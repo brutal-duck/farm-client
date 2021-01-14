@@ -51,6 +51,7 @@ import nextChapter from './nextChapter';
 import donate from './donate';
 import { changeNickname, support } from '../../html';
 import { bigButton, repositoryBtn } from '../../elements';
+import herdBoostWindow from './herdBoostWindow';
 
 let partProgress: any = require("./../../../assets/images/modal/part-progress.png");
 let newbieBg: any = require("./../../../assets/images/daily/newbie-bg.png");
@@ -148,6 +149,7 @@ class Modal extends Phaser.Scene {
   public donate = donate.bind(this);
   public improveCollectorSheep = improveCollectorSheep.bind(this);
   public improveCollectorChicken = improveCollectorChicken.bind(this);
+  public herdBoostWindow = herdBoostWindow.bind(this);
   
   public init(state: Istate): void {
     this.state = state;
@@ -237,6 +239,9 @@ class Modal extends Phaser.Scene {
         break;
       case 7: // окно выдачи донатных кристаллов
         this.donate();
+        break;
+      case 8: // окно стадного буста
+        this.herdBoostWindow();
         break;
       default:
         this.scene.stop();

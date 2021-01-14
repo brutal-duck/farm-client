@@ -24,7 +24,8 @@ function partTasks(): Itasks[] {
 
     console.log('-----------');
 
-    console.log('AllTasks ' + AllTasks);
+    console.log('AllTasks ', AllTasks);
+    console.log('this state farm', this.state.farm);
 
     console.log('-----------');
 
