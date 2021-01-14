@@ -5,9 +5,9 @@ import * as platform from 'platform';
 
 // поиск рекламы
 function findAd(): void {
-
+  
   if (!this.state.readyAd && !this.state.adBlock) {
-    
+
     if (this.state.platform === 'ok' && !this.state.adTimeout) {
 
       this.state.adTimeout = true;
@@ -15,7 +15,19 @@ function findAd(): void {
 
     } else if (this.state.platform === 'vk' && !this.state.adTimeout) {
 
-      this.state.readyAd = true;
+      this.state.adTimeout = true;
+
+      let win: any = window;
+      let mobile: boolean = false; 
+  
+      if (platform.os.family === 'Android' || platform.os.family === 'iOS') mobile = true;
+  
+      win.admanInit({
+        user_id: this.state.vkId,
+        app_id: process.env.VK_APP_ID,
+        mobile: mobile,
+        type: 'rewarded'
+      }, this.VKOnAdsReady, this.VKNoAds);
 
     }
     
@@ -34,21 +46,18 @@ function watchAd(type: number): void {
     FAPI.UI.showLoadedAd();
 
   } else if (this.state.platform === 'vk') {
-
-    let win: any = window;
-    let mobile: boolean = false;
-
-    if (platform.os.family === 'Android' || platform.os.family === 'iOS') mobile = true;
-
-    win.admanInit({
-      user_id: this.state.vkId,
-      app_id: process.env.VK_APP_ID,
-      mobile: mobile,
-      type: 'rewarded'
-    }, this.VKOnAdsReady, this.VKNoAds);
-
+    this.state.adTimeout = false;
+    
+    this.state.adman.onStarted((): void => {});
+    this.state.adman.onCompleted((): void => {
+      this.adReward();
+    });
+    this.state.adman.onSkipped((): void => {});      
+    this.state.adman.onClicked((): void => {}); 
+    this.state.adman.start('preroll');
   }
 
+  
 }
 
 
@@ -136,21 +145,17 @@ function adReward(): void {
 
 // показ рекламы ВК
 function VKOnAdsReady(adman: any): void {
-
-  adman.onStarted((): void => {});
-  adman.onCompleted((): void => {
-    this.adReward();
-  });
-  adman.onSkipped((): void => {});      
-  adman.onClicked((): void => {}); 
-  adman.start('preroll');
-
+  console.log(adman)
+  this.state.adman = adman;
+  this.state.readyAd = true;
 }
 
 
 // не рекламы
 function VKNoAds(): void {
   console.log('noAds');
+  this.state.readyAd = false;
+  this.state.adTimeout = false;
 }
 
 export {

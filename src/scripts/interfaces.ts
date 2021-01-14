@@ -364,4 +364,5 @@ interface Istate {
   sheepCollectorSettings: IcollectorSettings[];
   chickenCollectorSettings: IcollectorSettings[];
   adBlock: boolean;
+  adman: any;
 }
