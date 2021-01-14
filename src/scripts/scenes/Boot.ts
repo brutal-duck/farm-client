@@ -511,8 +511,8 @@ class Boot extends Phaser.Scene {
     this.state.adBlock = true;
     const block = document.querySelector('#anyId');
     if (block.clientHeight > 1) this.state.adBlock = false;
-    console.log('height #anyid' + block.clientHeight);
-    console.log('state adBlock' + this.state.adBlock);
+    console.log('height #anyid ' + block.clientHeight);
+    console.log('state adBlock ' + this.state.adBlock);
   }
 }
 
