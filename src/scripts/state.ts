@@ -11,6 +11,9 @@ let animal: any;
 let territory: any;
 let autoSaveSpeed: number;
 let maxMerginTime: number;
+let herdBoostSpeedAnimal: number;
+let herdBoostPrice: number;
+let herdBoostTime: number;
 let user: Iuser;
 let userSheep: IuserSheep;
 let userChicken: IuserChicken;
@@ -48,6 +51,9 @@ let state: Istate = {
   // записываемые в localStorage
   autoSaveSpeed, // скорость автосохранения
   maxMerginTime, // время не активности животного на ярмарке
+  herdBoostSpeedAnimal, // скорость животного во время 'стадного' буста
+  herdBoostPrice, // стоимость покупки 'стадного' буста
+  herdBoostTime, // время длительности 'стадного' буста
   sheepSettings, // настройки и параметры
   chickenSettings, // настройки и параметры
   farm, // имя сцены активной фермы (записывается в localStorage)

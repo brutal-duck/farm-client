@@ -1,6 +1,9 @@
-let general: { autoSaveSpeed: number, maxMerginTime: number, packages: Ipackage[] } = {
+let general: { autoSaveSpeed: number, maxMerginTime: number, boostSpeedAnimal: number, boostTime: number, boostPrice: number, packages: Ipackage[] } = {
   autoSaveSpeed: 15,
   maxMerginTime: 30,
+  boostSpeedAnimal: 100,
+  boostTime: 30,
+  boostPrice: 20,
   packages: [
     { bonus: 5, diamonds: 100, id: 1, price: 10, stock: 0, top: false },
     { bonus: 50, diamonds: 500, id: 2, price: 50, stock: 10, top: false },

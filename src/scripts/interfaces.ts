@@ -323,6 +323,9 @@ interface Istate {
   platform: string;
   autoSaveSpeed: number;
   maxMerginTime: number;
+  herdBoostSpeedAnimal: number;
+  herdBoostPrice: number;
+  herdBoostTime: number;
   sheepSettings: IsheepSettings;
   chickenSettings: IchickenSettings;
   chickenTerritories: Iterritories[];
