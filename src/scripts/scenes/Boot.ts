@@ -60,6 +60,7 @@ class Boot extends Phaser.Scene {
     this.name = '';
     this.avatar = '';
 
+    this.checkAbBlock();
     // язык берем из браузера. когда будет localStorage, то учитывать его
     let lang: string = window.navigator.language;
     lang = lang.toLowerCase();
@@ -113,8 +114,6 @@ class Boot extends Phaser.Scene {
     });
     
     this.checkUser();
-
-    this.checkAbBlock();
     
   }
 
@@ -509,10 +508,11 @@ class Boot extends Phaser.Scene {
 
   public checkAbBlock(): void {
     this.state.adBlock = true;
-    const block = document.querySelector('#anyId');
-    if (block.clientHeight > 1) this.state.adBlock = false;
-    console.log('height #anyid ' + block.clientHeight);
-    console.log('state adBlock ' + this.state.adBlock);
+    const block = document.querySelector('#adblock');
+
+    if (block) {
+      if (block.clientHeight > 1) this.state.adBlock = false;
+    }  
   }
 }
 

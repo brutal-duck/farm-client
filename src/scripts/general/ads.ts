@@ -7,7 +7,7 @@ import * as platform from 'platform';
 function findAd(): void {
 
   if (!this.state.readyAd && !this.state.adBlock) {
-    console.log('findAd func work');
+    
     if (this.state.platform === 'ok' && !this.state.adTimeout) {
 
       this.state.adTimeout = true;

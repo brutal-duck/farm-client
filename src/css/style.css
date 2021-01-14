@@ -468,9 +468,14 @@ textarea:focus, input:focus { outline: none; }
 
 /* проверка рекламы */
 
-#anyId {
+#adblock {
   position: fixed;
-  visibility: hidden;
-  width: 2px;
+  top: 0;
+  left: 0;
+}
+
+.adBanner {
   height: 2px;
+  width: 2px;
+  visibility: hidden;
 }
