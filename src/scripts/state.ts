@@ -41,6 +41,7 @@ let adTimeout: boolean;
 let vkId: number;
 let sheepCollectorSettings: IcollectorSettings[];
 let chickenCollectorSettings: IcollectorSettings[];
+let adBlock: boolean
 
 let state: Istate = {
   // записываемые в localStorage
@@ -88,7 +89,8 @@ let state: Istate = {
   adTimeout, // время таймаута до возможности показать рекламу
   vkId, // ВК id
   sheepCollectorSettings, // настройки уровней подстригателя
-  chickenCollectorSettings // настройки уровней собирателя яиц
+  chickenCollectorSettings, // настройки уровней собирателя яиц
+  adBlock
 }
 
 export default state;

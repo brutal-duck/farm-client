@@ -465,3 +465,12 @@ textarea:focus, input:focus { outline: none; }
   color: #925C28;
   margin: 25px auto 15px;
 }
+
+/* проверка рекламы */
+
+#anyId {
+  position: fixed;
+  visibility: hidden;
+  width: 2px;
+  height: 2px;
+}

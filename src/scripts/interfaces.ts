@@ -363,4 +363,5 @@ interface Istate {
   vkId: number;
   sheepCollectorSettings: IcollectorSettings[];
   chickenCollectorSettings: IcollectorSettings[];
+  adBlock: boolean;
 }

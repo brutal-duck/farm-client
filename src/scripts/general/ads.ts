@@ -6,7 +6,7 @@ import * as platform from 'platform';
 // поиск рекламы
 function findAd(): void {
 
-  if (!this.state.readyAd) {
+  if (!this.state.readyAd && !this.state.adBlock) {
     
     if (this.state.platform === 'ok' && !this.state.adTimeout) {
 
@@ -20,7 +20,7 @@ function findAd(): void {
     }
     
   }
-
+  console.log('findAd func work');
 }
 
 

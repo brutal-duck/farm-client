@@ -38,7 +38,7 @@ class Boot extends Phaser.Scene {
 
 
   public init(): void {
-
+    
     let build: string = '3.2';
     console.log('Build ' + build);
 
@@ -113,6 +113,8 @@ class Boot extends Phaser.Scene {
     });
     
     this.checkUser();
+
+    this.checkAbBlock();
     
   }
 
@@ -359,7 +361,7 @@ class Boot extends Phaser.Scene {
       }
 
     }
-
+  
   }
 
   
@@ -505,7 +507,13 @@ class Boot extends Phaser.Scene {
 
   }
 
-
+  public checkAbBlock(): void {
+    this.state.adBlock = true;
+    const block = document.querySelector('#anyId');
+    if (block.clientHeight > 1) this.state.adBlock = false;
+    console.log('height #anyid' + block.clientHeight);
+    console.log('state adBlock' + this.state.adBlock);
+  }
 }
 
 export default Boot;
