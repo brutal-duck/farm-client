@@ -24,7 +24,6 @@ function world(): void {
 
   // строим территории
   this.territories = this.physics.add.group(); // группа территорий
-
   let forest: number = 1;
   this.state.sheepTerritories.map((data: Iterritories) => {
 
