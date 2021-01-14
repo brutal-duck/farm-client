@@ -20,8 +20,6 @@ function tasks(): void {
 
 // окно заданий
 function tasksWindow(): void {
-  
-  console.log(this.game.scene.keys[this.state.farm].partTasks());
 
   this.state.amplitude.getInstance().logEvent('show_tasks_window', {
     farm_id: this.state.farm
