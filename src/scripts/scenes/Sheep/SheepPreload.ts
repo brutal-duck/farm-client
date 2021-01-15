@@ -795,6 +795,7 @@ class SheepPreload extends Phaser.Scene {
         this.state.herdBoostSpeedAnimal = response.data.herdBoostSpeedAnimal;
         this.state.herdBoostTime = response.data.herdBoostTime;
         this.state.herdBoostPrice = response.data.herdBoostPrice;
+        this.state.herdBoostDelay = response.data.herdBoostDelay;
 
         // массив с настройками для овечей фермы
         const sheepSettings: IsheepSettings = {

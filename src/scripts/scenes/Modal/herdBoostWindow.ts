@@ -25,6 +25,11 @@ function herdBoostWindow() {
   let tent: Phaser.GameObjects.Image = this.add.image(x, yTent, `${farm}-tent`)
     .setDepth(y + 1);
 
+  let fairTextLevel: Phaser.GameObjects.Text = this.add.text(x + 80, y + 65, this.state.userSheep.fair, {
+    font: '36px Shadow',
+    color: '#b5315a'
+  }).setOrigin(0.5, 0.5).setDepth(y + 1000);
+
   let road: Phaser.GameObjects.Sprite = this.add.sprite(xRoad, yRoad, `herd-boost-road-${farm}`)
     .setOrigin(0)
     .setDepth(2);
@@ -56,7 +61,7 @@ function herdBoostWindow() {
     this.sheepForBoost = this.physics.add.group();
 
     let timer = this.time.addEvent({
-      delay: 1000,
+      delay: this.state.herdBoostDelay,
       loop: true,
       callback: this.getRandomSheep,
       callbackScope: this
@@ -67,7 +72,7 @@ function herdBoostWindow() {
     this.chickenForBoost = this.physics.add.group();
 
     let timer = this.time.addEvent({
-      delay: 1000,
+      delay: this.state.herdBoostDelay,
       loop: true,
       callback: this.getRandomChicken,
       callbackScope: this
@@ -78,16 +83,8 @@ function herdBoostWindow() {
 
 
 function getRandomSheep() {
-  let x: number = 0;
-    let y: number = random(550, 850);
-    let side: string = 'right';
 
-    if (getRandomBool()) {
-      side = 'left'
-      x = this.game.config.width + 100;
-    } else {
-      x = -100;
-    }
+  const {x, y, side} = this.getRandomStartPosition(); 
 
   let randomType: number = random(1, this.state.userSheep.fair);
   let sheep: Phaser.Physics.Arcade.Sprite = this.sheepForBoost.create(x, y, 'sheep' + randomType)
@@ -99,7 +96,6 @@ function getRandomSheep() {
 
   if (side === 'right') {
     sheep.data.values.velocity = this.state.herdBoostSpeedAnimal;
-    sheep.setTexture('sheep'+ randomType, 4)
   }
   
   sheep.data.values.type = randomType;
@@ -119,16 +115,8 @@ function getRandomSheep() {
 }
 
 function getRandomChicken() {
-  let x: number = 0;
-  let y: number = random(550, 850);
-  let side: string = 'right';
   
-  if (getRandomBool()) {
-    side = 'left'
-    x = this.game.config.width + 100;
-  } else {
-    x = -100;
-  }
+  let {x, y, side} = this.getRandomStartPosition(); 
 
   let randomType: number = random(1, this.state.userChicken.fair);
   let chicken: Phaser.Physics.Arcade.Sprite = this.chickenForBoost.create(x, y, 'chicken' + randomType)
@@ -136,27 +124,41 @@ function getRandomChicken() {
     .setInteractive()
     .setDataEnabled();
 
-  chicken.data.values.velocity = -this.state.herdBoostSpeedAnimal
+  chicken.data.values.velocity = -this.state.herdBoostSpeedAnimal;
 
   if (side === 'right') {
     chicken.data.values.velocity = this.state.herdBoostSpeedAnimal;
-    chicken.setTexture('chicken' + randomType, 7)
   }
   
   chicken.data.values.type = randomType;
   this.input.setDraggable(chicken); 
-  // sheep.drag = false; 
-  // sheep.dragTimeout = 0;
-  // sheep.merging = false; // метка животного в мерджинге
+  // chicken.drag = false; 
+  // chicken.dragTimeout = 0;
+  // chicken.merging = false; // метка животного в мерджинге
 
   chicken.setVelocityX(chicken.data.values.velocity);
 
   chicken.play('chicken-move-' + side + chicken.data.values.type);
 }
 
+function getRandomStartPosition(){
+  let x: number = 0;
+  let y: number = random(550, 850);
+  let side: string = 'right';
+  
+  if (getRandomBool()) {
+    side = 'left';
+    x = this.game.config.width + 100;
+  } else {
+    x = -100;
+  }
+
+  return {x, y, side}
+}
 
 export {
   herdBoostWindow,
   getRandomSheep,
-  getRandomChicken
+  getRandomChicken,
+  getRandomStartPosition
 };
