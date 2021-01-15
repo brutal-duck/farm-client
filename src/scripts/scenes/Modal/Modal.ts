@@ -52,7 +52,7 @@ import donate from './donate';
 import { changeNickname, support } from '../../html';
 import { bigButton, repositoryBtn } from '../../elements';
   // буст "Стадо"
-import {herdBoostWindow, getRandomSheep} from './herdBoostWindow';
+import {herdBoostWindow, getRandomSheep, getRandomChicken} from './herdBoostWindow';
 
 let partProgress: any = require("./../../../assets/images/modal/part-progress.png");
 let newbieBg: any = require("./../../../assets/images/daily/newbie-bg.png");
@@ -109,6 +109,7 @@ class Modal extends Phaser.Scene {
   public progressButton: any;
   public caveTimer: Phaser.GameObjects.Text;
   public sheepForBoost: Phaser.Physics.Arcade.Group;
+  public chickenForBoost: Phaser.Physics.Arcade.Group;
 
   public clickButton = clickButton.bind(this);
   public clickModalBtn = clickModalBtn.bind(this);
@@ -157,7 +158,8 @@ class Modal extends Phaser.Scene {
   // буст "Стадо"
   public herdBoostWindow = herdBoostWindow.bind(this);
   public getRandomSheep = getRandomSheep.bind(this);
-  
+  public getRandomChicken = getRandomChicken.bind(this);
+
   public init(state: Istate): void {
     this.state = state;
   }

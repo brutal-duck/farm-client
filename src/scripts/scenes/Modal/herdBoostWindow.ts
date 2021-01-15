@@ -1,5 +1,4 @@
-import { random } from "../../general/basic";
-
+import { random, getRandomBool } from "../../general/basic";
 
 let x: number = 600;
 let y: number = 360;
@@ -50,63 +49,114 @@ function herdBoostWindow() {
   let borderBottom3: Phaser.GameObjects.Sprite = this.add.sprite(0 + 480, yRoad + road.height  + 15, `${farm}-horizontal-border-3`)
     .setOrigin(0, 1)
     .setDepth(y);
-  if (this.state.farm === 'Sheep') {
-    // создаю группу для овец
-    this.sheepForBoost = this.physics.add.group({
-      collideWorldBounds: true
-    });
-    
-    // создаю овцу в группе
-    
-    this.getRandomSheep(this.game.config.width - 200, yRoad + 100);
-    
-    this.getRandomSheep(600, 500);
 
-    
+  if (this.state.farm === 'Sheep') {
+
+    // создаю группу для овец
+    this.sheepForBoost = this.physics.add.group();
+
+    let timer = this.time.addEvent({
+      delay: 1000,
+      loop: true,
+      callback: this.getRandomSheep,
+      callbackScope: this
+    });
+
+  } else if (this.state.farm === 'Chicken') {
+
+    this.chickenForBoost = this.physics.add.group();
+
+    let timer = this.time.addEvent({
+      delay: 1000,
+      loop: true,
+      callback: this.getRandomChicken,
+      callbackScope: this
+    });
+
+  }
+}
+
+
+function getRandomSheep() {
+  let x: number = 0;
+    let y: number = random(550, 850);
+    let side: string = 'right';
+
+    if (getRandomBool()) {
+      side = 'left'
+      x = this.game.config.width + 100;
+    } else {
+      x = -100;
+    }
+
+  let randomType: number = random(1, this.state.userSheep.fair);
+  let sheep: Phaser.Physics.Arcade.Sprite = this.sheepForBoost.create(x, y, 'sheep' + randomType)
+    .setDepth(y)
+    .setInteractive()
+    .setDataEnabled();
+
+  sheep.data.values.velocity = -this.state.herdBoostSpeedAnimal
+
+  if (side === 'right') {
+    sheep.data.values.velocity = this.state.herdBoostSpeedAnimal;
+    sheep.setTexture('sheep'+ randomType, 4)
   }
   
+  sheep.data.values.type = randomType;
+  this.input.setDraggable(sheep); 
+  // sheep.drag = false; 
+  // sheep.dragTimeout = 0;
+  // sheep.merging = false; // метка животного в мерджинге
+  let stage: number = random(2, 4); 
+  sheep.setVelocityX(sheep.data.values.velocity);
 
+  sheep.data.values.woolSprite = this.physics.add.sprite(x, y, 'sheep-' + side + '-' + sheep.data.values.type + '-' + stage);
+
+  sheep.data.values.woolSprite.setDepth(y)
+    .setVelocityX(sheep.data.values.velocity);
+
+  sheep.play('sheep-move-' + side + sheep.data.values.type);
 }
 
-function getRandomSheep(x, y) {
-  let randomType = random(1, this.state.userSheep.fair);
-  let sheep = this.sheepForBoost.create(x, y, 'sheep' + randomType)
+function getRandomChicken() {
+  let x: number = 0;
+  let y: number = random(550, 850);
+  let side: string = 'right';
+  
+  if (getRandomBool()) {
+    side = 'left'
+    x = this.game.config.width + 100;
+  } else {
+    x = -100;
+  }
+
+  let randomType: number = random(1, this.state.userChicken.fair);
+  let chicken: Phaser.Physics.Arcade.Sprite = this.chickenForBoost.create(x, y, 'chicken' + randomType)
     .setDepth(y)
-    .setInteractive();
+    .setInteractive()
+    .setDataEnabled();
 
-  let wool: number = random(0, 900);
-  sheep.type = randomType;
-  this.input.setDraggable(sheep); // задали перетаскивание
-  sheep.moving = false; // движение
-  sheep.aim = false; // цель движения
-  sheep.aimX = 0; // точка X цели
-  sheep.aimY = 0; // точка Y цели
-  sheep.distance = 0; // дистанция для целей
-  sheep.drag = false; // метка перетаскивания
-  sheep.dragTimeout = 0; // метка задержки перетаскивания
-  sheep.body.onWorldBounds = true; // отскок от границ мира
-  sheep.collision = 1; // временно врубаем счетчик коллизии
-  sheep.body.mass = 0; // вроде как инерция
-  sheep.changeVector = false; // метка смены вектора
-  sheep.merging = false; // метка животного в мерджинге
-  sheep.wool = wool; // шерсть
-  sheep.expel = false; // метка изгнания
+  chicken.data.values.velocity = -this.state.herdBoostSpeedAnimal
 
-  let side: string = 'left';
-  let stage: number;
+  if (side === 'right') {
+    chicken.data.values.velocity = this.state.herdBoostSpeedAnimal;
+    chicken.setTexture('chicken' + randomType, 7)
+  }
+  
+  chicken.data.values.type = randomType;
+  this.input.setDraggable(chicken); 
+  // sheep.drag = false; 
+  // sheep.dragTimeout = 0;
+  // sheep.merging = false; // метка животного в мерджинге
 
-  if (wool <= 200) stage = 1;
-  else if (wool > 200 && wool <= 600) stage = 2;
-  else if (wool > 600 && wool <= 900) stage = 3;
-  else stage = 4;
+  chicken.setVelocityX(chicken.data.values.velocity);
 
-  sheep.woolSprite = this.add.sprite(x, y, 'sheep-' + side + '-' + sheep.type + '-' + stage)
-    .setDepth(y);
+  chicken.play('chicken-move-' + side + chicken.data.values.type);
 }
-
 
 
 export {
   herdBoostWindow,
-  getRandomSheep
+  getRandomSheep,
+  getRandomChicken
 };
