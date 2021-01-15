@@ -88,6 +88,9 @@ let bigButtonOrange: any = require("./../../../assets/images/modal/btn_lo.png");
 let bigButtonRed: any = require("./../../../assets/images/modal/btn_lr.png");
 let bigButtonYellow: any = require("./../../../assets/images/modal/btn_ly.png");
 let repositorySellBtn: any = require("./../../../assets/images/modal/repository-sell-btn.png");
+let herdBoostRoadSheep: any = require("./../../../assets/images/herd-boost-road-sheep.png");
+let herdBoostRoadChicken: any = require("./../../../assets/images/herd-boost-road-chicken.png");
+
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -202,6 +205,10 @@ class Modal extends Phaser.Scene {
     } else {
       this.load.image('farmer', farmer);
     }
+
+    // буст "стадо"
+    if (this.state.farm === 'Sheep') this.load.image('herd-boost-road-sheep', herdBoostRoadSheep);
+    if (this.state.farm === 'Chicken') this.load.image('herd-boost-road-chicken', herdBoostRoadChicken);
 
   }
 
