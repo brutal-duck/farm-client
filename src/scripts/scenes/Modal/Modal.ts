@@ -108,8 +108,11 @@ class Modal extends Phaser.Scene {
   public progressText: Phaser.GameObjects.Text;
   public progressButton: any;
   public caveTimer: Phaser.GameObjects.Text;
+  // буст "Стадо"
   public sheepForBoost: Phaser.Physics.Arcade.Group;
   public chickenForBoost: Phaser.Physics.Arcade.Group;
+  public mergingArray: any[];
+  public herdBoostArray: number[]
 
   public clickButton = clickButton.bind(this);
   public clickModalBtn = clickModalBtn.bind(this);
@@ -160,7 +163,7 @@ class Modal extends Phaser.Scene {
   public getRandomSheep = getRandomSheep.bind(this);
   public getRandomChicken = getRandomChicken.bind(this);
   public getRandomStartPosition = getRandomStartPosition.bind(this);
-
+  
   public init(state: Istate): void {
     this.state = state;
   }

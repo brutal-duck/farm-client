@@ -25,7 +25,7 @@ function herdBoostWindow(): void {
   
   // массив животных для слияния
   this.mergingArray = [];
-
+  this.herdBoostArray = [];
   this.add.image(x, yTent, `${farm}-tent`).setDepth(y + 1);
 
   this.add.text(x + 80, yTextLevel, this.state[`user${this.state.farm}`].fair, {
@@ -41,11 +41,11 @@ function herdBoostWindow(): void {
   road.data.values.type = 'road'
 
   // Заборы
-  this.add.sprite(0, yRoad + 15, `${farm}-horizontal-border-1`).setOrigin(0, 1).setDepth(y);
-  this.add.sprite(0 + 240, yRoad + 15, `${farm}-horizontal-border-2`).setOrigin(0, 1).setDepth(y);
-  this.add.sprite(0, yRoad + road.height + 15, `${farm}-horizontal-border-1`).setOrigin(0, 1).setDepth(y);
-  this.add.sprite(0 + 240, yRoad + road.height  + 15, `${farm}-horizontal-border-2`).setOrigin(0, 1).setDepth(y);
-  this.add.sprite(0 + 480, yRoad + road.height  + 15, `${farm}-horizontal-border-3`).setOrigin(0, 1).setDepth(y);
+  this.add.sprite(0, yRoad + 15, `${farm}-horizontal-border-1`).setOrigin(0, 1).setDepth(yRoad + 1);
+  this.add.sprite(0 + 240, yRoad + 15, `${farm}-horizontal-border-2`).setOrigin(0, 1).setDepth(yRoad + 1);
+  this.add.sprite(0, yRoad + road.height + 15, `${farm}-horizontal-border-1`).setOrigin(0, 1).setDepth(yRoad + 1);
+  this.add.sprite(0 + 240, yRoad + road.height  + 15, `${farm}-horizontal-border-2`).setOrigin(0, 1).setDepth(yRoad + 1);
+  this.add.sprite(0 + 480, yRoad + road.height  + 15, `${farm}-horizontal-border-3`).setOrigin(0, 1).setDepth(yRoad + 1);
 
   let timerCounter = 0;
 
@@ -231,16 +231,12 @@ function drag(animal): void {
     if (!animal.data.values.merging) {
       if (zone.type === 'left') {
         checkMerging.bind(this)(animal, 'left');
-        console.log('left')
       } else if (zone.type === 'top') {
         checkMerging.bind(this)(animal, 'top');
-        console.log('top')
       } else if (zone.type === 'right') {
         checkMerging.bind(this)(animal, 'right');
-        console.log('right')
       } else if (zone.type === 'bottom') {
         checkMerging.bind(this)(animal, 'bottom');
-        console.log('bottom')
       }
     }
   });
@@ -248,7 +244,6 @@ function drag(animal): void {
   this.input.on('dragend', (pointer: any, animal: Phaser.Physics.Arcade.Sprite): void => {
 
     if ((animal.y < 480 && animal.x < 480) || animal.y > 960) {
-        console.log('x: ' + animal.x, 'y: ' + animal.y)
         animal.data?.values.woolSprite?.destroy();
         animal.destroy();
         console.log('miss drop')
@@ -274,22 +269,27 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
   if (check === undefined) {
     if (this.mergingArray.length === 1 && this.mergingArray[0].position === position) {
       if (position === 'top') position = 'bottom';
-        else if (position === 'bottom') position = 'top';
+      else if (position === 'bottom') position = 'top';
+      if (position === 'left') position = 'right';
+      else if (position === 'right') position = 'left'
     }
-  
+
     this.mergingArray.push({
       _id: animal.data.values._id,
       type: animal.data.values.type,
       position: position
     })
-    
+
+    // проверка позиции для овец
     if (position === 'top') {
-  
+
       if (animal.data.values.side === 'left') {
+
         animal.data.values.side = 'right';
-        animal.data.values.woolSprite.setTexture('sheep-' + animal.data.values.side + '-' + animal.data.values.type + '-' + animal.data.values.stage);
+        animal.data.values.woolSprite.setTexture(this.state.farm.toLowerCase()+ '-' + animal.data.values.side + '-' + animal.data.values.type + '-' + animal.data.values.stage);
+      
       }
-  
+
       animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
       animal.y = y - 100;
       animal.x = x - 25;
@@ -297,69 +297,69 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
       animal.data.values.woolSprite.y = animal.y;
   
     } else if (position === 'bottom') {
+
       if (animal.data.values.side === 'left') {
+
         animal.data.values.side = 'right';
-        animal.data.values.woolSprite.setTexture('sheep-' + animal.data.values.side + '-' + animal.data.values.type + '-' + animal.data.values.stage);
+        animal.data.values.woolSprite.setTexture(this.state.farm.toLowerCase()+ '-' + animal.data.values.side + '-' + animal.data.values.type + '-' + animal.data.values.stage);
+      
       }
+
       animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
       animal.y = y + 20;
       animal.x = x - 25;
       animal.data.values.woolSprite.x = animal.x;
       animal.data.values.woolSprite.y = animal.y;
     }
+
+    // проверка позиции для кур
+    if (position === 'left') {
+      if (animal.data.values.side === 'left') {
+        animal.data.values.side = 'right';
+      }
+
+      animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
+      animal.y = y;
+      animal.x = x - 50;
+    } else if (position === 'right') {
+
+      if (animal.data.values.side === 'left') {
+        animal.data.values.side = 'right';
+      }
+
+      animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
+      animal.y = y;
+      animal.x = x + 50;
+    }
   }
+
   if (this.mergingArray.length === 2) {
 
-    let sheep1: Phaser.Physics.Arcade.Sprite = this.sheepForBoost.children.entries.find((data: any) => data.data.values._id === this.mergingArray[0]._id);
-    let sheep2: Phaser.Physics.Arcade.Sprite = this.sheepForBoost.children.entries.find((data: any) => data.data.values._id === this.mergingArray[1]._id);
+    let animal1: Phaser.Physics.Arcade.Sprite = this[`${this.state.farm.toLowerCase()}ForBoost`].children.entries.find((data: any) => data.data.values._id === this.mergingArray[0]._id);
+    let animal2: Phaser.Physics.Arcade.Sprite = this[`${this.state.farm.toLowerCase()}ForBoost`].children.entries.find((data: any) => data.data.values._id === this.mergingArray[1]._id);
     
-    if (sheep1 && sheep2) {
-      if (sheep1?.data.values.type === sheep2?.data.values.type) {
+    if (animal1 && animal2) {
+      if (animal1?.data.values.type === animal2?.data.values.type) {
+        this.herdBoostArray.push(animal.data.values.type + 1);
         this.time.addEvent({ delay: 100, callback: (): void => {
-          console.log('получай овцу');
-          sheep1.data.values.woolSprite.destroy();
-          sheep2.data.values.woolSprite.destroy();
-          sheep1.destroy();
-          sheep2.destroy();
+          console.log('получай животное');
+          animal1.data.values.woolSprite?.destroy();
+          animal2.data.values.woolSprite?.destroy();
+          animal1.destroy();
+          animal2.destroy();
         }, callbackScope: this, loop: false });
       } else {
         this.time.addEvent({ delay: 100, callback: (): void => {
-          console.log('не те овцы');
-          sheep1.data.values.woolSprite.destroy();
-          sheep2.data.values.woolSprite.destroy();
-          sheep1.destroy();
-          sheep2.destroy();
+          console.log('разный тип животного');
+          animal1.data.values.woolSprite?.destroy();
+          animal2.data.values.woolSprite?.destroy();
+          animal1.destroy();
+          animal2.destroy();
         }, callbackScope: this, loop: false });
       }
       this.mergingArray = [];
     }
   }
-
-  
-  
-
-// } else {
-
-//   if (check.position === 'top' && position === 'bottom') check.position = 'bottom';
-//   if (check.position === 'bottom' && position === 'top') check.position = 'top';
-
-//   // обновляем положение парковки
-//   if (position === 'top') {
-
-//     animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.type, true);
-//     sheep.vector = 6;
-//     animal.y = y + 30;
-//     sheep.x = x + 90;
-
-//   } else if (position === 'bottom') {
-
-//     sheep.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.type, true);
-//     sheep.vector = 6;
-//     sheep.y = territory.y + 130;
-//     sheep.x = territory.x + 90;
-
-//   }
-
 }
 
 
