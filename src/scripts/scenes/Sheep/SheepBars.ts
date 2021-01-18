@@ -181,6 +181,7 @@ class SheepBars extends Phaser.Scene {
 
     this.offline = this.add.sprite(650, this.height - 90, 'offline')
       .setInteractive()
+      .setDepth(this.height + 4)
       .setVisible(false);
 
     if (!this.state.online) this.offline.setVisible(true);
