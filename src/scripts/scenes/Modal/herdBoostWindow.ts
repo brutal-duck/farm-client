@@ -55,17 +55,17 @@ function herdBoostWindow() {
     // дроп зоны 
     let topZone: Phaser.GameObjects.Zone = this.add.zone(x, y - 75, 300, 145).setDropZone(undefined, () => {});
     topZone.type = 'top'
-    let bottomZone: Phaser.GameObjects.Zone = this.add.zone(x, y + 80, 300, 145).setDropZone(undefined, () => {});
+    let bottomZone: Phaser.GameObjects.Zone = this.add.zone(x, y + 70, 300, 145).setDropZone(undefined, () => {});
     bottomZone.type = 'bottom';
 
     // Для проверки дроп зон
-    // let graphics2 = this.add.graphics().setDepth(bottomZone.y * 5);
-    // graphics2.lineStyle(2, 0x00ff00);
-    // graphics2.strokeRect(bottomZone.x - bottomZone.input.hitArea.width / 2, bottomZone.y - bottomZone.input.hitArea.height / 2, bottomZone.input.hitArea.width, bottomZone.input.hitArea.height);
+    let graphics2 = this.add.graphics().setDepth(bottomZone.y * 5);
+    graphics2.lineStyle(2, 0x00ff00);
+    graphics2.strokeRect(bottomZone.x - bottomZone.input.hitArea.width / 2, bottomZone.y - bottomZone.input.hitArea.height / 2, bottomZone.input.hitArea.width, bottomZone.input.hitArea.height);
    
-    // let graphics1 = this.add.graphics().setDepth(topZone.y * 5);
-    // graphics1.lineStyle(2, 0xffff00);
-    // graphics1.strokeRect(topZone.x - topZone.input.hitArea.width / 2, topZone.y - topZone.input.hitArea.height / 2, topZone.input.hitArea.width, topZone.input.hitArea.height);
+    let graphics1 = this.add.graphics().setDepth(topZone.y * 5);
+    graphics1.lineStyle(2, 0xffff00);
+    graphics1.strokeRect(topZone.x - topZone.input.hitArea.width / 2, topZone.y - topZone.input.hitArea.height / 2, topZone.input.hitArea.width, topZone.input.hitArea.height);
 
     // создаю группу для овец
     this.sheepForBoost = this.physics.add.group();
@@ -212,7 +212,6 @@ function drag(animal) {
       } else {
         animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
       }
-  console.log('dragstart')
   });
 
   this.input.on('drag', (pointer: any, animal: Phaser.Physics.Arcade.Sprite, dragX: number, dragY: number): void => {
