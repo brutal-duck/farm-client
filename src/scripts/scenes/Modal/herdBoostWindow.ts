@@ -245,21 +245,26 @@ function drag(animal): void {
     }
   });
 
-  // this.input.on('dragend', (pointer: any, animal: Phaser.Physics.Arcade.Sprite): void => {
+  this.input.on('dragend', (pointer: any, animal: Phaser.Physics.Arcade.Sprite): void => {
 
-  //   if (animal.y > 480 && animal.y < 960) 
-  //      {
-  //       console.log('doroga')
-  //       animal.setVelocityX(animal.data.values.velocity);
-  //       animal.data.values.woolSprite?.setVelocityX(animal.data.values.velocity);
-  //       animal.play(this.state.farm.toLowerCase() + '-move-' + animal.data.values.side + animal.data.values.type);
-  //     } else {
-  //       animal.data?.values.woolSprite?.destroy();
-  //       animal.destroy();
-  //       console.log('miss drop')
-  //     }
-    
-  // });
+    if ((animal.y < 480 && animal.x < 480) || animal.y > 960) {
+        console.log('x: ' + animal.x, 'y: ' + animal.y)
+        animal.data?.values.woolSprite?.destroy();
+        animal.destroy();
+        console.log('miss drop')
+      } else {
+        console.log('popal')
+        animal.data.values.drag = false;
+        if (animal.data.values.merging) {
+          animal.setVelocityX(0);
+          animal.data.values.woolSprite?.setVelocityX(0);
+        } else {
+          animal.setVelocityX(animal.data.values.velocity);
+          animal.data.values.woolSprite?.setVelocityX(animal.data.values.velocity);
+          animal.play(this.state.farm.toLowerCase() + '-move-' + animal.data.values.side + animal.data.values.type);
+        }
+      }
+  });
 }
 
 function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): void {
