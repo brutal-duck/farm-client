@@ -13,68 +13,62 @@ function herdBoostWindow() {
   this.game.scene.keys[this.state.farm].scrolling.scrollY = 0;
 
   let farm: string = this.state.farm.toLowerCase();
+  // ярмарка и тент
+  this.add.sprite(x, y, `${farm}-merging`).setDepth(y);
   
-  let merging: Phaser.GameObjects.Sprite = this.add.sprite(x, y, `${farm}-merging`)
-    .setDepth(y);
-  
-  if (farm === 'sheep') {
-    yTent = y - 24;
-  } else if (farm === 'chicken') {
-    yTent = y - 17;
-  }
-  let tent: Phaser.GameObjects.Image = this.add.image(x, yTent, `${farm}-tent`)
-    .setDepth(y + 1);
+  if (farm === 'sheep') yTent = y - 24;
+  else if (farm === 'chicken') yTent = y - 17;
 
-  let fairTextLevel: Phaser.GameObjects.Text = this.add.text(x + 80, y + 65, this.state.userSheep.fair, {
+  this.add.image(x, yTent, `${farm}-tent`).setDepth(y + 1);
+
+  this.add.text(x + 80, y + 65, this.state.userSheep.fair, {
     font: '36px Shadow',
     color: '#b5315a'
   }).setOrigin(0.5, 0.5).setDepth(y + 1000);
 
-  let road: Phaser.GameObjects.Sprite = this.add.sprite(xRoad, yRoad, `herd-boost-road-${farm}`)
-    .setOrigin(0)
-    .setDepth(2);
+  // дорога
+  let road: Phaser.GameObjects.Sprite = this.add.sprite(xRoad, yRoad, `herd-boost-road-${farm}`).setOrigin(0).setDepth(yRoad);
 
   // Заборы
-  let borderTop1: Phaser.GameObjects.Sprite = this.add.sprite(0, yRoad + 15, `${farm}-horizontal-border-1`)
-    .setOrigin(0, 1)
-    .setDepth(y);
+  this.add.sprite(0, yRoad + 15, `${farm}-horizontal-border-1`).setOrigin(0, 1).setDepth(y);
+  this.add.sprite(0 + 240, yRoad + 15, `${farm}-horizontal-border-2`).setOrigin(0, 1).setDepth(y);
+  this.add.sprite(0, yRoad + road.height + 15, `${farm}-horizontal-border-1`).setOrigin(0, 1).setDepth(y);
+  this.add.sprite(0 + 240, yRoad + road.height  + 15, `${farm}-horizontal-border-2`).setOrigin(0, 1).setDepth(y);
+  this.add.sprite(0 + 480, yRoad + road.height  + 15, `${farm}-horizontal-border-3`).setOrigin(0, 1).setDepth(y);
 
-  let borderTop2: Phaser.GameObjects.Sprite = this.add.sprite(0 + 240, yRoad + 15, `${farm}-horizontal-border-2`)
-    .setOrigin(0, 1)
-    .setDepth(y);
-
-  let borderBottom1: Phaser.GameObjects.Sprite = this.add.sprite(0, yRoad + road.height + 15, `${farm}-horizontal-border-1`)
-    .setOrigin(0, 1)
-    .setDepth(y);
-
-  let borderBottom2: Phaser.GameObjects.Sprite = this.add.sprite(0 + 240, yRoad + road.height  + 15, `${farm}-horizontal-border-2`)
-    .setOrigin(0, 1)
-    .setDepth(y);
-
-  let borderBottom3: Phaser.GameObjects.Sprite = this.add.sprite(0 + 480, yRoad + road.height  + 15, `${farm}-horizontal-border-3`)
-    .setOrigin(0, 1)
-    .setDepth(y);
+  let timerCounter = 0;
 
   if (this.state.farm === 'Sheep') {
-
     // создаю группу для овец
     this.sheepForBoost = this.physics.add.group();
 
-    let timer = this.time.addEvent({
+    let timer: Phaser.Time.TimerEvent = this.time.addEvent({
       delay: this.state.herdBoostDelay,
       loop: true,
-      callback: this.getRandomSheep,
+      callback: () => {
+        this.getRandomSheep();
+        ++timerCounter;
+        if (timerCounter >= this.state.herdBoostTime) {
+          timer.remove();
+        }
+      },
       callbackScope: this
     });
 
+    
   } else if (this.state.farm === 'Chicken') {
 
     this.chickenForBoost = this.physics.add.group();
 
-    let timer = this.time.addEvent({
+    let timer: Phaser.Time.TimerEvent = this.time.addEvent({
       delay: this.state.herdBoostDelay,
       loop: true,
-      callback: this.getRandomChicken,
+      callback: () => {
+        this.getRandomChicken();
+        ++timerCounter;
+        if (timerCounter >= this.state.herdBoostTime) {
+          timer.remove();
+        }},
       callbackScope: this
     });
 
@@ -87,7 +81,7 @@ function getRandomSheep() {
   const {x, y, side} = this.getRandomStartPosition(); 
 
   let randomType: number = random(1, this.state.userSheep.fair);
-  let sheep: Phaser.Physics.Arcade.Sprite = this.sheepForBoost.create(x, y, 'sheep' + randomType)
+  const sheep: Phaser.Physics.Arcade.Sprite = this.sheepForBoost.create(x, y, 'sheep' + randomType)
     .setDepth(y)
     .setInteractive()
     .setDataEnabled();
@@ -116,10 +110,10 @@ function getRandomSheep() {
 
 function getRandomChicken() {
   
-  let {x, y, side} = this.getRandomStartPosition(); 
+  const {x, y, side} = this.getRandomStartPosition(); 
 
   let randomType: number = random(1, this.state.userChicken.fair);
-  let chicken: Phaser.Physics.Arcade.Sprite = this.chickenForBoost.create(x, y, 'chicken' + randomType)
+  const chicken: Phaser.Physics.Arcade.Sprite = this.chickenForBoost.create(x, y, 'chicken' + randomType)
     .setDepth(y)
     .setInteractive()
     .setDataEnabled();
