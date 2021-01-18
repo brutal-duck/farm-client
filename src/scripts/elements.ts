@@ -65,13 +65,14 @@ function createSpeechBubble(text: string, cave: boolean = false): void {
 }
 
 
-// облако при мерджинге
-function mergingCloud(position: Iposition, type?: number): void {
+// облако при мерджинге (Добавил type при неудчном мерджинге)
+function mergingCloud(position: Iposition, type?: boolean): void {
 
   let x: number = position.x;
   let y: number = position.y;
-  let cloud = this.add.image(x, y, 'merging-animation').setDepth(y + 100);
-
+  let cloud = !type 
+    ? this.add.image(x, y, 'merging-animation').setDepth(y + 100) 
+    : this.add.image(x, y, 'bad-merging-animation').setDepth(y + 100);
   let delay = 10;
   let interval = this.time.addEvent({ delay: 30, callback: (): void => {
 

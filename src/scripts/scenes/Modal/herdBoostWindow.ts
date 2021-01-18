@@ -362,6 +362,13 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
         }, callbackScope: this, loop: false });
       } else {
         this.time.addEvent({ delay: 100, callback: (): void => {
+         
+          const position: Iposition = {
+            x: animal.x,
+            y: animal.y
+          }
+          this.mergingCloud(position, true);
+          
           console.log('разный тип животного');
           animal1.data.values.woolSprite?.destroy();
           animal2.data.values.woolSprite?.destroy();
