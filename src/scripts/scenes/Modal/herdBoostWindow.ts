@@ -242,8 +242,13 @@ function drag(animal): void {
 
   this.input.on('dragend', (pointer: any, animal: Phaser.Physics.Arcade.Sprite): void => {
 
-    if ((animal.y < 480 && animal.x < 480) || animal.y > 960) {
+    if ((animal.y < 480 && animal.x < 480) || animal.y > 960 || animal.y < 200) {
         animal.data?.values.woolSprite?.destroy();
+        const position: Iposition = {
+          x: animal.x,
+          y: animal.y
+        } 
+        this.mergingCloud(position, true);
         animal.destroy();
         console.log('miss drop')
       } else {
