@@ -66,7 +66,7 @@ function createSpeechBubble(text: string, cave: boolean = false): void {
 
 
 // облако при мерджинге
-function mergingCloud(position: Iposition): void {
+function mergingCloud(position: Iposition, type?: number): void {
 
   let x: number = position.x;
   let y: number = position.y;

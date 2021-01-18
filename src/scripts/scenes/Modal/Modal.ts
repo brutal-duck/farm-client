@@ -50,7 +50,7 @@ import dailyNewbie from './dailyNewbie';
 import nextChapter from './nextChapter';
 import donate from './donate';
 import { changeNickname, support } from '../../html';
-import { bigButton, repositoryBtn } from '../../elements';
+import { bigButton, repositoryBtn, mergingCloud } from '../../elements';
   // буст "Стадо"
 import {herdBoostWindow, getRandomSheep, getRandomChicken, getRandomStartPosition} from './herdBoostWindow';
 
@@ -162,7 +162,8 @@ class Modal extends Phaser.Scene {
   public getRandomSheep = getRandomSheep.bind(this);
   public getRandomChicken = getRandomChicken.bind(this);
   public getRandomStartPosition = getRandomStartPosition.bind(this);
-
+  public mergingCloud = mergingCloud.bind(this);
+  
   public init(state: Istate): void {
     this.state = state;
   }

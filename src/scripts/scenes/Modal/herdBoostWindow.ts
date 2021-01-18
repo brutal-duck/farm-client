@@ -349,6 +349,11 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
 
         this.state.herdBoostAnimals.push(newType);
         this.time.addEvent({ delay: 100, callback: (): void => {
+          const position: Iposition = {
+            x: animal.x,
+            y: animal.y
+          }
+          this.mergingCloud(position);
           console.log('получай животное');
           animal1.data.values.woolSprite?.destroy();
           animal2.data.values.woolSprite?.destroy();
