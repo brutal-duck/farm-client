@@ -39,7 +39,7 @@ function herdBoostWindow(): void {
     .setOrigin(0)
     .setDepth(yRoad)
     .setDataEnabled()
-  road.data.values.type = 'road'
+  road.data.values.type = 'road';
 
   // Заборы
   this.add.sprite(0, yRoad + 15, `${farm}-horizontal-border-1`).setOrigin(0, 1).setDepth(yRoad + 1);
@@ -53,7 +53,7 @@ function herdBoostWindow(): void {
   if (this.state.farm === 'Sheep') {
     // дроп зоны 
     let topZone: Phaser.GameObjects.Zone = this.add.zone(x, y - 75, 300, 145).setDropZone(undefined, () => {});
-    topZone.type = 'top'
+    topZone.type = 'top';
     let bottomZone: Phaser.GameObjects.Zone = this.add.zone(x, y + 70, 300, 145).setDropZone(undefined, () => {});
     bottomZone.type = 'bottom';
 
@@ -61,7 +61,6 @@ function herdBoostWindow(): void {
     let graphics2 = this.add.graphics().setDepth(bottomZone.y * 5);
     graphics2.lineStyle(2, 0x00ff00);
     graphics2.strokeRect(bottomZone.x - bottomZone.input.hitArea.width / 2, bottomZone.y - bottomZone.input.hitArea.height / 2, bottomZone.input.hitArea.width, bottomZone.input.hitArea.height);
-   
     let graphics1 = this.add.graphics().setDepth(topZone.y * 5);
     graphics1.lineStyle(2, 0xffff00);
     graphics1.strokeRect(topZone.x - topZone.input.hitArea.width / 2, topZone.y - topZone.input.hitArea.height / 2, topZone.input.hitArea.width, topZone.input.hitArea.height);
@@ -81,7 +80,7 @@ function herdBoostWindow(): void {
       },
       callbackScope: this
     });
-    
+
   } else if (this.state.farm === 'Chicken') {
     // дроп зоны 
     let leftZone: Phaser.GameObjects.Zone = this.add.zone(x - 75, y - 30, 145, 300).setDropZone(undefined, () => {});
@@ -126,7 +125,7 @@ function getRandomSheep(): void {
     .setInteractive()
     .setDataEnabled();
 
-  sheep.data.values.velocity = -this.state.herdBoostSpeedAnimal
+  sheep.data.values.velocity = -this.state.herdBoostSpeedAnimal;
 
   if (side === 'right') {
     sheep.data.values.velocity = this.state.herdBoostSpeedAnimal;
@@ -197,7 +196,7 @@ function getRandomStartPosition(): {x: number, y: number, side: string, _id: str
     x = -100;
   }
 
-  return {x, y, side, _id}
+  return {x, y, side, _id};
 }
 
 function drag(animal): void {
@@ -207,11 +206,11 @@ function drag(animal): void {
     animal.data.values.woolSprite?.setVelocity(0, 0);
     animal.body.onWorldBounds = false; // чтобы не могли перетащить за пределы
       // анимация
-      if(animal.data.values.side === 'left') {
-        animal.anims.play(this.state.farm.toLowerCase() + '-stay-left' + animal.data.values.type, true);
-      } else {
-        animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
-      }
+    if(animal.data.values.side === 'left') {
+      animal.anims.play(this.state.farm.toLowerCase() + '-stay-left' + animal.data.values.type, true);
+    } else {
+      animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
+    }
   });
 
   this.input.on('drag', (pointer: any, animal: Phaser.Physics.Arcade.Sprite, dragX: number, dragY: number): void => {
@@ -275,8 +274,8 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
       if (position === 'top') position = 'bottom';
       else if (position === 'bottom') position = 'top';
       if (position === 'left') position = 'right';
-      else if (position === 'right') position = 'left'
-    }
+      else if (position === 'right') position = 'left';
+    };
 
     this.mergingArray.push({
       _id: animal.data.values._id,
@@ -340,7 +339,8 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
       animal.x = x + 50;
     }
   }
-
+  
+  // проверяем совпадение
   if (this.mergingArray.length === 2) {
 
     let animal1: Phaser.Physics.Arcade.Sprite = this[`${this.state.farm.toLowerCase()}ForBoost`].children.entries.find((data: any) => data.data.values._id === this.mergingArray[0]._id);
@@ -353,13 +353,17 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
           : animal.data.values.type;
 
         this.state.herdBoostAnimals.push(newType);
+
         this.time.addEvent({ delay: 100, callback: (): void => {
+        
           const position: Iposition = {
             x: animal.x,
             y: animal.y
           }
           this.mergingCloud(position);
+
           console.log('получай животное');
+
           animal1.data.values.woolSprite?.destroy();
           animal2.data.values.woolSprite?.destroy();
           animal1.destroy();
@@ -367,7 +371,7 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
         }, callbackScope: this, loop: false });
       } else {
         this.time.addEvent({ delay: 100, callback: (): void => {
-         
+          
           const position: Iposition = {
             x: animal.x,
             y: animal.y
