@@ -1,4 +1,5 @@
-import { random, getRandomBool } from "../../general/basic";
+import { random, getRandomBool, randomString } from "../../general/basic";
+import { sheep } from "./sheep";
 
 let x: number = 600;
 let y: number = 360;
@@ -6,14 +7,8 @@ let yTent: number;
 let yTextLevel: number;
 let xRoad: number = 0;
 let yRoad: number = 480;
-let xDropZone1: number;
-let yDropZone1: number;
-let xDropZone2: number;
-let yDropZone2: number;
-let dropZoneHight: number;
-let dropZoneWidth: number;
 
-function herdBoostWindow() {
+function herdBoostWindow(): void {
   this.game.scene.keys[this.state.farm].scrolling.scrollY = 0;
 
   let farm: string = this.state.farm.toLowerCase();
@@ -27,6 +22,9 @@ function herdBoostWindow() {
     yTent = y - 17;
     yTextLevel = y + 82;
   };
+  
+  // массив животных для слияния
+  this.mergingArray = [];
 
   this.add.image(x, yTent, `${farm}-tent`).setDepth(y + 1);
 
@@ -119,10 +117,9 @@ function herdBoostWindow() {
   }
 }
 
+function getRandomSheep(): void {
 
-function getRandomSheep() {
-
-  let {x, y, side} = this.getRandomStartPosition(); 
+  let {x, y, side, _id} = this.getRandomStartPosition(); 
 
   let randomType: number = random(1, this.state.userSheep.fair);
   let sheep: Phaser.Physics.Arcade.Sprite = this.sheepForBoost.create(x, y, 'sheep' + randomType)
@@ -140,13 +137,15 @@ function getRandomSheep() {
   this.input.setDraggable(sheep); 
   sheep.data.values.drag = false;
   sheep.data.values.side = side; 
+  sheep.data.values._id = _id;
   // sheep.dragTimeout = 0;
-  // sheep.merging = false; // метка животного в мерджинге
+  sheep.data.values.merging = false; // метка животного в мерджинге
 
   let stage: number = random(2, 4); 
+  sheep.data.values.stage = stage;
   sheep.setVelocityX(sheep.data.values.velocity);
 
-  sheep.data.values.woolSprite = this.physics.add.sprite(x, y, 'sheep-' + side + '-' + sheep.data.values.type + '-' + stage);
+  sheep.data.values.woolSprite = this.physics.add.sprite(x, y, 'sheep-' + sheep.data.values.side + '-' + sheep.data.values.type + '-' + sheep.data.values.stage);
 
   sheep.data.values.woolSprite.setDepth(y)
     .setVelocityX(sheep.data.values.velocity);
@@ -155,9 +154,9 @@ function getRandomSheep() {
   drag.bind(this)(sheep);
 }
 
-function getRandomChicken() {
+function getRandomChicken(): void {
   
-  const {x, y, side} = this.getRandomStartPosition(); 
+  const {x, y, side, _id} = this.getRandomStartPosition(); 
   
   let randomType: number = random(1, this.state.userChicken.fair);
   const chicken: Phaser.Physics.Arcade.Sprite = this.chickenForBoost.create(x, y, 'chicken' + randomType)
@@ -174,21 +173,23 @@ function getRandomChicken() {
   chicken.data.values.type = randomType;
   this.input.setDraggable(chicken); 
   chicken.data.values.side = side;
+  chicken.data.values._id = _id;
   chicken.data.values.drag = false; 
   // chicken.dragTimeout = 0;
-  // chicken.merging = false; // метка животного в мерджинге
+  chicken.data.values.merging = false; // метка животного в мерджинге
 
   chicken.setVelocityX(chicken.data.values.velocity);
 
-  chicken.play('chicken-move-' + side + chicken.data.values.type);
+  chicken.play('chicken-move-' + chicken.data.values.side + chicken.data.values.type);
 
   drag.bind(this)(chicken);
 }
 
-function getRandomStartPosition(){
+function getRandomStartPosition(): {x: number, y: number, side: string, _id: string} {
   let x: number = 0;
   let y: number = random(550, 850);
   let side: string = 'right';
+  let _id: string = 'local_' + randomString(18);
   
   if (getRandomBool()) {
     side = 'left';
@@ -197,10 +198,10 @@ function getRandomStartPosition(){
     x = -100;
   }
 
-  return {x, y, side}
+  return {x, y, side, _id}
 }
 
-function drag(animal) {
+function drag(animal): void {
   this.input.on('dragstart', (pointer: any, animal: any): void => {
     animal.data.values.drag = true; // метим перетаскивание для других функций
     animal.setVelocity(0, 0); // отменяем передвижение
@@ -224,28 +225,136 @@ function drag(animal) {
       animal.data.values.woolSprite.y = dragY;
       animal.data.values.woolSprite.setDepth(dragY + Math.round((animal.height / 2) + 101));
     }
-
   });
 
   this.input.on('drop', (pointer: any, animal: Phaser.Physics.Arcade.Sprite, zone: any): void => { 
-    
-  });
-
-  this.input.on('dragend', (pointer: any, animal: Phaser.Physics.Arcade.Sprite): void => {
-
-    if (animal.y > 480 && animal.y < 960) 
-       {
-        console.log('doroga')
-        animal.setVelocityX(animal.data.values.velocity);
-        animal.data.values.woolSprite?.setVelocityX(animal.data.values.velocity);
-        animal.play(this.state.farm.toLowerCase() + '-move-' + animal.data.values.side + animal.data.values.type);
-      } else {
-        animal.data?.values.woolSprite?.destroy();
-        animal.destroy();
-        console.log('miss drop')
+    if (!animal.data.values.merging) {
+      if (zone.type === 'left') {
+        checkMerging.bind(this)(animal, 'left');
+        console.log('left')
+      } else if (zone.type === 'top') {
+        checkMerging.bind(this)(animal, 'top');
+        console.log('top')
+      } else if (zone.type === 'right') {
+        checkMerging.bind(this)(animal, 'right');
+        console.log('right')
+      } else if (zone.type === 'bottom') {
+        checkMerging.bind(this)(animal, 'bottom');
+        console.log('bottom')
       }
-    
+    }
   });
+
+  // this.input.on('dragend', (pointer: any, animal: Phaser.Physics.Arcade.Sprite): void => {
+
+  //   if (animal.y > 480 && animal.y < 960) 
+  //      {
+  //       console.log('doroga')
+  //       animal.setVelocityX(animal.data.values.velocity);
+  //       animal.data.values.woolSprite?.setVelocityX(animal.data.values.velocity);
+  //       animal.play(this.state.farm.toLowerCase() + '-move-' + animal.data.values.side + animal.data.values.type);
+  //     } else {
+  //       animal.data?.values.woolSprite?.destroy();
+  //       animal.destroy();
+  //       console.log('miss drop')
+  //     }
+    
+  // });
+}
+
+function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): void {
+  animal.data.values.merging = true;
+  let check = this.mergingArray.find((data: any) => data._id === animal.data.values._id);
+
+  if (check === undefined) {
+    if (this.mergingArray.length === 1 && this.mergingArray[0].position === position) {
+      if (position === 'top') position = 'bottom';
+        else if (position === 'bottom') position = 'top';
+    }
+  
+    this.mergingArray.push({
+      _id: animal.data.values._id,
+      type: animal.data.values.type,
+      position: position
+    })
+    
+    if (position === 'top') {
+  
+      if (animal.data.values.side === 'left') {
+        animal.data.values.side = 'right';
+        animal.data.values.woolSprite.setTexture('sheep-' + animal.data.values.side + '-' + animal.data.values.type + '-' + animal.data.values.stage);
+      }
+  
+      animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
+      animal.y = y - 100;
+      animal.x = x - 25;
+      animal.data.values.woolSprite.x = animal.x;
+      animal.data.values.woolSprite.y = animal.y;
+  
+    } else if (position === 'bottom') {
+      if (animal.data.values.side === 'left') {
+        animal.data.values.side = 'right';
+        animal.data.values.woolSprite.setTexture('sheep-' + animal.data.values.side + '-' + animal.data.values.type + '-' + animal.data.values.stage);
+      }
+      animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
+      animal.y = y + 20;
+      animal.x = x - 25;
+      animal.data.values.woolSprite.x = animal.x;
+      animal.data.values.woolSprite.y = animal.y;
+    }
+  }
+  if (this.mergingArray.length === 2) {
+
+    let sheep1: Phaser.Physics.Arcade.Sprite = this.sheepForBoost.children.entries.find((data: any) => data.data.values._id === this.mergingArray[0]._id);
+    let sheep2: Phaser.Physics.Arcade.Sprite = this.sheepForBoost.children.entries.find((data: any) => data.data.values._id === this.mergingArray[1]._id);
+    
+    if (sheep1 && sheep2) {
+      if (sheep1?.data.values.type === sheep2?.data.values.type) {
+        this.time.addEvent({ delay: 100, callback: (): void => {
+          console.log('получай овцу');
+          sheep1.data.values.woolSprite.destroy();
+          sheep2.data.values.woolSprite.destroy();
+          sheep1.destroy();
+          sheep2.destroy();
+        }, callbackScope: this, loop: false });
+      } else {
+        this.time.addEvent({ delay: 100, callback: (): void => {
+          console.log('не те овцы');
+          sheep1.data.values.woolSprite.destroy();
+          sheep2.data.values.woolSprite.destroy();
+          sheep1.destroy();
+          sheep2.destroy();
+        }, callbackScope: this, loop: false });
+      }
+      this.mergingArray = [];
+    }
+  }
+
+  
+  
+
+// } else {
+
+//   if (check.position === 'top' && position === 'bottom') check.position = 'bottom';
+//   if (check.position === 'bottom' && position === 'top') check.position = 'top';
+
+//   // обновляем положение парковки
+//   if (position === 'top') {
+
+//     animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.type, true);
+//     sheep.vector = 6;
+//     animal.y = y + 30;
+//     sheep.x = x + 90;
+
+//   } else if (position === 'bottom') {
+
+//     sheep.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.type, true);
+//     sheep.vector = 6;
+//     sheep.y = territory.y + 130;
+//     sheep.x = territory.x + 90;
+
+//   }
+
 }
 
 
