@@ -1,5 +1,4 @@
 import { random, getRandomBool, randomString } from "../../general/basic";
-import { sheep } from "./sheep";
 
 let x: number = 600;
 let y: number = 360;
@@ -23,9 +22,11 @@ function herdBoostWindow(): void {
     yTextLevel = y + 82;
   };
   
-  // массив животных для слияния
-  this.mergingArray = [];
-  this.herdBoostArray = [];
+  
+  this.mergingArray = []; // массив животных для слияния
+  
+  this.state.herdBoostAnimals = []; // Обнуляем массив животных для буста
+
   this.add.image(x, yTent, `${farm}-tent`).setDepth(y + 1);
 
   this.add.text(x + 80, yTextLevel, this.state[`user${this.state.farm}`].fair, {
@@ -97,8 +98,6 @@ function herdBoostWindow(): void {
     let graphics2 = this.add.graphics().setDepth(rightZone.y * 5);
     graphics2.lineStyle(2, 0x00ff00);
     graphics2.strokeRect(rightZone.x - rightZone.input.hitArea.width / 2, rightZone.y - rightZone.input.hitArea.height / 2, rightZone.input.hitArea.width, rightZone.input.hitArea.height);
-
-
 
     this.chickenForBoost = this.physics.add.group();
 
@@ -315,16 +314,20 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
     // проверка позиции для кур
     if (position === 'left') {
       if (animal.data.values.side === 'left') {
+
         animal.data.values.side = 'right';
+
       }
 
       animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
       animal.y = y;
       animal.x = x - 50;
+
     } else if (position === 'right') {
 
       if (animal.data.values.side === 'left') {
         animal.data.values.side = 'right';
+
       }
 
       animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
@@ -340,7 +343,11 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
     
     if (animal1 && animal2) {
       if (animal1?.data.values.type === animal2?.data.values.type) {
-        this.herdBoostArray.push(animal.data.values.type + 1);
+        let newType = animal.data.values.type < this.state[`${this.state.farm.toLowerCase()}Settings`][`${this.state.farm.toLowerCase()}Settings`].length
+          ? animal.data.values.type + 1
+          : animal.data.values.type;
+
+        this.state.herdBoostAnimals.push(newType);
         this.time.addEvent({ delay: 100, callback: (): void => {
           console.log('получай животное');
           animal1.data.values.woolSprite?.destroy();
@@ -359,6 +366,7 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
       }
       this.mergingArray = [];
     }
+    console.log(this.state.herdBoostAnimals);
   }
 }
 

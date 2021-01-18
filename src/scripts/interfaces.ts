@@ -327,6 +327,7 @@ interface Istate {
   herdBoostPrice: number;
   herdBoostTime: number;
   herdBoostDelay: number;
+  herdBoostAnimals: number[];
   sheepSettings: IsheepSettings;
   chickenSettings: IchickenSettings;
   chickenTerritories: Iterritories[];
