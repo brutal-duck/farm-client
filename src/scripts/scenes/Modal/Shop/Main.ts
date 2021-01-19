@@ -152,7 +152,7 @@ class Shop extends Phaser.Scene {
 
       if (this.state.farm === 'Sheep') this.sheepBoosts();
       else if (this.state.farm === 'Chicken') this.chickenBoosts();
-
+      // сюда допиши много всего
     }
 
   }

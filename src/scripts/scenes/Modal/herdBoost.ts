@@ -7,7 +7,7 @@ let yTextLevel: number;
 let xRoad: number = 0;
 let yRoad: number = 480;
 
-function moveItem([...args], boostCounterWindow) {
+function moveItem([...args], boostCounterWindow): void {
   let y = boostCounterWindow.y;
 
   let timer: Phaser.Time.TimerEvent = this.time.addEvent({
@@ -25,7 +25,7 @@ function moveItem([...args], boostCounterWindow) {
   });
 }
 
-function showItems([...args], boostCounterWindow) {
+function showItems([...args], boostCounterWindow): void {
 
   let [timerText, leaves1, leaves2, countdown, text1, text2] = [...args];
   
