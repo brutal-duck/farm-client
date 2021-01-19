@@ -73,9 +73,9 @@ let repositorySellBtn: any = require("./../../assets/images/modal/repository-sel
 let herdBoostRoadSheep: any = require("./../../assets/images/sheep/herd-boost-road-sheep.png");
 let herdBoostRoadChicken: any = require("./../../assets/images/chicken/herd-boost-road-chicken.png");
 let badMergingAnimation: any = require("./../../assets/images/bad-merging-animation.png");
-let boostWindowBg: any = require("./../../../assets/images/boost/background.png");
-let boostCountdown: any = require("./../../../assets/images/boost/countdown.png");
-let boostLeaves: any = require("./../../../assets/images/boost/leaves.png");
+let boostWindowBg: any = require("./../../assets/images/boost/background.png");
+let boostCountdown: any = require("./../../assets/images/boost/countdown.png");
+let boostLeaves: any = require("./../../assets/images/boost/leaves.png");
 
 class Preload extends Phaser.Scene {
   constructor() {
@@ -175,7 +175,7 @@ class Preload extends Phaser.Scene {
     if (this.state.farm === 'Sheep') this.load.image('herd-boost-road-sheep', herdBoostRoadSheep);
     if (this.state.farm === 'Chicken') this.load.image('herd-boost-road-chicken', herdBoostRoadChicken);
     this.load.image('bad-merging-animation', badMergingAnimation);
-    this.load.image('boost-bg', boostWindowBg);
+    this.load.image('boost-window-bg', boostWindowBg);
     this.load.image('boost-countdown', boostCountdown);
     this.load.image('boost-leaves', boostLeaves);
   }

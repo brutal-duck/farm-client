@@ -222,7 +222,7 @@ class Modal extends Phaser.Scene {
     if (this.state.farm === 'Sheep') this.load.image('herd-boost-road-sheep', herdBoostRoadSheep);
     if (this.state.farm === 'Chicken') this.load.image('herd-boost-road-chicken', herdBoostRoadChicken);
     this.load.image('bad-merging-animation', badMergingAnimation);
-    this.load.image('boost-bg', boostWindowBg);
+    this.load.image('boost-window-bg', boostWindowBg);
     this.load.image('boost-countdown', boostCountdown);
     this.load.image('boost-leaves', boostLeaves);
   }

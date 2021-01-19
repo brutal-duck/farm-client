@@ -1,4 +1,4 @@
-import { random, getRandomBool, randomString } from "../../general/basic";
+import { random, getRandomBool, randomString, timer } from "../../general/basic";
 
 let x: number = 600;
 let y: number = 360;
@@ -7,26 +7,140 @@ let yTextLevel: number;
 let xRoad: number = 0;
 let yRoad: number = 480;
 
+function moveItem([...args], boostCounterWindow) {
+  let y = boostCounterWindow.y;
 
-function createBoostTimer(): void {
-  let text1: Phaser.GameObjects.Text = this.add.text(360, 600, this.state.lang.herdBoostStartTimout_1, {
-    font: '24px Shadow',
-    color: '#b5315a',
-    wordWrap: { width: 250 },
+  let timer: Phaser.Time.TimerEvent = this.time.addEvent({
+    delay: 5,
+    loop: true,
+    callback: () => {
+      y += 10;
+      boostCounterWindow.y = y
+      if (y >= 1080) {
+        timer.remove();
+        showItems.bind(this)([...args])
+      }
+    },
+    callbackScope: this
+  });
+}
+
+function showItems([...args]) {
+
+  let [timerText, leaves1, leaves2, countdown, text1, text2] = [...args];
+  
+  // установка новых позиций
+  timerText.setText(this.state.herdBoostTime);
+  timerText.x = 140;
+  timerText.y = 1080;
+
+  countdown.x = 140;
+  countdown.y = 1085;
+
+  leaves1.angle = 90;
+  leaves1.x = 135;
+  leaves1.y = 1140;
+  leaves2.angle = 90;
+  leaves2.x = 135;
+  leaves2.y = 1015;
+
+  text1.style.wordWrapWidth = 300;
+  text1
+    .setText(this.state.lang.herdBoostTimer_1)
+    .setFontSize('26px');
+  text1.y = 1050;
+  
+  text2
+    .setText(this.state.lang.herdBoostTimer_2);
+  text2.y = 1100;
+  
+  //выходим из сумрака
+  let alpha: number = 0;
+  let timer: Phaser.Time.TimerEvent = this.time.addEvent({
+    delay: 30,
+    loop: true,
+    callback: () => {
+      alpha += 0.1;
+      args.forEach(item => {
+        item.setAlpha(alpha);
+      })
+      if (alpha > 1) {
+        timer.remove();
+      }
+    },
+    callbackScope: this
+  });
+
+}
+
+function hideItems([...args], boostCounterWindow): void {
+  let alpha: number = 1;
+  let timer: Phaser.Time.TimerEvent = this.time.addEvent({
+    delay: 30,
+    loop: true,
+    callback: () => {
+      alpha -= 0.1;
+      args.forEach(item => {
+        item.setAlpha(alpha);
+      })
+      if (alpha <= 0) {
+        moveItem.bind(this)([...args], boostCounterWindow);
+        timer.remove();
+      }
+    },
+    callbackScope: this
+  });
+  
+}
+
+function createStartTimer(): void {
+  let startCount: number = 5;
+
+  let boostCounterWindow: Phaser.Physics.Arcade.Sprite = this.physics.add.sprite(360, 400, 'boost-window-bg')
+    .setDepth(1);
+
+  let text1: Phaser.GameObjects.Text = this.add.text(360, 360, this.state.lang.herdBoostStartTimout_1, {
+    font: '19px Shadow',
+    color: '#ce9457',
+    wordWrap: { width: 230 },
     align: 'center'
   }).setOrigin(0.5, 0.5).setDepth(y * 2);
 
-  let text2: Phaser.GameObjects.Text = this.add.text(360, 400, this.state.lang.herdBoostStartTimout_2, {
-    font: '34px Shadow',
-    color: '#b5315a',
-    wordWrap: { width: 480 },
+  let text2: Phaser.GameObjects.Text = this.add.text(360, 410, this.state.lang.herdBoostStartTimout_2, {
+    font: '21px Shadow',
+    color: '#946939',
+    wordWrap: { width: 470 },
     align: 'center'
   }).setOrigin(0.5, 0.5).setDepth(y * 2);
+
+  let countdown: Phaser.Physics.Arcade.Sprite = this.add.sprite(360, 500, 'boost-countdown').setDepth(2);
+
+  let leaves1: Phaser.Physics.Arcade.Sprite = this.add.sprite(440, 510, 'boost-leaves').setDepth(0).setFlip(true, true);
+  let leaves2: Phaser.Physics.Arcade.Sprite = this.add.sprite(280, 510, 'boost-leaves').setDepth(0).setFlip(false, true);
+
+  let timerText: Phaser.GameObjects.Text = this.add.text(362, 492, startCount, {
+    font: '64px Shadow',
+    color: '#f3eae6'
+  }).setOrigin(0.5, 0.5).setDepth(3);
+
+  let timer: Phaser.Time.TimerEvent = this.time.addEvent({
+        delay: 1000,
+        loop: true,
+        callback: () => {
+          --startCount;
+          timerText.setText(String(startCount));
+          if (startCount < 1) {
+            
+            hideItems.bind(this)([timerText, leaves1, leaves2, countdown, text1, text2], boostCounterWindow);
+            timer.remove();
+          }
+        },
+        callbackScope: this
+      });
 }
 
 function herdBoostWindow(): void {
-  createBoostTimer.bind(this)();
-
+  createStartTimer.bind(this)();
 
   // this.game.scene.keys[this.state.farm].scrolling.scrollY = 0;
 
