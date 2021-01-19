@@ -1,4 +1,4 @@
-import { random, getRandomBool, randomString, timer } from "../../general/basic";
+import { random, getRandomBool, randomString } from "../../general/basic";
 
 let x: number = 600;
 let y: number = 360;
@@ -18,14 +18,14 @@ function moveItem([...args], boostCounterWindow) {
       boostCounterWindow.y = y
       if (y >= 1080) {
         timer.remove();
-        showItems.bind(this)([...args])
+        showItems.bind(this)([...args], boostCounterWindow) // показывам элементы и создаем мир
       }
     },
     callbackScope: this
   });
 }
 
-function showItems([...args]) {
+function showItems([...args], boostCounterWindow) {
 
   let [timerText, leaves1, leaves2, countdown, text1, text2] = [...args];
   
@@ -50,10 +50,13 @@ function showItems([...args]) {
     .setFontSize('26px');
   text1.y = 1050;
   
-  text2
-    .setText(this.state.lang.herdBoostTimer_2);
+  text2.setText(this.state.lang.herdBoostTimer_2);
   text2.y = 1100;
-  
+
+  const worldItems: any[] = createWorld.bind(this)(); 
+
+  let allItems: any[] = args.concat(worldItems);
+
   //выходим из сумрака
   let alpha: number = 0;
   let timer: Phaser.Time.TimerEvent = this.time.addEvent({
@@ -61,11 +64,12 @@ function showItems([...args]) {
     loop: true,
     callback: () => {
       alpha += 0.1;
-      args.forEach(item => {
+      allItems.forEach(item => {
         item.setAlpha(alpha);
       })
       if (alpha > 1) {
         timer.remove();
+        createAnimals.bind(this)(timerText, allItems, boostCounterWindow);
       }
     },
     callbackScope: this
@@ -84,15 +88,71 @@ function hideItems([...args], boostCounterWindow): void {
         item.setAlpha(alpha);
       })
       if (alpha <= 0) {
-        moveItem.bind(this)([...args], boostCounterWindow);
+        moveItem.bind(this)([...args], boostCounterWindow); // двигаем плашку
         timer.remove();
       }
     },
     callbackScope: this
   });
-  
 }
 
+function showEndScore(items, boostCounterWindow): void {
+  let alpha: number = 1;
+  let timer: Phaser.Time.TimerEvent = this.time.addEvent({
+    delay: 30,
+    loop: true,
+    callback: () => {
+      alpha -= 0.1;
+      items.forEach(item => {
+        item.setAlpha(alpha);
+      })
+      if (alpha <= 0) {
+        timer.remove();
+        moveToEnd.bind(this)(boostCounterWindow);
+      }
+    },
+    callbackScope: this
+  });
+}
+
+function createScoreText(): void {
+  this.add.text(360, 400, this.state.lang.herdBoostScore + this.state.herdBoostAnimals.length, {
+    font: '30px Shadow',
+    color: '#ce9457',
+    align: 'center'
+  }).setOrigin(0.5, 0.5).setDepth(2);
+
+  this.add.text(360, 440, this.state.lang.herdBoostNext, {
+    font: '20px Shadow',
+    color: '#946939',
+    align: 'center'
+  }).setOrigin(0.5, 0.5).setDepth(2);
+}
+
+function moveToEnd(boostCounterWindow): void {
+  let y = boostCounterWindow.y;
+  let timer: Phaser.Time.TimerEvent = this.time.addEvent({
+    delay: 5,
+    loop: true,
+    callback: () => {
+      y -= 10;
+      boostCounterWindow.y = y
+      if (y <= 400) {
+        timer.remove();
+        createScoreText.bind(this)();
+        stopBoostScene.bind(this)();
+      }
+    },
+    callbackScope: this
+  });
+}
+
+function stopBoostScene(): void {
+  this.input.on('pointerdown', ()=>{
+    this.scene.stop();
+  });
+}
+ 
 function createStartTimer(): void {
   let startCount: number = 5;
 
@@ -130,8 +190,7 @@ function createStartTimer(): void {
           --startCount;
           timerText.setText(String(startCount));
           if (startCount < 1) {
-            
-            hideItems.bind(this)([timerText, leaves1, leaves2, countdown, text1, text2], boostCounterWindow);
+            hideItems.bind(this)([timerText, leaves1, leaves2, countdown, text1, text2], boostCounterWindow); // скрываем элементы
             timer.remove();
           }
         },
@@ -139,116 +198,155 @@ function createStartTimer(): void {
       });
 }
 
+function createWorld(): any[] {
+let farm: string = this.state.farm.toLowerCase();
+  // ярмарка и тент
+  let fairy: Phaser.Physics.Arcade.Sprite = this.add.sprite(x, y, `${farm}-merging`).setDepth(y).setAlpha(0);
+  
+  if (farm === 'sheep') { 
+    yTent = y - 24;
+    yTextLevel = y + 65;
+  } else if (farm === 'chicken') {
+    yTent = y - 17;
+    yTextLevel = y + 82;
+  };
+  
+  this.mergingArray = []; // массив животных для слияния
+  
+  this.state.herdBoostAnimals = []; // Обнуляем массив животных для буста
+
+  let tent: Phaser.Physics.Arcade.Sprite = this.add.image(x, yTent, `${farm}-tent`).setDepth(y + 1).setAlpha(0);
+
+  let textLevel: Phaser.Physics.Arcade.Sprite = this.add.text(x + 80, yTextLevel, this.state[`user${this.state.farm}`].fair, {
+    font: '36px Shadow',
+    color: '#b5315a'
+  }).setOrigin(0.5, 0.5).setDepth(y * 2).setAlpha(0);
+  
+  // дорога
+  let road: Phaser.GameObjects.Sprite = this.add.sprite(xRoad, yRoad, `herd-boost-road-${farm}`)
+    .setOrigin(0)
+    .setDepth(yRoad)
+    .setDataEnabled()
+    .setAlpha(0);
+
+  // Заборы
+  let border1: Phaser.GameObjects.Sprite = this.add.sprite(0, yRoad + 15, `${farm}-horizontal-border-1`).setOrigin(0, 1).setDepth(yRoad + 1).setAlpha(0);
+  let border2: Phaser.GameObjects.Sprite = this.add.sprite(0 + 240, yRoad + 15, `${farm}-horizontal-border-2`).setOrigin(0, 1).setDepth(yRoad + 1).setAlpha(0);
+  let border3: Phaser.GameObjects.Sprite = this.add.sprite(0, yRoad + road.height + 15, `${farm}-horizontal-border-1`).setOrigin(0, 1).setDepth(yRoad + 1).setAlpha(0);
+  let border4: Phaser.GameObjects.Sprite = this.add.sprite(0 + 240, yRoad + road.height  + 15, `${farm}-horizontal-border-2`).setOrigin(0, 1).setDepth(yRoad + 1).setAlpha(0);
+  let border5: Phaser.GameObjects.Sprite = this.add.sprite(0 + 480, yRoad + road.height  + 15, `${farm}-horizontal-border-3`).setOrigin(0, 1).setDepth(yRoad + 1).setAlpha(0);
+
+  return [fairy, tent, textLevel, road, border1, border2, border3, border4, border5];
+}
+
 function herdBoostWindow(): void {
-  createStartTimer.bind(this)();
+  this.game.scene.keys[this.state.farm].scrolling.scrollY = 0; // останавливаем скролл
 
-  // this.game.scene.keys[this.state.farm].scrolling.scrollY = 0;
+  createStartTimer.bind(this)(); // запускаем стартовый таймер
 
-  // let farm: string = this.state.farm.toLowerCase();
-  // // ярмарка и тент
-  // this.add.sprite(x, y, `${farm}-merging`).setDepth(y);
-  
-  // if (farm === 'sheep') { 
-  //   yTent = y - 24;
-  //   yTextLevel = y + 65;
-  // } else if (farm === 'chicken') {
-  //   yTent = y - 17;
-  //   yTextLevel = y + 82;
-  // };
-  
-  // this.mergingArray = []; // массив животных для слияния
-  
-  // this.state.herdBoostAnimals = []; // Обнуляем массив животных для буста
+}
 
-  // this.add.image(x, yTent, `${farm}-tent`).setDepth(y + 1);
+function createAnimals(timerText, allItems, boostCounterWindow): void {
 
-  // this.add.text(x + 80, yTextLevel, this.state[`user${this.state.farm}`].fair, {
-  //   font: '36px Shadow',
-  //   color: '#b5315a'
-  // }).setOrigin(0.5, 0.5).setDepth(y * 2);
-  
-  // // дорога
-  // let road: Phaser.GameObjects.Sprite = this.add.sprite(xRoad, yRoad, `herd-boost-road-${farm}`)
-  //   .setOrigin(0)
-  //   .setDepth(yRoad)
-  //   .setDataEnabled()
-  // road.data.values.type = 'road';
+  if (this.state.farm === 'Sheep') {
+    // дроп зоны 
+    let topZone: Phaser.GameObjects.Zone = this.add.zone(x, y - 75, 300, 145).setDropZone(undefined, () => {});
+    topZone.type = 'top';
+    let bottomZone: Phaser.GameObjects.Zone = this.add.zone(x, y + 70, 300, 145).setDropZone(undefined, () => {});
+    bottomZone.type = 'bottom';
 
-  // // Заборы
-  // this.add.sprite(0, yRoad + 15, `${farm}-horizontal-border-1`).setOrigin(0, 1).setDepth(yRoad + 1);
-  // this.add.sprite(0 + 240, yRoad + 15, `${farm}-horizontal-border-2`).setOrigin(0, 1).setDepth(yRoad + 1);
-  // this.add.sprite(0, yRoad + road.height + 15, `${farm}-horizontal-border-1`).setOrigin(0, 1).setDepth(yRoad + 1);
-  // this.add.sprite(0 + 240, yRoad + road.height  + 15, `${farm}-horizontal-border-2`).setOrigin(0, 1).setDepth(yRoad + 1);
-  // this.add.sprite(0 + 480, yRoad + road.height  + 15, `${farm}-horizontal-border-3`).setOrigin(0, 1).setDepth(yRoad + 1);
+    // Для проверки дроп зон
+    // let graphics2 = this.add.graphics().setDepth(bottomZone.y * 5);
+    // graphics2.lineStyle(2, 0x00ff00);
+    // graphics2.strokeRect(bottomZone.x - bottomZone.input.hitArea.width / 2, bottomZone.y - bottomZone.input.hitArea.height / 2, bottomZone.input.hitArea.width, bottomZone.input.hitArea.height);
+    // let graphics1 = this.add.graphics().setDepth(topZone.y * 5);
+    // graphics1.lineStyle(2, 0xffff00);
+    // graphics1.strokeRect(topZone.x - topZone.input.hitArea.width / 2, topZone.y - topZone.input.hitArea.height / 2, topZone.input.hitArea.width, topZone.input.hitArea.height);
 
-  // let timerCounter = 0;
+    // создаю группу для овец
+    this.sheepForBoost = this.physics.add.group();
 
-  // if (this.state.farm === 'Sheep') {
-  //   // дроп зоны 
-  //   let topZone: Phaser.GameObjects.Zone = this.add.zone(x, y - 75, 300, 145).setDropZone(undefined, () => {});
-  //   topZone.type = 'top';
-  //   let bottomZone: Phaser.GameObjects.Zone = this.add.zone(x, y + 70, 300, 145).setDropZone(undefined, () => {});
-  //   bottomZone.type = 'bottom';
+    let currentTime: number = this.state.herdBoostTime;
 
-  //   // Для проверки дроп зон
-  //   let graphics2 = this.add.graphics().setDepth(bottomZone.y * 5);
-  //   graphics2.lineStyle(2, 0x00ff00);
-  //   graphics2.strokeRect(bottomZone.x - bottomZone.input.hitArea.width / 2, bottomZone.y - bottomZone.input.hitArea.height / 2, bottomZone.input.hitArea.width, bottomZone.input.hitArea.height);
-  //   let graphics1 = this.add.graphics().setDepth(topZone.y * 5);
-  //   graphics1.lineStyle(2, 0xffff00);
-  //   graphics1.strokeRect(topZone.x - topZone.input.hitArea.width / 2, topZone.y - topZone.input.hitArea.height / 2, topZone.input.hitArea.width, topZone.input.hitArea.height);
-
-  //   // создаю группу для овец
-  //   this.sheepForBoost = this.physics.add.group();
-
-  //   let timer: Phaser.Time.TimerEvent = this.time.addEvent({
-  //     delay: this.state.herdBoostDelay,
-  //     loop: true,
-  //     callback: () => {
-  //       this.getRandomSheep();
-  //       ++timerCounter;
-  //       if (timerCounter >= this.state.herdBoostTime) {
-  //         timer.remove();
-  //       }
-  //     },
-  //     callbackScope: this
-  //   });
-
-  // } else if (this.state.farm === 'Chicken') {
-  //   // дроп зоны 
-  //   let leftZone: Phaser.GameObjects.Zone = this.add.zone(x - 75, y - 30, 145, 300).setDropZone(undefined, () => {});
-  //   leftZone.type = 'left';
+    let timerCreate: Phaser.Time.TimerEvent = this.time.addEvent({
+      delay: this.state.herdBoostDelay,
+      loop: true,
+      callback: () => {
+        this.getRandomSheep(); 
+      },
+      callbackScope: this
+    });
     
-  //   let rightZone: Phaser.GameObjects.Zone = this.add.zone(x + 70, y - 30, 145, 300).setDropZone(undefined, () => {});
-  //   rightZone.type = 'right';
+    // таймер переключающий время
+    let timerTickText: Phaser.Time.TimerEvent = this.time.addEvent({
+      delay: 1000,
+      loop: true,
+      callback: () => {
+        --currentTime;
+        timerText.setText(currentTime);
+        if (currentTime <= 0) {
+          this.sheepForBoost.children.entries.forEach((sheep) => {
+            sheep.data.values.woolSprite.destroy();
+          });
+          this.sheepForBoost.destroy(true);
+          timerCreate.remove();
+          timerTickText.remove();
+          showEndScore.bind(this)(allItems, boostCounterWindow);
+        }
+      },
+      callbackScope: this
+    });
 
-  //   // для проверки дроп зон
-  //   let graphics1 = this.add.graphics().setDepth(leftZone.y * 5);
-  //   graphics1.lineStyle(2, 0xffff00);
-  //   graphics1.strokeRect(leftZone.x - leftZone.input.hitArea.width / 2, leftZone.y - leftZone.input.hitArea.height / 2, leftZone.input.hitArea.width, leftZone.input.hitArea.height);
+  } else if (this.state.farm === 'Chicken') {
+    // дроп зоны 
+    let leftZone: Phaser.GameObjects.Zone = this.add.zone(x - 75, y - 30, 145, 300).setDropZone(undefined, () => {});
+    leftZone.type = 'left';
+    
+    let rightZone: Phaser.GameObjects.Zone = this.add.zone(x + 70, y - 30, 145, 300).setDropZone(undefined, () => {});
+    rightZone.type = 'right';
 
-  //   let graphics2 = this.add.graphics().setDepth(rightZone.y * 5);
-  //   graphics2.lineStyle(2, 0x00ff00);
-  //   graphics2.strokeRect(rightZone.x - rightZone.input.hitArea.width / 2, rightZone.y - rightZone.input.hitArea.height / 2, rightZone.input.hitArea.width, rightZone.input.hitArea.height);
+    // для проверки дроп зон
+    // let graphics1 = this.add.graphics().setDepth(leftZone.y * 5);
+    // graphics1.lineStyle(2, 0xffff00);
+    // graphics1.strokeRect(leftZone.x - leftZone.input.hitArea.width / 2, leftZone.y - leftZone.input.hitArea.height / 2, leftZone.input.hitArea.width, leftZone.input.hitArea.height);
+// 
+    // let graphics2 = this.add.graphics().setDepth(rightZone.y * 5);
+    // graphics2.lineStyle(2, 0x00ff00);
+    // graphics2.strokeRect(rightZone.x - rightZone.input.hitArea.width / 2, rightZone.y - rightZone.input.hitArea.height / 2, rightZone.input.hitArea.width, rightZone.input.hitArea.height);
 
-  //   this.chickenForBoost = this.physics.add.group();
+    this.chickenForBoost = this.physics.add.group();
+    // периодическое создание животных
+    let timerCreate: Phaser.Time.TimerEvent = this.time.addEvent({
+      delay: this.state.herdBoostDelay,
+      loop: true,
+      callback: () => {
+        this.getRandomChicken();
+      },
+      callbackScope: this
+    });
+    
+    // таймер переключающий время
+    let currentTime: number = this.state.herdBoostTime;
 
-  //   let timer: Phaser.Time.TimerEvent = this.time.addEvent({
-  //     delay: this.state.herdBoostDelay,
-  //     loop: true,
-  //     callback: () => {
-  //       this.getRandomChicken();
-  //       ++timerCounter;
-  //       if (timerCounter >= this.state.herdBoostTime) {
-  //         timer.remove();
-  //       }},
-  //     callbackScope: this
-  //   });
-  // }
+    let timerTickText: Phaser.Time.TimerEvent = this.time.addEvent({
+      delay: 1000,
+      loop: true,
+      callback: () => {
+        --currentTime;
+        timerText.setText(currentTime);
+        if (currentTime <= 0) {
+          this.chickenForBoost.destroy(true);
+          timerCreate.remove();
+          timerTickText.remove();
+          showEndScore.bind(this)(allItems, boostCounterWindow);
+        }
+      },
+      callbackScope: this
+    });
+  }
 }
 
 function getRandomSheep(): void {
-
   let {x, y, side, _id} = this.getRandomStartPosition(); 
 
   let randomType: number = random(1, this.state.userSheep.fair);
@@ -332,6 +430,7 @@ function getRandomStartPosition(): {x: number, y: number, side: string, _id: str
 }
 
 function drag(animal): void {
+  if (animal.body === null) return;
   this.input.on('dragstart', (pointer: any, animal: any): void => {
     animal.data.values.drag = true; // метим перетаскивание для других функций
     animal.setVelocity(0, 0); // отменяем передвижение
@@ -398,6 +497,7 @@ function drag(animal): void {
 }
 
 function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): void {
+
   animal.data.values.merging = true;
   let check = this.mergingArray.find((data: any) => data._id === animal.data.values._id);
 
@@ -522,8 +622,6 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
     console.log(this.state.herdBoostAnimals);
   }
 }
-
-
 
 export {
   herdBoostWindow,

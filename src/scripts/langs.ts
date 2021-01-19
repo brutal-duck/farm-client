@@ -417,6 +417,8 @@ export default {
     herdBoostStartTimout_2: 'Успевай загонять одинаковых овечек на ярмарку!',
     herdBoostTimer_1: 'Овечки уйдут через 30 секунд',
     herdBoostTimer_2: 'Загоняй пары на ярмарку',
+    herdBoostScore: 'Вы успели собрать: ',
+    herdBoostNext: 'Нажми для продолжения '
   },
   en: {
     index: 'en',
@@ -831,6 +833,12 @@ export default {
     still: 'Осталось',
     improve: 'Улучшить',
     speed: 'Скорость',
-    duration: 'Длительность'
+    duration: 'Длительность', 
+    herdBoostStartTimout_1: 'Стадо овечек будет у тебя недолго!',
+    herdBoostStartTimout_2: 'Успевай загонять одинаковых овечек на ярмарку!',
+    herdBoostTimer_1: 'Овечки уйдут через 30 секунд',
+    herdBoostTimer_2: 'Загоняй пары на ярмарку',
+    herdBoostScore: 'Вы успели собрать: ',
+    herdBoostNext: 'Нажми для продолжения '
   }
 }

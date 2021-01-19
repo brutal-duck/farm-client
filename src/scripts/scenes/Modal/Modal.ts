@@ -237,7 +237,7 @@ class Modal extends Phaser.Scene {
       Number(this.game.config.height),
       'modal'
     ).setOrigin(0).setInteractive();
-
+      
     // тип окна
     switch (this.state.modal.type) {
       case 1: // системное окно
