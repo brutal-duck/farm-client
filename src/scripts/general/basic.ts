@@ -1849,6 +1849,40 @@ function sendDebug(data: any, state: Istate, type: string): void {
 
 }
 
+// получение животного по бусту
+function createBoostAnimal(): void {
+  if (!this.state.herdBoostAnimals) return;
+  this.state.herdBoostAnimals.forEach(type => {
+    if (this.state.farm === 'Sheep') {
+      let counter: number = 0;
+      let timeout: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
+      counter++;
+      let x: number = random(270, 690);
+      let y: number = random(510, 690);
+      let id: string = 'local_' + randomString(18);
+      this.getSheep(id, type, x, y, 0, 500);
+      this.firework250(x, y);
+      if (counter >= 1) timeout.remove(false);
+      }, callbackScope: this, loop: true });
+    } else if (this.state.farm === 'Chicken') {
+      let counter: number = 0;
+      let timeout: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
+      
+      counter++;
+      let x: number = random(270, 690);
+      let y: number = random(510, 690);
+      let id: string = 'local_' + randomString(18);
+      this.getChicken(id, type, x, y, 0, 500);
+      this.firework250(x, y);
+
+      if (counter >= 1) timeout.remove(false);
+
+    }, callbackScope: this, loop: true });
+    }
+  });
+  this.state.herdBoostAnimals = [];
+}
+
 
 export {
   random,
@@ -1882,6 +1916,7 @@ export {
   checkStorage,
   buyNextFarm,
   getNewbieAward,
+  createBoostAnimal,
   takeDonate,
   improveCollector,
   debug

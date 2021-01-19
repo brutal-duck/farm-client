@@ -29,7 +29,8 @@ import {
   getNewbieAward,
   takeDonate,
   improveCollector,
-  debug
+  debug, 
+  createBoostAnimal
 } from '../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -208,6 +209,7 @@ class Chicken extends Phaser.Scene {
   public showImproveCollector = showImproveCollector.bind(this);
   public improveCollector = improveCollector.bind(this);
   public debug = debug.bind(this);
+  public createBoostAnimal = createBoostAnimal.bind(this);
   
 
   public init(state: Istate): void {

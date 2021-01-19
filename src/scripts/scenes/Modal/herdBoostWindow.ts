@@ -150,9 +150,10 @@ function moveToEnd(boostCounterWindow): void {
 function stopBoostScene(): void {
   this.input.on('pointerdown', ()=>{
     this.scene.stop();
+    this.game.scene.keys[this.state.farm].createBoostAnimal();
   });
 }
- 
+
 function createStartTimer(): void {
   let startCount: number = 5;
 
