@@ -457,6 +457,7 @@ function drag(animal): void {
   });
 
   this.input.on('drop', (pointer: any, animal: Phaser.Physics.Arcade.Sprite, zone: any): void => { 
+    if (animal.body === null) return;
     if (!animal.data.values.merging) {
       if (zone.type === 'left') {
         checkMerging.bind(this)(animal, 'left');
@@ -471,6 +472,8 @@ function drag(animal): void {
   });
 
   this.input.on('dragend', (pointer: any, animal: Phaser.Physics.Arcade.Sprite): void => {
+
+    if (animal.body === null) return;
 
     if ((animal.y < 480 && animal.x < 480) || animal.y > 960 || animal.y < 200) {
         animal.data?.values.woolSprite?.destroy();
