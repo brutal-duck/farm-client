@@ -95,6 +95,9 @@ let badMergingAnimation: any = require("./../../../assets/images/bad-merging-ani
 let boostWindowBg: any = require("./../../../assets/images/boost/background.png");
 let boostCountdown: any = require("./../../../assets/images/boost/countdown.png");
 let boostLeaves: any = require("./../../../assets/images/boost/leaves.png");
+let flags: any = require("./../../../assets/images/modal/flags.png");
+let herdBoostSheepIcon: any = require("./../../../assets/images/icons/sheep-herd-boost.png");
+let herdBoostChickenIcon: any = require("./../../../assets/images/icons/sheep-herd-boost.png");
 class Modal extends Phaser.Scene {
   constructor() {
     super('Modal');
@@ -225,6 +228,9 @@ class Modal extends Phaser.Scene {
     this.load.image('boost-window-bg', boostWindowBg);
     this.load.image('boost-countdown', boostCountdown);
     this.load.image('boost-leaves', boostLeaves);
+    this.load.image('flags', flags);
+    this.load.image('sheep-herd-boost-icon', herdBoostSheepIcon);
+    this.load.image('chicken-herd-boost-icon', herdBoostChickenIcon);
   }
 
 

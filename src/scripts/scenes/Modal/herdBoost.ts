@@ -403,8 +403,6 @@ function getRandomChicken(): void {
   this.input.setDraggable(chicken); 
   chicken.data.values.side = side;
   chicken.data.values._id = _id;
-  chicken.data.values.drag = false; 
-  // chicken.dragTimeout = 0;
   chicken.data.values.merging = false; // метка животного в мерджинге
 
   chicken.setVelocityX(chicken.data.values.velocity);
@@ -433,7 +431,8 @@ function getRandomStartPosition(): {x: number, y: number, side: string, _id: str
 function drag(animal): void {
   if (animal.body === null) return;
   this.input.on('dragstart', (pointer: any, animal: any): void => {
-    animal.data.values.drag = true; // метим перетаскивание для других функций
+    if (animal.data.values.merging) this.mergingArray = []; // если животное из мерджа то очистить массив
+    animal.data.values.merging = false; // снимаем метку с животных после попытки мерджа
     animal.setVelocity(0, 0); // отменяем передвижение
     animal.data.values.woolSprite?.setVelocity(0, 0);
     animal.body.onWorldBounds = false; // чтобы не могли перетащить за пределы
@@ -443,6 +442,7 @@ function drag(animal): void {
     } else {
       animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
     }
+
   });
 
   this.input.on('drag', (pointer: any, animal: Phaser.Physics.Arcade.Sprite, dragX: number, dragY: number): void => {
@@ -484,11 +484,11 @@ function drag(animal): void {
         console.log('miss drop')
       } else {
         console.log('popal')
-        animal.data.values.drag = false;
         if (animal.data.values.merging) {
           animal.setVelocityX(0);
           animal.data.values.woolSprite?.setVelocityX(0);
         } else {
+          animal.data.values.velocity = this.state.herdBoostSpeedAnimal;
           animal.setVelocityX(animal.data.values.velocity);
           animal.data.values.woolSprite?.setVelocityX(animal.data.values.velocity);
           animal.play(this.state.farm.toLowerCase() + '-move-' + animal.data.values.side + animal.data.values.type);
@@ -501,7 +501,7 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
 
   animal.data.values.merging = true;
   let check = this.mergingArray.find((data: any) => data._id === animal.data.values._id);
-
+  
   if (check === undefined) {
     if (this.mergingArray.length === 1 && this.mergingArray[0].position === position) {
       if (position === 'top') position = 'bottom';

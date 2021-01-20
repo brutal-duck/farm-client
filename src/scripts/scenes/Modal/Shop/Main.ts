@@ -152,9 +152,19 @@ class Shop extends Phaser.Scene {
 
       if (this.state.farm === 'Sheep') this.sheepBoosts();
       else if (this.state.farm === 'Chicken') this.chickenBoosts();
-      // сюда допиши много всего
+      this.herdBoost();
     }
 
+  }
+
+  public herdBoost(): void {
+    this.add.tileSprite(0, 344 + this.height, 466, 250, 'boost-bg').setOrigin(0, 0);
+    this.add.text(225, 360 + this.height, 'Стадо овец', { // Заменить текст
+      font: '28px Shadow',
+      color: '#FFFFFF'
+    }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
+    console.log(`${this.state.farm.toLocaleLowerCase()}-herd-boost-icon`);
+    let boostSprite: Phaser.GameObjects.Sprite = this.add.sprite(40, 400 + this.height, `${this.state.farm.toLocaleLowerCase()}-herd-boost-icon`).setOrigin(0, 0);
   }
 
   
