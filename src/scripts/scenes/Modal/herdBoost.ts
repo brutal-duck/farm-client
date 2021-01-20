@@ -1,4 +1,4 @@
-import { random, getRandomBool, randomString } from "../../general/basic";
+import { random, getRandomBool, randomString, shortTime} from "../../general/basic";
 
 let x: number = 600;
 let y: number = 360;
@@ -46,7 +46,7 @@ function showItems([...args], boostCounterWindow): void {
 
   text1.style.wordWrapWidth = 280;
   text1
-    .setText(this.state.lang[`herdBoostTimer${this.state.farm}_1`])
+    .setText(this.state.lang[`herdBoostTimer${this.state.farm}_1`] + this.state.herdBoostTime + ' ' + this.state.lang.seconds)
     .setFontSize('26px');
   text1.y = 1050;
   
