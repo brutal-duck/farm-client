@@ -161,7 +161,7 @@ class Shop extends Phaser.Scene {
 
   public herdBoost(): void {
     this.add.tileSprite(0, 344 + this.height, 466, 230, 'boost-bg').setOrigin(0, 0);
-    this.add.text(225, 360 + this.height, 'Стадо овец', { // Заменить текст
+    this.add.text(225, 360 + this.height, this.state.lang[`herdBoostTitle${this.state.farm}`], { // Заменить текст
       font: '28px Shadow',
       color: '#FFFFFF'
     }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);

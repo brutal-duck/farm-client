@@ -44,13 +44,13 @@ function showItems([...args], boostCounterWindow): void {
   leaves2.x = 135;
   leaves2.y = 1015;
 
-  text1.style.wordWrapWidth = 300;
+  text1.style.wordWrapWidth = 280;
   text1
-    .setText(this.state.lang.herdBoostTimer_1)
+    .setText(this.state.lang[`herdBoostTimer${this.state.farm}_1`])
     .setFontSize('26px');
   text1.y = 1050;
   
-  text2.setText(this.state.lang.herdBoostTimer_2);
+  text2.setText(this.state.lang[`herdBoostTimer${this.state.farm}_2`]);
   text2.y = 1100;
 
   const worldItems: any[] = createWorld.bind(this)(); 
@@ -160,17 +160,17 @@ function createStartTimer(): void {
   let boostCounterWindow: Phaser.Physics.Arcade.Sprite = this.physics.add.sprite(360, 400, 'boost-window-bg')
     .setDepth(1);
 
-  let text1: Phaser.GameObjects.Text = this.add.text(360, 360, this.state.lang.herdBoostStartTimout_1, {
+  let text1: Phaser.GameObjects.Text = this.add.text(360, 360, this.state.lang[`herdBoostStartTimout${this.state.farm}_1`], {
     font: '19px Shadow',
     color: '#ce9457',
     wordWrap: { width: 230 },
     align: 'center'
   }).setOrigin(0.5, 0.5).setDepth(y * 2);
 
-  let text2: Phaser.GameObjects.Text = this.add.text(360, 410, this.state.lang.herdBoostStartTimout_2, {
+  let text2: Phaser.GameObjects.Text = this.add.text(360, 410, this.state.lang[`herdBoostStartTimout${this.state.farm}_2`], {
     font: '21px Shadow',
     color: '#946939',
-    wordWrap: { width: 470 },
+    wordWrap: { width: 440 },
     align: 'center'
   }).setOrigin(0.5, 0.5).setDepth(y * 2);
 
