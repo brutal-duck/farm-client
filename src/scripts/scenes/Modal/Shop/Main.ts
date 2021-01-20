@@ -184,21 +184,25 @@ class Shop extends Phaser.Scene {
         wordWrap: {width: 206},
         align: 'center'
       }).setOrigin(0.5, 0.5);
+      // установка текста кнопки
       herdBoostBtnText.setText(this.state.lang.buy + '    ' + 20 * 1); // заменить 1 на нужный множитель
       diamondBtn.setVisible(true);
       
 
     } else {
+      // если время равно нулю 
+      this.herdBoostTimer.setVisible(false);
       herdBoostBtn.setY(460 + this.height);
       herdBoostBtnText.setY(455 + this.height);
+      herdBoostBtnText.setText(this.state.lang.pickUp);
       diamondBtn.setVisible(false);
     }
     
     this.clickShopBtn({ btn: herdBoostBtn, title: herdBoostBtnText, img: diamondBtn}, (): void => {
       this.game.scene.keys[this.state.farm].startHerdBoost();
-    })
+    });
 
-    // осталось времени
+
 
   }
 
