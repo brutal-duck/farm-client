@@ -199,9 +199,6 @@ function sheep(): void {
 
 // бусты
 function sheepBoosts(): void {
-
-  this.scrolling.bottom = this.height - this.heightWindow + 300;
-
   // собиратель шерсти
   this.add.sprite(0, 20 + this.height, 'boost-bg').setOrigin(0, 0);
   this.add.text(225, 40 + this.height, this.state.lang.woolCollector, {

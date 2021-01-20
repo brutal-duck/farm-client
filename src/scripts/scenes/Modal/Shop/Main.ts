@@ -150,8 +150,8 @@ class Shop extends Phaser.Scene {
       if (this.state.farm === 'Sheep') this.sheep();
       else if (this.state.farm === 'Chicken') this.chicken();
 
-    } else if (this.state.modal.shopType === 4) {
-
+    } else if (this.state.modal.shopType === 4) {   
+      this.scrolling.bottom = this.height - this.heightWindow + 300;   
       if (this.state.farm === 'Sheep') this.sheepBoosts();
       else if (this.state.farm === 'Chicken') this.chickenBoosts();
       this.herdBoost();
@@ -160,6 +160,7 @@ class Shop extends Phaser.Scene {
   }
 
   public herdBoost(): void {
+    console.log('data',this.scrolling.bottom);
     this.add.tileSprite(0, 344 + this.height, 466, 230, 'boost-bg').setOrigin(0, 0);
     this.add.text(225, 360 + this.height, this.state.lang[`herdBoostTitle${this.state.farm}`], { // Заменить текст
       font: '28px Shadow',

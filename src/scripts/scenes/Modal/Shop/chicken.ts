@@ -196,9 +196,6 @@ function chicken(): void {
 
 // бусты
 function chickenBoosts(): void {
-
-  this.scrolling.bottom = this.height - this.heightWindow + 300;
-
   // собиратель яиц
   this.add.sprite(0, 20 + this.height, 'boost-bg').setOrigin(0, 0);
   this.add.text(225, 40 + this.height, this.state.lang.eggCollector, {

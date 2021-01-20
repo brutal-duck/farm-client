@@ -73,11 +73,16 @@ function mergingCloud(position: Iposition, type: boolean = false): void {
   let cloud = !type 
     ? this.add.image(x, y, 'merging-animation').setDepth(y + 100) 
     : this.add.image(x, y, 'bad-merging-animation').setDepth(y + 100);
-  let delay = 10;
+  let cloudText = this.add.text(x, y, this.state.lang.herdBoostBadMerge, {
+    font: '64px Shadow',
+    color: '#000'
+  }).setOrigin(0.5, 0.5).setVisible(type);
+
+  let delay = !type ? 10 : 5;
   let interval = this.time.addEvent({ delay: 30, callback: (): void => {
 
     cloud.y -= 4;
-    
+    cloudText.y = cloud.y;
     if (delay === 0) {
 
       let alpha: number = Number(cloud.alpha.toFixed(2)) - 0.02;
@@ -85,6 +90,7 @@ function mergingCloud(position: Iposition, type: boolean = false): void {
 
       if (alpha <= 0.03) {
         cloud.destroy();
+        cloudText.destroy();
         interval.remove(false);
       }
 
