@@ -276,6 +276,19 @@ function showImproveCollector(): void {
 
 }
 
+function startHerdBoost(): void {
+
+  this.scene.stop('Shop');
+  this.scene.stop('ShopBars');
+
+  let modal: Imodal = {
+    type: 8,
+  }
+  this.state.modal = modal;
+  this.scene.launch('Modal', this.state);
+
+}
+
 
 export {
   confirmExchangeTerritory,
@@ -286,5 +299,6 @@ export {
   dailyAward,
   takeNewbieAward,
   showDonate,
-  showImproveCollector
+  showImproveCollector,
+  startHerdBoost
 }

@@ -43,7 +43,8 @@ import {
   dailyAward,
   takeNewbieAward,
   showDonate,
-  showImproveCollector
+  showImproveCollector,
+  startHerdBoost
 } from '../../general/modal';
 import {
   partTasks,
@@ -270,6 +271,7 @@ class Sheep extends Phaser.Scene {
   public improveCollector = improveCollector.bind(this);
   public debug = debug.bind(this);
   public createBoostAnimal = createBoostAnimal.bind(this);
+  public startHerdBoost = startHerdBoost.bind(this);
 
   public init(state: Istate): void {
 
@@ -307,21 +309,21 @@ class Sheep extends Phaser.Scene {
     this.interval();
     this.setCollector();
 
-    let cursors = this.input.keyboard.createCursorKeys();
-    cursors.space.on('down', (): void => {
+    // let cursors = this.input.keyboard.createCursorKeys();
+    // cursors.space.on('down', (): void => {
 
-      let modal: Imodal = {
-        type: 8,
-      }
-      this.state.modal = modal;
-      this.scene.launch('Modal', this.state);
+    //   let modal: Imodal = {
+    //     type: 8,
+    //   }
+    //   this.state.modal = modal;
+    //   this.scene.launch('Modal', this.state);
       // this.state.user.diamonds = 10000000;
       // let tasks = this.partTasks();
       // for (let i in tasks) {
       //   tasks[i].done = 1;
       //   tasks[i].got_awarded = 1;
       // }
-    });
+    // });
 
   }
 

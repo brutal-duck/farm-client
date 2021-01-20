@@ -361,17 +361,17 @@ function getRandomSheep(): void {
   if (side === 'right') {
     sheep.data.values.velocity = this.state.herdBoostSpeedAnimal;
   }
-  
-  sheep.data.values.type = randomType;
+
   this.input.setDraggable(sheep); 
-  sheep.data.values.drag = false;
+  sheep.data.values.type = randomType;
   sheep.data.values.side = side; 
   sheep.data.values._id = _id;
-  // sheep.dragTimeout = 0;
   sheep.data.values.merging = false; // метка животного в мерджинге
 
+  // случайная шерсть
   let stage: number = random(2, 4); 
   sheep.data.values.stage = stage;
+  
   sheep.setVelocityX(sheep.data.values.velocity);
 
   sheep.data.values.woolSprite = this.physics.add.sprite(x, y, 'sheep-' + sheep.data.values.side + '-' + sheep.data.values.type + '-' + sheep.data.values.stage);
@@ -398,13 +398,12 @@ function getRandomChicken(): void {
   if (side === 'right') {
     chicken.data.values.velocity = this.state.herdBoostSpeedAnimal;
   }
-  
-  chicken.data.values.type = randomType;
+
   this.input.setDraggable(chicken); 
+  chicken.data.values.type = randomType;
   chicken.data.values.side = side;
   chicken.data.values._id = _id;
   chicken.data.values.merging = false; // метка животного в мерджинге
-
   chicken.setVelocityX(chicken.data.values.velocity);
 
   chicken.play('chicken-move-' + chicken.data.values.side + chicken.data.values.type);

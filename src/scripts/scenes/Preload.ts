@@ -78,7 +78,7 @@ let boostCountdown: any = require("./../../assets/images/boost/countdown.png");
 let boostLeaves: any = require("./../../assets/images/boost/leaves.png");
 let flags: any = require("./../../assets/images/modal/flags.png");
 let herdBoostSheepIcon: any = require("./../../assets/images/icons/sheep-herd-boost.png");
-let herdBoostChickenIcon: any = require("./../../assets/images/icons/sheep-herd-boost.png");
+let herdBoostChickenIcon: any = require("./../../assets/images/icons/chicken-herd-boost.png");
 
 class Preload extends Phaser.Scene {
   constructor() {

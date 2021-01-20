@@ -418,7 +418,8 @@ export default {
     herdBoostTimer_1: 'Овечки уйдут через 30 секунд',
     herdBoostTimer_2: 'Загоняй пары на ярмарку',
     herdBoostScore: 'Вы успели собрать: ',
-    herdBoostNext: 'Нажми для продолжения '
+    herdBoostNext: 'Нажми для продолжения ',
+    stillForBoost: 'До бесплатного осталось',
   },
   en: {
     index: 'en',
@@ -839,6 +840,7 @@ export default {
     herdBoostTimer_1: 'Овечки уйдут через 30 секунд',
     herdBoostTimer_2: 'Загоняй пары на ярмарку',
     herdBoostScore: 'Вы успели собрать: ',
-    herdBoostNext: 'Нажми для продолжения '
+    herdBoostNext: 'Нажми для продолжения ',
+    stillForBoost: 'До бесплатного осталось',
   }
 }
