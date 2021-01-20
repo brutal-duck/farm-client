@@ -175,6 +175,7 @@ class Shop extends Phaser.Scene {
       color: '#FFFFFF'
     }).setOrigin(0.5, 0.5).setStroke('#3B5367', 4).setDepth(10);
     let diamondBtn: Phaser.GameObjects.Sprite = this.add.sprite(385, 480 + this.height, 'diamond').setVisible(false).setScale(0.11);
+    let boostPrice: number = 20 * 1 // заменить 1 на нужный множитель
     // осталось времени
     if (true) { // добавить условие this.state.[`user${this.state.farm}].herdBoost > 0
       let time: string = shortTime(10000, this.state.lang); // Вместо 3000 указать this.state.[`user${this.state.farm}].boost
@@ -185,10 +186,8 @@ class Shop extends Phaser.Scene {
         align: 'center'
       }).setOrigin(0.5, 0.5);
       // установка текста кнопки
-      herdBoostBtnText.setText(this.state.lang.buy + '    ' + 20 * 1); // заменить 1 на нужный множитель
+      herdBoostBtnText.setText(this.state.lang.buy + '    ' + boostPrice); 
       diamondBtn.setVisible(true);
-      
-
     } else {
       // если время равно нулю 
       this.herdBoostTimer.setVisible(false);
@@ -199,11 +198,14 @@ class Shop extends Phaser.Scene {
     }
     
     this.clickShopBtn({ btn: herdBoostBtn, title: herdBoostBtnText, img: diamondBtn}, (): void => {
-      this.game.scene.keys[this.state.farm].startHerdBoost();
+      if (this.state.user.diamonds >= boostPrice){
+        this.state.user.diamonds -= boostPrice;
+        this.game.scene.keys[this.state.farm].startHerdBoost();
+      } else {
+        console.log('мало кристалов');
+      }
+      // проверка хватает ли денег и лишь потом запуск сцены
     });
-
-
-
   }
 
   
