@@ -708,6 +708,7 @@ class ChickenPreload extends Phaser.Scene {
 
         }
         
+        this.state.timeToHerdBoost = response.data.timeToHerdBoost;
         this.state.chickenCollectorSettings = response.data.collectorSettings;
         this.state.dailyAwards = response.data.dailyAwards;
         this.state.newbieTime = response.data.newbieTime;
