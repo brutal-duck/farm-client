@@ -135,7 +135,7 @@ function showTasks(): void {
   let tasksParams: ItasksParams = {
     part: this.state.lang.part + ' ' + part,
     name: this.state.lang[this.state.farm.toLowerCase() + 'NamePart' + part],
-    farmer: this.state.lang.sheepProfileName + ' ' + romanize(part),
+    farmer: this.state.lang[this.state.farm.toLowerCase() + 'ProfileName'] + ' ' + romanize(part),
     done: done,
     description: this.state.lang[this.state.farm.toLowerCase() + 'PartAward' + part],
     tasks: tasks

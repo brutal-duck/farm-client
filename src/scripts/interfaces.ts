@@ -72,8 +72,6 @@ interface Iuser {
   level: number;
   additionalTutorial: IadditionalTutorial;
   takenReward: boolean;
-  takenHerdBoostSheep: number;
-  takenHerdBoostChicken: number;
 }
 interface IuserSheep {
   money: number;
@@ -87,6 +85,7 @@ interface IuserSheep {
   tutorial: number;
   autosaveCounter: number;
   diamondAnimalAd: boolean;
+  takenHerdBoost: number;
 }
 interface IuserChicken {
   money: number;
@@ -100,6 +99,7 @@ interface IuserChicken {
   tutorial: number;
   autosaveCounter: number;
   diamondAnimalAd: boolean;
+  takenHerdBoost: number;
 }
 interface Iterritories {
   block: number;
@@ -330,7 +330,7 @@ interface Istate {
   herdBoostTime: number;
   herdBoostDelay: number;
   herdBoostAnimals: number[];
-  timeToBoost: number;
+  timeToHerdBoost: number;
   sheepSettings: IsheepSettings;
   chickenSettings: IchickenSettings;
   chickenTerritories: Iterritories[];

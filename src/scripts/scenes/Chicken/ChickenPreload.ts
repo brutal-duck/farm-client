@@ -671,8 +671,6 @@ class ChickenPreload extends Phaser.Scene {
           level: response.data.user.level,
           additionalTutorial: response.data.user.additional_tutorial,
           takenReward: response.data.user.taken_reward,
-          takenHerdBoostSheep: response.data.user.takenHerdBoostSheep,
-          takenHerdBoostChicken: response.data.user.takenHerdBoostChicken
         }
 
         const userChicken: IuserChicken = {
@@ -686,7 +684,8 @@ class ChickenPreload extends Phaser.Scene {
           diamondAnimalTime: response.data.user.diamonds_chicken_time,
           tutorial: response.data.user.chicken_tutor,
           autosaveCounter: response.data.user.chickenSaveCounter,
-          diamondAnimalAd: response.data.user.diamonds_chicken_ad
+          diamondAnimalAd: response.data.user.diamonds_chicken_ad,
+          takenHerdBoost: response.data.user.takenHerdBoostSheep,
         }
         
         const Amplitude = this.state.amplitude;

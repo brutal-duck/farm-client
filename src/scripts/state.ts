@@ -16,7 +16,7 @@ let herdBoostPrice: number;
 let herdBoostTime: number;
 let herdBoostDelay: number;
 let herdBoostAnimals: number[];
-let timeToBoost: number;
+let timeToHerdBoost: number;
 let user: Iuser;
 let userSheep: IuserSheep;
 let userChicken: IuserChicken;
@@ -59,7 +59,7 @@ let state: Istate = {
   herdBoostTime, // время длительности 'стадного' буста
   herdBoostDelay, // время задержки для появления животного во время "стадного буста"
   herdBoostAnimals, // массив животных для буста
-  timeToBoost, // время до пуста
+  timeToHerdBoost, // время до пуста
   sheepSettings, // настройки и параметры
   chickenSettings, // настройки и параметры
   farm, // имя сцены активной фермы (записывается в localStorage)

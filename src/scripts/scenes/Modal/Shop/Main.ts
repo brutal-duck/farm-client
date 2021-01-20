@@ -176,19 +176,21 @@ class Shop extends Phaser.Scene {
       color: '#FFFFFF'
     }).setOrigin(0.5, 0.5).setStroke('#3B5367', 4).setDepth(10);
     let diamondBtn: Phaser.GameObjects.Sprite = this.add.sprite(385, 480 + this.height, 'diamond').setVisible(false).setScale(0.11);
-    let boostPrice: number = 20 * 1 // заменить 1 на нужный множитель
+    let boostPrice: number = 20 * this.state[`user${this.state.farm}`].takenHerdBoost 
+    let time: string = shortTime(this.state.timeToHerdBoost, this.state.lang); 
+    this.herdBoostTimer = this.add.text(350, 420 + this.height, this.state.lang.stillForBoost + '  ' + time, {
+      font: '20px Shadow',
+      color: '#FFFFFF',
+      wordWrap: {width: 206},
+      align: 'center'
+    }).setOrigin(0.5, 0.5);
+    
     // осталось времени
-    if (true) { // добавить условие this.state.[`user${this.state.farm}].herdBoost > 0
-      let time: string = shortTime(10000, this.state.lang); // Вместо 3000 указать this.state.[`user${this.state.farm}].boost
-      this.herdBoostTimer = this.add.text(350, 420 + this.height, this.state.lang.stillForBoost + '  ' + time, {
-        font: '20px Shadow',
-        color: '#FFFFFF',
-        wordWrap: {width: 206},
-        align: 'center'
-      }).setOrigin(0.5, 0.5);
+    if (this.state[`user${this.state.farm}`].takenHerdBoost > 0) { 
       // установка текста кнопки
       herdBoostBtnText.setText(this.state.lang.buy + '    ' + boostPrice); 
       diamondBtn.setVisible(true);
+      console.log(this.state[`user${this.state.farm}`].takenHerdBoost)
     } else {
       // если время равно нулю 
       this.herdBoostTimer.setVisible(false);
@@ -196,11 +198,13 @@ class Shop extends Phaser.Scene {
       herdBoostBtnText.setY(455 + this.height);
       herdBoostBtnText.setText(this.state.lang.pickUp);
       diamondBtn.setVisible(false);
+      console.log(this.state[`user${this.state.farm}`].takenHerdBoost)
     }
     
     this.clickShopBtn({ btn: herdBoostBtn, title: herdBoostBtnText, img: diamondBtn}, (): void => {
       if (this.state.user.diamonds >= boostPrice){
         this.state.user.diamonds -= boostPrice;
+        this.state[`user${this.state.farm}`].takenHerdBoost++;
         this.game.scene.keys[this.state.farm].startHerdBoost();
       } else {
         console.log('мало кристалов');

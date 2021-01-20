@@ -13,8 +13,6 @@ let userData: Iuser = {
     collector: false
   },
   takenReward: false,
-  takenHerdBoostChicken: 0,
-  takenHerdBoostSheep: 0
 }
 
 let userSheep: IuserSheep = {
@@ -28,7 +26,8 @@ let userSheep: IuserSheep = {
   diamondAnimalTime: 0,
   tutorial: 0,
   autosaveCounter: 0,
-  diamondAnimalAd: true
+  diamondAnimalAd: true,
+  takenHerdBoost: 0
 }
 
 let userChicken: IuserChicken = {
@@ -42,7 +41,8 @@ let userChicken: IuserChicken = {
   diamondAnimalTime: 0,
   tutorial: 0,
   autosaveCounter: 0,
-  diamondAnimalAd: true
+  diamondAnimalAd: true,
+  takenHerdBoost: 0
 }
 
 export {
