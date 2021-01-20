@@ -18,7 +18,7 @@ function loadChicken(counter: number = 0): void {
   this.state.farm = 'Chicken';
   this.state.daily = false;
   this.state.newbieTime = 0;
-  
+  this.state.timeToBoost = 0;
   if (localStorage.dailyAwards) this.state.dailyAwards = JSON.parse(localStorage.dailyAwards);
 
   if (localStorage.chicken) this.state.chicken = JSON.parse(localStorage.chicken);

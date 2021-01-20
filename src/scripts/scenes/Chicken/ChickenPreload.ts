@@ -670,7 +670,9 @@ class ChickenPreload extends Phaser.Scene {
           mail: response.data.user.mail,
           level: response.data.user.level,
           additionalTutorial: response.data.user.additional_tutorial,
-          takenReward: response.data.user.taken_reward
+          takenReward: response.data.user.taken_reward,
+          takenHerdBoostSheep: response.data.user.takenHerdBoostSheep,
+          takenHerdBoostChicken: response.data.user.takenHerdBoostChicken
         }
 
         const userChicken: IuserChicken = {

@@ -876,8 +876,12 @@ class SheepPreload extends Phaser.Scene {
           mail: response.data.user.mail,
           level: response.data.user.level,
           additionalTutorial: response.data.user.additional_tutorial,
-          takenReward: response.data.user.taken_reward
+          takenReward: response.data.user.taken_reward,
+          takenHerdBoostSheep: response.data.user.takenHerdBoostSheep,
+          takenHerdBoostChicken: response.data.user.takenHerdBoostChicken
         }
+        console.log(response.data.user.takenHerdBoost)
+        console.log(response.data.timeToHerdBoost)
 
         const userSheep: IuserSheep = {
           money: response.data.user.money,
@@ -890,7 +894,7 @@ class SheepPreload extends Phaser.Scene {
           diamondAnimalTime: response.data.user.diamonds_sheep_time,
           tutorial: response.data.user.tutor,
           autosaveCounter: response.data.user.sheepSaveCounter,
-          diamondAnimalAd: response.data.user.diamonds_sheep_ad
+          diamondAnimalAd: response.data.user.diamonds_sheep_ad,
         }
 
         const Amplitude = this.state.amplitude;
@@ -916,7 +920,8 @@ class SheepPreload extends Phaser.Scene {
           }
 
         }
-
+        
+        this.state.timeToBoost = response.data.timeToHerdBoost;
         this.state.sheepCollectorSettings = response.data.collectorSettings;
         this.state.dailyAwards = response.data.dailyAwards;
         this.state.newbieTime = response.data.newbieTime;

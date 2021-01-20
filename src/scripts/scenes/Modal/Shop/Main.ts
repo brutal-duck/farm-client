@@ -160,7 +160,7 @@ class Shop extends Phaser.Scene {
   }
 
   public herdBoost(): void {
-    console.log('data',this.scrolling.bottom);
+
     this.add.tileSprite(0, 344 + this.height, 466, 230, 'boost-bg').setOrigin(0, 0);
     this.add.text(225, 360 + this.height, this.state.lang[`herdBoostTitle${this.state.farm}`], { // Заменить текст
       font: '28px Shadow',

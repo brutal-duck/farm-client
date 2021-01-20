@@ -12,7 +12,9 @@ let userData: Iuser = {
     cave: false,
     collector: false
   },
-  takenReward: false
+  takenReward: false,
+  takenHerdBoostChicken: 0,
+  takenHerdBoostSheep: 0
 }
 
 let userSheep: IuserSheep = {

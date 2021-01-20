@@ -426,7 +426,7 @@ export default {
     stillForBoost: 'До бесплатного осталось',
     herdBoostTitleSheep: 'Стадо овец',
     herdBoostTitleChicken: 'Стая птиц',
-    herdBoostBadMerge: 'Oops!'
+    herdBoostBadMerge: 'Упс!'
   },
   en: {
     index: 'en',
@@ -849,5 +849,6 @@ export default {
     herdBoostScore: 'Вы успели собрать: ',
     herdBoostNext: 'Нажми для продолжения ',
     stillForBoost: 'До бесплатного осталось',
+    herdBoostBadMerge: 'Упс!',
   }
 }
