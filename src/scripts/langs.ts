@@ -425,8 +425,8 @@ export default {
     herdBoostScoreChicken: 'Количество пойманных птиц: ',
     herdBoostNext: 'Нажми для продолжения ',
     stillForBoost: 'До бесплатного осталось',
-    herdBoostTitleSheep: 'Стадо овец',
-    herdBoostTitleChicken: 'Стая птиц',
+    herdBoostTitleSheep: 'Овечий переполох',
+    herdBoostTitleChicken: 'Куриный переполох',
     herdBoostBadMerge: 'Упс!',
   },
   en: {
