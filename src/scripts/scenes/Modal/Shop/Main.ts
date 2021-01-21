@@ -176,14 +176,14 @@ class Shop extends Phaser.Scene {
     this.add.sprite(40, 390 + this.height, `${this.state.farm.toLocaleLowerCase()}-herd-boost-icon`).setOrigin(0, 0);
     this.add.sprite(0, 344 + this.height, 'flags').setOrigin(0, 0).setFlipX(true);
     this.add.sprite(466, 344 + this.height, 'flags').setOrigin(1, 0);
-    this.herdBoostBtn = this.add.sprite(350, 480 + this.height, 'improve-collector');
-    this.herdBoostBtnText = this.add.text(350, 475 + this.height, this.state.lang.buy + '    ' + this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost, {
+    this.herdBoostBtn = this.add.sprite(330, 480 + this.height, 'improve-collector');
+    this.herdBoostBtnText = this.add.text(330, 475 + this.height, this.state.lang.buy + '    ' + this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost, {
       font: '26px Shadow',
       color: '#FFFFFF'
     }).setOrigin(0.5, 0.5).setStroke('#3B5367', 4).setDepth(10);
-    this.herdBoostDiamondBtn = this.add.sprite(385, 480 + this.height, 'diamond').setVisible(false).setScale(0.11);
+    this.herdBoostDiamondBtn = this.add.sprite(355, 480 + this.height, 'diamond').setVisible(false).setScale(0.11);
       
-    this.herdBoostTimerText = this.add.text(350, 420 + this.height, this.state.lang.stillForBoost + ' ' + shortTime(this.state.timeToHerdBoost, this.state.lang), {
+    this.herdBoostTimerText = this.add.text(330, 420 + this.height, this.state.lang.stillForBoost + ' ' + shortTime(this.state.timeToHerdBoost, this.state.lang), {
       font: '20px Shadow',
       color: '#FFFFFF',
       wordWrap: {width: 220},
@@ -196,6 +196,7 @@ class Shop extends Phaser.Scene {
         this.state[`user${this.state.farm}`].takenHerdBoost++;
         this.game.scene.keys[this.state.farm].startHerdBoost();
       } else {
+        // вызывем конвертор
         this.state.convertor = {
           fun: 0,
           count: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
