@@ -777,16 +777,16 @@ class SheepPreload extends Phaser.Scene {
       hash: this.state.user.hash
     }).then((response) => {
 
-      checkStorage(response.data.user.hash);
+      // checkStorage(response.data.user.hash);
 
-      let localSaveCounter: number = 0;
+      // let localSaveCounter: number = 0;
 
-      if (localStorage.userSheep) {
-        let user: IuserSheep = JSON.parse(localStorage.userSheep);
-        if (typeof user.autosaveCounter === 'number') localSaveCounter = user.autosaveCounter;
-      }
+      // if (localStorage.userSheep) {
+      //   let user: IuserSheep = JSON.parse(localStorage.userSheep);
+      //   if (typeof user.autosaveCounter === 'number') localSaveCounter = user.autosaveCounter;
+      // }
 
-      if (response.data.user.sheepSaveCounter >= localSaveCounter) {
+      // if (response.data.user.sheepSaveCounter >= localSaveCounter) {
 
         // общие настройки
         this.state.autoSaveSpeed = response.data.autoSaveSpeed;
@@ -934,13 +934,14 @@ class SheepPreload extends Phaser.Scene {
         this.userReady = true;
         console.log(this.state.timeToHerdBoost);
         console.log(this.state.userSheep.takenHerdBoost);
-      } else {
-        this.loadSheep(response.data.user.counter);
-      }
+      // } else {
+      //   this.loadSheep(response.data.user.counter);
+      // }
 
-    }).catch(() => {
-      this.loadSheep();
-    });
+    })
+    // .catch(() => {
+    //   this.loadSheep();
+    // });
 
     localStorage.farm = 'Sheep';
   }

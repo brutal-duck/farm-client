@@ -561,16 +561,16 @@ class ChickenPreload extends Phaser.Scene {
       hash: this.state.user.hash
     }).then((response) => {
 
-      checkStorage(response.data.user.hash);
+      // checkStorage(response.data.user.hash);
 
-      let localSaveCounter: number = 0;
+      // let localSaveCounter: number = 0;
 
-      if (localStorage.userChicken) {
-        let user: IuserChicken = JSON.parse(localStorage.userChicken);
-        if (typeof user.autosaveCounter === 'number') localSaveCounter = user.autosaveCounter;
-      }
+      // if (localStorage.userChicken) {
+      //   let user: IuserChicken = JSON.parse(localStorage.userChicken);
+      //   if (typeof user.autosaveCounter === 'number') localSaveCounter = user.autosaveCounter;
+      // }
 
-      if (response.data.user.chickenSaveCounter >= localSaveCounter) {
+      // if (response.data.user.chickenSaveCounter >= localSaveCounter) {
 
         // общие настройки
         this.state.autoSaveSpeed = response.data.autoSaveSpeed;
@@ -726,13 +726,14 @@ class ChickenPreload extends Phaser.Scene {
         
         console.log(this.state.timeToHerdBoost);
         console.log(this.state.userChicken.takenHerdBoost);
-      } else {
-        this.loadChicken(response.data.user.counter);
-      }
+      // } else {
+      //   this.loadChicken(response.data.user.counter);
+      // }
       
-    }).catch(() => {
-      this.loadChicken();
-    });
+    })
+    // .catch(() => {
+    //   this.loadChicken();
+    // });
 
     localStorage.farm = 'Chicken';
   }
