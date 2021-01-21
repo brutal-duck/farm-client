@@ -37,6 +37,7 @@ interface IsheepUserAutoSave {
   taken_reward: boolean;
   autosaveCounter: number;
   diamondSheepAd: boolean;
+  takenHerdBoost: number;
 }
 interface IchickenUserAutoSave {
   diamonds: number;
@@ -53,6 +54,7 @@ interface IchickenUserAutoSave {
   taken_reward: boolean;
   autosaveCounter: number;
   diamondChickenAd: boolean;
+  takenHerdBoost: number;
 }
 
 // for state

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import state from './../../state';
 
 // автосохранение
 function autosave(): void {
@@ -57,9 +58,10 @@ function autosave(): void {
     additional_tutorial: this.state.user.additionalTutorial,
     taken_reward: this.state.user.takenReward,
     autosaveCounter: this.state.userSheep.autosaveCounter,
-    diamondSheepAd: this.state.userSheep.diamondAnimalAd
+    diamondSheepAd: this.state.userSheep.diamondAnimalAd,
+    takenHerdBoost: this.state.userSheep.takenHerdBoost,
   }
-
+  console.log(user)
   localStorage.user = JSON.stringify(this.state.user);
   localStorage.userSheep = JSON.stringify(this.state.userSheep);
   localStorage.sheepTasks = JSON.stringify(tasks);
@@ -78,6 +80,7 @@ function autosave(): void {
     user: user,
     dailyAwards: this.state.dailyAwards
   }
+
   axios.post(process.env.API + "/sheep/autoSave", data)
   .then((res) => {
     

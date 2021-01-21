@@ -311,7 +311,6 @@ class Sheep extends Phaser.Scene {
 
     let cursors = this.input.keyboard.createCursorKeys();
     cursors.space.on('down', (): void => {
-
       // let modal: Imodal = {
       //   type: 8,
       // }
