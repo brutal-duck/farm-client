@@ -219,7 +219,8 @@ class Shop extends Phaser.Scene {
     if (this.arrows?.active) this.arrows.update();
 
     // обновляем время бустера
-    if (this.state.modal.shopType === 4) {
+    if (this.state.modal.shopType === 4 && this.state[`user${this.state.farm}`].part >= 6) {
+
       this.herdBoostTimerText.setText(this.state.lang.stillForBoost + ' ' + shortTime(this.state.timeToHerdBoost, this.state.lang));
       if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0) { 
         // установка текста кнопки
