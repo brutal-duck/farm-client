@@ -267,6 +267,7 @@ function interval(): void {
     if (this.state.timeToHerdBoost > 0) {
       --this.state.timeToHerdBoost;
     } else {
+      this.state[`user${this.state.farm}`].takenHerdBoost = 0;
       this.state.timeToHerdBoost = 86400;
     }
 
