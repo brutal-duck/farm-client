@@ -320,6 +320,7 @@ function interval(): void {
 
     this.debug();
     
+    --this.state.timeToHerdBoost
   }, callbackScope: this, loop: true });
 
 }

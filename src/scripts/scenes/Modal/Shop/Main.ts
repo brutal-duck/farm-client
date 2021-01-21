@@ -59,9 +59,16 @@ class Shop extends Phaser.Scene {
   public heightWindow: number = 625;
   public buttons: IshopButtons[];
   public collectorTimer: Phaser.GameObjects.Text;
-  public herdBoostTimer: Phaser.GameObjects.Text;
+  public herdBoostTimerText: Phaser.GameObjects.Text;
   public freeCollector: any;
   public arrows: Arrows; // стрелки
+
+  // буст
+
+  public herdBoostBtnText: Phaser.GameObjects.Text;
+  public herdBoostDiamondBtn: Phaser.GameObjects.Sprite;
+  public herdBoostBtn: Phaser.GameObjects.Sprite;
+  public herdBoostPrice: number;
 
   public click = click.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
@@ -170,40 +177,24 @@ class Shop extends Phaser.Scene {
     this.add.sprite(40, 390 + this.height, `${this.state.farm.toLocaleLowerCase()}-herd-boost-icon`).setOrigin(0, 0);
     this.add.sprite(0, 344 + this.height, 'flags').setOrigin(0, 0).setFlipX(true);
     this.add.sprite(466, 344 + this.height, 'flags').setOrigin(1, 0);
-    let herdBoostBtn: Phaser.GameObjects.Sprite = this.add.sprite(350, 485 + this.height, 'improve-collector');
-    let herdBoostBtnText: Phaser.GameObjects.Text = this.add.text(350, 480 + this.height, this.state.lang.pickUp, {
+    this.herdBoostBtn = this.add.sprite(350, 480 + this.height, 'improve-collector');
+    this.herdBoostPrice = 20 * this.state[`user${this.state.farm}`].takenHerdBoost;
+    this.herdBoostBtnText = this.add.text(350, 475 + this.height, this.state.lang.buy + '    ' + this.herdBoostPrice, {
       font: '26px Shadow',
       color: '#FFFFFF'
     }).setOrigin(0.5, 0.5).setStroke('#3B5367', 4).setDepth(10);
-    let diamondBtn: Phaser.GameObjects.Sprite = this.add.sprite(385, 480 + this.height, 'diamond').setVisible(false).setScale(0.11);
-    let boostPrice: number = 20 * this.state[`user${this.state.farm}`].takenHerdBoost 
-    let time: string = shortTime(this.state.timeToHerdBoost, this.state.lang); 
-    this.herdBoostTimer = this.add.text(350, 420 + this.height, this.state.lang.stillForBoost + '  ' + time, {
+    this.herdBoostDiamondBtn = this.add.sprite(385, 480 + this.height, 'diamond').setVisible(false).setScale(0.11);
+      
+    this.herdBoostTimerText = this.add.text(350, 420 + this.height, this.state.lang.stillForBoost + ' ' + shortTime(this.state.timeToHerdBoost, this.state.lang), {
       font: '20px Shadow',
       color: '#FFFFFF',
-      wordWrap: {width: 206},
+      wordWrap: {width: 220},
       align: 'center'
     }).setOrigin(0.5, 0.5);
-    
-    // осталось времени
-    if (this.state[`user${this.state.farm}`].takenHerdBoost > 0) { 
-      // установка текста кнопки
-      herdBoostBtnText.setText(this.state.lang.buy + '    ' + boostPrice); 
-      diamondBtn.setVisible(true);
-      console.log(this.state[`user${this.state.farm}`].takenHerdBoost)
-    } else {
-      // если время равно нулю 
-      this.herdBoostTimer.setVisible(false);
-      herdBoostBtn.setY(460 + this.height);
-      herdBoostBtnText.setY(455 + this.height);
-      herdBoostBtnText.setText(this.state.lang.pickUp);
-      diamondBtn.setVisible(false);
-      console.log(this.state[`user${this.state.farm}`].takenHerdBoost)
-    }
-    
-    this.clickShopBtn({ btn: herdBoostBtn, title: herdBoostBtnText, img: diamondBtn}, (): void => {
-      if (this.state.user.diamonds >= boostPrice){
-        this.state.user.diamonds -= boostPrice;
+
+    this.clickShopBtn({ btn: this.herdBoostBtn, title: this.herdBoostBtnText, img: this.herdBoostDiamondBtn}, (): void => {
+      if (this.state.user.diamonds >= this.herdBoostPrice){
+        this.state.user.diamonds -= this.herdBoostPrice;
         this.state[`user${this.state.farm}`].takenHerdBoost++;
         this.game.scene.keys[this.state.farm].startHerdBoost();
       } else {
@@ -212,13 +203,30 @@ class Shop extends Phaser.Scene {
       // проверка хватает ли денег и лишь потом запуск сцены
     });
   }
-
   
   public update(): void {
     
     // укзывающие стрелки
     if (this.arrows?.active) this.arrows.update();
-    
+
+    // обновляем время бустера
+    if (this.state.modal.shopType === 4) {
+      this.herdBoostTimerText.setText(this.state.lang.stillForBoost + ' ' + shortTime(this.state.timeToHerdBoost, this.state.lang));
+      if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0) { 
+        // установка текста кнопки
+        this.herdBoostBtnText.setText(this.state.lang.pickUp); 
+        this.herdBoostDiamondBtn.setVisible(false);
+        this.herdBoostBtn.setY(460 + this.height);
+        this.herdBoostBtnText.setY(455 + this.height);
+        this.herdBoostTimerText.setVisible(false);
+      } else {
+        this.herdBoostTimerText.setVisible(true);
+        this.herdBoostBtn.setY(480 + this.height);
+        this.herdBoostBtnText.setY(475 + this.height);
+        this.herdBoostBtnText.setText(this.state.lang.buy + '    ' + this.herdBoostPrice);
+        this.herdBoostDiamondBtn.setVisible(true);
+      }
+    }
   }
 
 

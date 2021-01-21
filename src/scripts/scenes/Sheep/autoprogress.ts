@@ -21,6 +21,7 @@ function autoprogress(load: boolean = false): void {
   }
   
   if (!load) this.game.scene.keys['SheepBars'].collector.update();
+  if (!load) this.state.timeToHerdBoost -= this.state.offlineTime;
 
   // считаем сколько раз подстригли овец
   let balance: Ibalance = this.balance();
