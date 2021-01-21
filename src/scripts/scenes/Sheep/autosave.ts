@@ -61,7 +61,7 @@ function autosave(): void {
     diamondSheepAd: this.state.userSheep.diamondAnimalAd,
     takenHerdBoost: this.state.userSheep.takenHerdBoost,
   }
-  console.log(user)
+  
   localStorage.user = JSON.stringify(this.state.user);
   localStorage.userSheep = JSON.stringify(this.state.userSheep);
   localStorage.sheepTasks = JSON.stringify(tasks);

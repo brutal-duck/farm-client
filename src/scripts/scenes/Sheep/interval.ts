@@ -319,7 +319,7 @@ function interval(): void {
     this.caveIconsAnimation();
 
     this.debug();
-
+    
   }, callbackScope: this, loop: true });
 
 }
