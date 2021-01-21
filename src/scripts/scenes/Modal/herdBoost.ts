@@ -472,9 +472,11 @@ function drag(animal): void {
       }
     }
   });
-
+  
   this.input.on('dragend', (pointer: any, animal: Phaser.Physics.Arcade.Sprite): void => {
-    if (animal.data) { // существует ли еще dataManager животное
+    
+    if (animal.data) { // существует ли еще dataManager животного
+      
       animal.data.values.drag === false;
     
       if (animal.data.values.drag === false) return;
@@ -489,8 +491,15 @@ function drag(animal): void {
         if (animal.data.values.merging) {
           animal.setVelocityX(0);
           animal.data.values.woolSprite?.setVelocityX(0);
+          animal.data.values.side = 'right';
         } else {
-          animal.data.values.velocity = this.state.herdBoostSpeedAnimal;
+          // проверяем в какую сторону нужно отправить овцу
+          if (animal.data.values.side === 'right') {
+            animal.data.values.velocity = this.state.herdBoostSpeedAnimal;
+          } else  if (animal.data.values.side === 'left') {
+            animal.data.values.velocity = -this.state.herdBoostSpeedAnimal;
+          }
+          
           animal.setVelocityX(animal.data.values.velocity);
           animal.data.values.woolSprite?.setVelocityX(animal.data.values.velocity);
           animal.play(this.state.farm.toLowerCase() + '-move-' + animal.data.values.side + animal.data.values.type);
