@@ -1,7 +1,7 @@
+let height: number
+
 function tasks(): void {
   
-  let height: number = 400;
-
   // Старый фон окна заданий
   // this.header = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY - Math.floor(height / 2), 'tasks-window-side')
   //   .setOrigin(0.5, 1);
@@ -14,9 +14,11 @@ function tasks(): void {
   // this.body = this.add.tileSprite(this.cameras.main.centerX - 3, this.cameras.main.centerY, 614, height + 2, 'tasks-window-body')
   //   .setOrigin(0.5, 0.5);
 
-  this.top = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY - Math.floor(height / 2), 'tasks-top').setOrigin(0.5, 1)
+  this.top = this.add.image(this.cameras.main.centerX + 1, this.cameras.main.centerY - Math.floor(height / 2), 'tasks-top').setOrigin(0.5, 1)
   this.middle = this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY, 563, height, 'tasks-middle').setOrigin(0.5, 0.5)
-  this.top = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY + Math.floor(height / 2), 'tasks-bottom').setOrigin(0.5, 0.5)
+  // this.middle = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'tasks-middle').setOrigin(0.5, 0.5).setDisplaySize(563, height)
+  this.bottom = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY + Math.floor(height / 2), 'tasks-bottom').setOrigin(0.5, 0.5)
+  this.close = this.add.sprite(606, this.cameras.main.centerY - Math.floor(height / 2 + 114), 'tasks-close')
 
   this.tasksWindow();
 
@@ -38,10 +40,8 @@ function tasks(): void {
 
 //   if (this.state.farm === 'Chicken') {
 //     countBreed = this.state.chickenSettings.chickenSettings.length;
-//     part = String(this.state.userChicken.part)
 //   } else if (this.state.farm === 'Sheep') {
 //     countBreed = this.state.sheepSettings.sheepSettings.length;
-//     part = String(this.state.userSheep.part)
 //   }
 
 //   console.log(this.state.modal.tasksParams);
@@ -284,15 +284,161 @@ function tasks(): void {
 
 function tasksWindow(): void {
 
+  console.log(this.state.modal.tasksParams);
+  
+  let height: number = 600;
+  let tasks = [];
+  let countBreed: number;
+
+  if (this.state.farm === 'Chicken') {
+    countBreed = this.state.chickenSettings.chickenSettings.length;
+  } else if (this.state.farm === 'Sheep') {
+    countBreed = this.state.sheepSettings.sheepSettings.length;
+  }
+
+  this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - Math.floor(height / 2 + 200), this.state.modal.tasksParams.part, {
+    font: '72px Shadow',
+    fill: '#FFFFFF'
+  }).setOrigin(0.5, 0.5).setStroke('#AAAAAA', 1);
+
+  this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - Math.floor(height / 2 + 150), this.state.lang.part, {
+    font: '34px Shadow',
+    fill: '#FFFFFF'
+  }).setOrigin(0.5, 0.5).setStroke('#AAAAAA', 1);
+
+  this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - Math.floor(height / 2 + 78), this.state.modal.tasksParams.name, {
+    font: '32px Shadow',
+    fill: '#F2DCFF'
+  }).setOrigin(0.5, 0.5)
+
+  this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + Math.floor(height / 2 + 10), this.state.modal.tasksParams.farmer, {
+    font: '26px Shadow',
+    fill: '#8f3f00'
+  }).setOrigin(0.5, 0.5)
+  
+  this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + Math.floor(height / 2 + 54), this.state.modal.tasksParams.description, {
+    font: '20px Shadow',
+    fill: '#c15e00',
+    align: 'center',
+    wordWrap: { width: 420 }
+  }).setOrigin(0.5, 0.5)
+
+  // Плашки заданий
+  this.add.image(this.cameras.main.centerX + 2, this.cameras.main.centerY, 'tasks-reward').setOrigin(0.5, 0.5).setDisplaySize(460, 180)
+  this.add.image(this.cameras.main.centerX + 100, this.cameras.main.centerY + 89, 'tasks-bar').setOrigin(0.5, 1)
+
+  // Цикл создания tasks
+  for (let i in this.state.modal.tasksParams.tasks) {
+
+    let task: Itasks = this.state.modal.tasksParams.tasks[i];
+    let taskData: ItaskData = this.game.scene.keys[this.state.farm].getTaskData(task)
+    let boardColor: number = 0xFFEBC5;
+    let completed: boolean | Phaser.GameObjects.Image = false;
+    let awardText: boolean | Phaser.GameObjects.Image = false;
+    let awardIcon: boolean | Phaser.GameObjects.Image = false;
+    let doneText: boolean | Phaser.GameObjects.Text = false;
+    let takeButton: boolean | Phaser.GameObjects.Image = false; // зеленая кнопки
+    let takeText: boolean | Phaser.GameObjects.Text = false; // текст кнопки
+    let gotAwarded: boolean = false;
+    let textWidth: number = 300;
+
+    // icon & text
+    let icon: Phaser.GameObjects.Image = this.add.image(165, 0, taskData.icon).setDepth(1);
+    let text: Phaser.GameObjects.Text = this.add.text(220, 0, taskData.name, {
+      font: '23px Bip',
+      color: '#713D1E',
+      align: 'left',
+      wordWrap: { width: textWidth }
+    }).setDepth(1).setOrigin(0, 0);
+
+    // complete
+    if (task.done === 1) {
+
+      boardColor = 0xd5b272;
+      icon.setTint(0x777777);
+      completed = this.add.image(165, 0, 'completed').setDepth(1);
+
+    } else {
+
+      let count: number = task.count; //?
+      if (task.type === 14 && task.count === 0) count = countBreed; //?
+      
+      doneText = this.add.text(222, 0, this.state.lang.performed + ' ' + task.progress + ' / ' + count, {
+        font: '20px Bip',
+        color: '#9e3d08'
+      }).setDepth(1).setOrigin(0, 0.5);
+
+    }
+
+    // Кнопка получения награды
+    if (task.done === 1 && task.got_awarded === 0) {
+
+      takeButton = this.add.image(540, 0, 'little-button').setDepth(1);
+      takeText = this.add.text(540, 0, this.state.lang.pickUp, {
+        font: '20px Shadow',
+        color: '#FFFFFF'
+      }).setOrigin(0.5, 0.5).setDepth(1);
+
+      this.clickShopBtn({ btn: takeButton, title: takeText, img: false }, (): void => {
+        this.game.scene.keys[this.state.farm].pickUpTaskReward(task.id);
+      });
+
+    }
+
+    if ((task.done === 1 && task.got_awarded === 0) || task.done === 0) {
+      
+      awardText = this.add.text(261, 300, String(task.diamonds), {
+        font: '20px Bip',
+        color: '#FFFFFF'
+      }).setDepth(2).setOrigin(0, 0.5);
+
+      awardIcon = this.add.image(231, 300, 'diamond')
+        .setDepth(2)
+        .setScale(0.1)
+        .setOrigin(0, 0.5);
+
+    }
+
+
+    tasks.push({
+      icon: icon,
+      text: text,
+      completed: completed,
+      awardIcon: awardIcon,
+      awardText: awardText,
+      takeButton: takeButton,
+      takeText: takeText
+    })
+
+    console.log(task);
+
+    tasks[0].text
+
+  }
+
+  console.log(tasks);
+
+  // for (let i in tasks) {
+
+  // }
+
+  // Кнопка закрытия
+  this.clickButton(this.close, (): void => {
+    this.scene.stop();
+    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+  });
+
+  this.resizeTasksWindow(height);
+
 }
 
 // задать размеры
 function resizeTasksWindow(height: number): void {
 
-  this.header.y = this.cameras.main.centerY - Math.floor(height / 2);
-  this.close.y = this.cameras.main.centerY - Math.floor(height / 2) + 5;
+  this.top.y = this.cameras.main.centerY - Math.floor(height / 2);
+  this.middle.height = height;
   this.bottom.y = this.cameras.main.centerY + Math.floor(height / 2);
-  this.body.height = height + 2;
+  this.close.y = this.cameras.main.centerY - Math.floor(height / 2 + 114);
 
 }
 
