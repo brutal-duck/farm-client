@@ -932,7 +932,8 @@ class SheepPreload extends Phaser.Scene {
         this.state.sheepTasks = sheepTasks;
         this.state.farm = 'Sheep';
         this.userReady = true;
-
+        console.log(this.state.timeToHerdBoost);
+        console.log(this.state.userSheep.takenHerdBoost);
       } else {
         this.loadSheep(response.data.user.counter);
       }
@@ -942,9 +943,6 @@ class SheepPreload extends Phaser.Scene {
     });
 
     localStorage.farm = 'Sheep';
-    // получилили мы данные о овцах
-    console.log(this.state.timeToHerdBoost);
-    console.log(this.state.userSheep.takenHerdBoost);
   }
   
 }

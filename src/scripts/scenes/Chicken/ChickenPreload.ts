@@ -723,7 +723,9 @@ class ChickenPreload extends Phaser.Scene {
         this.state.chickenTasks = chickenTasks;
         this.state.farm = 'Chicken';
         this.userReady = true;
-
+        
+        console.log(this.state.timeToHerdBoost);
+        console.log(this.state.userChicken.takenHerdBoost);
       } else {
         this.loadChicken(response.data.user.counter);
       }
@@ -733,7 +735,6 @@ class ChickenPreload extends Phaser.Scene {
     });
 
     localStorage.farm = 'Chicken';
-
   }
 
 }
