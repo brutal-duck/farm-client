@@ -154,7 +154,7 @@ class Shop extends Phaser.Scene {
       this.scrolling.bottom = this.height - this.heightWindow + 300;   
       if (this.state.farm === 'Sheep') this.sheepBoosts();
       else if (this.state.farm === 'Chicken') this.chickenBoosts();
-      this.herdBoost();
+      if (this.state[`user${this.state.farm}`].part >= 6) this.herdBoost(); // проверяем главу и создаем окно только если глава выше 6
     }
 
   }

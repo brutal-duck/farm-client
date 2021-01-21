@@ -426,7 +426,7 @@ export default {
     stillForBoost: 'До бесплатного осталось',
     herdBoostTitleSheep: 'Стадо овец',
     herdBoostTitleChicken: 'Стая птиц',
-    herdBoostBadMerge: 'Упс!'
+    herdBoostBadMerge: 'Упс!',
   },
   en: {
     index: 'en',
