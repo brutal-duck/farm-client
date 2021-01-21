@@ -79,9 +79,6 @@ function hideItems([...args], boostCounterWindow): void {
   });
 }
 
-
-
-
 function moveItem([...args], boostCounterWindow): void {
   let y = boostCounterWindow.y;
 
@@ -293,7 +290,6 @@ function createAnimals(timerText, allItems, boostCounterWindow): void {
   }
 }
 
-
 function showEndScore(items, boostCounterWindow): void {
   let alpha: number = 1;
   let timer: Phaser.Time.TimerEvent = this.time.addEvent({
@@ -314,10 +310,11 @@ function showEndScore(items, boostCounterWindow): void {
 }
 
 function createScoreText(): void {
-  this.add.text(360, 400, this.state.lang.herdBoostScore + this.state.herdBoostAnimals.length, {
+  this.add.text(360, 380, this.state.lang[`herdBoostScore${this.state.farm}`] + this.state.herdBoostAnimals.length, {
     font: '30px Shadow',
     color: '#ce9457',
-    align: 'center'
+    align: 'center',
+    wordWrap: {width: 350}
   }).setOrigin(0.5, 0.5).setDepth(2);
 
   this.add.text(360, 440, this.state.lang.herdBoostNext, {
@@ -351,11 +348,6 @@ function stopBoostScene(): void {
     this.game.scene.keys[this.state.farm].createBoostAnimal();
   });
 }
-
-
-
-
-
 
 function getRandomSheep(): void {
   let {x, y, side, _id} = this.getRandomStartPosition(); 

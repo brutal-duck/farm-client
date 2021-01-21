@@ -256,11 +256,11 @@ class Chicken extends Phaser.Scene {
       // this.state.modal = modal;
       // this.scene.launch('Modal', this.state);
 
-      let tasks = this.partTasks();
-      for (let i in tasks) {
-        tasks[i].done = 1;
-        tasks[i].got_awarded = 1;
-      }
+      // let tasks = this.partTasks();
+      // for (let i in tasks) {
+      //   tasks[i].done = 1;
+      //   tasks[i].got_awarded = 1;
+      // }
     });
 
   }
