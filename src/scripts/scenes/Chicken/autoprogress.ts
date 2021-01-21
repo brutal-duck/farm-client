@@ -26,7 +26,8 @@ function autoprogress(load: boolean = false): void {
   }
 
   if (!load) this.game.scene.keys['ChickenBars'].collector.update();
-
+  if (!load) this.state.timeToHerdBoost -= this.state.offlineTime;
+  
   // считаем сколько снесла курица яйцо
   let balance: Ibalance = this.balance();
   let newEggs: { egg: boolean, id: string, type: number, count: number }[] = [];

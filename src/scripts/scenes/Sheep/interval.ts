@@ -320,7 +320,14 @@ function interval(): void {
 
     this.debug();
     
-    --this.state.timeToHerdBoost
+    // таймер до буста стадо
+    if (this.state.timeToHerdBoost > 0) {
+      --this.state.timeToHerdBoost;
+    } else {
+      this.state.timeToHerdBoost = 86400;
+    }
+    
+
   }, callbackScope: this, loop: true });
 
 }
