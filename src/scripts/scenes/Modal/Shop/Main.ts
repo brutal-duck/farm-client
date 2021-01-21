@@ -191,10 +191,23 @@ class Shop extends Phaser.Scene {
     }).setOrigin(0.5, 0.5);
 
     this.clickShopBtn({ btn: this.herdBoostBtn, title: this.herdBoostBtnText, img: this.herdBoostDiamondBtn}, (): void => {
-      if (this.state.user.diamonds >= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost){
+      if (this.state.user.diamonds >= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost) {
         this.state.user.diamonds -= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost;
         this.state[`user${this.state.farm}`].takenHerdBoost++;
         this.game.scene.keys[this.state.farm].startHerdBoost();
+
+        if (this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost > 0) {
+          this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+            type: 'herd',
+            count: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
+            farm_id: this.state.farm
+          });
+        }
+
+        this.state.amplitude.getInstance().logEvent('booster_merge', {
+          count: this.state[`user${this.state.farm}`].takenHerdBoost,
+          farm_id: this.state.farm
+        });
       } else {
         // вызывем конвертор
         this.state.convertor = {
