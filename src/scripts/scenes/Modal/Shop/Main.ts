@@ -68,7 +68,6 @@ class Shop extends Phaser.Scene {
   public herdBoostBtnText: Phaser.GameObjects.Text;
   public herdBoostDiamondBtn: Phaser.GameObjects.Sprite;
   public herdBoostBtn: Phaser.GameObjects.Sprite;
-  public herdBoostPrice: number;
 
   public click = click.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
@@ -178,8 +177,7 @@ class Shop extends Phaser.Scene {
     this.add.sprite(0, 344 + this.height, 'flags').setOrigin(0, 0).setFlipX(true);
     this.add.sprite(466, 344 + this.height, 'flags').setOrigin(1, 0);
     this.herdBoostBtn = this.add.sprite(350, 480 + this.height, 'improve-collector');
-    this.herdBoostPrice = 20 * this.state[`user${this.state.farm}`].takenHerdBoost;
-    this.herdBoostBtnText = this.add.text(350, 475 + this.height, this.state.lang.buy + '    ' + this.herdBoostPrice, {
+    this.herdBoostBtnText = this.add.text(350, 475 + this.height, this.state.lang.buy + '    ' + this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost, {
       font: '26px Shadow',
       color: '#FFFFFF'
     }).setOrigin(0.5, 0.5).setStroke('#3B5367', 4).setDepth(10);
@@ -193,12 +191,22 @@ class Shop extends Phaser.Scene {
     }).setOrigin(0.5, 0.5);
 
     this.clickShopBtn({ btn: this.herdBoostBtn, title: this.herdBoostBtnText, img: this.herdBoostDiamondBtn}, (): void => {
-      if (this.state.user.diamonds >= this.herdBoostPrice){
-        this.state.user.diamonds -= this.herdBoostPrice;
+      if (this.state.user.diamonds >= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost){
+        this.state.user.diamonds -= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost;
         this.state[`user${this.state.farm}`].takenHerdBoost++;
         this.game.scene.keys[this.state.farm].startHerdBoost();
       } else {
-        console.log('мало кристалов');
+        this.state.convertor = {
+          fun: 0,
+          count: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
+          diamonds: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
+          type: 1
+        }
+        this.game.scene.keys[this.state.farm].exchange();
+        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+        this.scene.stop();
+        this.scene.stop('ShopBars');
+        this.scene.stop('Modal');
       }
       // проверка хватает ли денег и лишь потом запуск сцены
     });
@@ -223,7 +231,7 @@ class Shop extends Phaser.Scene {
         this.herdBoostTimerText.setVisible(true);
         this.herdBoostBtn.setY(480 + this.height);
         this.herdBoostBtnText.setY(475 + this.height);
-        this.herdBoostBtnText.setText(this.state.lang.buy + '    ' + this.herdBoostPrice);
+        this.herdBoostBtnText.setText(this.state.lang.buy + '    ' + this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost);
         this.herdBoostDiamondBtn.setVisible(true);
       }
     }
