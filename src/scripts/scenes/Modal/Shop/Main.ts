@@ -181,7 +181,7 @@ class Shop extends Phaser.Scene {
       font: '26px Shadow',
       color: '#FFFFFF'
     }).setOrigin(0.5, 0.5).setStroke('#3B5367', 4).setDepth(10);
-    this.herdBoostDiamondBtn = this.add.sprite(355, 480 + this.height, 'diamond').setVisible(false).setScale(0.11);
+    this.herdBoostDiamondBtn = this.add.sprite(367, 475 + this.height, 'diamond').setVisible(false).setScale(0.11);
       
     this.herdBoostTimerText = this.add.text(330, 420 + this.height, this.state.lang.stillForBoost + ' ' + shortTime(this.state.timeToHerdBoost, this.state.lang), {
       font: '20px Shadow',
