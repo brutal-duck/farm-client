@@ -942,9 +942,11 @@ class SheepPreload extends Phaser.Scene {
     });
 
     localStorage.farm = 'Sheep';
-
+    // получилили мы данные о овцах
+    console.log(this.state.timeToHerdBoost);
+    console.log(this.state.userSheep.takenHerdBoost);
   }
-
+  
 }
 
 export default SheepPreload;
