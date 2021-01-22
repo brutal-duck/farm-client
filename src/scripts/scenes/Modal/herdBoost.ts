@@ -372,8 +372,27 @@ function stopBoostScene(): void {
 function getRandomAnimal(type: string, crystal: boolean = false): void {
   let {x, y, side, _id} = this.getRandomStartPosition(); 
 
-  let randomType: number = random(1, this.state[`user${this.state.farm}`].fair);
+  // Изменение рандома
+  let randomArray: number[] = [];
+  for (let i: number = 0; i < this.state[`user${this.state.farm}`].fair; i++) {
+    randomArray.push(i ** 3 * 100);
+  }
+
+  let randomIndex: number = random(0, this.state[`user${this.state.farm}`].fair ** 3 * 100);
+  let randomType: number;
+  console.log('randomIndex', randomIndex);
+  
+  for (let i = randomArray.length - 1; i >= 0; i--) {
+    if (randomIndex >= randomArray[i]) {
+      randomType = randomArray.length - i;
+      break;
+    } 
+  }
+  console.log('randomType', randomType);
+  console.log('Разброс рандома', 0 + ' - ' + this.state[`user${this.state.farm}`].fair ** 3 * 100)
+  // кристалическое животное?
   if (crystal) randomType = 0;
+
   let animal: Phaser.Physics.Arcade.Sprite = this[`${this.state.farm.toLowerCase()}ForBoost`].create(x, y, type + randomType)
     .setDepth(y)
     .setInteractive()
