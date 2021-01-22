@@ -186,6 +186,8 @@ class Shop extends Phaser.Scene {
     let xBtn: number =  330;
     let yBtn: number = 520 + this.height;
     this.herdBoostBtn = this.add.sprite(xBtn, yBtn, 'improve-collector');
+    this.herdBoostBtn.setDataEnabled();
+    this.herdBoostBtn.data.values.updated = false;
 
     this.herdBoostDiamondBtn = this.add.sprite(xBtn, yBtn - 5, 'diamond').setVisible(true).setScale(0.11);
     
@@ -251,14 +253,14 @@ class Shop extends Phaser.Scene {
     
     // укзывающие стрелки
     if (this.arrows?.active) this.arrows.update();
-    
+
     // обновляем время бустера
     if (this.state.modal.shopType === 4 && this.state[`user${this.state.farm}`].part >= 6) {
       let xBtn: number =  330;
       let yBtn: number = 520 + this.height;
       this.herdBoostTimerText.setText(this.state.lang.stillForBoost + ' ' + shortTime(this.state.timeToHerdBoost, this.state.lang));
-      if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0) { 
-        
+      if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0 && !this.herdBoostBtn.data.values.updated) { 
+        this.herdBoostBtn.data.values.updated = true;
         // если не взят буст
         this.herdBoostBtnLeftText.setText(this.state.lang.pickUp); 
         this.herdBoostDiamondBtn.setVisible(false);
