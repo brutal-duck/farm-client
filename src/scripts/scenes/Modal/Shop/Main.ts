@@ -211,11 +211,6 @@ class Shop extends Phaser.Scene {
       align: 'center'
     }).setOrigin(0.5, 0.5);
 
-
-    console.log(this.herdBoostBtn.x)
-    console.log(this.herdBoostBtnLeftText);
-    console.log(this.herdBoostDiamondBtn)
-
     this.clickModalBtn({ btn: this.herdBoostBtn, title: this.herdBoostBtnLeftText, text1: this.herdBoostBtnRightText, img1: this.herdBoostDiamondBtn }, (): void => {
       if (this.state.user.diamonds >= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost) {
         this.state.user.diamonds -= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost;

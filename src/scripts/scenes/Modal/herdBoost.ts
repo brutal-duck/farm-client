@@ -389,7 +389,6 @@ function getRandomAnimal(type: string, crystal: boolean = false): void {
     } 
   }
 
-  console.log('Разброс рандома', 0 + ' - ' + this.state[`user${this.state.farm}`].fair ** 2 * 100)
   // кристалическое животное?
   if (crystal) randomType = 0;
 
