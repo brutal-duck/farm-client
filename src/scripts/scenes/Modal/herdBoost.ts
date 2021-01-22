@@ -353,6 +353,13 @@ function getRandomSheep(): void {
   let {x, y, side, _id} = this.getRandomStartPosition(); 
 
   let randomType: number = random(1, this.state.userSheep.fair);
+  // if (true) {
+  //   randomType = random(0, this.state.userSheep.fair);
+  // } else {
+  //   randomType = random(1, this.state.userSheep.fair);
+  // }
+
+
   let sheep: Phaser.Physics.Arcade.Sprite = this.sheepForBoost.create(x, y, 'sheep' + randomType)
     .setDepth(y)
     .setInteractive()
