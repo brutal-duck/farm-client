@@ -216,11 +216,21 @@ function createAnimals(timerText, allItems, boostCounterWindow): void {
       delay: this.state.herdBoostDelay,
       loop: true,
       callback: () => {
-        this.getRandomSheep(); 
+        this.getRandomAnimal('sheep'); 
       },
       callbackScope: this
     });
     
+    let timerCreateCrystalAnimal: Phaser.Time.TimerEvent = this.time.addEvent({
+      delay: this.state.herdBoostTime / 3 * 1000,
+      loop: true,
+      callback: () => {
+        // this.getRandomSheep(); 
+        this.getRandomAnimal('sheep', true);
+      },
+      callbackScope: this
+    });
+
     // таймер переключающий время
     let timerTickText: Phaser.Time.TimerEvent = this.time.addEvent({
       delay: 1000,
@@ -235,6 +245,7 @@ function createAnimals(timerText, allItems, boostCounterWindow): void {
           this.sheepForBoost.destroy(true);
           timerCreate.remove();
           timerTickText.remove();
+          timerCreateCrystalAnimal.remove();
           showEndScore.bind(this)(allItems, boostCounterWindow);
         }
       },
@@ -264,11 +275,19 @@ function createAnimals(timerText, allItems, boostCounterWindow): void {
       delay: this.state.herdBoostDelay,
       loop: true,
       callback: () => {
-        this.getRandomChicken();
+        this.getRandomAnimal('chicken');
       },
       callbackScope: this
     });
-    
+    // таймер создания кристалических животных
+    let timerCreateCrystalAnimal: Phaser.Time.TimerEvent = this.time.addEvent({
+      delay: this.state.herdBoostTime / 3 * 1000,
+      loop: true,
+      callback: () => { 
+        this.getRandomAnimal('chicken', true);
+      },
+      callbackScope: this
+    });
     // таймер переключающий время
     let currentTime: number = this.state.herdBoostTime;
 
@@ -282,6 +301,7 @@ function createAnimals(timerText, allItems, boostCounterWindow): void {
           this.chickenForBoost.destroy(true);
           timerCreate.remove();
           timerTickText.remove();
+          timerCreateCrystalAnimal.remove();
           showEndScore.bind(this)(allItems, boostCounterWindow);
         }
       },
@@ -349,77 +369,46 @@ function stopBoostScene(): void {
   });
 }
 
-function getRandomSheep(): void {
+function getRandomAnimal(type: string, crystal: boolean = false): void {
   let {x, y, side, _id} = this.getRandomStartPosition(); 
 
-  let randomType: number = random(1, this.state.userSheep.fair);
-  // if (true) {
-  //   randomType = random(0, this.state.userSheep.fair);
-  // } else {
-  //   randomType = random(1, this.state.userSheep.fair);
-  // }
-
-
-  let sheep: Phaser.Physics.Arcade.Sprite = this.sheepForBoost.create(x, y, 'sheep' + randomType)
+  let randomType: number = random(1, this.state[`user${this.state.farm}`].fair);
+  if (crystal) randomType = 0;
+  let animal: Phaser.Physics.Arcade.Sprite = this[`${this.state.farm.toLowerCase()}ForBoost`].create(x, y, type + randomType)
     .setDepth(y)
     .setInteractive()
     .setDataEnabled();
 
-  sheep.data.values.velocity = -this.state.herdBoostSpeedAnimal;
+  animal.data.values.velocity = -this.state.herdBoostSpeedAnimal;
 
   if (side === 'right') {
-    sheep.data.values.velocity = this.state.herdBoostSpeedAnimal;
+    animal.data.values.velocity = this.state.herdBoostSpeedAnimal;
   }
 
-  this.input.setDraggable(sheep); 
-  sheep.data.values.type = randomType;
-  sheep.data.values.side = side; 
-  sheep.data.values._id = _id;
-  sheep.data.values.drag = false;
-  sheep.data.values.merging = false; // метка животного в мерджинге
+  this.input.setDraggable(animal); 
+  animal.data.values.type = randomType;
+  animal.data.values.side = side; 
+  animal.data.values._id = _id;
+  animal.data.values.drag = false;
+  animal.data.values.merging = false; // метка животного в мерджинге
 
-  // случайная шерсть
-  let stage: number = random(2, 4); 
-  sheep.data.values.stage = stage;
+  animal.setVelocityX(animal.data.values.velocity);
+  // случайная шерсть если овца
+  if (type === 'sheep') {
+
+    let stage: number = random(2, 4); 
+
+    animal.data.values.stage = stage;
   
-  sheep.setVelocityX(sheep.data.values.velocity);
-
-  sheep.data.values.woolSprite = this.physics.add.sprite(x, y, 'sheep-' + sheep.data.values.side + '-' + sheep.data.values.type + '-' + sheep.data.values.stage);
-
-  sheep.data.values.woolSprite.setDepth(y)
-    .setVelocityX(sheep.data.values.velocity);
-
-  sheep.play('sheep-move-' + side + sheep.data.values.type);
-  drag.bind(this)(sheep);
-}
-
-function getRandomChicken(): void {
+    animal.data.values.woolSprite = this.physics.add.sprite(x, y, type + '-' + animal.data.values.side + '-' + animal.data.values.type + '-' + animal.data.values.stage);
   
-  const {x, y, side, _id} = this.getRandomStartPosition(); 
-  
-  let randomType: number = random(1, this.state.userChicken.fair);
-  const chicken: Phaser.Physics.Arcade.Sprite = this.chickenForBoost.create(x, y, 'chicken' + randomType)
-    .setDepth(y)
-    .setInteractive()
-    .setDataEnabled();
-
-  chicken.data.values.velocity = -this.state.herdBoostSpeedAnimal;
-
-  if (side === 'right') {
-    chicken.data.values.velocity = this.state.herdBoostSpeedAnimal;
+    animal.data.values.woolSprite.setDepth(y)
+      .setVelocityX(animal.data.values.velocity);
   }
+  
 
-  this.input.setDraggable(chicken); 
-  chicken.data.values.type = randomType;
-  chicken.data.values.side = side;
-  chicken.data.values._id = _id;
-  chicken.data.values.merging = false; // метка животного в мерджинге
-  chicken.data.values.drag === false;
-  chicken.setVelocityX(chicken.data.values.velocity);
-
-  chicken.play('chicken-move-' + chicken.data.values.side + chicken.data.values.type);
-
-  drag.bind(this)(chicken);
+  animal.play(type + '-move-' + animal.data.values.side + animal.data.values.type);
+  drag.bind(this)(animal);
 }
 
 function getRandomStartPosition(): {x: number, y: number, side: string, _id: string} {
@@ -605,7 +594,7 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
         let newType = animal.data.values.type < this.state[`${this.state.farm.toLowerCase()}Settings`][`${this.state.farm.toLowerCase()}Settings`].length
           ? animal.data.values.type + 1
           : animal.data.values.type;
-
+        if (animal1.data.values.type === 0 && animal2.data.values.type === 0) newType = 0;
         this.state.herdBoostAnimals.push(newType);
 
         this.time.addEvent({ delay: 100, callback: (): void => {
@@ -639,7 +628,6 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
 
 export {
   herdBoostWindow,
-  getRandomSheep,
-  getRandomChicken,
+  getRandomAnimal,
   getRandomStartPosition
 };

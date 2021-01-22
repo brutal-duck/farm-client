@@ -52,7 +52,7 @@ import donate from './donate';
 import { changeNickname, support } from '../../html';
 import { bigButton, repositoryBtn, mergingCloud } from '../../elements';
   // буст "Стадо"
-import {herdBoostWindow, getRandomSheep, getRandomChicken, getRandomStartPosition} from './herdBoost';
+import {herdBoostWindow, getRandomAnimal, getRandomStartPosition} from './herdBoost';
 
 let partProgress: any = require("./../../../assets/images/modal/part-progress.png");
 let newbieBg: any = require("./../../../assets/images/daily/newbie-bg.png");
@@ -164,8 +164,7 @@ class Modal extends Phaser.Scene {
   public improveCollectorChicken = improveCollectorChicken.bind(this);
   // буст "Стадо"
   public herdBoostWindow = herdBoostWindow.bind(this);
-  public getRandomSheep = getRandomSheep.bind(this);
-  public getRandomChicken = getRandomChicken.bind(this);
+  public getRandomAnimal = getRandomAnimal.bind(this);
   public getRandomStartPosition = getRandomStartPosition.bind(this);
   public mergingCloud = mergingCloud.bind(this);
   
