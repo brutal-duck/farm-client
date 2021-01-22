@@ -445,7 +445,7 @@ function getRandomStartPosition(): {x: number, y: number, side: string, _id: str
   return {x, y, side, _id};
 }
 
-function drag(animal): void {
+function drag(animal: Phaser.Physics.Arcade.Sprite): void {
   if (animal.body === null) return;
   this.input.on('dragstart', (pointer: any, animal: any): void => {
     if (animal.data.values.merging) this.mergingArray = []; // если животное из мерджа то очистить массив
@@ -454,12 +454,7 @@ function drag(animal): void {
     animal.data.values.woolSprite?.setVelocity(0, 0);
     animal.body.onWorldBounds = false; // чтобы не могли перетащить за пределы
       // анимация
-    if(animal.data.values.side === 'left') {
-      animal.anims.play(this.state.farm.toLowerCase() + '-stay-left' + animal.data.values.type, true);
-    } else {
-      animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
-    }
-
+    animal.anims.play(this.state.farm.toLowerCase() + '-stay-' + animal.data.values.side + animal.data.values.type, true);
   });
 
   this.input.on('drag', (pointer: any, animal: Phaser.Physics.Arcade.Sprite, dragX: number, dragY: number): void => {
