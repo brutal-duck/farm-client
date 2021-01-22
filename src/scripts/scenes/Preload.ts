@@ -79,6 +79,8 @@ let boostLeaves: any = require("./../../assets/images/boost/leaves.png");
 let flags: any = require("./../../assets/images/modal/flags.png");
 let herdBoostSheepIcon: any = require("./../../assets/images/icons/sheep-herd-boost.png");
 let herdBoostChickenIcon: any = require("./../../assets/images/icons/chicken-herd-boost.png");
+let herdBoostChickenNative: any = require("./../../assets/images/icons/chicken-herd-boost.png");
+let herdBoostSheepNative: any = require("./../../assets/images/icons/sheep-herd-boost.png");
 
 class Preload extends Phaser.Scene {
   constructor() {
@@ -184,7 +186,8 @@ class Preload extends Phaser.Scene {
     this.load.image('flags', flags);
     if (this.state.farm === 'Sheep') this.load.image('sheep-herd-boost-icon', herdBoostSheepIcon);
     if (this.state.farm === 'Chicken') this.load.image('chicken-herd-boost-icon', herdBoostChickenIcon);
-    
+    if (this.state.farm === 'Sheep') this.load.image('sheep-herd-boost-native', herdBoostSheepNative);
+    if (this.state.farm === 'Chicken') this.load.image('chicken-herd-boost-native', herdBoostChickenNative);
   }
 
 }

@@ -364,6 +364,7 @@ function moveToEnd(boostCounterWindow): void {
 
 function stopBoostScene(): void {
   this.input.on('pointerdown', ()=>{
+    this.state[`user${this.state.farm}`].takenHerdBoost++;
     this.scene.stop();
     this.game.scene.keys[this.state.farm].createBoostAnimal();
   });

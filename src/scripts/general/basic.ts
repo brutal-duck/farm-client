@@ -1884,6 +1884,26 @@ function createBoostAnimal(): void {
   this.state.herdBoostAnimals = [];
 }
 
+function updateNativeHerdBoost(): void {
+  if ((this.scene.isActive('Modal') ||
+  this.scene.isActive('Block') ||
+  this.scene.isActive('Tutorial') ||
+  this.state[`user${this.state.farm}`].part < 6) &&
+  this.game.scene.keys[`${this.state.farm}Bars`].nativeHerdBoost.visible) {
+    console.log('false')
+  this.game.scene.keys[`${this.state.farm}Bars`].nativeHerdBoost.setVisible(false);
+  
+} else if (!this.scene.isActive('Modal') &&
+  !this.scene.isActive('Block') &&
+  !this.scene.isActive('Tutorial') &&
+  this.state[`user${this.state.farm}`].part >= 6 &&
+  !this.game.scene.keys[`${this.state.farm}Bars`].nativeHerdBoost.visible) {
+    console.log('true')
+  this.game.scene.keys[`${this.state.farm}Bars`].nativeHerdBoost.setVisible(true);
+
+}
+}
+
 
 export {
   random,
@@ -1920,5 +1940,6 @@ export {
   createBoostAnimal,
   takeDonate,
   improveCollector,
-  debug
+  debug,
+  updateNativeHerdBoost
 }

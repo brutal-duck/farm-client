@@ -327,8 +327,7 @@ function interval(): void {
       console.log('очистка таймера');
       this.state[`user${this.state.farm}`].takenHerdBoost = 0;
       this.state.timeToHerdBoost = 86400;
-    }
-    
+    }    
 
   }, callbackScope: this, loop: true });
 

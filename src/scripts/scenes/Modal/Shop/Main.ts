@@ -216,7 +216,6 @@ class Shop extends Phaser.Scene {
     this.clickModalBtn({ btn: this.herdBoostBtn, title: this.herdBoostBtnLeftText, text1: this.herdBoostBtnRightText, img1: this.herdBoostDiamondBtn }, (): void => {
       if (this.state.user.diamonds >= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost) {
         this.state.user.diamonds -= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost;
-        this.state[`user${this.state.farm}`].takenHerdBoost++;
         this.game.scene.keys[this.state.farm].startHerdBoost();
 
         if (this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost > 0) {
@@ -250,10 +249,9 @@ class Shop extends Phaser.Scene {
   }
   
   public update(): void {
-    
     // укзывающие стрелки
     if (this.arrows?.active) this.arrows.update();
-
+    
     // обновляем время бустера
     if (this.state.modal.shopType === 4 && this.state[`user${this.state.farm}`].part >= 6) {
       let xBtn: number =  330;
@@ -272,6 +270,8 @@ class Shop extends Phaser.Scene {
         this.herdBoostTimerText.setVisible(false);
       } 
     }
+
+    
   }
 
 
