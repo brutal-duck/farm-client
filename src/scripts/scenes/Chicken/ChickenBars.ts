@@ -129,7 +129,6 @@ class ChickenBars extends Phaser.Scene {
         type: 2,
         shopType: 4
       }
-      this.updateNativeHerdBoost();
       this.state.modal = modal;
       this.scene.launch('Modal', this.state);
 
