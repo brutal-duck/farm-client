@@ -1,6 +1,9 @@
-let height: number
+let height: number = 112
+let centerY: number
 
 function tasks(): void {
+
+  centerY = this.cameras.main.centerY + 60 //Смещение центра окна по Y
   
   // Старый фон окна заданий
   // this.header = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY - Math.floor(height / 2), 'tasks-window-side')
@@ -14,11 +17,11 @@ function tasks(): void {
   // this.body = this.add.tileSprite(this.cameras.main.centerX - 3, this.cameras.main.centerY, 614, height + 2, 'tasks-window-body')
   //   .setOrigin(0.5, 0.5);
 
-  this.top = this.add.image(this.cameras.main.centerX + 1, this.cameras.main.centerY - Math.floor(height / 2), 'tasks-top').setOrigin(0.5, 1)
-  this.middle = this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY, 563, height, 'tasks-middle').setOrigin(0.5, 0.5)
-  // this.middle = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'tasks-middle').setOrigin(0.5, 0.5).setDisplaySize(563, height)
-  this.bottom = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY + Math.floor(height / 2), 'tasks-bottom').setOrigin(0.5, 0.5)
-  this.close = this.add.sprite(606, this.cameras.main.centerY - Math.floor(height / 2 + 114), 'tasks-close')
+  this.top = this.add.image(this.cameras.main.centerX + 1, centerY - Math.floor(height / 2), 'tasks-top').setOrigin(0.5, 1)
+  this.middle = this.add.tileSprite(this.cameras.main.centerX, centerY, 563, height, 'tasks-middle').setOrigin(0.5, 0.5)
+  // this.middle = this.add.image(this.cameras.main.centerX, centerY, 'tasks-middle').setOrigin(0.5, 0.5).setDisplaySize(563, height)
+  this.bottom = this.add.image(this.cameras.main.centerX, centerY + Math.floor(height / 2), 'tasks-bottom').setOrigin(0.5, 0.5)
+  this.close = this.add.sprite(606, centerY - Math.floor(height / 2 + 114), 'tasks-close')
 
   this.tasksWindow();
 
@@ -284,11 +287,13 @@ function tasks(): void {
 
 function tasksWindow(): void {
 
-  console.log(this.state.modal.tasksParams);
-  
-  let height: number = 600;
+  // console.log(this.state.modal.tasksParams);
+
   let tasks = [];
   let countBreed: number;
+  // let taskCenterY: number = 686 - (this.state.modal.tasksParams.tasks.length * 80)
+  let h: number = 0
+    
 
   if (this.state.farm === 'Chicken') {
     countBreed = this.state.chickenSettings.chickenSettings.length;
@@ -296,43 +301,14 @@ function tasksWindow(): void {
     countBreed = this.state.sheepSettings.sheepSettings.length;
   }
 
-  this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - Math.floor(height / 2 + 200), this.state.modal.tasksParams.part, {
-    font: '72px Shadow',
-    fill: '#FFFFFF'
-  }).setOrigin(0.5, 0.5).setStroke('#AAAAAA', 1);
-
-  this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - Math.floor(height / 2 + 150), this.state.lang.part, {
-    font: '34px Shadow',
-    fill: '#FFFFFF'
-  }).setOrigin(0.5, 0.5).setStroke('#AAAAAA', 1);
-
-  this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - Math.floor(height / 2 + 78), this.state.modal.tasksParams.name, {
-    font: '32px Shadow',
-    fill: '#F2DCFF'
-  }).setOrigin(0.5, 0.5)
-
-  this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + Math.floor(height / 2 + 10), this.state.modal.tasksParams.farmer, {
-    font: '26px Shadow',
-    fill: '#8f3f00'
-  }).setOrigin(0.5, 0.5)
-  
-  this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + Math.floor(height / 2 + 54), this.state.modal.tasksParams.description, {
-    font: '20px Shadow',
-    fill: '#c15e00',
-    align: 'center',
-    wordWrap: { width: 420 }
-  }).setOrigin(0.5, 0.5)
-
-  // Плашки заданий
-  this.add.image(this.cameras.main.centerX + 2, this.cameras.main.centerY, 'tasks-reward').setOrigin(0.5, 0.5).setDisplaySize(460, 180)
-  this.add.image(this.cameras.main.centerX + 100, this.cameras.main.centerY + 89, 'tasks-bar').setOrigin(0.5, 1)
-
   // Цикл создания tasks
-  for (let i in this.state.modal.tasksParams.tasks) {
+  let j: number = 3
+  let taskCenterY: number = 686 - (j * 80)
+
+  for (let i = 0; i < j; i++) {
 
     let task: Itasks = this.state.modal.tasksParams.tasks[i];
     let taskData: ItaskData = this.game.scene.keys[this.state.farm].getTaskData(task)
-    let boardColor: number = 0xFFEBC5;
     let completed: boolean | Phaser.GameObjects.Image = false;
     let awardText: boolean | Phaser.GameObjects.Image = false;
     let awardIcon: boolean | Phaser.GameObjects.Image = false;
@@ -340,42 +316,68 @@ function tasksWindow(): void {
     let takeButton: boolean | Phaser.GameObjects.Image = false; // зеленая кнопки
     let takeText: boolean | Phaser.GameObjects.Text = false; // текст кнопки
     let gotAwarded: boolean = false;
-    let textWidth: number = 300;
+    let textWidth: number = 330;
+    let barHeight: number = 154
 
-    // icon & text
-    let icon: Phaser.GameObjects.Image = this.add.image(165, 0, taskData.icon).setDepth(1);
-    let text: Phaser.GameObjects.Text = this.add.text(220, 0, taskData.name, {
-      font: '23px Bip',
-      color: '#713D1E',
-      align: 'left',
+    // Плашки заданий
+    this.add.image(this.cameras.main.centerX + 2, taskCenterY, 'tasks-reward').setOrigin(0.5, 0.5).setDisplaySize(460, barHeight)
+    this.add.image(this.cameras.main.centerX + 100, taskCenterY + 76, 'tasks-bar').setOrigin(0.5, 1)
+
+    // Иконка и текст задания
+    let icon: Phaser.GameObjects.Image = this.add.image(194, taskCenterY - 6, taskData.icon).setDepth(1).setOrigin(0.5, 0.5).setScale(0.9);
+    let text: Phaser.GameObjects.Text = this.add.text(420, taskCenterY - 20, taskData.name, {
+      font: '24px Bip',
+      color: '#944000',
+      align: 'center',
       wordWrap: { width: textWidth }
-    }).setDepth(1).setOrigin(0, 0);
+    }).setDepth(1).setOrigin(0.5, 0.5);
+    let textHeight: number = text.getBounds().height
 
-    // complete
     if (task.done === 1) {
 
-      boardColor = 0xd5b272;
+      // Галочка и затемнение иконки
       icon.setTint(0x777777);
-      completed = this.add.image(165, 0, 'completed').setDepth(1);
+      completed = this.add.image(194, taskCenterY - 6, 'completed').setDepth(1).setOrigin(0.5, 0.5);
 
     } else {
 
+      // Счетчик прогресса
       let count: number = task.count; //?
       if (task.type === 14 && task.count === 0) count = countBreed; //?
       
-      doneText = this.add.text(222, 0, this.state.lang.performed + ' ' + task.progress + ' / ' + count, {
-        font: '20px Bip',
-        color: '#9e3d08'
-      }).setDepth(1).setOrigin(0, 0.5);
+      doneText = this.add.text(194, taskCenterY + 60, task.progress + '/' + count, {
+        font: '28px Shadow',
+        color: '#944000'
+      }).setDepth(1).setOrigin(0.5, 0.5).setShadow(1, 1, 'rgba(0, 0, 0, 0.5)', 5);
+
+      this.add.graphics()
+        .clear()
+        // Внутренний круг
+        .lineStyle(4, 0xc09245, 1)
+        .beginPath()
+        .arc(194, taskCenterY - 6, 40, 0, Math.PI * 2)
+        .strokePath()
+        // Прогресс
+        .lineStyle(8, 0x70399f, 1)
+        .beginPath()
+        .arc(194, taskCenterY - 6, 46, Math.PI / -2, 40 * (6.3 / 100) - Math.PI / 2)
+        .strokePath()
+        // Внешний круг
+        .lineStyle(4, 0xc09245, 1)
+        .beginPath()
+        .arc(194, taskCenterY - 6, 51, 0, Math.PI * 2)
+        .strokePath()
+
+        .setDepth(3)
 
     }
 
     // Кнопка получения награды
-    if (task.done === 1 && task.got_awarded === 0) {
+    if (task.done === 0 && task.got_awarded === 0) {
 
-      takeButton = this.add.image(540, 0, 'little-button').setDepth(1);
-      takeText = this.add.text(540, 0, this.state.lang.pickUp, {
-        font: '20px Shadow',
+      takeButton = this.add.image(422, taskCenterY + 52, 'little-button').setDepth(1).setDisplaySize(134, 48);
+      takeText = this.add.text(422, taskCenterY + 46, this.state.lang.pickUp, {
+        font: '22px Shadow',
         color: '#FFFFFF'
       }).setOrigin(0.5, 0.5).setDepth(1);
 
@@ -387,17 +389,29 @@ function tasksWindow(): void {
 
     if ((task.done === 1 && task.got_awarded === 0) || task.done === 0) {
       
-      awardText = this.add.text(261, 300, String(task.diamonds), {
-        font: '20px Bip',
+      // Кристал и его количество
+      awardText = this.add.text(542, taskCenterY + 50, String(task.diamonds), {
+        font: '34px Bip',
         color: '#FFFFFF'
-      }).setDepth(2).setOrigin(0, 0.5);
+      }).setDepth(2).setOrigin(0.5, 0.5).setShadow(2, 2, 'rgba(0, 0, 0, 0.5)', 5);
 
-      awardIcon = this.add.image(231, 300, 'diamond')
+      awardIcon = this.add.image(510, taskCenterY + 50, 'diamond')
         .setDepth(2)
-        .setScale(0.1)
-        .setOrigin(0, 0.5);
+        .setScale(0.14)
+        .setOrigin(0.5, 0.5);
 
     }
+
+    if (textHeight > 60 && Number(i) < j) {
+      height += 166
+      // taskCenterY -= 96
+      console.log('!');
+    } else if (Number(i) < j) {
+      height += 152 + (Number(i) + 2 * 2)
+      
+      taskCenterY += barHeight + 6
+    }
+    
 
 
     tasks.push({
@@ -412,15 +426,43 @@ function tasksWindow(): void {
 
     console.log(task);
 
-    tasks[0].text
-
   }
 
   console.log(tasks);
+  // tasks[0].text
+
 
   // for (let i in tasks) {
 
   // }
+
+  // Остальной текст
+  this.add.text(this.cameras.main.centerX, centerY - Math.floor(height / 2 + 200), this.state.modal.tasksParams.part, {
+    font: '72px Shadow',
+    fill: '#FFFFFF'
+  }).setOrigin(0.5, 0.5).setShadow(2, 2, 'rgba(0, 0, 0, 0.5)', 5);
+
+  this.add.text(this.cameras.main.centerX, centerY - Math.floor(height / 2 + 150), this.state.lang.part, {
+    font: '34px Shadow',
+    fill: '#FFFFFF'
+  }).setOrigin(0.5, 0.5).setShadow(2, 2, 'rgba(0, 0, 0, 0.5)', 5);
+
+  this.add.text(this.cameras.main.centerX, centerY - Math.floor(height / 2 + 78), this.state.modal.tasksParams.name, {
+    font: '32px Shadow',
+    fill: '#F2DCFF'
+  }).setOrigin(0.5, 0.5)
+
+  this.add.text(this.cameras.main.centerX, centerY + Math.floor(height / 2 + 10), this.state.modal.tasksParams.farmer, {
+    font: '26px Shadow',
+    fill: '#8f3f00'
+  }).setOrigin(0.5, 0.5)
+  
+  this.add.text(this.cameras.main.centerX, centerY + Math.floor(height / 2 + 54), this.state.modal.tasksParams.description, {
+    font: '20px Shadow',
+    fill: '#c15e00',
+    align: 'center',
+    wordWrap: { width: 420 }
+  }).setOrigin(0.5, 0.5)
 
   // Кнопка закрытия
   this.clickButton(this.close, (): void => {
@@ -430,15 +472,22 @@ function tasksWindow(): void {
 
   this.resizeTasksWindow(height);
 
+  // this.add.graphics()
+  // .lineStyle(8, 'black', 1)
+  // .beginPath()
+  // .arc(this.top.x, this.top.y + 85, 4, 0, Math.PI * 2)
+  // .strokePath()
+  // .setDepth(10)
+
 }
 
 // задать размеры
 function resizeTasksWindow(height: number): void {
 
-  this.top.y = this.cameras.main.centerY - Math.floor(height / 2);
+  this.top.y = centerY - Math.floor(height / 2);
   this.middle.height = height;
-  this.bottom.y = this.cameras.main.centerY + Math.floor(height / 2);
-  this.close.y = this.cameras.main.centerY - Math.floor(height / 2 + 114);
+  this.bottom.y = centerY + Math.floor(height / 2);
+  this.close.y = centerY - Math.floor(height / 2 + 114);
 
 }
 
