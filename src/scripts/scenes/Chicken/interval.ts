@@ -272,6 +272,18 @@ function interval(): void {
       this.state.timeToHerdBoost = 86400;
     }
 
+    if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0) {
+      this.state.nativeCounter[3] = 1;
+    }
+
+    let nativeCount = 0;
+    
+    for (let i = 0; i < this.state.nativeCounter.length; i++) {
+      nativeCount += this.state.nativeCounter[i];
+    }
+    this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setText(nativeCount);
+
+
   }, callbackScope: this, loop: true });
 
 }

@@ -16,6 +16,7 @@ let herdBoostPrice: number;
 let herdBoostTime: number;
 let herdBoostDelay: number;
 let herdBoostAnimals: number[];
+let nativeCounter: number[];
 let timeToHerdBoost: number;
 let user: Iuser;
 let userSheep: IuserSheep;
@@ -76,6 +77,7 @@ let state: Istate = {
   dailyAwards, // награды новичка
 
   // не записываемые в localStorage
+  nativeCounter,
   lang, // массив слов выбранного языка
   modal, // настройки окон
   animal, // сюда присваиваем животное (для окна)

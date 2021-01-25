@@ -53,6 +53,7 @@ function interval(): void {
       }, callbackScope: this, loop: false });
     }
 
+    // тутор про бустер
     if (this.state.userSheep.part >= 6 &&
     !this.state.user.additionalTutorial.herdBoost &&
     !this.scene.isActive('Modal') &&
@@ -338,7 +339,21 @@ function interval(): void {
       console.log('очистка таймера');
       this.state[`user${this.state.farm}`].takenHerdBoost = 0;
       this.state.timeToHerdBoost = 86400;
-    }    
+    } 
+
+    if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0) {
+      this.state.nativeCounter[3] = 1;
+    }
+
+    let nativeCount = 0;
+    
+    for (let i = 0; i < this.state.nativeCounter.length; i++) {
+      nativeCount += this.state.nativeCounter[i];
+    }
+    this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setText(nativeCount);
+
+
+    
 
   }, callbackScope: this, loop: true });
 

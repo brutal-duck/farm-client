@@ -333,6 +333,7 @@ interface Istate {
   herdBoostTime: number;
   herdBoostDelay: number;
   herdBoostAnimals: number[];
+  nativeCounter: number[];
   timeToHerdBoost: number;
   sheepSettings: IsheepSettings;
   chickenSettings: IchickenSettings;

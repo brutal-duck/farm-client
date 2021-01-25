@@ -33,13 +33,13 @@ class ShopBars extends Phaser.Scene {
 
     });
 
-    //буст
+    //натив вкладки с бустами
     this.nativeBoost = this.add.graphics()
       .fillStyle(0xFF2400, 1)
       .fillCircle(550, 165, 20)
       .setDepth(2)
       .setVisible(false);
-    this.nativeBoostCounter = this.add.text(550, 165, '!', {
+    this.nativeBoostCounter = this.add.text(550, 165, String(this.state.nativeCounter[3]), {
       font: '32px Shadow',
       color: '#f3eae6'
     }).setDepth(3)
