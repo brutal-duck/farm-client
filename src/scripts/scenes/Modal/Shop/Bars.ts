@@ -4,6 +4,8 @@ class ShopBars extends Phaser.Scene {
   
   public state: Istate;
   public clickButtonUp = clickButtonUp.bind(this);
+  public nativeBoost: Phaser.GameObjects.Graphics;
+  public nativeBoostCounter: Phaser.GameObjects.Text;
 
   constructor() {
     super('ShopBars');
@@ -30,6 +32,19 @@ class ShopBars extends Phaser.Scene {
       this.scene.stop('Modal');
 
     });
+
+    //буст
+    this.nativeBoost = this.add.graphics()
+      .fillStyle(0xFF2400, 1)
+      .fillCircle(550, 165, 20)
+      .setDepth(2)
+      .setVisible(false);
+    this.nativeBoostCounter = this.add.text(550, 165, '!', {
+      font: '32px Shadow',
+      color: '#f3eae6'
+    }).setDepth(3)
+      .setOrigin(0.5, 0.5)
+      .setVisible(false);
 
     if (this.state.farm === 'Sheep' && this.state.userSheep?.tutorial === 90) {
       close.setVisible(false);
@@ -170,6 +185,25 @@ class ShopBars extends Phaser.Scene {
 
   }
 
+  public update(): void {
+    this.updateNative();
+  }
+
+  public updateNative(): void{
+    if (this.state.modal.shopType === 4 && 
+    (this.state[`user${this.state.farm}`].part < 6 ||
+    this.state[`user${this.state.farm}`].takenHerdBoost > 0) &&
+    this.nativeBoost.visible) {
+      this.nativeBoost.setVisible(false);
+      this.nativeBoostCounter.setVisible(false);
+    } else if (!(this.state.modal.shopType === 4) &&
+    this.state[`user${this.state.farm}`].part > 6 &&
+    this.state[`user${this.state.farm}`].takenHerdBoost <= 0 &&
+    !this.nativeBoost.visible) {
+      this.nativeBoost.setVisible(true);
+      this.nativeBoostCounter.setVisible(true);
+    }
+  }
 }
 
 export default ShopBars;

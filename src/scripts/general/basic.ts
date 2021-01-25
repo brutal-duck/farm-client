@@ -1884,26 +1884,24 @@ function createBoostAnimal(): void {
   this.state.herdBoostAnimals = [];
 }
 
-function updateNativeHerdBoost(): void {
+function updateNativeShop(): void {
   if ((this.scene.isActive('Modal') ||
   this.scene.isActive('Block') ||
   this.scene.isActive('Tutorial') ||
   (this.state[`user${this.state.farm}`].part < 6) ||
   this.state[`user${this.state.farm}`].takenHerdBoost > 0) &&
-  this.game.scene.keys[`${this.state.farm}Bars`].nativeHerdBoost.visible) {
-  this.game.scene.keys[`${this.state.farm}Bars`].nativeHerdBoost.setVisible(false)
-  this.game.scene.keys[`${this.state.farm}Bars`].nativeHerdBoostCounter.setVisible(false);
-  
-} else if (!this.scene.isActive('Modal') &&
+  this.game.scene.keys[`${this.state.farm}Bars`].nativeShop.visible) {
+    this.game.scene.keys[`${this.state.farm}Bars`].nativeShop.setVisible(false);
+    this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setVisible(false);
+  } else if (!this.scene.isActive('Modal') &&
   !this.scene.isActive('Block') &&
   !this.scene.isActive('Tutorial') &&
   this.state[`user${this.state.farm}`].part >= 6 &&
-  !this.game.scene.keys[`${this.state.farm}Bars`].nativeHerdBoost.visible &&
+  !this.game.scene.keys[`${this.state.farm}Bars`].nativeShop.visible &&
   this.state[`user${this.state.farm}`].takenHerdBoost <= 0) {
-  this.game.scene.keys[`${this.state.farm}Bars`].nativeHerdBoost.setVisible(true)
-  this.game.scene.keys[`${this.state.farm}Bars`].nativeHerdBoostCounter.setVisible(true);
-
-}
+    this.game.scene.keys[`${this.state.farm}Bars`].nativeShop.setVisible(true);
+    this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setVisible(true);
+  }
 }
 
 
@@ -1943,5 +1941,5 @@ export {
   takeDonate,
   improveCollector,
   debug,
-  updateNativeHerdBoost
+  updateNativeShop
 }

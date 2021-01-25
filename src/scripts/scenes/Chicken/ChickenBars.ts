@@ -5,7 +5,7 @@ import {
   clickModalBtn,
   shortNum,
   socialButtons,
-  updateNativeHerdBoost
+  updateNativeShop
 } from '../../general/basic';
 import {
   Collector,
@@ -70,8 +70,8 @@ class ChickenBars extends Phaser.Scene {
   public offline: Phaser.GameObjects.Sprite;
   public calendarText: Phaser.GameObjects.Text;
   public calendar: any;
-  public nativeHerdBoost: Phaser.GameObjects.Graphics;
-  public nativeHerdBoostCounter: Phaser.GameObjects.Text;
+  public nativeShop: Phaser.GameObjects.Graphics;
+  public nativeShopCounter: Phaser.GameObjects.Text;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -91,7 +91,7 @@ class ChickenBars extends Phaser.Scene {
   public newbieAwardAnimation = newbieAwardAnimation.bind(this);
   public plusDiamonds = plusDiamonds.bind(this);
   public firework250 = firework250.bind(this);
-  public updateNativeHerdBoost = updateNativeHerdBoost.bind(this);
+  public updateNativeShop = updateNativeShop.bind(this);
 
 
   public init(state: Istate): void {
@@ -122,28 +122,17 @@ class ChickenBars extends Phaser.Scene {
     let shop: Phaser.GameObjects.Image = this.add.image(370, this.height - 90, 'shop');
     let map: Phaser.GameObjects.Image = this.add.image(510, this.height - 90, 'map-icon');
 
-    this.nativeHerdBoost = this.add.graphics()
+    this.nativeShop = this.add.graphics()
       .fillStyle(0xFF2400, 1)
       .fillCircle(405, this.height - 140, 20)
       .setDepth(2)
       .setVisible(false);
-    this.nativeHerdBoostCounter = this.add.text(405, this.height - 140, '!', {
+    this.nativeShopCounter = this.add.text(405, this.height - 140, '!', {
       font: '32px Shadow',
       color: '#f3eae6'
     }).setDepth(3)
       .setOrigin(0.5, 0.5)
       .setVisible(false);
-    // буст
-    
-    this.click(this.nativeHerdBoost, (): void => {
-      let modal: Imodal = {
-        type: 2,
-        shopType: 4
-      }
-      this.state.modal = modal;
-      this.scene.launch('Modal', this.state);
-
-    });
 
     // быстрая покупка курицы
     this.clickButton(this.chickenBuy, (): void => {
@@ -406,7 +395,7 @@ class ChickenBars extends Phaser.Scene {
     // икнока календарика
     this.calendarAnimation();
 
-    this.updateNativeHerdBoost();
+    this.updateNativeShop();
 
   }
 
