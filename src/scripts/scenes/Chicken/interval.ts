@@ -16,17 +16,17 @@ function interval(): void {
 
     if (!statusBalance && balance.alarm) {
 
-      this.state.amplitude.getInstance().logEvent('resources', {
-        status: 'problem started',
-        farm_id: this.state.farm
-      });
+      // this.state.amplitude.getInstance().logEvent('resources', {
+      //   status: 'problem started',
+      //   farm_id: this.state.farm
+      // });
 
     } else if (statusBalance && !balance.alarm) {
 
-      this.state.amplitude.getInstance().logEvent('resources', {
-        status: 'problem is over',
-        farm_id: this.state.farm
-      });
+      // this.state.amplitude.getInstance().logEvent('resources', {
+      //   status: 'problem is over',
+      //   farm_id: this.state.farm
+      // });
 
     }
 

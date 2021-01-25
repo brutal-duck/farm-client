@@ -632,12 +632,6 @@ function collectWool(sheep: any, manualСollect: boolean = false): void {
     this.state.user.diamonds++;
     this.tryTask(19, 0);
 
-    this.state.amplitude.getInstance().logEvent('diamonds_get', {
-      type: 'diamond_animal',
-      count: 1,
-      farm_id: this.state.farm
-    });
-
     if (sheep.diamond >= 5) {
 
       if (this.caveTutor) {
@@ -654,6 +648,11 @@ function collectWool(sheep: any, manualСollect: boolean = false): void {
       sheep.shaveStatus.destroy();
       sheep.destroy();
       
+      this.state.amplitude.getInstance().logEvent('diamonds_get', {
+        type: 'diamond_animal',
+        count: 5,
+        farm_id: this.state.farm
+      });
     }
 
   }
