@@ -70,7 +70,8 @@ class ChickenBars extends Phaser.Scene {
   public offline: Phaser.GameObjects.Sprite;
   public calendarText: Phaser.GameObjects.Text;
   public calendar: any;
-  public nativeHerdBoost: Phaser.GameObjects.Image;
+  public nativeHerdBoost: Phaser.GameObjects.Graphics;
+  public nativeHerdBoostCounter: Phaser.GameObjects.Text;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -121,7 +122,17 @@ class ChickenBars extends Phaser.Scene {
     let shop: Phaser.GameObjects.Image = this.add.image(370, this.height - 90, 'shop');
     let map: Phaser.GameObjects.Image = this.add.image(510, this.height - 90, 'map-icon');
 
-    this.nativeHerdBoost = this.add.image(120, 240,'chicken-herd-boost-native').setVisible(false);
+    this.nativeHerdBoost = this.add.graphics()
+      .fillStyle(0xFF2400, 1)
+      .fillCircle(405, this.height - 140, 20)
+      .setDepth(2)
+      .setVisible(false);
+    this.nativeHerdBoostCounter = this.add.text(405, this.height - 140, '!', {
+      font: '32px Shadow',
+      color: '#f3eae6'
+    }).setDepth(3)
+      .setOrigin(0.5, 0.5)
+      .setVisible(false);
     // буст
     
     this.click(this.nativeHerdBoost, (): void => {

@@ -205,7 +205,6 @@ let calendar: any = require("./../../../assets/images/calendar.png");
 let adIcon: any = require("./../../../assets/images/icons/ad-icon.png");
 let bgAd: any = require("./../../../assets/images/icons/bg-ad.png");
 let bigButtonGreen: any = require("./../../../assets/images/modal/btn_lg.png");
-let herdBoostChickenNative: any = require("./../../../assets/images/icons/chicken-herd-boost.png");
 
 class ChickenPreload extends Phaser.Scene {
 
@@ -500,7 +499,6 @@ class ChickenPreload extends Phaser.Scene {
     this.load.image('ad-icon', adIcon);
     this.load.image('bg-ad', bgAd);
     this.load.image('big-btn-green', bigButtonGreen);
-    this.load.image('chicken-herd-boost-native', herdBoostChickenNative);
   }
 
   

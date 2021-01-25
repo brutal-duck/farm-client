@@ -1891,7 +1891,8 @@ function updateNativeHerdBoost(): void {
   (this.state[`user${this.state.farm}`].part < 6) ||
   this.state[`user${this.state.farm}`].takenHerdBoost > 0) &&
   this.game.scene.keys[`${this.state.farm}Bars`].nativeHerdBoost.visible) {
-  this.game.scene.keys[`${this.state.farm}Bars`].nativeHerdBoost.setVisible(false);
+  this.game.scene.keys[`${this.state.farm}Bars`].nativeHerdBoost.setVisible(false)
+  this.game.scene.keys[`${this.state.farm}Bars`].nativeHerdBoostCounter.setVisible(false);
   
 } else if (!this.scene.isActive('Modal') &&
   !this.scene.isActive('Block') &&
@@ -1899,7 +1900,8 @@ function updateNativeHerdBoost(): void {
   this.state[`user${this.state.farm}`].part >= 6 &&
   !this.game.scene.keys[`${this.state.farm}Bars`].nativeHerdBoost.visible &&
   this.state[`user${this.state.farm}`].takenHerdBoost <= 0) {
-  this.game.scene.keys[`${this.state.farm}Bars`].nativeHerdBoost.setVisible(true);
+  this.game.scene.keys[`${this.state.farm}Bars`].nativeHerdBoost.setVisible(true)
+  this.game.scene.keys[`${this.state.farm}Bars`].nativeHerdBoostCounter.setVisible(true);
 
 }
 }
