@@ -71,7 +71,7 @@ function hideItems([...args], boostCounterWindow): void {
         item.setAlpha(alpha);
       })
       if (alpha <= 0) {
-        moveItem.bind(this)([...args], boostCounterWindow); // двигаем плашку
+        moveItems.bind(this)([...args], boostCounterWindow); // двигаем плашку
         timer.remove();
       }
     },
@@ -79,26 +79,8 @@ function hideItems([...args], boostCounterWindow): void {
   });
 }
 
-function moveItem([...args], boostCounterWindow): void {
+function moveItems([...args], boostCounterWindow): void {
   let y = boostCounterWindow.y;
-
-  let timer: Phaser.Time.TimerEvent = this.time.addEvent({
-    delay: 5,
-    loop: true,
-    callback: () => {
-      y += 10;
-      boostCounterWindow.y = y
-      if (y >= 1080) {
-        timer.remove();
-        showItems.bind(this)([...args], boostCounterWindow) // показывам элементы и создаем мир
-      }
-    },
-    callbackScope: this
-  });
-}
-
-function showItems([...args], boostCounterWindow): void {
-
   let [timerText, leaves1, leaves2, countdown, text1, text2] = [...args];
   
   // установка новых позиций
@@ -125,7 +107,26 @@ function showItems([...args], boostCounterWindow): void {
   text2.setText(this.state.lang[`herdBoostTimer${this.state.farm}_2`]);
   text2.y = 1100;
 
-  const worldItems: any[] = createWorld.bind(this)(); 
+  let timer: Phaser.Time.TimerEvent = this.time.addEvent({
+    delay: 5,
+    loop: true,
+    callback: () => {
+      y += 10;
+      boostCounterWindow.y = y
+      if (y >= 1080) {
+        timer.remove();
+        showItems.bind(this)([...args], boostCounterWindow) // показывам элементы и создаем мир
+      }
+    },
+    callbackScope: this
+  });
+}
+
+function showItems([...args], boostCounterWindow): void {
+
+  let [timerText] = [...args];
+
+  const worldItems: any[] = createWorld.bind(this)();  // Создаем мир и записываем элементы в массив, чтобы потом скрыть
 
   let allItems: any[] = args.concat(worldItems);
 
