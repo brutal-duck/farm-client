@@ -452,6 +452,16 @@ function doneTutorCave2(): void {
 
 }
 
+function doneTutorHerdBoost1(): void {
+
+  this.state.user.additionalTutorial.herdBoost = true;
+  this.scene.stop('Tutorial');
+
+  this.time.addEvent({ delay: 1000, callback: (): void => {
+    this.showTutorial('herdBoost2');
+  }, callbackScope: this, loop: false });
+
+}
 
 // отмена всего обучения
 function skipTutorial(): void {
@@ -465,6 +475,7 @@ function skipTutorial(): void {
   this.state.userSheep.tutorial = 100;
   this.state.user.additionalTutorial.balance = true;
   this.state.user.additionalTutorial.cave = true;
+  this.state.user.additionalTutorial.herdBoost = true;
 
   for (let i in this.sheep.children.entries) {
     this.sheep.children.entries[i].setVisible(true);
