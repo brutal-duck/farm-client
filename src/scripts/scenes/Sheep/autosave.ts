@@ -62,13 +62,13 @@ function autosave(): void {
     takenHerdBoost: this.state.userSheep.takenHerdBoost,
   }
   
-  localStorage.user = JSON.stringify(this.state.user);
-  localStorage.userSheep = JSON.stringify(this.state.userSheep);
-  localStorage.sheepTasks = JSON.stringify(tasks);
-  localStorage.sheepTerritories = JSON.stringify(territories);
-  localStorage.sheep = JSON.stringify(sheep);
-  localStorage.sheepTime = Math.round(new Date().getTime() / 1000);
-  localStorage.dailyAwards = JSON.stringify(this.state.dailyAwards);
+  // localStorage.user = JSON.stringify(this.state.user);
+  // localStorage.userSheep = JSON.stringify(this.state.userSheep);
+  // localStorage.sheepTasks = JSON.stringify(tasks);
+  // localStorage.sheepTerritories = JSON.stringify(territories);
+  // localStorage.sheep = JSON.stringify(sheep);
+  // localStorage.sheepTime = Math.round(new Date().getTime() / 1000);
+  // localStorage.dailyAwards = JSON.stringify(this.state.dailyAwards);
 
   const data = { 
     id: this.state.user.id,

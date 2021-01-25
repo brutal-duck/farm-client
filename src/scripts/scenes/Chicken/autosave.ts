@@ -74,14 +74,14 @@ function autosave(): void {
 
   }
 
-  localStorage.user = JSON.stringify(this.state.user);
-  localStorage.userChicken = JSON.stringify(this.state.userChicken);
-  localStorage.chickenTasks = JSON.stringify(tasks);
-  localStorage.chickenTerritories = JSON.stringify(territories);
-  localStorage.chicken = JSON.stringify(chicken);
-  localStorage.chickenEggs = JSON.stringify(eggs);
-  localStorage.chickenTime = Math.round(new Date().getTime() / 1000);
-  localStorage.dailyAwards = JSON.stringify(this.state.dailyAwards);
+  // localStorage.user = JSON.stringify(this.state.user);
+  // localStorage.userChicken = JSON.stringify(this.state.userChicken);
+  // localStorage.chickenTasks = JSON.stringify(tasks);
+  // localStorage.chickenTerritories = JSON.stringify(territories);
+  // localStorage.chicken = JSON.stringify(chicken);
+  // localStorage.chickenEggs = JSON.stringify(eggs);
+  // localStorage.chickenTime = Math.round(new Date().getTime() / 1000);
+  // localStorage.dailyAwards = JSON.stringify(this.state.dailyAwards);
 
   const data = { 
     id: this.state.user.id,
