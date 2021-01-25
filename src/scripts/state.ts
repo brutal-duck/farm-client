@@ -77,7 +77,7 @@ let state: Istate = {
   dailyAwards, // награды новичка
 
   // не записываемые в localStorage
-  nativeCounter,
+  nativeCounter, // счетчик нативов в магазине ['diamonds', 'gold', 'animals', 'booster']
   lang, // массив слов выбранного языка
   modal, // настройки окон
   animal, // сюда присваиваем животное (для окна)
