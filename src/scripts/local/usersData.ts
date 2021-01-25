@@ -10,7 +10,8 @@ let userData: Iuser = {
   additionalTutorial: {
     balance: false,
     cave: false,
-    collector: false
+    collector: false,
+    herdBoost: false
   },
   takenReward: false,
 }
