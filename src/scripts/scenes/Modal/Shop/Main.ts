@@ -164,7 +164,9 @@ class Shop extends Phaser.Scene {
       this.scrolling.bottom = this.height - this.heightWindow + 300;   
       if (this.state.farm === 'Sheep') this.sheepBoosts();
       else if (this.state.farm === 'Chicken') this.chickenBoosts();
-      if (this.state[`user${this.state.farm}`].part >= 6) this.herdBoost(); // проверяем главу и создаем окно только если глава выше 6
+      console.log(this.state.user.additionalTutorial.herdBoost);
+      if (this.state[`user${this.state.farm}`].part >= 6 &&
+      this.state.user.additionalTutorial.herdBoost) this.herdBoost(); // проверяем главу и создаем окно только если глава выше 6
     }
 
   }
@@ -253,7 +255,9 @@ class Shop extends Phaser.Scene {
     if (this.arrows?.active) this.arrows.update();
     
     // обновляем время бустера
-    if (this.state.modal.shopType === 4 && this.state[`user${this.state.farm}`].part >= 6) {
+    if (this.state.modal.shopType === 4 && 
+    this.state[`user${this.state.farm}`].part >= 6 &&
+    this.state.user.additionalTutorial.herdBoost) {
       let xBtn: number =  330;
       let yBtn: number = 520 + this.height;
       this.herdBoostTimerText.setText(this.state.lang.stillForBoost + ' ' + shortTime(this.state.timeToHerdBoost, this.state.lang));

@@ -268,6 +268,7 @@ class Tutorial extends Phaser.Scene {
       } else if (this.state.tutorial.additional === 'herdBoost1') {
         this.arrows = new Arrows(this, { x: 372, y: this.height - 92 }, 70, false, false, false, true, false, true);
         let shopBtn: Phaser.GameObjects.Image = this.add.image(370, this.height - 90, 'shop');
+        
         this.topPosition = false;
         this.indent = 240;
         this.tailX = 430;
@@ -337,7 +338,8 @@ class Tutorial extends Phaser.Scene {
           callbackScope: this
         })
         this.clickShopBtn({ btn: herdBoostBtn, title: herdBoostBtnText}, (): void => {
-          this.scene.stop();  
+          this.scene.stop();
+          this.state.user.additionalTutorial.herdBoost = true;  
           this.game.scene.keys[this.state.farm].startHerdBoost();
     });
         // this.game.scene.keys['Shop'].herdBoost();

@@ -1,4 +1,5 @@
 import { Arrows } from '../../elements';
+import state from './../../state';
 
 function interval(): void {
 
@@ -50,7 +51,17 @@ function interval(): void {
       this.time.addEvent({ delay: 900, callback: (): void => {
         this.showTutorial('cave1');
       }, callbackScope: this, loop: false });
+    }
 
+    if (this.state.userSheep.part >= 6 &&
+    !this.state.user.additionalTutorial.herdBoost &&
+    !this.scene.isActive('Modal') &&
+    !this.scene.isActive('Block') &&
+    !this.scene.isActive('Tutorial') &&
+    !this.scene.isActive('Map')) {
+      this.time.addEvent({ delay: 900, callback: (): void => {
+        this.showTutorial('herdBoost1');
+      }, callbackScope: this, loop: false });
     }
 
     // восстановаление территорий
