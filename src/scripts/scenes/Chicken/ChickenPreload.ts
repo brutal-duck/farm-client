@@ -723,9 +723,6 @@ class ChickenPreload extends Phaser.Scene {
         this.state.farm = 'Chicken';
         this.userReady = true;
         this.state.nativeCounter = [0, 0, 0, 0];
-        
-        console.log(this.state.timeToHerdBoost);
-        console.log(this.state.userChicken.takenHerdBoost);
       // } else {
       //   this.loadChicken(response.data.user.counter);
       // }

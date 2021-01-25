@@ -932,8 +932,6 @@ class SheepPreload extends Phaser.Scene {
         this.state.farm = 'Sheep';
         this.state.nativeCounter = [0, 0, 0, 0];
         this.userReady = true;
-        console.log(this.state.timeToHerdBoost);
-        console.log(this.state.userSheep.takenHerdBoost);
       // } else {
       //   this.loadSheep(response.data.user.counter);
       // }
