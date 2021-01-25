@@ -48,9 +48,14 @@ function watchAd(type: number): void {
   } else if (this.state.platform === 'vk') {
     this.state.adTimeout = false;
     
-    this.state.adman.onStarted((): void => {});
+    this.state.adman.onStarted((): void => {
+      this.game.scene.keys[this.state.farm].scene.pause();
+      this.game.scene.keys[`${this.state.farm}Bars`].scene.pause();
+    });
     this.state.adman.onCompleted((): void => {
       this.adReward();
+      this.game.scene.keys[this.state.farm].scene.resume();
+      this.game.scene.keys[`${this.state.farm}Bars`].scene.resume();
     });
     this.state.adman.onSkipped((): void => {});      
     this.state.adman.onClicked((): void => {}); 
