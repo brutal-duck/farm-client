@@ -48,7 +48,7 @@ function interval(): void {
       !this.scene.isActive('Map')) {
 
       this.caveTutor = true;
-      this.time.addEvent({ delay: 900, callback: (): void => {
+      this.time.addEvent({ delay: 300, callback: (): void => {
         this.showTutorial('cave1');
       }, callbackScope: this, loop: false });
     }
@@ -346,14 +346,11 @@ function interval(): void {
     }
 
     let nativeCount = 0;
-    
+
     for (let i = 0; i < this.state.nativeCounter.length; i++) {
       nativeCount += this.state.nativeCounter[i];
     }
     this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setText(nativeCount);
-
-
-    
 
   }, callbackScope: this, loop: true });
 
