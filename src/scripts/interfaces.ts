@@ -296,6 +296,7 @@ interface Ipackage {
   diamonds: number;
   id: number;
   price: number;
+  voices: number;
   stock: number;
   top: boolean;
 }
