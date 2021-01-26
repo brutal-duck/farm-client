@@ -1,9 +1,9 @@
-let height: number
 let centerY: number
+let height: number
 
 function tasks(): void {
 
-  centerY = this.cameras.main.centerY + 60 // Центра окна по Y
+  centerY = this.cameras.main.centerY + 60 // Центр окна по Y
   height = 112
   
   // Старый фон окна заданий
@@ -21,7 +21,7 @@ function tasks(): void {
   this.top = this.add.image(this.cameras.main.centerX + 1, centerY - Math.floor(height / 2), 'tasks-top').setOrigin(0.5, 1)
   this.middle = this.add.tileSprite(this.cameras.main.centerX, centerY, 563, height, 'tasks-middle').setOrigin(0.5, 0.5)
   this.bottom = this.add.image(this.cameras.main.centerX, centerY + Math.floor(height / 2), 'tasks-bottom').setOrigin(0.5, 0.5)
-  this.close = this.add.sprite(606, centerY - Math.floor(height / 2 + 114), 'tasks-close')
+  this.close = this.add.sprite(606, centerY - Math.floor(height / 2 + 114), 'tasks-close').setDepth(2)
 
   this.tasksWindow();
 
@@ -287,24 +287,19 @@ function tasks(): void {
 
 function tasksWindow(): void {
 
-  console.log(this.state.modal.tasksParams.tasks);
-
   let tasks = [];
   let textsHeight = [];
   let countBreed: number;
   let countDone: number = 0
+  let taskCenterY: number = 526
+  let barHeight: number = 154
+  let textWidth: number = 330
 
   if (this.state.farm === 'Chicken') {
     countBreed = this.state.chickenSettings.chickenSettings.length;
   } else if (this.state.farm === 'Sheep') {
     countBreed = this.state.sheepSettings.sheepSettings.length;
   }
-
-  let j: number = 4
-  let taskCenterY: number = 526
-  let barHeight: number = 154
-  let textWidth: number = 330
-
 
   // Определение общей высоты с текстом и позиции 1ой плашки заданий
   for (let i = 0; i < this.state.modal.tasksParams.tasks.length; i++) {
@@ -330,8 +325,6 @@ function tasksWindow(): void {
     })
 
   }
-
-  console.log(tasks);
   
   // Цикл создания tasks
   for (let i = 0; i < this.state.modal.tasksParams.tasks.length; i++) {
@@ -373,12 +366,13 @@ function tasksWindow(): void {
       wordWrap: { width: textWidth }
     }).setDepth(1).setOrigin(0.5, 0.5);
 
-
+    // Отрисовка плашек
     if (tasks[i].task.done === 1 && tasks[i].task.got_awarded === 1) {
 
       // Галочка и затемнение иконки
       icon.setTint(0x777777).setAlpha(0.5)
       completed = this.add.image(194, taskCenterY - 6, 'completed').setDepth(1).setTint(0xc0c0c0).setOrigin(0.5, 0.5).setAlpha(0.9)
+
       // Плашка задания
       this.add.image(this.cameras.main.centerX + 2, taskCenterY, 'tasks-complete').setOrigin(0.5, 0.5).setDisplaySize(460, barHeight)
       text.setColor('#494949').setAlpha(0.6).setY(text.y + 20)
@@ -415,12 +409,12 @@ function tasksWindow(): void {
 
       countDone++
 
-
     } else {
       // Счетчик прогресса
       let count: number = tasks[i].task.count;
-      if (tasks[i].task.type === 14 && tasks[i].task.count === 0) count = countBreed; //?
+      if (tasks[i].task.type === 14 && tasks[i].task.count === 0) count = countBreed;
 
+      // Плашка задания
       this.add.image(this.cameras.main.centerX + 2, taskCenterY, 'tasks-uncomplete').setOrigin(0.5, 0.5).setDisplaySize(460, barHeight)
       this.add.image(this.cameras.main.centerX + 100, taskCenterY + (barHeight / 2) - 29, 'tasks-bar').setOrigin(0.5, 0.5)
 
@@ -440,9 +434,9 @@ function tasksWindow(): void {
         .setOrigin(0.5, 0.5);
 
       doneText = this.add.text(194, taskCenterY + 60, tasks[i].task.progress + '/' + count, {
-        font: '28px Shadow',
+        font: '26px Shadow',
         color: '#944000'
-      }).setDepth(1).setOrigin(0.5, 0.5).setShadow(1, 1, 'rgba(0, 0, 0, 0.5)', 5);
+      }).setDepth(1).setOrigin(0.5, 0.5).setShadow(1, 1, 'rgba(0, 0, 0, 0.5)', 2);
 
       let progress: number = (100 / count * tasks[i].task.progress) * (6.3 / 100) - Math.PI / 2
 
@@ -467,26 +461,12 @@ function tasksWindow(): void {
 
     }
     
-
-    // tasks.push({
-    //   icon: icon,
-    //   text: text,
-    //   completed: completed,
-    //   awardIcon: awardIcon,
-    //   awardText: awardText,
-    //   takeButton: takeButton,
-    //   takeText: takeText
-    // })
-
-    console.log(height);
-
   }
 
-  // Полоска прогресса
 
+  // Полоска прогресса
   let percent: number = countDone / (this.state.modal.tasksParams.tasks.length / 100);
-  percent = 496 / 100 * percent;
-  
+  percent = 460 / 100 * percent;
   this.add.tileSprite(132, this.cameras.main.centerY + (height / 2) + 4, percent, 16, 'part-progress').setOrigin(0, 0.5);
 
 
@@ -511,12 +491,30 @@ function tasksWindow(): void {
     fill: '#8f3f00'
   }).setOrigin(0.5, 0.5)
   
-  this.add.text(this.cameras.main.centerX, centerY + Math.floor(height / 2 + 54), this.state.modal.tasksParams.description, {
-    font: '20px Shadow',
-    fill: '#c15e00',
-    align: 'center',
-    wordWrap: { width: 420 }
-  }).setOrigin(0.5, 0.5)
+  
+  if (this.state.modal.tasksParams.done) {
+
+    let nextPart = this.add.sprite(this.cameras.main.centerX, centerY + Math.floor(height / 2 + 60), 'big-btn-green').setDisplaySize(412, 64)
+    let nextPartText = this.add.text(this.cameras.main.centerX, centerY + Math.floor(height / 2 + 54), this.state.lang.donePart, {
+      font: '24px Shadow',
+      fill: '#FFFFFF'
+    }).setOrigin(0.5, 0.5)
+
+    this.clickShopBtn({ btn: nextPart, title: nextPartText }, (): void => {
+      this.game.scene.keys[this.state.farm].nextPart();
+    });
+
+  } else {
+
+    this.add.text(this.cameras.main.centerX, centerY + Math.floor(height / 2 + 60), this.state.modal.tasksParams.description, {
+      font: '20px Shadow',
+      fill: '#c15e00',
+      align: 'center',
+      wordWrap: { width: 420 }
+    }).setOrigin(0.5, 0.5)
+  
+  }
+
 
   // Кнопка закрытия
   this.clickButton(this.close, (): void => {
@@ -528,7 +526,7 @@ function tasksWindow(): void {
 
 }
 
-// задать размеры
+// Перезадать размеры
 function resizeTasksWindow(height: number): void {
 
   this.top.y = centerY - Math.floor(height / 2);
