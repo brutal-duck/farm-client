@@ -36,10 +36,10 @@ class ShopBars extends Phaser.Scene {
     //натив вкладки с бустами
     this.nativeBoost = this.add.graphics()
       .fillStyle(0xFF2400, 1)
-      .fillCircle(550, 165, 20)
+      .fillCircle(550, this.cameras.main.centerY - 430, 20)
       .setDepth(2)
       .setVisible(false);
-    this.nativeBoostCounter = this.add.text(550, 165, String(this.state.nativeCounter[3]), {
+    this.nativeBoostCounter = this.add.text(550, this.cameras.main.centerY - 430, String(this.state.nativeCounter[3]), {
       font: '32px Shadow',
       color: '#f3eae6'
     }).setDepth(3)
@@ -192,14 +192,16 @@ class ShopBars extends Phaser.Scene {
   public updateNative(): void{
     if (this.state.modal.shopType === 4 && 
     (this.state[`user${this.state.farm}`].part < 6 ||
-    this.state[`user${this.state.farm}`].takenHerdBoost > 0) &&
+    this.state[`user${this.state.farm}`].takenHerdBoost > 0 ||
+    this.nativeBoostCounter.text === '0') &&
     this.nativeBoost.visible) {
       this.nativeBoost.setVisible(false);
       this.nativeBoostCounter.setVisible(false);
     } else if (!(this.state.modal.shopType === 4) &&
     this.state[`user${this.state.farm}`].part > 6 &&
     this.state[`user${this.state.farm}`].takenHerdBoost <= 0 &&
-    !this.nativeBoost.visible) {
+    !this.nativeBoost.visible && 
+    this.nativeBoostCounter.text !== '0') {
       this.nativeBoost.setVisible(true);
       this.nativeBoostCounter.setVisible(true);
     }
