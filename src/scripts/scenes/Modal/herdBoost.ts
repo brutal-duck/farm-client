@@ -405,12 +405,14 @@ function getRandomAnimal(type: string, crystal: boolean = false): void {
     animal.data.values.velocity = this.state.herdBoostSpeedAnimal;
   }
 
+  animal.data.values.velocity += random(-20, 20);
   this.input.setDraggable(animal); 
   animal.data.values.type = randomType;
   animal.data.values.side = side; 
   animal.data.values._id = _id;
   animal.data.values.drag = false;
   animal.data.values.merging = false; // метка животного в мерджинге
+  animal.setDepth(animal.y);
 
   animal.setVelocityX(animal.data.values.velocity);
   // случайная шерсть если овца
@@ -424,6 +426,7 @@ function getRandomAnimal(type: string, crystal: boolean = false): void {
   
     animal.data.values.woolSprite.setDepth(y)
       .setVelocityX(animal.data.values.velocity);
+    animal.data.values.woolSprite.setDepth(animal.y);
   }
   
 
@@ -510,7 +513,8 @@ function drag(animal: Phaser.Physics.Arcade.Sprite): void {
           } else  if (animal.data.values.side === 'left') {
             animal.data.values.velocity = -this.state.herdBoostSpeedAnimal;
           }
-          
+          animal.setDepth(animal.y);
+          animal.data.values.woolSprite?.setDepth(animal.y);
           animal.setVelocityX(animal.data.values.velocity);
           animal.data.values.woolSprite?.setVelocityX(animal.data.values.velocity);
           animal.play(this.state.farm.toLowerCase() + '-move-' + animal.data.values.side + animal.data.values.type);
