@@ -119,8 +119,6 @@ function changeSprite(territory: any): void {
     }
 
     if (territory.repository.texture.key !== sprite) {
-      console.log(sprite);
-      console.log(territory.repository.texture.key);
       territory.repository.setTexture(sprite);
     }
 
