@@ -54,15 +54,11 @@ function installTerritory(): void {
         let x: number = this.state.territory.x + 120;
         let y: number = this.state.territory.y + 240;
   
-        this.time.addEvent({ delay: 500, callback: (): void => {
-
-          this.state.territory.setTexture('sheep-repository');
-          this.state.territory.repository = this.add.image(x, y, 'sheep-repository-1')
-            .setDepth(this.state.territory.y + 50)
-            .setOrigin(0.5, 1);
-          this.firework250(this.state.territory.x + 120, this.state.territory.y + 120);
-
-        }, callbackScope: this, loop: false });
+        this.state.territory.setTexture('sheep-repository');
+        this.state.territory.repository = this.add.image(x, y, 'sheep-repository-1-1')
+          .setDepth(this.state.territory.y + 50)
+          .setOrigin(0.5, 1);
+        this.firework250(this.state.territory.x + 120, this.state.territory.y + 120);
 
       } else {
 

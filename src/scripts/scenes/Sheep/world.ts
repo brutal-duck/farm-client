@@ -220,10 +220,42 @@ function world(): void {
 
     if (data.type === 5) {
 
+      let percent: number = 0;
+      let max: number = this.state.sheepSettings.territoriesSheepSettings[data.improve - 1].woolStorage
+  
+      if (data.volume > 0) {
+        percent = data.volume / (max / 100);
+      }
+    
+      switch (data.improve) {
+        case 1:
+          type = 'sheep-repository-1-';
+          break;
+        case 2:
+          type = 'sheep-repository-2-';
+          break;
+        case 3:
+          type = 'sheep-repository-3-';
+          break;
+        case 4:
+          type = 'sheep-repository-4-';
+          break;
+      }
+  
+      if (percent < 25) {
+        type += 1;
+      } else if (percent >= 25 && percent < 50) {
+        type += 2;
+      } else if (percent >= 50 && percent < 75) {
+        type += 3;
+      } else {
+        type += 4;
+      }
+
       let x: number = territory.x + 120;
       let y: number = territory.y + 240;
 
-      territory.repository = this.add.image(x, y, 'sheep-repository-' + data.improve)
+      territory.repository = this.add.image(x, y, type)
         .setDepth(territory.y + 50)
         .setOrigin(0.5, 1);
 

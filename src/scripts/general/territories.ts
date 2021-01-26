@@ -75,9 +75,60 @@ function changeSprite(territory: any): void {
 
   }
 
-  if (territory.texture.key !== sprite) {
-    territory.setTexture(sprite);
+  if (territory.type === 5) {
+    
+    let max: number, percent: number = 0;
+
+    if (this.state.farm === 'Sheep') {
+
+      max = this.state.sheepSettings.territoriesSheepSettings[territory.improve - 1].woolStorage;
+
+    } else if (this.state.farm === 'Chicken') {
+
+      max = this.state.chickenSettings.territoriesChickenSettings[territory.improve - 1].eggStorage;
+
+    }
+
+    if (territory.volume > 0) {
+      percent = territory.volume / (max / 100);
+    }
+
+    switch (territory.improve) {
+      case 1:
+        sprite = farm + '-repository-1-';
+        break;
+      case 2:
+        sprite = farm + '-repository-2-';
+        break;
+      case 3:
+        sprite = farm + '-repository-3-';
+        break;
+      case 4:
+        sprite = farm + '-repository-4-';
+        break;
+    }
+
+    if (percent < 25) {
+      sprite += 1;
+    } else if (percent >= 25 && percent < 50) {
+      sprite += 2;
+    } else if (percent >= 50 && percent < 75) {
+      sprite += 3;
+    } else {
+      sprite += 4;
+    }
+
+    if (territory.repository.texture.key !== sprite) {
+      console.log(sprite);
+      console.log(territory.repository.texture.key);
+      territory.repository.setTexture(sprite);
+    }
+
   }
+
+  if (territory.texture.key !== sprite && territory.type !== 5) {
+    territory.setTexture(sprite);
+  } 
 
 }
 
@@ -264,12 +315,8 @@ function improveTerritory(): void {
 
           this.tryTask(17, improve);
 
-          this.time.addEvent({ delay: 500, callback: (): void => {
-
-            this.state.territory.repository.setTexture(this.state.farm.toLowerCase() + '-repository-' + improve);
-            this.firework250(this.state.territory.x + 120, this.state.territory.y + 120);
-
-          }, callbackScope: this, loop: false });
+          this.state.territory.repository.setTexture(this.state.farm.toLowerCase() + '-repository-' + improve + '-1');
+          this.firework250(this.state.territory.x + 120, this.state.territory.y + 120);
 
         } else {
 
@@ -396,15 +443,11 @@ function exchangeTerritory(): void {
   
           this.tryTask(5, this.state.exchangeTerritory);
 
-          this.time.addEvent({ delay: 500, callback: (): void => {
-
-            this.state.territory.setTexture(farm + '-repository');
-            this.state.territory.repository = this.add.image(x, y, farm + '-repository-1')
-              .setDepth(this.state.territory.y + 50)
-              .setOrigin(0.5, 1);
-            this.firework250(this.state.territory.x + 120, this.state.territory.y + 120);
-
-          }, callbackScope: this, loop: false });
+          this.state.territory.setTexture(farm + '-repository');
+          this.state.territory.repository = this.add.image(x, y, farm + '-repository-1-1')
+            .setDepth(this.state.territory.y + 50)
+            .setOrigin(0.5, 1);
+          this.firework250(this.state.territory.x + 120, this.state.territory.y + 120);
   
         } else {
     

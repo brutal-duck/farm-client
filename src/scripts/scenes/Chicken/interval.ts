@@ -161,7 +161,7 @@ function interval(): void {
 
       let territory = this.territories.children.entries[i];
 
-      if (territory.type === 2 || territory.type === 3) {
+      if (territory.type === 2 || territory.type === 3 || territory.type === 5) {
         this.changeSprite(territory);
       }
 
