@@ -60,9 +60,7 @@ function interval(): void {
     !this.scene.isActive('Block') &&
     !this.scene.isActive('Tutorial') &&
     !this.scene.isActive('Map')) {
-      this.time.addEvent({ delay: 900, callback: (): void => {
-        this.showTutorial('herdBoost1');
-      }, callbackScope: this, loop: false });
+    this.showTutorial('herdBoost1');
     }
 
     // восстановаление территорий

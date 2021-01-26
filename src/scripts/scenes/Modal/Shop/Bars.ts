@@ -193,7 +193,7 @@ class ShopBars extends Phaser.Scene {
     if (this.state.modal.shopType === 4 && 
     (this.state[`user${this.state.farm}`].part < 6 ||
     this.state[`user${this.state.farm}`].takenHerdBoost > 0 ||
-    this.nativeBoostCounter.text === '0') &&
+    this.nativeBoostCounter.text === '0' || !this.state.user.additionalTutorial.herdBoost) &&
     this.nativeBoost.visible) {
       this.nativeBoost.setVisible(false);
       this.nativeBoostCounter.setVisible(false);
@@ -201,7 +201,7 @@ class ShopBars extends Phaser.Scene {
     this.state[`user${this.state.farm}`].part > 6 &&
     this.state[`user${this.state.farm}`].takenHerdBoost <= 0 &&
     !this.nativeBoost.visible && 
-    this.nativeBoostCounter.text !== '0') {
+    this.nativeBoostCounter.text !== '0' && this.state.user.additionalTutorial.herdBoost) {
       this.nativeBoost.setVisible(true);
       this.nativeBoostCounter.setVisible(true);
     }

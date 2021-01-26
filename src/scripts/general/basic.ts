@@ -1894,7 +1894,8 @@ function updateNativeShop(): void {
   this.scene.isActive('Block') ||
   this.scene.isActive('Tutorial') ||
   (this.state[`user${this.state.farm}`].part < 6) ||
-  this.state[`user${this.state.farm}`].takenHerdBoost > 0) &&
+  this.state[`user${this.state.farm}`].takenHerdBoost > 0
+  || !this.state.user.additionalTutorial.herdBoost) &&
   this.game.scene.keys[`${this.state.farm}Bars`].nativeShop.visible ||
   counter <= 0) {
     this.game.scene.keys[`${this.state.farm}Bars`].nativeShop.setVisible(false);
@@ -1905,7 +1906,8 @@ function updateNativeShop(): void {
   this.state[`user${this.state.farm}`].part >= 6 &&
   !this.game.scene.keys[`${this.state.farm}Bars`].nativeShop.visible &&
   this.state[`user${this.state.farm}`].takenHerdBoost <= 0 &&
-  counter > 0) {
+  counter > 0 &&
+  this.state.user.additionalTutorial.herdBoost) {
     this.game.scene.keys[`${this.state.farm}Bars`].nativeShop.setVisible(true);
     this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setVisible(true);
   }
