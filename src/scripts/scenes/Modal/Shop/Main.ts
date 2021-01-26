@@ -337,7 +337,7 @@ class Shop extends Phaser.Scene {
       if (this.state.platform === 'ok') {
         text = left.price + ' ' + 'ОК';
       } else if (this.state.platform === 'vk') {
-        text = Math.floor(left.price / 7) + ' ' + this.state.lang.voices;
+        text = left.voices + ' ' + this.state.lang.voices;
       } else {
         text = left.price + ' ' + this.state.lang.ruble;
       }
@@ -414,7 +414,7 @@ class Shop extends Phaser.Scene {
         if (this.state.platform === 'ok') {
           text = right.price + ' ' + 'ОК';
         } else if (this.state.platform === 'vk') {
-          text = Math.floor(right.price / 7) + ' ' + this.state.lang.voices;
+          text = right.voices + ' ' + this.state.lang.voices;
         } else {
           text = right.price + ' ' + this.state.lang.ruble;
         }
