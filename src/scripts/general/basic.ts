@@ -2,6 +2,7 @@ import axios from 'axios';
 import { FAPI } from '../libs/Fapi.js';
 import bridge from '@vkontakte/vk-bridge';
 import * as amplitude from 'amplitude-js';
+import state from './../state';
 
 // рандомное число
 function random(min: number, max: number): number {
@@ -657,18 +658,28 @@ function payRobokassa(id: number, state: Istate): void {
 
 // оплата пакета ОКами в одноклассниках
 function payOdnoklassniki(id: number): void {
-
-  let pack = this.state.packages.find((data: any) => data.id === id);
-
-  if (pack) {
-
-    this.state.payDiamonds = pack.diamonds + pack.bonus;
-    this.state.payId = id;
-    this.state.payPrice = pack.price;
-    FAPI.UI.showPayment(this.state.payDiamonds + ' ' + this.state.lang.diamonds, this.state.lang.okPayDescr, id, pack.price, null, null, 'ok', 'true');
-
+  const data = {
+    id: this.state.user.id,
+    packageId: id
   }
 
+  axios.post(process.env.API + "/addOrderOk", data)
+    .then((res) => {
+      
+      if (res.data.error === false) {
+
+        let pack = this.state.packages.find((data: any) => data.id === id);
+  
+        if (pack) {
+      
+          this.state.payDiamonds = pack.diamonds + pack.bonus;
+          this.state.payId = res.data.orderId;
+          this.state.payPrice = pack.price;
+          FAPI.UI.showPayment(this.state.payDiamonds + ' ' + this.state.lang.diamonds, this.state.lang.okPayDescr, res.data.orderId, pack.price, null, null, 'ok', 'true');
+      
+        }
+      }
+    });
 }
 
 

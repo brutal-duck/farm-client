@@ -9,12 +9,12 @@ function okCallback(): void {
     // метод успешной оплаты
     if (method === 'showPayment' && result === 'ok') {
 
-      this.state.user.diamonds += this.state.payDiamonds;
-      let revenue: amplitude.Revenue = new amplitude.Revenue()
-        .setProductId('Product #' + this.state.payId)
-        .setPrice(this.state.payPrice);
-      this.state.amplitude.logRevenueV2(revenue);
-      
+      // this.state.user.diamonds += this.state.payDiamonds;
+      // let revenue: amplitude.Revenue = new amplitude.Revenue()
+      //   .setProductId('Product #' + this.state.payId)
+      //   .setPrice(this.state.payPrice);
+      // this.state.amplitude.logRevenueV2(revenue);
+      this.game.scene.keys[this.state.farm].autosave();
     }
 
     // метод готовой рекламы
