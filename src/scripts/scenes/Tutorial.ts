@@ -290,29 +290,29 @@ class Tutorial extends Phaser.Scene {
 
       } else if (this.state.tutorial.additional === 'herdBoost2') {
         // окно буста
-        let bg: Phaser.GameObjects.TileSprite = this.add.tileSprite(130, 685, 460, 270, 'boost-bg').setOrigin(0, 0).setAlpha(0);
-        let title: Phaser.GameObjects.Text = this.add.text(365 + 5, 720, this.state.lang.herdBoostTitleSheep, { 
+        let bg: Phaser.GameObjects.TileSprite = this.add.tileSprite(130, this.cameras.main.centerY + 90, 460, 270, 'boost-bg').setOrigin(0, 0).setAlpha(0);
+        let title: Phaser.GameObjects.Text = this.add.text(365 + 5, this.cameras.main.centerY + 125, this.state.lang.herdBoostTitleSheep, { 
           font: '28px Shadow',
           color: '#FFFFFF',
           wordWrap: { width: 300 },
           align: 'center'
         }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2).setAlpha(0);
     
-        let icon: Phaser.GameObjects.Sprite = this.add.sprite(170, 760, 'sheep-herd-boost-icon').setOrigin(0, 0).setAlpha(0);
-        let flag1: Phaser.GameObjects.Sprite = this.add.sprite(130, 684, 'flags').setOrigin(0, 0).setFlipX(true).setAlpha(0);
-        let flag2: Phaser.GameObjects.Sprite = this.add.sprite(595, 684, 'flags').setOrigin(1, 0).setAlpha(0);
+        let icon: Phaser.GameObjects.Sprite = this.add.sprite(170, this.cameras.main.centerY + 160, 'sheep-herd-boost-icon').setOrigin(0, 0).setAlpha(0);
+        let flag1: Phaser.GameObjects.Sprite = this.add.sprite(130, this.cameras.main.centerY + 90, 'flags').setOrigin(0, 0).setFlipX(true).setAlpha(0);
+        let flag2: Phaser.GameObjects.Sprite = this.add.sprite(595, this.cameras.main.centerY + 90, 'flags').setOrigin(1, 0).setAlpha(0);
         // кнопка
         let xBtn: number =  460;
-        let yBtn: number = 837;
+        let yBtn: number = this.cameras.main.centerY + 230;
         let herdBoostBtn: Phaser.GameObjects.Sprite = this.add.sprite(xBtn, yBtn, 'improve-collector').setAlpha(0);
         let herdBoostBtnText = this.add.text(xBtn, yBtn - 2, this.state.lang.pickUp, {
           font: '23px Shadow',
           color: '#FFFFFF'
         }).setOrigin(0.5, 0.5).setStroke('#3B5367', 4).setDepth(10).setAlpha(0);
-        this.arrows = new Arrows(this, { x: 455, y: 830}, 70, false, false, false, true, false, true);
+        this.arrows = new Arrows(this, { x: 455, y: yBtn}, 70, false, false, false, true, false, true);
 
         this.topPosition = false;
-        this.indent = 620;
+        this.indent = yBtn - 250;
         this.tailX = 430;
         this.tailFlipX = true;
         this.tailFlipY = false;
