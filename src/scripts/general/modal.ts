@@ -133,7 +133,7 @@ function showTasks(): void {
   }
 
   let tasksParams: ItasksParams = {
-    part: this.state.lang.part + ' ' + part,
+    part: String(part),
     name: this.state.lang[this.state.farm.toLowerCase() + 'NamePart' + part],
     farmer: this.state.lang[this.state.farm.toLowerCase() + 'ProfileName'] + ' ' + romanize(part),
     done: done,
