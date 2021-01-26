@@ -277,7 +277,7 @@ class Tutorial extends Phaser.Scene {
         this.tutorText = this.state.lang.addTutorialHerdBoost1;
         this.pointerTutorial();
         
-        this.clickButton(shopBtn, (): void => {
+        this.click(shopBtn, (): void => {
           let modal: Imodal = {
             type: 2,
             shopType: 4
