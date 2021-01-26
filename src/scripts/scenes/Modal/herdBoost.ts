@@ -498,9 +498,7 @@ function drag(animal: Phaser.Physics.Arcade.Sprite): void {
           this.mergingCloud({x: animal.x, y: animal.y}, true); // плохое облако на месте животного
           animal.data?.values.woolSprite?.destroy();
           animal.destroy();
-          console.log('miss drop');
       } else {
-        console.log('popal');
         if (animal.data.values.merging) {
           animal.setVelocityX(0);
           animal.data.values.woolSprite?.setVelocityX(0);
@@ -616,8 +614,6 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
           
           this.mergingCloud({x, y}); // создаем на месте ярмарки хорошее облако
 
-          console.log('получай животное');
-
           animal1?.data.values.woolSprite?.destroy();
           animal2?.data.values.woolSprite?.destroy();
           animal1?.destroy();
@@ -627,8 +623,7 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
         this.time.addEvent({ delay: 100, callback: (): void => {
         
           this.mergingCloud({x, y}, true); // создаем на месте ярмарки облако
-          
-          console.log('разный тип животного');
+
           animal1.data.values.woolSprite?.destroy();
           animal2.data.values.woolSprite?.destroy();
           animal1.destroy();
@@ -637,7 +632,6 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
       }
       this.mergingArray = [];
     }
-    console.log(this.state.herdBoostAnimals);
   }
 }
 
