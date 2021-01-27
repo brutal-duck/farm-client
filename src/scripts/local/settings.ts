@@ -5,10 +5,10 @@ let general: { autoSaveSpeed: number, maxMerginTime: number, boostSpeedAnimal: n
   boostTime: 30,
   boostPrice: 20,
   packages: [
-    { bonus: 5, diamonds: 100, id: 1, price: 10, voices: 5,stock: 0, top: false },
-    { bonus: 50, diamonds: 500, id: 2, price: 50, voices: 25,stock: 10, top: false },
-    { bonus: 150, diamonds: 1000, id: 3, price: 100, voices: 50,stock: 50, top: true },
-    { bonus: 1000, diamonds: 5000, id: 4, price: 500, voices: 250,stock: 70, top: false }
+    { bonus: 5, diamonds: 100, id: 1, price: 10, voices: 3, stock: 0, top: false },
+    { bonus: 50, diamonds: 500, id: 2, price: 50, voices: 15, stock: 10, top: false },
+    { bonus: 150, diamonds: 1000, id: 3, price: 100, voices: 30, stock: 50, top: true },
+    { bonus: 1000, diamonds: 5000, id: 4, price: 500, voices: 150, stock: 70, top: false }
   ]
 }
 
