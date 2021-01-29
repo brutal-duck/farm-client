@@ -155,10 +155,12 @@ function showTasks(): void {
 function dailyAward(): void {
 
   let check: boolean = false;
-  
+  let checkBoost: boolean = true;
+
   if (this.state.farm === 'Sheep') {
 
     if (this.state.userSheep.tutorial >= 100 && this.state.userSheep.part > 3 && !this.state.user.takenReward) check = true;
+    if (!this.state.user.additionalTutorial.herdBoost && this.state.userSheep.part >= this.game.scene.keys[this.state.farm].herdBoostLvl) checkBoost = false;
 
   } else if (this.state.farm === 'Chicken') {
 
@@ -166,7 +168,7 @@ function dailyAward(): void {
 
   }
 
-  if (check &&
+  if (check && checkBoost &&
     typeof this.state.daily === 'number' &&
     !this.scene.isActive('Modal') &&
     !this.scene.isActive('Block') &&
