@@ -92,7 +92,7 @@ function interval(): void {
             let egg = this.eggs.children.entries[i];
             let ter = this.currentTerritory(egg.x, egg.y);
 
-            if (ter.block === territory.block && ter.position === territory.position) eggs++;
+            if (ter?.block === territory.block && ter?.position === territory.position) eggs++;
 
           }
 
