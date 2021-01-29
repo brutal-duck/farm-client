@@ -295,7 +295,7 @@ function tasksWindow(): void {
   let textsHeight = [];
   let countBreed: number;
   let countDone: number = 0
-  let taskCenterY: number = 526
+  let taskCenterY: number = centerY - 134
   let barHeight: number = 154
   let textWidth: number = 330
 
