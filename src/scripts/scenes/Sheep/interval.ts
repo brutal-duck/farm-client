@@ -54,7 +54,7 @@ function interval(): void {
     }
 
     // тутор про бустер
-    if (this.state.userSheep.part >= 6 &&
+    if (this.state.userSheep.part >= this.herdBoostLvl &&
     !this.state.user.additionalTutorial.herdBoost &&
     !this.scene.isActive('Modal') &&
     !this.scene.isActive('Block') &&
