@@ -60,6 +60,7 @@ function autosave(): void {
     autosaveCounter: this.state.userSheep.autosaveCounter,
     diamondSheepAd: this.state.userSheep.diamondAnimalAd,
     takenHerdBoost: this.state.userSheep.takenHerdBoost,
+    feedBoostTime: this.state.userSheep.feedBoostTime
   }
   
   // localStorage.user = JSON.stringify(this.state.user);

@@ -712,8 +712,8 @@ function chickenEggsRepository(): void {
 
     });
 
-    if (this.state.userChicken.feedBoostTimer > 0) {
-      this.feedBoostText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 80, this.state.lang.feedBoostCounterText + this.shortTime(this.state.userChicken.feedBoostTimer), {
+    if (this.state.userChicken.feedBoostTime > 0) {
+      this.feedBoostText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 80, this.state.lang.feedBoostCounterText + this.shortTime(this.state.userChicken.feedBoostTime), {
         font: '26px Bip',
         color: '#925C28'
       }).setOrigin(0.5, 0.5);
@@ -756,8 +756,8 @@ function chickenEggsRepository(): void {
 
     });
     
-    if (this.state.userChicken.feedBoostTimer > 0) {
-      this.feedBoostText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 30, this.state.lang.feedBoostCounterText + this.shortTime(this.state.userChicken.feedBoostTimer), {
+    if (this.state.userChicken.feedBoostTime > 0) {
+      this.feedBoostText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 30, this.state.lang.feedBoostCounterText + this.shortTime(this.state.userChicken.feedBoostTime), {
         font: '26px Bip',
         color: '#925C28'
       }).setOrigin(0.5, 0.5);

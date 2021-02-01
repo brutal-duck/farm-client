@@ -798,8 +798,8 @@ function sheepWoolRepository(): void {
 
     });
     
-    if (this.state.userSheep.feedBoostTimer > 0) {
-      this.feedBoostText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 80, this.state.lang.feedBoostCounterText + this.shortTime(this.state.userSheep.feedBoostTimer), {
+    if (this.state.userSheep.feedBoostTime > 0) {
+      this.feedBoostText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 80, this.state.lang.feedBoostCounterText + this.shortTime(this.state.userSheep.feedBoostTime), {
         font: '26px Bip',
         color: '#925C28'
       }).setOrigin(0.5, 0.5);
@@ -842,8 +842,8 @@ function sheepWoolRepository(): void {
 
     });
 
-    if (this.state.userSheep.feedBoostTimer > 0) {
-      this.feedBoostText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 30, this.state.lang.feedBoostCounterText + this.shortTime(this.state.userChicken.feedBoostTimer), {
+    if (this.state.userSheep.feedBoostTime > 0) {
+      this.feedBoostText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 30, this.state.lang.feedBoostCounterText + this.shortTime(this.state.userChicken.feedBoostTime), {
         font: '26px Bip',
         color: '#925C28'
       }).setOrigin(0.5, 0.5);

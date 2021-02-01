@@ -38,6 +38,8 @@ interface IsheepUserAutoSave {
   autosaveCounter: number;
   diamondSheepAd: boolean;
   takenHerdBoost: number;
+  feedBoostTime: number;
+  
 }
 interface IchickenUserAutoSave {
   diamonds: number;
@@ -55,6 +57,7 @@ interface IchickenUserAutoSave {
   autosaveCounter: number;
   diamondChickenAd: boolean;
   takenHerdBoost: number;
+  feedBoostTime: number;
 }
 
 // for state
@@ -89,7 +92,7 @@ interface IuserSheep {
   autosaveCounter: number;
   diamondAnimalAd: boolean;
   takenHerdBoost: number;
-  feedBoostTimer: number;
+  feedBoostTime: number;
 }
 interface IuserChicken {
   money: number;
@@ -104,7 +107,7 @@ interface IuserChicken {
   autosaveCounter: number;
   diamondAnimalAd: boolean;
   takenHerdBoost: number;
-  feedBoostTimer: number;
+  feedBoostTime: number;
 }
 interface Iterritories {
   block: number;
