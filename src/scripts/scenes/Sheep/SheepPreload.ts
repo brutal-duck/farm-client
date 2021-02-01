@@ -819,8 +819,7 @@ class SheepPreload extends Phaser.Scene {
         this.state.herdBoostTime = response.data.herdBoostTime;
         this.state.herdBoostPrice = response.data.herdBoostPrice;
         this.state.herdBoostDelay = response.data.herdBoostDelay;
-        this.state.feedBoostPrice = response.data.feedBoostPrice;
-  
+          
         // массив с настройками для овечей фермы
         const sheepSettings: IsheepSettings = {
           sheepBadPercent: response.data.sheepBadPercent,
@@ -844,7 +843,8 @@ class SheepPreload extends Phaser.Scene {
           collectorPrice12: response.data.collectorPrice12,
           unlockCollector4: response.data.unlockCollector4,
           unlockCollector12: response.data.unlockCollector12,
-          sheepDiamondsTime: response.data.sheepDiamondsTime
+          sheepDiamondsTime: response.data.sheepDiamondsTime,
+          feedBoostPrice: response.data.feedBoostPrice,
         }
 
         this.state.sheepSettings = sheepSettings;
@@ -866,7 +866,7 @@ class SheepPreload extends Phaser.Scene {
           });
 
         }
-        
+      
         const sheepTerritories: Iterritories[] = [];
 
         for (let i in response.data.territories) {

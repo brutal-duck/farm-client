@@ -216,6 +216,7 @@ interface IsheepSettings {
   unlockCollector4: number;
   unlockCollector12: number;
   sheepDiamondsTime: number;
+  feedBoostPrice: number;
 }
 interface IchickenSettings {
   chickenBadPercent: number;
@@ -240,6 +241,7 @@ interface IchickenSettings {
   unlockCollector4: number;
   unlockCollector12: number;
   chickenDiamondsTime: number;
+  feedBoostPrice: number;
 }
 interface ItaskData {
   icon: string;
@@ -334,7 +336,6 @@ interface Istate {
   herdBoostTime: number;
   herdBoostDelay: number;
   herdBoostAnimals: number[];
-  feedBoostPrice: number;
   nativeCounter: number[];
   timeToHerdBoost: number;
   sheepSettings: IsheepSettings;
