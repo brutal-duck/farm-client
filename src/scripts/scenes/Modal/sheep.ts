@@ -788,13 +788,6 @@ function sheepWoolRepository(): void {
       .setOrigin(0, 0.5);
 
     this.progressButton = this.repositoryBtn(10, this.state.lang.sellWool, woolMoney);
-    if (this.state.userSheep.feedBoostTimer > 0) {
-      this.feedBoostText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 80, this.state.lang.feedBoostCounterText + this.shortTime(this.state.userSheep.feedBoostTimer), {
-        font: '26px Bip',
-        color: '#925C28'
-      }).setOrigin(0.5, 0.5);
-    }
-
     this.clickModalBtn(this.progressButton, (): void => {
       
       if (this.state.territory.money > 0) {
@@ -805,6 +798,13 @@ function sheepWoolRepository(): void {
 
     });
     
+    if (this.state.userSheep.feedBoostTimer > 0) {
+      this.feedBoostText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 80, this.state.lang.feedBoostCounterText + this.shortTime(this.state.userSheep.feedBoostTimer), {
+        font: '26px Bip',
+        color: '#925C28'
+      }).setOrigin(0.5, 0.5);
+    }
+
     let button1 = this.bigButton('red', 'center', 200, this.state.lang.exchangeRepositoryBtn);
     this.clickModalBtn(button1, (): void => {
    
@@ -822,16 +822,16 @@ function sheepWoolRepository(): void {
 
   } else {
 
-    this.progressText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 160, '', {
+    this.progressText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 120, '', {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0.5);
 
-    this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 100, 'pb-chapter-modal');
-    this.progressBar = this.add.tileSprite(136, this.cameras.main.centerY - 100, 0, 16, 'green-progress')
+    this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 70, 'pb-chapter-modal');
+    this.progressBar = this.add.tileSprite(136, this.cameras.main.centerY - 70, 0, 16, 'green-progress')
       .setOrigin(0, 0.5);
 
-    this.progressButton = this.repositoryBtn(0, this.state.lang.sellWool, woolMoney);
+    this.progressButton = this.repositoryBtn(60, this.state.lang.sellWool, woolMoney);
     this.clickModalBtn(this.progressButton, (): void => {
 
       if (this.state.territory.money > 0) {
@@ -842,7 +842,14 @@ function sheepWoolRepository(): void {
 
     });
 
-    let button1 = this.bigButton('green', 'left', 200, this.state.lang.exchangeGrass, exchange);
+    if (this.state.userSheep.feedBoostTimer > 0) {
+      this.feedBoostText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 30, this.state.lang.feedBoostCounterText + this.shortTime(this.state.userChicken.feedBoostTimer), {
+        font: '26px Bip',
+        color: '#925C28'
+      }).setOrigin(0.5, 0.5);
+    }
+
+    let button1 = this.bigButton('red', 'center', 170, this.state.lang.exchangeRepositoryBtn);
     this.clickModalBtn(button1, (): void => {
       this.scene.stop();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
@@ -854,7 +861,7 @@ function sheepWoolRepository(): void {
       this.scene.start('Modal', this.state);
     });
 
-    this.resizeWindow(430);
+    this.resizeWindow(330);
 
   }
 

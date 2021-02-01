@@ -153,7 +153,7 @@ function systemWindow(): void {
       if(this.state.farm === 'Sheep') {
         this.sheepWoolRepositoryExchange();
       } else if (this.state.farm === 'Chicken') {
-
+        this.chickenEggRepositoryExchange();
       }
       break;
     default:      

@@ -127,7 +127,7 @@ class Chicken extends Phaser.Scene {
   public collectorTimer: Phaser.Time.TimerEvent; // интервал собирателя яиц
   public debugLog: boolean; // метка для отлова ошибок
   public herdBoostLvl: number = 6; // уровень старта стадного буста
-  public feedBoostMultiplier: number = 2; // множитель для буста комбикорм
+  public feedBoostMultiplier: number = 2; // множитель для буста 
 
   public world = world.bind(this);
   public drag = drag.bind(this);

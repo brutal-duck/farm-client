@@ -24,7 +24,8 @@ import {
   confirmExpelChicken,
   chickenProfile,
   diamondChickenAd,
-  improveCollectorChicken
+  improveCollectorChicken,
+  chickenEggRepositoryExchange
 } from './chicken';
 import {
   sheepFair,
@@ -180,6 +181,7 @@ class Modal extends Phaser.Scene {
   public mergingCloud = mergingCloud.bind(this);
   public shortTime = shortTime.bind(this);
   public sheepWoolRepositoryExchange = sheepWoolRepositoryExchange.bind(this);
+  public chickenEggRepositoryExchange = chickenEggRepositoryExchange.bind(this);
   
   public init(state: Istate): void {
     this.state = state;
