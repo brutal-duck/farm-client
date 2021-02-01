@@ -89,6 +89,7 @@ interface IuserSheep {
   autosaveCounter: number;
   diamondAnimalAd: boolean;
   takenHerdBoost: number;
+  feedBoostTimer: number;
 }
 interface IuserChicken {
   money: number;
@@ -103,6 +104,7 @@ interface IuserChicken {
   autosaveCounter: number;
   diamondAnimalAd: boolean;
   takenHerdBoost: number;
+  feedBoostTimer: number;
 }
 interface Iterritories {
   block: number;

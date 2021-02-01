@@ -527,6 +527,7 @@ function collectWool(sheep: any, manualСollect: boolean = false): void {
       
       sheep.wool = 0;
       let price: number = this.state.sheepSettings.sheepSettings.find((data: IsheepPoints) => data.breed === sheep.type).long_wool;
+      if (this.state.userSheep.feedBoostTimer > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
       this.state.userSheep.money += price;
 
       this.game.scene.keys['SheepBars'].plusMoneyAnimation({
@@ -586,6 +587,7 @@ function collectWool(sheep: any, manualСollect: boolean = false): void {
 
           length *= 3;
           let price: number = this.state.sheepSettings.sheepSettings.find((data: IsheepPoints) => data.breed === wool.type).long_wool;
+          if (this.state.userSheep.feedBoostTimer > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
           wool.click = false;
           repository.volume++;
           repository.money += price;
@@ -658,7 +660,6 @@ function collectWool(sheep: any, manualСollect: boolean = false): void {
   }
 
 }
-
 
 // продать шерсть из хранилища
 function sellWool(): void {

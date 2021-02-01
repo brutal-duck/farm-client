@@ -481,6 +481,7 @@ function collectEgg(egg: any, manualСollect: boolean = false): void {
     if (manualСollect) {
 
       let price: number = this.state.chickenSettings.chickenSettings.find((data: IchickenPoints) => data.breed === egg.type).eggPrice;
+      if (this.state.userChicken.feedBoostTimer > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
       this.state.userChicken.money += price;
       egg.destroy();
 
@@ -527,6 +528,7 @@ function collectEgg(egg: any, manualСollect: boolean = false): void {
 
         length *= 3;
         let price: number = this.state.chickenSettings.chickenSettings.find((data: IchickenPoints) => data.breed === egg.type).eggPrice;
+        if (this.state.userChicken.feedBoostTimer > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
         egg.click = false;
         repository.volume++;
         repository.money += price;

@@ -162,7 +162,8 @@ class Sheep extends Phaser.Scene {
   public caveIconsTimer: number; // таймер для анимации иконок на пещере
   public collectorTimer: Phaser.Time.TimerEvent; // интервал подстригателя
   public debugLog: boolean; // метка для отлова ошибок
-  public herdBoostLvl: number = 6;
+  public herdBoostLvl: number = 6; // уровень старда буста стадо
+  public feedBoostMultiplier: number = 2; // множитель для буста комбикорм
 
   public world = world.bind(this);
   public drag = drag.bind(this);
