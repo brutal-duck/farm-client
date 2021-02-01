@@ -148,11 +148,20 @@ function systemWindow(): void {
       }
       
       break;
+    
+    case 11: //окно смены территории
+      if(this.state.farm === 'Sheep') {
+        this.sheepWoolRepositoryExchange();
+      } else if (this.state.farm === 'Chicken') {
 
+      }
+      break;
     default:      
       this.scene.stop();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
       break;
+    
+
   }
 
 }
@@ -195,7 +204,7 @@ function chickenTerritory(): void {
 }
 
 
-// окно куриной территории
+// окно овечей территории
 function sheepTerritory(): void {
   
   switch (this.state.territory.type) {

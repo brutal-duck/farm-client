@@ -28,7 +28,8 @@ let userSheep: IuserSheep = {
   tutorial: 0,
   autosaveCounter: 0,
   diamondAnimalAd: true,
-  takenHerdBoost: 0
+  takenHerdBoost: 0,
+  feedBoostTimer: 0
 }
 
 let userChicken: IuserChicken = {
@@ -43,7 +44,8 @@ let userChicken: IuserChicken = {
   tutorial: 0,
   autosaveCounter: 0,
   diamondAnimalAd: true,
-  takenHerdBoost: 0
+  takenHerdBoost: 0,
+  feedBoostTimer: 0
 }
 
 export {

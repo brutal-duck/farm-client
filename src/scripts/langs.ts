@@ -431,6 +431,9 @@ export default {
     herdBoostTitleSheep: 'Овечий переполох',
     herdBoostTitleChicken: 'Куриный переполох',
     herdBoostBadMerge: 'Упс!',
+    feedBoostCounterText: 'Комбикорма хватит еще на ',
+    exchangeRepositoryBtn: 'Сменить хранилище на ...',
+    exchangeRepositoryTitle: 'Ты можешь сменить Хранилище 1$ уровня на другую постройку'
   },
   en: {
     index: 'ru',

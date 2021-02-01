@@ -2,7 +2,8 @@ import {
   clickButton,
   clickModalBtn,
   clickShopBtn,
-  shortNum
+  shortNum,
+  shortTime
 } from '../../general/basic';
 import {
   systemWindow,
@@ -38,7 +39,8 @@ import {
   confirmExpelSheep,
   sheepProfile,
   diamondSheepAd,
-  improveCollectorSheep
+  improveCollectorSheep,
+  sheepWoolRepositoryExchange
 } from './sheep';
 import {
   tasks,
@@ -120,6 +122,7 @@ class Modal extends Phaser.Scene {
   public progressBar: Phaser.GameObjects.TileSprite;
   public progressText: Phaser.GameObjects.Text;
   public progressButton: any;
+  public feedBoostText: Phaser.GameObjects.Text;
   public caveTimer: Phaser.GameObjects.Text;
   // буст "Стадо"
   public sheepForBoost: Phaser.Physics.Arcade.Group;
@@ -175,6 +178,8 @@ class Modal extends Phaser.Scene {
   public getRandomAnimal = getRandomAnimal.bind(this);
   public getRandomStartPosition = getRandomStartPosition.bind(this);
   public mergingCloud = mergingCloud.bind(this);
+  public shortTime = shortTime.bind(this);
+  public sheepWoolRepositoryExchange = sheepWoolRepositoryExchange.bind(this);
   
   public init(state: Istate): void {
     this.state = state;
