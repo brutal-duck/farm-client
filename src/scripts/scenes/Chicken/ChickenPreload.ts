@@ -603,6 +603,7 @@ class ChickenPreload extends Phaser.Scene {
         this.state.herdBoostTime = response.data.herdBoostTime;
         this.state.herdBoostPrice = response.data.herdBoostPrice;
         this.state.herdBoostDelay = response.data.herdBoostDelay;
+        this.state.feedBoostPrice = response.data.feedBoostPrice;
         
         // массив с настройками для куриной фермы
         const chickenSettings: IchickenSettings = {

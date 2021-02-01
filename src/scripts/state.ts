@@ -16,6 +16,7 @@ let herdBoostPrice: number;
 let herdBoostTime: number;
 let herdBoostDelay: number;
 let herdBoostAnimals: number[];
+let feedBoostPrice: number;
 let nativeCounter: number[];
 let timeToHerdBoost: number;
 let user: Iuser;
@@ -60,6 +61,7 @@ let state: Istate = {
   herdBoostTime, // время длительности 'стадного' буста
   herdBoostDelay, // время задержки для появления животного во время "стадного буста"
   herdBoostAnimals, // массив животных для буста
+  feedBoostPrice, // стоимость покупки буста 'комбикорм'
   timeToHerdBoost, // время до пуста
   sheepSettings, // настройки и параметры
   chickenSettings, // настройки и параметры

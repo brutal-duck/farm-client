@@ -334,6 +334,7 @@ interface Istate {
   herdBoostTime: number;
   herdBoostDelay: number;
   herdBoostAnimals: number[];
+  feedBoostPrice: number;
   nativeCounter: number[];
   timeToHerdBoost: number;
   sheepSettings: IsheepSettings;
