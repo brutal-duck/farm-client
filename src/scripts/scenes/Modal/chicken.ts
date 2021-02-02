@@ -788,7 +788,7 @@ function chickenEggRepositoryExchange(): void {
   let part: Ipart = this.state.chickenSettings.chickenParts.find((data: Ipart) => data.sort === this.state.userChicken.part);
 
   let exchange = {
-    icon: 'sheepCoin',
+    icon: 'chickenCoin',
     text: shortNum(part.improve_territory_2)
   }
   let textTitle: string = this.state.lang.exchangeRepositoryTitle.replace('1$', this.state.territory.improve);
