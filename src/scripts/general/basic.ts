@@ -2192,25 +2192,25 @@ function herdBoost(): void {
 }
 
 function feedBoost(): void {
-  this.add.tileSprite(0, 630 + this.height, 466, 270, 'boost-bg').setOrigin(0, 0);
-  this.add.text(240, 650 + this.height, this.state.lang.feedBoostTitle, { 
+  this.add.tileSprite(0, 635 + this.height, 466, 270, 'boost-bg').setOrigin(0, 0);
+  this.add.text(240, 655 + this.height, this.state.lang.feedBoostTitle, { 
     font: '28px Shadow',
     color: '#FFFFFF',
     wordWrap: { width: 300 },
     align: 'center'
   }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
 
-  this.add.text(330, 730 + this.height, this.state.lang.feedBoostSubtitle, { 
-    font: '16px Shadow',
+  this.add.text(330, 710 + this.height, this.state.lang.feedBoostSubtitle, { 
+    font: '18px Shadow',
     color: '#FFFFFF',
     wordWrap: { width: 240 },
     align: 'center'
   }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
   
-  this.add.sprite(40, 690 + this.height, `${this.state.farm.toLocaleLowerCase()}-feed-boost-icon`).setOrigin(0, 0);
+  this.add.sprite(40, 670 + this.height, `${this.state.farm.toLocaleLowerCase()}-feed-boost-icon`).setOrigin(0, 0);
 
   let xBtn: number =  330;
-  let yBtn: number = 790 + this.height;
+  let yBtn: number = 770 + this.height;
   let feedBoostBtn = this.add.sprite(xBtn, yBtn, 'improve-collector');
 
   let feedBoostDiamondBtn = this.add.sprite(xBtn, yBtn - 5, 'diamond').setVisible(true).setScale(0.11);
@@ -2219,7 +2219,7 @@ function feedBoost(): void {
     font: '23px Shadow',
     color: '#FFFFFF'
   }).setOrigin(1, 0.5).setStroke('#3B5367', 4).setDepth(10);
-  console.log(this.state[`user${this.state.farm}`].feedBoostPrice)
+
   let feedBoostBtnRightText = this.add.text(xBtn, yBtn - 5 , String(shortNum(this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice)), {
     font: '23px Shadow',
     color: '#FFFFFF'
@@ -2230,6 +2230,15 @@ function feedBoost(): void {
   feedBoostBtnLeftText.setX(feedBoostDiamondBtn.getBounds().left - 2);
   feedBoostBtnRightText.setX(feedBoostDiamondBtn.getBounds().right + 1);
 
+  this.add.sprite(10, this.height + 860, 'pb-chapter-modal').setOrigin(0, 0.5).setScale(0.92, 1)
+  this.feedProgressBar = this.add.tileSprite(25, this.height + 860, 300, 16, 'green-progress')
+      .setOrigin(0, 0.5);
+  this.feedProgressText = this.add.text(this.cameras.main.centerX, this.height + 830, this.state.lang.still + ' 2ч 6м', {
+    font: '21px Shadow',
+    color: '#FFFFFF'
+  }).setOrigin(0.5, 0.5);
+
+  this.feedProgressText.setX(this.cameras.main.centerX - this.feedProgressText.width / 2)
 
   this.clickModalBtn({ btn: feedBoostBtn, title: feedBoostBtnLeftText, text1: feedBoostBtnRightText, img1: feedBoostDiamondBtn }, (): void => {
     if (this.state.user.diamonds >= this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice) {

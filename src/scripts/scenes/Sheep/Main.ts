@@ -165,6 +165,7 @@ class Sheep extends Phaser.Scene {
   public herdBoostLvl: number = 6; // уровень старта буста стадо
   public feedBoostMultiplier: number = 2; // множитель для буста комбикорм
   public feedBoostLvl: number = 6; // уровень старта буста комбикорм
+  public feedBoostStack: number = 11; // максимальный стек часов
 
   public world = world.bind(this);
   public drag = drag.bind(this);

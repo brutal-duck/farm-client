@@ -71,6 +71,8 @@ class Shop extends Phaser.Scene {
   public herdBoostBtnLeftText: Phaser.GameObjects.Text;
   public herdBoostDiamondBtn: Phaser.GameObjects.Sprite;
   public herdBoostBtn: any;
+  public feedProgressBar: Phaser.GameObjects.TileSprite;
+  public feedProgressText: Phaser.GameObjects.Text;
 
   public click = click.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
@@ -175,6 +177,8 @@ class Shop extends Phaser.Scene {
     
     // обновляем время бустера
     this.updateHerdBoostBtn();
+
+    
   }
 
 
