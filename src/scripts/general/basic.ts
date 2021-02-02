@@ -2240,8 +2240,8 @@ function feedBoost(): void {
       // вызывем конвертор
       this.state.convertor = {
         fun: 0,
-        count: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
-        diamonds: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
+        count: this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice,
+        diamonds: this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice,
         type: 1
       }
       this.game.scene.keys[this.state.farm].exchange();

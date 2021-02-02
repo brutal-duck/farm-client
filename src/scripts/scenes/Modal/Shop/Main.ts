@@ -71,7 +71,6 @@ class Shop extends Phaser.Scene {
   public herdBoostBtnLeftText: Phaser.GameObjects.Text;
   public herdBoostDiamondBtn: Phaser.GameObjects.Sprite;
   public herdBoostBtn: any;
-  public feedBoostBtn: any;
 
   public click = click.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
