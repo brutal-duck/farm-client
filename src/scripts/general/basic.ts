@@ -2115,7 +2115,7 @@ function collectorBoost(): void {
 function herdBoost(): void {
 
   this.add.tileSprite(0, 344 + this.height, 466, 270, 'boost-bg').setOrigin(0, 0);
-  this.add.text(240, 380 + this.height, this.state.lang[`herdBoostTitle${this.state.farm}`], { // Заменить текст
+  this.add.text(240, 380 + this.height, this.state.lang[`herdBoostTitle${this.state.farm}`], { 
     font: '28px Shadow',
     color: '#FFFFFF',
     wordWrap: { width: 300 },
@@ -2193,6 +2193,12 @@ function herdBoost(): void {
 
 function feedBoost(): void {
   this.add.tileSprite(0, 630 + this.height, 466, 270, 'boost-bg').setOrigin(0, 0);
+  this.add.text(240, 650 + this.height, this.state.lang.feedBoostTitle, { 
+    font: '28px Shadow',
+    color: '#FFFFFF',
+    wordWrap: { width: 300 },
+    align: 'center'
+  }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
 }
 
 

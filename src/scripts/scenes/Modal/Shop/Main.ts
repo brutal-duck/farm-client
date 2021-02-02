@@ -58,7 +58,7 @@ class Shop extends Phaser.Scene {
   public state: Istate;
   public scrolling: Scrolling;
   public height: number;
-  public heightWindow: number = 625;
+  public heightWindow: number = 845;
   public buttons: IshopButtons[];
   public collectorTimer: Phaser.GameObjects.Text;
   public herdBoostTimerText: Phaser.GameObjects.Text;
@@ -135,7 +135,7 @@ class Shop extends Phaser.Scene {
 
     let cameraOptions = {
       x: 130,
-      y: this.cameras.main.centerY - 260,
+      y: this.cameras.main.centerY - 360,
       width: 460,
       height: this.heightWindow,
       wheel: true,
@@ -188,7 +188,7 @@ class Shop extends Phaser.Scene {
       this.state.user.additionalTutorial.herdBoost) this.herdBoost(); // проверяем главу и создаем окно только если глава выше 6
       
       if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].feedBoostLvl) {
-        this.scrolling.bottom = this.height - this.heightWindow + 900;
+        this.scrolling.bottom = this.height - this.heightWindow + 920;
         this.feedBoost();
       }
       
