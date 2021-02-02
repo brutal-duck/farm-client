@@ -2199,6 +2199,9 @@ function feedBoost(): void {
     wordWrap: { width: 300 },
     align: 'center'
   }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
+
+  this.add.sprite(40, 710 + this.height, `${this.state.farm.toLocaleLowerCase()}-feed-boost-icon`).setOrigin(0, 0);
+
 }
 
 

@@ -870,6 +870,7 @@ export default {
     herdBoostBadMerge: 'Упс!',
     feedBoostCounterText: 'Комбикорма хватит еще на ',
     exchangeRepositoryBtn: 'Сменить хранилище на ...',
-    exchangeRepositoryTitle: 'Ты можешь сменить Хранилище 1$ уровня на другую постройку'
+    exchangeRepositoryTitle: 'Ты можешь сменить Хранилище 1$ уровня на другую постройку',
+    feedBoostTitle: 'Комбикорм'
   }
 }
