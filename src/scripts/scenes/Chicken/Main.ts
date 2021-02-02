@@ -128,6 +128,7 @@ class Chicken extends Phaser.Scene {
   public debugLog: boolean; // метка для отлова ошибок
   public herdBoostLvl: number = 6; // уровень старта стадного буста
   public feedBoostMultiplier: number = 2; // множитель для буста 
+  public feedBoostLvl: number = 6; // уровень старта буста комбикорм
 
   public world = world.bind(this);
   public drag = drag.bind(this);

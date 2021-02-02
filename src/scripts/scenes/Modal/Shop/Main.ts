@@ -179,19 +179,31 @@ class Shop extends Phaser.Scene {
 
 
   public boosts(): void {
-    this.scrolling.bottom = this.height - this.heightWindow + 850;
+    this.scrolling.bottom = this.height - this.heightWindow + 500;
+  
     if (this.state.farm === 'Sheep') {
       this.collectorBoost();
+
       if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
       this.state.user.additionalTutorial.herdBoost) this.herdBoost(); // проверяем главу и создаем окно только если глава выше 6
-      this.feedBoost();
+      
+      if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].feedBoostLvl) {
+        this.scrolling.bottom = this.height - this.heightWindow + 900;
+        this.feedBoost();
+      }
+      
     }
 
     else if (this.state.farm === 'Chicken') {
       this.collectorBoost();
+
       if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
       this.state.user.additionalTutorial.herdBoost) this.herdBoost(); // проверяем главу и создаем окно только если глава выше 6
-      this.feedBoost();
+
+      if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].feedBoostLvl) {
+        this.scrolling.bottom = this.height - this.heightWindow + 900;
+        this.feedBoost();
+      }
     }
   }
 
