@@ -912,7 +912,7 @@ function sheepWoolRepositoryExchange(): void {
       this.scene.start('Modal', this.state);
   });
 
-  this.resizeWindow(300);
+  this.resizeWindow(310);
   
 
 }
