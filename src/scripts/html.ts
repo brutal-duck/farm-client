@@ -158,125 +158,6 @@ function registration(): void {
 
 }
 
-
-// смена логина
-function changeNickname(): void {
-
-  this.scene.stop();
-  this.scene.launch('Block');
-  
-  this.game.scene.keys[this.state.farm].scrolling.enabled = false;
-  this.game.scene.keys[this.state.farm].scrolling.wheel = false;
-
-  let change: boolean = false;
-  
-  let root = document.querySelector('#root');
-  let modal = document.createElement('div');
-  modal.setAttribute("class", "modal");
-  root.append(modal);
-  let modalWindow = document.createElement('div');
-  modalWindow.setAttribute("class", "window");
-  modal.append(modalWindow);
-
-  let body = document.createElement('div');
-  body.setAttribute("class", "body-window");
-  modalWindow.append(body);
-  let header = document.createElement('div');
-  header.innerText = this.state.lang.nickname;
-  header.setAttribute("class", "header");
-  modalWindow.append(header);
-  let footer = document.createElement('div');
-  footer.setAttribute("class", "footer");
-  modalWindow.append(footer);
-  let closeBtn = document.createElement('div');
-  closeBtn.setAttribute("class", "close");
-  modalWindow.append(closeBtn);
-
-  let error = document.createElement('div');
-  error.setAttribute("class", "reg-error");
-  body.append(error);
-
-  let label = document.createElement('div');
-  label.setAttribute("class", "enter-nickname");
-  label.innerText = this.state.lang.enterNickname;
-  body.append(label);
-
-  let login = document.createElement('input');
-  login.setAttribute("class", "login-pass");
-  login.setAttribute("type", "text");
-  body.append(login);
-
-  let changeBtn = document.createElement('div');
-  changeBtn.setAttribute("class", "big-btn big-btn-css mt-10");
-  changeBtn.innerText =  this.state.lang.changeNickname;
-  body.append(changeBtn);
-
-  closeBtn.onclick = (): void => {
-
-    modal.remove();
-    this.game.scene.keys[this.state.farm].scrolling.enabled = true;
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-    this.scene.stop('Block');
-
-  }
-
-  changeBtn.onclick = (): void => {
-
-    if (!change) {
-
-      error.innerText = '';
-      let checkLogin: boolean = true;
-      let re: RegExp = /^[a-zA-Z0-9]+$/;
-      checkLogin = re.test(login.value);
-      
-      if (login.value.length < 6) checkLogin = false;
-
-      if (checkLogin) {
-
-        change = true;
-
-        axios.post(process.env.API + '/newNickname', {
-          id: this.state.user.id,
-          hash: this.state.user.hash,
-          counter: this.state.user.counter,
-          login: login.value
-        })
-        .then((res) => {
-
-          if (res.data.error) window.location.reload();
-          else {
-
-            change = false;
-
-            if (res.data.success) {
-
-              this.state.user.login = login.value;
-              modal.remove();
-              document.cookie = "farmHASH=" + res.data.hash + "; expires=" + res.data.expires + "; path=/;";
-              this.state.user.hash = res.data.hash;
-              this.game.scene.keys[this.state.farm].scrolling.enabled = true;
-              this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-              this.scene.stop('Block');
-              
-            } else {
-              error.innerText = this.state.lang.haveAccaunt;
-            }
-
-          }
-
-        });
-
-      } else {
-        error.innerText = this.state.lang.validNickname;
-      }
-
-    }
-
-  }
-
-}
-
-
 // окно отправки сообщение в поддержку
 function support(): void {
 
@@ -727,7 +608,6 @@ function addEmail(): void {
 
 export {
   registration,
-  changeNickname,
   support,
   chatWindow,
   addEmail
