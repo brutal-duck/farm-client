@@ -332,6 +332,8 @@ interface IcollectorSettings {
   price: number;
   diamonds: boolean;
 }
+
+type modalElementType = Phaser.GameObjects.Sprite | Phaser.GameObjects.Image | Phaser.GameObjects.Zone | Phaser.GameObjects.Text | Phaser.GameObjects.Graphics;
 interface Istate {
   platform: string;
   autoSaveSpeed: number;

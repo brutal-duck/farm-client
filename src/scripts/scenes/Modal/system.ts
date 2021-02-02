@@ -20,6 +20,7 @@ function systemWindow(): void {
   this.clickButton(this.close, (): void => {
 
     if (this.state.modal.sysType === 6) this.state.animal.expel = false;
+    if (this.state.modal.sysType === 12) this.mainInput.remove();
 
     this.scene.stop();
     this.game.scene.keys[this.state.farm].scrolling.wheel = true;
@@ -155,6 +156,10 @@ function systemWindow(): void {
       } else if (this.state.farm === 'Chicken') {
         this.chickenEggRepositoryExchange();
       }
+      break;
+    
+    case 12:
+      this.changeNickname();
       break;
     default:      
       this.scene.stop();

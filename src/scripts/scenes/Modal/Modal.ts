@@ -52,8 +52,9 @@ import daily from './daily';
 import dailyNewbie from './dailyNewbie';
 import nextChapter from './nextChapter';
 import donate from './donate';
-import { changeNickname, support } from '../../html';
+import { support } from '../../html';
 import { bigButton, repositoryBtn, mergingCloud } from '../../elements';
+import { changeNickname } from '../../general/modal';
   // буст "Стадо"
 import {herdBoostWindow, getRandomAnimal, getRandomStartPosition} from './herdBoost';
 
@@ -129,6 +130,7 @@ class Modal extends Phaser.Scene {
   public sheepForBoost: Phaser.Physics.Arcade.Group;
   public chickenForBoost: Phaser.Physics.Arcade.Group;
   public mergingArray: any[];
+  public mainInput: HTMLInputElement;
 
   public clickButton = clickButton.bind(this);
   public clickModalBtn = clickModalBtn.bind(this);
@@ -164,7 +166,6 @@ class Modal extends Phaser.Scene {
   public resizeTasksWindow = resizeTasksWindow.bind(this);
   public chickenProfile = chickenProfile.bind(this);
   public sheepProfile = sheepProfile.bind(this);
-  public changeNickname = changeNickname.bind(this);
   public support = support.bind(this);
   public daily = daily.bind(this);
   public nextChapter = nextChapter.bind(this);
@@ -182,6 +183,7 @@ class Modal extends Phaser.Scene {
   public shortTime = shortTime.bind(this);
   public sheepWoolRepositoryExchange = sheepWoolRepositoryExchange.bind(this);
   public chickenEggRepositoryExchange = chickenEggRepositoryExchange.bind(this);
+  public changeNickname = changeNickname.bind(this);
   
   public init(state: Istate): void {
     this.state = state;

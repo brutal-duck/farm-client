@@ -928,7 +928,12 @@ function chickenProfile(): void {
     }).setOrigin(0.5, 0.5).setDepth(1);
 
     this.clickModalBtn({ btn: nickBtn, title: nickText }, (): void => {
-      this.changeNickname();
+      let modal: Imodal = {
+        type: 1,
+        sysType: 12
+      }
+      this.state.modal = modal;
+      this.game.scene.keys[this.state.farm].scene.launch('Modal', this.state);
     });
 
     height += 80;
