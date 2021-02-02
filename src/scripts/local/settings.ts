@@ -14,6 +14,7 @@ let general: { autoSaveSpeed: number, maxMerginTime: number, boostSpeedAnimal: n
 
 let sheepSettings: IsheepSettings = {
   buyBetterBreedSheep: 2,
+  feedBoostPrice: 20,
   collectorPrice3: 75,
   collectorPrice8: 200,
   collectorPrice15: 370,
@@ -112,6 +113,7 @@ let sheepSettings: IsheepSettings = {
 
 let chickenSettings: IchickenSettings = {
   buyBetterBreedChicken: 2,
+  feedBoostPrice: 20,
   chickenBadPercent: 40,
   chickenDiamondsTime: 10800,
   chickenPrice: 100,

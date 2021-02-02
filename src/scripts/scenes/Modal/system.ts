@@ -20,6 +20,7 @@ function systemWindow(): void {
   this.clickButton(this.close, (): void => {
 
     if (this.state.modal.sysType === 6) this.state.animal.expel = false;
+    if (this.state.modal.sysType === 12) this.mainInput.remove();
 
     this.scene.stop();
     this.game.scene.keys[this.state.farm].scrolling.wheel = true;
@@ -148,11 +149,24 @@ function systemWindow(): void {
       }
       
       break;
-
+    
+    case 11: //окно смены территории
+      if(this.state.farm === 'Sheep') {
+        this.sheepWoolRepositoryExchange();
+      } else if (this.state.farm === 'Chicken') {
+        this.chickenEggRepositoryExchange();
+      }
+      break;
+    
+    case 12:
+      this.changeNickname();
+      break;
     default:      
       this.scene.stop();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
       break;
+    
+
   }
 
 }
@@ -195,7 +209,7 @@ function chickenTerritory(): void {
 }
 
 
-// окно куриной территории
+// окно овечей территории
 function sheepTerritory(): void {
   
   switch (this.state.territory.type) {

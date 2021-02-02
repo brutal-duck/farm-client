@@ -727,7 +727,7 @@ function sheepWoolRepository(): void {
   
   let repository: string = this.state.lang.repository.replace('$1', this.state.territory.improve);
   this.textHeader.setText(repository);
-
+  
   let part: Ipart = this.state.sheepSettings.sheepParts.find((data: Ipart) => data.sort === this.state.userSheep.part);
 
   let exchange = {
@@ -760,7 +760,7 @@ function sheepWoolRepository(): void {
         text: shortNum(price)
       }
       let improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.improve + 1);
-      let button = this.bigButton('orange', 'left', 70, improveText, improve);
+      let button = this.bigButton('orange', 'left', 110, improveText, improve);
       this.clickModalBtn(button, (): void => {
         this.scene.stop();
         this.game.scene.keys[this.state.farm].scrolling.wheel = true;
@@ -774,20 +774,20 @@ function sheepWoolRepository(): void {
         text: this.state.lang.shortPart + ' ' + lock
       }
       let improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.improve + 1);
-      this.bigButton('grey', 'left', 70, improveText, improve);
+      this.bigButton('grey', 'left', 110, improveText, improve);
 
     }
 
-    this.progressText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 210, '', {
+    this.progressText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 180, '', {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0.5);
 
-    this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 150, 'pb-chapter-modal');
-    this.progressBar = this.add.tileSprite(136, this.cameras.main.centerY - 150, 0, 16, 'green-progress')
+    this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 120, 'pb-chapter-modal');
+    this.progressBar = this.add.tileSprite(136, this.cameras.main.centerY - 120, 0, 16, 'green-progress')
       .setOrigin(0, 0.5);
 
-    this.progressButton = this.repositoryBtn(-50, this.state.lang.sellWool, woolMoney);
+    this.progressButton = this.repositoryBtn(10, this.state.lang.sellWool, woolMoney);
     this.clickModalBtn(this.progressButton, (): void => {
       
       if (this.state.territory.money > 0) {
@@ -798,34 +798,40 @@ function sheepWoolRepository(): void {
 
     });
     
-    let button1 = this.bigButton('green', 'left', 160, this.state.lang.exchangeGrass, exchange);
+    if (this.state.userSheep.feedBoostTime > 0) {
+      this.feedBoostText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 80, this.state.lang.feedBoostCounterText + this.shortTime(this.state.userSheep.feedBoostTime), {
+        font: '26px Bip',
+        color: '#925C28'
+      }).setOrigin(0.5, 0.5);
+    }
+
+    let button1 = this.bigButton('red', 'center', 200, this.state.lang.exchangeRepositoryBtn);
     this.clickModalBtn(button1, (): void => {
+   
       this.scene.stop();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].confirmExchangeTerritory(2);
+      let modal: Imodal = {
+        type: 1,
+        sysType: 11
+      }
+      this.state.modal = modal;
+      this.scene.start('Modal', this.state);
     });
 
-    let button2 = this.bigButton('blue', 'left', 250, this.state.lang.exchangeWater, exchange);
-    this.clickModalBtn(button2, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].confirmExchangeTerritory(3);
-    });
-
-    this.resizeWindow(510);
+    this.resizeWindow(430);
 
   } else {
 
-    this.progressText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 160, '', {
+    this.progressText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 120, '', {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0.5);
 
-    this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 100, 'pb-chapter-modal');
-    this.progressBar = this.add.tileSprite(136, this.cameras.main.centerY - 100, 0, 16, 'green-progress')
+    this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 70, 'pb-chapter-modal');
+    this.progressBar = this.add.tileSprite(136, this.cameras.main.centerY - 70, 0, 16, 'green-progress')
       .setOrigin(0, 0.5);
 
-    this.progressButton = this.repositoryBtn(0, this.state.lang.sellWool, woolMoney);
+    this.progressButton = this.repositoryBtn(60, this.state.lang.sellWool, woolMoney);
     this.clickModalBtn(this.progressButton, (): void => {
 
       if (this.state.territory.money > 0) {
@@ -836,26 +842,80 @@ function sheepWoolRepository(): void {
 
     });
 
-    let button1 = this.bigButton('green', 'left', 120, this.state.lang.exchangeGrass, exchange);
+    if (this.state.userSheep.feedBoostTime > 0) {
+      this.feedBoostText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 30, this.state.lang.feedBoostCounterText + this.shortTime(this.state.userChicken.feedBoostTime), {
+        font: '26px Bip',
+        color: '#925C28'
+      }).setOrigin(0.5, 0.5);
+    }
+
+    let button1 = this.bigButton('red', 'center', 170, this.state.lang.exchangeRepositoryBtn);
     this.clickModalBtn(button1, (): void => {
       this.scene.stop();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].confirmExchangeTerritory(2);
+      let modal: Imodal = {
+        type: 1,
+        sysType: 11
+      }
+      this.state.modal = modal;
+      this.scene.start('Modal', this.state);
     });
 
-    let button2 = this.bigButton('blue', 'left', 210, this.state.lang.exchangeWater, exchange);
-    this.clickModalBtn(button2, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].confirmExchangeTerritory(3);
-    });
-
-    this.resizeWindow(430);
+    this.resizeWindow(330);
 
   }
 
 }
 
+function sheepWoolRepositoryExchange(): void {
+  let repository: string = this.state.lang.repository.replace('$1', this.state.territory.improve);
+  this.textHeader.setText(repository);
+
+  let part: Ipart = this.state.sheepSettings.sheepParts.find((data: Ipart) => data.sort === this.state.userSheep.part);
+
+  let exchange = {
+    icon: 'sheepCoin',
+    text: shortNum(part.improve_territory_2)
+  }
+  let textTitle: string = this.state.lang.exchangeRepositoryTitle.replace('1$', this.state.territory.improve);
+
+  let title: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 100, textTitle, {
+    font: '26px Bip',
+    color: '#925C28',
+    align: 'center',
+    wordWrap: {width: 450},
+  });
+  title.setOrigin(0.5, 0.5);
+  let button1 = this.bigButton('green', 'left', 0, this.state.lang.exchangeGrass, exchange);
+  this.clickModalBtn(button1, (): void => {
+    this.scene.stop();
+    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+    this.game.scene.keys[this.state.farm].confirmExchangeTerritory(2);
+  });
+
+  let button2 = this.bigButton('blue', 'left', 80, this.state.lang.exchangeWater, exchange);
+  this.clickModalBtn(button2, (): void => {
+    this.scene.stop();
+    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+    this.game.scene.keys[this.state.farm].confirmExchangeTerritory(3);
+  });
+
+  let button3 = this.bigButton('red', 'center', 160, this.state.lang.cancel);
+  this.clickModalBtn(button3, (): void => {
+    this.scene.stop();
+      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+      let modal: Imodal = {
+        type: 1,
+        sysType: 2
+      }
+      this.state.modal = modal;
+      this.scene.start('Modal', this.state);
+  });
+
+  this.resizeWindow(300);
+  
+
+}
 
 // окно подтверждения изгнания
 function confirmExpelSheep(): void {
@@ -956,7 +1016,12 @@ function sheepProfile(): void {
     }).setOrigin(0.5, 0.5).setDepth(1);
 
     this.clickModalBtn({ btn: nickBtn, title: nickText }, (): void => {
-      this.changeNickname();
+      let modal: Imodal = {
+        type: 1,
+        sysType: 12
+      }
+      this.state.modal = modal;
+      this.game.scene.keys[this.state.farm].scene.launch('Modal', this.state);
     });
 
     height += 80;
@@ -1145,5 +1210,6 @@ export {
   confirmExpelSheep,
   sheepProfile,
   diamondSheepAd,
-  improveCollectorSheep
+  improveCollectorSheep,
+  sheepWoolRepositoryExchange
 }

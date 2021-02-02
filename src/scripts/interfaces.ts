@@ -38,6 +38,8 @@ interface IsheepUserAutoSave {
   autosaveCounter: number;
   diamondSheepAd: boolean;
   takenHerdBoost: number;
+  feedBoostTime: number;
+  
 }
 interface IchickenUserAutoSave {
   diamonds: number;
@@ -55,6 +57,7 @@ interface IchickenUserAutoSave {
   autosaveCounter: number;
   diamondChickenAd: boolean;
   takenHerdBoost: number;
+  feedBoostTime: number;
 }
 
 // for state
@@ -89,6 +92,7 @@ interface IuserSheep {
   autosaveCounter: number;
   diamondAnimalAd: boolean;
   takenHerdBoost: number;
+  feedBoostTime: number;
 }
 interface IuserChicken {
   money: number;
@@ -103,6 +107,7 @@ interface IuserChicken {
   autosaveCounter: number;
   diamondAnimalAd: boolean;
   takenHerdBoost: number;
+  feedBoostTime: number;
 }
 interface Iterritories {
   block: number;
@@ -216,6 +221,7 @@ interface IsheepSettings {
   unlockCollector4: number;
   unlockCollector12: number;
   sheepDiamondsTime: number;
+  feedBoostPrice: number;
 }
 interface IchickenSettings {
   chickenBadPercent: number;
@@ -240,6 +246,7 @@ interface IchickenSettings {
   unlockCollector4: number;
   unlockCollector12: number;
   chickenDiamondsTime: number;
+  feedBoostPrice: number;
 }
 interface ItaskData {
   icon: string;
@@ -325,6 +332,8 @@ interface IcollectorSettings {
   price: number;
   diamonds: boolean;
 }
+
+type modalElementType = Phaser.GameObjects.Sprite | Phaser.GameObjects.Image | Phaser.GameObjects.Zone | Phaser.GameObjects.Text | Phaser.GameObjects.Graphics;
 interface Istate {
   platform: string;
   autoSaveSpeed: number;
