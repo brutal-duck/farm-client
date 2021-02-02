@@ -2200,8 +2200,58 @@ function feedBoost(): void {
     align: 'center'
   }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
 
-  this.add.sprite(40, 710 + this.height, `${this.state.farm.toLocaleLowerCase()}-feed-boost-icon`).setOrigin(0, 0);
+  this.add.text(330, 730 + this.height, this.state.lang.feedBoostSubtitle, { 
+    font: '16px Shadow',
+    color: '#FFFFFF',
+    wordWrap: { width: 240 },
+    align: 'center'
+  }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
+  
+  this.add.sprite(40, 690 + this.height, `${this.state.farm.toLocaleLowerCase()}-feed-boost-icon`).setOrigin(0, 0);
 
+  let xBtn: number =  330;
+  let yBtn: number = 790 + this.height;
+  let feedBoostBtn = this.add.sprite(xBtn, yBtn, 'improve-collector');
+
+  let feedBoostDiamondBtn = this.add.sprite(xBtn, yBtn - 5, 'diamond').setVisible(true).setScale(0.11);
+  
+  let feedBoostBtnLeftText = this.add.text(xBtn, yBtn - 5 , this.state.lang.buy, {
+    font: '23px Shadow',
+    color: '#FFFFFF'
+  }).setOrigin(1, 0.5).setStroke('#3B5367', 4).setDepth(10);
+  console.log(this.state[`user${this.state.farm}`].feedBoostPrice)
+  let feedBoostBtnRightText = this.add.text(xBtn, yBtn - 5 , String(shortNum(this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice)), {
+    font: '23px Shadow',
+    color: '#FFFFFF'
+  }).setOrigin(0, 0.5).setStroke('#3B5367', 4).setDepth(10);
+
+  
+  feedBoostDiamondBtn.setX(feedBoostBtn.x + feedBoostBtnLeftText.width - 25 - feedBoostBtnRightText.width);
+  feedBoostBtnLeftText.setX(feedBoostDiamondBtn.getBounds().left - 2);
+  feedBoostBtnRightText.setX(feedBoostDiamondBtn.getBounds().right + 1);
+
+
+  this.clickModalBtn({ btn: feedBoostBtn, title: feedBoostBtnLeftText, text1: feedBoostBtnRightText, img1: feedBoostDiamondBtn }, (): void => {
+    if (this.state.user.diamonds >= this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice) {
+      this.state.user.diamonds -= this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice;
+      this.state[`user${this.state.farm}`].feedBoostTime += 10000; // прибавить час
+
+    } else {
+      // вызывем конвертор
+      this.state.convertor = {
+        fun: 0,
+        count: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
+        diamonds: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
+        type: 1
+      }
+      this.game.scene.keys[this.state.farm].exchange();
+      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+      this.scene.stop();
+      this.scene.stop('ShopBars');
+      this.scene.stop('Modal');
+    }
+    // проверка хватает ли денег и лишь потом запуск сцены
+  });
 }
 
 
