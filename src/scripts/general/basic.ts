@@ -2250,7 +2250,19 @@ function feedBoost(): void {
     if (this.state.user.diamonds >= this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice) {
       this.state.user.diamonds -= this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice;
       if (this.state[`user${this.state.farm}`].feedBoostTime + 7200 > this.game.scene.keys[this.state.farm].feedBoostStack * 3600) {
-        console.log('хватит'); // вывести окно
+        this.scene.stop('Shop');
+        this.scene.stop('ShopBars');
+        this.scene.stop('Modal');
+
+        let modal: Imodal = {
+          type: 1,
+          sysType: 3,
+          height: 150,
+          message: this.state.lang.feedBoostMax
+        }
+        
+        this.state.modal = modal;
+        this.scene.launch('Modal', this.state);
       } else {
         if (this.state[`user${this.state.farm}`].feedBoostTime <= 0) {
           this.state[`user${this.state.farm}`].feedBoostTime += 3600; // прибавить час

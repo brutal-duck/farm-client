@@ -180,7 +180,7 @@ class Shop extends Phaser.Scene {
     this.updateHerdBoostBtn();
 
     if (this.state[`user${this.state.farm}`].feedBoostTime > 0) {
-      let progress: number = (this.state[`user${this.state.farm}`].feedBoostTime / (3600 * this.game.scene.keys[this.state.farm].feedBoostStack)) * this.feedProgressBar?.data.values.maxWidth;
+      let progress: number = (this.state[`user${this.state.farm}`].feedBoostTime / (3600 * this.game.scene.keys[this.state.farm].feedBoostStack)) * this.feedProgressBar?.data?.values.maxWidth;
       this.feedProgressBar?.setDisplaySize(progress, 16);
       this.feedProgressText?.setText(this.state.lang.still + ' ' + shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang));
     }
