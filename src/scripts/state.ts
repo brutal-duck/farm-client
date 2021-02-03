@@ -50,6 +50,7 @@ let sheepCollectorSettings: IcollectorSettings[];
 let chickenCollectorSettings: IcollectorSettings[];
 let adBlock: boolean;
 let adman: any;
+let donate: boolean;
 
 let state: Istate = {
   // записываемые в localStorage
@@ -106,7 +107,8 @@ let state: Istate = {
   sheepCollectorSettings, // настройки уровней подстригателя
   chickenCollectorSettings, // настройки уровней собирателя яиц
   adBlock, // состояние блокировщика рекламы
-  adman // объект рекламы вк
+  adman, // объект рекламы вк
+  donate // переменная для показа доната
 }
 
 export default state;

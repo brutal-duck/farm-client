@@ -387,4 +387,5 @@ interface Istate {
   chickenCollectorSettings: IcollectorSettings[];
   adBlock: boolean;
   adman: any;
+  donate: boolean;
 }
