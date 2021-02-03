@@ -2289,7 +2289,7 @@ function loadingScreen(farmType: string): void {
 
   let helpText: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 100, helpArr[random(0, helpArr.length - 1)], {
     font: '26px Bip',
-    color: 'Black',
+    color: '#925C28',
     align: 'center',
     wordWrap: { width: 440 }
   }).setOrigin(0.5, 0.5).setDepth(4);
