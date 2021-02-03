@@ -413,9 +413,12 @@ class Tutorial extends Phaser.Scene {
           callbackScope: this
         })
         this.clickShopBtn({ btn: herdBoostBtn, title: herdBoostBtnText}, (): void => {
+          this.scene.stop('Shop');
+          this.scene.stop('ShopBars');
+          this.scene.stop('Modal');
           this.scene.stop();
           this.state.user.additionalTutorial.feedBoost = true;  
-          this.state[`user${this.state.farm}`].feedBoostTime += 3600;
+          this.state[`user${this.state.farm}`].feedBoostTime = 3600;
         });
 
       } else if (this.state.tutorial.additional === 'collector') {
