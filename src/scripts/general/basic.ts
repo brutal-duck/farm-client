@@ -2266,9 +2266,9 @@ function feedBoost(): void {
 function loadingScreen(farmType: string): void {
 
   let loading: string = this.state.lang.loading;
-  let general: number = 0; // Количество общих посказок
-  let sheep: number = 0; // Количество посказок для овечьей фермы
-  let chicken: number = 0; // Количество посказок для куриной фермы
+  let general: number = 13; // Количество общих посказок
+  let sheep: number = 7; // Количество посказок для овечьей фермы
+  let chicken: number = 7; // Количество посказок для куриной фермы
   let helpArr: string[] = [];
 
   // Создаем массив с подсказками
