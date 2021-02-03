@@ -2,6 +2,7 @@ import axios from 'axios';
 import tasks from '../../tasks';
 import Socket from '../../Socket';
 import loadChicken from '../../local/loadChicken';
+import { loadingScreen } from '../../general/basic';
 import { checkStorage } from '../../general/basic';
 
 let pixel: any = require("./../../../assets/images/pixel.png");
@@ -229,6 +230,7 @@ class ChickenPreload extends Phaser.Scene {
   public startTime: number;
 
   public loadChicken = loadChicken.bind(this);
+  public loadingScreen = loadingScreen.bind(this);
 
   constructor() {
     super('ChickenPreload');
@@ -253,61 +255,7 @@ class ChickenPreload extends Phaser.Scene {
   
   public preload(): void {
 
-    let loading: string = this.state.lang.loading;
-
-    // экран загрузки
-    let height: number = 200; // параметр для высоты окна
-    let text = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 11, '0%', {
-      font: '37px Shadow',
-      color: '#1F5B06'
-    }).setDepth(1).setOrigin(0.5, 0.5);
-
-    this.add.image(this.cameras.main.centerX, this.cameras.main.centerY - Math.floor(height / 2), 'header-syst')
-      .setOrigin(0.5, 1);
-    this.add.image(this.cameras.main.centerX, this.cameras.main.centerY + Math.floor(height / 2), 'bottom-syst')
-      .setOrigin(0.5, 0);
-    this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY, 614, height + 2, "mid-syst")
-      .setOrigin(0.5, 0.5);
-    
-    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - Math.floor(height / 2) - 22, loading, {
-      font: '37px Shadow',
-      color: '#F9D48D'
-    }).setDepth(1).setOrigin(0.5, 1);
-
-    this.add.image(120, this.cameras.main.centerY + 20, 'pb-empty-corner');
-    this.add.image(600, this.cameras.main.centerY + 20, 'pb-empty-corner').setScale(-1, 1);
-    this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY + 20, 436, 130, 'pb-empty-mid');
-    
-    let leftCorner = this.add.image(120, this.cameras.main.centerY + 20, 'pb-full-corner')
-      .setAlpha(0);
-    let rightCorner = this.add.image(600, this.cameras.main.centerY + 20, 'pb-full-corner')
-      .setFlip(true, false)
-      .setAlpha(0);
-    let progress = this.add.tileSprite(142, this.cameras.main.centerY + 20, 0, 130, 'pb-full-mid')
-      .setOrigin(0, 0.5);
-
-    // прогресс загрузки
-    this.load.on('progress', (value: number): void => {
-
-      let percent: number = Math.round(value * 100);
-
-      if (percent >= 5 && leftCorner.alpha === 0) leftCorner.setAlpha(1);
-      if (percent >= 95 && rightCorner.alpha === 0) {
-        progress.setDisplaySize(436, 130);
-        rightCorner.setAlpha(1);
-      }
-
-      if (percent > 5 && percent < 95) {
-
-        let onePercent: number = 420 / 90;
-        let bar = Math.round(percent * onePercent); 
-        progress.setDisplaySize(bar, 130);
-        
-      }
-      
-      text.setText(percent + '%');
-
-    });
+    this.loadingScreen('Chicken');
     
     this.load.image('bg', bg);
     this.load.image('chicken-top', top);
@@ -614,14 +562,6 @@ class ChickenPreload extends Phaser.Scene {
           chickenFairLevels: response.data.chickenFairLevels,
           chickenParts: response.data.chickenParts,
           buyBetterBreedChicken: response.data.buyBetterBreedChicken,
-          unlockCollector3: response.data.unlockChickenCollector3,
-          unlockCollector8: response.data.unlockChickenCollector8,
-          unlockCollector15: response.data.unlockChickenCollector15,
-          unlockCollector24: response.data.unlockChickenCollector24,
-          collectorPrice3: response.data.chickenCollectorPrice3,
-          collectorPrice8: response.data.chickenCollectorPrice8,
-          collectorPrice15: response.data.chickenCollectorPrice15,
-          collectorPrice24: response.data.chickenCollectorPrice24,
           doubledСollectorPrice: response.data.doubledСollectorPrice,
           collectorPrice4: response.data.collectorPrice4,
           collectorPrice12: response.data.collectorPrice12,
@@ -710,7 +650,7 @@ class ChickenPreload extends Phaser.Scene {
           autosaveCounter: response.data.user.chickenSaveCounter,
           diamondAnimalAd: response.data.user.diamonds_chicken_ad,
           takenHerdBoost: response.data.user.takenHerdBoostChicken,
-          feedBoostTime: response.data.user.feedBoostTime,
+          feedBoostTime: response.data.user.feedBoostTimeChicken,
         }
         
         const Amplitude = this.state.amplitude;

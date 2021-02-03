@@ -712,12 +712,10 @@ function chickenEggsRepository(): void {
 
     });
 
-    if (this.state.userChicken.feedBoostTime > 0) {
-      this.feedBoostText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 80, this.state.lang.feedBoostCounterText + this.shortTime(this.state.userChicken.feedBoostTime), {
-        font: '26px Bip',
-        color: '#925C28'
-      }).setOrigin(0.5, 0.5);
-    }
+    this.feedBoostText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 80, ' ', {
+      font: '26px Bip',
+      color: '#925C28'
+    }).setOrigin(0.5, 0.5);
 
     let button1 = this.bigButton('red', 'center', 200, this.state.lang.exchangeRepositoryBtn);
     this.clickModalBtn(button1, (): void => {
@@ -757,10 +755,10 @@ function chickenEggsRepository(): void {
     });
     
     if (this.state.userChicken.feedBoostTime > 0) {
-      this.feedBoostText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 30, this.state.lang.feedBoostCounterText + this.shortTime(this.state.userChicken.feedBoostTime), {
+      this.feedBoostText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 30, ' ', {
         font: '26px Bip',
         color: '#925C28'
-      }).setOrigin(0.5, 0.5);
+      }).setOrigin(0.5, 0.5).setVisible(false);
     }
 
     let button1 = this.bigButton('red', 'center', 170, this.state.lang.exchangeRepositoryBtn);

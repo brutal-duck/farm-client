@@ -1,5 +1,4 @@
 import axios from 'axios';
-import state from './../../state';
 
 // автосохранение
 function autosave(): void {
@@ -108,11 +107,7 @@ function autosave(): void {
 
         }
 
-        if (res.data.donate &&
-          !this.scene.isActive('Modal') &&
-          !this.scene.isActive('Block') &&
-          !this.scene.isActive('Tutorial') &&
-          !this.scene.isActive('Map')) this.showDonate();
+        if (res.data.donate) this.state.donate = true; 
 
       }
 

@@ -39,7 +39,7 @@ class Boot extends Phaser.Scene {
 
   public init(): void {
     
-    let build: string = '3.3.2';
+    let build: string = '3.4';
     console.log('Build ' + build);
 
     // автосохранение при уходе с игры
@@ -158,7 +158,7 @@ class Boot extends Phaser.Scene {
       counter: 0,
       mail: '',
       level: 0,
-      additionalTutorial: { balance: false, cave: false, collector: false, herdBoost: false },
+      additionalTutorial: { balance: false, cave: false, collector: false, herdBoost: false, feedBoost: false },
       takenReward: true, 
     }
     this.state.platform = this.platform;

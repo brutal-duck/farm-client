@@ -452,17 +452,6 @@ function doneTutorCave2(): void {
 
 }
 
-function doneTutorHerdBoost1(): void {
-
-  this.state.user.additionalTutorial.herdBoost = true;
-  this.scene.stop('Tutorial');
-
-  this.time.addEvent({ delay: 1000, callback: (): void => {
-    this.showTutorial('herdBoost2');
-  }, callbackScope: this, loop: false });
-
-}
-
 // отмена всего обучения
 function skipTutorial(): void {
 

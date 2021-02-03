@@ -11,7 +11,8 @@ let userData: Iuser = {
     balance: false,
     cave: false,
     collector: false,
-    herdBoost: false
+    herdBoost: false,
+    feedBoost: false
   },
   takenReward: false,
 }

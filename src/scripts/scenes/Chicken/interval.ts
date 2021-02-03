@@ -283,8 +283,22 @@ function interval(): void {
     }
     this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setText(nativeCount);
 
+    if (this.state.donate &&
+      !this.scene.isActive('Modal') &&
+      !this.scene.isActive('Block') &&
+      !this.scene.isActive('Tutorial') &&
+      !this.scene.isActive('Map')) this.showDonate();
+
+    // уменьшаем время буста комбикорм
+    if (this.state.userChicken.feedBoostTime > 0) {
+      this.state.userChicken.feedBoostTime--;
+    }
 
   }, callbackScope: this, loop: true });
+
+  // проверка доната 
+  
+  
 
 }
 

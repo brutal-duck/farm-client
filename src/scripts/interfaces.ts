@@ -66,6 +66,7 @@ interface IadditionalTutorial {
   cave: boolean;
   collector: boolean;
   herdBoost: boolean;
+  feedBoost: boolean;
 }
 interface Iuser {
   diamonds: number;
@@ -207,14 +208,6 @@ interface IsheepSettings {
   sheepFairLevels: IfairLevel[];
   sheepParts: Ipart[];
   buyBetterBreedSheep: number;
-  unlockCollector3: number;
-  unlockCollector8: number;
-  unlockCollector15: number;
-  unlockCollector24: number;
-  collectorPrice3: number;
-  collectorPrice8: number;
-  collectorPrice15: number;
-  collectorPrice24: number;
   doubledСollectorPrice: number;
   collectorPrice4: number;
   collectorPrice12: number;
@@ -232,14 +225,6 @@ interface IchickenSettings {
   chickenFairLevels: IfairLevel[];
   chickenParts: Ipart[];
   buyBetterBreedChicken: number;
-  unlockCollector3: number;
-  unlockCollector8: number;
-  unlockCollector15: number;
-  unlockCollector24: number;
-  collectorPrice3: number;
-  collectorPrice8: number;
-  collectorPrice15: number;
-  collectorPrice24: number;
   doubledСollectorPrice: number;
   collectorPrice4: number;
   collectorPrice12: number;
@@ -387,4 +372,5 @@ interface Istate {
   chickenCollectorSettings: IcollectorSettings[];
   adBlock: boolean;
   adman: any;
+  donate: boolean;
 }

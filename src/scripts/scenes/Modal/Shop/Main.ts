@@ -10,19 +10,20 @@ import {
   clickBoostBtn,
   payOdnoklassniki,
   payVK,
-  shortTime,
-  shortNum,
+  updateHerdBoostBtn,
+  herdBoost,
+  feedBoost,
+  collectorBoost,
+  shortTime
 } from '../../../general/basic';
 import {
   sheepMoney,
   sheep,
-  sheepBoosts,
   updateSheepPrices
 } from './sheep';
 import {
   chickenMoney,
   chicken,
-  chickenBoosts,
   updateChickenPrices
 } from './chicken';
 import { Arrows } from '../../../elements';
@@ -58,7 +59,7 @@ class Shop extends Phaser.Scene {
   public state: Istate;
   public scrolling: Scrolling;
   public height: number;
-  public heightWindow: number = 625;
+  public heightWindow: number = 845;
   public buttons: IshopButtons[];
   public collectorTimer: Phaser.GameObjects.Text;
   public herdBoostTimerText: Phaser.GameObjects.Text;
@@ -71,6 +72,9 @@ class Shop extends Phaser.Scene {
   public herdBoostBtnLeftText: Phaser.GameObjects.Text;
   public herdBoostDiamondBtn: Phaser.GameObjects.Sprite;
   public herdBoostBtn: any;
+  public feedProgressBar: Phaser.GameObjects.TileSprite;
+  public feedProgressText: Phaser.GameObjects.Text;
+  public feedProgressBarBg: Phaser.GameObjects.Sprite
 
   public click = click.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
@@ -82,14 +86,16 @@ class Shop extends Phaser.Scene {
   public clickBoostBtn = clickBoostBtn.bind(this);
   public chickenMoney = chickenMoney.bind(this);
   public chicken = chicken.bind(this);
-  public chickenBoosts = chickenBoosts.bind(this);
   public updateChickenPrices = updateChickenPrices.bind(this);
   public sheepMoney = sheepMoney.bind(this);
   public sheep = sheep.bind(this);
-  public sheepBoosts = sheepBoosts.bind(this);
   public updateSheepPrices = updateSheepPrices.bind(this);
   public payOdnoklassniki = payOdnoklassniki.bind(this);
   public payVK = payVK.bind(this);
+  public updateHerdBoostBtn = updateHerdBoostBtn.bind(this);
+  public herdBoost = herdBoost.bind(this);
+  public feedBoost = feedBoost.bind(this);
+  public collectorBoost = collectorBoost.bind(this);
 
   public init(state: Istate): void {
     
@@ -133,7 +139,7 @@ class Shop extends Phaser.Scene {
 
     let cameraOptions = {
       x: 130,
-      y: this.cameras.main.centerY - 260,
+      y: this.cameras.main.centerY - 360,
       width: 460,
       height: this.heightWindow,
       wheel: true,
@@ -160,122 +166,66 @@ class Shop extends Phaser.Scene {
       else if (this.state.farm === 'Chicken') this.chicken();
 
     } else if (this.state.modal.shopType === 4) {   
-      this.scrolling.bottom = this.height - this.heightWindow + 300;   
-      if (this.state.farm === 'Sheep') this.sheepBoosts();
-      else if (this.state.farm === 'Chicken') this.chickenBoosts();
-      if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
-      this.state.user.additionalTutorial.herdBoost) this.herdBoost(); // проверяем главу и создаем окно только если глава выше 6
+      this.boosts();
     }
     
   }
 
-  public herdBoost(): void {
 
-    this.add.tileSprite(0, 344 + this.height, 466, 270, 'boost-bg').setOrigin(0, 0);
-    this.add.text(240, 380 + this.height, this.state.lang[`herdBoostTitle${this.state.farm}`], { // Заменить текст
-      font: '28px Shadow',
-      color: '#FFFFFF',
-      wordWrap: { width: 300 },
-      align: 'center'
-    }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
-    
-    this.add.sprite(40, 420 + this.height, `${this.state.farm.toLocaleLowerCase()}-herd-boost-icon`).setOrigin(0, 0);
-    this.add.sprite(0, 344 + this.height, 'flags').setOrigin(0, 0).setFlipX(true);
-    this.add.sprite(466, 344 + this.height, 'flags').setOrigin(1, 0);
-    // кнопка
-    let xBtn: number =  330;
-    let yBtn: number = 520 + this.height;
-    this.herdBoostBtn = this.add.sprite(xBtn, yBtn, 'improve-collector');
-    this.herdBoostBtn.setDataEnabled();
-    this.herdBoostBtn.data.values.updated = false;
-
-    this.herdBoostDiamondBtn = this.add.sprite(xBtn, yBtn - 5, 'diamond').setVisible(true).setScale(0.11);
-    
-    this.herdBoostBtnLeftText = this.add.text(xBtn, yBtn - 5 , this.state.lang.buy, {
-      font: '23px Shadow',
-      color: '#FFFFFF'
-    }).setOrigin(1, 0.5).setStroke('#3B5367', 4).setDepth(10);
-
-    this.herdBoostBtnRightText = this.add.text(xBtn, yBtn - 5 , String(shortNum(this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost)), {
-      font: '23px Shadow',
-      color: '#FFFFFF'
-    }).setOrigin(0, 0.5).setStroke('#3B5367', 4).setDepth(10);
-
-    
-    this.herdBoostDiamondBtn.setX(this.herdBoostBtn.x + this.herdBoostBtnLeftText.width - 25 - this.herdBoostBtnRightText.width);
-    this.herdBoostBtnLeftText.setX(this.herdBoostDiamondBtn.getBounds().left - 2);
-    this.herdBoostBtnRightText.setX(this.herdBoostDiamondBtn.getBounds().right + 1);
-    
-    this.herdBoostTimerText = this.add.text(xBtn, yBtn - 60, this.state.lang.stillForBoost + ' ' + shortTime(this.state.timeToHerdBoost, this.state.lang), {
-      font: '20px Shadow',
-      color: '#FFFFFF',
-      wordWrap: {width: 220},
-      align: 'center'
-    }).setOrigin(0.5, 0.5);
-
-    this.clickModalBtn({ btn: this.herdBoostBtn, title: this.herdBoostBtnLeftText, text1: this.herdBoostBtnRightText, img1: this.herdBoostDiamondBtn }, (): void => {
-      if (this.state.user.diamonds >= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost) {
-        this.state.user.diamonds -= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost;
-        this.game.scene.keys[this.state.farm].startHerdBoost();
-
-        if (this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost > 0) {
-          this.state.amplitude.getInstance().logEvent('diamonds_spent', {
-            type: 'herd',
-            count: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
-            farm_id: this.state.farm
-          });
-        }
-
-        this.state.amplitude.getInstance().logEvent('booster_merge', {
-          count: this.state[`user${this.state.farm}`].takenHerdBoost,
-          farm_id: this.state.farm
-        });
-      } else {
-        // вызывем конвертор
-        this.state.convertor = {
-          fun: 0,
-          count: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
-          diamonds: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
-          type: 1
-        }
-        this.game.scene.keys[this.state.farm].exchange();
-        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-        this.scene.stop();
-        this.scene.stop('ShopBars');
-        this.scene.stop('Modal');
-      }
-      // проверка хватает ли денег и лишь потом запуск сцены
-    });
-  }
   
   public update(): void {
     // укзывающие стрелки
     if (this.arrows?.active) this.arrows.update();
     
     // обновляем время бустера
-    if (this.state.modal.shopType === 4 && 
-    this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
-    this.state.user.additionalTutorial.herdBoost) {
-      let xBtn: number =  330;
-      let yBtn: number = 520 + this.height;
-      this.herdBoostTimerText.setText(this.state.lang.stillForBoost + ' ' + shortTime(this.state.timeToHerdBoost, this.state.lang));
-      if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0 && !this.herdBoostBtn.data.values.updated) { 
-        this.herdBoostBtn.data.values.updated = true;
-        // если не взят буст
-        this.herdBoostBtnLeftText.setText(this.state.lang.pickUp); 
-        this.herdBoostDiamondBtn.setVisible(false);
-        this.herdBoostBtn.setY(yBtn - 23);
-        this.herdBoostBtnLeftText.setY(yBtn - 25);
-        this.herdBoostBtnLeftText.setX(xBtn);
-        this.herdBoostBtnLeftText.setOrigin(0.5, 0.5);
-        this.herdBoostBtnRightText.setVisible(false);
-        this.herdBoostTimerText.setVisible(false);
-      } 
-    }
+    this.updateHerdBoostBtn();
 
+    if (this.state[`user${this.state.farm}`].feedBoostTime > 0 && this.state.modal.shopType === 4) {
+      let progress: number = (this.state[`user${this.state.farm}`].feedBoostTime / (3600 * this.game.scene.keys[this.state.farm].feedBoostStack)) * this.feedProgressBar?.data?.values.maxWidth;
+      this.feedProgressBar?.setDisplaySize(progress, 16);
+      this.feedProgressText?.setText(this.state.lang.still + ' ' + shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang));
+      this.feedProgressBar?.setVisible(true);
+      this.feedProgressText?.setVisible(true);
+      this.feedProgressBarBg?.setVisible(true);
+      this.scrolling.bottom = this.height - this.heightWindow + 920;
+    } else {
+      this.feedProgressBar?.setVisible(false);
+      this.feedProgressText?.setVisible(false);
+      this.feedProgressBarBg?.setVisible(false);
+      this.scrolling.bottom = this.height - this.heightWindow + 800;
+    }
     
   }
 
+
+  public boosts(): void {
+
+    if (this.state.farm === 'Sheep') {
+      this.collectorBoost();
+
+      if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
+      this.state.user.additionalTutorial.herdBoost) this.herdBoost(); // проверяем главу и создаем окно только если глава выше 6
+      
+      if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].feedBoostLvl &&
+      this.state.user.additionalTutorial.feedBoost) {
+        this.scrolling.bottom = this.height - this.heightWindow + 920;
+        this.feedBoost();
+      }
+      
+    }
+
+    else if (this.state.farm === 'Chicken') {
+      this.collectorBoost();
+
+      if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
+      this.state.user.additionalTutorial.herdBoost) this.herdBoost(); // проверяем главу и создаем окно только если глава выше 6
+
+      if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].feedBoostLvl) {
+        this.scrolling.bottom = this.height - this.heightWindow + 900;
+        this.feedBoost();
+      }
+    }
+  }
 
   // окно покупки кристаллов
   public shopDiamonds(): void {
@@ -317,14 +267,14 @@ class Shop extends Phaser.Scene {
 
       });
 
-      this.add.text(110, y + 145 + this.height, String(left.diamonds), {
+      this.add.text(110, y + 145 + this.height, String(left.diamonds + left.bonus), {
         font: '40px Shadow',
         color: '#FFFFFF'
       }).setOrigin(0.5, 0.5);
 
       if (left.bonus > 0) {
 
-        this.add.text(110, y + 180 + this.height, '+' + left.bonus + ' ' + this.state.lang.free, {
+        this.add.text(110, y + 180 + this.height, this.state.lang.benefit + ' ' + '+' + left.bonus, {
           font: '20px Shadow',
           color: '#FFFFFF'
         }).setOrigin(0.5, 0.5);
@@ -362,7 +312,7 @@ class Shop extends Phaser.Scene {
       if (left.stock > 0) {
 
         this.add.sprite(0, y + this.height, 'stock-tape').setOrigin(0, 0);
-        this.add.text(162, y + 42 + this.height, '-' + left.stock + '%', {
+        this.add.text(162, y + 42 + this.height, '+' + left.stock + '%', {
           font: '34px Shadow',
           color: '#FFFFFF'
         }).setOrigin(0.5, 0.5).setRotation(0.55);
@@ -394,14 +344,14 @@ class Shop extends Phaser.Scene {
 
         });
 
-        this.add.text(350, y + 145 + this.height, String(right.diamonds), {
+        this.add.text(350, y + 145 + this.height, String(right.diamonds + right.bonus), {
           font: '40px Shadow',
           color: '#FFFFFF'
         }).setOrigin(0.5, 0.5);
 
         if (right.bonus > 0) {
 
-          this.add.text(350, y + 180 + this.height, '+' + right.bonus + ' ' + this.state.lang.free, {
+          this.add.text(350, y + 180 + this.height, this.state.lang.benefit + ' ' + '+' + right.bonus , {
             font: '20px Shadow',
             color: '#FFFFFF'
           }).setOrigin(0.5, 0.5);
@@ -439,7 +389,7 @@ class Shop extends Phaser.Scene {
         if (right.stock > 0) {
 
           this.add.sprite(240, y + this.height, 'stock-tape').setOrigin(0, 0);
-          this.add.text(402, y + 42 + this.height, '-' + right.stock + '%', {
+          this.add.text(402, y + 42 + this.height, '+' + right.stock + '%', {
             font: '34px Shadow',
             color: '#FFFFFF'
           }).setOrigin(0.5, 0.5).setRotation(0.55);

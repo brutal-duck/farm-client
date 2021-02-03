@@ -126,8 +126,10 @@ class Chicken extends Phaser.Scene {
   public caveIconsTimer: number; // таймер для анимации иконок на пещере
   public collectorTimer: Phaser.Time.TimerEvent; // интервал собирателя яиц
   public debugLog: boolean; // метка для отлова ошибок
-  public herdBoostLvl: number = 6; // уровень старта стадного буста
+  public herdBoostLvl: number = 5; // уровень старта стадного буста
   public feedBoostMultiplier: number = 2; // множитель для буста 
+  public feedBoostLvl: number = 6; // уровень старта буста комбикорм
+  public feedBoostStack: number = 11; // максимальный стек часов
 
   public world = world.bind(this);
   public drag = drag.bind(this);
@@ -248,6 +250,21 @@ class Chicken extends Phaser.Scene {
     this.interval();
     this.setCollector();
 
+    // let cursors = this.input.keyboard.createCursorKeys();
+    // cursors.space.on('down', (): void => {
+    //   // let modal: Imodal = {
+    //   //   type: 8,
+    //   // }
+    //   // this.state.modal = modal;
+    //   // this.state.userSheep.feedBoostTimer = 10
+    //   // this.scene.launch('Modal', this.state);
+    //   // this.state.user.diamonds = 10000000;
+    //   let tasks = this.partTasks();
+    //   for (let i in tasks) {
+    //     tasks[i].done = 1;
+    //     tasks[i].got_awarded = 1;
+    //   }
+    // });
 
   }
 

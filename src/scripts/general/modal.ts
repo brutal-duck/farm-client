@@ -255,7 +255,7 @@ function takeNewbieAward(): void {
 
 // показ окна успешного доната
 function showDonate(): void {
-
+  this.state.donate = false;
   let modal: Imodal = { type: 7 }
   this.state.modal = modal;
   this.scene.launch('Modal', this.state);

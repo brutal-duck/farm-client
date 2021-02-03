@@ -20,10 +20,10 @@ class ShopBars extends Phaser.Scene {
   public create(): void {
     
     // бахрама
-    this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 300, 'shop-head').setDepth(2);
+    this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 390, 'shop-head').setDepth(2);
 
     // кнопка закрыть
-    let close: Phaser.GameObjects.Sprite = this.add.sprite(605, this.cameras.main.centerY - 375, 'shop-close');
+    let close: Phaser.GameObjects.Sprite = this.add.sprite(605, this.cameras.main.centerY - 465, 'shop-close');
     this.clickButtonUp(close, (): void => {
 
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
@@ -36,10 +36,10 @@ class ShopBars extends Phaser.Scene {
     //натив вкладки с бустами
     this.nativeBoost = this.add.graphics()
       .fillStyle(0xFF2400, 1)
-      .fillCircle(550, this.cameras.main.centerY - 430, 20)
+      .fillCircle(550, this.cameras.main.centerY - 520, 20)
       .setDepth(2)
       .setVisible(false);
-    this.nativeBoostCounter = this.add.text(550, this.cameras.main.centerY - 430, String(this.state.nativeCounter[3]), {
+    this.nativeBoostCounter = this.add.text(550, this.cameras.main.centerY - 520, String(this.state.nativeCounter[3]), {
       font: '32px Shadow',
       color: '#f3eae6'
     }).setDepth(3)
@@ -53,13 +53,13 @@ class ShopBars extends Phaser.Scene {
     // кристаллы
     if (this.state.modal.shopType === 1) {
 
-      this.add.sprite(136, this.cameras.main.centerY - 395, 'shop-tab-active').setDepth(1);
-      this.add.sprite(136, this.cameras.main.centerY - 405, 'diamond').setScale(0.25).setDepth(1);
+      this.add.sprite(136, this.cameras.main.centerY - 485, 'shop-tab-active').setDepth(1);
+      this.add.sprite(136, this.cameras.main.centerY - 495, 'diamond').setScale(0.25).setDepth(1);
 
     } else {
       
-      let diamonds: Phaser.GameObjects.Sprite = this.add.sprite(136, this.cameras.main.centerY - 395, 'shop-tab');
-      let diamondsIcon: Phaser.GameObjects.Sprite = this.add.sprite(136, this.cameras.main.centerY - 397, 'diamond').setScale(0.25);
+      let diamonds: Phaser.GameObjects.Sprite = this.add.sprite(136, this.cameras.main.centerY - 485, 'shop-tab');
+      let diamondsIcon: Phaser.GameObjects.Sprite = this.add.sprite(136, this.cameras.main.centerY - 487, 'diamond').setScale(0.25);
       this.clickButtonUp(diamonds, (): void => {
   
         if (this.state.userSheep?.tutorial !== 90) {
@@ -97,13 +97,13 @@ class ShopBars extends Phaser.Scene {
     // монеты
     if (this.state.modal.shopType === 2) {
 
-      this.add.sprite(258, this.cameras.main.centerY - 395, 'shop-tab-active').setDepth(1);
-      this.add.sprite(258, this.cameras.main.centerY - 402, coinIcon).setScale(0.25).setDepth(1);
+      this.add.sprite(258, this.cameras.main.centerY - 485, 'shop-tab-active').setDepth(1);
+      this.add.sprite(258, this.cameras.main.centerY - 492, coinIcon).setScale(0.25).setDepth(1);
 
     } else {
 
-      let money: Phaser.GameObjects.Sprite = this.add.sprite(258, this.cameras.main.centerY - 395, 'shop-tab');
-      let moneyIcon: Phaser.GameObjects.Sprite = this.add.sprite(258, this.cameras.main.centerY - 395, coinIcon).setScale(0.25);
+      let money: Phaser.GameObjects.Sprite = this.add.sprite(258, this.cameras.main.centerY - 485, 'shop-tab');
+      let moneyIcon: Phaser.GameObjects.Sprite = this.add.sprite(258, this.cameras.main.centerY - 485, coinIcon).setScale(0.25);
       this.clickButtonUp(money, (): void => {
 
         if (this.state.userSheep?.tutorial !== 90) {
@@ -129,13 +129,13 @@ class ShopBars extends Phaser.Scene {
     // животные
     if (this.state.modal.shopType === 3) {
 
-      this.add.sprite(380, this.cameras.main.centerY - 395, 'shop-tab-active').setDepth(1);
-      this.add.sprite(380, this.cameras.main.centerY - 402, animalIconTexture).setDepth(1);
+      this.add.sprite(380, this.cameras.main.centerY - 485, 'shop-tab-active').setDepth(1);
+      this.add.sprite(380, this.cameras.main.centerY - 492, animalIconTexture).setDepth(1);
 
     } else {
 
-      let animal: Phaser.GameObjects.Sprite = this.add.sprite(380, this.cameras.main.centerY - 395, 'shop-tab');
-      let animalIcon: Phaser.GameObjects.Sprite = this.add.sprite(380, this.cameras.main.centerY - 397, animalIconTexture);
+      let animal: Phaser.GameObjects.Sprite = this.add.sprite(380, this.cameras.main.centerY - 485, 'shop-tab');
+      let animalIcon: Phaser.GameObjects.Sprite = this.add.sprite(380, this.cameras.main.centerY - 487, animalIconTexture);
       this.clickButtonUp(animal, (): void => {
 
         if (this.state.userSheep?.tutorial !== 90) {
@@ -160,13 +160,13 @@ class ShopBars extends Phaser.Scene {
     // бусты
     if (this.state.modal.shopType === 4) {
 
-      this.add.sprite(502, this.cameras.main.centerY - 395, 'shop-tab-active').setDepth(1);
-      this.add.sprite(502, this.cameras.main.centerY - 402, 'icon-shop-boosts').setDepth(1);
+      this.add.sprite(502, this.cameras.main.centerY - 485, 'shop-tab-active').setDepth(1);
+      this.add.sprite(502, this.cameras.main.centerY - 492, 'icon-shop-boosts').setDepth(1);
 
     } else {
 
-      let boosts: Phaser.GameObjects.Sprite = this.add.sprite(502, this.cameras.main.centerY - 395, 'shop-tab');
-      let boostsIcon: Phaser.GameObjects.Sprite = this.add.sprite(502, this.cameras.main.centerY - 397, 'icon-shop-boosts');
+      let boosts: Phaser.GameObjects.Sprite = this.add.sprite(502, this.cameras.main.centerY - 485, 'shop-tab');
+      let boostsIcon: Phaser.GameObjects.Sprite = this.add.sprite(502, this.cameras.main.centerY - 487, 'icon-shop-boosts');
       this.clickButtonUp(boosts, (): void => {
 
         let modal: Imodal = {
