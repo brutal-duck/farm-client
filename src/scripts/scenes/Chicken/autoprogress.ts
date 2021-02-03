@@ -14,11 +14,16 @@ function autoprogress(load: boolean = false): void {
   }
   this.caveTimer();
 
-  // время буста комбикорм
-  if (this.state.userChicken.feedBoostTime >= this.state.offlineTime) this.state.userChicken.feedBoostTime -= this.state.offlineTime;
-  else {
-    this.state.userChicken.feedBoostTime = 0;
-  }
+   // время буста комбикорм
+   let wasFeedBoost: number = 0;
+
+   if (this.state.userSheep.feedBoostTime >= this.state.offlineTime) {
+     this.state.userSheep.feedBoostTime -= this.state.offlineTime;
+     wasFeedBoost = this.state.offlineTime;
+   } else {
+     wasFeedBoost = this.state.userSheep.feedBoostTime;
+     this.state.userSheep.feedBoostTime = 0;
+   }
 
   // время собирателя
   let wasCollector: number = 0;
@@ -30,6 +35,10 @@ function autoprogress(load: boolean = false): void {
     wasCollector = this.state.userChicken.collector;
     this.state.userChicken.collector = 0;
   }
+
+  // процент шерсти под бустом
+  let feedPercent: number = Number((wasFeedBoost / wasCollector).toFixed(2));
+  if (feedPercent >= 1 ) feedPercent = 1;
 
   if (!load) this.game.scene.keys['ChickenBars'].collector.update();
   if (!load) this.state.timeToHerdBoost -= this.state.offlineTime;
@@ -172,7 +181,8 @@ function autoprogress(load: boolean = false): void {
   for (let i: number = 0; i < length; i++) {
     
     let price: number = this.state.chickenSettings.chickenSettings.find((data: IchickenPoints) => data.breed === eggsArr[i].type).eggPrice;
-
+    price *= (1 + feedPercent); // коэфф
+    
     for (let j in this.territories.children.entries) {
 
       if (this.territories.children.entries[j].type === 5) {
