@@ -2231,12 +2231,19 @@ function feedBoost(): void {
   feedBoostBtnRightText.setX(feedBoostDiamondBtn.getBounds().right + 1);
 
   this.add.sprite(10, this.height + 870, 'pb-chapter-modal').setOrigin(0, 0.5).setScale(0.92, 1);
-  this.feedProgressBar = this.add.tileSprite(25, this.height + 870, 300, 16, 'green-progress')
+  this.feedProgressBar = this.add.tileSprite(25, this.height + 870, 0, 16, 'green-progress')
       .setOrigin(0, 0.5);
+  
+  this.feedProgressBar.setDataEnabled();
+  this.feedProgressBar.data.values.maxWidth = 408;
+  let progress: number = (this.state[`user${this.state.farm}`].feedBoostTime / (3600 * this.game.scene.keys[this.state.farm].feedBoostStack)) * this.feedProgressBar.data.values.maxWidth;
+  this.feedProgressBar.setDisplaySize(progress, 16);
   this.feedProgressText = this.add.text(240, this.height + 840, this.state.lang.still + ' ' + shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang), {
     font: '21px Shadow',
     color: '#FFFFFF'
   }).setOrigin(0.5, 0.5);
+
+
 
   this.clickModalBtn({ btn: feedBoostBtn, title: feedBoostBtnLeftText, text1: feedBoostBtnRightText, img1: feedBoostDiamondBtn }, (): void => {
     this.state.user.diamonds = 1000;
