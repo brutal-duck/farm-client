@@ -66,6 +66,7 @@ interface IadditionalTutorial {
   cave: boolean;
   collector: boolean;
   herdBoost: boolean;
+  feedBoost: boolean;
 }
 interface Iuser {
   diamonds: number;
