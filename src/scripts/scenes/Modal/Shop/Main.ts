@@ -198,8 +198,7 @@ class Shop extends Phaser.Scene {
 
 
   public boosts(): void {
-    this.scrolling.bottom = this.height - this.heightWindow + 500;
-    this.state.userSheep.feedBoostTime = 0
+
     if (this.state.farm === 'Sheep') {
       this.collectorBoost();
 
