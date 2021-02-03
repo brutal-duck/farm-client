@@ -17,12 +17,12 @@ function autoprogress(load: boolean = false): void {
    // время буста комбикорм
    let wasFeedBoost: number = 0;
 
-   if (this.state.userSheep.feedBoostTime >= this.state.offlineTime) {
-     this.state.userSheep.feedBoostTime -= this.state.offlineTime;
+   if (this.state.userChicken.feedBoostTime >= this.state.offlineTime) {
+     this.state.userChicken.feedBoostTime -= this.state.offlineTime;
      wasFeedBoost = this.state.offlineTime;
    } else {
-     wasFeedBoost = this.state.userSheep.feedBoostTime;
-     this.state.userSheep.feedBoostTime = 0;
+     wasFeedBoost = this.state.userChicken.feedBoostTime;
+     this.state.userChicken.feedBoostTime = 0;
    }
 
   // время собирателя
