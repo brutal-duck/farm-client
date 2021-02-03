@@ -126,7 +126,7 @@ class Chicken extends Phaser.Scene {
   public caveIconsTimer: number; // таймер для анимации иконок на пещере
   public collectorTimer: Phaser.Time.TimerEvent; // интервал собирателя яиц
   public debugLog: boolean; // метка для отлова ошибок
-  public herdBoostLvl: number = 6; // уровень старта стадного буста
+  public herdBoostLvl: number = 5; // уровень старта стадного буста
   public feedBoostMultiplier: number = 2; // множитель для буста 
   public feedBoostLvl: number = 6; // уровень старта буста комбикорм
   public feedBoostStack: number = 11; // максимальный стек часов
