@@ -2246,14 +2246,16 @@ function feedBoost(): void {
 
 
   this.clickModalBtn({ btn: feedBoostBtn, title: feedBoostBtnLeftText, text1: feedBoostBtnRightText, img1: feedBoostDiamondBtn }, (): void => {
-    this.state.user.diamonds = 1000;
+    
     if (this.state.user.diamonds >= this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice) {
+
       this.state.user.diamonds -= this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice;
+
       if (this.state[`user${this.state.farm}`].feedBoostTime + 7200 > this.game.scene.keys[this.state.farm].feedBoostStack * 3600) {
+
         this.scene.stop('Shop');
         this.scene.stop('ShopBars');
         this.scene.stop('Modal');
-
         let modal: Imodal = {
           type: 1,
           sysType: 3,
@@ -2264,6 +2266,7 @@ function feedBoost(): void {
         this.state.modal = modal;
         this.scene.launch('Modal', this.state);
       } else {
+
         if (this.state[`user${this.state.farm}`].feedBoostTime <= 0) {
           this.state[`user${this.state.farm}`].feedBoostTime += 3600; // прибавить час
         } else {
@@ -2279,13 +2282,14 @@ function feedBoost(): void {
         diamonds: this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice,
         type: 1
       }
+
       this.game.scene.keys[this.state.farm].exchange();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
       this.scene.stop();
       this.scene.stop('ShopBars');
       this.scene.stop('Modal');
     }
-    // проверка хватает ли денег и лишь потом запуск сцены
+    
   });
 }
 

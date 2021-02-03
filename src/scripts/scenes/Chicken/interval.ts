@@ -290,8 +290,8 @@ function interval(): void {
       !this.scene.isActive('Map')) this.showDonate();
 
     // уменьшаем время буста комбикорм
-    if (this.state.userSheep.feedBoostTime > 0) {
-      this.state.userSheep.feedBoostTime--;
+    if (this.state.userChicken.feedBoostTime > 0) {
+      this.state.userChicken.feedBoostTime--;
     }
 
   }, callbackScope: this, loop: true });

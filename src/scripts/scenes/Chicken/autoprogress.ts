@@ -15,9 +15,9 @@ function autoprogress(load: boolean = false): void {
   this.caveTimer();
 
   // время буста комбикорм
-  if (this.state.userSheep.feedBoostTime >= this.state.offlineTime) this.state.userSheep.feedBoostTime -= this.state.offlineTime;
+  if (this.state.userChicken.feedBoostTime >= this.state.offlineTime) this.state.userChicken.feedBoostTime -= this.state.offlineTime;
   else {
-    this.state.userSheep.feedBoostTime = 0;
+    this.state.userChicken.feedBoostTime = 0;
   }
 
   // время собирателя
