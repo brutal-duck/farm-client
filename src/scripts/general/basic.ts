@@ -2263,6 +2263,94 @@ function feedBoost(): void {
   });
 }
 
+function loadingScreen(farmType: string): void {
+
+  let loading: string = this.state.lang.loading;
+  let general: number = 0; // Количество общих посказок
+  let sheep: number = 0; // Количество посказок для овечьей фермы
+  let chicken: number = 0; // Количество посказок для куриной фермы
+  let helpArr: string[] = [];
+
+  // Создаем массив с подсказками
+  for (let i: number = 0; i < general; i++) {
+    helpArr.push(this.state.lang['helpGeneral_' + String(i + 1)]);
+  }
+  
+  // Добавляем в массив подсказки в зависимости от типа фермы
+  if (farmType === 'Sheep') {
+    for (let i: number = 0; i < sheep; i++) {
+      helpArr.push(this.state.lang['helpSheep_' + String(i + 1)]);
+    }
+  } else if (farmType === 'Chicken') {
+    for (let i: number = 0; i < chicken; i++) {
+      helpArr.push(this.state.lang['helpChicken_' + String(i + 1)]);
+    }
+  }
+
+  let helpText: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 100, helpArr[random(0, helpArr.length - 1)], {
+    font: '26px Bip',
+    color: 'Black',
+    align: 'center',
+    wordWrap: { width: 440 }
+  }).setOrigin(0.5, 0.5).setDepth(4);
+
+  // экран загрузки
+  let padding: number = helpText.height / 2; // Отступ для элементов в зависимости от высоты текста посказки
+  let height: number = 200 + helpText.height / 3; // параметр для высоты окна в зависимости от высоты текста посказки
+  let text: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 11 - padding, '0%', {
+    font: '37px Shadow',
+    color: '#1F5B06'
+  }).setDepth(1).setOrigin(0.5, 0.5);
+
+  this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - Math.floor(height / 2), 'header-syst')
+    .setOrigin(0.5, 1);
+  this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + Math.floor(height / 2), 'bottom-syst')
+    .setOrigin(0.5, 0);
+  this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY, 614, height + 2, "mid-syst")
+    .setOrigin(0.5, 0.5);
+  
+  this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - Math.floor(height / 2) - 22, loading, {
+    font: '37px Shadow',
+    color: '#F9D48D'
+  }).setDepth(1).setOrigin(0.5, 1);
+
+  this.add.sprite(120, this.cameras.main.centerY + 20 - padding, 'pb-empty-corner');
+  this.add.sprite(600, this.cameras.main.centerY + 20 - padding, 'pb-empty-corner').setScale(-1, 1);
+  this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY + 20 - padding, 436, 130, 'pb-empty-mid');
+  
+  let leftCorner: Phaser.GameObjects.Sprite = this.add.sprite(120, this.cameras.main.centerY + 20 - padding, 'pb-full-corner')
+    .setAlpha(0);
+  let rightCorner: Phaser.GameObjects.Sprite = this.add.sprite(600, this.cameras.main.centerY + 20 - padding, 'pb-full-corner')
+    .setFlip(true, false)
+    .setAlpha(0);
+  let progress: Phaser.GameObjects.TileSprite = this.add.tileSprite(142, this.cameras.main.centerY + 20 - padding, 0, 130, 'pb-full-mid')
+    .setVisible(false)
+    .setOrigin(0, 0.5);
+
+  // прогресс загрузки
+  this.load.on('progress', (value: number): void => {
+
+    let percent: number = Math.round(value * 100);
+
+    if (percent >= 5 && leftCorner.alpha === 0) leftCorner.setAlpha(1);
+    if (percent >= 95 && rightCorner.alpha === 0) {
+      progress.setDisplaySize(436, 130);
+      rightCorner.setAlpha(1);
+    }
+
+    if (percent > 5 && percent < 95) {
+
+      let onePercent: number = 420 / 90;
+      let bar: number = Math.round(percent * onePercent);
+      progress.setDisplaySize(bar, 130).setVisible(true);
+      
+    }
+    
+    text.setText(percent + '%');
+
+  });
+}
+
 
 export {
   random,
@@ -2304,5 +2392,6 @@ export {
   updateHerdBoostBtn,
   herdBoost,
   feedBoost,
-  collectorBoost
+  collectorBoost,
+  loadingScreen
 }
