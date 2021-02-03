@@ -251,14 +251,14 @@ class Shop extends Phaser.Scene {
 
       });
 
-      this.add.text(110, y + 145 + this.height, String(left.diamonds), {
+      this.add.text(110, y + 145 + this.height, String(left.diamonds + left.bonus), {
         font: '40px Shadow',
         color: '#FFFFFF'
       }).setOrigin(0.5, 0.5);
 
       if (left.bonus > 0) {
 
-        this.add.text(110, y + 180 + this.height, '+' + left.bonus + ' ' + this.state.lang.free, {
+        this.add.text(110, y + 180 + this.height, this.state.lang.benefit + ' ' + '+' + left.bonus, {
           font: '20px Shadow',
           color: '#FFFFFF'
         }).setOrigin(0.5, 0.5);
@@ -296,7 +296,7 @@ class Shop extends Phaser.Scene {
       if (left.stock > 0) {
 
         this.add.sprite(0, y + this.height, 'stock-tape').setOrigin(0, 0);
-        this.add.text(162, y + 42 + this.height, '-' + left.stock + '%', {
+        this.add.text(162, y + 42 + this.height, '+' + left.stock + '%', {
           font: '34px Shadow',
           color: '#FFFFFF'
         }).setOrigin(0.5, 0.5).setRotation(0.55);
@@ -328,14 +328,14 @@ class Shop extends Phaser.Scene {
 
         });
 
-        this.add.text(350, y + 145 + this.height, String(right.diamonds), {
+        this.add.text(350, y + 145 + this.height, String(right.diamonds + right.bonus), {
           font: '40px Shadow',
           color: '#FFFFFF'
         }).setOrigin(0.5, 0.5);
 
         if (right.bonus > 0) {
 
-          this.add.text(350, y + 180 + this.height, '+' + right.bonus + ' ' + this.state.lang.free, {
+          this.add.text(350, y + 180 + this.height, this.state.lang.benefit + ' ' + '+' + right.bonus , {
             font: '20px Shadow',
             color: '#FFFFFF'
           }).setOrigin(0.5, 0.5);
@@ -373,7 +373,7 @@ class Shop extends Phaser.Scene {
         if (right.stock > 0) {
 
           this.add.sprite(240, y + this.height, 'stock-tape').setOrigin(0, 0);
-          this.add.text(402, y + 42 + this.height, '-' + right.stock + '%', {
+          this.add.text(402, y + 42 + this.height, '+' + right.stock + '%', {
             font: '34px Shadow',
             color: '#FFFFFF'
           }).setOrigin(0.5, 0.5).setRotation(0.55);

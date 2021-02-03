@@ -435,7 +435,8 @@ export default {
     exchangeRepositoryBtn: 'Сменить хранилище на ...',
     exchangeRepositoryTitle: 'Ты можешь сменить Хранилище 1$ уровня на другую постройку',
     feedBoostTitle: 'Комбикорм',
-    feedBoostSubtitle: 'Удваивает стоимость шерсти'
+    feedBoostSubtitle: 'Удваивает стоимость шерсти',
+    benefit: 'Выгода'
   },
   en: {
     index: 'ru',
@@ -873,6 +874,7 @@ export default {
     exchangeRepositoryBtn: 'Сменить хранилище на ...',
     exchangeRepositoryTitle: 'Ты можешь сменить Хранилище 1$ уровня на другую постройку',
     feedBoostTitle: 'Комбикорм',
-    feedBoostSubtitle: 'Удваивает стоимость шерсти'
+    feedBoostSubtitle: 'Удваивает стоимость шерсти',
+    benefit: 'Выгода'
   }
 }
