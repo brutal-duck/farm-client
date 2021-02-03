@@ -2230,21 +2230,28 @@ function feedBoost(): void {
   feedBoostBtnLeftText.setX(feedBoostDiamondBtn.getBounds().left - 2);
   feedBoostBtnRightText.setX(feedBoostDiamondBtn.getBounds().right + 1);
 
-  this.add.sprite(10, this.height + 860, 'pb-chapter-modal').setOrigin(0, 0.5).setScale(0.92, 1)
-  this.feedProgressBar = this.add.tileSprite(25, this.height + 860, 300, 16, 'green-progress')
+  this.add.sprite(10, this.height + 870, 'pb-chapter-modal').setOrigin(0, 0.5).setScale(0.92, 1);
+  this.feedProgressBar = this.add.tileSprite(25, this.height + 870, 300, 16, 'green-progress')
       .setOrigin(0, 0.5);
-  this.feedProgressText = this.add.text(this.cameras.main.centerX, this.height + 830, this.state.lang.still + ' 2ч 6м', {
+  this.feedProgressText = this.add.text(240, this.height + 840, this.state.lang.still + ' ' + shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang), {
     font: '21px Shadow',
     color: '#FFFFFF'
   }).setOrigin(0.5, 0.5);
 
-  this.feedProgressText.setX(this.cameras.main.centerX - this.feedProgressText.width / 2)
-
   this.clickModalBtn({ btn: feedBoostBtn, title: feedBoostBtnLeftText, text1: feedBoostBtnRightText, img1: feedBoostDiamondBtn }, (): void => {
+    this.state.user.diamonds = 1000;
     if (this.state.user.diamonds >= this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice) {
       this.state.user.diamonds -= this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice;
-      this.state[`user${this.state.farm}`].feedBoostTime += 10000; // прибавить час
-
+      if (this.state[`user${this.state.farm}`].feedBoostTime + 7200 > this.game.scene.keys[this.state.farm].feedBoostStack * 3600) {
+        console.log('хватит'); // вывести окно
+      } else {
+        if (this.state[`user${this.state.farm}`].feedBoostTime <= 0) {
+          this.state[`user${this.state.farm}`].feedBoostTime += 3600; // прибавить час
+        } else {
+          this.state[`user${this.state.farm}`].feedBoostTime += 7200; // прибавить 2часа
+        }
+      }
+      
     } else {
       // вызывем конвертор
       this.state.convertor = {

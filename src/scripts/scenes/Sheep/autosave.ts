@@ -1,5 +1,4 @@
 import axios from 'axios';
-import state from './../../state';
 
 // автосохранение
 function autosave(): void {

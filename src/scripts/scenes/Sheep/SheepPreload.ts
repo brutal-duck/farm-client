@@ -856,9 +856,9 @@ class SheepPreload extends Phaser.Scene {
           autosaveCounter: response.data.user.sheepSaveCounter,
           diamondAnimalAd: response.data.user.diamonds_sheep_ad,
           takenHerdBoost: response.data.user.takenHerdBoostSheep,
-          feedBoostTime: 0
+          feedBoostTime: response.data.user.feedBoostTimeSheep,
         }
-
+        console.log(userSheep)
         const Amplitude = this.state.amplitude;
         const identify = new Amplitude.Identify().set('CatcherSheep', userSheep.collectorLevel);
         Amplitude.getInstance().identify(identify);

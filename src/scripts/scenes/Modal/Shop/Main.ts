@@ -13,7 +13,8 @@ import {
   updateHerdBoostBtn,
   herdBoost,
   feedBoost,
-  collectorBoost
+  collectorBoost,
+  shortTime
 } from '../../../general/basic';
 import {
   sheepMoney,
@@ -177,6 +178,7 @@ class Shop extends Phaser.Scene {
     
     // обновляем время бустера
     this.updateHerdBoostBtn();
+    this.feedProgressText?.setText(this.state.lang.still + ' ' + shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang));
 
     
   }

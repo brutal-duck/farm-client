@@ -355,7 +355,12 @@ function interval(): void {
       !this.scene.isActive('Block') &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Map')) this.showDonate();
-
+    
+    // уменьшаем время буста комбикорм
+    if (this.state.userSheep.feedBoostTime > 0) {
+      this.state.userSheep.feedBoostTime--;
+    }
+    
   }, callbackScope: this, loop: true });
   
 

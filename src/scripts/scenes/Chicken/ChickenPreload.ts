@@ -650,7 +650,7 @@ class ChickenPreload extends Phaser.Scene {
           autosaveCounter: response.data.user.chickenSaveCounter,
           diamondAnimalAd: response.data.user.diamonds_chicken_ad,
           takenHerdBoost: response.data.user.takenHerdBoostChicken,
-          feedBoostTime: response.data.user.feedBoostTime,
+          feedBoostTime: response.data.user.feedBoostTimeChicken,
         }
         
         const Amplitude = this.state.amplitude;
