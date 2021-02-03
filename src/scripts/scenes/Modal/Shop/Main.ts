@@ -74,6 +74,7 @@ class Shop extends Phaser.Scene {
   public herdBoostBtn: any;
   public feedProgressBar: Phaser.GameObjects.TileSprite;
   public feedProgressText: Phaser.GameObjects.Text;
+  public feedProgressBarBg: Phaser.GameObjects.Sprite
 
   public click = click.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
@@ -185,12 +186,12 @@ class Shop extends Phaser.Scene {
       this.feedProgressText?.setText(this.state.lang.still + ' ' + shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang));
       this.feedProgressBar?.setVisible(true);
       this.feedProgressText?.setVisible(true);
-      this.feedProgressBar?.data?.values.bg.setVisible(true);
+      this.feedProgressBarBg?.setVisible(true);
       this.scrolling.bottom = this.height - this.heightWindow + 920;
     } else {
       this.feedProgressBar?.setVisible(false);
       this.feedProgressText?.setVisible(false);
-      this.feedProgressBar?.data?.values.bg.setVisible(false);
+      this.feedProgressBarBg?.setVisible(false);
       this.scrolling.bottom = this.height - this.heightWindow + 800;
     }
     
