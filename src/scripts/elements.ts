@@ -503,17 +503,58 @@ class TaskBoard {
   public doneButtonText: Phaser.GameObjects.Text;
   public lastPart: Phaser.GameObjects.Text;
   public zone: Phaser.GameObjects.Zone;
+  public timer: Phaser.Time.TimerEvent;
+  public counter: number = 0;
+  public isGetTop: boolean = false
+  public elements: any[]; // ПОМЕНЯТЬ ТИП
+  public y: number;
 
   constructor(
     scene: any
   ) {
     this.scene = scene;
     this.active = true;
+    this.init();
     this.update();
   }
 
-  public update(): void {
 
+  public init(): void {
+
+    this.y = this.scene.height;
+    this.scene.time.addEvent({
+      delay: 20,
+      callback: (): void => {
+
+        if (this.status === 2 || this.status === 3) {
+
+          if (!this.isGetTop) this.y--;
+          else this.y++;
+
+          this.elements.forEach((el: any) => { // ПОМЕНЯТЬ ТИП
+            
+            if (!this.isGetTop) el.setY(el.y - 1)
+            else el.setY(el.y + 1)
+
+          })
+
+          this.counter++
+          
+          if (this.counter >= 16) {
+            this.isGetTop = !this.isGetTop
+            this.counter = 0
+          }
+
+        }
+        
+      },
+      loop: true
+    })
+
+  }
+
+  public update(): void {
+    
     let tasks: Itasks[] = this.scene.game.scene.keys[this.scene.state.farm].partTasks();
     tasks.sort((x1: Itasks, x2: Itasks) => {
       if (x1.got_awarded < x2.got_awarded) return -1;
@@ -524,7 +565,7 @@ class TaskBoard {
       if (x1.sort > x2.sort) return 1;
       return 0;
     });
-
+    
     let task: Itasks = tasks[0];
 
     if (task?.done === 0) this.status = 1;
@@ -557,7 +598,7 @@ class TaskBoard {
     }
 
     if (this.tileSprite) this.tileSprite.destroy();
-    if (this.taskBoard) this.taskBoard.destroy();
+    if (this.taskBoard) this.taskBoard.clear();
     if (this.taskText) this.taskText.destroy();
     if (this.doneText) this.doneText.destroy();
     if (this.taskIcon) this.taskIcon.destroy();
@@ -566,7 +607,7 @@ class TaskBoard {
     if (this.doneIcon) this.doneIcon.destroy();
     if (this.takeText) this.takeText.destroy();
     if (this.award) this.award.destroy();
-    if (this.awardBg) this.awardBg.destroy();
+    if (this.awardBg) this.awardBg.clear();
     if (this.diamond) this.diamond.destroy();
     if (this.doneButton) this.doneButton.destroy();
     if (this.doneButtonText) this.doneButtonText.destroy();
@@ -644,16 +685,16 @@ class TaskBoard {
         wordWrap: { width: 390 }
       }).setDepth(this.scene.height).setOrigin(0, 0);
 
-      let taskTextBounds = this.taskText.getBounds();
+      let taskTextBounds: Phaser.Geom.Rectangle = this.taskText.getBounds();
       
-      this.taskText.y = this.scene.height - taskTextBounds.height - 244;
+      this.taskText.y = this.y - taskTextBounds.height - 244;
 
-      this.award = this.scene.add.text(190, this.scene.height - 220, String(task.diamonds), {
+      this.award = this.scene.add.text(190, this.y - 220, String(task.diamonds), {
         font: '20px Bip',
         color: '#FFFFFF'
       }).setDepth(this.scene.height).setOrigin(0, 0.5);
 
-      this.diamond = this.scene.add.image(160, this.scene.height - 220, 'diamond')
+      this.diamond = this.scene.add.image(160, this.y - 220, 'diamond')
         .setDepth(this.scene.height)
         .setScale(0.1)
         .setOrigin(0, 0.5);
@@ -669,18 +710,18 @@ class TaskBoard {
 
       this.taskBoard = this.scene.add.graphics({
         x: 30,
-        y: this.scene.height - 190 - height
+        y: this.y - 190 - height
       });
       this.taskBoard.fillStyle(0xFFEBC5, 1);
       this.taskBoard.fillRoundedRect(0, 0, 660, height, 8);
 
-      this.taskIcon = this.scene.add.image(88, this.scene.height - 190 - height / 2, taskData.icon);
+      this.taskIcon = this.scene.add.image(88, this.y - 190 - height / 2, taskData.icon);
       this.taskIcon.setTint(0x777777);
-      this.doneIcon = this.scene.add.image(88, this.scene.height - 190 - height / 2, 'completed');
+      this.doneIcon = this.scene.add.image(88, this.y - 190 - height / 2, 'completed');
 
-      this.done = this.scene.add.image(620, this.scene.height - 190 - height / 2, 'little-button')
+      this.done = this.scene.add.image(620, this.y - 190 - height / 2, 'little-button')
         .setDepth(this.scene.height);
-      this.takeText = this.scene.add.text(620, this.scene.height - 193 - height / 2, this.scene.state.lang.pickUp, {
+      this.takeText = this.scene.add.text(620, this.y - 193 - height / 2, this.scene.state.lang.pickUp, {
         font: '20px Shadow',
         color: '#FFFFFF'
       }).setOrigin(0.5, 0.5).setDepth(this.scene.height);
@@ -697,19 +738,34 @@ class TaskBoard {
         .setOrigin(0)
         .setInteractive();
 
+      // Анимация
+      this.elements = [];
+      this.elements.push(
+        this.taskText,
+        this.award,
+        this.diamond,
+        this.awardBg,
+        this.taskBoard,
+        this.taskIcon,
+        this.doneIcon,
+        this.done,
+        this.takeText,
+        this.tileSprite
+      )
+
     }
 
     if (this.status === 3 && task) {
 
       this.taskBoard = this.scene.add.graphics({
         x: 30,
-        y: this.scene.height - 300
+        y: this.y - 300
       });
       this.taskBoard.fillStyle(0xFFEBC5, 1);
       this.taskBoard.fillRoundedRect(0, 0, 660, 110, 8);
 
-      this.doneButton = this.scene.add.image(this.scene.cameras.main.centerX, this.scene.height - 245, 'big-btn-green').setDepth(1);
-      this.doneButtonText = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.height - 249, this.scene.state.lang.donePart, {
+      this.doneButton = this.scene.add.image(this.scene.cameras.main.centerX, this.y - 245, 'big-btn-green').setDepth(1);
+      this.doneButtonText = this.scene.add.text(this.scene.cameras.main.centerX, this.y - 249, this.scene.state.lang.donePart, {
         font: '22px Shadow',
         fill: '#FFFFFF'
       }).setDepth(1).setOrigin(0.5, 0.5);
@@ -721,9 +777,18 @@ class TaskBoard {
         this.scene.game.scene.keys[this.scene.state.farm].nextPart();
       });
 
-      this.tileSprite = this.scene.add.tileSprite(30, this.scene.height - 300, 660, 110, 'modal')
+      this.tileSprite = this.scene.add.tileSprite(30, this.y - 300, 660, 110, 'modal')
         .setOrigin(0)
         .setInteractive();
+
+      // Анимация
+      this.elements = [];
+      this.elements.push(
+        this.taskBoard,
+        this.doneButton,
+        this.doneButtonText,
+        this.tileSprite
+      )
 
     }
     
@@ -814,7 +879,6 @@ class TaskBoard {
 
 
 }
-
 
 // кнопки меню
 function buildMenu(): void {
