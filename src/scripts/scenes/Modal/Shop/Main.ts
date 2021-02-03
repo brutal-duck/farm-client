@@ -183,6 +183,15 @@ class Shop extends Phaser.Scene {
       let progress: number = (this.state[`user${this.state.farm}`].feedBoostTime / (3600 * this.game.scene.keys[this.state.farm].feedBoostStack)) * this.feedProgressBar?.data?.values.maxWidth;
       this.feedProgressBar?.setDisplaySize(progress, 16);
       this.feedProgressText?.setText(this.state.lang.still + ' ' + shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang));
+      this.feedProgressBar?.setVisible(true);
+      this.feedProgressText?.setVisible(true);
+      this.feedProgressBar?.data?.values.bg.setVisible(true);
+      this.scrolling.bottom = this.height - this.heightWindow + 920;
+    } else {
+      this.feedProgressBar?.setVisible(false);
+      this.feedProgressText?.setVisible(false);
+      this.feedProgressBar?.data?.values.bg.setVisible(false);
+      this.scrolling.bottom = this.height - this.heightWindow + 800;
     }
     
   }
@@ -190,7 +199,7 @@ class Shop extends Phaser.Scene {
 
   public boosts(): void {
     this.scrolling.bottom = this.height - this.heightWindow + 500;
-  
+    this.state.userSheep.feedBoostTime = 0
     if (this.state.farm === 'Sheep') {
       this.collectorBoost();
 
