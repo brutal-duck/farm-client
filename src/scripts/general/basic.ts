@@ -2276,18 +2276,18 @@ function feedBoost(): void {
             time: 1,
             farm_id: this.state.farm
           });
+
         } else {
-          let time: number = Math.ceil(this.state[`user${this.state.farm}`].feedBoostTime / 3600 / 2) + 1;
-
-          console.log(time);
           
-          this.state[`user${this.state.farm}`].feedBoostTime += 7200; // прибавить 2часа
-
+          let time: number = Math.ceil(this.state[`user${this.state.farm}`].feedBoostTime / 3600 / 2) + 1;
+         
           this.state.amplitude.getInstance().logEvent('booster_feed_x2', {
             price: this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice,
             time: time,
             farm_id: this.state.farm
           });
+
+          this.state[`user${this.state.farm}`].feedBoostTime += 7200; // прибавить 2часа
         }
       }
       
