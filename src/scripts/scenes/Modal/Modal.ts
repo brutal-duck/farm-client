@@ -336,14 +336,6 @@ class Modal extends Phaser.Scene {
         
       }
 
-      if (this.state.userSheep.feedBoostTime > 0) {
-        this.feedBoostText.setText(this.state.lang.feedBoostCounterText + this.shortTime(this.state.userSheep.feedBoostTime, this.state.lang));
-        this.feedBoostText.setVisible(true);
-      } else {
-        this.feedBoostText.setVisible(false);
-      }
-      
-
     }
 
     // прогресс бар яйца курицы
@@ -358,14 +350,7 @@ class Modal extends Phaser.Scene {
       if (this.progressBar.displayWidth !== width) {
         this.progressBar.setDisplaySize(width, 16);
       }
-
-      if (this.state.userChicken.feedBoostTime > 0) {
-        this.feedBoostText.setText(this.state.lang.feedBoostCounterText + this.shortTime(this.state.userChicken.feedBoostTime, this.state.lang));
-        this.feedBoostText.setVisible(true);
-      } else {
-        this.feedBoostText.setVisible(false);
-      }
-
+      
     }
 
     // прогресс для хранилищ
@@ -402,6 +387,13 @@ class Modal extends Phaser.Scene {
 
       let volume: string = count + ': ' + this.state.territory.volume + ' / ' + max;
       if (this.progressText.text !== volume) this.progressText.setText(volume);
+
+      if (this.state[`user${this.state.farm}`].feedBoostTime > 0) {
+        this.feedBoostText.setText(this.state.lang.feedBoostCounterText + this.shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang));
+        this.feedBoostText.setVisible(true);
+      } else {
+        this.feedBoostText.setVisible(false);
+      }
       
     }
 
