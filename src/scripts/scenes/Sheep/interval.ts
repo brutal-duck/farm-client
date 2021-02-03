@@ -53,7 +53,7 @@ function interval(): void {
       }, callbackScope: this, loop: false });
     }
 
-    // тутор про бустер
+    // тутор про бустер переполох
     if (this.state.userSheep.part >= this.herdBoostLvl &&
     !this.state.user.additionalTutorial.herdBoost &&
     !this.scene.isActive('Modal') &&
@@ -62,6 +62,16 @@ function interval(): void {
     !this.scene.isActive('Map')) {
     this.showTutorial('herdBoost1');
     }
+
+    // тутор про бустер комбикорм
+    if (this.state.userSheep.part >= this.feedBoostLvl &&
+      !this.state.user.additionalTutorial.feedBoost &&
+      !this.scene.isActive('Modal') &&
+      !this.scene.isActive('Block') &&
+      !this.scene.isActive('Tutorial') &&
+      !this.scene.isActive('Map')) {
+      this.showTutorial('feedBoost1');
+      }
 
     // восстановаление территорий
     for (let i in this.territories.children.entries) {
