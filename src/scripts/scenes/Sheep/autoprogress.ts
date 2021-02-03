@@ -10,8 +10,13 @@ function autoprogress(load: boolean = false): void {
   this.caveTimer();
 
   // время буста комбикорм
-  if (this.state.userSheep.feedBoostTime >= this.state.offlineTime) this.state.userSheep.feedBoostTime -= this.state.offlineTime;
-  else {
+  let wasFeedBoost: number = 0;
+
+  if (this.state.userSheep.feedBoostTime >= this.state.offlineTime) {
+    this.state.userSheep.feedBoostTime -= this.state.offlineTime;
+    wasFeedBoost = this.state.offlineTime;
+  } else {
+    wasFeedBoost = this.state.userSheep.feedBoostTime;
     this.state.userSheep.feedBoostTime = 0;
   }
 
@@ -25,6 +30,8 @@ function autoprogress(load: boolean = false): void {
     wasCollector = this.state.userSheep.collector;
     this.state.userSheep.collector = 0;
   }
+
+  
   
   if (!load) this.game.scene.keys['SheepBars'].collector.update();
   if (!load) this.state.timeToHerdBoost -= this.state.offlineTime;
