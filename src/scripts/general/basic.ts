@@ -2268,6 +2268,8 @@ function feedBoost(): void {
         this.scene.launch('Modal', this.state);
         
       } else {
+        
+        this.state.boughtFeedBoost = true;
 
         if (this.state[`user${this.state.farm}`].feedBoostTime <= 0) {
           this.state[`user${this.state.farm}`].feedBoostTime += 3600; // прибавить час

@@ -10,7 +10,8 @@ import {
   genAnimations,
   firework250,
   cave,
-  caveIconsAnimation
+  caveIconsAnimation, 
+  hearts
 } from '../../general/animations';
 import {
   click,
@@ -33,7 +34,7 @@ import {
   createBoostAnimal,
   random,
   randomString,
-  getRandomBool
+  getRandomBool,
 } from '../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -221,6 +222,7 @@ class Chicken extends Phaser.Scene {
   public random = random.bind(this);
   public randomString = randomString.bind(this);
   public getRandomBool = getRandomBool.bind(this);
+  public hearts = hearts.bind(this);
   
 
   public init(state: Istate): void {
