@@ -56,7 +56,7 @@ function animalBrain(): void {
         
           // // если нет цели у животного
           if (!animal.data.values.aim) {
-            console.log(animal.data.values._id)
+
             // шанс смены вектора движения
             if (random(1, 170) === 1) {
               animal.data.values.changeVector = true;
@@ -118,22 +118,23 @@ function animalBrain(): void {
               animal.x > 720 ||
               animal.y < 0 ||
               (distance > animal.data.values.distance && animal.data.values.distance > 0)) {
-
-              animal.body.reset(animal.x, animal.y);
-              animal.data.values.aim = false;
-              animal.data.values.moving = false;
-              animal.data.values.aimX = 0;
-              animal.data.values.aimY = 0;
-              animal.data.values.distance = 0;
+                
+                animal.data.values.aim = false;
+                animal.body.reset(animal.x, animal.y);
+                
+                animal.data.values.moving = false;
+                animal.data.values.aimX = 0;
+                animal.data.values.aimY = 0;
+                animal.data.values.distance = 0;
 
             } else {
 
               animal.data.values.distance = distance;
 
             }
-      
+            animal.data.values.counter++; 
           }
-          animal.data.values.counter++; 
+          
         }
         
 
@@ -147,7 +148,7 @@ function animalBrain(): void {
 
       }
 
-      console.log(animal.data.values.counter)
+      
       animal.setDepth(animal.y + Math.round((animal.height / 2) + 1)); // z-index
     
 
