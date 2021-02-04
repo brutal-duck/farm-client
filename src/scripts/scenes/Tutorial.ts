@@ -290,7 +290,7 @@ class Tutorial extends Phaser.Scene {
 
       } else if (this.state.tutorial.additional === 'herdBoost2') {
         // окно буста
-        let bg: Phaser.GameObjects.TileSprite = this.add.tileSprite(130, this.cameras.main.centerY - 20, 460, 270, 'boost-bg').setOrigin(0, 0).setAlpha(0);
+        let bg: Phaser.GameObjects.TileSprite = this.add.tileSprite(130, this.cameras.main.centerY - 20, 460, 235, 'boost-bg').setOrigin(0, 0).setAlpha(0);
         let title: Phaser.GameObjects.Text = this.add.text(365 + 5, this.cameras.main.centerY + 15, this.state.lang.herdBoostTitleSheep, { 
           font: '28px Shadow',
           color: '#FFFFFF',
@@ -369,18 +369,19 @@ class Tutorial extends Phaser.Scene {
 
       } else if (this.state.tutorial.additional === 'feedBoost2') {
         // окно буста
-        let bg: Phaser.GameObjects.TileSprite = this.add.tileSprite(130, this.cameras.main.centerY + 270, 460, 215, 'boost-bg').setOrigin(0, 0).setAlpha(0);
-        let title: Phaser.GameObjects.Text = this.add.text(365 + 5, this.cameras.main.centerY + 290, this.state.lang.feedBoostTitle, { 
+        let y: number = this.cameras.main.centerY + 220;
+        let bg: Phaser.GameObjects.TileSprite = this.add.tileSprite(130, y, 460, 230, 'boost-bg').setOrigin(0, 0).setAlpha(0);
+        let title: Phaser.GameObjects.Text = this.add.text(365 + 5, y + 20, this.state.lang.feedBoostTitle, { 
           font: '28px Shadow',
           color: '#FFFFFF',
           wordWrap: { width: 300 },
           align: 'center'
         }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2).setAlpha(0);
     
-        let icon: Phaser.GameObjects.Sprite = this.add.sprite(170, this.cameras.main.centerY + 300, 'sheep-feed-boost-icon').setOrigin(0, 0).setAlpha(0);
+        let icon: Phaser.GameObjects.Sprite = this.add.sprite(170, y + 30, 'sheep-feed-boost-icon').setOrigin(0, 0).setAlpha(0);
         // кнопка
         let xBtn: number =  460;
-        let yBtn: number = this.cameras.main.centerY + 380;
+        let yBtn: number = y + 110;
         let herdBoostBtn: Phaser.GameObjects.Sprite = this.add.sprite(xBtn, yBtn, 'improve-collector').setAlpha(0);
         let herdBoostBtnText = this.add.text(xBtn, yBtn - 2, this.state.lang.pickUp, {
           font: '23px Shadow',
@@ -389,7 +390,7 @@ class Tutorial extends Phaser.Scene {
         this.arrows = new Arrows(this, { x: 455, y: yBtn}, 70, false, false, false, true, false, true);
 
         this.topPosition = false;
-        this.indent = yBtn - 550;
+        this.indent = y - 350;
         this.tailX = 430;
         this.tailFlipX = true;
         this.tailFlipY = false;
