@@ -69,7 +69,7 @@ class Event extends Phaser.Scene {
   public caveIconsTimer: number; // таймер для анимации иконок на пещере
   public collectorTimer: Phaser.Time.TimerEvent; // интервал собирателя яиц
   public debugLog: boolean;
-  public velocity: number = 100; 
+  public velocity: number = 20; 
   public countResource: number = 100;
 
   public collisions = collisions.bind(this);

@@ -50,7 +50,7 @@ function interval(): void {
         let resource: number = points.resource;
 
         animal.data.values.resource += resource;
-        console.log(animal.data.values.resource)
+
         if (animal.data.values.resource > 1000) animal.data.values.resource = 1000;
       }
 

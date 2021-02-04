@@ -133,20 +133,22 @@ function animalBrain(): void {
             }
       
           }
-          
+          animal.data.values.counter++; 
         }
-        animal.data.values.counter++; 
+        
 
         // уход от границ
-        
+        if (animal.data.values.working &&
+        !animal.data.values.aim) {
 
         let aimX: number = random(0 + Math.ceil(animal.width / 2), 720 - Math.ceil(animal.width / 2));
         let aimY: number = random(240 + Math.ceil(animal.width / 2), 720 - Math.ceil(animal.width / 2));
         this.aim(animal, aimX, aimY);
 
+      }
 
-
-      // animal.setDepth(animal.y + Math.round((animal.height / 2) + 1)); // z-index
+      console.log(animal.data.values.counter)
+      animal.setDepth(animal.y + Math.round((animal.height / 2) + 1)); // z-index
     
 
     // if (!animal.data.values.drag) {
