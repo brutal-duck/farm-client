@@ -14,7 +14,8 @@ import {
   herdBoost,
   feedBoost,
   collectorBoost,
-  shortTime
+  shortTime,
+  updateFeedBoostBtn
 } from '../../../general/basic';
 import {
   sheepMoney,
@@ -74,7 +75,11 @@ class Shop extends Phaser.Scene {
   public herdBoostBtn: any;
   public feedProgressBar: Phaser.GameObjects.TileSprite;
   public feedProgressText: Phaser.GameObjects.Text;
-  public feedProgressBarBg: Phaser.GameObjects.Sprite
+  public feedProgressBarBg: Phaser.GameObjects.Sprite;
+  public feedBoostBtnRightText: Phaser.GameObjects.Text;
+  public feedBoostBtnLeftText: Phaser.GameObjects.Text;
+  public feedBoostDiamondBtn: Phaser.GameObjects.Sprite;
+  public feedBoostBtn: any;
 
   public click = click.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
@@ -96,6 +101,8 @@ class Shop extends Phaser.Scene {
   public herdBoost = herdBoost.bind(this);
   public feedBoost = feedBoost.bind(this);
   public collectorBoost = collectorBoost.bind(this);
+  public updateFeedBoostBtn = updateFeedBoostBtn.bind(this);
+  public shortTime = shortTime.bind(this);
 
   public init(state: Istate): void {
     
@@ -180,20 +187,7 @@ class Shop extends Phaser.Scene {
     // обновляем время бустера
     this.updateHerdBoostBtn();
 
-    if (this.state[`user${this.state.farm}`].feedBoostTime > 0 && this.state.modal.shopType === 4) {
-      let progress: number = (this.state[`user${this.state.farm}`].feedBoostTime / (3600 * this.game.scene.keys[this.state.farm].feedBoostStack)) * this.feedProgressBar?.data?.values.maxWidth;
-      this.feedProgressBar?.setDisplaySize(progress, 16);
-      this.feedProgressText?.setText(this.state.lang.still + ' ' + shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang));
-      this.feedProgressBar?.setVisible(true);
-      this.feedProgressText?.setVisible(true);
-      this.feedProgressBarBg?.setVisible(true);
-      
-    } else {
-      this.feedProgressBar?.setVisible(false);
-      this.feedProgressText?.setVisible(false);
-      this.feedProgressBarBg?.setVisible(false);
-     
-    }
+    this.updateFeedBoostBtn();
     
   }
 
