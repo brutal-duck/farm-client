@@ -419,6 +419,7 @@ class Tutorial extends Phaser.Scene {
           this.scene.stop('Modal');
           this.scene.stop();
           this.state.user.additionalTutorial.feedBoost = true;  
+          this.game.scene.keys['SheepBars'].showFeedTime();
           this.state[`user${this.state.farm}`].feedBoostTime = 3600;
         });
 

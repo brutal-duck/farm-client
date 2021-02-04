@@ -617,6 +617,11 @@ function sheepConvertor(): void {
   
     let cancel = this.bigButton('yellow', 'center', 140, this.state.lang.cancel);
     this.clickModalBtn(cancel, (): void => {
+      if (this.state.boughtFeedBoost) {
+        this.game.scene.keys[`${this.state.farm}Bars`].showFeedTime();
+        this.state.boughtFeedBoost = false;
+      };
+      
       this.scene.stop();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
     });

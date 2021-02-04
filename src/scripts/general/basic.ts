@@ -1865,35 +1865,23 @@ function sendDebug(data: any, state: Istate, type: string): void {
 function createBoostAnimal(): void {
   if (!this.state.herdBoostAnimals) return;
   this.state.herdBoostAnimals.forEach(type => {
-    if (this.state.farm === 'Sheep') {
-      this.time.addEvent({ 
-        delay: 100, 
-        callback: (): void => {
-          let x: number = random(270, 690);
-          let y: number = random(510, 690);
-          let id: string = 'local_' + randomString(18);
-          this.getSheep(id, type, x, y, 0, 500);
-          this.firework250(x, y);
-        }, 
-        callbackScope: this, 
-        loop: false 
-      });
-    } else if (this.state.farm === 'Chicken') {
-      
-      this.time.addEvent({
-        delay: 100, callback: (): void => {
-          let x: number = random(270, 690);
-          let y: number = random(510, 690);
-          let id: string = 'local_' + randomString(18);
-          this.getChicken(id, type, x, y, 0, 500);
-          this.firework250(x, y);
-        }, 
-        callbackScope: this, 
-        loop: false 
-      });
-    }
+    this.time.addEvent({ 
+      delay: 100, 
+      callback: (): void => {
+        let x: number = random(270, 690);
+        let y: number = random(510, 690);
+        let id: string = 'local_' + randomString(18);
+        this[`get${this.state.farm}`](id, type, x, y, 0, 500);
+        this.firework250(x, y);
+      }, 
+      callbackScope: this, 
+      loop: false 
+    });
+    this.tryTask(4, type);
   });
+
   this.state.herdBoostAnimals = [];
+
 }
 
 function updateNativeShop(): void {
@@ -2164,6 +2152,7 @@ function herdBoost(): void {
       this.game.scene.keys[this.state.farm].startHerdBoost();
 
       if (this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost > 0) {
+        this.game.scene.keys[this.state.farm].tryTask(15, 0, this.state.herdBoostPrice);
         this.state.amplitude.getInstance().logEvent('diamonds_spent', {
           type: 'herd',
           count: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
@@ -2272,7 +2261,8 @@ function feedBoost(): void {
       } else {
         
         this.state.boughtFeedBoost = true;
-
+        this.game.scene.keys[this.state.farm].tryTask(15, 0, this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice);
+        
         if (this.state[`user${this.state.farm}`].feedBoostTime <= 0) {
           this.state[`user${this.state.farm}`].feedBoostTime += 3600; // прибавить час
 
