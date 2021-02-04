@@ -2316,7 +2316,9 @@ function feedBoost(): void {
 }
 
 function updateFeedBoostBtn(): void {
-  if (this.state.modal.shopType === 4) {
+  if (this.state.modal.shopType === 4 && 
+    this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].feedBoostLvl &&
+    this.state.user.additionalTutorial.feedBoost) {
     if (this.state[`user${this.state.farm}`].feedBoostTime > 0) {
    
       let progress: number = (this.state[`user${this.state.farm}`].feedBoostTime / (3600 * this.game.scene.keys[this.state.farm].feedBoostStack)) * this.feedProgressBar?.data?.values.maxWidth;
