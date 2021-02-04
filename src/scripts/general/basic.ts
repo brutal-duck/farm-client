@@ -2212,24 +2212,24 @@ function feedBoost(): void {
 
   let xBtn: number =  330;
   let yBtn: number = y + 135;
-  let feedBoostBtn = this.add.sprite(xBtn, yBtn, 'improve-collector');
+  this.feedBoostBtn = this.add.sprite(xBtn, yBtn, 'improve-collector');
 
-  let feedBoostDiamondBtn = this.add.sprite(xBtn, yBtn - 5, 'diamond').setVisible(true).setScale(0.11);
+  this.feedBoostDiamondBtn = this.add.sprite(xBtn, yBtn - 5, 'diamond').setVisible(true).setScale(0.11);
   
-  let feedBoostBtnLeftText = this.add.text(xBtn, yBtn - 5 , this.state.lang.buy, {
+  this.feedBoostBtnLeftText = this.add.text(xBtn, yBtn - 5 , '+1 ' + this.state.lang.hour, {
     font: '23px Shadow',
     color: '#FFFFFF'
   }).setOrigin(1, 0.5).setStroke('#3B5367', 4).setDepth(10);
 
-  let feedBoostBtnRightText = this.add.text(xBtn, yBtn - 5 , String(shortNum(this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice)), {
+  this.feedBoostBtnRightText = this.add.text(xBtn, yBtn - 5 , String(shortNum(this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice)), {
     font: '23px Shadow',
     color: '#FFFFFF'
   }).setOrigin(0, 0.5).setStroke('#3B5367', 4).setDepth(10);
 
   
-  feedBoostDiamondBtn.setX(feedBoostBtn.x + feedBoostBtnLeftText.width - 25 - feedBoostBtnRightText.width);
-  feedBoostBtnLeftText.setX(feedBoostDiamondBtn.getBounds().left - 2);
-  feedBoostBtnRightText.setX(feedBoostDiamondBtn.getBounds().right + 1);
+  this.feedBoostDiamondBtn.setX(this.feedBoostBtn.x + this.feedBoostBtnLeftText.width - 25 - this.feedBoostBtnRightText.width);
+  this.feedBoostBtnLeftText.setX(this.feedBoostDiamondBtn.getBounds().left - 2);
+  this.feedBoostBtnRightText.setX(this.feedBoostDiamondBtn.getBounds().right + 1);
 
   this.feedProgressBarBg = this.add.sprite(10, y + 230, 'pb-chapter-modal').setOrigin(0, 0.5).setScale(0.92, 1).setVisible(false);
   this.feedProgressBar = this.add.tileSprite(25, y + 230, 0, 16, 'green-progress')
@@ -2246,7 +2246,7 @@ function feedBoost(): void {
 
 
 
-  this.clickModalBtn({ btn: feedBoostBtn, title: feedBoostBtnLeftText, text1: feedBoostBtnRightText, img1: feedBoostDiamondBtn }, (): void => {
+  this.clickModalBtn({ btn: this.feedBoostBtn, title: this.feedBoostBtnLeftText, text1: this.feedBoostBtnRightText, img1: this.feedBoostDiamondBtn }, (): void => {
     
     if (this.state.user.diamonds >= this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice) {
 
@@ -2311,6 +2311,33 @@ function feedBoost(): void {
     }
     
   });
+}
+
+function updateFeedBoostBtn(): void {
+  if (this.state[`user${this.state.farm}`].feedBoostTime > 0 && this.state.modal.shopType === 4) {
+    let progress: number = (this.state[`user${this.state.farm}`].feedBoostTime / (3600 * this.game.scene.keys[this.state.farm].feedBoostStack)) * this.feedProgressBar?.data?.values.maxWidth;
+    this.feedProgressBar?.setDisplaySize(progress, 16);
+    this.feedProgressText?.setText(this.state.lang.still + ' ' + this.shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang));
+    this.feedProgressBar?.setVisible(true);
+    this.feedProgressText?.setVisible(true);
+    this.feedProgressBarBg?.setVisible(true);
+    this.feedBoostBtnLeftText?.setText('+2 ' + this.state.lang.hours);
+
+    this.feedBoostDiamondBtn?.setX(this.feedBoostBtn.x + this.feedBoostBtnLeftText.width - 30 - this.feedBoostBtnRightText.width);
+    this.feedBoostBtnLeftText?.setX(this.feedBoostDiamondBtn.getBounds().left - 2);
+    this.feedBoostBtnRightText?.setX(this.feedBoostDiamondBtn.getBounds().right + 1);
+    
+  } else {
+    this.feedProgressBar?.setVisible(false);
+    this.feedProgressText?.setVisible(false);
+    this.feedProgressBarBg?.setVisible(false);
+    this.feedBoostBtnLeftText?.setText('+1 ' + this.state.lang.hour);
+    
+    this.feedBoostDiamondBtn?.setX(this.feedBoostBtn.x + this.feedBoostBtnLeftText.width - 25 - this.feedBoostBtnRightText.width);
+    this.feedBoostBtnLeftText?.setX(this.feedBoostDiamondBtn.getBounds().left - 2);
+    this.feedBoostBtnRightText?.setX(this.feedBoostDiamondBtn.getBounds().right + 1);
+   
+  }
 }
 
 function loadingScreen(farmType: string): void {
@@ -2443,5 +2470,6 @@ export {
   herdBoost,
   feedBoost,
   collectorBoost,
-  loadingScreen
+  loadingScreen,
+  updateFeedBoostBtn
 }
