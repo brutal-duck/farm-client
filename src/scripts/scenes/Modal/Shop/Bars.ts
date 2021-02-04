@@ -29,11 +29,12 @@ class ShopBars extends Phaser.Scene {
         this.game.scene.keys[`${this.state.farm}Bars`].showFeedTime();
         this.state.boughtFeedBoost = false;
       };
+
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
       this.scene.stop();
       this.scene.stop('Shop');
       this.scene.stop('Modal');
-
+    
     });
 
     //натив вкладки с бустами
