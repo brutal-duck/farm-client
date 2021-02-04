@@ -2069,9 +2069,11 @@ function collectorBoost(): void {
     this.boostButton(350, 280 + this.height, '12', this.state.lang.shortHours, String(this.state[`${this.state.farm.toLowerCase()}Settings`].unlockCollector12), 'lock');
     
   }
-  
+  let check: boolean;
+  if (this.state.farm === 'Sheep') check = this.state[`user${this.state.farm}`].collectorLevel < this.state[`${this.state.farm.toLowerCase()}CollectorSettings`].length && this.state[`user${this.state.farm}`].tutorial >= 100;
+  if (this.state.farm === 'Chicken') check = this.state[`user${this.state.farm}`].collectorLevel < this.state[`${this.state.farm.toLowerCase()}CollectorSettings`].length; 
   // кнопка улучшения
-  if (this.state[`user${this.state.farm}`].collectorLevel < this.state[`${this.state.farm.toLowerCase()}CollectorSettings`].length && this.state[`user${this.state.farm}`].tutorial >= 100) {
+  if (check) {
     
     let improve: Phaser.GameObjects.Sprite = this.add.sprite(120, 285 + this.height, 'improve-collector');
     let improveText: Phaser.GameObjects.Text = this.add.text(120, 281 + this.height, this.state.lang.improve, {
@@ -2314,29 +2316,32 @@ function feedBoost(): void {
 }
 
 function updateFeedBoostBtn(): void {
-  if (this.state[`user${this.state.farm}`].feedBoostTime > 0 && this.state.modal.shopType === 4) {
-    let progress: number = (this.state[`user${this.state.farm}`].feedBoostTime / (3600 * this.game.scene.keys[this.state.farm].feedBoostStack)) * this.feedProgressBar?.data?.values.maxWidth;
-    this.feedProgressBar?.setDisplaySize(progress, 16);
-    this.feedProgressText?.setText(this.state.lang.still + ' ' + this.shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang));
-    this.feedProgressBar?.setVisible(true);
-    this.feedProgressText?.setVisible(true);
-    this.feedProgressBarBg?.setVisible(true);
-    this.feedBoostBtnLeftText?.setText('+2 ' + this.state.lang.hours);
-
-    this.feedBoostDiamondBtn?.setX(this.feedBoostBtn.x + this.feedBoostBtnLeftText.width - 30 - this.feedBoostBtnRightText.width);
-    this.feedBoostBtnLeftText?.setX(this.feedBoostDiamondBtn.getBounds().left - 2);
-    this.feedBoostBtnRightText?.setX(this.feedBoostDiamondBtn.getBounds().right + 1);
-    
-  } else {
-    this.feedProgressBar?.setVisible(false);
-    this.feedProgressText?.setVisible(false);
-    this.feedProgressBarBg?.setVisible(false);
-    this.feedBoostBtnLeftText?.setText('+1 ' + this.state.lang.hour);
-    
-    this.feedBoostDiamondBtn?.setX(this.feedBoostBtn.x + this.feedBoostBtnLeftText.width - 25 - this.feedBoostBtnRightText.width);
-    this.feedBoostBtnLeftText?.setX(this.feedBoostDiamondBtn.getBounds().left - 2);
-    this.feedBoostBtnRightText?.setX(this.feedBoostDiamondBtn.getBounds().right + 1);
+  if (this.state.modal.shopType === 4) {
+    if (this.state[`user${this.state.farm}`].feedBoostTime > 0) {
    
+      let progress: number = (this.state[`user${this.state.farm}`].feedBoostTime / (3600 * this.game.scene.keys[this.state.farm].feedBoostStack)) * this.feedProgressBar?.data?.values.maxWidth;
+      this.feedProgressBar.setDisplaySize(progress, 16);
+      this.feedProgressText.setText(this.state.lang.still + ' ' + this.shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang));
+      this.feedProgressBar.setVisible(true);
+      this.feedProgressText.setVisible(true);
+      this.feedProgressBarBg.setVisible(true);
+      this.feedBoostBtnLeftText.setText('+2 ' + this.state.lang.hours);
+  
+      this.feedBoostDiamondBtn.setX(this.feedBoostBtn.x + this.feedBoostBtnLeftText?.width - 30 - this.feedBoostBtnRightText?.width);
+      this.feedBoostBtnLeftText.setX(this.feedBoostDiamondBtn.getBounds().left - 2);
+      this.feedBoostBtnRightText.setX(this.feedBoostDiamondBtn.getBounds().right + 1);
+      
+    } else {
+      this.feedProgressBar.setVisible(false);
+      this.feedProgressText.setVisible(false);
+      this.feedProgressBarBg.setVisible(false);
+      this.feedBoostBtnLeftText.setText('+1 ' + this.state.lang.hour);
+      
+      this.feedBoostDiamondBtn.setX(this.feedBoostBtn?.x + this.feedBoostBtnLeftText.width - 25 - this.feedBoostBtnRightText.width);
+      this.feedBoostBtnLeftText.setX(this.feedBoostDiamondBtn?.getBounds().left - 2);
+      this.feedBoostBtnRightText.setX(this.feedBoostDiamondBtn?.getBounds().right + 1);
+   
+    }
   }
 }
 
