@@ -1877,6 +1877,7 @@ function createBoostAnimal(): void {
       callbackScope: this, 
       loop: false 
     });
+    this.tryTask(4, type);
   });
 
   this.state.herdBoostAnimals = [];
