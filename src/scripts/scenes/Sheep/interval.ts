@@ -1,5 +1,4 @@
 import { Arrows } from '../../elements';
-import state from './../../state';
 
 function interval(): void {
 
@@ -365,10 +364,19 @@ function interval(): void {
       !this.scene.isActive('Block') &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Map')) this.showDonate();
-    
+      
     // уменьшаем время буста комбикорм
     if (this.state.userSheep.feedBoostTime > 0) {
+
+      if (this.getRandomBool()) { // чтобы не так часто появлялись сердца
+
+        let randomIndex: number = Phaser.Math.Between(0, this.sheep.children.entries.length - 1);
+        this.hearts(this.sheep.children.entries[randomIndex]);
+
+      }
+
       this.state.userSheep.feedBoostTime--;
+
     }
     
   }, callbackScope: this, loop: true });

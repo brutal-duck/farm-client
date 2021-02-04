@@ -1,5 +1,3 @@
-import { random, randomString } from '../../general/basic';
-
 function interval(): void {
 
   // значение отступа для яиц, чтоб не прилегали к краям территории
@@ -116,9 +114,9 @@ function interval(): void {
 
             let egg: IchickenEgg = {
               type: chicken.type,
-              x: random(minX, maxX),
-              y: random(minY, maxY),
-              _id: 'local_' + randomString(18)
+              x: this.random(minX, maxX),
+              y: this.random(minY, maxY),
+              _id: 'local_' + this.randomString(18)
             }
 
             this.getEgg(egg);
@@ -291,6 +289,14 @@ function interval(): void {
 
     // уменьшаем время буста комбикорм
     if (this.state.userChicken.feedBoostTime > 0) {
+
+      if (this.getRandomBool()) { // чтобы не так часто появлялись сердца
+
+        let randomIndex: number = Phaser.Math.Between(0, this.sheep.children.entries.length - 1);
+        this.hearts(this.sheep.children.entries[randomIndex]);
+
+      }
+
       this.state.userChicken.feedBoostTime--;
     }
 

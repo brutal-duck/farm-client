@@ -30,7 +30,10 @@ import {
   takeDonate,
   improveCollector,
   debug, 
-  createBoostAnimal
+  createBoostAnimal,
+  random,
+  randomString,
+  getRandomBool
 } from '../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -215,6 +218,9 @@ class Chicken extends Phaser.Scene {
   public debug = debug.bind(this);
   public createBoostAnimal = createBoostAnimal.bind(this);
   public startHerdBoost = startHerdBoost.bind(this);
+  public random = random.bind(this);
+  public randomString = randomString.bind(this);
+  public getRandomBool = getRandomBool.bind(this);
   
 
   public init(state: Istate): void {
