@@ -56,7 +56,7 @@ function animalBrain(): void {
         
           // // если нет цели у животного
           if (!animal.data.values.aim) {
-            
+            console.log(animal.data.values._id)
             // шанс смены вектора движения
             if (random(1, 170) === 1) {
               animal.data.values.changeVector = true;
@@ -101,6 +101,7 @@ function animalBrain(): void {
               animal.data.values.moving = true;
               animal.data.values.changeVector = false;
               animal.data.values.counter++; 
+              
 
             }
 
@@ -137,18 +138,13 @@ function animalBrain(): void {
         animal.data.values.counter++; 
 
         // уход от границ
-      //   if (((territory.position === 1 && animal.x < animal.width / 2) ||
-      //   (territory.position === 3 && animal.x > (3 * this.height) - animal.width / 2) ||
-      //   (territory.block === 8 && animal.y > this.topIndent + (8 * this.height) - animal.height / 2))
-      //   && !animal.aim) {
+        
 
-      //   let aimX: number = random(zone.x + Math.ceil(animal.width / 2), territory.x - Math.ceil(animal.width / 2) + 240);
-      //   let aimY: number = random(zone.y + Math.ceil(animal.width / 2), territory.y - Math.ceil(animal.width / 2) + 240);
-      //   this.aim(animal, aimX, aimY);
+        let aimX: number = random(0 + Math.ceil(animal.width / 2), 720 - Math.ceil(animal.width / 2));
+        let aimY: number = random(240 + Math.ceil(animal.width / 2), 720 - Math.ceil(animal.width / 2));
+        this.aim(animal, aimX, aimY);
 
-      // }
 
-      } 
 
       // animal.setDepth(animal.y + Math.round((animal.height / 2) + 1)); // z-index
     
@@ -175,6 +171,7 @@ function animalBrain(): void {
 
   }
 
+}
 }
 
 export {animalBrain, collisions};

@@ -129,6 +129,7 @@ class Event extends Phaser.Scene {
     this.state = state;
 
     console.log('Event');
+    this.state.farm = 'Event'
     
   }
 
