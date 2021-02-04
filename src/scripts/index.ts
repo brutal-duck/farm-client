@@ -18,6 +18,9 @@ import ShopBars from './scenes/Modal/Shop/Bars';
 import Block from './scenes/Block';
 import Tutorial from './scenes/Tutorial';
 import * as eruda from 'eruda';
+import EventBars from './scenes/Event/EventBars';
+import Event from './scenes/Event/Main';
+import EventPreload from './scenes/Event/EventPreload';
 
 // eruda
 if (process.env.DEV_CLIENT === window.location.origin) {
@@ -79,7 +82,8 @@ window.onload = (): void => {
         Preload,
         SheepPreload, Sheep, SheepBars,
         ChickenPreload, Chicken, ChickenBars,
-        Modal,
+        Modal, 
+        EventPreload, Event, EventBars,
         Map, MapBars,
         Shop, ShopBars,
         Tutorial,
