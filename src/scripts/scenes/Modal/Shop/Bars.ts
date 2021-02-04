@@ -25,7 +25,10 @@ class ShopBars extends Phaser.Scene {
     // кнопка закрыть
     let close: Phaser.GameObjects.Sprite = this.add.sprite(605, this.cameras.main.centerY - 465, 'shop-close');
     this.clickButtonUp(close, (): void => {
-
+      if (this.state.boughtFeedBoost) {
+        this.game.scene.keys[`${this.state.farm}Bars`].showFeedTime();
+        this.state.boughtFeedBoost = false;
+      };
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
       this.scene.stop();
       this.scene.stop('Shop');

@@ -5,8 +5,10 @@ import {
   clickModalBtn,
   shortNum,
   socialButtons,
-  updateNativeShop
+  updateNativeShop,
+  shortTime
 } from '../../general/basic';
+import { showFeedTime } from './../../general/boosts';
 import {
   Collector,
   TaskBoard,
@@ -92,6 +94,8 @@ class ChickenBars extends Phaser.Scene {
   public plusDiamonds = plusDiamonds.bind(this);
   public firework250 = firework250.bind(this);
   public updateNativeShop = updateNativeShop.bind(this);
+  public showFeedTime = showFeedTime.bind(this);
+  public shortTime = shortTime.bind(this);
 
 
   public init(state: Istate): void {

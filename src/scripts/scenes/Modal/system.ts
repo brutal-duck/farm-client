@@ -18,7 +18,10 @@ function systemWindow(): void {
   }).setDepth(1).setOrigin(0.5, 1);
 
   this.clickButton(this.close, (): void => {
-
+    if (this.state.boughtFeedBoost) {
+      this.game.scene.keys[`${this.state.farm}Bars`].showFeedTime();
+      this.state.boughtFeedBoost = false;
+    };
     if (this.state.modal.sysType === 6) this.state.animal.expel = false;
     if (this.state.modal.sysType === 12) this.mainInput.remove();
 

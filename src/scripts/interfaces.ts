@@ -373,4 +373,5 @@ interface Istate {
   adBlock: boolean;
   adman: any;
   donate: boolean;
+  boughtFeedBoost: boolean;
 }

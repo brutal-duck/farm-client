@@ -1930,7 +1930,7 @@ function updateHerdBoostBtn(): void {
     this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
     this.state.user.additionalTutorial.herdBoost) {
     let xBtn: number =  330;
-    let yBtn: number = 520 + this.height;
+    let yBtn: number = 500 + this.height;
     this.herdBoostTimerText.setText(this.state.lang.stillForBoost + ' ' + shortTime(this.state.timeToHerdBoost, this.state.lang));
     if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0 && !this.herdBoostBtn.data.values.updated) { 
       this.herdBoostBtn.data.values.updated = true;
@@ -2113,21 +2113,21 @@ function collectorBoost(): void {
 
 
 function herdBoost(): void {
-
-  this.add.tileSprite(0, 344 + this.height, 466, 270, 'boost-bg').setOrigin(0, 0);
-  this.add.text(240, 380 + this.height, this.state.lang[`herdBoostTitle${this.state.farm}`], { 
+  let y: number = 335 + this.height;
+  this.add.tileSprite(0, y, 466, 235, 'boost-bg').setOrigin(0, 0);
+  this.add.text(240, y + 35, this.state.lang[`herdBoostTitle${this.state.farm}`], { 
     font: '28px Shadow',
     color: '#FFFFFF',
     wordWrap: { width: 300 },
     align: 'center'
   }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
   
-  this.add.sprite(40, 420 + this.height, `${this.state.farm.toLocaleLowerCase()}-herd-boost-icon`).setOrigin(0, 0);
-  this.add.sprite(0, 344 + this.height, 'flags').setOrigin(0, 0).setFlipX(true);
-  this.add.sprite(466, 344 + this.height, 'flags').setOrigin(1, 0);
+  this.add.sprite(40, y + 70, `${this.state.farm.toLocaleLowerCase()}-herd-boost-icon`).setOrigin(0, 0);
+  this.add.sprite(0, y, 'flags').setOrigin(0, 0).setFlipX(true);
+  this.add.sprite(466, y, 'flags').setOrigin(1, 0);
   // кнопка
   let xBtn: number =  330;
-  let yBtn: number = 520 + this.height;
+  let yBtn: number = y + 170;
   this.herdBoostBtn = this.add.sprite(xBtn, yBtn, 'improve-collector');
   this.herdBoostBtn.setDataEnabled();
   this.herdBoostBtn.data.values.updated = false;
@@ -2192,25 +2192,26 @@ function herdBoost(): void {
 }
 
 function feedBoost(): void {
-  this.add.tileSprite(0, 635 + this.height, 466, 270, 'boost-bg').setOrigin(0, 0);
-  this.add.text(240, 655 + this.height, this.state.lang.feedBoostTitle, { 
+  let y: number = 585 + this.height;
+  this.add.tileSprite(0, y, 466, 270, 'boost-bg').setOrigin(0, 0);
+  this.add.text(240, y + 20, this.state.lang.feedBoostTitle, { 
     font: '28px Shadow',
     color: '#FFFFFF',
     wordWrap: { width: 300 },
     align: 'center'
   }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
 
-  this.add.text(330, 710 + this.height, this.state.lang.feedBoostSubtitle, { 
+  this.add.text(330, y + 75, this.state.lang.feedBoostSubtitle, { 
     font: '18px Shadow',
     color: '#FFFFFF',
     wordWrap: { width: 240 },
     align: 'center'
   }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
   
-  this.add.sprite(40, 670 + this.height, `${this.state.farm.toLocaleLowerCase()}-feed-boost-icon`).setOrigin(0, 0);
+  this.add.sprite(40, y + 35, `${this.state.farm.toLocaleLowerCase()}-feed-boost-icon`).setOrigin(0, 0);
 
   let xBtn: number =  330;
-  let yBtn: number = 770 + this.height;
+  let yBtn: number = y + 135;
   let feedBoostBtn = this.add.sprite(xBtn, yBtn, 'improve-collector');
 
   let feedBoostDiamondBtn = this.add.sprite(xBtn, yBtn - 5, 'diamond').setVisible(true).setScale(0.11);
@@ -2230,15 +2231,15 @@ function feedBoost(): void {
   feedBoostBtnLeftText.setX(feedBoostDiamondBtn.getBounds().left - 2);
   feedBoostBtnRightText.setX(feedBoostDiamondBtn.getBounds().right + 1);
 
-  this.feedProgressBarBg = this.add.sprite(10, this.height + 870, 'pb-chapter-modal').setOrigin(0, 0.5).setScale(0.92, 1).setVisible(false);
-  this.feedProgressBar = this.add.tileSprite(25, this.height + 870, 0, 16, 'green-progress')
+  this.feedProgressBarBg = this.add.sprite(10, y + 230, 'pb-chapter-modal').setOrigin(0, 0.5).setScale(0.92, 1).setVisible(false);
+  this.feedProgressBar = this.add.tileSprite(25, y + 230, 0, 16, 'green-progress')
       .setOrigin(0, 0.5).setVisible(false);
   
   this.feedProgressBar.setDataEnabled();
   this.feedProgressBar.data.values.maxWidth = 408; // максимальная ширина бара
  let progress: number = (this.state[`user${this.state.farm}`].feedBoostTime / (3600 * this.game.scene.keys[this.state.farm].feedBoostStack)) * this.feedProgressBar.data.values.maxWidth;
   this.feedProgressBar.setDisplaySize(progress, 16);
-  this.feedProgressText = this.add.text(240, this.height + 840, this.state.lang.still + ' ' + shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang), {
+  this.feedProgressText = this.add.text(240, y + 200, this.state.lang.still + ' ' + shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang), {
     font: '21px Shadow',
     color: '#FFFFFF'
   }).setOrigin(0.5, 0.5).setVisible(false);
@@ -2267,6 +2268,8 @@ function feedBoost(): void {
         this.scene.launch('Modal', this.state);
         
       } else {
+        
+        this.state.boughtFeedBoost = true;
 
         if (this.state[`user${this.state.farm}`].feedBoostTime <= 0) {
           this.state[`user${this.state.farm}`].feedBoostTime += 3600; // прибавить час

@@ -59,7 +59,7 @@ class Shop extends Phaser.Scene {
   public state: Istate;
   public scrolling: Scrolling;
   public height: number;
-  public heightWindow: number = 845;
+  public heightWindow: number = 835;
   public buttons: IshopButtons[];
   public collectorTimer: Phaser.GameObjects.Text;
   public herdBoostTimerText: Phaser.GameObjects.Text;
@@ -187,19 +187,19 @@ class Shop extends Phaser.Scene {
       this.feedProgressBar?.setVisible(true);
       this.feedProgressText?.setVisible(true);
       this.feedProgressBarBg?.setVisible(true);
-      this.scrolling.bottom = this.height - this.heightWindow + 920;
+      
     } else {
       this.feedProgressBar?.setVisible(false);
       this.feedProgressText?.setVisible(false);
       this.feedProgressBarBg?.setVisible(false);
-      this.scrolling.bottom = this.height - this.heightWindow + 800;
+     
     }
     
   }
 
 
   public boosts(): void {
-
+    this.scrolling.bottom = this.height - this.heightWindow;
     if (this.state.farm === 'Sheep') {
       this.collectorBoost();
 
@@ -208,7 +208,6 @@ class Shop extends Phaser.Scene {
       
       if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].feedBoostLvl &&
       this.state.user.additionalTutorial.feedBoost) {
-        this.scrolling.bottom = this.height - this.heightWindow + 920;
         this.feedBoost();
       }
       
@@ -221,7 +220,6 @@ class Shop extends Phaser.Scene {
       this.state.user.additionalTutorial.herdBoost) this.herdBoost(); // проверяем главу и создаем окно только если глава выше 6
 
       if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].feedBoostLvl) {
-        this.scrolling.bottom = this.height - this.heightWindow + 900;
         this.feedBoost();
       }
     }
