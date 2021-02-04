@@ -368,7 +368,7 @@ function interval(): void {
     // уменьшаем время буста комбикорм
     if (this.state.userSheep.feedBoostTime > 0) {
 
-      if (Phaser.Math.Between(0, 10) >= 5) { // чтобы не так часто появлялись сердца
+      if (Phaser.Math.Between(0, 7) >= 5) { // чтобы не так часто появлялись сердца
 
         let randomIndex: number = Phaser.Math.Between(0, this.sheep.children.entries.length - 1);
         this.hearts(this.sheep.children.entries[randomIndex]);
