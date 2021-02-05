@@ -110,6 +110,17 @@ interface IuserChicken {
   takenHerdBoost: number;
   feedBoostTime: number;
 }
+interface IuserEvent {
+  money: number;
+  countAnimal: {counter: number}[];
+  collector: number;
+  collectorLevel: number;
+  collectorTakenTime: number;
+  tutorial: number;
+  autosaveCounter: number;
+  takenHerdBoost: number;
+  maxLevelAnimal: number;
+}
 interface Iterritories {
   block: number;
   improve: number;
@@ -117,6 +128,12 @@ interface Iterritories {
   type: number;
   volume: number;
   money: number;
+  _id?: any;
+}
+interface IeventTerritories {
+  block: number;
+  position: number;
+  type: number;
   _id?: any;
 }
 interface Isheep {
@@ -139,7 +156,22 @@ interface Ichicken {
   vector: number;
   _id?: string;
 }
+interface IeventAnimal {
+  type: number;
+  resource: number;
+  x: number;
+  y: number;
+  vector: number;
+  disabledAnimal: Phaser.GameObjects.Sprite;
+  _id?: string;
+}
 interface IchickenEgg {
+  _id?: any;
+  type: number;
+  x: number;
+  y: number;
+}
+interface IeventResource {
   _id?: any;
   type: number;
   x: number;
@@ -161,6 +193,13 @@ interface IchickenPoints {
   eggPrice: number;
   id?: any;
 }
+interface IeventPoints {
+  breed: number;
+  resource: number;
+  resourcePrice: number;
+  price: number;
+  id?: any;
+}
 interface IterritoriesSheepSettings {
   improve: number;
   regeneration: number;
@@ -174,6 +213,14 @@ interface IterritoriesChickenSettings {
   countEggs: number;
   unlock_improve: number;
   eggStorage: number;
+  id?: any;
+}
+interface IterritoriesEventSettings {
+  improve: number;
+  regeneration: number;
+  countResources: number;
+  unlock_improve: number;
+  resourceStorage: number;
   id?: any;
 }
 interface IterritoriesPrice {
@@ -232,6 +279,17 @@ interface IchickenSettings {
   unlockCollector12: number;
   chickenDiamondsTime: number;
   feedBoostPrice: number;
+}
+interface IeventSettings {
+  eventSettings: IeventPoints[]; // нужно попарвить
+  territoriesEventPrice: IterritoriesPrice[];
+  territoriesEventSettings: IterritoriesEventSettings[];
+  buyBetterBreedAnimal: number;
+  doubledСollectorPrice: number;
+  collectorPrice4: number;
+  collectorPrice12: number;
+  unlockCollector4: number;
+  unlockCollector12: number;
 }
 interface ItaskData {
   icon: string;
@@ -332,11 +390,15 @@ interface Istate {
   timeToHerdBoost: number;
   sheepSettings: IsheepSettings;
   chickenSettings: IchickenSettings;
+  eventSettings: IeventSettings;
   chickenTerritories: Iterritories[];
   sheepTerritories: Iterritories[];
+  eventTerritories: IeventTerritories[];
   sheep: Isheep[];
   chicken: Ichicken[];
+  eventAnimals: IeventAnimal[];
   chickenEggs: IchickenEgg[];
+  eventResources: IeventResource[];
   lang: any;
   modal: Imodal;
   animal: any;
@@ -344,6 +406,7 @@ interface Istate {
   user: Iuser;
   userSheep: IuserSheep;
   userChicken: IuserChicken;
+  userEvent: IuserEvent;
   convertor: Iconvertor;
   exchangeTerritory: number;
   farm: string;
@@ -370,6 +433,7 @@ interface Istate {
   vkId: number;
   sheepCollectorSettings: IcollectorSettings[];
   chickenCollectorSettings: IcollectorSettings[];
+  eventCollectorSettings: IcollectorSettings[];
   adBlock: boolean;
   adman: any;
   donate: boolean;

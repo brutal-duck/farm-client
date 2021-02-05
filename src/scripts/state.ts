@@ -52,6 +52,12 @@ let adBlock: boolean;
 let adman: any;
 let donate: boolean;
 let boughtFeedBoost: boolean;
+let eventSettings: IeventSettings;
+let eventTerritories: IeventTerritories[];
+let eventAnimals: IeventAnimal[];
+let eventResources: IeventResource[];
+let userEvent: IuserEvent;
+let eventCollectorSettings: IcollectorSettings[];
 
 let state: Istate = {
   // записываемые в localStorage
@@ -65,15 +71,20 @@ let state: Istate = {
   timeToHerdBoost, // время до пуста
   sheepSettings, // настройки и параметры
   chickenSettings, // настройки и параметры
+  eventSettings, // настройки и параметры
   farm, // имя сцены активной фермы (записывается в localStorage)
   chickenTerritories, // юзерский массив сохраненных территорий кур
   sheepTerritories, // юзерский массив сохраненных территорий овец
+  eventTerritories, // юзерский массив сохраненных территорий евента
   sheep, // юзерский массив сохраненных овец
   chicken, // юзерский массив сохраненных куриц
+  eventAnimals, // юзерский массив сохраненных евентовых животных
   chickenEggs, // юзерский массив сохраненных куринных яиц
+  eventResources, // юзерский массив сохраненных евентовых ресурсов
   user, // массив общих данных юзера для всех ферм
   userSheep, // массив данных юзера для овечьей фермы
   userChicken, // массив данных юзера для куринной фермы
+  userEvent, // массив данных юзера для евентовой фермы
   sheepTasks, // задания куриной фермы
   chickenTasks, // задания куриной фермы
   dailyAwards, // награды новичка
@@ -107,6 +118,7 @@ let state: Istate = {
   vkId, // ВК id
   sheepCollectorSettings, // настройки уровней подстригателя
   chickenCollectorSettings, // настройки уровней собирателя яиц
+  eventCollectorSettings, // настройки уровней собирателя яиц
   adBlock, // состояние блокировщика рекламы
   adman, // объект рекламы вк
   donate, // переменная для показа доната
