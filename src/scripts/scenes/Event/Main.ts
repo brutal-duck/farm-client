@@ -137,7 +137,6 @@ class Event extends Phaser.Scene {
 
 
   public create(): void {
-
     this.world();
     this.drag();
     this.collisions();

@@ -129,7 +129,7 @@ const testEventSettings: IeventSettings = {
   territoriesEventPrice: [
     { block: 3, position: 2, diamond: 0, price: 200, unlock: 0 },
     { block: 3, position: 3, diamond: 0, price: 2000, unlock: 0 },
-    { block: 4, position: 1, diamond: 2, price: 0, unlock: 0 },
+    { block: 4, position: 1, diamond: 0, price: 2000, unlock: 0 },
     { block: 4, position: 2, diamond: 1, price: 0, unlock: 2 },
     { block: 4, position: 3, diamond: 1, price: 0, unlock: 3 },
     { block: 5, position: 1, diamond: 1, price: 0, unlock: 3 },
