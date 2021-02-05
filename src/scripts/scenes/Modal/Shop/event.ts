@@ -160,7 +160,7 @@ function animals(): void {
 
       let price: string = String(shortNum(this.animalPrice(animal.breed).price));
       
-      btn = this.shopButton(330, center, price, 'animalCoin');
+      btn = this.shopButton(330, center, price, 'chickenCoin');
       this.clickShopBtn(btn, (): void => {
 
         let result: boolean = this.game.scene.keys[this.state.farm].buyAnimal(animal.breed, true);
