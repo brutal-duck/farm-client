@@ -122,7 +122,7 @@ let state: Istate = {
   adBlock, // состояние блокировщика рекламы
   adman, // объект рекламы вк
   donate, // переменная для показа доната
-  boughtFeedBoost // куплен ли буст
+  boughtFeedBoost, // куплен ли буст
 }
 
 export default state;

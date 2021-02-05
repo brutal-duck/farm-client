@@ -119,6 +119,7 @@ interface IuserEvent {
   tutorial: number;
   autosaveCounter: number;
   takenHerdBoost: number;
+  feedBoostTime: number;
   maxLevelAnimal: number;
 }
 interface Iterritories {

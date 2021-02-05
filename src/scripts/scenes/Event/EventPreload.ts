@@ -182,7 +182,8 @@ const testUserEvent: IuserEvent = {
   maxLevelAnimal: 0,
   tutorial: 0,
   autosaveCounter: 0,
-  takenHerdBoost: 0
+  takenHerdBoost: 0,
+  feedBoostTime: 0
 }
 
 class EventPreload extends Phaser.Scene {
@@ -544,6 +545,7 @@ class EventPreload extends Phaser.Scene {
           tutorial: response.data.user.eventTutor,
           autosaveCounter: response.data.user.eventSaveCounter,
           takenHerdBoost: response.data.user.takenHerdBoostEvent,
+          feedBoostTime: response.data.user.feedBoostTime,
           maxLevelAnimal: response.data.user.maxLevelAnimal,
         }
         
