@@ -70,7 +70,7 @@ class Event extends Phaser.Scene {
   public collectorTimer: Phaser.Time.TimerEvent; // интервал собирателя яиц
   public debugLog: boolean;
   public velocity: number = 100; 
-  public countResource: number = 100;
+  public maxCountResource: number = 30; // максимальное количество яиц
 
   public collisions = collisions.bind(this);
   public click = click.bind(this);

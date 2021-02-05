@@ -33,7 +33,7 @@ function interval(): void {
     // statusBalance = balance.alarm;
 
  
-    // поедание территорий курицами
+    
     for (let i in this.animals.children.entries) {
 
       let animal: Phaser.Physics.Arcade.Sprite = this.animals.children.entries[i];
@@ -42,32 +42,32 @@ function interval(): void {
       
       let points: IeventPoints = this.state.eventSettings.eventSettings.find((item: IeventPoints) => item.breed === breed);
 
-      // зарождение яйца
+      
       if (animal.data.values.working) {
+        // зарождение ресурса
+        if (animal.data.values.resource < 300) {
 
-      if (animal.data.values.resource < 1000) {
+          let resource: number = points.resource;
 
-        let resource: number = points.resource;
+          animal.data.values.resource += resource;
 
-        animal.data.values.resource += resource;
+        if (animal.data.values.resource > 300) animal.data.values.resource = 300;
 
-        if (animal.data.values.resource > 1000) animal.data.values.resource = 1000;
       }
 
-      if (animal.data.values.resource === 1000) {
+      if (animal.data.values.resource === 300 && this.resources.getLength() <= this.maxCountResource) {
 
-         if (this.countResource >= 0) {
-           let resource: IeventResource = {
-             type: animal.data.values.type,
-             x: animal.x,
-             y: animal.y,
-             _id: 'local_' + randomString(18)
-           }
+        let resource: IeventResource = {
+          type: animal.data.values.type,
+          x: animal.x,
+          y: animal.y,
+          _id: 'local_' + randomString(18)
+        }
 
-           this.getResource(resource);
-           this.countResource--;
-         } 
-         animal.data.values.resource = 0;  
+        this.getResource(resource);
+
+        animal.data.values.resource = 0;  
+
         }
       }
     }    
