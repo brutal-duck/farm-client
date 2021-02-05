@@ -139,7 +139,7 @@ class Event extends Phaser.Scene {
     this.world();
     this.drag();
     this.collisions();
-    // this.interval();
+    this.interval();
     // анимации
     // let cursors = this.input.keyboard.createCursorKeys();
     // cursors.space.on('down', (): void => {
@@ -164,7 +164,7 @@ class Event extends Phaser.Scene {
 
   public update(): void {
     this.animalBrain();
-    // this.resourcesFly();
+    this.resourcesFly();
   }
 
 

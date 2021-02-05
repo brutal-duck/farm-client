@@ -175,10 +175,13 @@ function collectResource(resource: Phaser.Physics.Arcade.Sprite): void {
   this.state.userEvent.money += price;
   let target = new Phaser.Math.Vector2();
   resource.data.values.distance = Phaser.Math.Distance.Between(resource.x, resource.y, end.x, end.y);
+  
   target.x = end.x;
   target.y = end.y;
   resource.data.values.target = end;
-  this.physics.moveToObject(resource, target, length);
+  this.physics.moveToObject(resource, target, 100);
+
+  console.log(this.physics)
 
 }
 
