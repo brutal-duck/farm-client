@@ -45,6 +45,7 @@ import { buyAnimal, getAnimal, confirmExpelAnimal, checkMerging, teleportation, 
 import drag  from './drag';
 import { animalBrain, collisions } from './animalBrain';
 import interval from './interval';
+import { deleteTerritoriesLocks } from './territories';
 class Event extends Phaser.Scene {
   constructor() {
     super('Event');
@@ -123,6 +124,7 @@ class Event extends Phaser.Scene {
   public interval = interval.bind(this);
   public collectResource = collectResource.bind(this);
   public resourcesFly = resourcesFly.bind(this);
+  public deleteTerritoriesLocks = deleteTerritoriesLocks.bind(this);
 
   public init(state: Istate): void {
 

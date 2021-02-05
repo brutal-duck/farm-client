@@ -314,7 +314,11 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
   let check = territory?.data.values.merging.find((data: any) => data._id === animal.data.values._id);
   let oldTerritory: Phaser.Physics.Arcade.Sprite = this.currentTerritory(animal.data.values.disabledAnimal?.x, animal.data.values.disabledAnimal?.y);
 
-  if (animal.data.values.type > this.state.userEvent.maxLevelAnimal) this.state.userEvent.maxLevelAnimal = animal.data.values.type;
+  if (animal.data.values.type > this.state.userEvent.maxLevelAnimal) {
+    this.state.userEvent.maxLevelAnimal = animal.data.values.type;
+    this.deleteTerritoriesLocks();
+    // показать экран нового единорога
+  }
 
   if (check === undefined) {
     territory?.data.values.merging.push({

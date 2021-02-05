@@ -231,6 +231,15 @@ interface IterritoriesPrice {
   unlock: number;
   id?: any;
 }
+
+interface IeventTerritoriesPrice {
+  block: number;
+  position: number;
+  price: number;
+  diamond: number;
+  unlock: number;
+  id?: any;
+}
 interface IfairLevel {
   exchange: number;
   level: number;
@@ -283,7 +292,7 @@ interface IchickenSettings {
 }
 interface IeventSettings {
   eventSettings: IeventPoints[]; // нужно попарвить
-  territoriesEventPrice: IterritoriesPrice[];
+  territoriesEventPrice: IeventTerritoriesPrice[];
   territoriesEventSettings: IterritoriesEventSettings[];
   buyBetterBreedAnimal: number;
   doubledСollectorPrice: number;
