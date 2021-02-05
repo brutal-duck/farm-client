@@ -29,7 +29,6 @@ import {
 import {
   buildBorders,
   checkExchangeRepository,
-  buyTerritory
 } from '../../general/territories';
 import { createSpeechBubble, mergingCloud } from '../../elements';
 import {
@@ -45,7 +44,7 @@ import { buyAnimal, getAnimal, confirmExpelAnimal, checkMerging, teleportation, 
 import drag  from './drag';
 import { animalBrain, collisions } from './animalBrain';
 import interval from './interval';
-import { deleteTerritoriesLocks } from './territories';
+import { deleteTerritoriesLocks, buyTerritory } from './territories';
 class Event extends Phaser.Scene {
   constructor() {
     super('Event');
@@ -80,7 +79,6 @@ class Event extends Phaser.Scene {
   public genAnimations = genAnimations.bind(this);
   public currentTerritory = currentTerritory.bind(this);
   public confirmExchangeTerritory = confirmExchangeTerritory.bind(this);
-  public buyTerritory = buyTerritory.bind(this);
   public checkExchangeRepository = checkExchangeRepository.bind(this);
   public convertDiamonds = convertDiamonds.bind(this);
   public convertEventMoney = convertEventMoney.bind(this);
@@ -125,6 +123,7 @@ class Event extends Phaser.Scene {
   public collectResource = collectResource.bind(this);
   public resourcesFly = resourcesFly.bind(this);
   public deleteTerritoriesLocks = deleteTerritoriesLocks.bind(this);
+  public buyTerritory = buyTerritory.bind(this);
 
   public init(state: Istate): void {
 

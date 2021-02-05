@@ -1,3 +1,5 @@
+import { сurrencyAnimation } from "../../general/animations";
+
 function deleteTerritoriesLocks(): void {
 
   let lvl: number = this.state.userEvent.maxLevelAnimal;
@@ -28,11 +30,12 @@ function buyTerritory(): void {
 
   let settings: IeventTerritoriesPrice;
   settings = this.state.eventSettings.territoriesEventPrice.find((data: IeventTerritoriesPrice) => data.block === this.state.territory.data.values.block && data.position === this.state.territory.data.values.position);
-
-  if (this.state.userEvent.maxLevelAnimal >= settings.unlock && this.state.territory.type === 0) {
-    
+  
+  if (this.state.userEvent.maxLevelAnimal >= settings.unlock && this.state.territory.data.values.type === 0) {
+    console.log(settings);
+     
     if (settings.price > 0) {
-
+       
       // 70% от суммы покупки
       let price: number = Math.round((settings.price / 100) * 70);
 
@@ -88,7 +91,7 @@ function buyTerritory(): void {
           farm_id: this.state.farm
         });
     
-        this.state.territory.data.values.type = 1;
+        this.state.territory.data.values.type = 2;
         this.state.user.diamonds -= price;
     
         const territory: Phaser.Physics.Arcade.Sprite = this.state.territory;
@@ -118,7 +121,7 @@ function buyTerritory(): void {
         this.scene.launch('Modal', this.state);
   
       }  
-      
+
     }
     
   }
