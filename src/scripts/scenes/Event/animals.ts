@@ -1,7 +1,7 @@
 import { random, randomString } from '../../general/basic';
 
 // телепортация животного на старое место
-function teleportation(animal: any): void {
+function teleportation(animal: Phaser.Physics.Arcade.Sprite): void {
 
   animal.x = animal.data.values.disabledAnimal.x;
   animal.y = animal.data.values.disabledAnimal.y;
@@ -13,7 +13,6 @@ function teleportation(animal: any): void {
   animal.data.values.working = false;
   animal.setDepth(animal.data.values.disabledAnimal.y);
   animal.data.values.disabledAnimal.destroy();
-  console.log(animal)
 
 }
 
@@ -156,7 +155,7 @@ function getResource(data: IeventResource): void {
   resource.data.values.timeout = 0;
 
   this.click(resource, (): void => {
-    console.log('resource click');
+
     if (resource.data.values.click) this.collectResource(resource);
 
   });
@@ -180,8 +179,6 @@ function collectResource(resource: Phaser.Physics.Arcade.Sprite): void {
   target.y = end.y;
   resource.data.values.target = end;
   this.physics.moveToObject(resource, target, 100);
-
-  console.log(this.physics)
 
 }
 

@@ -32,8 +32,7 @@ function buyTerritory(): void {
   settings = this.state.eventSettings.territoriesEventPrice.find((data: IeventTerritoriesPrice) => data.block === this.state.territory.data.values.block && data.position === this.state.territory.data.values.position);
   
   if (this.state.userEvent.maxLevelAnimal >= settings.unlock && this.state.territory.data.values.type === 0) {
-    console.log(settings);
-     
+
     if (settings.price > 0) {
        
       // 70% от суммы покупки
@@ -47,7 +46,7 @@ function buyTerritory(): void {
           farm_id: this.state.farm
         });
     
-        this.state.territory.type = 1;
+        this.state.territory.data.values.type = 2;
         this.state.userEvent.money -= price;
     
         const territory: Phaser.Physics.Arcade.Sprite = this.state.territory;

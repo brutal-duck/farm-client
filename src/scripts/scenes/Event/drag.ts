@@ -34,11 +34,10 @@ function drag(): void {
 
   // дропзоны для мерджинга
   this.input.on('drop', (pointer: any, animal: Phaser.Physics.Arcade.Sprite, zone: Phaser.GameObjects.Zone): void => {
-    console.log('drop')
 
      if (zone.type === 'type0') {
       animal.data.values.working = true;
-     } else {
+     } else if(zone.type) {
        animal.data.values.working = false;
        let territory: Phaser.Physics.Arcade.Sprite = this.currentTerritory(animal.x, animal.y);
        if (territory) {
@@ -46,8 +45,10 @@ function drag(): void {
         animal.x = zone.x + zone.width / 2;
         animal.y = zone.y + zone.height / 2;
         
-       }
-     }
+       } 
+     } else {
+      this.teleportation(animal)
+    }
   });
   
   this.input.on('dragend', (pointer: any, animal: Phaser.Physics.Arcade.Sprite): void => {
@@ -62,10 +63,10 @@ function drag(): void {
     animal.data.values.collision = 0;
     if (animal.data.values.working) {
       // если зона работы
-      console.log('work');
     } else {
+
       // если это не рабочая зона
-      console.log('merge');
+
       animal.data.values.working = false;
       let territory: Phaser.Physics.Arcade.Sprite = this.currentTerritory(animal.x, animal.y);
     
@@ -76,6 +77,7 @@ function drag(): void {
           this.checkMerging(animal);        
           // удаление животного
           if (territory.data.values.type === 0) {
+            console.log('удалить')
             animal.data.values.expel = true;
             this.state.animal = animal;
             this.confirmExpelAnimal();

@@ -142,6 +142,7 @@ function world(): void {
     this.clickTerritory(territory, (): void => {
       this.state.territory = territory;
       this.buyTerritory();
+
     });
 
   });
