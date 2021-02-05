@@ -25,7 +25,7 @@ function reverse(animal: Phaser.Physics.Arcade.Sprite): void {
   let x: number = random(this.velocity - 5, this.velocity + 5);
   let y: number = random(this.velocity - 5, this.velocity + 5);
   
-  animal.data.values.setVelocity(0, 0);
+  animal.setVelocity(0, 0);
   animal.body.reset(animal.x, animal.y);
 
   switch(animal.data.values.vector) {
@@ -76,7 +76,7 @@ function aim(animal: Phaser.Physics.Arcade.Sprite, x: number, y: number): void {
   else if (animal.x === x && animal.y < y) animal.data.values.vector = 7;
   else if (animal.x < x && animal.y === y) animal.data.values.vector = 6;
   else if (animal.x > x && animal.y === y) animal.data.values.vector = 8;
-
+  
   animal.data.values.aim = true;
   animal.data.values.aimX = x;
   animal.data.values.aimY = y;

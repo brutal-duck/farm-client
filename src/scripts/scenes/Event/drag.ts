@@ -1,7 +1,3 @@
-
-import { random } from "../../general/basic";
-import { currentTerritory } from "../../general/territories";
-
 function drag(): void {
 
   this.input.on('dragstart', (pointer: any, animal: Phaser.Physics.Arcade.Sprite): void => {
