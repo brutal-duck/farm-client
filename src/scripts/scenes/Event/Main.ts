@@ -57,6 +57,7 @@ import drag  from './drag';
 import { animalBrain, collisions } from './animalBrain';
 import interval from './interval';
 import { deleteTerritoriesLocks, buyTerritory } from './territories';
+import setCollector from './collector';
 class Event extends Phaser.Scene {
   constructor() {
     super('Event');
@@ -78,11 +79,10 @@ class Event extends Phaser.Scene {
   public collectorTakenTime: number = 0; // время на сколько брали собирателя
   public autoSaveTimer: number; // таймер для автосохранения
   public autoprogressTimer: number; // таймер для автопрогресса
-  public caveIconsTimer: number; // таймер для анимации иконок на пещере
-  public collectorTimer: Phaser.Time.TimerEvent; // интервал собирателя яиц
+  public collectorTimer: Phaser.Time.TimerEvent; // интервал собирателя ресурсов
   public debugLog: boolean;
   public velocity: number = 100; 
-  public maxCountResource: number = 30; // максимальное количество яиц
+  public maxCountResource: number = 30; // максимальное количество ресурсов
 
   public collisions = collisions.bind(this);
   public click = click.bind(this);
@@ -137,13 +137,15 @@ class Event extends Phaser.Scene {
   public deleteTerritoriesLocks = deleteTerritoriesLocks.bind(this);
   public buyTerritory = buyTerritory.bind(this);
   public expelAnimal = expelAnimal.bind(this);
+  public setCollector = setCollector.bind(this);
 
   public init(state: Istate): void {
 
     this.state = state;
 
     console.log('Event');
-    this.state.farm = 'Event'
+    this.state.farm = 'Event';
+    this.collectorTimer = null;
     
   }
 
@@ -153,6 +155,7 @@ class Event extends Phaser.Scene {
     this.drag();
     this.collisions();
     this.interval();
+    this.setCollector();
     // анимации
     // let cursors = this.input.keyboard.createCursorKeys();
     // cursors.space.on('down', (): void => {

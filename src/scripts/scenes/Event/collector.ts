@@ -1,7 +1,7 @@
 function setCollector(): void {
 
   let delay: number = 1000 / this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userEvent.collectorLevel).speed;
-
+  
   let config: Phaser.Types.Time.TimerEventConfig = {
 
     delay: delay,
