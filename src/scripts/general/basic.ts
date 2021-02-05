@@ -1995,8 +1995,13 @@ function collectorBoost(): void {
   let doubleTime: number = freeTime * 2;
 
   let doubleTimePrice: number = Math.floor(doubleTime / 60 * this.state[`${this.state.farm.toLowerCase()}Settings`].doubledСollectorPrice);
-
-  if (this.state[`user${this.state.farm}`].collector === 0 && this.state[`user${this.state.farm}`].tutorial >= 100) {
+  
+  // проверки для двойного собирателя разные
+  let checkDouble: boolean = true;
+  if (this.state.farm === 'Sheep') checkDouble = this.state[`user${this.state.farm}`].collector === 0 && this.state[`user${this.state.farm}`].tutorial >= 100;
+  else if (this.state.farm === 'Chicken') checkDouble = this.state[`user${this.state.farm}`].collector === 0; 
+  
+  if (checkDouble) {
 
     if (this.state.readyAd) {
 
