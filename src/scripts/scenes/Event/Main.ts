@@ -40,7 +40,19 @@ import {
 } from '../../general/ads';
 import world from './world';
 import { maxBreedForBuy, animalPrice, getFreePosition, convertEventMoney, currentTerritory } from './basic';
-import { buyAnimal, getAnimal, confirmExpelAnimal, checkMerging, teleportation, reverse, aim, getResource, collectResource, resourcesFly } from './animals';
+import { 
+  buyAnimal, 
+  getAnimal, 
+  confirmExpelAnimal, 
+  checkMerging, 
+  teleportation, 
+  reverse, 
+  aim, 
+  getResource, 
+  collectResource, 
+  resourcesFly,
+  expelAnimal, 
+} from './animals';
 import drag  from './drag';
 import { animalBrain, collisions } from './animalBrain';
 import interval from './interval';
@@ -124,6 +136,7 @@ class Event extends Phaser.Scene {
   public resourcesFly = resourcesFly.bind(this);
   public deleteTerritoriesLocks = deleteTerritoriesLocks.bind(this);
   public buyTerritory = buyTerritory.bind(this);
+  public expelAnimal = expelAnimal.bind(this);
 
   public init(state: Istate): void {
 

@@ -14,7 +14,7 @@ function confirmExpelAnimal(): void {
   this.clickModalBtn(button, (): void => {
     this.scene.stop();
     this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-    this.game.scene.keys[this.state.farm].confirmExpelAnimal();
+    this.game.scene.keys[this.state.farm].expelAnimal();
   });
 
   let cancel = this.bigButton('yellow', 'center', 120, this.state.lang.cancel);

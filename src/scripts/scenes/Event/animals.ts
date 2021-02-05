@@ -297,7 +297,7 @@ function confirmExpelAnimal(): void {
 
 
 // продажа курочки
-function expelChicken(): void {
+function expelAnimal(): void {
 
   this.state.animal.destroy();
 
@@ -377,7 +377,7 @@ export {
   buyAnimal,
   resourcesFly,
   confirmExpelAnimal,
-  expelChicken,
+  expelAnimal,
   checkMerging,
   collectResource
   
