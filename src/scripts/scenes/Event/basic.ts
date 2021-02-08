@@ -134,8 +134,6 @@ function freeCollector(type: number = 1): void {
         user.collector += minutes * 60;
         user.collectorTakenTime = user.collector;
         this.game.scene.keys[this.state.farm + 'Bars'].collector.update();
-        this.tryTask(3, 0, minutes);
-        this.tryTask(15, 0, doubleTimePrice);
   
         // this.state.amplitude.getInstance().logEvent('collector', {
         //   type: minutes + ' minutes',
@@ -198,8 +196,6 @@ function buyCollector(type: number): void {
       user.collector += hours * 60 * 60;
       user.collectorTakenTime = user.collector;
       this.game.scene.keys[this.state.farm + 'Bars'].collector.update();
-      this.tryTask(3, 0, hours * 60);
-      this.tryTask(15, 0, settings['collectorPrice' + hours]);
 
       // this.state.amplitude.getInstance().logEvent('collector', {
       //   type: hours + ' hours',

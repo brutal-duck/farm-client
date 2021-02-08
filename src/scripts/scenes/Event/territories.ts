@@ -30,7 +30,7 @@ function buyTerritory(): void {
 
   let settings: IeventTerritoriesPrice;
   settings = this.state.eventSettings.territoriesEventPrice.find((data: IeventTerritoriesPrice) => data.block === this.state.territory.data.values.block && data.position === this.state.territory.data.values.position);
-  
+  if (!settings) return;
   if (this.state.userEvent.maxLevelAnimal >= settings.unlock && this.state.territory.data.values.type === 0) {
 
     if (settings.price > 0) {

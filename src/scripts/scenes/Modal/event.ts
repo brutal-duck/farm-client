@@ -60,7 +60,7 @@ function eventConvertor(): void {
       align: 'center'
     }).setOrigin(0, 0.5);
 
-    this.add.sprite(border.right + 5, this.cameras.main.centerY - 10, 'chickenCoin')
+    this.add.sprite(border.right + 5, this.cameras.main.centerY - 10, 'eventCoin')
       .setOrigin(0, 0.5)
       .setScale(0.15);
 
