@@ -32,7 +32,8 @@ import {
   animalMoney,
   animals,
   updateAnimalPrices,
-  eventCollectorBoost
+  eventCollectorBoost,
+  eventHerdBoost
 } from './event';
 import { Arrows } from '../../../elements';
 
@@ -118,6 +119,7 @@ class Shop extends Phaser.Scene {
   public animalMoney = animalMoney.bind(this);
   public updateAnimalPrices = updateAnimalPrices.bind(this);
   public eventCollectorBoost = eventCollectorBoost.bind(this);
+  public eventHerdBoost = eventHerdBoost.bind(this);
 
   public init(state: Istate): void {
     
@@ -240,8 +242,7 @@ class Shop extends Phaser.Scene {
     } else if (this.state.farm === 'Event') {
       this.eventCollectorBoost();
 
-      // if (this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
-      // this.state.user.additionalTutorial.herdBoost) this.herdBoost(); // проверяем главу и создаем окно только если глава выше 6
+      if (this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].herdBoostLvl) this.herdBoost();
 
       // if (this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].feedBoostLvl &&
       // this.state.user.additionalTutorial.feedBoost) {

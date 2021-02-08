@@ -369,17 +369,17 @@ function eventCollectorBoost(): void {
 
 }
 
-function herdBoost(): void {
+function eventHerdBoost(): void {
   let y: number = 335 + this.height;
   this.add.tileSprite(0, y, 466, 235, 'boost-bg').setOrigin(0, 0);
-  this.add.text(240, y + 35, this.state.lang[`herdBoostTitle${this.state.farm}`], { 
+  this.add.text(240, y + 35, this.state.lang.herdBoostTitleEvent, { 
     font: '28px Shadow',
     color: '#FFFFFF',
     wordWrap: { width: 300 },
     align: 'center'
   }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
   
-  this.add.sprite(40, y + 70, `${this.state.farm.toLocaleLowerCase()}-herd-boost-icon`).setOrigin(0, 0);
+  this.add.sprite(40, y + 70, `event-herd-boost-icon`).setOrigin(0, 0);
   this.add.sprite(0, y, 'flags').setOrigin(0, 0).setFlipX(true);
   this.add.sprite(466, y, 'flags').setOrigin(1, 0);
   // кнопка
@@ -396,7 +396,7 @@ function herdBoost(): void {
     color: '#FFFFFF'
   }).setOrigin(1, 0.5).setStroke('#3B5367', 4).setDepth(10);
 
-  this.herdBoostBtnRightText = this.add.text(xBtn, yBtn - 5 , String(shortNum(this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost)), {
+  this.herdBoostBtnRightText = this.add.text(xBtn, yBtn - 5 , String(shortNum(this.state.herdBoostPrice * this.state.userEvent.takenHerdBoost)), {
     font: '23px Shadow',
     color: '#FFFFFF'
   }).setOrigin(0, 0.5).setStroke('#3B5367', 4).setDepth(10);
@@ -414,15 +414,15 @@ function herdBoost(): void {
   }).setOrigin(0.5, 0.5);
 
   this.clickModalBtn({ btn: this.herdBoostBtn, title: this.herdBoostBtnLeftText, text1: this.herdBoostBtnRightText, img1: this.herdBoostDiamondBtn }, (): void => {
-    if (this.state.user.diamonds >= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost) {
-      this.state.user.diamonds -= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost;
+    if (this.state.user.diamonds >= this.state.herdBoostPrice * this.state.userEvent.takenHerdBoost) {
+      this.state.user.diamonds -= this.state.herdBoostPrice * this.state.userEvent.takenHerdBoost;
       this.game.scene.keys[this.state.farm].startHerdBoost();
 
-      if (this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost > 0) {
+      if (this.state.herdBoostPrice * this.state.userEvent.takenHerdBoost > 0) {
         this.game.scene.keys[this.state.farm].tryTask(15, 0, this.state.herdBoostPrice);
         this.state.amplitude.getInstance().logEvent('diamonds_spent', {
           type: 'herd',
-          count: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
+          count: this.state.herdBoostPrice * this.state.userEvent.takenHerdBoost,
           farm_id: this.state.farm
         });
       }
@@ -435,8 +435,8 @@ function herdBoost(): void {
       // вызывем конвертор
       this.state.convertor = {
         fun: 0,
-        count: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
-        diamonds: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
+        count: this.state.herdBoostPrice * this.state.userEvent.takenHerdBoost,
+        diamonds: this.state.herdBoostPrice * this.state.userEvent.takenHerdBoost,
         type: 1
       }
       this.game.scene.keys[this.state.farm].exchange();
@@ -636,5 +636,6 @@ export {
   animalMoney,
   animals,
   updateAnimalPrices,
-  eventCollectorBoost
+  eventCollectorBoost,
+  eventHerdBoost,
 }

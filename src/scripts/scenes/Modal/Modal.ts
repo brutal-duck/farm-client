@@ -107,6 +107,7 @@ let bigButtonYellow: any = require("./../../../assets/images/modal/btn_ly.png");
 let repositorySellBtn: any = require("./../../../assets/images/modal/repository-sell-btn.png");
 let herdBoostRoadSheep: any = require("./../../../assets/images/sheep/herd-boost-road-sheep.png");
 let herdBoostRoadChicken: any = require("./../../../assets/images/chicken/herd-boost-road-chicken.png");
+let herdBoostRoadEvent: any = require("./../../../assets/images/event/herd-boost-road-event.png");
 let badMergingAnimation: any = require("./../../../assets/images/bad-merging-animation.png");
 let boostWindowBg: any = require("./../../../assets/images/boost/background.png");
 let boostCountdown: any = require("./../../../assets/images/boost/countdown.png");
@@ -114,8 +115,10 @@ let boostLeaves: any = require("./../../../assets/images/boost/leaves.png");
 let flags: any = require("./../../../assets/images/modal/flags.png");
 let herdBoostSheepIcon: any = require("./../../../assets/images/icons/sheep-herd-boost.png");
 let herdBoostChickenIcon: any = require("./../../../assets/images/icons/chicken-herd-boost.png");
+let herdBoostEventIcon: any = require("./../../../assets/images/icons/event-herd-boost.png");
 let feedBoostSheepIcon: any = require("./../../../assets/images/icons/sheep-feed-boost.png");
 let feedBoostChickenIcon: any = require("./../../../assets/images/icons/chicken-feed-boost.png");
+let feedBoostEventIcon: any = require("./../../../assets/images/icons/event-feed-boost.png");
 class Modal extends Phaser.Scene {
   constructor() {
     super('Modal');
@@ -258,15 +261,18 @@ class Modal extends Phaser.Scene {
     // буст "стадо"
     if (this.state.farm === 'Sheep') this.load.image('herd-boost-road-sheep', herdBoostRoadSheep);
     if (this.state.farm === 'Chicken') this.load.image('herd-boost-road-chicken', herdBoostRoadChicken);
+    if (this.state.farm === 'Event') this.load.image('herd-boost-road-event', herdBoostRoadEvent);
     this.load.image('bad-merging-animation', badMergingAnimation);
     this.load.image('boost-window-bg', boostWindowBg);
     this.load.image('boost-countdown', boostCountdown);
     this.load.image('boost-leaves', boostLeaves);
     this.load.image('flags', flags);
-    this.load.image('sheep-herd-boost-icon', herdBoostSheepIcon);
-    this.load.image('chicken-herd-boost-icon', herdBoostChickenIcon);
-    this.load.image('sheep-feed-boost-icon', feedBoostSheepIcon);
-    this.load.image('chicken-feed-boost-icon', feedBoostChickenIcon);
+    if (this.state.farm === 'Sheep') this.load.image('sheep-herd-boost-icon', herdBoostSheepIcon);
+    if (this.state.farm === 'Chicken') this.load.image('chicken-herd-boost-icon', herdBoostChickenIcon);
+    if (this.state.farm === 'Event') this.load.image('event-herd-boost-icon', herdBoostEventIcon);
+    if (this.state.farm === 'Sheep') this.load.image('sheep-feed-boost-icon', feedBoostSheepIcon);
+    if (this.state.farm === 'Chicken') this.load.image('chicken-feed-boost-icon', feedBoostChickenIcon);
+    if (this.state.farm === 'Event') this.load.image('event-feed-boost-icon', feedBoostEventIcon);
   }
 
 
