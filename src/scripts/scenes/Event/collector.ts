@@ -14,7 +14,7 @@ function setCollector(): void {
           let resource = this.resources.children.entries[i];
           
           if (resource.data.values.timeout > 2 && resource.data.values.type !== 0) {
-            console.log(resource, 'take resource');
+            
             this.collectResource(resource);
             break;
           }

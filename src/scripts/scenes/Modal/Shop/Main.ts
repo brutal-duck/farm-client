@@ -31,7 +31,8 @@ import {
 import {
   animalMoney,
   animals,
-  updateAnimalPrices
+  updateAnimalPrices,
+  eventCollectorBoost
 } from './event';
 import { Arrows } from '../../../elements';
 
@@ -57,6 +58,7 @@ let boostBtnAd: any = require("./../../../../assets/images/modal/boost-btn-ad.pn
 let levelBg: any = require("./../../../../assets/images/modal/level-bg.png");
 let boostBg: any = require("./../../../../assets/images/modal/boost-bg.png");
 let improveCollector: any = require("./../../../../assets/images/modal/improve-collector.png");
+let shopResourceCollector: any = require("./../../../../assets/images/event/shop-resource-collector.png");
 
 class Shop extends Phaser.Scene {
   constructor() {
@@ -113,6 +115,7 @@ class Shop extends Phaser.Scene {
   public animalPrice = animalPrice.bind(this);
   public animalMoney = animalMoney.bind(this);
   public updateAnimalPrices = updateAnimalPrices.bind(this);
+  public eventCollectorBoost = eventCollectorBoost.bind(this);
 
   public init(state: Istate): void {
     
@@ -137,6 +140,7 @@ class Shop extends Phaser.Scene {
     this.load.image('animal-shop-bg', animalShopBg);
     if (this.state.farm === 'Sheep') this.load.image('shop-sheep-wool-collector', shopWoolCollector);
     if (this.state.farm === 'Chicken') this.load.image('shop-chicken-egg-collector', shopEggCollector);
+    if (this.state.farm === 'Event') this.load.image('shop-event-resource-collector', shopResourceCollector);
     this.load.image('shop-btn-disable', shopBtnDisable);
     this.load.image('boost-btn', boostBtn);
     this.load.image('boost-btn-disable', boostBtnDisable);
@@ -225,9 +229,20 @@ class Shop extends Phaser.Scene {
       if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
       this.state.user.additionalTutorial.herdBoost) this.herdBoost(); // проверяем главу и создаем окно только если глава выше 6
 
-      if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].feedBoostLvl) {
+      if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].feedBoostLvl &&
+      this.state.user.additionalTutorial.feedBoost) {
         this.feedBoost();
       }
+    } else if (this.state.farm === 'Event') {
+      this.eventCollectorBoost();
+
+      // if (this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
+      // this.state.user.additionalTutorial.herdBoost) this.herdBoost(); // проверяем главу и создаем окно только если глава выше 6
+
+      // if (this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].feedBoostLvl &&
+      // this.state.user.additionalTutorial.feedBoost) {
+      //   this.feedBoost();
+      // }
     }
   }
 
