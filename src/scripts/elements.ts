@@ -288,6 +288,8 @@ class Collector {
       this.farmData = this.scene.state.userSheep;
     } else if (this.scene.state.farm === 'Chicken') {
       this.farmData = this.scene.state.userChicken;
+    } else if (this.scene.state.farm === 'Event') {
+      this.farmData = this.scene.state.userEvent;
     }
 
   }

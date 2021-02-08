@@ -28,7 +28,8 @@ import {
   chickenEggRepositoryExchange
 } from './chicken';
 import {
-  confirmExpelAnimal
+  confirmExpelAnimal,
+  eventConvertor
 } from './event';
 import {
   sheepFair,
@@ -191,6 +192,8 @@ class Modal extends Phaser.Scene {
   public changeNickname = changeNickname.bind(this);
 
   public confirmExpelAnimal = confirmExpelAnimal.bind(this);
+  public shortNum = shortNum.bind(this);
+  public eventConvertor = eventConvertor.bind(this);
   
   public init(state: Istate): void {
     this.state = state;

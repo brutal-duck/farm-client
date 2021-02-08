@@ -97,7 +97,7 @@ function freeCollector(type: number = 1): void {
 
   let user: IuserEvent = this.state.userEvent;
   let settings: IcollectorSettings[] = this.state.eventCollectorSettings;
-  let doubledСollectorPrice: number = this.state.sheepSettings.doubledСollectorPrice;
+  let doubledСollectorPrice: number = this.state.eventSettings.doubledСollectorPrice;
 
 
   this.scrolling.wheel = true;
@@ -177,20 +177,8 @@ function freeCollector(type: number = 1): void {
 // покупка собирателя
 function buyCollector(type: number): void {
 
-  let user: IuserSheep | IuserChicken;
-  let settings: IsheepSettings | IchickenSettings;
-
-  if (this.state.farm === 'Sheep') {
-
-    user = this.state.userSheep;
-    settings = this.state.sheepSettings;
-
-  } else if (this.state.farm === 'Chicken') {
-
-    user = this.state.userChicken;
-    settings = this.state.chickenSettings;
-
-  }
+  let user: IuserEvent = this.state.userEvent;
+  let settings: IeventSettings = this.state.eventSettings;
 
   let hours: number;
 
@@ -202,7 +190,7 @@ function buyCollector(type: number): void {
   this.scene.stop('ShopBars');
   this.scene.stop('Modal');
 
-  if (settings['unlockCollector' + hours] <= user.part) {
+  if (settings['unlockCollector' + hours] <= user.maxLevelAnimal) {
     
     if (this.state.user.diamonds >= settings['collectorPrice' + hours]) {
 
@@ -213,17 +201,17 @@ function buyCollector(type: number): void {
       this.tryTask(3, 0, hours * 60);
       this.tryTask(15, 0, settings['collectorPrice' + hours]);
 
-      this.state.amplitude.getInstance().logEvent('collector', {
-        type: hours + ' hours',
-        price: 'hard',
-        farm_id: this.state.farm
-      });
+      // this.state.amplitude.getInstance().logEvent('collector', {
+      //   type: hours + ' hours',
+      //   price: 'hard',
+      //   farm_id: this.state.farm
+      // });
 
-      this.state.amplitude.getInstance().logEvent('diamonds_spent', {
-        type: 'collector',
-        count: settings['collectorPrice' + hours],
-        farm_id: this.state.farm
-      });
+      // this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+      //   type: 'collector',
+      //   count: settings['collectorPrice' + hours],
+      //   farm_id: this.state.farm
+      // });
 
     } else {
 

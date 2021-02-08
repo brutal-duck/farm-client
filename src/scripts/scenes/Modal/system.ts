@@ -84,6 +84,8 @@ function systemWindow(): void {
         this.sheepConvertor();
       } else if (this.state.farm === 'Chicken') {
         this.chickenConvertor();
+      } else if (this.state.farm === 'Event') {
+        this.eventConvertor();
       }
 
       break;

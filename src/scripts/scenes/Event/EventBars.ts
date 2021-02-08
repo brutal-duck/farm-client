@@ -23,7 +23,7 @@ import {
   plusDiamonds,
   firework250
 } from '../../general/animations';
-// import { pulseCollector } from './animations';
+import { pulseCollector } from './animations';
 import {
   registration,
   chatWindow
@@ -78,7 +78,7 @@ class EventBars extends Phaser.Scene {
   public clickShopBtn = clickShopBtn.bind(this);
   public clickModalBtn = clickModalBtn.bind(this);
   public сurrencyAnimation = сurrencyAnimation.bind(this);
-  // public pulseCollector = pulseCollector.bind(this);
+  public pulseCollector = pulseCollector.bind(this);
   public menuAnimation = menuAnimation.bind(this);
   public pulseBalance = pulseBalance.bind(this);
   public registration = registration.bind(this);
@@ -310,7 +310,7 @@ class EventBars extends Phaser.Scene {
     this.сurrencyAnimation();
 
     // мигание нулевого таймера собирателя
-    // this.pulseCollector();
+    this.pulseCollector();
 
     // актуальный статус кнопки покупки курицы
     this.buyChickenStatus();

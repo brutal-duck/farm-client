@@ -301,7 +301,7 @@ function eventCollectorBoost(): void {
   }
 
   // 4 часа собирателя
-  if (this.state.eventSettings.unlockCollector4 <= this.state.userEvent.part) {
+  if (this.state.eventSettings.unlockCollector4 <= this.state.userEvent.maxLevelAnimal) {
 
     let hours4 = this.boostButton(350, 220 + this.height, '4', this.state.lang.shortHours, String(this.state.eventSettings.collectorPrice4), 'diamond');
     this.clickBoostBtn(hours4, (): void => {
@@ -315,7 +315,7 @@ function eventCollectorBoost(): void {
   }
 
   // 12 часа собирателя
-  if (this.state.eventSettings.unlockCollector12 <= this.state.userEvent.part) {
+  if (this.state.eventSettings.unlockCollector12 <= this.state.userEvent.maxLevelAnimal) {
 
     let hours12 = this.boostButton(350, 280 + this.height, '12', this.state.lang.shortHours, String(this.state.eventSettings.collectorPrice12), 'diamond');
     this.clickBoostBtn(hours12, (): void => {
