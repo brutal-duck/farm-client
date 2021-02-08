@@ -42,6 +42,7 @@ let shopTabActive: any = require("./../../../../assets/images/modal/shop-tab-act
 let shopTab: any = require("./../../../../assets/images/modal/shop-tab.png");
 let iconShopSheep: any = require("./../../../../assets/images/sheep/icons/icon-shop-sheep.png");
 let iconShopChicken: any = require("./../../../../assets/images/chicken/icons/icon-shop-chicken.png");
+let iconShopEvent: any = require("./../../../../assets/images/event/icons/icon-shop-event.png");
 let iconShopBoosts: any = require("./../../../../assets/images/icons/icon-shop-boosts.png");
 let bankPackage: any = require("./../../../../assets/images/modal/bank-package.png");
 let stockTape: any = require("./../../../../assets/images/modal/stock-tape.png");
@@ -131,6 +132,7 @@ class Shop extends Phaser.Scene {
     this.load.image('shop-tab', shopTab);
     if (this.state.farm === 'Sheep') this.load.image('icon-shop-sheep', iconShopSheep);
     if (this.state.farm === 'Chicken') this.load.image('icon-shop-chicken', iconShopChicken);
+    if (this.state.farm === 'Event') this.load.image('icon-shop-event', iconShopEvent);
     this.load.image('icon-shop-boosts', iconShopBoosts);
     this.load.image('bank-package', bankPackage);
     this.load.image('stock-tape', stockTape);

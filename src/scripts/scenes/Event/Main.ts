@@ -7,7 +7,6 @@ import {
   click,
   clickTerritory,
   logout,
-  convertDiamonds,
   convertMoney,
   exchange,
   onlineStatus,
@@ -41,7 +40,8 @@ import {
   maxBreedForBuy, 
   animalPrice, 
   getFreePosition, 
-  convertEventMoney, 
+  convertEventMoney,
+  convertDiamonds, 
   currentTerritory, 
   freeCollector, 
   buyCollector 

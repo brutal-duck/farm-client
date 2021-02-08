@@ -214,6 +214,7 @@ interface IeventPoints {
   resource: number;
   resourcePrice: number;
   price: number;
+  exchange: number;
   id?: any;
 }
 interface IterritoriesSheepSettings {
