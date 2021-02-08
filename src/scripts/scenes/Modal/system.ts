@@ -104,6 +104,8 @@ function systemWindow(): void {
         this.confirmExpelSheep();
       } else if (this.state.farm === 'Chicken') {
         this.confirmExpelChicken();
+      } else if (this.state.farm === 'Event') {
+        this.confirmExpelAnimal();
       }
       
       break;

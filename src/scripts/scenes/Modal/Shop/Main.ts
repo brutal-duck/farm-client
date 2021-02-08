@@ -2,6 +2,7 @@ import Scrolling from '../../../libs/Scrolling';
 import { shopButton, boostButton } from '../../../elements';
 import { chickenPrice } from '../../Chicken/basic';
 import { sheepPrice } from '../../Sheep/basic';
+import { animalPrice } from '../../Event/basic';
 import {
   click,
   clickShopBtn,
@@ -27,6 +28,11 @@ import {
   chicken,
   updateChickenPrices
 } from './chicken';
+import {
+  animalMoney,
+  animals,
+  updateAnimalPrices
+} from './event';
 import { Arrows } from '../../../elements';
 
 let shopHead: any = require("./../../../../assets/images/modal/shop-head.png");
@@ -103,6 +109,10 @@ class Shop extends Phaser.Scene {
   public collectorBoost = collectorBoost.bind(this);
   public updateFeedBoostBtn = updateFeedBoostBtn.bind(this);
   public shortTime = shortTime.bind(this);
+  public animals = animals.bind(this);
+  public animalPrice = animalPrice.bind(this);
+  public animalMoney = animalMoney.bind(this);
+  public updateAnimalPrices = updateAnimalPrices.bind(this);
 
   public init(state: Istate): void {
     
@@ -166,11 +176,13 @@ class Shop extends Phaser.Scene {
 
       if (this.state.farm === 'Sheep') this.sheepMoney();
       else if (this.state.farm === 'Chicken') this.chickenMoney();
+      else if (this.state.farm === 'Event') this.animalMoney();
 
     } else if (this.state.modal.shopType === 3) {
 
       if (this.state.farm === 'Sheep') this.sheep();
       else if (this.state.farm === 'Chicken') this.chicken();
+      else if (this.state.farm === 'Event') this.animals();
 
     } else if (this.state.modal.shopType === 4) {   
       this.boosts();

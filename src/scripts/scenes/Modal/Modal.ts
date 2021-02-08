@@ -28,6 +28,9 @@ import {
   chickenEggRepositoryExchange
 } from './chicken';
 import {
+  confirmExpelAnimal
+} from './event';
+import {
   sheepFair,
   sheep,
   sheepPasture,
@@ -186,6 +189,8 @@ class Modal extends Phaser.Scene {
   public sheepWoolRepositoryExchange = sheepWoolRepositoryExchange.bind(this);
   public chickenEggRepositoryExchange = chickenEggRepositoryExchange.bind(this);
   public changeNickname = changeNickname.bind(this);
+
+  public confirmExpelAnimal = confirmExpelAnimal.bind(this);
   
   public init(state: Istate): void {
     this.state = state;

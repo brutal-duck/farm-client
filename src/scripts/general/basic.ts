@@ -2248,6 +2248,12 @@ function feedBoost(): void {
 
       this.state.user.diamonds -= this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice;
 
+      this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+        type: 'booster_feed_x2',
+        count: this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice,
+        farm_id: this.state.farm
+      });
+
       if (this.state[`user${this.state.farm}`].feedBoostTime + 7200 > this.game.scene.keys[this.state.farm].feedBoostStack * 3600) {
 
         this.scene.stop('Shop');

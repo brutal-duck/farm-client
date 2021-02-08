@@ -621,7 +621,7 @@ function buildBorders(): void {
         
         let bottomTer = this.territories.children.entries.find((data: any) => data.block === territory.block + 1 && data.position === territory.position);
 
-        if (topTer.type === 0) {
+        if (topTer !== undefined && topTer.type === 0) {
           territory.borderTop.setVisible(true);
         } else {
           territory.borderTop.setVisible(false);
