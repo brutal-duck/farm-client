@@ -92,23 +92,23 @@ class Map extends Phaser.Scene {
     this.state.progress.chicken.unlock = 1; // костыль для покупки куриной фермы
     this.build(chickenPosition,'Chicken', this.state.progress.chicken);
     // Евентовая ферма на карте
-    // let eventIcon: Phaser.GameObjects.Graphics = this.add.graphics();
-    // eventIcon.fillStyle(0xff0000, 1.0)
-    //   .fillCircle(520, 740, 50);
-    // let eventText: Phaser.GameObjects.Text = this.add.text(520, 740, 'Нажми!', {
-    //   fontSize: '40px',
-    //   color: '#000',
-    //   fontFamily: 'Shadow'
-    // }).setOrigin(0.5, 0.5);
-    // this.click(eventText, (): void => {
-    //   console.log('click')
-    //   this.game.scene.keys[this.state.farm].autosave();
-    //   this.scene.stop();
-    //   this.scene.stop('MapBars');
-    //   this.scene.stop(this.state.farm);
-    //   this.scene.stop(this.state.farm + 'Bars');
-    //   this.scene.start('EventPreload', this.state);
-    // });
+    let eventIcon: Phaser.GameObjects.Graphics = this.add.graphics();
+    eventIcon.fillStyle(0xff0000, 1.0)
+      .fillCircle(520, 740, 50);
+    let eventText: Phaser.GameObjects.Text = this.add.text(520, 740, 'Нажми!', {
+      fontSize: '40px',
+      color: '#000',
+      fontFamily: 'Shadow'
+    }).setOrigin(0.5, 0.5);
+    this.click(eventText, (): void => {
+      console.log('click')
+      this.game.scene.keys[this.state.farm].autosave();
+      this.scene.stop();
+      this.scene.stop('MapBars');
+      this.scene.stop(this.state.farm);
+      this.scene.stop(this.state.farm + 'Bars');
+      this.scene.start('EventPreload', this.state);
+    });
   }
 
 

@@ -199,7 +199,6 @@ function buyAnimal(breed: number, shop: boolean = false, diamond: number = 0): b
         this.getAnimal(id, breed, x, y);
         this.state.user.diamonds -= diamond;
         this.state.userEvent.countAnimal[breed - 1].counter = animalPrice.countAnimal;
-        this.game.scene.keys['EventBars'].updateAnimalPrice();
       } else {
         console.log('не хватает кристаллов')
       }
