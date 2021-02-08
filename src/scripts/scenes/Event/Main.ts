@@ -10,8 +10,6 @@ import {
   convertDiamonds,
   convertMoney,
   exchange,
-  freeCollector,
-  buyCollector,
   onlineStatus,
   takeDonate,
   improveCollector,
@@ -39,7 +37,15 @@ import {
   VKNoAds
 } from '../../general/ads';
 import world from './world';
-import { maxBreedForBuy, animalPrice, getFreePosition, convertEventMoney, currentTerritory } from './basic';
+import { 
+  maxBreedForBuy, 
+  animalPrice, 
+  getFreePosition, 
+  convertEventMoney, 
+  currentTerritory, 
+  freeCollector, 
+  buyCollector 
+} from './basic';
 import { 
   buyAnimal, 
   getAnimal, 

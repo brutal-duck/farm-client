@@ -559,27 +559,27 @@ function sheepConvertor(): void {
     let count: number | string = shortNum(this.state.convertor.count);
     let length: number = String(count).length * 10 + 15;
     
-    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 130, this.state.lang.rememberSellWool, {
+    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 140, this.state.lang.rememberSellWool, {
       font: '26px Bip',
       color: '#57A90E',
       align: 'center',
       wordWrap: { width: 440 }
     }).setOrigin(0.5, 0);
 
-    let notEnaugh: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX - length, this.cameras.main.centerY - 25, this.state.lang.notEnoughForYou, {
+    let notEnaugh: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX - length, this.cameras.main.centerY - 10, this.state.lang.notEnoughForYou, {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0.5);
 
     let border = notEnaugh.getBounds();
 
-    this.add.text(border.right + 50, this.cameras.main.centerY - 25, count, {
+    this.add.text(border.right + 50, this.cameras.main.centerY - 10, count, {
       font: '26px Bip',
       color: '#925C28',
       align: 'center'
     }).setOrigin(0, 0.5);
 
-    this.add.sprite(border.right + 5, this.cameras.main.centerY - 25, 'sheepCoin')
+    this.add.sprite(border.right + 5, this.cameras.main.centerY - 10, 'sheepCoin')
       .setOrigin(0, 0.5)
       .setScale(0.15);
 
@@ -601,16 +601,28 @@ function sheepConvertor(): void {
 
     } else {
 
-      let right = {
-        icon: 'diamond',
-        text: shortNum(this.state.convertor.diamonds)
-      }
+      // let right = {
+      //   icon: 'diamond',
+      //   text: shortNum(this.state.convertor.diamonds)
+      // }
 
-      let pay = this.bigButton('green', 'left', 60, this.state.lang.surcharge, right);
-      this.clickModalBtn(pay, (): void => {
+      // let pay = this.bigButton('green', 'left', 60, this.state.lang.surcharge, right);
+      // this.clickModalBtn(pay, (): void => {
+      //   this.scene.stop();
+      //   this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+      //   this.game.scene.keys[this.state.farm].exchange();
+      // });
+
+      let btn = this.bigButton('green', 'center', 60, this.state.lang.goExchanger);
+      this.clickModalBtn(btn, (): void => {
+        let modal: Imodal = {
+          type: 2,
+          shopType: 2
+        }
+        this.state.modal = modal;
         this.scene.stop();
-        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-        this.game.scene.keys[this.state.farm].exchange();
+        this.scene.start('Modal', this.state);
+
       });
 
     }

@@ -82,6 +82,7 @@ export default {
     woolPrice: 'Цена шерсти: ',
     eggCollector: 'Собиратель яиц',
     woolCollector: 'Подстригатель',
+    resourceCollector: 'Собиратель радуги',
     take: 'Взять',
     chickenProfileName: 'Птицевод',
     sheepProfileName: 'Пастух-овцевод',
@@ -399,8 +400,8 @@ export default {
     taskName_126: 'Накопи $2 монет',
     taskName_127: 'Зайди в Хранилище и продай шерсть',
     next: 'Далее',
-    rememberSellWool: 'Не забывай продавать шерсть из хранилища',
-    rememberSellEggs: 'Не забывай продавать яйца из хранилища',
+    rememberSellWool: 'Не забывай продавать шерсть из хранилища! Также ты можешь обменять кристаллы на монеты',
+    rememberSellEggs: 'Не забывай продавать яйца из хранилища! Также ты можешь обменять кристаллы на монеты',
     openFarm: 'Доступно после $1 главы',
     newbieTimer: 'Осталось $1 дней $2 часов',
     close: 'Закрыть',
@@ -479,6 +480,7 @@ export default {
     feedBoostNative: 'Комбикорма хватит на ',
     hour: 'час',
     hours: 'часа',
+    goExchanger: 'Перейти в обменник'
   },
   en: {
     index: 'ru',
@@ -563,6 +565,7 @@ export default {
     woolPrice: 'Цена шерсти: ',
     eggCollector: 'Собиратель яиц',
     woolCollector: 'Подстригатель',
+    resourceCollector: 'Собиратель радуги',
     take: 'Взять',
     chickenProfileName: 'Птицевод',
     sheepProfileName: 'Пастух-овцевод',
@@ -880,8 +883,8 @@ export default {
     taskName_126: 'Накопи $2 монет',
     taskName_127: 'Зайди в Хранилище и продай шерсть',
     next: 'Далее',
-    rememberSellWool: 'Не забывай продавать шерсть из хранилища',
-    rememberSellEggs: 'Не забывай продавать яйца из хранилища',
+    rememberSellWool: 'Не забывай продавать шерсть из хранилища! Также ты можешь обменять кристаллы на монеты',
+    rememberSellEggs: 'Не забывай продавать яйца из хранилища! Также ты можешь обменять кристаллы на монеты',
     openFarm: 'Доступно после $1 главы',
     newbieTimer: 'Осталось $1 дней $2 часов',
     close: 'Закрыть',
@@ -960,5 +963,6 @@ export default {
     feedBoostNative: 'Комбикорма хватит на ',
     hour: 'час',
     hours: 'часа',
+    goExchanger: 'Перейти в обменник',
   }
 }

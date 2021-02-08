@@ -72,6 +72,13 @@ function interval(): void {
       }
     }    
 
+    for (let i in this.resources.children.entries) {
+
+      let resource: Phaser.Physics.Arcade.Sprite = this.resources.children.entries[i];
+      resource.data.values.timeout++;
+    
+    }
+    
     // // бар собирателя
     // if (this.state.userChicken.collector > 0) {
 

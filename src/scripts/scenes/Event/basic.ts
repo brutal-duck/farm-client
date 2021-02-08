@@ -91,10 +91,167 @@ function currentTerritory(x: number, y: number): object {
   return this.territories.children.entries.find((data: Phaser.Physics.Arcade.Sprite) => data.data.values.block === block && data.data.values.position === position);
   
 }
+
+// бесплатный собиратель
+function freeCollector(type: number = 1): void {
+
+  let user: IuserEvent = this.state.userEvent;
+  let settings: IcollectorSettings[] = this.state.eventCollectorSettings;
+  let doubledСollectorPrice: number = this.state.sheepSettings.doubledСollectorPrice;
+
+
+  this.scrolling.wheel = true;
+  this.scene.stop('Shop');
+  this.scene.stop('ShopBars');
+  this.scene.stop('Modal');
+
+  if (user.collector === 0) {
+
+    let minutes: number = settings.find((data: IcollectorSettings) => data.level === user.collectorLevel).time;
+
+    if (type === 1) {
+
+      let collector: number = minutes * 60;
+      user.collector += collector;
+      user.collectorTakenTime = user.collector;
+      this.game.scene.keys[this.state.farm + 'Bars'].collector.update();
+
+
+  
+      // this.state.amplitude.getInstance().logEvent('collector', {
+      //   type: 'free',
+      //   farm_id: this.state.farm
+      // });
+
+    } else {
+      
+      minutes *= 2;
+      let doubleTimePrice: number = Math.floor(minutes / 60 * doubledСollectorPrice);
+
+      if (this.state.user.diamonds >= doubleTimePrice) {
+
+        this.state.user.diamonds -= doubleTimePrice;
+        user.collector += minutes * 60;
+        user.collectorTakenTime = user.collector;
+        this.game.scene.keys[this.state.farm + 'Bars'].collector.update();
+        this.tryTask(3, 0, minutes);
+        this.tryTask(15, 0, doubleTimePrice);
+  
+        // this.state.amplitude.getInstance().logEvent('collector', {
+        //   type: minutes + ' minutes',
+        //   price: 'hard',
+        //   farm_id: this.state.farm
+        // });
+  
+        // this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+        //   type: 'collector',
+        //   count: doubleTimePrice,
+        //   farm_id: this.state.farm
+        // });
+
+      } else {
+
+        let count: number = doubleTimePrice - this.state.user.diamonds;
+        this.state.convertor = {
+          fun: 0,
+          count: count,
+          diamonds: count,
+          type: 2
+        }
+        let modal: Imodal = {
+          type: 1,
+          sysType: 4
+        }
+        this.state.modal = modal;
+        this.scene.launch('Modal', this.state);
+
+      }
+
+    }
+
+  }
+
+}
+
+
+// покупка собирателя
+function buyCollector(type: number): void {
+
+  let user: IuserSheep | IuserChicken;
+  let settings: IsheepSettings | IchickenSettings;
+
+  if (this.state.farm === 'Sheep') {
+
+    user = this.state.userSheep;
+    settings = this.state.sheepSettings;
+
+  } else if (this.state.farm === 'Chicken') {
+
+    user = this.state.userChicken;
+    settings = this.state.chickenSettings;
+
+  }
+
+  let hours: number;
+
+  if (type === 3) hours = 4;
+  else if (type === 4) hours = 12;
+
+  this.scrolling.wheel = true;
+  this.scene.stop('Shop');
+  this.scene.stop('ShopBars');
+  this.scene.stop('Modal');
+
+  if (settings['unlockCollector' + hours] <= user.part) {
+    
+    if (this.state.user.diamonds >= settings['collectorPrice' + hours]) {
+
+      this.state.user.diamonds -= settings['collectorPrice' + hours];
+      user.collector += hours * 60 * 60;
+      user.collectorTakenTime = user.collector;
+      this.game.scene.keys[this.state.farm + 'Bars'].collector.update();
+      this.tryTask(3, 0, hours * 60);
+      this.tryTask(15, 0, settings['collectorPrice' + hours]);
+
+      this.state.amplitude.getInstance().logEvent('collector', {
+        type: hours + ' hours',
+        price: 'hard',
+        farm_id: this.state.farm
+      });
+
+      this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+        type: 'collector',
+        count: settings['collectorPrice' + hours],
+        farm_id: this.state.farm
+      });
+
+    } else {
+
+      let count: number = settings['collectorPrice' + hours] - this.state.user.diamonds;
+      this.state.convertor = {
+        fun: 0,
+        count: count,
+        diamonds: count,
+        type: 2
+      }
+      let modal: Imodal = {
+        type: 1,
+        sysType: 4
+      }
+      this.state.modal = modal;
+      this.scene.launch('Modal', this.state);
+
+    }
+    
+  }
+  
+}
 export {
   animalPrice,
   maxBreedForBuy,
   getFreePosition,
   convertEventMoney,
-  currentTerritory
+  currentTerritory,
+  freeCollector,
+  buyCollector
 }
