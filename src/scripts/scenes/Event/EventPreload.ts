@@ -88,7 +88,7 @@ let resource9: any = require("./../../../assets/images/event/resources/resource9
 let resource10: any = require("./../../../assets/images/event/resources/resource10.png");
 let resource11: any = require("./../../../assets/images/event/resources/resource11.png");
 let resource12: any = require("./../../../assets/images/event/resources/resource12.png");
-
+let disableAnimal: any = require("./../../../assets/images/event/animal/disable-animal.png");
 const testCollector: IcollectorSettings[] = [
   {
     level: 1,
@@ -1141,6 +1141,7 @@ class EventPreload extends Phaser.Scene {
     this.load.image('event-buy-icon-11', eventBuyIcon11);
     this.load.image('event-buy-icon-12', eventBuyIcon12);
 
+    this.load.image('disable-animal', disableAnimal);
     this.load.spritesheet('animal0', animal0, { frameWidth: 109, frameHeight: 138 });
     this.load.spritesheet('animal1', animal1, { frameWidth: 115, frameHeight: 143 });
     this.load.spritesheet('animal2', animal2, { frameWidth: 115, frameHeight: 143 });

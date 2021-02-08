@@ -239,8 +239,16 @@ function convertDiamonds(diamonds: number): number {
   
   let breedSettings: IeventPoints[] = this.state.eventSettings.eventSettings;
   let maxLevel: number = this.state.userEvent.maxLevelAnimal;
+  
+  let setting: IeventPoints = breedSettings.find((item: IeventPoints) => item.breed === maxLevel);
+  let exchange: number;
 
-  let exchange: number = breedSettings.find((item: IeventPoints) => item.breed === maxLevel).exchange;
+  if (setting) {
+    exchange = setting.exchange;
+  } else {
+    exchange = 1;
+  }
+  
   return exchange *= diamonds;
 
 }

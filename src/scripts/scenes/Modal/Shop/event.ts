@@ -15,7 +15,7 @@ function animalMoney(): void {
     let left: number = diamonds[i * 2];
     let right: number = diamonds[i * 2 + 1];
 
-    let pack: Phaser.GameObjects.Sprite = this.add.sprite(0, y + this.height, 'animal-money-package').setOrigin(0, 0);
+    let pack: Phaser.GameObjects.Sprite = this.add.sprite(0, y + this.height, 'event-money-package').setOrigin(0, 0);
     this.click(pack, (): void => {
 
       this.state.convertor = {
@@ -58,7 +58,7 @@ function animalMoney(): void {
 
     if (right) {
 
-      let pack: Phaser.GameObjects.Sprite = this.add.sprite(240, y + this.height, 'chicken-money-package').setOrigin(0, 0);
+      let pack: Phaser.GameObjects.Sprite = this.add.sprite(240, y + this.height, 'event-money-package').setOrigin(0, 0);
       this.click(pack, (): void => {
 
         this.state.convertor = {
@@ -106,7 +106,7 @@ function animalMoney(): void {
 }
 
 
-// курицы
+// животные
 function animals(): void {
 
   let rows: number = this.state.eventSettings.eventSettings.length;
