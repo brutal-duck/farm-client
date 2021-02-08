@@ -34,17 +34,17 @@ function buyTerritory(): void {
   if (this.state.userEvent.maxLevelAnimal >= settings.unlock && this.state.territory.data.values.type === 0) {
 
     if (settings.price > 0) {
-       
+     
       // 70% от суммы покупки
       let price: number = Math.round((settings.price / 100) * 70);
 
       if (this.state.userEvent.money >= price) {
-    
-        this.state.amplitude.getInstance().logEvent('buy_territory', {
-          block: this.state.territory.data.values.block,
-          position: this.state.territory.data.values.position,
-          farm_id: this.state.farm
-        });
+        
+        // this.state.amplitude.getInstance().logEvent('buy_territory', {
+        //   block: this.state.territory.data.values.block,
+        //   position: this.state.territory.data.values.position,
+        //   farm_id: this.state.farm
+        // });
     
         this.state.territory.data.values.type = 2;
         this.state.userEvent.money -= price;
@@ -83,12 +83,12 @@ function buyTerritory(): void {
       
       let price: number = settings.diamond;
       if (this.state.user.diamonds >= price) {
-    
-        this.state.amplitude.getInstance().logEvent('buy_territory', {
-          block: this.state.territory.data.values.block,
-          position: this.state.territory.data.values.position,
-          farm_id: this.state.farm
-        });
+
+        // this.state.amplitude.getInstance().logEvent('buy_territory', {
+        //   block: this.state.territory.data.values.block,
+        //   position: this.state.territory.data.values.position,
+        //   farm_id: this.state.farm
+        // });
     
         this.state.territory.data.values.type = 2;
         this.state.user.diamonds -= price;
