@@ -253,6 +253,32 @@ function convertDiamonds(diamonds: number): number {
 
 }
 
+function convertMoney(money: number): number {
+
+  let breedSettings: IeventPoints[] = this.state.eventSettings.eventSettings;
+  let maxLevel: number = this.state.userEvent.maxLevelAnimal;
+  
+  let setting: IeventPoints = breedSettings.find((item: IeventPoints) => item.breed === maxLevel);
+  let exchange: number;
+
+  if (setting) {
+    exchange = setting.exchange;
+  } else {
+    exchange = 1;
+  }
+
+  let needDiamonds: number = 1;
+  let sumExchange: number = exchange;
+
+  while (sumExchange < money) {
+    needDiamonds++;
+    sumExchange = sumExchange + exchange;
+  }
+
+  return needDiamonds;
+
+}
+
 export {
   animalPrice,
   maxBreedForBuy,
@@ -261,5 +287,6 @@ export {
   currentTerritory,
   freeCollector,
   buyCollector,
-  convertDiamonds
+  convertDiamonds,
+  convertMoney
 }

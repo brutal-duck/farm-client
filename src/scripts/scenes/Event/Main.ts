@@ -7,7 +7,6 @@ import {
   click,
   clickTerritory,
   logout,
-  convertMoney,
   exchange,
   onlineStatus,
   takeDonate,
@@ -44,7 +43,8 @@ import {
   convertDiamonds, 
   currentTerritory, 
   freeCollector, 
-  buyCollector 
+  buyCollector,
+  convertMoney, 
 } from './basic';
 import { 
   buyAnimal, 
@@ -146,6 +146,7 @@ class Event extends Phaser.Scene {
   public buyTerritory = buyTerritory.bind(this);
   public expelAnimal = expelAnimal.bind(this);
   public setCollector = setCollector.bind(this);
+  public convertMoney = convertMoney.bind(this);
 
   public init(state: Istate): void {
 
