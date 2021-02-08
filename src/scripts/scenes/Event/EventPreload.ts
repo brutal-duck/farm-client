@@ -917,7 +917,7 @@ const testEventSettings: IeventSettings = {
   unlockCollector12: 8,
   eventSettings: [
     { breed: 1, resource: 100, resourcePrice: 100, price: 100, exchange: 10},
-    { breed: 2, resource: 100, resourcePrice: 200, price: 200, exchange: 20},
+    { breed: 2, resource: 100, resourcePrice: 200, price: 2000, exchange: 20},
     { breed: 3, resource: 100, resourcePrice: 400, price: 5000, exchange: 30},
     { breed: 4, resource: 100, resourcePrice: 800, price: 6000, exchange: 40},
     { breed: 5, resource: 100, resourcePrice: 1600, price: 8000, exchange: 50},

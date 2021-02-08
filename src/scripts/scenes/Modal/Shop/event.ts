@@ -121,7 +121,7 @@ function animals(): void {
     let animal: IeventPoints = this.state.eventSettings.eventSettings.find((data: IeventPoints) => data.breed === i + 1);
 
     // иконка
-    if (this.state.userEvent.maxLevelAnimal + 1 < animal.breed) {
+    if (this.state.userEvent.maxLevelAnimal < animal.breed) {
       this.add.sprite(110, y + this.height + 110, 'disable-animal');
     } else {
 
@@ -157,7 +157,7 @@ function animals(): void {
     // кнопка покупки
     let heightBtn: number = 0;
     let btn: any = false;
-    if (animal.breed <= this.state.userEvent.maxLevelAnimal || animal.breed === 1) {
+    if (animal.breed <= this.state.userEvent.maxLevelAnimal - 4 || animal.breed === 1) {
 
       let price: string = String(shortNum(this.animalPrice(animal.breed).price));
       
@@ -165,6 +165,66 @@ function animals(): void {
       this.clickShopBtn(btn, (): void => {
 
         let result: boolean = this.game.scene.keys[this.state.farm].buyAnimal(animal.breed, true);
+        if (result) this.updateAnimalPrices();
+
+      });
+
+      this.buttons.push({
+        text: btn.title,
+        breed: animal.breed,
+        img: btn.img
+      });
+
+      heightBtn = btn.btn.height;
+
+    } else if (animal.breed <= this.state.userEvent.maxLevelAnimal - 3 || animal.breed === 2 && this.state.userEvent.maxLevelAnimal >= 2) {
+
+      let diamondPrice :number = 10;
+      
+      btn = this.shopButton(330, center, String(diamondPrice), 'diamond');
+      this.clickShopBtn(btn, (): void => {
+
+        let result: boolean = this.game.scene.keys[this.state.farm].buyAnimal(animal.breed, true, diamondPrice);
+        if (result) this.updateAnimalPrices();
+
+      });
+
+      this.buttons.push({
+        text: btn.title,
+        breed: animal.breed,
+        img: btn.img
+      });
+
+      heightBtn = btn.btn.height;
+
+    } else if (animal.breed <= this.state.userEvent.maxLevelAnimal - 2 || animal.breed === 3 && this.state.userEvent.maxLevelAnimal >= 3) {
+
+      let diamondPrice: number = 20;
+      
+      btn = this.shopButton(330, center, String(diamondPrice), 'diamond');
+      this.clickShopBtn(btn, (): void => {
+
+        let result: boolean = this.game.scene.keys[this.state.farm].buyAnimal(animal.breed, true, diamondPrice);
+        if (result) this.updateAnimalPrices();
+
+      });
+
+      this.buttons.push({
+        text: btn.title,
+        breed: animal.breed,
+        img: btn.img
+      });
+
+      heightBtn = btn.btn.height;
+
+    } else if (animal.breed <= this.state.userEvent.maxLevelAnimal - 1 || animal.breed === 4 && this.state.userEvent.maxLevelAnimal >=4) {
+
+      let diamondPrice: number = 40;
+      
+      btn = this.shopButton(330, center, String(diamondPrice), 'diamond');
+      this.clickShopBtn(btn, (): void => {
+
+        let result: boolean = this.game.scene.keys[this.state.farm].buyAnimal(animal.breed, true, diamondPrice);
         if (result) this.updateAnimalPrices();
 
       });
@@ -198,7 +258,7 @@ function animals(): void {
 function updateAnimalPrices(): void {
   
   for (let i in this.buttons) {
-
+    if (Number(i) <= this.state.userEvent.maxLevelAnimal - 4 || Number(i) === 1)
     this.buttons[i].text.setText(String(shortNum(this.animalPrice(this.buttons[i].breed).price)));
     this.buttons[i].img.x = this.buttons[i].text.getBounds().left - 25;
 
