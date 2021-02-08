@@ -966,7 +966,7 @@ const testUserEvent: IuserEvent = {
     {counter: 1},
     {counter: 1},
   ],
-  collector: 0,
+  collector: 200,
   collectorLevel: 1,
   collectorTakenTime: 0,
   maxLevelAnimal: 0,

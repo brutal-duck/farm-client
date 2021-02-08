@@ -6,14 +6,15 @@ function setCollector(): void {
 
     delay: delay,
     callback: (): void => {
-
+      
       if (this.state.userEvent.collector > 0) {
-
+        
         for (let i in this.resources.children.entries) {
 
           let resource = this.resources.children.entries[i];
-
-          if (resource.timeout > 2 && resource.type !== 0) {
+          
+          if (resource.data.values.timeout > 2 && resource.data.values.type !== 0) {
+            console.log(resource, 'take resource');
             this.collectResource(resource);
             break;
           }
