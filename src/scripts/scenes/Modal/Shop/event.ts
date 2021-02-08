@@ -258,7 +258,7 @@ function animals(): void {
 function updateAnimalPrices(): void {
   
   for (let i in this.buttons) {
-    if (Number(i) <= this.state.userEvent.maxLevelAnimal - 4 || Number(i) === 1)
+    if (Number(i) < this.state.userEvent.maxLevelAnimal - 4 || Number(i) === 1)
     this.buttons[i].text.setText(String(shortNum(this.animalPrice(this.buttons[i].breed).price)));
     this.buttons[i].img.x = this.buttons[i].text.getBounds().left - 25;
 
