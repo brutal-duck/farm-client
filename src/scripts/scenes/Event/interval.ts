@@ -92,18 +92,6 @@ function interval(): void {
 
     }
 
-    // // задание на накопление денег
-    // this.tryTask(6, this.state.userChicken.money);
-
-    // // задание на кур на поле
-    // this.checkAnimalTask();
-
-    // // таймер кристаллической курицы
-    // this.caveTimer();
-
-    // // баланс-бары
-    // this.game.scene.keys['ChickenBars'].setBalanceBars(balance);
-    
     // // автосохранение
     // this.autoSaveTimer++;
     // if (this.autoSaveTimer >= this.state.autoSaveSpeed) this.autosave();
