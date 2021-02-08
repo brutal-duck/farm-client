@@ -9,7 +9,8 @@ import {
   systemWindow,
   chickenTerritory,
   sheepTerritory,
-  resizeWindow
+  resizeWindow,
+  eventTerritory
 } from './system';
 import {
   chickenFair,
@@ -29,7 +30,8 @@ import {
 } from './chicken';
 import {
   confirmExpelAnimal,
-  eventConvertor
+  eventConvertor,
+  buyEventTerritory
 } from './event';
 import {
   sheepFair,
@@ -197,6 +199,8 @@ class Modal extends Phaser.Scene {
   public confirmExpelAnimal = confirmExpelAnimal.bind(this);
   public shortNum = shortNum.bind(this);
   public eventConvertor = eventConvertor.bind(this);
+  public eventTerritory = eventTerritory.bind(this);
+  public buyEventTerritory = buyEventTerritory.bind(this);
   
   public init(state: Istate): void {
     this.state = state;
