@@ -23,7 +23,6 @@ import {
   startHerdBoost
 } from '../../general/modal';
 import {
-  buildBorders,
   checkExchangeRepository,
 } from '../../general/territories';
 import { createSpeechBubble, mergingCloud } from '../../elements';
@@ -62,7 +61,7 @@ import {
 import drag  from './drag';
 import { animalBrain, collisions } from './animalBrain';
 import interval from './interval';
-import { deleteTerritoriesLocks, buyTerritory } from './territories';
+import { deleteTerritoriesLocks, buyTerritory, buildBorders } from './territories';
 import setCollector from './collector';
 class Event extends Phaser.Scene {
   constructor() {
