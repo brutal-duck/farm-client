@@ -79,18 +79,18 @@ function interval(): void {
     
     }
     
-    // // бар собирателя
-    // if (this.state.userChicken.collector > 0) {
+    // бар собирателя
+    if (this.state.userEvent.collector > 0) {
 
-    //   this.state.userChicken.collector--;
-    //   this.game.scene.keys['ChickenBars'].collector.update();
+      this.state.userEvent.collector--;
+      this.game.scene.keys['EventBars'].collector.update();
 
-    // } else if (this.game.scene.keys['ChickenBars'].collector.endAngle !==
-    //   this.game.scene.keys['ChickenBars'].collector.startAngle) {
+    } else if (this.game.scene.keys['EventBars'].collector.endAngle !==
+      this.game.scene.keys['EventBars'].collector.startAngle) {
 
-    //   this.game.scene.keys['ChickenBars'].collector.update();
+      this.game.scene.keys['EventBars'].collector.update();
 
-    // }
+    }
 
     // // задание на накопление денег
     // this.tryTask(6, this.state.userChicken.money);
