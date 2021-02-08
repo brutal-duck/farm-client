@@ -108,10 +108,7 @@ function interval(): void {
 
     // // поиск рекламы
     // this.findAd();
-
-    // // анимация иконок на пещере
-    // this.caveIconsAnimation();
-
+    
     // this.debug();
 
     // // таймер до буста стадо

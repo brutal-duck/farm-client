@@ -91,7 +91,7 @@ class Map extends Phaser.Scene {
 
     this.state.progress.chicken.unlock = 1; // костыль для покупки куриной фермы
     this.build(chickenPosition,'Chicken', this.state.progress.chicken);
-    //Евентовая ферма на карте
+    // Евентовая ферма на карте
     // let eventIcon: Phaser.GameObjects.Graphics = this.add.graphics();
     // eventIcon.fillStyle(0xff0000, 1.0)
     //   .fillCircle(520, 740, 50);

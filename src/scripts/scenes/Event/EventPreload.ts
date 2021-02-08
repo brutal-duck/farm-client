@@ -1280,6 +1280,7 @@ class EventPreload extends Phaser.Scene {
             y: animal.y,
             vector: animal.vector,
             disabledAnimal: null,
+            counter: animal.counter
           });
 
         }

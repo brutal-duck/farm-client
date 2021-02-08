@@ -270,6 +270,8 @@ class Collector {
       time = shortTime(this.scene.state.userChicken.collector, this.scene.state.lang);
     } else if (this.scene.state.farm === 'Sheep') {
       time = shortTime(this.scene.state.userSheep.collector, this.scene.state.lang);
+    } else if (this.scene.state.farm === 'Event') {
+      time = shortTime(this.scene.state.userEvent.collector, this.scene.state.lang);
     }
 
     this.timeCollectorText = this.scene.add.text(230, this.scene.height - 43, time, {
