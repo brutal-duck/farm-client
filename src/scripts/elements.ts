@@ -270,6 +270,8 @@ class Collector {
       time = shortTime(this.scene.state.userChicken.collector, this.scene.state.lang);
     } else if (this.scene.state.farm === 'Sheep') {
       time = shortTime(this.scene.state.userSheep.collector, this.scene.state.lang);
+    } else if (this.scene.state.farm === 'Event') {
+      time = shortTime(this.scene.state.userEvent.collector, this.scene.state.lang);
     }
 
     this.timeCollectorText = this.scene.add.text(230, this.scene.height - 43, time, {
@@ -288,6 +290,8 @@ class Collector {
       this.farmData = this.scene.state.userSheep;
     } else if (this.scene.state.farm === 'Chicken') {
       this.farmData = this.scene.state.userChicken;
+    } else if (this.scene.state.farm === 'Event') {
+      this.farmData = this.scene.state.userEvent;
     }
 
   }

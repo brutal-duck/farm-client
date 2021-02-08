@@ -97,6 +97,10 @@ class ShopBars extends Phaser.Scene {
       coinIcon = 'chickenCoin';
       animalIconTexture = 'icon-shop-chicken';
     
+    } else if (this.state.farm === 'Event') {
+
+      coinIcon = 'eventCoin';
+      animalIconTexture = 'icon-shop-event';
     }
     // монеты
     if (this.state.modal.shopType === 2) {

@@ -32,7 +32,8 @@ import {
   animalMoney,
   animals,
   updateAnimalPrices,
-  eventCollectorBoost
+  eventCollectorBoost,
+  eventHerdBoost
 } from './event';
 import { Arrows } from '../../../elements';
 
@@ -42,12 +43,14 @@ let shopTabActive: any = require("./../../../../assets/images/modal/shop-tab-act
 let shopTab: any = require("./../../../../assets/images/modal/shop-tab.png");
 let iconShopSheep: any = require("./../../../../assets/images/sheep/icons/icon-shop-sheep.png");
 let iconShopChicken: any = require("./../../../../assets/images/chicken/icons/icon-shop-chicken.png");
+let iconShopEvent: any = require("./../../../../assets/images/event/icons/icon-shop-event.png");
 let iconShopBoosts: any = require("./../../../../assets/images/icons/icon-shop-boosts.png");
 let bankPackage: any = require("./../../../../assets/images/modal/bank-package.png");
 let stockTape: any = require("./../../../../assets/images/modal/stock-tape.png");
 let shopBtn: any = require("./../../../../assets/images/modal/shop-btn.png");
 let sheepMoneyPackage: any = require("./../../../../assets/images/sheep/money-package.png");
 let chickenMoneyPackage: any = require("./../../../../assets/images/chicken/money-package.png");
+let eventMoneyPackage: any = require("./../../../../assets/images/event/money-package.png");
 let animalShopBg: any = require("./../../../../assets/images/modal/animal-shop-bg.png");
 let shopWoolCollector: any = require("./../../../../assets/images/sheep/shop-wool-collector.png");
 let shopEggCollector: any = require("./../../../../assets/images/chicken/shop-egg-collector.png");
@@ -116,6 +119,7 @@ class Shop extends Phaser.Scene {
   public animalMoney = animalMoney.bind(this);
   public updateAnimalPrices = updateAnimalPrices.bind(this);
   public eventCollectorBoost = eventCollectorBoost.bind(this);
+  public eventHerdBoost = eventHerdBoost.bind(this);
 
   public init(state: Istate): void {
     
@@ -131,12 +135,14 @@ class Shop extends Phaser.Scene {
     this.load.image('shop-tab', shopTab);
     if (this.state.farm === 'Sheep') this.load.image('icon-shop-sheep', iconShopSheep);
     if (this.state.farm === 'Chicken') this.load.image('icon-shop-chicken', iconShopChicken);
+    if (this.state.farm === 'Event') this.load.image('icon-shop-event', iconShopEvent);
     this.load.image('icon-shop-boosts', iconShopBoosts);
     this.load.image('bank-package', bankPackage);
     this.load.image('stock-tape', stockTape);
     this.load.image('shop-btn', shopBtn);
     if (this.state.farm === 'Sheep') this.load.image('sheep-money-package', sheepMoneyPackage);
     if (this.state.farm === 'Chicken') this.load.image('chicken-money-package', chickenMoneyPackage);
+    if (this.state.farm === 'Event') this.load.image('event-money-package', eventMoneyPackage);
     this.load.image('animal-shop-bg', animalShopBg);
     if (this.state.farm === 'Sheep') this.load.image('shop-sheep-wool-collector', shopWoolCollector);
     if (this.state.farm === 'Chicken') this.load.image('shop-chicken-egg-collector', shopEggCollector);
@@ -236,8 +242,7 @@ class Shop extends Phaser.Scene {
     } else if (this.state.farm === 'Event') {
       this.eventCollectorBoost();
 
-      // if (this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
-      // this.state.user.additionalTutorial.herdBoost) this.herdBoost(); // проверяем главу и создаем окно только если глава выше 6
+      if (this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].herdBoostLvl) this.herdBoost();
 
       // if (this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].feedBoostLvl &&
       // this.state.user.additionalTutorial.feedBoost) {

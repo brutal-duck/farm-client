@@ -183,52 +183,67 @@ function collectResource(resource: Phaser.Physics.Arcade.Sprite): void {
 }
 
 // покупка курицы
-function buyAnimal(breed: number, shop: boolean = false): boolean {
+function buyAnimal(breed: number, shop: boolean = false, diamond: number = 0): boolean {
 
   let success: boolean = false;
 
   if (this.animals.children.entries.length < 50) {
-
     let animalPrice = this.animalPrice(breed);
+    if (diamond > 0) {
+      if (this.state.user.diamonds >= diamond) {
+        success = true;
+        let {x, y} = this.getFreePosition();
+        if (x === null || y === null) return;
+        this.currentTerritory(x, y).data.values.animal = breed;
+        let id: string = 'local_' + randomString(18);
+        this.getAnimal(id, breed, x, y);
+        this.state.user.diamonds -= diamond;
+        this.state.userEvent.countAnimal[breed - 1].counter = animalPrice.countAnimal;
+      } else {
+        console.log('не хватает кристаллов')
+      }
 
-    if (this.state.userEvent.money >= animalPrice.price) {
-      
-      success = true;
-      let {x, y} = this.getFreePosition();
-      if (x === null || y === null) return;
-      this.currentTerritory(x, y).data.values.animal = breed;
-      let id: string = 'local_' + randomString(18);
-      this.getAnimal(id, breed, x, y);
-      this.state.userEvent.money -= animalPrice.price;
-      this.state.userEvent.countAnimal[breed - 1].counter = animalPrice.countAnimal;
-      this.game.scene.keys['EventBars'].updateAnimalPrice();
     } else {
-      console.log('не хватает денег')
-      // if (shop) {
-      //   this.scene.stop('Shop');
-      //   this.scene.stop('ShopBars');
-      //   this.scene.stop('Modal');
-      // }
+      
+      if (this.state.userEvent.money >= animalPrice.price) {
+          
+        success = true;
+        let {x, y} = this.getFreePosition();
+        if (x === null || y === null) return;
+        this.currentTerritory(x, y).data.values.animal = breed;
+        let id: string = 'local_' + randomString(18);
+        this.getAnimal(id, breed, x, y);
+        this.state.userEvent.money -= animalPrice.price;
+        this.state.userEvent.countAnimal[breed - 1].counter = animalPrice.countAnimal;
+        this.game.scene.keys['EventBars'].updateAnimalPrice();
 
-      // let count: number = animalPrice.price - this.state.userEvent.money;
-      // let diamonds: number = this.convertMoney(count);
-      // this.state.convertor = {
-      //   fun: 1,
-      //   count: count,
-      //   diamonds: diamonds,
-      //   type: 1,
-      //   breed: breed
-      // }
+      } else {
+          console.log('не хватает денег')
+          // if (shop) {
+          //   this.scene.stop('Shop');
+          //   this.scene.stop('ShopBars');
+          //   this.scene.stop('Modal');
+          // }
 
-      // let modal: Imodal = {
-      //   type: 1,
-      //   sysType: 4
-      // }
-      // this.state.modal = modal;
-      // this.scene.launch('Modal', this.state);
+          // let count: number = animalPrice.price - this.state.userEvent.money;
+          // let diamonds: number = this.convertMoney(count);
+          // this.state.convertor = {
+          //   fun: 1,
+          //   count: count,
+          //   diamonds: diamonds,
+          //   type: 1,
+          //   breed: breed
+          // }
 
+          // let modal: Imodal = {
+          //   type: 1,
+          //   sysType: 4
+          // }
+          // this.state.modal = modal;
+          // this.scene.launch('Modal', this.state);
+
+      }
     }
-  
   } else {
 
     if (shop) {

@@ -15,7 +15,7 @@ function animalMoney(): void {
     let left: number = diamonds[i * 2];
     let right: number = diamonds[i * 2 + 1];
 
-    let pack: Phaser.GameObjects.Sprite = this.add.sprite(0, y + this.height, 'animal-money-package').setOrigin(0, 0);
+    let pack: Phaser.GameObjects.Sprite = this.add.sprite(0, y + this.height, 'event-money-package').setOrigin(0, 0);
     this.click(pack, (): void => {
 
       this.state.convertor = {
@@ -58,7 +58,7 @@ function animalMoney(): void {
 
     if (right) {
 
-      let pack: Phaser.GameObjects.Sprite = this.add.sprite(240, y + this.height, 'chicken-money-package').setOrigin(0, 0);
+      let pack: Phaser.GameObjects.Sprite = this.add.sprite(240, y + this.height, 'event-money-package').setOrigin(0, 0);
       this.click(pack, (): void => {
 
         this.state.convertor = {
@@ -106,7 +106,7 @@ function animalMoney(): void {
 }
 
 
-// курицы
+// животные
 function animals(): void {
 
   let rows: number = this.state.eventSettings.eventSettings.length;
@@ -121,7 +121,7 @@ function animals(): void {
     let animal: IeventPoints = this.state.eventSettings.eventSettings.find((data: IeventPoints) => data.breed === i + 1);
 
     // иконка
-    if (this.state.userEvent.maxLevelAnimal + 1 < animal.breed) {
+    if (this.state.userEvent.maxLevelAnimal < animal.breed) {
       this.add.sprite(110, y + this.height + 110, 'disable-animal');
     } else {
 
@@ -157,7 +157,7 @@ function animals(): void {
     // кнопка покупки
     let heightBtn: number = 0;
     let btn: any = false;
-    if (animal.breed <= this.state.userEvent.maxLevelAnimal || animal.breed === 1) {
+    if (animal.breed <= this.state.userEvent.maxLevelAnimal - 4 || animal.breed === 1) {
 
       let price: string = String(shortNum(this.animalPrice(animal.breed).price));
       
@@ -165,7 +165,64 @@ function animals(): void {
       this.clickShopBtn(btn, (): void => {
 
         let result: boolean = this.game.scene.keys[this.state.farm].buyAnimal(animal.breed, true);
-        if (result) this.updateAnimalPrices();
+        if (result) this.updateAnimalPrices({text: btn.title, breed: animal.breed, img: btn.img});
+
+      });
+
+      this.buttons.push({
+        text: btn.title,
+        breed: animal.breed,
+        img: btn.img
+      });
+
+      heightBtn = btn.btn.height;
+
+    } else if (animal.breed <= this.state.userEvent.maxLevelAnimal - 3 || animal.breed === 2 && this.state.userEvent.maxLevelAnimal >= 2) {
+
+      let diamondPrice :number = 10;
+      
+      btn = this.shopButton(330, center, String(diamondPrice), 'diamond');
+      this.clickShopBtn(btn, (): void => {
+
+        this.game.scene.keys[this.state.farm].buyAnimal(animal.breed, true, diamondPrice);
+
+      });
+
+      this.buttons.push({
+        text: btn.title,
+        breed: animal.breed,
+        img: btn.img
+      });
+
+      heightBtn = btn.btn.height;
+
+    } else if (animal.breed <= this.state.userEvent.maxLevelAnimal - 2 || animal.breed === 3 && this.state.userEvent.maxLevelAnimal >= 3) {
+
+      let diamondPrice: number = 20;
+      
+      btn = this.shopButton(330, center, String(diamondPrice), 'diamond');
+      this.clickShopBtn(btn, (): void => {
+
+        this.game.scene.keys[this.state.farm].buyAnimal(animal.breed, true, diamondPrice);
+
+      });
+
+      this.buttons.push({
+        text: btn.title,
+        breed: animal.breed,
+        img: btn.img
+      });
+
+      heightBtn = btn.btn.height;
+
+    } else if (animal.breed <= this.state.userEvent.maxLevelAnimal - 1 || animal.breed === 4 && this.state.userEvent.maxLevelAnimal >=4) {
+
+      let diamondPrice: number = 40;
+      
+      btn = this.shopButton(330, center, String(diamondPrice), 'diamond');
+      this.clickShopBtn(btn, (): void => {
+
+        this.game.scene.keys[this.state.farm].buyAnimal(animal.breed, true, diamondPrice);
 
       });
 
@@ -195,14 +252,11 @@ function animals(): void {
 }
 
 // обновление цен кнопок
-function updateAnimalPrices(): void {
-  
-  for (let i in this.buttons) {
+function updateAnimalPrices({text, breed, img}): void {
+ 
+  text.setText(String(shortNum(this.animalPrice(breed).price)));
+  img.x = text.getBounds().left - 25;
 
-    this.buttons[i].text.setText(String(shortNum(this.animalPrice(this.buttons[i].breed).price)));
-    this.buttons[i].img.x = this.buttons[i].text.getBounds().left - 25;
-
-  }
 
 }
 
@@ -301,7 +355,7 @@ function eventCollectorBoost(): void {
   }
 
   // 4 часа собирателя
-  if (this.state.eventSettings.unlockCollector4 <= this.state.userEvent.part) {
+  if (this.state.eventSettings.unlockCollector4 <= this.state.userEvent.maxLevelAnimal) {
 
     let hours4 = this.boostButton(350, 220 + this.height, '4', this.state.lang.shortHours, String(this.state.eventSettings.collectorPrice4), 'diamond');
     this.clickBoostBtn(hours4, (): void => {
@@ -315,7 +369,7 @@ function eventCollectorBoost(): void {
   }
 
   // 12 часа собирателя
-  if (this.state.eventSettings.unlockCollector12 <= this.state.userEvent.part) {
+  if (this.state.eventSettings.unlockCollector12 <= this.state.userEvent.maxLevelAnimal) {
 
     let hours12 = this.boostButton(350, 280 + this.height, '12', this.state.lang.shortHours, String(this.state.eventSettings.collectorPrice12), 'diamond');
     this.clickBoostBtn(hours12, (): void => {
@@ -369,17 +423,17 @@ function eventCollectorBoost(): void {
 
 }
 
-function herdBoost(): void {
+function eventHerdBoost(): void {
   let y: number = 335 + this.height;
   this.add.tileSprite(0, y, 466, 235, 'boost-bg').setOrigin(0, 0);
-  this.add.text(240, y + 35, this.state.lang[`herdBoostTitle${this.state.farm}`], { 
+  this.add.text(240, y + 35, this.state.lang.herdBoostTitleEvent, { 
     font: '28px Shadow',
     color: '#FFFFFF',
     wordWrap: { width: 300 },
     align: 'center'
   }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
   
-  this.add.sprite(40, y + 70, `${this.state.farm.toLocaleLowerCase()}-herd-boost-icon`).setOrigin(0, 0);
+  this.add.sprite(40, y + 70, `event-herd-boost-icon`).setOrigin(0, 0);
   this.add.sprite(0, y, 'flags').setOrigin(0, 0).setFlipX(true);
   this.add.sprite(466, y, 'flags').setOrigin(1, 0);
   // кнопка
@@ -396,7 +450,7 @@ function herdBoost(): void {
     color: '#FFFFFF'
   }).setOrigin(1, 0.5).setStroke('#3B5367', 4).setDepth(10);
 
-  this.herdBoostBtnRightText = this.add.text(xBtn, yBtn - 5 , String(shortNum(this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost)), {
+  this.herdBoostBtnRightText = this.add.text(xBtn, yBtn - 5 , String(shortNum(this.state.herdBoostPrice * this.state.userEvent.takenHerdBoost)), {
     font: '23px Shadow',
     color: '#FFFFFF'
   }).setOrigin(0, 0.5).setStroke('#3B5367', 4).setDepth(10);
@@ -414,15 +468,15 @@ function herdBoost(): void {
   }).setOrigin(0.5, 0.5);
 
   this.clickModalBtn({ btn: this.herdBoostBtn, title: this.herdBoostBtnLeftText, text1: this.herdBoostBtnRightText, img1: this.herdBoostDiamondBtn }, (): void => {
-    if (this.state.user.diamonds >= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost) {
-      this.state.user.diamonds -= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost;
+    if (this.state.user.diamonds >= this.state.herdBoostPrice * this.state.userEvent.takenHerdBoost) {
+      this.state.user.diamonds -= this.state.herdBoostPrice * this.state.userEvent.takenHerdBoost;
       this.game.scene.keys[this.state.farm].startHerdBoost();
 
-      if (this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost > 0) {
+      if (this.state.herdBoostPrice * this.state.userEvent.takenHerdBoost > 0) {
         this.game.scene.keys[this.state.farm].tryTask(15, 0, this.state.herdBoostPrice);
         this.state.amplitude.getInstance().logEvent('diamonds_spent', {
           type: 'herd',
-          count: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
+          count: this.state.herdBoostPrice * this.state.userEvent.takenHerdBoost,
           farm_id: this.state.farm
         });
       }
@@ -435,8 +489,8 @@ function herdBoost(): void {
       // вызывем конвертор
       this.state.convertor = {
         fun: 0,
-        count: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
-        diamonds: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
+        count: this.state.herdBoostPrice * this.state.userEvent.takenHerdBoost,
+        diamonds: this.state.herdBoostPrice * this.state.userEvent.takenHerdBoost,
         type: 1
       }
       this.game.scene.keys[this.state.farm].exchange();
@@ -636,5 +690,6 @@ export {
   animalMoney,
   animals,
   updateAnimalPrices,
-  eventCollectorBoost
+  eventCollectorBoost,
+  eventHerdBoost,
 }

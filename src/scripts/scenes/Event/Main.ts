@@ -7,8 +7,6 @@ import {
   click,
   clickTerritory,
   logout,
-  convertDiamonds,
-  convertMoney,
   exchange,
   onlineStatus,
   takeDonate,
@@ -25,7 +23,6 @@ import {
   startHerdBoost
 } from '../../general/modal';
 import {
-  buildBorders,
   checkExchangeRepository,
 } from '../../general/territories';
 import { createSpeechBubble, mergingCloud } from '../../elements';
@@ -41,10 +38,12 @@ import {
   maxBreedForBuy, 
   animalPrice, 
   getFreePosition, 
-  convertEventMoney, 
+  convertEventMoney,
+  convertDiamonds, 
   currentTerritory, 
   freeCollector, 
-  buyCollector 
+  buyCollector,
+  convertMoney, 
 } from './basic';
 import { 
   buyAnimal, 
@@ -62,7 +61,7 @@ import {
 import drag  from './drag';
 import { animalBrain, collisions } from './animalBrain';
 import interval from './interval';
-import { deleteTerritoriesLocks, buyTerritory } from './territories';
+import { deleteTerritoriesLocks, buyTerritory, buildBorders } from './territories';
 import setCollector from './collector';
 class Event extends Phaser.Scene {
   constructor() {
@@ -89,6 +88,8 @@ class Event extends Phaser.Scene {
   public debugLog: boolean;
   public velocity: number = 100; 
   public maxCountResource: number = 30; // максимальное количество ресурсов
+  public herdBoostLvl: number = 4;
+  public feedBoostLvl: number = 5;
 
   public collisions = collisions.bind(this);
   public click = click.bind(this);
@@ -144,6 +145,7 @@ class Event extends Phaser.Scene {
   public buyTerritory = buyTerritory.bind(this);
   public expelAnimal = expelAnimal.bind(this);
   public setCollector = setCollector.bind(this);
+  public convertMoney = convertMoney.bind(this);
 
   public init(state: Istate): void {
 

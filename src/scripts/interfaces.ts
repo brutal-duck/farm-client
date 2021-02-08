@@ -59,7 +59,21 @@ interface IchickenUserAutoSave {
   takenHerdBoost: number;
   feedBoostTime: number;
 }
-
+interface IeventUserAutoSave {
+  diamonds: number;
+  xp: number;
+  money: number;
+  countAnimal: {counter: number}[];
+  collector: number;
+  collectorLevel: number;
+  tutorial: number;
+  additional_tutorial: IadditionalTutorial;
+  taken_reward: boolean;
+  autosaveCounter: number;
+  takenHerdBoost: number;
+  feedBoostTime: number;
+  maxLevelAnimal: number;
+}
 // for state
 interface IadditionalTutorial {
   balance: boolean;
@@ -163,6 +177,7 @@ interface IeventAnimal {
   x: number;
   y: number;
   vector: number;
+  counter: number;
   disabledAnimal: Phaser.GameObjects.Sprite;
   _id?: string;
 }
@@ -199,6 +214,7 @@ interface IeventPoints {
   resource: number;
   resourcePrice: number;
   price: number;
+  exchange: number;
   id?: any;
 }
 interface IterritoriesSheepSettings {

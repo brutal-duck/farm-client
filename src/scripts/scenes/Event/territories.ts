@@ -1,5 +1,3 @@
-import { сurrencyAnimation } from "../../general/animations";
-
 function deleteTerritoriesLocks(): void {
 
   let lvl: number = this.state.userEvent.maxLevelAnimal;
@@ -30,7 +28,7 @@ function buyTerritory(): void {
 
   let settings: IeventTerritoriesPrice;
   settings = this.state.eventSettings.territoriesEventPrice.find((data: IeventTerritoriesPrice) => data.block === this.state.territory.data.values.block && data.position === this.state.territory.data.values.position);
-  
+  if (!settings) return;
   if (this.state.userEvent.maxLevelAnimal >= settings.unlock && this.state.territory.data.values.type === 0) {
 
     if (settings.price > 0) {
@@ -127,4 +125,114 @@ function buyTerritory(): void {
 
 }
 
-export { deleteTerritoriesLocks, buyTerritory}
+function buildBorders(): void {
+  
+  for (let i in this.territories.children.entries) {
+    
+    let territory = this.territories.children.entries[i];
+
+    if (territory.data.values.type === 7) {
+
+      territory.data.values.borderTop.setVisible(true);
+      territory.data.values.borderLeft.setVisible(true);
+
+      let bottomTer = this.territories.children.entries.find((data: any) => data.data.values.block === 2 && data.data.values.position === 1)
+      
+      if (bottomTer.data.values.type === 0) territory.borderBottom.setVisible(true);
+      else territory.data.values.borderBottom.setVisible(false);
+
+    }
+
+    if (territory.data.values.type === 6) {
+      territory.data.values.borderTop.setVisible(true);
+    }
+
+    if (territory.data.values.type === 1 ||
+      territory.data.values.type === 2 ||
+      territory.data.values.type === 3 ||
+      territory.data.values.type === 5) {
+
+      if (territory.data.values.position === 1) {
+        territory.data.values.borderLeft.setVisible(true);
+      }
+
+      if (territory.data.values.position === 3) {
+        territory.data.values.borderRight.setVisible(true);
+      }
+      
+      if (territory.data.values.block !== 8) {
+
+        let topTer = this.territories.children.entries.find((data: any) => data.data.values.block === territory.data.values.block - 1 && data.data.values.position === territory.data.values.position);
+        
+        let bottomTer = this.territories.children.entries.find((data: any) => data.data.values.block === territory.data.values.block + 1 && data.data.values.position === territory.data.values.position);
+
+        if (topTer !== undefined && topTer.type === 0) {
+          territory.data.values.borderTop.setVisible(true);
+        } else {
+          territory.data.values.borderTop.setVisible(false);
+        }
+
+        if (bottomTer.data.values.type === 1 ||
+          bottomTer.data.values.type === 2 ||
+          bottomTer.data.values.type === 3 ||
+          bottomTer.data.values.type === 5) {
+          territory.data.values.borderBottom.setVisible(false);
+        } else {
+          territory.data.values.borderBottom.setVisible(true);
+        }
+
+        if (territory.data.values.position === 1) {
+
+          let centerTer = this.territories.children.entries.find((data: any) => data.data.values.block === territory.data.values.block && data.data.values.position === 2);
+
+          if (centerTer.data.values.type === 0) {
+            territory.data.values.borderRight.setVisible(true);
+          } else {
+            territory.data.values.borderRight.setVisible(false);
+          }
+
+        }
+        
+        if (territory.data.values.position === 2) {
+
+          let leftTer = this.territories.children.entries.find((data: any) => data.data.values.block === territory.data.values.block && data.data.values.position === 1);
+
+          let rightTer = this.territories.children.entries.find((data: any) => data.data.values.block === territory.data.values.block && data.data.values.position === 3);
+
+          if (leftTer.data.values.type === 0) {
+            territory.data.values.borderLeft.setVisible(true);
+          } else {
+            territory.data.values.borderLeft.setVisible(false);
+          }
+
+          if (rightTer.data.values.type === 0) {
+            territory.data.values.borderRight.setVisible(true);
+          } else {
+            territory.data.values.borderRight.setVisible(false);
+          }
+
+        }
+
+        if (territory.data.values.position === 3) {
+
+          let centerTer = this.territories.children.entries.find((data: any) => data.data.values.block === territory.data.values.block && data.data.values.position === 2);
+
+          if (centerTer.data.values.type === 0) {
+            territory.data.values.borderLeft.setVisible(true);
+          } else {
+            territory.data.values.borderLeft.setVisible(false);
+          }
+
+        }
+
+      } else {
+        territory.data.values.borderBottom.setVisible(true);
+      }
+
+    }
+
+  }
+  
+}
+
+export { deleteTerritoriesLocks, buyTerritory, buildBorders}

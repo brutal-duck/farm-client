@@ -140,8 +140,18 @@ function world(): void {
 
     
     this.clickTerritory(territory, (): void => {
+      let modal: Imodal = {
+        type: 1,
+        sysType: 2
+      }
+      this.state.modal = modal;
       this.state.territory = territory;
-      this.buyTerritory();
+      this.state.territory.type = territory.data.values.type;
+      this.state.territory.block = territory.data.values.block;
+      this.state.territory.position = territory.data.values.position;
+      this.scene.launch('Modal', this.state);
+
+      // this.buyTerritory();
 
     });
 

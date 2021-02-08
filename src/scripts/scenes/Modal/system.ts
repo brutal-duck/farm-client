@@ -63,6 +63,8 @@ function systemWindow(): void {
         this.sheepTerritory();
       } else if (this.state.farm === 'Chicken') {
         this.chickenTerritory();
+      } else if (this.state.farm === 'Event') {
+        this.eventTerritory();
       }
       
       break;
@@ -84,6 +86,8 @@ function systemWindow(): void {
         this.sheepConvertor();
       } else if (this.state.farm === 'Chicken') {
         this.chickenConvertor();
+      } else if (this.state.farm === 'Event') {
+        this.eventConvertor();
       }
 
       break;
@@ -251,6 +255,23 @@ function sheepTerritory(): void {
 
 }
 
+// окно эвентовой территории 
+function eventTerritory(): void {
+  
+  switch (this.state.territory.type) {
+
+    case 0: // территория для покупки
+      this.buyEventTerritory();
+      break;
+
+    default:
+      this.scene.stop();
+      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+      break;
+  }
+
+}
+
 
 // задать размеры
 function resizeWindow(height: number): void {
@@ -267,5 +288,6 @@ export {
   systemWindow,
   chickenTerritory,
   sheepTerritory,
-  resizeWindow
+  resizeWindow,
+  eventTerritory
 }
