@@ -1,7 +1,7 @@
 function drag(): void {
 
   this.input.on('dragstart', (pointer: any, animal: Phaser.Physics.Arcade.Sprite): void => {
-    console.log(animal)
+
     this.scrolling.downHandler(); // остановка скролла
     this.scrolling.enabled = false; // отключаем скролл
     this.scrolling.wheel = false; // отключаем колесо
@@ -33,6 +33,7 @@ function drag(): void {
     if (animal.state === 'base') {
       if (zone.type === 'type0') {
         this.teleportation(animal); 
+
       } else if (zone) {
         animal.data.values.zone = true;
         let territory: Phaser.Physics.Arcade.Sprite = this.currentTerritory(animal.x, animal.y);
@@ -95,8 +96,6 @@ function drag(): void {
     
           if (territory.data.values.type !== 4) {
   
-            this.checkMerging(animal);    
-
             // удаление животного
             if (territory.data.values.type === 0) {
               animal.data.values.base.expel = true;
@@ -104,11 +103,34 @@ function drag(): void {
               this.state.animal = animal.data.values.base;
               this.confirmExpelAnimal();
     
-            } else animal.data.values.expel = false;
+            } else {
+              animal.data.values.expel = false;
+              this.checkMerging(animal); 
+            }
           }
-        }
+        } else this.teleportation(animal);
       }
 
+    } else if (animal.state === 'base') {
+      let territory: Phaser.Physics.Arcade.Sprite = this.currentTerritory(animal.x, animal.y);
+      
+      if (territory) {
+  
+        if (territory.data.values.type !== 4) {
+
+          // удаление животного
+          if (territory.data.values.type === 0) {
+            animal.data.values.expel = true;
+            this.teleportation(animal);
+            this.state.animal = animal;
+            this.confirmExpelAnimal();
+  
+          } else {
+            animal.data.values.expel = false;
+            this.checkMerging(animal); 
+          }
+        }
+      } else this.teleportation(animal);
     }
 
 

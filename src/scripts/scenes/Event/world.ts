@@ -134,6 +134,7 @@ function world(): void {
 
     let territoryZone: Phaser.GameObjects.Zone = this.add.zone(x + 10, y + 10, territory.width - 20, territory.height - 20).setDropZone(undefined, () => {}).setOrigin(0, 0);
     territoryZone.type = 'type' + index;
+    
     let graphics = this.add.graphics().setDepth(territory.y * 5);
     graphics.lineStyle(5, 0x000000);
     graphics.strokeRect(territoryZone.x, territoryZone.y, territoryZone.input.hitArea.width, territoryZone.input.hitArea.height);
@@ -150,8 +151,11 @@ function world(): void {
       this.state.territory.block = territory.data.values.block;
       this.state.territory.position = territory.data.values.position;
       this.scene.launch('Modal', this.state);
-
       // this.buyTerritory();
+      if (territory.data?.values.merging.length > 0) {
+        let animal: Phaser.Physics.Arcade.Sprite = this.animals.children.entries.find((data: any) => data.data.values._id === territory.data.values.merging[0]._id)
+        this.teleportation(animal.data.values.active);
+      }
 
     });
 

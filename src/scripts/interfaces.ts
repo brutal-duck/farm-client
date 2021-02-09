@@ -173,13 +173,15 @@ interface Ichicken {
 }
 interface IeventAnimal {
   type: number;
-  resource: number;
   x: number;
   y: number;
-  vector: number;
-  counter: number;
-  disabledAnimal: Phaser.GameObjects.Sprite;
+  activeAnimal: IactiveEventAnimal;
   _id?: string;
+}
+interface IactiveEventAnimal{
+  x: number;
+  y: number;
+  working: boolean;
 }
 interface IchickenEgg {
   _id?: any;
@@ -316,6 +318,7 @@ interface IeventSettings {
   collectorPrice12: number;
   unlockCollector4: number;
   unlockCollector12: number;
+  priceCoefficient: number;
 }
 interface ItaskData {
   icon: string;
