@@ -2197,7 +2197,7 @@ function feedBoost(): void {
     align: 'center'
   }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
 
-  this.add.text(330, y + 75, this.state.lang.feedBoostSubtitle, { 
+  this.add.text(330, y + 75, this.state.lang[`feedBoostSubtitle${this.state.farm}`], { 
     font: '18px Shadow',
     color: '#FFFFFF',
     wordWrap: { width: 240 },
