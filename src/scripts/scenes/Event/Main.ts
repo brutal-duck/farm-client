@@ -150,6 +150,7 @@ class Event extends Phaser.Scene {
   public getActiveAnimal = getActiveAnimal.bind(this);
   public autosave = autosave.bind(this);
 
+
   public init(state: Istate): void {
 
     this.state = state;

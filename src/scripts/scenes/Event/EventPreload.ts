@@ -915,6 +915,7 @@ const testEventSettings: IeventSettings = {
   collectorPrice12: 250,
   unlockCollector4: 5,
   unlockCollector12: 8,
+  priceCoefficient: 7,
   eventSettings: [
     { breed: 1, resource: 100, resourcePrice: 100, price: 100, exchange: 10},
     { breed: 2, resource: 100, resourcePrice: 200, price: 200, exchange: 20},
@@ -1264,6 +1265,7 @@ class EventPreload extends Phaser.Scene {
           collectorPrice12: response.data.collectorPrice12,
           unlockCollector4: response.data.unlockCollector4,
           unlockCollector12: response.data.unlockCollector12,
+          priceCoefficient: response.data.priceCoefficient,
         }
 
         this.state.eventSettings = eventSettings;
@@ -1276,12 +1278,10 @@ class EventPreload extends Phaser.Scene {
           eventAnimals.push({
             _id: animal._id,
             type: animal.type,
-            resource: animal.resource,
+            activeAnimal: animal.active,
             x: animal.x,
             y: animal.y,
-            vector: animal.vector,
-            disabledAnimal: null,
-            counter: animal.counter
+
           });
 
         }

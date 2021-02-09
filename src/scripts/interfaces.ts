@@ -318,6 +318,7 @@ interface IeventSettings {
   collectorPrice12: number;
   unlockCollector4: number;
   unlockCollector12: number;
+  priceCoefficient: number;
 }
 interface ItaskData {
   icon: string;

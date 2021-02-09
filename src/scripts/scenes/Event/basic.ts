@@ -3,11 +3,11 @@ function animalPrice(breed: number): {price: number, countAnimal: number} {
 
   let insideCounter: number = this.state.userEvent.countAnimal[breed - 1].counter;
   let insidePrice: number = this.state.eventSettings.eventSettings[breed - 1].price;
-    
+  let coefficient: number = this.state.eventSettings.priceCoefficient;
   
   for (let i = 1; i < insideCounter; i++) {
     
-    insidePrice += Phaser.Math.RoundTo(insidePrice * 0.07, 0);
+    insidePrice += Phaser.Math.RoundTo(insidePrice * (coefficient / 100), 0);
 
   }
   
