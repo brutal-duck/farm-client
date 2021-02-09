@@ -31,7 +31,8 @@ import {
 import {
   confirmExpelAnimal,
   eventConvertor,
-  buyEventTerritory
+  buyEventTerritory,
+  improveCollectorEvent
 } from './event';
 import {
   sheepFair,
@@ -201,6 +202,7 @@ class Modal extends Phaser.Scene {
   public eventConvertor = eventConvertor.bind(this);
   public eventTerritory = eventTerritory.bind(this);
   public buyEventTerritory = buyEventTerritory.bind(this);
+  public improveCollectorEvent = improveCollectorEvent.bind(this);
   
   public init(state: Istate): void {
     this.state = state;

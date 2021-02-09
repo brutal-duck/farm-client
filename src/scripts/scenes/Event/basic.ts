@@ -256,6 +256,84 @@ function convertMoney(money: number): number {
 
 }
 
+// улучшение собирателей
+function improveCollector(): void {
+
+  let user: IuserEvent = this.state.userEvent;
+  let collectorSettings: IcollectorSettings[] = this.state.eventCollectorSettings;
+
+
+  let nextLevel: IcollectorSettings = collectorSettings.find((data: IcollectorSettings) => data.level === user.collectorLevel + 1);
+
+  if (nextLevel.diamonds) {
+
+    if (this.state.user.diamonds >= nextLevel.price) {
+
+      this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+        type: 'improve_collector',
+        count: nextLevel.price,
+        farm_id: this.state.farm
+      });
+
+      this.state.user.diamonds -= nextLevel.price;
+      user.collectorLevel++;
+      this.setCollector();
+      
+      this.time.addEvent({ delay: 500, callback: (): void => {
+        this.game.scene.keys[this.state.farm + 'Bars'].firework250(230, Number(this.game.config.height) - 70);
+      }, callbackScope: this, loop: false });
+
+    } else {
+
+      this.state.convertor = {
+        fun: 8,
+        count: nextLevel.price - this.state.user.diamonds,
+        diamonds: nextLevel.price - this.state.user.diamonds,
+        type: 2
+      }
+      let modal: Imodal = {
+        type: 1,
+        sysType: 4
+      }
+      this.state.modal = modal;
+      this.scene.launch('Modal', this.state);
+
+    }
+
+  } else {
+
+    if (user.money >= nextLevel.price) {
+
+      user.money -= nextLevel.price;
+      user.collectorLevel++;
+      this.setCollector();
+
+      this.time.addEvent({ delay: 500, callback: (): void => {
+        this.game.scene.keys[this.state.farm + 'Bars'].firework250(230, Number(this.game.config.height) - 70);
+      }, callbackScope: this, loop: false });
+
+    } else {
+
+      let count: number = nextLevel.price - user.money;
+      let diamonds: number = this.convertMoney(count);
+      this.state.convertor = {
+        fun: 8,
+        count: count,
+        diamonds: diamonds,
+        type: 1
+      }
+      let modal: Imodal = {
+        type: 1,
+        sysType: 4
+      }
+      this.state.modal = modal;
+      this.scene.launch('Modal', this.state);
+
+    }
+
+  }
+  
+}
 
 export {
   animalPrice,
@@ -266,4 +344,5 @@ export {
   buyCollector,
   convertDiamonds,
   convertMoney,
+  improveCollector,
 }

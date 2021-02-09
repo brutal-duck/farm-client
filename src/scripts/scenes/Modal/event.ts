@@ -219,8 +219,89 @@ function buyEventTerritory(): void {
   this.resizeWindow(130);
 }
 
+// окно улучшения собирателя 
+function improveCollectorEvent(): void {
+
+  this.textHeader.setText(this.state.lang.eggCollector + ' ' + this.state.userEvent.collectorLevel + ' ' + this.state.lang.shortLevel + '.');
+
+  let thisLevel: IcollectorSettings = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userEvent.collectorLevel);
+  let nextLevel: IcollectorSettings = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userEvent.collectorLevel + 1);
+
+  let speedText: string = this.state.lang.speed + ': ' + thisLevel.speed + ' / ' + this.state.lang.seconds;
+  let speed: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY - 80, speedText, {
+    font: '34px Bip',
+    color: '#925C28'
+  });
+  
+  let durationText: string = this.state.lang.duration + ': ' + thisLevel.time + ' ' + this.state.lang.minutes;
+  let duration: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY - 25, durationText, {
+    font: '34px Bip',
+    color: '#925C28'
+  });
+
+  let icon: string;
+
+  if (nextLevel.time > thisLevel.time) {
+
+    let position: Iposition = {
+      x: duration.getBounds().right + 10,
+      y: duration.y
+    }
+    let text: string = '(+' + (nextLevel.time - thisLevel.time) + ' ' + this.state.lang.shortMinutes +  ')';
+    this.add.text(position.x, position.y, text, {
+      font: '34px Bip',
+      color: '#57A90E'
+    });
+    
+  } else if (nextLevel.speed > thisLevel.speed) {
+
+    let position: Iposition = {
+      x: speed.getBounds().right + 10,
+      y: speed.y
+    }
+    let text: string = '(+' + (nextLevel.speed - thisLevel.speed).toFixed(1) + ' ' + this.state.lang.seconds +  ')';
+    this.add.text(position.x, position.y, text, {
+      font: '34px Bip',
+      color: '#57A90E'
+    });
+
+  }
+
+  if (this.state.userEvent.maxLevelAnimal >= nextLevel.chapter) {
+
+    if (nextLevel.diamonds) icon = 'diamond';
+    else icon = 'eventCoin';
+
+    let right = {
+      icon: icon,
+      text: String(nextLevel.price)
+    }
+    let improve = this.bigButton('green', 'left', 90, this.state.lang.improve, right);
+    this.clickModalBtn(improve, (): void => {
+
+      this.scene.stop();
+      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+      this.game.scene.keys[this.state.farm].improveCollector();
+
+    });
+
+  } else {
+
+    let improve = {
+      icon: 'lock',
+      text: this.state.lang.shortPart + ' ' + nextLevel.chapter
+    }
+    this.bigButton('grey', 'left', 90, this.state.lang.improve, improve);
+
+  }
+
+  this.resizeWindow(250);
+  
+}
+
 export { 
   confirmExpelAnimal,
   eventConvertor,
   buyEventTerritory,
+  improveCollectorEvent
 } 

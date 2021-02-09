@@ -10,7 +10,6 @@ import {
   exchange,
   onlineStatus,
   takeDonate,
-  improveCollector,
   debug, 
   createBoostAnimal
 } from '../../general/basic';
@@ -43,7 +42,7 @@ import {
   freeCollector, 
   buyCollector,
   convertMoney,
-  // exchange, 
+  improveCollector
 } from './basic';
 import { 
   buyAnimal, 

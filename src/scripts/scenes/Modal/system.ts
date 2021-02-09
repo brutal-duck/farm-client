@@ -155,6 +155,8 @@ function systemWindow(): void {
         this.improveCollectorSheep();
       } else if (this.state.farm === 'Chicken') {
         this.improveCollectorChicken();
+      } else if (this.state.farm === 'Event') {
+        this.improveCollectorEvent();
       }
       
       break;
