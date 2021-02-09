@@ -1863,7 +1863,7 @@ function sendDebug(data: any, state: Istate, type: string): void {
 
 // получение животного по бусту
 function createBoostAnimal(): void {
-  if (!this.state.herdBoostAnimals) return;
+  if (this.state.herdBoostAnimals.length === 0) return;
   this.state.herdBoostAnimals.forEach(type => {
     this.time.addEvent({ 
       delay: 100, 
@@ -2197,7 +2197,7 @@ function feedBoost(): void {
     align: 'center'
   }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
 
-  this.add.text(330, y + 75, this.state.lang.feedBoostSubtitle, { 
+  this.add.text(330, y + 75, this.state.lang[`feedBoostSubtitle${this.state.farm}`], { 
     font: '18px Shadow',
     color: '#FFFFFF',
     wordWrap: { width: 240 },

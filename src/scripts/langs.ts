@@ -439,7 +439,8 @@ export default {
     exchangeRepositoryBtn: 'Сменить хранилище на ...',
     exchangeRepositoryTitle: 'Ты можешь сменить Хранилище 1$ уровня на другую постройку',
     feedBoostTitle: 'Комбикорм',
-    feedBoostSubtitle: 'Удваивает стоимость шерсти',
+    feedBoostSubtitleSheep: 'Удваивает стоимость шерсти',
+    feedBoostSubtitleChicken: 'Удваивает стоимость яиц',
     benefit: 'Выгода',
     // Советы 
     helpGeneral_1: 'В каждой ферме - свои особенности. Не заскучаешь!',
@@ -923,7 +924,8 @@ export default {
     exchangeRepositoryBtn: 'Сменить хранилище на ...',
     exchangeRepositoryTitle: 'Ты можешь сменить Хранилище 1$ уровня на другую постройку',
     feedBoostTitle: 'Комбикорм',
-    feedBoostSubtitle: 'Удваивает стоимость шерсти',
+    feedBoostSubtitleSheep: 'Удваивает стоимость шерсти',
+    feedBoostSubtitleChicken: 'Удваивает стоимость яиц',
     benefit: 'Выгода',
     // Советы 
     helpGeneral_1: 'В каждой ферме - свои особенности. Не заскучаешь!',

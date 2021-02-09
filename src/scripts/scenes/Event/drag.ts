@@ -1,20 +1,15 @@
 function drag(): void {
 
   this.input.on('dragstart', (pointer: any, animal: Phaser.Physics.Arcade.Sprite): void => {
+    console.log(animal)
     this.scrolling.downHandler(); // остановка скролла
     this.scrolling.enabled = false; // отключаем скролл
     this.scrolling.wheel = false; // отключаем колесо
+    animal.data.values.zone = false;
     animal.data.values.drag = true; // метим перетаскивание для других функций
     animal.setVelocity(0, 0); // отменяем передвижение
     animal.setCollideWorldBounds(true);
-    if (!animal.data.values.working) {
-      animal.data.values.disabledAnimal = this.add.sprite(animal.x, animal.y, animal.texture.key).setAlpha(0.7).setDepth(animal.y).setInteractive();
-      
-      this.click(animal.data.values.disabledAnimal, ():void => {
-        this.teleportation(animal);
-      })
-    }
-    
+
    // анимация
     animal.anims.play('chicken-drag' + animal.data.values.type, true);
 
@@ -35,57 +30,100 @@ function drag(): void {
   // дропзоны для мерджинга
   this.input.on('drop', (pointer: any, animal: Phaser.Physics.Arcade.Sprite, zone: Phaser.GameObjects.Zone): void => {
 
-     if (zone.type === 'type0') {
-      animal.data.values.working = true;
-     } else if(zone.type) {
-       animal.data.values.working = false;
-       let territory: Phaser.Physics.Arcade.Sprite = this.currentTerritory(animal.x, animal.y);
-       if (territory) {
+    if (animal.state === 'base') {
+      if (zone.type === 'type0') {
+        this.teleportation(animal); 
+      } else if (zone) {
+        animal.data.values.zone = true;
+        let territory: Phaser.Physics.Arcade.Sprite = this.currentTerritory(animal.x, animal.y);
+        if (territory) {
           
         animal.x = zone.x + zone.width / 2;
         animal.y = zone.y + zone.height / 2;
         
        } 
-     } else {
-      this.teleportation(animal)
+      }
+    } else if (animal.state === 'active') {
+      
+      if (zone.type === 'type0') {
+       animal.data.values.working = true;
+       animal.data.values.zone = true;
+      } else if (zone) {
+        animal.data.values.working = false;
+        animal.data.values.zone = true;
+        let territory: Phaser.Physics.Arcade.Sprite = this.currentTerritory(animal.x, animal.y);
+        if (territory) {
+           
+         animal.x = zone.x + zone.width / 2;
+         animal.y = zone.y + zone.height / 2;
+         animal.setDepth(animal.y + 100);
+         
+         
+
+        } 
+      } 
     }
+
+
+
   });
   
   this.input.on('dragend', (pointer: any, animal: Phaser.Physics.Arcade.Sprite): void => {
+    if (!animal.data.values.zone)  {
+      this.teleportation(animal); 
+      return;
+    }
 
     this.scrolling.enabled = true; // включаем скролл
     this.scrolling.wheel = true; // включаем колесо
-    animal.setCollideWorldBounds(true);
     animal.data.values.drag = false; // убираем метку перетаскивания
-    animal.data.values.aim = false;
-    animal.data.values.aimX = 0;
-    animal.data.values.aimY = 0;
-    animal.data.values.collision = 0;
-    if (animal.data.values.working) {
-      // если зона работы
-    } else {
+    if (animal.state === 'active') {
+      animal.data.values.aim = false;
+      animal.data.values.aimX = 0;
+      animal.data.values.aimY = 0;
+      animal.data.values.collision = 0;
 
-      // если это не рабочая зона
+      if (animal.data.values.working) {
+        // если зона работы
+  
+      } else {
+        // если это не рабочая зона
 
-      animal.data.values.working = false;
-      let territory: Phaser.Physics.Arcade.Sprite = this.currentTerritory(animal.x, animal.y);
+        let territory: Phaser.Physics.Arcade.Sprite = this.currentTerritory(animal.x, animal.y);
+      
+        if (territory) {
     
-      if (territory) {
+          if (territory.data.values.type !== 4) {
   
-        if (territory.data.values.type !== 4) {
-          animal.data.values.disabledAnimal.destroy();
-          this.checkMerging(animal);        
-          // удаление животного
-          if (territory.data.values.type === 0) {
-            console.log('удалить')
-            animal.data.values.expel = true;
-            this.state.animal = animal;
-            this.confirmExpelAnimal();
-  
-          } else animal.data.values.expel = false;
+            this.checkMerging(animal);    
+
+            // удаление животного
+            if (territory.data.values.type === 0) {
+              animal.data.values.base.expel = true;
+              this.teleportation(animal);
+              this.state.animal = animal.data.values.base;
+              this.confirmExpelAnimal();
+    
+            } else animal.data.values.expel = false;
+          }
         }
       }
+
     }
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
   });
 
 }

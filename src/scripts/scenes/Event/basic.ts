@@ -16,7 +16,7 @@ function animalPrice(breed: number): {price: number, countAnimal: number} {
 
 function getFreePosition(): {x: number, y: number} {
   let x: number = 120;
-  let y: number = 840;
+  let y: number = this.topIndent + 600;
   for (let i = 0; i < this.state.eventSettings.eventSettings.length; i ++ ) { // убрать жесткое число
     if (this.currentTerritory(x, y).data.values.type !== 0) {
       if (this.currentTerritory(x, y).data.values.merging.length !== 0) {
@@ -27,7 +27,19 @@ function getFreePosition(): {x: number, y: number} {
         }
       } else break
     } else {
-      console.log('нет животного тебе') 
+
+      this.scene.stop('Shop');
+      this.scene.stop('ShopBars');
+      this.scene.stop('Modal');
+  
+      let modal: Imodal = {
+        type: 1,
+        sysType: 3,
+        height: 150,
+        message: this.state.lang.maxChickenCount // поменять
+      }
+      this.state.modal = modal;
+      this.scene.launch('Modal', this.state);
       return {x: null, y: null}
     }
   }
@@ -51,36 +63,6 @@ function maxBreedForBuy(): number {
   };
   return breed;
   
-}
-
-function convertEventMoney(money: number): number {
-
-  let fairLevels: IfairLevel[];
-  let fair: number;
-  
-  if (this.state.farm === 'Sheep') {
-
-    fairLevels = this.state.sheepSettings.sheepFairLevels;
-    fair = this.state.userSheep.fair;
-
-  } else if (this.state.farm === 'Chicken') {
-
-    fairLevels = this.state.chickenSettings.chickenFairLevels;
-    fair = this.state.userChicken.fair;
-
-  }
-
-  let exchange: number = fairLevels.find((item: IfairLevel) => item.level === fair).exchange;
-  let needDiamonds: number = 1;
-  let sumExchange: number = exchange;
-
-  while (sumExchange < money) {
-    needDiamonds++;
-    sumExchange = sumExchange + exchange;
-  }
-
-  return needDiamonds;
-
 }
 
 // территория на которой находится объект
@@ -170,7 +152,6 @@ function freeCollector(type: number = 1): void {
   }
 
 }
-
 
 // покупка собирателя
 function buyCollector(type: number): void {
@@ -275,14 +256,93 @@ function convertMoney(money: number): number {
 
 }
 
+// улучшение собирателей
+function improveCollector(): void {
+
+  let user: IuserEvent = this.state.userEvent;
+  let collectorSettings: IcollectorSettings[] = this.state.eventCollectorSettings;
+
+
+  let nextLevel: IcollectorSettings = collectorSettings.find((data: IcollectorSettings) => data.level === user.collectorLevel + 1);
+
+  if (nextLevel.diamonds) {
+
+    if (this.state.user.diamonds >= nextLevel.price) {
+
+      this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+        type: 'improve_collector',
+        count: nextLevel.price,
+        farm_id: this.state.farm
+      });
+
+      this.state.user.diamonds -= nextLevel.price;
+      user.collectorLevel++;
+      this.setCollector();
+      
+      this.time.addEvent({ delay: 500, callback: (): void => {
+        this.game.scene.keys[this.state.farm + 'Bars'].firework250(230, Number(this.game.config.height) - 70);
+      }, callbackScope: this, loop: false });
+
+    } else {
+
+      this.state.convertor = {
+        fun: 8,
+        count: nextLevel.price - this.state.user.diamonds,
+        diamonds: nextLevel.price - this.state.user.diamonds,
+        type: 2
+      }
+      let modal: Imodal = {
+        type: 1,
+        sysType: 4
+      }
+      this.state.modal = modal;
+      this.scene.launch('Modal', this.state);
+
+    }
+
+  } else {
+
+    if (user.money >= nextLevel.price) {
+
+      user.money -= nextLevel.price;
+      user.collectorLevel++;
+      this.setCollector();
+
+      this.time.addEvent({ delay: 500, callback: (): void => {
+        this.game.scene.keys[this.state.farm + 'Bars'].firework250(230, Number(this.game.config.height) - 70);
+      }, callbackScope: this, loop: false });
+
+    } else {
+
+      let count: number = nextLevel.price - user.money;
+      let diamonds: number = this.convertMoney(count);
+      this.state.convertor = {
+        fun: 8,
+        count: count,
+        diamonds: diamonds,
+        type: 1
+      }
+      let modal: Imodal = {
+        type: 1,
+        sysType: 4
+      }
+      this.state.modal = modal;
+      this.scene.launch('Modal', this.state);
+
+    }
+
+  }
+  
+}
+
 export {
   animalPrice,
   maxBreedForBuy,
   getFreePosition,
-  convertEventMoney,
   currentTerritory,
   freeCollector,
   buyCollector,
   convertDiamonds,
-  convertMoney
+  convertMoney,
+  improveCollector,
 }
