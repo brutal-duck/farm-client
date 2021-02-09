@@ -1,5 +1,4 @@
 import { random, randomString } from '../../general/basic';
-import { takeDiamondChicken } from '../Chicken/basic';
 
 // телепортация животного на старое место
 function teleportation(animal: Phaser.Physics.Arcade.Sprite): void {

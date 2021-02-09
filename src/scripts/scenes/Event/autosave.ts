@@ -27,12 +27,13 @@ function autosave(): void {
     animals.push({
       _id: animal.data.values._id,
       type: animal.data.values.type,
-      resource: animal.data.values.resource,
       x: animal.x,
       y: animal.y,
-      counter: animal.data.values.counter,
-      vector: animal.data.values.vector,
-      disabledAnimal: animal.data.values.disabledAnimal
+      activeAnimal: {
+        x: animal.data.values.active.x,
+        y: animal.data.values.active.y,
+        working: animal.data.values.active.data.values.working,
+      }
     });
 
   }
