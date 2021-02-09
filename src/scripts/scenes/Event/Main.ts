@@ -56,7 +56,6 @@ import {
   collectResource, 
   resourcesFly,
   expelAnimal, 
-  dragAnimalMerging,
   getActiveAnimal
 } from './animals';
 import drag  from './drag';
@@ -146,7 +145,7 @@ class Event extends Phaser.Scene {
   public expelAnimal = expelAnimal.bind(this);
   public setCollector = setCollector.bind(this);
   public convertMoney = convertMoney.bind(this);
-  public dragAnimalMerging = dragAnimalMerging.bind(this);
+
   public getActiveAnimal = getActiveAnimal.bind(this);
 
   public init(state: Istate): void {

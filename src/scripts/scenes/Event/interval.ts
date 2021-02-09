@@ -36,9 +36,10 @@ function interval(): void {
     
     for (let i in this.animals.children.entries) {
 
-      let animal: Phaser.Physics.Arcade.Sprite = this.animals.children.entries[i];
+      let animal: Phaser.Physics.Arcade.Sprite = this.animals.children.entries[i].data.values.active;
       
-      let breed: number = animal.data.values.type;
+      let breed: number = animal.data.values.base.data.values.type;
+
       
       let points: IeventPoints = this.state.eventSettings.eventSettings.find((item: IeventPoints) => item.breed === breed);
 
@@ -58,7 +59,7 @@ function interval(): void {
       if (animal.data.values.resource === 300 && this.resources.getLength() <= this.maxCountResource) {
 
         let resource: IeventResource = {
-          type: animal.data.values.type,
+          type: animal.data.values.base.data.values.type,
           x: animal.x,
           y: animal.y,
           _id: 'local_' + randomString(18)
@@ -85,8 +86,7 @@ function interval(): void {
       this.state.userEvent.collector--;
       this.game.scene.keys['EventBars'].collector.update();
 
-    } else if (this.game.scene.keys['EventBars'].collector.endAngle !==
-      this.game.scene.keys['EventBars'].collector.startAngle) {
+    } else if (this.game.scene.keys['EventBars'].collector.endAngle !== this.game.scene.keys['EventBars'].collector.startAngle) {
 
       this.game.scene.keys['EventBars'].collector.update();
 

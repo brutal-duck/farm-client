@@ -22,7 +22,7 @@ function animalBrain(): void {
 
   for (let i in this.animals.children.entries) {
 
-    let animal: Phaser.Physics.Arcade.Sprite = this.animals.children.entries[i];
+    let animal: Phaser.Physics.Arcade.Sprite = this.animals.children.entries[i].data.values.active;
     
     // если не перетаскиваем
     if (!animal.data.values.drag) {
