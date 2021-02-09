@@ -4,6 +4,7 @@ function drag(): void {
     this.scrolling.downHandler(); // остановка скролла
     this.scrolling.enabled = false; // отключаем скролл
     this.scrolling.wheel = false; // отключаем колесо
+    animal.data.values.zone = false;
     animal.data.values.drag = true; // метим перетаскивание для других функций
     animal.setVelocity(0, 0); // отменяем передвижение
     animal.setCollideWorldBounds(true);
@@ -37,8 +38,10 @@ function drag(): void {
 
      if (zone.type === 'type0') {
       animal.data.values.working = true;
-     } else if(zone.type) {
+      animal.data.values.zone = true;
+     } else if(zone) {
        animal.data.values.working = false;
+       animal.data.values.zone = true;
        let territory: Phaser.Physics.Arcade.Sprite = this.currentTerritory(animal.x, animal.y);
        if (territory) {
           
@@ -46,13 +49,14 @@ function drag(): void {
         animal.y = zone.y + zone.height / 2;
         
        } 
-     } else {
-      this.teleportation(animal)
-    }
+     } 
   });
   
   this.input.on('dragend', (pointer: any, animal: Phaser.Physics.Arcade.Sprite): void => {
-
+    if (!animal.data.values.zone)  {
+      this.teleportation(animal); 
+      return;
+    }
     this.scrolling.enabled = true; // включаем скролл
     this.scrolling.wheel = true; // включаем колесо
     animal.setCollideWorldBounds(true);
@@ -63,6 +67,7 @@ function drag(): void {
     animal.data.values.collision = 0;
     if (animal.data.values.working) {
       // если зона работы
+      this.dragAnimalMerging(animal);
     } else {
 
       // если это не рабочая зона
@@ -79,6 +84,7 @@ function drag(): void {
           if (territory.data.values.type === 0) {
             console.log('удалить')
             animal.data.values.expel = true;
+            this.teleportation(animal);
             this.state.animal = animal;
             this.confirmExpelAnimal();
   

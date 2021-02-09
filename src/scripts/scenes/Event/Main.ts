@@ -56,6 +56,7 @@ import {
   collectResource, 
   resourcesFly,
   expelAnimal, 
+  dragAnimalMerging,
 } from './animals';
 import drag  from './drag';
 import { animalBrain, collisions } from './animalBrain';
@@ -74,7 +75,7 @@ class Event extends Phaser.Scene {
   public resources: Phaser.Physics.Arcade.Group;
   public bubble: Phaser.GameObjects.Graphics;;
   public bubbleText: Phaser.GameObjects.Text;
-  public topIndent: number = 240; // верхний отступ для блоков территорий
+  public topIndent: number = 140; // верхний отступ для блоков территорий
   public bottomIndent: number = 240; // нижний отступ мира (не считая нахлест)
   public height: number; // ширина-высота территории
   public alarm: boolean;
@@ -144,6 +145,7 @@ class Event extends Phaser.Scene {
   public expelAnimal = expelAnimal.bind(this);
   public setCollector = setCollector.bind(this);
   public convertMoney = convertMoney.bind(this);
+  public dragAnimalMerging = dragAnimalMerging.bind(this);
 
   public init(state: Istate): void {
 

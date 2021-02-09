@@ -16,7 +16,7 @@ function animalPrice(breed: number): {price: number, countAnimal: number} {
 
 function getFreePosition(): {x: number, y: number} {
   let x: number = 120;
-  let y: number = 840;
+  let y: number = this.topIndent + 600;
   for (let i = 0; i < this.state.eventSettings.eventSettings.length; i ++ ) { // убрать жесткое число
     if (this.currentTerritory(x, y).data.values.type !== 0) {
       if (this.currentTerritory(x, y).data.values.merging.length !== 0) {

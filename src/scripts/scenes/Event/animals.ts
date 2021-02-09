@@ -312,7 +312,7 @@ function expelAnimal(): void {
 }
 
 
-// мерджинг на поле
+// мерджинг на в клетках
 function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
   animal.data.values.merging = true;
   let territory: Phaser.Physics.Arcade.Sprite = this.currentTerritory(animal.x, animal.y);
@@ -375,6 +375,50 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
   }
 }
 
+// мерджинг на поле
+function dragAnimalMerging(animal: Phaser.Physics.Arcade.Sprite): void {
+  
+  let max: number = this.state.eventSettings.eventSettings.length;
+  console.log(this.animals)
+  let findAnimal: Phaser.Physics.Arcade.Sprite = this.animals.children.entries.find((data: Phaser.Physics.Arcade.Sprite) => {
+
+    if (data.x - (data.width / 2) <= animal.x && 
+      data.x + (data.width / 2) >= animal.x &&
+      data.y - (data.height / 2) <= animal.y && 
+      data.y + (data.height / 2) >= animal.y &&
+      data.data.values.type === animal.data.values.type &&
+      animal.data.values.type > 0 &&
+      animal.data.values.type < max &&
+      data.data.values._id !== animal.data.values._id) {
+
+      return data;
+
+    } else return false;
+
+  });
+
+  if (findAnimal) {
+
+    const position: Iposition = {
+      x: animal.x,
+      y: animal.y
+    }
+    this.mergingCloud(position);
+    
+    const type: number = animal.data.values.type + 1;
+    findAnimal.data.values.disabledAnimal.destroy();
+    animal.data.values.disabledAnimal.destroy();
+    findAnimal.destroy();
+    
+    animal.destroy();
+
+    const id: string = 'local_' + randomString(18);
+
+    this.getAnimal(id, type, position.x, position.y, 0, 0);
+
+  }
+
+}
 
 export {
   teleportation,
@@ -387,6 +431,7 @@ export {
   confirmExpelAnimal,
   expelAnimal,
   checkMerging,
-  collectResource
+  collectResource,
+  dragAnimalMerging
   
 }
