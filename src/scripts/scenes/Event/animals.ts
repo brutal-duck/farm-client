@@ -1,4 +1,5 @@
 import { random, randomString } from '../../general/basic';
+import { takeDiamondChicken } from '../Chicken/basic';
 
 // телепортация животного на старое место
 function teleportation(animal: Phaser.Physics.Arcade.Sprite): void {
@@ -127,7 +128,10 @@ function getAnimal(
   animal.state = 'base';
   this.checkMerging(animal);
   animal.data.values.active =  this.getActiveAnimal(id,type,x, y, animal);
- 
+    
+  this.click(animal, ()=>{
+    this.teleportation(animal.data.values.active)
+  })
   return animal;
 
 }
@@ -285,8 +289,6 @@ function buyAnimal(breed: number, shop: boolean = false, diamond: number = 0): b
   return success;
 
 }
-
-// собиратель яиц
 
 // полет яиц
 function resourcesFly(): void {
