@@ -33,6 +33,7 @@ function drag(): void {
     if (animal.state === 'base') {
       if (zone.type === 'type0') {
         this.teleportation(animal); 
+
       } else if (zone) {
         animal.data.values.zone = true;
         let territory: Phaser.Physics.Arcade.Sprite = this.currentTerritory(animal.x, animal.y);
@@ -107,7 +108,7 @@ function drag(): void {
               this.checkMerging(animal); 
             }
           }
-        }
+        } else this.teleportation(animal);
       }
 
     } else if (animal.state === 'base') {
@@ -129,7 +130,7 @@ function drag(): void {
             this.checkMerging(animal); 
           }
         }
-      }
+      } else this.teleportation(animal);
     }
 
 

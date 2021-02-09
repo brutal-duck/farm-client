@@ -1,5 +1,6 @@
 import { random, randomString } from '../../general/basic';
 
+
 // телепортация животного на старое место
 function teleportation(animal: Phaser.Physics.Arcade.Sprite): void {
   if (animal.state === 'active') {
@@ -15,6 +16,7 @@ function teleportation(animal: Phaser.Physics.Arcade.Sprite): void {
   } else if (animal.state === 'base') {
     animal.x = animal.data.values.oldX;
     animal.y = animal.data.values.oldY;
+    animal.setDepth(animal.y);
   }
 
   
@@ -129,7 +131,7 @@ function getAnimal(
   animal.data.values.active =  this.getActiveAnimal(id,type,x, y, animal);
     
   this.click(animal, ()=>{
-    this.teleportation(animal.data.values.active)
+    this.teleportation(animal.data.values.active);
   })
   return animal;
 
@@ -342,14 +344,15 @@ function expelAnimal(): void {
 
 // мерджинг на в клетках
 function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
-  
+  let territory: Phaser.Physics.Arcade.Sprite;
+  let oldTerritory: Phaser.Physics.Arcade.Sprite;
   if (animal.state === 'active') {
     
     animal.data.values.base.data.values.merging = true;
     
-    let territory: Phaser.Physics.Arcade.Sprite = this.currentTerritory(animal.x, animal.y);
-    let check = territory?.data.values.merging.find((data: any) => data._id === animal.data.values.base.data.values._id);
-    let oldTerritory: Phaser.Physics.Arcade.Sprite = this.currentTerritory(animal.data.values.base.x, animal.data.values.base.y);
+    territory = this.currentTerritory(animal.x, animal.y);
+    let check: any = territory?.data.values.merging.find((data: any) => data._id === animal.data.values.base.data.values._id);
+    oldTerritory = this.currentTerritory(animal.data.values.base.x, animal.data.values.base.y);
     
     if (animal.data.values.base.data.values.type > this.state.userEvent.maxLevelAnimal) {
       this.state.userEvent.maxLevelAnimal = animal.data.values.base.data.values.type;
@@ -377,51 +380,13 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
       }
     }
   
-    // проверяем совпадение
-    if (territory?.data.values.merging.length === 2) {
-  
-      let animal1: Phaser.Physics.Arcade.Sprite = this.animals.children.entries.find((data: any) => data.data.values._id === territory.data.values.merging[0]._id);
-      let animal2: Phaser.Physics.Arcade.Sprite = this.animals.children.entries.find((data: any) => data.data.values._id === territory.data.values.merging[1]._id);
-      
-      if (animal1 && animal2) {
-        if (animal1?.data.values.type === animal2?.data.values.type && !animal1.data.values.working) {
-          const position: Iposition = {
-            x: animal.x,
-            y: animal.y
-          }
-          
-          const type: number = animal1.data.values.type + 1;
-          const id: string = 'local_' + randomString(18);
-          
-          oldTerritory.data.values.merging = [];
-          territory.data.values.merging = [];
-          this.getAnimal(id, type, position.x, position.y, 0, 0);
-          
-          this.time.addEvent({ delay: 100, callback: (): void => {
-            
-            this.mergingCloud(position);
-            animal1?.data.values.active.destroy();
-            animal2?.data.values.active.destroy();
-            animal1?.destroy();
-            animal2?.destroy();
-          }, callbackScope: this, loop: false });
-        
-        } else {
-  
-          this.time.addEvent({ delay: 100, callback: (): void => {
-          territory.data.values.merging.pop(); 
-          this.teleportation(animal2.data.values.active);
-          }, callbackScope: this, loop: false });
-        }
-      }
-    }
   } else if (animal.state === 'base') {
 
     animal.data.values.merging = true;
     
-    let territory: Phaser.Physics.Arcade.Sprite = this.currentTerritory(animal.x, animal.y);
+    territory = this.currentTerritory(animal.x, animal.y);
     let check = territory?.data.values.merging.find((data: any) => data._id === animal.data.values._id);
-    let oldTerritory: Phaser.Physics.Arcade.Sprite = this.currentTerritory(animal.data.values.oldX, animal.data.values.oldY);
+    oldTerritory = this.currentTerritory(animal.data.values.oldX, animal.data.values.oldY);
 
     if (animal.data.values.type > this.state.userEvent.maxLevelAnimal) {
       this.state.userEvent.maxLevelAnimal = animal.data.values.type;
@@ -445,43 +410,44 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
         animal.setDepth(animal.y);
       }
     }
+  }
+
   
-    // проверяем совпадение
-    if (territory?.data.values.merging.length === 2) {
+  // проверяем совпадение
+  if (territory?.data.values.merging.length === 2) {
   
-      let animal1: Phaser.Physics.Arcade.Sprite = this.animals.children.entries.find((data: any) => data.data.values._id === territory.data.values.merging[0]._id);
-      let animal2: Phaser.Physics.Arcade.Sprite = this.animals.children.entries.find((data: any) => data.data.values._id === territory.data.values.merging[1]._id);
-      
-      if (animal1 && animal2) {
-        if (animal1?.data.values.type === animal2?.data.values.type) {
-          const position: Iposition = {
-            x: animal.x,
-            y: animal.y
-          }
-          
-          const type: number = animal1.data.values.type + 1;
-          const id: string = 'local_' + randomString(18);
-          
-          oldTerritory.data.values.merging = [];
-          territory.data.values.merging = [];
-          this.getAnimal(id, type, position.x, position.y, 0, 0);
-          
-          this.time.addEvent({ delay: 100, callback: (): void => {
-            
-            this.mergingCloud(position);
-            animal1?.data.values.active.destroy();
-            animal2?.data.values.active.destroy();
-            animal1?.destroy();
-            animal2?.destroy();
-          }, callbackScope: this, loop: false });
-        
-        } else {
-  
-          this.time.addEvent({ delay: 100, callback: (): void => {
-          territory.data.values.merging.pop(); 
-          this.teleportation(animal2.data.values.active);
-          }, callbackScope: this, loop: false });
+    let animal1: Phaser.Physics.Arcade.Sprite = this.animals.children.entries.find((data: any) => data.data.values._id === territory.data.values.merging[0]._id);
+    let animal2: Phaser.Physics.Arcade.Sprite = this.animals.children.entries.find((data: any) => data.data.values._id === territory.data.values.merging[1]._id);
+    
+    if (animal1 && animal2) {
+      if (animal1?.data.values.type === animal2?.data.values.type) {
+        const position: Iposition = {
+          x: animal.x,
+          y: animal.y
         }
+        
+        const type: number = animal1.data.values.type + 1;
+        const id: string = 'local_' + randomString(18);
+        
+        oldTerritory.data.values.merging = [];
+        territory.data.values.merging = [];
+        this.getAnimal(id, type, position.x, position.y, 0, 0);
+        
+        this.time.addEvent({ delay: 100, callback: (): void => {
+          
+          this.mergingCloud(position);
+          animal1?.data.values.active.destroy();
+          animal2?.data.values.active.destroy();
+          animal1?.destroy();
+          animal2?.destroy();
+        }, callbackScope: this, loop: false });
+      
+      } else {
+
+        this.time.addEvent({ delay: 100, callback: (): void => {
+        territory.data.values.merging.pop();
+        this.teleportation(animal2); 
+        }, callbackScope: this, loop: false });
       }
     }
   }
