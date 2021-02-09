@@ -38,12 +38,12 @@ import {
   maxBreedForBuy, 
   animalPrice, 
   getFreePosition, 
-  convertEventMoney,
   convertDiamonds, 
   currentTerritory, 
   freeCollector, 
   buyCollector,
-  convertMoney, 
+  convertMoney,
+  // exchange, 
 } from './basic';
 import { 
   buyAnimal, 
@@ -100,7 +100,6 @@ class Event extends Phaser.Scene {
   public confirmExchangeTerritory = confirmExchangeTerritory.bind(this);
   public checkExchangeRepository = checkExchangeRepository.bind(this);
   public convertDiamonds = convertDiamonds.bind(this);
-  public convertEventMoney = convertEventMoney.bind(this);
   public exchange = exchange.bind(this);
   public createSpeechBubble = createSpeechBubble.bind(this);
   public mergingCloud = mergingCloud.bind(this);

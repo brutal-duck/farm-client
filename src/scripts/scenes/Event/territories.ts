@@ -110,12 +110,7 @@ function buyTerritory(): void {
           type: 1
         }
   
-        let modal: Imodal = {
-          type: 1,
-          sysType: 4
-        }
-        this.state.modal = modal;
-        this.scene.launch('Modal', this.state);
+        this.game.scene.keys[this.state.farm].exchange();
   
       }  
 

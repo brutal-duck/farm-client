@@ -187,7 +187,6 @@ function buyAnimal(breed: number, shop: boolean = false, diamond: number = 0): b
 
   let success: boolean = false;
 
-  if (this.animals.children.entries.length < 50) {
     let animalPrice = this.animalPrice(breed);
     if (diamond > 0) {
       if (this.state.user.diamonds >= diamond) {
@@ -200,7 +199,19 @@ function buyAnimal(breed: number, shop: boolean = false, diamond: number = 0): b
         this.state.user.diamonds -= diamond;
         this.state.userEvent.countAnimal[breed - 1].counter = animalPrice.countAnimal;
       } else {
-        console.log('не хватает кристаллов')
+        if (shop) {
+          this.scene.stop('Shop');
+          this.scene.stop('ShopBars');
+          this.scene.stop('Modal');
+        }
+        this.state.convertor = {
+          fun: 0,
+          count: diamond - this.state.user.diamonds,
+          diamonds: diamond - this.state.user.diamonds,
+          type: 1
+        }
+  
+        this.game.scene.keys[this.state.farm].exchange();
       }
 
     } else {
@@ -218,50 +229,32 @@ function buyAnimal(breed: number, shop: boolean = false, diamond: number = 0): b
         this.game.scene.keys['EventBars'].updateAnimalPrice();
 
       } else {
-          console.log('не хватает денег')
-          // if (shop) {
-          //   this.scene.stop('Shop');
-          //   this.scene.stop('ShopBars');
-          //   this.scene.stop('Modal');
-          // }
+          
+          if (shop) {
+            this.scene.stop('Shop');
+            this.scene.stop('ShopBars');
+            this.scene.stop('Modal');
+          }
 
-          // let count: number = animalPrice.price - this.state.userEvent.money;
-          // let diamonds: number = this.convertMoney(count);
-          // this.state.convertor = {
-          //   fun: 1,
-          //   count: count,
-          //   diamonds: diamonds,
-          //   type: 1,
-          //   breed: breed
-          // }
+          let count: number = animalPrice.price - this.state.userEvent.money;
+          let diamonds: number = this.convertMoney(count);
+          this.state.convertor = {
+            fun: 1,
+            count: count,
+            diamonds: diamonds,
+            type: 1,
+            breed: breed
+          }
 
-          // let modal: Imodal = {
-          //   type: 1,
-          //   sysType: 4
-          // }
-          // this.state.modal = modal;
-          // this.scene.launch('Modal', this.state);
+          let modal: Imodal = {
+            type: 1,
+            sysType: 4
+          }
+          this.state.modal = modal;
+          this.scene.launch('Modal', this.state);
 
       }
     }
-  } else {
-
-    if (shop) {
-      this.scene.stop('Shop');
-      this.scene.stop('ShopBars');
-      this.scene.stop('Modal');
-    }
-
-    let modal: Imodal = {
-      type: 1,
-      sysType: 3,
-      height: 150,
-      message: this.state.lang.maxChickenCount // поменять
-    }
-    this.state.modal = modal;
-    this.scene.launch('Modal', this.state);
-
-  }
 
   return success;
 

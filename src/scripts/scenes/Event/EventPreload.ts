@@ -951,7 +951,7 @@ const testEventSettings: IeventSettings = {
 }
 
 const testUserEvent: IuserEvent = {
-  money: 1000,
+  money: 10000,
   countAnimal: [ // количество купленных животных
     {counter: 1},
     {counter: 1},

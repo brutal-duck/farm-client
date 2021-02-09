@@ -27,7 +27,19 @@ function getFreePosition(): {x: number, y: number} {
         }
       } else break
     } else {
-      console.log('нет животного тебе') 
+
+      this.scene.stop('Shop');
+      this.scene.stop('ShopBars');
+      this.scene.stop('Modal');
+  
+      let modal: Imodal = {
+        type: 1,
+        sysType: 3,
+        height: 150,
+        message: this.state.lang.maxChickenCount // поменять
+      }
+      this.state.modal = modal;
+      this.scene.launch('Modal', this.state);
       return {x: null, y: null}
     }
   }
@@ -51,36 +63,6 @@ function maxBreedForBuy(): number {
   };
   return breed;
   
-}
-
-function convertEventMoney(money: number): number {
-
-  let fairLevels: IfairLevel[];
-  let fair: number;
-  
-  if (this.state.farm === 'Sheep') {
-
-    fairLevels = this.state.sheepSettings.sheepFairLevels;
-    fair = this.state.userSheep.fair;
-
-  } else if (this.state.farm === 'Chicken') {
-
-    fairLevels = this.state.chickenSettings.chickenFairLevels;
-    fair = this.state.userChicken.fair;
-
-  }
-
-  let exchange: number = fairLevels.find((item: IfairLevel) => item.level === fair).exchange;
-  let needDiamonds: number = 1;
-  let sumExchange: number = exchange;
-
-  while (sumExchange < money) {
-    needDiamonds++;
-    sumExchange = sumExchange + exchange;
-  }
-
-  return needDiamonds;
-
 }
 
 // территория на которой находится объект
@@ -275,14 +257,77 @@ function convertMoney(money: number): number {
 
 }
 
+function exchange(ad: boolean = false): void {
+
+  let user: IuserEvent = this.state.userEvent;
+  let buyAnimal = (): void => this.buyAnimal(this.state.convertor.breed);
+
+  
+  if (this.state.convertor.diamonds > this.state.user.diamonds) {
+
+    let countResources = this.state.convertor.diamonds - this.state.user.diamonds;
+
+    this.time.addEvent({ delay: 100, callback: (): void => {
+
+      this.state.convertor.type = 2;
+      this.state.convertor.count = countResources;
+
+      let modal: Imodal = {
+        type: 1,
+        sysType: 4
+      }
+      this.state.modal = modal;
+      this.scene.launch('Modal', this.state);
+      
+    }, callbackScope: this, loop: false });
+
+  } else {
+
+    this.state.user.diamonds -= this.state.convertor.diamonds;
+    user.money += this.convertDiamonds(this.state.convertor.diamonds);
+
+    if (!ad) {
+
+      this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+        type: 'convertor',
+        count: this.state.convertor.diamonds,
+        farm_id: this.state.farm
+      });
+
+      this.tryTask(15, 0, this.state.convertor.diamonds);
+
+    }
+
+    if (this.state.convertor.fun === 1) {
+      buyAnimal();
+    } else if (this.state.convertor.fun === 2) {
+      this.fairLevelUp();
+    } else if (this.state.convertor.fun === 3) {
+      this.improveTerritory();
+    } else if (this.state.convertor.fun === 4) {
+      this.exchangeTerritory();
+    } else if (this.state.convertor.fun === 5) {
+      this.installTerritory();
+    } else if (this.state.convertor.fun === 6) {
+      this.buyTerritory();
+    } else if (this.state.convertor.fun === 7) {
+      this.buyNextFarm();
+    } else if (this.state.convertor.fun === 8) {
+      this.improveCollector();
+    }
+
+  }
+  
+}
+
 export {
   animalPrice,
   maxBreedForBuy,
   getFreePosition,
-  convertEventMoney,
   currentTerritory,
   freeCollector,
   buyCollector,
   convertDiamonds,
-  convertMoney
+  convertMoney,
+  exchange
 }
