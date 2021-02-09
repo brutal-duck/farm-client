@@ -447,6 +447,7 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
         this.time.addEvent({ delay: 100, callback: (): void => {
         territory.data.values.merging.pop();
         this.teleportation(animal2); 
+        if (animal.state === 'active') this.teleportation(animal2.data.values.active);
         }, callbackScope: this, loop: false });
       }
     }
