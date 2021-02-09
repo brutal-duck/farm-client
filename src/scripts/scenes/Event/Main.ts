@@ -63,6 +63,7 @@ import { animalBrain, collisions } from './animalBrain';
 import interval from './interval';
 import { deleteTerritoriesLocks, buyTerritory, buildBorders } from './territories';
 import setCollector from './collector';
+import autosave from './autosave';
 class Event extends Phaser.Scene {
   constructor() {
     super('Event');
@@ -147,6 +148,7 @@ class Event extends Phaser.Scene {
   public convertMoney = convertMoney.bind(this);
 
   public getActiveAnimal = getActiveAnimal.bind(this);
+  public autosave = autosave.bind(this);
 
   public init(state: Istate): void {
 
