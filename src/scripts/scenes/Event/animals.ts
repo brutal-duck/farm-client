@@ -217,10 +217,10 @@ function buyAnimal(breed: number, shop: boolean = false, diamond: number = 0): b
     } else {
       
       if (this.state.userEvent.money >= animalPrice.price) {
-          
-        success = true;
+
         let {x, y} = this.getFreePosition();
         if (x === null || y === null) return;
+        success = true;
         this.currentTerritory(x, y).data.values.animal = breed;
         let id: string = 'local_' + randomString(18);
         this.getAnimal(id, breed, x, y);
