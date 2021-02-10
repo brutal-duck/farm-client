@@ -139,8 +139,9 @@ class Modal extends Phaser.Scene {
   public feedBoostText: Phaser.GameObjects.Text;
   public caveTimer: Phaser.GameObjects.Text;
   // буст "Стадо"
-  public sheepForBoost: Phaser.Physics.Arcade.Group;
-  public chickenForBoost: Phaser.Physics.Arcade.Group;
+  // public sheepForBoost: Phaser.Physics.Arcade.Group;
+  // public chickenForBoost: Phaser.Physics.Arcade.Group;
+  public animalForBoost: Phaser.Physics.Arcade.Group;
   public mergingArray: any[];
   public mainInput: HTMLInputElement;
 

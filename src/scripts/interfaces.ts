@@ -125,7 +125,7 @@ interface IuserChicken {
   feedBoostTime: number;
 }
 interface IuserEvent {
-  money: number;
+  money: bigint;
   countAnimal: {counter: number}[];
   collector: number;
   collectorLevel: number;
@@ -214,8 +214,8 @@ interface IchickenPoints {
 interface IeventPoints {
   breed: number;
   resource: number;
-  resourcePrice: number;
-  price: number;
+  resourcePrice: bigint;
+  price: bigint;
   exchange: number;
   id?: any;
 }

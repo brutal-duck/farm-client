@@ -102,9 +102,26 @@ function aim(animal: Phaser.Physics.Arcade.Sprite, x: number, y: number): void {
   } else if (distance < 200 && distance >= 100) {
     coefficient = 0.5;
   }
-  
-  this.physics.moveToObject(animal, target, distance * coefficient);
 
+  this.physics.moveToObject(animal, target, distance * coefficient);
+  // moving.bind(this)(animal,target,distance,distance * coefficient);
+}
+
+function moving(animal: Phaser.Physics.Arcade.Sprite, target: Iposition, distance: number, speed): void {
+  let time: number = distance / speed * 1000;
+
+  let timer: Phaser.Time.TimerEvent = this.time.addEvent({
+    delay: 1,
+    loop: true,
+    callback: () => {
+      console.log(time);
+      time -= 1;
+      animal.x +=1;
+      animal.y +=1;
+      if (time <= 0 || animal.x >= target.x || animal.y >= target.y) timer.remove();  
+    },
+    callbackScope: this
+  });
 }
 
 // функция получения нового животного
@@ -145,7 +162,7 @@ function getActiveAnimal(
   y: number,
   base: Phaser.Physics.Arcade.Sprite,
   counter: number = 0,
-  vector: number = 7,
+  vector: number = Phaser.Math.Between(1, 8),
   load: boolean = false): Phaser.Physics.Arcade.Sprite {
 
   let animal: Phaser.Physics.Arcade.Sprite = this.physics.add.sprite(x, y, 'animal' + type).setInteractive().setDepth(y+100);
@@ -168,7 +185,6 @@ function getActiveAnimal(
   animal.data.values.resource = 0;
   animal.data.values.base = base;
   animal.state = 'active';
-  
 
   return animal;
 

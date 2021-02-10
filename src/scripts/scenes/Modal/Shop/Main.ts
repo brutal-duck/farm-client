@@ -33,7 +33,6 @@ import {
   animals,
   updateAnimalPrices,
   eventCollectorBoost,
-  eventHerdBoost
 } from './event';
 import { Arrows } from '../../../elements';
 
@@ -119,7 +118,6 @@ class Shop extends Phaser.Scene {
   public animalMoney = animalMoney.bind(this);
   public updateAnimalPrices = updateAnimalPrices.bind(this);
   public eventCollectorBoost = eventCollectorBoost.bind(this);
-  public eventHerdBoost = eventHerdBoost.bind(this);
 
   public init(state: Istate): void {
     

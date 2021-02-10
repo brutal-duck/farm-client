@@ -908,9 +908,9 @@ function buildMenu(): void {
 
   this.clickButton(this.menu, (): void => {
 
-    if (this.taskBoard.zone.scene && this.sendwich) {
+    if (this.taskBoard.zone?.scene && this.sendwich) {
       this.taskBoard.zone.depth = this.height + 1;
-    } else if (this.taskBoard.zone.scene && !this.sendwich) {
+    } else if (this.taskBoard.zone?.scene && !this.sendwich) {
       this.taskBoard.zone.depth = -1;
     }
 

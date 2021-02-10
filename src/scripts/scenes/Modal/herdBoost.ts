@@ -161,7 +161,10 @@ function createWorld(): any[] {
   } else if (farm === 'chicken') {
     yTent = y - 17;
     yTextLevel = y + 82;
-  };
+  } else if (farm === 'event') {
+    yTent = y - 17;
+    yTextLevel = y + 82;
+  }
   
   this.mergingArray = []; // массив животных для слияния
   
@@ -169,11 +172,12 @@ function createWorld(): any[] {
 
   let tent: Phaser.Physics.Arcade.Sprite = this.add.image(x, yTent, `${farm}-tent`).setDepth(y + 1).setAlpha(0);
 
-  let textLevel: Phaser.Physics.Arcade.Sprite = this.add.text(x + 80, yTextLevel, this.state[`user${this.state.farm}`].fair, {
+  let textLevel: Phaser.GameObjects.Text = this.add.text(x + 80, yTextLevel, this.state[`user${this.state.farm}`].fair, {
     font: '36px Shadow',
     color: '#b5315a'
   }).setOrigin(0.5, 0.5).setDepth(y * 2).setAlpha(0);
   
+  if (farm === 'event') textLevel.setText(this.state.userEvent.maxLevelAnimal);
   // дорога
   let road: Phaser.GameObjects.Sprite = this.add.sprite(xRoad, yRoad, `herd-boost-road-${farm}`)
     .setOrigin(0)
@@ -192,6 +196,7 @@ function createWorld(): any[] {
 }
   
 function createAnimals(timerText, allItems, boostCounterWindow): void {
+  let animal: string = this.state.farm.toLowerCase();
 
   if (this.state.farm === 'Sheep') {
     // дроп зоны 
@@ -208,50 +213,6 @@ function createAnimals(timerText, allItems, boostCounterWindow): void {
     // graphics1.lineStyle(2, 0xffff00);
     // graphics1.strokeRect(topZone.x - topZone.input.hitArea.width / 2, topZone.y - topZone.input.hitArea.height / 2, topZone.input.hitArea.width, topZone.input.hitArea.height);
 
-    // создаю группу для овец
-    this.sheepForBoost = this.physics.add.group();
-
-    let currentTime: number = this.state.herdBoostTime;
-
-    let timerCreate: Phaser.Time.TimerEvent = this.time.addEvent({
-      delay: this.state.herdBoostDelay,
-      loop: true,
-      callback: () => {
-        this.getRandomAnimal('sheep'); 
-      },
-      callbackScope: this
-    });
-    
-    let timerCreateCrystalAnimal: Phaser.Time.TimerEvent = this.time.addEvent({
-      delay: this.state.herdBoostTime / 3 * 1000,
-      loop: true,
-      callback: () => {
-        // this.getRandomSheep(); 
-        this.getRandomAnimal('sheep', true);
-      },
-      callbackScope: this
-    });
-
-    // таймер переключающий время
-    let timerTickText: Phaser.Time.TimerEvent = this.time.addEvent({
-      delay: 1000,
-      loop: true,
-      callback: () => {
-        --currentTime;
-        timerText.setText(currentTime);
-        if (currentTime <= 0) {
-          this.sheepForBoost.children.entries.forEach((sheep) => {
-            sheep.data.values.woolSprite.destroy();
-          });
-          this.sheepForBoost.destroy(true);
-          timerCreate.remove();
-          timerTickText.remove();
-          timerCreateCrystalAnimal.remove();
-          showEndScore.bind(this)(allItems, boostCounterWindow);
-        }
-      },
-      callbackScope: this
-    });
 
   } else if (this.state.farm === 'Chicken') {
     // дроп зоны 
@@ -265,50 +226,74 @@ function createAnimals(timerText, allItems, boostCounterWindow): void {
     // let graphics1 = this.add.graphics().setDepth(leftZone.y * 5);
     // graphics1.lineStyle(2, 0xffff00);
     // graphics1.strokeRect(leftZone.x - leftZone.input.hitArea.width / 2, leftZone.y - leftZone.input.hitArea.height / 2, leftZone.input.hitArea.width, leftZone.input.hitArea.height);
-// 
+
     // let graphics2 = this.add.graphics().setDepth(rightZone.y * 5);
     // graphics2.lineStyle(2, 0x00ff00);
     // graphics2.strokeRect(rightZone.x - rightZone.input.hitArea.width / 2, rightZone.y - rightZone.input.hitArea.height / 2, rightZone.input.hitArea.width, rightZone.input.hitArea.height);
 
-    this.chickenForBoost = this.physics.add.group();
-    // периодическое создание животных
-    let timerCreate: Phaser.Time.TimerEvent = this.time.addEvent({
-      delay: this.state.herdBoostDelay,
-      loop: true,
-      callback: () => {
-        this.getRandomAnimal('chicken');
-      },
-      callbackScope: this
-    });
-    // таймер создания кристалических животных
-    let timerCreateCrystalAnimal: Phaser.Time.TimerEvent = this.time.addEvent({
-      delay: this.state.herdBoostTime / 3 * 1000,
-      loop: true,
-      callback: () => { 
-        this.getRandomAnimal('chicken', true);
-      },
-      callbackScope: this
-    });
-    // таймер переключающий время
-    let currentTime: number = this.state.herdBoostTime;
+  } else if (this.state.farm === 'event') {
+    // дроп зоны 
+    let leftZone: Phaser.GameObjects.Zone = this.add.zone(x - 75, y - 30, 145, 300).setDropZone(undefined, () => {});
+    leftZone.type = 'left';
+    
+    let rightZone: Phaser.GameObjects.Zone = this.add.zone(x + 70, y - 30, 145, 300).setDropZone(undefined, () => {});
+    rightZone.type = 'right';
 
-    let timerTickText: Phaser.Time.TimerEvent = this.time.addEvent({
-      delay: 1000,
-      loop: true,
-      callback: () => {
-        --currentTime;
-        timerText.setText(currentTime);
-        if (currentTime <= 0) {
-          this.chickenForBoost.destroy(true);
-          timerCreate.remove();
-          timerTickText.remove();
-          timerCreateCrystalAnimal.remove();
-          showEndScore.bind(this)(allItems, boostCounterWindow);
-        }
-      },
-      callbackScope: this
-    });
+    // для проверки дроп зон
+    // let graphics1 = this.add.graphics().setDepth(leftZone.y * 5);
+    // graphics1.lineStyle(2, 0xffff00);
+    // graphics1.strokeRect(leftZone.x - leftZone.input.hitArea.width / 2, leftZone.y - leftZone.input.hitArea.height / 2, leftZone.input.hitArea.width, leftZone.input.hitArea.height);
+
+    // let graphics2 = this.add.graphics().setDepth(rightZone.y * 5);
+    // graphics2.lineStyle(2, 0x00ff00);
+    // graphics2.strokeRect(rightZone.x - rightZone.input.hitArea.width / 2, rightZone.y - rightZone.input.hitArea.height / 2, rightZone.input.hitArea.width, rightZone.input.hitArea.height);
+
   }
+
+  // создаю группу для овец
+  this.animalForBoost = this.physics.add.group();
+
+  let currentTime: number = this.state.herdBoostTime;
+
+  let timerCreate: Phaser.Time.TimerEvent = this.time.addEvent({
+    delay: this.state.herdBoostDelay,
+    loop: true,
+    callback: () => {
+      this.getRandomAnimal(animal); 
+    },
+    callbackScope: this
+  });
+  
+  let timerCreateCrystalAnimal: Phaser.Time.TimerEvent = this.time.addEvent({
+    delay: this.state.herdBoostTime / 3 * 1000,
+    loop: true,
+    callback: () => {
+      // this.getRandomSheep(); 
+      this.getRandomAnimal(animal, true);
+    },
+    callbackScope: this
+  });
+
+  // таймер переключающий время
+  let timerTickText: Phaser.Time.TimerEvent = this.time.addEvent({
+    delay: 1000,
+    loop: true,
+    callback: () => {
+      --currentTime;
+      timerText.setText(currentTime);
+      if (currentTime <= 0) {
+        this.animalForBoost.children.entries.forEach((sheep) => {
+          sheep.data.values.woolSprite?.destroy();
+        });
+        this.animalForBoost.destroy(true);
+        timerCreate.remove();
+        timerTickText.remove();
+        timerCreateCrystalAnimal.remove();
+        showEndScore.bind(this)(allItems, boostCounterWindow);
+      }
+    },
+    callbackScope: this
+  });
 }
 
 function showEndScore(items, boostCounterWindow): void {
@@ -376,11 +361,14 @@ function getRandomAnimal(type: string, crystal: boolean = false): void {
 
   // Изменение рандома
   let randomArray: number[] = [];
-  for (let i: number = 0; i < this.state[`user${this.state.farm}`].fair; i++) {
+  let max: number = this.state[`user${this.state.farm}`].fair;
+  if (this.state.farm === 'Event') max = this.state[`user${this.state.farm}`].maxLevelAnimal;
+
+  for (let i: number = 0; i < max; i++) {
     randomArray.push(i ** 2 * 100);
   }
 
-  let randomIndex: number = random(0, this.state[`user${this.state.farm}`].fair ** 2 * 100);
+  let randomIndex: number = random(0, max ** 2 * 100);
   let randomType: number;
 
   
@@ -394,7 +382,7 @@ function getRandomAnimal(type: string, crystal: boolean = false): void {
   // кристалическое животное?
   if (crystal) randomType = 0;
 
-  let animal: Phaser.Physics.Arcade.Sprite = this[`${this.state.farm.toLowerCase()}ForBoost`].create(x, y, type + randomType)
+  let animal: Phaser.Physics.Arcade.Sprite = this.animalForBoost.create(x, y, type + randomType)
     .setDepth(y)
     .setInteractive()
     .setDataEnabled();
@@ -603,8 +591,8 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
   // проверяем совпадение
   if (this.mergingArray.length === 2) {
 
-    let animal1: Phaser.Physics.Arcade.Sprite = this[`${this.state.farm.toLowerCase()}ForBoost`].children.entries.find((data: any) => data.data.values._id === this.mergingArray[0]._id);
-    let animal2: Phaser.Physics.Arcade.Sprite = this[`${this.state.farm.toLowerCase()}ForBoost`].children.entries.find((data: any) => data.data.values._id === this.mergingArray[1]._id);
+    let animal1: Phaser.Physics.Arcade.Sprite = this.animalForBoost.children.entries.find((data: any) => data.data.values._id === this.mergingArray[0]._id);
+    let animal2: Phaser.Physics.Arcade.Sprite = this.animalForBoost.children.entries.find((data: any) => data.data.values._id === this.mergingArray[1]._id);
     
     if (animal1 && animal2) {
       if (animal1?.data.values.type === animal2?.data.values.type) {
