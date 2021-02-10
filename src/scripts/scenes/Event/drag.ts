@@ -6,6 +6,7 @@ function drag(): void {
     this.scrolling.enabled = false; // отключаем скролл
     this.scrolling.wheel = false; // отключаем колесо
     animal.data.values.zone = false;
+    animal.data.values.working = false;
     animal.data.values.drag = true; // метим перетаскивание для других функций
     animal.setVelocity(0, 0); // отменяем передвижение
     animal.setCollideWorldBounds(true);

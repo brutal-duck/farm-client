@@ -371,10 +371,38 @@ function pulseCollector(): void {
 
 }
 
+function flyAnimal(): void {
+  this.time.addEvent({
+    delay: 30,
+    callback: (): void => {
+      this.animals.children.entries.forEach(animal => {
+        let activeAnimal: Phaser.Physics.Arcade.Sprite = animal.data.values.active;
 
+        if (activeAnimal.data.values.working && (activeAnimal.data.values.vector > 4 || !activeAnimal.data.values.moving) ) {
+          
+          if (activeAnimal.data.values.topPosition) {
+            activeAnimal.originY -= 0.0065;
+            activeAnimal.setOrigin(0.5, activeAnimal.originY);
+            if (activeAnimal.originY <= 0.45) activeAnimal.data.values.topPosition = false;
+            
+          } else {
+            activeAnimal.originY += 0.0065;
+            activeAnimal.setOrigin(0.5, activeAnimal.originY);
+            if (activeAnimal.originY >= 0.55) activeAnimal.data.values.topPosition = true;
+          }
+        }
+        
+      });
+    },
+    loop: true
+
+  });
+
+}
 
 
 export {
   animations,
   pulseCollector,
+  flyAnimal
 }

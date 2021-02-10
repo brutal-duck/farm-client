@@ -137,14 +137,8 @@ class EventBars extends Phaser.Scene {
     // быстрая покупка Животного
     this.clickButton(this.animalBuy, (): void => {
       let breed: number = this.game.scene.keys['Event'].maxBreedForBuy();
-      if (breed >= this.state.userEvent.maxLevelAnimal - 4) {
-        if (this.state.userEvent.maxLevelAnimal - 4 <= 0) {
-          breed = 1;
-        } else {
-          breed = this.state.userEvent.maxLevelAnimal - 4;
-        } 
-      }
       this.game.scene.keys[this.state.farm].buyAnimal(breed);
+      this.updateAnimalPrice();
     });
     
     // кнопка собирателя 
@@ -365,13 +359,6 @@ class EventBars extends Phaser.Scene {
   public updateAnimalPrice(): void {
     
     let breed: number = this.game.scene.keys['Event'].maxBreedForBuy();
-    if (breed >= this.state.userEvent.maxLevelAnimal - 4) {
-      if (this.state.userEvent.maxLevelAnimal - 4 <= 0) {
-        breed = 1;
-      } else {
-        breed = this.state.userEvent.maxLevelAnimal - 4;
-      } 
-    }
     let price: string = String(shortNum(this.game.scene.keys['Event'].animalPrice(breed).price));
     let animalIcon: string = 'event-buy-icon-' + breed;
     this.animalBuy.setTexture(animalIcon);
@@ -388,13 +375,6 @@ class EventBars extends Phaser.Scene {
   public buyChickenStatus(): void {
 
     let breed: number = this.game.scene.keys['Event'].maxBreedForBuy();
-    if (breed >= this.state.userEvent.maxLevelAnimal - 4) {
-      if (this.state.userEvent.maxLevelAnimal - 4 <= 0) {
-        breed = 1;
-      } else {
-        breed = this.state.userEvent.maxLevelAnimal - 4;
-      } 
-    }
     let price: number = this.game.scene.keys[this.state.farm].animalPrice(breed).price
     
     if (price > this.state.userEvent.money && this.animalBuy.tintBottomLeft === 0xFFFFFF) {

@@ -55,17 +55,23 @@ function getFreePosition(): {x: number, y: number} {
 // максимальная порода для покупки
 function maxBreedForBuy(): number {
 
-  let breed: number = 1;
-  let breedPrice: bigint = BigInt(100000000000000000000000000000000000000000000000000000000000000000000000);
-  for (let i = 0; i < this.state.userEvent.countAnimal.length - 1; i++ ) {
-    let counter: bigint = BigInt(this.state.userEvent.countAnimal[i].counter);
-    let currentPrice = counter * this.state.eventSettings.eventSettings[i].price; 
-    if (currentPrice <= breedPrice) {
+  let breed: number = this.state.userEvent.maxLevelAnimal - 4;
+  
+  if (breed <= 0) {
+    breed = 1;
+  } else {
+    let currentPrice: bigint;
+    let breedPrice: bigint;
+    for (let i = breed; i >= 1; i--) {
+
+      currentPrice = this.animalPrice(i).price;
+      breedPrice = this.animalPrice(breed).price;
+      if (currentPrice <= breedPrice) {
         breedPrice = currentPrice;
-        breed = i + 1;
+        breed = i ;
+      }
     }
-    
-  };
+  }
   return breed;
   
 }

@@ -102,26 +102,9 @@ function aim(animal: Phaser.Physics.Arcade.Sprite, x: number, y: number): void {
   } else if (distance < 200 && distance >= 100) {
     coefficient = 0.5;
   }
-
+  animal.data.values.moving = true;
   this.physics.moveToObject(animal, target, distance * coefficient);
-  // moving.bind(this)(animal,target,distance,distance * coefficient);
-}
 
-function moving(animal: Phaser.Physics.Arcade.Sprite, target: Iposition, distance: number, speed): void {
-  let time: number = distance / speed * 1000;
-
-  let timer: Phaser.Time.TimerEvent = this.time.addEvent({
-    delay: 1,
-    loop: true,
-    callback: () => {
-      console.log(time);
-      time -= 1;
-      animal.x +=1;
-      animal.y +=1;
-      if (time <= 0 || animal.x >= target.x || animal.y >= target.y) timer.remove();  
-    },
-    callbackScope: this
-  });
 }
 
 // функция получения нового животного
@@ -184,6 +167,7 @@ function getActiveAnimal(
   animal.data.values.changeVector = false; // метка смены вектора
   animal.data.values.resource = 0;
   animal.data.values.base = base;
+  animal.data.values.topPosition = false;
   animal.state = 'active';
 
   return animal;
@@ -450,7 +434,7 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
         this.getAnimal(id, type, position.x, position.y, 0, 0);
         
         this.time.addEvent({ delay: 100, callback: (): void => {
-          
+          this.game.scene.keys['EventBars'].updateAnimalPrice();
           this.mergingCloud(position);
           animal1?.data.values.active.destroy();
           animal2?.data.values.active.destroy();
