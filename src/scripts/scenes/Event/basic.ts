@@ -1,13 +1,13 @@
 // цена животного
-function animalPrice(breed: number): {price: number, countAnimal: number} {
+function animalPrice(breed: number): {price: bigint, countAnimal: number} {
 
   let insideCounter: number = this.state.userEvent.countAnimal[breed - 1].counter;
-  let insidePrice: number = this.state.eventSettings.eventSettings[breed - 1].price;
-  let coefficient: number = this.state.eventSettings.priceCoefficient;
+  let insidePrice: bigint = this.state.eventSettings.eventSettings[breed - 1].price;
+  let coefficient: bigint = BigInt(this.state.eventSettings.priceCoefficient);
   
   for (let i = 1; i < insideCounter; i++) {
     
-    insidePrice += Phaser.Math.RoundTo(insidePrice * (coefficient / 100), 0);
+    insidePrice += insidePrice * coefficient / BigInt(100);
 
   }
   
@@ -56,10 +56,10 @@ function getFreePosition(): {x: number, y: number} {
 function maxBreedForBuy(): number {
 
   let breed: number = 1;
-  let breedPrice: number = Infinity;
+  let breedPrice: bigint = BigInt(100000000000000000000000000000000000000000000000000000000000000000000000);
   for (let i = 0; i < this.state.userEvent.countAnimal.length - 1; i++ ) {
-
-    let currentPrice = this.state.userEvent.countAnimal[i].counter * this.state.eventSettings.eventSettings[i].price; 
+    let counter: bigint = BigInt(this.state.userEvent.countAnimal[i].counter);
+    let currentPrice = counter * this.state.eventSettings.eventSettings[i].price; 
     if (currentPrice <= breedPrice) {
         breedPrice = currentPrice;
         breed = i + 1;
@@ -309,7 +309,7 @@ function improveCollector(): void {
 
     if (user.money >= nextLevel.price) {
 
-      user.money -= nextLevel.price;
+      user.money -= BigInt(nextLevel.price);
       user.collectorLevel++;
       this.setCollector();
 
@@ -319,7 +319,7 @@ function improveCollector(): void {
 
     } else {
 
-      let count: number = nextLevel.price - user.money;
+      let count: number = nextLevel.price - Number(user.money);
       let diamonds: number = this.convertMoney(count);
       this.state.convertor = {
         fun: 8,

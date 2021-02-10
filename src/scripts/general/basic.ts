@@ -319,30 +319,85 @@ function clickModalBtn(arr: any, action: any) {
 
 
 // сокращенные числа
-function shortNum(num: number | string): number | string {
+function shortNum(num: number | string | bigint): string {
 
-  let num1: number | string;
-  let num2: number | string;
+	num = BigInt(num)
 
-  if (num > 9999 && num < 1000000) {
-    num1 = String(num).slice(-3, -2);
-    num2 = String(num).slice(0, -3);
-    num = num2 + "." + num1 + "k";
-  } else if (num >= 1000000 && num < 1000000000) {
-    num1 = String(num).slice(-6, -5);
-    num2 = String(num).slice(0, -6);
-    num = num2 + "." + num1 + "m";
-  } else if (num >= 1000000000 && num < 1000000000000) {
-    num1 = String(num).slice(-9, -8);
-    num2 = String(num).slice(0, -9);
-    num = num2 + "." + num1 + "b";
-  } else if (num >= 1000000000000) {
-    num1 = String(num).slice(-12, -11);
-    num2 = String(num).slice(0, -12);
-    num = num2 + "." + num1 + "t";
-  }
+	if (num < BigInt(9999)) return String(num);
+	else {
+		
+		let pow10: number = 0; // Начальная степень
+		let index: string = String(num).slice(1, 3); // Второе и третье число в num для составления выходного числа
 
-  return num;
+		// Сокращаем число, определяя степень
+		while ( num >= BigInt(10) ) {
+			num /= BigInt(10);
+			pow10 += 1;
+		}
+	
+		//"лишние" нули (в конце прибавятся)
+		const nulls: number = pow10 % 3;
+	
+		//число степеней, кратное 3м
+		let pow10correctly: number = ( pow10 - nulls ) / 3;
+	
+		//название каждой 3й степени
+		let powName: string;
+	
+		//если большое (от аа)
+		if ( pow10correctly >= 5 ) {
+	
+			let character1 = 97, character2 = 97;
+	
+			while ( pow10correctly > 5 ) {
+				character2 += 1;
+				if ( character2 > 122 ) {
+					character1 += 1;
+					character2 = 97;
+				}
+				pow10correctly -= 1;
+			}
+	
+			powName = String.fromCharCode(character1) + String.fromCharCode(character2);
+	
+		} else { //если меньше "аа"
+			switch ( pow10correctly ) {
+
+				case 0:	powName = '';
+				break;
+	
+				case 1: powName = 'K';
+				break;
+	
+				case 2:	powName = 'M';
+				break;
+	
+				case 3:	powName = 'B';
+				break;
+	
+				case 4:	powName = 'T';
+				break;
+
+			}
+		}
+	
+		let newNum: string;
+		switch (nulls) {
+
+			case 0: newNum = String(num); 
+			break;
+
+			case 1: newNum = String(num) + index[0];
+			break;
+
+			case 2: newNum = String(num) + index;
+			break;
+			
+		}
+	
+		return newNum + powName.toUpperCase();
+
+	}
 
 }
 

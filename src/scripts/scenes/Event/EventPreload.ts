@@ -922,18 +922,18 @@ const testEventSettings: IeventSettings = {
   unlockCollector12: 8,
   priceCoefficient: 7,
   eventSettings: [
-    { breed: 1, resource: 100, resourcePrice: 100, price: 100, exchange: 10},
-    { breed: 2, resource: 100, resourcePrice: 200, price: 200, exchange: 20},
-    { breed: 3, resource: 100, resourcePrice: 400, price: 500, exchange: 30},
-    { breed: 4, resource: 100, resourcePrice: 800, price: 600, exchange: 40},
-    { breed: 5, resource: 100, resourcePrice: 1600, price: 800, exchange: 50},
-    { breed: 6, resource: 100, resourcePrice: 3200, price: 1000, exchange: 60},
-    { breed: 7, resource: 100, resourcePrice: 6400, price: 10000, exchange: 70},
-    { breed: 8, resource: 100, resourcePrice: 12800, price: 1000000, exchange: 80},
-    { breed: 9, resource: 100, resourcePrice: 25600, price: 1000000, exchange: 90},
-    { breed: 10, resource: 100, resourcePrice: 51200, price: 1000000, exchange: 100},
-    { breed: 11, resource: 100, resourcePrice: 102400, price: 1000000, exchange: 110},
-    { breed: 12, resource: 100, resourcePrice: 204800, price: 1000000, exchange: 120}
+    { breed: 1, resource: 100, resourcePrice: BigInt(100), price: BigInt(100000000000), exchange: 10},
+    { breed: 2, resource: 100, resourcePrice: BigInt(200), price: BigInt(2000000000000), exchange: 20},
+    { breed: 3, resource: 100, resourcePrice: BigInt(400), price: BigInt(5000000000000), exchange: 30},
+    { breed: 4, resource: 100, resourcePrice: BigInt(800), price: BigInt(6000000000000), exchange: 40},
+    { breed: 5, resource: 100, resourcePrice: BigInt(1600), price: BigInt(8000000000000), exchange: 50},
+    { breed: 6, resource: 100, resourcePrice: BigInt(3200), price: BigInt(10000000000000), exchange: 60},
+    { breed: 7, resource: 100, resourcePrice: BigInt(6400), price: BigInt(100000000000000), exchange: 70},
+    { breed: 8, resource: 100, resourcePrice: BigInt(12800), price: BigInt(1000000000000000), exchange: 80},
+    { breed: 9, resource: 100, resourcePrice: BigInt(25600), price: BigInt(100000000000000000), exchange: 90},
+    { breed: 10, resource: 100, resourcePrice: BigInt(51200), price: BigInt(1000000000000000000), exchange: 100},
+    { breed: 11, resource: 100, resourcePrice: BigInt(102400), price: BigInt(10000000000000000000), exchange: 110},
+    { breed: 12, resource: 100, resourcePrice: BigInt(204800), price: BigInt(1000000000000000000000), exchange: 120}
   ],
   territoriesEventPrice: [
     { block: 3, position: 2, diamond: 0, price: 0, unlock: 0 },
@@ -957,7 +957,7 @@ const testEventSettings: IeventSettings = {
 }
 
 const testUserEvent: IuserEvent = {
-  money: 10000,
+  money: BigInt(1000000000000000000),
   countAnimal: [ // количество купленных животных
     {counter: 1},
     {counter: 1},
