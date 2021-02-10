@@ -923,7 +923,7 @@ const testEventSettings: IeventSettings = {
   priceCoefficient: 7,
   eventSettings: [
     { breed: 1, resource: 100, resourcePrice: BigInt(100), price: BigInt(100), exchange: 10},
-    { breed: 2, resource: 100, resourcePrice: BigInt(200), price: BigInt(2000), exchange: 20},
+    { breed: 2, resource: 100, resourcePrice: BigInt(200), price: BigInt(200), exchange: 20},
     { breed: 3, resource: 100, resourcePrice: BigInt(400), price: BigInt(50000), exchange: 30},
     { breed: 4, resource: 100, resourcePrice: BigInt(800), price: BigInt(60000), exchange: 40},
     { breed: 5, resource: 100, resourcePrice: BigInt(1600), price: BigInt(80000), exchange: 50},

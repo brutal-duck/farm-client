@@ -64,7 +64,7 @@ import interval from './interval';
 import { deleteTerritoriesLocks, buyTerritory, buildBorders } from './territories';
 import setCollector from './collector';
 import autosave from './autosave';
-import { animations } from './animations';
+import { animations, flyAnimal } from './animations';
 class Event extends Phaser.Scene {
   constructor() {
     super('Event');
@@ -151,6 +151,7 @@ class Event extends Phaser.Scene {
   public getActiveAnimal = getActiveAnimal.bind(this);
   public autosave = autosave.bind(this);
   public animations = animations.bind(this);
+  public flyAnimal = flyAnimal.bind(this);
 
 
   public init(state: Istate): void {
@@ -171,6 +172,7 @@ class Event extends Phaser.Scene {
     this.interval();
     this.setCollector();
     this.animations();
+    this.flyAnimal();
     // анимации
     // let cursors = this.input.keyboard.createCursorKeys();
     // cursors.space.on('down', (): void => {
@@ -189,6 +191,7 @@ class Event extends Phaser.Scene {
     // });
 
     
+    
 
   }
 
@@ -196,6 +199,7 @@ class Event extends Phaser.Scene {
   public update(): void {
     this.animalBrain();
     this.resourcesFly();
+    
   }
 
 
