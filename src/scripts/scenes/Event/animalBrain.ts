@@ -39,7 +39,7 @@ function animalBrain(): void {
             }
             
             // шанс остановки или продолжения движения
-            if (animal.data.values.counter > random(150, 170)) {
+            if (animal.data.values.counter > random(130, 170)) {
               
               if (animal.data.values.counter >= 200) animal.data.values.counter = 0;
 

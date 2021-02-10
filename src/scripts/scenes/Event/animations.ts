@@ -378,7 +378,7 @@ function flyAnimal(): void {
       this.animals.children.entries.forEach(animal => {
         let activeAnimal: Phaser.Physics.Arcade.Sprite = animal.data.values.active;
 
-        if (activeAnimal.data.values.working && (activeAnimal.data.values.vector > 4 || !activeAnimal.data.values.moving) ) {
+        if (activeAnimal.data.values.working) {
           
           if (activeAnimal.data.values.topPosition) {
             activeAnimal.originY -= 0.0065;
