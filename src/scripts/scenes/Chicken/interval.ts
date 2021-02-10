@@ -101,17 +101,22 @@ function interval(): void {
             // рандом разброса яиц
             let minX: number = chicken.x - indent;
             let maxX: number = chicken.x + indent;
-            let minY: number = chicken.y + 60 - indent;
-            let maxY: number = chicken.y + 60 + indent;
+            let minY: number = chicken.y + 40 - indent;
+            let maxY: number = chicken.y + 40 + indent;
 
             let left: number = (territory.position - 1) * 240 + indent;
             let right: number = territory.position * 240 - indent;
+            let top: number = (territory.block) * 240 + indent;
             let bottom: number = (territory.block + 1) * 240 - indent;
 
             if (left > minX) minX = left;
             if (maxX > right) maxX = right;
-            if (maxY > bottom) maxY = bottom;
-
+            if (top > minY) minY = top;
+            if (maxY > bottom) {
+              maxY = bottom;
+              if (maxY < minY) minY -= 40;
+            }
+ 
             let egg: IchickenEgg = {
               type: chicken.type,
               x: this.random(minX, maxX),
