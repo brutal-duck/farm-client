@@ -89,6 +89,11 @@ let resource10: any = require("./../../../assets/images/event/resources/resource
 let resource11: any = require("./../../../assets/images/event/resources/resource11.png");
 let resource12: any = require("./../../../assets/images/event/resources/resource12.png");
 let disableAnimal: any = require("./../../../assets/images/event/animal/disable-animal.png");
+let merging: any = require("./../../../assets/images/event/territories/merging.png");
+let tent: any = require("./../../../assets/images/event/territories/tent.png");
+
+
+
 const testCollector: IcollectorSettings[] = [
   {
     level: 1,
@@ -1172,6 +1177,8 @@ class EventPreload extends Phaser.Scene {
     this.load.image('event-resource12', resource12);
 
     this.load.image('pixel', pixel);
+    this.load.image('event-merging', merging);
+    this.load.image('event-tent', tent);
   }
 
   

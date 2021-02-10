@@ -503,7 +503,7 @@ function eventHerdBoost(): void {
   });
 }
 
-function feedBoost(): void {
+function eventFeedBoost(): void {
   let y: number = 585 + this.height;
   this.add.tileSprite(0, y, 466, 270, 'boost-bg').setOrigin(0, 0);
   this.add.text(240, y + 20, this.state.lang.feedBoostTitle, { 
@@ -664,32 +664,9 @@ function updateFeedBoostBtn(): void {
   }
 }
 
-function updateHerdBoostBtn(): void {
-  if (this.state.modal.shopType === 4 && 
-    this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
-    this.state.user.additionalTutorial.herdBoost) {
-    let xBtn: number =  330;
-    let yBtn: number = 500 + this.height;
-    this.herdBoostTimerText.setText(this.state.lang.stillForBoost + ' ' + shortTime(this.state.timeToHerdBoost, this.state.lang));
-    if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0 && !this.herdBoostBtn.data.values.updated) { 
-      this.herdBoostBtn.data.values.updated = true;
-      // если не взят буст
-      this.herdBoostBtnLeftText.setText(this.state.lang.pickUp); 
-      this.herdBoostDiamondBtn.setVisible(false);
-      this.herdBoostBtn.setY(yBtn - 23);
-      this.herdBoostBtnLeftText.setY(yBtn - 25);
-      this.herdBoostBtnLeftText.setX(xBtn);
-      this.herdBoostBtnLeftText.setOrigin(0.5, 0.5);
-      this.herdBoostBtnRightText.setVisible(false);
-      this.herdBoostTimerText.setVisible(false);
-    } 
-  }
-}
-
 export {
   animalMoney,
   animals,
   updateAnimalPrices,
   eventCollectorBoost,
-  eventHerdBoost,
 }

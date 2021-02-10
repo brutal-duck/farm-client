@@ -1915,7 +1915,8 @@ function updateNativeShop(): void {
 
 function updateHerdBoostBtn(): void {
   if (this.state.modal.shopType === 4 && 
-    this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
+    (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl || 
+    this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].herdBoostLvl)  &&
     this.state.user.additionalTutorial.herdBoost) {
     let xBtn: number =  330;
     let yBtn: number = 500 + this.height;
