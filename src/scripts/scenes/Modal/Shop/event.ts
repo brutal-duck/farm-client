@@ -177,7 +177,7 @@ function animals(): void {
 
       heightBtn = btn.btn.height;
 
-    } else if (animal.breed <= this.state.userEvent.maxLevelAnimal - 3 || animal.breed === 2 && this.state.userEvent.maxLevelAnimal >= 2) {
+    } else if (animal.breed <= this.state.userEvent.maxLevelAnimal - 3 || animal.breed === 2 && this.state.userEvent.maxLevelAnimal > 2) {
 
       let diamondPrice :number = 10;
       
@@ -196,7 +196,7 @@ function animals(): void {
 
       heightBtn = btn.btn.height;
 
-    } else if (animal.breed <= this.state.userEvent.maxLevelAnimal - 2 || animal.breed === 3 && this.state.userEvent.maxLevelAnimal >= 3) {
+    } else if (animal.breed <= this.state.userEvent.maxLevelAnimal - 2 || animal.breed === 3 && this.state.userEvent.maxLevelAnimal > 3) {
 
       let diamondPrice: number = 20;
       
@@ -215,7 +215,7 @@ function animals(): void {
 
       heightBtn = btn.btn.height;
 
-    } else if (animal.breed <= this.state.userEvent.maxLevelAnimal - 1 || animal.breed === 4 && this.state.userEvent.maxLevelAnimal >=4) {
+    } else if (animal.breed <= this.state.userEvent.maxLevelAnimal - 1 || animal.breed === 4 && this.state.userEvent.maxLevelAnimal > 4) {
 
       let diamondPrice: number = 40;
       
