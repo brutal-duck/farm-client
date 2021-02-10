@@ -36,7 +36,7 @@ function buyTerritory(): void {
       // 70% от суммы покупки
       let price: number = Math.round((settings.price / 100) * 70);
 
-      if (this.state.userEvent.money >= price) {
+      if (this.state.userEvent.money >= BigInt(price)) {
         
         // this.state.amplitude.getInstance().logEvent('buy_territory', {
         //   block: this.state.territory.data.values.block,
@@ -45,7 +45,7 @@ function buyTerritory(): void {
         // });
     
         this.state.territory.data.values.type = 2;
-        this.state.userEvent.money -= price;
+        this.state.userEvent.money -= BigInt(price);
     
         const territory: Phaser.Physics.Arcade.Sprite = this.state.territory;
     
