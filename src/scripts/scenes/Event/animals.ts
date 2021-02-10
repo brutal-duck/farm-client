@@ -145,7 +145,7 @@ function getActiveAnimal(
   y: number,
   base: Phaser.Physics.Arcade.Sprite,
   counter: number = 0,
-  vector: number = 7,
+  vector: number = Phaser.Math.Between(1, 8),
   load: boolean = false): Phaser.Physics.Arcade.Sprite {
 
   let animal: Phaser.Physics.Arcade.Sprite = this.physics.add.sprite(x, y, 'animal' + type).setInteractive().setDepth(y+100);
@@ -168,7 +168,6 @@ function getActiveAnimal(
   animal.data.values.resource = 0;
   animal.data.values.base = base;
   animal.state = 'active';
-  
 
   return animal;
 
