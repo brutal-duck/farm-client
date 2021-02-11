@@ -400,9 +400,26 @@ function flyAnimal(): void {
 
 }
 
+function plusResourceAnimation(position: Iposition, texture: string): void {
+  
+  let y = position.y - this.game.scene.keys[this.state.farm].scrolling.scrollY;
+
+  let resource: Phaser.GameObjects.Sprite = this.сurrency.create(position.x, y, 'event-resource' + texture);
+  resource.setDataEnabled();
+  resource.data.values.counter = 0;
+
+  let target: Iposition = { x: 495, y: 80 }
+  let aim = new Phaser.Math.Vector2();
+  aim.x = target.x;
+  aim.y = target.y;
+  let distance: number = Phaser.Math.Distance.Between(resource.x, resource.y, target.x, target.y) * 2;
+  this.physics.moveToObject(resource, aim, distance);
+
+}
 
 export {
   animations,
   pulseCollector,
-  flyAnimal
+  flyAnimal,
+  plusResourceAnimation
 }

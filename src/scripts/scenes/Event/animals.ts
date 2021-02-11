@@ -329,23 +329,13 @@ function getResource(data: IeventResource): void {
 }
 
 function collectResource(resource: Phaser.Physics.Arcade.Sprite): void {
-
-  let end: Iposition = {
-    x: 720,
-    y: 0
-  }
   
   let price: number = this.state.eventSettings.eventSettings.find((data: IeventPoints) => data.breed === resource.data.values.type).resourcePrice;
   
   resource.data.values.click = false;
   this.state.userEvent.money += price;
-  let target = new Phaser.Math.Vector2();
-  resource.data.values.distance = Phaser.Math.Distance.Between(resource.x, resource.y, end.x, end.y);
-  
-  target.x = end.x;
-  target.y = end.y;
-  resource.data.values.target = end;
-  this.physics.moveToObject(resource, target, 100);
+  this.game.scene.keys['EventBars'].plusResourceAnimation({x: resource.x, y: resource.y}, resource.data.values.type);
+  resource.destroy();
 
 }
 
