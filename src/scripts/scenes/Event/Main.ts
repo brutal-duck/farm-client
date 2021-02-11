@@ -56,7 +56,8 @@ import {
   collectResource, 
   resourcesFly,
   expelAnimal, 
-  getActiveAnimal
+  getActiveAnimal,
+  updateTeleportation
 } from './animals';
 import drag  from './drag';
 import { animalBrain, collisions } from './animalBrain';
@@ -152,6 +153,7 @@ class Event extends Phaser.Scene {
   public autosave = autosave.bind(this);
   public animations = animations.bind(this);
   public flyAnimal = flyAnimal.bind(this);
+  public updateTeleportation = updateTeleportation.bind(this);
 
 
   public init(state: Istate): void {
@@ -199,6 +201,8 @@ class Event extends Phaser.Scene {
   public update(): void {
     this.animalBrain();
     this.resourcesFly();
+    this.updateTeleportation();
+    
     
   }
 
