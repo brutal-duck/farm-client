@@ -7,7 +7,6 @@ import {
   click,
   clickTerritory,
   logout,
-  exchange,
   onlineStatus,
   takeDonate,
   debug, 
@@ -42,7 +41,8 @@ import {
   freeCollector, 
   buyCollector,
   convertMoney,
-  improveCollector
+  improveCollector,
+  exchange
 } from './basic';
 import { 
   buyAnimal, 
