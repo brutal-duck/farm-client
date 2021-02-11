@@ -23,7 +23,7 @@ import {
   plusDiamonds,
   firework250
 } from '../../general/animations';
-import { pulseCollector } from './animations';
+import { pulseCollector, plusResourceAnimation } from './animations';
 import {
   registration,
   chatWindow
@@ -92,6 +92,7 @@ class EventBars extends Phaser.Scene {
   public plusDiamonds = plusDiamonds.bind(this);
   public firework250 = firework250.bind(this);
   public updateNativeShop = updateNativeShop.bind(this);
+  public plusResourceAnimation = plusResourceAnimation.bind(this);
 
 
   public init(state: Istate): void {

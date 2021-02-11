@@ -346,6 +346,67 @@ function improveCollector(): void {
   
 }
 
+function exchange(ad: boolean = false): void {
+
+  let user: IuserEvent  = this.state.userEvent;
+  let buyAnimal = (): void => this.buyAnimal(this.state.convertor.breed);
+
+  if (this.state.convertor.diamonds > this.state.user.diamonds) {
+
+    let countResources = this.state.convertor.diamonds - this.state.user.diamonds;
+
+    this.time.addEvent({ delay: 100, callback: (): void => {
+
+      this.state.convertor.type = 2;
+      this.state.convertor.count = countResources;
+
+      let modal: Imodal = {
+        type: 1,
+        sysType: 4
+      }
+      this.state.modal = modal;
+      this.scene.launch('Modal', this.state);
+      
+    }, callbackScope: this, loop: false });
+
+  } else {
+
+    this.state.user.diamonds -= this.state.convertor.diamonds;
+    user.money += BigInt(this.convertDiamonds(this.state.convertor.diamonds));
+
+    if (!ad) {
+
+      // this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+      //   type: 'convertor',
+      //   count: this.state.convertor.diamonds,
+      //   farm_id: this.state.farm
+      // });
+
+    }
+
+    if (this.state.convertor.fun === 1) {
+      buyAnimal();
+    } else if (this.state.convertor.fun === 2) {
+      // this.fairLevelUp();
+    } else if (this.state.convertor.fun === 3) {
+      // this.improveTerritory();
+    } else if (this.state.convertor.fun === 4) {
+      // this.exchangeTerritory();
+    } else if (this.state.convertor.fun === 5) {
+      // this.installTerritory();
+    } else if (this.state.convertor.fun === 6) {
+      this.buyTerritory();
+    } else if (this.state.convertor.fun === 7) {
+      // this.buyNextFarm();
+    } else if (this.state.convertor.fun === 8) {
+      this.improveCollector();
+    }
+
+  }
+  
+}
+
+
 export {
   animalPrice,
   maxBreedForBuy,
@@ -356,4 +417,5 @@ export {
   convertDiamonds,
   convertMoney,
   improveCollector,
+  exchange
 }

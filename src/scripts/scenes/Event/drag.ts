@@ -30,7 +30,6 @@ function drag(): void {
 
   // дропзоны для мерджинга
   this.input.on('drop', (pointer: any, animal: Phaser.Physics.Arcade.Sprite, zone: Phaser.GameObjects.Zone): void => {
-
     if (animal.state === 'base') {
       if (zone.type === 'type0') {
         this.teleportation(animal); 
@@ -60,8 +59,6 @@ function drag(): void {
          animal.y = zone.y + zone.height / 2;
          animal.setDepth(animal.y + 100);
          
-         
-
         } 
       } 
     }
@@ -71,14 +68,15 @@ function drag(): void {
   });
   
   this.input.on('dragend', (pointer: any, animal: Phaser.Physics.Arcade.Sprite): void => {
-    if (!animal.data.values.zone)  {
-      this.teleportation(animal); 
-      return;
-    }
-
     this.scrolling.enabled = true; // включаем скролл
     this.scrolling.wheel = true; // включаем колесо
     animal.data.values.drag = false; // убираем метку перетаскивания
+    
+    if (!animal.data.values.zone)  {
+      this.teleportation(animal, undefined, true); 
+      return;
+    }
+
     if (animal.state === 'active') {
       animal.data.values.aim = false;
       animal.data.values.aimX = 0;
@@ -99,17 +97,18 @@ function drag(): void {
   
             // удаление животного
             if (territory.data.values.type === 0) {
-              animal.data.values.base.expel = true;
-              this.teleportation(animal);
+              animal.data.values.base.data.values.expel = true;
+              this.teleportation(animal, undefined, true);
               this.state.animal = animal.data.values.base;
               this.confirmExpelAnimal();
     
             } else {
-              animal.data.values.expel = false;
+              
+              animal.data.values.base.data.values.expel = false;
               this.checkMerging(animal); 
             }
           }
-        } else this.teleportation(animal);
+        } else this.teleportation(animal, undefined, true);
       }
 
     } else if (animal.state === 'base') {
@@ -122,7 +121,7 @@ function drag(): void {
           // удаление животного
           if (territory.data.values.type === 0) {
             animal.data.values.expel = true;
-            this.teleportation(animal);
+            this.teleportation(animal, undefined, true);
             this.state.animal = animal;
             this.confirmExpelAnimal();
   
@@ -131,7 +130,7 @@ function drag(): void {
             this.checkMerging(animal); 
           }
         }
-      } else this.teleportation(animal);
+      } else this.teleportation(animal, undefined, true);
     }
 
 

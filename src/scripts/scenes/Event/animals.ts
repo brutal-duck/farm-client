@@ -1,26 +1,160 @@
 import { random, randomString } from '../../general/basic';
 
+function updateTeleportation() {
+  this.animals.children.entries.forEach((animal) => {
+    
+    if (animal.data.values.active.data.values.teleport) {
+      let distance: number = Phaser.Math.Distance.Between(animal.data.values.active.x, animal.data.values.active.y, animal.data.values.oldX, animal.data.values.oldY);
+      if (distance < 40) {
+        animal.data.values.active.body.reset(animal.data.values.oldX, animal.data.values.oldY);
+        animal.data.values.active.teleport = false;
+        animal.data.values.active.setDepth(animal.y + 100);
+       
+      }
 
-// телепортация животного на старое место
-function teleportation(animal: Phaser.Physics.Arcade.Sprite): void {
-  if (animal.state === 'active') {
-    animal.x = animal.data.values.base.x;
-    animal.y = animal.data.values.base.y;
-    animal.data.values.drag = false; // убираем метку перетаскивания
-    animal.data.values.aim = false;
-    animal.setVelocity(0);
-    animal.data.values.aimX = 0;
-    animal.data.values.aimY = 0;
-    animal.data.values.working = false;
-    animal.setDepth(animal.data.values.base.y + 100);
-  } else if (animal.state === 'base') {
-    animal.x = animal.data.values.oldX;
-    animal.y = animal.data.values.oldY;
-    animal.setDepth(animal.y);
-  }
+    }
 
+    if (animal.data.values.teleport) {
+      let distance: number = Phaser.Math.Distance.Between(animal.x, animal.y, animal.data.values.oldX, animal.data.values.oldY);
+      console.log('animal x', animal.x);
+      
+      console.log(distance)
+      if (distance < 40) {
+        animal.body.reset(animal.data.values.oldX, animal.data.values.oldY);
+        animal.setDepth(animal.y);
+        animal.data.values.teleport = false;
+        this.checkMerging(animal);
+      }
+    }
+    
+  })
+}
+
+function teleportation(
+  animal1: Phaser.Physics.Arcade.Sprite, 
+  animal2?: Phaser.Physics.Arcade.Sprite, 
+  click: boolean = false
+  ): void {
+ 
+  if (animal1.data.values.drag === false) {
+
+    if (!animal2) {
+      
+      if (click) {
+
+        if (animal1.state === 'active') {
+
+          let target: Iposition = new Phaser.Math.Vector2();
+          target.x = animal1.data.values.base.x;
+          target.y = animal1.data.values.base.y;
+          animal1.data.values.teleport = true;
+          animal1.data.values.drag = false; // убираем метку перетаскивания
+          animal1.data.values.aim = false;
+          animal1.setVelocity(0);
+          animal1.data.values.aimX = 0;
+          animal1.data.values.aimY = 0;
+          animal1.data.values.working = false;
+          animal1.setDepth(animal1.data.values.base.y + 100);
   
+          let speed: number = Phaser.Math.Distance.Between(animal1.x, animal1.y, target.x, target.y) * 4;
+          
+          this.physics.moveToObject(animal1, target, speed);
 
+        } else if (animal1.state === 'base') {
+
+          let target: Iposition = new Phaser.Math.Vector2();
+          target.x = animal1.data.values.oldX;
+          target.y = animal1.data.values.oldY;
+          animal1.data.values.teleport = true;
+          let speed: number = Phaser.Math.Distance.Between(animal1.x, animal1.y, target.x, target.y) * 4;
+          
+          this.physics.moveToObject(animal1, target, speed);
+        }
+        
+      } else {
+
+        if (animal1.state === 'active') {
+        
+          animal1.data.values.base.x = animal1.x;
+          animal1.data.values.base.y = animal1.y;
+          animal1.data.values.base.data.values.oldX = animal1.data.values.base.x;
+          animal1.data.values.base.data.values.oldY = animal1.data.values.base.y;
+          animal1.setDepth(animal1.y + 1);
+          animal1.data.values.base.setDepth(animal1.y);
+  
+        } else if (animal1.state === 'base') {
+          animal1.data.values.oldX = animal1.x;
+          animal1.data.values.oldY = animal1.y;
+          animal1.setDepth(animal1.y);
+        }
+      }
+    
+    } else {
+      
+      if (animal1.state === 'active') {
+
+        let target: Iposition = new Phaser.Math.Vector2();
+        target.x = animal1.data.values.base.data.values.oldX;
+        target.y = animal1.data.values.base.data.values.oldY;
+        let speed: number = Phaser.Math.Distance.Between(animal2.x, animal2.y, target.x, target.y) * 4;
+        this.physics.moveToObject(animal2, target, speed);
+        animal2.data.values.teleport = true;
+
+        if (animal2.state === 'active') {
+
+          animal1.data.values.base.x = animal1.x;
+          animal1.data.values.base.y = animal1.y;
+          animal1.data.values.base.data.values.oldX = animal1.data.values.base.x;
+          animal1.data.values.base.data.values.oldY = animal1.data.values.base.y;
+
+          animal2.data.values.base.data.values.oldX = target.x;
+          animal2.data.values.base.data.values.oldY = target.y;
+          
+          this.physics.moveToObject(animal2.data.values.base, target, speed);
+          animal2.data.values.base.data.values.teleport = true;
+        } else if (animal2.state === 'base') {
+
+          animal1.data.values.oldX = animal1.data.values.base.x;
+          animal1.data.values.oldY = animal1.data.values.base.y;
+          
+          animal2.data.values.oldX = target.x;
+          animal2.data.values.oldY = target.y;
+        }
+
+      } else if (animal1.state === 'base') {
+        console.log('animal1 - base')
+        let target: Iposition = new Phaser.Math.Vector2();
+        target.x = animal1.data.values.oldX;
+        target.y = animal1.data.values.oldY;
+
+        animal2.data.values.oldX = target.x;
+        animal2.data.values.oldY = target.y;
+
+        animal1.data.values.oldX = animal1.x;
+        animal1.data.values.oldY = animal1.y;
+
+        console.log(animal1.x, animal1.y)
+        console.log(target)
+        let speed: number = Phaser.Math.Distance.Between(animal2.x, animal2.y, target.x, target.y) * 4;
+        let distance: number = Phaser.Math.Distance.Between(animal2.x, animal2.y, target.x, target.y)
+        console.log('distance', distance)
+        this.physics.moveToObject(animal2, target, speed);
+        animal2.data.values.teleport = true;
+
+        if (animal2.state === 'active') {
+
+          animal2.data.values.base.data.values.teleport = true;
+          
+          this.physics.moveToObject(animal2.data.values.base, target, speed);
+          
+
+        } else if (animal2.state === 'base') {
+          console.log('animal2 - base')
+        }
+      }
+      this.checkMerging(animal1);
+    }
+  }
 }
 
 // функция реверсивного движения животного
@@ -126,12 +260,13 @@ function getAnimal(
   animal.data.values.type = type; // порода курицы
   animal.data.values._id = id; // id
   animal.data.values.expel = false; // метка изгнания
+  animal.data.values.teleport = false; // метка телепорта
   animal.state = 'base';
   this.checkMerging(animal);
   animal.data.values.active =  this.getActiveAnimal(id,type,x, y, animal);
     
   this.click(animal, ()=>{
-    this.teleportation(animal.data.values.active);
+    this.teleportation(animal.data.values.active, undefined, true);
   })
   return animal;
 
@@ -167,6 +302,7 @@ function getActiveAnimal(
   animal.data.values.changeVector = false; // метка смены вектора
   animal.data.values.resource = 0;
   animal.data.values.base = base;
+  animal.data.values.teleport = false;
   animal.data.values.topPosition = false;
   animal.state = 'active';
 
@@ -193,23 +329,13 @@ function getResource(data: IeventResource): void {
 }
 
 function collectResource(resource: Phaser.Physics.Arcade.Sprite): void {
-
-  let end: Iposition = {
-    x: 720,
-    y: 0
-  }
   
   let price: number = this.state.eventSettings.eventSettings.find((data: IeventPoints) => data.breed === resource.data.values.type).resourcePrice;
   
   resource.data.values.click = false;
   this.state.userEvent.money += price;
-  let target = new Phaser.Math.Vector2();
-  resource.data.values.distance = Phaser.Math.Distance.Between(resource.x, resource.y, end.x, end.y);
-  
-  target.x = end.x;
-  target.y = end.y;
-  resource.data.values.target = end;
-  this.physics.moveToObject(resource, target, 100);
+  this.game.scene.keys['EventBars'].plusResourceAnimation({x: resource.x, y: resource.y}, resource.data.values.type);
+  resource.destroy();
 
 }
 
@@ -344,11 +470,11 @@ function expelAnimal(): void {
 
 // мерджинг на в клетках
 function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
+
   let territory: Phaser.Physics.Arcade.Sprite;
   let oldTerritory: Phaser.Physics.Arcade.Sprite;
+
   if (animal.state === 'active') {
-    
-    animal.data.values.base.data.values.merging = true;
     
     territory = this.currentTerritory(animal.x, animal.y);
     let check: any = territory?.data.values.merging.find((data: any) => data._id === animal.data.values.base.data.values._id);
@@ -358,31 +484,26 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
       this.state.userEvent.maxLevelAnimal = animal.data.values.base.data.values.type;
       this.deleteTerritoriesLocks();
       // показать экран нового единорога
+      console.log('новый единорог получен!')
     }
-  
+    
     if (check === undefined) {
       territory?.data.values.merging.push({
         _id: animal.data.values.base.data.values._id,
         type: animal.data.values.base.data.values.type
-      })
+      });
+
     }
-    
+
     // очистка старой территории
     if (territory?.data.values.merging.length === 1) {
       if (oldTerritory !== undefined && oldTerritory !== territory) {
         oldTerritory.data.values.merging = [];
-        animal.data.values.base.x = animal.x;
-        animal.data.values.base.y = animal.y;
-        animal.data.values.base.data.values.oldX = animal.x;
-        animal.data.values.base.data.values.oldY = animal.y;
-        animal.data.values.base.setDepth(animal.y);
-
+        this.teleportation(animal);
       }
     }
   
   } else if (animal.state === 'base') {
-
-    animal.data.values.merging = true;
     
     territory = this.currentTerritory(animal.x, animal.y);
     let check = territory?.data.values.merging.find((data: any) => data._id === animal.data.values._id);
@@ -392,6 +513,7 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
       this.state.userEvent.maxLevelAnimal = animal.data.values.type;
       this.deleteTerritoriesLocks();
       // показать экран нового единорога
+      console.log('новый единорог получен!')
     }
   
     if (check === undefined) {
@@ -400,14 +522,12 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
         type: animal.data.values.type
       })
     }
-    
+
     // очистка старой территории
     if (territory?.data.values.merging.length === 1) {
       if (oldTerritory !== undefined && oldTerritory !== territory) {
         oldTerritory.data.values.merging = [];
-        animal.data.values.oldX = animal.x;
-        animal.data.values.oldY = animal.y;
-        animal.setDepth(animal.y);
+        this.teleportation(animal);
       }
     }
   }
@@ -418,7 +538,7 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
   
     let animal1: Phaser.Physics.Arcade.Sprite = this.animals.children.entries.find((data: any) => data.data.values._id === territory.data.values.merging[0]._id);
     let animal2: Phaser.Physics.Arcade.Sprite = this.animals.children.entries.find((data: any) => data.data.values._id === territory.data.values.merging[1]._id);
-    
+
     if (animal1 && animal2) {
       if (animal1?.data.values.type === animal2?.data.values.type) {
         const position: Iposition = {
@@ -429,7 +549,9 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
         const type: number = animal1.data.values.type + 1;
         const id: string = 'local_' + randomString(18);
         
-        oldTerritory.data.values.merging = [];
+        if (oldTerritory !== undefined && oldTerritory !== territory) {
+          oldTerritory.data.values.merging = [];
+        }
         territory.data.values.merging = [];
         this.getAnimal(id, type, position.x, position.y, 0, 0);
         
@@ -445,9 +567,33 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
       } else {
 
         this.time.addEvent({ delay: 100, callback: (): void => {
-        territory.data.values.merging.pop();
-        this.teleportation(animal2); 
-        if (animal.state === 'active') this.teleportation(animal2.data.values.active);
+        territory.data.values.merging = [];
+        if (oldTerritory !== undefined && oldTerritory !== territory) {
+          oldTerritory.data.values.merging = [];
+        }
+        
+        
+        if (animal.state === 'active') {
+          
+          if (!animal1.data.values.active.data.values.working) {
+            
+            this.teleportation(animal2.data.values.active, animal1.data.values.active); 
+            
+          } else this.teleportation(animal2.data.values.active, animal1);
+
+        } else if (animal.state === 'base') {
+          
+          if (!animal1.data.values.active.data.values.working && !animal2.data.values.teleport && !animal2.data.values.active.data.values.teleport) {
+            console.log('animal на который - active')
+            console.log(animal2.data.values)
+            this.teleportation(animal2, animal1.data.values.active); 
+          } else {
+            console.log('animal на который - base')
+            this.teleportation(animal2, animal1);
+            
+          }
+        }
+
         }, callbackScope: this, loop: false });
       }
     }
@@ -468,6 +614,7 @@ export {
   expelAnimal,
   checkMerging,
   collectResource,
-  getActiveAnimal
+  getActiveAnimal,
+  updateTeleportation
   
 }

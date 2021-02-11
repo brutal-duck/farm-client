@@ -154,7 +154,7 @@ function world(): void {
       // this.buyTerritory();
       if (territory.data?.values.merging.length > 0) {
         let animal: Phaser.Physics.Arcade.Sprite = this.animals.children.entries.find((data: any) => data.data.values._id === territory.data.values.merging[0]._id)
-        this.teleportation(animal.data.values.active);
+        this.teleportation(animal.data.values.active, undefined, true);
       }
 
     });
