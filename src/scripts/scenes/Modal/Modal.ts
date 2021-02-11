@@ -320,8 +320,13 @@ class Modal extends Phaser.Scene {
         this.systemWindow();
         break;
       case 2: // магазин
-        this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + 70, 'shop-window');
-        this.scene.launch('Shop', this.state);
+        // this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + 70, 'shop-window');
+        // this.scene.launch('Shop', this.state);
+
+        this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + this.chatHeight, 'chat-bg');
+        this.createChatBars(this.chatHeight)
+        this.scene.launch('Chat', this.state);
+
         break;
       case 3: // окно с заданиями
         this.tasks();
