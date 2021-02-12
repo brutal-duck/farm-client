@@ -267,6 +267,8 @@ class EventBars extends Phaser.Scene {
 
   public update(): void {
 
+    this.сurrency.children.entries.forEach((item: Phaser.GameObjects.Sprite) => item.angle += 20); // при полете ресурсов их вращаем
+
     if (this.userDiamonds < this.state.user.diamonds) {
 
       if (this.countIncrease === 0) {
