@@ -64,7 +64,11 @@ class Chat extends Phaser.Scene {
         time: '22.22.2222',
         text: 'yeryr'
       },
-
+      {
+        name: 'user1',
+        time: '22.22.2222',
+        text: 'yeryr ца24а2в'
+      },
     ]
   }
 
@@ -97,31 +101,31 @@ class Chat extends Phaser.Scene {
     // .lineStyle(2, 0xF4E404)
     // .strokeRect(cameraOptions.x, cameraOptions.y, cameraOptions.width, cameraOptions.height);
 
-    let y = this.height;
-    for (let i = 0; i < 10; i++) {
-      this.add.sprite(cameraOptions.x + 120, y + (i * 100), 'img').setOrigin(0)
-      this.add.text(cameraOptions.x + 100, y + (i * 100), String(i + 1)).setOrigin(0)
-      if (i !== 0) this.scrollHeight += 100
-    }
+    // let y = this.height;
+    // for (let i = 0; i < 10; i++) {
+    //   this.add.sprite(cameraOptions.x + 120, y + (i * 100), 'img').setOrigin(0)
+    //   this.add.text(cameraOptions.x + 100, y + (i * 100), String(i + 1)).setOrigin(0)
+    //   if (i !== 0) this.scrollHeight += 100
+    // }
     
-    // Исходящее
-    let outputMsgBg = this.add.graphics()
-    .fillStyle(0x63527F, 1)
-    .fillRoundedRect(100, cameraOptions.height + this.scrollHeight + 4, 370, 60, 24)
-    let outputMsg = this.add.graphics()
-    .fillStyle(0x6162AD, 1)
-    .fillRoundedRect(100, cameraOptions.height + this.scrollHeight, 370, 60, 24)
+    // // Исходящее
+    // let outputMsgBg = this.add.graphics()
+    // .fillStyle(0x63527F, 1)
+    // .fillRoundedRect(100, cameraOptions.height + this.scrollHeight + 4, 370, 60, 24)
+    // let outputMsg = this.add.graphics()
+    // .fillStyle(0x6162AD, 1)
+    // .fillRoundedRect(100, cameraOptions.height + this.scrollHeight, 370, 60, 24)
 
-    this.scrollHeight += 100
+    // this.scrollHeight += 100
 
-    let getedMsgBg = this.add.graphics()
-    .fillStyle(0x64527A, 1)
-    .fillRoundedRect(10, cameraOptions.height + this.scrollHeight + 4, 370, 60, 24)
-    let getedMsg = this.add.graphics()
-    .fillStyle(0xFADAC1, 1)
-    .fillRoundedRect(10, cameraOptions.height + this.scrollHeight, 370, 60, 24)
+    // let getedMsgBg = this.add.graphics()
+    // .fillStyle(0x64527A, 1)
+    // .fillRoundedRect(10, cameraOptions.height + this.scrollHeight + 4, 370, 60, 24)
+    // let getedMsg = this.add.graphics()
+    // .fillStyle(0xFADAC1, 1)
+    // .fillRoundedRect(10, cameraOptions.height + this.scrollHeight, 370, 60, 24)
 
-    this.scrollHeight += 100
+    // this.scrollHeight += 100
 
     this.buildMessages()
 
@@ -142,12 +146,15 @@ class Chat extends Phaser.Scene {
       
       if (this.msg[i].name === this.userName) {
 
+        
+        
+
         // СООБЩЕНИЯ ПОЛЬЗОВАТЕЛЯ
-        let padding: number = 32
-        if (this.lastMsgFromUser !== this.msg[i].name) padding = 8
+        let padding: number = this.windowHeight + this.scrollHeight + 10
+        if (this.lastMsgFromUser !== this.msg[i].name) padding += 26
     
         // Текст исходящего сообщения
-        let outputText: Phaser.GameObjects.Text = this.add.text(this.windowWidth - this.textWrap - 24, this.windowHeight + this.scrollHeight + padding, this.msg[i].text + 'kjlk', {
+        let outputText: Phaser.GameObjects.Text = this.add.text(this.windowWidth - this.textWrap - 24, padding, this.msg[i].text, {
           font: '19px Shadow',
           color: '#FADAC1',
           align: 'left',
@@ -160,6 +167,8 @@ class Chat extends Phaser.Scene {
         let textHeight: number = outputText.getBounds().height
         let textWidth: number = outputText.getBounds().width
         
+        let top: number = outputText.y // для проверки
+        let n: number = 10
     
         // Текст Ника
         if (this.lastMsgFromUser !== this.msg[i].name) {
@@ -169,15 +178,17 @@ class Chat extends Phaser.Scene {
             color: '#63527F',
             align: 'right'
           })
-          .setOrigin(0, 0)
+          .setOrigin(0)
           .setCrop(0, 0, this.windowWidth - 40, 100)
           .setDepth(1)
     
           let nicknameTextWidth: number = nicknameText.getBounds().width
           if (nicknameTextWidth < 479) nicknameText.setX(this.windowWidth - nicknameTextWidth - 10)
+
+          top = nicknameText.y
+          n = 26
     
         }
-    
     
         // Время исходящего сообщения
         let timeText: Phaser.GameObjects.Text = this.add.text(this.windowWidth - 24, outputText.y + textHeight + 36, this.msg[i].time, {
@@ -219,18 +230,24 @@ class Chat extends Phaser.Scene {
         .fillRoundedRect(bgX, outputText.y - 14, bgWidth + 28, textHeight + 28, bgRound)
         
         this.lastMsgFromUser = this.msg[i].name
-    
-        // Добавляем длинну скролла
-        this.scrollHeight += textHeight + timeHeight + padding * 2
 
+        let bot: number = 14 + textHeight + 8 + timeHeight + 8 + n
+        
+        // Добавляем длинну скролла = \расстояние от краев фона до текста\ + \высота текста\ + \отступ текста времени\ + \высота текста времени\ + \расстояние до нижней границы\
+        this.scrollHeight += 28 + textHeight + 8 + timeHeight + 8
+        
+        let graphics: Phaser.GameObjects.Graphics = this.add.graphics()
+        .lineStyle(2, 0xF4E404)
+        .strokeRect(bgX, top, bgWidth + 28, bot);
+        //////////////////////////////////////
       } else {
 
         // ВХОДЯЩИЕ СООБЩЕНИЯ
-        let padding: number = 34
-        // if (this.lastMsgFromUser !== this.msg[1].name) padding = 20
+        let padding: number = this.windowHeight + this.scrollHeight + 10
+        if (this.lastMsgFromUser !== this.msg[i].name) padding += 26
         
         // Текст сообщения
-        let gettedText: Phaser.GameObjects.Text = this.add.text(24, this.windowHeight + this.scrollHeight + padding, this.msg[i].text, {
+        let gettedText: Phaser.GameObjects.Text = this.add.text(24, padding, this.msg[i].text, {
           font: '19px Shadow',
           color: '#5E340C',
           align: 'left',
@@ -244,27 +261,26 @@ class Chat extends Phaser.Scene {
         let textWidth: number = gettedText.getBounds().width
       
         // Текст Ника
-        // if (this.lastMsgFromUser !== this.msg[0].name) {
+        if (this.lastMsgFromUser !== this.msg[i].name) {
       
           let nicknameText: Phaser.GameObjects.Text = this.add.text(10, gettedText.y - 34, this.msg[i].name, {
             font: '18px Shadow',
             color: '#FADAC1',
             align: 'right'
           })
-      
           .setOrigin(0)
           .setCrop(0, 0, this.windowWidth - 40, 100)
           .setDepth(1)    
       
-        // }
+        }
       
         // Время сообщения
-        let timeText: Phaser.GameObjects.Text = this.add.text(24, gettedText.y + textHeight + 20, this.msg[i].time, {
+        let timeText: Phaser.GameObjects.Text = this.add.text(24, gettedText.y + textHeight + 36, this.msg[i].time, {
           font: '16px Shadow',
           color: '#FADAC1',
           align: 'right'
         })
-        .setOrigin(0)
+        .setOrigin(0, 1)
         .setDepth(1)
       
         let timeHeight: number = timeText.getBounds().height
@@ -295,8 +311,8 @@ class Chat extends Phaser.Scene {
       
         this.lastMsgFromUser = this.msg[i].name
         
-        // Добавляем длинну скролла
-        this.scrollHeight += textHeight + timeHeight + padding * 2
+        // Добавляем длинну скролла = \расстояние от краев фона до текста\ + \высота текста\ + \отступ текста времени\ + \высота текста времени\ + \расстояние до нижней границы\
+        this.scrollHeight += 28 + textHeight + 8 + timeHeight + 8
 
         
       }
