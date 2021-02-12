@@ -49,15 +49,12 @@ import {
   getAnimal, 
   confirmExpelAnimal, 
   checkMerging, 
-  teleportation, 
   reverse, 
   aim, 
   getResource, 
   collectResource, 
-  resourcesFly,
   expelAnimal, 
   getActiveAnimal,
-  updateTeleportation
 } from './animals';
 import drag  from './drag';
 import { animalBrain, collisions } from './animalBrain';
@@ -65,7 +62,7 @@ import interval from './interval';
 import { deleteTerritoriesLocks, buyTerritory, buildBorders } from './territories';
 import setCollector from './collector';
 import autosave from './autosave';
-import { animations, flyAnimal } from './animations';
+import { animations, flyAnimal, teleportation, updateTeleportation } from './animations';
 class Event extends Phaser.Scene {
   constructor() {
     super('Event');
@@ -142,7 +139,6 @@ class Event extends Phaser.Scene {
   public getResource = getResource.bind(this);
   public interval = interval.bind(this);
   public collectResource = collectResource.bind(this);
-  public resourcesFly = resourcesFly.bind(this);
   public deleteTerritoriesLocks = deleteTerritoriesLocks.bind(this);
   public buyTerritory = buyTerritory.bind(this);
   public expelAnimal = expelAnimal.bind(this);
@@ -200,10 +196,7 @@ class Event extends Phaser.Scene {
 
   public update(): void {
     this.animalBrain();
-    this.resourcesFly();
-    this.updateTeleportation();
-    
-    
+    this.updateTeleportation();    
   }
 
 

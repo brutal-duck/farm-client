@@ -32,7 +32,8 @@ import {
   confirmExpelAnimal,
   eventConvertor,
   buyEventTerritory,
-  improveCollectorEvent
+  improveCollectorEvent,
+  herdBoostEventWindow
 } from './event';
 import {
   sheepFair,
@@ -122,6 +123,7 @@ let herdBoostEventIcon: any = require("./../../../assets/images/icons/event-herd
 let feedBoostSheepIcon: any = require("./../../../assets/images/icons/sheep-feed-boost.png");
 let feedBoostChickenIcon: any = require("./../../../assets/images/icons/chicken-feed-boost.png");
 let feedBoostEventIcon: any = require("./../../../assets/images/icons/event-feed-boost.png");
+
 class Modal extends Phaser.Scene {
   constructor() {
     super('Modal');
@@ -204,6 +206,7 @@ class Modal extends Phaser.Scene {
   public eventTerritory = eventTerritory.bind(this);
   public buyEventTerritory = buyEventTerritory.bind(this);
   public improveCollectorEvent = improveCollectorEvent.bind(this);
+  public herdBoostEventWindow = herdBoostEventWindow.bind(this);
   
   public init(state: Istate): void {
     this.state = state;
@@ -318,7 +321,9 @@ class Modal extends Phaser.Scene {
         this.donate();
         break;
       case 8: // окно стадного буста
-        this.herdBoostWindow();
+        if (this.state.farm !== 'Event') {
+          this.herdBoostWindow();
+        } else this.herdBoostEventWindow();
         break;
       default:
         this.scene.stop();

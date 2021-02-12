@@ -1,4 +1,5 @@
 import { random, getRandomBool, randomString, shortTime} from "../../general/basic";
+import { takeDiamondChicken } from "../Chicken/basic";
 
 let x: number = 600;
 let y: number = 360;
@@ -250,7 +251,7 @@ function createAnimals(timerText, allItems, boostCounterWindow): void {
 
   }
 
-  // создаю группу для овец
+  // создаю группу для животных
   this.animalForBoost = this.physics.add.group();
 
   let currentTime: number = this.state.herdBoostTime;
@@ -264,11 +265,12 @@ function createAnimals(timerText, allItems, boostCounterWindow): void {
     callbackScope: this
   });
   
+  // кристалическая овца
   let timerCreateCrystalAnimal: Phaser.Time.TimerEvent = this.time.addEvent({
     delay: this.state.herdBoostTime / 3 * 1000,
     loop: true,
     callback: () => {
-      // this.getRandomSheep(); 
+      if (this.state.farm === 'Event') return;
       this.getRandomAnimal(animal, true);
     },
     callbackScope: this
@@ -439,13 +441,15 @@ function getRandomStartPosition(): {x: number, y: number, side: string, _id: str
 }
 
 function drag(animal: Phaser.Physics.Arcade.Sprite): void {
+  
   if (animal.body === null) return;
-  this.input.on('dragstart', (pointer: any, animal: any): void => {
+  this.input.on('dragstart', (pointer: any, animal: Phaser.Physics.Arcade.Sprite): void => {
+    console.log('dragstart')
     if (animal.data.values.merging) this.mergingArray = []; // если животное из мерджа то очистить массив
     animal.data.values.merging = false; // снимаем метку с животных после попытки мерджа
     animal.setVelocity(0, 0); // отменяем передвижение
     animal.data.values.woolSprite?.setVelocity(0, 0);
-    animal.body.onWorldBounds = false; // чтобы не могли перетащить за пределы
+    animal.setCollideWorldBounds(true); // чтобы не могли перетащить за пределы
       // анимация
     animal.anims.play(this.state.farm.toLowerCase() + '-stay-' + animal.data.values.side + animal.data.values.type, true);
   });
