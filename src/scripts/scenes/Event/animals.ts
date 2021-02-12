@@ -1,12 +1,13 @@
 import { random, randomString } from '../../general/basic';
 
 function updateTeleportation() {
-  this.animals.children.entries.forEach((animal) => {
+  this.animals.children.entries.forEach((animal: Phaser.Physics.Arcade.Sprite) => {
     
     if (animal.data.values.active.data.values.teleport) {
       let target: Iposition = animal.data.values.target;
       let distance: number = Phaser.Math.Distance.Between(animal.data.values.active.x, animal.data.values.active.y, target.x, target.y);
       if (distance < 40) {
+        console.log(animal)
         animal.data.values.active.body.reset(target.x, target.y);
         animal.data.values.active.data.values.teleport = false;
         animal.data.values.active.setDepth(animal.y + 100);
