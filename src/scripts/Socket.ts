@@ -23,6 +23,10 @@ export default class Socket {
 
     });
 
+    this.io.on('getRating', (data: any) => {
+      console.log(data);
+    });
+
   }
 
 }
