@@ -491,25 +491,7 @@ function createWorld(): any[] {
 }
   
 function createAnimals(timerText, allItems, boostCounterWindow): void {
-  let animal: string = this.state.farm.toLowerCase();
 
-  if (this.state.farm === 'Sheep') {
-    // дроп зоны 
-    let topZone: Phaser.GameObjects.Zone = this.add.zone(x, y - 75, 300, 145).setDropZone(undefined, () => {});
-    topZone.type = 'top';
-    let bottomZone: Phaser.GameObjects.Zone = this.add.zone(x, y + 70, 300, 145).setDropZone(undefined, () => {});
-    bottomZone.type = 'bottom';
-
-    // Для проверки дроп зон
-    // let graphics2 = this.add.graphics().setDepth(bottomZone.y * 5);
-    // graphics2.lineStyle(2, 0x00ff00);
-    // graphics2.strokeRect(bottomZone.x - bottomZone.input.hitArea.width / 2, bottomZone.y - bottomZone.input.hitArea.height / 2, bottomZone.input.hitArea.width, bottomZone.input.hitArea.height);
-    // let graphics1 = this.add.graphics().setDepth(topZone.y * 5);
-    // graphics1.lineStyle(2, 0xffff00);
-    // graphics1.strokeRect(topZone.x - topZone.input.hitArea.width / 2, topZone.y - topZone.input.hitArea.height / 2, topZone.input.hitArea.width, topZone.input.hitArea.height);
-
-
-  } else if (this.state.farm === 'Chicken') {
     // дроп зоны 
     let leftZone: Phaser.GameObjects.Zone = this.add.zone(x - 75, y - 30, 145, 300).setDropZone(undefined, () => {});
     leftZone.type = 'left';
@@ -518,32 +500,14 @@ function createAnimals(timerText, allItems, boostCounterWindow): void {
     rightZone.type = 'right';
 
     // для проверки дроп зон
-    // let graphics1 = this.add.graphics().setDepth(leftZone.y * 5);
-    // graphics1.lineStyle(2, 0xffff00);
-    // graphics1.strokeRect(leftZone.x - leftZone.input.hitArea.width / 2, leftZone.y - leftZone.input.hitArea.height / 2, leftZone.input.hitArea.width, leftZone.input.hitArea.height);
+    let graphics1 = this.add.graphics().setDepth(leftZone.y * 5);
+    graphics1.lineStyle(2, 0xffff00);
+    graphics1.strokeRect(leftZone.x - leftZone.input.hitArea.width / 2, leftZone.y - leftZone.input.hitArea.height / 2, leftZone.input.hitArea.width, leftZone.input.hitArea.height);
 
-    // let graphics2 = this.add.graphics().setDepth(rightZone.y * 5);
-    // graphics2.lineStyle(2, 0x00ff00);
-    // graphics2.strokeRect(rightZone.x - rightZone.input.hitArea.width / 2, rightZone.y - rightZone.input.hitArea.height / 2, rightZone.input.hitArea.width, rightZone.input.hitArea.height);
+    let graphics2 = this.add.graphics().setDepth(rightZone.y * 5);
+    graphics2.lineStyle(2, 0x00ff00);
+    graphics2.strokeRect(rightZone.x - rightZone.input.hitArea.width / 2, rightZone.y - rightZone.input.hitArea.height / 2, rightZone.input.hitArea.width, rightZone.input.hitArea.height);
 
-  } else if (this.state.farm === 'event') {
-    // дроп зоны 
-    let leftZone: Phaser.GameObjects.Zone = this.add.zone(x - 75, y - 30, 145, 300).setDropZone(undefined, () => {});
-    leftZone.type = 'left';
-    
-    let rightZone: Phaser.GameObjects.Zone = this.add.zone(x + 70, y - 30, 145, 300).setDropZone(undefined, () => {});
-    rightZone.type = 'right';
-
-    // для проверки дроп зон
-    // let graphics1 = this.add.graphics().setDepth(leftZone.y * 5);
-    // graphics1.lineStyle(2, 0xffff00);
-    // graphics1.strokeRect(leftZone.x - leftZone.input.hitArea.width / 2, leftZone.y - leftZone.input.hitArea.height / 2, leftZone.input.hitArea.width, leftZone.input.hitArea.height);
-
-    // let graphics2 = this.add.graphics().setDepth(rightZone.y * 5);
-    // graphics2.lineStyle(2, 0x00ff00);
-    // graphics2.strokeRect(rightZone.x - rightZone.input.hitArea.width / 2, rightZone.y - rightZone.input.hitArea.height / 2, rightZone.input.hitArea.width, rightZone.input.hitArea.height);
-
-  }
 
   // создаю группу для животных
   this.animalForBoost = this.physics.add.group();
@@ -554,7 +518,7 @@ function createAnimals(timerText, allItems, boostCounterWindow): void {
     delay: this.state.herdBoostDelay,
     loop: true,
     callback: () => {
-      getRandomAnimal.bind(this)(animal); 
+      getRandomAnimal.bind(this)('animal'); 
     },
     callbackScope: this
   });
@@ -666,7 +630,7 @@ function getRandomAnimal(type: string): void {
     .setDepth(y)
     .setInteractive()
     .setDataEnabled();
-
+  console.log(animal.texture);
   animal.data.values.velocity = -this.state.herdBoostSpeedAnimal;
 
   if (side === 'right') {
@@ -684,7 +648,6 @@ function getRandomAnimal(type: string): void {
 
   animal.setVelocityX(animal.data.values.velocity);
 
-  animal.play(type + '-move-' + animal.data.values.side + animal.data.values.type);
   drag.bind(this)(animal);
 }
 
@@ -715,8 +678,6 @@ function drag(animal: Phaser.Physics.Arcade.Sprite): void {
     animal.setVelocity(0, 0); // отменяем передвижение
     animal.data.values.woolSprite?.setVelocity(0, 0);
     animal.setCollideWorldBounds(true); // чтобы не могли перетащить за пределы
-      // анимация
-    animal.anims.play(this.state.farm.toLowerCase() + '-stay-' + animal.data.values.side + animal.data.values.type, true);
   });
 
   this.input.on('drag', (pointer: any, animal: Phaser.Physics.Arcade.Sprite, dragX: number, dragY: number): void => {
@@ -736,12 +697,8 @@ function drag(animal: Phaser.Physics.Arcade.Sprite): void {
     if (!animal.data.values.merging) {
       if (zone.type === 'left') {
         checkMerging.bind(this)(animal, 'left');
-      } else if (zone.type === 'top') {
-        checkMerging.bind(this)(animal, 'top');
       } else if (zone.type === 'right') {
         checkMerging.bind(this)(animal, 'right');
-      } else if (zone.type === 'bottom') {
-        checkMerging.bind(this)(animal, 'bottom');
       }
     }
   });
@@ -771,10 +728,7 @@ function drag(animal: Phaser.Physics.Arcade.Sprite): void {
             animal.data.values.velocity = -this.state.herdBoostSpeedAnimal;
           }
           animal.setDepth(animal.y);
-          animal.data.values.woolSprite?.setDepth(animal.y);
           animal.setVelocityX(animal.data.values.velocity);
-          animal.data.values.woolSprite?.setVelocityX(animal.data.values.velocity);
-          animal.play(this.state.farm.toLowerCase() + '-move-' + animal.data.values.side + animal.data.values.type);
         }
       }
     }
@@ -800,38 +754,6 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
       position: position
     })
 
-    // проверка позиции для овец
-    if (position === 'top') {
-
-      if (animal.data.values.side === 'left') {
-
-        animal.data.values.side = 'right';
-        animal.data.values.woolSprite.setTexture(this.state.farm.toLowerCase()+ '-' + animal.data.values.side + '-' + animal.data.values.type + '-' + animal.data.values.stage);
-      
-      }
-
-      animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
-      animal.y = y - 100;
-      animal.x = x - 25;
-      animal.data.values.woolSprite.x = animal.x;
-      animal.data.values.woolSprite.y = animal.y;
-  
-    } else if (position === 'bottom') {
-
-      if (animal.data.values.side === 'left') {
-
-        animal.data.values.side = 'right';
-        animal.data.values.woolSprite.setTexture(this.state.farm.toLowerCase()+ '-' + animal.data.values.side + '-' + animal.data.values.type + '-' + animal.data.values.stage);
-      
-      }
-
-      animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
-      animal.y = y + 20;
-      animal.x = x - 25;
-      animal.data.values.woolSprite.x = animal.x;
-      animal.data.values.woolSprite.y = animal.y;
-    }
-
     // проверка позиции для кур
     if (position === 'left') {
       if (animal.data.values.side === 'left') {
@@ -840,7 +762,6 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
 
       }
 
-      animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
       animal.y = y;
       animal.x = x - 50;
 
@@ -851,7 +772,6 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
 
       }
 
-      animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
       animal.y = y;
       animal.x = x + 50;
     }
@@ -895,6 +815,7 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
     }
   }
 }
+
 
 export { 
   confirmExpelAnimal,

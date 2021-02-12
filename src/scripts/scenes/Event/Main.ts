@@ -10,7 +10,6 @@ import {
   onlineStatus,
   takeDonate,
   debug, 
-  createBoostAnimal
 } from '../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -42,7 +41,8 @@ import {
   buyCollector,
   convertMoney,
   improveCollector,
-  exchange
+  exchange,
+  createBoostAnimal,
 } from './basic';
 import { 
   buyAnimal, 
@@ -62,7 +62,7 @@ import interval from './interval';
 import { deleteTerritoriesLocks, buyTerritory, buildBorders } from './territories';
 import setCollector from './collector';
 import autosave from './autosave';
-import { animations, flyAnimal, teleportation, updateTeleportation } from './animations';
+import { flyAnimal, teleportation, updateTeleportation } from './animations';
 class Event extends Phaser.Scene {
   constructor() {
     super('Event');
@@ -147,7 +147,6 @@ class Event extends Phaser.Scene {
 
   public getActiveAnimal = getActiveAnimal.bind(this);
   public autosave = autosave.bind(this);
-  public animations = animations.bind(this);
   public flyAnimal = flyAnimal.bind(this);
   public updateTeleportation = updateTeleportation.bind(this);
 
@@ -169,7 +168,6 @@ class Event extends Phaser.Scene {
     this.collisions();
     this.interval();
     this.setCollector();
-    this.animations();
     this.flyAnimal();
     // анимации
     // let cursors = this.input.keyboard.createCursorKeys();

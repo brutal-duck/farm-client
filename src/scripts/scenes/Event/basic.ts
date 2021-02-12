@@ -1,3 +1,4 @@
+import { randomString } from './../../general/basic';
 // цена животного
 function animalPrice(breed: number): {price: bigint, countAnimal: number} {
 
@@ -406,6 +407,27 @@ function exchange(ad: boolean = false): void {
   
 }
 
+function createBoostAnimal(): void {
+  if (this.state.herdBoostAnimals.length === 0) return;
+  this.state.herdBoostAnimals.forEach(type => {
+    this.time.addEvent({ 
+      delay: 100, 
+      callback: (): void => {
+        let x: number = Phaser.Math.Between(270, 690);
+        let y: number = Phaser.Math.Between(510, 690);
+        let id: string = 'local_' + randomString(18);
+        this[`get${this.state.farm}`](id, type, x, y, 0, 500);
+        this.firework250(x, y);
+      }, 
+      callbackScope: this, 
+      loop: false 
+    });
+    this.tryTask(4, type);
+  });
+
+  this.state.herdBoostAnimals = [];
+
+}
 
 export {
   animalPrice,
@@ -417,5 +439,6 @@ export {
   convertDiamonds,
   convertMoney,
   improveCollector,
-  exchange
+  exchange,
+  createBoostAnimal
 }

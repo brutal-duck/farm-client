@@ -1148,19 +1148,19 @@ class EventPreload extends Phaser.Scene {
     this.load.image('event-buy-icon-12', eventBuyIcon12);
 
     this.load.image('disable-animal', disableAnimal);
-    this.load.spritesheet('animal0', animal0, { frameWidth: 109, frameHeight: 138 });
-    this.load.spritesheet('animal1', animal1, { frameWidth: 115, frameHeight: 143 });
-    this.load.spritesheet('animal2', animal2, { frameWidth: 115, frameHeight: 143 });
-    this.load.spritesheet('animal3', animal3, { frameWidth: 115, frameHeight: 143 });
-    this.load.spritesheet('animal4', animal4, { frameWidth: 115, frameHeight: 137 });
-    this.load.spritesheet('animal5', animal5, { frameWidth: 115, frameHeight: 150 });
-    this.load.spritesheet('animal6', animal6, { frameWidth: 115, frameHeight: 150 });
-    this.load.spritesheet('animal7', animal7, { frameWidth: 115, frameHeight: 142 });
-    this.load.spritesheet('animal8', animal8, { frameWidth: 115, frameHeight: 150 });
-    this.load.spritesheet('animal9', animal9, { frameWidth: 115, frameHeight: 143 });
-    this.load.spritesheet('animal10', animal10, { frameWidth: 115, frameHeight: 145 });
-    this.load.spritesheet('animal11', animal11, { frameWidth: 115, frameHeight: 133 });
-    this.load.spritesheet('animal12', animal12, { frameWidth: 115, frameHeight: 150 });
+    this.load.image('animal0', animal0);
+    this.load.image('animal1', animal1);
+    this.load.image('animal2', animal2);
+    this.load.image('animal3', animal3);
+    this.load.image('animal4', animal4);
+    this.load.image('animal5', animal5);
+    this.load.image('animal6', animal6);
+    this.load.image('animal7', animal7);
+    this.load.image('animal8', animal8);
+    this.load.image('animal9', animal9);
+    this.load.image('animal10', animal10);
+    this.load.image('animal11', animal11);
+    this.load.image('animal12', animal12);
 
     this.load.image('event-resource0', resource0);
     this.load.image('event-resource1', resource1);
