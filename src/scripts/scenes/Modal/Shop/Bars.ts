@@ -195,6 +195,7 @@ class ShopBars extends Phaser.Scene {
 
   public update(): void {
     this.updateNative();
+    this.updateEventNative();
   }
 
   public updateNative(): void{  
@@ -207,6 +208,24 @@ class ShopBars extends Phaser.Scene {
       this.nativeBoostCounter.setVisible(false);
     } else if (!(this.state.modal.shopType === 4) &&
     this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
+    this.state[`user${this.state.farm}`].takenHerdBoost <= 0 &&
+    !this.nativeBoost.visible && 
+    this.nativeBoostCounter.text !== '0' && this.state.user.additionalTutorial.herdBoost) {
+      this.nativeBoost.setVisible(true);
+      this.nativeBoostCounter.setVisible(true);
+    }
+  }
+
+  public updateEventNative(): void{  
+    if (this.state.modal.shopType === 4 && 
+    (this.state[`user${this.state.farm}`].maxLevelAnimal < this.game.scene.keys[this.state.farm].herdBoostLvl ||
+    this.state[`user${this.state.farm}`].takenHerdBoost > 0 ||
+    this.nativeBoostCounter.text === '0' || !this.state.user.additionalTutorial.herdBoost) &&
+    this.nativeBoost.visible) {
+      this.nativeBoost.setVisible(false);
+      this.nativeBoostCounter.setVisible(false);
+    } else if (!(this.state.modal.shopType === 4) &&
+    this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
     this.state[`user${this.state.farm}`].takenHerdBoost <= 0 &&
     !this.nativeBoost.visible && 
     this.nativeBoostCounter.text !== '0' && this.state.user.additionalTutorial.herdBoost) {

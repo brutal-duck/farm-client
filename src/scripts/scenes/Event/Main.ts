@@ -91,8 +91,9 @@ class Event extends Phaser.Scene {
   public maxCountResource: number = 30; // максимальное количество ресурсов
   public herdBoostLvl: number = 1;
   public feedBoostLvl: number = 2;
-  public startCreateHerdBoostAnimal: boolean = false;
+  public startCreateHerdBoostAnimal: boolean = false; // метка начала создания животных
   public feedBoostMultiplier: bigint = BigInt(2);
+  public feedBoostStack: number = 11; // максимальный стек часов
 
   public collisions = collisions.bind(this);
   public click = click.bind(this);

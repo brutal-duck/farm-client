@@ -5,8 +5,8 @@ import {
   clickModalBtn,
   shortNum,
   socialButtons,
-  updateNativeShop
 } from '../../general/basic';
+import { updateEventNativeShop } from './basic';
 import {
   Collector,
   TaskBoard,
@@ -92,9 +92,9 @@ class EventBars extends Phaser.Scene {
   public newbieAwardAnimation = newbieAwardAnimation.bind(this);
   public plusDiamonds = plusDiamonds.bind(this);
   public firework250 = firework250.bind(this);
-  public updateNativeShop = updateNativeShop.bind(this);
   public plusResourceAnimation = plusResourceAnimation.bind(this);
   public showFeedTime = showFeedTime.bind(this);
+  public updateEventNativeShop = updateEventNativeShop.bind(this);
 
 
   public init(state: Istate): void {
@@ -125,17 +125,17 @@ class EventBars extends Phaser.Scene {
     let shop: Phaser.GameObjects.Image = this.add.image(370, this.height - 90, 'shop');
     let map: Phaser.GameObjects.Image = this.add.image(510, this.height - 90, 'map-icon');
 
-    // this.nativeShop = this.add.graphics()
-    //   .fillStyle(0xFF2400, 1)
-    //   .fillCircle(405, this.height - 140, 20)
-    //   .setDepth(2)
-    //   .setVisible(false);
-    // this.nativeShopCounter = this.add.text(405, this.height - 140, '!', {
-    //   font: '32px Shadow',
-    //   color: '#f3eae6'
-    // }).setDepth(3)
-    //   .setOrigin(0.5, 0.5)
-    //   .setVisible(false);
+    this.nativeShop = this.add.graphics()
+      .fillStyle(0xFF2400, 1)
+      .fillCircle(405, this.height - 140, 20)
+      .setDepth(2)
+      .setVisible(false);
+    this.nativeShopCounter = this.add.text(405, this.height - 140, '!', {
+      font: '32px Shadow',
+      color: '#f3eae6'
+    }).setDepth(3)
+      .setOrigin(0.5, 0.5)
+      .setVisible(false);
 
     // быстрая покупка Животного
     this.clickButton(this.animalBuy, (): void => {
@@ -326,7 +326,7 @@ class EventBars extends Phaser.Scene {
     this.socialButtons();
 
     // Обновление натива магазина
-    // this.updateNativeShop();
+    this.updateEventNativeShop();
 
   }
 

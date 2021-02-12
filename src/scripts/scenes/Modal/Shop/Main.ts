@@ -33,6 +33,10 @@ import {
   animals,
   updateAnimalPrices,
   eventCollectorBoost,
+  updateEventFeedBoostBtn,
+  updateEventHerdBoostBtn,
+  eventFeedBoost,
+  eventHerdBoost,
 } from './event';
 import { Arrows } from '../../../elements';
 
@@ -118,6 +122,10 @@ class Shop extends Phaser.Scene {
   public animalMoney = animalMoney.bind(this);
   public updateAnimalPrices = updateAnimalPrices.bind(this);
   public eventCollectorBoost = eventCollectorBoost.bind(this);
+  public updateEventFeedBoostBtn = updateEventFeedBoostBtn.bind(this);
+  public updateEventHerdBoostBtn = updateEventHerdBoostBtn.bind(this);
+  public eventFeedBoost = eventFeedBoost.bind(this);
+  public eventHerdBoost = eventHerdBoost.bind(this);
 
   public init(state: Istate): void {
     
@@ -208,6 +216,11 @@ class Shop extends Phaser.Scene {
     this.updateHerdBoostBtn();
 
     this.updateFeedBoostBtn();
+
+    if (this.state.farm === 'Event') {
+      this.updateEventHerdBoostBtn();
+      this.updateEventFeedBoostBtn();
+    }
     
   }
 
@@ -241,10 +254,10 @@ class Shop extends Phaser.Scene {
       this.eventCollectorBoost();
 
       if (this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].herdBoostLvl && 
-      this.state.user.additionalTutorial.herdBoost) this.herdBoost();
+      this.state.user.additionalTutorial.herdBoost) this.eventHerdBoost();
 
       if (this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].feedBoostLvl &&
-      this.state.user.additionalTutorial.feedBoost) this.feedBoost();
+      this.state.user.additionalTutorial.feedBoost) this.eventFeedBoost();
       
     }
   }
