@@ -600,7 +600,7 @@ function stopBoostScene(): void {
   this.input.on('pointerdown', ()=>{
     this.state[`user${this.state.farm}`].takenHerdBoost++;
     this.scene.stop();
-    this.game.scene.keys[this.state.farm].createBoostAnimal();
+    this.game.scene.keys['Event'].startCreateHerdBoostAnimal = true;
   });
 }
 
@@ -630,7 +630,7 @@ function getRandomAnimal(type: string): void {
     .setDepth(y)
     .setInteractive()
     .setDataEnabled();
-  console.log(animal.texture);
+ 
   animal.data.values.velocity = -this.state.herdBoostSpeedAnimal;
 
   if (side === 'right') {
@@ -672,7 +672,7 @@ function drag(animal: Phaser.Physics.Arcade.Sprite): void {
   if (animal.body === null) return;
   
   this.input.on('dragstart', (pointer: any, animal: Phaser.Physics.Arcade.Sprite): void => {
-    console.log('dragstart');
+
     if (animal.data.values.merging) this.mergingArray = []; // если животное из мерджа то очистить массив
     animal.data.values.merging = false; // снимаем метку с животных после попытки мерджа
     animal.setVelocity(0, 0); // отменяем передвижение

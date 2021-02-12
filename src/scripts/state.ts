@@ -15,7 +15,7 @@ let herdBoostSpeedAnimal: number;
 let herdBoostPrice: number;
 let herdBoostTime: number;
 let herdBoostDelay: number;
-let herdBoostAnimals: number[];
+let herdBoostAnimals: number[] = [];
 let nativeCounter: number[];
 let timeToHerdBoost: number;
 let user: Iuser;

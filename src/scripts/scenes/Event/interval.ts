@@ -91,7 +91,11 @@ function interval(): void {
       this.game.scene.keys['EventBars'].collector.update();
 
     }
-
+    if (this.startCreateHerdBoostAnimal) {
+      this.createBoostAnimal();
+      console.log(this.state.herdBoostAnimals)
+    }
+    
     // // автосохранение
     // this.autoSaveTimer++;
     // if (this.autoSaveTimer >= this.state.autoSaveSpeed) this.autosave();

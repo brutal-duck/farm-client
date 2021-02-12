@@ -2213,7 +2213,7 @@ function herdBoost(): void {
       this.game.scene.keys[this.state.farm].startHerdBoost();
 
       if (this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost > 0) {
-        this.game.scene.keys[this.state.farm].tryTask(15, 0, this.state.herdBoostPrice);
+        if (this.state.farm !== 'Event') this.game.scene.keys[this.state.farm].tryTask(15, 0, this.state.herdBoostPrice);
         this.state.amplitude.getInstance().logEvent('diamonds_spent', {
           type: 'herd',
           count: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
@@ -2328,7 +2328,7 @@ function feedBoost(): void {
       } else {
         
         this.state.boughtFeedBoost = true;
-        this.game.scene.keys[this.state.farm].tryTask(15, 0, this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice);
+        if (this.state.farm !== 'Event') this.game.scene.keys[this.state.farm].tryTask(15, 0, this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice);
         
         if (this.state[`user${this.state.farm}`].feedBoostTime <= 0) {
           this.state[`user${this.state.farm}`].feedBoostTime += 3600; // прибавить час

@@ -20,7 +20,7 @@ function animalPrice(breed: number): {price: bigint, countAnimal: number} {
 
 }
 
-function getFreePosition(): {x: number, y: number} {
+function getFreePosition(boost): {x: number, y: number} {
   let x: number = 120;
   let y: number = this.topIndent + 600;
   for (let i = 0; i < this.state.eventSettings.eventSettings.length; i ++ ) { // убрать жесткое число
@@ -33,7 +33,7 @@ function getFreePosition(): {x: number, y: number} {
         }
       } else break
     } else {
-
+      if (boost) return {x: null, y: null};
       this.scene.stop('Shop');
       this.scene.stop('ShopBars');
       this.scene.stop('Modal');
@@ -408,24 +408,21 @@ function exchange(ad: boolean = false): void {
 }
 
 function createBoostAnimal(): void {
-  if (this.state.herdBoostAnimals.length === 0) return;
-  this.state.herdBoostAnimals.forEach(type => {
-    this.time.addEvent({ 
-      delay: 100, 
-      callback: (): void => {
-        let x: number = Phaser.Math.Between(270, 690);
-        let y: number = Phaser.Math.Between(510, 690);
-        let id: string = 'local_' + randomString(18);
-        this[`get${this.state.farm}`](id, type, x, y, 0, 500);
-        this.firework250(x, y);
-      }, 
-      callbackScope: this, 
-      loop: false 
-    });
-    this.tryTask(4, type);
-  });
+  if (this.state.herdBoostAnimals.length === 0) {
+    this.startCreateHerdBoostAnimal = false;
+    return
+  };
 
-  this.state.herdBoostAnimals = [];
+  let {x, y} = this.getFreePosition(true);
+  console.log()
+  if (x === null || y === null) {
+    return;
+  } else {
+    let type = this.state.herdBoostAnimals.pop();
+    let id: string = 'local_' + randomString(18);
+    this.getAnimal(id, type, x, y);
+    this.firework250(x, y);
+  }
 
 }
 
