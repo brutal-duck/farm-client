@@ -444,7 +444,7 @@ function drag(animal: Phaser.Physics.Arcade.Sprite): void {
   
   if (animal.body === null) return;
   this.input.on('dragstart', (pointer: any, animal: Phaser.Physics.Arcade.Sprite): void => {
-    console.log('dragstart')
+
     if (animal.data.values.merging) this.mergingArray = []; // если животное из мерджа то очистить массив
     animal.data.values.merging = false; // снимаем метку с животных после попытки мерджа
     animal.setVelocity(0, 0); // отменяем передвижение
@@ -482,7 +482,7 @@ function drag(animal: Phaser.Physics.Arcade.Sprite): void {
   });
   
   this.input.on('dragend', (pointer: any, animal: Phaser.Physics.Arcade.Sprite): void => {
-    
+    animal.setCollideWorldBounds(false);
     if (animal.data) { // существует ли еще dataManager животного
       
       animal.data.values.drag === false;
