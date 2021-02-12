@@ -11,9 +11,6 @@ function drag(): void {
     animal.setVelocity(0, 0); // отменяем передвижение
     animal.setCollideWorldBounds(true);
 
-   // анимация
-    animal.anims.play('chicken-drag' + animal.data.values.type, true);
-
   });
 
   this.input.on('drag', (pointer: any, animal: Phaser.Physics.Arcade.Sprite, dragX: number, dragY: number): void => {
@@ -132,20 +129,6 @@ function drag(): void {
         }
       } else this.teleportation(animal, undefined, true);
     }
-
-
-
-
-
-
-
-
-
-
-
-    
-    
-    
   });
 
 }

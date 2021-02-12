@@ -240,12 +240,12 @@ class Shop extends Phaser.Scene {
     } else if (this.state.farm === 'Event') {
       this.eventCollectorBoost();
 
-      if (this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].herdBoostLvl) this.herdBoost();
+      if (this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].herdBoostLvl && 
+      this.state.user.additionalTutorial.herdBoost) this.herdBoost();
 
-      // if (this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].feedBoostLvl &&
-      // this.state.user.additionalTutorial.feedBoost) {
-      //   this.feedBoost();
-      // }
+      if (this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].feedBoostLvl &&
+      this.state.user.additionalTutorial.feedBoost) this.feedBoost();
+      
     }
   }
 

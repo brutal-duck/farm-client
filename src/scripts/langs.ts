@@ -433,6 +433,7 @@ export default {
     herdBoostTimerChicken_2: 'Загоняй пары на ярмарку',
     herdBoostScoreSheep: 'Количество пойманных овец: ',
     herdBoostScoreChicken: 'Количество пойманных птиц: ',
+    herdBoostScoreEvent: 'Количество пойманных единорогов: ',
     herdBoostNext: 'Нажми для продолжения ',
     stillForBoost: 'До бесплатного осталось',
     herdBoostTitleSheep: 'Овечий переполох',
@@ -445,6 +446,7 @@ export default {
     feedBoostTitle: 'Комбикорм',
     feedBoostSubtitleSheep: 'Удваивает стоимость шерсти',
     feedBoostSubtitleChicken: 'Удваивает стоимость яиц',
+    feedBoostSubtitleEvent: 'Удваивает стоимость радуги',
     benefit: 'Выгода',
     // Советы 
     helpGeneral_1: 'В каждой ферме - свои особенности. Не заскучаешь!',
@@ -922,6 +924,7 @@ export default {
     herdBoostTimerEvent_2: 'Загоняй пары на ярмарку',
     herdBoostScoreSheep: 'Количество пойманных овец: ',
     herdBoostScoreChicken: 'Количество пойманных птиц: ',
+    herdBoostScoreEvent: 'Количество пойманных единорогов: ',
     herdBoostNext: 'Нажми для продолжения ',
     stillForBoost: 'До бесплатного осталось',
     herdBoostTitleSheep: 'Овечий переполох',
@@ -934,6 +937,7 @@ export default {
     feedBoostTitle: 'Комбикорм',
     feedBoostSubtitleSheep: 'Удваивает стоимость шерсти',
     feedBoostSubtitleChicken: 'Удваивает стоимость яиц',
+    feedBoostSubtitleEvent: 'Удваивает стоимость радуги',
     benefit: 'Выгода',
     // Советы 
     helpGeneral_1: 'В каждой ферме - свои особенности. Не заскучаешь!',

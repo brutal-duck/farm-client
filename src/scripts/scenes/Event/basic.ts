@@ -1,3 +1,4 @@
+import { randomString } from './../../general/basic';
 // цена животного
 function animalPrice(breed: number): {price: bigint, countAnimal: number} {
 
@@ -32,7 +33,6 @@ function getFreePosition(): {x: number, y: number} {
         }
       } else break
     } else {
-
       this.scene.stop('Shop');
       this.scene.stop('ShopBars');
       this.scene.stop('Modal');
@@ -49,6 +49,32 @@ function getFreePosition(): {x: number, y: number} {
     }
   }
   return {x, y} 
+
+}
+
+function getFreeBoostPositions(): Iposition[] {
+  let x: number = 120;
+  let y: number = this.topIndent + 600;
+  let positions: Iposition[] = [];
+  for (let i = 0; i < this.state.eventSettings.eventSettings.length; i ++ ) { // убрать жесткое число
+    if (this.currentTerritory(x, y).data.values.type !== 0) {
+      if (this.currentTerritory(x, y).data.values.merging.length !== 0) {
+        x += 240;
+        if (x >= 650) {
+          x = 120;
+          y += 240;
+        }
+      } else {
+        positions.push({ x, y });
+        x += 240;
+        if (x >= 650) {
+          x = 120;
+          y += 240;
+        }}
+    } else break;
+  }
+
+  return positions;
 
 }
 
@@ -406,6 +432,22 @@ function exchange(ad: boolean = false): void {
   
 }
 
+function createBoostAnimal(positions): void {
+  if (this.state.herdBoostAnimals.length === 0) {
+    this.startCreateHerdBoostAnimal = false;
+    return;
+  };
+
+  positions.forEach(position => {
+
+    let type = this.state.herdBoostAnimals.pop();
+    let id: string = 'local_' + randomString(18);
+    this.getAnimal(id, type, position.x, position.y);
+    this.firework250(position.x, position.y);
+    
+  });
+
+}
 
 export {
   animalPrice,
@@ -417,5 +459,7 @@ export {
   convertDiamonds,
   convertMoney,
   improveCollector,
-  exchange
+  exchange,
+  createBoostAnimal,
+  getFreeBoostPositions
 }

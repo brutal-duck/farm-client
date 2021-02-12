@@ -1,359 +1,3 @@
-function animations(): void {
-  
-  // кристаллическая курица
-  this.anims.create({
-    key: 'event-move-right0',
-    frames: [ { key: 'animal0', frame: 10 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-move-left0',
-    frames: [ { key: 'animal0', frame: 10 } ],
-    frameRate: 10,
-  });
-  this.anims.create({
-    key: 'event-stay-right0',
-    frames: [ { key: 'animal0', frame: 10 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-stay-left0',
-    frames: [ { key: 'animal0', frame: 0 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-drag0',
-    frames: [ { key: 'animal0', frame: 5 } ],
-    frameRate: 20
-  });
-
-  // первая порода
-  this.anims.create({
-    key: 'event-move-right1',
-    frames: [ { key: 'animal1', frame: 10 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-move-left1',
-    frames: [ { key: 'animal1', frame: 0 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-stay-right1',
-    frames: [ { key: 'animal1', frame: 10 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-stay-left1',
-    frames: [ { key: 'animal1', frame: 0 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-drag1',
-    frames: [ { key: 'animal1', frame: 5 } ],
-    frameRate: 20
-  });
-
-  // вторая порода
-  this.anims.create({
-    key: 'event-move-right2',
-    frames: [ { key: 'animal2', frame: 10 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-move-left2',
-    frames: [ { key: 'animal2', frame: 0 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-stay-right2',
-    frames: [ { key: 'animal2', frame: 10 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-stay-left2',
-    frames: [ { key: 'animal2', frame: 0 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-drag2',
-    frames: [ { key: 'event2', frame: 5 } ],
-    frameRate: 20
-  });
-  
-  // тертья порода
-  this.anims.create({
-    key: 'event-move-right3',
-    frames: [ { key: 'animal3', frame: 10 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-move-left3',
-    frames: [ { key: 'animal3', frame: 0 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-stay-right3',
-    frames: [ { key: 'animal3', frame: 10 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-stay-left3',
-    frames: [ { key: 'animal3', frame: 0 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-drag3',
-    frames: [ { key: 'animal3', frame: 5 } ],
-    frameRate: 20
-  });
-
-  // четвертая порода
-  this.anims.create({
-    key: 'event-move-right4',
-    frames: [ { key: 'animal4', frame: 10 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-move-left4',
-    frames: [ { key: 'animal4', frame: 0 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-stay-right4',
-    frames: [ { key: 'animal4', frame: 10 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-stay-left4',
-    frames: [ { key: 'animal4', frame: 0 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-drag4',
-    frames: [ { key: 'animal4', frame: 5 } ],
-    frameRate: 20
-  });
-
-  // пятая порода
-  this.anims.create({
-    key: 'event-move-right5',
-    frames: [ { key: 'animal5', frame: 10 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-move-left5',
-    frames: [ { key: 'animal5', frame: 0 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-stay-right5',
-    frames: [ { key: 'animal5', frame: 10 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-stay-left5',
-    frames: [ { key: 'animal5', frame: 0 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-drag5',
-    frames: [ { key: 'animal5', frame: 5 } ],
-    frameRate: 20
-  });
-
-  // шестая порода
-  this.anims.create({
-    key: 'event-move-right6',
-    frames: [ { key: 'animal6', frame: 10 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-move-left6',
-    frames: [ { key: 'animal6', frame: 0 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-stay-right6',
-    frames: [ { key: 'animal6', frame: 10 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-stay-left6',
-    frames: [ { key: 'animal6', frame: 0 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-drag6',
-    frames: [ { key: 'animal6', frame: 5 } ],
-    frameRate: 20
-  });
-
-  // седьмая порода
-  this.anims.create({
-    key: 'event-move-right7',
-    frames: [ { key: 'animal7', frame: 10 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-move-left7',
-    frames: [ { key: 'animal7', frame: 0 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-stay-right7',
-    frames: [ { key: 'animal7', frame: 10 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-stay-left7',
-    frames: [ { key: 'animal7', frame: 0 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-drag7',
-    frames: [ { key: 'animal7', frame: 5 } ],
-    frameRate: 20
-  });
-
-  // восьмая порода
-  this.anims.create({
-    key: 'event-move-right8',
-    frames: [ { key: 'animal8', frame: 10 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-move-left8',
-    frames: [ { key: 'animal8', frame: 0 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-stay-right8',
-    frames: [ { key: 'animal8', frame: 10 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-stay-left8',
-    frames: [ { key: 'animal8', frame: 0 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-drag8',
-    frames: [ { key: 'animal8', frame: 5 } ],
-    frameRate: 20
-  });
-
-  // девятая порода
-  this.anims.create({
-    key: 'event-move-right9',
-    frames: [ { key: 'animal9', frame: 10 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-move-left9',
-    frames: [ { key: 'animal9', frame: 0 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-stay-right9',
-    frames: [ { key: 'animal9', frame: 10 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-stay-left9',
-    frames: [ { key: 'animal9', frame: 0 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-drag9',
-    frames: [ { key: 'animal9', frame: 5 } ],
-    frameRate: 20
-  });
-
-  // десятая порода
-  this.anims.create({
-    key: 'event-move-right10',
-    frames: [ { key: 'animal10', frame: 10 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-move-left10',
-    frames: [ { key: 'animal10', frame: 0 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-stay-right10',
-    frames: [ { key: 'animal10', frame: 10 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-stay-left10',
-    frames: [ { key: 'animal10', frame: 0 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-drag10',
-    frames: [ { key: 'animal10', frame: 5 } ],
-    frameRate: 20
-  });
-
-  // одиннадцатая порода
-  this.anims.create({
-    key: 'event-move-right11',
-    frames: [ { key: 'animal11', frame: 10 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-move-left11',
-    frames: [ { key: 'animal11', frame: 0 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-stay-right11',
-    frames: [ { key: 'animal11', frame: 10 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-stay-left11',
-    frames: [ { key: 'animal11', frame: 0 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-drag11',
-    frames: [ { key: 'animal11', frame: 5 } ],
-    frameRate: 20
-  });
-
-  // двенадцатая порода
-  this.anims.create({
-    key: 'event-move-right12',
-    frames: [ { key: 'animal12', frame: 10 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-move-left12',
-    frames: [ { key: 'animal12', frame: 0 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-stay-right12',
-    frames: [ { key: 'animal12', frame: 10 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-stay-left12',
-    frames: [ { key: 'animal12', frame: 0 } ],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'event-drag12',
-    frames: [ { key: 'animal12', frame: 5 } ],
-    frameRate: 20
-  });
-
-}
-
-
 // мигание нулевого таймера собирателя
 function pulseCollector(): void {
 
@@ -417,9 +61,172 @@ function plusResourceAnimation(position: Iposition, texture: string): void {
 
 }
 
+function updateTeleportation() {
+  this.animals.children.entries.forEach((animal: Phaser.Physics.Arcade.Sprite) => {
+    
+    if (animal.data.values.active.data.values.teleport) {
+      let target: Iposition = animal.data.values.target;
+      let distance: number = Phaser.Math.Distance.Between(animal.data.values.active.x, animal.data.values.active.y, target.x, target.y);
+      if (distance < 40) {
+        animal.data.values.active.body.reset(target.x, target.y);
+        animal.data.values.active.data.values.teleport = false;
+        animal.setDepth(animal.y);
+        animal.data.values.active.setDepth(animal.y * 2);
+      }
+
+    }
+
+    if (animal.data.values.teleport) {
+      let target: Iposition = animal.data.values.target;
+      let distance: number = Phaser.Math.Distance.Between(animal.x, animal.y, target.x, target.y);
+      if (distance < 40) {
+        animal.body.reset(target.x, target.y);
+        animal.setDepth(animal.y);
+        animal.data.values.teleport = false;
+        this.checkMerging(animal);
+      }
+    }
+    
+  })
+}
+
+function teleportation(
+  animal1: Phaser.Physics.Arcade.Sprite, 
+  animal2?: Phaser.Physics.Arcade.Sprite, 
+  click: boolean = false
+  ): void {
+ 
+  if (animal1.data.values.drag === false) {
+
+    if (!animal2) {
+      
+      if (click) {
+
+        if (animal1.state === 'active') {
+
+          let target: Iposition = new Phaser.Math.Vector2();
+          target.x = animal1.data.values.base.x;
+          target.y = animal1.data.values.base.y;
+          animal1.data.values.base.data.values.target = target;
+          animal1.data.values.teleport = true;
+          animal1.data.values.drag = false; // убираем метку перетаскивания
+          animal1.data.values.aim = false;
+          animal1.setVelocity(0);
+          animal1.data.values.aimX = 0;
+          animal1.data.values.aimY = 0;
+          animal1.data.values.working = false;
+          animal1.setDepth(animal1.data.values.base.y + 100);
+  
+          let speed: number = Phaser.Math.Distance.Between(animal1.x, animal1.y, target.x, target.y) * 4;
+          
+          this.physics.moveToObject(animal1, target, speed);
+
+        } else if (animal1.state === 'base') {
+
+          let target: Iposition = new Phaser.Math.Vector2();
+          target.x = animal1.data.values.oldX;
+          target.y = animal1.data.values.oldY;
+          animal1.data.values.target = target;
+          animal1.data.values.teleport = true;
+          let speed: number = Phaser.Math.Distance.Between(animal1.x, animal1.y, target.x, target.y) * 4;
+          
+          this.physics.moveToObject(animal1, target, speed);
+        }
+        
+      } else {
+
+        if (animal1.state === 'active') {
+        
+          animal1.data.values.base.x = animal1.x;
+          animal1.data.values.base.y = animal1.y;
+          animal1.data.values.base.data.values.oldX = animal1.data.values.base.x;
+          animal1.data.values.base.data.values.oldY = animal1.data.values.base.y;
+          animal1.setDepth(animal1.y + 1);
+          animal1.data.values.base.setDepth(animal1.y);
+  
+        } else if (animal1.state === 'base') {
+          animal1.data.values.oldX = animal1.x;
+          animal1.data.values.oldY = animal1.y;
+          animal1.setDepth(animal1.y);
+        }
+      }
+    
+    } else {
+      
+      if (animal1.state === 'active') {
+
+        let target: Iposition = new Phaser.Math.Vector2();
+        target.x = animal1.data.values.base.data.values.oldX;
+        target.y = animal1.data.values.base.data.values.oldY;
+        
+        let speed: number = Phaser.Math.Distance.Between(animal2.x, animal2.y, target.x, target.y) * 4;
+        
+        animal2.data.values.teleport = true;
+
+        if (animal2.state === 'active') {
+
+          animal2.data.values.base.data.values.target = target;
+          animal1.data.values.base.x = animal1.x;
+          animal1.data.values.base.y = animal1.y;
+          animal1.data.values.base.data.values.oldX = animal1.data.values.base.x;
+          animal1.data.values.base.data.values.oldY = animal1.data.values.base.y;
+
+          animal2.data.values.base.data.values.oldX = target.x;
+          animal2.data.values.base.data.values.oldY = target.y;
+          this.physics.moveToObject(animal2, target, speed);
+          this.physics.moveToObject(animal2.data.values.base, target, speed);
+          animal2.data.values.base.data.values.teleport = true;
+
+        } else if (animal2.state === 'base') {
+
+          animal2.data.values.target = target;
+          this.physics.moveToObject(animal2, target, speed);
+          animal1.data.values.oldX = animal1.data.values.base.x;
+          animal1.data.values.oldY = animal1.data.values.base.y;
+          
+          animal2.data.values.oldX = target.x;
+          animal2.data.values.oldY = target.y;
+
+        }
+
+      } else if (animal1.state === 'base') {
+        
+
+        let target: Iposition = new Phaser.Math.Vector2();
+        target.x = animal1.data.values.oldX;
+        target.y = animal1.data.values.oldY;
+        
+        animal2.data.values.oldX = target.x;
+        animal2.data.values.oldY = target.y;
+        
+        animal1.data.values.oldX = animal1.x;
+        animal1.data.values.oldY = animal1.y;
+
+        let speed: number = Phaser.Math.Distance.Between(animal2.x, animal2.y, target.x, target.y) * 4;
+
+        this.physics.moveToObject(animal2, target, speed);
+        animal2.data.values.teleport = true;
+
+        if (animal2.state === 'active') {
+
+          animal2.data.values.base.data.values.target = target;
+          animal2.data.values.base.data.values.teleport = true;
+          this.physics.moveToObject(animal2.data.values.base, target, speed);
+          
+
+        } else if (animal2.state === 'base') {
+          animal2.data.values.target = target;
+        }
+      }
+      this.checkMerging(animal1);
+    }
+  }
+}
+
 export {
-  animations,
   pulseCollector,
   flyAnimal,
-  plusResourceAnimation
+  plusResourceAnimation,
+  teleportation,
+  updateTeleportation
 }

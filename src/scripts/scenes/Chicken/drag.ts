@@ -85,6 +85,7 @@ function drag(): void {
     chicken.body.onWorldBounds = true;
     chicken.drag = false; // убираем метку перетаскивания
     chicken.aim = false;
+    chicken.spread = false;
     chicken.aimX = 0;
     chicken.aimY = 0;
     chicken.collision = 0;

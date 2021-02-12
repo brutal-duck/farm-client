@@ -183,6 +183,7 @@ function getChicken(
   chicken._id = id; // id
   chicken.diamond = diamond; // счетчик кристаллов для кристаллическлй курицы.
   chicken.expel = false; // метка изгнания
+  chicken.spread = false;
 
   // this.click(chicken, (): void => {
 

@@ -202,6 +202,7 @@ function getSheep(
   sheep._id = id; // id
   sheep.diamond = diamond; // счетчик кристаллов для кристаллического животного.
   sheep.expel = false; // метка изгнания
+  sheep.spread = false;
 
   let side: string = 'right';
   let stage: number;

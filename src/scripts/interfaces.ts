@@ -319,6 +319,7 @@ interface IeventSettings {
   unlockCollector4: number;
   unlockCollector12: number;
   priceCoefficient: number;
+  feedBoostPrice: number;
 }
 interface ItaskData {
   icon: string;

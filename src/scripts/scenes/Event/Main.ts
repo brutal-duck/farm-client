@@ -10,7 +10,6 @@ import {
   onlineStatus,
   takeDonate,
   debug, 
-  createBoostAnimal
 } from '../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -42,22 +41,21 @@ import {
   buyCollector,
   convertMoney,
   improveCollector,
-  exchange
+  exchange,
+  createBoostAnimal,
+  getFreeBoostPositions
 } from './basic';
 import { 
   buyAnimal, 
   getAnimal, 
   confirmExpelAnimal, 
   checkMerging, 
-  teleportation, 
   reverse, 
   aim, 
   getResource, 
   collectResource, 
-  resourcesFly,
   expelAnimal, 
   getActiveAnimal,
-  updateTeleportation
 } from './animals';
 import drag  from './drag';
 import { animalBrain, collisions } from './animalBrain';
@@ -65,7 +63,7 @@ import interval from './interval';
 import { deleteTerritoriesLocks, buyTerritory, buildBorders } from './territories';
 import setCollector from './collector';
 import autosave from './autosave';
-import { animations, flyAnimal } from './animations';
+import { flyAnimal, teleportation, updateTeleportation } from './animations';
 class Event extends Phaser.Scene {
   constructor() {
     super('Event');
@@ -91,8 +89,10 @@ class Event extends Phaser.Scene {
   public debugLog: boolean;
   public velocity: number = 100; 
   public maxCountResource: number = 30; // максимальное количество ресурсов
-  public herdBoostLvl: number = 4;
-  public feedBoostLvl: number = 5;
+  public herdBoostLvl: number = 1;
+  public feedBoostLvl: number = 2;
+  public startCreateHerdBoostAnimal: boolean = false;
+  public feedBoostMultiplier: bigint = BigInt(2);
 
   public collisions = collisions.bind(this);
   public click = click.bind(this);
@@ -142,7 +142,6 @@ class Event extends Phaser.Scene {
   public getResource = getResource.bind(this);
   public interval = interval.bind(this);
   public collectResource = collectResource.bind(this);
-  public resourcesFly = resourcesFly.bind(this);
   public deleteTerritoriesLocks = deleteTerritoriesLocks.bind(this);
   public buyTerritory = buyTerritory.bind(this);
   public expelAnimal = expelAnimal.bind(this);
@@ -151,13 +150,12 @@ class Event extends Phaser.Scene {
 
   public getActiveAnimal = getActiveAnimal.bind(this);
   public autosave = autosave.bind(this);
-  public animations = animations.bind(this);
   public flyAnimal = flyAnimal.bind(this);
   public updateTeleportation = updateTeleportation.bind(this);
+  public getFreeBoostPositions = getFreeBoostPositions.bind(this);
 
 
   public init(state: Istate): void {
-
     this.state = state;
 
     console.log('Event');
@@ -173,7 +171,6 @@ class Event extends Phaser.Scene {
     this.collisions();
     this.interval();
     this.setCollector();
-    this.animations();
     this.flyAnimal();
     // анимации
     // let cursors = this.input.keyboard.createCursorKeys();
@@ -200,10 +197,7 @@ class Event extends Phaser.Scene {
 
   public update(): void {
     this.animalBrain();
-    this.resourcesFly();
-    this.updateTeleportation();
-    
-    
+    this.updateTeleportation();    
   }
 
 
