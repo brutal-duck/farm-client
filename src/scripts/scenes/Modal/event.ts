@@ -817,12 +817,12 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
 }
 
 function flyAnimal(): void {
-  console.log(this.animalForBoost);
+
   this.time.addEvent({
     delay: 30,
     callback: (): void => {
       this.animalForBoost?.children?.entries.forEach(animal => {
-
+        if (!animal.data.values.drag && !animal.data.values.merging )
           if (animal.data.values.topPosition) {
             animal.originY -= 0.0065;
             animal.setOrigin(0.5, animal.originY);

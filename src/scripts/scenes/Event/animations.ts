@@ -70,6 +70,7 @@ function updateTeleportation() {
       if (distance < 40) {
         animal.data.values.active.body.reset(target.x, target.y);
         animal.data.values.active.data.values.teleport = false;
+        animal.setDepth(animal.y);
         animal.data.values.active.setDepth(animal.y * 2);
       }
 
