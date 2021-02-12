@@ -135,6 +135,7 @@ interface IuserEvent {
   takenHerdBoost: number;
   feedBoostTime: number;
   maxLevelAnimal: number;
+  herdBoostAnimals: number[];
 }
 interface Iterritories {
   block: number;

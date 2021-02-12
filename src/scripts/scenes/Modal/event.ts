@@ -462,9 +462,7 @@ function createWorld(): any[] {
   }
   
   this.mergingArray = []; // массив животных для слияния
-  
-  this.state.herdBoostAnimals = []; // Обнуляем массив животных для буста
-
+  this.state.herdBoostAnimals = [];
   let tent: Phaser.Physics.Arcade.Sprite = this.add.image(x, yTent, `${farm}-tent`).setDepth(y + 1).setAlpha(0);
 
   let textLevel: Phaser.GameObjects.Text = this.add.text(x + 80, yTextLevel, this.state[`user${this.state.farm}`].fair, {
@@ -790,6 +788,7 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
           : animal.data.values.type;
         if (animal1.data.values.type === 0 && animal2.data.values.type === 0) newType = 0;
         this.state.herdBoostAnimals.push(newType);
+        this.state.userEvent.herdBoostAnimals.push(newType);
 
         this.time.addEvent({ delay: 100, callback: (): void => {
           
@@ -841,6 +840,7 @@ function flyAnimal(): void {
   });
 
 }
+
 export { 
   confirmExpelAnimal,
   eventConvertor,
