@@ -2494,7 +2494,7 @@ function loadingScreen(farmType: string): void {
 
 // Перераспределние животных на поле
 function spreadAnimals(): void {
-  console.log('spreadAnimal')
+
   let animal: string = this.state.farm.toLowerCase();
   
   let localSpread: boolean = false; // Локальная метка на передвижение

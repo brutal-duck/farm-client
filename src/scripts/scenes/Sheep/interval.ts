@@ -381,7 +381,7 @@ function interval(): void {
 
     // Проверяем и запускаем распростанение овец по полю
     if (this.sheep.children.entries.every(el => el.spread === false)) {
-      console.log('spreadSheep')
+
       this.spreadAnimals();
 
     }
