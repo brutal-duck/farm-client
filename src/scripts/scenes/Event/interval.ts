@@ -92,8 +92,10 @@ function interval(): void {
 
     }
     if (this.startCreateHerdBoostAnimal) {
-      this.createBoostAnimal();
-      console.log(this.state.herdBoostAnimals)
+      let freePositions: Iposition[] = this.getFreeBoostPositions();
+
+      this.createBoostAnimal(freePositions);
+
     }
     
     // // автосохранение

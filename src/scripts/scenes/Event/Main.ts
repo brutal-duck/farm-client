@@ -43,6 +43,7 @@ import {
   improveCollector,
   exchange,
   createBoostAnimal,
+  getFreeBoostPositions
 } from './basic';
 import { 
   buyAnimal, 
@@ -150,6 +151,7 @@ class Event extends Phaser.Scene {
   public autosave = autosave.bind(this);
   public flyAnimal = flyAnimal.bind(this);
   public updateTeleportation = updateTeleportation.bind(this);
+  public getFreeBoostPositions = getFreeBoostPositions.bind(this);
 
 
   public init(state: Istate): void {
