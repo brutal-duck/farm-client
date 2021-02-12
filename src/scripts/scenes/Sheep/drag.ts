@@ -96,6 +96,7 @@ function drag(): void {
     sheep.body.onWorldBounds = true;
     sheep.drag = false; // убираем метку перетаскивания
     sheep.aim = false;
+    sheep.spread = false;
     sheep.aimX = 0;
     sheep.aimY = 0;
     sheep.collision = 0;

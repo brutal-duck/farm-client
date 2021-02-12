@@ -305,6 +305,13 @@ function interval(): void {
       this.state.userChicken.feedBoostTime--;
     }
 
+    // Проверяем и запускаем распростанение овец по полю
+    if (this.chicken.children.entries.every(el => el.spread === false)) {
+      
+      this.spreadAnimals();
+
+    }
+
   }, callbackScope: this, loop: true });
 
   // проверка доната 

@@ -21,6 +21,7 @@ function sheepBrain(): void {
             if (territory.type === 0 && sheep.expel) {
 
               sheep.aim = false;
+              sheep.spread = false;
               sheep.moving = false;
               sheep.setVelocity(0, 0);
               sheep.body.reset(sheep.x, sheep.y);
@@ -129,6 +130,7 @@ function sheepBrain(): void {
 
               sheep.body.reset(sheep.x, sheep.y);
               sheep.aim = false;
+              sheep.spread = false;
               sheep.moving = false;
               sheep.aimX = 0;
               sheep.aimY = 0;

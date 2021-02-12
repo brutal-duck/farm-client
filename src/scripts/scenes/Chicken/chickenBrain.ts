@@ -21,6 +21,7 @@ function chickenBrain(): void {
             if (territory.type === 0 && chicken.expel) {
 
               chicken.aim = false;
+              chicken.spread = false;
               chicken.moving = false;
               chicken.setVelocity(0, 0);
               chicken.body.reset(chicken.x, chicken.y);
@@ -96,6 +97,7 @@ function chickenBrain(): void {
 
               chicken.body.reset(chicken.x, chicken.y);
               chicken.aim = false;
+              chicken.spread = false;
               chicken.moving = false;
               chicken.aimX = 0;
               chicken.aimY = 0;

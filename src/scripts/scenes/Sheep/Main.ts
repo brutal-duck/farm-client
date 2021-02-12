@@ -33,7 +33,8 @@ import {
   improveCollector,
   debug,
   createBoostAnimal,
-  getRandomBool
+  getRandomBool,
+  spreadAnimals
 } from '../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -278,6 +279,7 @@ class Sheep extends Phaser.Scene {
   public createBoostAnimal = createBoostAnimal.bind(this);
   public startHerdBoost = startHerdBoost.bind(this);
   public getRandomBool = getRandomBool.bind(this);
+  public spreadAnimals = spreadAnimals.bind(this);
 
   public init(state: Istate): void {
 
