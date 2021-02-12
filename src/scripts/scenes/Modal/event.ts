@@ -511,7 +511,7 @@ function createAnimals(timerText, allItems, boostCounterWindow): void {
 
   // создаю группу для животных
   this.animalForBoost = this.physics.add.group();
-
+  flyAnimal.bind(this)(); // полет животных
   let currentTime: number = this.state.herdBoostTime;
 
   let timerCreate: Phaser.Time.TimerEvent = this.time.addEvent({
@@ -645,7 +645,7 @@ function getRandomAnimal(type: string): void {
   animal.data.values.drag = false;
   animal.data.values.merging = false; // метка животного в мерджинге
   animal.setDepth(animal.y);
-
+  animal.data.values.topPosition = false;
   animal.setVelocityX(animal.data.values.velocity);
 
   drag.bind(this)(animal);
@@ -816,7 +816,31 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
   }
 }
 
+function flyAnimal(): void {
+  console.log(this.animalForBoost);
+  this.time.addEvent({
+    delay: 30,
+    callback: (): void => {
+      this.animalForBoost?.children?.entries.forEach(animal => {
 
+          if (animal.data.values.topPosition) {
+            animal.originY -= 0.0065;
+            animal.setOrigin(0.5, animal.originY);
+            if (animal.originY <= 0.45) animal.data.values.topPosition = false;
+            
+          } else {
+            animal.originY += 0.0065;
+            animal.setOrigin(0.5, animal.originY);
+            if (animal.originY >= 0.55) animal.data.values.topPosition = true;
+          }
+        
+      });
+    },
+    loop: true
+
+  });
+
+}
 export { 
   confirmExpelAnimal,
   eventConvertor,

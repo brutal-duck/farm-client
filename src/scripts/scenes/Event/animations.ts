@@ -228,5 +228,4 @@ export {
   plusResourceAnimation,
   teleportation,
   updateTeleportation
-  
 }
