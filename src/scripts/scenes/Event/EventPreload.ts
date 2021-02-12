@@ -959,6 +959,7 @@ const testEventSettings: IeventSettings = {
 
 const testUserEvent: IuserEvent = {
   money: BigInt(10000),
+  herdBoostAnimals: [],
   countAnimal: [ // количество купленных животных
     {counter: 1},
     {counter: 1},
@@ -1349,6 +1350,7 @@ class EventPreload extends Phaser.Scene {
           takenHerdBoost: response.data.user.takenHerdBoostEvent,
           feedBoostTime: response.data.user.feedBoostTime,
           maxLevelAnimal: response.data.user.maxLevelAnimal,
+          herdBoostAnimals: response.data.user.herdBoostAnimals
         }
         
         // переписываем стейт

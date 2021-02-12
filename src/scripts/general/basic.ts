@@ -1970,8 +1970,7 @@ function updateNativeShop(): void {
 
 function updateHerdBoostBtn(): void {
   if (this.state.modal.shopType === 4 && 
-    (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl || 
-    this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].herdBoostLvl)  &&
+    this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
     this.state.user.additionalTutorial.herdBoost) {
     let xBtn: number =  330;
     let yBtn: number = 500 + this.height;
@@ -2213,7 +2212,7 @@ function herdBoost(): void {
       this.game.scene.keys[this.state.farm].startHerdBoost();
 
       if (this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost > 0) {
-        if (this.state.farm !== 'Event') this.game.scene.keys[this.state.farm].tryTask(15, 0, this.state.herdBoostPrice);
+        this.game.scene.keys[this.state.farm].tryTask(15, 0, this.state.herdBoostPrice);
         this.state.amplitude.getInstance().logEvent('diamonds_spent', {
           type: 'herd',
           count: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
@@ -2328,7 +2327,7 @@ function feedBoost(): void {
       } else {
         
         this.state.boughtFeedBoost = true;
-        if (this.state.farm !== 'Event') this.game.scene.keys[this.state.farm].tryTask(15, 0, this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice);
+        this.game.scene.keys[this.state.farm].tryTask(15, 0, this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice);
         
         if (this.state[`user${this.state.farm}`].feedBoostTime <= 0) {
           this.state[`user${this.state.farm}`].feedBoostTime += 3600; // прибавить час
@@ -2374,7 +2373,7 @@ function feedBoost(): void {
 
 function updateFeedBoostBtn(): void {
   if (this.state.modal.shopType === 4 && 
-    (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].feedBoostLvl || this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].feedBoostLvl) &&
+    this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].feedBoostLvl &&
     this.state.user.additionalTutorial.feedBoost) {
     if (this.state[`user${this.state.farm}`].feedBoostTime > 0) {
    

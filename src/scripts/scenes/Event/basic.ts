@@ -433,14 +433,14 @@ function exchange(ad: boolean = false): void {
 }
 
 function createBoostAnimal(positions): void {
-  if (this.state.herdBoostAnimals.length === 0) {
+  if (this.state.userEvent.herdBoostAnimals.length === 0) {
     this.startCreateHerdBoostAnimal = false;
     return;
   };
-
+  console.log(this.state.userEvent.herdBoostAnimals)
   positions.forEach(position => {
 
-    let type = this.state.herdBoostAnimals.pop();
+    let type = this.state.userEvent.herdBoostAnimals.pop();
     let id: string = 'local_' + randomString(18);
     this.getAnimal(id, type, position.x, position.y);
     this.firework250(position.x, position.y);
@@ -449,6 +449,44 @@ function createBoostAnimal(positions): void {
 
 }
 
+function updateEventNativeShop(): void {
+  let counter: number = 0;
+  for (let i = 0; i < this.state.nativeCounter.length; i++) {
+    counter += this.state.nativeCounter[i];
+  }
+  
+  if (
+    (this.scene.isActive('Modal') ||
+    this.scene.isActive('Block') ||
+    this.scene.isActive('Tutorial') ||
+    (this.state[`user${this.state.farm}`].maxLevelAnimal < this.game.scene.keys[this.state.farm].herdBoostLvl) ||
+    this.state[`user${this.state.farm}`].takenHerdBoost > 0
+    || !this.state.user.additionalTutorial.herdBoost) &&
+    this.game.scene.keys[`${this.state.farm}Bars`].nativeShop.visible ||
+    counter <= 0
+
+  ) {
+
+    this.game.scene.keys[`${this.state.farm}Bars`].nativeShop.setVisible(false);
+    this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setVisible(false);
+
+  } else if (
+    !this.scene.isActive('Modal') &&
+    !this.scene.isActive('Block') &&
+    !this.scene.isActive('Tutorial') &&
+    this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
+    !this.game.scene.keys[`${this.state.farm}Bars`].nativeShop.visible &&
+    this.state[`user${this.state.farm}`].takenHerdBoost <= 0 &&
+    counter > 0 &&
+    this.state.user.additionalTutorial.herdBoost
+
+  ) {
+
+    this.game.scene.keys[`${this.state.farm}Bars`].nativeShop.setVisible(true);
+    this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setVisible(true);
+    this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setText(counter);
+  }
+}
 export {
   animalPrice,
   maxBreedForBuy,
@@ -461,5 +499,6 @@ export {
   improveCollector,
   exchange,
   createBoostAnimal,
-  getFreeBoostPositions
+  getFreeBoostPositions,
+  updateEventNativeShop
 }
