@@ -174,8 +174,8 @@ function getResource(data: IeventResource): void {
 
 function collectResource(resource: Phaser.Physics.Arcade.Sprite): void {
   
-  let price: number = this.state.eventSettings.eventSettings.find((data: IeventPoints) => data.breed === resource.data.values.type).resourcePrice;
-  
+  let price: bigint = this.state.eventSettings.eventSettings.find((data: IeventPoints) => data.breed === resource.data.values.type).resourcePrice;
+  if (this.state.userEvent.feedBoostTime > 0) price *= this.feedBoostMultiplier;
   resource.data.values.click = false;
   this.state.userEvent.money += price;
   this.game.scene.keys['EventBars'].plusResourceAnimation({x: resource.x, y: resource.y}, resource.data.values.type);

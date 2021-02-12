@@ -1,10 +1,12 @@
+import { shortTime } from "./basic";
+
 function showFeedTime(): void {
     
     let x: number = this.cameras.main.centerX;
     let y: number = this.cameras.main.centerY - 250;
 
     
-    let text: Phaser.GameObjects.Text = this.add.text(x, y,  this.state.lang.feedBoostNative + this.shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang), {
+    let text: Phaser.GameObjects.Text = this.add.text(x, y,  this.state.lang.feedBoostNative + shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang), {
         font: '35px Bip',
         fill: '#FFFFFF'
       });

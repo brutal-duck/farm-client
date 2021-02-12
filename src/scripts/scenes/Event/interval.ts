@@ -97,6 +97,20 @@ function interval(): void {
       this.createBoostAnimal(freePositions);
 
     }
+
+    // уменьшаем время буста комбикорм
+    if (this.state.userEvent.feedBoostTime > 0) {
+
+      // if (Phaser.Math.Between(0, 7) >= 5) { // чтобы не так часто появлялись сердца
+
+      //   let randomIndex: number = Phaser.Math.Between(0, this.sheep.children.entries.length - 1);
+      //   this.hearts(this.sheep.children.entries[randomIndex]);
+
+      // }
+
+      this.state.userEvent.feedBoostTime--;
+
+    }
     
     // // автосохранение
     // this.autoSaveTimer++;

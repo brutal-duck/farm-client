@@ -28,6 +28,7 @@ import {
   registration,
   chatWindow
 } from '../../html';
+import { showFeedTime } from './../../general/boosts';
 
 class EventBars extends Phaser.Scene {
   constructor() {
@@ -93,6 +94,7 @@ class EventBars extends Phaser.Scene {
   public firework250 = firework250.bind(this);
   public updateNativeShop = updateNativeShop.bind(this);
   public plusResourceAnimation = plusResourceAnimation.bind(this);
+  public showFeedTime = showFeedTime.bind(this);
 
 
   public init(state: Istate): void {

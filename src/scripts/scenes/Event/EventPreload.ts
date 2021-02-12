@@ -916,6 +916,7 @@ const testTerritories: IeventTerritories[] = [
 const testEventSettings: IeventSettings = {
   buyBetterBreedAnimal: 2,
   doubledСollectorPrice: 25,
+  feedBoostPrice: 35,
   collectorPrice4: 90,
   collectorPrice12: 250,
   unlockCollector4: 5,
@@ -1273,6 +1274,7 @@ class EventPreload extends Phaser.Scene {
           unlockCollector4: response.data.unlockCollector4,
           unlockCollector12: response.data.unlockCollector12,
           priceCoefficient: response.data.priceCoefficient,
+          feedBoostPrice: response.data.feedBoostPrice
         }
 
         this.state.eventSettings = eventSettings;

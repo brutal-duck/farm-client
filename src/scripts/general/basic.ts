@@ -2374,7 +2374,7 @@ function feedBoost(): void {
 
 function updateFeedBoostBtn(): void {
   if (this.state.modal.shopType === 4 && 
-    this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].feedBoostLvl &&
+    (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].feedBoostLvl || this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].feedBoostLvl) &&
     this.state.user.additionalTutorial.feedBoost) {
     if (this.state[`user${this.state.farm}`].feedBoostTime > 0) {
    

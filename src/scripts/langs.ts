@@ -446,6 +446,7 @@ export default {
     feedBoostTitle: 'Комбикорм',
     feedBoostSubtitleSheep: 'Удваивает стоимость шерсти',
     feedBoostSubtitleChicken: 'Удваивает стоимость яиц',
+    feedBoostSubtitleEvent: 'Удваивает стоимость радуги',
     benefit: 'Выгода',
     // Советы 
     helpGeneral_1: 'В каждой ферме - свои особенности. Не заскучаешь!',
@@ -936,6 +937,7 @@ export default {
     feedBoostTitle: 'Комбикорм',
     feedBoostSubtitleSheep: 'Удваивает стоимость шерсти',
     feedBoostSubtitleChicken: 'Удваивает стоимость яиц',
+    feedBoostSubtitleEvent: 'Удваивает стоимость радуги',
     benefit: 'Выгода',
     // Советы 
     helpGeneral_1: 'В каждой ферме - свои особенности. Не заскучаешь!',

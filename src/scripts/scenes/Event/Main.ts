@@ -89,9 +89,10 @@ class Event extends Phaser.Scene {
   public debugLog: boolean;
   public velocity: number = 100; 
   public maxCountResource: number = 30; // максимальное количество ресурсов
-  public herdBoostLvl: number = 4;
-  public feedBoostLvl: number = 5;
+  public herdBoostLvl: number = 1;
+  public feedBoostLvl: number = 2;
   public startCreateHerdBoostAnimal: boolean = false;
+  public feedBoostMultiplier: bigint = BigInt(2);
 
   public collisions = collisions.bind(this);
   public click = click.bind(this);
