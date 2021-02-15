@@ -26,6 +26,25 @@ function createChatBars(height: number): void {
     console.log('Emoji')
   })
 
+  // Зона инпута
+  let chatInputZone: Phaser.GameObjects.Zone = this.add.zone(134, this.cameras.main.centerY + 311, 294, 65).setOrigin(0).setDropZone(undefined, () => {});
+  this.add.graphics().lineStyle(2, 0xF20800).strokeRect(134, this.cameras.main.centerY + 311, 294, 65).setDepth(4)
+  chatInputZone.setInteractive()
+
+  let root: HTMLDivElement = document.querySelector('#root');
+  this.mainInput = document.createElement('input');
+  root.append(this.mainInput);
+  this.mainInput.setAttribute("id", "chat");
+  this.mainInput.setAttribute("autocomplete", "off");
+
+  chatInputZone.on('pointerdown', () => {
+        
+    this.mainInput.style.display = 'block';
+    this.mainInput.focus();
+
+  });
+
+
 }
 
 export {
