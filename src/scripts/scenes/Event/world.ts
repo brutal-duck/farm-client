@@ -25,13 +25,13 @@ function world(): void {
   // строим территории
   this.territories = this.physics.add.group(); // группа территорий
 
-  let forest: number = 1;
+  let forest: number = 5;
   this.state.eventTerritories.map((data: IeventTerritories, index: number) => {
     let x: number = (data.position - 1) * this.height;
     let y: number = (data.block - 1) * this.height;
 
     forest++;
-    if (forest > 8) forest = 1;
+    if (forest > 6) forest = 1;
     if (data.position === 0) x++;
     if (data.block === 0) y++;
     y += this.topIndent;
@@ -125,9 +125,9 @@ function world(): void {
     let territoryZone: Phaser.GameObjects.Zone = this.add.zone(x + 10, y + 10, territory.width - 20, territory.height - 20).setDropZone(undefined, () => {}).setOrigin(0, 0);
     territoryZone.type = 'type' + index;
     
-    let graphics = this.add.graphics().setDepth(territory.y * 5);
-    graphics.lineStyle(5, 0x000000);
-    graphics.strokeRect(territoryZone.x, territoryZone.y, territoryZone.input.hitArea.width, territoryZone.input.hitArea.height);
+    // let graphics = this.add.graphics().setDepth(territory.y * 5);
+    // graphics.lineStyle(5, 0x000000);
+    // graphics.strokeRect(territoryZone.x, territoryZone.y, territoryZone.input.hitArea.width, territoryZone.input.hitArea.height);
 
     
     this.clickTerritory(territory, (): void => {

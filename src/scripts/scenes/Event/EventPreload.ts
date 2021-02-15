@@ -37,8 +37,6 @@ let forest3: any = require("./../../../assets/images/event/territories/forest-3.
 let forest4: any = require("./../../../assets/images/event/territories/forest-4.png");
 let forest5: any = require("./../../../assets/images/event/territories/forest-5.png");
 let forest6: any = require("./../../../assets/images/event/territories/forest-6.png");
-let forest7: any = require("./../../../assets/images/event/territories/forest-7.png");
-let forest8: any = require("./../../../assets/images/event/territories/forest-8.png");
 let verticalBorder: any = require("./../../../assets/images/event/territories/vertical-border.png");
 let horizontalBorder1: any = require("./../../../assets/images/event/territories/horizontal-border-1.png");
 let horizontalBorder2: any = require("./../../../assets/images/event/territories/horizontal-border-2.png");
@@ -1611,8 +1609,6 @@ class EventPreload extends Phaser.Scene {
     this.load.image('event-forest-4', forest4);
     this.load.image('event-forest-5', forest5);
     this.load.image('event-forest-6', forest6);
-    this.load.image('event-forest-7', forest7);
-    this.load.image('event-forest-8', forest8);
 
     this.load.image('event-vertical-border', verticalBorder);
     this.load.image('event-horizontal-border-1', horizontalBorder1);

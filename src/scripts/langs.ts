@@ -553,6 +553,7 @@ export default {
     eventBreed60: 'Курочка свободы',
 
     resourcePrice: 'Цена радуги: ',
+    
   },
   en: {
     index: 'ru',
