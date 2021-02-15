@@ -75,13 +75,16 @@ class Map extends Phaser.Scene {
 
     this.point = this.add.sprite(0, 0, 'point-map').setOrigin(0.5, 1);
     
-    let sheepPosition: Iposition = { x: 155, y: 145 }
-    let chickenPosition: Iposition = { x: 500, y: 270 }
+    let sheepPosition: Iposition = { x: 155, y: 145 };
+    let chickenPosition: Iposition = { x: 500, y: 270 };
+    let eventPosition: Iposition = { x: 520, y: 700 };
 
     if (this.state.farm === 'Sheep') {
       this.pointPosition = sheepPosition;
     } else if (this.state.farm === 'Chicken') {
       this.pointPosition = chickenPosition;
+    } else if (this.state.farm === 'Event') {
+      this.pointPosition = eventPosition;
     }
 
     this.point.x = this.pointPosition.x;
@@ -91,6 +94,7 @@ class Map extends Phaser.Scene {
 
     this.state.progress.chicken.unlock = 1; // костыль для покупки куриной фермы
     this.build(chickenPosition,'Chicken', this.state.progress.chicken);
+    
     // Евентовая ферма на карте
     let eventIcon: Phaser.GameObjects.Graphics = this.add.graphics();
     eventIcon.fillStyle(0xff0000, 1.0)
