@@ -2,6 +2,7 @@ import { FAPI } from '../libs/Fapi';
 import * as amplitude from 'amplitude-js';
 import { randomString } from './basic';
 import * as platform from 'platform';
+import { buyTerritory } from './territories';
 
 // поиск рекламы
 function findAd(): void {
@@ -37,7 +38,7 @@ function findAd(): void {
 
 // смотреть рекламу
 function watchAd(type: number): void {
-
+  
   this.state.adRewardedType = type;
   this.state.readyAd = false;
 
@@ -119,6 +120,10 @@ function adReward(): void {
         time = this.state.chickenCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userChicken.collectorLevel).time * 2;
         this.state.userChicken.collector = time * 60;
 
+      } else if (this.state.farm === 'Event') {
+        type = 'resource_catcher';
+        time = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userEvent.collectorLevel).time * 2;
+        this.state.userEvent.collector = time * 60;
       }
 
       this.tryTask(3, 0, time);
@@ -127,6 +132,22 @@ function adReward(): void {
         type: 'free',
         price: 'ad',
         farm_id: this.state.farm
+      });
+      break;
+    
+    case 4: 
+      let position = this.game.scene.keys['Event'].getFreePosition();
+      if (position.x === null || position.y === null) return;
+      let breed: number = this.state.userEvent.maxLevelAnimal - 3;
+      if (breed < 2) breed = 2;
+      this.currentTerritory(position.x, position.y).data.values.animal = breed;
+      id = 'local_' + randomString(18);
+      this.getAnimal(id, breed, position.x, position.y);
+
+      type = 'event_animal';
+      this.state.amplitude.getInstance().logEvent('take_diamond_animal', {
+        farm_id: this.state.farm,
+        price: 'ad'
       });
       break;
 

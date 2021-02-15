@@ -179,14 +179,46 @@ function animals(): void {
 
     } else if (animal.breed <= this.state.userEvent.maxLevelAnimal - 3 || animal.breed === 2 && this.state.userEvent.maxLevelAnimal > 2) {
 
-      let diamondPrice :number = 10;
       
-      btn = this.shopButton(330, center, String(diamondPrice), 'diamond');
-      this.clickShopBtn(btn, (): void => {
+      let diamondPrice: number = 10;
+      if (this.state.readyAd) {
+        
+        btn = this.shopButton(350, center,  this.state.lang.pickUp, 'ad-icon');
+        this.clickShopBtn(btn, (): void => {
+          if (this.game.scene.keys[this.state.farm].getFreeBoostPositions().length > 0) {
+            this.game.scene.keys[this.state.farm].watchAd(4);
+            this.scene.stop('Shop');
+            this.scene.stop('ShopBars');
+            this.scene.stop('Modal');
+            this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+          } else {
+            this.scene.stop('Shop');
+            this.scene.stop('ShopBars');
+            this.scene.stop('Modal');
+  
+            let modal: Imodal = {
+              type: 1,
+              sysType: 3,
+              height: 150,
+              message: this.state.lang.maxChickenCount // поменять
+            }
+            this.state.modal = modal;
+            this.scene.launch('Modal', this.state);
+          }
 
-        this.game.scene.keys[this.state.farm].buyAnimal(animal.breed, true, diamondPrice);
+        });
+  
+      } else {
 
-      });
+        btn = this.shopButton(330, center, String(diamondPrice), 'diamond');
+        this.clickShopBtn(btn, (): void => {
+  
+          this.game.scene.keys[this.state.farm].buyAnimal(animal.breed, true, diamondPrice);
+  
+        });
+
+      }
+      
 
       this.buttons.push({
         text: btn.title,

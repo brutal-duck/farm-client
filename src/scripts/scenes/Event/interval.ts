@@ -108,29 +108,29 @@ function interval(): void {
     // this.autoprogressTimer = time;
 
     // // поиск рекламы
-    // this.findAd();
+    this.findAd();
     
     // this.debug();
 
-    // // таймер до буста стадо
-    // if (this.state.timeToHerdBoost > 0) {
-    //   --this.state.timeToHerdBoost;
-    // } else {
-    //   console.log('очистка таймера');
-    //   this.state[`user${this.state.farm}`].takenHerdBoost = 0;
-    //   this.state.timeToHerdBoost = 86400;
-    // }
+    // таймер до буста стадо
+    if (this.state.timeToHerdBoost > 0) {
+      --this.state.timeToHerdBoost;
+    } else {
+      console.log('очистка таймера');
+      this.state[`user${this.state.farm}`].takenHerdBoost = 0;
+      this.state.timeToHerdBoost = 86400;
+    }
 
-    // if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0) {
-    //   this.state.nativeCounter[3] = 1;
-    // }
+    if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0) {
+      this.state.nativeCounter[3] = 1;
+    }
 
-    // let nativeCount = 0;
+    let nativeCount = 0;
     
-    // for (let i = 0; i < this.state.nativeCounter.length; i++) {
-    //   nativeCount += this.state.nativeCounter[i];
-    // }
-    // this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setText(nativeCount);
+    for (let i = 0; i < this.state.nativeCounter.length; i++) {
+      nativeCount += this.state.nativeCounter[i];
+    }
+    this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setText(nativeCount);
 
 
   }, callbackScope: this, loop: true });

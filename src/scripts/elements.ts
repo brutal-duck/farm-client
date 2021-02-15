@@ -386,6 +386,10 @@ function shopButton(x: number, y: number, text: string, icon: any = false): any 
     img = this.add.image(title.getBounds().left - 25, y - 5, icon).setScale(0.15);
   }
 
+  if (icon === 'ad-icon') {
+    img = this.add.image(title.getBounds().left - 25, y - 5, icon).setScale(0.5);
+  }
+
   return {
     btn: btn,
     title: title,

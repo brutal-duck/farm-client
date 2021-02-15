@@ -487,6 +487,10 @@ function updateEventNativeShop(): void {
     this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setText(counter);
   }
 }
+
+function tryTask(): void {
+  console.log('TryTask');
+}
 export {
   animalPrice,
   maxBreedForBuy,
@@ -500,5 +504,6 @@ export {
   exchange,
   createBoostAnimal,
   getFreeBoostPositions,
-  updateEventNativeShop
+  updateEventNativeShop,
+  tryTask
 }
