@@ -125,15 +125,14 @@ function animals(): void {
       this.add.sprite(110, y + this.height + 110, 'disable-animal');
     } else {
 
-      let sprite: Phaser.GameObjects.Sprite = this.add.sprite(110, y + this.height + 110, 'animal' + animal.breed);
-      sprite.anims.play('chicken-drag' + animal.breed, true);
+      this.add.sprite(110, y + this.height + 110, 'animal' + animal.breed);
 
     }
 
     // описание
     let center: number = y + 110 + this.height;
     
-    let animalName: string = this.state.lang['chickenBreed' + animal.breed];
+    let animalName: string = this.state.lang['eventBreed' + animal.breed];
     let name: Phaser.GameObjects.Text = this.add.text(240, center, animalName, {
       font: '28px Shadow',
       fill: '#FFFFFF',
@@ -142,7 +141,8 @@ function animals(): void {
     }).setOrigin(0, 0.5);
     let boundsName = name.getBounds();
 
-    let resourcePriceText: string = this.state.lang.eggPrice;
+    let resourcePriceText: string = this.state.lang.resourcePrice;
+
     let resource: Phaser.GameObjects.Text = this.add.text(240, center, resourcePriceText, {
       font: '20px Shadow',
       fill: '#FFFFFF'
@@ -161,7 +161,7 @@ function animals(): void {
 
       let price: string = String(shortNum(this.animalPrice(animal.breed).price));
       
-      btn = this.shopButton(330, center, price, 'chickenCoin');
+      btn = this.shopButton(330, center, price, 'eventCoin');
       this.clickShopBtn(btn, (): void => {
 
         let result: boolean = this.game.scene.keys[this.state.farm].buyAnimal(animal.breed, true);

@@ -166,10 +166,10 @@ function buildBorders(): void {
           territory.data.values.borderTop.setVisible(false);
         }
 
-        if (bottomTer.data.values.type === 1 ||
+        if (bottomTer !== undefined && (bottomTer.data.values.type === 1 ||
           bottomTer.data.values.type === 2 ||
           bottomTer.data.values.type === 3 ||
-          bottomTer.data.values.type === 5) {
+          bottomTer.data.values.type === 5)) {
           territory.data.values.borderBottom.setVisible(false);
         } else {
           territory.data.values.borderBottom.setVisible(true);
