@@ -16,7 +16,6 @@ let sandwichClose: any = require("./../../../assets/images/icons/sandwich-close.
 let profile: any = require("./../../../assets/images/icons/profile.png");
 let chat: any = require("./../../../assets/images/icons/chat.png");
 let forBuying: any = require("./../../../assets/images/event/territories/for-buying.png");
-let bought: any = require("./../../../assets/images/event/territories/bought.png");
 let lockTerritory: any = require("./../../../assets/images/event/lock-event-territory.png");
 let mergingAnimation: any = require("./../../../assets/images/merging-animation.png");
 let coin: any = require("./../../../assets/images/event/icons/money.png");
@@ -31,11 +30,7 @@ let calendar: any = require("./../../../assets/images/calendar.png");
 let adIcon: any = require("./../../../assets/images/icons/ad-icon.png");
 let bgAd: any = require("./../../../assets/images/icons/bg-ad.png");
 let bigButtonGreen: any = require("./../../../assets/images/modal/btn_lg.png");
-let grass1: any = require("./../../../assets/images/event/territories/grass1-1.png");
-let grass2: any = require("./../../../assets/images/event/territories/grass1-2.png");
-let grass3: any = require("./../../../assets/images/event/territories/grass1-3.png");
-let grass4: any = require("./../../../assets/images/event/territories/grass1-4.png");
-let grass5: any = require("./../../../assets/images/event/territories/grass1-5.png");
+let grass: any = require("./../../../assets/images/event/territories/grass.png");
 let forest1: any = require("./../../../assets/images/event/territories/forest-1.png");
 let forest2: any = require("./../../../assets/images/event/territories/forest-2.png");
 let forest3: any = require("./../../../assets/images/event/territories/forest-3.png");
@@ -1592,7 +1587,6 @@ class EventPreload extends Phaser.Scene {
     this.load.image('profile', profile);
     this.load.image('chat', chat);
     this.load.image('event-for-buying', forBuying);
-    this.load.image('event-bought', bought);
     this.load.image('lock-event-territory', lockTerritory);
     this.load.image('merging-animation', mergingAnimation);
     this.load.image('eventCoin', coin);
@@ -1608,11 +1602,7 @@ class EventPreload extends Phaser.Scene {
     this.load.image('bg-ad', bgAd);
     this.load.image('big-btn-green', bigButtonGreen);
     // грузим траву, нужно убавить будет
-    this.load.image('event-grass1', grass1);
-    this.load.image('event-grass2', grass2);
-    this.load.image('event-grass3', grass3);
-    this.load.image('event-grass4', grass4);
-    this.load.image('event-grass5', grass5);
+    this.load.image('event-grass', grass);
 
     this.load.image('event-forest-1', forest1);
     this.load.image('event-forest-2', forest2);

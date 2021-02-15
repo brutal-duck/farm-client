@@ -26,15 +26,12 @@ function world(): void {
   this.territories = this.physics.add.group(); // группа территорий
 
   let forest: number = 1;
-  let grass: number = 1;
   this.state.eventTerritories.map((data: IeventTerritories, index: number) => {
     let x: number = (data.position - 1) * this.height;
     let y: number = (data.block - 1) * this.height;
 
     forest++;
     if (forest > 8) forest = 1;
-    grass++;
-    if (grass > 5) grass = 1;
     if (data.position === 0) x++;
     if (data.block === 0) y++;
     y += this.topIndent;
@@ -51,7 +48,7 @@ function world(): void {
 
     } else if (data.type === 2) {
 
-      type = 'event-grass' + grass
+      type = 'event-grass'
       
     } else if (data.type === 4) {
 
