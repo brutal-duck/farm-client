@@ -27,11 +27,13 @@ function flyAnimal(): void {
           if (activeAnimal.data.values.topPosition) {
             activeAnimal.originY -= 0.0065;
             activeAnimal.setOrigin(0.5, activeAnimal.originY);
+            activeAnimal.data.values.cloud.setOrigin(0.5, activeAnimal.originY);
             if (activeAnimal.originY <= 0.45) activeAnimal.data.values.topPosition = false;
             
           } else {
             activeAnimal.originY += 0.0065;
             activeAnimal.setOrigin(0.5, activeAnimal.originY);
+            activeAnimal.data.values.cloud.setOrigin(0.5, activeAnimal.originY);
             if (activeAnimal.originY >= 0.55) activeAnimal.data.values.topPosition = true;
           }
         }

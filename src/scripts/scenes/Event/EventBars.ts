@@ -73,6 +73,9 @@ class EventBars extends Phaser.Scene {
   public calendar: any;
   public nativeShop: Phaser.GameObjects.Graphics;
   public nativeShopCounter: Phaser.GameObjects.Text;
+  public scoreText: Phaser.GameObjects.Text;
+  public placeText: Phaser.GameObjects.Text;
+  public proceedsText: Phaser.GameObjects.Text;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -113,7 +116,7 @@ class EventBars extends Phaser.Scene {
 
   public create(): void {
 
-    this.add.sprite(0, 0, 'topbar').setOrigin(0, 0).setInteractive();
+    this.add.sprite(0, 0, 'topbar-event').setOrigin(0, 0).setInteractive();
     
     this.add.sprite(0, this.height + 10, 'tabbar')
       .setInteractive()
@@ -263,6 +266,11 @@ class EventBars extends Phaser.Scene {
     this.animalPriceBubble = this.add.graphics({ x: bounds.left - 15, y: bounds.top });
     this.animalPriceBubble.fillStyle(0xFFFFFF, 1);
     this.animalPriceBubble.fillRoundedRect(0, 0, bounds.width + 30, bounds.height, 8);
+
+    this.proceedsText = this.add.text(this.cameras.main.centerX, 75, '0', {
+      font: '44px Shadow',
+      color: '#124C03'
+    }).setOrigin(0.5, 0.5);
 
   }
 

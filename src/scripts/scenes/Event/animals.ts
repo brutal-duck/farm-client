@@ -110,10 +110,10 @@ function getAnimal(
   this.checkMerging(animal);
   if (!activeAnimal)animal.data.values.active = this.getActiveAnimal(type,x, y, animal);
   
-    
   this.click(animal, ()=>{
     this.teleportation(animal.data.values.active, undefined, true);
-  })
+  });
+
   return animal;
 
 }
@@ -149,6 +149,7 @@ function getActiveAnimal(
   animal.data.values.base = base;
   animal.data.values.teleport = false;
   animal.data.values.topPosition = false;
+  animal.data.values.cloud = this.physics.add.sprite(x, y, 'cloud').setVisible(false);
   animal.state = 'active';
 
   return animal;
@@ -278,6 +279,7 @@ function confirmExpelAnimal(): void {
 // продажа курочки
 function expelAnimal(): void {
   this.currentTerritory(this.state.animal.x, this.state.animal.y).data.values.merging = [];
+  this.state.animal.data.values.active?.data.values.cloud.destroy();
   this.state.animal.data.values.active?.destroy();
   this.state.animal.destroy();
 
@@ -374,6 +376,8 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
         this.time.addEvent({ delay: 100, callback: (): void => {
           this.game.scene.keys['EventBars'].updateAnimalPrice();
           this.mergingCloud(position);
+          animal1?.data.values.active?.data.values.cloud.destroy();
+          animal2?.data.values.active?.data.values.cloud.destroy();
           animal1?.data.values.active.destroy();
           animal2?.data.values.active.destroy();
           animal1?.destroy();

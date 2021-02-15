@@ -6,7 +6,7 @@ let pixel: any = require("./../../../assets/images/pixel.png");
 let bg: any = require("./../../../assets/images/scroll-bg.png");
 let top: any = require("./../../../assets/images/event/top.png");
 let bottom: any = require("./../../../assets/images/event/bottom.png");
-let topbar: any = require("./../../../assets/images/topbar.png");
+let topbar: any = require("./../../../assets/images/event/topbar.png");
 let tabbar: any = require("./../../../assets/images/tabbar.png");
 let resourceCollector: any = require("./../../../assets/images/event/event-collector.png");
 let shop: any = require("./../../../assets/images/icons/shop.png");
@@ -166,6 +166,7 @@ let animal12: any = require("./../../../assets/images/event/animal/animal12.png"
 // let animal59: any = require("./../../../assets/images/event/animal/animal59.png");
 // let animal60: any = require("./../../../assets/images/event/animal/animal60.png");
 
+let cloud: any = require("./../../../assets/images/event/cloud.png");
 let resource: any = require("./../../../assets/images/event/resource.png");
 
 let disableAnimal: any = require("./../../../assets/images/event/animal/disable-animal.png");
@@ -1576,7 +1577,7 @@ class EventPreload extends Phaser.Scene {
     this.load.image('bg', bg);
     this.load.image('event-top', top);
     this.load.image('event-bottom', bottom);
-    this.load.image('topbar', topbar);
+    this.load.image('topbar-event', topbar);
     this.load.image('tabbar', tabbar);
     this.load.image('event-collector', resourceCollector);
     this.load.image('shop', shop);
@@ -1742,6 +1743,7 @@ class EventPreload extends Phaser.Scene {
     // this.load.image('animal58', animal58);
     // this.load.image('animal59', animal59);
     // this.load.image('animal60', animal60);
+    this.load.image('cloud', cloud);
     this.load.image('event-resource', resource);
 
     this.load.image('pixel', pixel);

@@ -1,4 +1,4 @@
-import { random, randomString } from '../../general/basic';
+import { random, randomString, shortNum, shortTime } from '../../general/basic';
 
 function interval(): void {
 
@@ -132,6 +132,15 @@ function interval(): void {
     }
     this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setText(nativeCount);
 
+
+    let proceeds: bigint = BigInt(0);
+    this.animals.children.entries.forEach(animal => {
+      if (animal.data.values.active.data.values.working) {
+        let price: bigint = this.state.eventSettings.eventSettings.find((data: IeventPoints) => data.breed === animal.data.values.type).resourcePrice;
+        proceeds += price;
+      }
+    });
+    this.game.scene.keys['EventBars'].proceedsText.setText(shortNum(proceeds / BigInt(10)));
 
   }, callbackScope: this, loop: true });
 

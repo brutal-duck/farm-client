@@ -72,7 +72,7 @@ window.onload = (): void => {
       parent: 'root',
       physics: {
         default: 'arcade',
-        arcade: { debug: false }
+        arcade: { debug: true }
       },
       render: {
         transparent: true // прозрачность канваса
