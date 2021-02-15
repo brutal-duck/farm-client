@@ -181,9 +181,9 @@ function animals(): void {
 
       
       let diamondPrice: number = 10;
-      if (this.state.readyAd) {
+      if (!this.state.readyAd) {
         
-        btn = this.shopButton(350, center,  this.state.lang.pickUp, 'ad-icon');
+        btn = this.shopButton(330, center,  this.state.lang.pickUp, 'ad-icon');
         this.clickShopBtn(btn, (): void => {
           if (this.game.scene.keys[this.state.farm].getFreeBoostPositions().length > 0) {
             this.game.scene.keys[this.state.farm].watchAd(4);
