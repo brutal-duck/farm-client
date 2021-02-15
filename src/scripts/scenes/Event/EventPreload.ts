@@ -17,7 +17,7 @@ let profile: any = require("./../../../assets/images/icons/profile.png");
 let chat: any = require("./../../../assets/images/icons/chat.png");
 let forBuying: any = require("./../../../assets/images/event/territories/for-buying.png");
 let bought: any = require("./../../../assets/images/event/territories/bought.png");
-let lockTerritory: any = require("./../../../assets/images/lock-territory.png");
+let lockTerritory: any = require("./../../../assets/images/event/lock-event-territory.png");
 let mergingAnimation: any = require("./../../../assets/images/merging-animation.png");
 let coin: any = require("./../../../assets/images/event/icons/money.png");
 let diamond: any = require("./../../../assets/images/icons/diamonds.png");
@@ -1345,17 +1345,18 @@ const testEventSettings: IeventSettings = {
     },
   ],
   territoriesEventPrice: [
+    { block: 3, position: 1, diamond: 0, price: 0, unlock: 0 },
     { block: 3, position: 2, diamond: 0, price: 0, unlock: 0 },
     { block: 3, position: 3, diamond: 0, price: 0, unlock: 0 },
     { block: 4, position: 1, diamond: 0, price: 0, unlock: 0 },
-    { block: 4, position: 2, diamond: 0, price: 2000, unlock: 2 },
-    { block: 4, position: 3, diamond: 0, price: 4000, unlock: 3 },
-    { block: 5, position: 1, diamond: 0, price: 5000, unlock: 3 },
-    { block: 5, position: 2, diamond: 1, price: 0, unlock: 4 },
-    { block: 5, position: 3, diamond: 1, price: 0, unlock: 8 },
-    { block: 6, position: 1, diamond: 1, price: 0, unlock: 10 },
-    { block: 6, position: 2, diamond: 1, price: 0, unlock: 11 },
-    { block: 6, position: 3, diamond: 1, price: 0, unlock: 12 },
+    { block: 4, position: 2, diamond: 0, price: 2000, unlock: 3 },
+    { block: 4, position: 3, diamond: 0, price: 4000, unlock: 5 },
+    { block: 5, position: 1, diamond: 0, price: 5000, unlock: 7 },
+    { block: 5, position: 2, diamond: 100, price: 0, unlock: 9 },
+    { block: 5, position: 3, diamond: 125, price: 0, unlock: 11 },
+    { block: 6, position: 1, diamond: 150, price: 0, unlock: 13 },
+    { block: 6, position: 2, diamond: 175, price: 0, unlock: 15 },
+    { block: 6, position: 3, diamond: 200, price: 0, unlock: 17 },
   ],
   territoriesEventSettings: [
     { improve: 1, regeneration: 11, countResources: 5, unlock_improve: 1, resourceStorage: 200 },
@@ -1505,7 +1506,7 @@ class EventPreload extends Phaser.Scene {
     this.load.image('chat', chat);
     this.load.image('event-for-buying', forBuying);
     this.load.image('event-bought', bought);
-    this.load.image('lock-territory', lockTerritory);
+    this.load.image('lock-event-territory', lockTerritory);
     this.load.image('merging-animation', mergingAnimation);
     this.load.image('eventCoin', coin);
     this.load.image('diamond', diamond);

@@ -11,10 +11,9 @@ function deleteTerritoriesLocks(): void {
 
       let unlock: number = prices.find((data: IeventTerritoriesPrice) => data.block === territory.data.values.block && data.position === territory.data.values.position).unlock;
 
-      if (lvl >= unlock && territory.data.values.lock_image && territory.data.values.lock_text) {
+      if (lvl >= unlock && territory.data.values.lock_image) {
         
         territory.data.values.lock_image.destroy();
-        territory.data.values.lock_text.destroy();
 
       }
 

@@ -114,22 +114,15 @@ function world(): void {
         .setOrigin(0.5, 1)
         .setDepth(territory.y + 1);
       
-      territory.data.values.lock_image = this.add.image(x, y, 'lock-territory').setDepth(territory.y + 2);
-      territory.data.values.lock_text = this.add.text(x, y - 37, this.state.lang.part + ' ' + unlock, {
-        font: '26px Shadow',
-        color: '#ECDFDF'
-      }).setOrigin(0.5, 0.5).setDepth(territory.y + 2);
+      territory.data.values.lock_image = this.add.image(x, y, 'lock-event-territory').setDepth(territory.y + 2).setVisible(false);
 
         // проверка на замок
-      // if (unlock > this.state.userEvent.part) {
+      if (unlock > this.state.userEvent.maxLevelAnimal) {
 
-      //   territory.lock_image = this.add.image(x, y, 'lock-territory').setDepth(territory.y + 2);
-      //   territory.lock_text = this.add.text(x, y - 37, this.state.lang.part + ' ' + unlock, {
-      //     font: '26px Shadow',
-      //     color: '#ECDFDF'
-      //   }).setOrigin(0.5, 0.5).setDepth(territory.y + 2);
+        territory.data.values.lock_image = this.add.image(x, y, 'lock-territory').setDepth(territory.y + 2).setVisible(true);
 
-      // }
+
+      }
     } 
 
     let territoryZone: Phaser.GameObjects.Zone = this.add.zone(x + 10, y + 10, territory.width - 20, territory.height - 20).setDropZone(undefined, () => {}).setOrigin(0, 0);
