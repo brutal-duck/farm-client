@@ -923,18 +923,426 @@ const testEventSettings: IeventSettings = {
   unlockCollector12: 8,
   priceCoefficient: 7,
   eventSettings: [
-    { breed: 1, resource: 100, resourcePrice: BigInt(100), price: BigInt(100), exchange: 10},
-    { breed: 2, resource: 100, resourcePrice: BigInt(200), price: BigInt(2000), exchange: 20},
-    { breed: 3, resource: 100, resourcePrice: BigInt(400), price: BigInt(50000), exchange: 30},
-    { breed: 4, resource: 100, resourcePrice: BigInt(800), price: BigInt(60000), exchange: 40},
-    { breed: 5, resource: 100, resourcePrice: BigInt(1600), price: BigInt(80000), exchange: 50},
-    { breed: 6, resource: 100, resourcePrice: BigInt(3200), price: BigInt(100000), exchange: 60},
-    { breed: 7, resource: 100, resourcePrice: BigInt(6400), price: BigInt(1000000), exchange: 70},
-    { breed: 8, resource: 100, resourcePrice: BigInt(12800), price: BigInt(1000000000), exchange: 80},
-    { breed: 9, resource: 100, resourcePrice: BigInt(25600), price: BigInt(100000000000), exchange: 90},
-    { breed: 10, resource: 100, resourcePrice: BigInt(51200), price: BigInt(1000000000000), exchange: 100},
-    { breed: 11, resource: 100, resourcePrice: BigInt(102400), price: BigInt(10000000000000), exchange: 110},
-    { breed: 12, resource: 100, resourcePrice: BigInt(204800), price: BigInt(1000000000000000), exchange: 120}
+    { 
+      breed: 1, 
+      resource: 100, 
+      resourcePrice: BigInt(10), 
+      price: BigInt(100), 
+      exchange: BigInt(1000)
+    },
+    { 
+      breed: 2, 
+      resource: 100, 
+      resourcePrice: BigInt(20), 
+      price: BigInt(1500), 
+      exchange: BigInt(2800)
+    },
+    { 
+      breed: 3, 
+      resource: 100, 
+      resourcePrice: BigInt(40), 
+      price: BigInt(4800), 
+      exchange: BigInt(7200)
+    },
+    { 
+      breed: 4, 
+      resource: 100, 
+      resourcePrice: BigInt(90), 
+      price: BigInt(15000), 
+      exchange: BigInt(17600)
+    },
+    { 
+      breed: 5, 
+      resource: 100, 
+      resourcePrice: BigInt(190), 
+      price: BigInt(48000), 
+      exchange: BigInt(41600)
+    },
+    { 
+      breed: 6, 
+      resource: 100, 
+      resourcePrice: BigInt(400), 
+      price: BigInt(150000), 
+      exchange: BigInt(96000)
+    },
+    { 
+      breed: 7, 
+      resource: 100, 
+      resourcePrice: BigInt(850), 
+      price: BigInt(480000), 
+      exchange: BigInt(217600)
+    },
+    { 
+      breed: 8, 
+      resource: 100, 
+      resourcePrice: BigInt(1780), 
+      price: BigInt(1500000), 
+      exchange: BigInt(486600)
+    },
+    { 
+      breed: 9, 
+      resource: 100, 
+      resourcePrice: BigInt(3750), 
+      price: BigInt(4800000), 
+      exchange: BigInt(1075200)
+    },
+    { 
+      breed: 10, 
+      resource: 100, 
+      resourcePrice: BigInt(7900), 
+      price: BigInt(15000000), 
+      exchange: BigInt(2355200)
+    },
+    { 
+      breed: 11, 
+      resource: 100, 
+      resourcePrice: BigInt(16000), 
+      price: BigInt(48000000), 
+      exchange: BigInt(5120000)
+    },
+    { 
+      breed: 12, 
+      resource: 100, 
+      resourcePrice: BigInt(73000), 
+      price: BigInt(480000000), 
+      exchange: BigInt(12000000)
+    },
+    { 
+      breed: 13, 
+      resource: 100, 
+      resourcePrice: BigInt(34000), 
+      price: BigInt(150000000), 
+      exchange: BigInt(24000000)
+    },
+    { 
+      breed: 14, 
+      resource: 100, 
+      resourcePrice: BigInt(150000), 
+      price: BigInt(1500000000), 
+      exchange: BigInt(48000000)
+    },
+    { 
+      breed: 15, 
+      resource: 100, 
+      resourcePrice: BigInt(320000), 
+      price: BigInt(4800000000), 
+      exchange: BigInt(96000000)
+    },
+    { 
+      breed: 16, 
+      resource: 100, 
+      resourcePrice: BigInt(670000), 
+      price: BigInt(15000000000), 
+      exchange: BigInt(192000000)
+    },
+    { 
+      breed: 17, 
+      resource: 100, 
+      resourcePrice: BigInt(1400000), 
+      price: BigInt(48000000000), 
+      exchange: BigInt(384000000)
+    },
+    { 
+      breed: 18, 
+      resource: 100, 
+      resourcePrice: BigInt(2900000), 
+      price: BigInt(150000000000), 
+      exchange: BigInt(768000000)
+    },
+    { 
+      breed: 19, 
+      resource: 100, 
+      resourcePrice: BigInt(6200000), 
+      price: BigInt(480000000000), 
+      exchange: BigInt(1536000000)
+    },
+    { 
+      breed: 20, 
+      resource: 100, 
+      resourcePrice: BigInt(13000000), 
+      price: BigInt(1500000000000), 
+      exchange: BigInt(3072000000)
+    },
+    { 
+      breed: 21, 
+      resource: 100, 
+      resourcePrice: BigInt(25000000), 
+      price: BigInt(4800000000000), 
+      exchange: BigInt(6144000000)
+    },
+    { 
+      breed: 22, 
+      resource: 100, 
+      resourcePrice: BigInt(50200000), 
+      price: BigInt(15000000000000), 
+      exchange: BigInt(12288000000)
+    },
+    { 
+      breed: 23, 
+      resource: 100, 
+      resourcePrice: BigInt(100300000), 
+      price: BigInt(48000000000000), 
+      exchange: BigInt(24576000000)
+    },
+    { 
+      breed: 24, 
+      resource: 100, 
+      resourcePrice: BigInt(200000000), 
+      price: BigInt(150000000000000), 
+      exchange: BigInt(49152000000)
+    },
+    { 
+      breed: 25, 
+      resource: 100, 
+      resourcePrice: BigInt(400000000), 
+      price: BigInt(480000000000000), 
+      exchange: BigInt(98304000000)
+    },
+    { 
+      breed: 26, 
+      resource: 100, 
+      resourcePrice: BigInt(800000000), 
+      price: BigInt(1500000000000000), 
+      exchange: BigInt(196608000000)
+    },
+    { 
+      breed: 27, 
+      resource: 100, 
+      resourcePrice: BigInt(1600000000), 
+      price: BigInt(4800000000000000), 
+      exchange: BigInt(393216000000)
+    },
+    { 
+      breed: 28, 
+      resource: 100, 
+      resourcePrice: BigInt(3200000000), 
+      price: BigInt(15000000000000000), 
+      exchange: BigInt(786432000000)
+    },
+    { 
+      breed: 29, 
+      resource: 100, 
+      resourcePrice: BigInt(6400000000), 
+      price: BigInt(48000000000000000), 
+      exchange: BigInt(1572864000000)
+    },
+    { 
+      breed: 30, 
+      resource: 100, 
+      resourcePrice: BigInt(12800000000), 
+      price: BigInt(150000000000000000), 
+      exchange: BigInt(3145728000000)
+    },
+    { 
+      breed: 31, 
+      resource: 100, 
+      resourcePrice: BigInt(25600000000), 
+      price: BigInt(480000000000000000), 
+      exchange: BigInt(6291456000000)
+    },
+    { 
+      breed: 32, 
+      resource: 100, 
+      resourcePrice: BigInt(51200000000), 
+      price: BigInt(1500000000000000000), 
+      exchange: BigInt(12582912000000)
+    },
+    { 
+      breed: 33, 
+      resource: 100, 
+      resourcePrice: BigInt(102400000000), 
+      price: BigInt(4800000000000000000), 
+      exchange: BigInt(25165824000000)
+    },
+    { 
+      breed: 34, 
+      resource: 100, 
+      resourcePrice: BigInt(204800000000), 
+      price: BigInt(15000000000000000000), 
+      exchange: BigInt(50331648000000)
+    },
+    { 
+      breed: 35, 
+      resource: 100, 
+      resourcePrice: BigInt(409600000000), 
+      price: BigInt(48000000000000000000), 
+      exchange: BigInt(100663296000000)
+    },
+    { 
+      breed: 36, 
+      resource: 100, 
+      resourcePrice: BigInt(819200000000), 
+      price: BigInt(150000000000000000000), 
+      exchange: BigInt(201326592000000)
+    },
+    { 
+      breed: 37, 
+      resource: 100, 
+      resourcePrice: BigInt(1638400000000), 
+      price: BigInt(480000000000000000000), 
+      exchange: BigInt(402653184000000)
+    },
+    { 
+      breed: 38, 
+      resource: 100, 
+      resourcePrice: BigInt(3276800000000), 
+      price: BigInt(1500000000000000000000), 
+      exchange: BigInt(805306368000000)
+    },
+    { 
+      breed: 39, 
+      resource: 100, 
+      resourcePrice: BigInt(6553600000000), 
+      price: BigInt(4800000000000000000000), 
+      exchange: BigInt(1610612736000000)
+    },
+    { 
+      breed: 40, 
+      resource: 100, 
+      resourcePrice: BigInt(13107200000000), 
+      price: BigInt(15000000000000000000000), 
+      exchange: BigInt(3221225472000000)
+    },
+    { 
+      breed: 41, 
+      resource: 100, 
+      resourcePrice: BigInt(26214400000000), 
+      price: BigInt(48000000000000000000000), 
+      exchange: BigInt(6442450944000000)
+    },
+    { 
+      breed: 42, 
+      resource: 100, 
+      resourcePrice: BigInt(52428800000000), 
+      price: BigInt(150000000000000000000000), 
+      exchange: BigInt(12884901888000000)
+    },
+    { 
+      breed: 43, 
+      resource: 100, 
+      resourcePrice: BigInt(104857600000000), 
+      price: BigInt(480000000000000000000000), 
+      exchange: BigInt(25769803776000000)
+    },
+    { 
+      breed: 44, 
+      resource: 100, 
+      resourcePrice: BigInt(209715200000000), 
+      price: BigInt(1500000000000000000000000), 
+      exchange: BigInt(51539607552000000)
+    },
+    { 
+      breed: 45, 
+      resource: 100, 
+      resourcePrice: BigInt(419430400000000), 
+      price: BigInt(4800000000000000000000000), 
+      exchange: BigInt(103079215104000000)
+    },
+    { 
+      breed: 46, 
+      resource: 100, 
+      resourcePrice: BigInt(838860800000000), 
+      price: BigInt(15000000000000000000000000), 
+      exchange: BigInt(206158430208000000)
+    },
+    { 
+      breed: 47, 
+      resource: 100, 
+      resourcePrice: BigInt(1677721600000000), 
+      price: BigInt(48000000000000000000000000), 
+      exchange: BigInt(412316860416000000)
+    },
+    { 
+      breed: 48, 
+      resource: 100, 
+      resourcePrice: BigInt(3355443200000000), 
+      price: BigInt(150000000000000000000000000), 
+      exchange: BigInt(824633720832000000)
+    },
+    { 
+      breed: 49, 
+      resource: 100, 
+      resourcePrice: BigInt(6710886400000000), 
+      price: BigInt(480000000000000000000000000), 
+      exchange: BigInt(1649267441664000000)
+    },
+    { 
+      breed: 50, 
+      resource: 100, 
+      resourcePrice: BigInt(13421772800000000), 
+      price: BigInt(1500000000000000000000000000), 
+      exchange: BigInt(3298534883328000000)
+    },
+    { 
+      breed: 51, 
+      resource: 100, 
+      resourcePrice: BigInt(26843545600000000), 
+      price: BigInt(4800000000000000000000000000), 
+      exchange: BigInt(6597069766656000000)
+    },
+    { 
+      breed: 52, 
+      resource: 100, 
+      resourcePrice: BigInt(53687091200000000), 
+      price: BigInt(15000000000000000000000000000), 
+      exchange: BigInt(13194139533312000000)
+    },
+    { 
+      breed: 53, 
+      resource: 100, 
+      resourcePrice: BigInt(107374182400000000), 
+      price: BigInt(48000000000000000000000000000), 
+      exchange: BigInt(26388279066624000000)
+    },
+    { 
+      breed: 54, 
+      resource: 100, 
+      resourcePrice: BigInt(214748364800000000), 
+      price: BigInt(150000000000000000000000000000), 
+      exchange: BigInt(52776558133248000000)
+    },
+    { 
+      breed: 55, 
+      resource: 100, 
+      resourcePrice: BigInt(429496729600000000), 
+      price: BigInt(480000000000000000000000000000), 
+      exchange: BigInt(105553116266496000000)
+    },
+    { 
+      breed: 56, 
+      resource: 100, 
+      resourcePrice: BigInt(858993459200000000), 
+      price: BigInt(1500000000000000000000000000000), 
+      exchange: BigInt(211106232532992000000)
+    },
+    { 
+      breed: 57, 
+      resource: 100, 
+      resourcePrice: BigInt(1717986918400000000), 
+      price: BigInt(4800000000000000000000000000000), 
+      exchange: BigInt(422212465065984000000)
+    },
+    { 
+      breed: 58, 
+      resource: 100, 
+      resourcePrice: BigInt(3435973836800000000), 
+      price: BigInt(15000000000000000000000000000000), 
+      exchange: BigInt(844424930131968000000)
+    },
+    { 
+      breed: 59, 
+      resource: 100, 
+      resourcePrice: BigInt(6871947673600000000), 
+      price: BigInt(48000000000000000000000000000000), 
+      exchange: BigInt(1688849860263940000000)
+    },
+    { 
+      breed: 60, 
+      resource: 100, 
+      resourcePrice: BigInt(13743895347200000000), 
+      price: BigInt(150000000000000000000000000000000), 
+      exchange: BigInt(3377699720527870000000)
+    },
   ],
   territoriesEventPrice: [
     { block: 3, position: 2, diamond: 0, price: 0, unlock: 0 },

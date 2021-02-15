@@ -2,6 +2,7 @@ import Scrolling from '../../libs/Scrolling';
 import {
   genAnimations,
   firework250,
+  hearts
 } from '../../general/animations';
 import {
   click,
@@ -154,6 +155,7 @@ class Event extends Phaser.Scene {
   public flyAnimal = flyAnimal.bind(this);
   public updateTeleportation = updateTeleportation.bind(this);
   public getFreeBoostPositions = getFreeBoostPositions.bind(this);
+  public hearts = hearts.bind(this);
 
 
   public init(state: Istate): void {
