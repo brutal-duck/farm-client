@@ -257,7 +257,6 @@ function updateAnimalPrices({text, breed, img}): void {
   text.setText(String(shortNum(this.animalPrice(breed).price)));
   img.x = text.getBounds().left - 25;
 
-
 }
 
 // бусты

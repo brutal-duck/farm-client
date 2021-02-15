@@ -108,7 +108,7 @@ function getAnimal(
   animal.data.values.target = {x, y};
   animal.state = 'base';
   this.checkMerging(animal);
-  if (!activeAnimal)animal.data.values.active = this.getActiveAnimal(id,type,x, y, animal);
+  if (!activeAnimal)animal.data.values.active = this.getActiveAnimal(type,x, y, animal);
   
     
   this.click(animal, ()=>{
@@ -120,7 +120,6 @@ function getAnimal(
 
 // функция получения нового животного
 function getActiveAnimal(
-  id: string,
   type: number,
   x: number,
   y: number,
