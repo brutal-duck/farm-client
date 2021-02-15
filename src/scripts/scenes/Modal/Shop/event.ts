@@ -181,7 +181,7 @@ function animals(): void {
 
       
       let diamondPrice: number = 10;
-      if (!this.state.readyAd) {
+      if (this.state.readyAd) {
         
         btn = this.shopButton(330, center,  this.state.lang.pickUp, 'ad-icon');
         this.clickShopBtn(btn, (): void => {
