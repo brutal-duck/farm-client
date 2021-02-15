@@ -6,7 +6,7 @@ let pixel: any = require("./../../../assets/images/pixel.png");
 let bg: any = require("./../../../assets/images/scroll-bg.png");
 let top: any = require("./../../../assets/images/event/top.png");
 let bottom: any = require("./../../../assets/images/event/bottom.png");
-let topbar: any = require("./../../../assets/images/topbar.png");
+let topbar: any = require("./../../../assets/images/event/topbar.png");
 let tabbar: any = require("./../../../assets/images/tabbar.png");
 let resourceCollector: any = require("./../../../assets/images/event/event-collector.png");
 let shop: any = require("./../../../assets/images/icons/shop.png");
@@ -16,8 +16,7 @@ let sandwichClose: any = require("./../../../assets/images/icons/sandwich-close.
 let profile: any = require("./../../../assets/images/icons/profile.png");
 let chat: any = require("./../../../assets/images/icons/chat.png");
 let forBuying: any = require("./../../../assets/images/event/territories/for-buying.png");
-let bought: any = require("./../../../assets/images/event/territories/bought.png");
-let lockTerritory: any = require("./../../../assets/images/lock-territory.png");
+let lockTerritory: any = require("./../../../assets/images/event/lock-event-territory.png");
 let mergingAnimation: any = require("./../../../assets/images/merging-animation.png");
 let coin: any = require("./../../../assets/images/event/icons/money.png");
 let diamond: any = require("./../../../assets/images/icons/diamonds.png");
@@ -31,19 +30,13 @@ let calendar: any = require("./../../../assets/images/calendar.png");
 let adIcon: any = require("./../../../assets/images/icons/ad-icon.png");
 let bgAd: any = require("./../../../assets/images/icons/bg-ad.png");
 let bigButtonGreen: any = require("./../../../assets/images/modal/btn_lg.png");
-let grass1: any = require("./../../../assets/images/event/territories/grass1-1.png");
-let grass2: any = require("./../../../assets/images/event/territories/grass1-2.png");
-let grass3: any = require("./../../../assets/images/event/territories/grass1-3.png");
-let grass4: any = require("./../../../assets/images/event/territories/grass1-4.png");
-let grass5: any = require("./../../../assets/images/event/territories/grass1-5.png");
+let grass: any = require("./../../../assets/images/event/territories/grass.png");
 let forest1: any = require("./../../../assets/images/event/territories/forest-1.png");
 let forest2: any = require("./../../../assets/images/event/territories/forest-2.png");
 let forest3: any = require("./../../../assets/images/event/territories/forest-3.png");
 let forest4: any = require("./../../../assets/images/event/territories/forest-4.png");
 let forest5: any = require("./../../../assets/images/event/territories/forest-5.png");
 let forest6: any = require("./../../../assets/images/event/territories/forest-6.png");
-let forest7: any = require("./../../../assets/images/event/territories/forest-7.png");
-let forest8: any = require("./../../../assets/images/event/territories/forest-8.png");
 let verticalBorder: any = require("./../../../assets/images/event/territories/vertical-border.png");
 let horizontalBorder1: any = require("./../../../assets/images/event/territories/horizontal-border-1.png");
 let horizontalBorder2: any = require("./../../../assets/images/event/territories/horizontal-border-2.png");
@@ -62,6 +55,55 @@ let eventBuyIcon9: any = require("./../../../assets/images/event/icons/event-buy
 let eventBuyIcon10: any = require("./../../../assets/images/event/icons/event-buy-icon-10.png");
 let eventBuyIcon11: any = require("./../../../assets/images/event/icons/event-buy-icon-11.png");
 let eventBuyIcon12: any = require("./../../../assets/images/event/icons/event-buy-icon-12.png");
+// let eventBuyIcon13: any = require("./../../../assets/images/event/icons/event-buy-icon-13.png");
+// let eventBuyIcon14: any = require("./../../../assets/images/event/icons/event-buy-icon-14.png");
+// let eventBuyIcon15: any = require("./../../../assets/images/event/icons/event-buy-icon-15.png");
+// let eventBuyIcon16: any = require("./../../../assets/images/event/icons/event-buy-icon-16.png");
+// let eventBuyIcon17: any = require("./../../../assets/images/event/icons/event-buy-icon-17.png");
+// let eventBuyIcon18: any = require("./../../../assets/images/event/icons/event-buy-icon-18.png");
+// let eventBuyIcon19: any = require("./../../../assets/images/event/icons/event-buy-icon-19.png");
+// let eventBuyIcon20: any = require("./../../../assets/images/event/icons/event-buy-icon-20.png");
+// let eventBuyIcon21: any = require("./../../../assets/images/event/icons/event-buy-icon-21.png");
+// let eventBuyIcon22: any = require("./../../../assets/images/event/icons/event-buy-icon-22.png");
+// let eventBuyIcon23: any = require("./../../../assets/images/event/icons/event-buy-icon-23.png");
+// let eventBuyIcon24: any = require("./../../../assets/images/event/icons/event-buy-icon-24.png");
+// let eventBuyIcon25: any = require("./../../../assets/images/event/icons/event-buy-icon-25.png");
+// let eventBuyIcon26: any = require("./../../../assets/images/event/icons/event-buy-icon-26.png");
+// let eventBuyIcon27: any = require("./../../../assets/images/event/icons/event-buy-icon-27.png");
+// let eventBuyIcon28: any = require("./../../../assets/images/event/icons/event-buy-icon-28.png");
+// let eventBuyIcon29: any = require("./../../../assets/images/event/icons/event-buy-icon-29.png");
+// let eventBuyIcon30: any = require("./../../../assets/images/event/icons/event-buy-icon-30.png");
+// let eventBuyIcon31: any = require("./../../../assets/images/event/icons/event-buy-icon-31.png");
+// let eventBuyIcon32: any = require("./../../../assets/images/event/icons/event-buy-icon-32.png");
+// let eventBuyIcon33: any = require("./../../../assets/images/event/icons/event-buy-icon-33.png");
+// let eventBuyIcon34: any = require("./../../../assets/images/event/icons/event-buy-icon-34.png");
+// let eventBuyIcon35: any = require("./../../../assets/images/event/icons/event-buy-icon-35.png");
+// let eventBuyIcon36: any = require("./../../../assets/images/event/icons/event-buy-icon-36.png");
+// let eventBuyIcon37: any = require("./../../../assets/images/event/icons/event-buy-icon-37.png");
+// let eventBuyIcon38: any = require("./../../../assets/images/event/icons/event-buy-icon-38.png");
+// let eventBuyIcon39: any = require("./../../../assets/images/event/icons/event-buy-icon-39.png");
+// let eventBuyIcon40: any = require("./../../../assets/images/event/icons/event-buy-icon-40.png");
+// let eventBuyIcon41: any = require("./../../../assets/images/event/icons/event-buy-icon-41.png");
+// let eventBuyIcon42: any = require("./../../../assets/images/event/icons/event-buy-icon-42.png");
+// let eventBuyIcon43: any = require("./../../../assets/images/event/icons/event-buy-icon-43.png");
+// let eventBuyIcon44: any = require("./../../../assets/images/event/icons/event-buy-icon-44.png");
+// let eventBuyIcon45: any = require("./../../../assets/images/event/icons/event-buy-icon-45.png");
+// let eventBuyIcon46: any = require("./../../../assets/images/event/icons/event-buy-icon-46.png");
+// let eventBuyIcon47: any = require("./../../../assets/images/event/icons/event-buy-icon-47.png");
+// let eventBuyIcon48: any = require("./../../../assets/images/event/icons/event-buy-icon-48.png");
+// let eventBuyIcon49: any = require("./../../../assets/images/event/icons/event-buy-icon-49.png");
+// let eventBuyIcon50: any = require("./../../../assets/images/event/icons/event-buy-icon-50.png");
+// let eventBuyIcon51: any = require("./../../../assets/images/event/icons/event-buy-icon-51.png");
+// let eventBuyIcon52: any = require("./../../../assets/images/event/icons/event-buy-icon-52.png");
+// let eventBuyIcon53: any = require("./../../../assets/images/event/icons/event-buy-icon-53.png");
+// let eventBuyIcon54: any = require("./../../../assets/images/event/icons/event-buy-icon-54.png");
+// let eventBuyIcon55: any = require("./../../../assets/images/event/icons/event-buy-icon-55.png");
+// let eventBuyIcon56: any = require("./../../../assets/images/event/icons/event-buy-icon-56.png");
+// let eventBuyIcon57: any = require("./../../../assets/images/event/icons/event-buy-icon-57.png");
+// let eventBuyIcon58: any = require("./../../../assets/images/event/icons/event-buy-icon-58.png");
+// let eventBuyIcon59: any = require("./../../../assets/images/event/icons/event-buy-icon-59.png");
+// let eventBuyIcon60: any = require("./../../../assets/images/event/icons/event-buy-icon-60.png");
+
 let animal0: any = require("./../../../assets/images/event/animal/animal0.png");
 let animal1: any = require("./../../../assets/images/event/animal/animal1.png");
 let animal2: any = require("./../../../assets/images/event/animal/animal2.png");
@@ -75,19 +117,58 @@ let animal9: any = require("./../../../assets/images/event/animal/animal9.png");
 let animal10: any = require("./../../../assets/images/event/animal/animal10.png");
 let animal11: any = require("./../../../assets/images/event/animal/animal11.png");
 let animal12: any = require("./../../../assets/images/event/animal/animal12.png");
-let resource0: any = require("./../../../assets/images/event/resources/resource0.png");
-let resource1: any = require("./../../../assets/images/event/resources/resource1.png");
-let resource2: any = require("./../../../assets/images/event/resources/resource2.png");
-let resource3: any = require("./../../../assets/images/event/resources/resource3.png");
-let resource4: any = require("./../../../assets/images/event/resources/resource4.png");
-let resource5: any = require("./../../../assets/images/event/resources/resource5.png");
-let resource6: any = require("./../../../assets/images/event/resources/resource6.png");
-let resource7: any = require("./../../../assets/images/event/resources/resource7.png");
-let resource8: any = require("./../../../assets/images/event/resources/resource8.png");
-let resource9: any = require("./../../../assets/images/event/resources/resource9.png");
-let resource10: any = require("./../../../assets/images/event/resources/resource10.png");
-let resource11: any = require("./../../../assets/images/event/resources/resource11.png");
-let resource12: any = require("./../../../assets/images/event/resources/resource12.png");
+// let animal13: any = require("./../../../assets/images/event/animal/animal13.png");
+// let animal14: any = require("./../../../assets/images/event/animal/animal14.png");
+// let animal15: any = require("./../../../assets/images/event/animal/animal15.png");
+// let animal16: any = require("./../../../assets/images/event/animal/animal16.png");
+// let animal17: any = require("./../../../assets/images/event/animal/animal17.png");
+// let animal18: any = require("./../../../assets/images/event/animal/animal18.png");
+// let animal19: any = require("./../../../assets/images/event/animal/animal19.png");
+// let animal20: any = require("./../../../assets/images/event/animal/animal20.png");
+// let animal21: any = require("./../../../assets/images/event/animal/animal21.png");
+// let animal22: any = require("./../../../assets/images/event/animal/animal22.png");
+// let animal23: any = require("./../../../assets/images/event/animal/animal23.png");
+// let animal24: any = require("./../../../assets/images/event/animal/animal24.png");
+// let animal25: any = require("./../../../assets/images/event/animal/animal25.png");
+// let animal26: any = require("./../../../assets/images/event/animal/animal26.png");
+// let animal27: any = require("./../../../assets/images/event/animal/animal27.png");
+// let animal28: any = require("./../../../assets/images/event/animal/animal28.png");
+// let animal29: any = require("./../../../assets/images/event/animal/animal29.png");
+// let animal30: any = require("./../../../assets/images/event/animal/animal30.png");
+// let animal31: any = require("./../../../assets/images/event/animal/animal31.png");
+// let animal32: any = require("./../../../assets/images/event/animal/animal32.png");
+// let animal33: any = require("./../../../assets/images/event/animal/animal33.png");
+// let animal34: any = require("./../../../assets/images/event/animal/animal34.png");
+// let animal35: any = require("./../../../assets/images/event/animal/animal35.png");
+// let animal36: any = require("./../../../assets/images/event/animal/animal36.png");
+// let animal37: any = require("./../../../assets/images/event/animal/animal37.png");
+// let animal38: any = require("./../../../assets/images/event/animal/animal38.png");
+// let animal39: any = require("./../../../assets/images/event/animal/animal39.png");
+// let animal40: any = require("./../../../assets/images/event/animal/animal40.png");
+// let animal41: any = require("./../../../assets/images/event/animal/animal41.png");
+// let animal42: any = require("./../../../assets/images/event/animal/animal42.png");
+// let animal43: any = require("./../../../assets/images/event/animal/animal43.png");
+// let animal44: any = require("./../../../assets/images/event/animal/animal44.png");
+// let animal45: any = require("./../../../assets/images/event/animal/animal45.png");
+// let animal46: any = require("./../../../assets/images/event/animal/animal46.png");
+// let animal47: any = require("./../../../assets/images/event/animal/animal47.png");
+// let animal48: any = require("./../../../assets/images/event/animal/animal48.png");
+// let animal49: any = require("./../../../assets/images/event/animal/animal49.png");
+// let animal50: any = require("./../../../assets/images/event/animal/animal50.png");
+// let animal51: any = require("./../../../assets/images/event/animal/animal51.png");
+// let animal52: any = require("./../../../assets/images/event/animal/animal52.png");
+// let animal53: any = require("./../../../assets/images/event/animal/animal53.png");
+// let animal54: any = require("./../../../assets/images/event/animal/animal54.png");
+// let animal55: any = require("./../../../assets/images/event/animal/animal55.png");
+// let animal56: any = require("./../../../assets/images/event/animal/animal56.png");
+// let animal57: any = require("./../../../assets/images/event/animal/animal57.png");
+// let animal58: any = require("./../../../assets/images/event/animal/animal58.png");
+// let animal59: any = require("./../../../assets/images/event/animal/animal59.png");
+// let animal60: any = require("./../../../assets/images/event/animal/animal60.png");
+
+let cloud: any = require("./../../../assets/images/event/cloud.png");
+let resource: any = require("./../../../assets/images/event/resource.png");
+
 let disableAnimal: any = require("./../../../assets/images/event/animal/disable-animal.png");
 let merging: any = require("./../../../assets/images/event/territories/merging.png");
 let tent: any = require("./../../../assets/images/event/territories/tent.png");
@@ -923,31 +1004,440 @@ const testEventSettings: IeventSettings = {
   unlockCollector12: 8,
   priceCoefficient: 7,
   eventSettings: [
-    { breed: 1, resource: 100, resourcePrice: BigInt(100), price: BigInt(100), exchange: 10},
-    { breed: 2, resource: 100, resourcePrice: BigInt(200), price: BigInt(2000), exchange: 20},
-    { breed: 3, resource: 100, resourcePrice: BigInt(400), price: BigInt(50000), exchange: 30},
-    { breed: 4, resource: 100, resourcePrice: BigInt(800), price: BigInt(60000), exchange: 40},
-    { breed: 5, resource: 100, resourcePrice: BigInt(1600), price: BigInt(80000), exchange: 50},
-    { breed: 6, resource: 100, resourcePrice: BigInt(3200), price: BigInt(100000), exchange: 60},
-    { breed: 7, resource: 100, resourcePrice: BigInt(6400), price: BigInt(1000000), exchange: 70},
-    { breed: 8, resource: 100, resourcePrice: BigInt(12800), price: BigInt(1000000000), exchange: 80},
-    { breed: 9, resource: 100, resourcePrice: BigInt(25600), price: BigInt(100000000000), exchange: 90},
-    { breed: 10, resource: 100, resourcePrice: BigInt(51200), price: BigInt(1000000000000), exchange: 100},
-    { breed: 11, resource: 100, resourcePrice: BigInt(102400), price: BigInt(10000000000000), exchange: 110},
-    { breed: 12, resource: 100, resourcePrice: BigInt(204800), price: BigInt(1000000000000000), exchange: 120}
+    { 
+      breed: 1, 
+      resource: 100, 
+      resourcePrice: BigInt(10), 
+      price: BigInt(100), 
+      exchange: BigInt(1000)
+    },
+    { 
+      breed: 2, 
+      resource: 100, 
+      resourcePrice: BigInt(20), 
+      price: BigInt(1500), 
+      exchange: BigInt(2800)
+    },
+    { 
+      breed: 3, 
+      resource: 100, 
+      resourcePrice: BigInt(40), 
+      price: BigInt(4800), 
+      exchange: BigInt(7200)
+    },
+    { 
+      breed: 4, 
+      resource: 100, 
+      resourcePrice: BigInt(90), 
+      price: BigInt(15000), 
+      exchange: BigInt(17600)
+    },
+    { 
+      breed: 5, 
+      resource: 100, 
+      resourcePrice: BigInt(190), 
+      price: BigInt(48000), 
+      exchange: BigInt(41600)
+    },
+    { 
+      breed: 6, 
+      resource: 100, 
+      resourcePrice: BigInt(400), 
+      price: BigInt(150000), 
+      exchange: BigInt(96000)
+    },
+    { 
+      breed: 7, 
+      resource: 100, 
+      resourcePrice: BigInt(850), 
+      price: BigInt(480000), 
+      exchange: BigInt(217600)
+    },
+    { 
+      breed: 8, 
+      resource: 100, 
+      resourcePrice: BigInt(1780), 
+      price: BigInt(1500000), 
+      exchange: BigInt(486600)
+    },
+    { 
+      breed: 9, 
+      resource: 100, 
+      resourcePrice: BigInt(3750), 
+      price: BigInt(4800000), 
+      exchange: BigInt(1075200)
+    },
+    { 
+      breed: 10, 
+      resource: 100, 
+      resourcePrice: BigInt(7900), 
+      price: BigInt(15000000), 
+      exchange: BigInt(2355200)
+    },
+    { 
+      breed: 11, 
+      resource: 100, 
+      resourcePrice: BigInt(16000), 
+      price: BigInt(48000000), 
+      exchange: BigInt(5120000)
+    },
+    { 
+      breed: 12, 
+      resource: 100, 
+      resourcePrice: BigInt(73000), 
+      price: BigInt(480000000), 
+      exchange: BigInt(12000000)
+    },
+    { 
+      breed: 13, 
+      resource: 100, 
+      resourcePrice: BigInt(34000), 
+      price: BigInt(150000000), 
+      exchange: BigInt(24000000)
+    },
+    { 
+      breed: 14, 
+      resource: 100, 
+      resourcePrice: BigInt(150000), 
+      price: BigInt(1500000000), 
+      exchange: BigInt(48000000)
+    },
+    { 
+      breed: 15, 
+      resource: 100, 
+      resourcePrice: BigInt(320000), 
+      price: BigInt(4800000000), 
+      exchange: BigInt(96000000)
+    },
+    { 
+      breed: 16, 
+      resource: 100, 
+      resourcePrice: BigInt(670000), 
+      price: BigInt(15000000000), 
+      exchange: BigInt(192000000)
+    },
+    { 
+      breed: 17, 
+      resource: 100, 
+      resourcePrice: BigInt(1400000), 
+      price: BigInt(48000000000), 
+      exchange: BigInt(384000000)
+    },
+    { 
+      breed: 18, 
+      resource: 100, 
+      resourcePrice: BigInt(2900000), 
+      price: BigInt(150000000000), 
+      exchange: BigInt(768000000)
+    },
+    { 
+      breed: 19, 
+      resource: 100, 
+      resourcePrice: BigInt(6200000), 
+      price: BigInt(480000000000), 
+      exchange: BigInt(1536000000)
+    },
+    { 
+      breed: 20, 
+      resource: 100, 
+      resourcePrice: BigInt(13000000), 
+      price: BigInt(1500000000000), 
+      exchange: BigInt(3072000000)
+    },
+    { 
+      breed: 21, 
+      resource: 100, 
+      resourcePrice: BigInt(25000000), 
+      price: BigInt(4800000000000), 
+      exchange: BigInt(6144000000)
+    },
+    { 
+      breed: 22, 
+      resource: 100, 
+      resourcePrice: BigInt(50200000), 
+      price: BigInt(15000000000000), 
+      exchange: BigInt(12288000000)
+    },
+    { 
+      breed: 23, 
+      resource: 100, 
+      resourcePrice: BigInt(100300000), 
+      price: BigInt(48000000000000), 
+      exchange: BigInt(24576000000)
+    },
+    { 
+      breed: 24, 
+      resource: 100, 
+      resourcePrice: BigInt(200000000), 
+      price: BigInt(150000000000000), 
+      exchange: BigInt(49152000000)
+    },
+    { 
+      breed: 25, 
+      resource: 100, 
+      resourcePrice: BigInt(400000000), 
+      price: BigInt(480000000000000), 
+      exchange: BigInt(98304000000)
+    },
+    { 
+      breed: 26, 
+      resource: 100, 
+      resourcePrice: BigInt(800000000), 
+      price: BigInt(1500000000000000), 
+      exchange: BigInt(196608000000)
+    },
+    { 
+      breed: 27, 
+      resource: 100, 
+      resourcePrice: BigInt(1600000000), 
+      price: BigInt(4800000000000000), 
+      exchange: BigInt(393216000000)
+    },
+    { 
+      breed: 28, 
+      resource: 100, 
+      resourcePrice: BigInt(3200000000), 
+      price: BigInt(15000000000000000), 
+      exchange: BigInt(786432000000)
+    },
+    { 
+      breed: 29, 
+      resource: 100, 
+      resourcePrice: BigInt(6400000000), 
+      price: BigInt(48000000000000000), 
+      exchange: BigInt(1572864000000)
+    },
+    { 
+      breed: 30, 
+      resource: 100, 
+      resourcePrice: BigInt(12800000000), 
+      price: BigInt(150000000000000000), 
+      exchange: BigInt(3145728000000)
+    },
+    { 
+      breed: 31, 
+      resource: 100, 
+      resourcePrice: BigInt(25600000000), 
+      price: BigInt(480000000000000000), 
+      exchange: BigInt(6291456000000)
+    },
+    { 
+      breed: 32, 
+      resource: 100, 
+      resourcePrice: BigInt(51200000000), 
+      price: BigInt(1500000000000000000), 
+      exchange: BigInt(12582912000000)
+    },
+    { 
+      breed: 33, 
+      resource: 100, 
+      resourcePrice: BigInt(102400000000), 
+      price: BigInt(4800000000000000000), 
+      exchange: BigInt(25165824000000)
+    },
+    { 
+      breed: 34, 
+      resource: 100, 
+      resourcePrice: BigInt(204800000000), 
+      price: BigInt(15000000000000000000), 
+      exchange: BigInt(50331648000000)
+    },
+    { 
+      breed: 35, 
+      resource: 100, 
+      resourcePrice: BigInt(409600000000), 
+      price: BigInt(48000000000000000000), 
+      exchange: BigInt(100663296000000)
+    },
+    { 
+      breed: 36, 
+      resource: 100, 
+      resourcePrice: BigInt(819200000000), 
+      price: BigInt(150000000000000000000), 
+      exchange: BigInt(201326592000000)
+    },
+    { 
+      breed: 37, 
+      resource: 100, 
+      resourcePrice: BigInt(1638400000000), 
+      price: BigInt(480000000000000000000), 
+      exchange: BigInt(402653184000000)
+    },
+    { 
+      breed: 38, 
+      resource: 100, 
+      resourcePrice: BigInt(3276800000000), 
+      price: BigInt(1500000000000000000000), 
+      exchange: BigInt(805306368000000)
+    },
+    { 
+      breed: 39, 
+      resource: 100, 
+      resourcePrice: BigInt(6553600000000), 
+      price: BigInt(4800000000000000000000), 
+      exchange: BigInt(1610612736000000)
+    },
+    { 
+      breed: 40, 
+      resource: 100, 
+      resourcePrice: BigInt(13107200000000), 
+      price: BigInt(15000000000000000000000), 
+      exchange: BigInt(3221225472000000)
+    },
+    { 
+      breed: 41, 
+      resource: 100, 
+      resourcePrice: BigInt(26214400000000), 
+      price: BigInt(48000000000000000000000), 
+      exchange: BigInt(6442450944000000)
+    },
+    { 
+      breed: 42, 
+      resource: 100, 
+      resourcePrice: BigInt(52428800000000), 
+      price: BigInt(150000000000000000000000), 
+      exchange: BigInt(12884901888000000)
+    },
+    { 
+      breed: 43, 
+      resource: 100, 
+      resourcePrice: BigInt(104857600000000), 
+      price: BigInt(480000000000000000000000), 
+      exchange: BigInt(25769803776000000)
+    },
+    { 
+      breed: 44, 
+      resource: 100, 
+      resourcePrice: BigInt(209715200000000), 
+      price: BigInt(1500000000000000000000000), 
+      exchange: BigInt(51539607552000000)
+    },
+    { 
+      breed: 45, 
+      resource: 100, 
+      resourcePrice: BigInt(419430400000000), 
+      price: BigInt(4800000000000000000000000), 
+      exchange: BigInt(103079215104000000)
+    },
+    { 
+      breed: 46, 
+      resource: 100, 
+      resourcePrice: BigInt(838860800000000), 
+      price: BigInt(15000000000000000000000000), 
+      exchange: BigInt(206158430208000000)
+    },
+    { 
+      breed: 47, 
+      resource: 100, 
+      resourcePrice: BigInt(1677721600000000), 
+      price: BigInt(48000000000000000000000000), 
+      exchange: BigInt(412316860416000000)
+    },
+    { 
+      breed: 48, 
+      resource: 100, 
+      resourcePrice: BigInt(3355443200000000), 
+      price: BigInt(150000000000000000000000000), 
+      exchange: BigInt(824633720832000000)
+    },
+    { 
+      breed: 49, 
+      resource: 100, 
+      resourcePrice: BigInt(6710886400000000), 
+      price: BigInt(480000000000000000000000000), 
+      exchange: BigInt(1649267441664000000)
+    },
+    { 
+      breed: 50, 
+      resource: 100, 
+      resourcePrice: BigInt(13421772800000000), 
+      price: BigInt(1500000000000000000000000000), 
+      exchange: BigInt(3298534883328000000)
+    },
+    { 
+      breed: 51, 
+      resource: 100, 
+      resourcePrice: BigInt(26843545600000000), 
+      price: BigInt(4800000000000000000000000000), 
+      exchange: BigInt(6597069766656000000)
+    },
+    { 
+      breed: 52, 
+      resource: 100, 
+      resourcePrice: BigInt(53687091200000000), 
+      price: BigInt(15000000000000000000000000000), 
+      exchange: BigInt(13194139533312000000)
+    },
+    { 
+      breed: 53, 
+      resource: 100, 
+      resourcePrice: BigInt(107374182400000000), 
+      price: BigInt(48000000000000000000000000000), 
+      exchange: BigInt(26388279066624000000)
+    },
+    { 
+      breed: 54, 
+      resource: 100, 
+      resourcePrice: BigInt(214748364800000000), 
+      price: BigInt(150000000000000000000000000000), 
+      exchange: BigInt(52776558133248000000)
+    },
+    { 
+      breed: 55, 
+      resource: 100, 
+      resourcePrice: BigInt(429496729600000000), 
+      price: BigInt(480000000000000000000000000000), 
+      exchange: BigInt(105553116266496000000)
+    },
+    { 
+      breed: 56, 
+      resource: 100, 
+      resourcePrice: BigInt(858993459200000000), 
+      price: BigInt(1500000000000000000000000000000), 
+      exchange: BigInt(211106232532992000000)
+    },
+    { 
+      breed: 57, 
+      resource: 100, 
+      resourcePrice: BigInt(1717986918400000000), 
+      price: BigInt(4800000000000000000000000000000), 
+      exchange: BigInt(422212465065984000000)
+    },
+    { 
+      breed: 58, 
+      resource: 100, 
+      resourcePrice: BigInt(3435973836800000000), 
+      price: BigInt(15000000000000000000000000000000), 
+      exchange: BigInt(844424930131968000000)
+    },
+    { 
+      breed: 59, 
+      resource: 100, 
+      resourcePrice: BigInt(6871947673600000000), 
+      price: BigInt(48000000000000000000000000000000), 
+      exchange: BigInt(1688849860263940000000)
+    },
+    { 
+      breed: 60, 
+      resource: 100, 
+      resourcePrice: BigInt(13743895347200000000), 
+      price: BigInt(150000000000000000000000000000000), 
+      exchange: BigInt(3377699720527870000000)
+    },
   ],
   territoriesEventPrice: [
+    { block: 3, position: 1, diamond: 0, price: 0, unlock: 0 },
     { block: 3, position: 2, diamond: 0, price: 0, unlock: 0 },
     { block: 3, position: 3, diamond: 0, price: 0, unlock: 0 },
     { block: 4, position: 1, diamond: 0, price: 0, unlock: 0 },
-    { block: 4, position: 2, diamond: 0, price: 2000, unlock: 2 },
-    { block: 4, position: 3, diamond: 0, price: 4000, unlock: 3 },
-    { block: 5, position: 1, diamond: 0, price: 5000, unlock: 3 },
-    { block: 5, position: 2, diamond: 1, price: 0, unlock: 4 },
-    { block: 5, position: 3, diamond: 1, price: 0, unlock: 8 },
-    { block: 6, position: 1, diamond: 1, price: 0, unlock: 10 },
-    { block: 6, position: 2, diamond: 1, price: 0, unlock: 11 },
-    { block: 6, position: 3, diamond: 1, price: 0, unlock: 12 },
+    { block: 4, position: 2, diamond: 0, price: 2000, unlock: 3 },
+    { block: 4, position: 3, diamond: 0, price: 4000, unlock: 5 },
+    { block: 5, position: 1, diamond: 0, price: 5000, unlock: 7 },
+    { block: 5, position: 2, diamond: 100, price: 0, unlock: 9 },
+    { block: 5, position: 3, diamond: 125, price: 0, unlock: 11 },
+    { block: 6, position: 1, diamond: 150, price: 0, unlock: 13 },
+    { block: 6, position: 2, diamond: 175, price: 0, unlock: 15 },
+    { block: 6, position: 3, diamond: 200, price: 0, unlock: 17 },
   ],
   territoriesEventSettings: [
     { improve: 1, regeneration: 11, countResources: 5, unlock_improve: 1, resourceStorage: 200 },
@@ -1012,6 +1502,7 @@ class EventPreload extends Phaser.Scene {
     this.state.eventSettings = testEventSettings;
     this.state.userEvent = testUserEvent;
     this.state.eventCollectorSettings = testCollector;
+    this.state.eventAnimals = [];
     this.state.farm = 'Event';
     // -------
     this.startTime = Math.round(new Date().getTime() / 1000);
@@ -1086,7 +1577,7 @@ class EventPreload extends Phaser.Scene {
     this.load.image('bg', bg);
     this.load.image('event-top', top);
     this.load.image('event-bottom', bottom);
-    this.load.image('topbar', topbar);
+    this.load.image('topbar-event', topbar);
     this.load.image('tabbar', tabbar);
     this.load.image('event-collector', resourceCollector);
     this.load.image('shop', shop);
@@ -1096,8 +1587,7 @@ class EventPreload extends Phaser.Scene {
     this.load.image('profile', profile);
     this.load.image('chat', chat);
     this.load.image('event-for-buying', forBuying);
-    this.load.image('event-bought', bought);
-    this.load.image('lock-territory', lockTerritory);
+    this.load.image('lock-event-territory', lockTerritory);
     this.load.image('merging-animation', mergingAnimation);
     this.load.image('eventCoin', coin);
     this.load.image('diamond', diamond);
@@ -1112,11 +1602,7 @@ class EventPreload extends Phaser.Scene {
     this.load.image('bg-ad', bgAd);
     this.load.image('big-btn-green', bigButtonGreen);
     // грузим траву, нужно убавить будет
-    this.load.image('event-grass1', grass1);
-    this.load.image('event-grass2', grass2);
-    this.load.image('event-grass3', grass3);
-    this.load.image('event-grass4', grass4);
-    this.load.image('event-grass5', grass5);
+    this.load.image('event-grass', grass);
 
     this.load.image('event-forest-1', forest1);
     this.load.image('event-forest-2', forest2);
@@ -1124,8 +1610,6 @@ class EventPreload extends Phaser.Scene {
     this.load.image('event-forest-4', forest4);
     this.load.image('event-forest-5', forest5);
     this.load.image('event-forest-6', forest6);
-    this.load.image('event-forest-7', forest7);
-    this.load.image('event-forest-8', forest8);
 
     this.load.image('event-vertical-border', verticalBorder);
     this.load.image('event-horizontal-border-1', horizontalBorder1);
@@ -1148,6 +1632,54 @@ class EventPreload extends Phaser.Scene {
     this.load.image('event-buy-icon-10', eventBuyIcon10);
     this.load.image('event-buy-icon-11', eventBuyIcon11);
     this.load.image('event-buy-icon-12', eventBuyIcon12);
+    // this.load.image('event-buy-icon-13', eventBuyIcon13);
+    // this.load.image('event-buy-icon-14', eventBuyIcon14);
+    // this.load.image('event-buy-icon-15', eventBuyIcon15);
+    // this.load.image('event-buy-icon-16', eventBuyIcon16);
+    // this.load.image('event-buy-icon-17', eventBuyIcon17);
+    // this.load.image('event-buy-icon-18', eventBuyIcon18);
+    // this.load.image('event-buy-icon-19', eventBuyIcon19);
+    // this.load.image('event-buy-icon-20', eventBuyIcon20);
+    // this.load.image('event-buy-icon-21', eventBuyIcon21);
+    // this.load.image('event-buy-icon-22', eventBuyIcon22);
+    // this.load.image('event-buy-icon-23', eventBuyIcon23);
+    // this.load.image('event-buy-icon-24', eventBuyIcon24);
+    // this.load.image('event-buy-icon-25', eventBuyIcon25);
+    // this.load.image('event-buy-icon-26', eventBuyIcon26);
+    // this.load.image('event-buy-icon-27', eventBuyIcon27);
+    // this.load.image('event-buy-icon-28', eventBuyIcon28);
+    // this.load.image('event-buy-icon-29', eventBuyIcon29);
+    // this.load.image('event-buy-icon-30', eventBuyIcon30);
+    // this.load.image('event-buy-icon-31', eventBuyIcon31);
+    // this.load.image('event-buy-icon-32', eventBuyIcon32);
+    // this.load.image('event-buy-icon-33', eventBuyIcon33);
+    // this.load.image('event-buy-icon-34', eventBuyIcon34);
+    // this.load.image('event-buy-icon-35', eventBuyIcon35);
+    // this.load.image('event-buy-icon-36', eventBuyIcon36);
+    // this.load.image('event-buy-icon-37', eventBuyIcon37);
+    // this.load.image('event-buy-icon-38', eventBuyIcon38);
+    // this.load.image('event-buy-icon-39', eventBuyIcon39);
+    // this.load.image('event-buy-icon-40', eventBuyIcon40);
+    // this.load.image('event-buy-icon-41', eventBuyIcon41);
+    // this.load.image('event-buy-icon-42', eventBuyIcon42);
+    // this.load.image('event-buy-icon-43', eventBuyIcon43);
+    // this.load.image('event-buy-icon-44', eventBuyIcon44);
+    // this.load.image('event-buy-icon-45', eventBuyIcon45);
+    // this.load.image('event-buy-icon-46', eventBuyIcon46);
+    // this.load.image('event-buy-icon-47', eventBuyIcon47);
+    // this.load.image('event-buy-icon-48', eventBuyIcon48);
+    // this.load.image('event-buy-icon-49', eventBuyIcon49);
+    // this.load.image('event-buy-icon-50', eventBuyIcon50);
+    // this.load.image('event-buy-icon-51', eventBuyIcon51);
+    // this.load.image('event-buy-icon-52', eventBuyIcon52);
+    // this.load.image('event-buy-icon-53', eventBuyIcon53);
+    // this.load.image('event-buy-icon-54', eventBuyIcon54);
+    // this.load.image('event-buy-icon-55', eventBuyIcon55);
+    // this.load.image('event-buy-icon-56', eventBuyIcon56);
+    // this.load.image('event-buy-icon-57', eventBuyIcon57);
+    // this.load.image('event-buy-icon-58', eventBuyIcon58);
+    // this.load.image('event-buy-icon-59', eventBuyIcon59);
+    // this.load.image('event-buy-icon-60', eventBuyIcon60);
 
     this.load.image('disable-animal', disableAnimal);
     this.load.image('animal0', animal0);
@@ -1163,20 +1695,56 @@ class EventPreload extends Phaser.Scene {
     this.load.image('animal10', animal10);
     this.load.image('animal11', animal11);
     this.load.image('animal12', animal12);
-
-    this.load.image('event-resource0', resource0);
-    this.load.image('event-resource1', resource1);
-    this.load.image('event-resource2', resource2);
-    this.load.image('event-resource3', resource3);
-    this.load.image('event-resource4', resource4);
-    this.load.image('event-resource5', resource5);
-    this.load.image('event-resource6', resource6);
-    this.load.image('event-resource7', resource7);
-    this.load.image('event-resource8', resource8);
-    this.load.image('event-resource9', resource9);
-    this.load.image('event-resource10', resource10);
-    this.load.image('event-resource11', resource11);
-    this.load.image('event-resource12', resource12);
+    // this.load.image('animal13', animal13);
+    // this.load.image('animal14', animal14);
+    // this.load.image('animal15', animal15);
+    // this.load.image('animal16', animal16);
+    // this.load.image('animal17', animal17);
+    // this.load.image('animal18', animal18);
+    // this.load.image('animal19', animal19);
+    // this.load.image('animal20', animal20);
+    // this.load.image('animal21', animal21);
+    // this.load.image('animal22', animal22);
+    // this.load.image('animal23', animal23);
+    // this.load.image('animal24', animal24);
+    // this.load.image('animal25', animal25);
+    // this.load.image('animal26', animal26);
+    // this.load.image('animal27', animal27);
+    // this.load.image('animal28', animal28);
+    // this.load.image('animal29', animal29);
+    // this.load.image('animal30', animal30);
+    // this.load.image('animal31', animal31);
+    // this.load.image('animal32', animal32);
+    // this.load.image('animal33', animal33);
+    // this.load.image('animal34', animal34);
+    // this.load.image('animal35', animal35);
+    // this.load.image('animal36', animal36);
+    // this.load.image('animal37', animal37);
+    // this.load.image('animal38', animal38);
+    // this.load.image('animal39', animal39);
+    // this.load.image('animal40', animal40);
+    // this.load.image('animal41', animal41);
+    // this.load.image('animal42', animal42);
+    // this.load.image('animal43', animal43);
+    // this.load.image('animal44', animal44);
+    // this.load.image('animal45', animal45);
+    // this.load.image('animal46', animal46);
+    // this.load.image('animal47', animal47);
+    // this.load.image('animal48', animal48);
+    // this.load.image('animal49', animal49);
+    // this.load.image('animal50', animal50);
+    // this.load.image('animal51', animal51);
+    // this.load.image('animal52', animal52);
+    // this.load.image('animal53', animal53);
+    // this.load.image('animal54', animal54);
+    // this.load.image('animal55', animal55);
+    // this.load.image('animal56', animal56);
+    // this.load.image('animal57', animal57);
+    // this.load.image('animal58', animal58);
+    // this.load.image('animal59', animal59);
+    // this.load.image('animal60', animal60);
+    this.load.image('cloud', cloud);
+    this.load.image('event-resource', resource);
 
     this.load.image('pixel', pixel);
     this.load.image('event-merging', merging);
@@ -1291,7 +1859,6 @@ class EventPreload extends Phaser.Scene {
             activeAnimal: animal.active,
             x: animal.x,
             y: animal.y,
-
           });
 
         }

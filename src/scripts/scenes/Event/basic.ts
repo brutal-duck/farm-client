@@ -249,40 +249,40 @@ function buyCollector(type: number): void {
   
 }
 
-function convertDiamonds(diamonds: number): number {
+function convertDiamonds(diamonds: number): bigint {
   
   let breedSettings: IeventPoints[] = this.state.eventSettings.eventSettings;
   let maxLevel: number = this.state.userEvent.maxLevelAnimal;
   
   let setting: IeventPoints = breedSettings.find((item: IeventPoints) => item.breed === maxLevel);
-  let exchange: number;
+  let exchange: bigint;
 
   if (setting) {
     exchange = setting.exchange;
   } else {
-    exchange = 1;
+    exchange = BigInt(1);
   }
   
-  return exchange *= diamonds;
+  return exchange *= BigInt(diamonds);
 
 }
 
-function convertMoney(money: number): number {
+function convertMoney(money: bigint): number {
 
   let breedSettings: IeventPoints[] = this.state.eventSettings.eventSettings;
   let maxLevel: number = this.state.userEvent.maxLevelAnimal;
   
   let setting: IeventPoints = breedSettings.find((item: IeventPoints) => item.breed === maxLevel);
-  let exchange: number;
+  let exchange: bigint;
 
   if (setting) {
     exchange = setting.exchange;
   } else {
-    exchange = 1;
+    exchange = BigInt(1);
   }
 
   let needDiamonds: number = 1;
-  let sumExchange: number = exchange;
+  let sumExchange: bigint = exchange;
 
   while (sumExchange < money) {
     needDiamonds++;
@@ -437,7 +437,7 @@ function createBoostAnimal(positions): void {
     this.startCreateHerdBoostAnimal = false;
     return;
   };
-  console.log(this.state.userEvent.herdBoostAnimals)
+
   positions.forEach(position => {
 
     let type = this.state.userEvent.herdBoostAnimals.pop();
@@ -487,6 +487,10 @@ function updateEventNativeShop(): void {
     this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setText(counter);
   }
 }
+
+function tryTask(): void {
+  console.log('TryTask');
+}
 export {
   animalPrice,
   maxBreedForBuy,
@@ -500,5 +504,6 @@ export {
   exchange,
   createBoostAnimal,
   getFreeBoostPositions,
-  updateEventNativeShop
+  updateEventNativeShop,
+  tryTask
 }

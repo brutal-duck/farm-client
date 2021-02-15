@@ -27,11 +27,13 @@ function flyAnimal(): void {
           if (activeAnimal.data.values.topPosition) {
             activeAnimal.originY -= 0.0065;
             activeAnimal.setOrigin(0.5, activeAnimal.originY);
+            activeAnimal.data.values.cloud.setOrigin(0.5, activeAnimal.originY);
             if (activeAnimal.originY <= 0.45) activeAnimal.data.values.topPosition = false;
             
           } else {
             activeAnimal.originY += 0.0065;
             activeAnimal.setOrigin(0.5, activeAnimal.originY);
+            activeAnimal.data.values.cloud.setOrigin(0.5, activeAnimal.originY);
             if (activeAnimal.originY >= 0.55) activeAnimal.data.values.topPosition = true;
           }
         }
@@ -44,11 +46,11 @@ function flyAnimal(): void {
 
 }
 
-function plusResourceAnimation(position: Iposition, texture: string): void {
+function plusResourceAnimation(position: Iposition): void {
   
   let y = position.y - this.game.scene.keys[this.state.farm].scrolling.scrollY;
 
-  let resource: Phaser.GameObjects.Sprite = this.сurrency.create(position.x, y, 'event-resource' + texture);
+  let resource: Phaser.GameObjects.Sprite = this.сurrency.create(position.x, y, 'event-resource');
   resource.setDataEnabled();
   resource.data.values.counter = 0;
 

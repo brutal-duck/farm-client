@@ -11,10 +11,9 @@ function deleteTerritoriesLocks(): void {
 
       let unlock: number = prices.find((data: IeventTerritoriesPrice) => data.block === territory.data.values.block && data.position === territory.data.values.position).unlock;
 
-      if (lvl >= unlock && territory.data.values.lock_image && territory.data.values.lock_text) {
+      if (lvl >= unlock && territory.data.values.lock_image) {
         
         territory.data.values.lock_image.destroy();
-        territory.data.values.lock_text.destroy();
 
       }
 
@@ -52,7 +51,7 @@ function buyTerritory(): void {
         this.time.addEvent({ delay: 500, callback: (): void => {
     
           territory.data.values.forest.destroy();
-          territory.setTexture(this.state.farm.toLowerCase() + '-bought');
+          territory.setTexture('event-grass');
           this.firework250(territory.x + 120, territory.y + 120);
           this.buildBorders();
     
@@ -96,7 +95,7 @@ function buyTerritory(): void {
         this.time.addEvent({ delay: 500, callback: (): void => {
     
           territory.data.values.forest.destroy();
-          territory.setTexture(this.state.farm.toLowerCase() + '-bought');
+          territory.setTexture('event-grass');
           this.firework250(territory.x + 120, territory.y + 120);
           this.buildBorders();
     
@@ -167,10 +166,10 @@ function buildBorders(): void {
           territory.data.values.borderTop.setVisible(false);
         }
 
-        if (bottomTer.data.values.type === 1 ||
+        if (bottomTer !== undefined && (bottomTer.data.values.type === 1 ||
           bottomTer.data.values.type === 2 ||
           bottomTer.data.values.type === 3 ||
-          bottomTer.data.values.type === 5) {
+          bottomTer.data.values.type === 5)) {
           territory.data.values.borderBottom.setVisible(false);
         } else {
           territory.data.values.borderBottom.setVisible(true);

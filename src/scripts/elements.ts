@@ -382,8 +382,12 @@ function shopButton(x: number, y: number, text: string, icon: any = false): any 
     color: '#FFFFFF'
   }).setOrigin(0.5, 0.5);
 
-  if (icon === 'sheepCoin' || icon === 'chickenCoin' || icon === 'diamond') {
+  if (icon === 'sheepCoin' || icon === 'chickenCoin' || icon === 'diamond' || icon === 'eventCoin') {
     img = this.add.image(title.getBounds().left - 25, y - 5, icon).setScale(0.15);
+  }
+
+  if (icon === 'ad-icon') {
+    img = this.add.image(title.getBounds().left - 25, y - 5, icon).setScale(0.5);
   }
 
   return {

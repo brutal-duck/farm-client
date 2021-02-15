@@ -73,6 +73,9 @@ class EventBars extends Phaser.Scene {
   public calendar: any;
   public nativeShop: Phaser.GameObjects.Graphics;
   public nativeShopCounter: Phaser.GameObjects.Text;
+  public scoreText: Phaser.GameObjects.Text;
+  public placeText: Phaser.GameObjects.Text;
+  public proceedsText: Phaser.GameObjects.Text;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -113,7 +116,7 @@ class EventBars extends Phaser.Scene {
 
   public create(): void {
 
-    this.add.sprite(0, 0, 'topbar').setOrigin(0, 0).setInteractive();
+    this.add.sprite(0, 0, 'topbar-event').setOrigin(0, 0).setInteractive();
     
     this.add.sprite(0, this.height + 10, 'tabbar')
       .setInteractive()
@@ -264,6 +267,11 @@ class EventBars extends Phaser.Scene {
     this.animalPriceBubble.fillStyle(0xFFFFFF, 1);
     this.animalPriceBubble.fillRoundedRect(0, 0, bounds.width + 30, bounds.height, 8);
 
+    this.proceedsText = this.add.text(this.cameras.main.centerX, 75, '0', {
+      font: '44px Shadow',
+      color: '#124C03'
+    }).setOrigin(0.5, 0.5);
+
   }
 
 
@@ -382,9 +390,9 @@ class EventBars extends Phaser.Scene {
     let breed: number = this.game.scene.keys['Event'].maxBreedForBuy();
     let price: number = this.game.scene.keys[this.state.farm].animalPrice(breed).price
     
-    if (price > this.state.userEvent.money && this.animalBuy.tintBottomLeft === 0xFFFFFF) {
+    if ((this.state.userEvent.herdBoostAnimals.length > 0 || price > this.state.userEvent.money) && this.animalBuy.tintBottomLeft === 0xFFFFFF) {
       this.animalBuy.setTint(0x777777);
-    } else if (price <= this.state.userEvent.money && this.animalBuy.tintBottomLeft === 0x777777) {
+    } else if (this.state.userEvent.herdBoostAnimals.length <= 0 && price <= this.state.userEvent.money && this.animalBuy.tintBottomLeft === 0x777777) {
       this.animalBuy.setTint(0xFFFFFF);
     }
 

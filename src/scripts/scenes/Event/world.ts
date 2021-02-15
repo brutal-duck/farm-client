@@ -25,16 +25,13 @@ function world(): void {
   // строим территории
   this.territories = this.physics.add.group(); // группа территорий
 
-  let forest: number = 1;
-  let grass: number = 1;
+  let forest: number = 5;
   this.state.eventTerritories.map((data: IeventTerritories, index: number) => {
     let x: number = (data.position - 1) * this.height;
     let y: number = (data.block - 1) * this.height;
 
     forest++;
-    if (forest > 8) forest = 1;
-    grass++;
-    if (grass > 5) grass = 1;
+    if (forest > 6) forest = 1;
     if (data.position === 0) x++;
     if (data.block === 0) y++;
     y += this.topIndent;
@@ -51,7 +48,7 @@ function world(): void {
 
     } else if (data.type === 2) {
 
-      type = 'event-grass' + grass
+      type = 'event-grass'
       
     } else if (data.type === 4) {
 
@@ -114,30 +111,23 @@ function world(): void {
         .setOrigin(0.5, 1)
         .setDepth(territory.y + 1);
       
-      territory.data.values.lock_image = this.add.image(x, y, 'lock-territory').setDepth(territory.y + 2);
-      territory.data.values.lock_text = this.add.text(x, y - 37, this.state.lang.part + ' ' + unlock, {
-        font: '26px Shadow',
-        color: '#ECDFDF'
-      }).setOrigin(0.5, 0.5).setDepth(territory.y + 2);
+      territory.data.values.lock_image = this.add.image(x, y, 'lock-event-territory').setDepth(territory.y + 2).setVisible(false);
 
         // проверка на замок
-      // if (unlock > this.state.userEvent.part) {
+      if (unlock > this.state.userEvent.maxLevelAnimal) {
 
-      //   territory.lock_image = this.add.image(x, y, 'lock-territory').setDepth(territory.y + 2);
-      //   territory.lock_text = this.add.text(x, y - 37, this.state.lang.part + ' ' + unlock, {
-      //     font: '26px Shadow',
-      //     color: '#ECDFDF'
-      //   }).setOrigin(0.5, 0.5).setDepth(territory.y + 2);
+        territory.data.values.lock_image = this.add.image(x, y, 'lock-event-territory').setDepth(territory.y + 2).setVisible(true);
 
-      // }
+
+      }
     } 
 
     let territoryZone: Phaser.GameObjects.Zone = this.add.zone(x + 10, y + 10, territory.width - 20, territory.height - 20).setDropZone(undefined, () => {}).setOrigin(0, 0);
     territoryZone.type = 'type' + index;
     
-    let graphics = this.add.graphics().setDepth(territory.y * 5);
-    graphics.lineStyle(5, 0x000000);
-    graphics.strokeRect(territoryZone.x, territoryZone.y, territoryZone.input.hitArea.width, territoryZone.input.hitArea.height);
+    // let graphics = this.add.graphics().setDepth(territory.y * 5);
+    // graphics.lineStyle(5, 0x000000);
+    // graphics.strokeRect(territoryZone.x, territoryZone.y, territoryZone.input.hitArea.width, territoryZone.input.hitArea.height);
 
     
     this.clickTerritory(territory, (): void => {
@@ -171,9 +161,9 @@ function world(): void {
   this.resources = this.physics.add.group();
 
   // подгружаем куриц
-  // this.state.eventAnimals.map((data: IeventAnimal) => {
-  //   this.getChicken(data._id, data.type, data.x, data.y, data.counter, data.egg, data.diamond, data.vector, true);
-  // });
+  this.state.eventAnimals.map((data: IeventAnimal) => {
+    this.getAnimal(data._id, data.type, data.x, data.y, data.activeAnimal, true);
+  });
   
   // // подгружаем яйца
   // this.eggs = this.physics.add.group();

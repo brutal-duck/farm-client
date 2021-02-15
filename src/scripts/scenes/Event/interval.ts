@@ -1,4 +1,4 @@
-import { random, randomString } from '../../general/basic';
+import { random, randomString, shortNum, shortTime } from '../../general/basic';
 
 function interval(): void {
 
@@ -11,28 +11,6 @@ function interval(): void {
     
     // проверка подключения к интернету
     this.onlineStatus();
-
-    // let balance: Ibalance = this.balance();
-
-    // if (!statusBalance && balance.alarm) {
-
-    //   // this.state.amplitude.getInstance().logEvent('resources', {
-    //   //   status: 'problem started',
-    //   //   farm_id: this.state.farm
-    //   // });
-
-    // } else if (statusBalance && !balance.alarm) {
-
-    //   // this.state.amplitude.getInstance().logEvent('resources', {
-    //   //   status: 'problem is over',
-    //   //   farm_id: this.state.farm
-    //   // });
-
-    // }
-
-    // statusBalance = balance.alarm;
-
- 
     
     for (let i in this.animals.children.entries) {
 
@@ -46,17 +24,17 @@ function interval(): void {
       
       if (animal.data.values.working) {
         // зарождение ресурса
-        if (animal.data.values.resource < 300) {
+        if (animal.data.values.resource < 1000) {
 
           let resource: number = points.resource;
 
           animal.data.values.resource += resource;
 
-        if (animal.data.values.resource > 300) animal.data.values.resource = 300;
+        if (animal.data.values.resource > 1000) animal.data.values.resource = 1000;
 
       }
 
-      if (animal.data.values.resource === 300 && this.resources.getLength() <= this.maxCountResource) {
+      if (animal.data.values.resource === 1000 && this.resources.getLength() <= this.maxCountResource) {
 
         let resource: IeventResource = {
           type: animal.data.values.base.data.values.type,
@@ -101,12 +79,15 @@ function interval(): void {
     // уменьшаем время буста комбикорм
     if (this.state.userEvent.feedBoostTime > 0) {
 
-      // if (Phaser.Math.Between(0, 7) >= 5) { // чтобы не так часто появлялись сердца
+      if (Phaser.Math.Between(0, 7) >= 5) { // чтобы не так часто появлялись сердца
 
-      //   let randomIndex: number = Phaser.Math.Between(0, this.sheep.children.entries.length - 1);
-      //   this.hearts(this.sheep.children.entries[randomIndex]);
+        let randomIndex: number = Phaser.Math.Between(0, this.animals.children.entries.length - 1);
 
-      // }
+        if (this.animals.children.entries[randomIndex].data.values.active.data.values.working) {
+          this.hearts(this.animals.children.entries[randomIndex].data.values.active);
+        }
+        
+      }
 
       this.state.userEvent.feedBoostTime--;
 
@@ -127,30 +108,39 @@ function interval(): void {
     // this.autoprogressTimer = time;
 
     // // поиск рекламы
-    // this.findAd();
+    this.findAd();
     
     // this.debug();
 
-    // // таймер до буста стадо
-    // if (this.state.timeToHerdBoost > 0) {
-    //   --this.state.timeToHerdBoost;
-    // } else {
-    //   console.log('очистка таймера');
-    //   this.state[`user${this.state.farm}`].takenHerdBoost = 0;
-    //   this.state.timeToHerdBoost = 86400;
-    // }
+    // таймер до буста стадо
+    if (this.state.timeToHerdBoost > 0) {
+      --this.state.timeToHerdBoost;
+    } else {
+      console.log('очистка таймера');
+      this.state[`user${this.state.farm}`].takenHerdBoost = 0;
+      this.state.timeToHerdBoost = 86400;
+    }
 
-    // if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0) {
-    //   this.state.nativeCounter[3] = 1;
-    // }
+    if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0) {
+      this.state.nativeCounter[3] = 1;
+    }
 
-    // let nativeCount = 0;
+    let nativeCount = 0;
     
-    // for (let i = 0; i < this.state.nativeCounter.length; i++) {
-    //   nativeCount += this.state.nativeCounter[i];
-    // }
-    // this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setText(nativeCount);
+    for (let i = 0; i < this.state.nativeCounter.length; i++) {
+      nativeCount += this.state.nativeCounter[i];
+    }
+    this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setText(nativeCount);
 
+
+    let proceeds: bigint = BigInt(0);
+    this.animals.children.entries.forEach(animal => {
+      if (animal.data.values.active.data.values.working) {
+        let price: bigint = this.state.eventSettings.eventSettings.find((data: IeventPoints) => data.breed === animal.data.values.type).resourcePrice;
+        proceeds += price;
+      }
+    });
+    this.game.scene.keys['EventBars'].proceedsText.setText(shortNum(proceeds / BigInt(10)));
 
   }, callbackScope: this, loop: true });
 

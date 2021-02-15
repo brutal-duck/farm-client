@@ -90,6 +90,7 @@ function getAnimal(
   type: number,
   x: number,
   y: number,
+  activeAnimal: Phaser.Physics.Arcade.Sprite = undefined,
   load: boolean = false): Phaser.Physics.Arcade.Sprite {
 
   let animal: Phaser.Physics.Arcade.Sprite = this.animals.create(x, y, 'animal' + type).setInteractive().setDepth(y).setAlpha(0.7);
@@ -107,18 +108,18 @@ function getAnimal(
   animal.data.values.target = {x, y};
   animal.state = 'base';
   this.checkMerging(animal);
-  animal.data.values.active =  this.getActiveAnimal(id,type,x, y, animal);
-    
+  if (!activeAnimal)animal.data.values.active = this.getActiveAnimal(type,x, y, animal);
+  
   this.click(animal, ()=>{
     this.teleportation(animal.data.values.active, undefined, true);
-  })
+  });
+
   return animal;
 
 }
 
 // функция получения нового животного
 function getActiveAnimal(
-  id: string,
   type: number,
   x: number,
   y: number,
@@ -148,6 +149,7 @@ function getActiveAnimal(
   animal.data.values.base = base;
   animal.data.values.teleport = false;
   animal.data.values.topPosition = false;
+  animal.data.values.cloud = this.physics.add.sprite(x, y, 'cloud').setVisible(false);
   animal.state = 'active';
 
   return animal;
@@ -156,7 +158,7 @@ function getActiveAnimal(
 // выдача ресурса и установка на него слушаетля
 function getResource(data: IeventResource): void {
 
-  let resource: Phaser.Physics.Arcade.Sprite = this.resources.create(data.x, data.y, 'event-resource' + data.type);
+  let resource: Phaser.Physics.Arcade.Sprite = this.resources.create(data.x, data.y, 'event-resource');
   resource.setDepth(data.y);
   resource.setDataEnabled();
   resource.data.values.type = data.type;
@@ -178,7 +180,7 @@ function collectResource(resource: Phaser.Physics.Arcade.Sprite): void {
   if (this.state.userEvent.feedBoostTime > 0) price *= this.feedBoostMultiplier;
   resource.data.values.click = false;
   this.state.userEvent.money += price;
-  this.game.scene.keys['EventBars'].plusResourceAnimation({x: resource.x, y: resource.y}, resource.data.values.type);
+  this.game.scene.keys['EventBars'].plusResourceAnimation({x: resource.x, y: resource.y});
   resource.destroy();
 
 }
@@ -277,6 +279,7 @@ function confirmExpelAnimal(): void {
 // продажа курочки
 function expelAnimal(): void {
   this.currentTerritory(this.state.animal.x, this.state.animal.y).data.values.merging = [];
+  this.state.animal.data.values.active?.data.values.cloud.destroy();
   this.state.animal.data.values.active?.destroy();
   this.state.animal.destroy();
 
@@ -373,6 +376,8 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
         this.time.addEvent({ delay: 100, callback: (): void => {
           this.game.scene.keys['EventBars'].updateAnimalPrice();
           this.mergingCloud(position);
+          animal1?.data.values.active?.data.values.cloud.destroy();
+          animal2?.data.values.active?.data.values.cloud.destroy();
           animal1?.data.values.active.destroy();
           animal2?.data.values.active.destroy();
           animal1?.destroy();

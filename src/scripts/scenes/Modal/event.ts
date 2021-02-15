@@ -211,7 +211,7 @@ function buyEventTerritory(): void {
 
     let right = {
       icon: 'lock',
-      text: this.state.lang.shortPart + ' ' + settings.unlock
+      text: this.state.lang.shortLevel + ' ' + settings.unlock
     }
   
     this.bigButton('grey', 'left', 20, this.state.lang.buyTerritory, right);
