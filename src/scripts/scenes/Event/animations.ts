@@ -44,11 +44,11 @@ function flyAnimal(): void {
 
 }
 
-function plusResourceAnimation(position: Iposition, texture: string): void {
+function plusResourceAnimation(position: Iposition): void {
   
   let y = position.y - this.game.scene.keys[this.state.farm].scrolling.scrollY;
 
-  let resource: Phaser.GameObjects.Sprite = this.сurrency.create(position.x, y, 'event-resource' + texture);
+  let resource: Phaser.GameObjects.Sprite = this.сurrency.create(position.x, y, 'event-resource');
   resource.setDataEnabled();
   resource.data.values.counter = 0;
 

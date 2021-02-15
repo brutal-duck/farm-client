@@ -119,7 +119,7 @@ function world(): void {
         // проверка на замок
       if (unlock > this.state.userEvent.maxLevelAnimal) {
 
-        territory.data.values.lock_image = this.add.image(x, y, 'lock-territory').setDepth(territory.y + 2).setVisible(true);
+        territory.data.values.lock_image = this.add.image(x, y, 'lock-event-territory').setDepth(territory.y + 2).setVisible(true);
 
 
       }

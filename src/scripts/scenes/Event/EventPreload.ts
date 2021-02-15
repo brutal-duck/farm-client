@@ -75,19 +75,8 @@ let animal9: any = require("./../../../assets/images/event/animal/animal9.png");
 let animal10: any = require("./../../../assets/images/event/animal/animal10.png");
 let animal11: any = require("./../../../assets/images/event/animal/animal11.png");
 let animal12: any = require("./../../../assets/images/event/animal/animal12.png");
-let resource0: any = require("./../../../assets/images/event/resources/resource0.png");
-let resource1: any = require("./../../../assets/images/event/resources/resource1.png");
-let resource2: any = require("./../../../assets/images/event/resources/resource2.png");
-let resource3: any = require("./../../../assets/images/event/resources/resource3.png");
-let resource4: any = require("./../../../assets/images/event/resources/resource4.png");
-let resource5: any = require("./../../../assets/images/event/resources/resource5.png");
-let resource6: any = require("./../../../assets/images/event/resources/resource6.png");
-let resource7: any = require("./../../../assets/images/event/resources/resource7.png");
-let resource8: any = require("./../../../assets/images/event/resources/resource8.png");
-let resource9: any = require("./../../../assets/images/event/resources/resource9.png");
-let resource10: any = require("./../../../assets/images/event/resources/resource10.png");
-let resource11: any = require("./../../../assets/images/event/resources/resource11.png");
-let resource12: any = require("./../../../assets/images/event/resources/resource12.png");
+let resource: any = require("./../../../assets/images/event/resource.png");
+
 let disableAnimal: any = require("./../../../assets/images/event/animal/disable-animal.png");
 let merging: any = require("./../../../assets/images/event/territories/merging.png");
 let tent: any = require("./../../../assets/images/event/territories/tent.png");
@@ -1573,19 +1562,7 @@ class EventPreload extends Phaser.Scene {
     this.load.image('animal11', animal11);
     this.load.image('animal12', animal12);
 
-    this.load.image('event-resource0', resource0);
-    this.load.image('event-resource1', resource1);
-    this.load.image('event-resource2', resource2);
-    this.load.image('event-resource3', resource3);
-    this.load.image('event-resource4', resource4);
-    this.load.image('event-resource5', resource5);
-    this.load.image('event-resource6', resource6);
-    this.load.image('event-resource7', resource7);
-    this.load.image('event-resource8', resource8);
-    this.load.image('event-resource9', resource9);
-    this.load.image('event-resource10', resource10);
-    this.load.image('event-resource11', resource11);
-    this.load.image('event-resource12', resource12);
+    this.load.image('event-resource', resource);
 
     this.load.image('pixel', pixel);
     this.load.image('event-merging', merging);

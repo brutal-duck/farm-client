@@ -156,7 +156,7 @@ function getActiveAnimal(
 // выдача ресурса и установка на него слушаетля
 function getResource(data: IeventResource): void {
 
-  let resource: Phaser.Physics.Arcade.Sprite = this.resources.create(data.x, data.y, 'event-resource' + data.type);
+  let resource: Phaser.Physics.Arcade.Sprite = this.resources.create(data.x, data.y, 'event-resource');
   resource.setDepth(data.y);
   resource.setDataEnabled();
   resource.data.values.type = data.type;
@@ -178,7 +178,7 @@ function collectResource(resource: Phaser.Physics.Arcade.Sprite): void {
   if (this.state.userEvent.feedBoostTime > 0) price *= this.feedBoostMultiplier;
   resource.data.values.click = false;
   this.state.userEvent.money += price;
-  this.game.scene.keys['EventBars'].plusResourceAnimation({x: resource.x, y: resource.y}, resource.data.values.type);
+  this.game.scene.keys['EventBars'].plusResourceAnimation({x: resource.x, y: resource.y});
   resource.destroy();
 
 }
