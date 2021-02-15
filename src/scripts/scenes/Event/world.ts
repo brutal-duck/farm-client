@@ -161,9 +161,9 @@ function world(): void {
   this.resources = this.physics.add.group();
 
   // подгружаем куриц
-  // this.state.eventAnimals.map((data: IeventAnimal) => {
-  //   this.getChicken(data._id, data.type, data.x, data.y, data.counter, data.egg, data.diamond, data.vector, true);
-  // });
+  this.state.eventAnimals.map((data: IeventAnimal) => {
+    this.getAnimal(data._id, data.type, data.x, data.y, data.activeAnimal, true);
+  });
   
   // // подгружаем яйца
   // this.eggs = this.physics.add.group();

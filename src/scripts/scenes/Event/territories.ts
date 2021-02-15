@@ -95,7 +95,7 @@ function buyTerritory(): void {
         this.time.addEvent({ delay: 500, callback: (): void => {
     
           territory.data.values.forest.destroy();
-          territory.setTexture(this.state.farm.toLowerCase() + '-bought');
+          territory.setTexture('event-grass');
           this.firework250(territory.x + 120, territory.y + 120);
           this.buildBorders();
     

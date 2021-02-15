@@ -90,6 +90,7 @@ function getAnimal(
   type: number,
   x: number,
   y: number,
+  activeAnimal: Phaser.Physics.Arcade.Sprite = undefined,
   load: boolean = false): Phaser.Physics.Arcade.Sprite {
 
   let animal: Phaser.Physics.Arcade.Sprite = this.animals.create(x, y, 'animal' + type).setInteractive().setDepth(y).setAlpha(0.7);
@@ -107,7 +108,8 @@ function getAnimal(
   animal.data.values.target = {x, y};
   animal.state = 'base';
   this.checkMerging(animal);
-  animal.data.values.active =  this.getActiveAnimal(id,type,x, y, animal);
+  if (!activeAnimal)animal.data.values.active = this.getActiveAnimal(id,type,x, y, animal);
+  
     
   this.click(animal, ()=>{
     this.teleportation(animal.data.values.active, undefined, true);

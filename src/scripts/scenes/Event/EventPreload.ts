@@ -1503,6 +1503,7 @@ class EventPreload extends Phaser.Scene {
     this.state.eventSettings = testEventSettings;
     this.state.userEvent = testUserEvent;
     this.state.eventCollectorSettings = testCollector;
+    this.state.eventAnimals = [];
     this.state.farm = 'Event';
     // -------
     this.startTime = Math.round(new Date().getTime() / 1000);
@@ -1860,7 +1861,6 @@ class EventPreload extends Phaser.Scene {
             activeAnimal: animal.active,
             x: animal.x,
             y: animal.y,
-
           });
 
         }
