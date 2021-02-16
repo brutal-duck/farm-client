@@ -412,6 +412,14 @@ interface Ichat {
   text: string;
   id: string;
 }
+interface IScrollingOptions {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  wheel: boolean;
+  top: number;
+}
 interface Istate {
   platform: string;
   autoSaveSpeed: number;

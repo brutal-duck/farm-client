@@ -20,7 +20,7 @@ class Chat extends Phaser.Scene {
   public init(state: Istate): void {
 
     this.state = state
-    this.scrollHeight = 562;
+    this.scrollHeight = Number(this.game.config.height) - 1200 + 562;
     this.windowHeight = 646;
     this.windowWidth = 479;
     this.isFirstBuild = true
@@ -52,9 +52,9 @@ class Chat extends Phaser.Scene {
   
   public create(): void {    
     
-    this.height = Number(this.game.config.height)
+    this.height = Number(this.game.config.height)    
     
-    let cameraOptions = {
+    let cameraOptions: IScrollingOptions = {
       x: 120,
       y: this.cameras.main.centerY - 347 + this.game.scene.keys['Modal'].chatHeight,
       width: this.windowWidth,
@@ -69,8 +69,7 @@ class Chat extends Phaser.Scene {
       this.scrolling.wheel = true;
     });
     
-
-    // this.add.graphics().lineStyle(2, 0xF4E404).strokeRect(cameraOptions.x, cameraOptions.y, this.windowWidth, this.scrollHeight - (this.allMsgsHeight + this.windowHeight));
+    // this.add.graphics().lineStyle(2, 0xF4E404).strokeRect(this.scrolling.x, this.scrolling.y, this.scrolling.width, cameraOptions.height);
 
 
     // let cursors = this.input.keyboard.createCursorKeys();
@@ -120,7 +119,7 @@ class Chat extends Phaser.Scene {
   
       // Текст исходящего сообщения
       let outputText: Phaser.GameObjects.Text = this.add.text(this.windowWidth - this.textWrap - 24,  this.windowHeight + this.scrollHeight + padding, msgData.text, {
-        font: '19px Shadow',
+        font: '21px Bip',
         color: '#FADAC1',
         align: 'left',
         wordWrap: { width: this.textWrap }
@@ -208,7 +207,7 @@ class Chat extends Phaser.Scene {
 
       // Текст сообщения
       let gettedText: Phaser.GameObjects.Text = this.add.text(24, this.windowHeight + this.scrollHeight + padding, msgData.text, {
-        font: '19px Shadow',
+        font: '21px Bip',
         color: '#5E340C',
         align: 'left',
         wordWrap: { width: this.textWrap }

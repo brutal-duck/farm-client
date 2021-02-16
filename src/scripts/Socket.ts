@@ -17,13 +17,7 @@ export default class Socket {
 
     this.io.on('add', (data: any) => {
       
-      if (data.type === 1) {
-        // newMessage(data, this.state);
-
-        console.log(data);
-        
-        this.state.chat.push(data);
-      }
+      if (data.type === 1) this.state.chat.push(data);
 
     });
 

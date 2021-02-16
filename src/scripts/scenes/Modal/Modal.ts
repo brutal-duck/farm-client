@@ -131,7 +131,6 @@ let chatBackground: any = require("./../../../assets/images/modal/chat-bg.png");
 let chatSendBtn: any = require("./../../../assets/images/modal/chat-send-btn.png");
 let chatEmojiBtn: any = require("./../../../assets/images/modal/chat-emoji-btn.png");
 
-
 class Modal extends Phaser.Scene {
   constructor() {
     super('Modal');
@@ -155,6 +154,7 @@ class Modal extends Phaser.Scene {
   public mainInput: HTMLInputElement;
   // Чат
   public chatHeight: number = 0
+  public chatBG: Phaser.GameObjects.Sprite
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -320,13 +320,8 @@ class Modal extends Phaser.Scene {
         this.systemWindow();
         break;
       case 2: // магазин
-        // this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + 70, 'shop-window');
-        // this.scene.launch('Shop', this.state);
-
-        this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + this.chatHeight, 'chat-bg');
-        this.createChatBars(this.chatHeight)
-        this.scene.launch('Chat', this.state);
-
+        this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + 70, 'shop-window');
+        this.scene.launch('Shop', this.state);
         break;
       case 3: // окно с заданиями
         this.tasks();
@@ -347,9 +342,9 @@ class Modal extends Phaser.Scene {
         this.herdBoostWindow();
         break;
       case 9:
-        this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + this.chatHeight, 'chat-bg');
-        this.createChatBars(this.chatHeight)
+        this.chatBG = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + this.chatHeight, 'chat-bg');
         this.scene.launch('Chat', this.state);
+        this.createChatBars(this.chatHeight)
         break;
       default:
         this.scene.stop();
