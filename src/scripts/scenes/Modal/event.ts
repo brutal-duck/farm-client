@@ -182,7 +182,7 @@ function buyEventTerritory(): void {
         text: this.shortNum(price)
       }
     
-      let button = this.bigButton('yellow', 'left', 20, this.state.lang.buyTerritory, right);
+      let button = this.bigButton('green', 'left', 20, this.state.lang.buyTerritory, right);
       this.clickModalBtn(button, (): void => {
         this.scene.stop();
         this.game.scene.keys[this.state.farm].scrolling.wheel = true;
@@ -197,7 +197,7 @@ function buyEventTerritory(): void {
       text: settings.diamond
     }
   
-    let button = this.bigButton('yellow', 'left', -15, this.state.lang.buyTerritory, right1);
+    let button = this.bigButton('green', 'left', -15, this.state.lang.buyTerritory, right1);
     this.clickModalBtn(button, (): void => {
       this.scene.stop();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
@@ -603,7 +603,7 @@ function getRandomAnimal(type: string): void {
 
   // Изменение рандома
   let randomArray: number[] = [];
-  let max: number = this.state[`user${this.state.farm}`].maxLevelAnimal ;
+  let max: number = this.state[`user${this.state.farm}`].maxLevelAnimal - 4;
   max = max <= 0 ? 1 : max;
   for (let i: number = 0; i < max; i++) {
     randomArray.push(i ** 2 * 100);

@@ -552,7 +552,7 @@ export default {
     eventBreed59: 'Благородная курочка',
     eventBreed60: 'Курочка свободы',
 
-    resourcePrice: 'Цена радуги: ',
+    resourcePrice: 'Доход в сек: ',
     
   },
   en: {
@@ -1107,6 +1107,6 @@ export default {
     eventBreed59: 'Благородная курочка',
     eventBreed60: 'Курочка свободы',
 
-    resourcePrice: 'Цена радуги: ',
+    resourcePrice: 'Доход в сек: ',
   }
 }
