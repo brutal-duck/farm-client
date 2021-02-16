@@ -172,14 +172,14 @@ function createChatBars(height: number = 0): void {
         modalElements.forEach((el) => el.setY(el.y + padding))
         this.game.scene.keys['Chat'].scrolling.y += padding
         this.mainInput.style.top = '86%';
-        this.mainInput.style.bottom = '8.5%';  
+        this.mainInput.style.bottom = '9%';  
         
       } else {
         
         modalElements.forEach((el) => el.setY(el.y - padding))
         this.game.scene.keys['Chat'].scrolling.y -= padding
         this.mainInput.style.top = '76%';
-        this.mainInput.style.bottom = '18.5%';  
+        this.mainInput.style.bottom = '19%';  
         
       }
       
