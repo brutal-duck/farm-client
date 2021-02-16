@@ -1,4 +1,4 @@
-import { Arrows } from '../../../elements';
+import { Arrows, bigButton } from '../../../elements';
 import { shortNum, shortTime } from '../../../general/basic';
 
 // монеты
@@ -149,7 +149,7 @@ function animals(): void {
     }).setOrigin(0, 0.5);
     let boundsResource = resource.getBounds();
 
-    let resourcePrice: Phaser.GameObjects.Text = this.add.text(boundsResource.right, center, String(shortNum(animal.resourcePrice)), {
+    let resourcePrice: Phaser.GameObjects.Text = this.add.text(boundsResource.right, center, String(shortNum(animal.resourcePrice / BigInt(10))), {
       font: '20px Shadow',
       fill: '#ECC896'
     }).setOrigin(0, 0.5);

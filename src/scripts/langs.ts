@@ -86,6 +86,7 @@ export default {
     take: 'Взять',
     chickenProfileName: 'Птицевод',
     sheepProfileName: 'Пастух-овцевод',
+    eventProfileName: 'Друг единорогов',
     chickenNamePart1: 'Первые шаги',
     chickenNamePart2: 'Ярмарка',
     chickenNamePart3: 'Курятник мечты',
@@ -201,8 +202,10 @@ export default {
     diamondSpeed: 'Появление кристалла: ',
     expelChicken: 'Изгнать курочку',
     expelSheep: 'Изгнать овечку',
+    expelEventAnimal: 'Изгнать единорога',
     confirmExpelChicken: 'Вы действительно хотите изгнать эту курочку?',
     confirmExpelSheep: 'Вы действительно хотите изгнать эту овечку?',
+    confirmExpelEventAnimal: 'Вы действительно хотите изгнать этого единорога?',
     farmSheep: 'Ферма овец',
     farmChicken: 'Ферма кур',
     cutWool: 'Срезать шерсть',
@@ -552,7 +555,7 @@ export default {
     eventBreed59: 'Благородная курочка',
     eventBreed60: 'Курочка свободы',
 
-    resourcePrice: 'Цена радуги: ',
+    resourcePrice: 'Доход в сек: ',
     
   },
   en: {
@@ -642,6 +645,7 @@ export default {
     take: 'Взять',
     chickenProfileName: 'Птицевод',
     sheepProfileName: 'Пастух-овцевод',
+    eventProfileName: 'Друг единорогов',
     chickenNamePart1: 'Первые шаги',
     chickenNamePart2: 'Ярмарка',
     chickenNamePart3: 'Курятник мечты',
@@ -757,8 +761,10 @@ export default {
     diamondSpeed: 'Появление кристалла: ',
     expelChicken: 'Изгнать курочку',
     expelSheep: 'Изгнать овечку',
+    expelEventAnimal: 'Изгнать единорога',
     confirmExpelChicken: 'Вы действительно хотите изгнать эту курочку?',
     confirmExpelSheep: 'Вы действительно хотите изгнать эту овечку?',
+    confirmExpelEventAnimal: 'Вы действительно хотите изгнать этого единорога?',
     farmSheep: 'Ферма овец',
     farmChicken: 'Ферма кур',
     cutWool: 'Срезать шерсть',
@@ -1107,6 +1113,6 @@ export default {
     eventBreed59: 'Благородная курочка',
     eventBreed60: 'Курочка свободы',
 
-    resourcePrice: 'Цена радуги: ',
+    resourcePrice: 'Доход в сек: ',
   }
 }

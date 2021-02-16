@@ -28,79 +28,82 @@ function buyTerritory(): void {
   let settings: IeventTerritoriesPrice;
   settings = this.state.eventSettings.territoriesEventPrice.find((data: IeventTerritoriesPrice) => data.block === this.state.territory.data.values.block && data.position === this.state.territory.data.values.position);
   if (!settings) return;
-  if (this.state.userEvent.maxLevelAnimal >= settings.unlock && this.state.territory.data.values.type === 0) {
+  if (this.state.territory.data.values.type === 0) {
 
-    if (settings.price > 0) {
-     
-      // 70% от суммы покупки
-      let price: number = Math.round((settings.price / 100) * 70);
-
-      if (this.state.userEvent.money >= BigInt(price)) {
-        
-        // this.state.amplitude.getInstance().logEvent('buy_territory', {
-        //   block: this.state.territory.data.values.block,
-        //   position: this.state.territory.data.values.position,
-        //   farm_id: this.state.farm
-        // });
-    
-        this.state.territory.data.values.type = 2;
-        this.state.userEvent.money -= BigInt(price);
-    
-        const territory: Phaser.Physics.Arcade.Sprite = this.state.territory;
-    
-        this.time.addEvent({ delay: 500, callback: (): void => {
-    
-          territory.data.values.forest.destroy();
-          territory.setTexture('event-grass');
-          this.firework250(territory.x + 120, territory.y + 120);
-          this.buildBorders();
-    
-        }, callbackScope: this, loop: false });
-    
-        } else {
-    
-          let count: number = price - Number(this.state.userEvent.money);
-          let diamonds: number = this.convertMoney(count);
-          this.state.convertor = {
-            fun: 6,
-            count: count,
-            diamonds: diamonds,
-            type: 1
-          }
-    
-          let modal: Imodal = {
-            type: 1,
-            sysType: 4
-          }
-          this.state.modal = modal;
-          this.scene.launch('Modal', this.state);
-    
-        }
-    } else if (settings.diamond > 0) {
+    if (this.state.userEvent.maxLevelAnimal >= settings.unlock) {
+  
+  
+        let price: number = settings.price;
+  
+        if (this.state.userEvent.money >= BigInt(price)) {
+          
+          // this.state.amplitude.getInstance().logEvent('buy_territory', {
+          //   block: this.state.territory.data.values.block,
+          //   position: this.state.territory.data.values.position,
+          //   farm_id: this.state.farm
+          // });
       
+          this.state.territory.data.values.type = 2;
+          this.state.userEvent.money -= BigInt(price);
+      
+          const territory: Phaser.Physics.Arcade.Sprite = this.state.territory;
+      
+          this.time.addEvent({ delay: 500, callback: (): void => {
+      
+            territory.data.values.forest.destroy();
+            territory.setTexture('event-grass');
+            this.firework250(territory.x + 120, territory.y + 120);
+            this.buildBorders();
+      
+          }, callbackScope: this, loop: false });
+      
+          } else {
+      
+            let count: number = price - Number(this.state.userEvent.money);
+            let diamonds: number = this.convertMoney(count);
+            this.state.convertor = {
+              fun: 6,
+              count: count,
+              diamonds: diamonds,
+              type: 1
+            }
+      
+            let modal: Imodal = {
+              type: 1,
+              sysType: 4
+            }
+            this.state.modal = modal;
+            this.scene.launch('Modal', this.state);
+      
+          }
+        
+        
+  
+    } else {
       let price: number = settings.diamond;
       if (this.state.user.diamonds >= price) {
-
+  
         // this.state.amplitude.getInstance().logEvent('buy_territory', {
         //   block: this.state.territory.data.values.block,
         //   position: this.state.territory.data.values.position,
         //   farm_id: this.state.farm
         // });
-    
+      
         this.state.territory.data.values.type = 2;
         this.state.user.diamonds -= price;
-    
+      
         const territory: Phaser.Physics.Arcade.Sprite = this.state.territory;
-    
+      
         this.time.addEvent({ delay: 500, callback: (): void => {
-    
+      
           territory.data.values.forest.destroy();
+          territory.data.values.lock_image.destroy();
           territory.setTexture('event-grass');
           this.firework250(territory.x + 120, territory.y + 120);
           this.buildBorders();
-    
+      
         }, callbackScope: this, loop: false });
-    
+      
       } else {
         this.state.convertor = {
           fun: 0,
@@ -108,13 +111,13 @@ function buyTerritory(): void {
           diamonds: price - this.state.user.diamonds,
           type: 1
         }
-  
+    
         this.game.scene.keys[this.state.farm].exchange();
-  
+    
       }  
 
     }
-    
+
   }
 
 }
@@ -125,26 +128,8 @@ function buildBorders(): void {
     
     let territory = this.territories.children.entries[i];
 
-    if (territory.data.values.type === 7) {
 
-      territory.data.values.borderTop.setVisible(true);
-      territory.data.values.borderLeft.setVisible(true);
-
-      let bottomTer = this.territories.children.entries.find((data: any) => data.data.values.block === 2 && data.data.values.position === 1)
-      
-      if (bottomTer.data.values.type === 0) territory.borderBottom.setVisible(true);
-      else territory.data.values.borderBottom.setVisible(false);
-
-    }
-
-    if (territory.data.values.type === 6) {
-      territory.data.values.borderTop.setVisible(true);
-    }
-
-    if (territory.data.values.type === 1 ||
-      territory.data.values.type === 2 ||
-      territory.data.values.type === 3 ||
-      territory.data.values.type === 5) {
+    if (territory.data.values.type === 2) {
 
       if (territory.data.values.position === 1) {
         territory.data.values.borderLeft.setVisible(true);
@@ -154,30 +139,35 @@ function buildBorders(): void {
         territory.data.values.borderRight.setVisible(true);
       }
       
-      if (territory.data.values.block !== 8) {
+      if (territory.data.values.block <= 6) {
 
-        let topTer = this.territories.children.entries.find((data: any) => data.data.values.block === territory.data.values.block - 1 && data.data.values.position === territory.data.values.position);
+        let topTer = this.territories.children.entries.find((data: Phaser.Physics.Arcade.Sprite) => data.data.values.block === territory.data.values.block - 1 && data.data.values.position === territory.data.values.position);
         
-        let bottomTer = this.territories.children.entries.find((data: any) => data.data.values.block === territory.data.values.block + 1 && data.data.values.position === territory.data.values.position);
+        let bottomTer = this.territories.children.entries.find((data: Phaser.Physics.Arcade.Sprite) => data.data.values.block === territory.data.values.block + 1 && data.data.values.position === territory.data.values.position);
 
-        if (topTer !== undefined && topTer.type === 0) {
+        if (topTer && topTer.data.values.type === 0) {
+          
           territory.data.values.borderTop.setVisible(true);
         } else {
           territory.data.values.borderTop.setVisible(false);
         }
+        if (!topTer) {
+          territory.data.values.borderTop.setVisible(true);
+        }
 
-        if (bottomTer !== undefined && (bottomTer.data.values.type === 1 ||
-          bottomTer.data.values.type === 2 ||
-          bottomTer.data.values.type === 3 ||
-          bottomTer.data.values.type === 5)) {
+        if (bottomTer && bottomTer.data.values.type === 2) {
           territory.data.values.borderBottom.setVisible(false);
         } else {
           territory.data.values.borderBottom.setVisible(true);
         }
 
+        if (!bottomTer) {
+          territory.data.values.borderBottom.setVisible(true);
+        }
+
         if (territory.data.values.position === 1) {
 
-          let centerTer = this.territories.children.entries.find((data: any) => data.data.values.block === territory.data.values.block && data.data.values.position === 2);
+          let centerTer = this.territories.children.entries.find((data: Phaser.Physics.Arcade.Sprite) => data.data.values.block === territory.data.values.block && data.data.values.position === 2);
 
           if (centerTer.data.values.type === 0) {
             territory.data.values.borderRight.setVisible(true);
@@ -189,9 +179,9 @@ function buildBorders(): void {
         
         if (territory.data.values.position === 2) {
 
-          let leftTer = this.territories.children.entries.find((data: any) => data.data.values.block === territory.data.values.block && data.data.values.position === 1);
+          let leftTer = this.territories.children.entries.find((data: Phaser.Physics.Arcade.Sprite) => data.data.values.block === territory.data.values.block && data.data.values.position === 1);
 
-          let rightTer = this.territories.children.entries.find((data: any) => data.data.values.block === territory.data.values.block && data.data.values.position === 3);
+          let rightTer = this.territories.children.entries.find((data: Phaser.Physics.Arcade.Sprite) => data.data.values.block === territory.data.values.block && data.data.values.position === 3);
 
           if (leftTer.data.values.type === 0) {
             territory.data.values.borderLeft.setVisible(true);
@@ -209,7 +199,7 @@ function buildBorders(): void {
 
         if (territory.data.values.position === 3) {
 
-          let centerTer = this.territories.children.entries.find((data: any) => data.data.values.block === territory.data.values.block && data.data.values.position === 2);
+          let centerTer = this.territories.children.entries.find((data: Phaser.Physics.Arcade.Sprite) => data.data.values.block === territory.data.values.block && data.data.values.position === 2);
 
           if (centerTer.data.values.type === 0) {
             territory.data.values.borderLeft.setVisible(true);

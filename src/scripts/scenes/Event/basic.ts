@@ -23,16 +23,24 @@ function animalPrice(breed: number): {price: bigint, countAnimal: number} {
 function getFreePosition(): {x: number, y: number} {
   let x: number = 120;
   let y: number = this.topIndent + 600;
-  for (let i = 0; i < this.state.eventSettings.eventSettings.length; i ++ ) { // убрать жесткое число
-    if (this.currentTerritory(x, y).data.values.type !== 0) {
-      if (this.currentTerritory(x, y).data.values.merging.length !== 0) {
-        x += 240;
+  for (let i = 0; i < this.state.eventSettings.eventSettings.length; i ++ ) {
+    let territory: Phaser.Physics.Arcade.Sprite = this.currentTerritory(x, y);
+    if (territory.data.values.type !== 0) {
+      if (territory.data.values.merging.length !== 0) {
+        x += territory.width;
         if (x >= 650) {
           x = 120;
           y += 240;
         }
-      } else break
+      } else break;
     } else {
+      x += 240;
+      if (x >= 650) {
+        x = 120;
+        y += 240;
+      }
+    }
+    if (y >= this.topIndent + 1400) {
       this.scene.stop('Shop');
       this.scene.stop('ShopBars');
       this.scene.stop('Modal');
@@ -47,6 +55,7 @@ function getFreePosition(): {x: number, y: number} {
       this.scene.launch('Modal', this.state);
       return {x: null, y: null}
     }
+    
   }
   return {x, y} 
 
@@ -57,8 +66,8 @@ function getFreeBoostPositions(): Iposition[] {
   let y: number = this.topIndent + 600;
   let positions: Iposition[] = [];
   for (let i = 0; i < this.state.eventSettings.eventSettings.length; i ++ ) { // убрать жесткое число
-    if (this.currentTerritory(x, y).data.values.type !== 0) {
-      if (this.currentTerritory(x, y).data.values.merging.length !== 0) {
+    if (this.currentTerritory(x, y)?.data.values.type !== 0) {
+      if (this.currentTerritory(x, y)?.data.values.merging.length !== 0) {
         x += 240;
         if (x >= 650) {
           x = 120;
@@ -71,7 +80,19 @@ function getFreeBoostPositions(): Iposition[] {
           x = 120;
           y += 240;
         }}
-    } else break;
+    } else {
+          
+      if (y >= this.topIndent + 1400) {
+        break;
+      } else {
+        x += 240;
+        if (x >= 650) {
+          x = 120;
+          y += 240;
+        }
+      }
+    
+    };
   }
 
   return positions;
@@ -491,6 +512,49 @@ function updateEventNativeShop(): void {
 function tryTask(): void {
   console.log('TryTask');
 }
+
+function buildMenu(): void {
+  console.log('menu');
+  this.profile = this.add.image(650, this.height - 90, 'profile').setScale(0.8).setDepth(this.height + 2);
+  this.chat = this.add.image(650, this.height - 90, 'chat').setScale(0.8).setDepth(this.height + 2);
+  this.menu = this.add.image(650, this.height - 90, 'sandwich').setDepth(this.height + 3);
+
+  this.clickButton(this.profile, (): void => {
+
+    let modal: Imodal = {
+      type: 1,
+      sysType: 7
+    }
+    this.state.modal = modal;
+    this.scene.launch('Modal', this.state);
+
+  });
+
+  this.clickButton(this.chat, (): void => {
+    this.chatWindow();
+  });
+
+  this.clickButton(this.menu, (): void => {
+    
+    
+    // if (this.taskBoard.zone?.scene && this.sendwich) {
+    //   this.taskBoard.zone.depth = this.height + 1;
+    // } else if (this.taskBoard.zone?.scene && !this.sendwich) {
+    //   this.taskBoard.zone.depth = -1;
+    // }
+
+    this.sendwich = !this.sendwich;
+    this.sendwichTimer = 0;
+
+    if (this.sendwich) {
+      this.menu.setTexture('sandwich-close');
+    } else {
+      this.menu.setTexture('sandwich');
+    }
+
+  });
+
+}
 export {
   animalPrice,
   maxBreedForBuy,
@@ -505,5 +569,6 @@ export {
   createBoostAnimal,
   getFreeBoostPositions,
   updateEventNativeShop,
-  tryTask
+  tryTask,
+  buildMenu
 }

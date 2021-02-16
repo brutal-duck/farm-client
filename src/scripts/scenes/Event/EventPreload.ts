@@ -104,7 +104,7 @@ let eventBuyIcon12: any = require("./../../../assets/images/event/icons/event-bu
 // let eventBuyIcon59: any = require("./../../../assets/images/event/icons/event-buy-icon-59.png");
 // let eventBuyIcon60: any = require("./../../../assets/images/event/icons/event-buy-icon-60.png");
 
-let animal0: any = require("./../../../assets/images/event/animal/animal0.png");
+
 let animal1: any = require("./../../../assets/images/event/animal/animal1.png");
 let animal2: any = require("./../../../assets/images/event/animal/animal2.png");
 let animal3: any = require("./../../../assets/images/event/animal/animal3.png");
@@ -117,54 +117,54 @@ let animal9: any = require("./../../../assets/images/event/animal/animal9.png");
 let animal10: any = require("./../../../assets/images/event/animal/animal10.png");
 let animal11: any = require("./../../../assets/images/event/animal/animal11.png");
 let animal12: any = require("./../../../assets/images/event/animal/animal12.png");
-// let animal13: any = require("./../../../assets/images/event/animal/animal13.png");
-// let animal14: any = require("./../../../assets/images/event/animal/animal14.png");
-// let animal15: any = require("./../../../assets/images/event/animal/animal15.png");
-// let animal16: any = require("./../../../assets/images/event/animal/animal16.png");
-// let animal17: any = require("./../../../assets/images/event/animal/animal17.png");
-// let animal18: any = require("./../../../assets/images/event/animal/animal18.png");
-// let animal19: any = require("./../../../assets/images/event/animal/animal19.png");
-// let animal20: any = require("./../../../assets/images/event/animal/animal20.png");
-// let animal21: any = require("./../../../assets/images/event/animal/animal21.png");
-// let animal22: any = require("./../../../assets/images/event/animal/animal22.png");
-// let animal23: any = require("./../../../assets/images/event/animal/animal23.png");
-// let animal24: any = require("./../../../assets/images/event/animal/animal24.png");
-// let animal25: any = require("./../../../assets/images/event/animal/animal25.png");
-// let animal26: any = require("./../../../assets/images/event/animal/animal26.png");
-// let animal27: any = require("./../../../assets/images/event/animal/animal27.png");
-// let animal28: any = require("./../../../assets/images/event/animal/animal28.png");
-// let animal29: any = require("./../../../assets/images/event/animal/animal29.png");
-// let animal30: any = require("./../../../assets/images/event/animal/animal30.png");
-// let animal31: any = require("./../../../assets/images/event/animal/animal31.png");
-// let animal32: any = require("./../../../assets/images/event/animal/animal32.png");
-// let animal33: any = require("./../../../assets/images/event/animal/animal33.png");
-// let animal34: any = require("./../../../assets/images/event/animal/animal34.png");
-// let animal35: any = require("./../../../assets/images/event/animal/animal35.png");
-// let animal36: any = require("./../../../assets/images/event/animal/animal36.png");
-// let animal37: any = require("./../../../assets/images/event/animal/animal37.png");
-// let animal38: any = require("./../../../assets/images/event/animal/animal38.png");
-// let animal39: any = require("./../../../assets/images/event/animal/animal39.png");
-// let animal40: any = require("./../../../assets/images/event/animal/animal40.png");
-// let animal41: any = require("./../../../assets/images/event/animal/animal41.png");
-// let animal42: any = require("./../../../assets/images/event/animal/animal42.png");
-// let animal43: any = require("./../../../assets/images/event/animal/animal43.png");
-// let animal44: any = require("./../../../assets/images/event/animal/animal44.png");
-// let animal45: any = require("./../../../assets/images/event/animal/animal45.png");
-// let animal46: any = require("./../../../assets/images/event/animal/animal46.png");
-// let animal47: any = require("./../../../assets/images/event/animal/animal47.png");
-// let animal48: any = require("./../../../assets/images/event/animal/animal48.png");
-// let animal49: any = require("./../../../assets/images/event/animal/animal49.png");
-// let animal50: any = require("./../../../assets/images/event/animal/animal50.png");
-// let animal51: any = require("./../../../assets/images/event/animal/animal51.png");
-// let animal52: any = require("./../../../assets/images/event/animal/animal52.png");
-// let animal53: any = require("./../../../assets/images/event/animal/animal53.png");
-// let animal54: any = require("./../../../assets/images/event/animal/animal54.png");
-// let animal55: any = require("./../../../assets/images/event/animal/animal55.png");
-// let animal56: any = require("./../../../assets/images/event/animal/animal56.png");
-// let animal57: any = require("./../../../assets/images/event/animal/animal57.png");
-// let animal58: any = require("./../../../assets/images/event/animal/animal58.png");
-// let animal59: any = require("./../../../assets/images/event/animal/animal59.png");
-// let animal60: any = require("./../../../assets/images/event/animal/animal60.png");
+let animal13: any = require("./../../../assets/images/event/animal/animal13.png");
+let animal14: any = require("./../../../assets/images/event/animal/animal14.png");
+let animal15: any = require("./../../../assets/images/event/animal/animal15.png");
+let animal16: any = require("./../../../assets/images/event/animal/animal16.png");
+let animal17: any = require("./../../../assets/images/event/animal/animal17.png");
+let animal18: any = require("./../../../assets/images/event/animal/animal18.png");
+let animal19: any = require("./../../../assets/images/event/animal/animal19.png");
+let animal20: any = require("./../../../assets/images/event/animal/animal20.png");
+let animal21: any = require("./../../../assets/images/event/animal/animal21.png");
+let animal22: any = require("./../../../assets/images/event/animal/animal22.png");
+let animal23: any = require("./../../../assets/images/event/animal/animal23.png");
+let animal24: any = require("./../../../assets/images/event/animal/animal24.png");
+let animal25: any = require("./../../../assets/images/event/animal/animal25.png");
+let animal26: any = require("./../../../assets/images/event/animal/animal26.png");
+let animal27: any = require("./../../../assets/images/event/animal/animal27.png");
+let animal28: any = require("./../../../assets/images/event/animal/animal28.png");
+let animal29: any = require("./../../../assets/images/event/animal/animal29.png");
+let animal30: any = require("./../../../assets/images/event/animal/animal30.png");
+let animal31: any = require("./../../../assets/images/event/animal/animal31.png");
+let animal32: any = require("./../../../assets/images/event/animal/animal32.png");
+let animal33: any = require("./../../../assets/images/event/animal/animal33.png");
+let animal34: any = require("./../../../assets/images/event/animal/animal34.png");
+let animal35: any = require("./../../../assets/images/event/animal/animal35.png");
+let animal36: any = require("./../../../assets/images/event/animal/animal36.png");
+let animal37: any = require("./../../../assets/images/event/animal/animal37.png");
+let animal38: any = require("./../../../assets/images/event/animal/animal38.png");
+let animal39: any = require("./../../../assets/images/event/animal/animal39.png");
+let animal40: any = require("./../../../assets/images/event/animal/animal40.png");
+let animal41: any = require("./../../../assets/images/event/animal/animal41.png");
+let animal42: any = require("./../../../assets/images/event/animal/animal42.png");
+let animal43: any = require("./../../../assets/images/event/animal/animal43.png");
+let animal44: any = require("./../../../assets/images/event/animal/animal44.png");
+let animal45: any = require("./../../../assets/images/event/animal/animal45.png");
+let animal46: any = require("./../../../assets/images/event/animal/animal46.png");
+let animal47: any = require("./../../../assets/images/event/animal/animal47.png");
+let animal48: any = require("./../../../assets/images/event/animal/animal48.png");
+let animal49: any = require("./../../../assets/images/event/animal/animal49.png");
+let animal50: any = require("./../../../assets/images/event/animal/animal50.png");
+let animal51: any = require("./../../../assets/images/event/animal/animal51.png");
+let animal52: any = require("./../../../assets/images/event/animal/animal52.png");
+let animal53: any = require("./../../../assets/images/event/animal/animal53.png");
+let animal54: any = require("./../../../assets/images/event/animal/animal54.png");
+let animal55: any = require("./../../../assets/images/event/animal/animal55.png");
+let animal56: any = require("./../../../assets/images/event/animal/animal56.png");
+let animal57: any = require("./../../../assets/images/event/animal/animal57.png");
+let animal58: any = require("./../../../assets/images/event/animal/animal58.png");
+let animal59: any = require("./../../../assets/images/event/animal/animal59.png");
+let animal60: any = require("./../../../assets/images/event/animal/animal60.png");
 
 let cloud: any = require("./../../../assets/images/event/cloud.png");
 let resource: any = require("./../../../assets/images/event/resource.png");
@@ -1430,14 +1430,14 @@ const testEventSettings: IeventSettings = {
     { block: 3, position: 2, diamond: 0, price: 0, unlock: 0 },
     { block: 3, position: 3, diamond: 0, price: 0, unlock: 0 },
     { block: 4, position: 1, diamond: 0, price: 0, unlock: 0 },
-    { block: 4, position: 2, diamond: 0, price: 2000, unlock: 3 },
-    { block: 4, position: 3, diamond: 0, price: 4000, unlock: 5 },
-    { block: 5, position: 1, diamond: 0, price: 5000, unlock: 7 },
-    { block: 5, position: 2, diamond: 100, price: 0, unlock: 9 },
-    { block: 5, position: 3, diamond: 125, price: 0, unlock: 11 },
-    { block: 6, position: 1, diamond: 150, price: 0, unlock: 13 },
-    { block: 6, position: 2, diamond: 175, price: 0, unlock: 15 },
-    { block: 6, position: 3, diamond: 200, price: 0, unlock: 17 },
+    { block: 4, position: 2, diamond: 10, price: 1500, unlock: 2 },
+    { block: 4, position: 3, diamond: 10, price: 5000, unlock: 4 },
+    { block: 5, position: 1, diamond: 20, price: 10000, unlock: 6 },
+    { block: 5, position: 2, diamond: 40, price: 20000, unlock: 8 },
+    { block: 5, position: 3, diamond: 100, price: 50000, unlock: 10 },
+    { block: 6, position: 1, diamond: 180, price: 90000, unlock: 12 },
+    { block: 6, position: 2, diamond: 300, price: 150000, unlock: 14 },
+    { block: 6, position: 3, diamond: 400, price: 200000, unlock: 16 },
   ],
   territoriesEventSettings: [
     { improve: 1, regeneration: 11, countResources: 5, unlock_improve: 1, resourceStorage: 200 },
@@ -1463,6 +1463,43 @@ const testUserEvent: IuserEvent = {
     {counter: 1},
     {counter: 1},
     {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    {counter: 1},
+    
   ],
   collector: 0,
   collectorLevel: 1,
@@ -1682,7 +1719,6 @@ class EventPreload extends Phaser.Scene {
     // this.load.image('event-buy-icon-60', eventBuyIcon60);
 
     this.load.image('disable-animal', disableAnimal);
-    this.load.image('animal0', animal0);
     this.load.image('animal1', animal1);
     this.load.image('animal2', animal2);
     this.load.image('animal3', animal3);
@@ -1695,54 +1731,54 @@ class EventPreload extends Phaser.Scene {
     this.load.image('animal10', animal10);
     this.load.image('animal11', animal11);
     this.load.image('animal12', animal12);
-    // this.load.image('animal13', animal13);
-    // this.load.image('animal14', animal14);
-    // this.load.image('animal15', animal15);
-    // this.load.image('animal16', animal16);
-    // this.load.image('animal17', animal17);
-    // this.load.image('animal18', animal18);
-    // this.load.image('animal19', animal19);
-    // this.load.image('animal20', animal20);
-    // this.load.image('animal21', animal21);
-    // this.load.image('animal22', animal22);
-    // this.load.image('animal23', animal23);
-    // this.load.image('animal24', animal24);
-    // this.load.image('animal25', animal25);
-    // this.load.image('animal26', animal26);
-    // this.load.image('animal27', animal27);
-    // this.load.image('animal28', animal28);
-    // this.load.image('animal29', animal29);
-    // this.load.image('animal30', animal30);
-    // this.load.image('animal31', animal31);
-    // this.load.image('animal32', animal32);
-    // this.load.image('animal33', animal33);
-    // this.load.image('animal34', animal34);
-    // this.load.image('animal35', animal35);
-    // this.load.image('animal36', animal36);
-    // this.load.image('animal37', animal37);
-    // this.load.image('animal38', animal38);
-    // this.load.image('animal39', animal39);
-    // this.load.image('animal40', animal40);
-    // this.load.image('animal41', animal41);
-    // this.load.image('animal42', animal42);
-    // this.load.image('animal43', animal43);
-    // this.load.image('animal44', animal44);
-    // this.load.image('animal45', animal45);
-    // this.load.image('animal46', animal46);
-    // this.load.image('animal47', animal47);
-    // this.load.image('animal48', animal48);
-    // this.load.image('animal49', animal49);
-    // this.load.image('animal50', animal50);
-    // this.load.image('animal51', animal51);
-    // this.load.image('animal52', animal52);
-    // this.load.image('animal53', animal53);
-    // this.load.image('animal54', animal54);
-    // this.load.image('animal55', animal55);
-    // this.load.image('animal56', animal56);
-    // this.load.image('animal57', animal57);
-    // this.load.image('animal58', animal58);
-    // this.load.image('animal59', animal59);
-    // this.load.image('animal60', animal60);
+    this.load.image('animal13', animal13);
+    this.load.image('animal14', animal14);
+    this.load.image('animal15', animal15);
+    this.load.image('animal16', animal16);
+    this.load.image('animal17', animal17);
+    this.load.image('animal18', animal18);
+    this.load.image('animal19', animal19);
+    this.load.image('animal20', animal20);
+    this.load.image('animal21', animal21);
+    this.load.image('animal22', animal22);
+    this.load.image('animal23', animal23);
+    this.load.image('animal24', animal24);
+    this.load.image('animal25', animal25);
+    this.load.image('animal26', animal26);
+    this.load.image('animal27', animal27);
+    this.load.image('animal28', animal28);
+    this.load.image('animal29', animal29);
+    this.load.image('animal30', animal30);
+    this.load.image('animal31', animal31);
+    this.load.image('animal32', animal32);
+    this.load.image('animal33', animal33);
+    this.load.image('animal34', animal34);
+    this.load.image('animal35', animal35);
+    this.load.image('animal36', animal36);
+    this.load.image('animal37', animal37);
+    this.load.image('animal38', animal38);
+    this.load.image('animal39', animal39);
+    this.load.image('animal40', animal40);
+    this.load.image('animal41', animal41);
+    this.load.image('animal42', animal42);
+    this.load.image('animal43', animal43);
+    this.load.image('animal44', animal44);
+    this.load.image('animal45', animal45);
+    this.load.image('animal46', animal46);
+    this.load.image('animal47', animal47);
+    this.load.image('animal48', animal48);
+    this.load.image('animal49', animal49);
+    this.load.image('animal50', animal50);
+    this.load.image('animal51', animal51);
+    this.load.image('animal52', animal52);
+    this.load.image('animal53', animal53);
+    this.load.image('animal54', animal54);
+    this.load.image('animal55', animal55);
+    this.load.image('animal56', animal56);
+    this.load.image('animal57', animal57);
+    this.load.image('animal58', animal58);
+    this.load.image('animal59', animal59);
+    this.load.image('animal60', animal60);
     this.load.image('cloud', cloud);
     this.load.image('event-resource', resource);
 

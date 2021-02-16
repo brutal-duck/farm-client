@@ -31,8 +31,8 @@ function animalBrain(): void {
         
         animal.data.values.cloud.setVisible(true);
         animal.data.values.cloud.x = animal.x;
-        animal.data.values.cloud.y = animal.y + animal.height / 2 - 20;
-        animal.data.values.cloud.setDepth(animal.y + 100);
+        animal.data.values.cloud.y = animal.y + animal.height / 2 - 10;
+        
           // // если нет цели у животного
           if (!animal.data.values.aim) {
             
@@ -116,24 +116,24 @@ function animalBrain(): void {
 
           }
           
-      }
-        
-      // уход от границ
-      if (((animal.x < animal.width / 2) ||
+        // уход от границ
+        if (((animal.x < animal.width / 2) ||
         (animal.x > 720 - animal.width / 2) ||
         (animal.y < this.topIndent + animal.height / 2) ||
-        (animal.y > this.topIndent + 480 - animal.height / 2))
+        (animal.y > this.topIndent + 480 - animal.height / 2 - animal.data.values.cloud.height / 4))
         && animal.data.values.working && !animal.data.values.aim) {
-
-          let aimX: number = random(0 + Math.ceil(animal.width / 2), 720 - Math.ceil(animal.width / 2));
-          let aimY: number = random(this.topIndent + Math.ceil(animal.height / 2), this.topIndent + 480 - Math.ceil(animal.height / 2));
-          this.aim(animal, aimX, aimY);
+  
+        let aimX: number = random(0 + Math.ceil(animal.width / 2), 720 - Math.ceil(animal.width / 2));
+        let aimY: number = random(this.topIndent + Math.ceil(animal.height / 2), this.topIndent + 480 - Math.ceil(animal.height / 2));
+        this.aim(animal, aimX, aimY);
       
+        }   
+        
       } 
-    
+
     }  
-    
-    animal.setDepth(animal.y + Math.round((animal.height / 2) + 1)); // z-index
+    animal.data.values.cloud.setDepth(animal.y + Math.round((animal.height / 2) + 100));
+    animal.setDepth(animal.y + Math.round((animal.height / 2) + 101)); // z-index
   
   }
 

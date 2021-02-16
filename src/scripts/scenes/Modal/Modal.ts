@@ -33,7 +33,9 @@ import {
   eventConvertor,
   buyEventTerritory,
   improveCollectorEvent,
-  herdBoostEventWindow
+  herdBoostEventWindow,
+  eventDrag,
+  eventProfile
 } from './event';
 import {
   sheepFair,
@@ -207,7 +209,8 @@ class Modal extends Phaser.Scene {
   public buyEventTerritory = buyEventTerritory.bind(this);
   public improveCollectorEvent = improveCollectorEvent.bind(this);
   public herdBoostEventWindow = herdBoostEventWindow.bind(this);
-  
+  public eventDrag = eventDrag.bind(this);
+  public eventProfile = eventProfile.bind(this);
   public init(state: Istate): void {
     this.state = state;
   }
@@ -323,7 +326,10 @@ class Modal extends Phaser.Scene {
       case 8: // окно стадного буста
         if (this.state.farm !== 'Event') {
           this.herdBoostWindow();
-        } else this.herdBoostEventWindow();
+        } else {
+          this.eventDrag()
+          this.herdBoostEventWindow();
+        }
         break;
       default:
         this.scene.stop();

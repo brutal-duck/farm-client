@@ -23,17 +23,21 @@ function flyAnimal(): void {
         let activeAnimal: Phaser.Physics.Arcade.Sprite = animal.data.values.active;
 
         if (activeAnimal.data.values.working) {
-          
+          let coefficient: number = activeAnimal.height / activeAnimal.data.values.cloud.height;
+        
+          let originTerm: number = 0.0065;
           if (activeAnimal.data.values.topPosition) {
-            activeAnimal.originY -= 0.0065;
+            activeAnimal.originY -= originTerm;
+            activeAnimal.data.values.cloud.originY -= originTerm * coefficient;
             activeAnimal.setOrigin(0.5, activeAnimal.originY);
-            activeAnimal.data.values.cloud.setOrigin(0.5, activeAnimal.originY);
+            activeAnimal.data.values.cloud.setOrigin(0.5, activeAnimal.data.values.cloud.originY);
             if (activeAnimal.originY <= 0.45) activeAnimal.data.values.topPosition = false;
             
           } else {
-            activeAnimal.originY += 0.0065;
+            activeAnimal.originY += originTerm;
+            activeAnimal.data.values.cloud.originY += originTerm * coefficient;
             activeAnimal.setOrigin(0.5, activeAnimal.originY);
-            activeAnimal.data.values.cloud.setOrigin(0.5, activeAnimal.originY);
+            activeAnimal.data.values.cloud.setOrigin(0.5, activeAnimal.data.values.cloud.originY);
             if (activeAnimal.originY >= 0.55) activeAnimal.data.values.topPosition = true;
           }
         }
@@ -71,6 +75,7 @@ function updateTeleportation() {
       let distance: number = Phaser.Math.Distance.Between(animal.data.values.active.x, animal.data.values.active.y, target.x, target.y);
       if (distance < 40) {
         animal.data.values.active.body.reset(target.x, target.y);
+        animal.data.values.active.setOrigin(0.5, 0.5);
         animal.data.values.active.data.values.teleport = false;
         animal.setDepth(animal.y);
         animal.data.values.active.setDepth(animal.y * 2);
@@ -117,8 +122,8 @@ function teleportation(
           animal1.data.values.aimX = 0;
           animal1.data.values.aimY = 0;
           animal1.data.values.working = false;
-          animal1.setDepth(animal1.data.values.base.y + 100);
-  
+          animal1.setDepth(target.y + 100);
+          animal1.data.values.cloud.setVisible(false);
           let speed: number = Phaser.Math.Distance.Between(animal1.x, animal1.y, target.x, target.y) * 4;
           
           this.physics.moveToObject(animal1, target, speed);
@@ -164,7 +169,7 @@ function teleportation(
         let speed: number = Phaser.Math.Distance.Between(animal2.x, animal2.y, target.x, target.y) * 4;
         
         animal2.data.values.teleport = true;
-
+        animal2.setDepth(target.y + 100);
         if (animal2.state === 'active') {
 
           animal2.data.values.base.data.values.target = target;
@@ -197,7 +202,7 @@ function teleportation(
         let target: Iposition = new Phaser.Math.Vector2();
         target.x = animal1.data.values.oldX;
         target.y = animal1.data.values.oldY;
-        
+        animal2.setDepth(target.y + 100);
         animal2.data.values.oldX = target.x;
         animal2.data.values.oldY = target.y;
         

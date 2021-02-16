@@ -159,13 +159,14 @@ function getActiveAnimal(
 function getResource(data: IeventResource): void {
 
   let resource: Phaser.Physics.Arcade.Sprite = this.resources.create(data.x, data.y, 'event-resource');
-  resource.setDepth(data.y);
   resource.setDataEnabled();
+  resource.setDepth(data.y);
   resource.data.values.type = data.type;
   resource.data.values._id = data._id;
   resource.data.values.click = true;
   resource.data.values.distance = 0;
   resource.data.values.timeout = 0;
+  resource.setAngle(Phaser.Math.Between(0, 360))
 
   this.click(resource, (): void => {
 
