@@ -27,13 +27,20 @@ function getFreePosition(): {x: number, y: number} {
     let territory: Phaser.Physics.Arcade.Sprite = this.currentTerritory(x, y);
     if (territory.data.values.type !== 0) {
       if (territory.data.values.merging.length !== 0) {
-        x += 240;
+        x += territory.width;
         if (x >= 650) {
           x = 120;
           y += 240;
         }
       } else break;
     } else {
+      x += 240;
+      if (x >= 650) {
+        x = 120;
+        y += 240;
+      }
+    }
+    if (y >= this.topIndent + 1400) {
       this.scene.stop('Shop');
       this.scene.stop('ShopBars');
       this.scene.stop('Modal');
@@ -48,6 +55,7 @@ function getFreePosition(): {x: number, y: number} {
       this.scene.launch('Modal', this.state);
       return {x: null, y: null}
     }
+    
   }
   return {x, y} 
 
