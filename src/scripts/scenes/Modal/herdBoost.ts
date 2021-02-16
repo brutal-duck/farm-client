@@ -482,12 +482,12 @@ function drag(animal: Phaser.Physics.Arcade.Sprite): void {
   });
   
   this.input.on('dragend', (pointer: any, animal: Phaser.Physics.Arcade.Sprite): void => {
-    animal.setCollideWorldBounds(false);
+    
     if (animal.data) { // существует ли еще dataManager животного
       
-      animal.data.values.drag === false;
-    
       if (animal.data.values.drag === false) return;
+
+      animal.data.values.drag = false;
   
       if ((animal.y < 480 && animal.x < 480) || animal.y > 960 || animal.y < 200) {
           this.mergingCloud({x: animal.x, y: animal.y}, true); // плохое облако на месте животного
@@ -500,6 +500,9 @@ function drag(animal: Phaser.Physics.Arcade.Sprite): void {
           animal.data.values.side = 'right';
         } else {
           // проверяем в какую сторону нужно отправить овцу
+
+          animal.setCollideWorldBounds(false);
+          
           if (animal.data.values.side === 'right') {
             animal.data.values.velocity = this.state.herdBoostSpeedAnimal;
           } else  if (animal.data.values.side === 'left') {
