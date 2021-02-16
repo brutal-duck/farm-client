@@ -104,7 +104,7 @@ let eventBuyIcon12: any = require("./../../../assets/images/event/icons/event-bu
 // let eventBuyIcon59: any = require("./../../../assets/images/event/icons/event-buy-icon-59.png");
 // let eventBuyIcon60: any = require("./../../../assets/images/event/icons/event-buy-icon-60.png");
 
-let animal0: any = require("./../../../assets/images/event/animal/animal0.png");
+
 let animal1: any = require("./../../../assets/images/event/animal/animal1.png");
 let animal2: any = require("./../../../assets/images/event/animal/animal2.png");
 let animal3: any = require("./../../../assets/images/event/animal/animal3.png");
@@ -1682,7 +1682,6 @@ class EventPreload extends Phaser.Scene {
     // this.load.image('event-buy-icon-60', eventBuyIcon60);
 
     this.load.image('disable-animal', disableAnimal);
-    this.load.image('animal0', animal0);
     this.load.image('animal1', animal1);
     this.load.image('animal2', animal2);
     this.load.image('animal3', animal3);
