@@ -166,6 +166,7 @@ function getResource(data: IeventResource): void {
   resource.data.values.click = true;
   resource.data.values.distance = 0;
   resource.data.values.timeout = 0;
+  resource.setAngle(Phaser.Math.Between(0, 360))
 
   this.click(resource, (): void => {
 

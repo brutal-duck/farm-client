@@ -31,7 +31,7 @@ function animalBrain(): void {
         
         animal.data.values.cloud.setVisible(true);
         animal.data.values.cloud.x = animal.x;
-        animal.data.values.cloud.y = animal.y + animal.height / 2 - 20;
+        animal.data.values.cloud.y = animal.y + animal.height / 2 - 10;
         animal.data.values.cloud.setDepth(animal.y + 100);
           // // если нет цели у животного
           if (!animal.data.values.aim) {
