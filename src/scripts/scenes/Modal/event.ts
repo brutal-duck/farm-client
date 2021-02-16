@@ -643,7 +643,7 @@ function getRandomAnimal(type: string): void {
   animal.setVelocityX(animal.data.values.velocity);
   animal.setScale(0.8);
   animal.data.values.cloud = this.physics.add.sprite(animal.x, animal.y + animal.height / 2 - 30, 'cloud');
-  animal.data.values.cloud.setDepth(y).setVelocityX(animal.data.values.velocity).setScale(0.8);
+  animal.data.values.cloud.setDepth(y - 1).setVelocityX(animal.data.values.velocity).setScale(0.8);
 }
 
 function getRandomStartPosition(): {x: number, y: number, side: string, _id: string} {
@@ -682,7 +682,7 @@ function eventDrag(): void {
     if (animal.data.values.cloud) {
       animal.data.values.cloud.x = dragX;
       animal.data.values.cloud.y = dragY + animal.height / 2 - 30;
-      animal.data.values.cloud.setDepth(dragY + Math.round((animal.height / 2) + 101));
+      animal.data.values.cloud.setDepth(dragY + Math.round((animal.height / 2) + 99));
     }
   });
 
@@ -725,6 +725,7 @@ function eventDrag(): void {
           animal.setDepth(animal.y);
           animal.data.values.cloud.setVisible(true);
           animal.setVelocityX(animal.data.values.velocity);
+          animal.data.values.cloud.setDepth(animal.y - 1);
           animal.data.values.cloud.setVelocityX(animal.data.values.velocity);
         }
       }
