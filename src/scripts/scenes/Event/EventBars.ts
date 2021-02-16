@@ -6,11 +6,10 @@ import {
   shortNum,
   socialButtons,
 } from '../../general/basic';
-import { updateEventNativeShop } from './basic';
+import { updateEventNativeShop, buildMenu } from './basic';
 import {
   Collector,
   TaskBoard,
-  buildMenu
 } from '../../elements';
 import {
   сurrencyAnimation,
@@ -52,7 +51,6 @@ class EventBars extends Phaser.Scene {
   public animalBuy: Phaser.GameObjects.Image;
   public animalPrice: Phaser.GameObjects.Text;
   public animalPriceBubble: Phaser.GameObjects.Graphics;
-  public taskBoard: TaskBoard;
   public partProgress: Phaser.GameObjects.Text;
   public balanceBg: Phaser.GameObjects.Image;
   public waterBg: Phaser.GameObjects.Image;
@@ -335,6 +333,10 @@ class EventBars extends Phaser.Scene {
 
     // Обновление натива магазина
     this.updateEventNativeShop();
+
+    // Анимация меню
+    this.menuAnimation();
+
 
   }
 

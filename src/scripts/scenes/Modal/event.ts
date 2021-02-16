@@ -1,11 +1,11 @@
 // окно подтверждения изгнания
-import { random, getRandomBool, randomString, shortTime} from "../../general/basic";
+import { random, getRandomBool, randomString, shortTime, romanize} from "../../general/basic";
 
 function confirmExpelAnimal(): void {
     
-  this.textHeader.setText(this.state.lang.expelChicken); // заменить тексты
+  this.textHeader.setText(this.state.lang.expelEventAnimal); // заменить тексты
 
-  this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 60, this.state.lang.confirmExpelChicken, {
+  this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 60, this.state.lang.confirmExpelEventAnimal, {
     font: '26px Bip',
     color: '#925C28',
     align: 'center',
@@ -850,11 +850,130 @@ function flyAnimal(): void {
 
 }
 
+// окно профиля
+function eventProfile(): void {
+
+  this.textHeader.setText(this.state.lang.profile);
+
+  let height: number = 360;
+  let exit: any;
+  let nickBtn: Phaser.GameObjects.Sprite;
+  let nickText: Phaser.GameObjects.Text;
+  let avatar: Phaser.GameObjects.Sprite;
+  let login: string = this.state.user.login;
+
+  if (this.state.platform !== 'web') login = this.state.name;
+
+  if (this.state.platform === 'vk') {
+
+    avatar = this.add.sprite(200, 0, 'avatar').setScale(0.7).setDepth(1);
+
+  } else if (this.state.platform === 'ok') {
+
+    avatar = this.add.sprite(200, 0, 'avatar').setDepth(1);
+
+  } else {
+
+    avatar = this.add.sprite(200, 0, 'farmer').setScale(0.6).setDepth(1);
+    
+  }
+  
+  let star: Phaser.GameObjects.Sprite = this.add.sprite(260, 0, 'star').setScale(0.65).setDepth(1);
+
+  let level: Phaser.GameObjects.Text = this.add.text(260, 0, String(this.state.user.level), {
+    font: '24px Bip',
+    color: '#925C28'
+  }).setOrigin(0.5, 0.5).setDepth(1);
+
+  let name: Phaser.GameObjects.Text = this.add.text(305, 0, login, {
+    font: '25px Shadow',
+    color: '#925C28',
+    align: 'left',
+    wordWrap: { width: 310 }
+  }).setOrigin(0, 0).setDepth(1);
+
+  let farmer: Phaser.GameObjects.Text = this.add.text(305, 0, this.state.lang.eventProfileName + ' ' + romanize(this.state.userEvent.maxLevelAnimal), {
+    font: '24px Bip',
+    color: '#925C28',
+    align: 'left',
+    wordWrap: { width: 310 }
+  }).setOrigin(0, 0.5).setDepth(1);
+
+  if (this.state.platform === 'web') {
+  
+    exit = this.bigButton('orange', 'center', 80, this.state.lang.profileExit);
+    this.clickModalBtn(exit, (): void => {
+      document.cookie = "farmHASH=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      window.location.reload();
+    });
+
+    name.y = this.cameras.main.centerY - 170;
+    let nameHeight: number = name.getBounds().height;
+    farmer.y = name.y + nameHeight + 23;
+    
+    nickBtn = this.add.sprite(405, farmer.y + 58, 'middle-button').setDepth(1);
+    nickText = this.add.text(405, farmer.y + 55, this.state.lang.changeNick, {
+      font: '22px Shadow',
+      color: '#FFFFFF'
+    }).setOrigin(0.5, 0.5).setDepth(1);
+
+    this.clickModalBtn({ btn: nickBtn, title: nickText }, (): void => {
+      let modal: Imodal = {
+        type: 1,
+        sysType: 12
+      }
+      this.state.modal = modal;
+      this.game.scene.keys[this.state.farm].scene.launch('Modal', this.state);
+    });
+
+    height += 80;
+
+  } else {
+
+    let heightText: number = 23;
+    heightText += name.getBounds().height;
+    heightText += farmer.getBounds().height;
+
+    name.y = this.cameras.main.centerY - (height / 2) + 25 + (110 - heightText / 2);
+    farmer.y = name.y + name.getBounds().height + 23;
+
+  }
+
+  let support = this.bigButton('green', 'center', 0, this.state.lang.support);
+  this.clickModalBtn(support, (): void => {
+    this.support();
+  });
+
+  let agreement: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, 0, this.state.lang.agreement, {
+    font: '22px Shadow',
+    color: '#777777'
+  }).setOrigin(0.5, 0.5);
+
+  this.clickButton(agreement, (): void => {
+    window.open('https://' + location.hostname + '/agreement', '_blank');
+  });
+  
+  let bg: Phaser.GameObjects.Graphics = this.add.graphics({ x: 115, y: this.cameras.main.centerY - (height / 2) + 25 });
+  bg.fillStyle(0xF8EFCE, 1);
+  bg.fillRoundedRect(0, 0, 490, 220, 16);
+
+  agreement.y = this.cameras.main.centerY + (height / 2) + 10;
+  support.btn.y = this.cameras.main.centerY + (height / 2) - 60;
+  support.title.y = support.btn.y - 5;
+  avatar.y = this.cameras.main.centerY - (height / 2) + 135;
+  star.y = avatar.y - 65;
+  level.y = star.y;
+
+  this.resizeWindow(height);
+
+}
+
 export { 
   confirmExpelAnimal,
   eventConvertor,
   buyEventTerritory,
   improveCollectorEvent,
   herdBoostEventWindow,
-  eventDrag
+  eventDrag,
+  eventProfile
 } 

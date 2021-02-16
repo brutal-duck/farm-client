@@ -120,6 +120,8 @@ function systemWindow(): void {
         this.sheepProfile();
       } else if (this.state.farm === 'Chicken') {
         this.chickenProfile();
+      } else if (this.state.farm === 'Event') {
+        this.eventProfile();
       }
       
       break;
