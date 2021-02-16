@@ -128,26 +128,8 @@ function buildBorders(): void {
     
     let territory = this.territories.children.entries[i];
 
-    if (territory.data.values.type === 7) {
 
-      territory.data.values.borderTop.setVisible(true);
-      territory.data.values.borderLeft.setVisible(true);
-
-      let bottomTer = this.territories.children.entries.find((data: any) => data.data.values.block === 2 && data.data.values.position === 1)
-      
-      if (bottomTer.data.values.type === 0) territory.borderBottom.setVisible(true);
-      else territory.data.values.borderBottom.setVisible(false);
-
-    }
-
-    if (territory.data.values.type === 6) {
-      territory.data.values.borderTop.setVisible(true);
-    }
-
-    if (territory.data.values.type === 1 ||
-      territory.data.values.type === 2 ||
-      territory.data.values.type === 3 ||
-      territory.data.values.type === 5) {
+    if (territory.data.values.type === 2) {
 
       if (territory.data.values.position === 1) {
         territory.data.values.borderLeft.setVisible(true);
@@ -157,22 +139,23 @@ function buildBorders(): void {
         territory.data.values.borderRight.setVisible(true);
       }
       
-      if (territory.data.values.block !== 8) {
+      if (territory.data.values.block !== 6) {
 
-        let topTer = this.territories.children.entries.find((data: any) => data.data.values.block === territory.data.values.block - 1 && data.data.values.position === territory.data.values.position);
+        let topTer = this.territories.children.entries.find((data: Phaser.Physics.Arcade.Sprite) => data.data.values.block === territory.data.values.block - 1 && data.data.values.position === territory.data.values.position);
         
-        let bottomTer = this.territories.children.entries.find((data: any) => data.data.values.block === territory.data.values.block + 1 && data.data.values.position === territory.data.values.position);
+        let bottomTer = this.territories.children.entries.find((data: Phaser.Physics.Arcade.Sprite) => data.data.values.block === territory.data.values.block + 1 && data.data.values.position === territory.data.values.position);
 
-        if (topTer !== undefined && topTer.type === 0) {
+        if (topTer && topTer.data.values.type === 0) {
+          
           territory.data.values.borderTop.setVisible(true);
         } else {
           territory.data.values.borderTop.setVisible(false);
         }
+        if (!topTer) {
+          territory.data.values.borderTop.setVisible(true);
+        }
 
-        if (bottomTer !== undefined && (bottomTer.data.values.type === 1 ||
-          bottomTer.data.values.type === 2 ||
-          bottomTer.data.values.type === 3 ||
-          bottomTer.data.values.type === 5)) {
+        if (bottomTer && bottomTer.data.values.type === 2) {
           territory.data.values.borderBottom.setVisible(false);
         } else {
           territory.data.values.borderBottom.setVisible(true);
@@ -180,7 +163,7 @@ function buildBorders(): void {
 
         if (territory.data.values.position === 1) {
 
-          let centerTer = this.territories.children.entries.find((data: any) => data.data.values.block === territory.data.values.block && data.data.values.position === 2);
+          let centerTer = this.territories.children.entries.find((data: Phaser.Physics.Arcade.Sprite) => data.data.values.block === territory.data.values.block && data.data.values.position === 2);
 
           if (centerTer.data.values.type === 0) {
             territory.data.values.borderRight.setVisible(true);
@@ -192,9 +175,9 @@ function buildBorders(): void {
         
         if (territory.data.values.position === 2) {
 
-          let leftTer = this.territories.children.entries.find((data: any) => data.data.values.block === territory.data.values.block && data.data.values.position === 1);
+          let leftTer = this.territories.children.entries.find((data: Phaser.Physics.Arcade.Sprite) => data.data.values.block === territory.data.values.block && data.data.values.position === 1);
 
-          let rightTer = this.territories.children.entries.find((data: any) => data.data.values.block === territory.data.values.block && data.data.values.position === 3);
+          let rightTer = this.territories.children.entries.find((data: Phaser.Physics.Arcade.Sprite) => data.data.values.block === territory.data.values.block && data.data.values.position === 3);
 
           if (leftTer.data.values.type === 0) {
             territory.data.values.borderLeft.setVisible(true);
@@ -212,7 +195,7 @@ function buildBorders(): void {
 
         if (territory.data.values.position === 3) {
 
-          let centerTer = this.territories.children.entries.find((data: any) => data.data.values.block === territory.data.values.block && data.data.values.position === 2);
+          let centerTer = this.territories.children.entries.find((data: Phaser.Physics.Arcade.Sprite) => data.data.values.block === territory.data.values.block && data.data.values.position === 2);
 
           if (centerTer.data.values.type === 0) {
             territory.data.values.borderLeft.setVisible(true);
