@@ -23,15 +23,16 @@ function animalPrice(breed: number): {price: bigint, countAnimal: number} {
 function getFreePosition(): {x: number, y: number} {
   let x: number = 120;
   let y: number = this.topIndent + 600;
-  for (let i = 0; i < this.state.eventSettings.eventSettings.length; i ++ ) { // убрать жесткое число
-    if (this.currentTerritory(x, y).data.values.type !== 0) {
-      if (this.currentTerritory(x, y).data.values.merging.length !== 0) {
+  for (let i = 0; i < this.state.eventSettings.eventSettings.length; i ++ ) {
+    let territory: Phaser.Physics.Arcade.Sprite = this.currentTerritory(x, y);
+    if (territory.data.values.type !== 0) {
+      if (territory.data.values.merging.length !== 0) {
         x += 240;
         if (x >= 650) {
           x = 120;
           y += 240;
         }
-      } else break
+      } else break;
     } else {
       this.scene.stop('Shop');
       this.scene.stop('ShopBars');

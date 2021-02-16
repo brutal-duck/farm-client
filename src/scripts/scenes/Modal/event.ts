@@ -174,24 +174,8 @@ function buyEventTerritory(): void {
   let settings: IeventTerritoriesPrice = this.state.eventSettings.territoriesEventPrice.find((data: IeventTerritoriesPrice) => data.block === this.state.territory.block && data.position === this.state.territory.position);
 
   if (this.state.userEvent.maxLevelAnimal >= settings.unlock) {
-    if (settings.diamond > 0) {
-      // 70% от суммы покупки  
-      let right = {
-        icon: 'diamond',
-        text: settings.diamond
-      }
-    
-      let button = this.bigButton('yellow', 'left', 20, this.state.lang.buyTerritory, right);
-      this.clickModalBtn(button, (): void => {
-        this.scene.stop();
-        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-        this.game.scene.keys[this.state.farm].buyTerritory();
-      });
 
-    } else {
-
-      // 70% от суммы покупки
-      let price = Math.round((settings.price / 100) * 70);
+      let price: number = settings.price;
   
       let right = {
         icon: 'eventCoin',
@@ -205,20 +189,32 @@ function buyEventTerritory(): void {
         this.game.scene.keys[this.state.farm].buyTerritory();
       });
 
-    }
-    
+      this.resizeWindow(130);
   } else {
 
-    let right = {
+    let right1 = {
+      icon: 'diamond',
+      text: settings.diamond
+    }
+  
+    let button = this.bigButton('yellow', 'left', -15, this.state.lang.buyTerritory, right1);
+    this.clickModalBtn(button, (): void => {
+      this.scene.stop();
+      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+      this.game.scene.keys[this.state.farm].buyTerritory();
+    });
+
+    let right2 = {
       icon: 'lock',
       text: this.state.lang.shortLevel + ' ' + settings.unlock
     }
   
-    this.bigButton('grey', 'left', 20, this.state.lang.buyTerritory, right);
+    this.bigButton('grey', 'left', 65, this.state.lang.buyTerritory, right2);
 
+    this.resizeWindow(150);
   }
   
-  this.resizeWindow(130);
+  
 }
 
 // окно улучшения собирателя 

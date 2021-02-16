@@ -28,79 +28,82 @@ function buyTerritory(): void {
   let settings: IeventTerritoriesPrice;
   settings = this.state.eventSettings.territoriesEventPrice.find((data: IeventTerritoriesPrice) => data.block === this.state.territory.data.values.block && data.position === this.state.territory.data.values.position);
   if (!settings) return;
-  if (this.state.userEvent.maxLevelAnimal >= settings.unlock && this.state.territory.data.values.type === 0) {
+  if (this.state.territory.data.values.type === 0) {
 
-    if (settings.price > 0) {
-     
-      // 70% от суммы покупки
-      let price: number = Math.round((settings.price / 100) * 70);
-
-      if (this.state.userEvent.money >= BigInt(price)) {
-        
-        // this.state.amplitude.getInstance().logEvent('buy_territory', {
-        //   block: this.state.territory.data.values.block,
-        //   position: this.state.territory.data.values.position,
-        //   farm_id: this.state.farm
-        // });
-    
-        this.state.territory.data.values.type = 2;
-        this.state.userEvent.money -= BigInt(price);
-    
-        const territory: Phaser.Physics.Arcade.Sprite = this.state.territory;
-    
-        this.time.addEvent({ delay: 500, callback: (): void => {
-    
-          territory.data.values.forest.destroy();
-          territory.setTexture('event-grass');
-          this.firework250(territory.x + 120, territory.y + 120);
-          this.buildBorders();
-    
-        }, callbackScope: this, loop: false });
-    
-        } else {
-    
-          let count: number = price - Number(this.state.userEvent.money);
-          let diamonds: number = this.convertMoney(count);
-          this.state.convertor = {
-            fun: 6,
-            count: count,
-            diamonds: diamonds,
-            type: 1
-          }
-    
-          let modal: Imodal = {
-            type: 1,
-            sysType: 4
-          }
-          this.state.modal = modal;
-          this.scene.launch('Modal', this.state);
-    
-        }
-    } else if (settings.diamond > 0) {
+    if (this.state.userEvent.maxLevelAnimal >= settings.unlock) {
+  
+  
+        let price: number = settings.price;
+  
+        if (this.state.userEvent.money >= BigInt(price)) {
+          
+          // this.state.amplitude.getInstance().logEvent('buy_territory', {
+          //   block: this.state.territory.data.values.block,
+          //   position: this.state.territory.data.values.position,
+          //   farm_id: this.state.farm
+          // });
       
+          this.state.territory.data.values.type = 2;
+          this.state.userEvent.money -= BigInt(price);
+      
+          const territory: Phaser.Physics.Arcade.Sprite = this.state.territory;
+      
+          this.time.addEvent({ delay: 500, callback: (): void => {
+      
+            territory.data.values.forest.destroy();
+            territory.setTexture('event-grass');
+            this.firework250(territory.x + 120, territory.y + 120);
+            this.buildBorders();
+      
+          }, callbackScope: this, loop: false });
+      
+          } else {
+      
+            let count: number = price - Number(this.state.userEvent.money);
+            let diamonds: number = this.convertMoney(count);
+            this.state.convertor = {
+              fun: 6,
+              count: count,
+              diamonds: diamonds,
+              type: 1
+            }
+      
+            let modal: Imodal = {
+              type: 1,
+              sysType: 4
+            }
+            this.state.modal = modal;
+            this.scene.launch('Modal', this.state);
+      
+          }
+        
+        
+  
+    } else {
       let price: number = settings.diamond;
       if (this.state.user.diamonds >= price) {
-
+  
         // this.state.amplitude.getInstance().logEvent('buy_territory', {
         //   block: this.state.territory.data.values.block,
         //   position: this.state.territory.data.values.position,
         //   farm_id: this.state.farm
         // });
-    
+      
         this.state.territory.data.values.type = 2;
         this.state.user.diamonds -= price;
-    
+      
         const territory: Phaser.Physics.Arcade.Sprite = this.state.territory;
-    
+      
         this.time.addEvent({ delay: 500, callback: (): void => {
-    
+      
           territory.data.values.forest.destroy();
+          territory.data.values.lock_image.destroy();
           territory.setTexture('event-grass');
           this.firework250(territory.x + 120, territory.y + 120);
           this.buildBorders();
-    
+      
         }, callbackScope: this, loop: false });
-    
+      
       } else {
         this.state.convertor = {
           fun: 0,
@@ -108,13 +111,13 @@ function buyTerritory(): void {
           diamonds: price - this.state.user.diamonds,
           type: 1
         }
-  
+    
         this.game.scene.keys[this.state.farm].exchange();
-  
+    
       }  
 
     }
-    
+
   }
 
 }
