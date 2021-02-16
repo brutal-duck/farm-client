@@ -215,7 +215,7 @@ class EventBars extends Phaser.Scene {
       color: '#7B3B0D'
     }).setDepth(1).setOrigin(0.5, 0.5);
 
-    this.add.sprite(498, 100, 'chickenCoin').setScale(0.22);
+    this.add.sprite(498, 100, 'eventCoin').setScale(0.22);
 
     let addDiamonds: Phaser.GameObjects.Sprite = this.add.sprite(680, 38, 'plus').setDepth(2);
     let addMoney: Phaser.GameObjects.Sprite = this.add.sprite(680, 100, 'plus').setDepth(2);
@@ -339,36 +339,6 @@ class EventBars extends Phaser.Scene {
 
 
   }
-
-
-  // анимация монет от позиции
-  public plusMoneyAnimation(position: Iposition): void {
-    
-    let y = position.y - this.game.scene.keys['Chicken'].scrolling.scrollY;
-
-    let img1 = this.сurrency.create(position.x - 70, y, 'chickenCoin').setScale(0.2);
-    let img2 = this.сurrency.create(position.x + 70, y, 'chickenCoin').setScale(0.2);
-    let img3 = this.сurrency.create(position.x, y - 30, 'chickenCoin').setScale(0.2);
-
-    img1.counter = 0;
-    img2.counter = 0;
-    img3.counter = 0;
-
-    let target: Iposition = { x: 495, y: 120 }
-    let aim = new Phaser.Math.Vector2();
-    aim.x = target.x;
-    aim.y = target.y;
-    let distance: number = Phaser.Math.Distance.Between(img1.x, img1.y, target.x, target.y) * 2;
-    this.physics.moveToObject(img1, aim, distance);
-    
-    distance = Phaser.Math.Distance.Between(img2.x, img2.y, target.x, target.y) * 2;
-    this.physics.moveToObject(img2, aim, distance);
-    
-    distance = Phaser.Math.Distance.Between(img3.x, img3.y, target.x, target.y) * 2;
-    this.physics.moveToObject(img3, aim, distance);
-
-  }
-
 
   // обновление цены покупки кур
   public updateAnimalPrice(): void {

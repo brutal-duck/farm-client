@@ -39,7 +39,7 @@ function interval(): void {
         let resource: IeventResource = {
           type: animal.data.values.base.data.values.type,
           x: animal.x,
-          y: animal.y,
+          y: animal.y + animal.height / 2,
           _id: 'local_' + randomString(18)
         }
 
