@@ -97,7 +97,7 @@ function world(): void {
 
     territory.data.values.borderBottom = this.add.sprite(territory.x, territory.y + 240, 'event-horizontal-border-' + bottomBorder)
       .setOrigin(0, 1)
-      .setDepth(territory.y + 240)
+      .setDepth(territory.y)
       .setVisible(false);
 
     if (data.type === 0) {
