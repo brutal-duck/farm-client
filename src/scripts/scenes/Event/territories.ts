@@ -139,7 +139,7 @@ function buildBorders(): void {
         territory.data.values.borderRight.setVisible(true);
       }
       
-      if (territory.data.values.block !== 6) {
+      if (territory.data.values.block <= 6) {
 
         let topTer = this.territories.children.entries.find((data: Phaser.Physics.Arcade.Sprite) => data.data.values.block === territory.data.values.block - 1 && data.data.values.position === territory.data.values.position);
         
@@ -158,6 +158,10 @@ function buildBorders(): void {
         if (bottomTer && bottomTer.data.values.type === 2) {
           territory.data.values.borderBottom.setVisible(false);
         } else {
+          territory.data.values.borderBottom.setVisible(true);
+        }
+
+        if (!bottomTer) {
           territory.data.values.borderBottom.setVisible(true);
         }
 
