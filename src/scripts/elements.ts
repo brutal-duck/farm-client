@@ -668,7 +668,7 @@ class TaskBoard {
         if (task.type === 10) {
           this.scene.registration(); // задание на регистрацию
         } else if (task.type === 16) {
-          this.scene.game.scene.keys[this.scene.state.farm].addEmail(); // задание на почту
+          this.scene.game.scene.keys['Sheep'].openEmailWindow(); // задание на почту
         }
 
       });

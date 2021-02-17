@@ -315,6 +315,7 @@ function changeNickname(): void {
   let result: Phaser.GameObjects.Text;
   let padding: number;
   let modalElement: modalElementType[] = [];
+  let tempHeight: number = window.innerHeight;
   const windowHeight: number = window.innerHeight;
 
   // Отрисовка текста, полученного из инпут
@@ -345,7 +346,7 @@ function changeNickname(): void {
   .fillRoundedRect(0, 0, 460, 70, 16);
 
   // Кнопка
-  let changeNickname = this.bigButton('green', 'center', 130, this.state.lang.changeNickname);
+  let changeNicknameBtn = this.bigButton('green', 'center', 130, this.state.lang.changeNickname);
   result = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 90, '', {
     font: '19px Shadow',
     color: '#FF0000',
@@ -365,14 +366,11 @@ function changeNickname(): void {
     nicknameInputZone,
     // graphics2,
     nicknameBG,
-    changeNickname.btn,
-    changeNickname.title,
+    changeNicknameBtn.btn,
+    changeNicknameBtn.title,
     result,
   );    
-      
 
-
-  let tempHeight = window.innerHeight;
 
   window.onresize = (): void => {
         
@@ -380,7 +378,7 @@ function changeNickname(): void {
 
       tempHeight = window.innerHeight;
 
-      if (tempHeight < windowHeight) {
+      if (tempHeight < windowHeight && centered) {
 
         root.scrollIntoView(false)
 
@@ -390,9 +388,10 @@ function changeNickname(): void {
 
         this.mainInput.style.top = '80%';
         this.mainInput.style.bottom = '14%';
-        centered = false;
 
-      } else {
+        centered = false
+
+      } else if (!centered) {
             
         modalElement.forEach((el) => {
           el.setY(el.y - padding);
@@ -400,7 +399,8 @@ function changeNickname(): void {
 
         this.mainInput.style.top = '50%';
         this.mainInput.style.bottom = '44%';
-        centered = true;
+
+        centered = true
 
       }
     }
@@ -427,7 +427,16 @@ function changeNickname(): void {
   });
 
   // Кнопка смены ника
-  this.clickModalBtn(changeNickname, (): void => {
+  this.clickModalBtn(changeNicknameBtn, (): void => {
+    changeNickname()
+  });
+
+  this.enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER)
+  this.enterKey.on('down', (): void => {
+    changeNickname()
+  });
+
+  const changeNickname = (): void => {
         
     if (!change) {
 
@@ -458,8 +467,8 @@ function changeNickname(): void {
               document.cookie = "farmHASH=" + res.data.hash + "; expires=" + res.data.expires + "; path=/;";
               this.state.user.hash = res.data.hash;
               this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-              this.mainInput.style.display = 'none';
-              this.mainInput.value = '';
+              this.enterKey.destroy()
+              this.mainInput.remove();
               this.scene.stop();
                   
             } else {
@@ -479,11 +488,195 @@ function changeNickname(): void {
         result.setText(this.state.lang.validNickname).setAlpha(1);
 
       }
+
     }
-  });
-      this.resizeWindow(270);
+
+  }
+
+  this.resizeWindow(270);
+
 }
 
+function addEmail(): void {
+
+  // Заголовок и описание
+  this.textHeader.setText(this.state.lang.yourMail);
+  let enterEmail: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 70, this.state.lang.enterYourEmail, {
+    font: '28px Shadow',
+    color: '#974f00'
+  }).setOrigin(0.5, 0.5).setDepth(3);
+
+  // HTML элементы
+  let root: HTMLDivElement = document.querySelector('#root');
+  this.mainInput = document.createElement('input');
+  root.append(this.mainInput);
+  this.mainInput.setAttribute("id", "nickname");
+  this.mainInput.setAttribute("autocomplete", "off");
+  
+  // Параметры
+  let send: boolean = false;
+  let centered: boolean = true;
+  let emailError: boolean = false;
+  let result: Phaser.GameObjects.Text;
+  let reMail: RegExp = /^[\w-.]+@[\w-]+\.[a-z]{2,4}$/i;
+  let padding: number = this.cameras.main.height / 100 * 30;
+  let modalElement: modalElementType[] = [];
+  let tempHeight: number = window.innerHeight;
+  const windowHeight: number = window.innerHeight;
+
+  // Отрисовка текста, полученного из инпут
+  let emailText: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX - 220, this.cameras.main.centerY + 35, this.mainInput.value, {
+    font: '24px Bip',
+    color: '#974f00'
+  }).setOrigin(0, 0.5).setDepth(3).setCrop(0, 0, 434, 100);
+  
+  let emailModalZone: Phaser.GameObjects.Zone = this.add.zone(this.cameras.main.centerX, this.cameras.main.centerY, 710, 1200).setDropZone(undefined, () => {});
+  let emailInputZone: Phaser.GameObjects.Zone = this.add.zone(this.cameras.main.centerX, this.cameras.main.centerY + 36, 460, 70).setDropZone(undefined, () => {});
+  
+  // Фон инпута
+  let emailBG: Phaser.GameObjects.Graphics = this.add.graphics({
+    x: this.cameras.main.centerX - 230,
+    y: this.cameras.main.centerY
+  })
+  .setDepth(3)
+  .fillStyle(0xffffff, 1)
+  .fillRoundedRect(0, 0, 460, 70, 16);
+
+  // Кнопка
+  let sendEmailBtn = this.bigButton('green', 'center', 130, this.state.lang.sendEmail);
+  result = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 90, '', {
+    font: '19px Shadow',
+    color: '#FF0000',
+    align: 'center',
+    wordWrap: { width: 520 }
+  }).setOrigin(0.5, 0.5).setDepth(4).setAlpha(0);
+
+  modalElement.push(
+    this.header,
+    this.body,
+    this.bottom,
+    this.close,
+    this.textHeader,
+    enterEmail,
+    emailText,
+    emailInputZone,
+    emailBG,
+    sendEmailBtn.btn,
+    sendEmailBtn.title,
+    result,
+  );    
+
+
+  window.onresize = (): void => {
+        
+    if (window.innerHeight !== tempHeight) {
+
+      tempHeight = window.innerHeight;
+
+      if (tempHeight < windowHeight && centered) {
+
+        root.scrollIntoView(false)
+
+        modalElement.forEach((el) => {
+          el.setY(el.y + padding)
+        })
+
+        this.mainInput.style.top = '80%';
+        this.mainInput.style.bottom = '14%';
+
+        centered = false
+
+      } else if (!centered) {
+            
+        modalElement.forEach((el) => {
+          el.setY(el.y - padding);
+        });
+
+        this.mainInput.style.top = '50%';
+        this.mainInput.style.bottom = '44%';
+
+        centered = true
+
+      }
+    }
+  }
+
+  // Фокус
+  emailInputZone.setInteractive();
+  emailInputZone.on('pointerdown', () => {
+        
+    this.mainInput.style.display = 'block';
+    this.mainInput.focus();
+
+  });
+
+  // Блюр
+  emailModalZone.setInteractive();
+  emailModalZone.on('pointerdown', () => {
+                
+    this.mainInput.style.display = 'none';
+    this.mainInput.blur();
+
+    emailText.setText(this.mainInput.value).setDepth(4).setCrop(0, 0, 434, 100);
+
+  });
+
+  
+  // Отправка почты
+  this.clickModalBtn(sendEmailBtn, (): void => {
+    sendEmail()
+  })
+
+  this.enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER)
+  this.enterKey.on('down', (): void => {
+    sendEmail()
+  });
+
+
+  const sendEmail = (): void => {
+    if (!send) {
+
+      if (reMail.test(this.mainInput.value)) {
+
+        send = true;
+
+        axios.post(process.env.API + '/sendEmail', {
+          id: this.state.user.id,
+          hash: this.state.user.hash,
+          counter: this.state.user.counter,
+          mail: this.mainInput.value
+        })
+        .then((res) => {
+
+          if (res.data.error) this.logout();
+          else {
+
+            send = false;
+            this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+            this.enterKey.destroy()
+            this.mainInput.remove();
+            this.scene.stop();
+            this.game.scene.keys[this.state.farm].tryTask(16, 1);
+            
+          }
+
+        });
+
+      } else {
+
+        if (!emailError) enterEmail.setY(enterEmail.y + 34);
+        emailError = true;
+        result.setText(this.state.lang.emailError).setAlpha(1);
+
+      }
+
+    }
+
+  }
+  
+
+  this.resizeWindow(270);
+}
 
 
 
@@ -499,5 +692,6 @@ export {
   showDonate,
   showImproveCollector,
   startHerdBoost,
-  changeNickname
+  changeNickname,
+  addEmail
 }
