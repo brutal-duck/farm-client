@@ -326,7 +326,7 @@ class EventBars extends Phaser.Scene {
     this.pulseCollector();
 
     // актуальный статус кнопки покупки курицы
-    this.buyChickenStatus();
+    this.buyAnimalStatus();
 
     // отображение кнопок социальных механик
     this.socialButtons();
@@ -357,7 +357,7 @@ class EventBars extends Phaser.Scene {
   }
 
   // затемнение на кнопке покупки животного
-  public buyChickenStatus(): void {
+  public buyAnimalStatus(): void {
 
     let breed: number = this.game.scene.keys['Event'].maxBreedForBuy();
     let price: number = this.game.scene.keys[this.state.farm].animalPrice(breed).price
