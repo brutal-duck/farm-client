@@ -14,7 +14,7 @@ function createChatBars(height: number = 0): void {
   let emojiHeight: number = 54
   let tempHeight: number = window.innerHeight;
   const windowHeight: number = window.innerHeight;
-  const emoji = ['😊', '😟', '😝', '😍', '😎', '😭', '😘', '😳', '😱']
+  const emoji: string[] = ['😊', '😟', '😝', '😍', '😎', '😭', '😘', '😳', '😱']
   
   // HTML
   let root: HTMLDivElement = document.querySelector('#root');
