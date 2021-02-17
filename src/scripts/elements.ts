@@ -907,7 +907,11 @@ function buildMenu(): void {
   });
 
   this.clickButton(this.chat, (): void => {
-    this.chatWindow();
+    
+    let modal: Imodal = { type: 9 }
+    this.state.modal = modal;
+    this.scene.launch('Modal', this.state);
+
   });
 
   this.clickButton(this.menu, (): void => {
@@ -928,90 +932,6 @@ function buildMenu(): void {
     }
 
   });
-
-}
-
-
-// сообщение в чат
-function newMessage(data: any, state: Istate): void {
-
-  let chat = document.querySelector('.chat-inside');
-
-  if (chat) {
-
-    let smiles = {
-      'O:-)': 'aa',
-      ':-)': 'ab',
-      ':-(': 'ac',
-      ':-P': 'ae',
-      '8-)': 'af',
-      ':-D': 'ag',
-      ':-[': 'ah',
-      '=-O': 'ai',
-      ':-*': 'aj'
-    }
-    
-    let text = data.text.replace(/<\/?[^>]+>/g,'');
-    let patterns: string[] = [];
-    let metachars: RegExp = /[[\]{}()*+?.\\|^$\-,&#\s]/g;
-
-    for (let i in smiles) {
-
-      if (smiles.hasOwnProperty(i)) {
-        patterns.push('(' + i.replace(metachars, "\\$&") + ')');
-      }
-
-    }
-
-    let regex: RegExp = /(<([^>]+)>)/ig;
-    text = text.toString().replace(regex, "").replace(new RegExp(patterns.join('|'),'g'), (match: number) => {
-      return typeof smiles[match] !== 'undefined' ?
-      "<div class='emoji " + smiles[match] + "'></div>" : match;
-    });
-
-    let time: Date = new Date(data.time * 1000);
-    let year: number = time.getFullYear();
-    let month: number = time.getMonth() + 1;
-    let day: number = time.getDate();
-    let date: string = day + '.' + month + '.' + year;
-
-    let userName: string;
-
-    if (state.platform !== 'web') userName = state.name;
-    else userName = state.user.login;
-
-    let message = document.createElement('div');
-
-    if (data.login === userName) {
-      message.setAttribute("class", "my-message");
-    } else {
-      message.setAttribute("class", "user-message");
-    }
-
-    let inside = document.createElement('div');
-    let chatLoginTime = document.createElement('div');
-    chatLoginTime.setAttribute("class", "chat-login-time");
-    inside.append(chatLoginTime);
-
-    let login = document.createElement('div');
-    login.setAttribute("class", "chat-login");
-    login.innerText = data.login;
-    let chatTime = document.createElement('div');
-    chatTime.setAttribute("class", "chat-time");
-    chatTime.innerText = date;
-    chatLoginTime.append(login);
-    chatLoginTime.append(chatTime);
-
-    let chatText = document.createElement('div');
-    chatText.setAttribute("class", "chat-text");
-    chatText.innerHTML = text;
-    inside.append(chatText);
-    
-    message.append(inside);
-    chat.append(message);
-    chat.scrollTop = chat.scrollHeight;
-
-  }
 
 }
 
@@ -1292,6 +1212,5 @@ export {
   boostButton,
   TaskBoard,
   buildMenu,
-  newMessage,
   Arrows
 }
