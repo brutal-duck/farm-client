@@ -148,7 +148,6 @@ function world(): void {
       }
       
     });
-    console.log(territory.depth)
   });
 
   this.buildBorders();
