@@ -29,7 +29,7 @@ function world(): void {
   this.state.eventTerritories.map((data: IeventTerritories, index: number) => {
     let x: number = (data.position - 1) * this.height;
     let y: number = (data.block - 1) * this.height;
-
+    
     forest++;
     if (forest > 6) forest = 1;
     if (data.position === 0) x++;
@@ -42,10 +42,6 @@ function world(): void {
 
       type = 'event-for-buying';
 
-    } else if (data.type === 1) { // промежуточное положение купленной пустой не факт что нужно
-
-      type = 'event-bought';
-
     } else if (data.type === 2) {
 
       type = 'event-grass'
@@ -55,10 +51,12 @@ function world(): void {
       type = 'event-work-zone';
     
     }
-    let territory:Phaser.Physics.Arcade.Sprite = this.territories.create(x, y, type);
-    territory.setDataEnabled();
-    territory.setOrigin(0, 0);
-    territory.setDepth(y);
+    const territory:Phaser.Physics.Arcade.Sprite = this.territories.create(x, y, type);
+    
+    territory.setDataEnabled()
+    .setOrigin(0, 0)
+    .setDepth(y);
+
     territory.data.values._id = data._id;
     territory.data.values.block = data.block;
     territory.data.values.position = data.position;
@@ -82,22 +80,22 @@ function world(): void {
 
     territory.data.values.borderTop = this.add.sprite(territory.x, territory.y + 15, 'event-horizontal-border-' + topBorder)
       .setOrigin(0, 1)
-      .setDepth(territory.y)
+      .setDepth(territory.y + 1)
       .setVisible(false);
     
     territory.data.values.borderLeft = this.add.sprite(territory.x, territory.y, 'event-vertical-border')
       .setOrigin(0, 0)
-      .setDepth(territory.y)
+      .setDepth(territory.y + 1)
       .setVisible(false);
 
     territory.data.values.borderRight = this.add.sprite(territory.x + 240, territory.y, 'event-vertical-border')
       .setOrigin(1, 0)
-      .setDepth(territory.y)
+      .setDepth(territory.y + 1)
       .setVisible(false);
 
     territory.data.values.borderBottom = this.add.sprite(territory.x, territory.y + 240, 'event-horizontal-border-' + bottomBorder)
       .setOrigin(0, 1)
-      .setDepth(territory.y)
+      .setDepth(territory.y + 1)
       .setVisible(false);
 
     if (data.type === 0) {
@@ -105,24 +103,26 @@ function world(): void {
       let x: number = territory.x + 120;
       let y: number = territory.y + 120;
 
-      let unlock: number = this.state.eventSettings.territoriesEventPrice.find((data: IterritoriesPrice) => data.block === territory.data.values.block && data.position === territory.data.values.position).unlock;
+      const unlock: number = this.state.eventSettings.territoriesEventPrice.find((data: IterritoriesPrice) => data.block === territory.data.values.block && data.position === territory.data.values.position).unlock;
 
       territory.data.values.forest = this.add.image(territory.x + 120, territory.y + 240, 'event-forest-' + forest)
         .setOrigin(0.5, 1)
-        .setDepth(territory.y + 1);
+        .setDepth(territory.y + 2);
       
-      territory.data.values.lock_image = this.add.image(x, y, 'lock-event-territory').setDepth(territory.y + 2).setVisible(false);
+      territory.data.values.lock_image = this.add.image(x, y, 'lock-event-territory').setDepth(territory.y + 3).setVisible(false);
 
         // проверка на замок
       if (unlock > this.state.userEvent.maxLevelAnimal) {
 
-        territory.data.values.lock_image = this.add.image(x, y, 'lock-event-territory').setDepth(territory.y + 2).setVisible(true);
+        territory.data.values.lock_image = this.add.image(x, y, 'lock-event-territory').setDepth(territory.y + 3).setVisible(true);
 
 
       }
     } 
 
-    let territoryZone: Phaser.GameObjects.Zone = this.add.zone(x + 10, y + 10, territory.width - 20, territory.height - 20).setDropZone(undefined, () => {}).setOrigin(0, 0);
+    
+    
+    const territoryZone: Phaser.GameObjects.Zone = this.add.zone(x + 10, y + 10, territory.width - 20, territory.height - 20).setDropZone(undefined, () => {}).setOrigin(0, 0);
     territoryZone.type = 'type' + index;
     
     // let graphics = this.add.graphics().setDepth(territory.y * 5);
@@ -131,7 +131,7 @@ function world(): void {
 
     
     this.clickTerritory(territory, (): void => {
-      let modal: Imodal = {
+      const modal: Imodal = {
         type: 1,
         sysType: 2
       }
@@ -143,16 +143,21 @@ function world(): void {
       this.scene.launch('Modal', this.state);
       // this.buyTerritory();
       if (territory.data?.values.merging.length > 0) {
-        let animal: Phaser.Physics.Arcade.Sprite = this.animals.children.entries.find((data: any) => data.data.values._id === territory.data.values.merging[0]._id)
+        const animal: Phaser.Physics.Arcade.Sprite = this.animals.children.entries.find((data: any) => data.data.values._id === territory.data.values.merging[0]._id)
         this.teleportation(animal.data.values.active, undefined, true);
       }
-
+      
     });
-
+    console.log(territory.depth)
   });
 
   this.buildBorders();
   
+
+  // цветочки 
+  this.buildFlowers();
+
+
   // группа куриц
   this.animals = this.physics.add.group({
     collideWorldBounds: true

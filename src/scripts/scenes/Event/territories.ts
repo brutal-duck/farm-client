@@ -219,4 +219,97 @@ function buildBorders(): void {
   
 }
 
-export { deleteTerritoriesLocks, buyTerritory, buildBorders}
+function buildFlowers(): void {
+   // территории 1
+   this.add.image(10, this.topIndent + 480, 'flower1')
+   .setOrigin(0, 0)
+   .setDepth(this.topIndent + 480 + 1)
+   .setScale(0.7);
+
+ this.add.image(240, this.topIndent + 620, 'flower2')
+   .setOrigin(1, 0)
+   .setDepth(this.topIndent + 480 + 1)
+   .setScale(0.7);
+ 
+ this.add.image(480, this.topIndent + 480, 'flower3')
+   .setOrigin(1, 0)
+   .setDepth(this.topIndent + 480 + 1)
+   .setScale(0.7);
+
+ this.add.image(720, this.topIndent + 480 + 1, 'flower4')
+   .setOrigin(1, 0)
+   .setDepth(this.topIndent + 480 + 1)
+   .setScale(0.7); 
+
+ // территории 2
+ this.add.image(10, this.topIndent + 700, 'flower4')
+   .setOrigin(0, 0)
+   .setDepth(this.topIndent + 860 + 1)
+   .setScale(0.7);
+
+ this.add.image(10, this.topIndent + 880, 'flower1')
+   .setOrigin(0, 0)
+   .setDepth(this.topIndent + 860 + 1)
+   .setScale(0.7);
+ 
+ this.add.image(480, this.topIndent + 710, 'flower2')
+   .setOrigin(1, 0)
+   .setDepth(this.topIndent + 720)
+   .setScale(0.7);
+
+ this.add.image(480, this.topIndent + 880, 'flower4')
+   .setOrigin(0, 0)
+   .setDepth(this.topIndent + 720)
+   .setScale(0.7); 
+
+   // территории 3
+
+ this.add.image(10, this.topIndent + 1120, 'flower3')
+   .setOrigin(0, 0)
+   .setDepth(this.topIndent + 960)
+   .setScale(0.7);
+
+ this.add.image(240, this.topIndent + 960, 'flower2')
+   .setOrigin(0, 0)
+   .setDepth(this.topIndent + 960)
+   .setScale(0.7);
+ 
+ this.add.image(480, this.topIndent + 1120, 'flower1')
+   .setOrigin(1, 0)
+   .setDepth(this.topIndent + 960)
+   .setScale(0.7);
+
+ this.add.image(720, this.topIndent + 960, 'flower3')
+   .setOrigin(1, 0)
+   .setDepth(this.topIndent + 960)
+   .setScale(0.7); 
+
+   
+   // территории 4
+
+ this.add.image(240, this.topIndent + 1200, 'flower2')
+ .setOrigin(1, 0)
+ .setDepth(this.topIndent + 1200)
+ .setScale(0.7);
+
+ this.add.image(240, this.topIndent + 1340, 'flower4')
+   .setOrigin(0, 0)
+   .setDepth(this.topIndent + 1200)
+   .setScale(0.7);
+ 
+ this.add.image(480, this.topIndent + 1340, 'flower1')
+   .setOrigin(0, 0)
+   .setDepth(this.topIndent + 1200)
+   .setScale(0.7);
+ 
+ this.add.image(720, this.topIndent + 1200, 'flower2')
+   .setOrigin(1, 0)
+   .setDepth(this.topIndent + 1200)
+   .setScale(0.7); 
+}
+export { 
+  deleteTerritoriesLocks, 
+  buyTerritory,
+  buildBorders, 
+  buildFlowers
+}

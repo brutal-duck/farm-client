@@ -62,7 +62,12 @@ import {
 import drag  from './drag';
 import { animalBrain, collisions } from './animalBrain';
 import interval from './interval';
-import { deleteTerritoriesLocks, buyTerritory, buildBorders } from './territories';
+import { 
+  deleteTerritoriesLocks, 
+  buyTerritory, 
+  buildBorders,
+  buildFlowers 
+} from './territories';
 import setCollector from './collector';
 import autosave from './autosave';
 import { flyAnimal, teleportation, updateTeleportation } from './animations';
@@ -158,6 +163,7 @@ class Event extends Phaser.Scene {
   public getFreeBoostPositions = getFreeBoostPositions.bind(this);
   public hearts = hearts.bind(this);
   public tryTask = tryTask.bind(this);
+  public buildFlowers = buildFlowers.bind(this);
 
 
   public init(state: Istate): void {
