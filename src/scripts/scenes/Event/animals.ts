@@ -318,6 +318,10 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
     if (territory?.data.values.merging.length === 1) {
       if (oldTerritory !== undefined && oldTerritory !== territory) {
         this.teleportation(animal);
+        let checkOld:any = oldTerritory?.data.values.merging.find((data: any) => data._id === animal.data.values.base.data.values._id);
+        
+        if (checkOld !== undefined) oldTerritory.data.values.merging = [];
+        
       }
     }
   
@@ -345,6 +349,9 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
     if (territory?.data.values.merging.length === 1) {
       if (oldTerritory !== undefined && oldTerritory !== territory) {
         this.teleportation(animal);
+        let checkOld:any = oldTerritory?.data.values.merging.find((data: any) => data._id === animal.data.values._id);
+        
+        if (checkOld !== undefined) oldTerritory.data.values.merging = [];
       }
     }
   }
@@ -413,6 +420,8 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
       }
     }
   }
+  console.log('territory', territory.data.values.merging);
+  console.log('oldTerritory', oldTerritory.data.values.merging);
 }
 
 
