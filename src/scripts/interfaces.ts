@@ -394,9 +394,16 @@ interface IpartProgress {
   unlock: number;
   donate: boolean;
 }
+interface IeventProgress {
+  maxLevelAnimal: number;
+  startTime: number;
+  endTime: number;
+  open: boolean;
+}
 interface Iprogress {
   sheep: IpartProgress;
   chicken: IpartProgress;
+  event: IeventProgress;
 }
 interface IcollectorSettings {
   level: number;

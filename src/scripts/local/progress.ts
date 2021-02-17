@@ -5,6 +5,7 @@ export default (): Iprogress => {
   let sheepPart: number = 1;
   let chickenPart: number = 0;
   let openChicken: boolean = false;
+  let eventMaxLevelAnimal: number = 0
 
   if (localStorage.userSheep) sheepPart = JSON.parse(localStorage.userSheep).part;
 
@@ -31,6 +32,12 @@ export default (): Iprogress => {
       price: 300000000,
       unlock: 8,
       donate: false
+    },
+    event: {
+      maxLevelAnimal: eventMaxLevelAnimal,
+      startTime: 0,
+      endTime: 0,
+      open: false
     }
   }
 

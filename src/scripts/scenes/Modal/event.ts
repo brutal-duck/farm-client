@@ -494,13 +494,13 @@ function createAnimals(timerText, allItems, boostCounterWindow): void {
     rightZone.type = 'right';
 
     // для проверки дроп зон
-    let graphics1 = this.add.graphics().setDepth(leftZone.y * 5);
-    graphics1.lineStyle(2, 0xffff00);
-    graphics1.strokeRect(leftZone.x - leftZone.input.hitArea.width / 2, leftZone.y - leftZone.input.hitArea.height / 2, leftZone.input.hitArea.width, leftZone.input.hitArea.height);
+    // let graphics1 = this.add.graphics().setDepth(leftZone.y * 5);
+    // graphics1.lineStyle(2, 0xffff00);
+    // graphics1.strokeRect(leftZone.x - leftZone.input.hitArea.width / 2, leftZone.y - leftZone.input.hitArea.height / 2, leftZone.input.hitArea.width, leftZone.input.hitArea.height);
 
-    let graphics2 = this.add.graphics().setDepth(rightZone.y * 5);
-    graphics2.lineStyle(2, 0x00ff00);
-    graphics2.strokeRect(rightZone.x - rightZone.input.hitArea.width / 2, rightZone.y - rightZone.input.hitArea.height / 2, rightZone.input.hitArea.width, rightZone.input.hitArea.height);
+    // let graphics2 = this.add.graphics().setDepth(rightZone.y * 5);
+    // graphics2.lineStyle(2, 0x00ff00);
+    // graphics2.strokeRect(rightZone.x - rightZone.input.hitArea.width / 2, rightZone.y - rightZone.input.hitArea.height / 2, rightZone.input.hitArea.width, rightZone.input.hitArea.height);
 
 
   // создаю группу для животных
