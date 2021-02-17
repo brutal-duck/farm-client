@@ -420,8 +420,6 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
       }
     }
   }
-  console.log('territory', territory.data.values.merging);
-  console.log('oldTerritory', oldTerritory.data.values.merging);
 }
 
 
