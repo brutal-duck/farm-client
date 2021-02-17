@@ -101,7 +101,7 @@ function createChatBars(height: number = 0): void {
       
       if (emojiBGround.visible) {
         
-        emojiElements.forEach((el) => el.setVisible(!el.visible))
+        emojiElements.forEach((el: Phaser.GameObjects.Text | Phaser.GameObjects.Graphics) => el.setVisible(!el.visible))
         this.game.scene.keys['Chat'].scrolling.height += emojiHeight - 3;
         this.game.scene.keys['Chat'].scrollHeight -= emojiHeight;
         this.game.scene.keys['Chat'].scrolling.bottom = this.game.scene.keys['Chat'].scrollHeight
