@@ -531,7 +531,9 @@ function buildMenu(): void {
   });
 
   this.clickButton(this.chat, (): void => {
-    this.chatWindow();
+    let modal: Imodal = { type: 9 }
+    this.state.modal = modal;
+    this.scene.launch('Modal', this.state);
   });
 
   this.clickButton(this.menu, (): void => {
