@@ -1,5 +1,4 @@
 import * as openSocket from 'socket.io-client';
-import { newMessage } from './elements';
 
 export default class Socket {
 

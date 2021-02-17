@@ -1,6 +1,9 @@
 import Scrolling from '../../../libs/Scrolling';
 import axios from 'axios';
 
+let tile1: any = require("./../../../../assets/images/chat-tile-1.png");
+let tile2: any = require("./../../../../assets/images/chat-tile-2.png");
+
 class Chat extends Phaser.Scene {
   constructor() {
     super('Chat');
@@ -16,6 +19,7 @@ class Chat extends Phaser.Scene {
   public textWrap: number;
   public lastMsgFromUser: string;
   public msg: Ichat[];
+  public ready: boolean;
 
   public init(state: Istate): void {
 
@@ -26,6 +30,7 @@ class Chat extends Phaser.Scene {
     this.isFirstBuild = true
     this.textWrap = 340;
     this.lastMsgFromUser;
+    this.ready = false;
 
     this.msg = [];
 
@@ -40,19 +45,24 @@ class Chat extends Phaser.Scene {
 
       if (!res.data.error) {
         this.state.chat = [];
-        for (let i: number = res.data.messages.length - 1; i > 0; i--) {
+        for (let i: number = res.data.messages.length - 1; i >= 0; i--) {
           this.state.chat.push(res.data.messages[i]);
         }
-  
+        this.ready = true;
       }
     })
 
   }
 
+  public preload(): void {
+    this.load.image('tile1', tile1);
+    this.load.image('tile2', tile2);
+  }
+
   
   public create(): void {    
     
-    this.height = Number(this.game.config.height)    
+    this.height = Number(this.game.config.height)
     
     let cameraOptions: IScrollingOptions = {
       x: 120,
@@ -87,16 +97,17 @@ class Chat extends Phaser.Scene {
   }
 
   public update(): void {
-    if (this.state.chat.length > this.msg.length) {
+    if (this.state.chat.length > this.msg.length && this.ready) {
 
       let index: number = this.state.chat.length - (this.state.chat.length - this.msg.length); // Индекс ненапечатанного сообщения
 
-      for (let i: number = index; i < this.state.chat.length; i++) {        
+      for (let i: number = index; i < this.state.chat.length; i++) {
+      
         this.msg.push(this.state.chat[i])
         this.newMsg(this.state.chat[i])
 
       }
-
+      
     }
   }
 
@@ -109,8 +120,7 @@ class Chat extends Phaser.Scene {
     let day: number = time.getDate();
     let date: string = day + '.' + month + '.' + year;
 
-
-    if (msgData.id === this.state.user.id) {
+    if (msgData.login === this.state.user.login) {
 
 
       // СООБЩЕНИЯ ПОЛЬЗОВАТЕЛЯ
@@ -185,12 +195,17 @@ class Chat extends Phaser.Scene {
   
 
       // Фон сообщения
-      let outputMsgBg = this.add.graphics()
-      .fillStyle(0x63527F, 1)
-      .fillRoundedRect(bgX, outputText.y - 14 + 4, bgWidth + 28, textHeight + 28, bgRound)
-      let outputMsg = this.add.graphics()
-      .fillStyle(0x6162AD, 1)
-      .fillRoundedRect(bgX, outputText.y - 14, bgWidth + 28, textHeight + 28, bgRound)
+      // this.add.graphics()
+      // .fillStyle(0x63527F, 1)
+      // .fillRoundedRect(bgX, outputText.y - 14 + 4, bgWidth + 28, textHeight + 28, bgRound)
+      // this.add.graphics()
+      // .fillStyle(0x6162AD, 1)
+      // .fillRoundedRect(bgX, outputText.y - 14, bgWidth + 28, textHeight + 28, bgRound)
+
+      let tile: Phaser.GameObjects.TileSprite = this.add.tileSprite(bgX, outputText.y - 14, bgWidth + 28, textHeight + 28, 'tile2').setOrigin(0)
+      tile.canvas.style.borderRadius = '10'
+      console.log(tile);
+      
       
       this.lastMsgFromUser = msgData.login
 
@@ -261,19 +276,21 @@ class Chat extends Phaser.Scene {
       }
     
       // Фон сообщения
-      let gettedMsgBg = this.add.graphics()
-      .fillStyle(0x63527F, 1)
-      .fillRoundedRect(bgX, gettedText.y - 14 + 4, bgWidth + 28, textHeight + 28, bgRound)
-      let gettedMsg = this.add.graphics()
-      .fillStyle(0xFADAC1, 1)
-      .fillRoundedRect(bgX, gettedText.y - 14, bgWidth + 28, textHeight + 28, bgRound)
+      // this.add.graphics()
+      // .fillStyle(0x63527F, 1)
+      // .fillRoundedRect(bgX, gettedText.y - 14 + 4, bgWidth + 28, textHeight + 28, bgRound)
+      // this.add.graphics()
+      // .fillStyle(0xFADAC1, 1)
+      // .fillRoundedRect(bgX, gettedText.y - 14, bgWidth + 28, textHeight + 28, bgRound)
+
+      this.add.tileSprite(bgX, gettedText.y - 14, bgWidth + 28, textHeight + 28, 'tile1').setOrigin(0)
     
       this.lastMsgFromUser = msgData.login
       
       // Добавляем длинну скролла
       this.scrollHeight += textHeight + padding + 40
 
-      
+
     }
 
     this.scrolling.bottom = this.scrollHeight

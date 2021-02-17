@@ -11,7 +11,7 @@ function createChatBars(height: number = 0): void {
   let modalElements: modalElementType[] = [];
   let emojiElements: modalElementType[] = [];
   let padding: number = this.cameras.main.height / 100 * 10;
-  let emojiHeight: number = 63
+  let emojiHeight: number = 54
   let tempHeight: number = window.innerHeight;
   const windowHeight: number = window.innerHeight;
   const emoji = ['😊', '😟', '😝', '😍', '😎', '😭', '😘', '😳', '😱']
@@ -44,16 +44,16 @@ function createChatBars(height: number = 0): void {
   let closeBtn: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX + 236, this.cameras.main.centerY - 388 + height, 'header-close').setOrigin(0.5, 0.5)
 
   // Отрисовка панели смайликов
-  let emojiBGround: Phaser.GameObjects.Graphics = this.add.graphics().fillStyle(0x742990).fillRect(118, this.cameras.main.centerY + 240 + height, 482, emojiHeight).setDepth(1).setVisible(false)
-  let emojiAA: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX - 210, this.cameras.main.centerY + 270 + height, emoji[0], {font: '30px Bip'}).setOrigin(0.5, 0.5).setDepth(2).setVisible(false).setInteractive()
-  let emojiAB: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX - 158, this.cameras.main.centerY + 270 + height, emoji[1], {font: '30px Bip'}).setOrigin(0.5, 0.5).setDepth(2).setVisible(false).setInteractive()
-  let emojiAC: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX - 105, this.cameras.main.centerY + 270 + height, emoji[2], {font: '30px Bip'}).setOrigin(0.5, 0.5).setDepth(2).setVisible(false).setInteractive()
-  let emojiAD: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX - 52, this.cameras.main.centerY + 270 + height, emoji[3], {font: '30px Bip'}).setOrigin(0.5, 0.5).setDepth(2).setVisible(false).setInteractive()
-  let emojiAE: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 270 + height, emoji[4], {font: '30px Bip'}).setOrigin(0.5, 0.5).setDepth(2).setVisible(false).setInteractive()
-  let emojiAF: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 52, this.cameras.main.centerY + 270 + height, emoji[5], {font: '30px Bip'}).setOrigin(0.5, 0.5).setDepth(2).setVisible(false).setInteractive()
-  let emojiAG: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 105, this.cameras.main.centerY + 270 + height, emoji[6], {font: '30px Bip'}).setOrigin(0.5, 0.5).setDepth(2).setVisible(false).setInteractive()
-  let emojiAH: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 158, this.cameras.main.centerY + 270 + height, emoji[7], {font: '30px Bip'}).setOrigin(0.5, 0.5).setDepth(2).setVisible(false).setInteractive()
-  let emojiAI: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 210, this.cameras.main.centerY + 270 + height, emoji[8], {font: '30px Bip'}).setOrigin(0.5, 0.5).setDepth(2).setVisible(false).setInteractive()
+  let emojiBGround: Phaser.GameObjects.Graphics = this.add.graphics().fillStyle(0x742990).fillRect(118, this.cameras.main.centerY + 248 + height, 482, emojiHeight).setDepth(1).setVisible(false)
+  let emojiAA: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX - 210, this.cameras.main.centerY + 276 + height, emoji[0], {font: '38px Bip'}).setOrigin(0.5, 0.5).setDepth(2).setVisible(false).setInteractive()
+  let emojiAB: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX - 158, this.cameras.main.centerY + 276 + height, emoji[1], {font: '38px Bip'}).setOrigin(0.5, 0.5).setDepth(2).setVisible(false).setInteractive()
+  let emojiAC: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX - 105, this.cameras.main.centerY + 276 + height, emoji[2], {font: '38px Bip'}).setOrigin(0.5, 0.5).setDepth(2).setVisible(false).setInteractive()
+  let emojiAD: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX - 52, this.cameras.main.centerY + 276 + height, emoji[3], {font: '38px Bip'}).setOrigin(0.5, 0.5).setDepth(2).setVisible(false).setInteractive()
+  let emojiAE: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 276 + height, emoji[4], {font: '38px Bip'}).setOrigin(0.5, 0.5).setDepth(2).setVisible(false).setInteractive()
+  let emojiAF: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 52, this.cameras.main.centerY + 276 + height, emoji[5], {font: '38px Bip'}).setOrigin(0.5, 0.5).setDepth(2).setVisible(false).setInteractive()
+  let emojiAG: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 105, this.cameras.main.centerY + 276 + height, emoji[6], {font: '38px Bip'}).setOrigin(0.5, 0.5).setDepth(2).setVisible(false).setInteractive()
+  let emojiAH: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 158, this.cameras.main.centerY + 276 + height, emoji[7], {font: '38px Bip'}).setOrigin(0.5, 0.5).setDepth(2).setVisible(false).setInteractive()
+  let emojiAI: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 210, this.cameras.main.centerY + 276 + height, emoji[8], {font: '38px Bip'}).setOrigin(0.5, 0.5).setDepth(2).setVisible(false).setInteractive()
 
   modalElements.push(
     emojiBGround,
