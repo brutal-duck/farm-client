@@ -49,7 +49,7 @@ function getFreePosition(): {x: number, y: number} {
         type: 1,
         sysType: 3,
         height: 150,
-        message: this.state.lang.maxChickenCount // поменять
+        message: this.state.lang.maxEventCount
       }
       this.state.modal = modal;
       this.scene.launch('Modal', this.state);
@@ -531,7 +531,9 @@ function buildMenu(): void {
   });
 
   this.clickButton(this.chat, (): void => {
-    this.chatWindow();
+    let modal: Imodal = { type: 9 }
+    this.state.modal = modal;
+    this.scene.launch('Modal', this.state);
   });
 
   this.clickButton(this.menu, (): void => {

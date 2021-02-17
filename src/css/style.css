@@ -308,158 +308,6 @@ textarea:focus, input:focus { outline: none; }
 }
 
 /* чат */
-.my-message,
-.user-message {
-  width: 100%;
-  display: flex;
-}
-.my-message { margin-left: 35px; }
-.my-message > div,
-.user-message > div {
-  width: 75%;
-  padding: 13px 15px;
-  box-sizing: border-box;
-  border-radius: 12px;
-}
-.my-message > div {
-  margin: 5px 40px 5px 5px;
-  background: #7837C8;
-}
-.user-message > div {
-  margin: 5px 5px 5px 18px;
-  background: #FEFBEE;
-}
-.chat-login-time {
-  display: flex;
-  align-items: center;
-  margin-bottom: 9px;
-}
-.user-message > div > .chat-login-time,
-.my-message > div > .chat-login-time {
-  font-family: Bip;
-  font-size: 13px;
-  line-height: 13px;
-}
-.user-message > div > .chat-login-time { color: #FE5F26; }
-.user-message > div > .chat-text,
-.user-message > div > .chat-login-time > .chat-time { color: #A45C28; }
-.my-message > div > .chat-login-time, 
-.my-message > div > .chat-text { color: #fff; }
-.chat-login-time { text-align: left; }
-.chat-text {
-  text-align: left;
-  font-family: Bip;
-  font-size: 13px;
-  line-height: 15px;
-  word-wrap: break-word;
-}
-.chat-time {
-  flex: 1 1 0;
-  font-size: 10px;
-  text-align: right;
-}
-.aa {
-  background: url('../assets/images/emoji/aa.gif') center no-repeat;
-  background-size: 100% 100%;
-}
-.ab {
-  background: url('../assets/images/emoji/ab.gif') center no-repeat;
-  background-size: 100% 100%;
-}
-.ac {
-  background: url('../assets/images/emoji/ac.gif') center no-repeat;
-  background-size: 100% 100%;
-}
-.ab {
-  background: url('../assets/images/emoji/ab.gif') center no-repeat;
-  background-size: 100% 100%;
-}
-.ae {
-  background: url('../assets/images/emoji/ae.gif') center no-repeat;
-  background-size: 100% 100%;
-}
-.af {
-  background: url('../assets/images/emoji/af.gif') center no-repeat;
-  background-size: 100% 100%;
-}
-.ag {
-  background: url('../assets/images/emoji/ag.gif') center no-repeat;
-  background-size: 100% 100%;
-}
-.ah {
-  background: url('../assets/images/emoji/ah.gif') center no-repeat;
-  background-size: 100% 100%;
-}
-.ai {
-  background: url('../assets/images/emoji/ai.gif') center no-repeat;
-  background-size: 100% 100%;
-}
-.aj {
-  background: url('../assets/images/emoji/aj.gif') center no-repeat;
-  background-size: 100% 100%;
-}
-.emoji {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-}
-.chat-input-block {
-  padding-top: 9px;
-  position: absolute;
-  right: 25px;
-  left: 25px;
-  bottom: -21px;
-  height: 48px;
-  display: flex;
-  justify-content: center;
-  background: #FFF7D6;
-}
-.chat-input-block input {
-  width: calc(100% - 50px);
-  height: 39px;
-  background: #FFFFFF;
-  border-radius: 31px;
-  box-sizing: border-box;
-  border: 0;
-  color: #A45C28;
-  font-family: Bip;
-  font-size: 13px;
-  padding: 0 40px 0 20px;
-}
-.send-message-button {
-  width: 39px;
-  height: 39px;
-  background: #7837C8 url('../assets/images/icons/send-message.png') 46% 50% no-repeat;
-  background-size: 40%;
-  border-radius: 50%;
-  margin-left: 7px;
-  position: relative;
-}
-.emoji-icon {
-  position: absolute;
-  top: 20px;
-  right: 63px;
-  width: 18px;
-  height: 18px;
-  background: url('../assets/images/icons/emoji.png') no-repeat;
-  background-size: 100% 100%;
-}
-.emoji-block {
-  height: 45px;
-  position: absolute;
-  background: #FFF7D6;
-  right: 25px;
-  left: 25px;
-  bottom: -13px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  padding: 5px 30px 0 20px;
-  box-sizing: border-box;
-  border-top: 3px solid #F2E8C5;
-}
-/* чат */
 
 .enter-mail {
   color: #925C28;
@@ -503,4 +351,24 @@ textarea:focus, input:focus { outline: none; }
 #nickname:focus {
   border: 3px solid rgba(0, 0, 0, 0.5);
   border-radius: 10px;
+}
+
+#chat {
+  display: none;
+  position: absolute;
+  width: 39%;
+  top: 76%;
+  left: 19%;
+  bottom: 19%;
+  z-index: 10;
+  border: none;
+  padding-left: 6px;
+  font-family: 'Bip';
+  font-size: 115%;
+  color: '#974f00';
+}
+#chat:focus {
+  border: none;
+  background: transparent;
+  /* background: rgba(0, 0, 0, 0.5); */
 }

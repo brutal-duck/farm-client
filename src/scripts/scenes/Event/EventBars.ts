@@ -23,11 +23,8 @@ import {
   firework250
 } from '../../general/animations';
 import { pulseCollector, plusResourceAnimation } from './animations';
-import {
-  registration,
-  chatWindow
-} from '../../html';
 import { showFeedTime } from './../../general/boosts';
+import { registration } from '../../html';
 
 class EventBars extends Phaser.Scene {
   constructor() {
@@ -85,7 +82,6 @@ class EventBars extends Phaser.Scene {
   public pulseBalance = pulseBalance.bind(this);
   public registration = registration.bind(this);
   public buildMenu = buildMenu.bind(this);
-  public chatWindow = chatWindow.bind(this);
   public increaseDiamonds = increaseDiamonds.bind(this);
   public plusDiamondsAnimation = plusDiamondsAnimation.bind(this);
   public socialButtons = socialButtons.bind(this);
@@ -326,7 +322,7 @@ class EventBars extends Phaser.Scene {
     this.pulseCollector();
 
     // актуальный статус кнопки покупки курицы
-    this.buyChickenStatus();
+    this.buyAnimalStatus();
 
     // отображение кнопок социальных механик
     this.socialButtons();
@@ -357,7 +353,7 @@ class EventBars extends Phaser.Scene {
   }
 
   // затемнение на кнопке покупки животного
-  public buyChickenStatus(): void {
+  public buyAnimalStatus(): void {
 
     let breed: number = this.game.scene.keys['Event'].maxBreedForBuy();
     let price: number = this.game.scene.keys[this.state.farm].animalPrice(breed).price

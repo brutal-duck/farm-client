@@ -1,4 +1,5 @@
 import {
+  click,
   clickButton,
   clickModalBtn,
   clickShopBtn,
@@ -67,6 +68,8 @@ import { bigButton, repositoryBtn, mergingCloud } from '../../elements';
 import { changeNickname } from '../../general/modal';
   // буст "Стадо"
 import {herdBoostWindow, getRandomAnimal, getRandomStartPosition} from './herdBoost';
+// Чат
+import { createChatBars } from './Chat/elements'
 
 let partProgress: any = require("./../../../assets/images/modal/part-progress.png");
 let newbieBg: any = require("./../../../assets/images/daily/newbie-bg.png");
@@ -126,6 +129,11 @@ let feedBoostSheepIcon: any = require("./../../../assets/images/icons/sheep-feed
 let feedBoostChickenIcon: any = require("./../../../assets/images/icons/chicken-feed-boost.png");
 let feedBoostEventIcon: any = require("./../../../assets/images/icons/event-feed-boost.png");
 
+// Чат
+let chatBackground: any = require("./../../../assets/images/modal/chat-bg.png");
+let chatSendBtn: any = require("./../../../assets/images/modal/chat-send-btn.png");
+let chatEmojiBtn: any = require("./../../../assets/images/modal/chat-emoji-btn.png");
+
 class Modal extends Phaser.Scene {
   constructor() {
     super('Modal');
@@ -148,7 +156,11 @@ class Modal extends Phaser.Scene {
   public animalForBoost: Phaser.Physics.Arcade.Group;
   public mergingArray: any[];
   public mainInput: HTMLInputElement;
+  // Чат
+  public chatHeight: number = 0
+  public chatBG: Phaser.GameObjects.Sprite
 
+  public click = click.bind(this);
   public clickButton = clickButton.bind(this);
   public clickModalBtn = clickModalBtn.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
@@ -211,6 +223,8 @@ class Modal extends Phaser.Scene {
   public herdBoostEventWindow = herdBoostEventWindow.bind(this);
   public eventDrag = eventDrag.bind(this);
   public eventProfile = eventProfile.bind(this);
+  public createChatBars = createChatBars.bind(this)
+  
   public init(state: Istate): void {
     this.state = state;
   }
@@ -286,7 +300,14 @@ class Modal extends Phaser.Scene {
     if (this.state.farm === 'Sheep') this.load.image('sheep-feed-boost-icon', feedBoostSheepIcon);
     if (this.state.farm === 'Chicken') this.load.image('chicken-feed-boost-icon', feedBoostChickenIcon);
     if (this.state.farm === 'Event') this.load.image('event-feed-boost-icon', feedBoostEventIcon);
+
+    // Чат
+    this.load.image('chat-bg', chatBackground);
+    this.load.image('chat-send-btn', chatSendBtn);
+    this.load.image('chat-emoji-btn', chatEmojiBtn);
+
   }
+
 
 
   public create(): void {
@@ -330,6 +351,11 @@ class Modal extends Phaser.Scene {
           this.eventDrag()
           this.herdBoostEventWindow();
         }
+        break;
+      case 9:
+        this.chatBG = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + this.chatHeight, 'chat-bg');
+        this.scene.launch('Chat', this.state);
+        this.createChatBars(this.chatHeight)
         break;
       default:
         this.scene.stop();

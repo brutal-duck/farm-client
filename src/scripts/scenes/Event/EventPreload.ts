@@ -104,7 +104,6 @@ let eventBuyIcon12: any = require("./../../../assets/images/event/icons/event-bu
 // let eventBuyIcon59: any = require("./../../../assets/images/event/icons/event-buy-icon-59.png");
 // let eventBuyIcon60: any = require("./../../../assets/images/event/icons/event-buy-icon-60.png");
 
-
 let animal1: any = require("./../../../assets/images/event/animal/animal1.png");
 let animal2: any = require("./../../../assets/images/event/animal/animal2.png");
 let animal3: any = require("./../../../assets/images/event/animal/animal3.png");
@@ -173,7 +172,10 @@ let disableAnimal: any = require("./../../../assets/images/event/animal/disable-
 let merging: any = require("./../../../assets/images/event/territories/merging.png");
 let tent: any = require("./../../../assets/images/event/territories/tent.png");
 
-
+let flower1: any = require("./../../../assets/images/event/flower1.png");
+let flower2: any = require("./../../../assets/images/event/flower2.png");
+let flower3: any = require("./../../../assets/images/event/flower3.png");
+let flower4: any = require("./../../../assets/images/event/flower4.png");
 
 const testCollector: IcollectorSettings[] = [
   {
@@ -1785,6 +1787,11 @@ class EventPreload extends Phaser.Scene {
     this.load.image('pixel', pixel);
     this.load.image('event-merging', merging);
     this.load.image('event-tent', tent);
+
+    this.load.image('flower1', flower1);
+    this.load.image('flower2', flower2);
+    this.load.image('flower3', flower3);
+    this.load.image('flower4', flower4);
   }
 
   

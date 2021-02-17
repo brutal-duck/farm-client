@@ -15,6 +15,7 @@ import Map from './scenes/Map';
 import MapBars from './scenes/MapBars';
 import Shop from './scenes/Modal/Shop/Main';
 import ShopBars from './scenes/Modal/Shop/Bars';
+import Chat from './scenes/Modal/Chat/Main';
 import Block from './scenes/Block';
 import Tutorial from './scenes/Tutorial';
 import * as eruda from 'eruda';
@@ -86,6 +87,7 @@ window.onload = (): void => {
         Modal, 
         Map, MapBars,
         Shop, ShopBars,
+        Chat,
         Tutorial,
         Block
       ]

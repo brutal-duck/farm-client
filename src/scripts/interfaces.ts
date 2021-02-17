@@ -408,6 +408,20 @@ interface IcollectorSettings {
 }
 
 type modalElementType = Phaser.GameObjects.Sprite | Phaser.GameObjects.Image | Phaser.GameObjects.Zone | Phaser.GameObjects.Text | Phaser.GameObjects.Graphics;
+interface Ichat {
+  login: string;
+  time: string;
+  text: string;
+  id: string;
+}
+interface IScrollingOptions {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  wheel: boolean;
+  top: number;
+}
 interface Istate {
   platform: string;
   autoSaveSpeed: number;
@@ -469,4 +483,5 @@ interface Istate {
   adman: any;
   donate: boolean;
   boughtFeedBoost: boolean;
+  chat: Ichat[];
 }
