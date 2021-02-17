@@ -65,7 +65,7 @@ import nextChapter from './nextChapter';
 import donate from './donate';
 import { support } from '../../html';
 import { bigButton, repositoryBtn, mergingCloud } from '../../elements';
-import { changeNickname } from '../../general/modal';
+import { changeNickname, addEmail } from '../../general/modal';
   // буст "Стадо"
 import {herdBoostWindow, getRandomAnimal, getRandomStartPosition} from './herdBoost';
 // Чат
@@ -156,6 +156,7 @@ class Modal extends Phaser.Scene {
   public animalForBoost: Phaser.Physics.Arcade.Group;
   public mergingArray: any[];
   public mainInput: HTMLInputElement;
+  public enterKey: Phaser.Input.Keyboard.Key;
   // Чат
   public chatHeight: number = 0
   public chatBG: Phaser.GameObjects.Sprite
@@ -213,6 +214,7 @@ class Modal extends Phaser.Scene {
   public sheepWoolRepositoryExchange = sheepWoolRepositoryExchange.bind(this);
   public chickenEggRepositoryExchange = chickenEggRepositoryExchange.bind(this);
   public changeNickname = changeNickname.bind(this);
+  public addEmail = addEmail.bind(this);
 
   public confirmExpelAnimal = confirmExpelAnimal.bind(this);
   public shortNum = shortNum.bind(this);

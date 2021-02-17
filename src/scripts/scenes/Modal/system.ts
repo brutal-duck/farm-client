@@ -1,7 +1,7 @@
 // системное окно
 function systemWindow(): void {
 
-  let height = 0;
+  let height:number = 0;
 
   this.header = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY - Math.floor(height / 2), 'header-syst')
     .setOrigin(0.5, 1);
@@ -23,7 +23,10 @@ function systemWindow(): void {
       this.state.boughtFeedBoost = false;
     };
     if (this.state.modal.sysType === 6) this.state.animal.expel = false;
-    if (this.state.modal.sysType === 12) this.mainInput.remove();
+    if (this.state.modal.sysType === 12 || this.state.modal.sysType === 13) {
+      this.enterKey.destroy();
+      this.mainInput.remove();
+    } 
 
     this.scene.stop();
     this.game.scene.keys[this.state.farm].scrolling.wheel = true;
@@ -171,9 +174,14 @@ function systemWindow(): void {
       }
       break;
     
-    case 12:
+    case 12: // Окно смены ника
       this.changeNickname();
       break;
+
+    case 13: // Окно ввода почты
+      this.addEmail();
+      break;
+
     default:      
       this.scene.stop();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;

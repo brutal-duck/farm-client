@@ -116,7 +116,6 @@ import {
   skipTutorial,
   collectorTutorial
 } from './tutorial';
-import { addEmail } from '../../html';
 import {
   findAd,
   watchAd,
@@ -253,7 +252,6 @@ class Sheep extends Phaser.Scene {
   public caveTimer = caveTimer.bind(this);
   public dailyAward = dailyAward.bind(this);
   public logout = logout.bind(this);
-  public addEmail = addEmail.bind(this);
   public onlineStatus = onlineStatus.bind(this);
   public dragSheep = dragSheep.bind(this);
   public hearts = hearts.bind(this);
@@ -319,18 +317,14 @@ class Sheep extends Phaser.Scene {
 
     // let cursors = this.input.keyboard.createCursorKeys();
     // cursors.space.on('down', (): void => {
-    //   // let modal: Imodal = {
-    //   //   type: 8,
-    //   // }
-    //   // this.state.modal = modal;
+    //   this.openEmailWindow()
     //   // this.state.userSheep.feedBoostTimer = 10
-    //   // this.scene.launch('Modal', this.state);
-    //   this.state.user.diamonds = 10000000;
-    //   let tasks = this.partTasks();
-    //   for (let i in tasks) {
-    //     tasks[i].done = 1;
-    //     tasks[i].got_awarded = 1;
-    //   }
+    //   // this.state.user.diamonds = 10000000;
+    //   // let tasks = this.partTasks();
+    //   // for (let i in tasks) {
+    //   //   tasks[i].done = 1;
+    //   //   tasks[i].got_awarded = 1;
+    //   // }
     // });
 
   }
@@ -355,6 +349,17 @@ class Sheep extends Phaser.Scene {
 
     // укзывающие стрелки
     this.arrowsBehavior();
+  }
+
+  public openEmailWindow(): void {
+
+    let modal: Imodal = {
+      type: 1,
+      sysType: 13
+    }
+    this.state.modal = modal;
+    this.scene.launch('Modal', this.state);
+
   }
 
 

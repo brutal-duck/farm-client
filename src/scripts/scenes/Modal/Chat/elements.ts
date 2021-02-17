@@ -12,6 +12,7 @@ function createChatBars(height: number = 0): void {
   let emojiElements: modalElementType[] = [];
   let padding: number = this.cameras.main.height / 100 * 10;
   let emojiHeight: number = 54
+  let centered: boolean = true;
   let tempHeight: number = window.innerHeight;
   const windowHeight: number = window.innerHeight;
   const emoji: string[] = ['😊', '😟', '😝', '😍', '😎', '😭', '😘', '😳', '😱']
@@ -162,7 +163,7 @@ function createChatBars(height: number = 0): void {
   // Ресайз
   window.onresize = (): void => {
     
-    if (window.innerHeight !== tempHeight) {
+    if (window.innerHeight !== tempHeight && centered) {
       
       tempHeight = window.innerHeight;
       
@@ -172,14 +173,18 @@ function createChatBars(height: number = 0): void {
         modalElements.forEach((el) => el.setY(el.y + padding))
         this.game.scene.keys['Chat'].scrolling.y += padding
         this.mainInput.style.top = '86%';
-        this.mainInput.style.bottom = '9%';  
+        this.mainInput.style.bottom = '9%';
+
+        centered = false
         
-      } else {
+      } else if (!centered) {
         
         modalElements.forEach((el) => el.setY(el.y - padding))
         this.game.scene.keys['Chat'].scrolling.y -= padding
         this.mainInput.style.top = '76%';
-        this.mainInput.style.bottom = '19%';  
+        this.mainInput.style.bottom = '19%';
+
+        centered = true
         
       }
       
