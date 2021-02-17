@@ -24,10 +24,7 @@ import {
   firework250
 } from '../../general/animations';
 import { pulseCollector } from './animations';
-import {
-  registration,
-  chatWindow
-} from '../../html';
+import { registration } from '../../html';
 
 class EventBars extends Phaser.Scene {
   constructor() {
@@ -83,7 +80,6 @@ class EventBars extends Phaser.Scene {
   public pulseBalance = pulseBalance.bind(this);
   public registration = registration.bind(this);
   public buildMenu = buildMenu.bind(this);
-  public chatWindow = chatWindow.bind(this);
   public increaseDiamonds = increaseDiamonds.bind(this);
   public plusDiamondsAnimation = plusDiamondsAnimation.bind(this);
   public socialButtons = socialButtons.bind(this);
