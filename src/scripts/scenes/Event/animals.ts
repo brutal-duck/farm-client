@@ -317,7 +317,6 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
     // очистка старой территории
     if (territory?.data.values.merging.length === 1) {
       if (oldTerritory !== undefined && oldTerritory !== territory) {
-        oldTerritory.data.values.merging = [];
         this.teleportation(animal);
       }
     }
@@ -345,7 +344,6 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
     // очистка старой территории
     if (territory?.data.values.merging.length === 1) {
       if (oldTerritory !== undefined && oldTerritory !== territory) {
-        oldTerritory.data.values.merging = [];
         this.teleportation(animal);
       }
     }
@@ -388,9 +386,9 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
       } else {
 
         this.time.addEvent({ delay: 100, callback: (): void => {
-        territory.data.values.merging = [];
+        territory.data.values.merging.shift();
         if (oldTerritory !== undefined && oldTerritory !== territory) {
-          oldTerritory.data.values.merging = [];
+          oldTerritory.data.values.merging.shift();
         }
         
         
@@ -415,7 +413,6 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
       }
     }
   }
-  
 }
 
 
