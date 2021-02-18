@@ -23,10 +23,15 @@ function systemWindow(): void {
       this.state.boughtFeedBoost = false;
     };
     if (this.state.modal.sysType === 6) this.state.animal.expel = false;
-    if (this.state.modal.sysType === 12 || this.state.modal.sysType === 13) {
+    if (
+      this.state.modal.sysType === 12 || 
+      this.state.modal.sysType === 13 ||
+      this.state.modal.sysType === 14
+    ) {
       this.enterKey.destroy();
       this.mainInput.remove();
-    } 
+      if (this.secondInput !== undefined) this.secondInput.remove();
+    }
 
     this.scene.stop();
     this.game.scene.keys[this.state.farm].scrolling.wheel = true;
@@ -182,11 +187,14 @@ function systemWindow(): void {
       this.addEmail();
       break;
 
+    case 14: // Окно ввода почты
+      this.support();
+      break;
+
     default:      
       this.scene.stop();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
       break;
-    
 
   }
 
