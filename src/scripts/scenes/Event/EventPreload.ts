@@ -172,10 +172,19 @@ let disableAnimal: any = require("./../../../assets/images/event/animal/disable-
 let merging: any = require("./../../../assets/images/event/territories/merging.png");
 let tent: any = require("./../../../assets/images/event/territories/tent.png");
 
-let flower1: any = require("./../../../assets/images/event/flower1.png");
-let flower2: any = require("./../../../assets/images/event/flower2.png");
-let flower3: any = require("./../../../assets/images/event/flower3.png");
-let flower4: any = require("./../../../assets/images/event/flower4.png");
+let flower1: any = require("./../../../assets/images/event/territories/flower1.png");
+let flower2: any = require("./../../../assets/images/event/territories/flower2.png");
+let flower3: any = require("./../../../assets/images/event/territories/flower3.png");
+let flower4: any = require("./../../../assets/images/event/territories/flower4.png");
+
+let confetti1: any = require("./../../../assets/images/event/territories/confetti1.png");
+let confetti2: any = require("./../../../assets/images/event/territories/confetti2.png");
+let confetti3: any = require("./../../../assets/images/event/territories/confetti3.png");
+let confetti4: any = require("./../../../assets/images/event/territories/confetti4.png");
+let confetti5: any = require("./../../../assets/images/event/territories/confetti5.png");
+let confetti6: any = require("./../../../assets/images/event/territories/confetti6.png");
+let confetti7: any = require("./../../../assets/images/event/territories/confetti7.png");
+let confetti8: any = require("./../../../assets/images/event/territories/confetti8.png");
 
 const testCollector: IcollectorSettings[] = [
   {
@@ -986,14 +995,14 @@ const testTerritories: IeventTerritories[] = [
   { _id: 'local_32', block: 3, position: 2, type: 2 },
   { _id: 'local_33', block: 3, position: 3, type: 2 },
   { _id: 'local_41', block: 4, position: 1, type: 2 },
-  { _id: 'local_42', block: 4, position: 2, type: 0 },
-  { _id: 'local_43', block: 4, position: 3, type: 0 },
-  { _id: 'local_51', block: 5, position: 1, type: 0 },
-  { _id: 'local_52', block: 5, position: 2, type: 0 },
-  { _id: 'local_53', block: 5, position: 3, type: 0 },
-  { _id: 'local_61', block: 6, position: 1, type: 0 },
-  { _id: 'local_62', block: 6, position: 2, type: 0 },
-  { _id: 'local_63', block: 6, position: 3, type: 0 },
+  { _id: 'local_42', block: 4, position: 2, type: 2 },
+  { _id: 'local_43', block: 4, position: 3, type: 2 },
+  { _id: 'local_51', block: 5, position: 1, type: 2 },
+  { _id: 'local_52', block: 5, position: 2, type: 2 },
+  { _id: 'local_53', block: 5, position: 3, type: 2 },
+  { _id: 'local_61', block: 6, position: 1, type: 2 },
+  { _id: 'local_62', block: 6, position: 2, type: 2 },
+  { _id: 'local_63', block: 6, position: 3, type: 2 },
 ];
 
 const testEventSettings: IeventSettings = {
@@ -1792,6 +1801,15 @@ class EventPreload extends Phaser.Scene {
     this.load.image('flower2', flower2);
     this.load.image('flower3', flower3);
     this.load.image('flower4', flower4);
+
+    this.load.image('confetti1', confetti1);
+    this.load.image('confetti2', confetti2);
+    this.load.image('confetti3', confetti3);
+    this.load.image('confetti4', confetti4);
+    this.load.image('confetti5', confetti5);
+    this.load.image('confetti6', confetti6);
+    this.load.image('confetti7', confetti7);
+    this.load.image('confetti8', confetti8);
   }
 
   

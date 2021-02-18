@@ -66,11 +66,16 @@ import {
   deleteTerritoriesLocks, 
   buyTerritory, 
   buildBorders,
-  buildFlowers 
+  buildFlowers, 
+  buildConfetti
 } from './territories';
 import setCollector from './collector';
 import autosave from './autosave';
-import { flyAnimal, teleportation, updateTeleportation } from './animations';
+import { 
+  flyAnimal, 
+  teleportation, 
+  updateTeleportation 
+} from './animations';
 class Event extends Phaser.Scene {
   constructor() {
     super('Event');
@@ -164,7 +169,7 @@ class Event extends Phaser.Scene {
   public hearts = hearts.bind(this);
   public tryTask = tryTask.bind(this);
   public buildFlowers = buildFlowers.bind(this);
-
+  public buildConfetti = buildConfetti.bind(this);
 
   public init(state: Istate): void {
     this.state = state;

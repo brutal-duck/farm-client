@@ -221,65 +221,65 @@ function buildBorders(): void {
 
 function buildFlowers(): void {
    // территории 1
-   this.add.image(10, this.topIndent + 480, 'flower1')
-   .setOrigin(0, 0)
-   .setDepth(this.topIndent + 480 + 1)
-   .setScale(0.7);
+  this.add.image(10, this.topIndent + 480, 'flower1')
+    .setOrigin(0, 0)
+    .setDepth(this.topIndent + 480 + 1)
+    .setScale(0.7);
 
- this.add.image(240, this.topIndent + 620, 'flower2')
-   .setOrigin(1, 0)
-   .setDepth(this.topIndent + 480 + 1)
-   .setScale(0.7);
+  this.add.image(240, this.topIndent + 620, 'flower2')
+    .setOrigin(1, 0)
+    .setDepth(this.topIndent + 480 + 1)
+    .setScale(0.7);
  
- this.add.image(480, this.topIndent + 480, 'flower3')
-   .setOrigin(1, 0)
-   .setDepth(this.topIndent + 480 + 1)
-   .setScale(0.7);
+  this.add.image(480, this.topIndent + 480, 'flower3')
+    .setOrigin(1, 0)
+    .setDepth(this.topIndent + 480 + 1)
+    .setScale(0.7);
 
- this.add.image(720, this.topIndent + 480 + 1, 'flower4')
-   .setOrigin(1, 0)
-   .setDepth(this.topIndent + 480 + 1)
-   .setScale(0.7); 
+  this.add.image(720, this.topIndent + 480 + 1, 'flower4')
+    .setOrigin(1, 0)
+    .setDepth(this.topIndent + 480 + 1)
+    .setScale(0.7); 
 
  // территории 2
- this.add.image(10, this.topIndent + 700, 'flower4')
-   .setOrigin(0, 0)
-   .setDepth(this.topIndent + 860 + 1)
-   .setScale(0.7);
+  this.add.image(10, this.topIndent + 700, 'flower4')
+    .setOrigin(0, 0)
+    .setDepth(this.topIndent + 860 + 1)
+    .setScale(0.7);
 
- this.add.image(10, this.topIndent + 880, 'flower1')
-   .setOrigin(0, 0)
-   .setDepth(this.topIndent + 860 + 1)
-   .setScale(0.7);
+  this.add.image(10, this.topIndent + 880, 'flower1')
+    .setOrigin(0, 0)
+    .setDepth(this.topIndent + 860 + 1)
+    .setScale(0.7);
  
- this.add.image(480, this.topIndent + 710, 'flower2')
-   .setOrigin(1, 0)
-   .setDepth(this.topIndent + 720)
-   .setScale(0.7);
+  this.add.image(480, this.topIndent + 710, 'flower2')
+    .setOrigin(1, 0)
+    .setDepth(this.topIndent + 720)
+    .setScale(0.7);
 
- this.add.image(480, this.topIndent + 880, 'flower4')
-   .setOrigin(0, 0)
-   .setDepth(this.topIndent + 720)
-   .setScale(0.7); 
+  this.add.image(480, this.topIndent + 880, 'flower4')
+    .setOrigin(0, 0)
+    .setDepth(this.topIndent + 720)
+    .setScale(0.7);  
 
-   // территории 3
+   // территории 3 
 
- this.add.image(10, this.topIndent + 1120, 'flower3')
-   .setOrigin(0, 0)
-   .setDepth(this.topIndent + 960)
-   .setScale(0.7);
+  this.add.image(10, this.topIndent + 1120, 'flower3')
+    .setOrigin(0, 0)
+    .setDepth(this.topIndent + 960)
+    .setScale(0.7);
 
- this.add.image(240, this.topIndent + 960, 'flower2')
-   .setOrigin(0, 0)
-   .setDepth(this.topIndent + 960)
-   .setScale(0.7);
+  this.add.image(240, this.topIndent + 960, 'flower2')
+    .setOrigin(0, 0)
+    .setDepth(this.topIndent + 960)
+    .setScale(0.7);
  
- this.add.image(480, this.topIndent + 1120, 'flower1')
-   .setOrigin(1, 0)
-   .setDepth(this.topIndent + 960)
-   .setScale(0.7);
+  this.add.image(480, this.topIndent + 1120, 'flower1')
+    .setOrigin(1, 0)
+    .setDepth(this.topIndent + 960)
+    .setScale(0.7);
 
- this.add.image(720, this.topIndent + 960, 'flower3')
+  this.add.image(720, this.topIndent + 960, 'flower3')
    .setOrigin(1, 0)
    .setDepth(this.topIndent + 960)
    .setScale(0.7); 
@@ -287,29 +287,81 @@ function buildFlowers(): void {
    
    // территории 4
 
- this.add.image(240, this.topIndent + 1200, 'flower2')
- .setOrigin(1, 0)
- .setDepth(this.topIndent + 1200)
- .setScale(0.7);
+  this.add.image(240, this.topIndent + 1200, 'flower2')
+    .setOrigin(1, 0)
+    .setDepth(this.topIndent + 1200)
+    .setScale(0.7);
 
- this.add.image(240, this.topIndent + 1340, 'flower4')
-   .setOrigin(0, 0)
-   .setDepth(this.topIndent + 1200)
-   .setScale(0.7);
+  this.add.image(240, this.topIndent + 1340, 'flower4')
+    .setOrigin(0, 0)
+    .setDepth(this.topIndent + 1200)
+    .setScale(0.7);
  
- this.add.image(480, this.topIndent + 1340, 'flower1')
-   .setOrigin(0, 0)
-   .setDepth(this.topIndent + 1200)
-   .setScale(0.7);
- 
- this.add.image(720, this.topIndent + 1200, 'flower2')
-   .setOrigin(1, 0)
-   .setDepth(this.topIndent + 1200)
-   .setScale(0.7); 
+  this.add.image(480, this.topIndent + 1340, 'flower1')
+    .setOrigin(0, 0)
+    .setDepth(this.topIndent + 1200)
+    .setScale(0.7);
+  
+  this.add.image(720, this.topIndent + 1200, 'flower2')
+    .setOrigin(1, 0)
+    .setDepth(this.topIndent + 1200)
+    .setScale(0.7); 
 }
+
+function buildConfetti(): void {
+  this.add.image(260, this.topIndent + 530, 'confetti1')
+  .setAngle(30)
+  .setOrigin(0.5, 0.5)
+  .setDepth(this.topIndent + 480 + 1)
+  .setScale(0.7);
+
+  this.add.image(530, this.topIndent + 680, 'confetti2')
+  .setAngle(90)
+  .setOrigin(0.5, 0.5)
+  .setDepth(this.topIndent + 480 + 1)
+  .setScale(0.7);
+
+  this.add.image(270, this.topIndent + 900, 'confetti3')
+  .setAngle(0)
+  .setOrigin(0.5, 0.5)
+  .setDepth(this.topIndent + 720 + 1)
+  .setScale(0.7);
+
+  this.add.image(670, this.topIndent + 760, 'confetti4')
+  .setAngle(90)
+  .setOrigin(0.5, 0.5)
+  .setDepth(this.topIndent + 720 + 1)
+  .setScale(0.7);
+
+  this.add.image(210, this.topIndent + 1160, 'confetti5')
+  .setAngle(-40)
+  .setOrigin(0.5, 0.5)
+  .setDepth(this.topIndent + 960 + 1)
+  .setScale(0.7);
+
+  this.add.image(520, this.topIndent + 990, 'confetti6')
+  .setAngle(0)
+  .setOrigin(0.5, 0.5)
+  .setDepth(this.topIndent + 960 + 1)
+  .setScale(0.7);
+
+  this.add.image(30, this.topIndent + 1380, 'confetti7')
+  .setAngle(70)
+  .setOrigin(0.5, 0.5)
+  .setDepth(this.topIndent + 1200 + 1)
+  .setScale(0.7);
+
+  this.add.image(520, this.topIndent + 1250, 'confetti8')
+  .setAngle(90)
+  .setOrigin(0.5, 0.5)
+  .setDepth(this.topIndent + 1200 + 1)
+  .setScale(0.7);
+}
+
 export { 
   deleteTerritoriesLocks, 
   buyTerritory,
   buildBorders, 
-  buildFlowers
+  buildFlowers,
+  buildConfetti
 }

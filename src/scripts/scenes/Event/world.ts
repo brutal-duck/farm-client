@@ -155,6 +155,9 @@ function world(): void {
 
   // цветочки 
   this.buildFlowers();
+  
+  // конфети
+  this.buildConfetti();
 
 
   // группа куриц
