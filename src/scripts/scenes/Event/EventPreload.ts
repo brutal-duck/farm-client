@@ -989,22 +989,6 @@ const testCollector: IcollectorSettings[] = [
   }
 ]
 
-const testTerritories: IeventTerritories[] = [
-  { _id: 'local_11', block: 1, position: 1, type: 4 },
-  { _id: 'local_31', block: 3, position: 1, type: 2 },
-  { _id: 'local_32', block: 3, position: 2, type: 2 },
-  { _id: 'local_33', block: 3, position: 3, type: 2 },
-  { _id: 'local_41', block: 4, position: 1, type: 2 },
-  { _id: 'local_42', block: 4, position: 2, type: 0 },
-  { _id: 'local_43', block: 4, position: 3, type: 0 },
-  { _id: 'local_51', block: 5, position: 1, type: 0 },
-  { _id: 'local_52', block: 5, position: 2, type: 0 },
-  { _id: 'local_53', block: 5, position: 3, type: 0 },
-  { _id: 'local_61', block: 6, position: 1, type: 0 },
-  { _id: 'local_62', block: 6, position: 2, type: 0 },
-  { _id: 'local_63', block: 6, position: 3, type: 0 },
-];
-
 const testEventSettings: IeventSettings = {
   buyBetterBreedAnimal: 2,
   doubledСollectorPrice: 25,
@@ -1457,71 +1441,6 @@ const testEventSettings: IeventSettings = {
     { improve: 4, regeneration: 44, countResources: 5, unlock_improve: 8, resourceStorage: 4000 }
   ]
 }
-
-const testUserEvent: IuserEvent = {
-  money: BigInt(10000),
-  herdBoostAnimals: [],
-  countAnimal: [ // количество купленных животных
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    {counter: 1},
-    
-  ],
-  collector: 0,
-  collectorLevel: 1,
-  collectorTakenTime: 0,
-  maxLevelAnimal: 0,
-  tutorial: 0,
-  autosaveCounter: 0,
-  takenHerdBoost: 0,
-  feedBoostTime: 0
-}
-
 class EventPreload extends Phaser.Scene {
 
   public lang: string; // индекс языка
@@ -1543,16 +1462,9 @@ class EventPreload extends Phaser.Scene {
     this.userReady = false;
     this.loadingReady = false;
     this.loadUser();
-    //удалить по завершению тестов и появлянию бэка
-    // -------
-    this.userReady = true;
-    // this.state.eventTerritories = testTerritories;
     this.state.eventSettings = testEventSettings;
-    // this.state.userEvent = testUserEvent;
     this.state.eventCollectorSettings = testCollector;
-    this.state.eventAnimals = [];
     this.state.farm = 'Event';
-    // -------
     this.startTime = Math.round(new Date().getTime() / 1000);
 
     if (!this.state.socket) {
@@ -1822,7 +1734,7 @@ class EventPreload extends Phaser.Scene {
   public update(): void {
 
     if (this.loadingReady && this.userReady) {
-
+      console.log('start', this.state.farm)
       if (this.socket) {
 
         let loadTime: number = Math.round(new Date().getTime() / 1000) - this.loadTime;
@@ -1872,25 +1784,15 @@ class EventPreload extends Phaser.Scene {
       hash: this.state.user.hash
     }).then((response) => {
       console.log(response);
-      // // checkStorage(response.data.user.hash);
 
-      // // let localSaveCounter: number = 0;
-
-      // // if (localStorage.userEvent) {
-      // //   let user: IuserEvent = JSON.parse(localStorage.userEvent);
-      // //   if (typeof user.autosaveCounter === 'number') localSaveCounter = user.autosaveCounter;
-      // // }
-
-      // // if (response.data.user.eventSaveCounter >= localSaveCounter) {
-
-      //   // общие настройки
-      //   this.state.autoSaveSpeed = response.data.autoSaveSpeed;
-      //   this.state.maxMerginTime = response.data.maxMerginTime;
-      //   this.state.packages = response.data.packages;
-      //   this.state.herdBoostSpeedAnimal = response.data.herdBoostSpeedAnimal;
-      //   this.state.herdBoostTime = response.data.herdBoostTime;
-      //   this.state.herdBoostPrice = response.data.herdBoostPrice;
-      //   this.state.herdBoostDelay = response.data.herdBoostDelay;
+        // общие настройки
+        this.state.autoSaveSpeed = response.data.autoSaveSpeed;
+        this.state.maxMerginTime = response.data.maxMerginTime;
+        this.state.packages = response.data.packages;
+        this.state.herdBoostSpeedAnimal = response.data.herdBoostSpeedAnimal;
+        this.state.herdBoostTime = response.data.herdBoostTime;
+        this.state.herdBoostPrice = response.data.herdBoostPrice;
+        this.state.herdBoostDelay = response.data.herdBoostDelay;
         
       //   // массив с настройками для евентовой фермы
       //   const eventSettings: IeventSettings = {  // IeventSettings Нужно делать интерфейс
@@ -1909,20 +1811,20 @@ class EventPreload extends Phaser.Scene {
 
       //   this.state.eventSettings = eventSettings;
 
-      //   const eventAnimals: IeventAnimal[] = []; // IeventAnimal
+        const eventAnimals: IeventAnimal[] = []; // IeventAnimal
 
-      //   for (let i in response.data.animals) {
+        for (let i in response.data.event.animals) {
           
-      //     let animal = response.data.animals[i];
-      //     eventAnimals.push({
-      //       _id: animal._id,
-      //       type: animal.type,
-      //       activeAnimal: animal.active,
-      //       x: animal.x,
-      //       y: animal.y,
-      //     });
+          let animal = response.data.event.animals[i];
+          eventAnimals.push({
+            _id: animal._id,
+            type: animal.type,
+            activeAnimal: animal.activeAnimal,
+            x: animal.x,
+            y: animal.y,
+          });
 
-      //   }
+        }
         
         const eventTerritories: IeventTerritories[] = [];
         
@@ -1939,20 +1841,20 @@ class EventPreload extends Phaser.Scene {
 
         }
 
-      //   const eventResources: IeventResource[] = []; // IeventResource
+        const eventResources: IeventResource[] = []; // IeventResource
 
-      //   for (let i in response.data.eventResources) {
+        for (let i in response.data.event.resources) {
 
-      //     let eventResource = response.data.eventResources[i];
+          let eventResource = response.data.event.resources[i];
 
-      //     eventResources.push({
-      //       _id: eventResource._id,
-      //       x: eventResource.x,
-      //       y: eventResource.y,
-      //       type: eventResource.type
-      //     });
+          eventResources.push({
+            _id: eventResource._id,
+            x: eventResource.x,
+            y: eventResource.y,
+            type: eventResource.type
+          });
 
-      //   }
+        }
 
         const user: Iuser = {
           diamonds: response.data.user.diamonds,
@@ -1982,28 +1884,20 @@ class EventPreload extends Phaser.Scene {
         }
         
       //   // переписываем стейт
-      //   this.state.timeToHerdBoost = response.data.timeToHerdBoost;
+        this.state.timeToHerdBoost = response.data.timeToHerdBoost;
         // this.state.eventCollectorSettings = response.data.collectorSettings;
-      //   this.state.offlineTime = response.data.offlineTime;
-      //   this.state.progress = response.data.progress;
+        this.state.offlineTime = response.data.offlineTime;
+        this.state.progress = response.data.progress;
         this.state.eventTerritories = eventTerritories;
-      //   this.state.eventAnimals = eventAnimals;
-      //   this.state.eventResources = eventResources; 
+        this.state.eventAnimals = eventAnimals;
+        this.state.eventResources = eventResources; 
         this.state.user = user;
         this.state.userEvent = userEvent;
-      //   this.state.farm = 'Event';
-      //   this.userReady = true;
-      //   this.state.nativeCounter = [0, 0, 0, 0];
-      // // } else {
-      // //   this.loadChicken(response.data.user.counter);
-      // // }
+        this.state.farm = 'Event';
+        this.userReady = true;
+        this.state.nativeCounter = [0, 0, 0, 0];
       
     })
-    // .catch(() => {
-    //   this.loadChicken();
-    // });
-
-    // localStorage.farm = 'Event';
   }
 
 }

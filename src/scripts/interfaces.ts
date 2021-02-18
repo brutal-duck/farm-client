@@ -62,17 +62,17 @@ interface IchickenUserAutoSave {
 interface IeventUserAutoSave {
   diamonds: number;
   xp: number;
-  money: number;
+  money: string;
   countAnimal: {counter: number}[];
   collector: number;
   collectorLevel: number;
   tutorial: number;
-  additional_tutorial: IadditionalTutorial;
-  taken_reward: boolean;
+  herdBoostAnimals: number[];
   autosaveCounter: number;
   takenHerdBoost: number;
   feedBoostTime: number;
   maxLevelAnimal: number;
+  
 }
 // for state
 interface IadditionalTutorial {
@@ -183,6 +183,8 @@ interface IactiveEventAnimal{
   x: number;
   y: number;
   working: boolean;
+  vector: number;
+  counter: number;
 }
 interface IchickenEgg {
   _id?: any;

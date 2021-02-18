@@ -13,10 +13,10 @@ function autosave(): void {
 
     let territory = this.territories.children.entries[i];
     territories.push({
-      _id: territory._id,
-      block: territory.block,
-      position: territory.position,
-      type: territory.type,
+      _id: territory.data.values._id,
+      block: territory.data.values.block,
+      position: territory.data.values.position,
+      type: territory.data.values.type,
     });
 
   }
@@ -33,6 +33,8 @@ function autosave(): void {
         x: animal.data.values.active.x,
         y: animal.data.values.active.y,
         working: animal.data.values.active.data.values.working,
+        vector: animal.data.values.active.data.values.vector,
+        counter: animal.data.values.active.data.values.counter,
       }
     });
 
@@ -44,17 +46,18 @@ function autosave(): void {
   let user: IeventUserAutoSave = {
     diamonds: this.state.user.diamonds,
     xp: this.state.user.xp,
-    money: this.state.userEvent.money,
-    countAnimal: this.state.userEvent.countChicken,
+    money: String(this.state.userEvent.money),
+    herdBoostAnimals: this.state.userEvent.herdBoostAnimals,
+    takenHerdBoost: this.state.userEvent.takenHerdBoost,
+    feedBoostTime: this.state.userEvent.feedBoostTime,
+    countAnimal: this.state.userEvent.countAnimal,
     collector: this.state.userEvent.collector,
     collectorLevel: this.state.userEvent.collectorLevel,
     tutorial: this.state.userEvent.tutorial,
-    additional_tutorial: this.state.user.additionalTutorial,
-    taken_reward: this.state.user.takenReward,
     autosaveCounter: this.state.userEvent.autosaveCounter,
-    takenHerdBoost: this.state.userEvent.takenHerdBoost,
-    feedBoostTime: this.state.userEvent.feedBoostTime,
-    maxLevelAnimal: this.state.userEvent.maxLevelAnimal
+    
+    maxLevelAnimal: this.state.userEvent.maxLevelAnimal,
+    
   }
 
   for (let i in this.resources.children.entries) {
@@ -69,15 +72,6 @@ function autosave(): void {
 
   }
 
-  // localStorage.user = JSON.stringify(this.state.user);
-  // localStorage.userChicken = JSON.stringify(this.state.userChicken);
-  // localStorage.chickenTasks = JSON.stringify(tasks);
-  // localStorage.chickenTerritories = JSON.stringify(territories);
-  // localStorage.chicken = JSON.stringify(chicken);
-  // localStorage.chickenEggs = JSON.stringify(eggs);
-  // localStorage.chickenTime = Math.round(new Date().getTime() / 1000);
-  // localStorage.dailyAwards = JSON.stringify(this.state.dailyAwards);
-
   const data = { 
     id: this.state.user.id,
     hash: this.state.user.hash,
@@ -87,6 +81,7 @@ function autosave(): void {
     user: user,
     resources: resources,
   }
+  console.log(data)
   axios.post(process.env.API + "/event/autoSave", data)
   .then((res) => {
     
@@ -95,17 +90,6 @@ function autosave(): void {
       if (res.data.error) this.logout();
       else {
 
-        if (this.state.user.hash === 'local') {
-          
-          this.state.user.id = res.data.newUser._id;
-          this.state.user.hash = res.data.newUser.hash;
-          this.state.user.counter = res.data.newUser.counter;
-
-          if (this.state.platform === 'web') {
-            document.cookie = "farmHASH=" + this.state.user.hash + "; expires=" + res.data.expires + "; path=/;";
-          }
-
-        }
         if (res.data.donate) this.state.donate = true; 
       }
       

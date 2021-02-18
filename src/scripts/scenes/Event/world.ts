@@ -168,15 +168,16 @@ function world(): void {
   this.resources = this.physics.add.group();
 
   // подгружаем куриц
+  console.log(this.state.eventAnimals)
   this.state.eventAnimals.map((data: IeventAnimal) => {
     this.getAnimal(data._id, data.type, data.x, data.y, data.activeAnimal, true);
   });
   
-  // // подгружаем яйца
-  // this.eggs = this.physics.add.group();
-  // this.state.chickenEggs.map((data: IchickenEgg) => {
-  //   this.getEgg(data);
-  // });
+  // подгружаем яйца
+  this.resources = this.physics.add.group();
+  this.state.eventResources.map((data: IeventResource) => {
+    this.getResource(data);
+  });
 
   // // туториал, если нужен
   // if (this.state.userChicken.tutorial === 0) {

@@ -90,7 +90,7 @@ function getAnimal(
   type: number,
   x: number,
   y: number,
-  activeAnimal: Phaser.Physics.Arcade.Sprite = undefined,
+  activeAnimal: IactiveEventAnimal = undefined,
   load: boolean = false): Phaser.Physics.Arcade.Sprite {
 
   let animal: Phaser.Physics.Arcade.Sprite = this.animals.create(x, y, 'animal' + type).setInteractive().setDepth(y).setAlpha(0.7);
@@ -108,7 +108,11 @@ function getAnimal(
   animal.data.values.target = {x, y};
   animal.state = 'base';
   this.checkMerging(animal);
-  if (!activeAnimal)animal.data.values.active = this.getActiveAnimal(type,x, y, animal);
+  if (!activeAnimal) {
+    animal.data.values.active = this.getActiveAnimal(type,x, y, animal);
+  } else {
+    animal.data.values.active = this.getActiveAnimal(type, activeAnimal.x, activeAnimal.y, animal, activeAnimal.counter, activeAnimal.vector, activeAnimal.working)
+  }
   
   this.click(animal, ()=>{
     this.teleportation(animal.data.values.active, undefined, true);
@@ -126,6 +130,7 @@ function getActiveAnimal(
   base: Phaser.Physics.Arcade.Sprite,
   counter: number = 0,
   vector: number = Phaser.Math.Between(1, 8),
+  working: boolean = false,
   load: boolean = false): Phaser.Physics.Arcade.Sprite {
 
   let animal: Phaser.Physics.Arcade.Sprite = this.physics.add.sprite(x, y, 'animal' + type).setInteractive().setDepth(y+100);
@@ -140,7 +145,7 @@ function getActiveAnimal(
   animal.data.values.aimY = 0; // точка Y цели
   animal.data.values.distance = 0; // дистанция для целей
   animal.data.values.drag = false; // метка перетаскивания
-  animal.data.values.working = false;
+  animal.data.values.working = working;
   animal.data.values.onWorldBounds// отскок от границ мира
   animal.data.values.collision = 1; // временно врубаем счетчик коллизии
   animal.body.mass = 0; // вроде как инерция
