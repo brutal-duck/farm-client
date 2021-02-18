@@ -733,14 +733,6 @@ function support(): void {
   .fillStyle(0xffffff, 1)
   .fillRoundedRect(0, 0, 460, 260, 16);
 
-  // let graphics: Phaser.GameObjects.Graphics = this.add.graphics()
-  // .lineStyle(2, 0xFFFF00)
-  // .strokeRect(helpInputZone.x - helpInputZone.input.hitArea.width / 2, helpInputZone.y - helpInputZone.input.hitArea.height / 2, helpInputZone.input.hitArea.width, helpInputZone.input.hitArea.height);
-
-  // let graphics2: Phaser.GameObjects.Graphics = this.add.graphics()
-  // .lineStyle(2, 0x7200FF)
-  // .strokeRect(helpTextareaZone.x - helpTextareaZone.input.hitArea.width / 2, helpTextareaZone.y - helpTextareaZone.input.hitArea.height / 2, helpTextareaZone.input.hitArea.width, helpTextareaZone.input.hitArea.height);
-
   // Кнопка
   let sendMsgBtn = this.bigButton('green', 'center', 130, this.state.lang.send);
   sendMsgBtn.btn.y = this.cameras.main.centerY + 280
@@ -858,6 +850,7 @@ function support(): void {
 
   });
 
+  // Валидация
   const checkError = (elements: string = 'all'): void => {
 
     if (elements === 'all' || elements === 'input') {
@@ -877,7 +870,8 @@ function support(): void {
     }
 
   }
-  
+
+  // Отправка
   this.clickModalBtn(sendMsgBtn, (): void => {
     this.mainInput.blur();
     this.secondInput.blur();
@@ -891,7 +885,6 @@ function support(): void {
     sendToSupport();
   });
 
-
   const sendToSupport = (): void => {
 
     if (!send) {
@@ -899,7 +892,6 @@ function support(): void {
       if (reMail.test(this.mainInput.value)) {
 
         if (this.secondInput.value !== '') {
-          console.log('send');
 
           send = true;
 
@@ -946,7 +938,6 @@ function support(): void {
 
     }
 
-    
   }
   
   this.resizeWindow(580);
