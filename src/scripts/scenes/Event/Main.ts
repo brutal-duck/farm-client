@@ -76,6 +76,7 @@ import {
   teleportation, 
   updateTeleportation 
 } from './animations';
+import autoprogress from './autoprogress';
 class Event extends Phaser.Scene {
   constructor() {
     super('Event');
@@ -170,6 +171,8 @@ class Event extends Phaser.Scene {
   public tryTask = tryTask.bind(this);
   public buildFlowers = buildFlowers.bind(this);
   public buildConfetti = buildConfetti.bind(this);
+
+  public autoprogress = autoprogress.bind(this);
 
   public init(state: Istate): void {
     this.state = state;

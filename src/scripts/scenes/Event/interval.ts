@@ -93,19 +93,19 @@ function interval(): void {
 
     }
     
-    // // автосохранение
-    // this.autoSaveTimer++;
-    // if (this.autoSaveTimer >= this.state.autoSaveSpeed) this.autosave();
+    // автосохранение
+    this.autoSaveTimer++;
+    if (this.autoSaveTimer >= this.state.autoSaveSpeed) this.autosave();
 
-    // // автопрогресс в случае неактивности
-    // let time: number = Math.round(new Date().getTime() / 1000);
+    // автопрогресс в случае неактивности
+    let time: number = Math.round(new Date().getTime() / 1000);
 
-    // if (time > this.autoprogressTimer + 5) {
-    //   this.state.offlineTime = time - this.autoprogressTimer;
-    //   this.autoprogress();
-    // }
+    if (time > this.autoprogressTimer + 5) {
+      this.state.offlineTime = time - this.autoprogressTimer;
+      this.autoprogress();
+    }
     
-    // this.autoprogressTimer = time;
+    this.autoprogressTimer = time;
 
     // // поиск рекламы
     this.findAd();

@@ -181,8 +181,8 @@ function world(): void {
   //   this.showTutorial();
   // }
 
-  // // расчет оффлайн прогресса
-  // this.autoprogress(true);
+  // расчет оффлайн прогресса
+  this.autoprogress(true);
   
 }
 
