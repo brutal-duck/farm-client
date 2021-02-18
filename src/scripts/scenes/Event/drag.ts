@@ -52,10 +52,10 @@ function drag(): void {
         animal.data.values.zone = true;
         let territory: Phaser.Physics.Arcade.Sprite = this.currentTerritory(animal.x, animal.y);
         if (territory) {
-           
-         animal.x = zone.x + zone.width / 2;
-         animal.y = zone.y + zone.height / 2;
-         animal.setDepth(animal.y + 100);
+          animal.setOrigin(0.5, 0.5);
+          animal.x = zone.x + zone.width / 2;
+          animal.y = zone.y + zone.height / 2;
+          animal.setDepth(animal.y + 100);
          
         } 
       } 

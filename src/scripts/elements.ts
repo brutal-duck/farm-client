@@ -71,8 +71,8 @@ function mergingCloud(position: Iposition, type: boolean = false): void {
   let x: number = position.x;
   let y: number = position.y;
   let cloud = !type 
-    ? this.add.image(x, y, 'merging-animation').setDepth(y + 100)
-    : this.add.image(x, y, 'bad-merging-animation').setDepth(y + 100);
+    ? this.add.image(x, y, 'merging-animation').setDepth(y + 1000)
+    : this.add.image(x, y, 'bad-merging-animation').setDepth(y + 1000);
   let cloudText = this.add.text(x, y, this.state.lang.herdBoostBadMerge, {
     font: '34px Shadow',
     color: '#1a1a1a',
