@@ -1820,7 +1820,7 @@ class EventPreload extends Phaser.Scene {
           countAnimal: response.data.event.countAnimal,
           collector: response.data.event.collector,
           collectorLevel: response.data.event.collectorLevel,
-          collectorTakenTime: response.data.event.collectorTakenTime,
+          collectorTakenTime: response.data.event.collector,
           tutorial: response.data.event.tutorial,
           autosaveCounter: response.data.event.autosaveCounter,
           takenHerdBoost: response.data.event.takenHerdBoost,
