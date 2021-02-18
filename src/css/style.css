@@ -372,3 +372,47 @@ textarea:focus, input:focus { outline: none; }
   background: transparent;
   /* background: rgba(0, 0, 0, 0.5); */
 }
+
+#sup-email {
+  display: none;
+  position: absolute;
+  box-sizing: border-box;
+  width: 64.5%;
+  top: 38.5%;
+  left: 17.5%;
+  bottom: 55.5%;
+  z-index: 10;
+  border: none;
+  padding-left: 8px;
+  font-family: 'Bip';
+  font-size: 120%;
+  color: '#974f00';
+}
+#sup-email:focus {
+  border: 3px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+#sup-msg {
+  display: none;
+  position: absolute;
+  box-sizing: border-box;
+  width: 64.5%;
+  top: 46%;
+  left: 17.5%;
+  bottom: 32%;
+  z-index: 10;
+  border: none;
+  padding-left: 8px;
+  padding-right: 13px;
+  font-family: 'Bip';
+  font-size: 120%;
+  line-height: 1.4;
+  color: '#974f00';
+  resize: none;
+  overflow: hidden;
+}
+#sup-msg:focus {
+  border: 3px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}

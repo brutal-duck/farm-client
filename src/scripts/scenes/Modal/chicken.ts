@@ -969,7 +969,14 @@ function chickenProfile(): void {
 
   let support = this.bigButton('green', 'center', 0, this.state.lang.support);
   this.clickModalBtn(support, (): void => {
-    this.support();
+
+    let modal: Imodal = {
+      type: 1,
+      sysType: 14
+    }
+    this.state.modal = modal;
+    this.game.scene.keys[this.state.farm].scene.launch('Modal', this.state);
+
   });
 
   let agreement: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, 0, this.state.lang.agreement, {

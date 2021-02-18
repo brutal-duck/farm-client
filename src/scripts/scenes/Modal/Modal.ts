@@ -63,11 +63,10 @@ import daily from './daily';
 import dailyNewbie from './dailyNewbie';
 import nextChapter from './nextChapter';
 import donate from './donate';
-import { support } from '../../html';
 import { bigButton, repositoryBtn, mergingCloud } from '../../elements';
-import { changeNickname, addEmail } from '../../general/modal';
+import { changeNickname, addEmail, support } from '../../general/modal';
   // буст "Стадо"
-import {herdBoostWindow, getRandomAnimal, getRandomStartPosition} from './herdBoost';
+import { herdBoostWindow, getRandomAnimal, getRandomStartPosition } from './herdBoost';
 // Чат
 import { createChatBars } from './Chat/elements'
 
@@ -156,6 +155,7 @@ class Modal extends Phaser.Scene {
   public animalForBoost: Phaser.Physics.Arcade.Group;
   public mergingArray: any[];
   public mainInput: HTMLInputElement;
+  public secondInput: HTMLInputElement;
   public enterKey: Phaser.Input.Keyboard.Key;
   // Чат
   public chatHeight: number = 0
