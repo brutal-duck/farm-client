@@ -34,7 +34,7 @@ export default (): Iprogress => {
       donate: false
     },
     event: {
-      maxLevelAnimal: eventMaxLevelAnimal,
+      eventPoints: eventMaxLevelAnimal,
       startTime: 0,
       endTime: 0,
       open: false

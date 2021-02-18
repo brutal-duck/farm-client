@@ -395,7 +395,7 @@ interface IpartProgress {
   donate: boolean;
 }
 interface IeventProgress {
-  maxLevelAnimal: number;
+  eventPoints: number;
   startTime: number;
   endTime: number;
   open: boolean;

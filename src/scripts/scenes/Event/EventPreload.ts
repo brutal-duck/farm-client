@@ -55,54 +55,54 @@ let eventBuyIcon9: any = require("./../../../assets/images/event/icons/event-buy
 let eventBuyIcon10: any = require("./../../../assets/images/event/icons/event-buy-icon-10.png");
 let eventBuyIcon11: any = require("./../../../assets/images/event/icons/event-buy-icon-11.png");
 let eventBuyIcon12: any = require("./../../../assets/images/event/icons/event-buy-icon-12.png");
-// let eventBuyIcon13: any = require("./../../../assets/images/event/icons/event-buy-icon-13.png");
-// let eventBuyIcon14: any = require("./../../../assets/images/event/icons/event-buy-icon-14.png");
-// let eventBuyIcon15: any = require("./../../../assets/images/event/icons/event-buy-icon-15.png");
-// let eventBuyIcon16: any = require("./../../../assets/images/event/icons/event-buy-icon-16.png");
-// let eventBuyIcon17: any = require("./../../../assets/images/event/icons/event-buy-icon-17.png");
-// let eventBuyIcon18: any = require("./../../../assets/images/event/icons/event-buy-icon-18.png");
-// let eventBuyIcon19: any = require("./../../../assets/images/event/icons/event-buy-icon-19.png");
-// let eventBuyIcon20: any = require("./../../../assets/images/event/icons/event-buy-icon-20.png");
-// let eventBuyIcon21: any = require("./../../../assets/images/event/icons/event-buy-icon-21.png");
-// let eventBuyIcon22: any = require("./../../../assets/images/event/icons/event-buy-icon-22.png");
-// let eventBuyIcon23: any = require("./../../../assets/images/event/icons/event-buy-icon-23.png");
-// let eventBuyIcon24: any = require("./../../../assets/images/event/icons/event-buy-icon-24.png");
-// let eventBuyIcon25: any = require("./../../../assets/images/event/icons/event-buy-icon-25.png");
-// let eventBuyIcon26: any = require("./../../../assets/images/event/icons/event-buy-icon-26.png");
-// let eventBuyIcon27: any = require("./../../../assets/images/event/icons/event-buy-icon-27.png");
-// let eventBuyIcon28: any = require("./../../../assets/images/event/icons/event-buy-icon-28.png");
-// let eventBuyIcon29: any = require("./../../../assets/images/event/icons/event-buy-icon-29.png");
-// let eventBuyIcon30: any = require("./../../../assets/images/event/icons/event-buy-icon-30.png");
-// let eventBuyIcon31: any = require("./../../../assets/images/event/icons/event-buy-icon-31.png");
-// let eventBuyIcon32: any = require("./../../../assets/images/event/icons/event-buy-icon-32.png");
-// let eventBuyIcon33: any = require("./../../../assets/images/event/icons/event-buy-icon-33.png");
-// let eventBuyIcon34: any = require("./../../../assets/images/event/icons/event-buy-icon-34.png");
-// let eventBuyIcon35: any = require("./../../../assets/images/event/icons/event-buy-icon-35.png");
-// let eventBuyIcon36: any = require("./../../../assets/images/event/icons/event-buy-icon-36.png");
-// let eventBuyIcon37: any = require("./../../../assets/images/event/icons/event-buy-icon-37.png");
-// let eventBuyIcon38: any = require("./../../../assets/images/event/icons/event-buy-icon-38.png");
-// let eventBuyIcon39: any = require("./../../../assets/images/event/icons/event-buy-icon-39.png");
-// let eventBuyIcon40: any = require("./../../../assets/images/event/icons/event-buy-icon-40.png");
-// let eventBuyIcon41: any = require("./../../../assets/images/event/icons/event-buy-icon-41.png");
-// let eventBuyIcon42: any = require("./../../../assets/images/event/icons/event-buy-icon-42.png");
-// let eventBuyIcon43: any = require("./../../../assets/images/event/icons/event-buy-icon-43.png");
-// let eventBuyIcon44: any = require("./../../../assets/images/event/icons/event-buy-icon-44.png");
-// let eventBuyIcon45: any = require("./../../../assets/images/event/icons/event-buy-icon-45.png");
-// let eventBuyIcon46: any = require("./../../../assets/images/event/icons/event-buy-icon-46.png");
-// let eventBuyIcon47: any = require("./../../../assets/images/event/icons/event-buy-icon-47.png");
-// let eventBuyIcon48: any = require("./../../../assets/images/event/icons/event-buy-icon-48.png");
-// let eventBuyIcon49: any = require("./../../../assets/images/event/icons/event-buy-icon-49.png");
-// let eventBuyIcon50: any = require("./../../../assets/images/event/icons/event-buy-icon-50.png");
-// let eventBuyIcon51: any = require("./../../../assets/images/event/icons/event-buy-icon-51.png");
-// let eventBuyIcon52: any = require("./../../../assets/images/event/icons/event-buy-icon-52.png");
-// let eventBuyIcon53: any = require("./../../../assets/images/event/icons/event-buy-icon-53.png");
-// let eventBuyIcon54: any = require("./../../../assets/images/event/icons/event-buy-icon-54.png");
-// let eventBuyIcon55: any = require("./../../../assets/images/event/icons/event-buy-icon-55.png");
-// let eventBuyIcon56: any = require("./../../../assets/images/event/icons/event-buy-icon-56.png");
-// let eventBuyIcon57: any = require("./../../../assets/images/event/icons/event-buy-icon-57.png");
-// let eventBuyIcon58: any = require("./../../../assets/images/event/icons/event-buy-icon-58.png");
-// let eventBuyIcon59: any = require("./../../../assets/images/event/icons/event-buy-icon-59.png");
-// let eventBuyIcon60: any = require("./../../../assets/images/event/icons/event-buy-icon-60.png");
+let eventBuyIcon13: any = require("./../../../assets/images/event/icons/event-buy-icon-13.png");
+let eventBuyIcon14: any = require("./../../../assets/images/event/icons/event-buy-icon-14.png");
+let eventBuyIcon15: any = require("./../../../assets/images/event/icons/event-buy-icon-15.png");
+let eventBuyIcon16: any = require("./../../../assets/images/event/icons/event-buy-icon-16.png");
+let eventBuyIcon17: any = require("./../../../assets/images/event/icons/event-buy-icon-17.png");
+let eventBuyIcon18: any = require("./../../../assets/images/event/icons/event-buy-icon-18.png");
+let eventBuyIcon19: any = require("./../../../assets/images/event/icons/event-buy-icon-19.png");
+let eventBuyIcon20: any = require("./../../../assets/images/event/icons/event-buy-icon-20.png");
+let eventBuyIcon21: any = require("./../../../assets/images/event/icons/event-buy-icon-21.png");
+let eventBuyIcon22: any = require("./../../../assets/images/event/icons/event-buy-icon-22.png");
+let eventBuyIcon23: any = require("./../../../assets/images/event/icons/event-buy-icon-23.png");
+let eventBuyIcon24: any = require("./../../../assets/images/event/icons/event-buy-icon-24.png");
+let eventBuyIcon25: any = require("./../../../assets/images/event/icons/event-buy-icon-25.png");
+let eventBuyIcon26: any = require("./../../../assets/images/event/icons/event-buy-icon-26.png");
+let eventBuyIcon27: any = require("./../../../assets/images/event/icons/event-buy-icon-27.png");
+let eventBuyIcon28: any = require("./../../../assets/images/event/icons/event-buy-icon-28.png");
+let eventBuyIcon29: any = require("./../../../assets/images/event/icons/event-buy-icon-29.png");
+let eventBuyIcon30: any = require("./../../../assets/images/event/icons/event-buy-icon-30.png");
+let eventBuyIcon31: any = require("./../../../assets/images/event/icons/event-buy-icon-31.png");
+let eventBuyIcon32: any = require("./../../../assets/images/event/icons/event-buy-icon-32.png");
+let eventBuyIcon33: any = require("./../../../assets/images/event/icons/event-buy-icon-33.png");
+let eventBuyIcon34: any = require("./../../../assets/images/event/icons/event-buy-icon-34.png");
+let eventBuyIcon35: any = require("./../../../assets/images/event/icons/event-buy-icon-35.png");
+let eventBuyIcon36: any = require("./../../../assets/images/event/icons/event-buy-icon-36.png");
+let eventBuyIcon37: any = require("./../../../assets/images/event/icons/event-buy-icon-37.png");
+let eventBuyIcon38: any = require("./../../../assets/images/event/icons/event-buy-icon-38.png");
+let eventBuyIcon39: any = require("./../../../assets/images/event/icons/event-buy-icon-39.png");
+let eventBuyIcon40: any = require("./../../../assets/images/event/icons/event-buy-icon-40.png");
+let eventBuyIcon41: any = require("./../../../assets/images/event/icons/event-buy-icon-41.png");
+let eventBuyIcon42: any = require("./../../../assets/images/event/icons/event-buy-icon-42.png");
+let eventBuyIcon43: any = require("./../../../assets/images/event/icons/event-buy-icon-43.png");
+let eventBuyIcon44: any = require("./../../../assets/images/event/icons/event-buy-icon-44.png");
+let eventBuyIcon45: any = require("./../../../assets/images/event/icons/event-buy-icon-45.png");
+let eventBuyIcon46: any = require("./../../../assets/images/event/icons/event-buy-icon-46.png");
+let eventBuyIcon47: any = require("./../../../assets/images/event/icons/event-buy-icon-47.png");
+let eventBuyIcon48: any = require("./../../../assets/images/event/icons/event-buy-icon-48.png");
+let eventBuyIcon49: any = require("./../../../assets/images/event/icons/event-buy-icon-49.png");
+let eventBuyIcon50: any = require("./../../../assets/images/event/icons/event-buy-icon-50.png");
+let eventBuyIcon51: any = require("./../../../assets/images/event/icons/event-buy-icon-51.png");
+let eventBuyIcon52: any = require("./../../../assets/images/event/icons/event-buy-icon-52.png");
+let eventBuyIcon53: any = require("./../../../assets/images/event/icons/event-buy-icon-53.png");
+let eventBuyIcon54: any = require("./../../../assets/images/event/icons/event-buy-icon-54.png");
+let eventBuyIcon55: any = require("./../../../assets/images/event/icons/event-buy-icon-55.png");
+let eventBuyIcon56: any = require("./../../../assets/images/event/icons/event-buy-icon-56.png");
+let eventBuyIcon57: any = require("./../../../assets/images/event/icons/event-buy-icon-57.png");
+let eventBuyIcon58: any = require("./../../../assets/images/event/icons/event-buy-icon-58.png");
+let eventBuyIcon59: any = require("./../../../assets/images/event/icons/event-buy-icon-59.png");
+let eventBuyIcon60: any = require("./../../../assets/images/event/icons/event-buy-icon-60.png");
 
 let animal1: any = require("./../../../assets/images/event/animal/animal1.png");
 let animal2: any = require("./../../../assets/images/event/animal/animal2.png");
@@ -995,14 +995,14 @@ const testTerritories: IeventTerritories[] = [
   { _id: 'local_32', block: 3, position: 2, type: 2 },
   { _id: 'local_33', block: 3, position: 3, type: 2 },
   { _id: 'local_41', block: 4, position: 1, type: 2 },
-  { _id: 'local_42', block: 4, position: 2, type: 2 },
-  { _id: 'local_43', block: 4, position: 3, type: 2 },
-  { _id: 'local_51', block: 5, position: 1, type: 2 },
-  { _id: 'local_52', block: 5, position: 2, type: 2 },
-  { _id: 'local_53', block: 5, position: 3, type: 2 },
-  { _id: 'local_61', block: 6, position: 1, type: 2 },
-  { _id: 'local_62', block: 6, position: 2, type: 2 },
-  { _id: 'local_63', block: 6, position: 3, type: 2 },
+  { _id: 'local_42', block: 4, position: 2, type: 0 },
+  { _id: 'local_43', block: 4, position: 3, type: 0 },
+  { _id: 'local_51', block: 5, position: 1, type: 0 },
+  { _id: 'local_52', block: 5, position: 2, type: 0 },
+  { _id: 'local_53', block: 5, position: 3, type: 0 },
+  { _id: 'local_61', block: 6, position: 1, type: 0 },
+  { _id: 'local_62', block: 6, position: 2, type: 0 },
+  { _id: 'local_63', block: 6, position: 3, type: 0 },
 ];
 
 const testEventSettings: IeventSettings = {
@@ -1542,13 +1542,13 @@ class EventPreload extends Phaser.Scene {
     this.state  = state;
     this.userReady = false;
     this.loadingReady = false;
-    // this.loadUser();
+    this.loadUser();
     //удалить по завершению тестов и появлянию бэка
     // -------
     this.userReady = true;
-    this.state.eventTerritories = testTerritories;
+    // this.state.eventTerritories = testTerritories;
     this.state.eventSettings = testEventSettings;
-    this.state.userEvent = testUserEvent;
+    // this.state.userEvent = testUserEvent;
     this.state.eventCollectorSettings = testCollector;
     this.state.eventAnimals = [];
     this.state.farm = 'Event';
@@ -1680,54 +1680,54 @@ class EventPreload extends Phaser.Scene {
     this.load.image('event-buy-icon-10', eventBuyIcon10);
     this.load.image('event-buy-icon-11', eventBuyIcon11);
     this.load.image('event-buy-icon-12', eventBuyIcon12);
-    // this.load.image('event-buy-icon-13', eventBuyIcon13);
-    // this.load.image('event-buy-icon-14', eventBuyIcon14);
-    // this.load.image('event-buy-icon-15', eventBuyIcon15);
-    // this.load.image('event-buy-icon-16', eventBuyIcon16);
-    // this.load.image('event-buy-icon-17', eventBuyIcon17);
-    // this.load.image('event-buy-icon-18', eventBuyIcon18);
-    // this.load.image('event-buy-icon-19', eventBuyIcon19);
-    // this.load.image('event-buy-icon-20', eventBuyIcon20);
-    // this.load.image('event-buy-icon-21', eventBuyIcon21);
-    // this.load.image('event-buy-icon-22', eventBuyIcon22);
-    // this.load.image('event-buy-icon-23', eventBuyIcon23);
-    // this.load.image('event-buy-icon-24', eventBuyIcon24);
-    // this.load.image('event-buy-icon-25', eventBuyIcon25);
-    // this.load.image('event-buy-icon-26', eventBuyIcon26);
-    // this.load.image('event-buy-icon-27', eventBuyIcon27);
-    // this.load.image('event-buy-icon-28', eventBuyIcon28);
-    // this.load.image('event-buy-icon-29', eventBuyIcon29);
-    // this.load.image('event-buy-icon-30', eventBuyIcon30);
-    // this.load.image('event-buy-icon-31', eventBuyIcon31);
-    // this.load.image('event-buy-icon-32', eventBuyIcon32);
-    // this.load.image('event-buy-icon-33', eventBuyIcon33);
-    // this.load.image('event-buy-icon-34', eventBuyIcon34);
-    // this.load.image('event-buy-icon-35', eventBuyIcon35);
-    // this.load.image('event-buy-icon-36', eventBuyIcon36);
-    // this.load.image('event-buy-icon-37', eventBuyIcon37);
-    // this.load.image('event-buy-icon-38', eventBuyIcon38);
-    // this.load.image('event-buy-icon-39', eventBuyIcon39);
-    // this.load.image('event-buy-icon-40', eventBuyIcon40);
-    // this.load.image('event-buy-icon-41', eventBuyIcon41);
-    // this.load.image('event-buy-icon-42', eventBuyIcon42);
-    // this.load.image('event-buy-icon-43', eventBuyIcon43);
-    // this.load.image('event-buy-icon-44', eventBuyIcon44);
-    // this.load.image('event-buy-icon-45', eventBuyIcon45);
-    // this.load.image('event-buy-icon-46', eventBuyIcon46);
-    // this.load.image('event-buy-icon-47', eventBuyIcon47);
-    // this.load.image('event-buy-icon-48', eventBuyIcon48);
-    // this.load.image('event-buy-icon-49', eventBuyIcon49);
-    // this.load.image('event-buy-icon-50', eventBuyIcon50);
-    // this.load.image('event-buy-icon-51', eventBuyIcon51);
-    // this.load.image('event-buy-icon-52', eventBuyIcon52);
-    // this.load.image('event-buy-icon-53', eventBuyIcon53);
-    // this.load.image('event-buy-icon-54', eventBuyIcon54);
-    // this.load.image('event-buy-icon-55', eventBuyIcon55);
-    // this.load.image('event-buy-icon-56', eventBuyIcon56);
-    // this.load.image('event-buy-icon-57', eventBuyIcon57);
-    // this.load.image('event-buy-icon-58', eventBuyIcon58);
-    // this.load.image('event-buy-icon-59', eventBuyIcon59);
-    // this.load.image('event-buy-icon-60', eventBuyIcon60);
+    this.load.image('event-buy-icon-13', eventBuyIcon13);
+    this.load.image('event-buy-icon-14', eventBuyIcon14);
+    this.load.image('event-buy-icon-15', eventBuyIcon15);
+    this.load.image('event-buy-icon-16', eventBuyIcon16);
+    this.load.image('event-buy-icon-17', eventBuyIcon17);
+    this.load.image('event-buy-icon-18', eventBuyIcon18);
+    this.load.image('event-buy-icon-19', eventBuyIcon19);
+    this.load.image('event-buy-icon-20', eventBuyIcon20);
+    this.load.image('event-buy-icon-21', eventBuyIcon21);
+    this.load.image('event-buy-icon-22', eventBuyIcon22);
+    this.load.image('event-buy-icon-23', eventBuyIcon23);
+    this.load.image('event-buy-icon-24', eventBuyIcon24);
+    this.load.image('event-buy-icon-25', eventBuyIcon25);
+    this.load.image('event-buy-icon-26', eventBuyIcon26);
+    this.load.image('event-buy-icon-27', eventBuyIcon27);
+    this.load.image('event-buy-icon-28', eventBuyIcon28);
+    this.load.image('event-buy-icon-29', eventBuyIcon29);
+    this.load.image('event-buy-icon-30', eventBuyIcon30);
+    this.load.image('event-buy-icon-31', eventBuyIcon31);
+    this.load.image('event-buy-icon-32', eventBuyIcon32);
+    this.load.image('event-buy-icon-33', eventBuyIcon33);
+    this.load.image('event-buy-icon-34', eventBuyIcon34);
+    this.load.image('event-buy-icon-35', eventBuyIcon35);
+    this.load.image('event-buy-icon-36', eventBuyIcon36);
+    this.load.image('event-buy-icon-37', eventBuyIcon37);
+    this.load.image('event-buy-icon-38', eventBuyIcon38);
+    this.load.image('event-buy-icon-39', eventBuyIcon39);
+    this.load.image('event-buy-icon-40', eventBuyIcon40);
+    this.load.image('event-buy-icon-41', eventBuyIcon41);
+    this.load.image('event-buy-icon-42', eventBuyIcon42);
+    this.load.image('event-buy-icon-43', eventBuyIcon43);
+    this.load.image('event-buy-icon-44', eventBuyIcon44);
+    this.load.image('event-buy-icon-45', eventBuyIcon45);
+    this.load.image('event-buy-icon-46', eventBuyIcon46);
+    this.load.image('event-buy-icon-47', eventBuyIcon47);
+    this.load.image('event-buy-icon-48', eventBuyIcon48);
+    this.load.image('event-buy-icon-49', eventBuyIcon49);
+    this.load.image('event-buy-icon-50', eventBuyIcon50);
+    this.load.image('event-buy-icon-51', eventBuyIcon51);
+    this.load.image('event-buy-icon-52', eventBuyIcon52);
+    this.load.image('event-buy-icon-53', eventBuyIcon53);
+    this.load.image('event-buy-icon-54', eventBuyIcon54);
+    this.load.image('event-buy-icon-55', eventBuyIcon55);
+    this.load.image('event-buy-icon-56', eventBuyIcon56);
+    this.load.image('event-buy-icon-57', eventBuyIcon57);
+    this.load.image('event-buy-icon-58', eventBuyIcon58);
+    this.load.image('event-buy-icon-59', eventBuyIcon59);
+    this.load.image('event-buy-icon-60', eventBuyIcon60);
 
     this.load.image('disable-animal', disableAnimal);
     this.load.image('animal1', animal1);
@@ -1871,64 +1871,64 @@ class EventPreload extends Phaser.Scene {
     axios.post(process.env.API + '/event/loadData', {
       hash: this.state.user.hash
     }).then((response) => {
+      console.log(response);
+      // // checkStorage(response.data.user.hash);
 
-      // checkStorage(response.data.user.hash);
+      // // let localSaveCounter: number = 0;
 
-      // let localSaveCounter: number = 0;
+      // // if (localStorage.userEvent) {
+      // //   let user: IuserEvent = JSON.parse(localStorage.userEvent);
+      // //   if (typeof user.autosaveCounter === 'number') localSaveCounter = user.autosaveCounter;
+      // // }
 
-      // if (localStorage.userEvent) {
-      //   let user: IuserEvent = JSON.parse(localStorage.userEvent);
-      //   if (typeof user.autosaveCounter === 'number') localSaveCounter = user.autosaveCounter;
-      // }
+      // // if (response.data.user.eventSaveCounter >= localSaveCounter) {
 
-      // if (response.data.user.eventSaveCounter >= localSaveCounter) {
-
-        // общие настройки
-        this.state.autoSaveSpeed = response.data.autoSaveSpeed;
-        this.state.maxMerginTime = response.data.maxMerginTime;
-        this.state.packages = response.data.packages;
-        this.state.herdBoostSpeedAnimal = response.data.herdBoostSpeedAnimal;
-        this.state.herdBoostTime = response.data.herdBoostTime;
-        this.state.herdBoostPrice = response.data.herdBoostPrice;
-        this.state.herdBoostDelay = response.data.herdBoostDelay;
+      //   // общие настройки
+      //   this.state.autoSaveSpeed = response.data.autoSaveSpeed;
+      //   this.state.maxMerginTime = response.data.maxMerginTime;
+      //   this.state.packages = response.data.packages;
+      //   this.state.herdBoostSpeedAnimal = response.data.herdBoostSpeedAnimal;
+      //   this.state.herdBoostTime = response.data.herdBoostTime;
+      //   this.state.herdBoostPrice = response.data.herdBoostPrice;
+      //   this.state.herdBoostDelay = response.data.herdBoostDelay;
         
-        // массив с настройками для евентовой фермы
-        const eventSettings: IeventSettings = {  // IeventSettings Нужно делать интерфейс
-          territoriesEventSettings: response.data.territoriesEventSettings,
-          eventSettings: response.data.eventSettings,
-          territoriesEventPrice: response.data.territoriesEventPrice,
-          buyBetterBreedAnimal: response.data.buyBetterBreedAnimal,
-          doubledСollectorPrice: response.data.doubledСollectorPrice,
-          collectorPrice4: response.data.collectorPrice4,
-          collectorPrice12: response.data.collectorPrice12,
-          unlockCollector4: response.data.unlockCollector4,
-          unlockCollector12: response.data.unlockCollector12,
-          priceCoefficient: response.data.priceCoefficient,
-          feedBoostPrice: response.data.feedBoostPrice
-        }
+      //   // массив с настройками для евентовой фермы
+      //   const eventSettings: IeventSettings = {  // IeventSettings Нужно делать интерфейс
+      //     territoriesEventSettings: response.data.territoriesEventSettings,
+      //     eventSettings: response.data.eventSettings,
+      //     territoriesEventPrice: response.data.territoriesEventPrice,
+      //     buyBetterBreedAnimal: response.data.buyBetterBreedAnimal,
+      //     doubledСollectorPrice: response.data.doubledСollectorPrice,
+      //     collectorPrice4: response.data.collectorPrice4,
+      //     collectorPrice12: response.data.collectorPrice12,
+      //     unlockCollector4: response.data.unlockCollector4,
+      //     unlockCollector12: response.data.unlockCollector12,
+      //     priceCoefficient: response.data.priceCoefficient,
+      //     feedBoostPrice: response.data.feedBoostPrice
+      //   }
 
-        this.state.eventSettings = eventSettings;
+      //   this.state.eventSettings = eventSettings;
 
-        const eventAnimals: IeventAnimal[] = []; // IeventAnimal
+      //   const eventAnimals: IeventAnimal[] = []; // IeventAnimal
 
-        for (let i in response.data.animals) {
+      //   for (let i in response.data.animals) {
           
-          let animal = response.data.animals[i];
-          eventAnimals.push({
-            _id: animal._id,
-            type: animal.type,
-            activeAnimal: animal.active,
-            x: animal.x,
-            y: animal.y,
-          });
+      //     let animal = response.data.animals[i];
+      //     eventAnimals.push({
+      //       _id: animal._id,
+      //       type: animal.type,
+      //       activeAnimal: animal.active,
+      //       x: animal.x,
+      //       y: animal.y,
+      //     });
 
-        }
+      //   }
         
         const eventTerritories: IeventTerritories[] = [];
         
-        for (let i in response.data.territories) {
+        for (let i in response.data.event.territories) {
 
-          let territory = response.data.territories[i];
+          let territory = response.data.event.territories[i];
 
           eventTerritories.push({
             _id: territory._id,
@@ -1939,20 +1939,20 @@ class EventPreload extends Phaser.Scene {
 
         }
 
-        const eventResources: IeventResource[] = []; // IeventResource
+      //   const eventResources: IeventResource[] = []; // IeventResource
 
-        for (let i in response.data.eventResources) {
+      //   for (let i in response.data.eventResources) {
 
-          let eventResource = response.data.eventResources[i];
+      //     let eventResource = response.data.eventResources[i];
 
-          eventResources.push({
-            _id: eventResource._id,
-            x: eventResource.x,
-            y: eventResource.y,
-            type: eventResource.type
-          });
+      //     eventResources.push({
+      //       _id: eventResource._id,
+      //       x: eventResource.x,
+      //       y: eventResource.y,
+      //       type: eventResource.type
+      //     });
 
-        }
+      //   }
 
         const user: Iuser = {
           diamonds: response.data.user.diamonds,
@@ -1968,35 +1968,35 @@ class EventPreload extends Phaser.Scene {
         }
 
         const userEvent: IuserEvent = {  // нужно делать интерфейс IuserEvent
-          money: response.data.user.eventMoney,
-          countAnimal: response.data.user.countEvent,
-          collector: response.data.user.eventCollector,
-          collectorLevel: response.data.user.eventCollectorLevel,
-          collectorTakenTime: response.data.user.eventCollector,
-          tutorial: response.data.user.eventTutor,
-          autosaveCounter: response.data.user.eventSaveCounter,
-          takenHerdBoost: response.data.user.takenHerdBoostEvent,
-          feedBoostTime: response.data.user.feedBoostTime,
-          maxLevelAnimal: response.data.user.maxLevelAnimal,
-          herdBoostAnimals: response.data.user.herdBoostAnimals
+          money: BigInt(response.data.event.money),
+          countAnimal: response.data.event.countAnimal,
+          collector: response.data.event.collector,
+          collectorLevel: response.data.event.collectorLevel,
+          collectorTakenTime: response.data.event.collectorTakenTime,
+          tutorial: response.data.event.tutorial,
+          autosaveCounter: response.data.event.autosaveCounter,
+          takenHerdBoost: response.data.event.takenHerdBoost,
+          feedBoostTime: response.data.event.feedBoostTime,
+          maxLevelAnimal: response.data.event.maxLevelAnimal,
+          herdBoostAnimals: response.data.event.herdBoostAnimals
         }
         
-        // переписываем стейт
-        this.state.timeToHerdBoost = response.data.timeToHerdBoost;
-        this.state.eventCollectorSettings = response.data.collectorSettings;
-        this.state.offlineTime = response.data.offlineTime;
-        this.state.progress = response.data.progress;
+      //   // переписываем стейт
+      //   this.state.timeToHerdBoost = response.data.timeToHerdBoost;
+        // this.state.eventCollectorSettings = response.data.collectorSettings;
+      //   this.state.offlineTime = response.data.offlineTime;
+      //   this.state.progress = response.data.progress;
         this.state.eventTerritories = eventTerritories;
-        this.state.eventAnimals = eventAnimals;
-        this.state.eventResources = eventResources; 
+      //   this.state.eventAnimals = eventAnimals;
+      //   this.state.eventResources = eventResources; 
         this.state.user = user;
         this.state.userEvent = userEvent;
-        this.state.farm = 'Event';
-        this.userReady = true;
-        this.state.nativeCounter = [0, 0, 0, 0];
-      // } else {
-      //   this.loadChicken(response.data.user.counter);
-      // }
+      //   this.state.farm = 'Event';
+      //   this.userReady = true;
+      //   this.state.nativeCounter = [0, 0, 0, 0];
+      // // } else {
+      // //   this.loadChicken(response.data.user.counter);
+      // // }
       
     })
     // .catch(() => {
