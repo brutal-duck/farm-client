@@ -2,7 +2,6 @@ import axios from 'axios';
 import { FAPI } from '../libs/Fapi.js';
 import bridge from '@vkontakte/vk-bridge';
 import * as amplitude from 'amplitude-js';
-import state from './../state';
 import { Arrows } from '../elements';
 
 // рандомное число
@@ -2409,6 +2408,7 @@ function loadingScreen(farmType: string): void {
   let general: number = 13; // Количество общих посказок
   let sheep: number = 7; // Количество посказок для овечьей фермы
   let chicken: number = 7; // Количество посказок для куриной фермы
+  let event: number = 4; // Количество посказок для куриной фермы
   let helpArr: string[] = [];
 
   // Создаем массив с подсказками
@@ -2424,6 +2424,10 @@ function loadingScreen(farmType: string): void {
   } else if (farmType === 'Chicken') {
     for (let i: number = 0; i < chicken; i++) {
       helpArr.push(this.state.lang['helpChicken_' + String(i + 1)]);
+    }
+  } else if (farmType === 'Event') {
+    for (let i: number = 0; i < event; i++) {
+      helpArr.push(this.state.lang['helpEvent_' + String(i + 1)]);
     }
   }
 
