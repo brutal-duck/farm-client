@@ -181,7 +181,7 @@ class EventBars extends Phaser.Scene {
       this.auth = this.add.image(650, this.height - 90, 'profile');
 
       this.clickButton(this.auth, (): void => {
-        this.registration();
+        // this.registration();
       });
 
     } else this.buildMenu();

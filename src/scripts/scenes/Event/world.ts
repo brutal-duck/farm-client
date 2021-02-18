@@ -167,13 +167,12 @@ function world(): void {
 
   this.resources = this.physics.add.group();
 
-  // подгружаем куриц
-  console.log(this.state.eventAnimals)
+  // подгружаем животных
   this.state.eventAnimals.map((data: IeventAnimal) => {
     this.getAnimal(data._id, data.type, data.x, data.y, data.activeAnimal, true);
   });
   
-  // подгружаем яйца
+  // подгружаем ресур
   this.resources = this.physics.add.group();
   this.state.eventResources.map((data: IeventResource) => {
     this.getResource(data);

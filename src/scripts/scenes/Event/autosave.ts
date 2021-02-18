@@ -78,7 +78,7 @@ function autosave(): void {
     user: user,
     resources: resources,
   }
-  console.log(data)
+
   axios.post(process.env.API + "/event/autoSave", data)
   .then((res) => {
     

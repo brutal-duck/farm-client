@@ -1462,8 +1462,10 @@ class EventPreload extends Phaser.Scene {
     this.userReady = false;
     this.loadingReady = false;
     this.loadUser();
+    // ---------- Тестовые настройки, не с бека --------//
     this.state.eventSettings = testEventSettings;
     this.state.eventCollectorSettings = testCollector;
+    // ------------------------------------------------//
     this.state.farm = 'Event';
     this.startTime = Math.round(new Date().getTime() / 1000);
 
@@ -1734,7 +1736,7 @@ class EventPreload extends Phaser.Scene {
   public update(): void {
 
     if (this.loadingReady && this.userReady) {
-      console.log('start', this.state.farm)
+
       if (this.socket) {
 
         let loadTime: number = Math.round(new Date().getTime() / 1000) - this.loadTime;
@@ -1783,7 +1785,6 @@ class EventPreload extends Phaser.Scene {
     axios.post(process.env.API + '/event/loadData', {
       hash: this.state.user.hash
     }).then((response) => {
-      console.log(response);
 
         // общие настройки
         this.state.autoSaveSpeed = response.data.autoSaveSpeed;
