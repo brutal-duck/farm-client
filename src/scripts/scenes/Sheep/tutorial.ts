@@ -465,6 +465,7 @@ function skipTutorial(): void {
   this.state.user.additionalTutorial.balance = true;
   this.state.user.additionalTutorial.cave = true;
   this.state.user.additionalTutorial.herdBoost = true;
+  this.state.user.additionalTutorial.feedBoost = true;
 
   for (let i in this.sheep.children.entries) {
     this.sheep.children.entries[i].setVisible(true);
