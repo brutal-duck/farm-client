@@ -74,9 +74,9 @@ function createChatBars(height: number = 0): void {
     sendMsgBtn,
     emojiBtn,
     closeBtn,
-  )
+  );
 
-  emojiElements = modalElements.slice(0, 10)
+  emojiElements = modalElements.slice(0, 10);
   emojiElements.forEach((el: Phaser.GameObjects.Text) => {
 
     if (el.type !== 'Graphics') {
@@ -85,8 +85,8 @@ function createChatBars(height: number = 0): void {
         
         this.mainInput.style.display = 'block';
         this.mainInput.focus();
-        this.mainInput.value += el.text
-        chatText.setText(this.mainInput.value).setAlpha(0)
+        this.mainInput.value += el.text;
+        chatText.setText(this.mainInput.value).setAlpha(0);
 
       })
       
@@ -134,18 +134,14 @@ function createChatBars(height: number = 0): void {
     
   }
   
-  this.click(sendMsgBtn, (): void => {
-    sendMsg()
-  })
+  this.click(sendMsgBtn, (): void => sendMsg());
   
-  let enter: Phaser.Input.Keyboard.Key = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER)
-  enter.on('down', (): void => {
-    sendMsg()
-  });
+  let enter: Phaser.Input.Keyboard.Key = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+  enter.on('down', (): void => sendMsg());
   
   // Панель смайлов
   this.click(emojiBtn, (): void => {
-    emojiElements.forEach((el) => el.setVisible(!el.visible))
+    emojiElements.forEach((el) => el.setVisible(!el.visible));
     
     if (!emojiBGround.visible) {
       this.game.scene.keys['Chat'].scrolling.height += emojiHeight - 3;
@@ -155,19 +151,19 @@ function createChatBars(height: number = 0): void {
       this.game.scene.keys['Chat'].scrollHeight += emojiHeight;
     }
     
-    this.game.scene.keys['Chat'].scrolling.bottom = this.game.scene.keys['Chat'].scrollHeight
-    this.game.scene.keys['Chat'].scrolling.scrollY = this.game.scene.keys['Chat'].scrollHeight
+    this.game.scene.keys['Chat'].scrolling.bottom = this.game.scene.keys['Chat'].scrollHeight;
+    this.game.scene.keys['Chat'].scrolling.scrollY = this.game.scene.keys['Chat'].scrollHeight;
     
   })
   
   // Ресайз
-  window.onresize = (): void => {
+  window.onresize = (): void => {    
     
-    if (window.innerHeight !== tempHeight && centered) {
+    if (window.innerHeight !== tempHeight) {
       
       tempHeight = window.innerHeight;
       
-      if (tempHeight < windowHeight) {
+      if (tempHeight < windowHeight && centered) {
         
         root.scrollIntoView(false)
         modalElements.forEach((el) => el.setY(el.y + padding))

@@ -382,9 +382,7 @@ function changeNickname(): void {
 
         root.scrollIntoView(false)
 
-        modalElement.forEach((el) => {
-          el.setY(el.y + padding)
-        })
+        modalElement.forEach((el) => el.setY(el.y + padding))
 
         this.mainInput.style.top = '80%';
         this.mainInput.style.bottom = '14%';
@@ -392,14 +390,12 @@ function changeNickname(): void {
         centered = false
 
       } else if (!centered) {
-            
-        modalElement.forEach((el) => {
-          el.setY(el.y - padding);
-        });
-
+        
+        modalElement.forEach((el) => el.setY(el.y - padding));
+        
         this.mainInput.style.top = '50%';
         this.mainInput.style.bottom = '44%';
-
+        
         centered = true
 
       }
@@ -408,7 +404,7 @@ function changeNickname(): void {
 
   // Фокус
   nicknameInputZone.setInteractive();
-  nicknameInputZone.on('pointerdown', () => {
+  nicknameInputZone.on('pointerdown', (): void => {
         
     this.mainInput.style.display = 'block';
     this.mainInput.focus();
@@ -417,24 +413,19 @@ function changeNickname(): void {
 
   // Блюр
   nicknameModalZone.setInteractive();
-  nicknameModalZone.on('pointerdown', () => {
+  nicknameModalZone.on('pointerdown', (): void => {
                 
     this.mainInput.style.display = 'none';
     this.mainInput.blur();
-
     nicknameText.setText(this.mainInput.value).setDepth(4).setCrop(0, 0, 434, 100);
 
   });
 
   // Кнопка смены ника
-  this.clickModalBtn(changeNicknameBtn, (): void => {
-    changeNickname()
-  });
+  this.clickModalBtn(changeNicknameBtn, (): void => changeNickname());
 
   this.enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER)
-  this.enterKey.on('down', (): void => {
-    changeNickname()
-  });
+  this.enterKey.on('down', (): void => changeNickname());
 
   const changeNickname = (): void => {
         
@@ -467,7 +458,7 @@ function changeNickname(): void {
               document.cookie = "farmHASH=" + res.data.hash + "; expires=" + res.data.expires + "; path=/;";
               this.state.user.hash = res.data.hash;
               this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-              this.enterKey.destroy()
+              this.enterKey.destroy();
               this.mainInput.remove();
               this.scene.stop();
                   
@@ -575,27 +566,23 @@ function addEmail(): void {
 
       if (tempHeight < windowHeight && centered) {
 
-        root.scrollIntoView(false)
+        root.scrollIntoView(false);
 
-        modalElement.forEach((el) => {
-          el.setY(el.y + padding)
-        })
+        modalElement.forEach((el) => el.setY(el.y + padding));
 
         this.mainInput.style.top = '80%';
         this.mainInput.style.bottom = '14%';
 
-        centered = false
+        centered = false;
 
       } else if (!centered) {
             
-        modalElement.forEach((el) => {
-          el.setY(el.y - padding);
-        });
+        modalElement.forEach((el) => el.setY(el.y - padding));
 
         this.mainInput.style.top = '50%';
         this.mainInput.style.bottom = '44%';
 
-        centered = true
+        centered = true;
 
       }
     }
@@ -603,7 +590,7 @@ function addEmail(): void {
 
   // Фокус
   emailInputZone.setInteractive();
-  emailInputZone.on('pointerdown', () => {
+  emailInputZone.on('pointerdown', (): void => {
         
     this.mainInput.style.display = 'block';
     this.mainInput.focus();
@@ -612,7 +599,7 @@ function addEmail(): void {
 
   // Блюр
   emailModalZone.setInteractive();
-  emailModalZone.on('pointerdown', () => {
+  emailModalZone.on('pointerdown', (): void => {
                 
     this.mainInput.style.display = 'none';
     this.mainInput.blur();
@@ -623,14 +610,10 @@ function addEmail(): void {
 
   
   // Отправка почты
-  this.clickModalBtn(sendEmailBtn, (): void => {
-    sendEmail()
-  })
+  this.clickModalBtn(sendEmailBtn, (): void => sendEmail());
 
-  this.enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER)
-  this.enterKey.on('down', (): void => {
-    sendEmail()
-  });
+  this.enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+  this.enterKey.on('down', (): void => sendEmail());
 
 
   const sendEmail = (): void => {
@@ -673,7 +656,6 @@ function addEmail(): void {
     }
 
   }
-  
 
   this.resizeWindow(270);
 }
