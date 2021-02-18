@@ -165,8 +165,6 @@ function world(): void {
     collideWorldBounds: true
   });
 
-  this.resources = this.physics.add.group();
-
   // подгружаем животных
   this.state.eventAnimals.map((data: IeventAnimal) => {
     this.getAnimal(data._id, data.type, data.x, data.y, data.activeAnimal, true);

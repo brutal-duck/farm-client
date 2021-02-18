@@ -514,7 +514,7 @@ function tryTask(): void {
 }
 
 function buildMenu(): void {
-  console.log('menu');
+ 
   this.profile = this.add.image(650, this.height - 90, 'profile').setScale(0.8).setDepth(this.height + 2);
   this.chat = this.add.image(650, this.height - 90, 'chat').setScale(0.8).setDepth(this.height + 2);
   this.menu = this.add.image(650, this.height - 90, 'sandwich').setDepth(this.height + 3);

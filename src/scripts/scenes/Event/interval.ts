@@ -35,14 +35,14 @@ function interval(): void {
       }
 
       if (animal.data.values.resource === 1000 && this.resources.getLength() <= this.maxCountResource) {
-
+        
         let resource: IeventResource = {
           type: animal.data.values.base.data.values.type,
           x: animal.x,
           y: animal.y + animal.height / 2,
           _id: 'local_' + randomString(18)
         }
-
+       
         this.getResource(resource);
 
         animal.data.values.resource = 0;  

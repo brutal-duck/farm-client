@@ -161,7 +161,7 @@ function getActiveAnimal(
 
 }
 // выдача ресурса и установка на него слушаетля
-function getResource(data: IeventResource): void {
+function getResource(data: IeventResource): Phaser.Physics.Arcade.Sprite {
 
   let resource: Phaser.Physics.Arcade.Sprite = this.resources.create(data.x, data.y, 'event-resource');
   resource.setDataEnabled();
@@ -178,6 +178,7 @@ function getResource(data: IeventResource): void {
     if (resource.data.values.click) this.collectResource(resource);
 
   });
+  return resource;
 }
 
 function collectResource(resource: Phaser.Physics.Arcade.Sprite): void {

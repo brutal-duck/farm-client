@@ -58,7 +58,7 @@ function autosave(): void {
   }
 
   for (let i in this.resources.children.entries) {
-
+    
     let resource: Phaser.Physics.Arcade.Sprite = this.resources.children.entries[i];
     resources.push({
       _id: resource.data.values._id,
@@ -68,7 +68,7 @@ function autosave(): void {
     });
 
   }
-
+  console.log(resources)
   const data = { 
     id: this.state.user.id,
     hash: this.state.user.hash,

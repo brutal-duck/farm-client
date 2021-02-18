@@ -8,17 +8,17 @@ function setCollector(): void {
     callback: (): void => {
       
       if (this.state.userEvent.collector > 0) {
-        
-        for (let i in this.resources.children.entries) {
 
-          let resource = this.resources.children.entries[i];
-          
-          if (resource.data.values.timeout > 2 && resource.data.values.type !== 0) {
+          for (let i in this.resources.children.entries) {
+  
+            let resource = this.resources.children.entries[i];
             
-            this.collectResource(resource);
-            break;
-          }
-        
+            if (resource.data.values.timeout > 2 && resource.data.values.type !== 0) {
+              
+              this.collectResource(resource);
+              break;
+            }
+
         }
         
       }
