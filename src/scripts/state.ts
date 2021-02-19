@@ -59,6 +59,7 @@ let eventResources: IeventResource[];
 let userEvent: IuserEvent;
 let eventCollectorSettings: IcollectorSettings[];
 let chat: Ichat[] = [];
+let eventRaiting: string = '-';
 
 let state: Istate = {
   // записываемые в localStorage
@@ -91,6 +92,7 @@ let state: Istate = {
   dailyAwards, // награды новичка
 
   // не записываемые в localStorage
+  eventRaiting, // рейтинг пользователя
   nativeCounter, // счетчик нативов в магазине ['diamonds', 'gold', 'animals', 'booster']
   lang, // массив слов выбранного языка
   modal, // настройки окон

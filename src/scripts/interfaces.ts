@@ -458,6 +458,7 @@ interface Istate {
   eventAnimals: IeventAnimal[];
   chickenEggs: IchickenEgg[];
   eventResources: IeventResource[];
+  eventRaiting: string;
   lang: any;
   modal: Imodal;
   animal: any;

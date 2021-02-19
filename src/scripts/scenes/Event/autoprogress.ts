@@ -106,19 +106,22 @@ function autoprogress(load: boolean = false): void {
   // сохраняем ресурсы
   let income: bigint = BigInt(0);
   let length: number = resourceArr.length;
-  if (percent < 100) length = Math.floor(resourceArr.length / 100 * percent);
+  
+  if (percent < 100) length = Math.floor(length / 100 * percent);
 
   for (let i: number = 0; i < length; i++) {
-    
+
     let price: bigint = this.state.eventSettings.eventSettings.find((data: IeventPoints) => data.breed === resourceArr[i].type).resourcePrice;
     price = (price * feedPercent) / BigInt(100); // коэфф
+    
+    
     if (wasCollector > 0) {
+      
       let resource = newResources.find(data => data.id === resourceArr[i].id);
+      console.log('resource', resource)
       if (resource.count > 0) resource.count--;
 
       income += price;
-      break;
-
     }
   }
   if (this.state.offlineTime > 900) {
