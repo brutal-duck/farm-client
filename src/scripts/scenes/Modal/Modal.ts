@@ -11,6 +11,7 @@ import {
   chickenTerritory,
   sheepTerritory,
   resizeWindow,
+  resizeWindowTop,
   eventTerritory
 } from './system';
 import {
@@ -64,7 +65,7 @@ import dailyNewbie from './dailyNewbie';
 import nextChapter from './nextChapter';
 import donate from './donate';
 import { bigButton, repositoryBtn, mergingCloud } from '../../elements';
-import { changeNickname, addEmail, support } from '../../general/modal';
+import { changeNickname, addEmail, support, registration } from '../../general/modal';
   // буст "Стадо"
 import { herdBoostWindow, getRandomAnimal, getRandomStartPosition } from './herdBoost';
 // Чат
@@ -170,6 +171,7 @@ class Modal extends Phaser.Scene {
   public chickenTerritory = chickenTerritory.bind(this);
   public sheepTerritory = sheepTerritory.bind(this);
   public resizeWindow = resizeWindow.bind(this);
+  public resizeWindowTop = resizeWindowTop.bind(this);
   public bigButton = bigButton.bind(this);
   public repositoryBtn = repositoryBtn.bind(this);
   public chickenFair = chickenFair.bind(this);
@@ -197,6 +199,7 @@ class Modal extends Phaser.Scene {
   public chickenProfile = chickenProfile.bind(this);
   public sheepProfile = sheepProfile.bind(this);
   public support = support.bind(this);
+  public registration = registration.bind(this);
   public daily = daily.bind(this);
   public nextChapter = nextChapter.bind(this);
   public dailyNewbie = dailyNewbie.bind(this);

@@ -328,12 +328,13 @@ textarea:focus, input:focus { outline: none; }
   visibility: hidden;
 }
 
-/* Новый инпут */
+/* НОВЫЙ ИНПУТ */
 
 #root {
   position: absolute;
 }
 
+/* Никнейм и отправка почты */
 #nickname {
   display: none;
   position: absolute;
@@ -353,6 +354,7 @@ textarea:focus, input:focus { outline: none; }
   border-radius: 10px;
 }
 
+/* Чат */
 #chat {
   display: none;
   position: absolute;
@@ -373,6 +375,7 @@ textarea:focus, input:focus { outline: none; }
   /* background: rgba(0, 0, 0, 0.5); */
 }
 
+/* Техподдержка */
 #sup-email {
   display: none;
   position: absolute;
@@ -416,3 +419,45 @@ textarea:focus, input:focus { outline: none; }
   border: 3px solid rgba(0, 0, 0, 0.5);
   border-radius: 10px;
 }
+
+/* Регистрация */
+#reg-login {
+  display: none;
+  position: absolute;
+  box-sizing: border-box;
+  top: 37.5%;
+  bottom: 56.5%;
+  width: 64.5%;
+  left: 17.5%;
+  z-index: 10;
+  border: none;
+  padding-left: 8px;
+  font-family: 'Bip';
+  font-size: 120%;
+  color: '#974f00';
+}
+#reg-login:focus {
+  border: 3px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+#reg-pass {
+  display: none;
+  position: absolute;
+  box-sizing: border-box;
+  top: 45.5%;
+  bottom: 48.5%;
+  width: 64.5%;
+  left: 17.5%;
+  z-index: 10;
+  border: none;
+  padding-left: 8px;
+  font-family: 'Bip';
+  font-size: 120%;
+  color: '#974f00';
+}
+#reg-pass:focus {
+  border: 3px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+

@@ -364,7 +364,6 @@ function changeNickname(): void {
     enterNickname,
     nicknameText,
     nicknameInputZone,
-    // graphics2,
     nicknameBG,
     changeNicknameBtn.btn,
     changeNicknameBtn.title,
@@ -373,33 +372,29 @@ function changeNickname(): void {
 
 
   window.onresize = (): void => {
-        
-    if (window.innerHeight !== tempHeight) {
+      
+    tempHeight = window.innerHeight;
 
-      tempHeight = window.innerHeight;
+    if (windowHeight !== tempHeight && centered) {
 
-      if (tempHeight < windowHeight && centered) {
+      root.scrollIntoView(false)
 
-        root.scrollIntoView(false)
+      modalElement.forEach((el) => el.setY(el.y + padding))
+      this.mainInput.style.top = '80%';
+      this.mainInput.style.bottom = '14%';
 
-        modalElement.forEach((el) => el.setY(el.y + padding))
+      centered = false
 
-        this.mainInput.style.top = '80%';
-        this.mainInput.style.bottom = '14%';
+    } else if (windowHeight === tempHeight && !centered) {
+      
+      modalElement.forEach((el) => el.setY(el.y - padding));
+      this.mainInput.style.top = '50%';
+      this.mainInput.style.bottom = '44%';
+      
+      centered = true
 
-        centered = false
-
-      } else if (!centered) {
-        
-        modalElement.forEach((el) => el.setY(el.y - padding));
-        
-        this.mainInput.style.top = '50%';
-        this.mainInput.style.bottom = '44%';
-        
-        centered = true
-
-      }
     }
+
   }
 
   // Фокус
@@ -559,33 +554,29 @@ function addEmail(): void {
 
 
   window.onresize = (): void => {
-        
-    if (window.innerHeight !== tempHeight) {
+      
+    tempHeight = window.innerHeight;
 
-      tempHeight = window.innerHeight;
+    if (windowHeight !== tempHeight && centered) {
 
-      if (tempHeight < windowHeight && centered) {
+      root.scrollIntoView(false);
 
-        root.scrollIntoView(false);
+      modalElement.forEach((el) => el.setY(el.y + padding));
+      this.mainInput.style.top = '80%';
+      this.mainInput.style.bottom = '14%';
 
-        modalElement.forEach((el) => el.setY(el.y + padding));
+      centered = false;
 
-        this.mainInput.style.top = '80%';
-        this.mainInput.style.bottom = '14%';
+    } else if (windowHeight === tempHeight && !centered) {
+          
+      modalElement.forEach((el) => el.setY(el.y - padding));
+      this.mainInput.style.top = '50%';
+      this.mainInput.style.bottom = '44%';
 
-        centered = false;
+      centered = true;
 
-      } else if (!centered) {
-            
-        modalElement.forEach((el) => el.setY(el.y - padding));
-
-        this.mainInput.style.top = '50%';
-        this.mainInput.style.bottom = '44%';
-
-        centered = true;
-
-      }
     }
+    
   }
 
   // Фокус
@@ -681,7 +672,6 @@ function support(): void {
   this.mainInput.setAttribute("autocomplete", "off");
   this.secondInput.setAttribute("id", "sup-msg");
   this.secondInput.setAttribute("autocomplete", "off");
-  this.secondInput.setAttribute("rows", "8");
   
   // Параметры
   let send: boolean = false;
@@ -743,7 +733,6 @@ function support(): void {
     align: 'center',
     wordWrap: { width: 520 }
   }).setOrigin(0.5, 0.5).setDepth(4).setAlpha(0);
-  result.setAlpha(1)
 
   modalElement.push(
     this.header,
@@ -765,37 +754,33 @@ function support(): void {
   
   // resize
   window.onresize = (): void => {
-        
-    if (window.innerHeight !== tempHeight) {
+      
+    tempHeight = window.innerHeight;
 
-      tempHeight = window.innerHeight;
+    if (windowHeight !== tempHeight && centered) {
 
-      if (tempHeight < windowHeight && centered) {
+      root.scrollIntoView(false);
 
-        root.scrollIntoView(false);
+      modalElement.forEach((el) => el.setY(el.y + padding));
+      this.mainInput.style.top = '53.5%';
+      this.mainInput.style.bottom = '40.5%';
+      this.secondInput.style.top = '61%';
+      this.secondInput.style.bottom = '17%';
+  
+      centered = false;
 
-        modalElement.forEach((el) => el.setY(el.y + padding));
-
-        this.mainInput.style.top = '53.5%';
-        this.mainInput.style.bottom = '40.5%';
-        this.secondInput.style.top = '61%';
-        this.secondInput.style.bottom = '17%';
-    
-        centered = false;
-
-      } else if (!centered) {
+      } else if (windowHeight === tempHeight && !centered) {
             
-        modalElement.forEach((el) => el.setY(el.y - padding));
+      modalElement.forEach((el) => el.setY(el.y - padding));
+      this.mainInput.style.top = '38.5%';
+      this.mainInput.style.bottom = '55.5%';
+      this.secondInput.style.top = '46%';
+      this.secondInput.style.bottom = '32%';
 
-        this.mainInput.style.top = '38.5%';
-        this.mainInput.style.bottom = '55.5%';
-        this.secondInput.style.top = '46%';
-        this.secondInput.style.bottom = '32%';
+      centered = true;
 
-        centered = true;
-
-      }
     }
+
   }
 
   // Фокус на инпут
@@ -943,6 +928,368 @@ function support(): void {
   this.resizeWindow(580);
 }
 
+function registration(): void {
+  
+  // Заголовок
+  this.textHeader.setText(this.state.lang.saving);
+
+  // HTML элементы
+  let root: HTMLDivElement = document.querySelector('#root');
+  this.mainInput = document.createElement('input');
+  this.secondInput = document.createElement('input');
+  root.append(this.mainInput);
+  root.append(this.secondInput);
+  this.mainInput.setAttribute("id", "reg-login");
+  this.mainInput.setAttribute("autocomplete", "off");
+  this.secondInput.setAttribute("id", "reg-pass");
+  this.secondInput.setAttribute("autocomplete", "off");
+  this.secondInput.setAttribute("type", "password");
+  
+  // Параметры
+  let reg: boolean = false;
+  let centered: boolean = true;
+  let isLoginTouched: boolean = false;
+  let isPassTouched: boolean = false;
+  let isInputActive: boolean = false;
+  let errorType: string = ''
+  let lastLogin: string = ''
+  let result: Phaser.GameObjects.Text;
+  let re: RegExp = /^[a-zA-Z0-9]+$/;
+  let padding: number = this.cameras.main.height / 100 * 22;
+  let extraHeight: number = 50;
+  let modalElement: modalElementType[] = [];
+  let tempHeight: number = window.innerHeight;
+  const windowHeight: number = window.innerHeight;
+  
+  // Отрисовка текста, полученного из инпут + placeholder
+  let loginText: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX - 220, this.cameras.main.centerY - 113, this.state.lang.loginSixSymbols, {
+    font: '24px Bip',
+    color: '#974f00'
+  }).setOrigin(0, 0.5).setDepth(4).setCrop(0, 0, 434, 100);
+
+  // Отрисовка текста, полученного из инпут + placeholder
+  let passText: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX - 220, this.cameras.main.centerY - 18, this.state.lang.passSixSymbols, {
+    font: '24px Bip',
+    color: '#974f00'
+  }).setOrigin(0, 0.5).setDepth(4).setCrop(0, 0, 434, 100);
+
+  // Зоны
+  let regModalZone: Phaser.GameObjects.Zone = this.add.zone(this.cameras.main.centerX, this.cameras.main.centerY, 710, 1200).setDropZone(undefined, () => {});
+  let loginInputZone: Phaser.GameObjects.Zone = this.add.zone(this.cameras.main.centerX, this.cameras.main.centerY - 113, 460, 70).setDropZone(undefined, () => {});
+  let passTextareaZone: Phaser.GameObjects.Zone = this.add.zone(this.cameras.main.centerX, this.cameras.main.centerY - 18, 460, 70).setDropZone(undefined, () => {});
+
+  // Фон логина
+  let loginBG: Phaser.GameObjects.Graphics = this.add.graphics({
+    x: this.cameras.main.centerX - 230,
+    y: this.cameras.main.centerY - 149
+  })
+  .setDepth(2)
+  .fillStyle(0xffffff, 1)
+  .fillRoundedRect(0, 0, 460, 70, 16);
+
+  // Фон пароля
+  let passBG: Phaser.GameObjects.Graphics = this.add.graphics({
+    x: this.cameras.main.centerX - 230,
+    y: this.cameras.main.centerY - 53
+  })
+  .setDepth(2)
+  .fillStyle(0xffffff, 1)
+  .fillRoundedRect(0, 0, 460, 70, 16);
+
+  // let graphics: Phaser.GameObjects.Graphics = this.add.graphics()
+  // .lineStyle(2, 0xFFFF00)
+  // .strokeRect(loginInputZone.x - loginInputZone.input.hitArea.width / 2, loginInputZone.y - loginInputZone.input.hitArea.height / 2, loginInputZone.input.hitArea.width, loginInputZone.input.hitArea.height);
+
+  // let graphics2: Phaser.GameObjects.Graphics = this.add.graphics()
+  // .lineStyle(2, 0x7200FF)
+  // .strokeRect(passTextareaZone.x - passTextareaZone.input.hitArea.width / 2, passTextareaZone.y - passTextareaZone.input.hitArea.height / 2, passTextareaZone.input.hitArea.width, passTextareaZone.input.hitArea.height);
+
+  let regBtn = this.bigButton('green', 'center', 130, this.state.lang.save);
+  regBtn.btn.y = this.cameras.main.centerY + 80
+  regBtn.title.y = this.cameras.main.centerY + 74
+
+  let logoutBtn = this.bigButton('red', 'center', 130, this.state.lang.profileExit);
+  logoutBtn.btn.y = this.cameras.main.centerY + 166
+  logoutBtn.title.y = this.cameras.main.centerY + 160
+
+  result = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 180, '', {
+    font: '19px Shadow',
+    color: '#FF0000',
+    align: 'center',
+    wordWrap: { width: 500 }
+  }).setOrigin(0.5, 1).setDepth(4).setAlpha(0);
+
+  modalElement.push(
+    this.header,
+    this.body,
+    this.bottom,
+    this.close,
+    this.textHeader,
+    loginText,
+    passText,
+    loginInputZone,
+    passTextareaZone,
+    loginBG,
+    passBG,
+    regBtn.btn,
+    regBtn.title,
+    logoutBtn.btn,
+    logoutBtn.title,
+    result
+  )
+  
+  // resize
+  window.onresize = (): void => {
+    
+    tempHeight = window.innerHeight;
+
+    if (windowHeight !== tempHeight && centered) {
+
+      root.scrollIntoView(false);
+
+      modalElement.forEach((el) => el.setY(el.y + padding));
+      this.mainInput.style.top = '59.5%';
+      this.mainInput.style.bottom = '34.5%';
+      this.secondInput.style.top = '67.5%';
+      this.secondInput.style.bottom = '26.5%';
+      
+      centered = false;
+
+    } else if (windowHeight === tempHeight && !centered) {
+          
+      modalElement.forEach((el) => el.setY(el.y - padding));
+      this.mainInput.style.top = '37.5%';
+      this.mainInput.style.bottom = '56.5%';
+      this.secondInput.style.top = '45.5%';
+      this.secondInput.style.bottom = '48.5%';
+  
+      centered = true;
+
+    }
+
+  }
+  
+
+  // Фокус на логин
+  loginInputZone.setInteractive();
+  loginInputZone.on('pointerdown', (): void => {
+
+    this.secondInput.style.display = 'none';
+    this.mainInput.style.display = 'block';
+    this.mainInput.focus();
+    // this.secondInput.blur();
+
+    // isInputActive = true
+    
+    if (this.secondInput.value === '') passText.setText(this.state.lang.passSixSymbols).setDepth(4).setCrop(0, 0, 434, 100)
+    else passText.setText(hidePass()).setDepth(4).setCrop(0, 0, 434, 100);
+    
+    if (!isLoginTouched) isLoginTouched = true
+    checkError();
+
+  });
+
+  // Фокус на пароль
+  passTextareaZone.setInteractive();
+  passTextareaZone.on('pointerdown', (): void => {
+
+    this.mainInput.style.display = 'none';
+    this.secondInput.style.display = 'block';
+    this.secondInput.focus();
+    // this.mainInput.blur();
+
+    // isInputActive = true
+
+    if (this.mainInput.value === '') loginText.setText(this.state.lang.loginSixSymbols).setDepth(4).setCrop(0, 0, 434, 100)
+    else loginText.setText(this.mainInput.value).setDepth(4).setCrop(0, 0, 434, 100);
+    
+    if (!isPassTouched) isPassTouched = true
+    checkError();
+
+  });
+
+  // Блюр
+  regModalZone.setInteractive();
+  regModalZone.on('pointerdown', (): void => {
+
+    // isInputActive = false
+
+    this.mainInput.style.display = 'none';
+    this.secondInput.style.display = 'none';
+    this.mainInput.blur();
+    this.secondInput.blur();
+
+    if (this.mainInput.value === '') loginText.setText(this.state.lang.loginSixSymbols).setDepth(4).setCrop(0, 0, 434, 100)
+    else loginText.setText(this.mainInput.value).setDepth(4).setCrop(0, 0, 434, 100);
+    
+    if (this.secondInput.value === '') passText.setText(this.state.lang.passSixSymbols).setDepth(4).setCrop(0, 0, 434, 100)
+    else passText.setText(hidePass()).setDepth(4).setCrop(0, 0, 434, 100);
+
+    checkError();
+
+  });
+
+  // Скрытие пароля
+  const hidePass = (): string => {
+    let output: string = ''
+    let i: number = 0
+
+    while (i < this.secondInput.value.length) {
+      output += '*'
+      i++
+    }
+
+    return output
+  }
+
+  // Валидация
+  const checkError = (): void => {
+
+    if (
+      errorType === 'validLoginPass' &&
+      re.test(this.mainInput.value) &&
+      re.test(this.secondInput.value) &&
+      this.mainInput.value.length >= 6 &&
+      this.secondInput.value.length >= 6 &&
+      isLoginTouched &&
+      isPassTouched
+    ) {
+
+      this.resizeWindowTop(-(extraHeight + 20));
+      result.setAlpha(0);
+      errorType = ''
+
+    } else if (errorType === 'haveAccaunt' && lastLogin !== this.mainInput.value) {
+
+      this.resizeWindowTop(-(extraHeight + 20));
+      result.setAlpha(0);
+      errorType = ''
+
+    }
+
+  }
+
+  // Отправка
+  this.clickModalBtn(regBtn, (): void => {
+    this.mainInput.blur();
+    this.secondInput.blur();
+    registration();
+  });
+
+  this.enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+  this.enterKey.on('down', (): void => {
+    this.mainInput.blur();
+    this.secondInput.blur();
+    registration();
+  });
+
+  const registration = (): void => {
+
+    if (!reg) {
+      
+      let checkLogin: boolean = true;
+      let checkPass: boolean = true;
+      checkLogin = re.test(this.mainInput.value);
+      checkPass = re.test(this.secondInput.value);
+      
+      if (this.mainInput.value.length < 6) checkLogin = false;
+      if (this.secondInput.value.length < 6) checkPass = false;
+
+      if (checkLogin && checkPass) {
+
+        reg = true;
+        
+        axios.post(process.env.API + '/registration', {
+          id: this.state.user.id,
+          hash: this.state.user.hash,
+          counter: this.state.user.counter,
+          login: this.mainInput.value,
+          pass: this.secondInput.value
+        })
+        .then((res) => {
+
+          if (res.data.error) window.location.reload();
+          else {
+
+            reg = false;
+
+            if (res.data.success) {
+
+              this.state.amplitude.getInstance().logEvent('reg_done', {});
+
+              let tasks: Itasks[] = this.game.scene.keys[this.state.farm].partTasks();
+              let task: Itasks = tasks.find((data: Itasks) => data.type === 10);
+
+              if (task) {
+                this.game.scene.keys[this.state.farm].takeRewardRegistration = true;
+                this.game.scene.keys[this.state.farm].tryTask(10, 1);
+              }
+
+              this.state.user.login = this.mainInput.value;
+              document.cookie = "farmHASH=" + res.data.hash + "; expires=" + res.data.expires + "; path=/;";
+              this.state.user.hash = res.data.hash;
+              this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+              this.enterKey.destroy()
+              this.secondInput.remove();
+              this.mainInput.remove();
+              this.scene.stop();  
+
+            } else {
+
+              lastLogin = this.mainInput.value
+              result.setText(this.state.lang.haveAccaunt).setAlpha(1);
+              setExtraHeight()
+              errorType = 'haveAccaunt'
+          
+            }
+
+          }
+
+        });
+
+      } else {
+        
+        result.setText(this.state.lang.validLoginPass).setAlpha(1);
+        setExtraHeight()
+        errorType = 'validLoginPass'
+        
+        
+      }
+
+    }
+
+  }
+  
+  // Установка высоты окна
+  const setExtraHeight = (): void => {
+
+    if (errorType === '') {
+
+      extraHeight = result.getBounds().height
+      this.resizeWindowTop(extraHeight + 20);
+
+    } else if (errorType === 'haveAccaunt' || errorType === 'validLoginPass') {
+
+      this.resizeWindowTop(-(extraHeight + 20));
+      extraHeight = result.getBounds().height
+      this.resizeWindowTop(extraHeight + 20);
+
+    }
+  }
+
+  // Выход
+  this.clickModalBtn(logoutBtn, (): void => {
+
+    document.cookie = "farmHASH=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    window.location.reload();
+
+  });
+
+
+  this.resizeWindow(360);
+
+}
+
 
 
 export {
@@ -958,5 +1305,6 @@ export {
   startHerdBoost,
   changeNickname,
   addEmail,
-  support
+  support,
+  registration
 }
