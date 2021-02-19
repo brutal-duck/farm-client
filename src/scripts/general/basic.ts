@@ -2730,5 +2730,6 @@ export {
   collectorBoost,
   loadingScreen,
   updateFeedBoostBtn,
-  spreadAnimals
+  spreadAnimals,
+  setEventRaiting
 }
