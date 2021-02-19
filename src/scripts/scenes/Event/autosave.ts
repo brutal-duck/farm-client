@@ -42,7 +42,7 @@ function autosave(): void {
   
   if (typeof this.state.userEvent.autosaveCounter === 'number') this.state.userEvent.autosaveCounter++;
   else this.state.userEvent.autosaveCounter = 0;
-
+  console.log(this.state.userEvent.maxLevelAnimal)
   let user: IeventUserAutoSave = {
     diamonds: this.state.user.diamonds,
     xp: this.state.user.xp,
@@ -54,7 +54,8 @@ function autosave(): void {
     collector: this.state.userEvent.collector,
     collectorLevel: this.state.userEvent.collectorLevel,
     tutorial: this.state.userEvent.tutorial,
-    autosaveCounter: this.state.userEvent.autosaveCounter,    
+    autosaveCounter: this.state.userEvent.autosaveCounter, 
+    maxLevelAnimal: this.state.userEvent.maxLevelAnimal   
   }
 
   for (let i in this.resources.children.entries) {

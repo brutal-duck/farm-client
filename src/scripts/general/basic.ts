@@ -2673,6 +2673,20 @@ function spreadAnimals(): void {
 
 }
 
+function setEventRaiting():void {
+
+  let login: string;
+  if (this.state.platform !== 'web') {
+    login = this.state.name
+  } else login = this.state.user.login
+
+  this.state.socket.io.emit('setRating', {
+    name: login,
+    mongo: this.state.user.id,
+    score: this.state.user.eventPoints
+  });
+}
+
 export {
   random,
   getRandomBool,

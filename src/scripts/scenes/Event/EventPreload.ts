@@ -1801,7 +1801,7 @@ class EventPreload extends Phaser.Scene {
           });
 
         }
-
+        console.log(response.data.user)
         const user: Iuser = {
           diamonds: response.data.user.diamonds,
           id: response.data.user._id,

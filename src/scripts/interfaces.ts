@@ -71,7 +71,7 @@ interface IeventUserAutoSave {
   autosaveCounter: number;
   takenHerdBoost: number;
   feedBoostTime: number;
-  
+  maxLevelAnimal: number;
 }
 // for state
 interface IadditionalTutorial {
