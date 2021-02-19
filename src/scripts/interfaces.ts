@@ -357,6 +357,10 @@ interface ItasksParams {
   description: string;
   tasks: Itasks[];
 }
+interface IeventParams {
+  offlineTime: number;
+  offlineProgress: number;
+}
 interface Imodal {
   type: number;
   sysType?: number;
@@ -365,6 +369,7 @@ interface Imodal {
   height?: number;
   message?: string;
   tasksParams?: ItasksParams;
+  eventParams?: IeventParams;
 }
 interface Iconvertor {
   fun: number;

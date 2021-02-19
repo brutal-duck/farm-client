@@ -359,6 +359,9 @@ class Modal extends Phaser.Scene {
         this.scene.launch('Chat', this.state);
         this.createChatBars(this.chatHeight)
         break;
+      case 10:
+        // this.eventProgress();
+        break;
       default:
         this.scene.stop();
         this.game.scene.keys[this.state.farm].scrolling.wheel = true;
