@@ -118,7 +118,7 @@ function autoprogress(load: boolean = false): void {
     if (wasCollector > 0) {
       
       let resource = newResources.find(data => data.id === resourceArr[i].id);
-      console.log('resource', resource)
+
       if (resource.count > 0) resource.count--;
 
       income += price;

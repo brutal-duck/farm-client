@@ -68,7 +68,7 @@ function autosave(): void {
     });
 
   }
-  console.log(resources)
+
   const data = { 
     id: this.state.user.id,
     hash: this.state.user.hash,
