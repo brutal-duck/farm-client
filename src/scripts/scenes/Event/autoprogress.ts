@@ -3,9 +3,6 @@ import { random, randomString } from '../../general/basic';
 // расчет прогресса во время отсутствия
 function autoprogress(load: boolean = false): void {
 
-  // значение отступа для яиц, чтоб не прилегали к краям территории
-  let indent: number = 20;
-
    // время буста комбикорм
   let wasFeedBoost: number = 0;
 
@@ -111,7 +108,7 @@ function autoprogress(load: boolean = false): void {
   }
 
   // сохраняем ресурсы
-  let zarabotal: bigint = BigInt(0);
+  let income: bigint = BigInt(0);
   let length: number = resourceArr.length;
   if (percent < 100) length = Math.floor(resourceArr.length / 100 * percent);
 
@@ -123,14 +120,26 @@ function autoprogress(load: boolean = false): void {
       let resource = newResources.find(data => data.id === resourceArr[i].id);
       if (resource.count > 0) resource.count--;
 
-      zarabotal += price;
+      income += price;
       break;
 
     }
-    
-
   }
-  console.log('Заработал',zarabotal)
+  if (this.state.offlineTime > 900) {
+    let modal: Imodal = {
+      type: 10,
+      eventParams: {
+        offlineTime: this.state.offlineTime,
+        offlineProgress: income,
+        collectorTime: wasCollector,
+      }
+    }
+  
+    this.state.modal = modal;
+    this.scene.launch('Modal', this.state);
+  }
+  
+  
   // убираем ресурсы, которые собрали с поля
   for (let i in newResources) {
 

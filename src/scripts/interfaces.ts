@@ -359,7 +359,7 @@ interface ItasksParams {
 }
 interface IeventParams {
   offlineTime: number;
-  offlineProgress: number;
+  offlineProgress: bigint;
   collectorTime: number;
 }
 interface Imodal {
