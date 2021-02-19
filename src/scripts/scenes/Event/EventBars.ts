@@ -211,8 +211,6 @@ class EventBars extends Phaser.Scene {
       color: '#7B3B0D'
     }).setDepth(1).setOrigin(0.5, 0.5);
 
-    this.add.sprite(498, 100, 'eventCoin').setScale(0.22);
-
     let addDiamonds: Phaser.GameObjects.Sprite = this.add.sprite(680, 38, 'plus').setDepth(2);
     let addMoney: Phaser.GameObjects.Sprite = this.add.sprite(680, 100, 'plus').setDepth(2);
 
@@ -261,9 +259,9 @@ class EventBars extends Phaser.Scene {
     this.animalPriceBubble.fillStyle(0xFFFFFF, 1);
     this.animalPriceBubble.fillRoundedRect(0, 0, bounds.width + 30, bounds.height, 8);
 
-    this.proceedsText = this.add.text(this.cameras.main.centerX, 75, '0', {
-      font: '44px Shadow',
-      color: '#124C03'
+    this.proceedsText = this.add.text(this.cameras.main.centerX, 100, '0', {
+      font: '21px Shadow',
+      color: '#f2ede4'
     }).setOrigin(0.5, 0.5);
 
   }
