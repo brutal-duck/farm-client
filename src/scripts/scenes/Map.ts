@@ -96,34 +96,34 @@ class Map extends Phaser.Scene {
     this.build(chickenPosition,'Chicken', this.state.progress.chicken);
     
     // Евентовая ферма на карте
-    let eventIcon: Phaser.GameObjects.Graphics = this.add.graphics();
-    eventIcon.fillStyle(0xff0000, 1.0)
-      .fillCircle(520, 740, 50);
-    let eventText: Phaser.GameObjects.Text = this.add.text(520, 740, 'Нажми!', {
-      fontSize: '40px',
-      color: '#000',
-      fontFamily: 'Shadow'
-    }).setOrigin(0.5, 0.5);
-    this.click(eventText, (): void => {
-      if (this.state.farm !== 'Event') {
+    // let eventIcon: Phaser.GameObjects.Graphics = this.add.graphics();
+    // eventIcon.fillStyle(0xff0000, 1.0)
+    //   .fillCircle(520, 740, 50);
+    // let eventText: Phaser.GameObjects.Text = this.add.text(520, 740, 'Нажми!', {
+    //   fontSize: '40px',
+    //   color: '#000',
+    //   fontFamily: 'Shadow'
+    // }).setOrigin(0.5, 0.5);
+    // this.click(eventText, (): void => {
+    //   if (this.state.farm !== 'Event') {
   
-        this.game.scene.keys[this.state.farm].autosave();
-        this.scene.stop();
-        this.scene.stop('MapBars');
-        this.scene.stop(this.state.farm);
-        this.scene.stop(this.state.farm + 'Bars');
-        this.scene.start('EventPreload', this.state);
+    //     this.game.scene.keys[this.state.farm].autosave();
+    //     this.scene.stop();
+    //     this.scene.stop('MapBars');
+    //     this.scene.stop(this.state.farm);
+    //     this.scene.stop(this.state.farm + 'Bars');
+    //     this.scene.start('EventPreload', this.state);
 
-      } else {
+    //   } else {
 
-        this.game.scene.keys[this.state.farm].scrolling.downHandler();
-        this.game.scene.keys[this.state.farm].scrolling.enabled = true;
-        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-        this.scene.stop('MapBars');
-        this.scene.stop();
+    //     this.game.scene.keys[this.state.farm].scrolling.downHandler();
+    //     this.game.scene.keys[this.state.farm].scrolling.enabled = true;
+    //     this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+    //     this.scene.stop('MapBars');
+    //     this.scene.stop();
 
-      }
-    });
+    //   }
+    // });
   }
 
 
