@@ -24,7 +24,6 @@ import {
 } from '../../general/animations';
 import { pulseCollector, plusResourceAnimation } from './animations';
 import { showFeedTime } from './../../general/boosts';
-import { registration } from '../../html';
 
 class EventBars extends Phaser.Scene {
   constructor() {
@@ -80,7 +79,6 @@ class EventBars extends Phaser.Scene {
   public pulseCollector = pulseCollector.bind(this);
   public menuAnimation = menuAnimation.bind(this);
   public pulseBalance = pulseBalance.bind(this);
-  public registration = registration.bind(this);
   public buildMenu = buildMenu.bind(this);
   public increaseDiamonds = increaseDiamonds.bind(this);
   public plusDiamondsAnimation = plusDiamondsAnimation.bind(this);
@@ -181,7 +179,12 @@ class EventBars extends Phaser.Scene {
       this.auth = this.add.image(650, this.height - 90, 'profile');
 
       this.clickButton(this.auth, (): void => {
-        // this.registration();
+        let modal: Imodal = {
+          type: 1,
+          sysType: 15
+        }
+        this.state.modal = modal;
+        this.scene.launch('Modal', this.state);
       });
 
     } else this.buildMenu();

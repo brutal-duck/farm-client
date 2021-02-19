@@ -27,7 +27,6 @@ import {
   firework250
 } from '../../general/animations';
 import { pulseCollector, arrowsBehavior } from './animations';
-import { registration } from '../../html';
 
 class SheepBars extends Phaser.Scene {
   constructor() {
@@ -89,7 +88,6 @@ class SheepBars extends Phaser.Scene {
   public pulseCollector = pulseCollector.bind(this);
   public menuAnimation = menuAnimation.bind(this);
   public pulseBalance = pulseBalance.bind(this);
-  public registration = registration.bind(this);
   public buildMenu = buildMenu.bind(this);
   public increaseDiamonds = increaseDiamonds.bind(this);
   public plusDiamondsAnimation = plusDiamondsAnimation.bind(this);
@@ -171,7 +169,7 @@ class SheepBars extends Phaser.Scene {
       }
       this.state.modal = modal;
       this.scene.launch('Modal', this.state);
-
+  
     });
     
     // кнопка карты
@@ -189,8 +187,14 @@ class SheepBars extends Phaser.Scene {
 
       this.auth = this.add.image(650, this.height - 90, 'profile');
 
+      // регистрация
       this.clickButton(this.auth, (): void => {
-        this.registration();
+        let modal: Imodal = {
+          type: 1,
+          sysType: 15
+        }
+        this.state.modal = modal;
+        this.scene.launch('Modal', this.state);
       });
 
     } else this.buildMenu();

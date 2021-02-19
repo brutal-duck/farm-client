@@ -3,7 +3,7 @@ function systemWindow(): void {
 
   let height:number = 0;
 
-  this.header = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY - Math.floor(height / 2), 'header-syst')
+  this.header = this.add.image(this.cameras.main.centerX - 1, this.cameras.main.centerY - Math.floor(height / 2), 'header-syst')
     .setOrigin(0.5, 1);
   this.close = this.add.sprite(620, this.cameras.main.centerY - Math.floor(height / 2) - 45, 'header-close')
     .setOrigin(0.5, 0.5)
@@ -26,7 +26,8 @@ function systemWindow(): void {
     if (
       this.state.modal.sysType === 12 || 
       this.state.modal.sysType === 13 ||
-      this.state.modal.sysType === 14
+      this.state.modal.sysType === 14 ||
+      this.state.modal.sysType === 15
     ) {
       this.enterKey.destroy();
       this.mainInput.remove();
@@ -187,8 +188,12 @@ function systemWindow(): void {
       this.addEmail();
       break;
 
-    case 14: // Окно ввода почты
+    case 14: // Окно тех поддержки
       this.support();
+      break;
+
+    case 15: // Окно регистрации
+      this.registration();
       break;
 
     default:      
@@ -304,10 +309,22 @@ function resizeWindow(height: number): void {
 
 }
 
+// Растягивание верхушки окна
+function resizeWindowTop(height: number): void {
+
+  this.textHeader.setY(this.textHeader.y - height)
+  this.header.setY(this.header.y - height)
+  this.close.setY(this.close.y - height)
+  this.body.setY(this.body.y - height / 2)
+  this.body.height += height
+
+}
+
 export {
   systemWindow,
   chickenTerritory,
   sheepTerritory,
   resizeWindow,
+  resizeWindowTop,
   eventTerritory
 }

@@ -666,7 +666,12 @@ class TaskBoard {
 
         // кликабельность заданий
         if (task.type === 10) {
-          this.scene.registration(); // задание на регистрацию
+          let modal: Imodal = {
+            type: 1,
+            sysType: 15
+          }
+          this.scene.state.modal = modal;
+          this.scene.scene.launch('Modal', this.scene.state);
         } else if (task.type === 16) {
           this.scene.game.scene.keys['Sheep'].openEmailWindow(); // задание на почту
         }
