@@ -992,7 +992,7 @@ const testCollector: IcollectorSettings[] = [
 const testEventSettings: IeventSettings = {
   buyBetterBreedAnimal: 2,
   doubledСollectorPrice: 25,
-  feedBoostPrice: 35,
+  feedBoostPrice: 40,
   collectorPrice4: 90,
   collectorPrice12: 250,
   unlockCollector4: 5,

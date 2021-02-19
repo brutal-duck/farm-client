@@ -28,10 +28,6 @@ function autoprogress(load: boolean = false): void {
   // процент ресурсов под бустом
   let feedBoostNumberPercent: number = 100 + Number((wasFeedBoost / wasCollector).toFixed(2)) * 100;
   if (feedBoostNumberPercent >= 200 ) feedBoostNumberPercent = 200;
-  console.log(wasFeedBoost)
-  console.log(wasCollector);
-  
-  console.log(feedBoostNumberPercent)
   let feedPercent: bigint = BigInt(feedBoostNumberPercent);
 
   if (!load) this.game.scene.keys['EventBars'].collector.update();
@@ -134,9 +130,9 @@ function autoprogress(load: boolean = false): void {
         collectorTime: wasCollector,
       }
     }
-  
-    this.state.modal = modal;
-    this.scene.launch('Modal', this.state);
+    console.log(modal)
+    // this.state.modal = modal;
+    // this.scene.launch('Modal', this.state);
   }
   
   
@@ -194,9 +190,13 @@ function autoprogress(load: boolean = false): void {
     index++;
 
   }
-  console.log('всего',newResources)
-  console.log('Осталось',remainingResources)
+  console.log('------------------------------');
+  console.log('Доход', income)
+  console.log('всего', newResources)
+  console.log('Осталось', remainingResources)
   console.log('новый массив', this.resources.children.entries)
+  console.log('------------------------------');
+  
 
 }
 
