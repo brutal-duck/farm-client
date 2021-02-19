@@ -26,9 +26,14 @@ function autoprogress(load: boolean = false): void {
   }
 
   // процент ресурсов под бустом
-  let feedBoostNumberPercent: number = 100 + Number((wasFeedBoost / wasCollector).toFixed(2)) * 100;
-  if (feedBoostNumberPercent >= 200 ) feedBoostNumberPercent = 200;
-  let feedPercent: bigint = BigInt(feedBoostNumberPercent);
+  let feedBoostNumberPercent: number;
+  let feedPercent: bigint = BigInt(100);
+  if (wasFeedBoost > 0) {
+    feedBoostNumberPercent = 100 + Number((wasFeedBoost / wasCollector).toFixed(2)) * 100;
+    if (feedBoostNumberPercent >= 200 ) feedBoostNumberPercent = 200;
+    feedPercent = BigInt(feedBoostNumberPercent);
+  }
+  
 
   if (!load) this.game.scene.keys['EventBars'].collector.update();
   if (!load) this.state.timeToHerdBoost -= this.state.offlineTime;

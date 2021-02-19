@@ -1399,22 +1399,22 @@ function caveTimer(): void {
 // проверка подключения к интернету
 function onlineStatus(): void {
 
-  let http_request: XMLHttpRequest = new XMLHttpRequest();
+  // let http_request: XMLHttpRequest = new XMLHttpRequest();
 
-  http_request.onreadystatechange = (): void => {
+  // http_request.onreadystatechange = (): void => {
 
-    if (http_request.readyState === 4) {
+  //   if (http_request.readyState === 4) {
       
-      if (http_request.status === 200) this.state.online = true;
-      else this.state.online = false;
+  //     if (http_request.status === 200) this.state.online = true;
+  //     else this.state.online = false;
       
-    }
+  //   }
 
-  }
+  // }
 
-  http_request.open('GET', 'https://ipv4.icanhazip.com', true);
-  http_request.timeout = 1500;
-  http_request.send('');
+  // http_request.open('GET', 'https://ipv4.icanhazip.com', true);
+  // http_request.timeout = 1500;
+  // http_request.send('');
   
 }
 
