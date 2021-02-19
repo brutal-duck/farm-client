@@ -31,6 +31,10 @@ function autoprogress(load: boolean = false): void {
   // процент ресурсов под бустом
   let feedBoostNumberPercent: number = 100 + Number((wasFeedBoost / wasCollector).toFixed(2)) * 100;
   if (feedBoostNumberPercent >= 200 ) feedBoostNumberPercent = 200;
+  console.log(wasFeedBoost)
+  console.log(wasCollector);
+  
+  console.log(feedBoostNumberPercent)
   let feedPercent: bigint = BigInt(feedBoostNumberPercent);
 
   if (!load) this.game.scene.keys['EventBars'].collector.update();
@@ -56,7 +60,7 @@ function autoprogress(load: boolean = false): void {
     }
     
     if (this.state.userEvent.collector === 0) {
-      animal.data.values.active.data.values.resource = random(0, 1000);
+      animal.data.values.resource = random(0, 1000);
     }
 
     if (animal.data.values.active.data.values.working) {
@@ -107,6 +111,7 @@ function autoprogress(load: boolean = false): void {
   }
 
   // сохраняем ресурсы
+  let zarabotal: bigint = BigInt(0);
   let length: number = resourceArr.length;
   if (percent < 100) length = Math.floor(resourceArr.length / 100 * percent);
 
@@ -114,20 +119,18 @@ function autoprogress(load: boolean = false): void {
     
     let price: bigint = this.state.eventSettings.eventSettings.find((data: IeventPoints) => data.breed === resourceArr[i].type).resourcePrice;
     price = (price * feedPercent) / BigInt(100); // коэфф
-    
-    if (newResources.length < this.maxCountResource && wasCollector > 0) {
-      
+    if (wasCollector > 0) {
       let resource = newResources.find(data => data.id === resourceArr[i].id);
       if (resource.count > 0) resource.count--;
 
-      this.state.userEvent.money += price;
+      zarabotal += price;
       break;
 
     }
     
 
   }
-
+  console.log('Заработал',zarabotal)
   // убираем ресурсы, которые собрали с поля
   for (let i in newResources) {
 
@@ -143,9 +146,9 @@ function autoprogress(load: boolean = false): void {
   // ложим остатки ресурсов на поле
   let remainingResources: number[] = [];
   for (let i in newResources) {
-    console.log(newResources[i])
+
     for (let j: number = 0; j < newResources[i].count; j++) {
-      console.log(newResources[i])
+
       if (!newResources[i].resource) {
         
         remainingResources.push(newResources[i].type);
@@ -155,7 +158,7 @@ function autoprogress(load: boolean = false): void {
 
   // формируем свободные места на рабочей зоне
   let freeSpace: Iposition[] = [];
-  for (let j: number = 0; j < this.maxCountResource; j++) {
+  for (let j: number = 0; j < this.maxCountResource - this.resources.children.entries.length; j++) {
     freeSpace.push({
       x: random(20, 700),
       y: random(this.topIndent + 20, this.topIndent + 460)
@@ -182,8 +185,10 @@ function autoprogress(load: boolean = false): void {
     index++;
 
   }
-  console.log('Осталось',remainingResources)
   console.log('всего',newResources)
+  console.log('Осталось',remainingResources)
+  console.log('новый массив', this.resources.children.entries)
+
 }
 
 export default autoprogress;
