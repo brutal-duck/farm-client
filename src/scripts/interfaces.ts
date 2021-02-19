@@ -360,6 +360,7 @@ interface ItasksParams {
 interface IeventParams {
   offlineTime: number;
   offlineProgress: number;
+  collectorTime: number;
 }
 interface Imodal {
   type: number;

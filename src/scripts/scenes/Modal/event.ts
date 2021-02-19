@@ -976,6 +976,12 @@ function eventProfile(): void {
 
 }
 
+function eventProgress(): void {
+  console.log(this.state.modal);
+}
+
+
+
 export { 
   confirmExpelAnimal,
   eventConvertor,
@@ -983,5 +989,6 @@ export {
   improveCollectorEvent,
   herdBoostEventWindow,
   eventDrag,
-  eventProfile
+  eventProfile,
+  eventProgress
 } 

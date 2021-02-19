@@ -36,7 +36,8 @@ import {
   improveCollectorEvent,
   herdBoostEventWindow,
   eventDrag,
-  eventProfile
+  eventProfile,
+  eventProgress
 } from './event';
 import {
   sheepFair,
@@ -225,7 +226,8 @@ class Modal extends Phaser.Scene {
   public herdBoostEventWindow = herdBoostEventWindow.bind(this);
   public eventDrag = eventDrag.bind(this);
   public eventProfile = eventProfile.bind(this);
-  public createChatBars = createChatBars.bind(this)
+  public eventProgress = eventProgress.bind(this);
+  public createChatBars = createChatBars.bind(this);
   
   public init(state: Istate): void {
     this.state = state;
@@ -360,7 +362,7 @@ class Modal extends Phaser.Scene {
         this.createChatBars(this.chatHeight)
         break;
       case 10:
-        // this.eventProgress();
+        this.eventProgress();
         break;
       default:
         this.scene.stop();
