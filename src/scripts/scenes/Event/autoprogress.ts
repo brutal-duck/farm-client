@@ -122,6 +122,7 @@ function autoprogress(load: boolean = false): void {
       if (resource.count > 0) resource.count--;
 
       income += price;
+
     }
   }
   if (this.state.offlineTime > 900) {
@@ -192,14 +193,7 @@ function autoprogress(load: boolean = false): void {
 
     index++;
 
-  }
-  console.log('------------------------------');
-  console.log('Доход', income)
-  console.log('всего', newResources)
-  console.log('Осталось', remainingResources)
-  console.log('новый массив', this.resources.children.entries)
-  console.log('------------------------------');
-  
+  } 
 
 }
 
