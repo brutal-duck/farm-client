@@ -11,7 +11,7 @@ import {
   onlineStatus,
   takeDonate,
   debug, 
-  setEventRaiting
+  getEventRaiting
 } from '../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -174,7 +174,7 @@ class Event extends Phaser.Scene {
   public buildConfetti = buildConfetti.bind(this);
 
   public autoprogress = autoprogress.bind(this);
-  public setEventRaiting = setEventRaiting.bind(this);
+  public getEventRaiting = getEventRaiting.bind(this);
 
   public init(state: Istate): void {
     this.state = state;
@@ -193,7 +193,7 @@ class Event extends Phaser.Scene {
     this.interval();
     this.setCollector();
     this.flyAnimal();
-    this.setEventRaiting();
+    this.getEventRaiting();
     // анимации
     // let cursors = this.input.keyboard.createCursorKeys();
     // cursors.space.on('down', (): void => {

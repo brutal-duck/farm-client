@@ -160,7 +160,8 @@ class Boot extends Phaser.Scene {
       mail: '',
       level: 0,
       additionalTutorial: { balance: false, cave: false, collector: false, herdBoost: false, feedBoost: false },
-      takenReward: true, 
+      takenReward: true,
+      eventPoints: 0 
     }
     this.state.platform = this.platform;
     this.state.name = this.name;

@@ -92,6 +92,7 @@ interface Iuser {
   level: number;
   additionalTutorial: IadditionalTutorial;
   takenReward: boolean;
+  eventPoints: number;
 }
 interface IuserSheep {
   money: number;
@@ -436,6 +437,11 @@ interface IScrollingOptions {
   wheel: boolean;
   top: number;
 }
+interface IeventRaiting {
+  place: number;
+  name: string;
+  score: string | number;
+}
 interface Istate {
   platform: string;
   autoSaveSpeed: number;
@@ -458,7 +464,6 @@ interface Istate {
   eventAnimals: IeventAnimal[];
   chickenEggs: IchickenEgg[];
   eventResources: IeventResource[];
-  eventRaiting: string;
   lang: any;
   modal: Imodal;
   animal: any;
@@ -499,4 +504,6 @@ interface Istate {
   donate: boolean;
   boughtFeedBoost: boolean;
   chat: Ichat[];
+  eventRaitings: IeventRaiting[];
+  userEventRaiting: IeventRaiting;
 }

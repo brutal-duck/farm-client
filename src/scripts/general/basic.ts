@@ -2673,18 +2673,28 @@ function spreadAnimals(): void {
 
 }
 
-function setEventRaiting():void {
-
+function getEventRaiting():void {
+  
   let login: string;
   if (this.state.platform !== 'web') {
     login = this.state.name
   } else login = this.state.user.login
 
+  console.log('login', login)
+  console.log('id', this.state.user.id)
+  console.log(this.state.user);
+  console.log('points', this.state.user.eventPoints)
   this.state.socket.io.emit('setRating', {
     name: login,
     mongo: this.state.user.id,
     score: this.state.user.eventPoints
   });
+
+  // this.state.socket.io.emit('setRating', {
+  //   name: 'alibaba',
+  //   mongo: 's',
+  //   score: 110
+  // });
 }
 
 export {
@@ -2731,5 +2741,5 @@ export {
   loadingScreen,
   updateFeedBoostBtn,
   spreadAnimals,
-  setEventRaiting
+  getEventRaiting
 }
