@@ -8,8 +8,7 @@ import {
 } from '../../general/basic';
 import { updateEventNativeShop, buildMenu } from './basic';
 import {
-  Collector,
-  TaskBoard,
+  Collector
 } from '../../elements';
 import {
   сurrencyAnimation,
@@ -70,6 +69,9 @@ class EventBars extends Phaser.Scene {
   public scoreText: Phaser.GameObjects.Text;
   public placeText: Phaser.GameObjects.Text;
   public proceedsText: Phaser.GameObjects.Text;
+  public score: Phaser.GameObjects.Text;
+  public place: Phaser.GameObjects.Text;
+
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -216,6 +218,16 @@ class EventBars extends Phaser.Scene {
 
     let addDiamonds: Phaser.GameObjects.Sprite = this.add.sprite(680, 38, 'plus').setDepth(2);
     let addMoney: Phaser.GameObjects.Sprite = this.add.sprite(680, 100, 'plus').setDepth(2);
+
+    this.score = this.add.text(110, 30, '8 очков', {
+      font: '28px Shadow',
+      color: '#6e00c7'
+    }).setDepth(2).setOrigin(0.5, 0.5);
+
+    this.place = this.add.text(110, 100, '1000000 место', {
+      font: '28px Shadow',
+      color: '#dfcccd'
+    }).setDepth(2).setOrigin(0.5, 0.5);
 
     this.clickButton(addDiamonds, (): void => {
 
