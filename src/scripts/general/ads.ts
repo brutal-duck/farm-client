@@ -141,7 +141,9 @@ function adReward(): void {
       if (breed < 2) breed = 2;
       this.currentTerritory(position.x, position.y).data.values.animal = breed;
       id = 'local_' + randomString(18);
+      
       this.getAnimal(id, breed, position.x, position.y);
+      this.firework250(position.x, position.y);
 
       this.state.amplitude.getInstance().logEvent('take_event_animal', {
         farm_id: this.state.farm,
@@ -151,7 +153,7 @@ function adReward(): void {
 
     case 5:
       this.state.userEvent.money += this.state.modal.eventParams.offlineProgress;
-
+      // this.game.scene.keys[''].
       this.state.amplitude.getInstance().logEvent('take_double_profit_event', {
         farm_id: this.state.farm,
         price: 'ad'
