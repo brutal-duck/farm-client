@@ -2673,7 +2673,7 @@ function spreadAnimals(): void {
 
 }
 
-function getEventRaiting():void {
+function getEventRaiting(): void {
   
   let login: string;
   if (this.state.platform !== 'web') {
@@ -2684,6 +2684,7 @@ function getEventRaiting():void {
   console.log('id', this.state.user.id)
   console.log('points', this.state.progress.event.eventPoints)
   console.log('отправить')
+
   this.state.socket.io.emit('setRating', {
     name: login,
     mongo: this.state.user.id,

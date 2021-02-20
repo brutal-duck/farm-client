@@ -1,5 +1,5 @@
 import Scrolling from '../libs/Scrolling';
-import { click, shortNum, clickShopBtn, getEventRaiting } from '../general/basic';
+import { click, shortNum, clickShopBtn, getEventRaiting, shortTime } from '../general/basic';
 
 let sheepCoin: any = require("./../../assets/images/sheep/icons/money.png");
 let chickenCoin: any = require("./../../assets/images/chicken/icons/money.png");
@@ -121,6 +121,7 @@ class Map extends Phaser.Scene {
 
     }
 
+    this.updateEvent();
   }
 
 
@@ -299,6 +300,16 @@ class Map extends Phaser.Scene {
     });
   };
 
+  public updateEvent(): void {
+    if (this.state.progress.event.updateRaitings) {
+      console.log(this.state.progress)
+      this.eventScore.setText('Твои очки: ' + this.state.progress.event.eventPoints);
+      this.eventPlace.setText('Твое место: ' + this.state.progress.event.userEventRaiting.place);
+      this.eventTime.setText('Осталось: ' + shortTime(this.state.progress.event.endTime, this.state.lang));
+      this.state.progress.event.updateRaitings = false;
+    }
+    
+  }
 
   // предыдущая глава
   public previousPartAndCoin(farm: string): { part: number, coin: string } {
