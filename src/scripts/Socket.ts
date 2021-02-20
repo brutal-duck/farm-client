@@ -21,10 +21,10 @@ export default class Socket {
     });
 
     this.io.on('getRating', (data: any) => {
-      console.log(JSON.parse(data))
+      console.log(data)
       this.state.progress.event.updateRaitings = true;
-      this.state.progress.event.eventRaitings = JSON.parse(data).ratings;
-      this.state.progress.event.userEventRaiting = JSON.parse(data).user;
+      this.state.progress.event.eventRaitings = data.ratings;
+      this.state.progress.event.userEventRaiting = data.user;
       // console.log(this.state);
     });
 
