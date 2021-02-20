@@ -120,11 +120,11 @@ function animalBrain(): void {
         if (((animal.x < animal.width / 2) ||
         (animal.x > 720 - animal.width / 2) ||
         (animal.y < this.topIndent + animal.height / 2) ||
-        (animal.y > this.topIndent + 480 - animal.height / 2 - animal.data.values.cloud.height / 4))
+        (animal.y > this.topIndent + 480 - animal.height / 2 - animal.data.values.cloud.height / 2))
         && animal.data.values.working && !animal.data.values.aim) {
   
         let aimX: number = random(0 + Math.ceil(animal.width / 2), 720 - Math.ceil(animal.width / 2));
-        let aimY: number = random(this.topIndent + Math.ceil(animal.height / 2), this.topIndent + 480 - Math.ceil(animal.height / 2));
+        let aimY: number = random(this.topIndent + Math.ceil(animal.height / 2), this.topIndent + 480 - Math.ceil(animal.height / 2) - Math.ceil(animal.data.values.cloud.height / 2));
         this.aim(animal, aimX, aimY);
       
         }   

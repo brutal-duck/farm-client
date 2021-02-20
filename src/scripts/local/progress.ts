@@ -37,7 +37,10 @@ export default (): Iprogress => {
       eventPoints: eventMaxLevelAnimal,
       startTime: 0,
       endTime: 0,
-      open: false
+      open: false,
+      eventRaitings: [],
+      userEventRaiting: null,
+      updateRaitings: false
     }
   }
 
