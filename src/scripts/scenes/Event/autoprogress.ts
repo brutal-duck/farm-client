@@ -130,7 +130,7 @@ function autoprogress(load: boolean = false): void {
 
     }
   }
-  if (this.state.offlineTime > 10 && income > 0) {
+  if (this.state.offlineTime > 900 && income > 0) {
     let modal: Imodal = {
       type: 10,
       eventParams: {
