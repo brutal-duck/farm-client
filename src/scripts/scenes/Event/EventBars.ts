@@ -6,7 +6,11 @@ import {
   shortNum,
   socialButtons,
 } from '../../general/basic';
-import { updateEventNativeShop, buildMenu } from './basic';
+import { 
+  updateEventNativeShop, 
+  buildMenu,
+  updateRaitingsBar 
+} from './basic';
 import {
   Collector
 } from '../../elements';
@@ -92,6 +96,7 @@ class EventBars extends Phaser.Scene {
   public plusResourceAnimation = plusResourceAnimation.bind(this);
   public showFeedTime = showFeedTime.bind(this);
   public updateEventNativeShop = updateEventNativeShop.bind(this);
+  public updateRaitingsBar = updateRaitingsBar.bind(this);
 
 
   public init(state: Istate): void {
@@ -219,12 +224,12 @@ class EventBars extends Phaser.Scene {
     let addDiamonds: Phaser.GameObjects.Sprite = this.add.sprite(680, 38, 'plus').setDepth(2);
     let addMoney: Phaser.GameObjects.Sprite = this.add.sprite(680, 100, 'plus').setDepth(2);
 
-    this.score = this.add.text(110, 30, '8 очков', {
+    this.score = this.add.text(110, 30, '- ' + this.state.lang.eventScores, {
       font: '28px Shadow',
       color: '#6e00c7'
     }).setDepth(2).setOrigin(0.5, 0.5);
 
-    this.place = this.add.text(110, 100, '1000000 место', {
+    this.place = this.add.text(110, 100, '- ' + this.state.lang.eventPlace, {
       font: '28px Shadow',
       color: '#dfcccd'
     }).setDepth(2).setOrigin(0.5, 0.5);
@@ -346,6 +351,7 @@ class EventBars extends Phaser.Scene {
     // Анимация меню
     this.menuAnimation();
 
+    this.updateRaitingsBar();
 
   }
 

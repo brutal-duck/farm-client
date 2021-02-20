@@ -560,6 +560,8 @@ export default {
 
     resourcePrice: 'Доход в сек: ',
     
+    eventScores: 'очков',
+    eventPlace: 'место'
   },
   en: {
     index: 'ru',
@@ -1120,5 +1122,8 @@ export default {
     eventBreed60: 'рокерская',
 
     resourcePrice: 'Доход в сек: ',
+
+    eventScores: ' очков',
+    eventPlace: ' место'
   }
 }

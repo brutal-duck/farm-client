@@ -406,6 +406,9 @@ interface IeventProgress {
   startTime: number;
   endTime: number;
   open: boolean;
+  eventRaitings: IeventRaiting[];
+  userEventRaiting: IeventRaiting;
+  updateRaitings: boolean;
 }
 interface Iprogress {
   sheep: IpartProgress;
@@ -503,6 +506,4 @@ interface Istate {
   donate: boolean;
   boughtFeedBoost: boolean;
   chat: Ichat[];
-  eventRaitings: IeventRaiting[];
-  userEventRaiting: IeventRaiting;
 }

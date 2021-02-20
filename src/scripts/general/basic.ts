@@ -2680,9 +2680,9 @@ function getEventRaiting():void {
     login = this.state.name
   } else login = this.state.user.login
 
-  // console.log('login', login)
-  // console.log('id', this.state.user.id)
-  // console.log('points', this.state.progress.event.eventPoints)
+  console.log('login', login)
+  console.log('id', this.state.user.id)
+  console.log('points', this.state.progress.event.eventPoints)
   console.log('отправить')
   this.state.socket.io.emit('setRating', {
     name: login,
