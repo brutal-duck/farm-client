@@ -24,7 +24,7 @@ export default class Socket {
       console.log(JSON.parse(data))
       this.state.eventRaitings = JSON.parse(data).ratings;
       this.state.userEventRaiting = JSON.parse(data).user;
-      console.log(this.state);
+      // console.log(this.state);
     });
 
   }

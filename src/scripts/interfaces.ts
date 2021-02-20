@@ -92,7 +92,6 @@ interface Iuser {
   level: number;
   additionalTutorial: IadditionalTutorial;
   takenReward: boolean;
-  eventPoints: number;
 }
 interface IuserSheep {
   money: number;
