@@ -42,6 +42,7 @@ function getFreePosition(): {x: number, y: number} {
     }
     if (y >= this.topIndent + 1400) {
       let territoryForBuy: IeventTerritories = this.territories.children.entries.find(territory => territory.data.values.type === 0);
+      console.log(territoryForBuy)
       if (territoryForBuy) {
         
         let modal: Imodal = {
