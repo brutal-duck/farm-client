@@ -5,6 +5,7 @@ import {
   clickModalBtn,
   shortNum,
   socialButtons,
+  shortTime
 } from '../../general/basic';
 import { 
   updateEventNativeShop, 
@@ -75,6 +76,9 @@ class EventBars extends Phaser.Scene {
   public proceedsText: Phaser.GameObjects.Text;
   public score: Phaser.GameObjects.Text;
   public place: Phaser.GameObjects.Text;
+  public feedBoostDoubledIcon: Phaser.GameObjects.Image;
+  public feedBoostIcon: Phaser.GameObjects.Image;
+  public feedBoostTime: Phaser.GameObjects.Text;
 
 
   public click = click.bind(this);
@@ -242,10 +246,10 @@ class EventBars extends Phaser.Scene {
       color: '#6e00c7'
     }).setDepth(2).setOrigin(0.5, 0.5);
 
-    this.place = this.add.text(110, 100, '- ' + this.state.lang.eventPlace, {
+    this.place = this.add.text(110, 90, '- ' + this.state.lang.eventPlace, {
       font: '28px Shadow',
-      color: '#dfcccd'
-    }).setDepth(2).setOrigin(0.5, 0.5);
+      color: '#f0e8ce'
+    }).setDepth(2).setOrigin(0.5, 0.5).setShadow(4, 2, '#00000030', 0.5);
 
     this.clickButton(addDiamonds, (): void => {
 
@@ -269,8 +273,6 @@ class EventBars extends Phaser.Scene {
       
     });
     
-    this.add.sprite(352, 0, 'event-leaves').setOrigin(0.5, 0);
-
     // монеты и кристаллы для анимации
     this.сurrency = this.physics.add.group();
 
@@ -292,10 +294,18 @@ class EventBars extends Phaser.Scene {
     this.animalPriceBubble.fillStyle(0xFFFFFF, 1);
     this.animalPriceBubble.fillRoundedRect(0, 0, bounds.width + 30, bounds.height, 8);
 
-    this.proceedsText = this.add.text(this.cameras.main.centerX, 100, '0', {
+    // Доход в секунду
+    this.proceedsText = this.add.text(this.cameras.main.centerX, 92, '0/'+ this.state.lang.seconds, {
+      font: '21px Shadow',
+      color: '#f2ede4',
+    }).setOrigin(0.5, 0.5).setShadow(4, 2, '#00000030', 0.5);
+
+    this.feedBoostDoubledIcon = this.add.image(this.cameras.main.centerX + 60, 50, 'double-feed-boost').setVisible(false);
+    this.feedBoostIcon = this.add.image(this.cameras.main.centerX - 50, 105, 'event-feed-boost-mini').setVisible(false);
+    this.feedBoostTime = this.add.text(this.feedBoostIcon.getBounds().right + 5, 105, shortTime(this.state.userEvent.feedBoostTime, this.state.lang), {
       font: '21px Shadow',
       color: '#f2ede4'
-    }).setOrigin(0.5, 0.5);
+    }).setOrigin(0, 0.5).setVisible(false);
 
   }
 

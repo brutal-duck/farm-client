@@ -41,7 +41,6 @@ let verticalBorder: any = require("./../../../assets/images/event/territories/ve
 let horizontalBorder1: any = require("./../../../assets/images/event/territories/horizontal-border-1.png");
 let horizontalBorder2: any = require("./../../../assets/images/event/territories/horizontal-border-2.png");
 let horizontalBorder3: any = require("./../../../assets/images/event/territories/horizontal-border-3.png");
-let eventLeaves: any = require("./../../../assets/images/event/event-leaves.png");
 let eventWorkZone: any = require("./../../../assets/images/event/territories/work-zone.png");
 let eventBuyIcon1: any = require("./../../../assets/images/event/icons/event-buy-icon-1.png");
 let eventBuyIcon2: any = require("./../../../assets/images/event/icons/event-buy-icon-2.png");
@@ -185,6 +184,11 @@ let confetti5: any = require("./../../../assets/images/event/territories/confett
 let confetti6: any = require("./../../../assets/images/event/territories/confetti6.png");
 let confetti7: any = require("./../../../assets/images/event/territories/confetti7.png");
 let confetti8: any = require("./../../../assets/images/event/territories/confetti8.png");
+
+let doubleFeedBoost: any = require("./../../../assets/images/icons/double-feed-boost.png");
+let eventFeedBoostMini: any = require("./../../../assets/images/event/icons/event-feed-boost-mini.png");
+
+
 
 const testCollector: IcollectorSettings[] = [
   {
@@ -1523,7 +1527,6 @@ class EventPreload extends Phaser.Scene {
     this.load.image('event-horizontal-border-2', horizontalBorder2);
     this.load.image('event-horizontal-border-3', horizontalBorder3);
 
-    this.load.image('event-leaves', eventLeaves);
 
     this.load.image('event-work-zone', eventWorkZone);
 
@@ -1669,6 +1672,8 @@ class EventPreload extends Phaser.Scene {
     this.load.image('confetti6', confetti6);
     this.load.image('confetti7', confetti7);
     this.load.image('confetti8', confetti8);
+    this.load.image('double-feed-boost', doubleFeedBoost);
+    this.load.image('event-feed-boost-mini', eventFeedBoostMini);
   }
 
   

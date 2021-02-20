@@ -90,7 +90,7 @@ function interval(): void {
       }
 
       this.state.userEvent.feedBoostTime--;
-
+      this.game.scene.keys['EventBars'].feedBoostTime.setText(shortTime(this.state.userEvent.feedBoostTime,this.state.lang))
     }
     
     // автосохранение
@@ -145,6 +145,22 @@ function interval(): void {
   
     } else {
       this.game.scene.keys['EventBars'].proceedsText.setText('0/' + this.state.lang.seconds);
+    }
+    
+    // Обновление иконки feed буста
+    if (this.state.userEvent.feedBoostTime > 0 && !this.game.scene.keys['EventBars'].feedBoostTime.visible) {
+      this.game.scene.keys['EventBars'].proceedsText.y = 80;
+      this.game.scene.keys['EventBars'].proceedsText.setColor('#cbff40');
+      this.game.scene.keys['EventBars'].feedBoostDoubledIcon.setVisible(true);
+      this.game.scene.keys['EventBars'].feedBoostIcon.setVisible(true);
+      this.game.scene.keys['EventBars'].feedBoostTime.setVisible(true);
+
+    } else {
+      this.game.scene.keys['EventBars'].proceedsText.y = 92;
+      this.game.scene.keys['EventBars'].proceedsText.setColor('#f2ede4');
+      this.game.scene.keys['EventBars'].feedBoostDoubledIcon.setVisible(true);
+      this.game.scene.keys['EventBars'].feedBoostIcon.setVisible(true);
+      this.game.scene.keys['EventBars'].feedBoostTime.setVisible(true);
     }
     
   }, callbackScope: this, loop: true });
