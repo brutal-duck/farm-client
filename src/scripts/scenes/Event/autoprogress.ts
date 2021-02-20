@@ -130,7 +130,7 @@ function autoprogress(load: boolean = false): void {
 
     }
   }
-  if (this.state.offlineTime > 900 && income > 0) {
+  if (this.state.offlineTime > 60 && income > 0) {
     let modal: Imodal = {
       type: 10,
       eventParams: {
@@ -142,6 +142,8 @@ function autoprogress(load: boolean = false): void {
     // console.log(modal)
     this.state.modal = modal;
     this.scene.launch('Modal', this.state);
+  } else {
+    this.state.userEvent.money += income;
   }
   
   

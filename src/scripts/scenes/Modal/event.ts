@@ -977,74 +977,69 @@ function eventProfile(): void {
 }
 
 function eventProgress(): void {
-  console.log(this.state);
   
-  let height: number = 80
-  let doubleProfitPrice: number = 5
-  let ad: boolean = false
+  let height: number = 80;
+  let doubleProfitPrice: number = 5;
+  let ad: boolean = false;
 
-  // this.state.modal.eventParams.offlineTime = 3780600
-  // this.state.modal.eventParams.collectorTime = 8000
-  // this.state.modal.eventParams.offlineProgress = BigInt(2000)
+  this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - height, 'autoprogress-bg');
 
-  let autoprogressBG: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - height, 'autoprogress-bg');
-
-  let offlineTimeText: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 58, this.cameras.main.centerY - 148 - height, this.state.lang.offlineTime, {
+  this.add.text(this.cameras.main.centerX + 58, this.cameras.main.centerY - 148 - height, this.state.lang.offlineTime, {
     font: '21px Shadow',
     color: '#06693e'
-  }).setOrigin(1)
+  }).setOrigin(1);
 
-  let offlineTimeTime: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 150, this.cameras.main.centerY - 146 - height, shortTime(this.state.modal.eventParams.offlineTime, this.state.lang), {
+  this.add.text(this.cameras.main.centerX + 150, this.cameras.main.centerY - 146 - height, shortTime(this.state.modal.eventParams.offlineTime, this.state.lang), {
     font: '36px Shadow',
     color: '#fff3e1'
-  }).setOrigin(0.5, 1).setShadow(1, 4, 'rgba(0, 0, 0, 0.5)', 3)
+  }).setOrigin(0.5, 1).setShadow(1, 4, 'rgba(0, 0, 0, 0.5)', 3);
 
-  let offlineCollectorTimeText: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 12, this.cameras.main.centerY - 74 - height, this.state.lang.offlineCollectorTime + ' ' + shortTime(this.state.modal.eventParams.collectorTime, this.state.lang), {
+  this.add.text(this.cameras.main.centerX + 12, this.cameras.main.centerY - 74 - height, this.state.lang.offlineCollectorTime + ' ' + shortTime(this.state.modal.eventParams.collectorTime, this.state.lang), {
     font: '21px Shadow',
     color: '#fff3e1',
     align: 'center',
     wordWrap: { width: 260 }
-  }).setOrigin(0.5, 0.5).setLineSpacing(8)
+  }).setOrigin(0.5, 0.5).setLineSpacing(8);
 
-  let offlineProfitText: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 80, this.cameras.main.centerY + 10 - height, '+' + shortNum(this.state.modal.eventParams.offlineProgress), {
+  this.add.text(this.cameras.main.centerX + 80, this.cameras.main.centerY + 10 - height, '+' + shortNum(this.state.modal.eventParams.offlineProgress), {
     font: '48px Shadow',
     color: '#fff3e1'
-  }).setOrigin(0.5, 0.5).setShadow(1, 4, 'rgba(0, 0, 0, 0.5)', 3)
+  }).setOrigin(0.5, 0.5).setShadow(1, 4, 'rgba(0, 0, 0, 0.5)', 3);
 
-  let doubleProfitText: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 9, this.cameras.main.centerY + 96 - height, this.state.lang.doubleProfit, {
+  this.add.text(this.cameras.main.centerX + 9, this.cameras.main.centerY + 96 - height, this.state.lang.doubleProfit, {
     font: '24px Shadow',
     color: '#643302'
-  }).setOrigin(0.5, 0.5)
+  }).setOrigin(0.5, 0.5);
 
   // Определение стоимости удвоения
   if (this.state.modal.eventParams.collectorTime >= 1800 && this.state.modal.eventParams.collectorTime <= 7200) doubleProfitPrice = 40
-  else if (this.state.modal.eventParams.collectorTime > 7200) doubleProfitPrice = 90
+  else if (this.state.modal.eventParams.collectorTime > 7200) doubleProfitPrice = 90;
 
   // Кнопка удвоения
-  let btn: Phaser.GameObjects.Sprite | undefined = undefined
-  let title: Phaser.GameObjects.Text | undefined = undefined
-  let img1: Phaser.GameObjects.Sprite | undefined = undefined
-  let text1: Phaser.GameObjects.Text | undefined = undefined
+  let btn: Phaser.GameObjects.Sprite = undefined;
+  let title: Phaser.GameObjects.Text = undefined;
+  let img1: Phaser.GameObjects.Sprite = undefined;
+  let text1: Phaser.GameObjects.Text = undefined;
 
   btn = this.add.sprite(this.cameras.main.centerX + 9, this.cameras.main.centerY + 156 - height, 'purple-btn');
   title = this.add.text(btn.x - 140, btn.y, this.state.lang.pickUp + ' X2', {
     font: '30px Shadow',
     color: '#fff3e1',
-  }).setOrigin(0, 0.5).setStroke('#7214a3', 7).setCrop(0, 0, 200, 100)
+  }).setOrigin(0, 0.5).setStroke('#7214a3', 7).setCrop(0, 0, 200, 100);
 
 
-  if (this.state.readyAd === undefined) {
+  if (this.state.readyAd && doubleProfitPrice === 5) {
 
-    img1 = this.add.sprite(btn.x + 100, btn.y, 'ad-icon').setScale(0.8)
-    ad = true
+    img1 = this.add.sprite(btn.x + 100, btn.y, 'ad-icon').setScale(0.8);
+    ad = true;
 
   } else {
 
-    img1 = this.add.sprite(btn.x + 80, btn.y, 'diamond').setScale(0.12)
+    img1 = this.add.sprite(btn.x + 80, btn.y, 'diamond').setScale(0.12);
     text1 = this.add.text(btn.x + 120, btn.y, doubleProfitPrice, {
       font: '30px Shadow',
       color: '#fff3e1',
-    }).setOrigin(0.5, 0.5).setStroke('#7214a3', 7)  
+    }).setOrigin(0.5, 0.5).setStroke('#7214a3', 7); 
 
   }
 
@@ -1055,18 +1050,18 @@ function eventProgress(): void {
     img1: img1
   }, (): void => {
 
-    this.state.userEvent.money += this.state.modal.eventParams.offlineProgress
+    this.state.userEvent.money += this.state.modal.eventParams.offlineProgress;
 
     if (ad) {
 
-      this.watchAd(5)
+      this.game.scene.keys[this.state.farm].watchAd(5);
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
       this.scene.stop();
 
     } else if (this.state.user.diamonds - doubleProfitPrice >= 0) {
       
-      this.state.user.diamonds -= doubleProfitPrice
-      this.state.userEvent.money += this.state.modal.eventParams.offlineProgress
+      this.state.user.diamonds -= doubleProfitPrice;
+      this.state.userEvent.money += this.state.modal.eventParams.offlineProgress;
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
       this.scene.stop();
 
@@ -1088,10 +1083,10 @@ function eventProgress(): void {
   // Кнопка 'Забрать'
   this.time.addEvent({ delay: 3000, callback: (): void => {
 
-    let pickUp = this.shopButton(this.cameras.main.centerX + 9, this.cameras.main.centerY + 276 - height, this.state.lang.pickUp)
+    let pickUp = this.shopButton(this.cameras.main.centerX + 9, this.cameras.main.centerY + 276 - height, this.state.lang.pickUp);
     this.clickShopBtn(pickUp, (): void => {
       
-      this.state.userEvent.money += this.state.modal.eventParams.offlineProgress
+      this.state.userEvent.money += this.state.modal.eventParams.offlineProgress;
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
       this.scene.stop();
   

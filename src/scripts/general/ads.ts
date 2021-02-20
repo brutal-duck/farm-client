@@ -2,7 +2,6 @@ import { FAPI } from '../libs/Fapi';
 import * as amplitude from 'amplitude-js';
 import { randomString } from './basic';
 import * as platform from 'platform';
-import { buyTerritory } from './territories';
 
 // поиск рекламы
 function findAd(): void {
@@ -151,7 +150,7 @@ function adReward(): void {
       break;
 
     case 5:
-      this.state.userEvent.money += this.state.modal.eventParams.offlineProgress
+      this.state.userEvent.money += this.state.modal.eventParams.offlineProgress;
 
       this.state.amplitude.getInstance().logEvent('take_double_profit_event', {
         farm_id: this.state.farm,
