@@ -65,7 +65,7 @@ import daily from './daily';
 import dailyNewbie from './dailyNewbie';
 import nextChapter from './nextChapter';
 import donate from './donate';
-import { bigButton, repositoryBtn, mergingCloud } from '../../elements';
+import { bigButton, repositoryBtn, mergingCloud, shopButton } from '../../elements';
 import { changeNickname, addEmail, support, registration } from '../../general/modal';
   // буст "Стадо"
 import { herdBoostWindow, getRandomAnimal, getRandomStartPosition } from './herdBoost';
@@ -134,6 +134,10 @@ let feedBoostEventIcon: any = require("./../../../assets/images/icons/event-feed
 let chatBackground: any = require("./../../../assets/images/modal/chat-bg.png");
 let chatSendBtn: any = require("./../../../assets/images/modal/chat-send-btn.png");
 let chatEmojiBtn: any = require("./../../../assets/images/modal/chat-emoji-btn.png");
+
+// Автопрогресс эвентовой фермы
+let autoprogressBG: any = require("./../../../assets/images/event/modal/autoprogress-bg.png");
+let purpleBtn: any = require("./../../../assets/images/event/modal/purple-btn.png");
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -214,6 +218,7 @@ class Modal extends Phaser.Scene {
   public getRandomAnimal = getRandomAnimal.bind(this);
   public getRandomStartPosition = getRandomStartPosition.bind(this);
   public mergingCloud = mergingCloud.bind(this);
+  public shopButton = shopButton.bind(this);
   public shortTime = shortTime.bind(this);
   public sheepWoolRepositoryExchange = sheepWoolRepositoryExchange.bind(this);
   public chickenEggRepositoryExchange = chickenEggRepositoryExchange.bind(this);
@@ -312,6 +317,10 @@ class Modal extends Phaser.Scene {
     this.load.image('chat-bg', chatBackground);
     this.load.image('chat-send-btn', chatSendBtn);
     this.load.image('chat-emoji-btn', chatEmojiBtn);
+
+    // Автопрогресс эвентовой фермы
+    this.load.image('autoprogress-bg', autoprogressBG);
+    this.load.image('purple-btn', purpleBtn);
 
   }
 

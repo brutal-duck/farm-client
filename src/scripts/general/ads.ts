@@ -144,8 +144,16 @@ function adReward(): void {
       id = 'local_' + randomString(18);
       this.getAnimal(id, breed, position.x, position.y);
 
-      type = 'event_animal';
-      this.state.amplitude.getInstance().logEvent('take_diamond_animal', {
+      this.state.amplitude.getInstance().logEvent('take_event_animal', {
+        farm_id: this.state.farm,
+        price: 'ad'
+      });
+      break;
+
+    case 5:
+      this.state.userEvent.money += this.state.modal.eventParams.offlineProgress
+
+      this.state.amplitude.getInstance().logEvent('take_double_profit_event', {
         farm_id: this.state.farm,
         price: 'ad'
       });

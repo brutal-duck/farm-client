@@ -1,5 +1,5 @@
 // окно подтверждения изгнания
-import { random, getRandomBool, randomString, shortTime, romanize} from "../../general/basic";
+import { random, getRandomBool, randomString, shortTime, romanize, shortNum} from "../../general/basic";
 
 function confirmExpelAnimal(): void {
     
@@ -926,37 +926,37 @@ function eventProfile(): void {
       this.state.modal = modal;
       this.game.scene.keys[this.state.farm].scene.launch('Modal', this.state);
     });
-
+    
     height += 80;
-
+    
   } else {
-
+    
     let heightText: number = 23;
     heightText += name.getBounds().height;
     heightText += farmer.getBounds().height;
-
+    
     name.y = this.cameras.main.centerY - (height / 2) + 25 + (110 - heightText / 2);
     farmer.y = name.y + name.getBounds().height + 23;
-
+    
   }
-
+  
   let support = this.bigButton('green', 'center', 0, this.state.lang.support);
   this.clickModalBtn(support, (): void => {
-
+    
     let modal: Imodal = {
       type: 1,
       sysType: 14
     }
     this.state.modal = modal;
     this.game.scene.keys[this.state.farm].scene.launch('Modal', this.state);
-
+    
   });
-
+  
   let agreement: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, 0, this.state.lang.agreement, {
     font: '22px Shadow',
     color: '#777777'
   }).setOrigin(0.5, 0.5);
-
+  
   this.clickButton(agreement, (): void => {
     window.open('https://' + location.hostname + '/agreement', '_blank');
   });
@@ -964,20 +964,142 @@ function eventProfile(): void {
   let bg: Phaser.GameObjects.Graphics = this.add.graphics({ x: 115, y: this.cameras.main.centerY - (height / 2) + 25 });
   bg.fillStyle(0xF8EFCE, 1);
   bg.fillRoundedRect(0, 0, 490, 220, 16);
-
+  
   agreement.y = this.cameras.main.centerY + (height / 2) + 10;
   support.btn.y = this.cameras.main.centerY + (height / 2) - 60;
   support.title.y = support.btn.y - 5;
   avatar.y = this.cameras.main.centerY - (height / 2) + 135;
   star.y = avatar.y - 65;
   level.y = star.y;
-
+  
   this.resizeWindow(height);
-
+  
 }
 
 function eventProgress(): void {
-  console.log(this.state.modal);
+  console.log(this.state);
+  
+  let height: number = 80
+  let doubleProfitPrice: number = 5
+  let ad: boolean = false
+
+  // this.state.modal.eventParams.offlineTime = 3780600
+  // this.state.modal.eventParams.collectorTime = 8000
+  // this.state.modal.eventParams.offlineProgress = BigInt(2000)
+
+  let autoprogressBG: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - height, 'autoprogress-bg');
+
+  let offlineTimeText: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 58, this.cameras.main.centerY - 148 - height, this.state.lang.offlineTime, {
+    font: '21px Shadow',
+    color: '#06693e'
+  }).setOrigin(1)
+
+  let offlineTimeTime: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 150, this.cameras.main.centerY - 146 - height, shortTime(this.state.modal.eventParams.offlineTime, this.state.lang), {
+    font: '36px Shadow',
+    color: '#fff3e1'
+  }).setOrigin(0.5, 1).setShadow(1, 4, 'rgba(0, 0, 0, 0.5)', 3)
+
+  let offlineCollectorTimeText: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 12, this.cameras.main.centerY - 74 - height, this.state.lang.offlineCollectorTime + ' ' + shortTime(this.state.modal.eventParams.collectorTime, this.state.lang), {
+    font: '21px Shadow',
+    color: '#fff3e1',
+    align: 'center',
+    wordWrap: { width: 260 }
+  }).setOrigin(0.5, 0.5).setLineSpacing(8)
+
+  let offlineProfitText: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 80, this.cameras.main.centerY + 10 - height, '+' + shortNum(this.state.modal.eventParams.offlineProgress), {
+    font: '48px Shadow',
+    color: '#fff3e1'
+  }).setOrigin(0.5, 0.5).setShadow(1, 4, 'rgba(0, 0, 0, 0.5)', 3)
+
+  let doubleProfitText: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 9, this.cameras.main.centerY + 96 - height, this.state.lang.doubleProfit, {
+    font: '24px Shadow',
+    color: '#643302'
+  }).setOrigin(0.5, 0.5)
+
+  // Определение стоимости удвоения
+  if (this.state.modal.eventParams.collectorTime >= 1800 && this.state.modal.eventParams.collectorTime <= 7200) doubleProfitPrice = 40
+  else if (this.state.modal.eventParams.collectorTime > 7200) doubleProfitPrice = 90
+
+  // Кнопка удвоения
+  let btn: Phaser.GameObjects.Sprite | undefined = undefined
+  let title: Phaser.GameObjects.Text | undefined = undefined
+  let img1: Phaser.GameObjects.Sprite | undefined = undefined
+  let text1: Phaser.GameObjects.Text | undefined = undefined
+
+  btn = this.add.sprite(this.cameras.main.centerX + 9, this.cameras.main.centerY + 156 - height, 'purple-btn');
+  title = this.add.text(btn.x - 140, btn.y, this.state.lang.pickUp + ' X2', {
+    font: '30px Shadow',
+    color: '#fff3e1',
+  }).setOrigin(0, 0.5).setStroke('#7214a3', 7).setCrop(0, 0, 200, 100)
+
+
+  if (this.state.readyAd === undefined) {
+
+    img1 = this.add.sprite(btn.x + 100, btn.y, 'ad-icon').setScale(0.8)
+    ad = true
+
+  } else {
+
+    img1 = this.add.sprite(btn.x + 80, btn.y, 'diamond').setScale(0.12)
+    text1 = this.add.text(btn.x + 120, btn.y, doubleProfitPrice, {
+      font: '30px Shadow',
+      color: '#fff3e1',
+    }).setOrigin(0.5, 0.5).setStroke('#7214a3', 7)  
+
+  }
+
+  this.clickModalBtn({
+    btn: btn,
+    title: title,
+    text1: text1,
+    img1: img1
+  }, (): void => {
+
+    this.state.userEvent.money += this.state.modal.eventParams.offlineProgress
+
+    if (ad) {
+
+      this.watchAd(5)
+      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+      this.scene.stop();
+
+    } else if (this.state.user.diamonds - doubleProfitPrice >= 0) {
+      
+      this.state.user.diamonds -= doubleProfitPrice
+      this.state.userEvent.money += this.state.modal.eventParams.offlineProgress
+      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+      this.scene.stop();
+
+    } else {
+      
+      this.state.convertor = {
+        fun: 0,
+        count: doubleProfitPrice - this.state.user.diamonds,
+        diamonds: doubleProfitPrice - this.state.user.diamonds,
+        type: 1
+      }
+  
+      this.game.scene.keys[this.state.farm].exchange();
+    }
+
+  })
+
+
+  // Кнопка 'Забрать'
+  this.time.addEvent({ delay: 3000, callback: (): void => {
+
+    let pickUp = this.shopButton(this.cameras.main.centerX + 9, this.cameras.main.centerY + 276 - height, this.state.lang.pickUp)
+    this.clickShopBtn(pickUp, (): void => {
+      
+      this.state.userEvent.money += this.state.modal.eventParams.offlineProgress
+      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+      this.scene.stop();
+  
+    });
+
+  }, callbackScope: this, loop: false });
+
+
 }
 
 
