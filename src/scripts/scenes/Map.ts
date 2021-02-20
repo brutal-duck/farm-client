@@ -1,5 +1,5 @@
 import Scrolling from '../libs/Scrolling';
-import { click, shortNum, clickShopBtn } from '../general/basic';
+import { click, shortNum, clickShopBtn, getEventRaiting } from '../general/basic';
 
 let sheepCoin: any = require("./../../assets/images/sheep/icons/money.png");
 let chickenCoin: any = require("./../../assets/images/chicken/icons/money.png");
@@ -28,6 +28,7 @@ class Map extends Phaser.Scene {
 
   public click = click.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
+  public getEventRaiting = getEventRaiting.bind(this); 
   
 
   public init(state: Istate): void {
@@ -59,6 +60,8 @@ class Map extends Phaser.Scene {
 
     this.scene.launch('MapBars', this.state);
     
+    this.getEventRaiting(); // получаем новые рейтинги
+
     this.bg = this.add.tileSprite(0, 0, 720, this.height, 'map')
       .setInteractive()
       .setOrigin(0, 0);

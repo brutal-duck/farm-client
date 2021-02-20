@@ -559,6 +559,7 @@ function buildMenu(): void {
 
 function updateRaitingsBar(): void {
   if (this.state.progress.event.updateRaitings) {
+    console.log('АПДЕЙТ')
     this.state.progress.event.updateRaitings = false;
     this.score.setText(this.state.progress.event.eventPoints + ' ' + this.state.lang.eventScores);
     this.place.setText(this.state.progress.event.userEventRaiting.place + ' ' + this.state.lang.eventPlace);
