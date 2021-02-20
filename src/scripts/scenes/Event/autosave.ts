@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // автосохранение
 function autosave(): void {
-  
+  this.getEventRaiting();
   this.autoSaveTimer = 0;
 
   let territories: IeventTerritories[] = [];
