@@ -194,7 +194,7 @@ class Event extends Phaser.Scene {
     this.setCollector();
     this.flyAnimal();
     this.getEventRaiting();
-    // анимации
+
     // let cursors = this.input.keyboard.createCursorKeys();
     // cursors.space.on('down', (): void => {
 

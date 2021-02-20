@@ -148,19 +148,23 @@ function interval(): void {
     }
     
     // Обновление иконки feed буста
-    if (this.state.userEvent.feedBoostTime > 0 && !this.game.scene.keys['EventBars'].feedBoostTime.visible) {
-      this.game.scene.keys['EventBars'].proceedsText.y = 80;
-      this.game.scene.keys['EventBars'].proceedsText.setColor('#cbff40');
-      this.game.scene.keys['EventBars'].feedBoostDoubledIcon.setVisible(true);
-      this.game.scene.keys['EventBars'].feedBoostIcon.setVisible(true);
-      this.game.scene.keys['EventBars'].feedBoostTime.setVisible(true);
-
-    } else {
-      this.game.scene.keys['EventBars'].proceedsText.y = 92;
-      this.game.scene.keys['EventBars'].proceedsText.setColor('#f2ede4');
-      this.game.scene.keys['EventBars'].feedBoostDoubledIcon.setVisible(true);
-      this.game.scene.keys['EventBars'].feedBoostIcon.setVisible(true);
-      this.game.scene.keys['EventBars'].feedBoostTime.setVisible(true);
+    if (this.state.userEvent.maxLevelAnimal >= this.game.scene.keys.Event.feedBoostLvl &&
+    this.state.user.additionalTutorial.feedBoost) {
+      
+      if (this.state.userEvent.feedBoostTime > 0 && !this.game.scene.keys['EventBars'].feedBoostTime.visible) {
+        this.game.scene.keys['EventBars'].proceedsText.y = 80;
+        this.game.scene.keys['EventBars'].proceedsText.setColor('#cbff40');
+        this.game.scene.keys['EventBars'].feedBoostDoubledIcon.setVisible(true);
+        this.game.scene.keys['EventBars'].feedBoostIcon.setVisible(true);
+        this.game.scene.keys['EventBars'].feedBoostTime.setVisible(true);
+      } else if (this.state.userEvent.feedBoostTime <= 0 && this.game.scene.keys['EventBars'].feedBoostTime.visible) {
+        this.game.scene.keys['EventBars'].proceedsText.y = 92;
+        this.game.scene.keys['EventBars'].proceedsText.setColor('#f2ede4');
+        this.game.scene.keys['EventBars'].feedBoostDoubledIcon.setVisible(false);
+        this.game.scene.keys['EventBars'].feedBoostIcon.setVisible(false);
+        this.game.scene.keys['EventBars'].feedBoostTime.setVisible(false);
+      }
+      
     }
     
   }, callbackScope: this, loop: true });
