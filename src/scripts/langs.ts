@@ -559,6 +559,11 @@ export default {
     eventBreed60: 'рокерская',
 
     resourcePrice: 'Доход в сек: ',
+
+    // Автопрогресс
+    offlineTime: 'Вас не было на ферме',
+    offlineCollectorTime: 'Собиратель радуги работал',
+    doubleProfit: 'Хочешь удвоить доход?',
     
   },
   en: {
@@ -1120,5 +1125,10 @@ export default {
     eventBreed60: 'рокерская',
 
     resourcePrice: 'Доход в сек: ',
+
+    // Автопрогресс
+    offlineTime: 'Вас не было на ферме',
+    offlineCollectorTime: 'Собиратель радуги работал',
+    doubleProfit: 'Хочешь удвоить доход?',
   }
 }

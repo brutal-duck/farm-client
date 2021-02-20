@@ -186,6 +186,10 @@ let confetti6: any = require("./../../../assets/images/event/territories/confett
 let confetti7: any = require("./../../../assets/images/event/territories/confetti7.png");
 let confetti8: any = require("./../../../assets/images/event/territories/confetti8.png");
 
+// Автопрогресс эвентовой фермы
+let autoprogressBG: any = require("./../../../assets/images/event/modal/autoprogress-bg.png");
+let purpleBtn: any = require("./../../../assets/images/event/modal/purple-btn.png");
+
 const testCollector: IcollectorSettings[] = [
   {
     level: 1,
@@ -1669,6 +1673,10 @@ class EventPreload extends Phaser.Scene {
     this.load.image('confetti6', confetti6);
     this.load.image('confetti7', confetti7);
     this.load.image('confetti8', confetti8);
+
+    // Автопрогресс эвентовой фермы
+    this.load.image('autoprogress-bg', autoprogressBG);
+    this.load.image('purple-btn', purpleBtn);
   }
 
   

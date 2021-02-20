@@ -139,9 +139,9 @@ function autoprogress(load: boolean = false): void {
         collectorTime: wasCollector,
       }
     }
-    console.log(modal)
-    // this.state.modal = modal;
-    // this.scene.launch('Modal', this.state);
+    // console.log(modal)
+    this.state.modal = modal;
+    this.scene.launch('Modal', this.state);
   }
   
   
