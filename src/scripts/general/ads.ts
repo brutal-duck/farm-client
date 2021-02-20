@@ -153,7 +153,7 @@ function adReward(): void {
 
     case 5:
       this.state.userEvent.money += this.state.modal.eventParams.offlineProgress;
-      // this.game.scene.keys[''].
+      this.game.scene.keys[this.state.farm + 'Bars'].plusMoney();
       this.state.amplitude.getInstance().logEvent('take_double_profit_event', {
         farm_id: this.state.farm,
         price: 'ad'

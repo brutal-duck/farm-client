@@ -1064,6 +1064,7 @@ function eventProgress(): void {
       this.state.userEvent.money += this.state.modal.eventParams.offlineProgress;
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
       this.scene.stop();
+      this.game.scene.keys['EventBars'].plusMoney();
 
     } else {
       
