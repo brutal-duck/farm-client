@@ -41,24 +41,43 @@ function getFreePosition(): {x: number, y: number} {
       }
     }
     if (y >= this.topIndent + 1400) {
-      this.scene.stop('Shop');
-      this.scene.stop('ShopBars');
-      this.scene.stop('Modal');
-  
-      let modal: Imodal = {
-        type: 1,
-        sysType: 3,
-        height: 150,
-        message: this.state.lang.maxEventCount
+      let territoryForBuy: IeventTerritories = this.territories.children.entries.find(territory => territory.data.values.type === 0);
+      if (territoryForBuy) {
+        
+        let modal: Imodal = {
+          type: 1,
+          sysType: 2,
+        }
+        this.state.territory = territoryForBuy;
+        this.state.modal = modal;
+        this.scene.launch('Modal', this.state);
+
+      } else {
+        this.scene.stop('Shop');
+        this.scene.stop('ShopBars');
+        this.scene.stop('Modal');
+    
+        let modal: Imodal = {
+          type: 1,
+          sysType: 3,
+          height: 150,
+          message: this.state.lang.maxEventCount
+        }
+        this.state.modal = modal;
+        this.scene.launch('Modal', this.state);
+        
       }
-      this.state.modal = modal;
-      this.scene.launch('Modal', this.state);
       return {x: null, y: null}
     }
     
   }
   return {x, y} 
 
+}
+
+function getTerritoryForBuy(): Phaser.Physics.Arcade.Sprite {
+  let territory: Phaser.Physics.Arcade.Sprite = this.state.eventTerritories.find(territory => territory.type === 0);
+  return territory
 }
 
 function getFreeBoostPositions(): Iposition[] {
