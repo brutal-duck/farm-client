@@ -25,6 +25,9 @@ class Map extends Phaser.Scene {
   public point: Phaser.GameObjects.Sprite;
   public pointPosition: Iposition;
   public pointAnimation: number;
+  public eventScore: Phaser.GameObjects.Text;
+  public eventPlace: Phaser.GameObjects.Text;
+  public eventTime: Phaser.GameObjects.Text;
 
   public click = click.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
@@ -99,34 +102,7 @@ class Map extends Phaser.Scene {
     this.build(chickenPosition,'Chicken', this.state.progress.chicken);
     
     // Евентовая ферма на карте
-    let eventIcon: Phaser.GameObjects.Graphics = this.add.graphics();
-    eventIcon.fillStyle(0xff0000, 1.0)
-      .fillCircle(520, 740, 50);
-    let eventText: Phaser.GameObjects.Text = this.add.text(520, 740, 'Нажми!', {
-      fontSize: '40px',
-      color: '#000',
-      fontFamily: 'Shadow'
-    }).setOrigin(0.5, 0.5);
-    this.click(eventText, (): void => {
-      if (this.state.farm !== 'Event') {
-  
-        this.game.scene.keys[this.state.farm].autosave();
-        this.scene.stop();
-        this.scene.stop('MapBars');
-        this.scene.stop(this.state.farm);
-        this.scene.stop(this.state.farm + 'Bars');
-        this.scene.start('EventPreload', this.state);
-
-      } else {
-
-        this.game.scene.keys[this.state.farm].scrolling.downHandler();
-        this.game.scene.keys[this.state.farm].scrolling.enabled = true;
-        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-        this.scene.stop('MapBars');
-        this.scene.stop();
-
-      }
-    });
+    this.buildEvent();
   }
 
 
@@ -269,6 +245,59 @@ class Map extends Phaser.Scene {
     }
 
   }
+
+  public buildEvent(): void {
+    // let eventIcon: Phaser.GameObjects.Graphics = this.add.graphics();
+    // eventIcon.fillStyle(0xff0000, 1.0)
+    //   .fillCircle(520, 740, 50);
+    
+    let zone: Phaser.GameObjects.Zone = this.add.zone(500, 690, 200, 100).setDepth(690).setOrigin(0.5, 0.5);
+
+    this.add.graphics({
+      fillStyle: {
+        color: 0xffffff,
+        alpha: 0.2
+      },
+    }).fillRect(zone.x, zone.y, zone.width, zone.height);
+
+    this.eventScore = this.add.text(520, 720, 'Твои очки: -', {
+      fontSize: '20px',
+      color: '#000',
+      fontFamily: 'Shadow'
+    }).setOrigin(0.5, 0.5);
+
+    this.eventPlace = this.add.text(520, 740, 'Твое место: -', {
+      fontSize: '20px',
+      color: '#000',
+      fontFamily: 'Shadow'
+    }).setOrigin(0.5, 0.5);
+
+    this.eventTime = this.add.text(520, 760, 'Время до: ', {
+      fontSize: '20px',
+      color: '#000',
+      fontFamily: 'Shadow'
+    }).setOrigin(0.5, 0.5)
+    this.click(zone, (): void => {
+      if (this.state.farm !== 'Event') {
+  
+        this.game.scene.keys[this.state.farm].autosave();
+        this.scene.stop();
+        this.scene.stop('MapBars');
+        this.scene.stop(this.state.farm);
+        this.scene.stop(this.state.farm + 'Bars');
+        this.scene.start('EventPreload', this.state);
+
+      } else {
+
+        this.game.scene.keys[this.state.farm].scrolling.downHandler();
+        this.game.scene.keys[this.state.farm].scrolling.enabled = true;
+        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+        this.scene.stop('MapBars');
+        this.scene.stop();
+
+      }
+    });
+  };
 
 
   // предыдущая глава

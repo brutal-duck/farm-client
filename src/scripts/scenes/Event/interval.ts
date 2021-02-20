@@ -144,7 +144,7 @@ function interval(): void {
       this.game.scene.keys['EventBars'].proceedsText.setText(shortNum(proceeds / BigInt(10)) + '/' + this.state.lang.seconds);
   
     } else {
-      this.game.scene.keys['EventBars'].proceedsText.setText('0');
+      this.game.scene.keys['EventBars'].proceedsText.setText('0/' + this.state.lang.seconds);
     }
     
   }, callbackScope: this, loop: true });
