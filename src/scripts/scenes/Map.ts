@@ -102,7 +102,7 @@ class Map extends Phaser.Scene {
     this.build(chickenPosition,'Chicken', this.state.progress.chicken);
     
     // Евентовая ферма на карте
-    // this.buildEvent();
+    this.buildEvent();
   }
 
 
@@ -121,7 +121,7 @@ class Map extends Phaser.Scene {
 
     }
 
-    // this.updateEvent();
+    this.updateEvent();
   }
 
 
