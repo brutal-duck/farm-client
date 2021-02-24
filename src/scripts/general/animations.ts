@@ -290,7 +290,7 @@ function plusDiamondsAnimation(position: Iposition): void {
   diamond.counter = 0;
 
   let target: Iposition = { x: 495, y: 30 }
-  let aim = new Phaser.Math.Vector2();
+  let aim: Phaser.Math.Vector2 = new Phaser.Math.Vector2();
   aim.x = target.x;
   aim.y = target.y;
   let distance: number = Phaser.Math.Distance.Between(diamond.x, diamond.y, target.x, target.y) * 2;
@@ -734,6 +734,24 @@ function plusDiamonds(): void {
 }
 
 
+// получения кристаллов
+function getDiamonds(position: Iposition, counter: number = 1): void {
+
+  if (counter > 5) counter = 5;
+
+  let time: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
+    counter--;
+    const pos: Iposition = {
+      x: Phaser.Math.Between(position.x - 30, position.x + 30),
+      y: Phaser.Math.Between(position.y - 30, position.y + 30),
+    }
+    this.plusDiamondsAnimation(pos);
+    if (counter <= 0) time.remove(false);
+  }, callbackScope: this, loop: true });
+
+}
+
+
 export {
   firework250,
   genAnimations,
@@ -749,5 +767,6 @@ export {
   calendarAnimation,
   newbieAwardAnimation,
   caveIconsAnimation,
-  plusDiamonds
+  plusDiamonds,
+  getDiamonds
 }

@@ -1402,8 +1402,6 @@ function pickUpTaskReward(id: number): void {
 
     }
 
-    console.log('анимация за сбор награды за задание задания');
-
   }
 
 }
