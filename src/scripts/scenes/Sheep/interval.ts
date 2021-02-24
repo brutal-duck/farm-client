@@ -1,4 +1,5 @@
 import { Arrows } from '../../elements';
+import { shortTime } from '../../general/basic';
 
 function interval(): void {
 
@@ -386,6 +387,13 @@ function interval(): void {
 
     }
     
+    // обновление времени евента
+    console.log(this.game.scene.keys['Map'])
+    if (this.state.progress.event.endTime > 0 && this.scene.isActive('Map')) {
+      this.state.progress.event.endTime--;
+      this.game.scene.keys['Map'].eventTime.setText('Осталось: ' + shortTime(this.state.progress.event.endTime, this.state.lang));
+    }
+
   }, callbackScope: this, loop: true });
   
 

@@ -1,3 +1,4 @@
+import {shortTime} from './../../general/basic';
 function interval(): void {
 
   // значение отступа для яиц, чтоб не прилегали к краям территории
@@ -310,6 +311,12 @@ function interval(): void {
       
       this.spreadAnimals();
 
+    }
+
+    // обновление времени евента
+    if (this.state.progress.event.endTime > 0 && this.scene.isActive('Map')) {
+      this.state.progress.event.endTime--;
+      this.game.scene.keys['Map'].eventTime.setText('Осталось: ' + shortTime(this.state.progress.event.endTime, this.state.lang));
     }
 
   }, callbackScope: this, loop: true });

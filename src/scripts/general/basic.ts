@@ -320,7 +320,8 @@ function clickModalBtn(arr: any, action: any) {
 // сокращенные числа
 function shortNum(num: number | string | bigint): string {
 
-	num = BigInt(num)
+  if (typeof num === 'number') num.toFixed(0);
+	num = BigInt(num);
 
 	if (num < BigInt(9999)) return String(num);
 	else {
