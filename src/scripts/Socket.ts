@@ -21,8 +21,8 @@ export default class Socket {
     });
 
     this.io.on('getRating', (data: any) => {
-      console.log(data)
-      console.log(this.state.progress)
+      // console.log(data)
+      // console.log(this.state.progress)
       this.state.progress.event.updateRaitings = true;
       this.state.progress.event.eventRaitings = data.ratings;
       this.state.progress.event.userEventRaiting = data.user;

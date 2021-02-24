@@ -388,11 +388,11 @@ function interval(): void {
     }
     
     // обновление времени евента
-    console.log(this.game.scene.keys['Map'])
-    if (this.state.progress.event.endTime > 0 && this.scene.isActive('Map')) {
-      this.state.progress.event.endTime--;
-      this.game.scene.keys['Map'].eventTime.setText('Осталось: ' + shortTime(this.state.progress.event.endTime, this.state.lang));
-    }
+
+    // if (this.state.progress.event.endTime > 0 && this.scene.isActive('Map')) {
+    //   this.state.progress.event.endTime--;
+    //   this.game.scene.keys['Map'].eventTime.setText('Осталось: ' + shortTime(this.state.progress.event.endTime, this.state.lang));
+    // }
 
   }, callbackScope: this, loop: true });
   
