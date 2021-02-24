@@ -93,7 +93,7 @@ class Map extends Phaser.Scene {
     
     let sheepPosition: Iposition = { x: 155, y: 145 };
     let chickenPosition: Iposition = { x: 500, y: 270 };
-    let eventPosition: Iposition = { x: 560, y: 650 };
+    let eventPosition: Iposition = { x: 580, y: 650 };
 
     if (this.state.farm === 'Sheep') {
       this.pointPosition = sheepPosition;

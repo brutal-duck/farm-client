@@ -43,6 +43,9 @@ function getFreePosition(): {x: number, y: number} {
     if (y >= this.topIndent + 1400) {
       let territoryForBuy: Phaser.Physics.Arcade.Sprite = this.territories.children.entries.find(territory => territory.data.values.type === 0);
       if (territoryForBuy !== undefined) {
+        this.scene.stop('Shop');
+        this.scene.stop('ShopBars');
+        this.scene.stop('Modal');
         
         let modal: Imodal = {
           type: 1,
