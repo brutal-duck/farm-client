@@ -163,8 +163,8 @@ function getActiveAnimal(
     animal.data.values.goWork = true;
     animal.data.values.teleport = true;
     let target: Iposition = new Phaser.Math.Vector2();
-    target.x = Phaser.Math.Between(50, 650);
-    target.y = Phaser.Math.Between(this.topIndent + 50, this.topIndent + 400);
+    target.x = Phaser.Math.Between(100, 600);
+    target.y = Phaser.Math.Between(this.topIndent + 100, this.topIndent + 300);
     animal.data.values.target = target;
     
     let speed: number = Phaser.Math.Distance.Between(animal.x, animal.y, target.x, target.y) * 4;
