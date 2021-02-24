@@ -557,7 +557,14 @@ export default {
     eventScores: 'очков',
     eventPlace: 'место',
     eventLastTime: 'до конца ивента:',
-    eventStart: 'До начала события'
+    eventStart: 'До начала события',
+    unicornField: 'полянка единорогов',
+    eventRules: 'Условия',
+    eventPrice: 'Призы',
+    eventRating: 'Рейтинг',
+    eventRulesTеxt: 'Выводи новые породы единорогов и расти в рейтинге!',
+    eventRulesTеxt2: 'Первые трое игроков получат почёт и огромную награду, а остальные - утешительные призы!',
+    eventRulesLeft: 'Событие закончится через ',
   },
   en: {
     index: 'ru',
@@ -1123,6 +1130,13 @@ export default {
     offlineCollectorTime: 'Собиратель радуги работал',
     doubleProfit: 'Хочешь удвоить доход?',
     eventLastTime: 'до конца события',
-    eventStart: 'До начала события'
+    eventStart: 'До начала события',
+    unicornField: 'полянка единорогов',
+    eventRules: 'Условия',
+    eventPrice: 'Призы',
+    eventRating: 'Рейтинг',
+    eventRulesTеxt: 'Выводи новые породы единорогов и расти в рейтинге!',
+    eventRulesTеxt2: 'Первые трое игроков получат почёт и огромную награду, а остальные - утешительные призы!',
+    eventRulesLeft: 'Событие закончится через ',
   }
 }

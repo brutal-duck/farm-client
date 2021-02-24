@@ -69,8 +69,8 @@ import { bigButton, repositoryBtn, mergingCloud, shopButton } from '../../elemen
 import { changeNickname, addEmail, support, registration } from '../../general/modal';
   // буст "Стадо"
 import { herdBoostWindow, getRandomAnimal, getRandomStartPosition } from './herdBoost';
-// Чат
 import { createChatBars } from './Chat/elements'
+import ratings from '../Event/ratings'
 
 let partProgress: any = require("./../../../assets/images/modal/part-progress.png");
 let newbieBg: any = require("./../../../assets/images/daily/newbie-bg.png");
@@ -129,15 +129,16 @@ let herdBoostEventIcon: any = require("./../../../assets/images/icons/event-herd
 let feedBoostSheepIcon: any = require("./../../../assets/images/icons/sheep-feed-boost.png");
 let feedBoostChickenIcon: any = require("./../../../assets/images/icons/chicken-feed-boost.png");
 let feedBoostEventIcon: any = require("./../../../assets/images/icons/event-feed-boost.png");
-
-// Чат
 let chatBackground: any = require("./../../../assets/images/modal/chat-bg.png");
 let chatSendBtn: any = require("./../../../assets/images/modal/chat-send-btn.png");
 let chatEmojiBtn: any = require("./../../../assets/images/modal/chat-emoji-btn.png");
-
-// Автопрогресс эвентовой фермы
 let autoprogressBG: any = require("./../../../assets/images/event/modal/autoprogress-bg.png");
 let purpleBtn: any = require("./../../../assets/images/event/modal/purple-btn.png");
+let ratingBG: any = require("./../../../assets/images/event/modal/rating-bg.png");
+let ratingRulesBtn: any = require("./../../../assets/images/event/modal/rating-rules-btn.png");
+let ratingPriseBtn: any = require("./../../../assets/images/event/modal/rating-price-btn.png");
+let ratingPrisePlaces: any = require("./../../../assets/images/event/modal/rating-places.png");
+
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -166,6 +167,11 @@ class Modal extends Phaser.Scene {
   // Чат
   public chatHeight: number = 0
   public chatBG: Phaser.GameObjects.Sprite
+  public line: Phaser.GameObjects.Text
+  public playerPlaceAndName: Phaser.GameObjects.Text
+  public playerScore: Phaser.GameObjects.Text
+  public eventRatingsNames: Phaser.GameObjects.Text[]
+  public eventRatingsScores: Phaser.GameObjects.Text[]
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -236,6 +242,7 @@ class Modal extends Phaser.Scene {
   public eventProfile = eventProfile.bind(this);
   public eventProgress = eventProgress.bind(this);
   public createChatBars = createChatBars.bind(this);
+  public ratings = ratings.bind(this);
   
   public init(state: Istate): void {
     this.state = state;
@@ -313,14 +320,15 @@ class Modal extends Phaser.Scene {
     if (this.state.farm === 'Chicken') this.load.image('chicken-feed-boost-icon', feedBoostChickenIcon);
     if (this.state.farm === 'Event') this.load.image('event-feed-boost-icon', feedBoostEventIcon);
 
-    // Чат
     this.load.image('chat-bg', chatBackground);
     this.load.image('chat-send-btn', chatSendBtn);
     this.load.image('chat-emoji-btn', chatEmojiBtn);
-
-    // Автопрогресс эвентовой фермы
     this.load.image('autoprogress-bg', autoprogressBG);
     this.load.image('purple-btn', purpleBtn);
+    this.load.image('rating-bg', ratingBG);
+    this.load.image('rating-rules-btn', ratingRulesBtn);
+    this.load.image('rating-price-btn', ratingPriseBtn);
+    this.load.image('rating-places', ratingPrisePlaces);
 
   }
 
@@ -375,6 +383,9 @@ class Modal extends Phaser.Scene {
         break;
       case 10:
         this.eventProgress();
+        break;
+      case 11:
+        this.ratings()
         break;
       default:
         this.scene.stop();
@@ -473,6 +484,36 @@ class Modal extends Phaser.Scene {
       }
       
     }
+
+
+    // Обновление таблицы
+    if (this.state.progress.event.updateRaitings) {
+
+      for (let i: number = 0; i < 10; i++) {
+        if (this.state.progress.event.eventRaitings[i].score !== null) {
+          this.eventRatingsNames[i].setText(this.state.progress.event.eventRaitings[i].place + '. ' + this.state.progress.event.eventRaitings[i].name).setCrop(0, 0, 280, 100)
+          this.eventRatingsScores[i].setText(String(this.state.progress.event.eventRaitings[i].score))
+        }
+      }
+      
+      if (this.state.progress.event.userEventRaiting.place <= 10) {
+        
+        this.line.setVisible(false)
+        this.playerPlaceAndName.setVisible(false)
+        this.playerScore.setVisible(false)
+    
+      } else if (this.state.progress.event.userEventRaiting.place > 10) {
+        
+        this.line.setVisible(true)
+        this.playerPlaceAndName.setVisible(true).setCrop(0, 0, 280, 100)
+        this.playerScore.setVisible(true)
+        
+      }
+
+      this.state.progress.event.updateRaitings = false
+
+    }
+
 
   }
 

@@ -192,6 +192,12 @@ let eventFeedBoostMini: any = require("./../../../assets/images/event/icons/even
 let autoprogressBG: any = require("./../../../assets/images/event/modal/autoprogress-bg.png");
 let purpleBtn: any = require("./../../../assets/images/event/modal/purple-btn.png");
 
+// Окно рейтингов
+let ratingBG: any = require("./../../../assets/images/event/modal/rating-bg.png");
+let ratingRulesBtn: any = require("./../../../assets/images/event/modal/rating-rules-btn.png");
+let ratingPriseBtn: any = require("./../../../assets/images/event/modal/rating-price-btn.png");
+let ratingPrisePlaces: any = require("./../../../assets/images/event/modal/rating-places.png");
+
 const testCollector: IcollectorSettings[] = [
   {
     level: 1,
@@ -1680,6 +1686,13 @@ class EventPreload extends Phaser.Scene {
     // Автопрогресс эвентовой фермы
     this.load.image('autoprogress-bg', autoprogressBG);
     this.load.image('purple-btn', purpleBtn);
+    
+    // Окно рейтингов
+    this.load.image('rating-bg', ratingBG);
+    this.load.image('rating-rules-btn', ratingRulesBtn);
+    this.load.image('rating-price-btn', ratingPriseBtn);
+    this.load.image('rating-places', ratingPrisePlaces);
+
   }
 
   
