@@ -555,7 +555,14 @@ export default {
     offlineCollectorTime: 'Собиратель радуги работал',
     doubleProfit: 'Хочешь удвоить доход?',
     eventScores: 'очков',
-    eventPlace: 'место'
+    eventPlace: 'место',
+    unicornField: 'полянка единорогов',
+    eventRules: 'Условия',
+    eventPrice: 'Призы',
+    eventRating: 'Рейтинг',
+    eventRulesTеxt: 'Выводи новые породы единорогов и расти в рейтинге!',
+    eventRulesTеxt2: 'Первые трое игроков получат почёт и огромную награду, а остальные - утешительные призы!',
+    eventRulesLeft: 'Событие закончится через ',
   },
   en: {
     index: 'ru',
@@ -1120,5 +1127,12 @@ export default {
     offlineTime: 'Вас не было на ферме',
     offlineCollectorTime: 'Собиратель радуги работал',
     doubleProfit: 'Хочешь удвоить доход?',
+    unicornField: 'полянка единорогов',
+    eventRules: 'Условия',
+    eventPrice: 'Призы',
+    eventRating: 'Рейтинг',
+    eventRulesTеxt: 'Выводи новые породы единорогов и расти в рейтинге!',
+    eventRulesTеxt2: 'Первые трое игроков получат почёт и огромную награду, а остальные - утешительные призы!',
+    eventRulesLeft: 'Событие закончится через ',
   }
 }

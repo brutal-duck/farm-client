@@ -137,6 +137,7 @@ let purpleBtn: any = require("./../../../assets/images/event/modal/purple-btn.pn
 let ratingBG: any = require("./../../../assets/images/event/modal/rating-bg.png");
 let ratingRulesBtn: any = require("./../../../assets/images/event/modal/rating-rules-btn.png");
 let ratingPriseBtn: any = require("./../../../assets/images/event/modal/rating-price-btn.png");
+let ratingPrisePlaces: any = require("./../../../assets/images/event/modal/rating-places.png");
 
 
 class Modal extends Phaser.Scene {
@@ -166,7 +167,11 @@ class Modal extends Phaser.Scene {
   // Чат
   public chatHeight: number = 0
   public chatBG: Phaser.GameObjects.Sprite
-  public eventRatings: Phaser.GameObjects.Text[]
+  public line: Phaser.GameObjects.Text
+  public playerPlaceAndName: Phaser.GameObjects.Text
+  public playerScore: Phaser.GameObjects.Text
+  public eventRatingsNames: Phaser.GameObjects.Text[]
+  public eventRatingsScores: Phaser.GameObjects.Text[]
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -241,7 +246,6 @@ class Modal extends Phaser.Scene {
   
   public init(state: Istate): void {
     this.state = state;
-    this.eventRatings = []
   }
 
 
@@ -324,6 +328,7 @@ class Modal extends Phaser.Scene {
     this.load.image('rating-bg', ratingBG);
     this.load.image('rating-rules-btn', ratingRulesBtn);
     this.load.image('rating-price-btn', ratingPriseBtn);
+    this.load.image('rating-places', ratingPrisePlaces);
 
   }
 
@@ -479,6 +484,36 @@ class Modal extends Phaser.Scene {
       }
       
     }
+
+
+    // Обновление таблицы
+    if (this.state.progress.event.updateRaitings) {
+
+      for (let i: number = 0; i < 10; i++) {
+        if (this.state.progress.event.eventRaitings[i].score !== null) {
+          this.eventRatingsNames[i].setText(this.state.progress.event.eventRaitings[i].place + '. ' + this.state.progress.event.eventRaitings[i].name).setCrop(0, 0, 280, 100)
+          this.eventRatingsScores[i].setText(String(this.state.progress.event.eventRaitings[i].score))
+        }
+      }
+      
+      if (this.state.progress.event.userEventRaiting.place <= 10) {
+        
+        this.line.setVisible(false)
+        this.playerPlaceAndName.setVisible(false)
+        this.playerScore.setVisible(false)
+    
+      } else if (this.state.progress.event.userEventRaiting.place > 10) {
+        
+        this.line.setVisible(true)
+        this.playerPlaceAndName.setVisible(true).setCrop(0, 0, 280, 100)
+        this.playerScore.setVisible(true)
+        
+      }
+
+      this.state.progress.event.updateRaitings = false
+
+    }
+
 
   }
 

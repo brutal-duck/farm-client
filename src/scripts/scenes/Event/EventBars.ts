@@ -122,15 +122,14 @@ class EventBars extends Phaser.Scene {
     this.add.sprite(0, 0, 'topbar-event').setOrigin(0, 0).setInteractive();
     const raitingZone:Phaser.GameObjects.Zone = this.add.zone(0,0, 480, 280);
 
-    this.click(raitingZone, ()=>{
+    this.click(raitingZone, () => {
+
       this.game.scene.keys['Event'].getEventRaiting();
-      console.log('raiting open', this.state.progress);
-      // const modal: Imodal = {
-      //   type: 2,
-      //   shopType: 4
-      // }
-      // this.state.modal = modal;
-      // this.scene.launch('Modal', this.state);
+      const modal: Imodal = {
+        type: 11
+      }
+      this.state.modal = modal;
+      this.scene.launch('Modal', this.state);
       
     })
 
