@@ -20,7 +20,7 @@ function drag(): void {
 
       animal.x = dragX;
       animal.y = dragY;
-      animal.setDepth(dragY + Math.round((animal.height / 2) + 100));
+      // animal.setDepth(dragY + Math.round((animal.height / 2) + 1000));
 
     }
 
@@ -71,6 +71,21 @@ function drag(): void {
     animal.data.values.drag = false; // убираем метку перетаскивания
     
     if (!animal.data.values.zone)  {
+      
+      if (animal.y > this.topIndent + 480 + 240 * 3.5){
+
+        if (animal.state === 'active') { 
+          animal.data.values.base.data.values.expel = true;
+          this.state.animal = animal.data.values.base;
+
+        } else if (animal.state === 'base') {
+          animal.data.values.expel = true;
+          
+          this.state.animal = animal;
+        }
+        this.teleportation(animal, undefined, true);
+        this.confirmExpelAnimal();
+      } 
       this.teleportation(animal, undefined, true); 
       return;
     }
@@ -131,7 +146,7 @@ function drag(): void {
       } else this.teleportation(animal, undefined, true);
     }
   });
-
+ 
 }
 
 export default drag;

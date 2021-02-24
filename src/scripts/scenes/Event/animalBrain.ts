@@ -134,7 +134,8 @@ function animalBrain(): void {
     }  
     
     animal.data.values.cloud.setDepth(animal.y + Math.round((animal.height / 2) + 100));
-    animal.setDepth(animal.y + Math.round((animal.height / 2) + 101)); // z-index
+    animal.setDepth(animal.y + Math.round((animal.height / 2) + 1000)); // z-index
+    if (animal.data.values.base.data.values.drag) animal.data.values.base.setDepth(animal.y + Math.round((animal.height / 2) + 10000));
     if (animal.data.values.teleport) animal.setDepth(animal.y * 10000);
     if (animal.data.values.base.data.values.teleport) animal.data.values.base.setDepth(animal.y * 10000);
   
