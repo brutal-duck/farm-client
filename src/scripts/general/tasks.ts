@@ -22,18 +22,9 @@ function partTasks(): Itasks[] {
   // костыль (иногда нет заданий у кого-то)
   if (tasks?.length === 0 || !tasks) {
 
-    console.log('-----------');
-
-    console.log('AllTasks ', AllTasks);
-    console.log('this state farm', this.state.farm);
-
-    console.log('-----------');
-
     tasks = [];
 
     for (let i in AllTasks) {
-
-      
 
       if (AllTasks[i].farm === 1 && this.state.farm === 'Sheep') tasks.push(AllTasks[i]);
       if (AllTasks[i].farm === 2 && this.state.farm === 'Chicken') tasks.push(AllTasks[i]);

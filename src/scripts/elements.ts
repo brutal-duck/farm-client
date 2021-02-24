@@ -744,6 +744,7 @@ class TaskBoard {
         title: this.takeText,
         img: false
       }, (): void => {
+        this.scene.getDiamonds({ x: this.done.x, y: this.done.y }, task.diamonds);
         this.scene.game.scene.keys[this.scene.state.farm].pickUpTaskReward(task.id);
       });
 
