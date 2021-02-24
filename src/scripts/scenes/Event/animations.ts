@@ -71,17 +71,33 @@ function updateTeleportation() {
   this.animals.children.entries.forEach((animal: Phaser.Physics.Arcade.Sprite) => {
     
     if (animal.data.values.active.data.values.teleport) {
-      animal.data.values.active.setDepth(animal.data.values.active.y);
-      let target: Iposition = animal.data.values.target;
-      let distance: number = Phaser.Math.Distance.Between(animal.data.values.active.x, animal.data.values.active.y, target.x, target.y);
-      if (distance < 40) {
-        animal.data.values.active.body.reset(target.x, target.y);
-        animal.data.values.active.setOrigin(0.5, 0.5);
-        animal.data.values.active.data.values.teleport = false;
-        animal.setDepth(animal.y);
-        animal.data.values.active.setDepth(animal.y * 2);
-      }
+      if (animal.data.values.active.data.values.goWork) {
+        animal.data.values.active.setDepth(animal.data.values.active.y);
+        let target: Iposition = animal.data.values.active.data.values.target;
+        
+        let distance: number = Phaser.Math.Distance.Between(animal.data.values.active.x, animal.data.values.active.y, target.x, target.y);
+        if (distance < 40) {
+          animal.data.values.active.data.values.working = true;
+          animal.data.values.active.body.reset(target.x, target.y);
+          animal.data.values.active.setOrigin(0.5, 0.5);
+          animal.data.values.active.data.values.teleport = false;
+          animal.setDepth(animal.y);
+          animal.data.values.active.setDepth(animal.y * 2);
+        }
 
+      } else {
+        animal.data.values.active.setDepth(animal.data.values.active.y);
+        let target: Iposition = animal.data.values.target;
+        let distance: number = Phaser.Math.Distance.Between(animal.data.values.active.x, animal.data.values.active.y, target.x, target.y);
+        if (distance < 40) {
+          animal.data.values.active.body.reset(target.x, target.y);
+          animal.data.values.active.setOrigin(0.5, 0.5);
+          animal.data.values.active.data.values.teleport = false;
+          animal.setDepth(animal.y);
+          animal.data.values.active.setDepth(animal.y * 2);
+        }
+      }
+      
     }
 
     if (animal.data.values.teleport) {

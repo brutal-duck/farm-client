@@ -9,7 +9,7 @@ function drag(): void {
     animal.data.values.working = false;
     animal.data.values.drag = true; // метим перетаскивание для других функций
     animal.data.values.cloud?.setVisible(false);
-    animal.data.values.cloud.setOrigin(0.5, 0.5);
+    animal.data.values.cloud?.setOrigin(0.5, 0.5);
     animal.setOrigin(0.5, 0.5);
     animal.setVelocity(0, 0); // отменяем передвижение
     animal.setCollideWorldBounds(true);

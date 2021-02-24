@@ -155,18 +155,20 @@ function getActiveAnimal(
   animal.data.values.teleport = false;
   animal.data.values.topPosition = false;
   animal.data.values.cloud = this.physics.add.sprite(x, y, 'cloud').setVisible(false);
+  animal.data.values.goWork = false;
   animal.state = 'active';
 
   this.doubleClick(animal, ()=> {
-    animal.data.values.working = true;
-    // animal.data.values.teleport = true;
+    // animal.data.values.working = true;
+    animal.data.values.goWork = true;
+    animal.data.values.teleport = true;
     let target: Iposition = new Phaser.Math.Vector2();
     target.x = Phaser.Math.Between(50, 650);
     target.y = Phaser.Math.Between(this.topIndent + 50, this.topIndent + 400);
     animal.data.values.target = target;
-    console.log(target)
+    
     let speed: number = Phaser.Math.Distance.Between(animal.x, animal.y, target.x, target.y) * 4;
-
+    
     this.physics.moveToObject(animal, target, speed);
   })
   return animal;
