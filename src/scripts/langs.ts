@@ -556,7 +556,8 @@ export default {
     doubleProfit: 'Хочешь удвоить доход?',
     eventScores: 'очков',
     eventPlace: 'место',
-    eventLastTime: 'до конца ивента:'
+    eventLastTime: 'до конца ивента:',
+    eventStart: 'До начала события'
   },
   en: {
     index: 'ru',
@@ -1121,6 +1122,7 @@ export default {
     offlineTime: 'Вас не было на ферме',
     offlineCollectorTime: 'Собиратель радуги работал',
     doubleProfit: 'Хочешь удвоить доход?',
-    eventLastTime: 'до конца ивента:'
+    eventLastTime: 'до конца события',
+    eventStart: 'До начала события'
   }
 }

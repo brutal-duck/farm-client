@@ -314,9 +314,18 @@ function interval(): void {
     }
 
     // обновление времени евента
-    if (this.state.progress.event.endTime > 0 && this.scene.isActive('Map')) {
+    if (this.state.progress.event.endTime > 0) {
       this.state.progress.event.endTime--;
-      this.game.scene.keys['Map'].eventTime.setText(shortTime(this.state.progress.event.endTime, this.state.lang));
+      if ( this.scene.isActive('Map')) {
+        this.game.scene.keys['Map'].eventEndTime?.setText(shortTime(this.state.progress.event.endTime, this.state.lang));
+      } 
+    }
+
+    if (this.state.progress.event.startTime > 0) {
+      this.state.progress.event.startTime--;
+      if (this.scene.isActive('Map')) {
+        this.game.scene.keys['Map'].eventStartTime?.setText(shortTime(this.state.progress.event.startTime, this.state.lang));
+      }
     }
 
   }, callbackScope: this, loop: true });

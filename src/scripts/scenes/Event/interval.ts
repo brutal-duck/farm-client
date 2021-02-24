@@ -172,7 +172,7 @@ function interval(): void {
     if (this.state.progress.event.endTime > 0) {
       this.state.progress.event.endTime--;
       if ( this.scene.isActive('Map')) {
-        this.game.scene.keys['Map'].eventTime?.setText(shortTime(this.state.progress.event.endTime, this.state.lang));
+        this.game.scene.keys['Map'].eventEndTime?.setText(shortTime(this.state.progress.event.endTime, this.state.lang));
       } 
     }
 
@@ -182,6 +182,13 @@ function interval(): void {
       this.scene.stop('Event');
       this.scene.stop('EventBars');
       this.scene.start('SheepPreload', this.state);
+    }
+
+    if (this.state.progress.event.startTime > 0) {
+      this.state.progress.event.startTime--;
+      if (this.scene.isActive('Map')) {
+        this.game.scene.keys['Map'].eventStartTime?.setText(shortTime(this.state.progress.event.startTime, this.state.lang));
+      }
     }
     
   }, callbackScope: this, loop: true });

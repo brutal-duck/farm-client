@@ -29,9 +29,13 @@ class Map extends Phaser.Scene {
   public pointAnimation: number;
   public eventScore: Phaser.GameObjects.Text;
   public eventPlace: Phaser.GameObjects.Text;
-  public eventTime: Phaser.GameObjects.Text;
+  public eventEndText: Phaser.GameObjects.Text;
+  public eventEndTime: Phaser.GameObjects.Text;
   public eventCloud: Phaser.GameObjects.Sprite;
   public eventMapFarm: Phaser.GameObjects.Sprite;
+  public eventStartText: Phaser.GameObjects.Text;
+  public eventStartTime: Phaser.GameObjects.Text;
+  public eventStartBg: Phaser.GameObjects.Graphics;
 
   public click = click.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
@@ -85,11 +89,11 @@ class Map extends Phaser.Scene {
       this.scrolling.wheel = true;
     });
 
-    this.point = this.add.sprite(0, 0, 'point-map').setOrigin(0.5, 1);
+    this.point = this.add.sprite(0, 0, 'point-map').setOrigin(0.5, 1).setDepth(100);
     
     let sheepPosition: Iposition = { x: 155, y: 145 };
     let chickenPosition: Iposition = { x: 500, y: 270 };
-    let eventPosition: Iposition = { x: 520, y: 700 };
+    let eventPosition: Iposition = { x: 560, y: 650 };
 
     if (this.state.farm === 'Sheep') {
       this.pointPosition = sheepPosition;
@@ -257,8 +261,9 @@ class Map extends Phaser.Scene {
     // let eventIcon: Phaser.GameObjects.Graphics = this.add.graphics();
     // eventIcon.fillStyle(0xff0000, 1.0)
     //   .fillCircle(520, 740, 50);
-    this.eventCloud = this.add.sprite(550, 750, 'map-cloud');
-    this.eventMapFarm = this.add.sprite(720, 730, 'map-event-farm').setOrigin(1, 0.5);
+    this.eventCloud = this.add.sprite(550, 750, 'map-cloud').setVisible(false);
+
+    this.eventMapFarm = this.add.sprite(720, 730, 'map-event-farm').setOrigin(1, 0.5).setVisible(false);
 
     let zone: Phaser.GameObjects.Zone = this.add.zone(570, 720, 220, 160).setDropZone(undefined, () => {});
 
@@ -273,25 +278,49 @@ class Map extends Phaser.Scene {
       fontSize: '21px',
       color: '#6e00c7',
       fontFamily: 'Shadow'
-    }).setOrigin(0.5, 0.5);
+    }).setOrigin(0.5, 0.5).setVisible(false);
 
     this.eventPlace = this.add.text(580, 720, '-', {
       fontSize: '21px',
       color: '#f0e8ce',
       fontFamily: 'Shadow'
-    }).setOrigin(0.5, 0.5);
+    }).setOrigin(0.5, 0.5).setVisible(false);
 
-    this.add.text(580, 740, this.state.lang.eventLastTime, {
+    this.eventEndText = this.add.text(580, 740, this.state.lang.eventLastTime, {
       fontSize: '16px',
       color: '#530d8e',
       fontFamily: 'Shadow'
-    }).setOrigin(0.5, 0.5);
+    }).setOrigin(0.5, 0.5).setVisible(false);
 
-    this.eventTime = this.add.text(580, 760, '-', {
+    this.eventEndTime = this.add.text(580, 760, '-', {
       fontSize: '24px',
       color: '#cbff40',
       fontFamily: 'Shadow'
-    }).setOrigin(0.5, 0.5)
+    }).setOrigin(0.5, 0.5).setVisible(false);
+    
+    
+
+    this.eventStartText = this.add.text(570, 740, this.state.lang.eventStart, {
+      fontSize: '16px',
+      color: '#ffe9e4',
+      fontFamily: 'Shadow'
+    }).setOrigin(0.5, 0.5).setDepth(1).setVisible(false);
+
+    this.eventStartTime = this.add.text(570, 760, '-', {
+      fontSize: '21px',
+      color: '#cbff40',
+      fontFamily: 'Shadow'
+    }).setOrigin(0.5, 0.5).setDepth(1).setVisible(false);
+
+    this.eventStartBg = this.add.graphics({
+      fillStyle: {
+        color: 0x3d1a11,
+        alpha: 0.5
+      },
+    }).fillRoundedRect(this.eventStartText.getBounds().left - 25, this.eventStartText.getBounds().top - 10, this.eventStartText.width + 50, 60).setVisible(false);
+
+
+
     this.click(zone, (): void => {
       if (this.state.farm !== 'Event') {
   
@@ -315,11 +344,40 @@ class Map extends Phaser.Scene {
   };
 
   public updateEvent(): void {
+    if (this.state.progress.event.startTime > 0) {
+
+      if (!this.eventCloud.visible) {
+        this.eventCloud.setVisible(true);
+        this.eventStartText.setVisible(true);
+        this.eventStartTime.setVisible(true);
+        this.eventStartBg.setVisible(true);
+        this.eventMapFarm.setVisible(false);
+        this.eventPlace.setVisible(false);
+        this.eventScore.setVisible(false);
+        this.eventEndTime.setVisible(false);
+        this.eventEndText.setVisible(false);
+      } 
+    } else if (this.state.progress.event.startTime <= 0) {
+
+      if (!this.eventMapFarm.visible) {
+        this.eventCloud.setVisible(false);
+        this.eventStartText.setVisible(false);
+        this.eventStartTime.setVisible(false);
+        this.eventStartBg.setVisible(false);
+        this.eventMapFarm.setVisible(true);
+        this.eventPlace.setVisible(true);
+        this.eventScore.setVisible(true);
+        this.eventEndTime.setVisible(true);
+        this.eventEndText.setVisible(true);
+      }
+      
+    }
+
     if (this.state.progress.event.updateRaitings) {
       console.log(this.state.progress)
       this.eventScore.setText(this.state.progress.event.eventPoints + ' ' + this.state.lang.eventScores);
       this.eventPlace.setText(this.state.progress.event.userEventRaiting.place + ' ' + this.state.lang.eventPlace);
-      this.eventTime.setText(shortTime(this.state.progress.event.endTime, this.state.lang));
+      this.eventEndTime.setText(shortTime(this.state.progress.event.endTime, this.state.lang));
       this.state.progress.event.updateRaitings = false;
     }
     
