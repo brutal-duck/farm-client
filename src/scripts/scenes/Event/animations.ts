@@ -94,6 +94,7 @@ function updateTeleportation() {
         let target: Iposition = animal.data.values.target;
         let distance: number = Phaser.Math.Distance.Between(animal.data.values.active.x, animal.data.values.active.y, target.x, target.y);
         if (distance < 40) {
+          this.input.setDraggable(animal, true);
           animal.data.values.active.body.reset(target.x, target.y);
           animal.data.values.active.setOrigin(0.5, 0.5);
           animal.data.values.active.data.values.teleport = false;
@@ -109,6 +110,7 @@ function updateTeleportation() {
       let target: Iposition = animal.data.values.target;
       let distance: number = Phaser.Math.Distance.Between(animal.x, animal.y, target.x, target.y);
       if (distance < 40) {
+        this.input.setDraggable(animal, true);
         animal.body.reset(target.x, target.y);
         animal.setDepth(animal.y);
         animal.data.values.teleport = false;
