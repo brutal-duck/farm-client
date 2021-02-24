@@ -172,7 +172,7 @@ function interval(): void {
     if (this.state.progress.event.endTime > 0) {
       this.state.progress.event.endTime--;
       if ( this.scene.isActive('Map')) {
-        this.game.scene.keys['Map'].eventTime?.setText('Осталось: ' + shortTime(this.state.progress.event.endTime, this.state.lang));
+        this.game.scene.keys['Map'].eventTime?.setText(shortTime(this.state.progress.event.endTime, this.state.lang));
       } 
     }
 

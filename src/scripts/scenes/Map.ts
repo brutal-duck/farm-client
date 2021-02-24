@@ -12,6 +12,8 @@ let pointMap: any = require("./../../assets/images/icons/point-map.png");
 let pbChapterMap: any = require("./../../assets/images/modal/pb-chapter-map.png");
 let partProgress: any = require("./../../assets/images/modal/part-progress.png");
 let mapBtn: any = require("./../../assets/images/modal/map-btn.png");
+let mapCloud: any = require("./../../assets/images/event/map-cloud.png");
+let mapEventFarm: any = require("./../../assets/images/event/map-event-farm.png");
 
 class Map extends Phaser.Scene {
   constructor() {
@@ -28,6 +30,8 @@ class Map extends Phaser.Scene {
   public eventScore: Phaser.GameObjects.Text;
   public eventPlace: Phaser.GameObjects.Text;
   public eventTime: Phaser.GameObjects.Text;
+  public eventCloud: Phaser.GameObjects.Sprite;
+  public eventMapFarm: Phaser.GameObjects.Sprite;
 
   public click = click.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
@@ -55,6 +59,8 @@ class Map extends Phaser.Scene {
     this.load.image('pb-chapter-map', pbChapterMap);
     this.load.image('part-progress', partProgress);
     this.load.image('map-btn', mapBtn);
+    this.load.image('map-cloud', mapCloud);
+    this.load.image('map-event-farm', mapEventFarm);
 
   }
 
@@ -251,31 +257,39 @@ class Map extends Phaser.Scene {
     // let eventIcon: Phaser.GameObjects.Graphics = this.add.graphics();
     // eventIcon.fillStyle(0xff0000, 1.0)
     //   .fillCircle(520, 740, 50);
-    
-    let zone: Phaser.GameObjects.Zone = this.add.zone(500, 690, 200, 100).setDepth(690).setOrigin(0.5, 0.5);
+    this.eventCloud = this.add.sprite(550, 750, 'map-cloud');
+    this.eventMapFarm = this.add.sprite(720, 730, 'map-event-farm').setOrigin(1, 0.5);
 
-    this.add.graphics({
-      fillStyle: {
-        color: 0xffffff,
-        alpha: 0.2
-      },
-    }).fillRect(zone.x, zone.y, zone.width, zone.height);
+    let zone: Phaser.GameObjects.Zone = this.add.zone(570, 720, 220, 160).setDropZone(undefined, () => {});
 
-    this.eventScore = this.add.text(520, 720, 'Твои очки: -', {
-      fontSize: '20px',
-      color: '#000',
+    // this.add.graphics({
+    //   fillStyle: {
+    //     color: 0xffffff,
+    //     alpha: 0.6
+    //   },
+    // }).fillRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.width, zone.height);
+
+    this.eventScore = this.add.text(580, 675, '-', {
+      fontSize: '21px',
+      color: '#6e00c7',
       fontFamily: 'Shadow'
     }).setOrigin(0.5, 0.5);
 
-    this.eventPlace = this.add.text(520, 740, 'Твое место: -', {
-      fontSize: '20px',
-      color: '#000',
+    this.eventPlace = this.add.text(580, 720, '-', {
+      fontSize: '21px',
+      color: '#f0e8ce',
       fontFamily: 'Shadow'
     }).setOrigin(0.5, 0.5);
 
-    this.eventTime = this.add.text(520, 760, 'Время до: ', {
-      fontSize: '20px',
-      color: '#000',
+    this.add.text(580, 740, this.state.lang.eventLastTime, {
+      fontSize: '16px',
+      color: '#530d8e',
+      fontFamily: 'Shadow'
+    }).setOrigin(0.5, 0.5);
+
+    this.eventTime = this.add.text(580, 760, '-', {
+      fontSize: '24px',
+      color: '#cbff40',
       fontFamily: 'Shadow'
     }).setOrigin(0.5, 0.5)
     this.click(zone, (): void => {
@@ -303,9 +317,9 @@ class Map extends Phaser.Scene {
   public updateEvent(): void {
     if (this.state.progress.event.updateRaitings) {
       console.log(this.state.progress)
-      this.eventScore.setText('Твои очки: ' + this.state.progress.event.eventPoints);
-      this.eventPlace.setText('Твое место: ' + this.state.progress.event.userEventRaiting.place);
-      this.eventTime.setText('Осталось: ' + shortTime(this.state.progress.event.endTime, this.state.lang));
+      this.eventScore.setText(this.state.progress.event.eventPoints + ' ' + this.state.lang.eventScores);
+      this.eventPlace.setText(this.state.progress.event.userEventRaiting.place + ' ' + this.state.lang.eventPlace);
+      this.eventTime.setText(shortTime(this.state.progress.event.endTime, this.state.lang));
       this.state.progress.event.updateRaitings = false;
     }
     
