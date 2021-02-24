@@ -9,6 +9,8 @@ function drag(): void {
     animal.data.values.working = false;
     animal.data.values.drag = true; // метим перетаскивание для других функций
     animal.data.values.cloud?.setVisible(false);
+    animal.data.values.cloud.setOrigin(0.5, 0.5);
+    animal.setOrigin(0.5, 0.5);
     animal.setVelocity(0, 0); // отменяем передвижение
     animal.setCollideWorldBounds(true);
 
@@ -20,7 +22,7 @@ function drag(): void {
 
       animal.x = dragX;
       animal.y = dragY;
-      // animal.setDepth(dragY + Math.round((animal.height / 2) + 1000));
+      animal.setDepth(dragY + Math.round((animal.height / 2) + 1000));
 
     }
 

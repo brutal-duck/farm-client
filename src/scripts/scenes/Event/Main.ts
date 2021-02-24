@@ -11,7 +11,8 @@ import {
   onlineStatus,
   takeDonate,
   debug, 
-  getEventRaiting
+  getEventRaiting,
+  doubleClick
 } from '../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -175,6 +176,7 @@ class Event extends Phaser.Scene {
 
   public autoprogress = autoprogress.bind(this);
   public getEventRaiting = getEventRaiting.bind(this);
+  public doubleClick = doubleClick.bind(this);
 
   public init(state: Istate): void {
     this.state = state;
@@ -210,9 +212,6 @@ class Event extends Phaser.Scene {
     //   //   tasks[i].got_awarded = 1;
     //   // }
     // });
-
-    
-    
 
   }
 

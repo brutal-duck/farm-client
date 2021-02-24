@@ -158,6 +158,62 @@ function click(object: any, action: any, maxMoveCounter: number = 3): void {
   
 }
 
+function doubleClick(object: any, action: any, maxMoveCounter: number = 3): void {
+
+  object.setInteractive();
+  let moveCounter: number = 0;
+  let clickCounter: number = 0;
+
+  object.on('pointerdown', (): void => {
+    object.xDown = object.x;
+    object.yDown = object.y;
+    object.press = true;
+  });
+
+  object.on('pointermove', (): void => {
+    if (object.press) moveCounter++;
+  });
+
+  object.on('pointerout', (): void => {
+    
+    if (object.press) {
+      moveCounter = 0;
+      object.press = false;
+    }
+
+  });
+
+  object.on('pointerup', (): void => {
+
+    let x: number;
+    let y: number;
+
+    if (object.xDown >= object.x) x = object.xDown - object.x;
+    else x = object.x - object.xDown;
+
+    if (object.yDown >= object.y) y = object.yDown - object.y;
+    else y = object.y - object.yDown;
+    
+    if (object.press && moveCounter < maxMoveCounter && x < 5 && y < 5) {
+      object.press = false;
+      clickCounter++;
+      this.time.addEvent({ delay: 400, callback: (): void => {
+        clickCounter = 0;
+      }, callbackScope: this, loop: false });
+
+      if (clickCounter >= 2) {
+        action();
+      }
+      
+    } else if (object.press) {
+      object.press = false;
+    }
+
+    moveCounter = 0;
+
+  });
+  
+}
 
 // функция нажатия на кнопку с затемнением
 function clickModalBtn(arr: any, action: any) {
@@ -2741,5 +2797,6 @@ export {
   loadingScreen,
   updateFeedBoostBtn,
   spreadAnimals,
-  getEventRaiting
+  getEventRaiting,
+  doubleClick
 }
