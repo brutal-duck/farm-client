@@ -486,8 +486,8 @@ class Modal extends Phaser.Scene {
     }
 
 
-    // Обновление таблицы
-    if (this.state.progress.event.updateRaitings) {
+    // Обновление таблицы рейтингов евента
+    if (this.state.progress.event.updateRaitings && this.state.modal.type === 11) {
 
       for (let i: number = 0; i < 10; i++) {
         if (this.state.progress.event.eventRaitings[i].score !== null) {
