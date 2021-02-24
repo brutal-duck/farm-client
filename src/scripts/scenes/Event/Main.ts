@@ -98,7 +98,7 @@ class Event extends Phaser.Scene {
   public settings: IeventSettings; // настройки
   public collector: number = 0; // время собирателя в секундах
   public collectorTakenTime: number = 0; // время на сколько брали собирателя
-  public autoSaveTimer: number; // таймер для автосохранения
+  public autoSaveTimer: number = 0; // таймер для автосохранения
   public autoprogressTimer: number; // таймер для автопрогресса
   public collectorTimer: Phaser.Time.TimerEvent; // интервал собирателя ресурсов
   public debugLog: boolean;
@@ -197,21 +197,21 @@ class Event extends Phaser.Scene {
     this.flyAnimal();
     this.getEventRaiting();
 
-    // let cursors = this.input.keyboard.createCursorKeys();
-    // cursors.space.on('down', (): void => {
+    let cursors = this.input.keyboard.createCursorKeys();
+    cursors.space.on('down', (): void => {
 
-    //   // let modal: Imodal = {
-    //   //   type: 8,
-    //   // }
-    //   // this.state.modal = modal;
-    //   // this.scene.launch('Modal', this.state);
-
-    //   // let tasks = this.partTasks();
-    //   // for (let i in tasks) {
-    //   //   tasks[i].done = 1;
-    //   //   tasks[i].got_awarded = 1;
-    //   // }
-    // });
+      // let modal: Imodal = {
+      //   type: 8,
+      // }
+      // this.state.modal = modal;
+      // this.scene.launch('Modal', this.state);
+      this.state.user.diamonds = 100000;
+      // let tasks = this.partTasks();
+      // for (let i in tasks) {
+      //   tasks[i].done = 1;
+      //   tasks[i].got_awarded = 1;
+      // }
+    });
 
   }
 

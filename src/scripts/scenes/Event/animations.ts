@@ -71,6 +71,7 @@ function updateTeleportation() {
   this.animals.children.entries.forEach((animal: Phaser.Physics.Arcade.Sprite) => {
     
     if (animal.data.values.active.data.values.teleport) {
+      this.input.setDraggable(animal, false);
       if (animal.data.values.active.data.values.goWork) {
         
         animal.data.values.active.setDepth(animal.data.values.active.y);
@@ -78,6 +79,7 @@ function updateTeleportation() {
         
         let distance: number = Phaser.Math.Distance.Between(animal.data.values.active.x, animal.data.values.active.y, target.x, target.y);
         if (distance < 40) {
+          this.input.setDraggable(animal, true);
           animal.data.values.active.data.values.working = true;
           animal.data.values.active.data.values.goWork = false;
           animal.data.values.active.body.reset(target.x, target.y);

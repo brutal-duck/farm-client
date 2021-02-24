@@ -1,7 +1,9 @@
 function drag(): void {
 
   this.input.on('dragstart', (pointer: any, animal: Phaser.Physics.Arcade.Sprite): void => {
-
+    if (animal.state === 'base') {
+      if (animal.data.values.active.data.values.teleport) return;
+    }
     this.scrolling.downHandler(); // остановка скролла
     this.scrolling.enabled = false; // отключаем скролл
     this.scrolling.wheel = false; // отключаем колесо
