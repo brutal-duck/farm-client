@@ -481,12 +481,14 @@ function createBoostAnimal(positions): void {
   };
 
   positions.forEach(position => {
+    if (this.state.userEvent.herdBoostAnimals.length > 0) {
+      
+      let type = this.state.userEvent.herdBoostAnimals.pop();
+      let id: string = 'local_' + randomString(18);
+      this.getAnimal(id, type, position.x, position.y);
+      this.firework250(position.x, position.y);
 
-    let type = this.state.userEvent.herdBoostAnimals.pop();
-    let id: string = 'local_' + randomString(18);
-    this.getAnimal(id, type, position.x, position.y);
-    this.firework250(position.x, position.y);
-    
+    }
   });
 
 }

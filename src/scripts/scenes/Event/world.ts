@@ -182,7 +182,7 @@ function world(): void {
   // }
 
   // расчет оффлайн прогресса
-  this.autoprogress(true);
+  // this.autoprogress(true);
   
 }
 

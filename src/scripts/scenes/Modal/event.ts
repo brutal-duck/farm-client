@@ -451,7 +451,7 @@ function showItems([...args], boostCounterWindow): void {
 function createWorld(): any[] {
   let farm: string = this.state.farm.toLowerCase();
     // ярмарка и тент
-  let fairy: Phaser.Physics.Arcade.Sprite = this.add.sprite(x, y, `${farm}-merging`).setDepth(y).setAlpha(0);
+  let fairy: Phaser.Physics.Arcade.Sprite = this.add.sprite(x, y + 5, `${farm}-merging`).setDepth(y).setAlpha(0);
   
   if (farm === 'event') {
     yTent = y - 17;
@@ -596,6 +596,8 @@ function stopBoostScene(): void {
     this.state[`user${this.state.farm}`].takenHerdBoost++;
     this.scene.stop();
     this.game.scene.keys['Event'].startCreateHerdBoostAnimal = true;
+    console.log(this.state.herdBoostAnimals);
+    
   });
 }
 
@@ -706,7 +708,7 @@ function eventDrag(): void {
 
       animal.data.values.drag = false;
     
-      if ((animal.y < 480 && animal.x < 480) || animal.y > 960 || animal.y < 200) {
+      if ((animal.y < 480 && animal.x < 480) || animal.y > 900 || animal.y < 200) {
           this.mergingCloud({x: animal.x, y: animal.y}, true); // плохое облако на месте животного
           animal.data?.values.cloud?.destroy();
           animal.destroy();

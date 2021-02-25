@@ -77,7 +77,7 @@ function mergingCloud(position: Iposition, type: boolean = false): void {
     font: '34px Shadow',
     color: '#1a1a1a',
     align: 'center'
-  }).setOrigin(0.5, 0.5).setVisible(type).setDepth(y + 101).setStroke('#cc3737', 2);
+  }).setOrigin(0.5, 0.5).setVisible(type).setDepth(y + 1001).setStroke('#cc3737', 2);
 
   let delay = 10;
   let interval = this.time.addEvent({ delay: 30, callback: (): void => {

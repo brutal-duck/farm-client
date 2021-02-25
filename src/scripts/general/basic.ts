@@ -1974,6 +1974,7 @@ function sendDebug(data: any, state: Istate, type: string): void {
 // получение животного по бусту
 function createBoostAnimal(): void {
   if (this.state.herdBoostAnimals.length === 0) return;
+  
   this.state.herdBoostAnimals.forEach(type => {
     this.time.addEvent({ 
       delay: 100, 
