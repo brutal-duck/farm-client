@@ -35,7 +35,8 @@ import {
   random,
   randomString,
   getRandomBool,
-  spreadAnimals
+  spreadAnimals,
+  getEventRaiting
 } from '../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -225,6 +226,7 @@ class Chicken extends Phaser.Scene {
   public getRandomBool = getRandomBool.bind(this);
   public hearts = hearts.bind(this);
   public spreadAnimals = spreadAnimals.bind(this);
+  public getEventRaiting = getEventRaiting.bind(this);
   
 
   public init(state: Istate): void {

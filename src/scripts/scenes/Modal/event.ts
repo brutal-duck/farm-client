@@ -1532,9 +1532,17 @@ function endEventModal(): void {
 
   });
 
+  let diamonds: number;
+  if (this.state.progress.event.userEventRaiting.place === 1) diamonds = 1000
+  else if (this.state.progress.event.userEventRaiting.place === 2) diamonds = 700
+  else if (this.state.progress.event.userEventRaiting.place === 3) diamonds = 400
+  else if (this.state.progress.event.userEventRaiting.place <= 10) diamonds = 300
+  else if (this.state.progress.event.userEventRaiting.place <= 100) diamonds = 100
+  else if (this.state.progress.event.userEventRaiting.place <= 500) diamonds = 50
+  else if (this.state.progress.event.userEventRaiting.place >= 501) diamonds = 20
   // кнопка
   let btn: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + height, 'repository-sell-btn').setScale(0.7);
-  let title: Phaser.GameObjects.Text = this.add.text(btn.getBounds().centerX, this.cameras.main.centerY - 10 + height, this.state.lang.pickUp + ' 1000', {
+  let title: Phaser.GameObjects.Text = this.add.text(btn.getBounds().centerX, this.cameras.main.centerY - 10 + height, this.state.lang.pickUp + ' + ' + diamonds, {
     font: '26px Shadow',
     fill: '#FFFFFF'
   }).setDepth(1).setOrigin(0.5, 0.5);
@@ -1545,17 +1553,9 @@ function endEventModal(): void {
     .setScale(0.15);
   
   this.clickModalBtn({ btn, title, img1: coin }, (): void => {
-    let diamonds: number;
-    if (this.state.progress.event.userEventRaiting.place === 1) diamonds = 1000
-    else if (this.state.progress.event.userEventRaiting.place === 2) diamonds = 700
-    else if (this.state.progress.event.userEventRaiting.place === 3) diamonds = 400
-    else if (this.state.progress.event.userEventRaiting.place <= 10) diamonds = 300
-    else if (this.state.progress.event.userEventRaiting.place <= 100) diamonds = 100
-    else if (this.state.progress.event.userEventRaiting.place <= 500) diamonds = 50
-    else if (this.state.progress.event.userEventRaiting.place >= 501) diamonds = 20
-
-    
     this.state.progress.event.eventPoints = -1;
+
+    this.state.user.diamonds += diamonds;
 
     this.game.scene.keys[this.state.farm].scrolling.wheel = true;
     this.scene.stop('Modal');

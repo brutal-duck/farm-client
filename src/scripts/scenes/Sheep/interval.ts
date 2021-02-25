@@ -403,17 +403,18 @@ function interval(): void {
       }
     }
     
-    console.log(checkRaiting, 'checkRaiting')
     if (this.state.progress.event.endTime <= 0 && // добавить метку с бека что закончился евент и нужно показать евент
-      !checkRaiting &&
       this.state.progress.event.eventPoints > 0 &&
       !this.scene.isActive('Modal') && 
       !this.scene.isActive('Block') &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Map')) { 
       
-      this.getEventRaiting();
-      checkRaiting = true;
+      if (!checkRaiting) {
+        this.getEventRaiting();
+        checkRaiting = true;
+      }
+      
       if (this.state.progress.event.updateRaitings) {
 
         let modal: Imodal = {
