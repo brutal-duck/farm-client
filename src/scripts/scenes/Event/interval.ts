@@ -177,6 +177,7 @@ function interval(): void {
     }
 
     if (this.state.progress.event.endTime <= 0 && this.scene.isActive('Event')) {
+      this.autosave();
       this.scene.stop('Map');
       this.scene.stop('MapBars');
       this.scene.stop('Event');

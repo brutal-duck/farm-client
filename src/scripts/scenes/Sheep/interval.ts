@@ -403,6 +403,7 @@ function interval(): void {
       }
     }
     
+    console.log(checkRaiting, 'checkRaiting')
     if (this.state.progress.event.endTime <= 0 && // добавить метку с бека что закончился евент и нужно показать евент
       !checkRaiting &&
       this.state.progress.event.eventPoints > 0 &&
