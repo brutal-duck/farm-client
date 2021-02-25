@@ -36,6 +36,7 @@ class Map extends Phaser.Scene {
   public eventStartText: Phaser.GameObjects.Text;
   public eventStartTime: Phaser.GameObjects.Text;
   public eventStartBg: Phaser.GameObjects.Graphics;
+  public eventZone: Phaser.GameObjects.Zone;
 
   public click = click.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
@@ -265,7 +266,7 @@ class Map extends Phaser.Scene {
 
     this.eventMapFarm = this.add.sprite(720, 730, 'map-event-farm').setOrigin(1, 0.5).setVisible(false);
 
-    let zone: Phaser.GameObjects.Zone = this.add.zone(570, 720, 220, 160).setDropZone(undefined, () => {});
+    this.eventZone = this.add.zone(570, 720, 220, 160).setDropZone(undefined, () => {});
 
     // this.add.graphics({
     //   fillStyle: {
@@ -321,7 +322,7 @@ class Map extends Phaser.Scene {
 
 
 
-    this.click(zone, (): void => {
+    this.click(this.eventZone, (): void => {
       if (this.state.farm !== 'Event') {
   
         this.game.scene.keys[this.state.farm].autosave();
@@ -356,6 +357,7 @@ class Map extends Phaser.Scene {
         this.eventScore.setVisible(false);
         this.eventEndTime.setVisible(false);
         this.eventEndText.setVisible(false);
+        this.eventZone?.destroy();
       } 
     } else if (this.state.progress.event.startTime <= 0) {
 
@@ -371,11 +373,25 @@ class Map extends Phaser.Scene {
         this.eventEndText.setVisible(true);
       }
       
-    }
+      if (this.state.progress.event.endTime <= 0) {
+        this.eventCloud.setVisible(true);
+        this.eventStartText.setVisible(false);
+        this.eventStartTime.setVisible(false);
+        this.eventStartBg.setVisible(false);
+        this.eventMapFarm.setVisible(false);
+        this.eventPlace.setVisible(false);
+        this.eventScore.setVisible(false);
+        this.eventEndTime.setVisible(false);
+        this.eventEndText.setVisible(false);
+        this.eventZone?.destroy();
+      }
+    } 
 
     if (this.state.progress.event.updateRaitings) {
       console.log(this.state.progress)
-      this.eventScore.setText(this.state.progress.event.eventPoints + ' ' + this.state.lang.eventScores);
+      let points: number = this.state.progress.event.eventPoints >= 0 ? this.state.progress.event.eventPoints : 0;
+
+      this.eventScore.setText(points + ' ' + this.state.lang.eventScores);
       this.eventPlace.setText(this.state.progress.event.userEventRaiting.place + ' ' + this.state.lang.eventPlace);
       this.eventEndTime.setText(shortTime(this.state.progress.event.endTime, this.state.lang));
       this.state.progress.event.updateRaitings = false;
