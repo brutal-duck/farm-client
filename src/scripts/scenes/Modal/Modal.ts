@@ -39,7 +39,8 @@ import {
   eventDrag,
   eventProfile,
   eventProgress,
-  eventRatings
+  eventRatings,
+  endEventModal
 } from './event';
 import {
   sheepFair,
@@ -138,6 +139,7 @@ let ratingBG: any = require("./../../../assets/images/event/modal/rating-bg.png"
 let ratingRulesBtn: any = require("./../../../assets/images/event/modal/rating-rules-btn.png");
 let ratingPriseBtn: any = require("./../../../assets/images/event/modal/rating-price-btn.png");
 let ratingPrisePlaces: any = require("./../../../assets/images/event/modal/rating-places.png");
+let ratingBGAfter: any = require("./../../../assets/images/event/modal/raiting-bg-after.png");
 
 
 class Modal extends Phaser.Scene {
@@ -243,6 +245,7 @@ class Modal extends Phaser.Scene {
   public eventProgress = eventProgress.bind(this);
   public createChatBars = createChatBars.bind(this);
   public eventRatings = eventRatings.bind(this);
+  public endEventModal = endEventModal.bind(this);
   
   public init(state: Istate): void {
     this.state = state;
@@ -329,6 +332,7 @@ class Modal extends Phaser.Scene {
     this.load.image('rating-rules-btn', ratingRulesBtn);
     this.load.image('rating-price-btn', ratingPriseBtn);
     this.load.image('rating-places', ratingPrisePlaces);
+    this.load.image('raiting-bg-after',ratingBGAfter);
 
   }
 
@@ -386,6 +390,9 @@ class Modal extends Phaser.Scene {
         break;
       case 11:
         this.eventRatings()
+        break;
+      case 12: 
+        this.endEventModal();
         break;
       default:
         this.scene.stop();
@@ -487,7 +494,7 @@ class Modal extends Phaser.Scene {
 
 
     // Обновление таблицы рейтингов евента
-    if (this.state.progress.event.updateRaitings && this.state.modal.type === 11) {
+    if (this.state.progress.event.updateRaitings && (this.state.modal.type === 11 || this.state.modal.type === 12)) {
 
       for (let i: number = 0; i < 10; i++) {
         if (this.state.progress.event.eventRaitings[i].score !== null) {

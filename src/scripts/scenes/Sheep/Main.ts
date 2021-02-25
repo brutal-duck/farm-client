@@ -34,7 +34,8 @@ import {
   debug,
   createBoostAnimal,
   getRandomBool,
-  spreadAnimals
+  spreadAnimals, 
+  getEventRaiting
 } from '../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -278,6 +279,7 @@ class Sheep extends Phaser.Scene {
   public startHerdBoost = startHerdBoost.bind(this);
   public getRandomBool = getRandomBool.bind(this);
   public spreadAnimals = spreadAnimals.bind(this);
+  public getEventRaiting = getEventRaiting.bind(this);
 
   public init(state: Istate): void {
 
@@ -315,17 +317,21 @@ class Sheep extends Phaser.Scene {
     this.interval();
     this.setCollector();
 
-    // let cursors = this.input.keyboard.createCursorKeys();
-    // cursors.space.on('down', (): void => {
-    //   this.openEmailWindow()
-    //   // this.state.userSheep.feedBoostTimer = 10
-    //   // this.state.user.diamonds = 10000000;
-    //   // let tasks = this.partTasks();
-    //   // for (let i in tasks) {
-    //   //   tasks[i].done = 1;
-    //   //   tasks[i].got_awarded = 1;
-    //   // }
-    // });
+    let cursors = this.input.keyboard.createCursorKeys();
+    cursors.space.on('down', (): void => {
+      let modal: Imodal = {
+        type: 12,
+      }
+      this.state.modal = modal;
+      this.scene.launch('Modal', this.state);
+      // this.state.userSheep.feedBoostTimer = 10
+      // this.state.user.diamonds = 10000000;
+      // let tasks = this.partTasks();
+      // for (let i in tasks) {
+      //   tasks[i].done = 1;
+      //   tasks[i].got_awarded = 1;
+      // }
+    });
 
   }
 

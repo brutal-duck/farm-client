@@ -2733,6 +2733,7 @@ function spreadAnimals(): void {
 function getEventRaiting(): void {
   
   let login: string;
+  console.log(this)
   if (this.state.platform !== 'web') {
     login = this.state.name
   } else login = this.state.user.login
