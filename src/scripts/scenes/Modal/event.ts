@@ -1559,6 +1559,7 @@ function endEventModal(): void {
 
     this.game.scene.keys[this.state.farm].scrolling.wheel = true;
     this.scene.stop('Modal');
+    this.game.scene.keys[this.state.farm + 'Bars'].plusDiamonds();
     
   });
 }
