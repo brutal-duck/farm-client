@@ -39,6 +39,7 @@ interface IsheepUserAutoSave {
   diamondSheepAd: boolean;
   takenHerdBoost: number;
   feedBoostTime: number;
+  eventPoints: number;
   
 }
 interface IchickenUserAutoSave {
@@ -58,6 +59,7 @@ interface IchickenUserAutoSave {
   diamondChickenAd: boolean;
   takenHerdBoost: number;
   feedBoostTime: number;
+  eventPoints: number;
 }
 interface IeventUserAutoSave {
   diamonds: number;
@@ -71,7 +73,7 @@ interface IeventUserAutoSave {
   autosaveCounter: number;
   takenHerdBoost: number;
   feedBoostTime: number;
-  maxLevelAnimal: number;
+  eventPoints: number;
 }
 // for state
 interface IadditionalTutorial {

@@ -1449,6 +1449,11 @@ function endEventModal(): void {
       color: '#793D0A',
     });
 
+    if (this.state.progress.event.eventRaitings[i].score !== null) {
+      placeAndName.setText(this.state.progress.event.eventRaitings[i].place + '. ' + this.state.progress.event.eventRaitings[i].name).setCrop(0, 0, 280, 100);
+      score.setText(this.state.progress.event.eventRaitings[i].score);
+    }
+    
     this.eventRatingsNames.push(placeAndName);
     this.eventRatingsScores.push(score);
 
@@ -1457,17 +1462,25 @@ function endEventModal(): void {
   this.line = this.add.text(placeAndNameX, placeAndNameY + 240, '-----', {
     font: '26px Shadow',
     color: '#793D0A',
-  }).setVisible(false);
+  })
 
-  this.playerPlaceAndName = this.add.text(placeAndNameX, placeAndNameY + 270, '', {
+  this.playerPlaceAndName = this.add.text(placeAndNameX, placeAndNameY + 270, this.state.progress.event.userEventRaiting.place + '. ' + this.state.progress.event.userEventRaiting.name, {
     font: '21px Bip',
     color: '#793D0A',
-  }).setCrop(0, 0, 280, 100).setVisible(false);
+  }).setCrop(0, 0, 280, 100);
 
-  this.playerScore = this.add.text(placeAndNameX + 300, placeAndNameY + 270, '', {
+  this.playerScore = this.add.text(placeAndNameX + 300, placeAndNameY + 270, this.state.progress.event.userEventRaiting.score + 90, {
     font: '21px Bip',
     color: '#793D0A',
-  }).setVisible(false);
+  })
+
+  if (this.state.progress.event.userEventRaiting.place <= 10) {
+
+    this.line.setVisible(false);
+    this.playerPlaceAndName.setVisible(false);
+    this.playerScore.setVisible(false);
+
+  }
 
   priceElements.push(
     topPlaces,
@@ -1532,7 +1545,18 @@ function endEventModal(): void {
     .setScale(0.15);
   
   this.clickModalBtn({ btn, title, img1: coin }, (): void => {
-  
+    let diamonds: number;
+    if (this.state.progress.event.userEventRaiting.place === 1) diamonds = 1000
+    else if (this.state.progress.event.userEventRaiting.place === 2) diamonds = 700
+    else if (this.state.progress.event.userEventRaiting.place === 3) diamonds = 400
+    else if (this.state.progress.event.userEventRaiting.place <= 10) diamonds = 300
+    else if (this.state.progress.event.userEventRaiting.place <= 100) diamonds = 100
+    else if (this.state.progress.event.userEventRaiting.place <= 500) diamonds = 50
+    else if (this.state.progress.event.userEventRaiting.place >= 501) diamonds = 20
+
+    
+    this.state.progress.event.eventPoints = -1;
+
     this.game.scene.keys[this.state.farm].scrolling.wheel = true;
     this.scene.stop('Modal');
     

@@ -4,7 +4,7 @@ import { shortTime } from '../../general/basic';
 function interval(): void {
 
   let statusBalance: boolean = false;
-
+  let checkRaiting: boolean = false;
   this.time.addEvent({ delay: 1000, callback: (): void => {
 
     // проверка подключения к интернету
@@ -400,6 +400,28 @@ function interval(): void {
       this.state.progress.event.startTime--;
       if (this.scene.isActive('Map')) {
         this.game.scene.keys['Map'].eventStartTime?.setText(shortTime(this.state.progress.event.startTime, this.state.lang));
+      }
+    }
+    
+    if (this.state.progress.event.endTime <= 0 && // добавить метку с бека что закончился евент и нужно показать евент
+      !checkRaiting &&
+      this.state.progress.event.eventPoints > 0 &&
+      !this.scene.isActive('Modal') && 
+      !this.scene.isActive('Block') &&
+      !this.scene.isActive('Tutorial') &&
+      !this.scene.isActive('Map')) { 
+      
+      this.getEventRaiting();
+      checkRaiting = true;
+      if (this.state.progress.event.updateRaitings) {
+
+        let modal: Imodal = {
+          type: 12,
+        };
+
+        this.state.modal = modal;
+        this.scene.launch('Modal', this.state);
+
       }
     }
 

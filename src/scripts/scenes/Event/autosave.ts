@@ -55,7 +55,7 @@ function autosave(): void {
     collectorLevel: this.state.userEvent.collectorLevel,
     tutorial: this.state.userEvent.tutorial,
     autosaveCounter: this.state.userEvent.autosaveCounter, 
-    maxLevelAnimal: this.state.userEvent.maxLevelAnimal   
+    eventPoints: this.state.userEvent.maxLevelAnimal   
   }
 
   for (let i in this.resources.children.entries) {
