@@ -71,8 +71,6 @@ class EventBars extends Phaser.Scene {
   public calendar: any;
   public nativeShop: Phaser.GameObjects.Graphics;
   public nativeShopCounter: Phaser.GameObjects.Text;
-  public scoreText: Phaser.GameObjects.Text;
-  public placeText: Phaser.GameObjects.Text;
   public proceedsText: Phaser.GameObjects.Text;
   public score: Phaser.GameObjects.Text;
   public place: Phaser.GameObjects.Text;

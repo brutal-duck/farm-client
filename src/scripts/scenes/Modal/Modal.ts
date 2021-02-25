@@ -38,7 +38,8 @@ import {
   herdBoostEventWindow,
   eventDrag,
   eventProfile,
-  eventProgress
+  eventProgress,
+  eventRatings
 } from './event';
 import {
   sheepFair,
@@ -69,8 +70,7 @@ import { bigButton, repositoryBtn, mergingCloud, shopButton } from '../../elemen
 import { changeNickname, addEmail, support, registration } from '../../general/modal';
   // буст "Стадо"
 import { herdBoostWindow, getRandomAnimal, getRandomStartPosition } from './herdBoost';
-import { createChatBars } from './Chat/elements'
-import ratings from '../Event/ratings'
+import { createChatBars } from './Chat/elements';
 
 let partProgress: any = require("./../../../assets/images/modal/part-progress.png");
 let newbieBg: any = require("./../../../assets/images/daily/newbie-bg.png");
@@ -242,7 +242,7 @@ class Modal extends Phaser.Scene {
   public eventProfile = eventProfile.bind(this);
   public eventProgress = eventProgress.bind(this);
   public createChatBars = createChatBars.bind(this);
-  public ratings = ratings.bind(this);
+  public eventRatings = eventRatings.bind(this);
   
   public init(state: Istate): void {
     this.state = state;
@@ -385,7 +385,7 @@ class Modal extends Phaser.Scene {
         this.eventProgress();
         break;
       case 11:
-        this.ratings()
+        this.eventRatings()
         break;
       default:
         this.scene.stop();
