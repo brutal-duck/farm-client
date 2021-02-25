@@ -259,9 +259,7 @@ class Map extends Phaser.Scene {
   }
 
   public buildEvent(): void {
-    // let eventIcon: Phaser.GameObjects.Graphics = this.add.graphics();
-    // eventIcon.fillStyle(0xff0000, 1.0)
-    //   .fillCircle(520, 740, 50);
+
     this.eventCloud = this.add.sprite(550, 750, 'map-cloud').setVisible(false);
 
     this.eventMapFarm = this.add.sprite(720, 730, 'map-event-farm').setOrigin(1, 0.5).setVisible(false);
@@ -299,8 +297,6 @@ class Map extends Phaser.Scene {
       fontFamily: 'Shadow'
     }).setOrigin(0.5, 0.5).setVisible(false);
     
-    
-
     this.eventStartText = this.add.text(570, 740, this.state.lang.eventStart, {
       fontSize: '16px',
       color: '#ffe9e4',

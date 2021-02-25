@@ -402,6 +402,14 @@ function interval(): void {
         this.game.scene.keys['Map'].eventStartTime?.setText(shortTime(this.state.progress.event.startTime, this.state.lang));
       }
     }
+
+    if (this.state.progress.event.endTime <= 0 && 
+      this.state.progress.event.eventPoints > 0 &&
+      this.scene.isActive('Map')) {
+      this.autosave();
+      this.scene.stop('Map');
+      this.scene.stop('MapBars');
+    }
     
     if (this.state.progress.event.endTime <= 0 && // добавить метку с бека что закончился евент и нужно показать евент
       this.state.progress.event.eventPoints > 0 &&
