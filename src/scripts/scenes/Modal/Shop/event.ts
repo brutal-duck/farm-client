@@ -697,22 +697,30 @@ function updateEventFeedBoostBtn(): void {
 function updateEventHerdBoostBtn(): void {
   if (this.state.modal.shopType === 4 && 
     this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].herdBoostLvl  &&
-    this.state.user.additionalTutorial.herdBoost) {
+    this.state.user.additionalTutorial.herdBoost && !this.herdBoostBtn.data.values.updated) {
     let xBtn: number =  330;
     let yBtn: number = 500 + this.height;
     this.herdBoostTimerText.setText(this.state.lang.stillForBoost + ' ' + shortTime(this.state.timeToHerdBoost, this.state.lang));
-    if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0 && !this.herdBoostBtn.data.values.updated) { 
-      this.herdBoostBtn.data.values.updated = true;
-      // если не взят буст
-      this.herdBoostBtnLeftText.setText(this.state.lang.pickUp); 
-      this.herdBoostDiamondBtn.setVisible(false);
-      this.herdBoostBtn.setY(yBtn - 23);
-      this.herdBoostBtnLeftText.setY(yBtn - 25);
-      this.herdBoostBtnLeftText.setX(xBtn);
-      this.herdBoostBtnLeftText.setOrigin(0.5, 0.5);
-      this.herdBoostBtnRightText.setVisible(false);
-      this.herdBoostTimerText.setVisible(false);
-    } 
+    //----------- костыль со скрытием текста и центрированием кнопки //
+    this.herdBoostBtn.data.values.updated = true;
+    this.herdBoostTimerText.setVisible(false)
+    this.herdBoostBtn.setY(yBtn - 23);
+    this.herdBoostBtnLeftText.setY(yBtn - 25);
+    this.herdBoostDiamondBtn.setY(yBtn - 25);
+    this.herdBoostBtnRightText.setY(yBtn - 25);
+    //-------------------------------------------------------------//
+    // if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0 && !this.herdBoostBtn.data.values.updated) { 
+    //   this.herdBoostBtn.data.values.updated = true;
+    //   // если не взят буст
+    //   this.herdBoostBtnLeftText.setText(this.state.lang.pickUp); 
+    //   this.herdBoostDiamondBtn.setVisible(false);
+    //   this.herdBoostBtn.setY(yBtn - 23);
+    //   this.herdBoostBtnLeftText.setY(yBtn - 25);
+    //   this.herdBoostBtnLeftText.setX(xBtn);
+    //   this.herdBoostBtnLeftText.setOrigin(0.5, 0.5);
+    //   this.herdBoostBtnRightText.setVisible(false);
+    //   this.herdBoostTimerText.setVisible(false);
+    // } 
   }
 }
 export {

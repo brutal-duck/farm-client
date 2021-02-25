@@ -184,6 +184,8 @@ class Event extends Phaser.Scene {
     console.log('Event');
     this.state.farm = 'Event';
     this.collectorTimer = null;
+
+    if (this.state.userEvent.takenHerdBoost <= 0) this.state.userEvent.takenHerdBoost = 1;
     
   }
 
