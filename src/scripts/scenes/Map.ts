@@ -341,7 +341,8 @@ class Map extends Phaser.Scene {
   };
 
   public updateEvent(): void {
-    if (this.state.progress.event.startTime > 0) {
+
+    if (this.state.progress.event.startTime > 0 && this.state.progress.event.open) {
 
       if (!this.eventCloud.visible) {
         this.eventCloud.setVisible(true);
@@ -355,7 +356,7 @@ class Map extends Phaser.Scene {
         this.eventEndText.setVisible(false);
         this.eventZone?.destroy();
       } 
-    } else if (this.state.progress.event.startTime <= 0) {
+    } else if (this.state.progress.event.startTime <= 0 && this.state.progress.event.open) {
 
       if (!this.eventMapFarm.visible) {
         this.eventCloud.setVisible(false);
@@ -369,11 +370,13 @@ class Map extends Phaser.Scene {
         this.eventEndText.setVisible(true);
       }
       
-      if (this.state.progress.event.endTime <= 0) {
+      if (this.state.progress.event.endTime <= 0 && this.state.progress.event.open) {
         this.eventCloud.setVisible(true);
-        this.eventStartText.setVisible(false);
+        this.eventStartText.setVisible(true);
+        this.eventStartText.setY(750);
         this.eventStartTime.setVisible(false);
-        this.eventStartBg.setVisible(false);
+        this.eventStartBg.setVisible(true);
+        this.eventStartText.setText(this.state.lang.eventEndText);
         this.eventMapFarm.setVisible(false);
         this.eventPlace.setVisible(false);
         this.eventScore.setVisible(false);
@@ -381,7 +384,22 @@ class Map extends Phaser.Scene {
         this.eventEndText.setVisible(false);
         this.eventZone?.destroy();
       }
-    } 
+
+
+    }
+    
+    if (!this.state.progress.event.open) {
+      this.eventCloud.setVisible(true);
+      this.eventStartText.setVisible(false);
+      this.eventStartTime.setVisible(false);
+      this.eventStartBg.setVisible(false);
+      this.eventMapFarm.setVisible(false);
+      this.eventPlace.setVisible(false);
+      this.eventScore.setVisible(false);
+      this.eventEndTime.setVisible(false);
+      this.eventEndText.setVisible(false);
+      this.eventZone?.destroy();
+    }
 
     if (this.state.progress.event.updateRaitings) {
       console.log(this.state.progress)
