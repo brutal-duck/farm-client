@@ -1,5 +1,6 @@
 import Scrolling from '../libs/Scrolling';
 import { click, shortNum, clickShopBtn, getEventRaiting, shortTime } from '../general/basic';
+import { scoreEnding } from './Event/basic';
 
 let sheepCoin: any = require("./../../assets/images/sheep/icons/money.png");
 let chickenCoin: any = require("./../../assets/images/chicken/icons/money.png");
@@ -42,6 +43,7 @@ class Map extends Phaser.Scene {
   public click = click.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
   public getEventRaiting = getEventRaiting.bind(this); 
+  public scoreEnding = scoreEnding.bind(this);
   
 
   public init(state: Istate): void {
@@ -411,7 +413,7 @@ class Map extends Phaser.Scene {
       console.log(this.state.progress)
       let points: number = this.state.progress.event.eventPoints >= 0 ? this.state.progress.event.eventPoints : 0;
 
-      this.eventScore.setText(points + ' ' + this.state.lang.eventScores);
+      this.eventScore.setText(points + ' ' + this.scoreEnding(points, this.state.lang));
       this.eventPlace.setText(this.state.progress.event.userEventRaiting.place + ' ' + this.state.lang.eventPlace);
       this.eventEndTime.setText(shortTime(this.state.progress.event.endTime, this.state.lang));
       this.state.progress.event.updateRaitings = false;

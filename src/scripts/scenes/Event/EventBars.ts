@@ -10,7 +10,8 @@ import {
 import { 
   updateEventNativeShop, 
   buildMenu,
-  updateRaitingsBar 
+  updateRaitingsBar,
+  scoreEnding 
 } from './basic';
 import {
   Arrows,
@@ -96,6 +97,7 @@ class EventBars extends Phaser.Scene {
   public updateEventNativeShop = updateEventNativeShop.bind(this);
   public updateRaitingsBar = updateRaitingsBar.bind(this);
   public arrowsBehavior = arrowsBehavior.bind(this);
+  public scoreEnding = scoreEnding.bind(this);
   
 
   public init(state: Istate): void {
@@ -227,7 +229,7 @@ class EventBars extends Phaser.Scene {
     this.addDiamonds = this.add.sprite(680, 38, 'plus').setDepth(2);
     this.addMoney = this.add.sprite(680, 100, 'plus').setDepth(2);
 
-    this.score = this.add.text(110, 30, '- ' + this.state.lang.eventScores, {
+    this.score = this.add.text(110, 30, '- ' + this.scoreEnding(10, this.state.lang), {
       font: '28px Shadow',
       color: '#6e00c7'
     }).setDepth(2).setOrigin(0.5, 0.5);

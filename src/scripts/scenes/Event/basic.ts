@@ -585,12 +585,24 @@ function updateRaitingsBar(): void {
     this.state.progress.event.updateRaitings = false;
     let score: number = this.state.progress.event.eventPoints < 0 ? 0 : this.state.progress.event.eventPoints;
 
-    this.score.setText(score + ' ' + this.state.lang.eventScores);
+    this.score.setText(score + ' ' + this.scoreEnding(score, this.state.lang));
     this.place.setText(this.state.progress.event.userEventRaiting.place + ' ' + this.state.lang.eventPlace);
     
   }
   
 }
+
+function scoreEnding(score: number, lang: any): string {
+  if (lang.index === 'ru') {
+    // Склоняет 'дней' в зависимости от числа
+    let scoresWord: string[] = ['Очко', 'Очка', 'Очков'];
+    const cases: number[] = [2, 0, 1, 1, 1, 2];
+    return scoresWord[(score % 100 > 4 && score % 100 < 20) ? 2 : cases[(score % 10 < 5) ? score % 10 : 5]];  
+  } 
+  else if (lang.index === 'en' && score === 1) return 'Score'
+  else if (lang.index === 'en') return 'Scores'
+}
+
 export {
   animalPrice,
   maxBreedForBuy,
@@ -608,4 +620,5 @@ export {
   tryTask,
   buildMenu,
   updateRaitingsBar,
+  scoreEnding
 }
