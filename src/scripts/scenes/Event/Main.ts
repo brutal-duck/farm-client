@@ -78,6 +78,7 @@ import {
   teleportation, 
   updateTeleportation,
   dragEventAnimal, 
+  arrowsBehavior
 } from './animations';
 import autoprogress from './autoprogress';
 import { 
@@ -85,7 +86,10 @@ import {
   doneEventTutor_10, 
   doneEventTutor_20, 
   doneEventTutor_30,
-  doneEventTutor_40, 
+  doneEventTutor_40,
+  doneEventTutor_50, 
+  doneEventTutor_60, 
+  doneEventTutor_70, 
   progressEventTutor_40,
 } from './tutorial';
 class Event extends Phaser.Scene {
@@ -191,8 +195,12 @@ class Event extends Phaser.Scene {
   public doneEventTutor_20 = doneEventTutor_20.bind(this);
   public doneEventTutor_30 = doneEventTutor_30.bind(this);
   public doneEventTutor_40 = doneEventTutor_40.bind(this);
+  public doneEventTutor_50 = doneEventTutor_50.bind(this);
+  public doneEventTutor_60 = doneEventTutor_60.bind(this);
+  public doneEventTutor_70 = doneEventTutor_70.bind(this);
   public progressEventTutor_40 = progressEventTutor_40.bind(this);
   public dragEventAnimal = dragEventAnimal.bind(this);
+  public arrowsBehavior = arrowsBehavior.bind(this);
   
   public init(state: Istate): void {
     this.state = state;
@@ -238,6 +246,8 @@ class Event extends Phaser.Scene {
     this.animalBrain();
     this.updateTeleportation();  
     this.dragEventAnimal();
+    // укзывающие стрелки
+    this.arrowsBehavior();
     if (this.state.user.additionalTutorial.eventTutorial === 30) {
      
       if (this.animals.children.entries.length > 1) {
@@ -245,11 +255,23 @@ class Event extends Phaser.Scene {
       }
       
     }  
+
     if (this.state.user.additionalTutorial.eventTutorial === 40) {
 
       if (this.state.userEvent.maxLevelAnimal >= 2) {
         this.doneEventTutor_40();
       }
+    }
+
+    if (this.state.user.additionalTutorial.eventTutorial === 50) {
+
+      this.animals.getChildren().forEach((animal) => {
+        if (animal.data.values.active.data.values.working) this.doneEventTutor_50();
+        else console.log(animal.data.values.active.data.values.working)
+      });
+
+        
+      
     }
     
   }

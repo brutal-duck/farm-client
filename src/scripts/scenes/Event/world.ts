@@ -175,9 +175,11 @@ function world(): void {
   this.state.eventResources.map((data: IeventResource) => {
     this.getResource(data);
   });
-  this.state.user.additionalTutorial.eventTutorial = 10;
+  
+  // this.state.user.additionalTutorial.eventTutorial = 10;
+  console.log(this.state.user.additionalTutorial.eventTutorial)
   // туториал, если нужен
-  if (this.state.user.additionalTutorial.eventTutorial > 0) {
+  if (this.state.user.additionalTutorial.eventTutorial > 0 && this.state.user.additionalTutorial.eventTutorial < 80) {
     this.showEventTutorial();
     console.log('showtutor');
     

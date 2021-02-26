@@ -826,7 +826,6 @@ class Tutorial extends Phaser.Scene {
 
             this.game.scene.keys[this.state.farm].buyAnimal(1);
             this.game.scene.keys['EventBars'].arrows = new Arrows(this.game.scene.keys['EventBars'], { x: 82, y: this.height - 92 }, 70, false, false, false, true, false, true);
-            console.log(this.game.scene.keys['EventBars'].arrows)
             this.game.scene.keys['EventBars'].animalBuy.setVisible(true);
             this.game.scene.keys['EventBars'].animalPrice.setVisible(true);
             this.game.scene.keys['EventBars'].animalPriceBubble.setVisible(true);
@@ -844,7 +843,7 @@ class Tutorial extends Phaser.Scene {
           this.showContinue = true;
           this.tailFlipY = false;
           this.pointerTutorial();
-          this.generalClick = (): void => this.game.scene.keys[this.state.farm].progressEventTutor_40();
+          this.generalClick = (): void => {this.game.scene.keys[this.state.farm].progressEventTutor_40();}
          
           
           this.game.scene.keys[this.state.farm].showMergPointer = false;
@@ -872,9 +871,25 @@ class Tutorial extends Phaser.Scene {
           this.pointerTutorial();
           this.add.image(0, 140, 'event-work-zone').setOrigin(0, 0);
           this.arrows = new Arrows(this, { x: 360, y: 360 }, 120, false, false, true, false, false, true);
-          this.generalClick = (): void => this.game.scene.keys[this.state.farm].progressEventTutor_50();
+          this.generalClick = (): void => {
+            this.game.scene.keys['Event'].arrows = new Arrows(this.game.scene.keys['Event'], { x: 360, y: 400 }, 120, false, false, true, false, false, true);
+            this.scene.stop('Tutorial');
+          };
                    
-        } else {
+        } else if (this.state.tutorial.step === 60) {
+
+          this.tutorText = this.state.lang.eventTutorial_60;
+          this.simpleTutorial();
+          this.generalClick = (): void => this.game.scene.keys[this.state.farm].doneEventTutor_60();
+                   
+        } else if (this.state.tutorial.step === 70) {
+
+          this.tutorText = this.state.lang.eventTutorial_70;
+          this.simpleTutorial();
+
+          this.generalClick = (): void => this.game.scene.keys[this.state.farm].doneEventTutor_70();
+                   
+        }else {
           this.fail();
         }
         

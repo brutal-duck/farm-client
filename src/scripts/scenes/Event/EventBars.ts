@@ -294,7 +294,7 @@ class EventBars extends Phaser.Scene {
     }).setOrigin(0, 0.5).setVisible(false);
 
         // блокировка баров для туториала
-    if (this.state.user.additionalTutorial.eventTutorial < 100) {
+    if (this.state.user.additionalTutorial.eventTutorial < 80) {
 
       this.shop.setVisible(false);
       this.map.setVisible(false);
@@ -304,7 +304,6 @@ class EventBars extends Phaser.Scene {
       this.menu.setVisible(false);
       this.chat.setVisible(false);
       this.profile.setVisible(false);
-
 
     }
 
@@ -369,7 +368,7 @@ class EventBars extends Phaser.Scene {
     this.сurrencyAnimation();
 
     // мигание нулевого таймера собирателя
-    if (this.state.user.additionalTutorial.eventTutorial > 100) this.pulseCollector();
+    if (this.state.user.additionalTutorial.eventTutorial > 70) this.pulseCollector();
     
     // актуальный статус кнопки покупки курицы
     this.buyAnimalStatus();
