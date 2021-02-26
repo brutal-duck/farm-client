@@ -254,10 +254,64 @@ function teleportation(
   }
 }
 
+
+// перетаскивание овец
+function dragEventAnimal(animal: boolean = false): void {
+ 
+  if (this.showMergPointer) {
+    
+    if (!this.mergPointer.start) {
+      
+        this.mergPointer.stop = false;
+        this.mergPointer.setVisible(true);
+        let target: Phaser.Math.Vector2 = new Phaser.Math.Vector2();
+        target.x = 360;
+        let distance: number = 285;
+        target.y = 740;
+        this.mergPointer.x = 120;
+        this.mergPointer.y = 740;
+        distance = 300;
+        this.mergPointer.target = target.x;
+        
+        if (this.mergPointer.scene) {
+  
+          this.physics.moveToObject(this.mergPointer, target, distance);
+          this.mergPointer.start = true;
+          this.mergPointer.setDepth(this.mergPointer.y + 1000);
+  
+        }
+      
+    } else {
+      console.log('else start')
+
+      if (this.mergPointer.x >= this.mergPointer.target && !this.mergPointer.stop) {
+        console.log(this.mergPointer.x, this.mergPointer.target)
+        this.mergPointer.stop = true;
+        this.mergPointer.body.reset(this.mergPointer.x, this.mergPointer.y);
+        this.mergPointer.first = !this.mergPointer.first;
+
+        this.time.addEvent({ delay: 300, callback: (): void => {
+          this.mergPointer.setVisible(false);
+        }, callbackScope: this, loop: false });
+
+        this.time.addEvent({ delay: 1000, callback: (): void => {
+          this.showMergPointer = true;
+          this.mergPointer.start = false;
+        }, callbackScope: this, loop: false });
+
+      }
+
+    }
+
+
+  }
+
+}
 export {
   pulseCollector,
   flyAnimal,
   plusResourceAnimation,
   teleportation,
-  updateTeleportation
+  updateTeleportation,
+  dragEventAnimal
 }

@@ -197,6 +197,7 @@ let ratingBG: any = require("./../../../assets/images/event/modal/rating-bg.png"
 let ratingRulesBtn: any = require("./../../../assets/images/event/modal/rating-rules-btn.png");
 let ratingPriseBtn: any = require("./../../../assets/images/event/modal/rating-price-btn.png");
 let ratingPrisePlaces: any = require("./../../../assets/images/event/modal/rating-places.png");
+let eventTutorMerging: any = require("./../../../assets/images/event/tutor-merging.png");
 
 const testCollector: IcollectorSettings[] = [
   {
@@ -1692,6 +1693,7 @@ class EventPreload extends Phaser.Scene {
     this.load.image('rating-rules-btn', ratingRulesBtn);
     this.load.image('rating-price-btn', ratingPriseBtn);
     this.load.image('rating-places', ratingPrisePlaces);
+    this.load.image('event-tutor-merging',eventTutorMerging);
 
   }
 
@@ -1840,7 +1842,7 @@ class EventPreload extends Phaser.Scene {
         }
 
         const userEvent: IuserEvent = {  // нужно делать интерфейс IuserEvent
-          money: BigInt(response.data.event.money),
+          money: BigInt(1000),//BigInt(response.data.event.money),
           countAnimal: response.data.event.countAnimal,
           collector: response.data.event.collector,
           collectorLevel: response.data.event.collectorLevel,
@@ -1849,7 +1851,7 @@ class EventPreload extends Phaser.Scene {
           autosaveCounter: response.data.event.autosaveCounter,
           takenHerdBoost: response.data.event.takenHerdBoost,
           feedBoostTime: response.data.event.feedBoostTime,
-          maxLevelAnimal: response.data.user.eventPoints,
+          maxLevelAnimal: 0,//response.data.user.eventPoints,
           herdBoostAnimals: response.data.event.herdBoostAnimals
         }
         
@@ -1859,7 +1861,7 @@ class EventPreload extends Phaser.Scene {
         this.state.offlineTime = response.data.offlineTime;
         this.state.progress = response.data.progress;
         this.state.eventTerritories = eventTerritories;
-        this.state.eventAnimals = eventAnimals;
+        this.state.eventAnimals = []//eventAnimals;
         this.state.eventResources = eventResources; 
         this.state.user = user;
         this.state.userEvent = userEvent;

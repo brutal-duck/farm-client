@@ -2,8 +2,10 @@ import {
   click,
   clickButton,
   clickShopBtn,
+  shortTime,
 } from '../general/basic';
 import { dragSheep, showSheepSprite } from '../general/animations';
+import { dragEventAnimal } from './Event/animations';
 import { Arrows } from '../elements';
 
 let farmer: any = require("./../../assets/images/farmer.png");
@@ -38,7 +40,7 @@ class Tutorial extends Phaser.Scene {
   public clickShopBtn = clickShopBtn.bind(this);
   public dragSheep = dragSheep.bind(this);
   public showSheepSprite = showSheepSprite.bind(this);
-  
+  public dragEventAnimal = dragEventAnimal.bind(this);
 
   public init(state: Istate): void {
 
@@ -117,7 +119,10 @@ class Tutorial extends Phaser.Scene {
     }
 
     // перетаскивание овец
-    this.dragSheep();
+    if (this.state.farm === 'Sheep') this.dragSheep();
+    
+    // перетаскивание евентовых животных
+    if (this.state.farm === 'Event') this.dragEventAnimal();
     
     // укзывающие стрелки
     if (this.arrows?.active) this.arrows.update();
@@ -769,7 +774,10 @@ class Tutorial extends Phaser.Scene {
 
                 if (alpha2 >= 1) {
 
-                  this.click(eventIsland, () => this.game.scene.keys[this.state.farm].doneEventTutor_0());
+                  this.click(eventIsland, () => {
+                    this.game.scene.keys[this.state.farm].autosave();
+                    this.game.scene.keys[this.state.farm].doneEventTutor_0();
+                  });
                   timer.remove();
 
                 }
@@ -780,6 +788,7 @@ class Tutorial extends Phaser.Scene {
           })
           
         } else if (this.state.tutorial.step === 10) {
+
           this.tutorText = this.state.lang.eventTutorial_10;
           this.topPosition = false;
           this.indent = 250;
@@ -787,7 +796,96 @@ class Tutorial extends Phaser.Scene {
           this.tailFlipX = true;
           this.tailFlipY = false;
           this.showContinue = true;
+          this.simpleTutorial();
+          this.generalClick = (): void => this.game.scene.keys[this.state.farm].doneEventTutor_10();
+
+        } else if (this.state.tutorial.step === 20) {
+
+          this.tutorText = this.state.lang.eventTutorial_20 + shortTime(this.state.progress.event.endTime, this.state.lang);
+          this.topPosition = false;
+          this.indent = 250;
+          this.tailX = 300;
+          this.tailFlipX = true;
+          this.tailFlipY = false;
+          this.showContinue = true;
+          this.simpleTutorial();
+          this.generalClick = (): void => this.game.scene.keys[this.state.farm].doneEventTutor_20();
+
+        } else if (this.state.tutorial.step === 30) {
+
+          this.tutorText = this.state.lang.eventTutorial_30;
+          this.topPosition = false;
+          this.indent = 250;
+          this.tailX = 300;
+          this.tailFlipX = true;
+          this.tailFlipY = false;
           this.pointerTutorial();
+
+          let button: Phaser.GameObjects.Sprite = this.add.sprite(82, this.height - 92, 'event-buy-icon-1');
+          this.clickButton(button, (): void => {
+
+            this.game.scene.keys[this.state.farm].buyAnimal(1);
+            this.game.scene.keys['EventBars'].animalBuy.setVisible(true);
+            this.game.scene.keys['EventBars'].animalPrice.setVisible(true);
+            this.game.scene.keys['EventBars'].animalPriceBubble.setVisible(true);
+            this.scene.stop('Tutorial');
+            
+          });
+
+          this.arrows = new Arrows(this, { x: 82, y: this.height - 92 }, 70, false, false, false, true, false, true);
+          
+        } else if (this.state.tutorial.step === 40) {
+
+          this.tutorText = this.state.lang.eventTutorial_40;
+          this.topPosition = false;
+          this.indent = 700;
+          this.tailX = 300;
+          this.tailFlipX = true;
+          this.showContinue = true;
+          this.tailFlipY = false;
+          this.pointerTutorial();
+          this.generalClick = (): void => this.game.scene.keys[this.state.farm].progressEventTutor_40();
+         
+          
+          this.game.scene.keys[this.state.farm].showMergPointer = false;
+          this.game.scene.keys[this.state.farm].mergPointer?.destroy();
+          this.add.sprite(120, 740, 'animal1');
+          this.add.sprite(360, 740, 'animal1')
+          
+          this.time.addEvent({ delay: 500, callback: (): void => {
+
+            this.mergPointer = this.physics.add.sprite(120, 740, 'event-tutor-merging').setDepth(this.height);
+            this.mergPointer.first = false;
+            this.showMergPointer = true;
+
+          }, callbackScope: this, loop: false });
+          
+        } else if (this.state.tutorial.step === 50) {
+
+          this.tutorText = this.state.lang.eventTutorial_50;
+          this.topPosition = false;
+          this.indent = 700;
+          this.tailX = 300;
+          this.tailFlipX = true;
+          this.showContinue = true;
+          this.tailFlipY = false;
+          this.pointerTutorial();
+          this.generalClick = (): void => this.game.scene.keys[this.state.farm].progressEventTutor_40();
+         
+          
+          this.game.scene.keys[this.state.farm].showMergPointer = false;
+          this.game.scene.keys[this.state.farm].mergPointer?.destroy();
+          let animal = this.game.scene.keys['Event'].animals.children.entries.find(animal => animal);
+          this.add.sprite(animal.x, animal.y, 'animal' + animal.data.values.type);
+          
+          this.time.addEvent({ delay: 500, callback: (): void => {
+
+            this.mergPointer = this.physics.add.sprite(120, 740, 'event-tutor-merging').setDepth(this.height);
+            this.mergPointer.first = false;
+            this.showMergPointer = true;
+
+          }, callbackScope: this, loop: false });
+          
         } else {
           this.fail();
         }

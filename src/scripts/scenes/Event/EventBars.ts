@@ -51,16 +51,6 @@ class EventBars extends Phaser.Scene {
   public animalBuy: Phaser.GameObjects.Image;
   public animalPrice: Phaser.GameObjects.Text;
   public animalPriceBubble: Phaser.GameObjects.Graphics;
-  public partProgress: Phaser.GameObjects.Text;
-  public balanceBg: Phaser.GameObjects.Image;
-  public waterBg: Phaser.GameObjects.Image;
-  public grassBg: Phaser.GameObjects.Image;
-  public textWater: any;
-  public textGrass: any;
-  public waterBar: Phaser.GameObjects.Graphics;
-  public grassBar: Phaser.GameObjects.Graphics;
-  public waterProblem: boolean;
-  public grassProblem: boolean;
   public timeout: Phaser.Time.TimerEvent; // таймаут пульсации алмазов
   public increaseAnimation: boolean; // метка занятости анимации пульсации алмазов
   public countIncrease: number; // колличество пульсаций
@@ -77,7 +67,11 @@ class EventBars extends Phaser.Scene {
   public feedBoostDoubledIcon: Phaser.GameObjects.Image;
   public feedBoostIcon: Phaser.GameObjects.Image;
   public feedBoostTime: Phaser.GameObjects.Text;
-
+  public addDiamonds: Phaser.GameObjects.Sprite;
+  public addMoney: Phaser.GameObjects.Sprite;
+  public shop: Phaser.GameObjects.Image;
+  public map: Phaser.GameObjects.Image;
+  public collectorBtn: Phaser.GameObjects.Image;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -137,9 +131,9 @@ class EventBars extends Phaser.Scene {
     
     let animalIcon: string = 'event-buy-icon-' + this.game.scene.keys[this.state.farm].maxBreedForBuy();
     this.animalBuy = this.add.image(82, this.height - 92, animalIcon);
-    let collector: Phaser.GameObjects.Image = this.add.image(230, this.height - 90, 'event-collector');
-    let shop: Phaser.GameObjects.Image = this.add.image(370, this.height - 90, 'shop');
-    let map: Phaser.GameObjects.Image = this.add.image(510, this.height - 90, 'map-icon');
+    this.collectorBtn = this.add.image(230, this.height - 90, 'event-collector');
+    this.shop = this.add.image(370, this.height - 90, 'shop');
+    this.map = this.add.image(510, this.height - 90, 'map-icon');
 
     this.nativeShop = this.add.graphics()
       .fillStyle(0xFF2400, 1)
@@ -161,7 +155,7 @@ class EventBars extends Phaser.Scene {
     });
     
     // кнопка собирателя 
-    this.clickButton(collector, (): void => {
+    this.clickButton(this.collectorBtn, (): void => {
 
       let modal: Imodal = {
         type: 2,
@@ -173,7 +167,7 @@ class EventBars extends Phaser.Scene {
     });
     
     // кнопка магазина
-    this.clickButton(shop, (): void => {
+    this.clickButton(this.shop, (): void => {
 
       let modal: Imodal = {
         type: 2,
@@ -185,7 +179,7 @@ class EventBars extends Phaser.Scene {
     });
     
     // кнопка карты
-    this.clickButton(map, (): void => {
+    this.clickButton(this.map, (): void => {
 
       this.game.scene.keys[this.state.farm].scrolling.downHandler();
       this.game.scene.keys[this.state.farm].scrolling.enabled = false;
@@ -226,17 +220,9 @@ class EventBars extends Phaser.Scene {
       font: '32px Shadow',
       color: '#7B3B0D'
     }).setDepth(1).setOrigin(0.5, 0.5);
-    this.part = this.add.text(this.cameras.main.centerX, 60, '', {
-      font: '44px Shadow',
-      color: '#124C03'
-    }).setDepth(1).setOrigin(0.5, 0.5);
-    this.partProgress = this.add.text(this.cameras.main.centerX, 120, '', {
-      font: '32px Shadow',
-      color: '#7B3B0D'
-    }).setDepth(1).setOrigin(0.5, 0.5);
 
-    let addDiamonds: Phaser.GameObjects.Sprite = this.add.sprite(680, 38, 'plus').setDepth(2);
-    let addMoney: Phaser.GameObjects.Sprite = this.add.sprite(680, 100, 'plus').setDepth(2);
+    this.addDiamonds = this.add.sprite(680, 38, 'plus').setDepth(2);
+    this.addMoney = this.add.sprite(680, 100, 'plus').setDepth(2);
 
     this.score = this.add.text(110, 30, '- ' + this.state.lang.eventScores, {
       font: '28px Shadow',
@@ -248,7 +234,7 @@ class EventBars extends Phaser.Scene {
       color: '#f0e8ce'
     }).setDepth(2).setOrigin(0.5, 0.5).setShadow(4, 2, '#00000030', 0.5);
 
-    this.clickButton(addDiamonds, (): void => {
+    this.clickButton(this.addDiamonds, (): void => {
 
       let modal: Imodal = {
         type: 2,
@@ -259,7 +245,7 @@ class EventBars extends Phaser.Scene {
 
     });
 
-    this.clickButton(addMoney, (): void => {
+    this.clickButton(this.addMoney, (): void => {
 
       let modal: Imodal = {
         type: 2,
@@ -303,6 +289,29 @@ class EventBars extends Phaser.Scene {
       font: '21px Shadow',
       color: '#f2ede4'
     }).setOrigin(0, 0.5).setVisible(false);
+
+        // блокировка баров для туториала
+    if (this.state.user.additionalTutorial.eventTutorial < 100) {
+
+      this.shop.setVisible(false);
+      this.map.setVisible(false);
+      this.collectorBtn.setVisible(false);
+      this.collector.timeCollectorText.setVisible(false);
+      this.collector.bubble.setVisible(false);
+      this.menu.setVisible(false);
+      this.chat.setVisible(false);
+      this.profile.setVisible(false);
+
+
+    }
+
+    if (this.state.user.additionalTutorial.eventTutorial < 30) {
+
+      this.animalBuy.setVisible(false);
+      this.animalPrice.setVisible(false);
+      this.animalPriceBubble.setVisible(false);
+
+    }
 
   }
 
@@ -357,8 +366,8 @@ class EventBars extends Phaser.Scene {
     this.сurrencyAnimation();
 
     // мигание нулевого таймера собирателя
-    this.pulseCollector();
-
+    if (this.state.user.additionalTutorial.eventTutorial > 100) this.pulseCollector();
+    
     // актуальный статус кнопки покупки курицы
     this.buyAnimalStatus();
 

@@ -76,10 +76,18 @@ import autosave from './autosave';
 import { 
   flyAnimal, 
   teleportation, 
-  updateTeleportation 
+  updateTeleportation,
+  dragEventAnimal, 
 } from './animations';
 import autoprogress from './autoprogress';
-import { showEventTutorial } from './tutorial';
+import { 
+  showEventTutorial, 
+  doneEventTutor_10, 
+  doneEventTutor_20, 
+  doneEventTutor_30,
+  doneEventTutor_40, 
+  progressEventTutor_40,
+} from './tutorial';
 class Event extends Phaser.Scene {
   constructor() {
     super('Event');
@@ -179,7 +187,13 @@ class Event extends Phaser.Scene {
   public getEventRaiting = getEventRaiting.bind(this);
   public doubleClick = doubleClick.bind(this);
   public showEventTutorial = showEventTutorial.bind(this);
-
+  public doneEventTutor_10 = doneEventTutor_10.bind(this);
+  public doneEventTutor_20 = doneEventTutor_20.bind(this);
+  public doneEventTutor_30 = doneEventTutor_30.bind(this);
+  public doneEventTutor_40 = doneEventTutor_40.bind(this);
+  public progressEventTutor_40 = progressEventTutor_40.bind(this);
+  public dragEventAnimal = dragEventAnimal.bind(this);
+  
   public init(state: Istate): void {
     this.state = state;
 
@@ -222,7 +236,21 @@ class Event extends Phaser.Scene {
 
   public update(): void {
     this.animalBrain();
-    this.updateTeleportation();    
+    this.updateTeleportation();  
+    this.dragEventAnimal();
+    if (this.state.user.additionalTutorial.eventTutorial === 30) {
+     
+      if (this.animals.children.entries.length > 1) {
+        this.doneEventTutor_30();
+      }
+      
+    }  
+    if (this.state.user.additionalTutorial.eventTutorial === 40) {
+
+      if (this.state.userEvent.maxLevelAnimal >= 2) {
+        this.doneEventTutor_40();
+      }
+    }
   }
 
 
