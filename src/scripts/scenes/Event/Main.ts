@@ -267,7 +267,6 @@ class Event extends Phaser.Scene {
 
       this.animals.getChildren().forEach((animal) => {
         if (animal.data.values.active.data.values.working) this.doneEventTutor_50();
-        else console.log(animal.data.values.active.data.values.working)
       });
 
         
