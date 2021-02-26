@@ -14,6 +14,7 @@ let partProgress: any = require("./../../assets/images/modal/part-progress.png")
 let mapBtn: any = require("./../../assets/images/modal/map-btn.png");
 let mapCloud: any = require("./../../assets/images/event/map-cloud.png");
 let mapEventFarm: any = require("./../../assets/images/event/map-event-farm.png");
+let mapEventIsland: any = require("./../../assets/images/event/map-event-island.png");
 
 class Map extends Phaser.Scene {
   constructor() {
@@ -66,6 +67,7 @@ class Map extends Phaser.Scene {
     this.load.image('map-btn', mapBtn);
     this.load.image('map-cloud', mapCloud);
     this.load.image('map-event-farm', mapEventFarm);
+    this.load.image('map-event-island', mapEventIsland);
 
   }
 
@@ -113,8 +115,7 @@ class Map extends Phaser.Scene {
     this.build(chickenPosition,'Chicken', this.state.progress.chicken);
     
     // Евентовая ферма на карте
-    if (this.state.user.additionalTutorial.eventTutorial > 0) this.buildEvent();
-    else this.eventCloud = this.add.sprite(550, 750, 'map-cloud');
+    this.buildEvent();
     
   }
 
@@ -133,7 +134,7 @@ class Map extends Phaser.Scene {
       this.point.y = this.pointPosition.y;
 
     }
-    if (this.state.user.additionalTutorial.eventTutorial > 0) this.updateEvent();
+    this.updateEvent();
     
   }
 
@@ -344,7 +345,7 @@ class Map extends Phaser.Scene {
 
   public updateEvent(): void {
 
-    if (this.state.progress.event.startTime > 0 && this.state.progress.event.open) {
+    if (this.state.progress.event.startTime > 0 && this.state.progress.event.open && this.state.user.additionalTutorial.eventTutorial === 0) {
 
       if (!this.eventCloud?.visible) {
         this.eventCloud?.setVisible(true);
@@ -358,7 +359,7 @@ class Map extends Phaser.Scene {
         this.eventEndText?.setVisible(false);
         this.eventZone?.destroy();
       } 
-    } else if (this.state.progress.event.startTime <= 0 && this.state.progress.event.open) {
+    } else if (this.state.progress.event.startTime <= 0 && this.state.progress.event.open && this.state.user.additionalTutorial.eventTutorial > 0) {
 
       if (!this.eventMapFarm?.visible) {
         this.eventCloud?.setVisible(false);
@@ -388,8 +389,11 @@ class Map extends Phaser.Scene {
       }
 
 
+    } else if (this.state.progress.event.startTime <= 0 && this.state.progress.event.open && this.state.user.additionalTutorial.eventTutorial === 0) {
+      this.eventCloud?.setVisible(true);
+      this.eventZone?.destroy();
     }
-    
+
     if (!this.state.progress.event.open) {
       this.eventCloud.setVisible(true);
       this.eventStartText.setVisible(false);

@@ -177,8 +177,8 @@ function world(): void {
   });
 
   // туториал, если нужен
-  if (this.state.user.additionalTutorial.eventTutorial === 0) {
-    // this.showTutorial();
+  if (this.state.user.additionalTutorial.eventTutorial > 0) {
+    this.showTutorial();
     console.log('showtutor');
     
   }

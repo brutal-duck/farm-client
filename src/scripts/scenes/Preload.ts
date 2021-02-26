@@ -92,6 +92,9 @@ let feedBoostChickenIcon: any = require("./../../assets/images/icons/chicken-fee
 let iconShopEvent: any = require("./../../assets/images/event/icons/icon-shop-event.png");
 let eventMoneyPackage: any = require("./../../assets/images/event/money-package.png");
 let shopResourceCollector: any = require("./../../assets/images/event/shop-resource-collector.png");
+let mapCloud: any = require("./../../assets/images/event/map-cloud.png");
+let mapEventFarm: any = require("./../../assets/images/event/map-event-farm.png");
+let mapEventIsland: any = require("./../../assets/images/event/map-event-island.png");
 
 class Preload extends Phaser.Scene {
   constructor() {
@@ -118,6 +121,10 @@ class Preload extends Phaser.Scene {
     this.load.image('pb-chapter-map', pbChapterMap);
     this.load.image('part-progress', partProgress);
     this.load.image('map-btn', mapBtn);
+    this.load.image('map-cloud', mapCloud);
+    this.load.image('map-event-farm', mapEventFarm);
+    this.load.image('map-event-island', mapEventIsland);
+
 
     // магазин
     this.load.image('shop-head', shopHead);

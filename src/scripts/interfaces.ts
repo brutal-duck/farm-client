@@ -74,6 +74,7 @@ interface IeventUserAutoSave {
   takenHerdBoost: number;
   feedBoostTime: number;
   eventPoints: number;
+  additionalTutorial: IadditionalTutorial;
 }
 // for state
 interface IadditionalTutorial {

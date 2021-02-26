@@ -449,7 +449,8 @@ function interval(): void {
       if (this.state.user.additionalTutorial.eventTutorial === 0 &&
         !this.scene.isActive('Tutorial') &&
         this.scene.isActive('Map')) {
-        console.log('SHOW MAP TUTOR')
+        this.game.scene.keys[`Map`].scrolling.wheel = false;
+        this.showEventTutorial();
       }
     }
     

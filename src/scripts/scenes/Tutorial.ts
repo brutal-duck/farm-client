@@ -735,13 +735,70 @@ class Tutorial extends Phaser.Scene {
         } else {
           this.fail();
         }
+      // ивентовая ферма
+      } else if (this.state.tutorial.farm === 3) {
+        
+        if (this.state.tutorial.step === 0) {
+          
+          let eventIsland: Phaser.GameObjects.Image = this.add.image(720, 775, 'map-event-island').setOrigin(1, 0.5);
+          let eventCloud: Phaser.GameObjects.Image = this.add.image(550, 750, 'map-cloud');
+          let eventFarm: Phaser.GameObjects.Image = this.add.image(720, 730, 'map-event-farm').setOrigin(1, 0.5).setAlpha(0);
+          
+          this.topPosition = false;
+          this.indent = 240;
+          this.tailX = 430;
+          this.tailFlipX = true;
+          this.tailFlipY = false;
+          this.tutorText = this.state.lang;
 
+          let alpha1: number = 1;
+          let alpha2: number = 0;
+          let timer: Phaser.Time.TimerEvent = this.time.addEvent({
+            delay: 50,
+            callbackScope: this,
+            callback: () => {
+
+              alpha1 -= 0.05;
+              eventCloud.setAlpha(alpha1);
+
+              if (alpha1 < 0) {
+
+                eventCloud.setVisible(false);
+                alpha2 += 0.05;
+                eventFarm.setAlpha(alpha2);
+
+                if (alpha2 >= 1) {
+
+                  this.click(eventIsland, () => this.game.scene.keys[this.state.farm].doneEventTutor_0());
+                  timer.remove();
+
+                }
+                
+              }
+            },
+            loop: true
+          })
+          
+        } else if (this.state.tutorial.step === 10) {
+          this.tutorText = this.state.lang.eventTutorial_10;
+          this.topPosition = false;
+          this.indent = 250;
+          this.tailX = 300;
+          this.tailFlipX = true;
+          this.tailFlipY = false;
+          this.showContinue = true;
+          this.pointerTutorial();
+        } else {
+          this.fail();
+        }
+        
+        
       } else {
         this.fail();
       }
 
     }
-
+    
   }
 
 
