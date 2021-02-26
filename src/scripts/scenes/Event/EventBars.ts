@@ -13,6 +13,7 @@ import {
   updateRaitingsBar 
 } from './basic';
 import {
+  Arrows,
   Collector
 } from '../../elements';
 import {
@@ -24,9 +25,9 @@ import {
   calendarAnimation,
   newbieAwardAnimation,
   plusDiamonds,
-  firework250
+  firework250,
 } from '../../general/animations';
-import { pulseCollector, plusResourceAnimation } from './animations';
+import { pulseCollector, plusResourceAnimation, arrowsBehavior} from './animations';
 import { showFeedTime } from './../../general/boosts';
 
 class EventBars extends Phaser.Scene {
@@ -72,6 +73,7 @@ class EventBars extends Phaser.Scene {
   public shop: Phaser.GameObjects.Image;
   public map: Phaser.GameObjects.Image;
   public collectorBtn: Phaser.GameObjects.Image;
+  public arrows: Arrows;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -93,7 +95,8 @@ class EventBars extends Phaser.Scene {
   public showFeedTime = showFeedTime.bind(this);
   public updateEventNativeShop = updateEventNativeShop.bind(this);
   public updateRaitingsBar = updateRaitingsBar.bind(this);
-
+  public arrowsBehavior = arrowsBehavior.bind(this);
+  
 
   public init(state: Istate): void {
     
@@ -382,7 +385,10 @@ class EventBars extends Phaser.Scene {
 
     this.updateRaitingsBar();
 
-  }
+    // укзывающие стрелки
+    this.arrowsBehavior();
+
+  } 
 
   // обновление цены покупки кур
   public updateAnimalPrice(): void {

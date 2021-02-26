@@ -85,6 +85,7 @@ function doneEventTutor_30(): void {
   });
 
   this.state.user.additionalTutorial.eventTutorial = 40;
+  this.game.scene.keys['EventBars'].arrows.destroy();
   this.scene.stop('Tutorial');
   this.time.addEvent({ delay: 1000, callback: (): void => {
     console.log('event 40')

@@ -254,6 +254,31 @@ function teleportation(
   }
 }
 
+function arrowsBehavior(): void {
+  
+  if (this.arrows?.active) {
+    
+    this.arrows.update();
+
+    if ((this.scene.isActive('Modal') ||
+      this.scene.isActive('Block') ||
+      this.scene.isActive('Tutorial')) &&
+      this.arrows.visible) {
+      
+      this.arrows.setVisible(false);
+      
+    } else if (!this.scene.isActive('Modal') &&
+      !this.scene.isActive('Block') &&
+      !this.scene.isActive('Tutorial') &&
+      !this.arrows.visible) {
+
+      this.arrows.setVisible(true);
+      
+    }
+
+  }
+
+}
 
 // перетаскивание овец
 function dragEventAnimal(animal: boolean = false): void {
@@ -261,7 +286,7 @@ function dragEventAnimal(animal: boolean = false): void {
   if (this.showMergPointer) {
     
     if (!this.mergPointer.start) {
-      
+
         this.mergPointer.stop = false;
         this.mergPointer.setVisible(true);
         let target: Phaser.Math.Vector2 = new Phaser.Math.Vector2();
@@ -313,5 +338,6 @@ export {
   plusResourceAnimation,
   teleportation,
   updateTeleportation,
-  dragEventAnimal
+  dragEventAnimal,
+  arrowsBehavior
 }

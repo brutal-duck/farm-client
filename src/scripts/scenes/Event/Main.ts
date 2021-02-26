@@ -251,6 +251,7 @@ class Event extends Phaser.Scene {
         this.doneEventTutor_40();
       }
     }
+    
   }
 
 

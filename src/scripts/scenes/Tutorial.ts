@@ -820,19 +820,19 @@ class Tutorial extends Phaser.Scene {
           this.tailFlipX = true;
           this.tailFlipY = false;
           this.pointerTutorial();
-
+          this.arrows = new Arrows(this, { x: 82, y: this.height - 92 }, 70, false, false, false, true, false, true);
           let button: Phaser.GameObjects.Sprite = this.add.sprite(82, this.height - 92, 'event-buy-icon-1');
           this.clickButton(button, (): void => {
 
             this.game.scene.keys[this.state.farm].buyAnimal(1);
+            this.game.scene.keys['EventBars'].arrows = new Arrows(this.game.scene.keys['EventBars'], { x: 82, y: this.height - 92 }, 70, false, false, false, true, false, true);
+            console.log(this.game.scene.keys['EventBars'].arrows)
             this.game.scene.keys['EventBars'].animalBuy.setVisible(true);
             this.game.scene.keys['EventBars'].animalPrice.setVisible(true);
             this.game.scene.keys['EventBars'].animalPriceBubble.setVisible(true);
             this.scene.stop('Tutorial');
             
           });
-
-          this.arrows = new Arrows(this, { x: 82, y: this.height - 92 }, 70, false, false, false, true, false, true);
           
         } else if (this.state.tutorial.step === 40) {
 
@@ -864,28 +864,16 @@ class Tutorial extends Phaser.Scene {
 
           this.tutorText = this.state.lang.eventTutorial_50;
           this.topPosition = false;
-          this.indent = 700;
+          this.indent = 100;
           this.tailX = 300;
           this.tailFlipX = true;
           this.showContinue = true;
           this.tailFlipY = false;
           this.pointerTutorial();
-          this.generalClick = (): void => this.game.scene.keys[this.state.farm].progressEventTutor_40();
-         
-          
-          this.game.scene.keys[this.state.farm].showMergPointer = false;
-          this.game.scene.keys[this.state.farm].mergPointer?.destroy();
-          let animal = this.game.scene.keys['Event'].animals.children.entries.find(animal => animal);
-          this.add.sprite(animal.x, animal.y, 'animal' + animal.data.values.type);
-          
-          this.time.addEvent({ delay: 500, callback: (): void => {
-
-            this.mergPointer = this.physics.add.sprite(120, 740, 'event-tutor-merging').setDepth(this.height);
-            this.mergPointer.first = false;
-            this.showMergPointer = true;
-
-          }, callbackScope: this, loop: false });
-          
+          this.add.image(0, 140, 'event-work-zone').setOrigin(0, 0);
+          this.arrows = new Arrows(this, { x: 360, y: 360 }, 120, false, false, true, false, false, true);
+          this.generalClick = (): void => this.game.scene.keys[this.state.farm].progressEventTutor_50();
+                   
         } else {
           this.fail();
         }
