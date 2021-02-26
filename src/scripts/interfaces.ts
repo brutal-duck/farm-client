@@ -82,6 +82,7 @@ interface IadditionalTutorial {
   collector: boolean;
   herdBoost: boolean;
   feedBoost: boolean;
+  eventTutorial: number;
 }
 interface Iuser {
   diamonds: number;

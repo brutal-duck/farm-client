@@ -176,13 +176,15 @@ function world(): void {
     this.getResource(data);
   });
 
-  // // туториал, если нужен
-  // if (this.state.userChicken.tutorial === 0) {
-  //   this.showTutorial();
-  // }
+  // туториал, если нужен
+  if (this.state.user.additionalTutorial.eventTutorial === 0) {
+    // this.showTutorial();
+    console.log('showtutor');
+    
+  }
 
   // расчет оффлайн прогресса
-  // this.autoprogress(true);
+  this.autoprogress(true);
   
 }
 

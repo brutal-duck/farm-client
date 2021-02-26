@@ -629,6 +629,12 @@ class SheepBars extends Phaser.Scene {
 
   }
 
+  public showMapArrows(): void {
+    
+    this.arrows = new Arrows(this, { x: 510, y: this.height - 90 }, 70, false, false, true, false, false);
+
+  }
+
 
   // анимация монет
   public plusMoney(): void {

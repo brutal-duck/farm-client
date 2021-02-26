@@ -1,5 +1,5 @@
 // включение туториала
-function showTutorial(additional: boolean | string = false): void {
+function showEventTutorial(additional: boolean | string = false): void {
   
   if (this.scene.isActive('Modal')) this.scene.stop('Modal');
   if (this.scene.isActive('Block')) this.scene.stop('Block');
@@ -514,7 +514,7 @@ function collectorTutorial(): void {
 
 
 export {
-  showTutorial,
+  showEventTutorial,
   doneTutor_0,
   doneTutor_10,
   doneTutor_20,

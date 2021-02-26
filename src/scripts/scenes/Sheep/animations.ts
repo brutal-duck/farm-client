@@ -392,7 +392,7 @@ function repositoryAnimation(): void {
 function arrowsBehavior(): void {
   
   if (this.arrows?.active) {
-
+    
     this.arrows.update();
 
     if ((this.scene.isActive('Modal') ||
