@@ -12,7 +12,8 @@ let userData: Iuser = {
     cave: false,
     collector: false,
     herdBoost: false,
-    feedBoost: false
+    feedBoost: false,
+    eventTutorial: 0
   },
   takenReward: false,
 }

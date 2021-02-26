@@ -113,7 +113,9 @@ class Map extends Phaser.Scene {
     this.build(chickenPosition,'Chicken', this.state.progress.chicken);
     
     // Евентовая ферма на карте
-    this.buildEvent();
+    if (this.state.user.additionalTutorial.eventTutorial > 0) this.buildEvent();
+    else this.eventCloud = this.add.sprite(550, 750, 'map-cloud');
+    
   }
 
 
@@ -131,8 +133,8 @@ class Map extends Phaser.Scene {
       this.point.y = this.pointPosition.y;
 
     }
-
-    this.updateEvent();
+    if (this.state.user.additionalTutorial.eventTutorial > 0) this.updateEvent();
+    
   }
 
 
@@ -344,44 +346,44 @@ class Map extends Phaser.Scene {
 
     if (this.state.progress.event.startTime > 0 && this.state.progress.event.open) {
 
-      if (!this.eventCloud.visible) {
-        this.eventCloud.setVisible(true);
-        this.eventStartText.setVisible(true);
-        this.eventStartTime.setVisible(true);
-        this.eventStartBg.setVisible(true);
-        this.eventMapFarm.setVisible(false);
-        this.eventPlace.setVisible(false);
-        this.eventScore.setVisible(false);
-        this.eventEndTime.setVisible(false);
-        this.eventEndText.setVisible(false);
+      if (!this.eventCloud?.visible) {
+        this.eventCloud?.setVisible(true);
+        this.eventStartText?.setVisible(true);
+        this.eventStartTime?.setVisible(true);
+        this.eventStartBg?.setVisible(true);
+        this.eventMapFarm?.setVisible(false);
+        this.eventPlace?.setVisible(false);
+        this.eventScore?.setVisible(false);
+        this.eventEndTime?.setVisible(false);
+        this.eventEndText?.setVisible(false);
         this.eventZone?.destroy();
       } 
     } else if (this.state.progress.event.startTime <= 0 && this.state.progress.event.open) {
 
-      if (!this.eventMapFarm.visible) {
-        this.eventCloud.setVisible(false);
-        this.eventStartText.setVisible(false);
-        this.eventStartTime.setVisible(false);
-        this.eventStartBg.setVisible(false);
-        this.eventMapFarm.setVisible(true);
-        this.eventPlace.setVisible(true);
-        this.eventScore.setVisible(true);
-        this.eventEndTime.setVisible(true);
-        this.eventEndText.setVisible(true);
+      if (!this.eventMapFarm?.visible) {
+        this.eventCloud?.setVisible(false);
+        this.eventStartText?.setVisible(false);
+        this.eventStartTime?.setVisible(false);
+        this.eventStartBg?.setVisible(false);
+        this.eventMapFarm?.setVisible(true);
+        this.eventPlace?.setVisible(true);
+        this.eventScore?.setVisible(true);
+        this.eventEndTime?.setVisible(true);
+        this.eventEndText?.setVisible(true);
       }
       
       if (this.state.progress.event.endTime <= 0 && this.state.progress.event.open) {
-        this.eventCloud.setVisible(true);
-        this.eventStartText.setVisible(true);
-        this.eventStartText.setY(750);
-        this.eventStartTime.setVisible(false);
-        this.eventStartBg.setVisible(true);
-        this.eventStartText.setText(this.state.lang.eventEndText);
-        this.eventMapFarm.setVisible(false);
-        this.eventPlace.setVisible(false);
-        this.eventScore.setVisible(false);
-        this.eventEndTime.setVisible(false);
-        this.eventEndText.setVisible(false);
+        this.eventCloud?.setVisible(true);
+        this.eventStartText?.setVisible(true);
+        this.eventStartText?.setY(750);
+        this.eventStartTime?.setVisible(false);
+        this.eventStartBg?.setVisible(true);
+        this.eventStartText?.setText(this.state.lang.eventEndText);
+        this.eventMapFarm?.setVisible(false);
+        this.eventPlace?.setVisible(false);
+        this.eventScore?.setVisible(false);
+        this.eventEndTime?.setVisible(false);
+        this.eventEndText?.setVisible(false);
         this.eventZone?.destroy();
       }
 
