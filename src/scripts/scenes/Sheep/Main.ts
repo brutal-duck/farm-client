@@ -302,7 +302,6 @@ class Sheep extends Phaser.Scene {
 
 
   public create(): void {
-    console.log(this.state.lang);
     
     // анимации
     this.genAnimations();
