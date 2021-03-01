@@ -364,7 +364,7 @@ function interval(): void {
 
     if ((this.state.name !== '' || this.state.user.login !== '') && 
       this.state.progress.event.startTime <= 0 && 
-      this.state.progress.event.endTime >= 0) {
+      this.state.progress.event.endTime > 0) {
         
       if (this.state.user.additionalTutorial.eventTutorial === 0 &&
         !this.game.scene.keys[`${this.state.farm}Bars`].arrows?.active &&

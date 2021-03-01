@@ -347,7 +347,9 @@ class Map extends Phaser.Scene {
 
   public updateEvent(): void {
 
-    if (this.state.progress.event.startTime > 0 && this.state.progress.event.open && this.state.user.additionalTutorial.eventTutorial === 0) {
+    if (this.state.progress.event.startTime > 0 && 
+      this.state.progress.event.open && 
+      this.state.user.additionalTutorial.eventTutorial === 0) {
 
       if (!this.eventCloud?.visible) {
         this.eventCloud?.setVisible(true);
@@ -361,7 +363,10 @@ class Map extends Phaser.Scene {
         this.eventEndText?.setVisible(false);
         this.eventZone?.destroy();
       } 
-    } else if (this.state.progress.event.startTime <= 0 && this.state.progress.event.open && this.state.user.additionalTutorial.eventTutorial > 0) {
+    } else if (this.state.progress.event.startTime <= 0 && 
+      this.state.progress.event.open && 
+      this.state.user.additionalTutorial.eventTutorial > 0 &&
+      this.state.progress.event.endTime > 0) {
 
       if (!this.eventMapFarm?.visible) {
         this.eventCloud?.setVisible(false);
@@ -391,7 +396,9 @@ class Map extends Phaser.Scene {
       }
 
 
-    } else if (this.state.progress.event.startTime <= 0 && this.state.progress.event.open && this.state.user.additionalTutorial.eventTutorial === 0) {
+    } else if (this.state.progress.event.startTime <= 0 && 
+      this.state.progress.event.open && 
+      this.state.user.additionalTutorial.eventTutorial === 0) {
       this.eventCloud?.setVisible(true);
       this.eventZone?.destroy();
     }
@@ -410,7 +417,6 @@ class Map extends Phaser.Scene {
     }
 
     if (this.state.progress.event.updateRaitings) {
-      console.log(this.state.progress)
       let points: number = this.state.progress.event.eventPoints >= 0 ? this.state.progress.event.eventPoints : 0;
 
       this.eventScore.setText(points + ' ' + this.scoreEnding(points, this.state.lang));

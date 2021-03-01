@@ -388,7 +388,7 @@ function interval(): void {
     }
     
     // обновление времени евента
-
+    
     if (this.state.progress.event.endTime > 0) {
       this.state.progress.event.endTime--;
       if ( this.scene.isActive('Map')) {
@@ -439,7 +439,7 @@ function interval(): void {
     if (this.state.userSheep.part >= 4 && 
       (this.state.name !== '' || this.state.user.login !== '') && 
       this.state.progress.event.startTime <= 0 && 
-      this.state.progress.event.endTime >= 0) {
+      this.state.progress.event.endTime > 0) {
       if (this.state.user.additionalTutorial.eventTutorial === 0 &&
         !this.game.scene.keys[`${this.state.farm}Bars`].arrows?.active &&
         !this.scene.isActive('Modal') &&
