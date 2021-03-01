@@ -1553,11 +1553,19 @@ function endEventModal(): void {
     .setScale(0.15);
   
   this.clickModalBtn({ btn, title, img1: coin }, (): void => {
+    this.state.amplitude.getInstance().logEvent('event_finished', {
+      farm_id: 'Event'
+    });
+
     this.state.progress.event.eventPoints = -1;
     this.state.user.additionalTutorial.eventTutorial = 0;
 
     this.state.user.diamonds += diamonds;
-
+    this.state.amplitude.getInstance().logEvent('diamonds_get', {
+      type: 'other',
+      farm_id: 'Event',
+      count: diamonds
+    });
     this.game.scene.keys[this.state.farm].scrolling.wheel = true;
     this.scene.stop('Modal');
     this.game.scene.keys[this.state.farm + 'Bars'].plusDiamonds();
