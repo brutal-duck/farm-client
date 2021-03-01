@@ -254,7 +254,7 @@ class Event extends Phaser.Scene {
     // укзывающие стрелки
     this.arrowsBehavior();
     if (this.state.user.additionalTutorial.eventTutorial === 30) {
-     
+   
       if (this.animals.children.entries.length > 1) {
         this.doneEventTutor_30();
       }
@@ -267,15 +267,13 @@ class Event extends Phaser.Scene {
         this.doneEventTutor_40();
       }
     }
-
-    if (this.state.user.additionalTutorial.eventTutorial === 50) {
-
-      this.animals.getChildren().forEach((animal) => {
+    
+    if (this.state.user.additionalTutorial.eventTutorial === 50 && !this.scene.isActive('Tutorial')) {
+      
+      this.animals.children.entries.forEach((animal) => {
         if (animal.data.values.active.data.values.working) this.doneEventTutor_50();
       });
 
-        
-      
     }
     
   }

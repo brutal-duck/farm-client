@@ -349,6 +349,7 @@ function dragEventAnimal(animal: boolean = false): void {
         
         target.x = 360;
         target.y = 360;
+        
         let animal: Phaser.Physics.Arcade.Sprite = this.game.scene.keys['Event'].animals.getChildren()[0];
         this.mergPointer.setX(animal.x);
         this.mergPointer.setY(animal.y);
@@ -366,11 +367,10 @@ function dragEventAnimal(animal: boolean = false): void {
           this.mergPointer.data.values.animal.setDepth(this.mergPointer.y + 10000);
           
         }
-      
+
       } else {
         
         let distance: number = Phaser.Math.Distance.Between(this.mergPointer.x, this.mergPointer.y, this.mergPointer.target.x, this.mergPointer.target.y);
-        
         if (distance <= 10 && !this.mergPointer.stop) {
   
           this.mergPointer.stop = true;

@@ -750,11 +750,12 @@ class Tutorial extends Phaser.Scene {
           let eventFarm: Phaser.GameObjects.Image = this.add.image(720, 730, 'map-event-farm').setOrigin(1, 0.5).setAlpha(0);
           
           this.topPosition = false;
-          this.indent = 240;
+          this.indent = 750;
           this.tailX = 430;
-          this.tailFlipX = true;
+          this.tailFlipX = false;
           this.tailFlipY = false;
-          this.tutorText = this.state.lang;
+          this.tutorText = this.state.lang.eventWelcome;
+          
 
           let alpha1: number = 1;
           let alpha2: number = 0;
@@ -773,7 +774,7 @@ class Tutorial extends Phaser.Scene {
                 eventFarm.setAlpha(alpha2);
 
                 if (alpha2 >= 1) {
-
+                  this.pointerTutorial();
                   this.click(eventIsland, () => {
                     this.game.scene.keys[this.state.farm].autosave();
                     this.game.scene.keys[this.state.farm].doneEventTutor_0();
@@ -879,7 +880,7 @@ class Tutorial extends Phaser.Scene {
           this.physics.add.sprite(animal.x, animal.y, 'animal' + animal.data.values.type).setDepth(this.height);
           this.time.addEvent({ delay: 500, callback: (): void => {
 
-            this.mergPointer = this.physics.add.sprite(120, 740, 'event-tutor-merging').setDepth(this.height + 1).setOrigin(0, 0);
+            this.mergPointer = this.physics.add.sprite(animal.x, animal.y, 'event-tutor-merging').setDepth(this.height + 1).setOrigin(0, 0);
             this.mergPointer.setDataEnabled();
             this.mergPointer.data.values.animal = this.physics.add.sprite(animal.x, animal.y, 'animal' + animal.data.values.type).setDepth(this.height).setTint(0x777777).setScale(0.95);
             this.mergPointer.first = false;

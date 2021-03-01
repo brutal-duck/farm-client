@@ -126,11 +126,12 @@ function doneEventTutor_50(): void {
     step: 50,
     farm_id: this.state.farm
   });
-  console.log('done event' + this.state.user.additionalTutorial.eventTutorial)
-  this.state.user.additionalTutorial.eventTutorial = 60;
-  this.game.scene.keys['Event'].arrows?.destroy();
-  this.scene.stop('Tutorial');
 
+  console.log('done event' + this.state.user.additionalTutorial.eventTutorial)
+  
+  this.mergPointer?.data.values.animal?.destroy();
+  this.mergPointer?.destroy();
+  this.state.user.additionalTutorial.eventTutorial = 60;
   this.time.addEvent({ delay: 500, callback: (): void => {
     this.showEventTutorial();
     console.log('event 60');
