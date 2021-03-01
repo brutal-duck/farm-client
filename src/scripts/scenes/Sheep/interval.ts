@@ -317,7 +317,7 @@ function interval(): void {
 
     }
 
-    if (this.game.scene.keys['SheepBars'].arrows?.active && this.state.userSheep.collector > 0) {
+    if (this.game.scene.keys['SheepBars'].arrows?.active && this.state.userSheep.collector > 0 && this.state.user.additionalTutorial.eventTutorial !== 0) {
 
       this.counterWithoutCollector = 0;
       this.game.scene.keys['SheepBars'].arrows.destroy();

@@ -179,7 +179,7 @@ function doneEventTutor_70(): void {
 }
 
 
-// выключение тутора для мерджинга овец
+// выключение тутора для мерджинга животных
 function progressEventTutor_40() {
 
   this.mergTutor = 0;

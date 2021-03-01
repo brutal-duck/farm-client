@@ -167,6 +167,15 @@ function interval(): void {
       
     }
 
+    // повтор шага туториала про мерджинг животных
+    if (this.state.user.additionalTutorial.eventTutorial === 40 && !this.scene.isActive('Tutorial')) {
+
+      this.mergTutor++;
+      let dragAnimal: any = this.animals.children.entries.find((data: any) => data.data.values.active.data.values.drag);
+
+      if (this.mergTutor > 5 && !dragAnimal) this.showEventTutorial();
+
+    }
     // обновление времени евента
 
     if (this.state.progress.event.endTime > 0) {

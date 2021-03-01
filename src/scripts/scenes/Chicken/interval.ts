@@ -362,23 +362,23 @@ function interval(): void {
       }
     }
 
-    // if (this.state.userSheep.part > 4 && (this.state.name !== '' || this.state.user.login !== '')) {
-    //   if (this.state.user.additionalTutorial.eventTutorial === 0 &&
-    //     !this.game.scene.keys[`${this.state.farm}Bars`].arrows?.active &&
-    //     !this.scene.isActive('Modal') &&
-    //     !this.scene.isActive('Block') &&
-    //     !this.scene.isActive('Tutorial') &&
-    //     !this.scene.isActive('Map')) {
-    //     this.game.scene.keys[`${this.state.farm}Bars`].showMapArrows();
-    //   }
+    if (this.state.name !== '' || this.state.user.login !== '') {
+      if (this.state.user.additionalTutorial.eventTutorial === 0 &&
+        !this.game.scene.keys[`${this.state.farm}Bars`].arrows?.active &&
+        !this.scene.isActive('Modal') &&
+        !this.scene.isActive('Block') &&
+        !this.scene.isActive('Tutorial') &&
+        !this.scene.isActive('Map')) {
+        this.game.scene.keys[`${this.state.farm}Bars`].showMapArrows();
+      }
   
-    //   if (this.state.user.additionalTutorial.eventTutorial === 0 &&
-    //     !this.scene.isActive('Tutorial') &&
-    //     this.scene.isActive('Map')) {
-    //     this.game.scene.keys[`Map`].scrolling.wheel = false;
-    //     this.showEventTutorial();
-    //   }
-    // }
+      if (this.state.user.additionalTutorial.eventTutorial === 0 &&
+        !this.scene.isActive('Tutorial') &&
+        this.scene.isActive('Map')) {
+        this.game.scene.keys[`Map`].scrolling.wheel = false;
+        this.showEventTutorial();
+      }
+    }
 
   }, callbackScope: this, loop: true });
 

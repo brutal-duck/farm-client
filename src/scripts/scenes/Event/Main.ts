@@ -122,6 +122,7 @@ class Event extends Phaser.Scene {
   public startCreateHerdBoostAnimal: boolean = false; // метка начала создания животных
   public feedBoostMultiplier: bigint = BigInt(2);
   public feedBoostStack: number = 11; // максимальный стек часов
+  public mergTutor: number; // счетчик для повтора туториала про мерджинг
 
   public collisions = collisions.bind(this);
   public click = click.bind(this);
