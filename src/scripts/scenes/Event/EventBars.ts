@@ -154,8 +154,8 @@ class EventBars extends Phaser.Scene {
 
     // быстрая покупка Животного
     this.clickButton(this.animalBuy, (): void => {
-      let breed: number = this.game.scene.keys['Event'].maxBreedForBuy();
-      this.game.scene.keys[this.state.farm].buyAnimal(breed);
+      if (this.state.user.additionalTutorial.eventTutorial > 70 || this.state.user.additionalTutorial.eventTutorial === 30)
+      this.game.scene.keys[this.state.farm].buyAnimal(this.game.scene.keys['Event'].maxBreedForBuy());
       this.updateAnimalPrice();
     });
     
@@ -413,9 +413,17 @@ class EventBars extends Phaser.Scene {
     let breed: number = this.game.scene.keys['Event'].maxBreedForBuy();
     let price: number = this.game.scene.keys[this.state.farm].animalPrice(breed).price
     
-    if ((this.state.userEvent.herdBoostAnimals.length > 0 || price > this.state.userEvent.money) && this.animalBuy.tintBottomLeft === 0xFFFFFF) {
+    if ((this.state.userEvent.herdBoostAnimals.length > 0 || 
+      price > this.state.userEvent.money || 
+      (this.state.user.additionalTutorial.eventTutorial < 70 &&
+      this.state.user.additionalTutorial.eventTutorial !== 30)) && 
+      this.animalBuy.tintBottomLeft === 0xFFFFFF) {
       this.animalBuy.setTint(0x777777);
-    } else if (this.state.userEvent.herdBoostAnimals.length <= 0 && price <= this.state.userEvent.money && this.animalBuy.tintBottomLeft === 0x777777) {
+    } else if (this.state.userEvent.herdBoostAnimals.length <= 0 && 
+      price <= this.state.userEvent.money && 
+      this.animalBuy.tintBottomLeft === 0x777777 &&
+      (this.state.user.additionalTutorial.eventTutorial > 70 ||
+      this.state.user.additionalTutorial.eventTutorial === 30)) {
       this.animalBuy.setTint(0xFFFFFF);
     }
 
