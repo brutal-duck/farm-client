@@ -571,7 +571,7 @@ class Tutorial extends Phaser.Scene {
           this.clickButton(button, (): void => {
             this.game.scene.keys[this.state.farm].doneTutor_50();
           });
-          this.topPosition = false;
+          this.topPosition = true;
           this.indent = 250;
           this.tailX = 210;
           this.tailFlipX = true;
@@ -867,8 +867,8 @@ class Tutorial extends Phaser.Scene {
         } else if (this.state.tutorial.step === 50) {
 
           this.tutorText = this.state.lang.eventTutorial_50;
-          this.topPosition = false;
-          this.indent = 100;
+          this.topPosition = true;
+          this.indent = 920;
           this.tailX = 450;
           this.tailFlipX = true;
           this.showContinue = true;
@@ -959,12 +959,6 @@ class Tutorial extends Phaser.Scene {
     this.tail = this.add.sprite(this.tailX, tailY, 'tail').setOrigin(0.5, tailOrigin).setAlpha(0);
     this.tail.setFlipX(this.tailFlipX);
     this.tail.setFlipY(this.tailFlipY);
-
-    if (this.tailFlipY) {
-      tailOrigin = 0;
-      this.tail.setOrigin(0.5, tailOrigin);
-      this.tail.setY(tailY - bubbleHeight - this.tail.height);
-    }
 
     let continueBtn: Phaser.GameObjects.Sprite;
     let continueText: Phaser.GameObjects.Text;

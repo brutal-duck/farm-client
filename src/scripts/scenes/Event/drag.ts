@@ -1,31 +1,36 @@
 function drag(): void {
 
   this.input.on('dragstart', (pointer: any, animal: Phaser.Physics.Arcade.Sprite): void => {
-    if (animal.state === 'base') {
-      if (animal.data.values.active.data.values.teleport) return;
+    if (this.state.user.additionalTutorial.eventTutorial >= 40) {
+      
+      if (animal.state === 'base') {
+        if (animal.data.values.active.data.values.teleport) return;
+      }
+      this.scrolling.downHandler(); // остановка скролла
+      this.scrolling.enabled = false; // отключаем скролл
+      this.scrolling.wheel = false; // отключаем колесо
+      animal.data.values.zone = false;
+      animal.data.values.working = false;
+      animal.data.values.drag = true; // метим перетаскивание для других функций
+      animal.data.values.cloud?.setVisible(false);
+      animal.data.values.cloud?.setOrigin(0.5, 0.5);
+      animal.setOrigin(0.5, 0.5);
+      animal.setVelocity(0, 0); // отменяем передвижение
+      animal.setCollideWorldBounds(true);
     }
-    this.scrolling.downHandler(); // остановка скролла
-    this.scrolling.enabled = false; // отключаем скролл
-    this.scrolling.wheel = false; // отключаем колесо
-    animal.data.values.zone = false;
-    animal.data.values.working = false;
-    animal.data.values.drag = true; // метим перетаскивание для других функций
-    animal.data.values.cloud?.setVisible(false);
-    animal.data.values.cloud?.setOrigin(0.5, 0.5);
-    animal.setOrigin(0.5, 0.5);
-    animal.setVelocity(0, 0); // отменяем передвижение
-    animal.setCollideWorldBounds(true);
 
   });
 
   this.input.on('drag', (pointer: any, animal: Phaser.Physics.Arcade.Sprite, dragX: number, dragY: number): void => {
+    if (this.state.user.additionalTutorial.eventTutorial >= 40) {
 
-    if (animal.data.values.drag) {
-
-      animal.x = dragX;
-      animal.y = dragY;
-      animal.setDepth(dragY + Math.round((animal.height / 2) + 1000));
-
+      if (animal.data.values.drag) {
+  
+        animal.x = dragX;
+        animal.y = dragY;
+        animal.setDepth(dragY + Math.round((animal.height / 2) + 1000));
+  
+      }
     }
 
   });
@@ -114,11 +119,12 @@ function drag(): void {
   
             // удаление животного
             if (territory.data.values.type === 0) {
-              animal.data.values.base.data.values.expel = true;
               this.teleportation(animal, undefined, true);
-              this.state.animal = animal.data.values.base;
-              this.confirmExpelAnimal();
-    
+              if (this.state.user.additionalTutorial.eventTutorial >= 80) {
+                animal.data.values.base.data.values.expel = true;
+                this.state.animal = animal.data.values.base;
+                this.confirmExpelAnimal();
+              }
             } else {
               
               animal.data.values.base.data.values.expel = false;
@@ -137,11 +143,14 @@ function drag(): void {
 
           // удаление животного
           if (territory.data.values.type === 0) {
-            animal.data.values.expel = true;
+            
             this.teleportation(animal, undefined, true);
-            this.state.animal = animal;
-            this.confirmExpelAnimal();
-  
+            if ( this.state.user.additionalTutorial.eventTutorial >= 80) {
+              animal.data.values.expel = true;
+              this.state.animal = animal;
+              this.confirmExpelAnimal();
+            }
+          
           } else {
             animal.data.values.expel = false;
             this.checkMerging(animal); 
