@@ -278,13 +278,13 @@ class Map extends Phaser.Scene {
     //   },
     // }).fillRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.width, zone.height);
 
-    this.eventScore = this.add.text(580, 675, '-', {
+    this.eventScore = this.add.text(580, 675, '- ' + this.state.lang.eventScores, {
       fontSize: '21px',
       color: '#6e00c7',
       fontFamily: 'Shadow'
     }).setOrigin(0.5, 0.5).setVisible(false);
 
-    this.eventPlace = this.add.text(580, 720, '-', {
+    this.eventPlace = this.add.text(580, 720, '- ' + this.state.lang.eventPlace, {
       fontSize: '21px',
       color: '#f0e8ce',
       fontFamily: 'Shadow'
