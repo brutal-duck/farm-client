@@ -436,7 +436,7 @@ function interval(): void {
     }
 
     // туториал по ивентовой ферме
-    if (this.state.userSheep.part > 4 && (this.state.name !== '' || this.state.user.login !== '')) {
+    if (this.state.userSheep.part >= 4 && (this.state.name !== '' || this.state.user.login !== '')) {
       if (this.state.user.additionalTutorial.eventTutorial === 0 &&
         !this.game.scene.keys[`${this.state.farm}Bars`].arrows?.active &&
         !this.scene.isActive('Modal') &&
