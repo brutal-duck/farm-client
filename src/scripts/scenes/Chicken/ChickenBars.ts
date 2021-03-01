@@ -12,7 +12,8 @@ import { showFeedTime } from './../../general/boosts';
 import {
   Collector,
   TaskBoard,
-  buildMenu
+  buildMenu,
+  Arrows
 } from '../../elements';
 import {
   сurrencyAnimation,
@@ -26,7 +27,7 @@ import {
   firework250,
   getDiamonds
 } from '../../general/animations';
-import { pulseCollector } from './animations';
+import { pulseCollector, arrowsBehavior } from './animations';
 
 class ChickenBars extends Phaser.Scene {
   constructor() {
@@ -71,6 +72,7 @@ class ChickenBars extends Phaser.Scene {
   public calendar: any;
   public nativeShop: Phaser.GameObjects.Graphics;
   public nativeShopCounter: Phaser.GameObjects.Text;
+  public arrows: Arrows;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -92,6 +94,7 @@ class ChickenBars extends Phaser.Scene {
   public showFeedTime = showFeedTime.bind(this);
   public shortTime = shortTime.bind(this);
   public getDiamonds = getDiamonds.bind(this);
+  public arrowsBehavior = arrowsBehavior.bind(this);
 
 
   public init(state: Istate): void {
@@ -402,6 +405,9 @@ class ChickenBars extends Phaser.Scene {
 
     this.updateNativeShop();
 
+    // укзывающие стрелки
+    this.arrowsBehavior();
+
   }
 
 
@@ -550,6 +556,11 @@ class ChickenBars extends Phaser.Scene {
 
   }
 
+  public showMapArrows(): void {
+    
+    this.arrows = new Arrows(this, { x: 510, y: this.height - 90 }, 70, false, false, true, false, false);
+
+  }
 
 }
 

@@ -105,6 +105,7 @@ import {
   VKNoAds
 } from '../../general/ads';
 import setCollector from './collector';
+import { showEventTutorial } from '../Event/tutorial';
 
 class Chicken extends Phaser.Scene {
   constructor() {
@@ -227,6 +228,7 @@ class Chicken extends Phaser.Scene {
   public hearts = hearts.bind(this);
   public spreadAnimals = spreadAnimals.bind(this);
   public getEventRaiting = getEventRaiting.bind(this);
+  public showEventTutorial = showEventTutorial.bind(this);
   
 
   public init(state: Istate): void {

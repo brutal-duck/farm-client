@@ -47,7 +47,6 @@ function doneEventTutor_10(): void {
     step: 10,
     farm_id: this.state.farm
   });
-  console.log('done event' + this.state.user.additionalTutorial.eventTutorial)
   this.state.user.additionalTutorial.eventTutorial = 20;
   this.scene.stop('Tutorial');
 
@@ -66,7 +65,6 @@ function doneEventTutor_20(): void {
     step: 20,
     farm_id: this.state.farm
   });
-  console.log('done event' + this.state.user.additionalTutorial.eventTutorial)
   this.state.user.additionalTutorial.eventTutorial = 30;
   this.scene.stop('Tutorial');
   this.time.addEvent({ delay: 1000, callback: (): void => {
@@ -83,7 +81,6 @@ function doneEventTutor_30(): void {
     step: 30,
     farm_id: this.state.farm
   });
-  console.log('done event' + this.state.user.additionalTutorial.eventTutorial)
   this.state.user.additionalTutorial.eventTutorial = 40;
   this.game.scene.keys['EventBars'].arrows?.destroy();
   this.game.scene.keys['EventBars'].animalBuy.setVisible(true);
@@ -91,7 +88,6 @@ function doneEventTutor_30(): void {
   this.game.scene.keys['EventBars'].animalPriceBubble.setVisible(true);
   this.scene.stop('Tutorial');
   this.time.addEvent({ delay: 500, callback: (): void => {
-    console.log('event 40')
     this.showEventTutorial();
     
   }, callbackScope: this, loop: false });
@@ -106,7 +102,6 @@ function doneEventTutor_40(): void {
     step: 40,
     farm_id: this.state.farm
   });
-  console.log('done event' + this.state.user.additionalTutorial.eventTutorial)
   this.showMergPointer = false;
   this.mergPointer?.data.values.animal?.destroy();
   this.mergPointer?.destroy();
@@ -127,14 +122,12 @@ function doneEventTutor_50(): void {
     farm_id: this.state.farm
   });
 
-  console.log('done event' + this.state.user.additionalTutorial.eventTutorial)
   
   this.mergPointer?.data.values.animal?.destroy();
   this.mergPointer?.destroy();
   this.state.user.additionalTutorial.eventTutorial = 60;
   this.time.addEvent({ delay: 500, callback: (): void => {
     this.showEventTutorial();
-    console.log('event 60');
     
   }, callbackScope: this, loop: false });
   
@@ -148,7 +141,6 @@ function doneEventTutor_60(): void {
     step: 60,
     farm_id: this.state.farm
   });
-  console.log('done event' + this.state.user.additionalTutorial.eventTutorial)
   this.state.user.additionalTutorial.eventTutorial = 70;
   this.scene.stop('Tutorial');
 
@@ -166,7 +158,6 @@ function doneEventTutor_70(): void {
     step: 70,
     farm_id: this.state.farm
   });
-  console.log('done event' + this.state.user.additionalTutorial.eventTutorial)
   this.state.user.additionalTutorial.eventTutorial = 80;
   this.game.scene.keys['EventBars'].shop.setVisible(true);
   this.game.scene.keys['EventBars'].map.setVisible(true);

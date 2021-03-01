@@ -338,7 +338,7 @@ function interval(): void {
       this.scene.stop('MapBars');
     }
 
-    if (this.state.progress.event.endTime <= 0 && // добавить метку с бека что закончился евент и нужно показать евент
+    if (this.state.progress.event.endTime <= 0 && 
       this.state.progress.event.eventPoints > 0 &&
       !this.scene.isActive('Modal') && 
       !this.scene.isActive('Block') &&
@@ -362,7 +362,10 @@ function interval(): void {
       }
     }
 
-    if (this.state.name !== '' || this.state.user.login !== '') {
+    if ((this.state.name !== '' || this.state.user.login !== '') && 
+      this.state.progress.event.startTime <= 0 && 
+      this.state.progress.event.endTime >= 0) {
+        
       if (this.state.user.additionalTutorial.eventTutorial === 0 &&
         !this.game.scene.keys[`${this.state.farm}Bars`].arrows?.active &&
         !this.scene.isActive('Modal') &&

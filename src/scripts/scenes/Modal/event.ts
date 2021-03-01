@@ -1331,7 +1331,7 @@ function eventRatings(): void {
 }
 
 function endEventModal(): void {
-  this.game.scene.keys['Sheep'].getEventRaiting();
+  this.game.scene.keys[this.state.farm].getEventRaiting();
   let height: number = 390;
 
   this.eventRatingsNames = [];
@@ -1554,6 +1554,7 @@ function endEventModal(): void {
   
   this.clickModalBtn({ btn, title, img1: coin }, (): void => {
     this.state.progress.event.eventPoints = -1;
+    this.state.user.additionalTutorial.eventTutorial = 0;
 
     this.state.user.diamonds += diamonds;
 
