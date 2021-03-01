@@ -869,10 +869,10 @@ class Tutorial extends Phaser.Scene {
           this.tutorText = this.state.lang.eventTutorial_50;
           this.topPosition = false;
           this.indent = 100;
-          this.tailX = 300;
+          this.tailX = 450;
           this.tailFlipX = true;
           this.showContinue = true;
-          this.tailFlipY = false;
+          this.tailFlipY = true;
           this.pointerTutorial();
           this.add.image(0, 140, 'event-work-zone').setOrigin(0, 0);
 
@@ -959,6 +959,12 @@ class Tutorial extends Phaser.Scene {
     this.tail = this.add.sprite(this.tailX, tailY, 'tail').setOrigin(0.5, tailOrigin).setAlpha(0);
     this.tail.setFlipX(this.tailFlipX);
     this.tail.setFlipY(this.tailFlipY);
+
+    if (this.tailFlipY) {
+      tailOrigin = 0;
+      this.tail.setOrigin(0.5, tailOrigin);
+      this.tail.setY(tailY - bubbleHeight - this.tail.height);
+    }
 
     let continueBtn: Phaser.GameObjects.Sprite;
     let continueText: Phaser.GameObjects.Text;
