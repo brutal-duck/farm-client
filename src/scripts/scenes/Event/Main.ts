@@ -91,6 +91,7 @@ import {
   doneEventTutor_60, 
   doneEventTutor_70, 
   progressEventTutor_40,
+  progressEventTutor_50
 } from './tutorial';
 class Event extends Phaser.Scene {
   constructor() {
@@ -123,6 +124,8 @@ class Event extends Phaser.Scene {
   public feedBoostMultiplier: bigint = BigInt(2);
   public feedBoostStack: number = 11; // максимальный стек часов
   public mergTutor: number; // счетчик для повтора туториала про мерджинг
+  public showMergPointer: boolean; // показ пальца с перетаскиванием овец для тутора
+  public mergPointer: any; // спрайт пальца с перетаскиванием
 
   public collisions = collisions.bind(this);
   public click = click.bind(this);
@@ -200,6 +203,7 @@ class Event extends Phaser.Scene {
   public doneEventTutor_60 = doneEventTutor_60.bind(this);
   public doneEventTutor_70 = doneEventTutor_70.bind(this);
   public progressEventTutor_40 = progressEventTutor_40.bind(this);
+  public progressEventTutor_50 = progressEventTutor_50.bind(this);
   public dragEventAnimal = dragEventAnimal.bind(this);
   public arrowsBehavior = arrowsBehavior.bind(this);
   
@@ -246,7 +250,7 @@ class Event extends Phaser.Scene {
   public update(): void {
     this.animalBrain();
     this.updateTeleportation();  
-    this.dragEventAnimal();
+    if (!this.scene.isActive('Tutorial')) this.dragEventAnimal(true);
     // укзывающие стрелки
     this.arrowsBehavior();
     if (this.state.user.additionalTutorial.eventTutorial === 30) {

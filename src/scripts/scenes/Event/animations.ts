@@ -285,50 +285,114 @@ function dragEventAnimal(animal: boolean = false): void {
  
   if (this.showMergPointer) {
     
-    if (!this.mergPointer.start) {
+    if (this.state.user.additionalTutorial.eventTutorial === 40) {
+      if (!this.mergPointer.start) {
+        let distance: number = 285;
+        let target: Phaser.Math.Vector2 = new Phaser.Math.Vector2();
 
         this.mergPointer.stop = false;
         this.mergPointer.setVisible(true);
-        let target: Phaser.Math.Vector2 = new Phaser.Math.Vector2();
-        target.x = 360;
-        let distance: number = 285;
-        target.y = 740;
-        this.mergPointer.x = 120;
-        this.mergPointer.y = 740;
+        this.mergPointer.data.values.animal.setVisible(true);
+        let animal1: Phaser.Physics.Arcade.Sprite = this.game.scene.keys['Event'].animals.getChildren()[0];
+        let animal2: Phaser.Physics.Arcade.Sprite = this.game.scene.keys['Event'].animals.getChildren()[1];
+        target.x = animal2.x;
+        target.y = animal2.y;
+        this.mergPointer.x = animal1.x;
+        this.mergPointer.y = animal1.y;
+        this.mergPointer.data.values.animal.setX(this.mergPointer.x);
+        this.mergPointer.data.values.animal.setY(this.mergPointer.y);
         distance = 300;
-        this.mergPointer.target = target.x;
-        
+        this.mergPointer.target = target;
+
         if (this.mergPointer.scene) {
   
           this.physics.moveToObject(this.mergPointer, target, distance);
+          this.physics.moveToObject(this.mergPointer.data.values.animal, target, distance);
           this.mergPointer.start = true;
-          this.mergPointer.setDepth(this.mergPointer.y + 1000);
+          this.mergPointer.setDepth(this.mergPointer.y + 10001);
+          this.mergPointer.data.values.animal.setDepth(this.mergPointer.y + 10000);
+          
+        } 
+      
+      } else {
+
+        let distance: number = Phaser.Math.Distance.Between(this.mergPointer.x, this.mergPointer.y, this.mergPointer.target.x, this.mergPointer.target.y);
+        
+        if (distance <= 10 && !this.mergPointer.stop) {
+
+          this.mergPointer.stop = true;
+          this.mergPointer.data.values.animal.body.reset(this.mergPointer.target.x, this.mergPointer.target.y);
+          this.mergPointer.body.reset(this.mergPointer.target.x, this.mergPointer.target.y);
+          
+          this.mergPointer.first = !this.mergPointer.first;
   
+          this.time.addEvent({ delay: 300, callback: (): void => {
+            this.mergPointer.setVisible(false);
+            this.mergPointer?.data?.values.animal.setVisible(false);
+          }, callbackScope: this, loop: false });
+  
+          this.time.addEvent({ delay: 1000, callback: (): void => {
+            this.showMergPointer = true;
+            this.mergPointer.start = false;
+          }, callbackScope: this, loop: false });
+        }
+      }
+    } else if (this.state.user.additionalTutorial.eventTutorial === 50) {
+      
+      if (!this.mergPointer.start) {
+        let target: Phaser.Math.Vector2 = new Phaser.Math.Vector2();
+        let distance: number = 285;
+
+        this.mergPointer.stop = false;
+        this.mergPointer?.setVisible(true);
+        this.mergPointer?.data?.values.animal?.setVisible(true);
+        
+        target.x = 360;
+        target.y = 360;
+        let animal: Phaser.Physics.Arcade.Sprite = this.game.scene.keys['Event'].animals.getChildren()[0];
+        this.mergPointer.setX(animal.x);
+        this.mergPointer.setY(animal.y);
+        this.mergPointer?.data?.values.animal?.setX(this.mergPointer.x);
+        this.mergPointer?.data?.values.animal?.setY(this.mergPointer.y);
+        distance = 300;
+        this.mergPointer.target = target;
+          
+        if (this.mergPointer.scene) {
+    
+          this.physics.moveToObject(this.mergPointer, target, distance);
+          this.physics.moveToObject(this.mergPointer.data.values.animal, target, distance);
+          this.mergPointer.start = true;
+          this.mergPointer.setDepth(this.mergPointer.y + 10001);
+          this.mergPointer.data.values.animal.setDepth(this.mergPointer.y + 10000);
+          
         }
       
-    } else {
-      console.log('else start')
+      } else {
+        
+        let distance: number = Phaser.Math.Distance.Between(this.mergPointer.x, this.mergPointer.y, this.mergPointer.target.x, this.mergPointer.target.y);
+        
+        if (distance <= 10 && !this.mergPointer.stop) {
+  
+          this.mergPointer.stop = true;
+          this.mergPointer.data.values.animal.body.reset(this.mergPointer.x, this.mergPointer.y);
+          this.mergPointer.body.reset(this.mergPointer.x, this.mergPointer.y);
+          
+          this.mergPointer.first = !this.mergPointer.first;
+  
+          this.time.addEvent({ delay: 300, callback: (): void => {
+            this.mergPointer.setVisible(false);
+            this.mergPointer?.data?.values.animal?.setVisible(false);
+          }, callbackScope: this, loop: false });
+  
+          this.time.addEvent({ delay: 1000, callback: (): void => {
+            this.showMergPointer = true;
+            this.mergPointer.start = false;
+          }, callbackScope: this, loop: false });
 
-      if (this.mergPointer.x >= this.mergPointer.target && !this.mergPointer.stop) {
-        console.log(this.mergPointer.x, this.mergPointer.target)
-        this.mergPointer.stop = true;
-        this.mergPointer.body.reset(this.mergPointer.x, this.mergPointer.y);
-        this.mergPointer.first = !this.mergPointer.first;
-
-        this.time.addEvent({ delay: 300, callback: (): void => {
-          this.mergPointer.setVisible(false);
-        }, callbackScope: this, loop: false });
-
-        this.time.addEvent({ delay: 1000, callback: (): void => {
-          this.showMergPointer = true;
-          this.mergPointer.start = false;
-        }, callbackScope: this, loop: false });
+        }
 
       }
-
     }
-
-
   }
 
 }

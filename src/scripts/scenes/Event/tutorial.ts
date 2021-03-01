@@ -108,6 +108,7 @@ function doneEventTutor_40(): void {
   });
   console.log('done event' + this.state.user.additionalTutorial.eventTutorial)
   this.showMergPointer = false;
+  this.mergPointer?.data.values.animal?.destroy();
   this.mergPointer?.destroy();
   this.state.user.additionalTutorial.eventTutorial = 50;
 
@@ -183,7 +184,21 @@ function doneEventTutor_70(): void {
 function progressEventTutor_40() {
 
   this.mergTutor = 0;
-  this.mergPointer = this.physics.add.sprite(120, 740, 'event-tutor-merging').setDepth(Number(this.game.config.width));
+  this.mergPointer = this.physics.add.sprite(120, 740, 'event-tutor-merging').setDepth(Number(this.game.config.width)).setOrigin(0, 0);
+  this.mergPointer.setDataEnabled();
+  this.mergPointer.data.values.animal = this.physics.add.sprite(120, 740, 'animal1').setDepth(this.height).setTint(0x777777).setScale(0.95);
+  this.mergPointer.first = true;
+  this.showMergPointer = true;
+  this.scene.stop('Tutorial');
+
+}
+
+function progressEventTutor_50() {
+  let animal: Phaser.Physics.Arcade.Sprite = this.animals.getChildren()[0];
+  this.mergTutor = 0;
+  this.mergPointer = this.physics.add.sprite(animal.x, animal.y, 'event-tutor-merging').setDepth(Number(this.game.config.width)).setOrigin(0, 0);
+  this.mergPointer.setDataEnabled();
+  this.mergPointer.data.values.animal = this.physics.add.sprite(animal.x, animal.y, 'animal' + animal.data.values.type).setDepth(this.height).setTint(0x777777).setScale(0.95);
   this.mergPointer.first = true;
   this.showMergPointer = true;
   this.scene.stop('Tutorial');
@@ -204,4 +219,5 @@ export {
   doneEventTutor_60,
   doneEventTutor_70,
   progressEventTutor_40,
+  progressEventTutor_50
 }

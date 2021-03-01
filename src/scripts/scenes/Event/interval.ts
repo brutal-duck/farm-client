@@ -168,7 +168,9 @@ function interval(): void {
     }
 
     // повтор шага туториала про мерджинг животных
-    if (this.state.user.additionalTutorial.eventTutorial === 40 && !this.scene.isActive('Tutorial')) {
+    if ((this.state.user.additionalTutorial.eventTutorial === 40 || 
+      this.state.user.additionalTutorial.eventTutorial === 50) && 
+      !this.scene.isActive('Tutorial')) {
 
       this.mergTutor++;
       let dragAnimal: any = this.animals.children.entries.find((data: any) => data.data.values.active.data.values.drag);
@@ -176,6 +178,7 @@ function interval(): void {
       if (this.mergTutor > 5 && !dragAnimal) this.showEventTutorial();
 
     }
+
     // обновление времени евента
 
     if (this.state.progress.event.endTime > 0) {
