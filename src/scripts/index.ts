@@ -18,15 +18,15 @@ import ShopBars from './scenes/Modal/Shop/Bars';
 import Chat from './scenes/Modal/Chat/Main';
 import Block from './scenes/Block';
 import Tutorial from './scenes/Tutorial';
-import * as eruda from 'eruda';
+// import * as eruda from 'eruda';
 import EventBars from './scenes/Event/EventBars';
 import Event from './scenes/Event/Main';
 import EventPreload from './scenes/Event/EventPreload';
 
 // eruda
-if (process.env.DEV_CLIENT === window.location.origin) {
-  eruda.init();
-}
+// if (process.env.DEV_CLIENT === window.location.origin) {
+//   eruda.init();
+// }
 
 function gcd(num1: number, num2: number): number {
   while (num1 && num2) num1 > num2 ? num1 %= num2 : num2 %= num1;
