@@ -127,10 +127,22 @@ function maxBreedForBuy(): number {
   
   if (breed <= 0) {
     breed = 1;
-  } else {
+  } else if (this.state.userEvent.maxLevelAnimal <= 10) {
     let currentPrice: bigint;
     let breedPrice: bigint;
     for (let i = breed; i >= 1; i--) {
+
+      currentPrice = this.animalPrice(i).price;
+      breedPrice = this.animalPrice(breed).price;
+      if (currentPrice <= breedPrice) {
+        breedPrice = currentPrice;
+        breed = i ;
+      }
+    }
+  } else if (this.state.userEvent.maxLevelAnimal > 10) {
+    let currentPrice: bigint;
+    let breedPrice: bigint;
+    for (let i = breed; i >= this.state.userEvent.maxLevelAnimal - 9; i--) {
 
       currentPrice = this.animalPrice(i).price;
       breedPrice = this.animalPrice(breed).price;

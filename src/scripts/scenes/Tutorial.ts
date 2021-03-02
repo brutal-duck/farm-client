@@ -749,7 +749,7 @@ class Tutorial extends Phaser.Scene {
           this.add.image(720, 775, 'map-event-island').setOrigin(1, 0.5);
           let eventCloud: Phaser.GameObjects.Image = this.add.image(550, 750, 'map-cloud');
           let eventFarm: Phaser.GameObjects.Image = this.add.image(720, 730, 'map-event-farm').setOrigin(1, 0.5).setAlpha(0);
-          let eventFarmText: Phaser.GameObjects.Text = this.add.text(580,740, 'Ферма единорогов', {
+          let eventFarmText: Phaser.GameObjects.Text = this.add.text(580,740, this.state.lang.eventFarm, {
             fontSize: '21px',
             color: '#f0e8ce',
             fontFamily: 'Shadow',
