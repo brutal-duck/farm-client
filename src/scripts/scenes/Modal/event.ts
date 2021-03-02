@@ -1254,7 +1254,7 @@ function eventRatings(): void {
     color: '#793D0A',
   }).setCrop(0, 0, 280, 100);
 
-  this.playerScore = this.add.text(placeAndNameX + 300, placeAndNameY + 270, this.state.progress.event.userEventRaiting.score + 90, {
+  this.playerScore = this.add.text(placeAndNameX + 300, placeAndNameY + 270, this.state.progress.event.userEventRaiting.score, {
     font: '21px Bip',
     color: '#793D0A',
   })
@@ -1469,7 +1469,7 @@ function endEventModal(): void {
     color: '#793D0A',
   }).setCrop(0, 0, 280, 100);
 
-  this.playerScore = this.add.text(placeAndNameX + 300, placeAndNameY + 270, this.state.progress.event.userEventRaiting.score + 90, {
+  this.playerScore = this.add.text(placeAndNameX + 300, placeAndNameY + 270, this.state.progress.event.userEventRaiting.score, {
     font: '21px Bip',
     color: '#793D0A',
   })
