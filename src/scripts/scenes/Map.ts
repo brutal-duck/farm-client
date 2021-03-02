@@ -346,7 +346,7 @@ class Map extends Phaser.Scene {
   };
 
   public updateEvent(): void {
-    console.log(this.state.progress.event.endTime <= 0, this.state.progress.event.open)
+    
     if (this.state.progress.event.startTime > 0 && 
       this.state.progress.event.open && 
       this.state.user.additionalTutorial.eventTutorial === 0) {
