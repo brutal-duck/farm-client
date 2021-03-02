@@ -115,7 +115,11 @@ function getAnimal(
   }
   
   this.click(animal, ()=>{
-    this.teleportation(animal.data.values.active, undefined, true);
+    if (!animal.data.values.active.data.values.teleport) {
+      
+      this.teleportation(animal.data.values.active, undefined, true);
+
+    }
   });
 
   return animal;
@@ -159,7 +163,6 @@ function getActiveAnimal(
   animal.state = 'active';
 
   this.doubleClick(animal, ()=> {
-    // animal.data.values.working = true;
     animal.data.values.goWork = true;
     animal.data.values.teleport = true;
     let target: Iposition = new Phaser.Math.Vector2();
