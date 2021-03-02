@@ -37,41 +37,42 @@ function drag(): void {
 
   // дропзоны для мерджинга
   this.input.on('drop', (pointer: any, animal: Phaser.Physics.Arcade.Sprite, zone: Phaser.GameObjects.Zone): void => {
-    if (animal.state === 'base') {
-      if (zone.type === 'type0') {
-        this.teleportation(animal); 
+    
+    if (this.state.user.additionalTutorial.eventTutorial >= 40) {
 
-      } else if (zone) {
-        animal.data.values.zone = true;
-        let territory: Phaser.Physics.Arcade.Sprite = this.currentTerritory(animal.x, animal.y);
-        if (territory) {
-          
-        animal.x = zone.x + zone.width / 2;
-        animal.y = zone.y + zone.height / 2;
-        
-       } 
-      }
-    } else if (animal.state === 'active') {
-      
-      if (zone.type === 'type0') {
-       animal.data.values.working = true;
-       animal.data.values.zone = true;
-      } else if (zone) {
-        animal.data.values.working = false;
-        animal.data.values.zone = true;
-        let territory: Phaser.Physics.Arcade.Sprite = this.currentTerritory(animal.x, animal.y);
-        if (territory) {
-          animal.setOrigin(0.5, 0.5);
+      if (animal.state === 'base') {
+        if (zone.type === 'type0') {
+          this.teleportation(animal); 
+  
+        } else if (zone) {
+          animal.data.values.zone = true;
+          let territory: Phaser.Physics.Arcade.Sprite = this.currentTerritory(animal.x, animal.y);
+          if (territory) {
+            
           animal.x = zone.x + zone.width / 2;
           animal.y = zone.y + zone.height / 2;
-          animal.setDepth(animal.y + 100);
-         
+          
+         } 
+        }
+      } else if (animal.state === 'active') {
+        
+        if (zone.type === 'type0') {
+         animal.data.values.working = true;
+         animal.data.values.zone = true;
+        } else if (zone) {
+          animal.data.values.working = false;
+          animal.data.values.zone = true;
+          let territory: Phaser.Physics.Arcade.Sprite = this.currentTerritory(animal.x, animal.y);
+          if (territory) {
+            animal.setOrigin(0.5, 0.5);
+            animal.x = zone.x + zone.width / 2;
+            animal.y = zone.y + zone.height / 2;
+            animal.setDepth(animal.y + 100);
+           
+          } 
         } 
-      } 
+      }
     }
-
-
-
   });
   
   this.input.on('dragend', (pointer: any, animal: Phaser.Physics.Arcade.Sprite): void => {
