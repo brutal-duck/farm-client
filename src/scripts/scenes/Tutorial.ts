@@ -571,7 +571,7 @@ class Tutorial extends Phaser.Scene {
           this.clickButton(button, (): void => {
             this.game.scene.keys[this.state.farm].doneTutor_50();
           });
-          this.topPosition = true;
+          this.topPosition = false;
           this.indent = 250;
           this.tailX = 210;
           this.tailFlipX = true;
@@ -625,6 +625,7 @@ class Tutorial extends Phaser.Scene {
             color: '#FFFFFF'
           }).setOrigin(0.5, 0.5).setDepth(this.height);
           this.clickShopBtn({ btn: done, title: takeText, img: false }, (): void => {
+            this.game.scene.keys[this.state.farm + 'Bars'].getDiamonds({ x: done.x, y: done.y }, task.diamonds);
             this.game.scene.keys[this.state.farm].doneTutor_60();
           });
 
@@ -745,9 +746,16 @@ class Tutorial extends Phaser.Scene {
         
         if (this.state.tutorial.step === 0) {
           
-          let eventIsland: Phaser.GameObjects.Image = this.add.image(720, 775, 'map-event-island').setOrigin(1, 0.5);
+          this.add.image(720, 775, 'map-event-island').setOrigin(1, 0.5);
           let eventCloud: Phaser.GameObjects.Image = this.add.image(550, 750, 'map-cloud');
           let eventFarm: Phaser.GameObjects.Image = this.add.image(720, 730, 'map-event-farm').setOrigin(1, 0.5).setAlpha(0);
+          let eventFarmText: Phaser.GameObjects.Text = this.add.text(580,740, 'Ферма единорогов', {
+            fontSize: '21px',
+            color: '#f0e8ce',
+            fontFamily: 'Shadow',
+            wordWrap: { width: 150 },
+            align: 'center'
+          }).setOrigin(0.5, 0.5).setAlpha(0);
           
           this.topPosition = false;
           this.indent = 750;
@@ -772,13 +780,13 @@ class Tutorial extends Phaser.Scene {
                 eventCloud.setVisible(false);
                 alpha2 += 0.05;
                 eventFarm.setAlpha(alpha2);
-
+                eventFarmText.setAlpha(alpha2);
                 if (alpha2 >= 1) {
                   this.pointerTutorial();
-                  this.click(eventIsland, () => {
+                  this.generalClick = (): void => {
                     this.game.scene.keys[this.state.farm].autosave();
                     this.game.scene.keys[this.state.farm].doneEventTutor_0();
-                  });
+                  };
                   timer.remove();
 
                 }
