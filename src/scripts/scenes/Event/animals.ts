@@ -386,19 +386,7 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
     let animal2: Phaser.Physics.Arcade.Sprite = this.animals.children.entries.find((data: any) => data.data.values._id === territory.data.values.merging[1]._id);
 
     if (animal1 && animal2) {
-      if (animal1?.data.values.type > this.state.eventSettings.eventSettings.length - 1) {
-        console.log('больше')
-        let modal: Imodal = {
-          type: 1,
-          sysType: 3,
-          height: 150,
-          message: this.state.lang.mergingMessageBreedMax
-        }
-        this.state.modal = modal;
-        this.scene.launch('Modal', this.state);
-        this.teleportation(animal, undefined, true);
-        return;
-      }
+
       if (animal1?.data.values.type === animal2?.data.values.type) {
         const position: Iposition = {
           x: animal.x,
@@ -407,6 +395,20 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
         
         const type: number = animal1.data.values.type + 1;
         const id: string = 'local_' + randomString(18);
+
+        if (type > this.state.eventSettings.eventSettings.length) {
+          let modal: Imodal = {
+            type: 1,
+            sysType: 3,
+            height: 150,
+            message: this.state.lang.mergingMessageBreedMax
+          }
+          this.state.modal = modal;
+          this.scene.launch('Modal', this.state);
+          this.teleportation(animal, undefined, true);
+          territory?.data.values.merging.pop();
+          return;
+        }
         
         if (oldTerritory !== undefined && oldTerritory !== territory) {
           oldTerritory.data.values.merging = [];
