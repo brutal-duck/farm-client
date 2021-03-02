@@ -141,10 +141,14 @@ function world(): void {
       this.state.territory.block = territory.data.values.block;
       this.state.territory.position = territory.data.values.position;
       this.scene.launch('Modal', this.state);
-      // this.buyTerritory();
+
       if (territory.data?.values.merging.length > 0) {
         const animal: Phaser.Physics.Arcade.Sprite = this.animals.children.entries.find((data: any) => data.data.values._id === territory.data.values.merging[0]._id)
-        this.teleportation(animal.data.values.active, undefined, true);
+        if (!animal.data.values.active.data.values.teleport) {
+
+          this.teleportation(animal.data.values.active, undefined, true);
+          
+        }
       }
       
     });
