@@ -457,8 +457,6 @@ function interval(): void {
         this.showEventTutorial();
       }
     }
-    
-
   }, callbackScope: this, loop: true });
   
 

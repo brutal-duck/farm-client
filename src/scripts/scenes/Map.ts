@@ -346,12 +346,13 @@ class Map extends Phaser.Scene {
   };
 
   public updateEvent(): void {
-
+    console.log(this.state.progress.event.endTime <= 0, this.state.progress.event.open)
     if (this.state.progress.event.startTime > 0 && 
       this.state.progress.event.open && 
       this.state.user.additionalTutorial.eventTutorial === 0) {
 
-      if (!this.eventCloud?.visible) {
+        if (!this.eventCloud?.visible) {
+
         this.eventCloud?.setVisible(true);
         this.eventStartText?.setVisible(true);
         this.eventStartTime?.setVisible(true);
@@ -362,6 +363,7 @@ class Map extends Phaser.Scene {
         this.eventEndTime?.setVisible(false);
         this.eventEndText?.setVisible(false);
         this.eventZone?.destroy();
+
       } 
     } else if (this.state.progress.event.startTime <= 0 && 
       this.state.progress.event.open && 
@@ -369,6 +371,7 @@ class Map extends Phaser.Scene {
       this.state.progress.event.endTime > 0) {
 
       if (!this.eventMapFarm?.visible) {
+
         this.eventCloud?.setVisible(false);
         this.eventStartText?.setVisible(false);
         this.eventStartTime?.setVisible(false);
@@ -378,28 +381,28 @@ class Map extends Phaser.Scene {
         this.eventScore?.setVisible(true);
         this.eventEndTime?.setVisible(true);
         this.eventEndText?.setVisible(true);
-      }
-      
-      if (this.state.progress.event.endTime <= 0 && this.state.progress.event.open) {
-        this.eventCloud?.setVisible(true);
-        this.eventStartText?.setVisible(true);
-        this.eventStartText?.setY(750);
-        this.eventStartTime?.setVisible(false);
-        this.eventStartBg?.setVisible(true);
-        this.eventStartText?.setText(this.state.lang.eventEndText);
-        this.eventMapFarm?.setVisible(false);
-        this.eventPlace?.setVisible(false);
-        this.eventScore?.setVisible(false);
-        this.eventEndTime?.setVisible(false);
-        this.eventEndText?.setVisible(false);
-        this.eventZone?.destroy();
-      }
 
-
+      }   
     } else if (this.state.progress.event.startTime <= 0 && 
       this.state.progress.event.open && 
       this.state.user.additionalTutorial.eventTutorial === 0) {
       this.eventCloud?.setVisible(true);
+      this.eventZone?.destroy();
+
+    } 
+    
+    if (this.state.progress.event.endTime <= 0 && this.state.progress.event.open) {
+      this.eventCloud?.setVisible(true);
+      this.eventStartText?.setVisible(true);
+      this.eventStartText?.setY(750);
+      this.eventStartTime?.setVisible(false);
+      this.eventStartBg?.setVisible(true);
+      this.eventStartText?.setText(this.state.lang.eventEndText);
+      this.eventMapFarm?.setVisible(false);
+      this.eventPlace?.setVisible(false);
+      this.eventScore?.setVisible(false);
+      this.eventEndTime?.setVisible(false);
+      this.eventEndText?.setVisible(false);
       this.eventZone?.destroy();
     }
 

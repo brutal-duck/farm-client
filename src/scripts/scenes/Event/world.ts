@@ -177,11 +177,7 @@ function world(): void {
   });
 
   // туториал, если нужен
-  if (this.state.user.additionalTutorial.eventTutorial > 0 && this.state.user.additionalTutorial.eventTutorial < 80) {
-    this.showEventTutorial();
-    console.log('showtutor');
-    
-  }
+  if (this.state.user.additionalTutorial.eventTutorial > 0 && this.state.user.additionalTutorial.eventTutorial < 80) this.showEventTutorial();
 
   // расчет оффлайн прогресса
   this.autoprogress(true);
