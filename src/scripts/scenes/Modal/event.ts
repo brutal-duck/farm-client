@@ -526,8 +526,8 @@ function createAnimals(timerText, allItems, boostCounterWindow): void {
       --currentTime;
       timerText.setText(currentTime);
       if (currentTime <= 0) {
-        this.animalForBoost.children.entries.forEach((sheep) => {
-          sheep.data.values.cloud?.destroy();
+        this.animalForBoost.children.entries.forEach((animal) => {
+          animal?.data?.values.cloud?.destroy();
         });
         this.animalForBoost.destroy(true);
         timerCreate.remove();
@@ -710,7 +710,7 @@ function eventDrag(): void {
     
       if ((animal.y < 480 && animal.x < 480) || animal.y > 900 || animal.y < 200) {
           this.mergingCloud({x: animal.x, y: animal.y}, true); // плохое облако на месте животного
-          animal.data?.values.cloud?.destroy();
+          animal?.data?.values.cloud?.destroy();
           animal.destroy();
       } else {
         if (animal.data.values.merging) {
@@ -797,8 +797,8 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
           
           this.mergingCloud({x, y}); // создаем на месте ярмарки хорошее облако
 
-          animal1?.data.values.cloud?.destroy();
-          animal2?.data.values.cloud?.destroy();
+          animal1?.data?.values.cloud?.destroy();
+          animal2?.data?.values.cloud?.destroy();
           animal1?.destroy();
           animal2?.destroy();
         }, callbackScope: this, loop: false });
@@ -807,8 +807,8 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
         
           this.mergingCloud({x, y}, true); // создаем на месте ярмарки облако
 
-          animal1.data.values.cloud?.destroy();
-          animal2.data.values.cloud?.destroy();
+          animal1?.data?.values.cloud?.destroy();
+          animal2?.data?.values.cloud?.destroy();
           animal1.destroy();
           animal2.destroy();
         }, callbackScope: this, loop: false });
