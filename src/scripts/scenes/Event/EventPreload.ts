@@ -1868,7 +1868,6 @@ class EventPreload extends Phaser.Scene {
         this.state.farm = 'Event';
         this.userReady = true;
         this.state.nativeCounter = [0, 0, 0, 0];
-      
     })
   }
 

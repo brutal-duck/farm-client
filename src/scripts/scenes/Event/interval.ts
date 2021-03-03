@@ -69,6 +69,9 @@ function interval(): void {
       this.game.scene.keys['EventBars'].collector.update();
 
     }
+    if (this.state.userEvent.herdBoostAnimals.length > 0) {
+      this.startCreateHerdBoostAnimal = true;
+    }
     if (this.startCreateHerdBoostAnimal) {
       let freePositions: Iposition[] = this.getFreeBoostPositions();
 

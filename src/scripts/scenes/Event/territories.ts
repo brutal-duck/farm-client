@@ -294,15 +294,15 @@ function buildConfetti(): void {
   .setOrigin(0, 0)
   .setDepth(this.topIndent + 480 + 1);
 
-  this.add.image(720, this.topIndent + 570, 'confetti4')
+  this.add.image(720, this.topIndent + 600, 'confetti4')
   .setOrigin(1, 0)
   .setDepth(this.topIndent + 480 + 1);
 
-  this.add.image(10, this.topIndent + 820, 'confetti5')
+  this.add.image(10, this.topIndent + 890, 'confetti5')
   .setOrigin(0, 0)
   .setDepth(this.topIndent + 720 + 1);
 
-  this.add.image(710, this.topIndent + 840, 'confetti6')
+  this.add.image(710, this.topIndent + 900, 'confetti6')
   .setOrigin(1, 0)
   .setDepth(this.topIndent + 720 + 1);
 
