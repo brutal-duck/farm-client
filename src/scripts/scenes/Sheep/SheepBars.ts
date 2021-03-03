@@ -312,7 +312,7 @@ class SheepBars extends Phaser.Scene {
       this.collector.timeCollectorText.setVisible(false);
       this.collector.bubble.setVisible(false);
 
-      if (this.state.platform === 'web') this.auth.setVisible(false);
+      if (this.state.platform === 'web') this.auth?.setVisible(false);
       else {
         this.menu.setVisible(false);
         this.chat.setVisible(false);

@@ -520,116 +520,119 @@ function drag(animal: Phaser.Physics.Arcade.Sprite): void {
 }
 
 function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): void {
+  if (animal) {
 
-  animal.data.values.merging = true;
-  let check = this.mergingArray.find((data: any) => data._id === animal.data.values._id);
-  
-  if (check === undefined) {
-    if (this.mergingArray.length === 1 && this.mergingArray[0].position === position) {
-      if (position === 'top') position = 'bottom';
-      else if (position === 'bottom') position = 'top';
-      if (position === 'left') position = 'right';
-      else if (position === 'right') position = 'left';
-    };
-
-    this.mergingArray.push({
-      _id: animal.data.values._id,
-      type: animal.data.values.type,
-      position: position
-    })
-
-    // проверка позиции для овец
-    if (position === 'top') {
-
-      if (animal.data.values.side === 'left') {
-
-        animal.data.values.side = 'right';
-        animal.data.values.woolSprite.setTexture(this.state.farm.toLowerCase()+ '-' + animal.data.values.side + '-' + animal.data.values.type + '-' + animal.data.values.stage);
-      
-      }
-
-      animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
-      animal.y = y - 100;
-      animal.x = x - 25;
-      animal.data.values.woolSprite.x = animal.x;
-      animal.data.values.woolSprite.y = animal.y;
-  
-    } else if (position === 'bottom') {
-
-      if (animal.data.values.side === 'left') {
-
-        animal.data.values.side = 'right';
-        animal.data.values.woolSprite.setTexture(this.state.farm.toLowerCase()+ '-' + animal.data.values.side + '-' + animal.data.values.type + '-' + animal.data.values.stage);
-      
-      }
-
-      animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
-      animal.y = y + 20;
-      animal.x = x - 25;
-      animal.data.values.woolSprite.x = animal.x;
-      animal.data.values.woolSprite.y = animal.y;
-    }
-
-    // проверка позиции для кур
-    if (position === 'left') {
-      if (animal.data.values.side === 'left') {
-
-        animal.data.values.side = 'right';
-
-      }
-
-      animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
-      animal.y = y;
-      animal.x = x - 50;
-
-    } else if (position === 'right') {
-
-      if (animal.data.values.side === 'left') {
-        animal.data.values.side = 'right';
-
-      }
-
-      animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
-      animal.y = y;
-      animal.x = x + 50;
-    }
-  }
-  
-  // проверяем совпадение
-  if (this.mergingArray.length === 2) {
-
-    let animal1: Phaser.Physics.Arcade.Sprite = this.animalForBoost.children.entries.find((data: any) => data.data.values._id === this.mergingArray[0]._id);
-    let animal2: Phaser.Physics.Arcade.Sprite = this.animalForBoost.children.entries.find((data: any) => data.data.values._id === this.mergingArray[1]._id);
+    animal.data.values.merging = true;
     
-    if (animal1 && animal2) {
-      if (animal1?.data.values.type === animal2?.data.values.type) {
-        let newType = animal.data.values.type < this.state[`${this.state.farm.toLowerCase()}Settings`][`${this.state.farm.toLowerCase()}Settings`].length
-          ? animal.data.values.type + 1
-          : animal.data.values.type;
-        if (animal1.data.values.type === 0 && animal2.data.values.type === 0) newType = 0;
-        this.state.herdBoostAnimals.push(newType);
-
-        this.time.addEvent({ delay: 100, callback: (): void => {
-          
-          this.mergingCloud({x, y}); // создаем на месте ярмарки хорошее облако
-
-          animal1?.data.values.woolSprite?.destroy();
-          animal2?.data.values.woolSprite?.destroy();
-          animal1?.destroy();
-          animal2?.destroy();
-        }, callbackScope: this, loop: false });
-      } else {
-        this.time.addEvent({ delay: 100, callback: (): void => {
+    let check = this.mergingArray.find((data: any) => data._id === animal.data.values._id);
+    
+    if (check === undefined) {
+      if (this.mergingArray.length === 1 && this.mergingArray[0].position === position) {
+        if (position === 'top') position = 'bottom';
+        else if (position === 'bottom') position = 'top';
+        if (position === 'left') position = 'right';
+        else if (position === 'right') position = 'left';
+      };
+  
+      this.mergingArray.push({
+        _id: animal.data.values._id,
+        type: animal.data.values.type,
+        position: position
+      })
+  
+      // проверка позиции для овец
+      if (position === 'top') {
+  
+        if (animal.data.values.side === 'left') {
+  
+          animal.data.values.side = 'right';
+          animal.data.values.woolSprite.setTexture(this.state.farm.toLowerCase()+ '-' + animal.data.values.side + '-' + animal.data.values.type + '-' + animal.data.values.stage);
         
-          this.mergingCloud({x, y}, true); // создаем на месте ярмарки облако
-
-          animal1.data.values.woolSprite?.destroy();
-          animal2.data.values.woolSprite?.destroy();
-          animal1.destroy();
-          animal2.destroy();
-        }, callbackScope: this, loop: false });
+        }
+  
+        animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
+        animal.y = y - 100;
+        animal.x = x - 25;
+        animal.data.values.woolSprite.x = animal.x;
+        animal.data.values.woolSprite.y = animal.y;
+    
+      } else if (position === 'bottom') {
+  
+        if (animal.data.values.side === 'left') {
+  
+          animal.data.values.side = 'right';
+          animal.data.values.woolSprite.setTexture(this.state.farm.toLowerCase()+ '-' + animal.data.values.side + '-' + animal.data.values.type + '-' + animal.data.values.stage);
+        
+        }
+  
+        animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
+        animal.y = y + 20;
+        animal.x = x - 25;
+        animal.data.values.woolSprite.x = animal.x;
+        animal.data.values.woolSprite.y = animal.y;
       }
-      this.mergingArray = [];
+  
+      // проверка позиции для кур
+      if (position === 'left') {
+        if (animal.data.values.side === 'left') {
+  
+          animal.data.values.side = 'right';
+  
+        }
+  
+        animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
+        animal.y = y;
+        animal.x = x - 50;
+  
+      } else if (position === 'right') {
+  
+        if (animal.data.values.side === 'left') {
+          animal.data.values.side = 'right';
+  
+        }
+  
+        animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
+        animal.y = y;
+        animal.x = x + 50;
+      }
+    }
+    
+    // проверяем совпадение
+    if (this.mergingArray.length === 2) {
+  
+      let animal1: Phaser.Physics.Arcade.Sprite = this.animalForBoost.children.entries.find((data: any) => data.data.values._id === this.mergingArray[0]._id);
+      let animal2: Phaser.Physics.Arcade.Sprite = this.animalForBoost.children.entries.find((data: any) => data.data.values._id === this.mergingArray[1]._id);
+      
+      if (animal1 && animal2) {
+        if (animal1?.data.values.type === animal2?.data.values.type) {
+          let newType = animal.data.values.type < this.state[`${this.state.farm.toLowerCase()}Settings`][`${this.state.farm.toLowerCase()}Settings`].length
+            ? animal.data.values.type + 1
+            : animal.data.values.type;
+          if (animal1.data.values.type === 0 && animal2.data.values.type === 0) newType = 0;
+          this.state.herdBoostAnimals.push(newType);
+  
+          this.time.addEvent({ delay: 100, callback: (): void => {
+            
+            this.mergingCloud({x, y}); // создаем на месте ярмарки хорошее облако
+  
+            animal1?.data.values.woolSprite?.destroy();
+            animal2?.data.values.woolSprite?.destroy();
+            animal1?.destroy();
+            animal2?.destroy();
+          }, callbackScope: this, loop: false });
+        } else {
+          this.time.addEvent({ delay: 100, callback: (): void => {
+          
+            this.mergingCloud({x, y}, true); // создаем на месте ярмарки облако
+  
+            animal1.data.values.woolSprite?.destroy();
+            animal2.data.values.woolSprite?.destroy();
+            animal1.destroy();
+            animal2.destroy();
+          }, callbackScope: this, loop: false });
+        }
+        this.mergingArray = [];
+      }
     }
   }
 }
