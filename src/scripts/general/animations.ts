@@ -751,7 +751,42 @@ function getDiamonds(position: Iposition, counter: number = 1): void {
 
 }
 
+function improveCollectorAnim(position: Iposition): void {
+  let icon: string;
+  if (this.state.farm === 'Sheep') icon = 'wool-collector';
+  else if (this.state.farm === 'Chicken') icon = 'egg-collector';
+  else if (this.state.farm === 'Event') icon = 'event-collector';
+  
+  let sprite: Phaser.GameObjects.Sprite = this.add.sprite(position.x, position.y, icon).setScale(0.5); 
+  let scale: boolean = true;
 
+  let scaleTimer: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 20, callback: (): void => {
+
+    if (scale) sprite.scaleX -= 0.02;
+    else sprite.scaleX += 0.02;
+    
+    if (sprite.scaleX >= 0.5 || sprite.scaleX <= 0) scale = !scale;
+
+  }, callbackScope: this, loop: true });
+  
+  let top: boolean = false;
+  let topY: number = sprite.y + 20;
+  let bottomY: number = sprite.y - 30;
+  let positionTimer: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 20, callback: (): void => {
+    if (top) sprite.y -= 3;
+    else sprite.y += 3;
+    if (sprite.y >=  topY || sprite.y <= bottomY) top =!top;
+    sprite.setY(sprite.y);
+
+  }, callbackScope: this, loop: true }); 
+
+  this.time.addEvent({ delay: 1000, callback: (): void => {
+    positionTimer.remove();
+    scaleTimer.remove();
+    sprite.destroy();
+    },
+    callbackScope: this, loop: false });
+}
 export {
   firework250,
   genAnimations,
@@ -768,5 +803,6 @@ export {
   newbieAwardAnimation,
   caveIconsAnimation,
   plusDiamonds,
-  getDiamonds
+  getDiamonds,
+  improveCollectorAnim
 }

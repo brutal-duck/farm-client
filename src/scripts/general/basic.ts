@@ -1824,6 +1824,8 @@ function improveCollector(): void {
       this.state.user.diamonds -= nextLevel.price;
       user.collectorLevel++;
       this.setCollector();
+
+      this.game.scene.keys['Modal'].improveCollectorAnim({x: this.cameras.main.centerX, y: this.cameras.main.centerY + 10});
       
       this.time.addEvent({ delay: 500, callback: (): void => {
         this.game.scene.keys[this.state.farm + 'Bars'].firework250(230, Number(this.game.config.height) - 70);
@@ -1854,6 +1856,8 @@ function improveCollector(): void {
       user.money -= nextLevel.price;
       user.collectorLevel++;
       this.setCollector();
+
+      this.game.scene.keys['Modal'].improveCollectorAnim({x: this.cameras.main.centerX, y: this.cameras.main.centerY + 10});
 
       this.time.addEvent({ delay: 500, callback: (): void => {
         this.game.scene.keys[this.state.farm + 'Bars'].firework250(230, Number(this.game.config.height) - 70);

@@ -370,6 +370,8 @@ function improveCollector(): void {
       user.collectorLevel++;
       this.setCollector();
       
+      this.game.scene.keys['Modal'].improveCollectorAnim({x: this.cameras.main.centerX, y: this.cameras.main.centerY + 10});
+      
       this.time.addEvent({ delay: 500, callback: (): void => {
         this.game.scene.keys[this.state.farm + 'Bars'].firework250(230, Number(this.game.config.height) - 70);
       }, callbackScope: this, loop: false });
@@ -398,6 +400,8 @@ function improveCollector(): void {
       user.money -= BigInt(nextLevel.price);
       user.collectorLevel++;
       this.setCollector();
+
+      this.game.scene.keys['Modal'].improveCollectorAnim({x: this.cameras.main.centerX, y: this.cameras.main.centerY + 10});
 
       this.time.addEvent({ delay: 500, callback: (): void => {
         this.game.scene.keys[this.state.farm + 'Bars'].firework250(230, Number(this.game.config.height) - 70);

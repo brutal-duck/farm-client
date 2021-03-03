@@ -1073,7 +1073,7 @@ function improveCollectorChicken(): void {
   });
 
   let icon: string;
-
+  let nextLevelText: Phaser.GameObjects.Text;
   if (nextLevel.time > thisLevel.time) {
 
     let position: Iposition = {
@@ -1081,7 +1081,7 @@ function improveCollectorChicken(): void {
       y: duration.y
     }
     let text: string = '(+' + (nextLevel.time - thisLevel.time) + ' ' + this.state.lang.shortMinutes +  ')';
-    this.add.text(position.x, position.y, text, {
+    nextLevelText = this.add.text(position.x, position.y, text, {
       font: '34px Bip',
       color: '#57A90E'
     });
@@ -1093,7 +1093,7 @@ function improveCollectorChicken(): void {
       y: speed.y
     }
     let text: string = '(+' + (nextLevel.speed - thisLevel.speed).toFixed(1) + ' ' + this.state.lang.seconds +  ')';
-    this.add.text(position.x, position.y, text, {
+    nextLevelText = this.add.text(position.x, position.y, text, {
       font: '34px Bip',
       color: '#57A90E'
     });
@@ -1112,9 +1112,8 @@ function improveCollectorChicken(): void {
     let improve = this.bigButton('green', 'left', 90, this.state.lang.improve, right);
     this.clickModalBtn(improve, (): void => {
 
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
       this.game.scene.keys[this.state.farm].improveCollector();
+      this.updateImproveCollectorChicken(improve, speed, duration, nextLevelText);  
 
     });
 
@@ -1132,6 +1131,79 @@ function improveCollectorChicken(): void {
   
 }
 
+function updateImproveCollectorChicken(
+  btn: {
+    btn: Phaser.GameObjects.Sprite,
+    img1: Phaser.GameObjects.Sprite,
+    img2: Phaser.GameObjects.Sprite,
+    text1: Phaser.GameObjects.Text
+    text2: Phaser.GameObjects.Text
+    title: Phaser.GameObjects.Text
+  }, 
+  speed: Phaser.GameObjects.Text, 
+  duration: Phaser.GameObjects.Text, 
+  nextLevelText: Phaser.GameObjects.Text): void {
+
+  this.textHeader.setText(this.state.lang.woolCollector + ' ' + this.state.userChicken.collectorLevel + ' ' + this.state.lang.shortLevel + '.');
+  let thisLevel: IcollectorSettings = this.state.chickenCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userChicken.collectorLevel);
+  let nextLevel: IcollectorSettings = this.state.chickenCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userChicken.collectorLevel + 1);
+
+  let speedText: string = this.state.lang.speed + ': ' + thisLevel.speed + ' / ' + this.state.lang.seconds;
+  speed.setText(speedText);
+    
+  let durationText: string = this.state.lang.duration + ': ' + thisLevel.time + ' ' + this.state.lang.minutes;
+  duration.setText(durationText);
+
+  let position: Iposition;
+  let text: string;
+  if (nextLevel.time > thisLevel.time) {
+
+    position = {
+      x: duration.getBounds().right + 10,
+      y: duration.y
+    }
+    text = '(+' + (nextLevel.time - thisLevel.time) + ' ' + this.state.lang.shortMinutes +  ')';
+    
+  } else if (nextLevel.speed > thisLevel.speed) {
+    
+    position = {
+      x: speed.getBounds().right + 10,
+      y: speed.y
+    }
+    text = '(+' + (nextLevel.speed - thisLevel.speed).toFixed(1) + ' ' + this.state.lang.seconds +  ')';
+  }
+  nextLevelText.setPosition(position.x, position.y);
+  nextLevelText.setText(text);
+  if (this.state.userChicken.part >= nextLevel.chapter) {
+    let icon: string;
+    if (nextLevel.diamonds) icon = 'diamond';
+    else icon = 'chickenCoin';
+
+    let right = {
+      icon: icon,
+      text: String(nextLevel.price)
+    }
+
+    btn.text1.setText(right.text);
+    btn.img1.setTexture(right.icon);
+    btn.img1.setX(570 - btn.text1.displayWidth);
+
+  } else {
+
+    btn.btn.destroy();
+    btn.img1.destroy();
+    btn.text1.destroy();
+    btn.title.destroy();
+
+    let improve = {
+      icon: 'lock',
+      text: this.state.lang.shortPart + ' ' + nextLevel.chapter
+    }
+    this.bigButton('grey', 'left', 90, this.state.lang.improve, improve);
+
+  }
+
+}
 
 export {
   chickenFair,
@@ -1147,5 +1219,6 @@ export {
   chickenProfile,
   diamondChickenAd,
   improveCollectorChicken,
-  chickenEggRepositoryExchange
+  chickenEggRepositoryExchange,
+  updateImproveCollectorChicken
 }

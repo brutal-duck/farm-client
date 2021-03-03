@@ -28,7 +28,8 @@ import {
   chickenProfile,
   diamondChickenAd,
   improveCollectorChicken,
-  chickenEggRepositoryExchange
+  chickenEggRepositoryExchange,
+  updateImproveCollectorChicken
 } from './chicken';
 import {
   confirmExpelAnimal,
@@ -40,7 +41,8 @@ import {
   eventProfile,
   eventProgress,
   eventRatings,
-  endEventModal
+  endEventModal,
+  updateImproveCollectorEvent
 } from './event';
 import {
   sheepFair,
@@ -56,7 +58,8 @@ import {
   sheepProfile,
   diamondSheepAd,
   improveCollectorSheep,
-  sheepWoolRepositoryExchange
+  sheepWoolRepositoryExchange,
+  updateImproveCollectorSheep
 } from './sheep';
 import {
   tasks,
@@ -72,6 +75,7 @@ import { changeNickname, addEmail, support, registration } from '../../general/m
   // буст "Стадо"
 import { herdBoostWindow, getRandomAnimal, getRandomStartPosition } from './herdBoost';
 import { createChatBars } from './Chat/elements';
+import { improveCollectorAnim } from '../../general/animations';
 
 let partProgress: any = require("./../../../assets/images/modal/part-progress.png");
 let newbieBg: any = require("./../../../assets/images/daily/newbie-bg.png");
@@ -220,7 +224,9 @@ class Modal extends Phaser.Scene {
   public diamondChickenAd = diamondChickenAd.bind(this);
   public donate = donate.bind(this);
   public improveCollectorSheep = improveCollectorSheep.bind(this);
+  public updateImproveCollectorSheep = updateImproveCollectorSheep.bind(this);
   public improveCollectorChicken = improveCollectorChicken.bind(this);
+  public updateImproveCollectorChicken = updateImproveCollectorChicken.bind(this);
   // буст "Стадо"
   public herdBoostWindow = herdBoostWindow.bind(this);
   public getRandomAnimal = getRandomAnimal.bind(this);
@@ -239,6 +245,7 @@ class Modal extends Phaser.Scene {
   public eventTerritory = eventTerritory.bind(this);
   public buyEventTerritory = buyEventTerritory.bind(this);
   public improveCollectorEvent = improveCollectorEvent.bind(this);
+  public updateImproveCollectorEvent = updateImproveCollectorEvent.bind(this);
   public herdBoostEventWindow = herdBoostEventWindow.bind(this);
   public eventDrag = eventDrag.bind(this);
   public eventProfile = eventProfile.bind(this);
@@ -246,6 +253,7 @@ class Modal extends Phaser.Scene {
   public createChatBars = createChatBars.bind(this);
   public eventRatings = eventRatings.bind(this);
   public endEventModal = endEventModal.bind(this);
+  public improveCollectorAnim = improveCollectorAnim.bind(this);
   
   public init(state: Istate): void {
     this.state = state;
