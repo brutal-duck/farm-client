@@ -1160,7 +1160,7 @@ function eventRatings(): void {
   }).setOrigin(1, 0.5).setDepth(2);
   
   // Время
-  let eventLeftTime: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 114, this.cameras.main.centerY - 40, this.shortTime(this.state.progress.event.endTime, this.state.lang), {
+  this.eventLeftTime = this.add.text(this.cameras.main.centerX + 114, this.cameras.main.centerY - 40, this.shortTime(this.state.progress.event.endTime, this.state.lang), {
     font: '24px Bip',
     color: '#459D1A',
   }).setOrigin(0, 0.5).setDepth(2);
@@ -1296,7 +1296,7 @@ function eventRatings(): void {
     rulesText.setVisible(true);
     rulesText2.setVisible(true);
     eventLeftText.setVisible(true);
-    eventLeftTime.setVisible(true);
+    this.eventLeftTime.setVisible(true);
 
     priceElements.forEach(el => el.setVisible(false));
 
@@ -1313,7 +1313,7 @@ function eventRatings(): void {
     rulesText.setVisible(false);
     rulesText2.setVisible(false);
     eventLeftText.setVisible(false);
-    eventLeftTime.setVisible(false);
+    this.eventLeftTime.setVisible(false);
 
     priceElements.forEach(el => el.setVisible(true));
 

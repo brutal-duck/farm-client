@@ -171,13 +171,14 @@ class Modal extends Phaser.Scene {
   public secondInput: HTMLInputElement;
   public enterKey: Phaser.Input.Keyboard.Key;
   // Чат
-  public chatHeight: number = 0
-  public chatBG: Phaser.GameObjects.Sprite
-  public line: Phaser.GameObjects.Text
-  public playerPlaceAndName: Phaser.GameObjects.Text
-  public playerScore: Phaser.GameObjects.Text
-  public eventRatingsNames: Phaser.GameObjects.Text[]
-  public eventRatingsScores: Phaser.GameObjects.Text[]
+  public chatHeight: number = 0;
+  public chatBG: Phaser.GameObjects.Sprite;
+  public line: Phaser.GameObjects.Text;
+  public playerPlaceAndName: Phaser.GameObjects.Text;
+  public playerScore: Phaser.GameObjects.Text;
+  public eventRatingsNames: Phaser.GameObjects.Text[];
+  public eventRatingsScores: Phaser.GameObjects.Text[];
+  public eventLeftTime: Phaser.GameObjects.Text;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);

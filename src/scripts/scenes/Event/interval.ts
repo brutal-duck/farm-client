@@ -1,11 +1,6 @@
-import { random, randomString, shortNum, shortTime } from '../../general/basic';
+import { randomString, shortNum, shortTime } from '../../general/basic';
 
 function interval(): void {
-
-  // значение отступа для яиц, чтоб не прилегали к краям территории
-  let indent: number = 20;
-
-  let statusBalance: boolean = false;
 
   this.time.addEvent({ delay: 1000, callback: (): void => {
     
@@ -79,6 +74,9 @@ function interval(): void {
 
     }
 
+    if (this.scene.isActive('Modal') && this.state.modal.type === 11) {
+      this.game.scene.keys['Modal'].eventLeftTime.setText(shortTime(this.state.progress.event.endTime, this.state.lang));
+    }
     // уменьшаем время буста комбикорм
     if (this.state.userEvent.feedBoostTime > 0) {
 
