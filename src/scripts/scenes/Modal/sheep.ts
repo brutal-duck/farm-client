@@ -1013,6 +1013,15 @@ function sheepProfile(): void {
     align: 'left',
     wordWrap: { width: 310 }
   }).setOrigin(0, 0.5).setDepth(1);
+  
+  let statusIcon: Phaser.GameObjects.Sprite = this.add.sprite(305, 0, 'unicorn-status').setDepth(2).setOrigin(0, 0.5);
+
+  let status: Phaser.GameObjects.Text = this.add.text(statusIcon.getBounds().right + 5, 0, this.state.lang.eventProfileName , {
+    font: '24px Bip',
+    color: '#459D1A',
+    align: 'left',
+    wordWrap: { width: 310 }
+  }).setOrigin(0, 0.5).setDepth(2);
 
   if (this.state.platform === 'web') {
   
@@ -1025,9 +1034,11 @@ function sheepProfile(): void {
     name.y = this.cameras.main.centerY - 170;
     let nameHeight: number = name.getBounds().height;
     farmer.y = name.y + nameHeight + 23;
+    status.y = farmer.getBounds().height + 7 + farmer.y;
+    statusIcon.y = status.y;
     
-    nickBtn = this.add.sprite(405, farmer.y + 58, 'middle-button').setDepth(1);
-    nickText = this.add.text(405, farmer.y + 55, this.state.lang.changeNick, {
+    nickBtn = this.add.sprite(405, farmer.y + 90, 'middle-button').setDepth(1);
+    nickText = this.add.text(405, farmer.y + 88, this.state.lang.changeNick, {
       font: '22px Shadow',
       color: '#FFFFFF'
     }).setOrigin(0.5, 0.5).setDepth(1);
@@ -1049,8 +1060,13 @@ function sheepProfile(): void {
     heightText += name.getBounds().height;
     heightText += farmer.getBounds().height;
 
-    name.y = this.cameras.main.centerY - (height / 2) + 25 + (110 - heightText / 2);
+    name.y = this.cameras.main.centerY - (height / 2)+ 10 + (110 - heightText / 2);
+
     farmer.y = name.y + name.getBounds().height + 23;
+
+    status.y = farmer.getBounds().height + 7 + farmer.y;
+    statusIcon.y = status.y;
+    
 
   }
 

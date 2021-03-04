@@ -144,7 +144,7 @@ let ratingRulesBtn: any = require("./../../../assets/images/event/modal/rating-r
 let ratingPriseBtn: any = require("./../../../assets/images/event/modal/rating-price-btn.png");
 let ratingPrisePlaces: any = require("./../../../assets/images/event/modal/rating-places.png");
 let ratingBGAfter: any = require("./../../../assets/images/event/modal/raiting-bg-after.png");
-
+let unicornStatus: any = require("./../../../assets/images/icons/unicorn-status.png");
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -340,6 +340,8 @@ class Modal extends Phaser.Scene {
     this.load.image('rating-price-btn', ratingPriseBtn);
     this.load.image('rating-places', ratingPrisePlaces);
     this.load.image('raiting-bg-after',ratingBGAfter);
+    this.load.image('unicorn-status', unicornStatus);
+
 
   }
 
