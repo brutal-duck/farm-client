@@ -12,7 +12,8 @@ import {
   takeDonate,
   debug, 
   getEventRaiting,
-  doubleClick
+  doubleClick,
+  buyNextFarm
 } from '../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -180,7 +181,7 @@ class Event extends Phaser.Scene {
   public expelAnimal = expelAnimal.bind(this);
   public setCollector = setCollector.bind(this);
   public convertMoney = convertMoney.bind(this);
-
+  public buyNextFarm = buyNextFarm.bind(this);
   public getActiveAnimal = getActiveAnimal.bind(this);
   public autosave = autosave.bind(this);
   public flyAnimal = flyAnimal.bind(this);

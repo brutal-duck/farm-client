@@ -40,6 +40,7 @@ interface IsheepUserAutoSave {
   takenHerdBoost: number;
   feedBoostTime: number;
   eventPoints: number;
+  status: string;
   
 }
 interface IchickenUserAutoSave {
@@ -60,6 +61,8 @@ interface IchickenUserAutoSave {
   takenHerdBoost: number;
   feedBoostTime: number;
   eventPoints: number;
+  status: string;
+
 }
 interface IeventUserAutoSave {
   diamonds: number;
@@ -75,6 +78,8 @@ interface IeventUserAutoSave {
   feedBoostTime: number;
   eventPoints: number;
   additionalTutorial: IadditionalTutorial;
+  status: string;
+  
 }
 // for state
 interface IadditionalTutorial {
@@ -96,6 +101,8 @@ interface Iuser {
   level: number;
   additionalTutorial: IadditionalTutorial;
   takenReward: boolean;
+  status: string;
+  statuses: string[];
 }
 interface IuserSheep {
   money: number;

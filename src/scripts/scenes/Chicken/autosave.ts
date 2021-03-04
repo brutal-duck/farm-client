@@ -61,7 +61,9 @@ function autosave(): void {
     diamondChickenAd: this.state.userChicken.diamondAnimalAd,
     takenHerdBoost: this.state.userChicken.takenHerdBoost,
     feedBoostTime: this.state.userChicken.feedBoostTime,
-    eventPoints: this.state.progress.event.eventPoints
+    eventPoints: this.state.progress.event.eventPoints,
+    status: this.state.user.status,   
+
   }
 
   for (let i in this.eggs.children.entries) {

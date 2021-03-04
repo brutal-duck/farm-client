@@ -1543,6 +1543,12 @@ function buyNextFarm(): void {
     // progress = this.state.progress.chicken;
     // farm = 'Chicken';
 
+  } else if (this.state.farm === 'Event') {
+
+    user = this.state.userSheep;
+    progress = this.state.progress.chicken;
+    farm = 'Chicken';
+  
   }
 
   if (progress.donate) {

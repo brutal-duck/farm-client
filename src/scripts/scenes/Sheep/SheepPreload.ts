@@ -841,6 +841,8 @@ class SheepPreload extends Phaser.Scene {
           level: response.data.user.level,
           additionalTutorial: response.data.user.additional_tutorial,
           takenReward: response.data.user.taken_reward,
+          status: response.data.user.status,
+          statuses: response.data.user.statuses,
         }
 
         const userSheep: IuserSheep = {
