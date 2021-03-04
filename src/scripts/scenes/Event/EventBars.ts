@@ -120,13 +120,16 @@ class EventBars extends Phaser.Scene {
     const raitingZone:Phaser.GameObjects.Zone = this.add.zone(0,0, 480, 280);
 
     this.click(raitingZone, () => {
+      if (this.state.user.additionalTutorial.eventTutorial > 70) {
 
-      this.game.scene.keys['Event'].getEventRaiting();
-      const modal: Imodal = {
-        type: 11
+        this.game.scene.keys['Event'].getEventRaiting();
+        const modal: Imodal = {
+          type: 11
+        }
+        this.state.modal = modal;
+        this.scene.launch('Modal', this.state);
+        
       }
-      this.state.modal = modal;
-      this.scene.launch('Modal', this.state);
       
     })
 
@@ -240,25 +243,27 @@ class EventBars extends Phaser.Scene {
     }).setDepth(2).setOrigin(0.5, 0.5).setShadow(4, 2, '#00000030', 0.5);
 
     this.clickButton(this.addDiamonds, (): void => {
-
-      let modal: Imodal = {
-        type: 2,
-        shopType: 1
+      if (this.state.user.additionalTutorial.eventTutorial > 70) {
+        let modal: Imodal = {
+          type: 2,
+          shopType: 1
+        }
+        this.state.modal = modal;
+        this.scene.launch('Modal', this.state);
       }
-      this.state.modal = modal;
-      this.scene.launch('Modal', this.state);
-
     });
 
     this.clickButton(this.addMoney, (): void => {
+      if (this.state.user.additionalTutorial.eventTutorial > 70) {
 
-      let modal: Imodal = {
-        type: 2,
-        shopType: 2
+        let modal: Imodal = {
+          type: 2,
+          shopType: 2
+        }
+        this.state.modal = modal;
+        this.scene.launch('Modal', this.state);
+        
       }
-      this.state.modal = modal;
-      this.scene.launch('Modal', this.state);
-      
     });
     
     // монеты и кристаллы для анимации

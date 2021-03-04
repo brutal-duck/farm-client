@@ -56,9 +56,15 @@ function drag(): void {
         }
       } else if (animal.state === 'active') {
         
+        
         if (zone.type === 'type0') {
-         animal.data.values.working = true;
-         animal.data.values.zone = true;
+          if (this.state.user.additionalTutorial.eventTutorial >= 50) {
+            animal.data.values.working = true;
+            animal.data.values.zone = true;
+          } else {
+            this.teleportation(animal, undefined, true); 
+          }
+          
         } else if (zone) {
           animal.data.values.working = false;
           animal.data.values.zone = true;
@@ -83,18 +89,21 @@ function drag(): void {
     if (!animal.data.values.zone)  {
       
       if (animal.y > this.topIndent + 480 + 240 * 3.5){
+        if (this.state.user.additionalTutorial.eventTutorial >= 80) {
+          if (animal.state === 'active') { 
+            animal.data.values.base.data.values.expel = true;
+            this.state.animal = animal.data.values.base;
 
-        if (animal.state === 'active') { 
-          animal.data.values.base.data.values.expel = true;
-          this.state.animal = animal.data.values.base;
+          } else if (animal.state === 'base') {
+            animal.data.values.expel = true;
 
-        } else if (animal.state === 'base') {
-          animal.data.values.expel = true;
-          
-          this.state.animal = animal;
+            this.state.animal = animal;
+          }
+          this.teleportation(animal, undefined, true);
+          this.confirmExpelAnimal();
+        } else {
+          this.teleportation(animal, undefined, true);
         }
-        this.teleportation(animal, undefined, true);
-        this.confirmExpelAnimal();
       } 
       this.teleportation(animal, undefined, true); 
       return;

@@ -131,23 +131,26 @@ function world(): void {
 
     
     this.clickTerritory(territory, (): void => {
-      const modal: Imodal = {
-        type: 1,
-        sysType: 2
-      }
-      this.state.modal = modal;
-      this.state.territory = territory;
-      this.state.territory.type = territory.data.values.type;
-      this.state.territory.block = territory.data.values.block;
-      this.state.territory.position = territory.data.values.position;
-      this.scene.launch('Modal', this.state);
-
-      if (territory.data?.values.merging.length > 0) {
-        const animal: Phaser.Physics.Arcade.Sprite = this.animals.children.entries.find((data: any) => data.data.values._id === territory.data.values.merging[0]._id)
-        if (!animal.data.values.active.data.values.teleport) {
-
-          this.teleportation(animal.data.values.active, undefined, true);
-          
+      if (this.state.user.additionalTutorial.eventTutorial > 70) {
+        
+        const modal: Imodal = {
+          type: 1,
+          sysType: 2
+        }
+        this.state.modal = modal;
+        this.state.territory = territory;
+        this.state.territory.type = territory.data.values.type;
+        this.state.territory.block = territory.data.values.block;
+        this.state.territory.position = territory.data.values.position;
+        this.scene.launch('Modal', this.state);
+  
+        if (territory.data?.values.merging.length > 0) {
+          const animal: Phaser.Physics.Arcade.Sprite = this.animals.children.entries.find((data: any) => data.data.values._id === territory.data.values.merging[0]._id)
+          if (!animal.data.values.active.data.values.teleport) {
+  
+            this.teleportation(animal.data.values.active, undefined, true);
+            
+          }
         }
       }
       

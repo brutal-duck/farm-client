@@ -576,6 +576,7 @@ export default {
     eventTutorial_70: 'P.S. И не забывай включать автосборщик!',
     eventWelcome: 'Заходи на ферму единорогов!',
     eventFarm: 'Ферма единорогов',
+    eventRulesAfterStatus: 'Топ 3 игрока получают статус',
   },
 
   en: {
@@ -1155,5 +1156,6 @@ export default {
     eventTutorial_70: 'P.S. И не забывай включать автосборщик!',
     eventWelcome: 'Заходи на ферму единорогов!',
     eventFarm: 'Ферма единорогов',
+    eventRulesAfterStatus: 'Топ 3 игрока получают статус',
   }
 }

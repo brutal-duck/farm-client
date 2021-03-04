@@ -14,6 +14,12 @@ function showEventTutorial(additional: boolean | string = false): void {
     step: this.state.user.additionalTutorial.eventTutorial,
     additional: additional
   }
+  if (this.game.scene.keys['Event'].mergPointer) {
+    
+    this.game.scene.keys['Event'].mergPointer?.data?.values.animal?.destroy();
+    this.game.scene.keys['Event'].mergPointer?.destroy();
+
+  }
   this.state.tutorial = tutorial;
   this.scene.launch('Tutorial', this.state);
 

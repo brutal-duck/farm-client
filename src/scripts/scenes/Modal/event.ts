@@ -1227,18 +1227,21 @@ function eventRatings(): void {
     placeAndName = this.add.text(placeAndNameX, placeAndNameY + padding * Number(i), '', {
       font: '21px Bip',
       color: '#793D0A',
-    }).setCrop(0, 0, 280, 100);
+    }).setCrop(0, 0, 260, 100);
 
-    score = this.add.text(placeAndNameX + 300, placeAndNameY + padding * Number(i), '', {
+    score = this.add.text(placeAndNameX + 280, placeAndNameY + padding * Number(i), '', {
       font: '21px Bip',
       color: '#793D0A',
     });
 
     if (this.state.progress.event.eventRaitings[i].score !== null) {
-      placeAndName.setText(this.state.progress.event.eventRaitings[i].place + '. ' + this.state.progress.event.eventRaitings[i].name).setCrop(0, 0, 280, 100);
+      placeAndName.setText(this.state.progress.event.eventRaitings[i].place + '. ' + this.state.progress.event.eventRaitings[i].name).setCrop(0, 0, 260, 100);
       score.setText(this.state.progress.event.eventRaitings[i].score);
+      if (i < 3) {
+        this.add.sprite(placeAndNameX + 280 + 35, placeAndNameY + padding * Number(i), 'unicorn-status').setOrigin(0, 0).setScale(0.65);
+      }
     }
-    
+
     this.eventRatingsNames.push(placeAndName);
     this.eventRatingsScores.push(score);
 
@@ -1368,12 +1371,28 @@ function endEventModal(): void {
   }).setOrigin(0.5, 0.5).setDepth(2).setShadow(1, 3, 'rgba(0, 0, 0, 0.5)', 2);
 
   // Текст условия
-  let rulesText: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 150, this.state.lang.eventRulesAfter, {
+  let rulesText: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 170, this.state.lang.eventRulesAfter, {
     font: '23px Bip',
     color: '#793D0A',
     align: 'center',
     wordWrap: { width: 380 }
   }).setOrigin(0.5, 0.5).setDepth(2).setLineSpacing(0.2);
+
+  let rulesTextStatus: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, rulesText.getBounds().bottom + 15, this.state.lang.eventRulesAfterStatus, {
+    font: '23px Bip',
+    color: '#793D0A',
+    align: 'center',
+    wordWrap: { width: 380 },
+  }).setOrigin(0.5, 0.5).setDepth(2);
+
+  let status: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, rulesTextStatus.getBounds().bottom + 17, this.state.lang.eventProfileName , {
+    font: '24px Bip',
+    color: '#459D1A',
+    align: 'left',
+    wordWrap: { width: 310 }
+  }).setOrigin(0.5, 0.5).setDepth(2);
+  
+  let statusIcon: Phaser.GameObjects.Sprite = this.add.sprite(status.getBounds().left - 10, status.y, 'unicorn-status').setDepth(2).setOrigin(1, 0.5).setDepth(2);
 
   // // Времени осталось
   // let eventLeftText: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 100, this.cameras.main.centerY - 40, this.state.lang.eventRulesLeft, {
@@ -1442,16 +1461,19 @@ function endEventModal(): void {
     placeAndName = this.add.text(placeAndNameX, placeAndNameY + padding * Number(i), '', {
       font: '21px Bip',
       color: '#793D0A',
-    }).setCrop(0, 0, 280, 100);
+    }).setCrop(0, 0, 260, 100);
 
-    score = this.add.text(placeAndNameX + 300, placeAndNameY + padding * Number(i), '', {
+    score = this.add.text(placeAndNameX + 280, placeAndNameY + padding * Number(i), '', {
       font: '21px Bip',
       color: '#793D0A',
     });
 
     if (this.state.progress.event.eventRaitings[i].score !== null) {
-      placeAndName.setText(this.state.progress.event.eventRaitings[i].place + '. ' + this.state.progress.event.eventRaitings[i].name).setCrop(0, 0, 280, 100);
+      placeAndName.setText(this.state.progress.event.eventRaitings[i].place + '. ' + this.state.progress.event.eventRaitings[i].name).setCrop(0, 0, 260, 100);
       score.setText(this.state.progress.event.eventRaitings[i].score);
+      if (i < 3) {
+        this.add.sprite(placeAndNameX + 280 + 35, placeAndNameY + padding * Number(i), 'unicorn-status').setOrigin(0, 0).setScale(0.65);
+      }
     }
     
     this.eventRatingsNames.push(placeAndName);
@@ -1509,8 +1531,9 @@ function endEventModal(): void {
     rules.setTint(0xffffff);
 
     rulesText.setVisible(true);
-    // eventLeftText.setVisible(true);
-    // eventLeftTime.setVisible(true);
+    rulesTextStatus.setVisible(true);
+    statusIcon.setVisible(true);
+    status.setVisible(true);
 
     priceElements.forEach(el => el.setVisible(false));
 
@@ -1525,8 +1548,9 @@ function endEventModal(): void {
     price.setTint(0xffffff);
 
     rulesText.setVisible(false);
-    // eventLeftText.setVisible(false);
-    // eventLeftTime.setVisible(false);
+    rulesTextStatus.setVisible(false);
+    statusIcon.setVisible(false);
+    status.setVisible(false);
 
     priceElements.forEach(el => el.setVisible(true));
 

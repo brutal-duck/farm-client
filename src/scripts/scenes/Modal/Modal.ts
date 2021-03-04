@@ -507,7 +507,7 @@ class Modal extends Phaser.Scene {
 
       for (let i: number = 0; i < 10; i++) {
         if (this.state.progress.event.eventRaitings[i].score !== null) {
-          this.eventRatingsNames[i].setText(this.state.progress.event.eventRaitings[i].place + '. ' + this.state.progress.event.eventRaitings[i].name).setCrop(0, 0, 280, 100)
+          this.eventRatingsNames[i].setText(this.state.progress.event.eventRaitings[i].place + '. ' + this.state.progress.event.eventRaitings[i].name).setCrop(0, 0, 260, 100)
           this.eventRatingsScores[i].setText(String(this.state.progress.event.eventRaitings[i].score))
         }
       }
