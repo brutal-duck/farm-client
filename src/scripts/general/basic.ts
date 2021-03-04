@@ -1578,22 +1578,34 @@ function buyNextFarm(): void {
 
     if (user.money >= progress.price) check = true;
     else {
+      if (this.state.farm !== 'Event') {
 
-      let count: number = progress.price - user.money;
-      let diamonds: number = this.convertMoney(count);
-      this.state.convertor = {
-        fun: 7,
-        count: count,
-        diamonds: diamonds,
-        type: 1
-      }
-
-      let modal: Imodal = {
-        type: 1,
-        sysType: 4
-      }
-      this.state.modal = modal;
-      this.scene.launch('Modal', this.state);
+        let count: number = progress.price - user.money;
+        let diamonds: number = this.convertMoney(count);
+        this.state.convertor = {
+          fun: 7,
+          count: count,
+          diamonds: diamonds,
+          type: 1
+        }
+  
+        let modal: Imodal = {
+          type: 1,
+          sysType: 4
+        }
+        this.state.modal = modal;
+        this.scene.launch('Modal', this.state);
+      } else {
+        
+        let count: number = progress.price - user.money;
+        let modal: Imodal = {
+          type: 1,
+          sysType: 3,
+          message: String(this.state.lang.notEnoughForYou + shortNum(count))
+        }
+        this.state.modal = modal;
+        this.scene.launch('Modal', this.state);
+      } 
 
     }
     
