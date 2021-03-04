@@ -4,7 +4,8 @@ import {
   clickModalBtn,
   clickShopBtn,
   shortNum,
-  shortTime
+  shortTime,
+  getStatusSettings
 } from '../../general/basic';
 import {
   systemWindow,
@@ -253,6 +254,7 @@ class Modal extends Phaser.Scene {
   public eventRatings = eventRatings.bind(this);
   public endEventModal = endEventModal.bind(this);
   public improveCollectorAnim = improveCollectorAnim.bind(this);
+  public getStatusSettings = getStatusSettings.bind(this);
   
   public init(state: Istate): void {
     this.state = state;

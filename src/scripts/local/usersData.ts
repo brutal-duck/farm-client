@@ -16,6 +16,8 @@ let userData: Iuser = {
     eventTutorial: 0
   },
   takenReward: false,
+  status: '',
+  statuses: []
 }
 
 let userSheep: IuserSheep = {

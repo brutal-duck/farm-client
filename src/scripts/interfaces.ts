@@ -455,6 +455,12 @@ interface IeventRaiting {
   name: string;
   score: string | number;
 }
+interface IstatusSettings {
+  textColor: string;
+  text: string;
+  iconTexture: string;
+  iconVisible: boolean;
+}
 interface Istate {
   platform: string;
   autoSaveSpeed: number;

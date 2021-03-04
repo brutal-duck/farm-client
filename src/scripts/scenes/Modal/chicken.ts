@@ -927,15 +927,21 @@ function chickenProfile(): void {
     wordWrap: { width: 310 }
   }).setOrigin(0, 0.5).setDepth(1);
 
-  let statusIcon: Phaser.GameObjects.Sprite = this.add.sprite(305, 0, 'unicorn-status').setDepth(2).setOrigin(0, 0.5);
+  let statusSettings: IstatusSettings = this.getStatusSettings(this.state.user.status);
+  let statusIcon: Phaser.GameObjects.Sprite ;
+  let status: Phaser.GameObjects.Text; 
 
-  let status: Phaser.GameObjects.Text = this.add.text(statusIcon.getBounds().right + 5, 0, this.state.lang.eventProfileName , {
-    font: '24px Bip',
-    color: '#459D1A',
-    align: 'left',
-    wordWrap: { width: 310 }
-  }).setOrigin(0, 0.5).setDepth(2);
+  if (statusSettings) {
+    statusIcon = this.add.sprite(305, 0, statusSettings.iconTexture).setDepth(2).setOrigin(0, 0.5).setVisible(statusSettings.iconVisible);
 
+    status = this.add.text(statusIcon.getBounds().right + 5, 0, statusSettings.text , {
+      font: '24px Bip',
+      color: statusSettings.textColor,
+      align: 'left',
+      wordWrap: { width: 310 }
+    }).setOrigin(0, 0.5).setDepth(2);
+  }
+  
   if (this.state.platform === 'web') {
   
     exit = this.bigButton('orange', 'center', 80, this.state.lang.profileExit);
@@ -943,18 +949,32 @@ function chickenProfile(): void {
       document.cookie = "farmHASH=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       window.location.reload();
     });
-
-    name.y = this.cameras.main.centerY - 170;
     let nameHeight: number = name.getBounds().height;
-    farmer.y = name.y + nameHeight + 23;
-    status.y = farmer.getBounds().height + 7 + farmer.y;
-    statusIcon.y = status.y;
-    
-    nickBtn = this.add.sprite(405, farmer.y + 90, 'middle-button').setDepth(1);
-    nickText = this.add.text(405, farmer.y + 88, this.state.lang.changeNick, {
-      font: '22px Shadow',
-      color: '#FFFFFF'
-    }).setOrigin(0.5, 0.5).setDepth(1);
+
+    if (statusSettings) {
+      
+      name.y = this.cameras.main.centerY - 170;
+      farmer.y = name.y + nameHeight + 23;
+      status.y = farmer.getBounds().height + 7 + farmer.y;
+      statusIcon.y = status.y;
+      
+      nickBtn = this.add.sprite(405, farmer.y + 90, 'middle-button').setDepth(1);
+      nickText = this.add.text(405, farmer.y + 88, this.state.lang.changeNick, {
+        font: '22px Shadow',
+        color: '#FFFFFF'
+      }).setOrigin(0.5, 0.5).setDepth(1);
+
+    } else {
+
+      name.y = this.cameras.main.centerY - 170;
+      farmer.y = name.y + nameHeight + 23;
+      
+      nickBtn = this.add.sprite(405, farmer.y + 58, 'middle-button').setDepth(1);
+      nickText = this.add.text(405, farmer.y + 55, this.state.lang.changeNick, {
+        font: '22px Shadow',
+        color: '#FFFFFF'
+      }).setOrigin(0.5, 0.5).setDepth(1);
+    }
 
     this.clickModalBtn({ btn: nickBtn, title: nickText }, (): void => {
       let modal: Imodal = {
@@ -968,20 +988,29 @@ function chickenProfile(): void {
     height += 80;
 
   } else {
-
+    
     let heightText: number = 23;
     heightText += name.getBounds().height;
     heightText += farmer.getBounds().height;
 
-    name.y = this.cameras.main.centerY - (height / 2)+ 10 + (110 - heightText / 2);
+    if (statusSettings) {
 
-    farmer.y = name.y + name.getBounds().height + 23;
+      name.y = this.cameras.main.centerY - (height / 2) + 10 + (110 - heightText / 2);
+  
+      farmer.y = name.y + name.getBounds().height + 23;
+  
+      status.y = farmer.getBounds().height + 7 + farmer.y;
+      statusIcon.y = status.y;
 
-    status.y = farmer.getBounds().height + 7 + farmer.y;
-    statusIcon.y = status.y;
-
+    } else {
+  
+      name.y = this.cameras.main.centerY - (height / 2) + 25 + (110 - heightText / 2);
+  
+      farmer.y = name.y + name.getBounds().height + 23;
+    }
+    
   }
-
+  
   let support = this.bigButton('green', 'center', 0, this.state.lang.support);
   this.clickModalBtn(support, (): void => {
 

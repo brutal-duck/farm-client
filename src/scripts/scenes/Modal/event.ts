@@ -1,5 +1,6 @@
 // окно подтверждения изгнания
 import { random, getRandomBool, randomString, shortTime, romanize, shortNum} from "../../general/basic";
+import axios  from 'axios';
 
 function confirmExpelAnimal(): void {
     
@@ -903,6 +904,21 @@ function eventProfile(): void {
     wordWrap: { width: 310 }
   }).setOrigin(0, 0.5).setDepth(1);
 
+  let statusSettings: IstatusSettings = this.getStatusSettings(this.state.user.status);
+  let statusIcon: Phaser.GameObjects.Sprite ;
+  let status: Phaser.GameObjects.Text; 
+
+  if (statusSettings) {
+    statusIcon = this.add.sprite(305, 0, statusSettings.iconTexture).setDepth(2).setOrigin(0, 0.5).setVisible(statusSettings.iconVisible);
+
+    status = this.add.text(statusIcon.getBounds().right + 5, 0, statusSettings.text , {
+      font: '24px Bip',
+      color: statusSettings.textColor,
+      align: 'left',
+      wordWrap: { width: 310 }
+    }).setOrigin(0, 0.5).setDepth(2);
+  }
+
   if (this.state.platform === 'web') {
   
     exit = this.bigButton('orange', 'center', 80, this.state.lang.profileExit);
@@ -910,16 +926,32 @@ function eventProfile(): void {
       document.cookie = "farmHASH=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       window.location.reload();
     });
-
-    name.y = this.cameras.main.centerY - 170;
     let nameHeight: number = name.getBounds().height;
-    farmer.y = name.y + nameHeight + 23;
-    
-    nickBtn = this.add.sprite(405, farmer.y + 58, 'middle-button').setDepth(1);
-    nickText = this.add.text(405, farmer.y + 55, this.state.lang.changeNick, {
-      font: '22px Shadow',
-      color: '#FFFFFF'
-    }).setOrigin(0.5, 0.5).setDepth(1);
+
+    if (statusSettings) {
+      
+      name.y = this.cameras.main.centerY - 170;
+      farmer.y = name.y + nameHeight + 23;
+      status.y = farmer.getBounds().height + 7 + farmer.y;
+      statusIcon.y = status.y;
+      
+      nickBtn = this.add.sprite(405, farmer.y + 90, 'middle-button').setDepth(1);
+      nickText = this.add.text(405, farmer.y + 88, this.state.lang.changeNick, {
+        font: '22px Shadow',
+        color: '#FFFFFF'
+      }).setOrigin(0.5, 0.5).setDepth(1);
+
+    } else {
+
+      name.y = this.cameras.main.centerY - 170;
+      farmer.y = name.y + nameHeight + 23;
+      
+      nickBtn = this.add.sprite(405, farmer.y + 58, 'middle-button').setDepth(1);
+      nickText = this.add.text(405, farmer.y + 55, this.state.lang.changeNick, {
+        font: '22px Shadow',
+        color: '#FFFFFF'
+      }).setOrigin(0.5, 0.5).setDepth(1);
+    }
 
     this.clickModalBtn({ btn: nickBtn, title: nickText }, (): void => {
       let modal: Imodal = {
@@ -929,17 +961,30 @@ function eventProfile(): void {
       this.state.modal = modal;
       this.game.scene.keys[this.state.farm].scene.launch('Modal', this.state);
     });
-    
+
     height += 80;
-    
+
   } else {
     
     let heightText: number = 23;
     heightText += name.getBounds().height;
     heightText += farmer.getBounds().height;
-    
-    name.y = this.cameras.main.centerY - (height / 2) + 25 + (110 - heightText / 2);
-    farmer.y = name.y + name.getBounds().height + 23;
+
+    if (statusSettings) {
+
+      name.y = this.cameras.main.centerY - (height / 2) + 10 + (110 - heightText / 2);
+  
+      farmer.y = name.y + name.getBounds().height + 23;
+  
+      status.y = farmer.getBounds().height + 7 + farmer.y;
+      statusIcon.y = status.y;
+
+    } else {
+  
+      name.y = this.cameras.main.centerY - (height / 2) + 25 + (110 - heightText / 2);
+  
+      farmer.y = name.y + name.getBounds().height + 23;
+    }
     
   }
   
@@ -1557,13 +1602,13 @@ function endEventModal(): void {
   });
 
   let diamonds: number;
-  if (this.state.progress.event.userEventRaiting.place === 1) diamonds = 1000
-  else if (this.state.progress.event.userEventRaiting.place === 2) diamonds = 700
-  else if (this.state.progress.event.userEventRaiting.place === 3) diamonds = 400
-  else if (this.state.progress.event.userEventRaiting.place <= 10) diamonds = 300
-  else if (this.state.progress.event.userEventRaiting.place <= 100) diamonds = 100
-  else if (this.state.progress.event.userEventRaiting.place <= 500) diamonds = 50
-  else if (this.state.progress.event.userEventRaiting.place >= 501) diamonds = 20
+  if (this.state.progress.event.userEventRaiting.place === 1) diamonds = 1000;
+  else if (this.state.progress.event.userEventRaiting.place === 2) diamonds = 700;
+  else if (this.state.progress.event.userEventRaiting.place === 3) diamonds = 400;
+  else if (this.state.progress.event.userEventRaiting.place <= 10) diamonds = 300;
+  else if (this.state.progress.event.userEventRaiting.place <= 100) diamonds = 100;
+  else if (this.state.progress.event.userEventRaiting.place <= 500) diamonds = 50;
+  else if (this.state.progress.event.userEventRaiting.place >= 501) diamonds = 20;
   // кнопка
   let btn: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + height, 'repository-sell-btn').setScale(0.7);
   let title: Phaser.GameObjects.Text = this.add.text(btn.getBounds().centerX, this.cameras.main.centerY - 10 + height, this.state.lang.pickUp + ' + ' + diamonds, {
@@ -1580,7 +1625,18 @@ function endEventModal(): void {
     this.state.amplitude.getInstance().logEvent('event_finished', {
       farm_id: 'Event'
     });
-
+    if (this.state.progress.event.userEventRaiting.place <= 3) {
+      const data: any = {
+        id: this.state.user.id,
+        hash: this.state.user.hash,
+        counter: this.state.user.counter,
+        status: this.state.user.status
+      }
+      axios.post(process.env.API + "/newStatus", data)
+        .then(res => {
+          console.log(res);
+        });
+    }
     this.state.progress.event.eventPoints = -1;
     this.state.user.additionalTutorial.eventTutorial = 0;
 

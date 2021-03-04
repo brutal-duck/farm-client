@@ -2774,6 +2774,19 @@ function getEventRaiting(): void {
   // });
 }
 
+function getStatusSettings(string: string): IstatusSettings {
+
+  if (string === 'Друг единорогов') {
+    return {
+      textColor: '#459D1A',
+      text: this.state.lang.eventProfileName,
+      iconTexture: 'unicorn-status',
+      iconVisible: true,
+    }
+  } 
+  
+  return;
+}
 export {
   random,
   getRandomBool,
@@ -2819,5 +2832,6 @@ export {
   updateFeedBoostBtn,
   spreadAnimals,
   getEventRaiting,
-  doubleClick
+  doubleClick,
+  getStatusSettings
 }
