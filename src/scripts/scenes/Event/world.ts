@@ -108,14 +108,19 @@ function world(): void {
       territory.data.values.forest = this.add.image(territory.x + 120, territory.y + 240, 'event-forest-' + forest)
         .setOrigin(0.5, 1)
         .setDepth(territory.y + 2);
-      
+      territory.data.values.btn = this.add.image(x, y,'event-territory-btn').setDepth(territory.y + 3);
+      territory.data.values.btnText = this.add.text(x + 2, y + 2, this.state.lang.buy,  {
+        font: '30px Shadow',
+        color: '#e2f5fe',
+        align: 'center'
+      }).setOrigin(0.5,0.5).setDepth(territory.y + 4).setShadow(0, -2, '#00000055', 0);
       territory.data.values.lock_image = this.add.image(x, y, 'lock-event-territory').setDepth(territory.y + 3).setVisible(false);
 
         // проверка на замок
       if (unlock > this.state.userEvent.maxLevelAnimal) {
-
+        territory.data.values.btn.setVisible(false);
+        territory.data.values.btnText.setVisible(false);
         territory.data.values.lock_image = this.add.image(x, y, 'lock-event-territory').setDepth(territory.y + 3).setVisible(true);
-
 
       }
     } 

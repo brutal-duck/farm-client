@@ -13,6 +13,8 @@ function deleteTerritoriesLocks(): void {
 
       if (lvl >= unlock && territory.data.values.lock_image) {
         
+        territory.data.values.btn.setVisible(true);
+        territory.data.values.btnText.setVisible(true);
         territory.data.values.lock_image.destroy();
 
       }
@@ -49,7 +51,9 @@ function buyTerritory(): void {
           const territory: Phaser.Physics.Arcade.Sprite = this.state.territory;
       
           this.time.addEvent({ delay: 500, callback: (): void => {
-      
+
+            territory.data.values.btn.destroy();
+            territory.data.values.btnText.destroy();
             territory.data.values.forest.destroy();
             territory.setTexture('event-grass');
             this.firework250(territory.x + 120, territory.y + 120);
@@ -95,7 +99,9 @@ function buyTerritory(): void {
         const territory: Phaser.Physics.Arcade.Sprite = this.state.territory;
       
         this.time.addEvent({ delay: 500, callback: (): void => {
-      
+
+          territory.data.values.btn.destroy();
+          territory.data.values.btnText.destroy();
           territory.data.values.forest.destroy();
           territory.data.values.lock_image.destroy();
           territory.setTexture('event-grass');
