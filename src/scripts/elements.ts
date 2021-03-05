@@ -257,6 +257,10 @@ class Collector {
 
   public init(): void {
     
+    if (this.scene.state.farm === 'Event') {
+      this.weight = 15;
+      this.color = 0x750296;
+    }
     this.percent = 6.3 / 100;
     this.collector = this.scene.add.graphics();
     this.collector.lineStyle(this.weight, this.color, 1);
