@@ -288,9 +288,11 @@ class EventBars extends Phaser.Scene {
     this.animalPriceBubble.fillRoundedRect(0, 0, bounds.width + 30, bounds.height, 8);
 
     // Доход в секунду
-    this.proceedsText = this.add.text(this.cameras.main.centerX, 92, '0/'+ this.state.lang.seconds, {
+    this.proceedsText = this.add.text(this.cameras.main.centerX, 92, this.state.lang.income + ' 0/'+ this.state.lang.seconds, {
       font: '21px Shadow',
       color: '#f2ede4',
+      wordWrap: { width: 80 },
+      align: 'center'
     }).setOrigin(0.5, 0.5).setShadow(4, 2, '#00000030', 0.5);
 
     this.feedBoostDoubledIcon = this.add.image(this.cameras.main.centerX + 60, 50, 'double-feed-boost').setVisible(false);

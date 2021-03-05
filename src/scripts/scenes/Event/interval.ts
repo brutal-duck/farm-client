@@ -133,23 +133,26 @@ function interval(): void {
     }
     this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setText(nativeCount);
 
-
-    if (this.state.userEvent.collector > 0) {
-      let proceeds: bigint = BigInt(0);
-      this.animals.children.entries.forEach(animal => {
-        if (animal.data.values.active.data.values.working) {
-          let price: bigint = this.state.eventSettings.eventSettings.find((data: IeventPoints) => data.breed === animal.data.values.type).resourcePrice;
-          proceeds += price;
-        }
-      });
-      this.game.scene.keys['EventBars'].proceedsText.setText(shortNum(proceeds / BigInt(10)) + '/' + this.state.lang.seconds);
+    let proceeds: bigint = BigInt(0);
+    this.animals.children.entries.forEach(animal => {
+      if (animal.data.values.active.data.values.working) {
+        let price: bigint = this.state.eventSettings.eventSettings.find((data: IeventPoints) => data.breed === animal.data.values.type).resourcePrice;
+        proceeds += price;
+      }
+    });
+    
+    if (this.state.userEvent.collector > 0 && this.state.userEvent.feedBoostTime <= 0) {
+      this.game.scene.keys['EventBars'].proceedsText.setText(this.state.lang.income + ' ' + shortNum( proceeds / BigInt(10)) + '/' + this.state.lang.seconds);
   
-    } else {
-      this.game.scene.keys['EventBars'].proceedsText.setText('0/' + this.state.lang.seconds);
-    }
+    } else if (this.state.userEvent.feedBoostTime > 0) { 
+      this.game.scene.keys['EventBars'].proceedsText.setText(shortNum( proceeds / BigInt(10)) + '/' + this.state.lang.seconds);
+
+    } else if (this.state.userEvent.feedBoostTime <= 0) {
+      this.game.scene.keys['EventBars'].proceedsText.setText(this.state.lang.income + ' ' + shortNum( proceeds / BigInt(10)) + '/' + this.state.lang.seconds);
+    } 
     
     // Обновление иконки feed буста
-    if (this.state.userEvent.maxLevelAnimal >= this.game.scene.keys.Event.feedBoostLvl &&
+    if (this.state.userEvent.maxLevelAnimal >= this.game.scene.keys['Event'].feedBoostLvl &&
     this.state.user.additionalTutorial.feedBoost) {
       
       if (this.state.userEvent.feedBoostTime > 0 && !this.game.scene.keys['EventBars'].feedBoostTime.visible) {

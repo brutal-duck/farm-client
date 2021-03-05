@@ -581,6 +581,7 @@ export default {
     unitSheep: 'овец',
     unitChicken: 'яиц',
     unitEvent: 'р.',
+    income: 'Доход',
   },
 
   en: {
@@ -1165,5 +1166,6 @@ export default {
     unitSheep: 'овец',
     unitChicken: 'яиц',
     unitEvent: 'р.',
+    income: 'Доход',
   }
 }
