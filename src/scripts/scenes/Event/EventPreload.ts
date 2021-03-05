@@ -1842,9 +1842,11 @@ class EventPreload extends Phaser.Scene {
           status: response.data.user.status,
           statuses: response.data.user.statuses,
         }
-
-        const userEvent: IuserEvent = {  // нужно делать интерфейс IuserEvent
-          money: BigInt(response.data.event.money),
+        // -------- костыль с плохой строкой из базы  -------- ///
+        let money: String | Number = Number(response.data.event.money) < Number.MAX_SAFE_INTEGER ? response.data.event.money : Number(response.data.event.money);
+        // -------------------------------------------------- ///
+        const userEvent: IuserEvent = {  
+          money: BigInt(money),
           countAnimal: response.data.event.countAnimal,
           collector: response.data.event.collector,
           collectorLevel: response.data.event.collectorLevel,
