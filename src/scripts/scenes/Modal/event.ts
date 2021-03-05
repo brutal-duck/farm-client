@@ -208,7 +208,7 @@ function buyEventTerritory(): void {
 
     let right2 = {
       icon: 'lock',
-      text: this.state.lang.shortLevel + ' ' + settings.unlock
+      text: this.state.lang.shortLevel + '. ' + settings.unlock
     }
   
     this.bigButton('grey', 'left', 65, this.state.lang.buyTerritory, right2);
@@ -227,15 +227,15 @@ function improveCollectorEvent(): void {
   let thisLevel: IcollectorSettings = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userEvent.collectorLevel);
   let nextLevel: IcollectorSettings = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userEvent.collectorLevel + 1);
 
-  let speedText: string = this.state.lang.speed + ': ' + thisLevel.speed + ' / ' + this.state.lang.seconds;
+  let speedText: string = this.state.lang.power + ': ' + thisLevel.speed + ' ' + this.state.lang.unitEvent + '/' + this.state.lang.seconds;
   let speed: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY - 80, speedText, {
-    font: '34px Bip',
+    font: '30px Bip',
     color: '#925C28'
   });
   
   let durationText: string = this.state.lang.duration + ': ' + thisLevel.time + ' ' + this.state.lang.minutes;
   let duration: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY - 25, durationText, {
-    font: '34px Bip',
+    font: '30px Bip',
     color: '#925C28'
   });
 
@@ -250,7 +250,7 @@ function improveCollectorEvent(): void {
     }
     let text: string = '(+' + (nextLevel.time - thisLevel.time) + ' ' + this.state.lang.shortMinutes +  ')';
     nextLevelText = this.add.text(position.x, position.y, text, {
-      font: '34px Bip',
+      font: '30px Bip',
       color: '#57A90E'
     });
     
@@ -262,7 +262,7 @@ function improveCollectorEvent(): void {
     }
     let text: string = '(+' + (nextLevel.speed - thisLevel.speed).toFixed(1) + ' ' + this.state.lang.seconds +  ')';
     nextLevelText = this.add.text(position.x, position.y, text, {
-      font: '34px Bip',
+      font: '30px Bip',
       color: '#57A90E'
     });
 
@@ -289,7 +289,7 @@ function improveCollectorEvent(): void {
 
     let improve = {
       icon: 'lock',
-      text: this.state.lang.shortPart + ' ' + nextLevel.chapter
+      text: this.state.lang.shortLevel + ' ' + nextLevel.chapter
     }
     this.bigButton('grey', 'left', 90, this.state.lang.improve, improve);
 
@@ -1671,7 +1671,7 @@ function updateImproveCollectorEvent(
   let thisLevel: IcollectorSettings = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userEvent.collectorLevel);
   let nextLevel: IcollectorSettings = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userEvent.collectorLevel + 1);
 
-  let speedText: string = this.state.lang.speed + ': ' + thisLevel.speed + ' / ' + this.state.lang.seconds;
+  let speedText: string = this.state.lang.power + ': ' + thisLevel.speed + ' ' + this.state.lang.unitEvent + '/' + this.state.lang.seconds;
   speed.setText(speedText);
     
   let durationText: string = this.state.lang.duration + ': ' + thisLevel.time + ' ' + this.state.lang.minutes;
@@ -1720,7 +1720,7 @@ function updateImproveCollectorEvent(
 
     let improve = {
       icon: 'lock',
-      text: this.state.lang.shortPart + ' ' + nextLevel.chapter
+      text: this.state.lang.shortLevel + '. ' + nextLevel.chapter
     }
     this.bigButton('grey', 'left', 90, this.state.lang.improve, improve);
 

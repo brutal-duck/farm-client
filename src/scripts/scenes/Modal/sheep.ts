@@ -1193,15 +1193,15 @@ function improveCollectorSheep(): void {
   let thisLevel: IcollectorSettings = this.state.sheepCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userSheep.collectorLevel);
   let nextLevel: IcollectorSettings = this.state.sheepCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userSheep.collectorLevel + 1);
 
-  let speedText: string = this.state.lang.speed + ': ' + thisLevel.speed + ' / ' + this.state.lang.seconds;
+  let speedText: string = this.state.lang.power + ': ' + thisLevel.speed + ' ' + this.state.lang.unitSheep + '/' + this.state.lang.seconds;
   let speed: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY - 80, speedText, {
-    font: '34px Bip',
+    font: '30px Bip',
     color: '#925C28'
   });
   
   let durationText: string = this.state.lang.duration + ': ' + thisLevel.time + ' ' + this.state.lang.minutes;
   let duration: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY - 25, durationText, {
-    font: '34px Bip',
+    font: '30px Bip',
     color: '#925C28'
   });
 
@@ -1216,7 +1216,7 @@ function improveCollectorSheep(): void {
     }
     let text: string = '(+' + (nextLevel.time - thisLevel.time) + ' ' + this.state.lang.shortMinutes +  ')';
     nextLevelText = this.add.text(position.x, position.y, text, {
-      font: '34px Bip',
+      font: '30px Bip',
       color: '#57A90E'
     });
     
@@ -1228,7 +1228,7 @@ function improveCollectorSheep(): void {
     }
     let text: string = '(+' + (nextLevel.speed - thisLevel.speed).toFixed(1) + ' ' + this.state.lang.seconds +  ')';
     nextLevelText = this.add.text(position.x, position.y, text, {
-      font: '34px Bip',
+      font: '30px Bip',
       color: '#57A90E'
     });
 
@@ -1281,7 +1281,7 @@ function updateImproveCollectorSheep(
   let thisLevel: IcollectorSettings = this.state.sheepCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userSheep.collectorLevel);
   let nextLevel: IcollectorSettings = this.state.sheepCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userSheep.collectorLevel + 1);
 
-  let speedText: string = this.state.lang.speed + ': ' + thisLevel.speed + ' / ' + this.state.lang.seconds;
+  let speedText: string = this.state.lang.power + ': ' + thisLevel.speed + ' ' + this.state.lang.unitSheep + '/' + this.state.lang.seconds;
   speed.setText(speedText);
 
   let durationText: string = this.state.lang.duration + ': ' + thisLevel.time + ' ' + this.state.lang.minutes;

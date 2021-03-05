@@ -93,7 +93,7 @@ function getAnimal(
   activeAnimal: IactiveEventAnimal = undefined,
   load: boolean = false): Phaser.Physics.Arcade.Sprite {
 
-  let animal: Phaser.Physics.Arcade.Sprite = this.animals.create(x, y, 'animal' + type).setInteractive().setDepth(y).setAlpha(0.7);
+  let animal: Phaser.Physics.Arcade.Sprite = this.animals.create(x, y, 'animal' + type).setInteractive().setDepth(y).setAlpha(0.55).setTint(0xFFFFFF);
   animal.setCollideWorldBounds(true);
   animal.setDataEnabled();
   this.input.setDraggable(animal); // задали перетаскивание

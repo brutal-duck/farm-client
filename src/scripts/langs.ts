@@ -424,6 +424,7 @@ export default {
     still: 'Осталось',
     improve: 'Улучшить',
     speed: 'Скорость',
+    power: 'Мощность',
     duration: 'Длительность',
     herdBoostStartTimoutSheep_1: 'Стадо овечек будет у тебя недолго!',
     herdBoostStartTimoutSheep_2: 'Успевай загонять одинаковых овечек на ярмарку!',
@@ -577,6 +578,9 @@ export default {
     eventWelcome: 'Заходи на ферму единорогов!',
     eventFarm: 'Ферма единорогов',
     eventRulesAfterStatus: 'Топ 3 игрока получают статус',
+    unitSheep: 'овец',
+    unitChicken: 'яиц',
+    unitEvent: 'р.',
   },
 
   en: {
@@ -1004,6 +1008,7 @@ export default {
     still: 'Осталось',
     improve: 'Улучшить',
     speed: 'Скорость',
+    power: 'Мощность',
     duration: 'Длительность',
     herdBoostStartTimoutSheep_1: 'Стадо овечек будет у тебя недолго!',
     herdBoostStartTimoutSheep_2: 'Успевай загонять одинаковых овечек на ярмарку!',
@@ -1157,5 +1162,8 @@ export default {
     eventWelcome: 'Заходи на ферму единорогов!',
     eventFarm: 'Ферма единорогов',
     eventRulesAfterStatus: 'Топ 3 игрока получают статус',
+    unitSheep: 'овец',
+    unitChicken: 'яиц',
+    unitEvent: 'р.',
   }
 }

@@ -757,25 +757,25 @@ function improveCollectorAnim(position: Iposition): void {
   else if (this.state.farm === 'Chicken') icon = 'egg-collector';
   else if (this.state.farm === 'Event') icon = 'event-collector';
   
-  let sprite: Phaser.GameObjects.Sprite = this.add.sprite(position.x, position.y, icon).setScale(0.5); 
+  let sprite: Phaser.GameObjects.Sprite = this.add.sprite(position.x, position.y, icon); 
   let scale: boolean = true;
 
   let scaleTimer: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 20, callback: (): void => {
 
-    if (scale) sprite.scaleX -= 0.02;
-    else sprite.scaleX += 0.02;
+    if (scale) sprite.scaleX -= 0.05;
+    else sprite.scaleX += 0.05;
     
-    if (sprite.scaleX >= 0.5 || sprite.scaleX <= 0) scale = !scale;
+    if (sprite.scaleX >= 1 || sprite.scaleX <= 0) scale = !scale;
 
   }, callbackScope: this, loop: true });
   
   let top: boolean = false;
-  let topY: number = sprite.y + 20;
-  let bottomY: number = sprite.y - 30;
+  let topY: number = sprite.y - 50;
+  let bottomY: number = sprite.y; 
   let positionTimer: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 20, callback: (): void => {
-    if (top) sprite.y -= 3;
-    else sprite.y += 3;
-    if (sprite.y >=  topY || sprite.y <= bottomY) top =!top;
+    if (top) sprite.y += 3;
+    else sprite.y -= 3;
+    if (sprite.y <=  topY || sprite.y >= bottomY) top =!top;
     sprite.setY(sprite.y);
 
   }, callbackScope: this, loop: true }); 
