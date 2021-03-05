@@ -391,7 +391,7 @@ function shortNum(num: number | bigint): string {
 			num /= BigInt(10);
 			pow10 += 1;
 		}
-	
+    let leftover: string = String(num).slice(0,1);
 		//"лишние" нули (в конце прибавятся)
 		const nulls: number = pow10 % 3;
 	
@@ -441,13 +441,13 @@ function shortNum(num: number | bigint): string {
 		let newNum: string;
 		switch (nulls) {
 
-			case 0: newNum = String(num); 
+			case 0: newNum = String(num) +'.'+ String(leftover); 
 			break;
 
-			case 1: newNum = String(num) + index[0];
+			case 1: newNum = String(num) + index[0] +'.'+ String(leftover);
 			break;
 
-			case 2: newNum = String(num) + index;
+			case 2: newNum = String(num) + index +'.'+ String(leftover);
 			break;
 			
 		}
