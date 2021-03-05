@@ -124,7 +124,8 @@ function createChatBars(height: number = 0): void {
         hash: this.state.user.hash,
         login: login,
         text: this.mainInput.value,
-        type: 1
+        type: 1,
+        status: this.state.user.status
       });
 
       this.mainInput.value = '';

@@ -441,6 +441,7 @@ interface Ichat {
   time: string;
   text: string;
   id: string;
+  status: string;
 }
 interface IScrollingOptions {
   x: number;

@@ -1,5 +1,6 @@
 import Scrolling from '../../../libs/Scrolling';
 import axios from 'axios';
+import { getStatusSettings } from '../../../general/basic';
 
 let tile1: any = require("./../../../../assets/images/chat-tile-1.png");
 let tile2: any = require("./../../../../assets/images/chat-tile-2.png");
@@ -23,6 +24,8 @@ class Chat extends Phaser.Scene {
   public msg: Ichat[];
   public ready: boolean;
 
+  public getStatusSettings = getStatusSettings.bind(this);
+
   public init(state: Istate): void {
 
     this.state = state
@@ -44,7 +47,6 @@ class Chat extends Phaser.Scene {
     }
     axios.post(process.env.API + "/getLastMessages", data)
     .then((res) => {
-
       if (!res.data.error) {
         this.state.chat = [];
         for (let i: number = res.data.messages.length - 1; i >= 0; i--) {
@@ -103,7 +105,6 @@ class Chat extends Phaser.Scene {
 
 
   public newMsg(msgData: Ichat) {
-
     let time: Date = new Date(Number(msgData.time) * 1000);
     let year: number = time.getFullYear();
     let month: number = time.getMonth() + 1;
@@ -113,8 +114,8 @@ class Chat extends Phaser.Scene {
     if (msgData.login === this.state.user.login) {
 
       // СООБЩЕНИЯ ПОЛЬЗОВАТЕЛЯ
-      let padding: number = 18
-      if (this.lastMsgFromUser !== msgData.login) padding += 20
+      let padding: number = 18;
+      if (this.lastMsgFromUser !== msgData.login) padding += 20;
   
       // Текст исходящего сообщения
       let outputText: Phaser.GameObjects.Text = this.add.text(this.windowWidth - this.textWrap - 24,  this.windowHeight + this.scrollHeight + padding, msgData.text, {
@@ -125,12 +126,11 @@ class Chat extends Phaser.Scene {
       })
       .setOrigin(0, 0)
       .setCrop(0, 0, this.textWrap - 5, 100)
-      .setDepth(2)
+      .setDepth(2);
       
-      let textHeight: number = outputText.getBounds().height
-      let textWidth: number = outputText.getBounds().width
-      
-      
+      let textHeight: number = outputText.getBounds().height;
+      let textWidth: number = outputText.getBounds().width;
+            
       // Текст Ника
       if (this.lastMsgFromUser !== msgData.login) {
   
@@ -141,11 +141,11 @@ class Chat extends Phaser.Scene {
         })
         .setOrigin(0)
         .setCrop(0, 0, this.windowWidth - 40, 100)
-        .setDepth(1)
+        .setDepth(1);
   
-        let nicknameTextWidth: number = nicknameText.getBounds().width
-        if (nicknameTextWidth < 479) nicknameText.setX(this.windowWidth - nicknameTextWidth - 10)
-  
+        let nicknameTextWidth: number = nicknameText.getBounds().width;
+        if (nicknameTextWidth < 479) nicknameText.setX(this.windowWidth - nicknameTextWidth - 10);
+                
       }
 
   
@@ -156,50 +156,55 @@ class Chat extends Phaser.Scene {
         align: 'right'
       })
       .setOrigin(1)
-      .setDepth(2)
+      .setDepth(2);
   
-      let timeWidth: number = timeText.getBounds().width
+      let timeWidth: number = timeText.getBounds().width;
       
   
       // Определяем размер и положение плашки и текста
-      let bgX: number = outputText.x - 14
-      let bgWidth: number = textWidth
+      let bgX: number = outputText.x - 14;
+      let bgWidth: number = textWidth;
   
-      if (textWidth > 364) bgWidth = 336
+      if (textWidth > 364) bgWidth = 336;
       else {
-        outputText.setX(this.windowWidth - textWidth - 24)
-        bgX = outputText.x - 14
+        outputText.setX(this.windowWidth - textWidth - 24);
+        bgX = outputText.x - 14;
       }
 
       // Минимальный размер и положение плашки
       if (textWidth < timeWidth - 10) {
-        timeText.setX(this.windowWidth - 14)
+        timeText.setX(this.windowWidth - 14);
         // bgWidth = timeWidth
         // bgX = timeText.x - timeWidth - 14
       }
-  
+      
+      const status: IstatusSettings = this.getStatusSettings(msgData.status);
+
+      if (status) {
+        this.add.sprite(bgX - 12, this.windowHeight + this.scrollHeight + padding, status.iconTexture).setOrigin(1, 0).setScale(0.8);
+      }
 
       // Фон сообщения
-      this.add.tileSprite(bgX + 10, outputText.y - 14, bgWidth + 28 - 20, textHeight + 28, 'tile2').setOrigin(0)
-      this.add.tileSprite(bgX, outputText.y - 14 + 10, bgWidth + 28, textHeight + 28 - 20, 'tile2').setOrigin(0)
+      this.add.tileSprite(bgX + 10, outputText.y - 14, bgWidth + 28 - 20, textHeight + 28, 'tile2').setOrigin(0);
+      this.add.tileSprite(bgX, outputText.y - 14 + 10, bgWidth + 28, textHeight + 28 - 20, 'tile2').setOrigin(0);
 
-      let corner1: Phaser.GameObjects.Sprite = this.add.sprite(bgX + 10, outputText.y - 14 + 10, 'corner2').setOrigin(1)
-      let corner2: Phaser.GameObjects.Sprite = this.add.sprite(corner1.x + bgWidth + 28 - 20, corner1.y, 'corner2').setOrigin(1).setAngle(90)
-      let corner3: Phaser.GameObjects.Sprite = this.add.sprite(corner2.x, corner2.y + textHeight + 28 - 20, 'corner2').setOrigin(1).setAngle(180)
-      let corner4: Phaser.GameObjects.Sprite = this.add.sprite(corner1.x, corner3.y, 'corner2').setOrigin(1).setAngle(270)
+      let corner1: Phaser.GameObjects.Sprite = this.add.sprite(bgX + 10, outputText.y - 14 + 10, 'corner2').setOrigin(1);
+      let corner2: Phaser.GameObjects.Sprite = this.add.sprite(corner1.x + bgWidth + 28 - 20, corner1.y, 'corner2').setOrigin(1).setAngle(90);
+      let corner3: Phaser.GameObjects.Sprite = this.add.sprite(corner2.x, corner2.y + textHeight + 28 - 20, 'corner2').setOrigin(1).setAngle(180);
+      let corner4: Phaser.GameObjects.Sprite = this.add.sprite(corner1.x, corner3.y, 'corner2').setOrigin(1).setAngle(270);
 
       
-      this.lastMsgFromUser = msgData.login
+      this.lastMsgFromUser = msgData.login;
 
       // Добавляем длинну скролла если высота всех сообщений уходит за границу
-      this.scrollHeight += textHeight + padding + 40        
+      this.scrollHeight += textHeight + padding + 40   ;     
 
       
     } else {
 
       // ВХОДЯЩИЕ СООБЩЕНИЯ
-      let padding: number = 18
-      if (this.lastMsgFromUser !== msgData.login) padding += 20
+      let padding: number = 18;
+      if (this.lastMsgFromUser !== msgData.login) padding += 20;
       
 
       // Текст сообщения
@@ -211,11 +216,11 @@ class Chat extends Phaser.Scene {
       })
       .setOrigin(0)
       .setCrop(0, 0, this.textWrap - 5, 100)
-      .setDepth(2)
+      .setDepth(2);
       
-      let textHeight: number = gettedText.getBounds().height
-      let textWidth: number = gettedText.getBounds().width
-    
+      let textHeight: number = gettedText.getBounds().height;
+      let textWidth: number = gettedText.getBounds().width;
+      
       // Текст Ника
       if (this.lastMsgFromUser !== msgData.login) {
     
@@ -226,7 +231,7 @@ class Chat extends Phaser.Scene {
         })
         .setOrigin(0)
         .setCrop(0, 0, this.windowWidth - 40, 100)
-        .setDepth(1)    
+        .setDepth(1);  
     
       }
 
@@ -238,43 +243,49 @@ class Chat extends Phaser.Scene {
         align: 'right'
       })
       .setOrigin(0, 1)
-      .setDepth(2)
+      .setDepth(2);
     
-      let timeWidth: number = timeText.getBounds().width
+      let timeWidth: number = timeText.getBounds().width;
       
     
       // Определяем плашки и текст
-      let bgX: number = gettedText.x - 14
-      let bgWidth: number = textWidth
+      let bgX: number = gettedText.x - 14;
+      let bgWidth: number = textWidth;
     
       // Устанавливает минимальный размер и положение плашки
-      if (textWidth > 364) bgWidth = 364
+      if (textWidth > 364) bgWidth = 364;
       if (textWidth < timeWidth - 10) {
-        timeText.setX(14)
+        timeText.setX(14);
         // bgWidth = timeWidth
         // bgX = timeText.x - timeWidth - 14
       }
-    
+
+      const status: IstatusSettings = this.getStatusSettings(msgData.status);
+
+      if (status) {
+        this.add.sprite(bgX + bgWidth + 35, this.windowHeight + this.scrollHeight + padding, status.iconTexture).setOrigin(1, 0).setScale(0.8);
+      }
+
       // Фон сообщения
-      let tile: Phaser.GameObjects.TileSprite = this.add.tileSprite(bgX + 10, gettedText.y - 14, bgWidth + 28 - 20, textHeight + 28, 'tile1').setOrigin(0)
-      let tile2: Phaser.GameObjects.TileSprite = this.add.tileSprite(bgX, gettedText.y - 14 + 10, bgWidth + 28, textHeight + 28 - 20, 'tile1').setOrigin(0)
+      let tile: Phaser.GameObjects.TileSprite = this.add.tileSprite(bgX + 10, gettedText.y - 14, bgWidth + 28 - 20, textHeight + 28, 'tile1').setOrigin(0);
+      let tile2: Phaser.GameObjects.TileSprite = this.add.tileSprite(bgX, gettedText.y - 14 + 10, bgWidth + 28, textHeight + 28 - 20, 'tile1').setOrigin(0);
 
-      let corner1: Phaser.GameObjects.Sprite = this.add.sprite(bgX + 10, gettedText.y - 14 + 10, 'corner1').setOrigin(1)
-      let corner2: Phaser.GameObjects.Sprite = this.add.sprite(corner1.x + bgWidth + 28 - 20, corner1.y, 'corner1').setOrigin(1).setAngle(90)
-      let corner3: Phaser.GameObjects.Sprite = this.add.sprite(corner2.x, corner2.y + textHeight + 28 - 20, 'corner1').setOrigin(1).setAngle(180)
-      let corner4: Phaser.GameObjects.Sprite = this.add.sprite(corner1.x, corner3.y, 'corner1').setOrigin(1).setAngle(270)
+      let corner1: Phaser.GameObjects.Sprite = this.add.sprite(bgX + 10, gettedText.y - 14 + 10, 'corner1').setOrigin(1);
+      let corner2: Phaser.GameObjects.Sprite = this.add.sprite(corner1.x + bgWidth + 28 - 20, corner1.y, 'corner1').setOrigin(1).setAngle(90);
+      let corner3: Phaser.GameObjects.Sprite = this.add.sprite(corner2.x, corner2.y + textHeight + 28 - 20, 'corner1').setOrigin(1).setAngle(180);
+      let corner4: Phaser.GameObjects.Sprite = this.add.sprite(corner1.x, corner3.y, 'corner1').setOrigin(1).setAngle(270);
 
 
-      this.lastMsgFromUser = msgData.login
+      this.lastMsgFromUser = msgData.login;
       
       // Добавляем длинну скролла
-      this.scrollHeight += textHeight + padding + 40
+      this.scrollHeight += textHeight + padding + 40;
 
 
     }
 
-    this.scrolling.bottom = this.scrollHeight
-    this.scrolling.scrollY = this.scrollHeight
+    this.scrolling.bottom = this.scrollHeight;
+    this.scrolling.scrollY = this.scrollHeight;
 
 
   }
