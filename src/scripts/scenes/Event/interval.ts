@@ -141,6 +141,7 @@ function interval(): void {
       }
     });
     
+    if (this.state.userEvent.collector <= 0) proceeds = BigInt(0);
     if (this.state.userEvent.collector > 0 && this.state.userEvent.feedBoostTime <= 0) {
       this.game.scene.keys['EventBars'].proceedsText.setText(this.state.lang.income + ' ' + shortNum( proceeds / BigInt(10)) + '/' + this.state.lang.seconds);
   
