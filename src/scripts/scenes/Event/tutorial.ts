@@ -33,7 +33,7 @@ function doneEventTutor_0(): void {
     step: 0,
     farm_id: 'Event'
   });
-  
+  this.state.user.eventPoints = 0;
   this.state.user.additionalTutorial.eventTutorial = 10;
   
   this.scene.stop('Tutorial');
