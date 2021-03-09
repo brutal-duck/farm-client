@@ -758,34 +758,22 @@ function improveCollectorAnim(position: Iposition): void {
   else if (this.state.farm === 'Event') icon = 'event-collector';
   
   let sprite: Phaser.GameObjects.Sprite = this.add.sprite(position.x, position.y, icon); 
-  let scale: boolean = true;
 
-  let scaleTimer: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 20, callback: (): void => {
-
-    if (scale) sprite.scaleX -= 0.08;
-    else sprite.scaleX += 0.08;
-    
-    if (sprite.scaleX >= 1 || sprite.scaleX <= 0) scale = !scale;
-
-  }, callbackScope: this, loop: true });
-  
-  let top: boolean = false;
-  let topY: number = sprite.y - 50;
-  let bottomY: number = sprite.y; 
-  let positionTimer: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 20, callback: (): void => {
-    if (top) sprite.y += 4;
-    else sprite.y -= 4;
-    if (sprite.y <=  topY || sprite.y >= bottomY) top =!top;
-    sprite.setY(sprite.y);
-
-  }, callbackScope: this, loop: true }); 
-
-  this.time.addEvent({ delay: 1000, callback: (): void => {
-    positionTimer.remove();
-    scaleTimer.remove();
-    sprite.destroy();
+  let tween: Phaser.Tweens.Tween = this.tweens.add({
+    targets: sprite,
+    props: {
+      scaleX: { value: 0, ease: 'Linear'}, 
+      y: { value: '-=60', ease: 'Power2'},
     },
-    callbackScope: this, loop: false });
+    yoyo: true,
+    duration: 280,
+    repeat: 1,
+    onComplete: () => {
+      tween.remove();
+      sprite.destroy();
+    },
+  });
+
 }
 export {
   firework250,
