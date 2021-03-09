@@ -353,11 +353,15 @@ function interval(): void {
       this.state.nativeCounter[3] = 1;
     }
 
+    if (!this.state.user.starterpack) this.state.nativeCounter[0] = 1;
+
     let nativeCount = 0;
 
     for (let i = 0; i < this.state.nativeCounter.length; i++) {
       nativeCount += this.state.nativeCounter[i];
     }
+
+    
     this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setText(nativeCount);
 
     if (this.state.donate &&

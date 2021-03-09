@@ -6,6 +6,8 @@ class ShopBars extends Phaser.Scene {
   public clickButtonUp = clickButtonUp.bind(this);
   public nativeBoost: Phaser.GameObjects.Graphics;
   public nativeBoostCounter: Phaser.GameObjects.Text;
+  public nativeDiamond: Phaser.GameObjects.Graphics;
+  public nativeDiamondCounter: Phaser.GameObjects.Text;
 
   constructor() {
     super('ShopBars');
@@ -44,6 +46,19 @@ class ShopBars extends Phaser.Scene {
       .setDepth(2)
       .setVisible(false);
     this.nativeBoostCounter = this.add.text(550, this.cameras.main.centerY - 520, String(this.state.nativeCounter[3]), {
+      font: '32px Shadow',
+      color: '#f3eae6'
+    }).setDepth(3)
+      .setOrigin(0.5, 0.5)
+      .setVisible(false);
+
+    //натив вкладки с diamonds
+    this.nativeDiamond = this.add.graphics()
+      .fillStyle(0xFF2400, 1)
+      .fillCircle(175, this.cameras.main.centerY - 520, 20)
+      .setDepth(2)
+      .setVisible(false);
+    this.nativeDiamondCounter = this.add.text(175, this.cameras.main.centerY - 520, String(this.state.nativeCounter[0]), {
       font: '32px Shadow',
       color: '#f3eae6'
     }).setDepth(3)
@@ -195,7 +210,7 @@ class ShopBars extends Phaser.Scene {
 
   public update(): void {
     this.updateNative();
-    this.updateEventNative();
+    // this.updateEventNative();
   }
 
   public updateNative(): void{  
@@ -213,6 +228,24 @@ class ShopBars extends Phaser.Scene {
     this.nativeBoostCounter.text !== '0' && this.state.user.additionalTutorial.herdBoost) {
       this.nativeBoost.setVisible(true);
       this.nativeBoostCounter.setVisible(true);
+    }
+
+    if ((this.state.modal.shopType === 1 ||
+      this.state.user.starterpack || 
+      this.nativeDiamondCounter.text === '0') && 
+      this.nativeDiamond.visible) {
+        
+      this.nativeDiamond.setVisible(false);
+      this.nativeDiamondCounter.setVisible(false);
+
+    } else if (this.state.modal.shopType !== 1 &&
+      !this.state.user.starterpack && 
+      this.nativeDiamondCounter.text !== '0' && 
+      !this.nativeDiamond.visible) {
+
+      this.nativeDiamond.setVisible(true);
+      this.nativeDiamondCounter.setVisible(true);
+
     }
   }
 

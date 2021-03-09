@@ -103,6 +103,7 @@ interface Iuser {
   takenReward: boolean;
   status: string;
   statuses: string[];
+  starterpack: boolean;
 }
 interface IuserSheep {
   money: number;
@@ -524,5 +525,4 @@ interface Istate {
   donate: boolean;
   boughtFeedBoost: boolean;
   chat: Ichat[];
-  starterpack: boolean;
 }

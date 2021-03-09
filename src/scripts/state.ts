@@ -126,7 +126,6 @@ let state: Istate = {
   donate, // переменная для показа доната
   boughtFeedBoost, // куплен ли буст
   chat, // сообщения в чат
-  starterpack
 }
 
 export default state;

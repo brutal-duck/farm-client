@@ -396,7 +396,7 @@ function shortNum(num: number | bigint): string {
 
 		//"лишние" нули (в конце прибавятся)
 		const nulls: number = pow10 % 3;
-    leftover = leftover.slice(nulls+1, nulls + 2);
+    leftover = leftover.slice(nulls + 1, nulls + 2);
 		//число степеней, кратное 3м
 		let pow10correctly: number = ( pow10 - nulls ) / 3;
 	

@@ -1844,6 +1844,8 @@ class EventPreload extends Phaser.Scene {
           takenReward: response.data.user.taken_reward,
           status: response.data.user.status,
           statuses: response.data.user.statuses,
+          starterpack: response.data.user.starterpack,
+
         }
         // -------- костыль с плохой строкой из базы  -------- ///
         let money: String | Number = Number(response.data.event.money) < Number.MAX_SAFE_INTEGER ? response.data.event.money : Number(response.data.event.money);
