@@ -5,10 +5,11 @@ import {
   clickModalBtn,
   shortNum,
   socialButtons,
-  shortTime
+  shortTime,
+  updateNativeShop, 
+
 } from '../../general/basic';
 import { 
-  updateEventNativeShop, 
   buildMenu,
   updateRaitingsBar,
   scoreEnding 
@@ -94,7 +95,7 @@ class EventBars extends Phaser.Scene {
   public firework250 = firework250.bind(this);
   public plusResourceAnimation = plusResourceAnimation.bind(this);
   public showFeedTime = showFeedTime.bind(this);
-  public updateEventNativeShop = updateEventNativeShop.bind(this);
+  public updateNativeShop = updateNativeShop.bind(this);
   public updateRaitingsBar = updateRaitingsBar.bind(this);
   public arrowsBehavior = arrowsBehavior.bind(this);
   public scoreEnding = scoreEnding.bind(this);
@@ -386,7 +387,7 @@ class EventBars extends Phaser.Scene {
     this.socialButtons();
 
     // Обновление натива магазина
-    this.updateEventNativeShop();
+    this.updateNativeShop();
 
     // Анимация меню
     this.menuAnimation();

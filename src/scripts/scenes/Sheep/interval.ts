@@ -349,11 +349,14 @@ function interval(): void {
       this.state.timeToHerdBoost = 86400;
     } 
 
-    if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0) {
+    if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
+     this.state[`user${this.state.farm}`].takenHerdBoost <= 0 && 
+     this.state.user.additionalTutorial.herdBoost) {
       this.state.nativeCounter[3] = 1;
-    }
+    } else this.state.nativeCounter[3] = 0;
 
     if (!this.state.user.starterpack) this.state.nativeCounter[0] = 1;
+    else this.state.nativeCounter[0] = 0;
 
     let nativeCount = 0;
 
