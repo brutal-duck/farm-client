@@ -582,6 +582,8 @@ export default {
     unitChicken: 'яиц',
     unitEvent: 'р.',
     income: 'Доход',
+    unicornStatus: 'Друг единорогов',
+
   },
 
   en: {
@@ -1167,5 +1169,6 @@ export default {
     unitChicken: 'яиц',
     unitEvent: 'р.',
     income: 'Доход',
+    unicornStatus: 'Друг единорогов',
   }
 }

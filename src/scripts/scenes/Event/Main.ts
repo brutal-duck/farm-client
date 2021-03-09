@@ -13,7 +13,6 @@ import {
   debug, 
   getEventRaiting,
   doubleClick,
-  buyNextFarm
 } from '../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -48,7 +47,8 @@ import {
   exchange,
   createBoostAnimal,
   getFreeBoostPositions,
-  tryTask
+  tryTask,
+  buyNextFarm
 } from './basic';
 import { 
   buyAnimal, 

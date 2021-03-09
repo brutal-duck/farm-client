@@ -1,4 +1,5 @@
-import { randomString } from './../../general/basic';
+import axios from 'axios';
+import { randomString, shortNum } from './../../general/basic';
 // цена животного
 function animalPrice(breed: number): {price: bigint, countAnimal: number} {
 
@@ -619,6 +620,93 @@ function scoreEnding(score: number, lang: any): string {
   else if (lang.index === 'en') return 'Scores'
 }
 
+function buyNextFarm(): void {
+
+  let user: IuserSheep | IuserChicken;
+  let progress: IpartProgress;
+  let farm: string;
+  let check: boolean = false;
+
+  user = this.state.userSheep;
+  progress = this.state.progress.chicken;
+  farm = 'Chicken';
+
+  if (progress.donate) {
+    
+    if (this.state.user.diamonds >= progress.price) check = true;
+
+    else {
+
+      let count: number = progress.price - this.state.user.diamonds;
+          
+      this.state.convertor = {
+        fun: 7,
+        count: count,
+        diamonds: count,
+        type: 2
+      }
+
+      let modal: Imodal = {
+        type: 1,
+        sysType: 4
+      }
+      this.state.modal = modal;
+      this.scene.launch('Modal', this.state);
+
+    }
+
+  } else {
+
+    if (user.money >= progress.price) check = true;
+
+    else {
+      
+      let count: number = progress.price - user.money;
+      let modal: Imodal = {
+        type: 1,
+        sysType: 3,
+        message: String(this.state.lang.notEnoughForYou + ' ' + shortNum(count)),
+        height: 150
+      }
+      this.state.modal = modal;
+      this.scene.launch('Modal', this.state);
+    
+    }
+  }
+
+
+  if (check) {
+
+    if (progress.donate) this.state.user.diamonds -= progress.price;
+    else {
+
+      const data = { 
+        id: this.state.user.id,
+        hash: this.state.user.hash,
+        counter: this.state.user.counter,
+        price: progress.price,
+      }
+      axios.post(process.env.API + "/buyNextFarm", data)
+      .then((res) => {
+        if (res.data.success) {
+          user.money -= progress.price;
+
+          this.state.amplitude.getInstance().logEvent('get_new_farm', {
+            type: 'buy',
+            farm_id: farm
+          });
+      
+          this.scene.stop(this.state.farm);
+          this.scene.stop(this.state.farm + 'Bars');
+          this.scene.start(farm + 'Preload', this.state);
+        }
+      });
+    }
+  }
+}
+
+
+
 export {
   animalPrice,
   maxBreedForBuy,
@@ -636,5 +724,6 @@ export {
   tryTask,
   buildMenu,
   updateRaitingsBar,
-  scoreEnding
+  scoreEnding,
+  buyNextFarm
 }

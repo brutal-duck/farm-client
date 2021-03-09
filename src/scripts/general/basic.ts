@@ -1543,13 +1543,7 @@ function buyNextFarm(): void {
     // progress = this.state.progress.chicken;
     // farm = 'Chicken';
 
-  } else if (this.state.farm === 'Event') {
-
-    user = this.state.userSheep;
-    progress = this.state.progress.chicken;
-    farm = 'Chicken';
-  
-  }
+  } 
 
   if (progress.donate) {
     
@@ -1578,35 +1572,23 @@ function buyNextFarm(): void {
 
     if (user.money >= progress.price) check = true;
     else {
-      if (this.state.farm !== 'Event') {
+      
+      let count: number = progress.price - user.money;
+      let diamonds: number = this.convertMoney(count);
+      this.state.convertor = {
+        fun: 7,
+        count: count,
+        diamonds: diamonds,
+        type: 1
+      }
 
-        let count: number = progress.price - user.money;
-        let diamonds: number = this.convertMoney(count);
-        this.state.convertor = {
-          fun: 7,
-          count: count,
-          diamonds: diamonds,
-          type: 1
-        }
-  
-        let modal: Imodal = {
-          type: 1,
-          sysType: 4
-        }
-        this.state.modal = modal;
-        this.scene.launch('Modal', this.state);
-      } else {
-        
-        let count: number = progress.price - user.money;
-        let modal: Imodal = {
-          type: 1,
-          sysType: 3,
-          message: String(this.state.lang.notEnoughForYou + shortNum(count))
-        }
-        this.state.modal = modal;
-        this.scene.launch('Modal', this.state);
-      } 
-
+      let modal: Imodal = {
+        type: 1,
+        sysType: 4
+      }
+      this.state.modal = modal;
+      this.scene.launch('Modal', this.state);
+      
     }
     
   }
@@ -2775,18 +2757,17 @@ function getEventRaiting(): void {
 }
 
 function getStatusSettings(string: string): IstatusSettings {
-
-  if (string === 'Друг единорогов') {
+  if (string && this.state.lang[string + 'Status']) {
     return {
       textColor: '#459D1A',
-      text: this.state.lang.eventProfileName,
-      iconTexture: 'unicorn-status',
+      text: this.state.lang[string + 'Status'],
+      iconTexture: `${string}-status`,
       iconVisible: true,
     }
   } 
-  
   return;
-}
+} 
+
 export {
   random,
   getRandomBool,
