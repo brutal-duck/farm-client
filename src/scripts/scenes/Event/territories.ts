@@ -39,11 +39,11 @@ function buyTerritory(): void {
   
         if (this.state.userEvent.money >= BigInt(price)) {
           
-          // this.state.amplitude.getInstance().logEvent('buy_territory', {
-          //   block: this.state.territory.data.values.block,
-          //   position: this.state.territory.data.values.position,
-          //   farm_id: this.state.farm
-          // });
+          this.state.amplitude.getInstance().logEvent('buy_territory', {
+            block: this.state.territory.data.values.block,
+            position: this.state.territory.data.values.position,
+            farm_id: this.state.farm
+          });
       
           this.state.territory.data.values.type = 2;
           this.state.userEvent.money -= BigInt(price);
@@ -87,12 +87,18 @@ function buyTerritory(): void {
       let price: number = settings.diamond;
       if (this.state.user.diamonds >= price) {
   
-        // this.state.amplitude.getInstance().logEvent('buy_territory', {
-        //   block: this.state.territory.data.values.block,
-        //   position: this.state.territory.data.values.position,
-        //   farm_id: this.state.farm
-        // });
-      
+        this.state.amplitude.getInstance().logEvent('buy_territory', {
+          block: this.state.territory.data.values.block,
+          position: this.state.territory.data.values.position,
+          farm_id: this.state.farm
+        });
+        
+        this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+          type: 'improve_collector',
+          count: price,
+          farm_id: this.state.farm
+        });
+        
         this.state.territory.data.values.type = 2;
         this.state.user.diamonds -= price;
       
