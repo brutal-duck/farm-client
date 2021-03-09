@@ -457,6 +457,8 @@ function interval(): void {
         this.showEventTutorial();
       }
     }
+
+    console.log(this.state.userSheep.money);
   }, callbackScope: this, loop: true });
   
 
