@@ -524,4 +524,5 @@ interface Istate {
   donate: boolean;
   boughtFeedBoost: boolean;
   chat: Ichat[];
+  starterpack: boolean;
 }

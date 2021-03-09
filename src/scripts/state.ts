@@ -59,6 +59,7 @@ let eventResources: IeventResource[];
 let userEvent: IuserEvent;
 let eventCollectorSettings: IcollectorSettings[];
 let chat: Ichat[] = [];
+let starterpack: boolean = false;
 
 let state: Istate = {
   // записываемые в localStorage
@@ -124,7 +125,8 @@ let state: Istate = {
   adman, // объект рекламы вк
   donate, // переменная для показа доната
   boughtFeedBoost, // куплен ли буст
-  chat // сообщения в чат
+  chat, // сообщения в чат
+  starterpack
 }
 
 export default state;

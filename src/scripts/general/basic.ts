@@ -1772,6 +1772,7 @@ function takeDonate(): void {
         
         let pack: Ipackage = this.state.packages.find((data: Ipackage) => data.id === res.data.package);
         this.state.user.diamonds += res.data.donate;
+        this.state.user.starterpack = true;
         let revenue: amplitude.Revenue = new amplitude.Revenue()
           .setProductId('Product #' + res.data.package)
           .setPrice(pack.price);
