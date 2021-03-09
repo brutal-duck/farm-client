@@ -386,15 +386,17 @@ function shortNum(num: number | bigint): string {
 		let pow10: number = 0; // Начальная степень
 		let index: string = String(num).slice(1, 3); // Второе и третье число в num для составления выходного числа
 
+    let leftover: string = String(num);
+
 		// Сокращаем число, определяя степень
 		while ( num >= BigInt(10) ) {
 			num /= BigInt(10);
 			pow10 += 1;
 		}
-    let leftover: string = String(num).slice(0,1);
+
 		//"лишние" нули (в конце прибавятся)
 		const nulls: number = pow10 % 3;
-	
+    leftover = leftover.slice(nulls+1, nulls + 2);
 		//число степеней, кратное 3м
 		let pow10correctly: number = ( pow10 - nulls ) / 3;
 	
