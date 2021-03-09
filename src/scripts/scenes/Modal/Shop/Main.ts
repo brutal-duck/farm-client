@@ -65,6 +65,7 @@ let levelBg: any = require("./../../../../assets/images/modal/level-bg.png");
 let boostBg: any = require("./../../../../assets/images/modal/boost-bg.png");
 let improveCollector: any = require("./../../../../assets/images/modal/improve-collector.png");
 let shopResourceCollector: any = require("./../../../../assets/images/event/shop-resource-collector.png");
+let starterpackBg: any = require("./../../../../assets/images/modal/starterpack-bg.png");
 
 class Shop extends Phaser.Scene {
   constructor() {
@@ -160,6 +161,7 @@ class Shop extends Phaser.Scene {
     this.load.image('level-bg', levelBg);
     this.load.image('boost-bg', boostBg);
     this.load.image('improve-collector', improveCollector);
+    this.load.image('starterpack-bg', starterpackBg);
 
   }
 
@@ -272,10 +274,51 @@ class Shop extends Phaser.Scene {
     let rows: number = Math.ceil(this.state.packages.length / 2);
     let height: number = rows * 270 + 40;
     this.scrolling.bottom = this.height - this.heightWindow + height;
+    
+    if (!this.state.user.starterpack) {
+
+      let starterpackBg: Phaser.GameObjects.Image = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY - 240, 'starterpack-bg');
+      let text1: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 40, this.cameras.main.centerY - 290, this.state.lang.buyFrom, {
+        font: '26px Shadow',
+        color: '#FBCB64'
+      }).setOrigin(0.5, 0.5);
+  
+      let text2: Phaser.GameObjects.Text = this.add.text(text1.getBounds().right + 10, text1.y, '750', {
+        font: '26px Shadow',
+        color: '#ffffff'
+      }).setOrigin(0, 0.5);
+  
+      let diamond1: Phaser.GameObjects.Image = this.add.image(text2.getBounds().right + 5, text1.y, 'diamond').setScale(0.10).setOrigin(0, 0.5);
+  
+      let text3: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 80, text1.getBounds().bottom + 5, this.state.lang.getGift,  {
+        font: '26px Shadow',
+        color: '#FBCB64'
+      }).setOrigin(0.5, 0);
+  
+      let text4: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 40, text3.getBounds().bottom + 5, this.state.lang.more, {
+        font: '26px Shadow',
+        color: '#FBCB64'
+      }).setOrigin(0.5, 0);
+      
+      let text5: Phaser.GameObjects.Text = this.add.text(text4.getBounds().right + 5, text3.getBounds().bottom + 5, '+750', {
+        font: '26px Shadow',
+        color: '#FFFFFF'
+      }).setOrigin(0, 0);
+  
+      let diamond2: Phaser.GameObjects.Image = this.add.image(text5.getBounds().right + 5, text5.y, 'diamond').setScale(0.10).setOrigin(0);
+  
+      let text6: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 80, text4.getBounds().bottom + 5, this.state.lang.dontMissChanse, {
+        font: '26px Shadow',
+        color: '#FFFFFF'
+      }).setOrigin(0.5, 0);
+    }
+
 
     for (let i: number = 0; i < rows; i++) {
-
       let y: number = i * 270 + 40;
+
+      if (!this.state.user.starterpack) y += 200;
+      
       let left: Ipackage = this.state.packages[i * 2];
       let right: Ipackage = this.state.packages[i * 2 + 1];
       

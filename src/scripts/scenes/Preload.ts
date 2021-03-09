@@ -96,6 +96,8 @@ let mapCloud: any = require("./../../assets/images/event/map-cloud.png");
 let mapEventFarm: any = require("./../../assets/images/event/map-event-farm.png");
 let mapEventIsland: any = require("./../../assets/images/event/map-event-island.png");
 let unicornStatus: any = require("./../../assets/images/icons/unicorn-status.png");
+let starterpackBg: any = require("./../../assets/images/modal/starterpack-bg.png");
+
 
 class Preload extends Phaser.Scene {
   constructor() {
@@ -219,6 +221,7 @@ class Preload extends Phaser.Scene {
     if (this.state.farm === 'Sheep') this.load.image('sheep-feed-boost-icon', feedBoostSheepIcon);
     if (this.state.farm === 'Chicken') this.load.image('chicken-herd-boost-icon', feedBoostChickenIcon);
     this.load.image('unicorn-status', unicornStatus);
+    this.load.image('starterpack-bg', starterpackBg);
   }
 
 }

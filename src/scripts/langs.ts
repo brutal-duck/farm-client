@@ -583,7 +583,10 @@ export default {
     unitEvent: 'р.',
     income: 'Доход',
     unicornStatus: 'Друг единорогов',
-
+    buyFrom: 'Купи от',
+    getGift: 'Получи в подарок',
+    more: 'ещё',
+    dontMissChanse: 'Не упусти шанс!',
   },
 
   en: {
@@ -1170,5 +1173,9 @@ export default {
     unitEvent: 'р.',
     income: 'Доход',
     unicornStatus: 'Друг единорогов',
+    buyFrom: 'Купи от',
+    getGift: 'Получи в подарок',
+    more: 'ещё',
+    dontMissChanse: 'Не упусти шанс!',
   }
 }
