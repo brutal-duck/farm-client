@@ -762,8 +762,8 @@ function improveCollectorAnim(position: Iposition): void {
 
   let scaleTimer: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 20, callback: (): void => {
 
-    if (scale) sprite.scaleX -= 0.05;
-    else sprite.scaleX += 0.05;
+    if (scale) sprite.scaleX -= 0.08;
+    else sprite.scaleX += 0.08;
     
     if (sprite.scaleX >= 1 || sprite.scaleX <= 0) scale = !scale;
 
@@ -773,8 +773,8 @@ function improveCollectorAnim(position: Iposition): void {
   let topY: number = sprite.y - 50;
   let bottomY: number = sprite.y; 
   let positionTimer: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 20, callback: (): void => {
-    if (top) sprite.y += 3;
-    else sprite.y -= 3;
+    if (top) sprite.y += 4;
+    else sprite.y -= 4;
     if (sprite.y <=  topY || sprite.y >= bottomY) top =!top;
     sprite.setY(sprite.y);
 
