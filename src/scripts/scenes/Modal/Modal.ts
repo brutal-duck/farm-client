@@ -417,7 +417,7 @@ class Modal extends Phaser.Scene {
   public update(): void {
     
     // восстановление скролла
-    if (this.game.scene.keys[this.state.farm].scrolling.wheel === true) {
+    if (this.game.scene.keys[this.state.farm].scrolling?.wheel === true) {
       this.game.scene.keys[this.state.farm].scrolling.wheel = false;
     }
     
