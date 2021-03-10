@@ -141,7 +141,6 @@ class Map extends Phaser.Scene {
         this.state.modal = modal;
         this.scene.stop('Map');
         this.scene.stop('MapBars');
-        console.log(this.state.modal)
         this.scene.launch('Modal', this.state);
       })
     }
