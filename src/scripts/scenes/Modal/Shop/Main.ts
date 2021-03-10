@@ -377,6 +377,19 @@ class Shop extends Phaser.Scene {
 
       }
 
+      if (left.diamonds + left.bonus >= 750 && !this.state.user.starterpack) {
+        let starterpackIcon: Phaser.GameObjects.Image = this.add.image(30, y + this.height + 20, 'starterpack-icon').setScale(0.4);
+        this.tweens.add({
+          targets: starterpackIcon,
+          delay: 2000,
+          angle: -21,
+          duration: 100,
+          yoyo: true,
+          repeat: 1,
+          loop: -1
+        });
+      }
+
       let text: string;
 
       if (this.state.platform === 'ok') {
@@ -412,8 +425,6 @@ class Shop extends Phaser.Scene {
           font: '34px Shadow',
           color: '#FFFFFF'
         }).setOrigin(0.5, 0.5).setRotation(0.55);
-
-        // if (!this.state.user.starterpack) this.add.image(167, y + 38 + this.height, 'starterpack-icon').setRotation(0.55).setScale(0.5);
       } 
       
       // правая
@@ -445,6 +456,19 @@ class Shop extends Phaser.Scene {
           font: '40px Shadow',
           color: '#FFFFFF'
         }).setOrigin(0.5, 0.5);
+        
+        if (right.diamonds + right.bonus >= 750 && !this.state.user.starterpack) {
+          let starterpackIcon: Phaser.GameObjects.Image = this.add.image(270, y + this.height + 20, 'starterpack-icon').setScale(0.4).setDepth(3);
+          this.tweens.add({
+            targets: starterpackIcon,
+            delay: 2000,
+            angle: -21,
+            duration: 100,
+            yoyo: true,
+            repeat: 1,
+            loop: -1
+          });
+        }
 
         if (right.bonus > 0) {
 
@@ -454,7 +478,6 @@ class Shop extends Phaser.Scene {
           }).setOrigin(0.5, 0.5);
 
         }
-        
         let text: string;
 
         if (this.state.platform === 'ok') {

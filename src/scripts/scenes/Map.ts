@@ -119,6 +119,32 @@ class Map extends Phaser.Scene {
     // Евентовая ферма на карте
     this.buildEvent();
     
+    if (!this.state.user.starterpack) {
+
+      let starterpackIcon: Phaser.GameObjects.Image = this.add.image(620, 440, 'starterpack-icon').setScale(0.8).setAngle(-30);
+      this.tweens.add({
+        targets: starterpackIcon,
+        delay: 2000,
+        angle: -21,
+        duration: 100,
+        yoyo: true,
+        repeat: 1,
+        loop: -1
+      });
+
+      this.click(starterpackIcon, () => {
+      
+        let modal: Imodal = {
+          type: 2,
+          shopType: 1
+        }
+        this.state.modal = modal;
+        this.scene.stop('Map');
+        this.scene.stop('MapBars');
+        console.log(this.state.modal)
+        this.scene.launch('Modal', this.state);
+      })
+    }
   }
 
 
