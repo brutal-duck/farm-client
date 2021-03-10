@@ -17,7 +17,8 @@ let userData: Iuser = {
   },
   takenReward: false,
   status: '',
-  statuses: []
+  statuses: [], 
+  starterpack: false
 }
 
 let userSheep: IuserSheep = {
