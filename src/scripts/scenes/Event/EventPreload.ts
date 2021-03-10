@@ -200,6 +200,8 @@ let ratingPrisePlaces: any = require("./../../../assets/images/event/modal/ratin
 let eventTutorMerging: any = require("./../../../assets/images/event/tutor-merging.png");
 
 let eventTerritoryBtn: any = require("./../../../assets/images/event/territories/buy-button.png");
+let starterpackIcon: any = require("./../../../assets/images/icons/starterpack.png");
+
 const testCollector: IcollectorSettings[] = [
   {
     level: 1,
@@ -1697,6 +1699,8 @@ class EventPreload extends Phaser.Scene {
 
     this.load.image('event-tutor-merging',eventTutorMerging);
     this.load.image('event-territory-btn', eventTerritoryBtn);
+    this.load.image('starterpack-icon', starterpackIcon);
+
 
   }
 
