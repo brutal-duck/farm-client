@@ -492,6 +492,8 @@ class SheepBars extends Phaser.Scene {
     this.updateNativeShop();
 
     if (this.starterpackIcon && this.state.user.starterpack) this.starterpackIcon?.destroy();
+    if (this.starterpackIcon && this.starterpackIcon.visible && this.state.userSheep.tutorial < 70) this.starterpackIcon.setVisible(false);
+    else if (this.starterpackIcon && !this.starterpackIcon.visible && this.state.userSheep.tutorial >= 70) this.starterpackIcon.setVisible(true);
 
   }
 
