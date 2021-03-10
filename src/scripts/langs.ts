@@ -587,6 +587,7 @@ export default {
     getGift: 'Получи в подарок',
     more: 'ещё',
     dontMissChanse: 'Не упусти шанс!',
+    maxLevelCollector: 'Вы достигли масимального уровня собирателя',
   },
 
   en: {
@@ -1177,5 +1178,6 @@ export default {
     getGift: 'Получи в подарок',
     more: 'ещё',
     dontMissChanse: 'Не упусти шанс!',
+    maxLevelCollector: 'Вы достигли масимального уровня собирателя',
   }
 }

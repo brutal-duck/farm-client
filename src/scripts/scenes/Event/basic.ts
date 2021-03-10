@@ -356,8 +356,24 @@ function improveCollector(): void {
 
 
   let nextLevel: IcollectorSettings = collectorSettings.find((data: IcollectorSettings) => data.level === user.collectorLevel + 1);
+  
+  if (!nextLevel) {
+    
+    this.scene.stop('Modal');
+    this.scene.stop('Shop');
+    this.scene.stop('ShopBars');
 
-  if (nextLevel.diamonds) {
+    let modal: Imodal = {
+      type: 1,
+      sysType: 3,
+      message: this.state.lang.maxLevelCollector,
+      height: 150
+    }
+    this.state.modal = modal;
+    this.scene.launch('Modal', this.state);
+  }
+  
+  if (nextLevel?.diamonds) {
 
     if (this.state.user.diamonds >= nextLevel.price) {
 

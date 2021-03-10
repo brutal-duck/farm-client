@@ -1335,7 +1335,7 @@ function updateImproveCollectorSheep(
     this.bigButton('grey', 'left', 90, this.state.lang.improve, improve);
 
   }
-
+  
 }
 
 export {
