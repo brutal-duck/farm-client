@@ -379,7 +379,7 @@ class SheepBars extends Phaser.Scene {
 
     if (!this.state.user.starterpack) {
       
-      this.starterpackIcon = this.add.image(490, 45, 'starterpack-icon').setScale(0.2);
+      this.starterpackIcon = this.add.image(490, 45, 'starterpack-icon').setScale(0.2).setVisible(false);
       
       this.tweens.add({
         targets: this.starterpackIcon,
@@ -492,8 +492,8 @@ class SheepBars extends Phaser.Scene {
     this.updateNativeShop();
 
     if (this.starterpackIcon && this.state.user.starterpack) this.starterpackIcon?.destroy();
-    if (this.starterpackIcon && this.starterpackIcon.visible && this.state.userSheep.tutorial < 70) this.starterpackIcon.setVisible(false);
-    else if (this.starterpackIcon && !this.starterpackIcon.visible && this.state.userSheep.tutorial >= 70) this.starterpackIcon.setVisible(true);
+    if (this.starterpackIcon && this.starterpackIcon.visible && this.state.userSheep.tutorial < 70 && this.state.userSheep?.part < 4) this.starterpackIcon.setVisible(false);
+    else if (this.starterpackIcon && !this.starterpackIcon.visible && this.state.userSheep.tutorial >= 70 && this.state.userSheep?.part > 4) this.starterpackIcon.setVisible(true);
 
   }
 

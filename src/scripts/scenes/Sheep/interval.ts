@@ -351,11 +351,11 @@ function interval(): void {
 
     if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
      this.state[`user${this.state.farm}`].takenHerdBoost <= 0 && 
-     this.state.user.additionalTutorial.herdBoost) {
+     this.state.user.additionalTutorial.herdBoost ) {
       this.state.nativeCounter[3] = 1;
     } else this.state.nativeCounter[3] = 0;
 
-    if (!this.state.user.starterpack) this.state.nativeCounter[0] = 1;
+    if (!this.state.user.starterpack && this.state.userSheep.part > 4) this.state.nativeCounter[0] = 1;
     else this.state.nativeCounter[0] = 0;
 
     let nativeCount = 0;
