@@ -66,7 +66,7 @@ window.onload = (): void => {
     root.style.width = width + 'px';
 
     // конфиг игры
-    let config = {
+    let config: Phaser.Types.Core.GameConfig = {
       type: Phaser.AUTO,
       width: canvasWidth,
       height: canvasHeight,
@@ -90,7 +90,10 @@ window.onload = (): void => {
         Chat,
         Tutorial,
         Block
-      ]
+      ],
+      loader:{
+        maxParallelDownloads: 128,
+    },
     }
     
     const game: Phaser.Game = new Phaser.Game(config);
