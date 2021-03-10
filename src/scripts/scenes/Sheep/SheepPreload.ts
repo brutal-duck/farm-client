@@ -326,6 +326,7 @@ let calendar: any = require("./../../../assets/images/calendar.png");
 let adIcon: any = require("./../../../assets/images/icons/ad-icon.png");
 let bgAd: any = require("./../../../assets/images/icons/bg-ad.png");
 let bigButtonGreen: any = require("./../../../assets/images/modal/btn_lg.png");
+let starterpackIcon: any = require("./../../../assets/images/icons/starterpack.png");
 
 class SheepPreload extends Phaser.Scene {
 
@@ -690,6 +691,7 @@ class SheepPreload extends Phaser.Scene {
     this.load.image('ad-icon', adIcon);
     this.load.image('bg-ad', bgAd);
     this.load.image('big-btn-green', bigButtonGreen);
+    this.load.image('starterpack-icon', starterpackIcon);
   }
   
   

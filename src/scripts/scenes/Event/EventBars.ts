@@ -76,6 +76,7 @@ class EventBars extends Phaser.Scene {
   public map: Phaser.GameObjects.Image;
   public collectorBtn: Phaser.GameObjects.Image;
   public arrows: Arrows;
+  public starterpackIcon: Phaser.GameObjects.Image;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -325,6 +326,23 @@ class EventBars extends Phaser.Scene {
 
     }
 
+    if (!this.state.user.starterpack) {
+      
+      this.starterpackIcon = this.add.image(490, 45, 'starterpack-icon').setScale(0.2);
+      
+      this.tweens.add({
+        targets: this.starterpackIcon,
+        duration: 300,
+        yoyo: true,
+        ease: 'Power2',
+        repeat: 2,
+        delay: 400,
+        scale: 0.3,
+        loop: -1,
+        loopDelay: 4000,
+      });
+    }
+
   }
 
 
@@ -396,6 +414,8 @@ class EventBars extends Phaser.Scene {
 
     // укзывающие стрелки
     this.arrowsBehavior();
+
+    if (this.starterpackIcon && this.state.user.starterpack) this.starterpackIcon?.destroy();
 
   } 
 

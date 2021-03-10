@@ -80,6 +80,7 @@ class SheepBars extends Phaser.Scene {
   public calendar: any;
   public nativeShop: Phaser.GameObjects.Graphics;
   public nativeShopCounter: Phaser.GameObjects.Text;
+  public starterpackIcon: Phaser.GameObjects.Image;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -376,6 +377,22 @@ class SheepBars extends Phaser.Scene {
     // graphics.lineStyle(2, 0xFFFF00);
     // graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
 
+    if (!this.state.user.starterpack) {
+      
+      this.starterpackIcon = this.add.image(490, 45, 'starterpack-icon').setScale(0.2);
+      
+      this.tweens.add({
+        targets: this.starterpackIcon,
+        duration: 300,
+        yoyo: true,
+        ease: 'Power2',
+        repeat: 2,
+        delay: 400,
+        scale: 0.3,
+        loop: -1,
+        loopDelay: 4000,
+      });
+    }
   }
 
 
@@ -473,6 +490,9 @@ class SheepBars extends Phaser.Scene {
     this.calendarAnimation();
 
     this.updateNativeShop();
+
+    if (this.starterpackIcon && this.state.user.starterpack) this.starterpackIcon?.destroy();
+
   }
 
 

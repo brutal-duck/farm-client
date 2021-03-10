@@ -66,6 +66,7 @@ let boostBg: any = require("./../../../../assets/images/modal/boost-bg.png");
 let improveCollector: any = require("./../../../../assets/images/modal/improve-collector.png");
 let shopResourceCollector: any = require("./../../../../assets/images/event/shop-resource-collector.png");
 let starterpackBg: any = require("./../../../../assets/images/modal/starterpack-bg.png");
+let starterpackShadow: any = require("./../../../../assets/images/modal/starterpack-icon-shadow.png");
 
 class Shop extends Phaser.Scene {
   constructor() {
@@ -162,6 +163,7 @@ class Shop extends Phaser.Scene {
     this.load.image('boost-bg', boostBg);
     this.load.image('improve-collector', improveCollector);
     this.load.image('starterpack-bg', starterpackBg);
+    this.load.image('starterpack-shadow', starterpackShadow);
 
   }
 
@@ -277,8 +279,10 @@ class Shop extends Phaser.Scene {
     
     if (!this.state.user.starterpack) {
 
-      let starterpackBg: Phaser.GameObjects.Image = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY - 240, 'starterpack-bg');
-      let text1: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 40, this.cameras.main.centerY - 290, this.state.lang.buyFrom, {
+      let starterpackBg: Phaser.GameObjects.Image = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY - 210, 'starterpack-bg');
+      let starterpackIconShadow: Phaser.GameObjects.Image = this.add.image(this.cameras.main.centerX - 135, this.cameras.main.centerY - 145, 'starterpack-shadow');
+      let starterpackIcon: Phaser.GameObjects.Image = this.add.image(this.cameras.main.centerX - 140, this.cameras.main.centerY - 210, 'starterpack-icon');
+      let text1: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 40, this.cameras.main.centerY - 260, this.state.lang.buyFrom, {
         font: '26px Shadow',
         color: '#FBCB64'
       }).setOrigin(0.5, 0.5);
@@ -311,13 +315,27 @@ class Shop extends Phaser.Scene {
         font: '26px Shadow',
         color: '#FFFFFF'
       }).setOrigin(0.5, 0);
+
+      this.tweens.add({
+        targets: starterpackIcon,
+        delay: 2000,
+        props: {
+          rotation: { duration: 1200, yoyo: false, ease: 'Power2', value: 2 * Math.PI },
+          y: { value: '-=40', ease: 'Power1', duration: 250, repeat: 2, yoyo: true },
+        },
+        loop: -1,
+        loopDelay: 1000,
+      });
+
+      this.tweens.add({ targets: starterpackIconShadow, delay: 2000, duration: 250,  repeat: 2, yoyo: true, scale: 0.3, ease: 'Power1', loop: -1, loopDelay: 1000 });
+
     }
 
 
     for (let i: number = 0; i < rows; i++) {
       let y: number = i * 270 + 40;
 
-      if (!this.state.user.starterpack) y += 200;
+      if (!this.state.user.starterpack) y += 248;
       
       let left: Ipackage = this.state.packages[i * 2];
       let right: Ipackage = this.state.packages[i * 2 + 1];
@@ -395,7 +413,8 @@ class Shop extends Phaser.Scene {
           color: '#FFFFFF'
         }).setOrigin(0.5, 0.5).setRotation(0.55);
 
-      }
+        // if (!this.state.user.starterpack) this.add.image(167, y + 38 + this.height, 'starterpack-icon').setRotation(0.55).setScale(0.5);
+      } 
       
       // правая
       if (right) {
