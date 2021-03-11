@@ -60,6 +60,8 @@ let ratingPriseBtn: any = require("./../../../assets/images/event/modal/rating-p
 let ratingPrisePlaces: any = require("./../../../assets/images/event/modal/rating-places.png");
 let ratingBGAfter: any = require("./../../../assets/images/event/modal/raiting-bg-after.png");
 let unicornStatus: any = require("./../../../assets/images/icons/unicorn-status.png");
+let feedBoostChickenIcon: any = require("./../../../assets/images/icons/chicken-feed-boost.png");
+
 
 
 export default function typePreload(): void {
@@ -84,7 +86,8 @@ export default function typePreload(): void {
         break;
       case 2: // магазин
         this.load.image('shop-window', shopWindow);
-
+        if (this.state.farm === 'Chicken') this.load.image('chicken-feed-boost-icon', feedBoostChickenIcon); 
+        
         break;
       case 3: // окно с заданиями
         this.load.image('tasks-top', tasksTop);

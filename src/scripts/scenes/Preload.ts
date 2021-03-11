@@ -100,6 +100,7 @@ let mapEventIsland: any = require("./../../assets/images/event/map-event-island.
 let unicornStatus: any = require("./../../assets/images/icons/unicorn-status.png");
 let starterpackBg: any = require("./../../assets/images/modal/starterpack-bg.png");
 let starterpackShadow: any = require("./../../assets/images/modal/starterpack-icon-shadow.png");
+let herdBoostRoadEvent: any = require("./../../assets/images/event/herd-boost-road-event.png");
 
 
 class Preload extends Phaser.Scene {
@@ -137,6 +138,7 @@ class Preload extends Phaser.Scene {
     this.load.image('shop-close', shopClose);
     this.load.image('shop-tab-active', shopTabActive);
     this.load.image('shop-tab', shopTab);
+    this.load.image('shop-window', shopWindow);
     if (this.state.farm === 'Sheep') this.load.image('icon-shop-sheep', iconShopSheep);
     if (this.state.farm === 'Chicken') this.load.image('icon-shop-chicken', iconShopChicken);
     this.load.image('icon-shop-boosts', iconShopBoosts);
@@ -182,7 +184,6 @@ class Preload extends Phaser.Scene {
 
     this.load.image('donate', donateBg);
     this.load.image('done-chapter-button', doneChapterButton);
-    this.load.image('shop-window', shopWindow);
     this.load.image('middle-button', middleButton);
     this.load.image('award-bg', awardBg);
     this.load.image('done-chapter', doneChapter);
@@ -214,17 +215,18 @@ class Preload extends Phaser.Scene {
     // буст "стадо"
     if (this.state.farm === 'Sheep') this.load.image('herd-boost-road-sheep', herdBoostRoadSheep);
     if (this.state.farm === 'Chicken') this.load.image('herd-boost-road-chicken', herdBoostRoadChicken);
+    if (this.state.farm === 'Event') this.load.image('herd-boost-road-event', herdBoostRoadEvent);
     this.load.image('bad-merging-animation', badMergingAnimation);
     this.load.image('boost-window-bg', boostWindowBg);
     this.load.image('boost-countdown', boostCountdown);
     this.load.image('boost-leaves', boostLeaves);
     this.load.image('flags', flags);
-    if (this.state.farm === 'Sheep') this.load.image('sheep-herd-boost-icon', herdBoostSheepIcon);
-    if (this.state.farm === 'Chicken') this.load.image('chicken-herd-boost-icon', herdBoostChickenIcon);
-    if (this.state.farm === 'Sheep') this.load.image('sheep-feed-boost-icon', feedBoostSheepIcon);
-    if (this.state.farm === 'Chicken') this.load.image('chicken-herd-boost-icon', feedBoostChickenIcon);
-    if (this.state.farm === 'Event') this.load.image('event-herd-boost-icon', herdBoostEventIcon);
-    if (this.state.farm === 'Event') this.load.image('event-feed-boost-icon', feedBoostEventIcon);
+    this.load.image('sheep-herd-boost-icon', herdBoostSheepIcon);
+    this.load.image('chicken-herd-boost-icon', herdBoostChickenIcon);
+    this.load.image('sheep-feed-boost-icon', feedBoostSheepIcon);
+    this.load.image('chicken-herd-boost-icon', feedBoostChickenIcon);
+    this.load.image('event-herd-boost-icon', herdBoostEventIcon);
+    this.load.image('event-feed-boost-icon', feedBoostEventIcon);
     this.load.image('unicorn-status', unicornStatus);
     this.load.image('starterpack-bg', starterpackBg);
     this.load.image('starterpack-shadow', starterpackShadow);
