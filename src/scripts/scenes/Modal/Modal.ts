@@ -77,6 +77,7 @@ import { changeNickname, addEmail, support, registration } from '../../general/m
 import { herdBoostWindow, getRandomAnimal, getRandomStartPosition } from './herdBoost';
 import { createChatBars } from './Chat/elements';
 import { improveCollectorAnim } from '../../general/animations';
+import typePreload from './typePreload';
 
 let partProgress: any = require("./../../../assets/images/modal/part-progress.png");
 let newbieBg: any = require("./../../../assets/images/daily/newbie-bg.png");
@@ -163,13 +164,11 @@ class Modal extends Phaser.Scene {
   public progressButton: any;
   public feedBoostText: Phaser.GameObjects.Text;
   public caveTimer: Phaser.GameObjects.Text;
-  // буст "Стадо"
   public animalForBoost: Phaser.Physics.Arcade.Group;
   public mergingArray: any[];
   public mainInput: HTMLInputElement;
   public secondInput: HTMLInputElement;
   public enterKey: Phaser.Input.Keyboard.Key;
-  // Чат
   public chatHeight: number = 0;
   public chatBG: Phaser.GameObjects.Sprite;
   public line: Phaser.GameObjects.Text;
@@ -227,7 +226,6 @@ class Modal extends Phaser.Scene {
   public updateImproveCollectorSheep = updateImproveCollectorSheep.bind(this);
   public improveCollectorChicken = improveCollectorChicken.bind(this);
   public updateImproveCollectorChicken = updateImproveCollectorChicken.bind(this);
-  // буст "Стадо"
   public herdBoostWindow = herdBoostWindow.bind(this);
   public getRandomAnimal = getRandomAnimal.bind(this);
   public getRandomStartPosition = getRandomStartPosition.bind(this);
@@ -238,7 +236,6 @@ class Modal extends Phaser.Scene {
   public chickenEggRepositoryExchange = chickenEggRepositoryExchange.bind(this);
   public changeNickname = changeNickname.bind(this);
   public addEmail = addEmail.bind(this);
-
   public confirmExpelAnimal = confirmExpelAnimal.bind(this);
   public shortNum = shortNum.bind(this);
   public eventConvertor = eventConvertor.bind(this);
@@ -255,6 +252,7 @@ class Modal extends Phaser.Scene {
   public endEventModal = endEventModal.bind(this);
   public improveCollectorAnim = improveCollectorAnim.bind(this);
   public getStatusSettings = getStatusSettings.bind(this);
+  public typePreload = typePreload.bind(this);
   
   public init(state: Istate): void {
     this.state = state;
@@ -262,87 +260,88 @@ class Modal extends Phaser.Scene {
 
 
   public preload(): void {
+    this.typePreload();
+
+    // this.load.image('part-progress', partProgress);
+    // this.load.image('donate', donateBg);
+    // this.load.image('done-chapter-button', doneChapterButton);
+    // this.load.image('shop-window', shopWindow);
+    // this.load.image('middle-button', middleButton);
+    // this.load.image('award-bg', awardBg);
+    // this.load.image('done-chapter', doneChapter);
+    // this.load.image('pb-chapter-modal', pbChapterAnimal);
+    // this.load.image('green-progress', greenProgress);
+    // // this.load.image('tasks-window-side', tasksWindowSide);
+    // // this.load.image('tasks-window-body', tasksWindowBody);
+    // this.load.image('tasks-top', tasksTop);
+    // this.load.image('tasks-middle', tasksMiddle);
+    // this.load.image('tasks-bottom', tasksBottom);
+    // this.load.image('tasks-complete', tasksComplete);
+    // this.load.image('tasks-uncomplete', tasksUncomplete);
+    // this.load.image('tasks-reward', tasksReward);
+    // this.load.image('tasks-bar', tasksBar);
+    // this.load.image('tasks-close', tasksClose);
+    // // this.load.image('pb-chapter', pbChapter);
+    // this.load.image('big-btn-grey', bigButtonGrey);
+    // this.load.image('big-btn-blue', bigButtonBlue);
+    // this.load.image('big-btn-orange', bigButtonOrange);
+    // this.load.image('big-btn-red', bigButtonRed);
+    // this.load.image('big-btn-yellow', bigButtonYellow);
+    // this.load.image('repository-sell-btn', repositorySellBtn);
     
-    this.load.image('part-progress', partProgress);
-    this.load.image('donate', donateBg);
-    this.load.image('done-chapter-button', doneChapterButton);
-    this.load.image('shop-window', shopWindow);
-    this.load.image('middle-button', middleButton);
-    this.load.image('award-bg', awardBg);
-    this.load.image('done-chapter', doneChapter);
-    this.load.image('pb-chapter-modal', pbChapterAnimal);
-    this.load.image('green-progress', greenProgress);
-    // this.load.image('tasks-window-side', tasksWindowSide);
-    // this.load.image('tasks-window-body', tasksWindowBody);
-    this.load.image('tasks-top', tasksTop);
-    this.load.image('tasks-middle', tasksMiddle);
-    this.load.image('tasks-bottom', tasksBottom);
-    this.load.image('tasks-complete', tasksComplete);
-    this.load.image('tasks-uncomplete', tasksUncomplete);
-    this.load.image('tasks-reward', tasksReward);
-    this.load.image('tasks-bar', tasksBar);
-    this.load.image('tasks-close', tasksClose);
-    this.load.image('pb-chapter', pbChapter);
-    this.load.image('big-btn-grey', bigButtonGrey);
-    this.load.image('big-btn-blue', bigButtonBlue);
-    this.load.image('big-btn-orange', bigButtonOrange);
-    this.load.image('big-btn-red', bigButtonRed);
-    this.load.image('big-btn-yellow', bigButtonYellow);
-    this.load.image('repository-sell-btn', repositorySellBtn);
-    
-    if (this.state.newbieTime > 0) {
-      this.load.image('newbie-bg', newbieBg);
-      this.load.image('newbie-day-0', newbieDay0);
-      this.load.image('newbie-day-1', newbieDay1);
-      this.load.image('newbie-day-2', newbieDay2);
-      this.load.image('newbie-day-3', newbieDay3);
-      this.load.image('newbie-day-4', newbieDay4);
-      this.load.image('newbie-day-5', newbieDay5);
-      this.load.image('newbie-day-6', newbieDay6);
-      this.load.image('newbie-day-7', newbieDay7);
-      this.load.image('day-yellow', dayYellow);
-      this.load.image('day-purple', dayPurple);
-      this.load.image('day-red', dayRed);
-      this.load.image('award-received', awardReceived);
-    } else {
-      this.load.image('daily-bg', dailyBg);
-      this.load.image('achievement-daily', achievementDaily);
-      this.load.image('flash-daily', flashDaily);
-    }
+    // if (this.state.newbieTime > 0) {
+    //   this.load.image('newbie-bg', newbieBg);
+    //   this.load.image('newbie-day-0', newbieDay0);
+    //   this.load.image('newbie-day-1', newbieDay1);
+    //   this.load.image('newbie-day-2', newbieDay2);
+    //   this.load.image('newbie-day-3', newbieDay3);
+    //   this.load.image('newbie-day-4', newbieDay4);
+    //   this.load.image('newbie-day-5', newbieDay5);
+    //   this.load.image('newbie-day-6', newbieDay6);
+    //   this.load.image('newbie-day-7', newbieDay7);
+    //   this.load.image('day-yellow', dayYellow);
+    //   this.load.image('day-purple', dayPurple);
+    //   this.load.image('day-red', dayRed);
+    //   this.load.image('award-received', awardReceived);
+    // } else {
+    //   this.load.image('daily-bg', dailyBg);
+    //   this.load.image('achievement-daily', achievementDaily);
+    //   this.load.image('flash-daily', flashDaily);
+    // }
 
-    if (this.state.platform !== 'web') {
-      this.load.image('avatar', this.state.avatar);
-    } else {
-      this.load.image('farmer', farmer);
-    }
+    // if (this.state.platform !== 'web') {
+    //   this.load.image('avatar', this.state.avatar);
+    // } else {
+    //   this.load.image('farmer', farmer);
+    // }
 
-    // буст "стадо"
-    if (this.state.farm === 'Sheep') this.load.image('herd-boost-road-sheep', herdBoostRoadSheep);
-    if (this.state.farm === 'Chicken') this.load.image('herd-boost-road-chicken', herdBoostRoadChicken);
-    if (this.state.farm === 'Event') this.load.image('herd-boost-road-event', herdBoostRoadEvent);
-    this.load.image('bad-merging-animation', badMergingAnimation);
-    this.load.image('boost-window-bg', boostWindowBg);
-    this.load.image('boost-countdown', boostCountdown);
-    this.load.image('boost-leaves', boostLeaves);
-    this.load.image('flags', flags);
-    if (this.state.farm === 'Sheep') this.load.image('sheep-herd-boost-icon', herdBoostSheepIcon);
-    if (this.state.farm === 'Chicken') this.load.image('chicken-herd-boost-icon', herdBoostChickenIcon);
-    if (this.state.farm === 'Event') this.load.image('event-herd-boost-icon', herdBoostEventIcon);
-    if (this.state.farm === 'Sheep') this.load.image('sheep-feed-boost-icon', feedBoostSheepIcon);
-    if (this.state.farm === 'Chicken') this.load.image('chicken-feed-boost-icon', feedBoostChickenIcon);
-    if (this.state.farm === 'Event') this.load.image('event-feed-boost-icon', feedBoostEventIcon);
+    // // буст "стадо"
+    // if (this.state.farm === 'Sheep') this.load.image('herd-boost-road-sheep', herdBoostRoadSheep);
+    // if (this.state.farm === 'Chicken') this.load.image('herd-boost-road-chicken', herdBoostRoadChicken);
+    // if (this.state.farm === 'Event') this.load.image('herd-boost-road-event', herdBoostRoadEvent);
+    // this.load.image('bad-merging-animation', badMergingAnimation);
+    // this.load.image('boost-window-bg', boostWindowBg);
+    // this.load.image('boost-countdown', boostCountdown);
+    // this.load.image('boost-leaves', boostLeaves);
+    // this.load.image('flags', flags);
+    // if (this.state.farm === 'Sheep') this.load.image('sheep-herd-boost-icon', herdBoostSheepIcon);
+    // if (this.state.farm === 'Chicken') this.load.image('chicken-herd-boost-icon', herdBoostChickenIcon);
+    // if (this.state.farm === 'Event') this.load.image('event-herd-boost-icon', herdBoostEventIcon);
+    // if (this.state.farm === 'Sheep') this.load.image('sheep-feed-boost-icon', feedBoostSheepIcon);
+    // if (this.state.farm === 'Chicken') this.load.image('chicken-feed-boost-icon', feedBoostChickenIcon);
+    // if (this.state.farm === 'Event') this.load.image('event-feed-boost-icon', feedBoostEventIcon);
 
-    this.load.image('chat-bg', chatBackground);
-    this.load.image('chat-send-btn', chatSendBtn);
-    this.load.image('chat-emoji-btn', chatEmojiBtn);
-    this.load.image('autoprogress-bg', autoprogressBG);
-    this.load.image('purple-btn', purpleBtn);
-    this.load.image('rating-bg', ratingBG);
-    this.load.image('rating-rules-btn', ratingRulesBtn);
-    this.load.image('rating-price-btn', ratingPriseBtn);
-    this.load.image('rating-places', ratingPrisePlaces);
-    this.load.image('raiting-bg-after',ratingBGAfter);
-    this.load.image('unicorn-status', unicornStatus);
+    // this.load.image('chat-bg', chatBackground);
+    // this.load.image('chat-send-btn', chatSendBtn);
+    // this.load.image('chat-emoji-btn', chatEmojiBtn);
+    // this.load.image('autoprogress-bg', autoprogressBG);
+    // this.load.image('purple-btn', purpleBtn);
+    // this.load.image('rating-bg', ratingBG);
+    // this.load.image('rating-rules-btn', ratingRulesBtn);
+    // this.load.image('rating-price-btn', ratingPriseBtn);
+    // this.load.image('rating-places', ratingPrisePlaces);
+    // this.load.image('raiting-bg-after',ratingBGAfter);
+    // this.load.image('unicorn-status', unicornStatus);
 
 
   }
@@ -391,18 +390,18 @@ class Modal extends Phaser.Scene {
           this.herdBoostEventWindow();
         }
         break;
-      case 9:
+      case 9: // Чат
         this.chatBG = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + this.chatHeight, 'chat-bg');
         this.scene.launch('Chat', this.state);
         this.createChatBars(this.chatHeight)
         break;
-      case 10:
+      case 10: // окно автопрогресса ивентовой фермы
         this.eventProgress();
         break;
-      case 11:
-        this.eventRatings()
+      case 11: // окно рейтингов ивентовой фермы
+        this.eventRatings();
         break;
-      case 12: 
+      case 12: // окно выдачи наград ивентовой фермы
         this.endEventModal();
         break;
       default:

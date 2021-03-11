@@ -443,7 +443,7 @@ function interval(): void {
     }
 
     // туториал по ивентовой ферме
-    if (this.state.userSheep.part >= 4 && 
+    if (this.state.userSheep.part > 4 && 
       (this.state.name !== '' || this.state.user.login !== '') && 
       this.state.progress.event.startTime <= 0 && 
       this.state.progress.event.endTime > 0) {
