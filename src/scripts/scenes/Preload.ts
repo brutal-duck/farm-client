@@ -89,6 +89,8 @@ let herdBoostSheepIcon: any = require("./../../assets/images/icons/sheep-herd-bo
 let herdBoostChickenIcon: any = require("./../../assets/images/icons/chicken-herd-boost.png");
 let feedBoostSheepIcon: any = require("./../../assets/images/icons/sheep-feed-boost.png");
 let feedBoostChickenIcon: any = require("./../../assets/images/icons/chicken-feed-boost.png");
+let feedBoostEventIcon: any = require("./../../assets/images/icons/event-feed-boost.png");
+let herdBoostEventIcon: any = require("./../../assets/images/icons/event-herd-boost.png");
 let iconShopEvent: any = require("./../../assets/images/event/icons/icon-shop-event.png");
 let eventMoneyPackage: any = require("./../../assets/images/event/money-package.png");
 let shopResourceCollector: any = require("./../../assets/images/event/shop-resource-collector.png");
@@ -221,6 +223,8 @@ class Preload extends Phaser.Scene {
     if (this.state.farm === 'Chicken') this.load.image('chicken-herd-boost-icon', herdBoostChickenIcon);
     if (this.state.farm === 'Sheep') this.load.image('sheep-feed-boost-icon', feedBoostSheepIcon);
     if (this.state.farm === 'Chicken') this.load.image('chicken-herd-boost-icon', feedBoostChickenIcon);
+    if (this.state.farm === 'Event') this.load.image('event-herd-boost-icon', herdBoostEventIcon);
+    if (this.state.farm === 'Event') this.load.image('event-feed-boost-icon', feedBoostEventIcon);
     this.load.image('unicorn-status', unicornStatus);
     this.load.image('starterpack-bg', starterpackBg);
     this.load.image('starterpack-shadow', starterpackShadow);

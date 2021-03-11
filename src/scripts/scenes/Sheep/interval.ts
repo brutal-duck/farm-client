@@ -465,7 +465,6 @@ function interval(): void {
       }
     }
 
-    console.log(this.state.userSheep.money);
   }, callbackScope: this, loop: true });
   
 

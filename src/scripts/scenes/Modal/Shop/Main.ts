@@ -67,6 +67,12 @@ let improveCollector: any = require("./../../../../assets/images/modal/improve-c
 let shopResourceCollector: any = require("./../../../../assets/images/event/shop-resource-collector.png");
 let starterpackBg: any = require("./../../../../assets/images/modal/starterpack-bg.png");
 let starterpackShadow: any = require("./../../../../assets/images/modal/starterpack-icon-shadow.png");
+let herdBoostSheepIcon: any = require("./../../../../assets/images/icons/sheep-herd-boost.png");
+let herdBoostChickenIcon: any = require("./../../../../assets/images/icons/chicken-herd-boost.png");
+let herdBoostEventIcon: any = require("./../../../../assets/images/icons/event-herd-boost.png");
+let feedBoostSheepIcon: any = require("./../../../../assets/images/icons/sheep-feed-boost.png");
+let feedBoostChickenIcon: any = require("./../../../../assets/images/icons/chicken-feed-boost.png");
+let feedBoostEventIcon: any = require("./../../../../assets/images/icons/event-feed-boost.png");
 
 class Shop extends Phaser.Scene {
   constructor() {
@@ -164,6 +170,12 @@ class Shop extends Phaser.Scene {
     this.load.image('improve-collector', improveCollector);
     this.load.image('starterpack-bg', starterpackBg);
     this.load.image('starterpack-shadow', starterpackShadow);
+    if (this.state.farm === 'Sheep') this.load.image('sheep-herd-boost-icon', herdBoostSheepIcon);
+    if (this.state.farm === 'Chicken') this.load.image('chicken-herd-boost-icon', herdBoostChickenIcon);
+    if (this.state.farm === 'Event') this.load.image('event-herd-boost-icon', herdBoostEventIcon);
+    if (this.state.farm === 'Sheep') this.load.image('sheep-feed-boost-icon', feedBoostSheepIcon);
+    if (this.state.farm === 'Chicken') this.load.image('chicken-feed-boost-icon', feedBoostChickenIcon);
+    if (this.state.farm === 'Event') this.load.image('event-feed-boost-icon', feedBoostEventIcon);
 
   }
 
