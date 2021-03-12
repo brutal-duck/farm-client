@@ -362,7 +362,7 @@ function dailyNewbie(): void {
     let textAwardLitle: Phaser.GameObjects.Text;
 
     if (this.state.daily === 1) {
-
+      
       day = day0;
       bgDay = bgDay0;
       textDay = textDay0;
@@ -435,33 +435,14 @@ function dailyNewbie(): void {
 
     }
 
-    let counter: number = 1;
-    let top: boolean = true;
-    this.time.addEvent({ delay: 20, callback: (): void => {
-
-      counter++;
-
-      if (top) {
-
-        day.y -= 1;
-        bgDay.y -= 1;
-        textDay.y -= 1;
-        if (textAward) textAward.y -= 1;
-        if (textAwardLitle) textAwardLitle.y -= 1;
-
-      } else {
-
-        day.y += 1;
-        bgDay.y += 1;
-        textDay.y += 1;
-        if (textAward) textAward.y += 1;
-        if (textAwardLitle) textAwardLitle.y += 1;
-
-      }
-
-      if (!(counter % 10)) top = !top;
-
-    }, callbackScope: this, loop: true });
+    this.tweens.add({
+      targets: [day, bgDay, textDay, textAward, textAwardLitle],
+      y: '-=15',
+      duration: 160,
+      yoyo: true,
+      repeat: -1,
+      ease: 'Power1'
+    });
 
   }
 
