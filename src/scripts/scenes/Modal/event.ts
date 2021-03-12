@@ -609,19 +609,22 @@ function getRandomAnimal(type: string): void {
   let randomArray: number[] = [];
   let max: number = this.state[`user${this.state.farm}`].maxLevelAnimal - 4;
   max = max <= 0 ? 1 : max;
-  for (let i: number = 0; i < max; i++) {
+
+  let min: number = this.state[`user${this.state.farm}`].maxLevelAnimal - 14;
+  min = min <= 0 ? 0 : min;
+
+  for (let i: number = min; i < max; i++) {
     randomArray.push(i ** 2 * 100);
   }
 
-  let randomIndex: number = random(0, max ** 2 * 100);
+  let randomIndex: number = random(min + 1 , max ** 2 * 100);
   let randomType: number;
-
   
   for (let i = randomArray.length - 1; i >= 0; i--) {
     if (randomIndex >= randomArray[i]) {
-      randomType = randomArray.length - i;
+      randomType = min + randomArray.length - i;
       break;
-    } 
+    } else randomType = min;
   }
 
   let animal: Phaser.Physics.Arcade.Sprite = this.animalForBoost.create(x, y, type + randomType)
