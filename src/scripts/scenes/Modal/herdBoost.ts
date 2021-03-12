@@ -447,6 +447,7 @@ function drag(animal: Phaser.Physics.Arcade.Sprite): void {
 
     if (animal.data.values.merging) this.mergingArray = []; // если животное из мерджа то очистить массив
     animal.data.values.merging = false; // снимаем метку с животных после попытки мерджа
+    animal.data.values.drag = true;
     animal.setVelocity(0, 0); // отменяем передвижение
     animal.data.values.woolSprite?.setVelocity(0, 0);
     animal.setCollideWorldBounds(true); // чтобы не могли перетащить за пределы
@@ -455,7 +456,6 @@ function drag(animal: Phaser.Physics.Arcade.Sprite): void {
   });
 
   this.input.on('drag', (pointer: any, animal: Phaser.Physics.Arcade.Sprite, dragX: number, dragY: number): void => {
-    animal.data.values.drag = true;
     animal.x = dragX;
     animal.y = dragY;
     animal.setDepth(dragY + Math.round((animal.height / 2) + 100));
@@ -493,14 +493,15 @@ function drag(animal: Phaser.Physics.Arcade.Sprite): void {
           this.mergingCloud({x: animal.x, y: animal.y}, true); // плохое облако на месте животного
           animal.data?.values.woolSprite?.destroy();
           animal.destroy();
+          
       } else {
         if (animal.data.values.merging) {
+
           animal.setVelocityX(0);
           animal.data.values.woolSprite?.setVelocityX(0);
           animal.data.values.side = 'right';
         } else {
           // проверяем в какую сторону нужно отправить овцу
-
           animal.setCollideWorldBounds(false);
           
           if (animal.data.values.side === 'right') {

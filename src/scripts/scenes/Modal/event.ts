@@ -670,6 +670,7 @@ function eventDrag(): void {
 
   this.input.on('dragstart', (pointer: any, animal: Phaser.Physics.Arcade.Sprite): void => {
     if (animal.body === null) return;
+    animal.data.values.drag = true;
     animal.data.values.cloud.setVisible(false);
     if (animal.data.values.merging) this.mergingArray = []; // если животное из мерджа то очистить массив
     animal.data.values.merging = false; // снимаем метку с животных после попытки мерджа
@@ -679,7 +680,6 @@ function eventDrag(): void {
   });
 
   this.input.on('drag', (pointer: any, animal: Phaser.Physics.Arcade.Sprite, dragX: number, dragY: number): void => {
-    animal.data.values.drag = true;
     animal.x = dragX;
     animal.y = dragY;
     animal.setDepth(dragY + Math.round((animal.height / 2) + 100));
@@ -1060,14 +1060,14 @@ function eventProgress(): void {
   }).setOrigin(0.5, 0.5);
 
   // Определение стоимости удвоения
-  if (this.state.modal.eventParams.collectorTime >= 1800 && this.state.modal.eventParams.collectorTime <= 7200) doubleProfitPrice = 40
-  else if (this.state.modal.eventParams.collectorTime > 7200) doubleProfitPrice = 90;
+  if (this.state.modal.eventParams.offlineTime >= 1800 && this.state.modal.eventParams.offlineTime <= 7200) doubleProfitPrice = 40
+  else if (this.state.modal.eventParams.offlineTime> 7200) doubleProfitPrice = 90;
 
   // Кнопка удвоения
-  let btn: Phaser.GameObjects.Sprite = undefined;
-  let title: Phaser.GameObjects.Text = undefined;
-  let img1: Phaser.GameObjects.Sprite = undefined;
-  let text1: Phaser.GameObjects.Text = undefined;
+  let btn: Phaser.GameObjects.Sprite;
+  let title: Phaser.GameObjects.Text;
+  let img1: Phaser.GameObjects.Sprite;
+  let text1: Phaser.GameObjects.Text;
 
   btn = this.add.sprite(this.cameras.main.centerX + 9, this.cameras.main.centerY + 156 - height, 'purple-btn');
   title = this.add.text(btn.x - 140, btn.y, this.state.lang.pickUp + ' X2', {
@@ -1100,7 +1100,7 @@ function eventProgress(): void {
 
     this.state.userEvent.money += this.state.modal.eventParams.offlineProgress;
 
-    if (ad) {
+    if (ad && doubleProfitPrice === 5) {
 
       this.game.scene.keys[this.state.farm].watchAd(5);
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
