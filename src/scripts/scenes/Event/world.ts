@@ -127,9 +127,10 @@ function world(): void {
 
     
     
-    const territoryZone: Phaser.GameObjects.Zone = this.add.zone(x + 10, y + 10, territory.width - 20, territory.height - 20).setDropZone(undefined, () => {}).setOrigin(0, 0);
+    const territoryZone: Phaser.GameObjects.Zone = this.add.zone(x + 40, y + 40, territory.width - 80, territory.height - 80).setDropZone(undefined, () => {}).setOrigin(0, 0);
+
     territoryZone.type = 'type' + index;
-    
+    if (territoryZone.type === 'type0') territoryZone.setDisplaySize(territoryZone.width, territoryZone.height - 50);
     // let graphics = this.add.graphics().setDepth(territory.y * 5);
     // graphics.lineStyle(5, 0x000000);
     // graphics.strokeRect(territoryZone.x, territoryZone.y, territoryZone.input.hitArea.width, territoryZone.input.hitArea.height);
