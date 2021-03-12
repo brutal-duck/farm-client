@@ -1061,7 +1061,7 @@ function eventProgress(): void {
 
   // Определение стоимости удвоения
   if (this.state.modal.eventParams.offlineTime >= 1800 && this.state.modal.eventParams.offlineTime <= 7200) doubleProfitPrice = 40
-  else if (this.state.modal.eventParams.offlineTime> 7200) doubleProfitPrice = 90;
+  else if (this.state.modal.eventParams.offlineTime > 7200) doubleProfitPrice = 90;
 
   // Кнопка удвоения
   let btn: Phaser.GameObjects.Sprite;

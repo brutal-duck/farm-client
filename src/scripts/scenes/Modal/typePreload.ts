@@ -106,6 +106,7 @@ export default function typePreload(): void {
         this.load.image('daily-bg', dailyBg);
         this.load.image('achievement-daily', achievementDaily);
         this.load.image('flash-daily', flashDaily);
+        this.load.image('middle-button', middleButton);
         break;
       case 5: // следующая глава +
         this.load.image('done-chapter', doneChapter);
@@ -126,6 +127,7 @@ export default function typePreload(): void {
         this.load.image('day-purple', dayPurple);
         this.load.image('day-red', dayRed);
         this.load.image('award-received', awardReceived);
+        this.load.image('done-chapter-button', doneChapterButton);
         break;
       case 7: // окно выдачи донатных кристаллов +
         this.load.image('done-chapter-button', doneChapterButton);
