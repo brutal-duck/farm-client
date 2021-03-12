@@ -227,7 +227,7 @@ function buyAnimal(breed: number, shop: boolean = false, diamond: number = 0): b
         this.state.userEvent.countAnimal[breed - 1].counter = animalPrice.countAnimal;
 
         this.state.amplitude.getInstance().logEvent('diamonds_spent', {
-          type: 'improve_collector',
+          type: 'buy_unicorn',
           count: diamond,
           farm_id: this.state.farm
         });
