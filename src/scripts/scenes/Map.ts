@@ -119,7 +119,7 @@ class Map extends Phaser.Scene {
     // Евентовая ферма на карте
     this.buildEvent();
     
-    if (!this.state.user.starterpack) {
+    if (!this.state.user.starterpack && (this.state.userSheep?.part > 4 || this.state.userChicken?.part >= 1)) {
 
       let starterpackIcon: Phaser.GameObjects.Image = this.add.image(620, 440, 'starterpack-icon').setScale(0.8).setAngle(-30);
       this.tweens.add({
