@@ -78,8 +78,8 @@ class Map extends Phaser.Scene {
 
     this.scene.launch('MapBars', this.state);
     
-    this.getEventRaiting(); // получаем новые рейтинги
-
+    if (this.state.progress.event.eventPoints >= 0) this.getEventRaiting(); // получаем новые рейтинги
+    
     this.bg = this.add.tileSprite(0, 0, 720, this.height, 'map')
       .setInteractive()
       .setOrigin(0, 0);
