@@ -1,38 +1,27 @@
 import { shortTime } from './general/basic';
+import SheepBars from './scenes/Sheep/SheepBars';
+import ChickenBars from './scenes/Chicken/ChickenBars';
 
 // бабл
-function createSpeechBubble(text: string, cave: boolean = false): void {
+function createSpeechBubble(text: string, type: number = 1): void {
   
   let x = 120;
   let y = 360;
   let width = 340;
-  let height = 130;
 
-  if (cave) {
+  if (type === 2) {
     y = 220;
     x = 260;
-  }
+  } 
+
+  if (type === 3) {
+    y = 165;
+    x = 205;
+  } 
 
   let bubble: Phaser.GameObjects.Graphics = this.add.graphics({ x: x, y: y });
 
   bubble.fillStyle(0xFFFFFF, 1);
-  bubble.fillRoundedRect(0, 0, width, height, 16);
-  
-  let point1X = width;
-  let point1Y = 40;
-  let point2X = width;
-  let point2Y = 10;
-  let point3X = width + 40;
-  let point3Y = 20;
-
-  if (cave) {
-    point1X = 0;
-    point2X = 0;
-    point3X = -40;
-  }
-
-  bubble.fillTriangle(point1X, point1Y, point2X, point2Y, point3X, point3Y);
-  bubble.setDepth(y + 240);
 
   let bubbleText: Phaser.GameObjects.Text = this.add.text(x + 20, y, text, {
     font: '24px Bip',
@@ -41,26 +30,51 @@ function createSpeechBubble(text: string, cave: boolean = false): void {
     wordWrap: { width: width }
   }).setDepth(y + 240);
 
-  let b = bubbleText.getBounds();
-  bubbleText.setPosition(x + 20, bubble.y + (height / 2) - (b.height / 2));
+  let bubleTextHeight = bubbleText.getBounds().height + 40;
+  bubbleText.setPosition(x + 20, bubble.y + 20);
+  bubble.fillRoundedRect(0, 0, width, bubleTextHeight, 16);
 
-  this.time.addEvent({ delay: 3000, callback: (): void => {
+  let point1X = width;
+  let point1Y = 40;
+  let point2X = width;
+  let point2Y = 10;
+  let point3X = width + 40;
+  let point3Y = 20;
 
-    let interval = this.time.addEvent({ delay: 30, callback: (): void => {
+  if (type === 2) {
+    point1X = 0;
+    point2X = 0;
+    point3X = -40;
+  }
+  if (type === 3) {
+    point1Y = bubleTextHeight / 2 - 15;
+    point2Y = bubleTextHeight / 2 + 15;
+    point3Y = bubleTextHeight / 2 + 25;
+  }
 
-      let alpha: number = Number(bubble.alpha.toFixed(2)) - 0.03;
-      bubble.setAlpha(alpha);
-      bubbleText.setAlpha(alpha);
+  bubble.fillTriangle(point1X, point1Y, point2X, point2Y, point3X, point3Y);
+  bubble.setDepth(y + 240);
 
-      if (alpha <= 0.03) {
-        bubble.destroy();
-        bubbleText.destroy();
-        interval.remove(false);
-      }
-
-    }, callbackScope: this, loop: true });
-
-  }, callbackScope: this, loop: false });
+  let bubbleFarmer: Phaser.GameObjects.Image;
+  let bubbleBg: Phaser.GameObjects.Graphics = this.add.graphics();
+  if (type === 3 ) {
+    bubbleFarmer = this.add.image(bubble.x + width + 20, bubble.y + (bubleTextHeight / 2), 'farmer').setOrigin(0, 0.5).setScale(0.5);
+    bubbleBg.fillStyle(0x000000, 0.5).fillRoundedRect(bubble.x - 20, bubble.y - 20, width + bubbleFarmer.displayWidth + 60, bubleTextHeight + 40, 16)
+  }
+  let anims: Phaser.Tweens.Tween = this.tweens.add({
+    targets: [bubble, bubbleText, bubbleFarmer, bubbleBg],
+    delay: 3000,
+    duration: 1000,
+    alpha: 0,
+    ease: 'Power1',
+    onComplete: () => {
+      bubble?.destroy();
+      bubbleText?.destroy();
+      bubbleFarmer?.destroy();
+      bubbleBg?.destroy();
+      anims.remove();
+    },
+  });
 
 }
 
@@ -496,7 +510,7 @@ function boostButton(
 // плашка заданий
 class TaskBoard {
 
-  public scene: any;
+  public scene: SheepBars | ChickenBars;
   public active: boolean;
   public status: number;
   public taskIcon: Phaser.GameObjects.Image;
@@ -520,9 +534,10 @@ class TaskBoard {
   public isGetTop: boolean = false
   public elements: any[]; // ПОМЕНЯТЬ ТИП
   public y: number;
+  public taskProgress: Phaser.GameObjects.Graphics;
 
   constructor(
-    scene: any
+    scene: SheepBars | ChickenBars
   ) {
     this.scene = scene;
     this.active = true;
@@ -584,8 +599,8 @@ class TaskBoard {
     else if (task?.done === 1 && task?.got_awarded === 0) this.status = 2;
     else this.status = 3;
 
-    let stateParts: Itasks[];
-    let userData: any;
+    let stateParts: Ipart[];
+    let userData: IuserSheep | IuserChicken;
     let countBreed: number;
 
     if (this.scene.state.farm === 'Chicken') {
@@ -653,7 +668,7 @@ class TaskBoard {
           color: '#525252'
         }
       ).setDepth(this.scene.height).setOrigin(0, 0.5);
-
+      
       let height: number = 70 + taskTextBounds.height;
       if (height < 110) height = 110;
 
@@ -668,21 +683,242 @@ class TaskBoard {
 
       this.scene.click(this.zone, (): void => {
 
-        // кликабельность заданий
-        if (task.type === 10) {
+        const openRegisterWindow = (): void => {
           let modal: Imodal = {
             type: 1,
             sysType: 15
           }
           this.scene.state.modal = modal;
           this.scene.scene.launch('Modal', this.scene.state);
-        } else if (task.type === 16) {
-          this.scene.game.scene.keys['Sheep'].openEmailWindow(); // задание на почту
+        }
+
+        const openShopAnimal = (): void => {
+          let modal: Imodal = {
+            type: 2,
+            shopType: 3
+          }
+          this.scene.state.modal = modal;
+          this.scene.scene.launch('Modal', this.scene.state);
+        }
+
+        const mergeAnimalBubble = (): void => {
+          this.scene.game.scene.keys[this.scene.state.farm].scrolling.scrollY = 0; 
+          this.scene.game.scene.keys[this.scene.state.farm].createSpeechBubble(this.scene.state.lang.taskHelp_2);
+        }
+
+        const openShopBoosters = (): void => {
+          let modal: Imodal = {
+              type: 2,
+              shopType: 4
+            }
+            this.scene.state.modal = modal;
+            this.scene.scene.launch('Modal', this.scene.state);
+        }
+
+        const takeAnimalBubble = (): void => {
+          this.scene.game.scene.keys[this.scene.state.farm].scrolling.scrollY = 0; 
+          this.scene.game.scene.keys[this.scene.state.farm].createSpeechBubble(this.scene.state.lang.taskHelp_4);
+        }
+
+        const openUpdateMerg = (): void => {
+          let modal: Imodal = {
+              type: 1,
+              sysType: 2
+          }
+          this.scene.state.territory = this.scene.game.scene.keys[this.scene.state.farm].territories.children.entries.find(el => el.type === 4);
+          this.scene.state.modal = modal;
+          this.scene.scene.launch('Modal', this.scene.state);
+        }
+
+        const openPasture = (): void => {
+          let modal: Imodal = {
+              type: 1,
+              sysType: 2
+          }
+          this.scene.state.territory = undefined;
+
+          for (let i = 1; i < 4; i++) {
+            this.scene.state.territory = this.scene.game.scene.keys[this.scene.state.farm].territories.children.entries.find(el => el.type === 2 && el.improve ===task.  state - i);
+            if (this.scene.state.territory) break;
+          }
+
+          if (this.scene.state.territory) {
+            this.scene.state.modal = modal;
+            this.scene.scene.launch('Modal', this.scene.state);
+          } else {
+            this.scene.createSpeechBubble(this.scene.state.lang.taskHelp_8, 3);
+          }
+        }
+
+        const openDrinker = (): void => {
+          let modal: Imodal = {
+            type: 1,
+            sysType: 2
+          }
+          this.scene.state.territory = undefined;
+          
+          for (let i = 1; i < 4; i++) {
+            this.scene.state.territory = this.scene.game.scene.keys[this.scene.state.farm].territories.children.entries.find(el => el.type === 3 && el.improve === task.state - i);
+
+            if (this.scene.state.territory) break;
+
+          }
+          if (this.scene.state.territory) {
+            this.scene.state.modal = modal;
+            this.scene.scene.launch('Modal', this.scene.state);
+          } else {
+            this.scene.createSpeechBubble(this.scene.state.lang.taskHelp_9, 3);
+          }
+        }
+
+        const openStorage = (): void => {
+          let modal: Imodal = {
+            type: 1,
+            sysType: 2
+          }
+          this.scene.state.territory = undefined;
+          
+          for (let i = 1; i < 4; i++) {
+            this.scene.state.territory = this.scene.game.scene.keys[this.scene.state.farm].territories.children.entries.find(el => el.type === 5 && el.improve === task.state - i);
+
+            if (this.scene.state.territory) break;
+
+          }
+          if (this.scene.state.territory) {
+            this.scene.state.modal = modal;
+            this.scene.scene.launch('Modal', this.scene.state);
+          } else {
+            this.scene.createSpeechBubble(this.scene.state.lang.taskHelp_9, 3);
+          }
+        }
+
+        const saveUpCoins = (): void => {
+          
+          let storage: any = this.scene.game.scene.keys[this.scene.state.farm].territories.find(el => el.type === 5 && el.money > 0);
+          this.scene.state.territory = undefined;
+          if (storage) {
+            this.scene.state.territory = storage;
+            let modal: Imodal = {
+              type: 1,
+              sysType: 2
+            }
+            this.scene.state.modal = modal;
+            this.scene.scene.launch('Modal', this.scene.state);
+          } else {
+            this.scene.createSpeechBubble(this.scene.state.lang.taskHelp_6, 3);
+          }
+        }
+
+         switch (task.type) {
+          case 1: 
+            openShopAnimal();
+            break;
+          case 2: 
+            mergeAnimalBubble();
+          break;
+          case 3: 
+            openShopBoosters();
+            break;
+          case 4: 
+            takeAnimalBubble();
+            break;
+          case 5:
+            break;
+          case 6: 
+            saveUpCoins();
+            break;
+          case 7: 
+            openUpdateMerg();
+            break;
+          case 8: 
+            openPasture();
+            break;
+          case 9:
+            openDrinker();
+            break;
+          case 10: 
+            openRegisterWindow();
+            break;
+          case 11: 
+            this.scene.createSpeechBubble(this.scene.state.lang[`taskHelp${this.scene.state.farm}_11`], 3);
+            break;
+          case 12: 
+            break;
+          case 13: 
+            break;
+          case 14: 
+            this.scene.createSpeechBubble(this.scene.state.lang[`taskHelp${this.scene.state.farm}_14`], 3);
+            break;
+          case 15: 
+            openShopBoosters();
+            break;
+          case 16: 
+            this.scene.game.scene.keys['Sheep'].openEmailWindow(); // задание на почту
+            break;
+          case 17: 
+            openStorage();
+            break;
+          case 18: 
+            this.scene.game.scene.keys[this.scene.state.farm].takeDiamondSheep();
+            break;
+          case 19: 
+            this.scene.createSpeechBubble(this.scene.state.lang[`taskHelp${this.scene.state.farm}_14`], 3);
+            break;
+          case 20: 
+            openStorage();
+            break;
         }
 
       });
 
       this.taskIcon = this.scene.add.image(88, this.scene.height  - 190 - height / 2, taskData.icon);
+
+      let progress: number = (100 / count * task.progress) * (6.3 / 100) - Math.PI / 2
+
+      if (!this.taskProgress) {
+        this.taskProgress = this.scene.add.graphics()
+          .clear()
+          // Внутренний круг
+          .lineStyle(4, 0xc09245, 1)
+          .beginPath()
+          .arc(this.taskIcon.x, this.taskIcon.y, 40, 0, Math.PI * 2)
+          .strokePath()
+          // Прогресс
+          .lineStyle(8, 0x70399f, 1)
+          .beginPath()
+          .arc(this.taskIcon.x, this.taskIcon.y, 46, Math.PI / -2, progress)
+          .strokePath()
+          // Внешний круг
+          .lineStyle(4, 0xc09245, 1)
+          .beginPath()
+          .arc(this.taskIcon.x, this.taskIcon.y, 51, 0, Math.PI * 2)
+          .strokePath()
+          .setDepth(3)
+          .setVisible(true);
+        
+      } else {
+        this.taskProgress
+          .clear()
+          // Внутренний круг
+          .lineStyle(4, 0xc09245, 1)
+          .beginPath()
+          .arc(this.taskIcon.x, this.taskIcon.y, 40, 0, Math.PI * 2)
+          .strokePath()
+          // Прогресс
+          .lineStyle(8, 0x70399f, 1)
+          .beginPath()
+          .arc(this.taskIcon.x, this.taskIcon.y, 46, Math.PI / -2, progress)
+          .strokePath()
+          // Внешний круг
+          .lineStyle(4, 0xc09245, 1)
+          .beginPath()
+          .arc(this.taskIcon.x, this.taskIcon.y, 51, 0, Math.PI * 2)
+          .strokePath()
+          .setDepth(3)
+          .setVisible(true);
+      }
+
+        
       this.star = this.scene.add.image(630, this.scene.height - 190 - height / 2, 'star');
 
       this.tileSprite = this.scene.add.tileSprite(30, this.scene.height - 190 - height, 660, height, 'modal')
@@ -770,7 +1006,8 @@ class TaskBoard {
         this.takeText,
         this.tileSprite
       )
-
+      
+      this.taskProgress?.clear();
     }
 
     if (this.status === 3 && task) {
@@ -807,7 +1044,8 @@ class TaskBoard {
         this.doneButtonText,
         this.tileSprite
       )
-
+      
+      this.taskProgress?.clear();
     }
     
     if (this.status === 4 && task) {
@@ -827,6 +1065,8 @@ class TaskBoard {
       this.tileSprite = this.scene.add.tileSprite(30, this.scene.height - 300, 660, 110, 'modal')
         .setOrigin(0)
         .setInteractive();
+
+      this.taskProgress?.clear();
 
     }
 
@@ -857,6 +1097,7 @@ class TaskBoard {
       this.doneText.setVisible(active);
       this.taskBoard.setVisible(active);
       this.taskIcon.setVisible(active);
+      this.taskProgress.setVisible(active);
       this.star.setVisible(active);
 
     }

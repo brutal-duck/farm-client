@@ -194,7 +194,7 @@ function takeDiamondSheep(): void {
       this.scene.launch('Modal', this.state);
 
     } else {
-      this.createSpeechBubble(this.state.lang.sheepCaveMessage, true);
+      this.createSpeechBubble(this.state.lang.sheepCaveMessage, 2);
     }
 
   }

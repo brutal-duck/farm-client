@@ -234,7 +234,7 @@ class Modal extends Phaser.Scene {
         if (this.state.farm !== 'Event') {
           this.herdBoostWindow();
         } else {
-          this.eventDrag()
+          this.eventDrag();
           this.herdBoostEventWindow();
         }
         break;

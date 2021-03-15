@@ -1,5 +1,4 @@
 import { random, getRandomBool, randomString, shortTime} from "../../general/basic";
-import { takeDiamondChicken } from "../Chicken/basic";
 
 let x: number = 600;
 let y: number = 360;

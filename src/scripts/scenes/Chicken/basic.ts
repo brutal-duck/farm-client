@@ -195,7 +195,7 @@ function takeDiamondChicken(): void {
       this.scene.launch('Modal', this.state);
 
     } else {
-      this.createSpeechBubble(this.state.lang.chickenCaveMessage, true);
+      this.createSpeechBubble(this.state.lang.chickenCaveMessage, 2);
     }
 
   }

@@ -13,7 +13,8 @@ import {
   Collector,
   TaskBoard,
   buildMenu,
-  Arrows
+  Arrows,
+  createSpeechBubble
 } from '../../elements';
 import {
   сurrencyAnimation,
@@ -103,6 +104,7 @@ class SheepBars extends Phaser.Scene {
   public showFeedTime = showFeedTime.bind(this);
   public shortTime = shortTime.bind(this);
   public getDiamonds = getDiamonds.bind(this);
+  public createSpeechBubble = createSpeechBubble.bind(this);
 
   public init(state: Istate): void {
     
