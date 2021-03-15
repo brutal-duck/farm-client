@@ -1629,6 +1629,9 @@ function endEventModal(): void {
       farm_id: 'Event'
     });
     if (this.state.progress.event.userEventRaiting.place <= 3) {
+
+      this.state.user.status = 'unicorn';
+      
       const data: any = {
         id: this.state.user.id,
         hash: this.state.user.hash,
