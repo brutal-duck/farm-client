@@ -381,8 +381,8 @@ class Modal extends Phaser.Scene {
       this.state.progress.event.updateRaitings = false
 
     }
-
-    this.timerNewbieAward.setText(shortTime(this.state.timeToNewDay, this.state.lang));
+  
+    if (this.state.modal.type === 6) this.timerNewbieAward.setText(shortTime(this.state.timeToNewDay, this.state.lang));
 
   }
 
