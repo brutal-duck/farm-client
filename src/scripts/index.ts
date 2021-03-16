@@ -23,7 +23,7 @@ import EventBars from './scenes/Event/EventBars';
 import Event from './scenes/Event/Main';
 import EventPreload from './scenes/Event/EventPreload';
 
-eruda
+// eruda
 if (process.env.DEV_CLIENT === window.location.origin) {
   eruda.init();
 }

@@ -492,7 +492,7 @@ class SheepBars extends Phaser.Scene {
     this.socialButtons();
 
     // икнока календарика
-    this.calendarAnimation();
+    // this.calendarAnimation();
 
     this.updateNativeShop();
 
