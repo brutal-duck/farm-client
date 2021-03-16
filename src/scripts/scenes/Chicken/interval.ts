@@ -336,7 +336,7 @@ function interval(): void {
     } 
 
     if (this.state.progress.event.endTime <= 0 && 
-      this.state.progress.event.eventPoints > 0 &&
+      this.state.progress.event.eventPoints > 0  && this.state.progress.even.open &&
       this.scene.isActive('Map')) {
       this.autosave();
       this.scene.stop('Map');
@@ -344,7 +344,7 @@ function interval(): void {
     }
 
     if (this.state.progress.event.endTime <= 0 && 
-      this.state.progress.event.eventPoints > 0 &&
+      this.state.progress.event.eventPoints > 0 && this.state.progress.even.open &&
       !this.scene.isActive('Modal') && 
       !this.scene.isActive('Block') &&
       !this.scene.isActive('Tutorial') &&
