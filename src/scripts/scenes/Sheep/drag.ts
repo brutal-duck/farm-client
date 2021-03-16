@@ -112,7 +112,7 @@ function drag(): void {
         this.dragSheepMerging(sheep);
 
         // удаление животного
-        if (typeTerritory.type === 0 && this.state.userSheep.tutorial >= 100) {
+        if ((typeTerritory === undefined || typeTerritory.type === 0) && this.state.userSheep.tutorial >= 100) {
 
           sheep.expel = true;
           this.state.animal = sheep;
@@ -140,7 +140,12 @@ function drag(): void {
 
       }
 
-    } else this.teleportation(sheep);
+    } else {
+      sheep.expel = true;
+      this.state.animal = sheep;
+      this.confirmExpelSheep();
+      this.teleportation(sheep);
+    }
     
   });
 

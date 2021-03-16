@@ -129,7 +129,12 @@ function drag(): void {
 
       }
 
-    } else this.teleportation(chicken);
+    } else {
+      chicken.expel = true;
+      this.state.animal = chicken;
+      this.confirmExpelChicken();
+      this.teleportation(chicken);
+    }
 
   });
 
