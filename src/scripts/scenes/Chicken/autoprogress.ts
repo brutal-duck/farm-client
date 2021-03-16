@@ -41,7 +41,7 @@ function autoprogress(load: boolean = false): void {
   if (feedPercent >= 1 ) feedPercent = 1;
 
   if (!load) this.game.scene.keys['ChickenBars'].collector.update();
-  if (!load) this.state.timeToHerdBoost -= this.state.offlineTime;
+  if (!load) this.state.timeToNewDay -= this.state.offlineTime;
   
   // считаем сколько снесла курица яйцо
   let balance: Ibalance = this.balance();

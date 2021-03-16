@@ -2053,7 +2053,7 @@ function updateHerdBoostBtn(): void {
     this.state.user.additionalTutorial.herdBoost) {
     let xBtn: number =  330;
     let yBtn: number = 500 + this.height;
-    this.herdBoostTimerText.setText(this.state.lang.stillForBoost + ' ' + shortTime(this.state.timeToHerdBoost, this.state.lang));
+    this.herdBoostTimerText.setText(this.state.lang.stillForBoost + ' ' + shortTime(this.state.timeToNewDay, this.state.lang));
     if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0 && !this.herdBoostBtn.data.values.updated) { 
       this.herdBoostBtn.data.values.updated = true;
       // если не взят буст
@@ -2278,7 +2278,7 @@ function herdBoost(): void {
   this.herdBoostBtnLeftText.setX(this.herdBoostDiamondBtn.getBounds().left - 2);
   this.herdBoostBtnRightText.setX(this.herdBoostDiamondBtn.getBounds().right + 1);
   
-  this.herdBoostTimerText = this.add.text(xBtn, yBtn - 60, this.state.lang.stillForBoost + ' ' + shortTime(this.state.timeToHerdBoost, this.state.lang), {
+  this.herdBoostTimerText = this.add.text(xBtn, yBtn - 60, this.state.lang.stillForBoost + ' ' + shortTime(this.state.timeToNewDay, this.state.lang), {
     font: '20px Shadow',
     color: '#FFFFFF',
     wordWrap: {width: 220},

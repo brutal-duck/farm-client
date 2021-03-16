@@ -473,7 +473,7 @@ interface Istate {
   herdBoostDelay: number;
   herdBoostAnimals: number[];
   nativeCounter: number[];
-  timeToHerdBoost: number;
+  timeToNewDay: number;
   sheepSettings: IsheepSettings;
   chickenSettings: IchickenSettings;
   eventSettings: IeventSettings;

@@ -341,12 +341,12 @@ function interval(): void {
     this.debug();
     
     // таймер до буста стадо
-    if (this.state.timeToHerdBoost > 0) {
-      --this.state.timeToHerdBoost;
+    if (this.state.timeToNewDay > 0) {
+      --this.state.timeToNewDay;
     } else {
       console.log('очистка таймера');
       this.state[`user${this.state.farm}`].takenHerdBoost = 0;
-      this.state.timeToHerdBoost = 86400;
+      this.state.timeToNewDay = 86400;
     } 
 
     if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl &&

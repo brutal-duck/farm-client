@@ -1869,7 +1869,7 @@ class EventPreload extends Phaser.Scene {
         }
         
       //   // переписываем стейт
-        this.state.timeToHerdBoost = response.data.timeToHerdBoost;
+        this.state.timeToNewDay = response.data.timeToNewDay;
         // this.state.eventCollectorSettings = response.data.collectorSettings;
         this.state.offlineTime = response.data.offlineTime;
         this.state.progress = response.data.progress;

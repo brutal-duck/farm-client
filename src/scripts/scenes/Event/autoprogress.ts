@@ -36,7 +36,7 @@ function autoprogress(load: boolean = false): void {
   
 
   if (!load) this.game.scene.keys['EventBars'].collector.update();
-  if (!load) this.state.timeToHerdBoost -= this.state.offlineTime;
+  if (!load) this.state.timeToNewDay -= this.state.offlineTime;
   
   // считаем сколько появилось ресурсов
   let newResources: { resource: boolean, id: string, type: number, count: number }[] = [];

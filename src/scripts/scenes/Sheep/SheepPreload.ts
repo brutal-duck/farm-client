@@ -889,7 +889,7 @@ class SheepPreload extends Phaser.Scene {
 
         }
         
-        this.state.timeToHerdBoost = response.data.timeToHerdBoost;
+        this.state.timeToNewDay = response.data.timeToNewDay;
         this.state.sheepCollectorSettings = response.data.collectorSettings;
         this.state.dailyAwards = response.data.dailyAwards;
         this.state.newbieTime = response.data.newbieTime;

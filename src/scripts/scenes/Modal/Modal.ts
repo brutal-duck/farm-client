@@ -109,6 +109,7 @@ class Modal extends Phaser.Scene {
   public eventRatingsNames: Phaser.GameObjects.Text[];
   public eventRatingsScores: Phaser.GameObjects.Text[];
   public eventLeftTime: Phaser.GameObjects.Text;
+  public timerNewbieAward: Phaser.GameObjects.Text;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -381,6 +382,7 @@ class Modal extends Phaser.Scene {
 
     }
 
+    this.timerNewbieAward.setText(shortTime(this.state.timeToNewDay, this.state.lang));
 
   }
 

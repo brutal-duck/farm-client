@@ -17,7 +17,7 @@ let herdBoostTime: number;
 let herdBoostDelay: number;
 let herdBoostAnimals: number[] = [];
 let nativeCounter: number[];
-let timeToHerdBoost: number;
+let timeToNewDay: number;
 let user: Iuser;
 let userSheep: IuserSheep;
 let userChicken: IuserChicken;
@@ -70,7 +70,7 @@ let state: Istate = {
   herdBoostTime, // время длительности 'стадного' буста
   herdBoostDelay, // время задержки для появления животного во время "стадного буста"
   herdBoostAnimals, // массив животных для буста
-  timeToHerdBoost, // время до пуста
+  timeToNewDay, // время до пуста
   sheepSettings, // настройки и параметры
   chickenSettings, // настройки и параметры
   eventSettings, // настройки и параметры

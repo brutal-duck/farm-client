@@ -491,7 +491,7 @@ function eventHerdBoost(): void {
   this.herdBoostBtnLeftText.setX(this.herdBoostDiamondBtn.getBounds().left - 2);
   this.herdBoostBtnRightText.setX(this.herdBoostDiamondBtn.getBounds().right + 1);
   
-  this.herdBoostTimerText = this.add.text(xBtn, yBtn - 60, this.state.lang.stillForBoost + ' ' + shortTime(this.state.timeToHerdBoost, this.state.lang), {
+  this.herdBoostTimerText = this.add.text(xBtn, yBtn - 60, this.state.lang.stillForBoost + ' ' + shortTime(this.state.timeToNewDay, this.state.lang), {
     font: '20px Shadow',
     color: '#FFFFFF',
     wordWrap: {width: 220},
@@ -700,7 +700,7 @@ function updateEventHerdBoostBtn(): void {
     this.state.user.additionalTutorial.herdBoost && !this.herdBoostBtn.data.values.updated) {
     let xBtn: number =  330;
     let yBtn: number = 500 + this.height;
-    this.herdBoostTimerText.setText(this.state.lang.stillForBoost + ' ' + shortTime(this.state.timeToHerdBoost, this.state.lang));
+    this.herdBoostTimerText.setText(this.state.lang.stillForBoost + ' ' + shortTime(this.state.timeToNewDay, this.state.lang));
     //----------- костыль со скрытием текста и центрированием кнопки //
     this.herdBoostBtn.data.values.updated = true;
     this.herdBoostTimerText.setVisible(false)
