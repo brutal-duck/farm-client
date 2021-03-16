@@ -683,6 +683,16 @@ class TaskBoard {
 
       this.scene.click(this.zone, (): void => {
 
+        const openTerritoryWindow = (territory: any): void => {
+          this.scene.state.territory = territory;
+          let modal: Imodal = {
+            type: 1,
+            sysType: 2
+          }
+          this.scene.state.modal = modal;
+          this.scene.scene.launch('Modal', this.scene.state);
+        }
+
         const openRegisterWindow = (): void => {
           let modal: Imodal = {
             type: 1,
@@ -720,92 +730,81 @@ class TaskBoard {
           this.scene.game.scene.keys[this.scene.state.farm].createSpeechBubble(this.scene.state.lang.taskHelp_4);
         }
 
-        const openUpdateMerg = (): void => {
-          let modal: Imodal = {
-              type: 1,
-              sysType: 2
-          }
-          this.scene.state.territory = this.scene.game.scene.keys[this.scene.state.farm].territories.children.entries.find(el => el.type === 4);
-          this.scene.state.modal = modal;
-          this.scene.scene.launch('Modal', this.scene.state);
+        const openMerg = (): void => {
+          let merg: any = this.scene.game.scene.keys[this.scene.state.farm].territories.children.entries.find(el => el.type === 4);
+          openTerritoryWindow(merg);
         }
 
-        const openPasture = (): void => {
-          let modal: Imodal = {
-              type: 1,
-              sysType: 2
-          }
+        const openPastureOrSpeechBuble = (): void => {
           this.scene.state.territory = undefined;
-
+          let territory: any;
           for (let i = 1; i < 4; i++) {
-            this.scene.state.territory = this.scene.game.scene.keys[this.scene.state.farm].territories.children.entries.find(el => el.type === 2 && el.improve ===task.  state - i);
-            if (this.scene.state.territory) break;
+            territory = this.scene.game.scene.keys[this.scene.state.farm].territories.children.entries.find(el => el.type === 2 && el.improve ===task.state - i);
+            if (territory) break;
           }
 
-          if (this.scene.state.territory) {
-            this.scene.state.modal = modal;
-            this.scene.scene.launch('Modal', this.scene.state);
-          } else {
-            this.scene.createSpeechBubble(this.scene.state.lang.taskHelp_8, 3);
-          }
+          if (territory) openTerritoryWindow(territory);
+          else this.scene.createSpeechBubble(this.scene.state.lang.taskHelp_8, 3);
+          
         }
 
-        const openDrinker = (): void => {
-          let modal: Imodal = {
-            type: 1,
-            sysType: 2
-          }
+        const openDrinkerOrSpeechBuble = (): void => {
           this.scene.state.territory = undefined;
-          
+          let territory: any;
           for (let i = 1; i < 4; i++) {
-            this.scene.state.territory = this.scene.game.scene.keys[this.scene.state.farm].territories.children.entries.find(el => el.type === 3 && el.improve === task.state - i);
-
-            if (this.scene.state.territory) break;
-
+            territory = this.scene.game.scene.keys[this.scene.state.farm].territories.children.entries.find(el => el.type === 3 && el.improve === task.state - i);
+            if (territory) break;
           }
-          if (this.scene.state.territory) {
-            this.scene.state.modal = modal;
-            this.scene.scene.launch('Modal', this.scene.state);
-          } else {
-            this.scene.createSpeechBubble(this.scene.state.lang.taskHelp_9, 3);
-          }
+          if (territory) openTerritoryWindow(territory);
+          else this.scene.createSpeechBubble(this.scene.state.lang.taskHelp_9, 3);
         }
 
-        const openStorage = (): void => {
-          let modal: Imodal = {
-            type: 1,
-            sysType: 2
-          }
+        const openStorageToImproveOrSpeechBuble = (): void => {
           this.scene.state.territory = undefined;
-          
+          let territory: any;
           for (let i = 1; i < 4; i++) {
-            this.scene.state.territory = this.scene.game.scene.keys[this.scene.state.farm].territories.children.entries.find(el => el.type === 5 && el.improve === task.state - i);
-
-            if (this.scene.state.territory) break;
-
+            territory = this.scene.game.scene.keys[this.scene.state.farm].territories.children.entries.find(el => el.type === 5 && el.improve === task.state - i);
+            if (territory) break;
           }
-          if (this.scene.state.territory) {
-            this.scene.state.modal = modal;
-            this.scene.scene.launch('Modal', this.scene.state);
-          } else {
-            this.scene.createSpeechBubble(this.scene.state.lang.taskHelp_9, 3);
-          }
+          if (territory) openTerritoryWindow(territory);
+          else this.scene.createSpeechBubble(this.scene.state.lang.taskHelp_9, 3);
         }
 
-        const saveUpCoins = (): void => {
-          
-          let storage: any = this.scene.game.scene.keys[this.scene.state.farm].territories.find(el => el.type === 5 && el.money > 0);
+        const openNotFreeStorageOrSpeechBubble = (): void => {
+          let storage: any = this.scene.game.scene.keys[this.scene.state.farm].territories.children.entries.find(el => el.type === 5 && el.money > 0);
           this.scene.state.territory = undefined;
-          if (storage) {
-            this.scene.state.territory = storage;
-            let modal: Imodal = {
-              type: 1,
-              sysType: 2
+          if (storage) openTerritoryWindow(storage);
+          else this.scene.createSpeechBubble(this.scene.state.lang.taskHelp_6, 3);
+        }
+
+        const openStorageOrSpeechBuble = (): void => {
+          let storage: any = this.scene.game.scene.keys[this.scene.state.farm].territories.children.entries.find(el => el.type === 5);
+          this.scene.state.territory = undefined;
+          if (storage) openTerritoryWindow(storage); 
+          else this.scene.createSpeechBubble(this.scene.state.lang.taskHelp_20, 3);
+        }
+
+
+        
+        const openBuyTerritoryWindowForTask = (): void => {
+          if (task.state === 1 || task.state === 0) {
+            let territory: any = this.scene.game.scene.keys[this.scene.state.farm].territories.children.entries.find(el => el.type === 0 && el.lock_image === undefined && el.forest !== undefined);
+            openTerritoryWindow(territory);
+          }
+          if (task.state === 2 || task.state === 5) {
+            let territory: any;
+            territory = this.scene.game.scene.keys[this.scene.state.farm].territories.children.entries.find(el => el.type === 1);
+            if (territory) {
+              openTerritoryWindow(territory);
+
+            } else {
+              territory = this.scene.game.scene.keys[this.scene.state.farm].territories.children.entries.find(el => el.type === 0 && el.lock_image === undefined && el.forest !== undefined);
+              if (territory) {
+                openTerritoryWindow(territory);
+              } else {
+                this.scene.createSpeechBubble(this.scene.state.lang[`taskHelp_5_${task.state}`], 3);
+              }
             }
-            this.scene.state.modal = modal;
-            this.scene.scene.launch('Modal', this.scene.state);
-          } else {
-            this.scene.createSpeechBubble(this.scene.state.lang.taskHelp_6, 3);
           }
         }
 
@@ -823,18 +822,19 @@ class TaskBoard {
             takeAnimalBubble();
             break;
           case 5:
+            openBuyTerritoryWindowForTask();
             break;
           case 6: 
-            saveUpCoins();
+            openNotFreeStorageOrSpeechBubble();
             break;
           case 7: 
-            openUpdateMerg();
+            openMerg();
             break;
           case 8: 
-            openPasture();
+            openPastureOrSpeechBuble();
             break;
           case 9:
-            openDrinker();
+            openDrinkerOrSpeechBuble();
             break;
           case 10: 
             openRegisterWindow();
@@ -856,16 +856,16 @@ class TaskBoard {
             this.scene.game.scene.keys['Sheep'].openEmailWindow(); // задание на почту
             break;
           case 17: 
-            openStorage();
+            openStorageToImproveOrSpeechBuble();
             break;
           case 18: 
             this.scene.game.scene.keys[this.scene.state.farm].takeDiamondSheep();
             break;
           case 19: 
-            this.scene.createSpeechBubble(this.scene.state.lang[`taskHelp${this.scene.state.farm}_14`], 3);
+            this.scene.createSpeechBubble(this.scene.state.lang[`taskHelp${this.scene.state.farm}_19`], 3);
             break;
           case 20: 
-            openStorage();
+            openStorageOrSpeechBuble();
             break;
         }
 
