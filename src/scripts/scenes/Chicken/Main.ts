@@ -13,15 +13,15 @@ import {
   caveIconsAnimation, 
   hearts
 } from '../../general/animations';
-import {
+import {  
   click,
   clickTerritory,
+} from '../../general/clicks';
+import {
   logout,
   convertDiamonds,
   convertMoney,
   exchange,
-  freeCollector,
-  buyCollector,
   donePart,
   pickUpTaskReward,
   caveTimer,
@@ -29,15 +29,19 @@ import {
   buyNextFarm,
   getNewbieAward,
   takeDonate,
-  improveCollector,
   debug, 
-  createBoostAnimal,
   random,
   randomString,
   getRandomBool,
   spreadAnimals,
   getEventRaiting
 } from '../../general/basic';
+import {
+  improveCollector,
+  createBoostAnimal,
+  freeCollector,
+  buyCollector,
+} from '../../general/boosts';
 import {
   confirmExchangeTerritory,
   messageIsSent,

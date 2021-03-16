@@ -6,6 +6,12 @@ import sheepBrain from './sheepBrain';
 import interval from './interval';
 import autoprogress from './autoprogress';
 import autosave from './autosave';
+import {  
+  improveCollector, 
+  createBoostAnimal,   
+  freeCollector,
+  buyCollector,
+ } from '../../general/boosts';
 import {
   genAnimations,
   firework250,
@@ -17,12 +23,12 @@ import {
 import {
   click,
   clickTerritory,
+} from '../../general/clicks';
+import {
   logout,
   convertDiamonds,
   convertMoney,
   exchange,
-  freeCollector,
-  buyCollector,
   donePart,
   pickUpTaskReward,
   caveTimer,
@@ -30,9 +36,7 @@ import {
   buyNextFarm,
   getNewbieAward,
   takeDonate,
-  improveCollector,
   debug,
-  createBoostAnimal,
   getRandomBool,
   spreadAnimals, 
   getEventRaiting

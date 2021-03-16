@@ -1,4 +1,4 @@
-import { clickButtonUp } from '../../../general/basic';
+import { clickButtonUp } from '../../../general/clicks';
 
 class ShopBars extends Phaser.Scene {
   

@@ -7,17 +7,21 @@ import {
   click,
   clickShopBtn,
   clickModalBtn,
-  payRobokassa,
   clickBoostBtn,
+} from '../../../general/clicks';
+import {
+  payRobokassa,
   payOdnoklassniki,
   payVK,
+  shortTime,
+} from '../../../general/basic';
+import {  
   updateHerdBoostBtn,
   herdBoost,
   feedBoost,
   collectorBoost,
-  shortTime,
-  updateFeedBoostBtn
-} from '../../../general/basic';
+  updateFeedBoostBtn,
+} from '../../../general/boosts';
 import {
   sheepMoney,
   sheep,

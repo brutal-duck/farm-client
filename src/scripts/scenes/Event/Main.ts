@@ -7,12 +7,14 @@ import {
 import {
   click,
   clickTerritory,
+  doubleClick,
+} from '../../general/clicks';
+import {
   logout,
   onlineStatus,
   takeDonate,
   debug, 
   getEventRaiting,
-  doubleClick,
 } from '../../general/basic';
 import {
   confirmExchangeTerritory,

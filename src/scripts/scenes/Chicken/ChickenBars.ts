@@ -1,14 +1,15 @@
 import {
+  shortNum,
+  socialButtons,
+  shortTime
+} from '../../general/basic';
+import {
   click,
   clickButton,
   clickShopBtn,
   clickModalBtn,
-  shortNum,
-  socialButtons,
-  updateNativeShop,
-  shortTime
-} from '../../general/basic';
-import { showFeedTime } from './../../general/boosts';
+} from '../../general/clicks';
+import { showFeedTime, updateNativeShop } from './../../general/boosts';
 import {
   Collector,
   TaskBoard,

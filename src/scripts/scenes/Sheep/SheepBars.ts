@@ -3,12 +3,13 @@ import {
   clickButton,
   clickShopBtn,
   clickModalBtn,
+} from '../../general/clicks';
+import {
   shortNum,
   socialButtons,
-  updateNativeShop,
   shortTime
 } from '../../general/basic';
-import { showFeedTime } from './../../general/boosts';
+import { showFeedTime, updateNativeShop } from './../../general/boosts';
 import {
   Collector,
   TaskBoard,

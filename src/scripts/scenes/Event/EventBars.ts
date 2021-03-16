@@ -1,14 +1,17 @@
-import {
+import {  
   click,
   clickButton,
   clickShopBtn,
   clickModalBtn,
+} from '../../general/clicks';
+import {
   shortNum,
   socialButtons,
   shortTime,
-  updateNativeShop, 
-
 } from '../../general/basic';
+import {
+  updateNativeShop, 
+} from '../../general/boosts';
 import { 
   buildMenu,
   updateRaitingsBar,

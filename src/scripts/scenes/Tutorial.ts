@@ -1,9 +1,9 @@
-import {
+import {  
   click,
   clickButton,
-  clickShopBtn,
-  shortTime,
-} from '../general/basic';
+  clickShopBtn, 
+} from '../general/clicks';
+import { shortTime } from '../general/basic';
 import { dragSheep, showSheepSprite } from '../general/animations';
 import { dragEventAnimal } from './Event/animations';
 import { Arrows } from '../elements';

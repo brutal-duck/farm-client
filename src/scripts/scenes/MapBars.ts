@@ -1,4 +1,4 @@
-import { clickButton } from '../general/basic';
+import { clickButton } from '../general/clicks';
 
 class MapBars extends Phaser.Scene {
 

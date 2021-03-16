@@ -1,12 +1,14 @@
 import {
-  click,
-  clickButton,
-  clickModalBtn,
-  clickShopBtn,
   shortNum,
   shortTime,
   getStatusSettings
 } from '../../general/basic';
+import {
+  click,
+  clickButton,
+  clickModalBtn,
+  clickShopBtn,
+} from '../../general/clicks';
 import {
   systemWindow,
   chickenTerritory,

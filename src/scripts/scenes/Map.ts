@@ -1,5 +1,6 @@
 import Scrolling from '../libs/Scrolling';
-import { click, shortNum, clickShopBtn, getEventRaiting, shortTime } from '../general/basic';
+import { click, clickShopBtn } from '../general/clicks';
+import { shortNum, getEventRaiting, shortTime } from '../general/basic';
 import { scoreEnding } from './Event/basic';
 
 let sheepCoin: any = require("./../../assets/images/sheep/icons/money.png");
