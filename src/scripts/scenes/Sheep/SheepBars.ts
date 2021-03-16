@@ -29,6 +29,7 @@ import {
   getDiamonds
 } from '../../general/animations';
 import { pulseCollector, arrowsBehavior } from './animations';
+import { clickTaskBoard } from '../../general/tasks';
 
 class SheepBars extends Phaser.Scene {
   constructor() {
@@ -105,7 +106,8 @@ class SheepBars extends Phaser.Scene {
   public shortTime = shortTime.bind(this);
   public getDiamonds = getDiamonds.bind(this);
   public createSpeechBubble = createSpeechBubble.bind(this);
-
+  public clickTaskBoard = clickTaskBoard.bind(this);
+  
   public init(state: Istate): void {
     
     this.state = state;

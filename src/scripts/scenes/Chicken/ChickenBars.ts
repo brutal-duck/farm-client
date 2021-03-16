@@ -29,6 +29,7 @@ import {
   getDiamonds
 } from '../../general/animations';
 import { pulseCollector, arrowsBehavior } from './animations';
+import { clickTaskBoard } from '../../general/tasks';
 
 class ChickenBars extends Phaser.Scene {
   constructor() {
@@ -98,6 +99,7 @@ class ChickenBars extends Phaser.Scene {
   public getDiamonds = getDiamonds.bind(this);
   public arrowsBehavior = arrowsBehavior.bind(this);
   public createSpeechBubble = createSpeechBubble.bind(this);
+  public clickTaskBoard = clickTaskBoard.bind(this);
 
 
 
