@@ -154,8 +154,13 @@ function tasksWindow(): void {
       if (tasks[i].task.type === 14 && tasks[i].task.count === 0) count = countBreed;
 
       // Плашка задания
-      this.add.image(this.cameras.main.centerX + 2, taskCenterY, 'tasks-uncomplete').setOrigin(0.5, 0.5).setDisplaySize(460, barHeight)
-      this.add.image(this.cameras.main.centerX + 100, taskCenterY + (barHeight / 2) - 29, 'tasks-bar').setOrigin(0.5, 0.5)
+      let taskBg: Phaser.GameObjects.Image = this.add.image(this.cameras.main.centerX + 2, taskCenterY, 'tasks-uncomplete').setOrigin(0.5, 0.5).setDisplaySize(460, barHeight);
+      this.add.image(this.cameras.main.centerX + 100, taskCenterY + (barHeight / 2) - 29, 'tasks-bar').setOrigin(0.5, 0.5);
+
+      this.click(taskBg, (): void => {
+        this.scene.stop('Modal');
+        this.clickTaskBoard(tasks[i].task)
+      });
 
       takeText = this.add.text(426, taskCenterY + (barHeight / 2) - 28, this.state.lang.taskReward, {
         font: '24px Shadow',

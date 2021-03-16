@@ -681,11 +681,7 @@ class TaskBoard {
 
       this.zone = this.scene.add.zone(this.scene.cameras.main.centerX, this.taskBoard.y + (height / 2), 660, height).setDropZone(undefined, () => {}).setDepth(this.scene.height + 1);
       
-      this.scene.click(this.zone, (): void => {
-
-        this.scene.clickTaskBoard(task, this.scene);
-
-      });
+      this.scene.click(this.zone, (): void => this.scene.clickTaskBoard(task));
 
       this.taskIcon = this.scene.add.image(88, this.scene.height  - 190 - height / 2, taskData.icon);
 

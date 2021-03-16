@@ -77,6 +77,7 @@ import { changeNickname, addEmail, support, registration } from '../../general/m
 import { herdBoostWindow, getRandomAnimal, getRandomStartPosition } from './herdBoost';
 import { createChatBars } from './Chat/elements';
 import { improveCollectorAnim } from '../../general/animations';
+import { clickTaskBoard } from '../../general/tasks';
 import typePreload from './typePreload';
 
 class Modal extends Phaser.Scene {
@@ -184,6 +185,7 @@ class Modal extends Phaser.Scene {
   public improveCollectorAnim = improveCollectorAnim.bind(this);
   public getStatusSettings = getStatusSettings.bind(this);
   public typePreload = typePreload.bind(this);
+  public clickTaskBoard = clickTaskBoard.bind(this);
   
   public init(state: Istate): void {
     this.state = state;
