@@ -1300,10 +1300,18 @@ function nextDayTimer(): void {
   } else { // обнуление параметров
     this.state.timeToNewDay = 86400;
     this.state[`user${this.state.farm}`].takenHerdBoost = 0;
-    // if (this.state.user.takenReward) {
-    //   this.state.daily++;
-    //   this.state.user.takenReward = false;
-    // }
+    axios.post(process.env.API + "/newDay", {    
+      id: this.state.user.id,
+      hash: this.state.user.hash,
+      counter: this.state.user.counter,
+    }).then((res) => {
+      if (!res.data.error) {
+        if (this.state.user.takenReward) {
+          this.state.daily++;
+          this.state.user.takenReward = false;
+        }
+      }
+    });
   }
 }
 
