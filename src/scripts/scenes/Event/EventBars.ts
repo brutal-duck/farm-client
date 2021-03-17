@@ -332,6 +332,14 @@ class EventBars extends Phaser.Scene {
     if (!this.state.user.starterpack) {
       
       this.starterpackIcon = this.add.image(490, 45, 'starterpack-icon').setScale(0.2);
+      this.click(this.starterpackIcon, ()=>{
+        const modal: Imodal = {
+          type: 2,
+          shopType: 1,
+        }
+        this.state.modal = modal;
+        this.scene.launch('Modal', this.state);
+      });
       
       this.tweens.add({
         targets: this.starterpackIcon,

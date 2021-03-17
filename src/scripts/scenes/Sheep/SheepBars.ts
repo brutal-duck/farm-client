@@ -392,7 +392,7 @@ class SheepBars extends Phaser.Scene {
         }
         this.state.modal = modal;
         this.scene.launch('Modal', this.state);
-      })
+      });
       
       this.tweens.add({
         targets: this.starterpackIcon,
