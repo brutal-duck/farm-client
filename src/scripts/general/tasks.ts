@@ -291,7 +291,7 @@ function checkDoneTasks(): void {
 function clickTaskBoard(task: Itasks): void {
   const openTerritoryWindow = (territory: any): void => {
     this.state.territory = territory;
-    let modal: Imodal = {
+    const modal: Imodal = {
       type: 1,
       sysType: 2
     }
@@ -300,7 +300,7 @@ function clickTaskBoard(task: Itasks): void {
   }
   
   const openRegisterWindow = (): void => {
-    let modal: Imodal = {
+    const modal: Imodal = {
       type: 1,
       sysType: 15
     }
@@ -309,7 +309,7 @@ function clickTaskBoard(task: Itasks): void {
   }
   
   const openShopAnimal = (): void => {
-    let modal: Imodal = {
+    const modal: Imodal = {
       type: 2,
       shopType: 3
     }
@@ -323,13 +323,13 @@ function clickTaskBoard(task: Itasks): void {
   }
   
   const openShopBoosters = (): void => {
-    let modal: Imodal = {
-        type: 2,
-        shopType: 4
-      }
-      this.state.modal = modal;
-      this.scene.manager.keys[this.state.farm].scene.launch('Modal', this.state);
+    const modal: Imodal = {
+      type: 2,
+      shopType: 4
     }
+    this.state.modal = modal;
+    this.scene.manager.keys[this.state.farm].scene.launch('Modal', this.state);
+  }
   
   const takeAnimalBubble = (): void => {
     this.game.scene.keys[this.state.farm].scrolling.scrollY = 0; 
@@ -337,7 +337,7 @@ function clickTaskBoard(task: Itasks): void {
   }
   
   const openMerg = (): void => {
-    let merg: any = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => el.type === 4);
+    const merg: any = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => el.type === 4);
     openTerritoryWindow(merg);
   }
   
@@ -390,9 +390,21 @@ function clickTaskBoard(task: Itasks): void {
     else this.game.scene.keys[this.state.farm + 'Bars'].createSpeechBubble(this.state.lang.taskHelp_20, 3);
   }
   
+  const findUnlockTerritoryForBuy = (): any => {
+    let farmTerritories: any = this.game.scene.keys[this.state.farm].territories.children.entries;
+    let settings: IterritoriesPrice[] = this.state[`${this.state.farm.toLowerCase()}Settings`][`territories${this.state.farm}Price`];
+    let unlockTerritories: IterritoriesPrice[] = settings.filter(el => el.unlock <= this.state[`user${this.state.farm}`].part);
+    let terr: any;
+    unlockTerritories.forEach((territory: IterritoriesPrice) => {
+      terr = farmTerritories.find(el => el.type === 0 && el.block === territory.block && el.position === territory.position);
+    })
+    return terr;
+  }
+
   const openBuyTerritoryWindowForTask = (): void => {
+  
     if (task.state === 1 || task.state === 0) {
-      let territory: any = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => el.type === 0 && el.lock_image === undefined && el.forest !== undefined);
+      const territory = findUnlockTerritoryForBuy();
       openTerritoryWindow(territory);
     }
     if (task.state === 2 || task.state === 5) {
@@ -400,7 +412,7 @@ function clickTaskBoard(task: Itasks): void {
       territory = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => el.type === 1);
       if (territory) openTerritoryWindow(territory);
       else {
-        territory = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => el.type === 0 && el.lock_image === undefined && el.forest !== undefined);
+        territory = findUnlockTerritoryForBuy();
         if (territory) openTerritoryWindow(territory);
         else this.game.scene.keys[this.state.farm + 'Bars'].createSpeechBubble(this.state.lang[`taskHelp_5_${task.state}`], 3);
       }
