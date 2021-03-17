@@ -455,7 +455,7 @@ function eventCollectorBoost(): void {
 }
 
 function eventHerdBoost(): void {
-  if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0) this.state[`user${this.state.farm}`].takenHerdBoost =1;
+  if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0) this.state[`user${this.state.farm}`].takenHerdBoost = 1;
   
   let y: number = 335 + this.height;
   this.add.tileSprite(0, y, 466, 235, 'boost-bg').setOrigin(0, 0);
