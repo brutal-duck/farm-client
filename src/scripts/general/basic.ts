@@ -1298,8 +1298,12 @@ function nextDayTimer(): void {
   if (this.state.timeToNewDay > 0) {
     --this.state.timeToNewDay;
   } else { // обнуление параметров
-    this.state[`user${this.state.farm}`].takenHerdBoost = 0;
     this.state.timeToNewDay = 86400;
+    this.state[`user${this.state.farm}`].takenHerdBoost = 0;
+    // if (this.state.user.takenReward) {
+    //   this.state.daily++;
+    //   this.state.user.takenReward = false;
+    // }
   }
 }
 

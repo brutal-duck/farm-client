@@ -60,13 +60,13 @@ function dailyNewbie(): void {
   if (this.state.farm === 'Sheep' && this.state.daily === 1 && !this.state.user.takenReward) {
 
     let money: string | number = shortNum(this.game.scene.keys[this.state.farm].convertDiamonds(10));
-    textAwardLitle0 = this.add.text(203, this.cameras.main.centerY - 200, money, {
+    textAwardLitle0 = this.add.text(203, this.cameras.main.centerY - 200 + 90, money, {
       font: '34px Shadow',
       color: '#FFF0F0'
     }).setOrigin(0.5, 0.5).setStroke('#5D4D2B', 4);
 
     let x: number = textAwardLitle0.getBounds().left;
-    textAward0 = this.add.text(x - 10, this.cameras.main.centerY - 200, 'x', {
+    textAward0 = this.add.text(x - 10, this.cameras.main.centerY - 200 + 90, 'x', {
       font: '24px Shadow',
       color: '#FFF0F0'
     }).setOrigin(0.5, 0.5).setStroke('#5D4D2B', 4);
@@ -357,109 +357,97 @@ function dailyNewbie(): void {
 
   }
 
-  const animation = (): void => {
-    // анимация
-    if (!this.state.user.takenReward) {
-  
-      let day: Phaser.GameObjects.Sprite;
-      let bgDay: Phaser.GameObjects.Sprite;
-      let textDay: Phaser.GameObjects.Text;
-      let textAward: Phaser.GameObjects.Text;
-      let textAwardLitle: Phaser.GameObjects.Text;
-  
-      if (this.state.daily === 1) {
-        
-        day = day0;
-        bgDay = bgDay0;
-        textDay = textDay0;
-        textAward = textAward0;
-        textAwardLitle = textAwardLitle0;
-  
-      } else if (this.state.daily === 2) {
-  
-        day = day1;
-        bgDay = bgDay1;
-        textDay = textDay1;
-        textAward = textAward1;
-        textAwardLitle = textAwardLitle1;
-  
-      } else if (this.state.daily === 3) {
-  
-        day = day2;
-        bgDay = bgDay2;
-        textDay = textDay2;
-        textAward = textAward2;
-        textAwardLitle = textAwardLitle2;
-  
-      } else if (this.state.daily === 4) {
-  
-        day = day3;
-        bgDay = bgDay3;
-        textDay = textDay3;
-        textAward = textAward3;
-        textAwardLitle = textAwardLitle3;
-  
-      } else if (this.state.daily === 5) {
-  
-        day = day4;
-        bgDay = bgDay4;
-        textDay = textDay4;
-        textAward = textAward4;
-        textAwardLitle = textAwardLitle4;
-  
-      } else if (this.state.daily === 6) {
-  
-        day = day5;
-        bgDay = bgDay5;
-        textDay = textDay5;
-        textAward = textAward5;
-        textAwardLitle = textAwardLitle5;
-  
-      } else if (this.state.daily === 7) {
-  
-        day = day6;
-        bgDay = bgDay6;
-        textDay = textDay6;
-        textAward = textAward6;
-        textAwardLitle = textAwardLitle6;
-  
-      } else if (this.state.daily === 8) {
-  
-        day = day7;
-        bgDay = bgDay7;
-        textDay = textDay7;
-        textAward = textAward7;
-        textAwardLitle = textAwardLitle7;
-  
-      } else {
-  
-        day = day0;
-        bgDay = bgDay0;
-        textDay = textDay0;
-        textAward = textAward0;
-        textAwardLitle = textAwardLitle0;
-  
-      }
-  
-      this.tweens.add({
-        targets: [day, bgDay, textDay, textAward, textAwardLitle],
-        y: '-=15',
-        duration: 160,
-        yoyo: true,
-        repeat: -1,
-        ease: 'Power1'
-      });
-    }
-  }
+  if (!this.state.user.takenReward) {
 
-  bg[`preUpdate`] = () => {
-    if (this.state.timeToNewDay <= 0 && this.state.user.takenReward) {
-      this.state.daily++;
-      this.state.user.takenReward = false;
-      animation();
-    }
-  }
+    let day: Phaser.GameObjects.Sprite;
+    let bgDay: Phaser.GameObjects.Sprite;
+    let textDay: Phaser.GameObjects.Text;
+    let textAward: Phaser.GameObjects.Text;
+    let textAwardLitle: Phaser.GameObjects.Text;
 
+    if (this.state.daily === 1) {
+      
+      day = day0;
+      bgDay = bgDay0;
+      textDay = textDay0;
+      textAward = textAward0;
+      textAwardLitle = textAwardLitle0;
+
+    } else if (this.state.daily === 2) {
+
+      day = day1;
+      bgDay = bgDay1;
+      textDay = textDay1;
+      textAward = textAward1;
+      textAwardLitle = textAwardLitle1;
+
+    } else if (this.state.daily === 3) {
+
+      day = day2;
+      bgDay = bgDay2;
+      textDay = textDay2;
+      textAward = textAward2;
+      textAwardLitle = textAwardLitle2;
+
+    } else if (this.state.daily === 4) {
+
+      day = day3;
+      bgDay = bgDay3;
+      textDay = textDay3;
+      textAward = textAward3;
+      textAwardLitle = textAwardLitle3;
+
+    } else if (this.state.daily === 5) {
+
+      day = day4;
+      bgDay = bgDay4;
+      textDay = textDay4;
+      textAward = textAward4;
+      textAwardLitle = textAwardLitle4;
+
+    } else if (this.state.daily === 6) {
+
+      day = day5;
+      bgDay = bgDay5;
+      textDay = textDay5;
+      textAward = textAward5;
+      textAwardLitle = textAwardLitle5;
+
+    } else if (this.state.daily === 7) {
+
+      day = day6;
+      bgDay = bgDay6;
+      textDay = textDay6;
+      textAward = textAward6;
+      textAwardLitle = textAwardLitle6;
+
+    } else if (this.state.daily === 8) {
+
+      day = day7;
+      bgDay = bgDay7;
+      textDay = textDay7;
+      textAward = textAward7;
+      textAwardLitle = textAwardLitle7;
+
+    } else {
+
+      day = day0;
+      bgDay = bgDay0;
+      textDay = textDay0;
+      textAward = textAward0;
+      textAwardLitle = textAwardLitle0;
+
+    }
+
+    this.tweens.add({
+      targets: [day, bgDay, textDay, textAward, textAwardLitle],
+      y: '-=15',
+      duration: 160,
+      yoyo: true,
+      repeat: -1,
+      ease: 'Power1'
+    });
+  }
 }
 
 export default dailyNewbie;
