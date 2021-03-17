@@ -516,11 +516,18 @@ function pickUpTaskReward(id: number): void {
   else if (this.state.farm === 'Chicken') tasks = this.state.chickenTasks;
 
   let task: Itasks = tasks.find((data: Itasks) => data.id === id);
-
   if (task?.done === 1 && task?.got_awarded === 0) {
 
+    if (this.state.farm === 'Sheep') {     
+      let moneyTask: any = this.moneyTasks.find(el => el.id === task.id);
+      if (moneyTask) {
+        console.log(moneyTask);
+        this.state.userSheep.money += moneyTask.money;
+      }
+      else this.state.user.diamonds += task.diamonds;
+    } else this.state.user.diamonds += task.diamonds;
+
     this.state.user.xp += task.xp;
-    this.state.user.diamonds += task.diamonds;
     task.got_awarded = 1;
     this.game.scene.keys[this.state.farm + 'Bars'].taskBoard.update();
 

@@ -1,4 +1,4 @@
-import { shortTime } from './general/basic';
+import { shortNum, shortTime } from './general/basic';
 import SheepBars from './scenes/Sheep/SheepBars';
 import ChickenBars from './scenes/Chicken/ChickenBars';
 
@@ -753,13 +753,24 @@ class TaskBoard {
       let taskTextBounds: Phaser.Geom.Rectangle = this.taskText.getBounds();
       
       this.taskText.y = this.y - taskTextBounds.height - 244;
-
-      this.award = this.scene.add.text(190, this.y - 220, String(task.diamonds), {
+      
+      let icon: string = 'diamond';
+      let award: number = task.diamonds;
+      
+      if (this.scene.state.farm === 'Sheep') {     
+        let moneyTask: any = this.scene.game.scene.keys['Sheep'].moneyTasks.find(el => el.id === task.id);
+        if (moneyTask) {
+          award = moneyTask.money;
+          icon = 'sheepCoin';
+        }
+      }
+      
+      this.award = this.scene.add.text(190, this.y - 220, String(award), {
         font: '20px Bip',
         color: '#FFFFFF'
       }).setDepth(this.scene.height).setOrigin(0, 0.5);
-
-      this.diamond = this.scene.add.image(160, this.y - 220, 'diamond')
+      
+      this.diamond = this.scene.add.image(160, this.y - 220, icon)
         .setDepth(this.scene.height)
         .setScale(0.1)
         .setOrigin(0, 0.5);
@@ -796,7 +807,11 @@ class TaskBoard {
         title: this.takeText,
         img: false
       }, (): void => {
-        this.scene.getDiamonds({ x: this.done.x, y: this.done.y }, task.diamonds);
+        if (icon === 'diamond') {
+          this.scene.getDiamonds({ x: this.done.x, y: this.done.y }, task.diamonds);
+        } else if (icon === 'sheepCoin') {
+          this.scene.plusMoneyAnimation({ x: this.done.x, y: this.done.y });
+        }
         this.scene.game.scene.keys[this.scene.state.farm].pickUpTaskReward(task.id);
       });
 

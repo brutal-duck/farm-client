@@ -39,56 +39,55 @@ function tasksWindow(): void {
   for (let i = 0; i < this.state.modal.tasksParams.tasks.length; i++) {
 
     let task: Itasks = this.state.modal.tasksParams.tasks[i];
-    let taskData: ItaskData = this.game.scene.keys[this.state.farm].getTaskData(task)
+    let taskData: ItaskData = this.game.scene.keys[this.state.farm].getTaskData(task);
 
     let textForWidth: Phaser.GameObjects.Text = this.add.text(0, 0, taskData.name, {
       font: '24px Bip',
       color: '#944000',
       align: 'center',
       wordWrap: { width: textWidth }
-    }).setAlpha(0)
+    }).setAlpha(0);
 
-    if (textForWidth.getBounds().height > 60) taskCenterY -= 86
-    else taskCenterY -= 80
+    if (textForWidth.getBounds().height > 60) taskCenterY -= 86;
+    else taskCenterY -= 80;
 
-    textsHeight.push(textForWidth.getBounds().height)
+    textsHeight.push(textForWidth.getBounds().height);
 
     tasks.push({
       task: task,
-      taskData: taskData
-    })
+      taskData: taskData,
+    });
 
   }
   
   // Цикл создания tasks
   for (let i = 0; i < this.state.modal.tasksParams.tasks.length; i++) {
 
-    let completed: boolean | Phaser.GameObjects.Image = false;
-    let awardText: boolean | Phaser.GameObjects.Image = false;
-    let awardIcon: boolean | Phaser.GameObjects.Image = false;
-    let doneText: boolean | Phaser.GameObjects.Text = false;
-    let takeButton: boolean | Phaser.GameObjects.Image = false; // зеленая кнопки
-    let takeText: boolean | Phaser.GameObjects.Text = false; // текст кнопки
-    let padding: number // Отступ от предыдущей верхней плашки
+    let completed: Phaser.GameObjects.Image;
+    let awardText: Phaser.GameObjects.Image;
+    let awardIcon: Phaser.GameObjects.Image;
+    let doneText: Phaser.GameObjects.Text;
+    let takeButton: Phaser.GameObjects.Image; // зеленая кнопки
+    let takeText: Phaser.GameObjects.Text; // текст кнопки
+    let padding: number; // Отступ от предыдущей верхней плашки
 
     if (textsHeight[i] > 60 && Number(i) < this.state.modal.tasksParams.tasks.length) {
 
-      if (barHeight === 154) padding = 12
-      else if (barHeight === 164) padding = 8
+      if (barHeight === 154) padding = 12;
+      else if (barHeight === 164) padding = 8;
 
-      height += 168 + Number(i)
-      taskCenterY += barHeight + padding
-      barHeight = 164
+      height += 168 + Number(i);
+      taskCenterY += barHeight + padding;
+      barHeight = 164;
 
     } else if (Number(i) < this.state.modal.tasksParams.tasks.length) {
 
-      if (barHeight === 154) padding = 6
-      else if (barHeight === 164) padding = 2
+      if (barHeight === 154) padding = 6;
+      else if (barHeight === 164) padding = 2;
       
-      height += 158 + Number(i)
-      taskCenterY += barHeight + padding
-      barHeight = 154
-
+      height += 158 + Number(i);
+      taskCenterY += barHeight + padding;
+      barHeight = 154;
     }
     
     // Иконка и текст
@@ -104,22 +103,35 @@ function tasksWindow(): void {
     if (tasks[i].task.done === 1 && tasks[i].task.got_awarded === 1) {
 
       // Галочка и затемнение иконки
-      icon.setTint(0x777777).setAlpha(0.5)
-      completed = this.add.image(194, taskCenterY - 6, 'completed').setDepth(1).setTint(0xc0c0c0).setOrigin(0.5, 0.5).setAlpha(0.9)
+      icon.setTint(0x777777).setAlpha(0.5);
+      completed = this.add.image(194, taskCenterY - 6, 'completed').setDepth(1).setTint(0xc0c0c0).setOrigin(0.5, 0.5).setAlpha(0.9);
 
       // Плашка задания
-      this.add.image(this.cameras.main.centerX + 2, taskCenterY, 'tasks-complete').setOrigin(0.5, 0.5).setDisplaySize(460, barHeight)
-      text.setColor('#494949').setAlpha(0.6).setY(text.y + 20)
-      countDone++
+      this.add.image(this.cameras.main.centerX + 2, taskCenterY, 'tasks-complete').setOrigin(0.5, 0.5).setDisplaySize(460, barHeight);
+      text.setColor('#494949').setAlpha(0.6).setY(text.y + 20);
+      countDone++;
 
     } else if (tasks[i].task.done === 1 && tasks[i].task.got_awarded === 0) {
+      // костыль //
+      let iconTexture: string = 'diamond'; 
+      let award: string = String(tasks[i].task.diamonds);
+      let moneyTask: any = undefined;
 
-      icon.setTint(0x777777)
-      completed = this.add.image(194, taskCenterY - 6, 'completed').setDepth(1).setOrigin(0.5, 0.5)
+      if (this.state.farm === 'Sheep') {     
+        moneyTask = this.game.scene.keys['Sheep'].moneyTasks.find(el => el.id === tasks[i].task.id);
+        if (moneyTask) {
+          award = moneyTask.money;
+          iconTexture = 'sheepCoin';
+        }
+      }
+      // ----- //
+
+      icon.setTint(0x777777);
+      completed = this.add.image(194, taskCenterY - 6, 'completed').setDepth(1).setOrigin(0.5, 0.5);
 
       // Плашка задания
-      this.add.image(this.cameras.main.centerX + 2, taskCenterY, 'tasks-reward').setOrigin(0.5, 0.5).setDisplaySize(460, barHeight)
-      this.add.image(this.cameras.main.centerX + 100, taskCenterY + (barHeight / 2) - 29, 'tasks-bar').setOrigin(0.5, 0.5)
+      this.add.image(this.cameras.main.centerX + 2, taskCenterY, 'tasks-reward').setOrigin(0.5, 0.5).setDisplaySize(460, barHeight);
+      this.add.image(this.cameras.main.centerX + 100, taskCenterY + (barHeight / 2) - 29, 'tasks-bar').setOrigin(0.5, 0.5);
 
       takeButton = this.add.image(422, taskCenterY + (barHeight / 2) - 26, 'little-button').setOrigin(0.5, 0.5).setDepth(1).setDisplaySize(134, 48);
       const position: Iposition = {
@@ -131,22 +143,33 @@ function tasksWindow(): void {
         color: '#FFFFFF'
       }).setOrigin(0.5, 0.5).setDepth(1);
 
-      awardText = this.add.text(542, taskCenterY + (barHeight / 2) - 29, String(tasks[i].task.diamonds), {
+      awardText = this.add.text(542, taskCenterY + (barHeight / 2) - 29, award, {
         font: '34px Bip',
         color: '#FFFFFF'
       }).setDepth(2).setOrigin(0.5, 0.5).setShadow(2, 2, 'rgba(0, 0, 0, 0.5)', 5);
 
-      awardIcon = this.add.image(510, taskCenterY + (barHeight / 2) - 29, 'diamond')
+      awardIcon = this.add.image(510, taskCenterY + (barHeight / 2) - 29, iconTexture)
         .setDepth(2)
         .setScale(0.14)
         .setOrigin(0.5, 0.5);
+        
+      if (moneyTask) { // костыль
+        awardText.setVisible(false);
+        awardIcon.setVisible(false);
+        takeButton.setX(460);
+        takeText.setX(takeButton.x);
+      }  
 
       this.clickShopBtn({ btn: takeButton, title: takeText, img: false }, (): void => {
-        this.game.scene.keys[this.state.farm + 'Bars'].getDiamonds(position, tasks[i].task.diamonds);
+        if (iconTexture === 'diamond') {
+          this.game.scene.keys[this.state.farm + 'Bars'].getDiamonds(position, tasks[i].task.diamonds);
+        } else if (iconTexture === 'sheepCoin') {
+          this.game.scene.keys[this.state.farm + 'Bars'].plusMoneyAnimation(position);
+        }
         this.game.scene.keys[this.state.farm].pickUpTaskReward(tasks[i].task.id);
       });
 
-      countDone++
+      countDone++;
 
     } else {
       // Счетчик прогресса
@@ -159,23 +182,44 @@ function tasksWindow(): void {
 
       this.click(taskBg, (): void => {
         this.scene.stop('Modal');
-        this.clickTaskBoard(tasks[i].task)
+        this.clickTaskBoard(tasks[i].task);
       });
+      // костыль //
+
+      let iconTexture: string = 'diamond';
+      let award: string = String(tasks[i].task.diamonds);
+      let moneyTask: any = undefined;
+
+      if (this.state.farm === 'Sheep') {     
+        moneyTask = this.game.scene.keys['Sheep'].moneyTasks.find(el => el.id === tasks[i].task.id);
+        if (moneyTask) {
+          award = moneyTask.money;
+          iconTexture = 'sheepCoin';
+        }
+      }
+      // ------- //
+
 
       takeText = this.add.text(426, taskCenterY + (barHeight / 2) - 28, this.state.lang.taskReward, {
         font: '24px Shadow',
         color: '#FFFFFF'
       }).setOrigin(0.5, 0.5).setDepth(1);
 
-      awardText = this.add.text(542, taskCenterY + (barHeight / 2) - 29, String(tasks[i].task.diamonds), {
+      awardText = this.add.text(542, taskCenterY + (barHeight / 2) - 29, award, {
         font: '34px Bip',
         color: '#FFFFFF'
       }).setDepth(2).setOrigin(0.5, 0.5).setShadow(2, 2, 'rgba(0, 0, 0, 0.5)', 5);
 
-      awardIcon = this.add.image(510, taskCenterY + (barHeight / 2) - 29, 'diamond')
+      awardIcon = this.add.image(510, taskCenterY + (barHeight / 2) - 29, iconTexture)
         .setDepth(2)
         .setScale(0.14)
         .setOrigin(0.5, 0.5);
+      
+      if (moneyTask) { // костыль //
+        takeText.setVisible(false);
+        awardIcon.setX(415);
+        awardText.setX(awardIcon.getBounds().right + 5).setOrigin(0, 0.5);
+      }
 
       doneText = this.add.text(194, taskCenterY + 60, tasks[i].task.progress + '/' + count, {
         font: '26px Shadow',
