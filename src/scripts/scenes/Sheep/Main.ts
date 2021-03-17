@@ -39,7 +39,8 @@ import {
   debug,
   getRandomBool,
   spreadAnimals, 
-  getEventRaiting
+  getEventRaiting,
+  nextDayTimer,
 } from '../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -287,6 +288,7 @@ class Sheep extends Phaser.Scene {
   public getEventRaiting = getEventRaiting.bind(this);
   public showEventTutorial = showEventTutorial.bind(this);
   public doneEventTutor_0 = doneEventTutor_0.bind(this);
+  public nextDayTimer = nextDayTimer.bind(this);
 
   public init(state: Istate): void {
 

@@ -341,16 +341,9 @@ function interval(): void {
     this.caveIconsAnimation();
 
     this.debug();
-    
-    // таймер до буста стадо
-    if (this.state.timeToNewDay > 0) {
-      --this.state.timeToNewDay;
-    } else {
-      console.log('очистка таймера');
-      this.state[`user${this.state.farm}`].takenHerdBoost = 0;
-      this.state.timeToNewDay = 86400;
-    } 
 
+    this.nextDayTimer();
+    
     if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
      this.state[`user${this.state.farm}`].takenHerdBoost <= 0 && 
      this.state.user.additionalTutorial.herdBoost ) {

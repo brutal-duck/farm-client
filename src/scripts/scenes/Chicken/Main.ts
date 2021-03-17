@@ -34,7 +34,8 @@ import {
   randomString,
   getRandomBool,
   spreadAnimals,
-  getEventRaiting
+  getEventRaiting,
+  nextDayTimer,
 } from '../../general/basic';
 import {
   improveCollector,
@@ -234,6 +235,7 @@ class Chicken extends Phaser.Scene {
   public getEventRaiting = getEventRaiting.bind(this);
   public showEventTutorial = showEventTutorial.bind(this);
   public doneEventTutor_0 = doneEventTutor_0.bind(this);
+  public nextDayTimer = nextDayTimer.bind(this);
 
   public init(state: Istate): void {
 

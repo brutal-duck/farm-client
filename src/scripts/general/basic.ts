@@ -1294,6 +1294,15 @@ function getStatusSettings(string: string): IstatusSettings {
   return;
 } 
 
+function nextDayTimer(): void {
+  if (this.state.timeToNewDay > 0) {
+    --this.state.timeToNewDay;
+  } else { // обнуление параметров
+    this.state[`user${this.state.farm}`].takenHerdBoost = 0;
+    this.state.timeToNewDay = 86400;
+  }
+}
+
 export {
   random,
   getRandomBool,
@@ -1322,5 +1331,6 @@ export {
   loadingScreen,
   spreadAnimals,
   getEventRaiting,
-  getStatusSettings
+  getStatusSettings,
+  nextDayTimer
 }

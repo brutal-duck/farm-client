@@ -173,10 +173,12 @@ function dailyNewbie(): void {
   }).setOrigin(0.5, 0.5).setStroke('#5226A3', 5);
 
   this.click(bg, () => {
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-    this.game.scene.keys[this.state.farm].takeNewbieAward();
-  })
+    if (!this.state.user.takenReward) {
+      this.scene.stop();
+      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+      this.game.scene.keys[this.state.farm].takeNewbieAward();
+    }
+  });
 
   
 
