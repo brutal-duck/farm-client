@@ -409,18 +409,7 @@ function herdBoost(): void {
 
   this.clickModalBtn({ btn: this.herdBoostBtn, title: this.herdBoostBtnLeftText, text1: this.herdBoostBtnRightText, img1: this.herdBoostDiamondBtn }, (): void => {
     if (this.state.user.diamonds >= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost) {
-      this.state.user.diamonds -= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost;
       this.game.scene.keys[this.state.farm].startHerdBoost();
-
-      if (this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost > 0) {
-        this.game.scene.keys[this.state.farm].tryTask(15, 0, this.state.herdBoostPrice);
-        this.state.amplitude.getInstance().logEvent('diamonds_spent', {
-          type: 'herd',
-          count: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
-          farm_id: this.state.farm
-        });
-      }
-
       this.state.amplitude.getInstance().logEvent('booster_merge', {
         count: this.state[`user${this.state.farm}`].takenHerdBoost,
         farm_id: this.state.farm
