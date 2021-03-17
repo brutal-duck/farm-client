@@ -111,7 +111,7 @@ function interval(): void {
     // // поиск рекламы
     this.findAd();
     
-    this.debug();
+    // this.debug();
 
     this.nextDayTimer();
 
