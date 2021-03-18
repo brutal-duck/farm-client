@@ -1112,6 +1112,11 @@ function eventProgress(): void {
     } else if (this.state.user.diamonds - doubleProfitPrice >= 0) {
       
       this.state.user.diamonds -= doubleProfitPrice;
+      this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+        type: 'event_double_salary',
+        count: doubleProfitPrice,
+        farm_id: this.state.farm
+      });
       this.state.userEvent.money += this.state.modal.eventParams.offlineProgress;
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
       this.scene.stop();
@@ -1303,7 +1308,7 @@ function eventRatings(): void {
   this.playerPlaceAndName = this.add.text(placeAndNameX, placeAndNameY + 270, this.state.progress.event.userEventRaiting.place + '. ' + this.state.progress.event.userEventRaiting.name, {
     font: '21px Bip',
     color: '#793D0A',
-  }).setCrop(0, 0, 280, 100);
+  }).setCrop(0, 0, 260, 100);
 
   this.playerScore = this.add.text(placeAndNameX + 280, placeAndNameY + 270, this.state.progress.event.userEventRaiting.score, {
     font: '21px Bip',
@@ -1537,7 +1542,7 @@ function endEventModal(): void {
   this.playerPlaceAndName = this.add.text(placeAndNameX, placeAndNameY + 270, this.state.progress.event.userEventRaiting.place + '. ' + this.state.progress.event.userEventRaiting.name, {
     font: '21px Bip',
     color: '#793D0A',
-  }).setCrop(0, 0, 280, 100);
+  }).setCrop(0, 0, 260, 100);
 
   this.playerScore = this.add.text(placeAndNameX + 280, placeAndNameY + 270, this.state.progress.event.userEventRaiting.score, {
     font: '21px Bip',
