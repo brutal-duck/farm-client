@@ -105,6 +105,16 @@ function animalMoney(): void {
 
 }
 
+function setDiamondPrice(devisor): number {
+  const lvl: number = 61;
+  let diamondPrice: number = 40;
+  let multiply: number = 1 + Math.floor((this.state.userEvent.maxLevelAnimal - lvl) / 5) 
+  let inc: number = 5;
+  if (this.state.userEvent.maxLevelAnimal > lvl) {
+    diamondPrice += inc * multiply;
+  }
+  return Math.round(diamondPrice / devisor);
+}
 
 // животные
 function animals(): void {
@@ -179,8 +189,8 @@ function animals(): void {
 
     } else if (animal.breed <= this.state.userEvent.maxLevelAnimal - 3 || animal.breed === 2 && this.state.userEvent.maxLevelAnimal > 2) {
 
+      const diamondPrice = setDiamondPrice(4);
       
-      let diamondPrice: number = 10;
       if (this.state.readyAd && this.game.scene.keys['Event'].delayAd <= 0) {
         
         btn = this.shopButton(330, center,  this.state.lang.pickUp, 'ad-icon');
@@ -230,7 +240,7 @@ function animals(): void {
 
     } else if (animal.breed <= this.state.userEvent.maxLevelAnimal - 2 || animal.breed === 3 && this.state.userEvent.maxLevelAnimal > 3) {
 
-      let diamondPrice: number = 20;
+      const diamondPrice = setDiamondPrice(2);
       
       btn = this.shopButton(330, center, String(diamondPrice), 'diamond');
       this.clickShopBtn(btn, (): void => {
@@ -249,8 +259,8 @@ function animals(): void {
 
     } else if (animal.breed <= this.state.userEvent.maxLevelAnimal - 1 || animal.breed === 4 && this.state.userEvent.maxLevelAnimal > 4) {
 
-      let diamondPrice: number = 40;
-
+      const diamondPrice = setDiamondPrice(1);
+      
       btn = this.shopButton(330, center, String(diamondPrice), 'diamond');
       this.clickShopBtn(btn, (): void => {
 
