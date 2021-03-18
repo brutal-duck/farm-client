@@ -141,7 +141,7 @@ function adReward(): void {
       if (breed < 2) breed = 2;
       this.currentTerritory(position.x, position.y).data.values.animal = breed;
       id = 'local_' + randomString(18);
-      
+      this.delayAd = 30;
       this.getAnimal(id, breed, position.x, position.y);
       this.firework250(position.x, position.y);
 

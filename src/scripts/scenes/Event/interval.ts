@@ -208,6 +208,8 @@ function interval(): void {
       }
     }
     
+    if (this.delayAd > 0) --this.delayAd;
+
   }, callbackScope: this, loop: true });
 
 }

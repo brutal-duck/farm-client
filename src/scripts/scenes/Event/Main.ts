@@ -130,6 +130,7 @@ class Event extends Phaser.Scene {
   public mergTutor: number; // счетчик для повтора туториала про мерджинг
   public showMergPointer: boolean; // показ пальца с перетаскиванием овец для тутора
   public mergPointer: any; // спрайт пальца с перетаскиванием
+  public delayAd: number; // задержка на рекламу для получения единорога
 
   public collisions = collisions.bind(this);
   public click = click.bind(this);
@@ -215,7 +216,7 @@ class Event extends Phaser.Scene {
   
   public init(state: Istate): void {
     this.state = state;
-
+    this.delayAd = 30;
     console.log('Event');
     this.state.farm = 'Event';
     this.collectorTimer = null;
