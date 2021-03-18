@@ -902,13 +902,15 @@ function takeDonate(): void {
     else {
 
       if (res.data.donate > 0) {
-        
+        this.state.stock = '';
+        if (this.state.starterpack) this.state.stock = 'starterpack';
         let pack: Ipackage = this.state.packages.find((data: Ipackage) => data.id === res.data.package);
         this.state.user.diamonds += res.data.donate;
         this.state.user.starterpack = true;
         let revenue: amplitude.Revenue = new amplitude.Revenue()
           .setProductId('Product #' + res.data.package)
-          .setPrice(pack.price);
+          .setPrice(pack.price)
+          .setEventProperties(this.state.stock);
         this.state.amplitude.logRevenueV2(revenue);
         this.game.scene.keys[this.state.farm + 'Bars'].plusDiamonds();
         this.autosave();

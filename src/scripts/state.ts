@@ -60,6 +60,7 @@ let userEvent: IuserEvent;
 let eventCollectorSettings: IcollectorSettings[];
 let chat: Ichat[] = [];
 let starterpack: boolean = false;
+let stock: string = '';
 
 let state: Istate = {
   // записываемые в localStorage
@@ -126,6 +127,8 @@ let state: Istate = {
   donate, // переменная для показа доната
   boughtFeedBoost, // куплен ли буст
   chat, // сообщения в чат
+  starterpack, // забрал ли юзер стартерпак
+  stock // тип акции, собтия для revenue
 }
 
 export default state;
