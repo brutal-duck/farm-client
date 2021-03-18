@@ -250,7 +250,7 @@ function animals(): void {
     } else if (animal.breed <= this.state.userEvent.maxLevelAnimal - 1 || animal.breed === 4 && this.state.userEvent.maxLevelAnimal > 4) {
 
       let diamondPrice: number = 40;
-      
+
       btn = this.shopButton(330, center, String(diamondPrice), 'diamond');
       this.clickShopBtn(btn, (): void => {
 
