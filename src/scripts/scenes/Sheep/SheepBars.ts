@@ -500,7 +500,20 @@ class SheepBars extends Phaser.Scene {
     this.socialButtons();
 
     // икнока календарика
-    // this.calendarAnimation();
+    if (this.calendar?.scene) {
+
+      if (this.state.farm === 'Sheep') {
+  
+        if (this.state.userSheep.part >= 4 && !this.calendar.visible) {
+          this.calendar.setVisible(true);
+          this.calendarText.setVisible(true);
+        } else if (this.state.userSheep.part < 4 && this.calendar.visible) {
+          this.calendar.setVisible(false);
+          this.calendarText.setVisible(false);
+        }
+  
+      }
+    }
 
     this.updateNativeShop();
 
