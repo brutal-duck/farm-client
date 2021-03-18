@@ -85,18 +85,18 @@ function moveItems([...args], boostCounterWindow): void {
   
   // установка новых позиций
   timerText.setText(this.state.herdBoostTime);
-  timerText.x = 140;
-  timerText.y = 1080;
+  timerText.x = 430;
+  timerText.y = 355;
 
-  countdown.x = 140;
-  countdown.y = 1085;
-
+  countdown.x = 430;
+  countdown.y = 360;
+  
   leaves1.angle = 90;
-  leaves1.x = 135;
-  leaves1.y = 1140;
+  leaves1.x = 455;
+  leaves1.y = 420;
   leaves2.angle = 90;
-  leaves2.x = 135;
-  leaves2.y = 1015;
+  leaves2.x = 455;
+  leaves2.y = 290;
 
   text1.style.wordWrapWidth = 280;
   text1
