@@ -2,7 +2,6 @@ import axios from 'axios';
 import { randomString, shortNum } from './../../general/basic';
 // цена животного
 function animalPrice(breed: number): {price: bigint, countAnimal: number} {
-
   let insideCounter: number = this.state.userEvent.countAnimal[breed - 1].counter;
   let insidePrice: bigint = this.state.eventSettings.eventSettings[breed - 1].price;
   let coefficient: bigint = BigInt(this.state.eventSettings.priceCoefficient);

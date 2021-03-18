@@ -1929,7 +1929,7 @@ class EventPreload extends Phaser.Scene {
           });
 
         }
-
+        
         const eventResources: IeventResource[] = []; // IeventResource
 
         for (let i in response.data.event.resources) {
@@ -1964,9 +1964,17 @@ class EventPreload extends Phaser.Scene {
         // -------- костыль с плохой строкой из базы  -------- ///
         let money: String | Number = Number(response.data.event.money) < Number.MAX_SAFE_INTEGER ? response.data.event.money : Number(response.data.event.money);
         // -------------------------------------------------- ///
+
+        const countAnimal = response.data.event.countAnimal;
+        if (countAnimal.length < this.state.eventSettings.eventSettings.length) {
+          let addCounter: number = this.state.eventSettings.eventSettings.length - countAnimal.length;
+          for (let i = 0; i < addCounter; i++) {
+            countAnimal.push({ counter: 1 });
+          }
+        }
         const userEvent: IuserEvent = {  
           money: BigInt(money),
-          countAnimal: response.data.event.countAnimal,
+          countAnimal: countAnimal,
           collector: response.data.event.collector,
           collectorLevel: response.data.event.collectorLevel,
           collectorTakenTime: response.data.event.collector,

@@ -41,6 +41,7 @@ import {
   updateEventHerdBoostBtn,
   eventFeedBoost,
   eventHerdBoost,
+  getDiamondPrice
 } from './event';
 import { Arrows } from '../../../elements';
 
@@ -138,6 +139,7 @@ class Shop extends Phaser.Scene {
   public updateEventHerdBoostBtn = updateEventHerdBoostBtn.bind(this);
   public eventFeedBoost = eventFeedBoost.bind(this);
   public eventHerdBoost = eventHerdBoost.bind(this);
+  public getDiamondPrice = getDiamondPrice.bind(this);
 
   public init(state: Istate): void {
     
