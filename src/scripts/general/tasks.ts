@@ -471,7 +471,7 @@ function clickTaskBoard(task: Itasks): void {
       openStorageToImproveOrSpeechBuble();
       break;
     case 18: 
-      this.game.scene.keys[this.state.farm].takeDiamondSheep();
+      this.game.scene.keys[this.state.farm][`takeDiamond${this.state.farm}`]();
       break;
     case 19: 
       this.game.scene.keys[this.state.farm + 'Bars'].createSpeechBubble(this.state.lang[`taskHelp${this.state.farm}_19`], 3);
