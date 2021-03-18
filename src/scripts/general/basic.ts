@@ -520,10 +520,7 @@ function pickUpTaskReward(id: number): void {
 
     if (this.state.farm === 'Sheep') {     
       let moneyTask: any = this.moneyTasks.find(el => el.id === task.id);
-      if (moneyTask) {
-        console.log(moneyTask);
-        this.state.userSheep.money += moneyTask.money;
-      }
+      if (moneyTask) this.state.userSheep.money += moneyTask.money;
       else this.state.user.diamonds += task.diamonds;
     } else this.state.user.diamonds += task.diamonds;
 

@@ -175,10 +175,14 @@ class Sheep extends Phaser.Scene {
   public feedBoostLvl: number = 6; // уровень старта буста комбикорм
   public feedBoostStack: number = 11; // максимальный стек часов
   public readonly moneyTasks: { id: number, money: number }[] = [
-    // {
-    //   id: 1,
-    //   money: 2000
-    // }
+    {
+      id: 127,
+      money: 3000
+    },
+    {
+      id: 4,
+      money: 4000
+    }
   ];
 
   public world = world.bind(this);
