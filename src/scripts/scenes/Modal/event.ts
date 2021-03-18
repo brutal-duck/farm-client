@@ -1112,6 +1112,11 @@ function eventProgress(): void {
     } else if (this.state.user.diamonds - doubleProfitPrice >= 0) {
       
       this.state.user.diamonds -= doubleProfitPrice;
+      this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+        type: 'event_double_salary',
+        count: doubleProfitPrice,
+        farm_id: this.state.farm
+      });
       this.state.userEvent.money += this.state.modal.eventParams.offlineProgress;
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
       this.scene.stop();

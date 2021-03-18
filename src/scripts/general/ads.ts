@@ -149,8 +149,8 @@ function adReward(): void {
         farm_id: this.state.farm,
         price: 'ad'
       });
+      type = 'take_event_animal';
       break;
-
     case 5:
       this.state.userEvent.money += this.state.modal.eventParams.offlineProgress;
       this.game.scene.keys[this.state.farm + 'Bars'].plusMoney();
@@ -158,6 +158,7 @@ function adReward(): void {
         farm_id: this.state.farm,
         price: 'ad'
       });
+      type = 'take_double_profit_event';
       break;
 
     default:
