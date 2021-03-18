@@ -216,7 +216,7 @@ class Event extends Phaser.Scene {
   
   public init(state: Istate): void {
     this.state = state;
-    this.delayAd = 30;
+    this.delayAd = 0;
     console.log('Event');
     this.state.farm = 'Event';
     this.collectorTimer = null;

@@ -1199,7 +1199,7 @@ function eventRatings(): void {
     align: 'center',
     wordWrap: { width: 380 }
   }).setOrigin(0.5, 0.5).setDepth(2).setLineSpacing(0.2);
-  let rulesText2: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 112, this.state.lang.eventRulesTеxt2, {
+  let rulesText2: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 97, this.state.lang.eventRulesTеxt2, {
     font: '23px Bip',
     color: '#793D0A',
     align: 'center',
@@ -1207,13 +1207,13 @@ function eventRatings(): void {
   }).setOrigin(0.5, 0.5).setDepth(2).setLineSpacing(0.2);
 
   // Времени осталось
-  let eventLeftText: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 100, this.cameras.main.centerY - 40, this.state.lang.eventRulesLeft, {
+  let eventLeftText: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 100, this.cameras.main.centerY - 25, this.state.lang.eventRulesLeft, {
     font: '24px Bip',
     color: '#793D0A',
   }).setOrigin(1, 0.5).setDepth(2);
   
   // Время
-  this.eventLeftTime = this.add.text(this.cameras.main.centerX + 114, this.cameras.main.centerY - 40, this.shortTime(this.state.progress.event.endTime, this.state.lang), {
+  this.eventLeftTime = this.add.text(this.cameras.main.centerX + 114, this.cameras.main.centerY - 25, this.shortTime(this.state.progress.event.endTime, this.state.lang), {
     font: '24px Bip',
     color: '#459D1A',
   }).setOrigin(0, 0.5).setDepth(2);
