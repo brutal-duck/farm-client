@@ -124,11 +124,11 @@ class Chat extends Phaser.Scene {
         align: 'left',
         wordWrap: { width: this.textWrap }
       })
-      .setOrigin(0, 0)
-      .setCrop(0, 0, this.textWrap - 5, 100)
-      .setDepth(2);
+        .setOrigin(0, 0)
+        .setDepth(2);
       
       let textHeight: number = outputText.getBounds().height;
+      outputText.setCrop(0, 0, this.textWrap - 5, textHeight);
       let textWidth: number = outputText.getBounds().width;
             
       // Текст Ника
@@ -148,7 +148,6 @@ class Chat extends Phaser.Scene {
                 
       }
 
-  
       // Время исходящего сообщения
       let timeText: Phaser.GameObjects.Text = this.add.text(this.windowWidth - 24, outputText.y + textHeight + 36, date, {
         font: '16px Shadow',
@@ -215,10 +214,10 @@ class Chat extends Phaser.Scene {
         wordWrap: { width: this.textWrap }
       })
       .setOrigin(0)
-      .setCrop(0, 0, this.textWrap - 5, 100)
       .setDepth(2);
       
       let textHeight: number = gettedText.getBounds().height;
+      gettedText.setCrop(0, 0, this.textWrap - 5, textHeight);
       let textWidth: number = gettedText.getBounds().width;
       
       // Текст Ника
