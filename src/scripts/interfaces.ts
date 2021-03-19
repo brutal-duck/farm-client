@@ -388,7 +388,7 @@ interface Imodal {
 }
 interface Iconvertor {
   fun: number;
-  count: number;
+  count: number | bigint;
   diamonds: number;
   type: number;
   breed?: number;
