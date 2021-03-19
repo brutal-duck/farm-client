@@ -191,7 +191,7 @@ function animals(): void {
 
       const diamondPrice = this.getDiamondPrice(4, animal.breed);
 
-      if (this.state.readyAd && this.game.scene.keys['Event'].delayAd <= 0) {
+      if (this.state.readyAd && this.state.userEvent.timeToAd <= 0) {
         
         btn = this.shopButton(330, center,  this.state.lang.pickUp, 'ad-icon');
         this.clickShopBtn(btn, (): void => {

@@ -2,6 +2,7 @@ import { FAPI } from '../libs/Fapi';
 import * as amplitude from 'amplitude-js';
 import { randomString } from './basic';
 import * as platform from 'platform';
+import axios from 'axios';
 
 // поиск рекламы
 function findAd(): void {
@@ -141,7 +142,23 @@ function adReward(): void {
       if (breed < 2) breed = 2;
       this.currentTerritory(position.x, position.y).data.values.animal = breed;
       id = 'local_' + randomString(18);
-      this.delayAd = 30;
+      
+      const data = {
+        id: this.state.user.id,
+        hash: this.state.user.hash,
+        counter: this.state.user.counter,
+      }
+      axios.post(process.env.API + "/takeAd", data)
+        .then((response) => {
+          if (response.data.success) {
+            if (this.state.userEvent.takenAd === 0) this.state.userEvent.timeToAd += 60;
+            else if (this.state.userEvent.takenAd === 1) this.state.userEvent.timeToAd += 300;
+            else if (this.state.userEvent.takenAd === 2) this.state.userEvent.timeToAd += 1800;
+            else if (this.state.userEvent.takenAd === 3) this.state.userEvent.timeToAd += 7200;
+            else if (this.state.userEvent.takenAd >= 4) this.state.userEvent.timeToAd += 86400;
+            this.state.userEvent.takenAd += 1;
+          }
+        });
       this.getAnimal(id, breed, position.x, position.y);
       this.firework250(position.x, position.y);
 

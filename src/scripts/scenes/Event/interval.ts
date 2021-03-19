@@ -208,7 +208,7 @@ function interval(): void {
       }
     }
     
-    if (this.delayAd > 0) --this.delayAd;
+    if (this.state.userEvent.timeToAd > 0) --this.state.userEvent.timeToAd;
 
   }, callbackScope: this, loop: true });
 

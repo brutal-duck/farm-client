@@ -137,7 +137,7 @@ interface IuserChicken {
 }
 interface IuserEvent {
   money: bigint;
-  countAnimal: {counter: number}[];
+  countAnimal: { counter: number }[];
   collector: number;
   collectorLevel: number;
   collectorTakenTime: number;
@@ -147,6 +147,8 @@ interface IuserEvent {
   feedBoostTime: number;
   maxLevelAnimal: number;
   herdBoostAnimals: number[];
+  takenAd: number;
+  timeToAd: number;
 }
 interface Iterritories {
   block: number;

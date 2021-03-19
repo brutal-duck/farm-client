@@ -130,7 +130,6 @@ class Event extends Phaser.Scene {
   public mergTutor: number; // счетчик для повтора туториала про мерджинг
   public showMergPointer: boolean; // показ пальца с перетаскиванием овец для тутора
   public mergPointer: any; // спрайт пальца с перетаскиванием
-  public delayAd: number = 0; // задержка на рекламу для получения единорога
 
   public collisions = collisions.bind(this);
   public click = click.bind(this);

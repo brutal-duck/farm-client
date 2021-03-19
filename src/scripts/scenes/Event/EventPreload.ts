@@ -1983,7 +1983,9 @@ class EventPreload extends Phaser.Scene {
           takenHerdBoost: response.data.event.takenHerdBoost,
           feedBoostTime: response.data.event.feedBoostTime,
           maxLevelAnimal: response.data.user.eventPoints,
-          herdBoostAnimals: response.data.event.herdBoostAnimals
+          herdBoostAnimals: response.data.event.herdBoostAnimals,
+          takenAd: response.data.takenAd,
+          timeToAd: response.data.timeToAd,
         }
         
       //   // переписываем стейт
