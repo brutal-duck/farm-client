@@ -208,7 +208,10 @@ function interval(): void {
       }
     }
     
-    if (this.state.userEvent.timeToAd > 0) --this.state.userEvent.timeToAd;
+    if (this.state.userEvent.timeToAd > 0) {
+      console.log(this.state.userEvent.timeToAd);
+      --this.state.userEvent.timeToAd;
+    }
 
   }, callbackScope: this, loop: true });
 
