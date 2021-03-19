@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // автосохранение
-function autosave(): void {
+function autosave(exitGame: boolean = false): void {
 
   this.autoSaveTimer = 0;
 
@@ -81,7 +81,8 @@ function autosave(): void {
     territories: territories,
     sheep: sheep,
     user: user,
-    dailyAwards: this.state.dailyAwards
+    dailyAwards: this.state.dailyAwards,
+    exitGame: exitGame,
   }
 
   axios.post(process.env.API + "/sheep/autoSave", data)

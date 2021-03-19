@@ -48,7 +48,7 @@ class Boot extends Phaser.Scene {
       if ((this.state.farm === 'Sheep' && this.scene.isActive('Sheep')) ||
         (this.state.farm === 'Chicken' && this.scene.isActive('Chicken')) ||
         (this.state.farm === 'Event' && this.scene.isActive('Event'))) {
-        this.game.scene.keys[this.state.farm].autosave();
+        this.game.scene.keys[this.state.farm].autosave(true);
       }
 
     }, false);
