@@ -327,23 +327,9 @@ function convertMoney(money: bigint): number {
   let maxLevel: number = this.state.userEvent.maxLevelAnimal;
   
   let setting: IeventPoints = breedSettings.find((item: IeventPoints) => item.breed === maxLevel);
-  let exchange: bigint;
+  let exchange: bigint = setting ? setting.exchange : BigInt(1);
 
-  if (setting) {
-    exchange = setting.exchange;
-  } else {
-    exchange = BigInt(1);
-  }
-
-  let needDiamonds: number = 1;
-  let sumExchange: bigint = exchange;
-
-  while (sumExchange < money) {
-    needDiamonds++;
-    sumExchange = sumExchange + exchange;
-  }
-
-  return needDiamonds;
+  return Math.ceil(Number(money / exchange));;
 
 }
 
