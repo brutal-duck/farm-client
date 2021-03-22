@@ -122,6 +122,16 @@ let eventBuyIcon77: any = require("./../../../assets/images/event/icons/event-bu
 let eventBuyIcon78: any = require("./../../../assets/images/event/icons/event-buy-icon-78.png");
 let eventBuyIcon79: any = require("./../../../assets/images/event/icons/event-buy-icon-79.png");
 let eventBuyIcon80: any = require("./../../../assets/images/event/icons/event-buy-icon-80.png");
+let eventBuyIcon81: any = require("./../../../assets/images/event/icons/event-buy-icon-81.png");
+let eventBuyIcon82: any = require("./../../../assets/images/event/icons/event-buy-icon-82.png");
+let eventBuyIcon83: any = require("./../../../assets/images/event/icons/event-buy-icon-83.png");
+let eventBuyIcon84: any = require("./../../../assets/images/event/icons/event-buy-icon-84.png");
+let eventBuyIcon85: any = require("./../../../assets/images/event/icons/event-buy-icon-85.png");
+let eventBuyIcon86: any = require("./../../../assets/images/event/icons/event-buy-icon-86.png");
+let eventBuyIcon87: any = require("./../../../assets/images/event/icons/event-buy-icon-87.png");
+let eventBuyIcon88: any = require("./../../../assets/images/event/icons/event-buy-icon-88.png");
+let eventBuyIcon89: any = require("./../../../assets/images/event/icons/event-buy-icon-89.png");
+let eventBuyIcon90: any = require("./../../../assets/images/event/icons/event-buy-icon-90.png");
 
 let animal1: any = require("./../../../assets/images/event/animal/animal1.png");
 let animal2: any = require("./../../../assets/images/event/animal/animal2.png");
@@ -203,6 +213,16 @@ let animal77: any = require("./../../../assets/images/event/animal/animal77.png"
 let animal78: any = require("./../../../assets/images/event/animal/animal78.png");
 let animal79: any = require("./../../../assets/images/event/animal/animal79.png");
 let animal80: any = require("./../../../assets/images/event/animal/animal80.png");
+let animal81: any = require("./../../../assets/images/event/animal/animal81.png");
+let animal82: any = require("./../../../assets/images/event/animal/animal82.png");
+let animal83: any = require("./../../../assets/images/event/animal/animal83.png");
+let animal84: any = require("./../../../assets/images/event/animal/animal84.png");
+let animal85: any = require("./../../../assets/images/event/animal/animal85.png");
+let animal86: any = require("./../../../assets/images/event/animal/animal86.png");
+let animal87: any = require("./../../../assets/images/event/animal/animal87.png");
+let animal88: any = require("./../../../assets/images/event/animal/animal88.png");
+let animal89: any = require("./../../../assets/images/event/animal/animal89.png");
+let animal90: any = require("./../../../assets/images/event/animal/animal90.png");
 
 let cloud: any = require("./../../../assets/images/event/cloud.png");
 let resource: any = require("./../../../assets/images/event/resource.png");
@@ -1615,6 +1635,76 @@ const testEventSettings: IeventSettings = {
       price: BigInt(15000000000000000000000000000000000000000000), 
       exchange: BigInt(3541774862152230000000000000)
     },
+    { 
+      breed: 81, 
+      resource: 100, 
+      resourcePrice: BigInt(2882303761517120000000000), 
+      price: BigInt(48000000000000000000000000000000000000000000), 
+      exchange: BigInt(6917529027641080000000000)
+    },
+    { 
+      breed: 82, 
+      resource: 100, 
+      resourcePrice: BigInt(5764607523034240000000000), 
+      price: BigInt(150000000000000000000000000000000000000000000), 
+      exchange: BigInt(13835058055282200000000000)
+    },
+    { 
+      breed: 83, 
+      resource: 100, 
+      resourcePrice: BigInt(11529215046068500000000000), 
+      price: BigInt(480000000000000000000000000000000000000000000), 
+      exchange: BigInt(27670116110564300000000000)
+    },
+    { 
+      breed: 84, 
+      resource: 100, 
+      resourcePrice: BigInt(23058430092136900000000000), 
+      price: BigInt(1500000000000000000000000000000000000000000000), 
+      exchange: BigInt(55340232221128700000000000)
+    },
+    { 
+      breed: 85, 
+      resource: 100, 
+      resourcePrice: BigInt(46116860184273900000000000), 
+      price: BigInt(4800000000000000000000000000000000000000000000), 
+      exchange: BigInt(110680464442257000000000000)
+    },
+    { 
+      breed: 86, 
+      resource: 100, 
+      resourcePrice: BigInt(92233720368547800000000000), 
+      price: BigInt(15000000000000000000000000000000000000000000000), 
+      exchange: BigInt(221360928884515000000000000)
+    },
+    { 
+      breed: 87, 
+      resource: 100, 
+      resourcePrice: BigInt(184467440737096000000000000), 
+      price: BigInt(48000000000000000000000000000000000000000000000), 
+      exchange: BigInt(442721857769029000000000000)
+    },
+    { 
+      breed: 88, 
+      resource: 100, 
+      resourcePrice: BigInt(368934881474191000000000000), 
+      price: BigInt(150000000000000000000000000000000000000000000000), 
+      exchange: BigInt(885443715538059000000000000)
+    },
+    { 
+      breed: 89, 
+      resource: 100, 
+      resourcePrice: BigInt(737869762948382000000000000), 
+      price: BigInt(480000000000000000000000000000000000000000000000), 
+      exchange: BigInt(1770887431076120000000000000)
+    },
+    { 
+      breed: 90, 
+      resource: 100, 
+      resourcePrice: BigInt(1475739525896760000000000000), 
+      price: BigInt(1500000000000000000000000000000000000000000000000), 
+      exchange: BigInt(3541774862152230000000000000)
+    },
   ],
   territoriesEventPrice: [
     { block: 3, position: 1, diamond: 0, price: 0, unlock: 0 },
@@ -1803,6 +1893,16 @@ class EventPreload extends Phaser.Scene {
     this.load.image('event-buy-icon-78', eventBuyIcon78);
     this.load.image('event-buy-icon-79', eventBuyIcon79);
     this.load.image('event-buy-icon-80', eventBuyIcon80);
+    this.load.image('event-buy-icon-81', eventBuyIcon81);
+    this.load.image('event-buy-icon-82', eventBuyIcon82);
+    this.load.image('event-buy-icon-83', eventBuyIcon83);
+    this.load.image('event-buy-icon-84', eventBuyIcon84);
+    this.load.image('event-buy-icon-85', eventBuyIcon85);
+    this.load.image('event-buy-icon-86', eventBuyIcon86);
+    this.load.image('event-buy-icon-87', eventBuyIcon87);
+    this.load.image('event-buy-icon-88', eventBuyIcon88);
+    this.load.image('event-buy-icon-89', eventBuyIcon89);
+    this.load.image('event-buy-icon-90', eventBuyIcon90);
 
     this.load.image('disable-animal', disableAnimal);
     this.load.image('animal1', animal1);
@@ -1885,6 +1985,16 @@ class EventPreload extends Phaser.Scene {
     this.load.image('animal78', animal78);
     this.load.image('animal79', animal79);
     this.load.image('animal80', animal80);
+    this.load.image('animal81', animal81);
+    this.load.image('animal82', animal82);
+    this.load.image('animal83', animal83);
+    this.load.image('animal84', animal84);
+    this.load.image('animal85', animal85);
+    this.load.image('animal86', animal86);
+    this.load.image('animal87', animal87);
+    this.load.image('animal88', animal88);
+    this.load.image('animal89', animal89);
+    this.load.image('animal90', animal90);
     this.load.image('cloud', cloud);
     this.load.image('event-resource', resource);
 
