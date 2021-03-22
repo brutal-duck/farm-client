@@ -39,7 +39,7 @@ class Boot extends Phaser.Scene {
 
   public init(): void {
     
-    let build: string = '3.5.3';
+    let build: string = '3.5.4';
     console.log('Build ' + build);
 
     // автосохранение при уходе с игры
@@ -48,7 +48,7 @@ class Boot extends Phaser.Scene {
       if ((this.state.farm === 'Sheep' && this.scene.isActive('Sheep')) ||
         (this.state.farm === 'Chicken' && this.scene.isActive('Chicken')) ||
         (this.state.farm === 'Event' && this.scene.isActive('Event'))) {
-        this.game.scene.keys[this.state.farm].autosave(true);
+        this.game.scene.keys[this.state.farm].autosave();
       }
 
     }, false);

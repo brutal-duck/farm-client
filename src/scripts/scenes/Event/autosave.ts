@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // автосохранение
-function autosave(exitGame: boolean = false): void {
+function autosave(): void {
   this.getEventRaiting();
   this.autoSaveTimer = 0;
 
@@ -80,7 +80,6 @@ function autosave(exitGame: boolean = false): void {
     animals: animals,
     user: user,
     resources: resources,
-    exitGame: exitGame,
   }
 
   axios.post(process.env.API + "/event/autoSave", data)
