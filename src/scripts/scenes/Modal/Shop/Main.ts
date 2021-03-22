@@ -201,6 +201,11 @@ class Shop extends Phaser.Scene {
       top: this.height
     };
     this.scrolling = new Scrolling(this, cameraOptions);
+
+    if (this.state.farm === 'Event' && this.state.modal.shopType === 3 && this.game.scene.keys['Event'].scrollPoint) {
+      this.scrolling.scrollY = this.game.scene.keys['Event'].scrollPoint
+    }
+
     this.input.on('pointerup', (): void => {
       this.scrolling.enabled = true;
       this.scrolling.wheel = true;
@@ -242,6 +247,10 @@ class Shop extends Phaser.Scene {
     if (this.state.farm === 'Event') {
       this.updateEventHerdBoostBtn();
       this.updateEventFeedBoostBtn();
+    }
+
+    if (this.state.farm === 'Event' && this.state.modal.shopType === 3) {
+      this.game.scene.keys['Event'].scrollPoint = this.scrolling.scrollY;
     }
     
   }
