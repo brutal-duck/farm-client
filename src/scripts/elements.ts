@@ -290,6 +290,8 @@ class Collector {
       time = shortTime(this.scene.state.userSheep.collector, this.scene.state.lang);
     } else if (this.scene.state.farm === 'Event') {
       time = shortTime(this.scene.state.userEvent.collector, this.scene.state.lang);
+    } else if (this.scene.state.farm === 'Cow') {
+      time = shortTime(this.scene.state.userChicken.collector, this.scene.state.lang);
     }
 
     this.timeCollectorText = this.scene.add.text(230, this.scene.height - 43, time, {
@@ -310,7 +312,9 @@ class Collector {
       this.farmData = this.scene.state.userChicken;
     } else if (this.scene.state.farm === 'Event') {
       this.farmData = this.scene.state.userEvent;
-    }
+    } else if (this.scene.state.farm === 'Cow') {
+      this.farmData = this.scene.state.userChicken;
+    } 
 
   }
 
@@ -558,12 +562,16 @@ class TaskBoard {
           if (!this.isGetTop) this.y--;
           else this.y++;
 
-          this.elements.forEach((el: any) => { // ПОМЕНЯТЬ ТИП
+          if (this.elements !== undefined) {
             
-            if (!this.isGetTop) el.setY(el.y - 1)
-            else el.setY(el.y + 1)
-
-          })
+            this.elements.forEach((el: any) => { // ПОМЕНЯТЬ ТИП
+              
+              if (!this.isGetTop) el.setY(el.y - 1)
+              else el.setY(el.y + 1)
+  
+            })
+            
+          }
 
           this.counter++
           
@@ -614,6 +622,12 @@ class TaskBoard {
       stateParts = this.scene.state.sheepSettings.sheepParts;
       userData = this.scene.state.userSheep;
       countBreed = this.scene.state.sheepSettings.sheepSettings.length;
+      
+    } else if (this.scene.state.farm === 'Cow') {
+
+      stateParts = this.scene.state.chickenSettings.chickenParts;
+      userData = this.scene.state.userChicken;
+      countBreed = this.scene.state.chickenSettings.chickenSettings.length;
       
     }
 

@@ -172,7 +172,8 @@ class Boot extends Phaser.Scene {
     this.scene.stop();
 
     if (localStorage.farm === 'Sheep' ||
-      localStorage.farm === 'Chicken') {
+      localStorage.farm === 'Chicken' ||
+      localStorage.farm === 'Cow') {
       this.scene.start(localStorage.farm + 'Preload', this.state);
     } else {
       this.scene.start('SheepPreload', this.state);

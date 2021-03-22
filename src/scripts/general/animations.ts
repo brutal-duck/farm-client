@@ -162,6 +162,8 @@ function cave(): void {
     user = this.state.userSheep;
   } else if (this.state.farm === 'Chicken') {
     user = this.state.userChicken;
+  } else if (this.state.farm === 'Cow') {
+    user = this.state.userChicken;
   }
   
   if (user.part >= 3) {
