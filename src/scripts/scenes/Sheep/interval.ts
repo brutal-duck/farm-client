@@ -460,6 +460,8 @@ function interval(): void {
       }
     }
 
+    this.intervalPorgressCollectorTime();
+
   }, callbackScope: this, loop: true });
   
 

@@ -381,11 +381,9 @@ function interval(): void {
       }
     }
 
-  }, callbackScope: this, loop: true });
+    this.intervalPorgressCollectorTime();
 
-  // проверка доната 
-  
-  
+  }, callbackScope: this, loop: true });
 
 }
 

@@ -213,6 +213,8 @@ function interval(): void {
       --this.state.userEvent.timeToAd;
     }
 
+    this.intervalPorgressCollectorTime();
+
   }, callbackScope: this, loop: true });
 
 }

@@ -3,6 +3,7 @@ import { random, randomString } from '../../general/basic';
 // расчет прогресса во время отсутствия
 function autoprogress(load: boolean = false): void {
 
+  this.autoporgressCollectorTime();
    // время буста комбикорм
   let wasFeedBoost: number = 0;
 

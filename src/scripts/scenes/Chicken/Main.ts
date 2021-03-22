@@ -36,6 +36,8 @@ import {
   spreadAnimals,
   getEventRaiting,
   nextDayTimer,
+  intervalPorgressCollectorTime,
+  autoporgressCollectorTime,
 } from '../../general/basic';
 import {
   improveCollector,
@@ -236,6 +238,8 @@ class Chicken extends Phaser.Scene {
   public showEventTutorial = showEventTutorial.bind(this);
   public doneEventTutor_0 = doneEventTutor_0.bind(this);
   public nextDayTimer = nextDayTimer.bind(this);
+  public intervalPorgressCollectorTime = intervalPorgressCollectorTime.bind(this);
+  public autoporgressCollectorTime = autoporgressCollectorTime.bind(this);
 
   public init(state: Istate): void {
 

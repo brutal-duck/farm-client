@@ -1321,6 +1321,38 @@ function nextDayTimer(): void {
   }
 }
 
+function intervalPorgressCollectorTime(): void {
+
+  if (this.state.farm === 'Sheep') {
+    this.state.progress.sheep.collector = this.state.userSheep.collector;
+    if (this.state.progress.chicken.collector > 0) this.state.progress.chicken.collector--;
+
+  } else if (this.state.farm === 'Chicken') {
+
+    this.state.progress.chicken.collector = this.state.userChicken.collector;
+    if (this.state.progress.sheep.collector > 0) this.state.progress.sheep.collector--;
+    
+  } else if (this.state.farm === 'Event') {
+    
+    if (this.state.progress.chicken.collector > 0) this.state.progress.chicken.collector--;
+    if (this.state.progress.sheep.collector > 0) this.state.progress.sheep.collector--;
+  }
+}
+
+function autoporgressCollectorTime(): void {
+  if (this.state.progress.sheep.collector >= this.state.progress.sheep.offlineTime) {
+    this.state.progress.sheep.collector -= this.state.progress.sheep.offlineTime;
+  } else {
+    this.state.progress.sheep.collector = 0;
+  }
+
+  if (this.state.progress.chicken.collector >= this.state.progress.chicken.offlineTime) {
+    this.state.progress.chicken.collector -= this.state.progress.chicken.offlineTime;
+  } else {
+    this.state.progress.chicken.collector = 0;
+  }
+}
+
 export {
   random,
   getRandomBool,
@@ -1350,5 +1382,7 @@ export {
   spreadAnimals,
   getEventRaiting,
   getStatusSettings,
-  nextDayTimer
+  nextDayTimer,
+  intervalPorgressCollectorTime,
+  autoporgressCollectorTime,
 }

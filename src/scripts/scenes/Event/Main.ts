@@ -16,6 +16,8 @@ import {
   debug, 
   getEventRaiting,
   nextDayTimer,
+  intervalPorgressCollectorTime,
+  autoporgressCollectorTime,
 } from '../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -212,6 +214,8 @@ class Event extends Phaser.Scene {
   public dragEventAnimal = dragEventAnimal.bind(this);
   public arrowsBehavior = arrowsBehavior.bind(this);
   public nextDayTimer = nextDayTimer.bind(this);
+  public intervalPorgressCollectorTime = intervalPorgressCollectorTime.bind(this);
+  public autoporgressCollectorTime = autoporgressCollectorTime.bind(this);
 
   
   public init(state: Istate): void {
