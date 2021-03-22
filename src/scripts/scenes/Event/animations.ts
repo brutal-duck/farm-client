@@ -78,7 +78,8 @@ function updateTeleportation() {
         let target: Iposition = animal.data.values.active.data.values.target;
         
         let distance: number = Phaser.Math.Distance.Between(animal.data.values.active.x, animal.data.values.active.y, target.x, target.y);
-        if (distance < 100) {
+        if ((distance > animal.data.values.active.data.values.distance && animal.data.values.active.data.values.distance > 0) || distance < 40) {
+          animal.data.values.active.data.values.distance = 0;
           this.input.setDraggable(animal, true);
           animal.data.values.active.data.values.working = true;
           animal.data.values.active.data.values.goWork = false;
@@ -87,20 +88,21 @@ function updateTeleportation() {
           animal.data.values.active.data.values.teleport = false;
           animal.setDepth(animal.y);
           animal.data.values.active.setDepth(animal.y * 2);
-        }
+        } else animal.data.values.active.data.values.distance = distance;
 
       } else {
         animal.data.values.active.setDepth(animal.data.values.active.y);
         let target: Iposition = animal.data.values.target;
         let distance: number = Phaser.Math.Distance.Between(animal.data.values.active.x, animal.data.values.active.y, target.x, target.y);
-        if (distance < 100) {
+        if ((distance > animal.data.values.active.data.values.distance && animal.data.values.active.data.values.distance > 0) || distance < 40) {
+          animal.data.values.active.data.values.distance = 0;
           this.input.setDraggable(animal, true);
           animal.data.values.active.body.reset(target.x, target.y);
           animal.data.values.active.setOrigin(0.5, 0.5);
           animal.data.values.active.data.values.teleport = false;
           animal.setDepth(animal.y);
           animal.data.values.active.setDepth(animal.y * 2);
-        }
+        } else animal.data.values.active.data.values.distance = distance;
       }
       
     }
@@ -109,13 +111,14 @@ function updateTeleportation() {
       animal.setDepth(animal.y);
       let target: Iposition = animal.data.values.target;
       let distance: number = Phaser.Math.Distance.Between(animal.x, animal.y, target.x, target.y);
-      if (distance < 100) {
+      if ((distance > animal.data.values.distance && animal.data.values.distance > 0) || distance < 40) {
+        animal.data.values.distance = 0;
         this.input.setDraggable(animal, true);
         animal.body.reset(target.x, target.y);
         animal.setDepth(animal.y);
         animal.data.values.teleport = false;
         this.checkMerging(animal);
-      }
+      } else animal.data.values.distance = distance;
     }
     
   })
