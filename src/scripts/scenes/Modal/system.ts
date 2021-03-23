@@ -1,6 +1,5 @@
 // системное окно
 function systemWindow(): void {
-
   let height:number = 0;
 
   this.header = this.add.image(this.cameras.main.centerX - 1, this.cameras.main.centerY - Math.floor(height / 2), 'header-syst')
@@ -211,7 +210,7 @@ function systemWindow(): void {
       break;
 
   }
-
+  this.openModal(this.cameras.main);
 }
 
 // окно куриной территории

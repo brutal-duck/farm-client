@@ -982,6 +982,8 @@ function eventProgress(): void {
 
   }, callbackScope: this, loop: false });
 
+  this.openModal(this.cameras.main);
+
 
 }
 
@@ -1214,6 +1216,8 @@ function eventRatings(): void {
     this.scene.stop('Modal');
     
   });
+
+  this.openModal(this.cameras.main);
 
 }
 
@@ -1494,6 +1498,8 @@ function endEventModal(): void {
     this.game.scene.keys[this.state.farm + 'Bars'].plusDiamonds();
     
   });
+  this.openModal(this.cameras.main);
+
 }
 
 function updateImproveCollectorEvent(

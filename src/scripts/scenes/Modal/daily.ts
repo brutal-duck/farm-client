@@ -401,6 +401,8 @@ function daily(): void {
     this.scene.stop();
 
   });
+  
+  this.openModal(this.cameras.main);
 
 }
 

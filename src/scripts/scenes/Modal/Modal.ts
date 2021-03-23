@@ -92,7 +92,7 @@ import { changeNickname, addEmail, support, registration, profileWindow } from '
   // буст "Стадо"
 import { herdBoostWindow, getRandomAnimal, getRandomStartPosition } from './herdBoost';
 import { createChatBars } from './Chat/elements';
-import { improveCollectorAnim } from '../../general/animations';
+import { improveCollectorAnim, openModal } from '../../general/animations';
 import { clickTaskBoard } from '../../general/tasks';
 import typePreload from './typePreload';
 
@@ -216,6 +216,7 @@ class Modal extends Phaser.Scene {
   public getStatusSettings = getStatusSettings.bind(this);
   public typePreload = typePreload.bind(this);
   public clickTaskBoard = clickTaskBoard.bind(this);
+  public openModal = openModal.bind(this);
   
   public init(state: Istate): void {
     this.state = state;
@@ -229,7 +230,6 @@ class Modal extends Phaser.Scene {
 
 
   public create(): void {
-    
     this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)');
 
     this.add.tileSprite(0, 0,
@@ -288,7 +288,8 @@ class Modal extends Phaser.Scene {
         this.game.scene.keys[this.state.farm].scrolling.wheel = true;
         break;
     }
-     
+
+    
   }
 
 

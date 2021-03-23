@@ -326,6 +326,8 @@ function tasksWindow(): void {
 
   this.resizeTasksWindow(height);
 
+  this.openModal(this.cameras.main);
+
 }
 
 // Перезадать размеры

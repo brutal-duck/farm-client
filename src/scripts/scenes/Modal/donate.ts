@@ -31,6 +31,8 @@ function donate() {
 
   });
 
+  this.openModal(this.cameras.main);
+
 }
 
 export default donate;

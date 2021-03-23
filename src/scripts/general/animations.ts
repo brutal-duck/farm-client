@@ -780,6 +780,38 @@ function improveCollectorAnim(position: Iposition): void {
   });
 
 }
+
+function openModal(...args: Phaser.Cameras.Scene2D.Camera[]): void {
+  this.tweens.add({
+    duration: 150,
+    targets: args,
+    zoom: { from: 0.7, to: 1.1 },
+    onComplete: () => {
+      this.tweens.add({
+        duration: 100,
+        targets: args,
+        zoom: { from: 1.1, to: 1 },
+      })
+    },
+    onCompleteScope: this,
+  });
+}
+
+function openShop(...args: Phaser.Cameras.Scene2D.Camera[]): void {
+  this.tweens.add({
+    duration: 150,
+    targets: args,
+    alpha: { from: 0.7, to: 1.1 },
+    onComplete: () => {
+      this.tweens.add({
+        duration: 100,
+        targets: args,
+        alpha: { from: 1.1, to: 1 },
+      })
+    },
+    onCompleteScope: this,
+  });
+}
 export {
   firework250,
   genAnimations,
@@ -797,5 +829,7 @@ export {
   caveIconsAnimation,
   plusDiamonds,
   getCurrency,
-  improveCollectorAnim
+  openShop,
+  improveCollectorAnim,
+  openModal
 }
