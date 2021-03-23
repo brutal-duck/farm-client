@@ -135,16 +135,7 @@ function systemWindow(): void {
 
     case 7: // окно профиля
 
-      if (this.state.farm === 'Sheep') {
-        this.sheepProfile();
-      } else if (this.state.farm === 'Chicken') {
-        this.chickenProfile();
-      } else if (this.state.farm === 'Cow') {
-        this.cowProfile();
-      } else if (this.state.farm === 'Event') {
-        this.eventProfile();
-      }
-      
+      this.profileWindow();
       break;
 
     case 8: // окно завершения сессии

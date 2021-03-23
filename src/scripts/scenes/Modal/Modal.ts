@@ -29,7 +29,6 @@ import {
   confirmChickenExchangeTerritory,
   chickenEggsRepository,
   confirmExpelChicken,
-  chickenProfile,
   diamondChickenAd,
   improveCollectorChicken,
   chickenEggRepositoryExchange,
@@ -46,7 +45,6 @@ import {
   confirmCowExchangeTerritory,
   cowMilkRepository,
   confirmExpelCow,
-  cowProfile,
   diamondCowAd,
   improveCollectorCow,
   cowMilkRepositoryExchange,
@@ -59,7 +57,6 @@ import {
   improveCollectorEvent,
   herdBoostEventWindow,
   eventDrag,
-  eventProfile,
   eventProgress,
   eventRatings,
   endEventModal,
@@ -76,7 +73,6 @@ import {
   confirmSheepExchangeTerritory,
   sheepWoolRepository,
   confirmExpelSheep,
-  sheepProfile,
   diamondSheepAd,
   improveCollectorSheep,
   sheepWoolRepositoryExchange,
@@ -92,7 +88,7 @@ import dailyNewbie from './dailyNewbie';
 import nextChapter from './nextChapter';
 import donate from './donate';
 import { bigButton, repositoryBtn, mergingCloud, shopButton } from '../../elements';
-import { changeNickname, addEmail, support, registration } from '../../general/modal';
+import { changeNickname, addEmail, support, registration, profileWindow } from '../../general/modal';
   // буст "Стадо"
 import { herdBoostWindow, getRandomAnimal, getRandomStartPosition } from './herdBoost';
 import { createChatBars } from './Chat/elements';
@@ -176,9 +172,7 @@ class Modal extends Phaser.Scene {
   public tasks = tasks.bind(this);
   public tasksWindow = tasksWindow.bind(this);
   public resizeTasksWindow = resizeTasksWindow.bind(this);
-  public chickenProfile = chickenProfile.bind(this);
-  public cowProfile = cowProfile.bind(this);
-  public sheepProfile = sheepProfile.bind(this);
+  public profileWindow = profileWindow.bind(this);
   public support = support.bind(this);
   public registration = registration.bind(this);
   public daily = daily.bind(this);
@@ -214,7 +208,6 @@ class Modal extends Phaser.Scene {
   public updateImproveCollectorEvent = updateImproveCollectorEvent.bind(this);
   public herdBoostEventWindow = herdBoostEventWindow.bind(this);
   public eventDrag = eventDrag.bind(this);
-  public eventProfile = eventProfile.bind(this);
   public eventProgress = eventProgress.bind(this);
   public createChatBars = createChatBars.bind(this);
   public eventRatings = eventRatings.bind(this);
