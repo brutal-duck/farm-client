@@ -279,8 +279,11 @@ function tasksWindow(): void {
     fill: '#8f3f00'
   }).setOrigin(0.5, 0.5)
   
+  const parts: Ipart[] = this.state[`${this.state.farm.toLowerCase()}Settings`][`${this.state.farm.toLowerCase()}Parts`];
+  const userPart: number = this.state[`user${this.state.farm}`].part;
   
-  if (this.state.modal.tasksParams.done) {
+  if (this.state.modal.tasksParams.done && 
+    parts.length !== userPart) {
 
     let nextPart = this.add.sprite(this.cameras.main.centerX, centerY + Math.floor(height / 2 + 60), 'big-btn-green').setDisplaySize(412, 64)
     let nextPartText = this.add.text(this.cameras.main.centerX, centerY + Math.floor(height / 2 + 54), this.state.lang.donePart, {
@@ -292,8 +295,17 @@ function tasksWindow(): void {
       this.game.scene.keys[this.state.farm].nextPart();
     });
 
-  } else {
+  } else if (this.state.modal.tasksParams.done && 
+    parts.length === userPart){
 
+    this.add.text(this.cameras.main.centerX, centerY + Math.floor(height / 2 + 60), this.state.lang[`${this.state.farm.toLowerCase()}CompanyDone`], {
+      font: '20px Shadow',
+      fill: '#c15e00',
+      align: 'center',
+      wordWrap: { width: 420 }
+    }).setOrigin(0.5, 0.5)
+  
+  } else if (!this.state.modal.tasksParams.done) {
     this.add.text(this.cameras.main.centerX, centerY + Math.floor(height / 2 + 60), this.state.modal.tasksParams.description, {
       font: '20px Shadow',
       fill: '#c15e00',
