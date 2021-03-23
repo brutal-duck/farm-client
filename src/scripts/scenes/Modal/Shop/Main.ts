@@ -50,6 +50,7 @@ import {
   getDiamondPrice
 } from './event';
 import { Arrows } from '../../../elements';
+import { openModal } from '../../../general/animations';
 
 let shopHead: any = require("./../../../../assets/images/modal/shop-head.png");
 let shopClose: any = require("./../../../../assets/images/modal/shop-close.png");
@@ -154,6 +155,8 @@ class Shop extends Phaser.Scene {
   public eventFeedBoost = eventFeedBoost.bind(this);
   public eventHerdBoost = eventHerdBoost.bind(this);
   public getDiamondPrice = getDiamondPrice.bind(this);
+  public openModal = openModal.bind(this);
+
 
   public init(state: Istate): void {
     
@@ -208,6 +211,7 @@ class Shop extends Phaser.Scene {
   public create(): void {
 
     this.scene.launch('ShopBars', this.state);
+    
     this.game.scene.keys['Modal'].add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + 70, 'shop-window');
     
     this.height = Number(this.game.config.height);

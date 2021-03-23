@@ -448,6 +448,9 @@ function dailyNewbie(): void {
       ease: 'Power1'
     });
   }
+
+  this.openModal(this.cameras.main);
+
 }
 
 export default dailyNewbie;

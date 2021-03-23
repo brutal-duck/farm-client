@@ -53,6 +53,7 @@ function nextChapter(): void {
     this.game.scene.keys[this.state.farm].donePart();
   });
 
+  this.openModal(this.cameras.main);
 
 }
 

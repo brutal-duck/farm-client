@@ -1,9 +1,11 @@
 import { clickButtonUp } from '../../../general/clicks';
+import { openShop } from '../../../general/animations';
 
 class ShopBars extends Phaser.Scene {
   
   public state: Istate;
   public clickButtonUp = clickButtonUp.bind(this);
+  public openShop = openShop.bind(this);
   public nativeBoost: Phaser.GameObjects.Graphics;
   public nativeBoostCounter: Phaser.GameObjects.Text;
   public nativeDiamond: Phaser.GameObjects.Graphics;
@@ -212,6 +214,7 @@ class ShopBars extends Phaser.Scene {
 
     }
 
+    this.openShop(this.cameras.main, this.game.scene.keys['Modal'].cameras.main, this.game.scene.keys['Shop'].cameras.cameras[0], this.game.scene.keys['Shop'].cameras.cameras[1])
   }
 
   public update(): void {
