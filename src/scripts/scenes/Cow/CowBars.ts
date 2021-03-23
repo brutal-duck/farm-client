@@ -22,12 +22,12 @@ import {
   menuAnimation,
   pulseBalance,
   increaseDiamonds,
-  plusDiamondsAnimation,
+  plusCurrencyAnimation,
   calendarAnimation,
   newbieAwardAnimation,
   plusDiamonds,
   firework250,
-  getDiamonds
+  getCurrency
 } from '../../general/animations';
 import { pulseCollector, arrowsBehavior } from './animations';
 import { clickTaskBoard } from '../../general/tasks';
@@ -88,7 +88,7 @@ class CowBars extends Phaser.Scene {
   public pulseBalance = pulseBalance.bind(this);
   public buildMenu = buildMenu.bind(this);
   public increaseDiamonds = increaseDiamonds.bind(this);
-  public plusDiamondsAnimation = plusDiamondsAnimation.bind(this);
+  public plusCurrencyAnimation = plusCurrencyAnimation.bind(this);
   public socialButtons = socialButtons.bind(this);
   public calendarAnimation = calendarAnimation.bind(this);
   public newbieAwardAnimation = newbieAwardAnimation.bind(this);
@@ -97,7 +97,7 @@ class CowBars extends Phaser.Scene {
   public updateNativeShop = updateNativeShop.bind(this);
   public showFeedTime = showFeedTime.bind(this);
   public shortTime = shortTime.bind(this);
-  public getDiamonds = getDiamonds.bind(this);
+  public getCurrency = getCurrency.bind(this);
   public arrowsBehavior = arrowsBehavior.bind(this);
   public createSpeechBubble = createSpeechBubble.bind(this);
   public clickTaskBoard = clickTaskBoard.bind(this);
