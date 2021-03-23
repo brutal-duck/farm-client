@@ -175,7 +175,7 @@ function dailyAward(): void {
 
   } else if (this.state.farm === 'Cow') {
 
-    if (this.state.userCow.tutorial > 0 && !this.state.user.takenReward) check = true;
+    if (/*this.state.userCow.tutorial > 0 && */!this.state.user.takenReward) check = true;
 
   }
 

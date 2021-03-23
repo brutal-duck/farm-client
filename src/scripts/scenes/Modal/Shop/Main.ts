@@ -301,6 +301,7 @@ class Shop extends Phaser.Scene {
       this.state.user.additionalTutorial.feedBoost) {
         this.feedBoost();
       }
+
     } else if (this.state.farm === 'Cow') {
       this.collectorBoost();
 
@@ -311,6 +312,7 @@ class Shop extends Phaser.Scene {
       this.state.user.additionalTutorial.feedBoost) {
         this.feedBoost();
       }
+
     } else if (this.state.farm === 'Event') {
       this.eventCollectorBoost();
 
@@ -335,7 +337,11 @@ class Shop extends Phaser.Scene {
     this.scrolling.bottom = this.height - this.heightWindow + height;
     
     if (!this.state.user.starterpack && 
-      (this.state.userSheep?.part > 4 || this.state.userChicken?.part >= 1 || this.state.userEvent?.maxLevelAnimal >= 1)) {
+      (this.state.userSheep?.part > 4 ||
+        this.state.userChicken?.part >= 1 ||
+        this.state.userEvent?.maxLevelAnimal >= 1 ||
+        this.state.userCow?.part >= 1
+      )) {
 
       let starterpackBg: Phaser.GameObjects.Image = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY - 210, 'starterpack-bg');
       let starterpackIconShadow: Phaser.GameObjects.Image = this.add.image(this.cameras.main.centerX - 135, this.cameras.main.centerY - 145, 'starterpack-shadow');
@@ -394,7 +400,11 @@ class Shop extends Phaser.Scene {
       let y: number = i * 270 + 40;
 
       if (!this.state.user.starterpack && 
-        (this.state.userSheep?.part > 4 || this.state.userChicken?.part >= 1 || this.state.userEvent?.maxLevelAnimal >= 1)) y += 248;
+        (this.state.userSheep?.part > 4 ||
+          this.state.userChicken?.part >= 1 ||
+          this.state.userEvent?.maxLevelAnimal >= 1 ||
+          this.state.userCow?.part >= 1
+        )) y += 248;
       
       let left: Ipackage = this.state.packages[i * 2];
       let right: Ipackage = this.state.packages[i * 2 + 1];
@@ -438,7 +448,11 @@ class Shop extends Phaser.Scene {
 
       if (left.diamonds + left.bonus >= 750 && 
         !this.state.user.starterpack && 
-        (this.state.userSheep?.part > 4 || this.state.userChicken?.part >= 1 || this.state.userEvent?.maxLevelAnimal >= 1)) {
+        (this.state.userSheep?.part > 4 ||
+          this.state.userChicken?.part >= 1 ||
+          this.state.userEvent?.maxLevelAnimal >= 1 ||
+          this.state.userCow?.part >= 1
+        )) {
         let starterpackIcon: Phaser.GameObjects.Image = this.add.image(30, y + this.height + 20, 'starterpack-icon').setScale(0.4);
         this.tweens.add({
           targets: starterpackIcon,
@@ -520,7 +534,11 @@ class Shop extends Phaser.Scene {
         
         if (right.diamonds + right.bonus >= 750 && 
           !this.state.user.starterpack && 
-          (this.state.userSheep?.part > 4 || this.state.userChicken?.part >= 1 || this.state.userEvent?.maxLevelAnimal >= 1)) {
+          (this.state.userSheep?.part > 4 ||
+          this.state.userChicken?.part >= 1 ||
+          this.state.userEvent?.maxLevelAnimal >= 1 ||
+          this.state.userCow?.part >= 1
+        )) {
           let starterpackIcon: Phaser.GameObjects.Image = this.add.image(270, y + this.height + 20, 'starterpack-icon').setScale(0.4).setDepth(3);
           this.tweens.add({
             targets: starterpackIcon,

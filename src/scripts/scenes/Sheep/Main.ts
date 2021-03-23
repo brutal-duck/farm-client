@@ -343,10 +343,14 @@ class Sheep extends Phaser.Scene {
     let cursors = this.input.keyboard.createCursorKeys();
     cursors.space.on('down', (): void => {
 
-      localStorage.farm = 'Cow'
-      this.scene.stop();
-      this.scene.stop('SheepBars')
-      this.scene.start('CowPreload', this.state)
+      // this.state.daily = 8
+      // this.state.user.takenReward = false;
+      // this.state.dailyAwards = [false, false, false, false, false, false, false, false]
+
+      // localStorage.farm = 'Cow'
+      // this.scene.stop();
+      // this.scene.stop('SheepBars')
+      // this.scene.start('CowPreload', this.state)
       // let modal: Imodal = {
       //   type: 12,
       // }

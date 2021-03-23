@@ -164,7 +164,7 @@ function cow(): void {
       this.clickShopBtn(btn, (): void => {
 
         let result: boolean = this.game.scene.keys[this.state.farm].buyCow(cow.breed, true);
-        if (result) this.updateChickenPrices();
+        if (result) this.updateCowPrices();
 
       });
 
