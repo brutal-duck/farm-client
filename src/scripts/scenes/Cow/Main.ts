@@ -2,7 +2,7 @@ import Scrolling from '../../libs/Scrolling';
 import collisions from '../../general/collisions';
 import world from './world';
 import drag from './drag';
-import chickenBrain from './cowBrain';
+import cowBrain from './cowBrain';
 import interval from './interval';
 import autoprogress from './autoprogress';
 import autosave from './autosave';
@@ -78,25 +78,25 @@ import {
   teleportation,
   reverse,
   aim,
-  getChicken,
+  getCow,
   getEgg,
   checkMerging,
   cancelMerging,
-  buyChicken,
+  buyCow,
   collectEgg,
   sellEggs,
   eggsFly,
-  confirmExpelChicken,
-  expelChicken,
-  dragChickenMerging
+  confirmExpelCow,
+  expelCow,
+  dragCowMerging
 } from './cow';
 import { installTerritory } from './territories';
 import { createSpeechBubble, mergingCloud } from '../../elements';
 import {
   balance,
-  chickenPrice,
+  cowPrice,
   maxBreedForBuy,
-  takeDiamondChicken
+  takeDiamondCow
 } from './basic';
 import { 
   showTutorial,
@@ -119,17 +119,17 @@ class Cow extends Phaser.Scene {
   
   public state: Istate;
   public scrolling: Scrolling;
-  public chicken: Phaser.Physics.Arcade.Group;
+  public cow: Phaser.Physics.Arcade.Group;
   public territories: Phaser.Physics.Arcade.Group;
   public eggs: Phaser.Physics.Arcade.Group;
   public bubble: Phaser.GameObjects.Graphics;;
   public bubbleText: Phaser.GameObjects.Text;
-  public velocity: number = 40; // дефолтное ускорение куриц
+  public velocity: number = 40; // дефолтное ускорение коров
   public topIndent: number = 240; // верхний отступ для блоков территорий
   public bottomIndent: number = 240; // нижний отступ мира (не считая нахлест)
   public height: number; // ширина-высота территории
   public alarm: boolean;
-  public settings: IchickenSettings; // настройки
+  public settings: IcowSettings; // настройки
   public collector: number = 0; // время собирателя в секундах
   public collectorTakenTime: number = 0; // время на сколько брали собирателя
   public house: Phaser.GameObjects.Image;
@@ -146,7 +146,7 @@ class Cow extends Phaser.Scene {
   public world = world.bind(this);
   public drag = drag.bind(this);
   public collisions = collisions.bind(this);
-  public chickenBrain = chickenBrain.bind(this);
+  public cowBrain = cowBrain.bind(this);
   public interval = interval.bind(this);
   public click = click.bind(this);
   public clickTerritory = clickTerritory.bind(this);
@@ -156,7 +156,7 @@ class Cow extends Phaser.Scene {
   public teleportation = teleportation.bind(this);
   public reverse = reverse.bind(this);
   public aim = aim.bind(this);
-  public getChicken = getChicken.bind(this);
+  public getCow = getCow.bind(this);
   public getEgg = getEgg.bind(this);
   public currentTerritory = currentTerritory.bind(this);
   public changeSprite = changeSprite.bind(this);
@@ -173,15 +173,15 @@ class Cow extends Phaser.Scene {
   public convertDiamonds = convertDiamonds.bind(this);
   public convertMoney = convertMoney.bind(this);
   public exchange = exchange.bind(this);
-  public chickenPrice = chickenPrice.bind(this);
+  public cowPrice = cowPrice.bind(this);
   public checkMerging = checkMerging.bind(this);
   public cancelMerging = cancelMerging.bind(this);
-  public buyChicken = buyChicken.bind(this);
+  public buyCow = buyCow.bind(this);
   public collectEgg = collectEgg.bind(this);
   public sellEggs = sellEggs.bind(this);
   public eggsFly = eggsFly.bind(this);
-  public confirmExpelChicken = confirmExpelChicken.bind(this);
-  public expelChicken = expelChicken.bind(this);
+  public confirmExpelCow = confirmExpelCow.bind(this);
+  public expelCow = expelCow.bind(this);
   public createSpeechBubble = createSpeechBubble.bind(this);
   public mergingCloud = mergingCloud.bind(this);
   public showBank = showBank.bind(this);
@@ -195,7 +195,7 @@ class Cow extends Phaser.Scene {
   public tryTask = tryTask.bind(this);
   public getTaskData = getTaskData.bind(this);
   public cave = cave.bind(this);
-  public takeDiamondChicken = takeDiamondChicken.bind(this);
+  public takeDiamondCow = takeDiamondCow.bind(this);
   public checkAnimalTask = checkAnimalTask.bind(this);
   public showTasks = showTasks.bind(this);
   public messageIsSent = messageIsSent.bind(this);
@@ -212,7 +212,7 @@ class Cow extends Phaser.Scene {
   public buyNextFarm = buyNextFarm.bind(this);
   public takeNewbieAward = takeNewbieAward.bind(this);
   public getNewbieAward = getNewbieAward.bind(this);
-  public dragChickenMerging = dragChickenMerging.bind(this);
+  public dragCowMerging = dragCowMerging.bind(this);
   public findAd = findAd.bind(this);
   public watchAd = watchAd.bind(this);
   public adReward = adReward.bind(this);
@@ -244,7 +244,7 @@ class Cow extends Phaser.Scene {
     this.state = state;
     this.alarm = false;
     this.collectorTimer = null;
-    this.settings = state.chickenSettings;
+    this.settings = state.cowSettings;
     this.caveIconsTimer = 0;
     console.log('Cow');
     
@@ -270,6 +270,8 @@ class Cow extends Phaser.Scene {
     this.interval();
     this.setCollector();
 
+
+    console.log(this.state)
     // let cursors = this.input.keyboard.createCursorKeys();
     // cursors.space.on('down', (): void => {
 
@@ -296,8 +298,8 @@ class Cow extends Phaser.Scene {
 
   public update(): void {
 
-    // мозг куриц
-    this.chickenBrain();
+    // мозг коров
+    this.cowBrain();
 
     // полет яиц в хранилище
     this.eggsFly();

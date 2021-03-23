@@ -30,7 +30,7 @@ function tasksWindow(): void {
   let textWidth: number = 330
 
   if (this.state.farm === 'Cow') {
-    countBreed = this.state.chickenSettings.chickenSettings.length;
+    countBreed = this.state.cowSettings.cowSettings.length;
   } else if (this.state.farm === 'Chicken') {
     countBreed = this.state.chickenSettings.chickenSettings.length;
   } else if (this.state.farm === 'Sheep') {

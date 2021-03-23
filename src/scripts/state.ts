@@ -1,10 +1,14 @@
 let sheepSettings: IsheepSettings;
 let chickenSettings: IchickenSettings;
 let chickenTerritories: Iterritories[];
+let cowSettings: IcowSettings;
+let cowTerritories: Iterritories[];
 let sheepTerritories: Iterritories[];
 let sheep: Isheep[];
 let chicken: Ichicken[];
 let chickenEggs: IchickenEgg[];
+let cow: Ichicken[];
+let cowEggs: IchickenEgg[];
 let lang: object;
 let modal: Imodal;
 let animal: any;
@@ -21,12 +25,14 @@ let timeToNewDay: number;
 let user: Iuser;
 let userSheep: IuserSheep;
 let userChicken: IuserChicken;
+let userCow: IuserCow;
 let convertor: Iconvertor;
 let exchangeTerritory: number;
 let farm: string;
 let packages: Ipackage[];
 let sheepTasks: Itasks[];
 let chickenTasks: Itasks[];
+let cowTasks: Itasks[];
 let platform: string;
 let name: string;
 let avatar: string;
@@ -48,6 +54,7 @@ let adTimeout: boolean;
 let vkId: number;
 let sheepCollectorSettings: IcollectorSettings[];
 let chickenCollectorSettings: IcollectorSettings[];
+let cowCollectorSettings: IcollectorSettings[];
 let adBlock: boolean;
 let adman: any;
 let donate: boolean;
@@ -74,22 +81,28 @@ let state: Istate = {
   timeToNewDay, // время до пуста
   sheepSettings, // настройки и параметры
   chickenSettings, // настройки и параметры
+  cowSettings, // настройки и параметры
   eventSettings, // настройки и параметры
   farm, // имя сцены активной фермы (записывается в localStorage)
   chickenTerritories, // юзерский массив сохраненных территорий кур
+  cowTerritories, // юзерский массив сохраненных территорий коров
   sheepTerritories, // юзерский массив сохраненных территорий овец
   eventTerritories, // юзерский массив сохраненных территорий евента
   sheep, // юзерский массив сохраненных овец
   chicken, // юзерский массив сохраненных куриц
+  cow, // юзерский массив сохраненных коров
   eventAnimals, // юзерский массив сохраненных евентовых животных
   chickenEggs, // юзерский массив сохраненных куринных яиц
+  cowEggs, // юзерский массив сохраненных коровьих яиц
   eventResources, // юзерский массив сохраненных евентовых ресурсов
   user, // массив общих данных юзера для всех ферм
   userSheep, // массив данных юзера для овечьей фермы
   userChicken, // массив данных юзера для куринной фермы
+  userCow, // массив данных юзера для коровьей фермы
   userEvent, // массив данных юзера для евентовой фермы
-  sheepTasks, // задания куриной фермы
+  sheepTasks, // задания овечьей фермы
   chickenTasks, // задания куриной фермы
+  cowTasks, // задания коровьей фермы
   dailyAwards, // награды новичка
 
   // не записываемые в localStorage
@@ -121,6 +134,7 @@ let state: Istate = {
   vkId, // ВК id
   sheepCollectorSettings, // настройки уровней подстригателя
   chickenCollectorSettings, // настройки уровней собирателя яиц
+  cowCollectorSettings, // настройки уровней собирателя яиц
   eventCollectorSettings, // настройки уровней собирателя яиц
   adBlock, // состояние блокировщика рекламы
   adman, // объект рекламы вк

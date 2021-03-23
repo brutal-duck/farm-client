@@ -50,7 +50,7 @@ function showBank(): void {
 // окно завершения текущей главы
 function nextPart(): void {
 
-  let user: IuserSheep | IuserChicken;
+  let user: IuserSheep | IuserChicken | IuserCow;
   let parts: Ipart[];
 
   if (this.state.farm === 'Sheep') {
@@ -62,6 +62,11 @@ function nextPart(): void {
 
     user = this.state.userChicken;
     parts = this.state.chickenSettings.chickenParts;
+
+  } else if (this.state.farm === 'Cow') {
+
+    user = this.state.userCow;
+    parts = this.state.cowSettings.cowParts;
 
   }
 
@@ -119,6 +124,7 @@ function showTasks(): void {
 
   if (this.state.farm === 'Sheep') part = this.state.userSheep.part;
   else if (this.state.farm === 'Chicken') part = this.state.userChicken.part;
+  else if (this.state.farm === 'Cow') part = this.state.userCow.part;
 
   let done: boolean = true;
   let tasks: Itasks[] = this.partTasks();
@@ -167,7 +173,7 @@ function dailyAward(): void {
 
     if (this.state.userChicken.tutorial > 0 && !this.state.user.takenReward) check = true;
 
-  }
+  } // нет коров
 
   if (check && checkBoost &&
     typeof this.state.daily === 'number' &&

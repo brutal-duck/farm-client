@@ -40,7 +40,7 @@ function interval(): void {
 
       if ((territory.type === 2 || territory.type === 3) && territory.volume < 1000) {
 
-        let reg: number = this.settings.territoriesChickenSettings.find((item: IterritoriesChickenSettings) => item.improve === territory.improve).regeneration;
+        let reg: number = this.settings.territoriesCowSettings.find((item: IterritoriesCowSettings) => item.improve === territory.improve).regeneration;
         territory.volume += reg;
   
         if (territory.volume > 1000) {
@@ -51,40 +51,40 @@ function interval(): void {
 
     }
     
-    // поедание территорий курицами
-    for (let i in this.chicken.children.entries) {
+    // поедание территорий коровами
+    for (let i in this.cow.children.entries) {
 
-      let chicken = this.chicken.children.entries[i];
+      let cow = this.cow.children.entries[i];
       
       let breed: number;
 
-      if (chicken.type === 0) breed = 1;
-      else breed = chicken.type;
+      if (cow.type === 0) breed = 1;
+      else breed = cow.type;
       
-      let points: IchickenPoints = this.settings.chickenSettings.find((item: IchickenPoints) => item.breed === breed);
+      let points: IcowPoints = this.settings.cowSettings.find((item: IcowPoints) => item.breed === breed);
 
       // зарождение яйца
-      if (chicken.egg < 1000) {
+      if (cow.egg < 1000) {
 
         let egg: number = points.egg;
 
         if (balance.alarm) {
-          egg = Math.round(egg / 100 * this.settings.chickenBadPercent);
+          egg = Math.round(egg / 100 * this.settings.cowBadPercent);
           if (egg < 1) egg = 1;
         }
 
-        chicken.egg += egg;
-        if (chicken.egg > 1000) chicken.egg = 1000;
+        cow.egg += egg;
+        if (cow.egg > 1000) cow.egg = 1000;
 
       }
 
-      if (chicken.egg === 1000) {
+      if (cow.egg === 1000) {
 
-        let territory = this.currentTerritory(chicken.x, chicken.y);
+        let territory = this.currentTerritory(cow.x, cow.y);
 
         if (territory) {
           
-          let countEggs: number = this.settings.territoriesChickenSettings.find((item: IterritoriesChickenSettings) => item.improve === territory.improve).countEggs;
+          let countEggs: number = this.settings.territoriesCowSettings.find((item: IterritoriesCowSettings) => item.improve === territory.improve).countEggs;
 
           let eggs: number = 0;
 
@@ -97,15 +97,15 @@ function interval(): void {
 
           }
 
-          if (eggs < countEggs && !chicken.drag && (territory.type === 2 || territory.type === 3)) {
+          if (eggs < countEggs && !cow.drag && (territory.type === 2 || territory.type === 3)) {
 
-            chicken.egg = 0;
+            cow.egg = 0;
 
             // рандом разброса яиц
-            let minX: number = chicken.x - indent;
-            let maxX: number = chicken.x + indent;
-            let minY: number = chicken.y + 40 - indent;
-            let maxY: number = chicken.y + 40 + indent;
+            let minX: number = cow.x - indent;
+            let maxX: number = cow.x + indent;
+            let minY: number = cow.y + 40 - indent;
+            let maxY: number = cow.y + 40 + indent;
 
             let left: number = (territory.position - 1) * 240 + indent;
             let right: number = territory.position * 240 - indent;
@@ -120,8 +120,8 @@ function interval(): void {
               if (maxY < minY) minY -= 40;
             }
  
-            let egg: IchickenEgg = {
-              type: chicken.type,
+            let egg: IcowEgg = {
+              type: cow.type,
               x: this.random(minX, maxX),
               y: this.random(minY, maxY),
               _id: 'local_' + this.randomString(18)
@@ -129,10 +129,10 @@ function interval(): void {
 
             this.getEgg(egg);
 
-            if (chicken.type === 0) chicken.diamond++;
-            if (chicken.diamond >= 5 && chicken.type === 0) {
-              this.firework250(chicken.x, chicken.y);
-              chicken.destroy();
+            if (cow.type === 0) cow.diamond++;
+            if (cow.diamond >= 5 && cow.type === 0) {
+              this.firework250(cow.x, cow.y);
+              cow.destroy();
             }
 
           }
@@ -142,9 +142,9 @@ function interval(): void {
       }
 
       // отнимаем очки у территории
-      let territory = this.currentTerritory(chicken.x, chicken.y);
+      let territory = this.currentTerritory(cow.x, cow.y);
 
-      if (territory && !chicken.drag) {
+      if (territory && !cow.drag) {
 
         if (territory.type === 2) {
 
@@ -176,27 +176,27 @@ function interval(): void {
         if (territory.mergingCounter > 0) territory.mergingCounter++;
         if (territory.mergingCounter > this.state.maxMerginTime) {
 
-          let chicken1: any;
-          let chicken2: any;
+          let cow1: any;
+          let cow2: any;
 
           switch (territory.merging.length) {
             case 0:
-              chicken1 = false;
-              chicken2 = false;
+              cow1 = false;
+              cow2 = false;
               break;
             case 1:
-              chicken1 = this.chicken.children.entries.find((data: any) => data._id === territory.merging[0]._id);
-              chicken2 = false;
+              cow1 = this.cow.children.entries.find((data: any) => data._id === territory.merging[0]._id);
+              cow2 = false;
               break;
             case 2:
-              chicken1 = this.chicken.children.entries.find((data: any) => data._id === territory.merging[0]._id);
-              chicken2 = this.chicken.children.entries.find((data: any) => data._id === territory.merging[1]._id);;
+              cow1 = this.cow.children.entries.find((data: any) => data._id === territory.merging[0]._id);
+              cow2 = this.cow.children.entries.find((data: any) => data._id === territory.merging[1]._id);;
               break;
             default:
               break;
           }
 
-          this.cancelMerging(territory, chicken1, chicken2);
+          this.cancelMerging(territory, cow1, cow2);
 
         }
 
@@ -212,9 +212,9 @@ function interval(): void {
     }
 
     // бар собирателя
-    if (this.state.userChicken.collector > 0) {
+    if (this.state.userCow.collector > 0) {
 
-      this.state.userChicken.collector--;
+      this.state.userCow.collector--;
       this.game.scene.keys['CowBars'].collector.update();
 
     } else if (this.game.scene.keys['CowBars'].collector.endAngle !==
@@ -225,12 +225,12 @@ function interval(): void {
     }
 
     // задание на накопление денег
-    this.tryTask(6, this.state.userChicken.money);
+    this.tryTask(6, this.state.userCow.money);
 
-    // задание на кур на поле
+    // задание на коровы на поле
     this.checkAnimalTask();
 
-    // таймер кристаллической курицы
+    // таймер кристаллической коровы
     this.caveTimer();
 
     // баланс-бары
@@ -271,9 +271,8 @@ function interval(): void {
 
     this.nextDayTimer();
 
-    // this.state[`user${this.state.farm}`].part
-    if (this.state[`userChicken`].part >= this.game.scene.keys['Chicken'].herdBoostLvl &&
-     this.state[`userChicken`].takenHerdBoost <= 0 && 
+    if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys['Cow'].herdBoostLvl &&
+    this.state[`user${this.state.farm}`].takenHerdBoost <= 0 && 
      this.state.user.additionalTutorial.herdBoost) {
       this.state.nativeCounter[3] = 1;
     } else this.state.nativeCounter[3] = 0;
@@ -295,20 +294,20 @@ function interval(): void {
       !this.scene.isActive('Map')) this.showDonate();
 
     // уменьшаем время буста комбикорм
-    if (this.state.userChicken.feedBoostTime > 0) {
+    if (this.state.userCow.feedBoostTime > 0) {
 
       if (Phaser.Math.Between(0, 7) >= 5) { // чтобы не так часто появлялись сердца
 
-        let randomIndex: number = Phaser.Math.Between(0, this.chicken.children.entries.length - 1);
-        this.hearts(this.chicken.children.entries[randomIndex]);
+        let randomIndex: number = Phaser.Math.Between(0, this.cow.children.entries.length - 1);
+        this.hearts(this.cow.children.entries[randomIndex]);
 
       }
 
-      this.state.userChicken.feedBoostTime--;
+      this.state.userCow.feedBoostTime--;
     }
 
     // Проверяем и запускаем распростанение овец по полю
-    if (this.chicken.children.entries.every(el => el.spread === false)) {
+    if (this.cow.children.entries.every(el => el.spread === false)) {
       
       this.spreadAnimals();
 

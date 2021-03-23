@@ -51,9 +51,9 @@ class CowBars extends Phaser.Scene {
   public menu: Phaser.GameObjects.Image;
   public auth: Phaser.GameObjects.Image;
   public sendwichTimer: number;
-  public chickenBuy: Phaser.GameObjects.Image;
-  public chickenPrice: Phaser.GameObjects.Text;
-  public chickenPriceBubble: Phaser.GameObjects.Graphics;
+  public cowBuy: Phaser.GameObjects.Image;
+  public cowPrice: Phaser.GameObjects.Text;
+  public cowPriceBubble: Phaser.GameObjects.Graphics;
   public taskBoard: TaskBoard;
   public partProgress: Phaser.GameObjects.Text;
   public balanceBg: Phaser.GameObjects.Image;
@@ -126,8 +126,8 @@ class CowBars extends Phaser.Scene {
       .setInteractive()
       .setOrigin(0, 1);
     
-    let chickenIcon: string = 'chicken-buy-icon-' + this.game.scene.keys[this.state.farm].maxBreedForBuy();
-    this.chickenBuy = this.add.image(82, this.height - 92, chickenIcon);
+    let cowIcon: string = 'cow-buy-icon-' + this.game.scene.keys[this.state.farm].maxBreedForBuy();
+    this.cowBuy = this.add.image(82, this.height - 92, cowIcon);
     let collector: Phaser.GameObjects.Image = this.add.image(230, this.height - 90, 'egg-collector');
     let shop: Phaser.GameObjects.Image = this.add.image(370, this.height - 90, 'shop');
     let map: Phaser.GameObjects.Image = this.add.image(510, this.height - 90, 'map-icon');
@@ -144,9 +144,9 @@ class CowBars extends Phaser.Scene {
       .setOrigin(0.5, 0.5)
       .setVisible(false);
 
-    // быстрая покупка курицы
-    this.clickButton(this.chickenBuy, (): void => {
-      this.game.scene.keys[this.state.farm].buyChicken(this.game.scene.keys[this.state.farm].maxBreedForBuy());
+    // быстрая покупка корова
+    this.clickButton(this.cowBuy, (): void => {
+      this.game.scene.keys[this.state.farm].buyCow(this.game.scene.keys[this.state.farm].maxBreedForBuy());
     });
     
     // кнопка собирателя яиц
@@ -225,7 +225,7 @@ class CowBars extends Phaser.Scene {
     }).setDepth(1).setOrigin(0.5, 0.5);
     this.currentPartProgress();
 
-    this.add.sprite(498, 100, 'chickenCoin').setScale(0.22);
+    this.add.sprite(498, 100, 'cowCoin').setScale(0.22);
 
     let addDiamonds: Phaser.GameObjects.Sprite = this.add.sprite(680, 38, 'plus').setDepth(2);
     let addMoney: Phaser.GameObjects.Sprite = this.add.sprite(680, 100, 'plus').setDepth(2);
@@ -252,7 +252,7 @@ class CowBars extends Phaser.Scene {
       
     });
     
-    this.add.sprite(352, 0, 'chicken-leaves').setOrigin(0.5, 0);
+    this.add.sprite(352, 0, 'cow-leaves').setOrigin(0.5, 0);
 
     this.balanceBg = this.add.image(0, 0, 'green-balance-bg').setOrigin(0, 0);
     this.add.sprite(70, 10, 'water-balance').setOrigin(0.5, 0).setDepth(2);
@@ -283,18 +283,18 @@ class CowBars extends Phaser.Scene {
 
     // цена быстрой покупки
     let breed: number = this.game.scene.keys[this.state.farm].maxBreedForBuy();
-    let price: string = String(shortNum(this.game.scene.keys[this.state.farm].chickenPrice(breed).price));
+    let price: string = String(shortNum(this.game.scene.keys[this.state.farm].cowPrice(breed).price));
 
-    this.chickenPrice = this.add.text(82, this.height - 43, price, {
+    this.cowPrice = this.add.text(82, this.height - 43, price, {
       font: '28px Bip',
       color: '#925C28',
       align: 'center'
     }).setDepth(this.height).setOrigin(0.5, 0.5);
 
-    let bounds = this.chickenPrice.getBounds();
-    this.chickenPriceBubble = this.add.graphics({ x: bounds.left - 15, y: bounds.top });
-    this.chickenPriceBubble.fillStyle(0xFFFFFF, 1);
-    this.chickenPriceBubble.fillRoundedRect(0, 0, bounds.width + 30, bounds.height, 8);
+    let bounds = this.cowPrice.getBounds();
+    this.cowPriceBubble = this.add.graphics({ x: bounds.left - 15, y: bounds.top });
+    this.cowPriceBubble.fillStyle(0xFFFFFF, 1);
+    this.cowPriceBubble.fillRoundedRect(0, 0, bounds.width + 30, bounds.height, 8);
 
     // плашка заданий
     this.taskBoard = new TaskBoard(this);
@@ -387,12 +387,12 @@ class CowBars extends Phaser.Scene {
       this.diamonds.setText(String(shortNum(this.userDiamonds)));
     }
 
-    if (this.money.text !== String(shortNum(this.state.userChicken.money))) {
-      this.money.setText(shortNum(this.state.userChicken.money));
+    if (this.money.text !== String(shortNum(this.state.userCow.money))) {
+      this.money.setText(shortNum(this.state.userCow.money));
     }
 
-    if (this.part.text !== String(shortNum(this.state.userChicken.part))) {
-      this.part.setText(String(this.state.userChicken.part));
+    if (this.part.text !== String(shortNum(this.state.userCow.part))) {
+      this.part.setText(String(this.state.userCow.part));
     }
     
     // отображение плашки заданий
@@ -426,8 +426,8 @@ class CowBars extends Phaser.Scene {
     // пульсация баланс-баров
     this.pulseBalance();
 
-    // актуальный статус кнопки покупки курицы
-    this.buyChickenStatus();
+    // актуальный статус кнопки покупки корова
+    this.buyCowStatus();
 
     // отображение кнопок социальных механик
     this.socialButtons();
@@ -448,11 +448,11 @@ class CowBars extends Phaser.Scene {
   // анимация монет от позиции
   public plusMoneyAnimation(position: Iposition): void {
     
-    let y = position.y - this.game.scene.keys['Chicken'].scrolling.scrollY;
+    let y = position.y - this.game.scene.keys['Cow'].scrolling.scrollY;
 
-    let img1 = this.сurrency.create(position.x - 70, y, 'chickenCoin').setScale(0.2);
-    let img2 = this.сurrency.create(position.x + 70, y, 'chickenCoin').setScale(0.2);
-    let img3 = this.сurrency.create(position.x, y - 30, 'chickenCoin').setScale(0.2);
+    let img1 = this.сurrency.create(position.x - 70, y, 'cowCoin').setScale(0.2);
+    let img2 = this.сurrency.create(position.x + 70, y, 'cowCoin').setScale(0.2);
+    let img3 = this.сurrency.create(position.x, y - 30, 'cowCoin').setScale(0.2);
 
     img1.counter = 0;
     img2.counter = 0;
@@ -474,17 +474,17 @@ class CowBars extends Phaser.Scene {
   }
 
 
-  // обновление цены покупки кур
-  public updateChickenPrice(): void {
+  // обновление цены покупки коров
+  public updateCowPrice(): void {
     
-    let breed: number = this.game.scene.keys['Chicken'].maxBreedForBuy();
-    let price: string = String(shortNum(this.game.scene.keys['Chicken'].chickenPrice(breed).price));
-    this.chickenPrice.setText(price);
-    let bounds = this.chickenPrice.getBounds();
-    this.chickenPriceBubble.destroy();
-    this.chickenPriceBubble = this.add.graphics({ x: bounds.left - 15, y: bounds.top });
-    this.chickenPriceBubble.fillStyle(0xffffff, 1);
-    this.chickenPriceBubble.fillRoundedRect(0, 0, bounds.width + 30, bounds.height, 8);
+    let breed: number = this.game.scene.keys['Cow'].maxBreedForBuy();
+    let price: string = String(shortNum(this.game.scene.keys['Cow'].cowPrice(breed).price));
+    this.cowPrice.setText(price);
+    let bounds = this.cowPrice.getBounds();
+    this.cowPriceBubble.destroy();
+    this.cowPriceBubble = this.add.graphics({ x: bounds.left - 15, y: bounds.top });
+    this.cowPriceBubble.fillStyle(0xffffff, 1);
+    this.cowPriceBubble.fillRoundedRect(0, 0, bounds.width + 30, bounds.height, 8);
 
   }
 
@@ -577,15 +577,15 @@ class CowBars extends Phaser.Scene {
 
 
   // затемнение на кнопке покупки овцы
-  public buyChickenStatus(): void {
+  public buyCowStatus(): void {
 
     let breed: number = this.game.scene.keys[this.state.farm].maxBreedForBuy();
-    let price: number = this.game.scene.keys[this.state.farm].chickenPrice(breed).price
+    let price: number = this.game.scene.keys[this.state.farm].cowPrice(breed).price
 
-    if (price > this.state.userChicken.money && this.chickenBuy.tintBottomLeft === 0xFFFFFF) {
-      this.chickenBuy.setTint(0x777777);
-    } else if (price <= this.state.userChicken.money && this.chickenBuy.tintBottomLeft === 0x777777) {
-      this.chickenBuy.setTint(0xFFFFFF);
+    if (price > this.state.userCow.money && this.cowBuy.tintBottomLeft === 0xFFFFFF) {
+      this.cowBuy.setTint(0x777777);
+    } else if (price <= this.state.userCow.money && this.cowBuy.tintBottomLeft === 0x777777) {
+      this.cowBuy.setTint(0xFFFFFF);
     }
 
   }

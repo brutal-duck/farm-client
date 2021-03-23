@@ -194,8 +194,101 @@ let chickenSettings: IchickenSettings = {
   ]
 }
 
+let cowSettings: IcowSettings = {
+  buyBetterBreedCow: 2,
+  feedBoostPrice: 35,
+  cowBadPercent: 40,
+  cowDiamondsTime: 10800,
+  cowPrice: 100,
+  doubledСollectorPrice: 25,
+  collectorPrice4: 85,
+  collectorPrice12: 220,
+  unlockCollector4: 5,
+  unlockCollector12: 8,
+  cowFairLevels: [
+    { level: 1, price_m: 0, price_d: 0, exchange: 1000, part_unlock: 1 },
+    { level: 2, price_m: 5000, price_d: 0, exchange: 2800, part_unlock: 2 },
+    { level: 3, price_m: 25000, price_d: 0, exchange: 7200, part_unlock: 4 },
+    { level: 4, price_m: 150000, price_d: 0, exchange: 17600, part_unlock: 7 },
+    { level: 5, price_m: 800000, price_d: 0, exchange: 41600, part_unlock: 9 },
+    { level: 6, price_m: 4000000, price_d: 0, exchange: 96000, part_unlock: 10 },
+    { level: 7, price_m: 12000000, price_d: 0, exchange: 217600, part_unlock: 11 },
+    { level: 8, price_m: 27600000, price_d: 0, exchange: 486600, part_unlock: 12 },
+    { level: 9, price_m: 62400000, price_d: 0, exchange: 1075200, part_unlock: 13 },
+    { level: 10, price_m: 140000000, price_d: 0, exchange: 2355200, part_unlock: 14 },
+    { level: 11, price_m: 309000000, price_d: 0, exchange: 5120000, part_unlock: 15 },
+    { level: 12, price_m: 680000000, price_d: 0, exchange: 12000000, part_unlock: 16 }
+  ],
+  cowParts: [
+    { sort: 1, award: 10, improve_territory_2: 1000, improve_territory_3: 3000, improve_territory_4: 6000, collector: 10 },
+    { sort: 2, award: 10, improve_territory_2: 7000, improve_territory_3: 13000, improve_territory_4: 26000, collector: 10} ,
+    { sort: 3, award: 10, improve_territory_2: 17000, improve_territory_3: 33500, improve_territory_4: 66500, collector: 10 },
+    { sort: 4, award: 10, improve_territory_2: 27000, improve_territory_3: 54000, improve_territory_4: 107000, collector: 15 },
+    { sort: 5, award: 10, improve_territory_2: 126000, improve_territory_3: 253000, improve_territory_4: 506000, collector: 15 },
+    { sort: 6, award: 10, improve_territory_2: 495000, improve_territory_3: 989000, improve_territory_4: 1979000, collector: 15 },
+    { sort: 7, award: 10, improve_territory_2: 1051500, improve_territory_3: 2102500, improve_territory_4: 4205500, collector: 20 },
+    { sort: 8, award: 10, improve_territory_2: 1608000, improve_territory_3: 3216000, improve_territory_4: 6432000, collector: 25 },
+    { sort: 9, award: 10, improve_territory_2: 4082000, improve_territory_3: 8163000, improve_territory_4: 16327000, collector: 25 },
+    { sort: 10, award: 10, improve_territory_2: 10177000, improve_territory_3: 20354000, improve_territory_4: 40708000, collector: 25 },
+    { sort: 11, award: 10, improve_territory_2: 17600000, improve_territory_3: 35200500, improve_territory_4: 70401000, collector: 25 },
+    { sort: 12, award: 10, improve_territory_2: 25023000, improve_territory_3: 50047000, improve_territory_4: 100094000, collector: 25 },
+    { sort: 13, award: 10, improve_territory_2: 60846000, improve_territory_3: 121693000, improve_territory_4: 243385000, collector: 25 },
+    { sort: 14, award: 10, improve_territory_2: 146611000, improve_territory_3: 293222000, improve_territory_4: 586443000, collector: 30 },
+    { sort: 15, award: 10, improve_territory_2: 248601000, improve_territory_3: 497202000, improve_territory_4: 994403500, collector: 30 },
+    { sort: 16, award: 10, improve_territory_2: 350591000, improve_territory_3: 701182000, improve_territory_4: 1402364000, collector: 30 }
+  ],
+  cowSettings: [
+    { breed: 1, drinking: 2, eating: 10, egg: 100, eggPrice: 100 },
+    { breed: 2, drinking: 2, eating: 11, egg: 100, eggPrice: 200 },
+    { breed: 3, drinking: 3, eating: 12, egg: 100, eggPrice: 400 },
+    { breed: 4, drinking: 3, eating: 13, egg: 100, eggPrice: 800 },
+    { breed: 5, drinking: 3, eating: 14, egg: 100, eggPrice: 1600 },
+    { breed: 6, drinking: 3, eating: 15, egg: 100, eggPrice: 3200 },
+    { breed: 7, drinking: 4, eating: 17, egg: 100, eggPrice: 6400 },
+    { breed: 8, drinking: 4, eating: 19, egg: 100, eggPrice: 12800 },
+    { breed: 9, drinking: 5, eating: 21, egg: 100, eggPrice: 25600 },
+    { breed: 10, drinking: 5, eating: 23, egg: 100, eggPrice: 51200 },
+    { breed: 11, drinking: 6, eating: 25, egg: 100, eggPrice: 102400 },
+    { breed: 12, drinking: 7, eating: 28, egg: 100, eggPrice: 204800 }
+  ],
+  territoriesCowPrice: [
+    { block: 1, position: 1, price: 0, unlock: 1 },
+    { block: 1, position: 2, price: 0, unlock: 1 },
+    { block: 1, position: 3, price: 0, unlock: 1 },
+    { block: 2, position: 1, price: 2000, unlock: 2 },
+    { block: 2, position: 2, price: 50, unlock: 1 },
+    { block: 2, position: 3, price: 0, unlock: 1 },
+    { block: 3, position: 1, price: 36000, unlock: 4 },
+    { block: 3, position: 2, price: 24000, unlock: 3 },
+    { block: 3, position: 3, price: 2000, unlock: 2 },
+    { block: 4, position: 1, price: 407000, unlock: 7 },
+    { block: 4, position: 2, price: 132000, unlock: 6 },
+    { block: 4, position: 3, price: 132000, unlock: 5 },
+    { block: 5, position: 1, price: 3092000, unlock: 10 },
+    { block: 5, position: 2, price: 1150000, unlock: 9 },
+    { block: 5, position: 3, price: 1150000, unlock: 8 },
+    { block: 6, position: 1, price: 50885000, unlock: 13 },
+    { block: 6, position: 2, price: 20408000, unlock: 12 },
+    { block: 6, position: 3, price: 20408000, unlock: 11 },
+    { block: 7, position: 1, price: 304232000, unlock: 15 },
+    { block: 7, position: 2, price: 304232000, unlock: 14 },
+    { block: 7, position: 3, price: 125117000, unlock: 13 },
+    { block: 8, position: 1, price: 1752955000, unlock: 16 },
+    { block: 8, position: 2, price: 1752955000, unlock: 16 },
+    { block: 8, position: 3, price: 733054000, unlock: 16 }
+  ],
+  territoriesCowSettings: [
+    { improve: 1, regeneration: 11, countEggs: 5, unlock_improve: 1, eggStorage: 200 },
+    { improve: 2, regeneration: 22, countEggs: 5, unlock_improve: 2, eggStorage: 700 },
+    { improve: 3, regeneration: 33, countEggs: 5, unlock_improve: 5, eggStorage: 1500 },
+    { improve: 4, regeneration: 44, countEggs: 5, unlock_improve: 8, eggStorage: 4000 }
+  ]
+}
+
+
 export {
   general,
   sheepSettings,
-  chickenSettings
+  chickenSettings,
+  cowSettings
 }

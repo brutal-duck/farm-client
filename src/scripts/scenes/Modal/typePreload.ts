@@ -43,6 +43,7 @@ let bigButtonYellow: any = require("./../../../assets/images/modal/btn_ly.png");
 let repositorySellBtn: any = require("./../../../assets/images/modal/repository-sell-btn.png");
 let herdBoostRoadSheep: any = require("./../../../assets/images/sheep/herd-boost-road-sheep.png");
 let herdBoostRoadChicken: any = require("./../../../assets/images/chicken/herd-boost-road-chicken.png");
+let herdBoostRoadCow: any = require("./../../../assets/images/cow/herd-boost-road-cow.png");
 let herdBoostRoadEvent: any = require("./../../../assets/images/event/herd-boost-road-event.png");
 let badMergingAnimation: any = require("./../../../assets/images/bad-merging-animation.png");
 let boostWindowBg: any = require("./../../../assets/images/boost/background.png");
@@ -61,6 +62,7 @@ let ratingPrisePlaces: any = require("./../../../assets/images/event/modal/ratin
 let ratingBGAfter: any = require("./../../../assets/images/event/modal/raiting-bg-after.png");
 let unicornStatus: any = require("./../../../assets/images/icons/unicorn-status.png");
 let feedBoostChickenIcon: any = require("./../../../assets/images/icons/chicken-feed-boost.png");
+let feedBoostCowIcon: any = require("./../../../assets/images/icons/cow-feed-boost.png");
 
 
 
@@ -87,6 +89,7 @@ export default function typePreload(): void {
       case 2: // магазин
         this.load.image('shop-window', shopWindow);
         if (this.state.farm === 'Chicken') this.load.image('chicken-feed-boost-icon', feedBoostChickenIcon); 
+        else if (this.state.farm === 'Cow') this.load.image('cow-feed-boost-icon', feedBoostCowIcon); 
         
         break;
       case 3: // окно с заданиями
@@ -136,6 +139,7 @@ export default function typePreload(): void {
       case 8: // окно стадного буста +
         if (this.state.farm === 'Sheep') this.load.image('herd-boost-road-sheep', herdBoostRoadSheep);
         if (this.state.farm === 'Chicken') this.load.image('herd-boost-road-chicken', herdBoostRoadChicken);
+        if (this.state.farm === 'Cow') this.load.image('herd-boost-road-cow', herdBoostRoadCow);
         if (this.state.farm === 'Event') this.load.image('herd-boost-road-event', herdBoostRoadEvent);
         this.load.image('bad-merging-animation', badMergingAnimation);
         this.load.image('boost-window-bg', boostWindowBg);

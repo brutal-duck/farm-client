@@ -79,7 +79,7 @@ function updateHerdBoostBtn(): void {
 // улучшение собирателей
 function improveCollector(): void {
 
-  let user: IuserSheep | IuserChicken;
+  let user: IuserSheep | IuserChicken | IuserCow;
   let collectorSettings: IcollectorSettings[];
 
   if (this.state.farm === 'Sheep') {
@@ -91,6 +91,11 @@ function improveCollector(): void {
 
     user = this.state.userChicken;
     collectorSettings = this.state.chickenCollectorSettings;
+
+  } else if (this.state.farm === 'Cow') {
+
+    user = this.state.userCow;
+    collectorSettings = this.state.cowCollectorSettings;
 
   }
 
@@ -196,6 +201,7 @@ function collectorBoost(): void {
   let resource: string;
   if (this.state.farm === 'Sheep') resource = 'wool';
   if (this.state.farm === 'Chicken') resource = 'egg';
+  if (this.state.farm === 'Cow') resource = 'egg';
   this.add.sprite(0, 20 + this.height, 'boost-bg').setOrigin(0, 0);
   this.add.text(225, 40 + this.height, this.state.lang[`${resource}Collector`], {
     font: '28px Shadow',
@@ -256,6 +262,7 @@ function collectorBoost(): void {
   let checkDouble: boolean = true;
   if (this.state.farm === 'Sheep') checkDouble = this.state[`user${this.state.farm}`].collector === 0 && this.state[`user${this.state.farm}`].tutorial >= 100;
   else if (this.state.farm === 'Chicken') checkDouble = this.state[`user${this.state.farm}`].collector === 0; 
+  else if (this.state.farm === 'Cow') checkDouble = this.state[`user${this.state.farm}`].collector === 0; 
   
   if (checkDouble) {
 
@@ -320,7 +327,8 @@ function collectorBoost(): void {
   }
   let check: boolean;
   if (this.state.farm === 'Sheep') check = this.state[`user${this.state.farm}`].collectorLevel < this.state[`${this.state.farm.toLowerCase()}CollectorSettings`].length && this.state[`user${this.state.farm}`].tutorial >= 100;
-  if (this.state.farm === 'Chicken') check = this.state[`user${this.state.farm}`].collectorLevel < this.state[`${this.state.farm.toLowerCase()}CollectorSettings`].length; 
+  if (this.state.farm === 'Chicken') check = this.state[`user${this.state.farm}`].collectorLevel < this.state[`${this.state.farm.toLowerCase()}CollectorSettings`].length;
+  if (this.state.farm === 'Cow') check = this.state[`user${this.state.farm}`].collectorLevel < this.state[`${this.state.farm.toLowerCase()}CollectorSettings`].length;
   // кнопка улучшения
   if (check) {
     
@@ -643,7 +651,7 @@ function showFeedTime(): void {
 // бесплатный собиратель
 function freeCollector(type: number = 1): void {
 
-  let user: IuserSheep | IuserChicken;
+  let user: IuserSheep | IuserChicken | IuserCow;
   let settings: IcollectorSettings[];
   let doubledСollectorPrice: number;
 
@@ -658,6 +666,12 @@ function freeCollector(type: number = 1): void {
     user = this.state.userChicken;
     settings = this.state.chickenCollectorSettings;
     doubledСollectorPrice = this.state.chickenSettings.doubledСollectorPrice;
+
+  } else if (this.state.farm === 'Cow') {
+
+    user = this.state.userCow;
+    settings = this.state.cowCollectorSettings;
+    doubledСollectorPrice = this.state.cowSettings.doubledСollectorPrice;
 
   }
 
@@ -741,8 +755,8 @@ function freeCollector(type: number = 1): void {
 // покупка собирателя
 function buyCollector(type: number): void {
 
-  let user: IuserSheep | IuserChicken;
-  let settings: IsheepSettings | IchickenSettings;
+  let user: IuserSheep | IuserChicken | IuserCow;
+  let settings: IsheepSettings | IchickenSettings | IcowSettings;
 
   if (this.state.farm === 'Sheep') {
 
@@ -753,6 +767,11 @@ function buyCollector(type: number): void {
 
     user = this.state.userChicken;
     settings = this.state.chickenSettings;
+
+  } else if (this.state.farm === 'Cow') {
+
+    user = this.state.userCow;
+    settings = this.state.cowSettings;
 
   }
 

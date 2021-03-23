@@ -13,15 +13,15 @@ function balance(): Ibalance {
   let notEnoughGrass: boolean = false;
   let notEnoughWater: boolean = false;
 
-  for (let i in this.chicken.children.entries) {
+  for (let i in this.cow.children.entries) {
 
-    let chicken = this.chicken.children.entries[i];
+    let cow = this.cow.children.entries[i];
 
     let breed: number;
-    if (chicken.type === 0) breed = 1;
-    else breed = chicken.type;
+    if (cow.type === 0) breed = 1;
+    else breed = cow.type;
 
-    let points: IchickenPoints = this.settings.chickenSettings.find((item: IchickenPoints) => item.breed === breed);
+    let points: IcowPoints = this.settings.cowSettings.find((item: IcowPoints) => item.breed === breed);
     
     grassConsumption += points.eating;
     waterConsumption += points.drinking;
@@ -37,7 +37,7 @@ function balance(): Ibalance {
 
     if (territory.type === 2 || territory.type === 3) {
       
-      let reg: number = this.settings.territoriesChickenSettings.find(item => item.improve === territory.improve).regeneration;
+      let reg: number = this.settings.territoriesCowSettings.find(item => item.improve === territory.improve).regeneration;
 
       if (territory.type === 2) {
         grassRecovery += reg;
@@ -103,15 +103,15 @@ function balance(): Ibalance {
 }
 
 
-// цена курицы
-function chickenPrice(breed: number) {
+// цена коровы
+function cowPrice(breed: number) {
 
   let degree = Math.pow(2, breed - 1);
-  let insideCounter: number = this.state.userChicken.countChicken;
+  let insideCounter: number = this.state.userCow.countCow;
   let insidePrice: number = 0;
 
   for (let i = 0; i < degree; i++) {
-    let price = this.state.chickenSettings.chickenPrice;
+    let price = this.state.cowSettings.cowPrice;
 
     if (insideCounter !== 0 && insideCounter !== 1) {
       price *= insideCounter;
@@ -123,7 +123,7 @@ function chickenPrice(breed: number) {
 
   return {
     price: insidePrice,
-    countChicken: insideCounter
+    countCow: insideCounter
   }
 
 }
@@ -133,8 +133,8 @@ function chickenPrice(breed: number) {
 function maxBreedForBuy(): number {
 
   let breed: number = 1;
-  this.state.chickenSettings.chickenSettings.map((data: IchickenPoints) => {
-    if (data.breed <= this.state.userChicken.fair - this.state.chickenSettings.buyBetterBreedChicken) breed = data.breed;
+  this.state.cowSettings.cowSettings.map((data: IcowPoints) => {
+    if (data.breed <= this.state.userCow.fair - this.state.cowSettings.buyBetterBreedCow) breed = data.breed;
     return true;
   });
   
@@ -143,12 +143,12 @@ function maxBreedForBuy(): number {
 }
 
 
-// берем кристаллическую курицу
-function takeDiamondChicken(): void {
+// Кристалическая корова
+function takeDiamondCow(): void {
   
-  if (this.state.userChicken.part >= 3) {
+  if (this.state.userCow.part >= 3) {
 
-    if (this.state.userChicken.diamondAnimalTime === 0) {
+    if (this.state.userCow.diamondAnimalTime === 0) {
 
       this.state.amplitude.getInstance().logEvent('take_diamond_animal', {
         farm_id: this.state.farm,
@@ -156,36 +156,36 @@ function takeDiamondChicken(): void {
       });
 
       this.tryTask(18, 0);
-      this.state.userChicken.diamondAnimalTime = this.state.chickenSettings.chickenDiamondsTime;
+      this.state.userCow.diamondAnimalTime = this.state.cowSettings.cowDiamondsTime;
       
       let x: number = Phaser.Math.Between(530, 660);
       let y: number = Phaser.Math.Between(530, 540);
 
-      if (this.chicken.children.entries.length <= 50) {
+      if (this.cow.children.entries.length <= 50) {
 
         let id: string = 'local_' + randomString(18);
-        this.getChicken(id, 0, x, y, 0, 500);
+        this.getCow(id, 0, x, y, 0, 500);
 
       } else {
 
-        let diamondChicken = this.chicken.children.entries.find((data: any) => data.type === 0);
+        let diamondCow = this.cow.children.entries.find((data: any) => data.type === 0);
 
-        if (diamondChicken) {
+        if (diamondCow) {
 
-          diamondChicken.diamond = 0;
-          diamondChicken.x = x;
-          diamondChicken.y = y;
+          diamondCow.diamond = 0;
+          diamondCow.x = x;
+          diamondCow.y = y;
 
         } else {
           
           let id: string = 'local_' + randomString(18);
-          this.getChicken(id, 0, x, y, 0, 500);
+          this.getCow(id, 0, x, y, 0, 500);
 
         }
 
       }
 
-    } else if (this.state.readyAd && this.state.userChicken.diamondAnimalAd) {
+    } else if (this.state.readyAd && this.state.userCow.diamondAnimalAd) {
 
       let modal: Imodal = {
         type: 1,
@@ -195,7 +195,7 @@ function takeDiamondChicken(): void {
       this.scene.launch('Modal', this.state);
 
     } else {
-      this.createSpeechBubble(this.state.lang.chickenCaveMessage, 2);
+      this.createSpeechBubble(this.state.lang.cowCaveMessage, 2);
     }
 
   }
@@ -205,7 +205,7 @@ function takeDiamondChicken(): void {
 
 export {
   balance,
-  chickenPrice,
+  cowPrice,
   maxBreedForBuy,
-  takeDiamondChicken
+  takeDiamondCow
 }

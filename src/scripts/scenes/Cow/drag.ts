@@ -2,65 +2,65 @@ import { random } from "../../general/basic";
 
 function drag(): void {
 
-  this.input.on('dragstart', (pointer: any, chicken: any): void => {
+  this.input.on('dragstart', (pointer: any, cow: any): void => {
 
     this.scrolling.downHandler(); // остановка скролла
     this.scrolling.enabled = false; // отключаем скролл
     this.scrolling.wheel = false; // отключаем колесо
-    chicken.drag = true; // метим перетаскивание для других функций
-    chicken.setVelocity(0, 0); // отменяем передвижение
-    chicken.body.onWorldBounds = false; // чтобы не могли перетащить за пределы
+    cow.drag = true; // метим перетаскивание для других функций
+    cow.setVelocity(0, 0); // отменяем передвижение
+    cow.body.onWorldBounds = false; // чтобы не могли перетащить за пределы
 
     // анимация
-    chicken.anims.play('chicken-drag' + chicken.type, true);
+    cow.anims.play('cow-drag' + cow.type, true);
 
   });
 
-  this.input.on('drag', (pointer: any, chicken: any, dragX: number, dragY: number): void => {
+  this.input.on('drag', (pointer: any, cow: any, dragX: number, dragY: number): void => {
 
-    if (chicken.drag) {
+    if (cow.drag) {
 
-      chicken.x = dragX;
-      chicken.y = dragY;
-      chicken.setDepth(dragY + Math.round((chicken.height / 2) + 100));
+      cow.x = dragX;
+      cow.y = dragY;
+      cow.setDepth(dragY + Math.round((cow.height / 2) + 100));
 
     }
 
   });
 
   // дропзоны для мерджинга
-  this.input.on('drop', (pointer: any, chicken: any, zone: any): void => {
+  this.input.on('drop', (pointer: any, cow: any, zone: any): void => {
 
-    let territory = this.currentTerritory(chicken.x, chicken.y);
+    let territory = this.currentTerritory(cow.x, cow.y);
     
     if (territory) {
 
       if (territory.type === 4) {
 
-        if (chicken.type === 0) {
+        if (cow.type === 0) {
 
-          this.createSpeechBubble(this.state.lang.mergingDiamondChicken);
-          this.cancelMerging(territory, chicken, false);
+          this.createSpeechBubble(this.state.lang.mergingDiamondCow);
+          this.cancelMerging(territory, cow, false);
 
-        } else if (chicken.type === this.state.chickenSettings.chickenSettings.length) {
+        } else if (cow.type === this.state.cowSettings.cowSettings.length) {
           
           this.createSpeechBubble(this.state.lang.mergingMessageBreedMax);
-          this.cancelMerging(territory, chicken, false);
+          this.cancelMerging(territory, cow, false);
 
-        } else if (this.state.userChicken.fair < chicken.type) {
+        } else if (this.state.userCow.fair < cow.type) {
 
           this.createSpeechBubble(this.state.lang.needImproveFair);
-          this.cancelMerging(territory, chicken, false);
+          this.cancelMerging(territory, cow, false);
 
         } else {
 
           if (zone.type === 'left') {
 
-            this.checkMerging(territory, chicken, 'left');
+            this.checkMerging(territory, cow, 'left');
 
           } else if (zone.type === 'right') {
 
-            this.checkMerging(territory, chicken, 'right');
+            this.checkMerging(territory, cow, 'right');
 
           }
 
@@ -70,44 +70,44 @@ function drag(): void {
 
         let randomX: number = random(territory.x + 40, territory.x + 200);
         let randomY: number = random(territory.y + 280, territory.y + 440);
-        this.aim(chicken, randomX, randomY);
+        this.aim(cow, randomX, randomY);
         
       }
     
-     } else this.teleportation(chicken);
+     } else this.teleportation(cow);
 
   });
 
-  this.input.on('dragend', (pointer: any, chicken: any): void => {
+  this.input.on('dragend', (pointer: any, cow: any): void => {
 
     this.scrolling.enabled = true; // включаем скролл
     this.scrolling.wheel = true; // включаем колесо
-    chicken.body.onWorldBounds = true;
-    chicken.drag = false; // убираем метку перетаскивания
-    chicken.aim = false;
-    chicken.spread = false;
-    chicken.aimX = 0;
-    chicken.aimY = 0;
-    chicken.collision = 0;
-    chicken.counter = 200;
+    cow.body.onWorldBounds = true;
+    cow.drag = false; // убираем метку перетаскивания
+    cow.aim = false;
+    cow.spread = false;
+    cow.aimX = 0;
+    cow.aimY = 0;
+    cow.collision = 0;
+    cow.counter = 200;
 
-    let typeTerritory = this.currentTerritory(chicken.x, chicken.y);
+    let typeTerritory = this.currentTerritory(cow.x, cow.y);
 
     if (typeTerritory) {
 
       if (typeTerritory.type !== 4) {
 
         // мерджинг на поле
-        this.dragChickenMerging(chicken);
+        this.dragCowMerging(cow);
 
         // удаление животного
         if (typeTerritory.type === 0) {
 
-          chicken.expel = true;
-          this.state.animal = chicken;
-          this.confirmExpelChicken();
+          cow.expel = true;
+          this.state.animal = cow;
+          this.confirmExpelCow();
 
-        } else chicken.expel = false;
+        } else cow.expel = false;
 
         for (let i in this.territories.children.entries) {
 
@@ -115,7 +115,7 @@ function drag(): void {
 
           if (territory.type === 4) {
 
-            let check = territory.merging.find((data: Imerging) => data._id === chicken._id);
+            let check = territory.merging.find((data: Imerging) => data._id === cow._id);
 
             if (check) {
               territory.merging.splice(0, 1);
@@ -123,17 +123,17 @@ function drag(): void {
               break;
             }
 
-          } else chicken.merging = false;
+          } else cow.merging = false;
 
         }
 
       }
 
     } else {
-      chicken.expel = true;
-      this.state.animal = chicken;
-      this.confirmExpelChicken();
-      this.teleportation(chicken);
+      cow.expel = true;
+      this.state.animal = cow;
+      this.confirmExpelCow();
+      this.teleportation(cow);
     }
 
   });

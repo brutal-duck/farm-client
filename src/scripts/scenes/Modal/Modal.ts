@@ -12,6 +12,7 @@ import {
 import {
   systemWindow,
   chickenTerritory,
+  cowTerritory,
   sheepTerritory,
   resizeWindow,
   resizeWindowTop,
@@ -34,6 +35,23 @@ import {
   chickenEggRepositoryExchange,
   updateImproveCollectorChicken
 } from './chicken';
+import {
+  cowFair,
+  cow,
+  cowPasture,
+  cowWater,
+  boughtCowLand,
+  buyCowTerritory,
+  cowConvertor,
+  confirmCowExchangeTerritory,
+  cowEggsRepository,
+  confirmExpelCow,
+  cowProfile,
+  diamondCowAd,
+  improveCollectorCow,
+  cowEggRepositoryExchange,
+  updateImproveCollectorCow
+} from './cow';
 import {
   confirmExpelAnimal,
   eventConvertor,
@@ -120,6 +138,8 @@ class Modal extends Phaser.Scene {
   public systemWindow = systemWindow.bind(this);
   public chicken = chicken.bind(this);
   public chickenTerritory = chickenTerritory.bind(this);
+  public cow = cow.bind(this);
+  public cowTerritory = cowTerritory.bind(this);
   public sheepTerritory = sheepTerritory.bind(this);
   public resizeWindow = resizeWindow.bind(this);
   public resizeWindowTop = resizeWindowTop.bind(this);
@@ -130,10 +150,19 @@ class Modal extends Phaser.Scene {
   public chickenWater = chickenWater.bind(this);
   public boughtChickenLand = boughtChickenLand.bind(this);
   public buyChickenTerritory = buyChickenTerritory.bind(this);
+  public cowFair = cowFair.bind(this);
+  public cowPasture = cowPasture.bind(this);
+  public cowWater = cowWater.bind(this);
+  public boughtCowLand = boughtCowLand.bind(this);
+  public buyCowTerritory = buyCowTerritory.bind(this);
   public chickenConvertor = chickenConvertor.bind(this);
   public confirmChickenExchangeTerritory = confirmChickenExchangeTerritory.bind(this);
   public chickenEggsRepository = chickenEggsRepository.bind(this);
   public confirmExpelChicken = confirmExpelChicken.bind(this);
+  public cowConvertor = cowConvertor.bind(this);
+  public confirmCowExchangeTerritory = confirmCowExchangeTerritory.bind(this);
+  public cowEggsRepository = cowEggsRepository.bind(this);
+  public confirmExpelCow = confirmExpelCow.bind(this);
   public sheepFair = sheepFair.bind(this);
   public sheep = sheep.bind(this);
   public sheepPasture = sheepPasture.bind(this);
@@ -148,6 +177,7 @@ class Modal extends Phaser.Scene {
   public tasksWindow = tasksWindow.bind(this);
   public resizeTasksWindow = resizeTasksWindow.bind(this);
   public chickenProfile = chickenProfile.bind(this);
+  public cowProfile = cowProfile.bind(this);
   public sheepProfile = sheepProfile.bind(this);
   public support = support.bind(this);
   public registration = registration.bind(this);
@@ -156,11 +186,14 @@ class Modal extends Phaser.Scene {
   public dailyNewbie = dailyNewbie.bind(this);
   public diamondSheepAd = diamondSheepAd.bind(this);
   public diamondChickenAd = diamondChickenAd.bind(this);
+  public diamondCowAd = diamondCowAd.bind(this);
   public donate = donate.bind(this);
   public improveCollectorSheep = improveCollectorSheep.bind(this);
   public updateImproveCollectorSheep = updateImproveCollectorSheep.bind(this);
   public improveCollectorChicken = improveCollectorChicken.bind(this);
   public updateImproveCollectorChicken = updateImproveCollectorChicken.bind(this);
+  public improveCollectorCow = improveCollectorCow.bind(this);
+  public updateImproveCollectorCow = updateImproveCollectorCow.bind(this);
   public herdBoostWindow = herdBoostWindow.bind(this);
   public getRandomAnimal = getRandomAnimal.bind(this);
   public getRandomStartPosition = getRandomStartPosition.bind(this);
@@ -169,6 +202,7 @@ class Modal extends Phaser.Scene {
   public shortTime = shortTime.bind(this);
   public sheepWoolRepositoryExchange = sheepWoolRepositoryExchange.bind(this);
   public chickenEggRepositoryExchange = chickenEggRepositoryExchange.bind(this);
+  public cowEggRepositoryExchange = cowEggRepositoryExchange.bind(this);
   public changeNickname = changeNickname.bind(this);
   public addEmail = addEmail.bind(this);
   public confirmExpelAnimal = confirmExpelAnimal.bind(this);
@@ -311,6 +345,21 @@ class Modal extends Phaser.Scene {
       
     }
 
+    // прогресс бар яйца коровы
+    if (this.state.modal.type === 1 &&
+      this.state.modal.sysType === 1 &&
+      this.state.farm === 'Cow') {
+
+      let width: number = Math.round(444 / 100 * (this.state.animal.egg / 10));
+      
+      if (width === 440) width = 444;
+
+      if (this.progressBar.displayWidth !== width) {
+        this.progressBar.setDisplaySize(width, 16);
+      }
+      
+    }
+
     // прогресс для хранилищ
     if (this.state.territory?.type === 5 && this.state.modal?.sysType === 2) {
 
@@ -324,6 +373,11 @@ class Modal extends Phaser.Scene {
       } else if (this.state.farm === 'Chicken') {
 
         max = this.state.chickenSettings.territoriesChickenSettings.find((data: IterritoriesChickenSettings) => data.improve === this.state.territory.improve).eggStorage;
+        count = this.state.lang.countEggs;
+
+      } else if (this.state.farm === 'Cow') {
+
+        max = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === this.state.territory.improve).eggStorage;
         count = this.state.lang.countEggs;
 
       }

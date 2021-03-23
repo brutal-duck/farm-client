@@ -1,14 +1,14 @@
 import axios from 'axios';
 
 // автосохранение
-function autosave(exitGame: boolean = false): void {
+function autosave(): void {
   
   this.autoSaveTimer = 0;
 
   let tasks: Itasks[] = this.partTasks();
   let territories: Iterritories[] = [];
-  let chicken: Ichicken[] = [];
-  let eggs: IchickenEgg[] = [];
+  let cow: Icow[] = [];
+  let eggs: IcowEgg[] = [];
 
   for (let i in this.territories.children.entries) {
 
@@ -25,10 +25,10 @@ function autosave(exitGame: boolean = false): void {
 
   }
 
-  for (let i in this.chicken.children.entries) {
+  for (let i in this.cow.children.entries) {
 
-    let chick = this.chicken.children.entries[i];
-    chicken.push({
+    let chick = this.cow.children.entries[i];
+    cow.push({
       _id: chick._id,
       type: chick.type,
       egg: chick.egg,
@@ -41,26 +41,26 @@ function autosave(exitGame: boolean = false): void {
 
   }
   
-  if (typeof this.state.userChicken.autosaveCounter === 'number') this.state.userChicken.autosaveCounter++;
-  else this.state.userChicken.autosaveCounter = 0;
+  if (typeof this.state.userCow.autosaveCounter === 'number') this.state.userCow.autosaveCounter++;
+  else this.state.userCow.autosaveCounter = 0;
 
-  let user: IchickenUserAutoSave = {
+  let user: IcowUserAutoSave = {
     diamonds: this.state.user.diamonds,
     xp: this.state.user.xp,
-    money: this.state.userChicken.money,
-    fair: this.state.userChicken.fair,
-    part: this.state.userChicken.part,
-    countChicken: this.state.userChicken.countChicken,
-    collector: this.state.userChicken.collector,
-    collectorLevel: this.state.userChicken.collectorLevel,
-    diamondChickenTime: this.state.userChicken.diamondAnimalTime,
-    tutorial: this.state.userChicken.tutorial,
+    money: this.state.userCow.money,
+    fair: this.state.userCow.fair,
+    part: this.state.userCow.part,
+    countCow: this.state.userCow.countCow,
+    collector: this.state.userCow.collector,
+    collectorLevel: this.state.userCow.collectorLevel,
+    diamondCowTime: this.state.userCow.diamondAnimalTime,
+    tutorial: this.state.userCow.tutorial,
     additional_tutorial: this.state.user.additionalTutorial,
     taken_reward: this.state.user.takenReward,
-    autosaveCounter: this.state.userChicken.autosaveCounter,
-    diamondChickenAd: this.state.userChicken.diamondAnimalAd,
-    takenHerdBoost: this.state.userChicken.takenHerdBoost,
-    feedBoostTime: this.state.userChicken.feedBoostTime,
+    autosaveCounter: this.state.userCow.autosaveCounter,
+    diamondCowAd: this.state.userCow.diamondAnimalAd,
+    takenHerdBoost: this.state.userCow.takenHerdBoost,
+    feedBoostTime: this.state.userCow.feedBoostTime,
     eventPoints: this.state.progress.event.eventPoints,
     status: this.state.user.status,   
 
@@ -79,12 +79,12 @@ function autosave(exitGame: boolean = false): void {
   }
 
   // localStorage.user = JSON.stringify(this.state.user);
-  // localStorage.userChicken = JSON.stringify(this.state.userChicken);
-  // localStorage.chickenTasks = JSON.stringify(tasks);
-  // localStorage.chickenTerritories = JSON.stringify(territories);
-  // localStorage.chicken = JSON.stringify(chicken);
-  // localStorage.chickenEggs = JSON.stringify(eggs);
-  // localStorage.chickenTime = Math.round(new Date().getTime() / 1000);
+  // localStorage.userCow = JSON.stringify(this.state.userCow);
+  // localStorage.cowTasks = JSON.stringify(tasks);
+  // localStorage.cowTerritories = JSON.stringify(territories);
+  // localStorage.cow = JSON.stringify(cow);
+  // localStorage.cowEggs = JSON.stringify(eggs);
+  // localStorage.cowTime = Math.round(new Date().getTime() / 1000);
   // localStorage.dailyAwards = JSON.stringify(this.state.dailyAwards);
 
   const data = { 
@@ -93,37 +93,36 @@ function autosave(exitGame: boolean = false): void {
     counter: this.state.user.counter,
     tasks: tasks,
     territories: territories,
-    chicken: chicken,
+    cow: cow,
     user: user,
     eggs: eggs,
     dailyAwards: this.state.dailyAwards,
-    exitGame: exitGame,
   }
-  axios.post(process.env.API + "/chicken/autoSave", data)
-  .then((res) => {
+  // axios.post(process.env.API + "/cow/autoSave", data)
+  // .then((res) => {
     
-    if (this.scene.isActive('Chicken')) {
+  //   if (this.scene.isActive('Cow')) {
 
-      if (res.data.error) this.logout();
-      else {
+  //     if (res.data.error) this.logout();
+  //     else {
 
-        if (this.state.user.hash === 'local') {
+  //       if (this.state.user.hash === 'local') {
           
-          this.state.user.id = res.data.newUser._id;
-          this.state.user.hash = res.data.newUser.hash;
-          this.state.user.counter = res.data.newUser.counter;
+  //         this.state.user.id = res.data.newUser._id;
+  //         this.state.user.hash = res.data.newUser.hash;
+  //         this.state.user.counter = res.data.newUser.counter;
 
-          if (this.state.platform === 'web') {
-            document.cookie = "farmHASH=" + this.state.user.hash + "; expires=" + res.data.expires + "; path=/;";
-          }
+  //         if (this.state.platform === 'web') {
+  //           document.cookie = "farmHASH=" + this.state.user.hash + "; expires=" + res.data.expires + "; path=/;";
+  //         }
 
-        }
-        if (res.data.donate) this.state.donate = true; 
-      }
+  //       }
+  //       if (res.data.donate) this.state.donate = true; 
+  //     }
       
-    }
+  //   }
 
-  });
+  // });
 
 }
 

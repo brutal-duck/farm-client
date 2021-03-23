@@ -1,53 +1,53 @@
-import { general, chickenSettings } from './settings';
-import territories from './chickenTerritories';
-import collectorSettings from './chickenCollector';
-import { userData, userChicken } from './usersData';
+import { general, cowSettings } from './settings';
+import territories from './cowTerritories';
+import collectorSettings from './cowCollector';
+import { userData, userCow } from './usersData';
 import tasks from '../tasks';
 import progress from './progress';
 
-function loadChicken(counter: number = 0): void {
+function loadCow(counter: number = 0): void {
   
-  this.state.chickenCollectorSettings = collectorSettings;
+  this.state.cowCollectorSettings = collectorSettings;
   this.state.autoSaveSpeed = general.autoSaveSpeed;
   this.state.maxMerginTime = general.maxMerginTime;
   this.state.packages = general.packages;
-  this.state.chickenSettings = chickenSettings;
+  this.state.cowSettings = cowSettings;
   this.state.progress = progress();
-  this.state.chicken = [];
-  this.state.chickenEggs = [];
-  this.state.farm = 'Chicken';
+  this.state.cow = [];
+  this.state.cowEggs = [];
+  this.state.farm = 'Cow';
   this.state.daily = false;
   this.state.newbieTime = 0;
   this.state.timeToBoost = 0;
   if (localStorage.dailyAwards) this.state.dailyAwards = JSON.parse(localStorage.dailyAwards);
 
-  if (localStorage.chicken) this.state.chicken = JSON.parse(localStorage.chicken);
-  if (localStorage.chickenEggs) this.state.chickenEggs = JSON.parse(localStorage.chickenEggs);
+  if (localStorage.cow) this.state.cow = JSON.parse(localStorage.cow);
+  if (localStorage.cowEggs) this.state.cowEggs = JSON.parse(localStorage.cowEggs);
 
-  if (localStorage.chickenTerritories) this.state.chickenTerritories = JSON.parse(localStorage.chickenTerritories);
-  else this.state.chickenTerritories = territories;
+  if (localStorage.cowTerritories) this.state.cowTerritories = JSON.parse(localStorage.cowTerritories);
+  else this.state.cowTerritories = territories;
 
   if (localStorage.user) this.state.user = JSON.parse(localStorage.user);
   else this.state.user = userData;
   
   if (counter > 0) this.state.user.counter = counter;
 
-  if (localStorage.userChicken) this.state.userChicken = JSON.parse(localStorage.userChicken);
-  else this.state.userChicken = userChicken;
+  if (localStorage.userCow) this.state.userCow = JSON.parse(localStorage.userCow);
+  else this.state.userCow = userCow;
 
-  if (localStorage.chickenTasks) this.state.chickenTasks = JSON.parse(localStorage.chickenTasks);
+  if (localStorage.cowTasks) this.state.cowTasks = JSON.parse(localStorage.cowTasks);
   else {
 
-    let chickenTasks: Itasks[] = [];
-    for (let i in tasks) if (tasks[i].farm === 2) chickenTasks.push(tasks[i]);
-    this.state.chickenTasks = chickenTasks;
+    let cowTasks: Itasks[] = [];
+    for (let i in tasks) if (tasks[i].farm === 2) cowTasks.push(tasks[i]);
+    this.state.cowTasks = cowTasks;
 
   }
 
-  if (localStorage.chickenTime) {
+  if (localStorage.cowTime) {
 
     let time: number = Math.round(new Date().getTime() / 1000);
-    this.state.offlineTime = time - Number(localStorage.chickenTime);
+    this.state.offlineTime = time - Number(localStorage.cowTime);
 
   } else this.state.offlineTime = 0;
 
@@ -55,4 +55,4 @@ function loadChicken(counter: number = 0): void {
 
 }
 
-export default loadChicken;
+export default loadCow;

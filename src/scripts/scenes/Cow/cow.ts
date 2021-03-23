@@ -1,7 +1,7 @@
 import { random, randomString } from '../../general/basic';
 
-// телепортация куриц на свободные территории
-function teleportation(chicken: any): void {
+// телепортация коров на свободные территории
+function teleportation(cow: any): void {
 
   let territories = [];
 
@@ -19,10 +19,10 @@ function teleportation(chicken: any): void {
 
   }
   
-  // смотрим, где какая курица сидит
-  for (let i in this.chicken.children.entries) {
+  // смотрим, где какая корова сидит
+  for (let i in this.cow.children.entries) {
 
-    let c = this.chicken.children.entries[i];
+    let c = this.cow.children.entries[i];
     let territory = this.currentTerritory(c.x, c.y);
 
     if (territory !== undefined) {
@@ -44,8 +44,8 @@ function teleportation(chicken: any): void {
     return 0;
   });
   
-  let halfWidth: number = Math.ceil(chicken.width / 2) + 1;
-  let halfHeight: number = Math.ceil(chicken.height / 2) + 1;
+  let halfWidth: number = Math.ceil(cow.width / 2) + 1;
+  let halfHeight: number = Math.ceil(cow.height / 2) + 1;
 
   let minX: number = (territories[0].position - 1) * this.height + halfWidth;
   let maxX: number = territories[0].position * this.height - halfWidth;
@@ -53,86 +53,86 @@ function teleportation(chicken: any): void {
   let mixY: number = (territories[0].block - 1) * this.height + halfHeight + this.topIndent;
   let maxY: number = territories[0].block * this.height - halfHeight + this.topIndent;
 
-  chicken.x = random(minX, maxX);
-  chicken.y = random(mixY, maxY);
-  chicken.counter = 200;
-  chicken.aim = false;
-  chicken.aimX = 0;
-  chicken.aimY = 0;
-  chicken.distance = 0;
+  cow.x = random(minX, maxX);
+  cow.y = random(mixY, maxY);
+  cow.counter = 200;
+  cow.aim = false;
+  cow.aimX = 0;
+  cow.aimY = 0;
+  cow.distance = 0;
 
 }
 
 
-// функция реверсивного движения курицы
-function reverse(chicken: any): void {
+// функция реверсивного движения коровы
+function reverse(cow: any): void {
 
-  chicken.collision = 1;
+  cow.collision = 1;
 
   let x: number = random(this.velocity - 5, this.velocity + 5);
   let y: number = random(this.velocity - 5, this.velocity + 5);
   
-  chicken.setVelocity(0, 0);
-  chicken.body.reset(chicken.x, chicken.y);
+  cow.setVelocity(0, 0);
+  cow.body.reset(cow.x, cow.y);
 
-  switch(chicken.vector) {
+  switch(cow.vector) {
     case 1:
-      chicken.vector = 3;
-      chicken.setVelocity(-x, -y);
+      cow.vector = 3;
+      cow.setVelocity(-x, -y);
       break;
     case 2:
-      chicken.vector = 4;
-      chicken.setVelocity(x, -y);
+      cow.vector = 4;
+      cow.setVelocity(x, -y);
       break;
     case 3:
-      chicken.vector = 1;
-      chicken.setVelocity(x, y);
+      cow.vector = 1;
+      cow.setVelocity(x, y);
       break;
     case 4:
-      chicken.vector = 2;
-      chicken.setVelocity(-x, y);
+      cow.vector = 2;
+      cow.setVelocity(-x, y);
       break;
     case 5:
-      chicken.vector = 7;
-      chicken.setVelocity(0, y);
+      cow.vector = 7;
+      cow.setVelocity(0, y);
       break;
     case 6:
-      chicken.vector = 8;
-      chicken.setVelocity(-x, 0);
+      cow.vector = 8;
+      cow.setVelocity(-x, 0);
       break;
     case 7:
-      chicken.vector = 5;
-      chicken.setVelocity(0, -y);
+      cow.vector = 5;
+      cow.setVelocity(0, -y);
       break;
     case 8:
-      chicken.vector = 6;
-      chicken.setVelocity(x, 0);
+      cow.vector = 6;
+      cow.setVelocity(x, 0);
       break;
   }
 
 }
 
 
-// функция получения цели для точки движения курицы
-function aim(chicken: any, x: number, y: number): void {
+// функция получения цели для точки движения коровы
+function aim(cow: any, x: number, y: number): void {
 
-  if (chicken.x < x && chicken.y > y) chicken.vector = 4;
-  else if (chicken.x < x && chicken.y < y) chicken.vector = 1;
-  else if (chicken.x > x && chicken.y < y) chicken.vector = 2;
-  else if (chicken.x > x && chicken.y > y) chicken.vector = 3;
-  else if (chicken.x === x && chicken.y > y) chicken.vector = 5;
-  else if (chicken.x === x && chicken.y < y) chicken.vector = 7;
-  else if (chicken.x < x && chicken.y === y) chicken.vector = 6;
-  else if (chicken.x > x && chicken.y === y) chicken.vector = 8;
+  if (cow.x < x && cow.y > y) cow.vector = 4;
+  else if (cow.x < x && cow.y < y) cow.vector = 1;
+  else if (cow.x > x && cow.y < y) cow.vector = 2;
+  else if (cow.x > x && cow.y > y) cow.vector = 3;
+  else if (cow.x === x && cow.y > y) cow.vector = 5;
+  else if (cow.x === x && cow.y < y) cow.vector = 7;
+  else if (cow.x < x && cow.y === y) cow.vector = 6;
+  else if (cow.x > x && cow.y === y) cow.vector = 8;
 
-  chicken.aim = true;
-  chicken.aimX = x;
-  chicken.aimY = y;
-  chicken.distance = 0;
+  cow.aim = true;
+  cow.aimX = x;
+  cow.aimY = y;
+  cow.distance = 0;
   let target: Iposition = new Phaser.Math.Vector2();
   target.x = x;
   target.y = y;
-  let distance: number = Phaser.Math.Distance.Between(chicken.x, chicken.y, target.x, target.y);
+  let distance: number = Phaser.Math.Distance.Between(cow.x, cow.y, target.x, target.y);
   let coefficient: number = 1;
 
   if (distance >= 400) {
@@ -145,13 +145,13 @@ function aim(chicken: any, x: number, y: number): void {
     coefficient = 0.5;
   }
 
-  this.physics.moveToObject(chicken, target, distance * coefficient);
+  this.physics.moveToObject(cow, target, distance * coefficient);
 
 }
 
 
-// функция получения новой курицы
-function getChicken(
+// функция получения новой коровы
+function getCow(
   id: string,
   type: number,
   x: number,
@@ -162,52 +162,52 @@ function getChicken(
   vector: number = 7,
   load: boolean = false): void {
 
-  let chicken = this.chicken.create(x, y, 'chicken' + type).setInteractive().setDepth(y);
-  chicken.setCollideWorldBounds(true);
-  this.input.setDraggable(chicken); // задали перетаскивание
-  chicken.moving = false; // движение
-  chicken.vector = vector; // вектор движения
-  chicken.counter = counter; // счетчик
-  chicken.aim = false; // цель движения
-  chicken.aimX = 0; // точка X цели
-  chicken.aimY = 0; // точка Y цели
-  chicken.distance = 0; // дистанция для целей
-  chicken.drag = false; // метка перетаскивания
-  chicken.body.onWorldBounds = true; // отскок от границ мира
-  chicken.collision = 1; // временно врубаем счетчик коллизии
-  chicken.body.mass = 0; // вроде как инерция
-  chicken.changeVector = false; // метка смены вектора
-  chicken.merging = false; // метка курицы в мерджинге
-  chicken.type = type; // порода курицы
-  chicken.egg = egg; // зарождение яйца
-  chicken._id = id; // id
-  chicken.diamond = diamond; // счетчик кристаллов для кристаллическлй курицы.
-  chicken.expel = false; // метка изгнания
-  chicken.spread = false;
+  let cow = this.cow.create(x, y, 'cow' + type).setInteractive().setDepth(y);
+  cow.setCollideWorldBounds(true);
+  this.input.setDraggable(cow); // задали перетаскивание
+  cow.moving = false; // движение
+  cow.vector = vector; // вектор движения
+  cow.counter = counter; // счетчик
+  cow.aim = false; // цель движения
+  cow.aimX = 0; // точка X цели
+  cow.aimY = 0; // точка Y цели
+  cow.distance = 0; // дистанция для целей
+  cow.drag = false; // метка перетаскивания
+  cow.body.onWorldBounds = true; // отскок от границ мира
+  cow.collision = 1; // временно врубаем счетчик коллизии
+  cow.body.mass = 0; // вроде как инерция
+  cow.changeVector = false; // метка смены вектора
+  cow.merging = false; // метка коровы в мерджинге
+  cow.type = type; // порода коровы
+  cow.egg = egg; // зарождение яйца
+  cow._id = id; // id
+  cow.diamond = diamond; // счетчик кристаллов для кристаллическлй коровы.
+  cow.expel = false; // метка изгнания
+  cow.spread = false;
 
-  // this.click(chicken, (): void => {
+  // this.click(cow, (): void => {
 
   //   let modal: Imodal = {
   //     type: 1,
   //     sysType: 1
   //   }
   //   this.state.modal = modal;
-  //   this.state.animal = chicken;
+  //   this.state.animal = cow;
   //   this.scene.launch('Modal', this.state);
 
   // });
   
   if (type === 0) this.firework250(x, y);
 
-  return chicken;
+  return cow;
 
 }
 
 
 // переместить яйцо в хранилище
-function getEgg(data: IchickenEgg): void {
+function getEgg(data: IcowEgg): void {
 
-  let egg = this.eggs.create(data.x, data.y, 'chicken-egg' + data.type);
+  let egg = this.eggs.create(data.x, data.y, 'cow-egg' + data.type);
   egg.setDepth(data.y);
   egg.type = data.type;
   egg._id = data._id;
@@ -233,15 +233,15 @@ function getEgg(data: IchickenEgg): void {
 
 
 // мерджинг
-function checkMerging(territory: any, chicken: any, position: string) {
+function checkMerging(territory: any, cow: any, position: string) {
 
-  chicken.merging = true;
+  cow.merging = true;
   territory.mergingCounter = 1;
-  let check = territory.merging.find((data: any) => data._id === chicken._id);
+  let check = territory.merging.find((data: any) => data._id === cow._id);
 
   if (check === undefined) {
 
-    // если на этой позиции уже стоит курица
+    // если на этой позиции уже стоит корова
     if (territory.merging.length === 1 && territory.merging[0].position === position) {
 
       if (position === 'left') position = 'right';
@@ -251,25 +251,25 @@ function checkMerging(territory: any, chicken: any, position: string) {
 
     // запоминаем
     territory.merging.push({
-      _id: chicken._id,
-      type: chicken.type,
+      _id: cow._id,
+      type: cow.type,
       position: position
     });
 
-    // ставим кур на парковку
+    // ставим коров на парковку
     if (position === 'left') {
 
-      chicken.anims.play('chicken-stay-right' + chicken.type, true);
-      chicken.y = territory.y + 120;
-      chicken.x = territory.x + 70;
-      chicken.vector = 6;
+      cow.anims.play('cow-stay-right' + cow.type, true);
+      cow.y = territory.y + 120;
+      cow.x = territory.x + 70;
+      cow.vector = 6;
 
     } else if (position === 'right') {
 
-      chicken.anims.play('chicken-stay-left' + chicken.type, true);
-      chicken.y = territory.y + 120;
-      chicken.x = territory.x + 170;
-      chicken.vector = 8;
+      cow.anims.play('cow-stay-left' + cow.type, true);
+      cow.y = territory.y + 120;
+      cow.x = territory.x + 170;
+      cow.vector = 8;
 
     }
 
@@ -281,17 +281,17 @@ function checkMerging(territory: any, chicken: any, position: string) {
     // обновляем положение парковки
     if (position === 'left') {
 
-      chicken.anims.play('chicken-stay-right' + chicken.type, true);
-      chicken.y = territory.y + 120;
-      chicken.x = territory.x + 70;
-      chicken.vector = 6;
+      cow.anims.play('cow-stay-right' + cow.type, true);
+      cow.y = territory.y + 120;
+      cow.x = territory.x + 70;
+      cow.vector = 6;
 
     } else if (position === 'right') {
 
-      chicken.anims.play('chicken-stay-left' + chicken.type, true);
-      chicken.y = territory.y + 120;
-      chicken.x = territory.x + 170;
-      chicken.vector = 8;
+      cow.anims.play('cow-stay-left' + cow.type, true);
+      cow.y = territory.y + 120;
+      cow.x = territory.x + 170;
+      cow.vector = 8;
 
     }
 
@@ -300,10 +300,10 @@ function checkMerging(territory: any, chicken: any, position: string) {
   // проверяем успешный на мерджинг
   if (territory.merging.length === 2) {
 
-    let chicken1 = this.chicken.children.entries.find((data: any) => data._id === territory.merging[0]._id);
-    let chicken2 = this.chicken.children.entries.find((data: any) => data._id === territory.merging[1]._id);
+    let cow1 = this.cow.children.entries.find((data: any) => data._id === territory.merging[0]._id);
+    let cow2 = this.cow.children.entries.find((data: any) => data._id === territory.merging[1]._id);
 
-    if (chicken1?.type === chicken2?.type) {
+    if (cow1?.type === cow2?.type) {
       
       this.time.addEvent({ delay: 100, callback: (): void => {
 
@@ -312,16 +312,16 @@ function checkMerging(territory: any, chicken: any, position: string) {
           y: territory.y + 120
         }
         this.mergingCloud(position);
-        let type: number = chicken1.type + 1;
-        chicken1.destroy();
-        chicken2.destroy();
+        let type: number = cow1.type + 1;
+        cow1.destroy();
+        cow2.destroy();
         let id: string = 'local_' + randomString(18);
         let x: number = territory.x + 120;
         let y: number = territory.y + 240;
-        let chicken = this.getChicken(id, type, x, y, 0, 0);
+        let cow = this.getCow(id, type, x, y, 0, 0);
         let aimX: number = random(territory.x + 40, territory.x + 200);
         let aimY: number = random(territory.y + 280, territory.y + 440);
-        this.aim(chicken, aimX, aimY);
+        this.aim(cow, aimX, aimY);
         this.tryTask(2, type);
         this.tryTask(4, type);
         this.checkAnimalTask();
@@ -332,17 +332,17 @@ function checkMerging(territory: any, chicken: any, position: string) {
 
     } else {
 
-      if (chicken1 && chicken2) {
+      if (cow1 && cow2) {
 
         this.createSpeechBubble(this.state.lang.mergingMessageBreed);
-        this.cancelMerging(territory, chicken1, chicken2);
+        this.cancelMerging(territory, cow1, cow2);
 
       } else {
         
         // костыль
-        for (let i in this.chicken.children.entries) this.chicken.children.entries[i].merging = false;
-        if (chicken1) this.teleportation(chicken2);
-        if (chicken2) this.teleportation(chicken2);
+        for (let i in this.cow.children.entries) this.cow.children.entries[i].merging = false;
+        if (cow1) this.teleportation(cow2);
+        if (cow2) this.teleportation(cow2);
         territory.merging = [];
 
       }
@@ -356,35 +356,35 @@ function checkMerging(territory: any, chicken: any, position: string) {
 
 
 // отмена мерджинга
-function cancelMerging(territory: any, chicken1: any, chicken2: any) {
+function cancelMerging(territory: any, cow1: any, cow2: any) {
 
   this.time.addEvent({ delay: 100, callback: (): void => {
 
-    if (chicken1) {
+    if (cow1) {
 
-      chicken1.merging = false;
+      cow1.merging = false;
       let randomX: number = random(territory.x + 40, territory.x + 200);
       let randomY: number = random(territory.y + 280, territory.y + 440);
-      this.aim(chicken1, randomX, randomY);
+      this.aim(cow1, randomX, randomY);
 
     }
 
-    if (chicken2) {
+    if (cow2) {
 
-      chicken2.merging = false;
+      cow2.merging = false;
       let randomX: number = random(territory.x + 40, territory.x + 200);
       let randomY: number = random(territory.y + 280, territory.y + 440);
-      this.aim(chicken2, randomX, randomY);
+      this.aim(cow2, randomX, randomY);
 
     }
 
     for (let i in territory.merging) {
 
-      let chicken = this.chicken.children.entries.find((data: any) => data._id === territory.merging[i]._id);
+      let cow = this.cow.children.entries.find((data: any) => data._id === territory.merging[i]._id);
       let randomX: number = random(territory.x + 40, territory.x + 200);
       let randomY: number = random(territory.y + 280, territory.y + 440);
-      this.aim(chicken, randomX, randomY);
-      chicken.mergin = false;
+      this.aim(cow, randomX, randomY);
+      cow.mergin = false;
 
     }
     
@@ -396,25 +396,25 @@ function cancelMerging(territory: any, chicken1: any, chicken2: any) {
 }
 
 
-// покупка курицы
-function buyChicken(breed: number, shop: boolean = false): boolean {
+// покупка коровы
+function buyCow(breed: number, shop: boolean = false): boolean {
 
   let success: boolean = false;
 
-  if (this.chicken.children.entries.length < 50) {
+  if (this.cow.children.entries.length < 50) {
 
-    let chickenPrice = this.chickenPrice(breed);
+    let cowPrice = this.cowPrice(breed);
 
-    if (this.state.userChicken.money >= chickenPrice.price) {
+    if (this.state.userCow.money >= cowPrice.price) {
       
       success = true;
       let x: number = random(530, 660);
       let y: number = random(530, 540);
       let id: string = 'local_' + randomString(18);
-      this.getChicken(id, breed, x, y);
-      this.state.userChicken.money -= chickenPrice.price;
-      this.state.userChicken.countChicken = chickenPrice.countChicken;
-      this.game.scene.keys['ChickenBars'].updateChickenPrice();
+      this.getCow(id, breed, x, y);
+      this.state.userCow.money -= cowPrice.price;
+      this.state.userCow.countCow = cowPrice.countCow;
+      this.game.scene.keys['CowBars'].updateCowPrice();
       this.tryTask(1, breed);
       this.tryTask(4, breed);
       this.checkAnimalTask();
@@ -427,7 +427,7 @@ function buyChicken(breed: number, shop: boolean = false): boolean {
         this.scene.stop('Modal');
       }
 
-      let count: number = chickenPrice.price - this.state.userChicken.money;
+      let count: number = cowPrice.price - this.state.userCow.money;
       let diamonds: number = this.convertMoney(count);
       this.state.convertor = {
         fun: 1,
@@ -458,7 +458,7 @@ function buyChicken(breed: number, shop: boolean = false): boolean {
       type: 1,
       sysType: 3,
       height: 150,
-      message: this.state.lang.maxChickenCount
+      message: this.state.lang.maxCowCount
     }
     this.state.modal = modal;
     this.scene.launch('Modal', this.state);
@@ -481,12 +481,12 @@ function collectEgg(egg: any, manualСollect: boolean = false): void {
 
     if (manualСollect) {
 
-      let price: number = this.state.chickenSettings.chickenSettings.find((data: IchickenPoints) => data.breed === egg.type).eggPrice;
-      if (this.state.userChicken.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
-      this.state.userChicken.money += price;
+      let price: number = this.state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === egg.type).eggPrice;
+      if (this.state.userCow.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
+      this.state.userCow.money += price;
       egg.destroy();
 
-      this.game.scene.keys['ChickenBars'].plusMoneyAnimation({
+      this.game.scene.keys['CowBars'].plusMoneyAnimation({
         x: egg.x,
         y: egg.y - 50
       });
@@ -501,7 +501,7 @@ function collectEgg(egg: any, manualСollect: boolean = false): void {
 
         if (territory.type === 5) {
           
-          let max: number = this.state.chickenSettings.territoriesChickenSettings.find((data: IterritoriesChickenSettings) => data.improve === territory.improve).eggStorage;
+          let max: number = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === territory.improve).eggStorage;
 
           if (max > territory.volume) {
 
@@ -528,8 +528,8 @@ function collectEgg(egg: any, manualСollect: boolean = false): void {
       if (length) {
 
         length *= 3;
-        let price: number = this.state.chickenSettings.chickenSettings.find((data: IchickenPoints) => data.breed === egg.type).eggPrice;
-        if (this.state.userChicken.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
+        let price: number = this.state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === egg.type).eggPrice;
+        if (this.state.userCow.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
         egg.click = false;
         repository.volume++;
         repository.money += price;
@@ -557,7 +557,7 @@ function collectEgg(egg: any, manualСollect: boolean = false): void {
       farm_id: this.state.farm
     });
 
-    this.game.scene.keys['ChickenBars'].plusDiamondsAnimation(position);
+    this.game.scene.keys['CowBars'].plusDiamondsAnimation(position);
     this.state.user.diamonds++;
     egg.destroy();
     this.tryTask(19, 0);
@@ -576,7 +576,7 @@ function sellEggs(): void {
 
       this.tryTask(20, 0);
 
-      this.state.userChicken.money += this.state.territory.money;
+      this.state.userCow.money += this.state.territory.money;
       this.state.territory.money = 0;
       this.state.territory.volume = 0;
       
@@ -621,8 +621,8 @@ function eggsFly(): void {
 }
 
 
-// подтверждение продажи курицы
-function confirmExpelChicken(): void {
+// подтверждение продажи коровы
+function confirmExpelCow(): void {
 
   let modal: Imodal = {
     type: 1,
@@ -634,8 +634,8 @@ function confirmExpelChicken(): void {
 }
 
 
-// продажа курочки
-function expelChicken(): void {
+// продажа коровы
+function expelCow(): void {
 
   this.state.animal.destroy();
 
@@ -643,19 +643,19 @@ function expelChicken(): void {
 
 
 // мерджинг на поле
-function dragChickenMerging(chicken: any): void {
+function dragCowMerging(cow: any): void {
   
-  let max: number = this.state.chickenSettings.chickenSettings.length;
-  let findChicken: any = this.chicken.children.entries.find((data: any) => {
+  let max: number = this.state.cowSettings.cowSettings.length;
+  let findCow: any = this.cow.children.entries.find((data: any) => {
 
-    if (data.x - (data.width / 2) <= chicken.x && data.x + (data.width / 2) >= chicken.x &&
-      data.y - (data.height / 2) <= chicken.y && data.y + (data.height / 2) >= chicken.y &&
-      data.type === chicken.type &&
-      chicken.type > 0 &&
-      chicken.type < max &&
-      data._id !== chicken._id &&
-      this.state.userChicken.tutorial >= 0 &&
-      this.state.userChicken.fair >= chicken.type) {
+    if (data.x - (data.width / 2) <= cow.x && data.x + (data.width / 2) >= cow.x &&
+      data.y - (data.height / 2) <= cow.y && data.y + (data.height / 2) >= cow.y &&
+      data.type === cow.type &&
+      cow.type > 0 &&
+      cow.type < max &&
+      data._id !== cow._id &&
+      this.state.userCow.tutorial >= 0 &&
+      this.state.userCow.fair >= cow.type) {
 
       return data;
 
@@ -663,22 +663,22 @@ function dragChickenMerging(chicken: any): void {
 
   });
 
-  if (findChicken) {
+  if (findCow) {
 
     const position: Iposition = {
-      x: chicken.x,
-      y: chicken.y
+      x: cow.x,
+      y: cow.y
     }
     this.mergingCloud(position);
     
-    const type: number = chicken.type + 1;
+    const type: number = cow.type + 1;
 
-    findChicken.destroy();
-    chicken.destroy();
+    findCow.destroy();
+    cow.destroy();
 
     const id: string = 'local_' + randomString(18);
     
-    this.getChicken(id, type, position.x, position.y, 0, 0);
+    this.getCow(id, type, position.x, position.y, 0, 0);
 
     this.tryTask(2, type);
     this.tryTask(4, type);
@@ -693,15 +693,15 @@ export {
   teleportation,
   reverse,
   aim,
-  getChicken,
+  getCow,
   getEgg,
   checkMerging,
   cancelMerging,
-  buyChicken,
+  buyCow,
   collectEgg,
   sellEggs,
   eggsFly,
-  confirmExpelChicken,
-  expelChicken,
-  dragChickenMerging
+  confirmExpelCow,
+  expelCow,
+  dragCowMerging
 }

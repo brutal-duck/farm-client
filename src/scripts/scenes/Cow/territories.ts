@@ -5,12 +5,12 @@ function installTerritory(): void {
     this.state.exchangeTerritory === 3 ||
     this.state.exchangeTerritory === 5) {
 
-    let price: number = this.state.chickenSettings.territoriesChickenPrice.find((data: IterritoriesPrice) => data.block === this.state.territory.block && data.position === this.state.territory.position).price;
+    let price: number = this.state.cowSettings.territoriesCowPrice.find((data: IterritoriesPrice) => data.block === this.state.territory.block && data.position === this.state.territory.position).price;
 
     // 30% от суммы покупки
     price = Math.round((price / 100) * 30);
 
-    if (this.state.userChicken.money >= price) {
+    if (this.state.userCow.money >= price) {
 
       let territory: string;
 
@@ -27,7 +27,7 @@ function installTerritory(): void {
 
       this.state.territory.improve = 1;
       this.state.territory.type = this.state.exchangeTerritory;
-      this.state.userChicken.money -= price;
+      this.state.userCow.money -= price;
       this.tryTask(5, this.state.exchangeTerritory);
 
       if (this.state.exchangeTerritory === 5) {
@@ -37,8 +37,8 @@ function installTerritory(): void {
         let x: number = this.state.territory.x + 120;
         let y: number = this.state.territory.y + 240;
   
-        this.state.territory.setTexture('chicken-repository');
-        this.state.territory.repository = this.add.image(x, y, 'chicken-repository-1-1')
+        this.state.territory.setTexture('cow-repository');
+        this.state.territory.repository = this.add.image(x, y, 'cow-repository-1-1')
           .setDepth(this.state.territory.y + 50)
           .setOrigin(0.5, 1);
         this.firework250(this.state.territory.x + 120, this.state.territory.y + 120);
@@ -58,7 +58,7 @@ function installTerritory(): void {
 
     } else {
 
-      let count: number = price - this.state.userChicken.money;
+      let count: number = price - this.state.userCow.money;
       let diamonds: number = this.convertMoney(count);
       this.state.convertor = {
         fun: 5,

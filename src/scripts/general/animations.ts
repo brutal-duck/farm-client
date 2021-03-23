@@ -156,14 +156,14 @@ function menuAnimation(): void {
 // анимация пещеры
 function cave(): void {
 
-  let user: IuserSheep | IuserChicken;
+  let user: IuserSheep | IuserChicken | IuserCow;
 
   if (this.state.farm === 'Sheep') {
     user = this.state.userSheep;
   } else if (this.state.farm === 'Chicken') {
     user = this.state.userChicken;
   } else if (this.state.farm === 'Cow') {
-    user = this.state.userChicken;
+    user = this.state.userCow;
   }
   
   if (user.part >= 3) {
@@ -584,6 +584,7 @@ function newbieAwardAnimation(): void {
     y = this.cameras.main.centerY + 155;
     image = 'newbie-day-6';
     if (this.state.farm === 'Chicken') target.x = 230;
+    // нет коров
     
   } else if (this.state.daily === 8) {
 
@@ -757,6 +758,7 @@ function improveCollectorAnim(position: Iposition): void {
   let icon: string;
   if (this.state.farm === 'Sheep') icon = 'wool-collector';
   else if (this.state.farm === 'Chicken') icon = 'egg-collector';
+  else if (this.state.farm === 'Cow') icon = 'egg-collector';
   else if (this.state.farm === 'Event') icon = 'event-collector';
   
   let sprite: Phaser.GameObjects.Sprite = this.add.sprite(position.x, position.y, icon); 

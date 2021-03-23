@@ -6,7 +6,7 @@ function collisions(): void {
 
   if (this.state.farm === 'Sheep') animals = this.sheep;
   else if (this.state.farm === 'Chicken') animals = this.chicken;
-  else if (this.state.farm === 'Cow') animals = this.chicken;
+  else if (this.state.farm === 'Cow') animals = this.cow;
 
   this.physics.add.overlap(animals, this.territories, (animal: any, territory: any): void => {
 

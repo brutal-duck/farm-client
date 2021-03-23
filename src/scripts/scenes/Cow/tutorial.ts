@@ -9,7 +9,7 @@ function showTutorial(additional: boolean | string = false): void {
 
   let tutorial: Itutorial = {
     farm: 2,
-    step: this.state.userChicken.tutorial,
+    step: this.state.userCow.tutorial,
     additional: additional
   }
   this.state.tutorial = tutorial;
@@ -20,7 +20,7 @@ function showTutorial(additional: boolean | string = false): void {
 // завершение первого шага (приветствие)
 function doneTutor_0(): void {
   
-  this.state.userChicken.tutorial = 10;
+  this.state.userCow.tutorial = 10;
   this.scene.stop('Tutorial');
   
 }

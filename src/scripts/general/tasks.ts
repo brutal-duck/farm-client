@@ -5,7 +5,7 @@ function partTasks(): Itasks[] {
 
   let partTasks: Itasks[] = [];
   let tasks: Itasks[] = [];
-  let user: IuserSheep | IuserChicken;
+  let user: IuserSheep | IuserChicken | IuserCow;
 
   if (this.state.farm === 'Sheep') {
 
@@ -16,6 +16,11 @@ function partTasks(): Itasks[] {
 
     user = this.state.userChicken;
     tasks = this.state.chickenTasks;
+    
+  } else if (this.state.farm === 'Cow') {
+
+    user = this.state.userCow;
+    tasks = this.state.cowTasks;
     
   }
   
@@ -28,6 +33,7 @@ function partTasks(): Itasks[] {
 
       if (AllTasks[i].farm === 1 && this.state.farm === 'Sheep') tasks.push(AllTasks[i]);
       if (AllTasks[i].farm === 2 && this.state.farm === 'Chicken') tasks.push(AllTasks[i]);
+      if (AllTasks[i].farm === 3 && this.state.farm === 'Cow') tasks.push(AllTasks[i]);
 
     }
 
@@ -71,6 +77,7 @@ function tryTask(type: number, state: number, count: number = 1): void {
 
   if (this.state.farm === 'Sheep') part = this.state.userSheep.part;
   else if (this.state.farm === 'Chicken') part = this.state.userChicken.part;
+  else if (this.state.farm === 'Cow') part = this.state.userCow.part;
 
   let tasks: Itasks[] = this.partTasks();
   let task: Itasks = tasks.find((data: Itasks) => data.type === type);
@@ -175,6 +182,11 @@ function checkAnimalTask(): void {
 
     animals = this.chicken.children.entries;
     settings = this.state.chickenSettings.chickenSettings;
+
+  } else if (this.state.farm === 'Cow') {
+
+    animals = this.cow.children.entries;
+    settings = this.state.cowSettings.cowSettings;
 
   }
 
