@@ -1462,6 +1462,22 @@ function profileWindow(): void {
   star.y = avatar.y - 65;
   level.y = star.y;
 
+  if (this.state.platform === 'vk') {
+
+    const graphic: Phaser.GameObjects.Graphics = this.add.graphics(0, 0);
+    graphic.fillCircle(avatar.x, avatar.y, 75).fillStyle(0xffffff);
+    const mask = graphic.createGeometryMask();
+    avatar.setMask(mask);
+    
+  } else if (this.state.platform === 'ok') {
+    
+    const graphic: Phaser.GameObjects.Graphics = this.add.graphics(0, 0);
+    graphic.fillCircle(avatar.x, avatar.y, 75).fillStyle(0xffffff);
+    const mask = graphic.createGeometryMask();
+    avatar.setMask(mask);
+    
+  } 
+
   this.resizeWindow(height);
 
 }
