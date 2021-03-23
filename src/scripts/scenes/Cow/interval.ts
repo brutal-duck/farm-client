@@ -64,42 +64,42 @@ function interval(): void {
       let points: IcowPoints = this.settings.cowSettings.find((item: IcowPoints) => item.breed === breed);
 
       // зарождение яйца
-      if (cow.egg < 1000) {
+      if (cow.milk < 1000) {
 
-        let egg: number = points.egg;
+        let milk: number = points.milk;
 
         if (balance.alarm) {
-          egg = Math.round(egg / 100 * this.settings.cowBadPercent);
-          if (egg < 1) egg = 1;
+          milk = Math.round(milk / 100 * this.settings.cowBadPercent);
+          if (milk < 1) milk = 1;
         }
 
-        cow.egg += egg;
-        if (cow.egg > 1000) cow.egg = 1000;
+        cow.milk += milk;
+        if (cow.milk > 1000) cow.milk = 1000;
 
       }
 
-      if (cow.egg === 1000) {
+      if (cow.milk === 1000) {
 
         let territory = this.currentTerritory(cow.x, cow.y);
 
         if (territory) {
           
-          let countEggs: number = this.settings.territoriesCowSettings.find((item: IterritoriesCowSettings) => item.improve === territory.improve).countEggs;
+          let countMilk: number = this.settings.territoriesCowSettings.find((item: IterritoriesCowSettings) => item.improve === territory.improve).countMilk;
 
-          let eggs: number = 0;
+          let milks: number = 0;
 
-          for (let i in this.eggs.children.entries) {
+          for (let i in this.milk.children.entries) {
 
-            let egg = this.eggs.children.entries[i];
-            let ter = this.currentTerritory(egg.x, egg.y);
+            let milk = this.milk.children.entries[i];
+            let ter = this.currentTerritory(milk.x, milk.y);
 
-            if (ter?.block === territory.block && ter?.position === territory.position) eggs++;
+            if (ter?.block === territory.block && ter?.position === territory.position) milks++;
 
           }
 
-          if (eggs < countEggs && !cow.drag && (territory.type === 2 || territory.type === 3)) {
+          if (milks < countMilk && !cow.drag && (territory.type === 2 || territory.type === 3)) {
 
-            cow.egg = 0;
+            cow.milk = 0;
 
             // рандом разброса яиц
             let minX: number = cow.x - indent;
@@ -120,14 +120,14 @@ function interval(): void {
               if (maxY < minY) minY -= 40;
             }
  
-            let egg: IcowEgg = {
+            let milk: IcowMilk = {
               type: cow.type,
               x: this.random(minX, maxX),
               y: this.random(minY, maxY),
               _id: 'local_' + this.randomString(18)
             }
 
-            this.getEgg(egg);
+            this.getMilk(milk);
 
             if (cow.type === 0) cow.diamond++;
             if (cow.diamond >= 5 && cow.type === 0) {
@@ -204,12 +204,12 @@ function interval(): void {
 
     }
 
-    for (let i in this.eggs.children.entries) {
+    // for (let i in this.milk.children.entries) {
 
-      let egg = this.eggs.children.entries[i];
-      egg.timeout++;
+    //   let milk = this.milk.children.entries[i];
+    //   milk.timeout++;
     
-    }
+    // }
 
     // бар собирателя
     if (this.state.userCow.collector > 0) {
@@ -267,7 +267,7 @@ function interval(): void {
     // анимация иконок на пещере
     this.caveIconsAnimation();
 
-    this.debug();
+    // this.debug();
 
     this.nextDayTimer();
 

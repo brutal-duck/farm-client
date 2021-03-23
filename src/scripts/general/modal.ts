@@ -173,7 +173,11 @@ function dailyAward(): void {
 
     if (this.state.userChicken.tutorial > 0 && !this.state.user.takenReward) check = true;
 
-  } // нет коров
+  } else if (this.state.farm === 'Cow') {
+
+    if (this.state.userCow.tutorial > 0 && !this.state.user.takenReward) check = true;
+
+  }
 
   if (check && checkBoost &&
     typeof this.state.daily === 'number' &&

@@ -7,8 +7,8 @@ let sheepTerritories: Iterritories[];
 let sheep: Isheep[];
 let chicken: Ichicken[];
 let chickenEggs: IchickenEgg[];
-let cow: Ichicken[];
-let cowEggs: IchickenEgg[];
+let cow: Icow[];
+let cowMilk: IcowMilk[];
 let lang: object;
 let modal: Imodal;
 let animal: any;
@@ -93,7 +93,7 @@ let state: Istate = {
   cow, // юзерский массив сохраненных коров
   eventAnimals, // юзерский массив сохраненных евентовых животных
   chickenEggs, // юзерский массив сохраненных куринных яиц
-  cowEggs, // юзерский массив сохраненных коровьих яиц
+  cowMilk, // юзерский массив сохраненного коровьего молока
   eventResources, // юзерский массив сохраненных евентовых ресурсов
   user, // массив общих данных юзера для всех ферм
   userSheep, // массив данных юзера для овечьей фермы

@@ -23,7 +23,7 @@ let cowBuyIcon9: any = require("./../../../assets/images/cow/icons/cow-buy-icon-
 let cowBuyIcon10: any = require("./../../../assets/images/cow/icons/cow-buy-icon-10.png");
 let cowBuyIcon11: any = require("./../../../assets/images/cow/icons/cow-buy-icon-11.png");
 let cowBuyIcon12: any = require("./../../../assets/images/cow/icons/cow-buy-icon-12.png");
-let eggCollector: any = require("./../../../assets/images/cow/egg-collector.png");
+let milkCollector: any = require("./../../../assets/images/cow/milk-collector.png");
 let shop: any = require("./../../../assets/images/icons/shop.png");
 let mapIcon: any = require("./../../../assets/images/icons/map.png");
 let sandwich: any = require("./../../../assets/images/icons/sandwich.png");
@@ -103,19 +103,21 @@ let cow9: any = require("./../../../assets/images/cow/cow/cow9.png");
 let cow10: any = require("./../../../assets/images/cow/cow/cow10.png");
 let cow11: any = require("./../../../assets/images/cow/cow/cow11.png");
 let cow12: any = require("./../../../assets/images/cow/cow/cow12.png");
-let egg0: any = require("./../../../assets/images/cow/eggs/egg0.png");
-let egg1: any = require("./../../../assets/images/cow/eggs/egg1.png");
-let egg2: any = require("./../../../assets/images/cow/eggs/egg2.png");
-let egg3: any = require("./../../../assets/images/cow/eggs/egg3.png");
-let egg4: any = require("./../../../assets/images/cow/eggs/egg4.png");
-let egg5: any = require("./../../../assets/images/cow/eggs/egg5.png");
-let egg6: any = require("./../../../assets/images/cow/eggs/egg6.png");
-let egg7: any = require("./../../../assets/images/cow/eggs/egg7.png");
-let egg8: any = require("./../../../assets/images/cow/eggs/egg8.png");
-let egg9: any = require("./../../../assets/images/cow/eggs/egg9.png");
-let egg10: any = require("./../../../assets/images/cow/eggs/egg10.png");
-let egg11: any = require("./../../../assets/images/cow/eggs/egg11.png");
-let egg12: any = require("./../../../assets/images/cow/eggs/egg12.png");
+let milkStatus: any = require("./../../../assets/images/cow/icons/milk-status.png");
+let milk0: any = require("./../../../assets/images/cow/milk/milk0.png");
+// let egg0: any = require("./../../../assets/images/cow/eggs/egg0.png");
+// let egg1: any = require("./../../../assets/images/cow/eggs/egg1.png");
+// let egg2: any = require("./../../../assets/images/cow/eggs/egg2.png");
+// let egg3: any = require("./../../../assets/images/cow/eggs/egg3.png");
+// let egg4: any = require("./../../../assets/images/cow/eggs/egg4.png");
+// let egg5: any = require("./../../../assets/images/cow/eggs/egg5.png");
+// let egg6: any = require("./../../../assets/images/cow/eggs/egg6.png");
+// let egg7: any = require("./../../../assets/images/cow/eggs/egg7.png");
+// let egg8: any = require("./../../../assets/images/cow/eggs/egg8.png");
+// let egg9: any = require("./../../../assets/images/cow/eggs/egg9.png");
+// let egg10: any = require("./../../../assets/images/cow/eggs/egg10.png");
+// let egg11: any = require("./../../../assets/images/cow/eggs/egg11.png");
+// let egg12: any = require("./../../../assets/images/cow/eggs/egg12.png");
 let mergingAnimation: any = require("./../../../assets/images/merging-animation.png");
 let coin: any = require("./../../../assets/images/cow/icons/money.png");
 let diamond: any = require("./../../../assets/images/icons/diamonds.png");
@@ -276,7 +278,7 @@ class CowPreload extends Phaser.Scene {
     this.load.image('cow-buy-icon-10', cowBuyIcon10);
     this.load.image('cow-buy-icon-11', cowBuyIcon11);
     this.load.image('cow-buy-icon-12', cowBuyIcon12);
-    this.load.image('egg-collector', eggCollector);
+    this.load.image('milk-collector', milkCollector);
     this.load.image('shop', shop);
     this.load.image('map-icon', mapIcon);
     this.load.image('sandwich', sandwich);
@@ -356,19 +358,21 @@ class CowPreload extends Phaser.Scene {
     this.load.spritesheet('cow10', cow10, { frameWidth: 115, frameHeight: 145 });
     this.load.spritesheet('cow11', cow11, { frameWidth: 115, frameHeight: 133 });
     this.load.spritesheet('cow12', cow12, { frameWidth: 115, frameHeight: 150 });
-    this.load.image('cow-egg0', egg0);
-    this.load.image('cow-egg1', egg1);
-    this.load.image('cow-egg2', egg2);
-    this.load.image('cow-egg3', egg3);
-    this.load.image('cow-egg4', egg4);
-    this.load.image('cow-egg5', egg5);
-    this.load.image('cow-egg6', egg6);
-    this.load.image('cow-egg7', egg7);
-    this.load.image('cow-egg8', egg8);
-    this.load.image('cow-egg9', egg9);
-    this.load.image('cow-egg10', egg10);
-    this.load.image('cow-egg11', egg11);
-    this.load.image('cow-egg12', egg12);
+    this.load.image('milk-status', milkStatus);
+    this.load.image('cow-milk0', milk0);
+    // this.load.image('cow-egg0', egg0);
+    // this.load.image('cow-egg1', egg1);
+    // this.load.image('cow-egg2', egg2);
+    // this.load.image('cow-egg3', egg3);
+    // this.load.image('cow-egg4', egg4);
+    // this.load.image('cow-egg5', egg5);
+    // this.load.image('cow-egg6', egg6);
+    // this.load.image('cow-egg7', egg7);
+    // this.load.image('cow-egg8', egg8);
+    // this.load.image('cow-egg9', egg9);
+    // this.load.image('cow-egg10', egg10);
+    // this.load.image('cow-egg11', egg11);
+    // this.load.image('cow-egg12', egg12);
     this.load.image('merging-animation', mergingAnimation);
     this.load.image('cowCoin', coin);
     this.load.image('diamond', diamond);
@@ -532,9 +536,10 @@ class CowPreload extends Phaser.Scene {
 
   public loadUser(): void {
 
-    // axios.post(process.env.API + '/cow/loadData', {
-    //   hash: this.state.user.hash
-    // }).then((response) => {
+    axios.post(process.env.API + '/cow/loadData', {
+      hash: this.state.user.hash
+    }).then((response) => {
+      console.log(response.data)
 
     //   // checkStorage(response.data.user.hash);
 
@@ -547,181 +552,6 @@ class CowPreload extends Phaser.Scene {
 
     //   // if (response.data.user.cowSaveCounter >= localSaveCounter) {
 
-    //     // общие настройки
-    //     this.state.autoSaveSpeed = response.data.autoSaveSpeed;
-    //     this.state.maxMerginTime = response.data.maxMerginTime;
-    //     this.state.packages = response.data.packages;
-    //     this.state.herdBoostSpeedAnimal = response.data.herdBoostSpeedAnimal;
-    //     this.state.herdBoostTime = response.data.herdBoostTime;
-    //     this.state.herdBoostPrice = response.data.herdBoostPrice;
-    //     this.state.herdBoostDelay = response.data.herdBoostDelay;
-        
-    //     // массив с настройками для коровьей фермы
-    //     const cowSettings: IcowSettings = {
-    //       cowBadPercent: response.data.cowBadPercent,
-    //       cowPrice: response.data.cowPrice,
-    //       territoriesCowSettings: response.data.territoriesCowSettings,
-    //       cowSettings: response.data.cowSettings,
-    //       territoriesCowPrice: response.data.territoriesCowPrice,
-    //       cowFairLevels: response.data.cowFairLevels,
-    //       cowParts: response.data.cowParts,
-    //       buyBetterBreedCow: response.data.buyBetterBreedCow,
-    //       doubledСollectorPrice: response.data.doubledСollectorPrice,
-    //       collectorPrice4: response.data.collectorPrice4,
-    //       collectorPrice12: response.data.collectorPrice12,
-    //       unlockCollector4: response.data.unlockCollector4,
-    //       unlockCollector12: response.data.unlockCollector12,
-    //       cowDiamondsTime: response.data.cowDiamondsTime,
-    //       feedBoostPrice: response.data.feedBoostPrice,
-    //     }
-
-    //     this.state.cowSettings = cowSettings;
-
-    //     const cow: Icow[] = [];
-
-    //     for (let i in response.data.cow) {
-          
-    //       let chick = response.data.cow[i];
-    //       cow.push({
-    //         _id: chick._id,
-    //         type: chick.type,
-    //         egg: chick.egg,
-    //         x: chick.x,
-    //         y: chick.y,
-    //         counter: chick.counter,
-    //         diamond: chick.diamond,
-    //         vector: chick.vector
-    //       });
-
-    //     }
-        
-    //     const cowTerritories: Iterritories[] = [];
-        
-    //     for (let i in response.data.territories) {
-
-    //       let territory = response.data.territories[i];
-
-    //       cowTerritories.push({
-    //         _id: territory._id,
-    //         block: territory.block,
-    //         position: territory.position,
-    //         type: territory.type,
-    //         volume: territory.volume,
-    //         improve: territory.improve,
-    //         money: territory.money
-    //       });
-
-    //     }
-
-    //     const cowEggs: IcowEgg[] = [];
-
-    //     for (let i in response.data.eggs) {
-
-    //       let egg = response.data.eggs[i];
-
-    //       cowEggs.push({
-    //         _id: egg._id,
-    //         x: egg.x,
-    //         y: egg.y,
-    //         type: egg.type
-    //       });
-
-    //     }
-
-    //     const user: Iuser = {
-    //       diamonds: response.data.user.diamonds,
-    //       id: response.data.user._id,
-    //       xp: response.data.user.xp,
-    //       hash: response.data.user.hash,
-    //       login: response.data.user.login,
-    //       counter: response.data.user.counter,
-    //       mail: response.data.user.mail,
-    //       level: response.data.user.level,
-    //       additionalTutorial: response.data.user.additional_tutorial,
-    //       takenReward: response.data.user.taken_reward,
-    //       status: response.data.user.status,
-    //       statuses: response.data.user.statuses,
-    //       starterpack: response.data.user.starterpack,
-
-    //     }
-
-    //     const userCow: IuserCow = {
-    //       money: response.data.user.cow_money,
-    //       fair: response.data.user.cow_fair,
-    //       part: response.data.user.cow_part,
-    //       countCow: response.data.user.count_cow,
-    //       collector: response.data.user.cow_collector,
-    //       collectorLevel: response.data.user.cowCollectorLevel,
-    //       collectorTakenTime: response.data.user.cow_collector,
-    //       diamondAnimalTime: response.data.user.diamonds_cow_time,
-    //       tutorial: response.data.user.cow_tutor,
-    //       autosaveCounter: response.data.user.cowSaveCounter,
-    //       diamondAnimalAd: response.data.user.diamonds_cow_ad,
-    //       takenHerdBoost: response.data.user.takenHerdBoostCow,
-    //       feedBoostTime: response.data.user.feedBoostTimeCow,
-    //     }
-        
-    //     const Amplitude = this.state.amplitude;
-    //     const identify = new Amplitude.Identify().set('CatcherSheep', userCow.collectorLevel);
-    //     Amplitude.getInstance().identify(identify);
-
-    //     const cowTasks: Itasks[] = [];
-
-    //     for (let i in tasks) if (tasks[i].farm === 2) cowTasks.push(tasks[i]);
-    //     for (let i in response.data.tasks) {
-
-    //       let usersTask = response.data.tasks[i];
-    //       let task = tasks.find((task: Itasks) => task.id === usersTask.task_id);
-
-    //       if (task) {
-    //         task.done = usersTask.done;
-    //         task.got_awarded = usersTask.got_awarded;
-    //         task.progress = usersTask.progress;
-    //       }
-
-    //     }
-        
-    //     this.state.timeToNewDay = response.data.timeToNewDay;
-    //     this.state.cowCollectorSettings = response.data.collectorSettings;
-    //     this.state.dailyAwards = response.data.dailyAwards;
-    //     this.state.newbieTime = response.data.newbieTime;
-    //     this.state.daily = response.data.daily;
-    //     this.state.offlineTime = response.data.offlineTime;
-    //     this.state.progress = response.data.progress;
-    //     this.state.cowTerritories = cowTerritories;
-    //     this.state.cow = cow;
-    //     this.state.cowEggs = cowEggs;
-    //     this.state.user = user;
-    //     this.state.userCow = userCow;
-    //     this.state.cowTasks = cowTasks;
-    //     this.state.farm = 'Cow';
-    //     this.userReady = true;
-    //     this.state.nativeCounter = [0, 0, 0, 0];
-    //   // } else {
-    //   //   this.loadCow(response.data.user.counter);
-    //   // }
-      
-    // })
-    // .catch(() => {
-    //   this.loadCow();
-    // });
-
-
-    axios.post(process.env.API + '/chicken/loadData', {
-      hash: this.state.user.hash
-    }).then((response) => {
-
-      // checkStorage(response.data.user.hash);
-
-      // let localSaveCounter: number = 0;
-
-      // if (localStorage.userChicken) {
-      //   let user: IuserChicken = JSON.parse(localStorage.userChicken);
-      //   if (typeof user.autosaveCounter === 'number') localSaveCounter = user.autosaveCounter;
-      // }
-
-      // if (response.data.user.chickenSaveCounter >= localSaveCounter) {
-
         // общие настройки
         this.state.autoSaveSpeed = response.data.autoSaveSpeed;
         this.state.maxMerginTime = response.data.maxMerginTime;
@@ -731,22 +561,22 @@ class CowPreload extends Phaser.Scene {
         this.state.herdBoostPrice = response.data.herdBoostPrice;
         this.state.herdBoostDelay = response.data.herdBoostDelay;
         
-        // массив с настройками для куриной фермы
+        // массив с настройками для коровьей фермы
         const cowSettings: IcowSettings = {
-          cowBadPercent: response.data.chickenBadPercent,
-          cowPrice: response.data.chickenPrice,
-          territoriesCowSettings: response.data.territoriesChickenSettings,
-          cowSettings: response.data.chickenSettings,
-          territoriesCowPrice: response.data.territoriesChickenPrice,
-          cowFairLevels: response.data.chickenFairLevels,
-          cowParts: response.data.chickenParts,
-          buyBetterBreedCow: response.data.buyBetterBreedChicken,
+          cowBadPercent: response.data.cowBadPercent,
+          cowPrice: response.data.cowPrice,
+          territoriesCowSettings: response.data.territoriesCowSettings,
+          cowSettings: response.data.cowSettings,
+          territoriesCowPrice: response.data.territoriesCowPrice,
+          cowFairLevels: response.data.cowFairLevels,
+          cowParts: response.data.cowParts,
+          buyBetterBreedCow: response.data.buyBetterBreedCow,
           doubledСollectorPrice: response.data.doubledСollectorPrice,
           collectorPrice4: response.data.collectorPrice4,
           collectorPrice12: response.data.collectorPrice12,
           unlockCollector4: response.data.unlockCollector4,
           unlockCollector12: response.data.unlockCollector12,
-          cowDiamondsTime: response.data.chickenDiamondsTime,
+          cowDiamondsTime: response.data.cowDiamondsTime,
           feedBoostPrice: response.data.feedBoostPrice,
         }
 
@@ -754,18 +584,18 @@ class CowPreload extends Phaser.Scene {
 
         const cow: Icow[] = [];
 
-        for (let i in response.data.chicken) {
+        for (let i in response.data.cow) {
           
-          let chick = response.data.chicken[i];
+          let cw = response.data.cow[i];
           cow.push({
-            _id: chick._id,
-            type: chick.type,
-            egg: chick.egg,
-            x: chick.x,
-            y: chick.y,
-            counter: chick.counter,
-            diamond: chick.diamond,
-            vector: chick.vector
+            _id: cw._id,
+            type: cw.type,
+            milk: cw.milk,
+            x: cw.x,
+            y: cw.y,
+            counter: cw.counter,
+            diamond: cw.diamond,
+            vector: cw.vector
           });
 
         }
@@ -788,21 +618,6 @@ class CowPreload extends Phaser.Scene {
 
         }
 
-        const cowEggs: IcowEgg[] = [];
-
-        for (let i in response.data.eggs) {
-
-          let egg = response.data.eggs[i];
-
-          cowEggs.push({
-            _id: egg._id,
-            x: egg.x,
-            y: egg.y,
-            type: egg.type
-          });
-
-        }
-
         const user: Iuser = {
           diamonds: response.data.user.diamonds,
           id: response.data.user._id,
@@ -821,24 +636,24 @@ class CowPreload extends Phaser.Scene {
         }
 
         const userCow: IuserCow = {
-          money: response.data.user.chicken_money,
-          fair: response.data.user.chicken_fair,
-          part: response.data.user.chicken_part,
-          countCow: response.data.user.count_chicken,
-          collector: response.data.user.chicken_collector,
-          collectorLevel: response.data.user.chickenCollectorLevel,
-          collectorTakenTime: response.data.user.chicken_collector,
-          diamondAnimalTime: response.data.user.diamonds_chicken_time,
-          tutorial: response.data.user.chicken_tutor,
-          autosaveCounter: response.data.user.chickenSaveCounter,
-          diamondAnimalAd: response.data.user.diamonds_chicken_ad,
-          takenHerdBoost: response.data.user.takenHerdBoostChicken,
-          feedBoostTime: response.data.user.feedBoostTimeChicken,
+          money: response.data.user.cow_money,
+          fair: response.data.user.cow_fair,
+          part: response.data.user.cow_part,
+          countCow: response.data.user.count_cow,
+          collector: response.data.user.cow_collector,
+          collectorLevel: response.data.user.cowCollectorLevel,
+          collectorTakenTime: response.data.user.cow_collector,
+          diamondAnimalTime: response.data.user.diamonds_cow_time,
+          tutorial: response.data.user.cow_tutor,
+          autosaveCounter: response.data.user.cowSaveCounter,
+          diamondAnimalAd: response.data.user.diamonds_cow_ad,
+          takenHerdBoost: response.data.user.takenHerdBoostCow,
+          feedBoostTime: response.data.user.feedBoostTimeCow,
         }
         
-        // const Amplitude = this.state.amplitude;
-        // const identify = new Amplitude.Identify().set('CatcherSheep', userChicken.collectorLevel);
-        // Amplitude.getInstance().identify(identify);
+        const Amplitude = this.state.amplitude;
+        const identify = new Amplitude.Identify().set('CatcherSheep', userCow.collectorLevel);
+        Amplitude.getInstance().identify(identify);
 
         const cowTasks: Itasks[] = [];
 
@@ -865,18 +680,21 @@ class CowPreload extends Phaser.Scene {
         this.state.progress = response.data.progress;
         this.state.cowTerritories = cowTerritories;
         this.state.cow = cow;
-        this.state.cowEggs = cowEggs;
         this.state.user = user;
         this.state.userCow = userCow;
         this.state.cowTasks = cowTasks;
         this.state.farm = 'Cow';
         this.userReady = true;
         this.state.nativeCounter = [0, 0, 0, 0];
-      // } else {
-      //   this.loadChicken(response.data.user.counter);
-      // }
+    //   // } else {
+    //   //   this.loadCow(response.data.user.counter);
+    //   // }
       
     })
+    // .catch(() => {
+    //   this.loadCow();
+    // });
+
 
     localStorage.farm = 'Cow';
   }

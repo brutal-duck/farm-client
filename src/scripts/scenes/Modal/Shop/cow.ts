@@ -141,14 +141,14 @@ function cow(): void {
     }).setOrigin(0, 0.5);
     let boundsName = name.getBounds();
 
-    let eggPriceText: string = this.state.lang.eggPrice;
-    let egg: Phaser.GameObjects.Text = this.add.text(240, center, eggPriceText, {
+    let milkPriceText: string = this.state.lang.milkPrice;
+    let milk: Phaser.GameObjects.Text = this.add.text(240, center, milkPriceText, {
       font: '20px Shadow',
       fill: '#FFFFFF'
     }).setOrigin(0, 0.5);
-    let boundsEgg = egg.getBounds();
+    let boundsMilk = milk.getBounds();
 
-    let eggPrice: Phaser.GameObjects.Text = this.add.text(boundsEgg.right, center, String(shortNum(cow.eggPrice)), {
+    let milkPrice: Phaser.GameObjects.Text = this.add.text(boundsMilk.right, center, String(shortNum(cow.milkPrice)), {
       font: '20px Shadow',
       fill: '#ECC896'
     }).setOrigin(0, 0.5);
@@ -178,10 +178,10 @@ function cow(): void {
 
     }
     
-    let height: number = heightBtn + boundsName.height + boundsEgg.height + 20;
+    let height: number = heightBtn + boundsName.height + boundsMilk.height + 20;
     name.y -= height / 2 - (boundsName.height / 2);
-    egg.y -= height / 2 - boundsName.height - (boundsEgg.height / 2) - 5;
-    eggPrice.y = egg.y;
+    milk.y -= height / 2 - boundsName.height - (boundsMilk.height / 2) - 5;
+    milkPrice.y = milk.y;
 
     if (btn) {
       btn.btn.y += height / 2 - (heightBtn / 2);

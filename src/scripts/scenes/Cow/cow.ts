@@ -1,4 +1,5 @@
 import { random, randomString } from '../../general/basic';
+import { cow } from '../Modal/cow';
 
 // телепортация коров на свободные территории
 function teleportation(cow: any): void {
@@ -157,7 +158,7 @@ function getCow(
   x: number,
   y: number,
   counter: number = 0,
-  egg: number = 0,
+  milk: number = 0,
   diamond: number = 0,
   vector: number = 7,
   load: boolean = false): void {
@@ -179,23 +180,32 @@ function getCow(
   cow.changeVector = false; // метка смены вектора
   cow.merging = false; // метка коровы в мерджинге
   cow.type = type; // порода коровы
-  cow.egg = egg; // зарождение яйца
+  cow.milk = milk; // молоко
   cow._id = id; // id
   cow.diamond = diamond; // счетчик кристаллов для кристаллическлй коровы.
   cow.expel = false; // метка изгнания
   cow.spread = false;
+  cow.milkStatus = this.add.sprite(x, y, 'milk-status').setVisible(false)
 
-  // this.click(cow, (): void => {
+  this.click(cow, (): void => {
 
-  //   let modal: Imodal = {
-  //     type: 1,
-  //     sysType: 1
-  //   }
-  //   this.state.modal = modal;
-  //   this.state.animal = cow;
-  //   this.scene.launch('Modal', this.state);
+    console.log(cow.milkStatus);
+    
 
-  // });
+    // let modal: Imodal = {
+    //   type: 1,
+    //   sysType: 1
+    // }
+    // this.state.modal = modal;
+    // this.state.animal = cow;
+    // this.scene.launch('Modal', this.state);
+
+    if (cow.milk >= 900) {
+      this.collectMilk(cow, true);
+    }
+
+
+  });
   
   if (type === 0) this.firework250(x, y);
 
@@ -204,32 +214,58 @@ function getCow(
 }
 
 
-// переместить яйцо в хранилище
-function getEgg(data: IcowEgg): void {
+// переместить яйцо в хранилище !!!
+function getMilk(data: IcowMilk): void {
 
-  let egg = this.eggs.create(data.x, data.y, 'cow-egg' + data.type);
-  egg.setDepth(data.y);
-  egg.type = data.type;
-  egg._id = data._id;
-  egg.click = true;
-  egg.distance = 0;
-  egg.timeout = 0;
+  let milk = this.milk.create(data.x, data.y, 'cow-milk' + data.type);
+  milk.setDepth(data.y);
+  milk.type = data.type;
+  milk._id = data._id;
+  milk.click = true;
+  milk.distance = 0;
+  milk.timeout = 0;
 
-  this.click(egg, (): void => {
+  this.click(milk, (): void => {
 
-    if (egg.click) {
+    if (milk.click) {
 
       let manualСollect: boolean = false;
 
-      if (egg.type !== 0) manualСollect = true;
+      if (milk.type !== 0) manualСollect = true;
 
-      this.collectEgg(egg, manualСollect);
+      this.collectMilk(milk, manualСollect);
 
     }
     
   });
 
 }
+
+// function getMilk(data: IcowMilk): void {
+
+//   let milk = this.milk.create(data.x, data.y, 'cow-milk' + data.type);
+//   milk.setDepth(data.y);
+//   milk.type = data.type;
+//   milk._id = data._id;
+//   milk.click = true;
+//   milk.distance = 0;
+//   milk.timeout = 0;
+
+//   this.click(milk, (): void => {
+
+//     if (milk.click) {
+
+//       let manualСollect: boolean = false;
+
+//       if (milk.type !== 0) manualСollect = true;
+
+//       this.collectMilk(milk, manualСollect);
+
+//     }
+    
+//   });
+
+// }
 
 
 // мерджинг
@@ -315,6 +351,8 @@ function checkMerging(territory: any, cow: any, position: string) {
         let type: number = cow1.type + 1;
         cow1.destroy();
         cow2.destroy();
+        cow1.milkStatus.destroy();
+        cow2.milkStatus.destroy();
         let id: string = 'local_' + randomString(18);
         let x: number = territory.x + 120;
         let y: number = territory.y + 240;
@@ -470,28 +508,29 @@ function buyCow(breed: number, shop: boolean = false): boolean {
 }
 
 
-// собиратель яиц
-function collectEgg(egg: any, manualСollect: boolean = false): void {
+// собиратель яиц !!!
+function collectMilk(cow: any, manualСollect: boolean = false): void {
 
   let path: Iposition;
   let length: number;
   let repository: any = false;
 
-  if (egg.type !== 0) {
+  if (cow.type !== 0) {
 
     if (manualСollect) {
 
-      let price: number = this.state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === egg.type).eggPrice;
+      cow.milk = 0
+      let price: number = this.state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === cow.type).milkPrice;
       if (this.state.userCow.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
       this.state.userCow.money += price;
-      egg.destroy();
+      // milk.destroy();
 
       this.game.scene.keys['CowBars'].plusMoneyAnimation({
-        x: egg.x,
-        y: egg.y - 50
+        x: cow.x,
+        y: cow.y - 50
       });
 
-      this.tryTask(11, 0);
+      // this.tryTask(11, 0);
 
     } else {
 
@@ -501,15 +540,17 @@ function collectEgg(egg: any, manualСollect: boolean = false): void {
 
         if (territory.type === 5) {
           
-          let max: number = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === territory.improve).eggStorage;
+          let max: number = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === territory.improve).milkStorage;
 
           if (max > territory.volume) {
+
+            cow.milk = 0
 
             let position: Iposition = {
               x: territory.x + 120,
               y: territory.y + 120
             }
-            let distance: number = Phaser.Math.Distance.Between(egg.x, egg.y, position.x, position.y);
+            let distance: number = Phaser.Math.Distance.Between(cow.x, cow.y - 50, position.x, position.y);
             
             if (length === undefined || distance < length) {
 
@@ -527,40 +568,97 @@ function collectEgg(egg: any, manualСollect: boolean = false): void {
 
       if (length) {
 
-        length *= 3;
-        let price: number = this.state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === egg.type).eggPrice;
-        if (this.state.userCow.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
-        egg.click = false;
-        repository.volume++;
-        repository.money += price;
-        let target = new Phaser.Math.Vector2();
-        egg.distance = length;
-        target.x = path.x;
-        target.y = path.y;
-        egg.target = path;
-        this.physics.moveToObject(egg, target, length);
+        // let milk = this.milk.create(cow.x, cow.y - 50, 'cow-milk' + cow.type);
+        let milk = this.milk.create(cow.x, cow.y - 50, 'cow-milk' + '0');
+        milk.setDepth(cow.y);
+        milk.type = cow.type;
+        milk._id = cow._id;
+        milk.distance = 0;
 
-      } // else console.log('have not space for eggs');
+        if (milk) {
+
+          length *= 3;
+          let price: number = this.state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === milk.type).milkPrice;
+          if (this.state.userCow.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
+          milk.click = false;
+          repository.volume++;
+          repository.money += price;
+          let target = new Phaser.Math.Vector2();
+          milk.distance = length;
+          target.x = path.x;
+          target.y = path.y;
+          milk.target = path;
+          this.physics.moveToObject(milk, target, length);
+          
+        } else {
+        
+          if (manualСollect) {
+  
+            let modal: Imodal = {
+              type: 1,
+              sysType: 3,
+              height: 150,
+              message: this.state.lang.haveNotSpaceRepository
+            }
+            this.state.modal = modal;
+            this.scene.launch('Modal', this.state);
+  
+          }
+  
+        }
+
+        // console.log('have not space for milk');
+
+      }
 
     }
 
   } else {
 
     let position: Iposition = {
-      x: egg.x,
-      y: egg.y
+      x: cow.x,
+      y: cow.y - 50
     }
 
-    this.state.amplitude.getInstance().logEvent('diamonds_get', {
-      type: 'diamond_animal',
-      count: 1,
-      farm_id: this.state.farm
-    });
+    // this.state.amplitude.getInstance().logEvent('diamonds_get', {
+    //   type: 'diamond_animal',
+    //   count: 1,
+    //   farm_id: this.state.farm
+    // });
 
+    // this.game.scene.keys['CowBars'].plusDiamondsAnimation(position);
+    // this.state.user.diamonds++;
+    // cow.destroy();
+    // this.tryTask(19, 0);
+
+    cow.milk = 0;
+    cow.diamond++;
     this.game.scene.keys['CowBars'].plusDiamondsAnimation(position);
     this.state.user.diamonds++;
-    egg.destroy();
     this.tryTask(19, 0);
+
+    if (cow.diamond >= 5) {
+
+      // if (this.caveTutor) {
+        
+      //   this.time.addEvent({ delay: 2000, callback: (): void => {
+      //     this.showTutorial('cave3');
+      //     this.caveTutor = false;
+      //   }, callbackScope: this, loop: false });
+
+      // }
+ 
+      this.firework250(cow.x, cow.y);
+      cow.milkStatus.destroy();
+      cow.destroy();
+      
+      this.state.amplitude.getInstance().logEvent('diamonds_get', {
+        type: 'diamond_animal',
+        count: 5,
+        farm_id: this.state.farm
+      });
+    }
+
 
   }
 
@@ -568,7 +666,7 @@ function collectEgg(egg: any, manualСollect: boolean = false): void {
 
 
 // продать яйца из хранилища
-function sellEggs(): void {
+function sellMilk(): void {
 
   if (this.state.territory) {
 
@@ -592,27 +690,50 @@ function sellEggs(): void {
 }
 
 
-// полет яиц
-function eggsFly(): void {
+// полет яиц !!!
+function milksFly(): void {
 
-  for (let i in this.eggs.children.entries) {
+  // for (let i in this.milk.children.entries) {
 
-    let egg = this.eggs.children.entries[i];
+  //   let milk = this.milk.children.entries[i];
 
-    if (egg.body.speed > 0) {
+  //   if (milk.body.speed > 0) {
 
-      egg.setDepth(egg.y + 100);
-      let distance = Phaser.Math.Distance.Between(egg.x, egg.y, egg.target.x, egg.target.y) * 3;
+  //     milk.setDepth(milk.y + 100);
+  //     let distance = Phaser.Math.Distance.Between(milk.x, milk.y, milk.target.x, milk.target.y) * 3;
 
-      if (egg.x < 0 ||
-        egg.x > 720 ||
-        egg.y < 0 ||
-        (distance > egg.distance && egg.distance > 0) ||
+  //     if (milk.x < 0 ||
+  //       milk.x > 720 ||
+  //       milk.y < 0 ||
+  //       (distance > milk.distance && milk.distance > 0) ||
+  //       distance < 100) {
+        
+  //       milk.destroy();
+        
+  //     } else milk.distance = distance;
+
+  //   }
+
+  // }
+
+  for (let i in this.milk.children.entries) {
+
+    let milk = this.milk.children.entries[i];
+
+    if (milk.body.speed > 0) {
+
+      milk.setDepth(milk.y + 100);
+      let distance = Phaser.Math.Distance.Between(milk.x, milk.y, milk.target.x, milk.target.y) * 3;
+
+      if (milk.x < 0 ||
+        milk.x > 720 ||
+        milk.y < 0 ||
+        (distance > milk.distance && milk.distance > 0) ||
         distance < 100) {
         
-        egg.destroy();
+        milk.destroy();
         
-      } else egg.distance = distance;
+      } else milk.distance = distance;
 
     }
 
@@ -637,6 +758,7 @@ function confirmExpelCow(): void {
 // продажа коровы
 function expelCow(): void {
 
+  this.state.animal.milkStatus.destroy();
   this.state.animal.destroy();
 
 }
@@ -694,13 +816,13 @@ export {
   reverse,
   aim,
   getCow,
-  getEgg,
+  getMilk,
   checkMerging,
   cancelMerging,
   buyCow,
-  collectEgg,
-  sellEggs,
-  eggsFly,
+  collectMilk,
+  sellMilk,
+  milksFly,
   confirmExpelCow,
   expelCow,
   dragCowMerging

@@ -79,13 +79,13 @@ import {
   reverse,
   aim,
   getCow,
-  getEgg,
+  getMilk,
   checkMerging,
   cancelMerging,
   buyCow,
-  collectEgg,
-  sellEggs,
-  eggsFly,
+  collectMilk,
+  sellMilk,
+  milksFly,
   confirmExpelCow,
   expelCow,
   dragCowMerging
@@ -121,7 +121,7 @@ class Cow extends Phaser.Scene {
   public scrolling: Scrolling;
   public cow: Phaser.Physics.Arcade.Group;
   public territories: Phaser.Physics.Arcade.Group;
-  public eggs: Phaser.Physics.Arcade.Group;
+  public milk: Phaser.Physics.Arcade.Group;
   public bubble: Phaser.GameObjects.Graphics;;
   public bubbleText: Phaser.GameObjects.Text;
   public velocity: number = 40; // дефолтное ускорение коров
@@ -157,7 +157,7 @@ class Cow extends Phaser.Scene {
   public reverse = reverse.bind(this);
   public aim = aim.bind(this);
   public getCow = getCow.bind(this);
-  public getEgg = getEgg.bind(this);
+  public getMilk = getMilk.bind(this);
   public currentTerritory = currentTerritory.bind(this);
   public changeSprite = changeSprite.bind(this);
   public fairLevelUp = fairLevelUp.bind(this);
@@ -177,9 +177,9 @@ class Cow extends Phaser.Scene {
   public checkMerging = checkMerging.bind(this);
   public cancelMerging = cancelMerging.bind(this);
   public buyCow = buyCow.bind(this);
-  public collectEgg = collectEgg.bind(this);
-  public sellEggs = sellEggs.bind(this);
-  public eggsFly = eggsFly.bind(this);
+  public collectMilk = collectMilk.bind(this);
+  public sellMilk = sellMilk.bind(this);
+  public milksFly = milksFly.bind(this);
   public confirmExpelCow = confirmExpelCow.bind(this);
   public expelCow = expelCow.bind(this);
   public createSpeechBubble = createSpeechBubble.bind(this);
@@ -302,7 +302,7 @@ class Cow extends Phaser.Scene {
     this.cowBrain();
 
     // полет яиц в хранилище
-    this.eggsFly();
+    this.milksFly();
 
     // анимация полных хранилищ
     this.repositoryAnimation();

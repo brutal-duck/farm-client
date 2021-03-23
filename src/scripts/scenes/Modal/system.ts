@@ -194,7 +194,7 @@ function systemWindow(): void {
       } else if (this.state.farm === 'Chicken') {
         this.chickenEggRepositoryExchange();
       } else if (this.state.farm === 'Cow') {
-        this.cowEggRepositoryExchange();
+        this.cowMilkRepositoryExchange();
       }
       break;
     
@@ -286,7 +286,7 @@ function cowTerritory(): void {
       break;
 
     case 5: // хранилище яиц
-      this.cowEggsRepository();
+      this.cowMilkRepository();
       break;
 
     default:

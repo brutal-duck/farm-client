@@ -109,24 +109,24 @@ function cow(): void {
 
     let points: IcowPoints = this.state.cowSettings.cowSettings.find((item: IcowPoints) => item.breed === this.state.animal.type);
     
-    let eggSpeed: number = Math.round(1000 / points.egg);
+    let milkSpeed: number = Math.round(1000 / points.milk);
 
-    this.add.text(132, this.cameras.main.centerY + 90, this.state.lang.eggSpeed, {
+    this.add.text(132, this.cameras.main.centerY + 90, this.state.lang.milkSpeed, {
       font: '28px Bip',
       color: '#925C28'
     }).setOrigin(0, 0.5);
 
-    this.add.text(588, this.cameras.main.centerY + 90, eggSpeed + ' ' + this.state.lang.seconds, {
+    this.add.text(588, this.cameras.main.centerY + 90, milkSpeed + ' ' + this.state.lang.seconds, {
       font: '28px Bip',
       color: '#925C28'
     }).setOrigin(1, 0.5);
 
-    this.add.text(132, this.cameras.main.centerY + 135, this.state.lang.eggPrice, {
+    this.add.text(132, this.cameras.main.centerY + 135, this.state.lang.milkPrice, {
       font: '28px Bip',
       color: '#925C28'
     }).setOrigin(0, 0.5);
 
-    let price: Phaser.GameObjects.Text = this.add.text(588, this.cameras.main.centerY + 135, String(points.eggPrice), {
+    let price: Phaser.GameObjects.Text = this.add.text(588, this.cameras.main.centerY + 135, String(points.milkPrice), {
       font: '28px Bip',
       color: '#925C28'
     }).setOrigin(1, 0.5);
@@ -167,14 +167,14 @@ function cow(): void {
 
     let points: IcowPoints = this.state.cowSettings.cowSettings.find((item: IcowPoints) => item.breed === 1);
     
-    let eggSpeed: number = Math.round(1000 / points.egg);
+    let milkSpeed: number = Math.round(1000 / points.milk);
 
     this.add.text(132, this.cameras.main.centerY + 150, this.state.lang.diamondSpeed, {
       font: '28px Bip',
       color: '#925C28'
     }).setOrigin(0, 0.5);
 
-    this.add.text(588, this.cameras.main.centerY + 150, eggSpeed + ' ' + this.state.lang.seconds, {
+    this.add.text(588, this.cameras.main.centerY + 150, milkSpeed + ' ' + this.state.lang.seconds, {
       font: '28px Bip',
       color: '#925C28'
     }).setOrigin(1, 0.5);
@@ -472,7 +472,7 @@ function cowConvertor(): void {
     let count: number | string = shortNum(this.state.convertor.count);
     let length: number = String(count).length * 10 + 15;
 
-    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 140, this.state.lang.rememberSellEggs, {
+    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 140, this.state.lang.rememberSellMilk, {
       font: '26px Bip',
       color: '#57A90E',
       align: 'center',
@@ -608,7 +608,7 @@ function confirmCowExchangeTerritory(): void {
   let repository: string = '';
 
   if (this.state.territory.type === 5) {
-    repository = ' ' + this.state.lang.eggsWillBeSold;
+    repository = ' ' + this.state.lang.MilkWillBeSold;
   }
 
   this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 60, this.state.lang.sureExchange + repository, {
@@ -657,7 +657,7 @@ function confirmCowExchangeTerritory(): void {
 
 
 // хранилище яиц
-function cowEggsRepository(): void {
+function cowMilkRepository(): void {
   
   let repository: string = this.state.lang.repository.replace('$1', this.state.territory.improve);
   this.textHeader.setText(repository);
@@ -669,7 +669,7 @@ function cowEggsRepository(): void {
     text: shortNum(part.improve_territory_2)
   }
 
-  let eggMoney = {
+  let milkMoney = {
     icon: 'cowCoin',
     text: shortNum(this.state.territory.money)
   }
@@ -721,13 +721,13 @@ function cowEggsRepository(): void {
     this.progressBar = this.add.tileSprite(136, this.cameras.main.centerY - 120, 0, 16, 'green-progress')
       .setOrigin(0, 0.5);
 
-    this.progressButton = this.repositoryBtn(10, this.state.lang.sellEggs, eggMoney);
+    this.progressButton = this.repositoryBtn(10, this.state.lang.sellMilk, milkMoney);
     this.clickModalBtn(this.progressButton, (): void => {
 
       if (this.state.territory.money > 0) {
         this.scene.stop();
         this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-        this.game.scene.keys[this.state.farm].sellEggs();
+        this.game.scene.keys[this.state.farm].sellMilk();
       }
 
     });
@@ -763,13 +763,13 @@ function cowEggsRepository(): void {
     this.progressBar = this.add.tileSprite(136, this.cameras.main.centerY - 70, 0, 16, 'green-progress')
       .setOrigin(0, 0.5);
 
-    this.progressButton = this.repositoryBtn(60, this.state.lang.sellEggs, eggMoney);
+    this.progressButton = this.repositoryBtn(60, this.state.lang.sellMilk, milkMoney);
     this.clickModalBtn(this.progressButton, (): void => {
 
       if (this.state.territory.money > 0) {
         this.scene.stop();
         this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-        this.game.scene.keys[this.state.farm].sellEggs();
+        this.game.scene.keys[this.state.farm].sellMilk();
       }
 
     });
@@ -799,7 +799,7 @@ function cowEggsRepository(): void {
 
 }
 
-function cowEggRepositoryExchange(): void {
+function cowMilkRepositoryExchange(): void {
   let repository: string = this.state.lang.repository.replace('$1', this.state.territory.improve);
   this.textHeader.setText(repository);
 
@@ -1099,7 +1099,7 @@ function diamondCowAd(): void {
 // окно улучшения собирателя яиц
 function improveCollectorCow(): void {
 
-  this.textHeader.setText(this.state.lang.eggCollector + ' ' + this.state.userCow.collectorLevel + ' ' + this.state.lang.shortLevel + '.');
+  this.textHeader.setText(this.state.lang.milkCollector + ' ' + this.state.userCow.collectorLevel + ' ' + this.state.lang.shortLevel + '.');
 
   let thisLevel: IcollectorSettings = this.state.cowCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userCow.collectorLevel);
   let nextLevel: IcollectorSettings = this.state.cowCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userCow.collectorLevel + 1);
@@ -1258,11 +1258,11 @@ export {
   buyCowTerritory,
   cowConvertor,
   confirmCowExchangeTerritory,
-  cowEggsRepository,
+  cowMilkRepository,
   confirmExpelCow,
   cowProfile,
   diamondCowAd,
   improveCollectorCow,
-  cowEggRepositoryExchange,
+  cowMilkRepositoryExchange,
   updateImproveCollectorCow
 }

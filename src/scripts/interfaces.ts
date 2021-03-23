@@ -223,7 +223,7 @@ interface Ichicken {
 }
 interface Icow {
   type: number;
-  egg: number;
+  milk: number;
   x: number;
   y: number;
   counter: number;
@@ -251,7 +251,7 @@ interface IchickenEgg {
   x: number;
   y: number;
 }
-interface IcowEgg {
+interface IcowMilk {
   _id?: any;
   type: number;
   x: number;
@@ -283,8 +283,8 @@ interface IcowPoints {
   breed: number;
   drinking: number;
   eating: number;
-  egg: number;
-  eggPrice: number;
+  milk: number;
+  milkPrice: number;
   id?: any;
 }
 interface IeventPoints {
@@ -313,9 +313,9 @@ interface IterritoriesChickenSettings {
 interface IterritoriesCowSettings {
   improve: number;
   regeneration: number;
-  countEggs: number;
+  countMilk: number;
   unlock_improve: number;
-  eggStorage: number;
+  milkStorage: number;
   id?: any;
 }
 interface IterritoriesEventSettings {
@@ -575,7 +575,7 @@ interface Istate {
   cow: Icow[];
   eventAnimals: IeventAnimal[];
   chickenEggs: IchickenEgg[];
-  cowEggs: IcowEgg[];
+  cowMilk: IcowMilk[];
   eventResources: IeventResource[];
   lang: any;
   modal: Imodal;

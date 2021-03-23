@@ -128,7 +128,7 @@ class CowBars extends Phaser.Scene {
     
     let cowIcon: string = 'cow-buy-icon-' + this.game.scene.keys[this.state.farm].maxBreedForBuy();
     this.cowBuy = this.add.image(82, this.height - 92, cowIcon);
-    let collector: Phaser.GameObjects.Image = this.add.image(230, this.height - 90, 'egg-collector');
+    let collector: Phaser.GameObjects.Image = this.add.image(230, this.height - 90, 'milk-collector');
     let shop: Phaser.GameObjects.Image = this.add.image(370, this.height - 90, 'shop');
     let map: Phaser.GameObjects.Image = this.add.image(510, this.height - 90, 'map-icon');
 

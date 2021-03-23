@@ -44,12 +44,12 @@ import {
   buyCowTerritory,
   cowConvertor,
   confirmCowExchangeTerritory,
-  cowEggsRepository,
+  cowMilkRepository,
   confirmExpelCow,
   cowProfile,
   diamondCowAd,
   improveCollectorCow,
-  cowEggRepositoryExchange,
+  cowMilkRepositoryExchange,
   updateImproveCollectorCow
 } from './cow';
 import {
@@ -161,7 +161,7 @@ class Modal extends Phaser.Scene {
   public confirmExpelChicken = confirmExpelChicken.bind(this);
   public cowConvertor = cowConvertor.bind(this);
   public confirmCowExchangeTerritory = confirmCowExchangeTerritory.bind(this);
-  public cowEggsRepository = cowEggsRepository.bind(this);
+  public cowMilkRepository = cowMilkRepository.bind(this);
   public confirmExpelCow = confirmExpelCow.bind(this);
   public sheepFair = sheepFair.bind(this);
   public sheep = sheep.bind(this);
@@ -202,7 +202,7 @@ class Modal extends Phaser.Scene {
   public shortTime = shortTime.bind(this);
   public sheepWoolRepositoryExchange = sheepWoolRepositoryExchange.bind(this);
   public chickenEggRepositoryExchange = chickenEggRepositoryExchange.bind(this);
-  public cowEggRepositoryExchange = cowEggRepositoryExchange.bind(this);
+  public cowMilkRepositoryExchange = cowMilkRepositoryExchange.bind(this);
   public changeNickname = changeNickname.bind(this);
   public addEmail = addEmail.bind(this);
   public confirmExpelAnimal = confirmExpelAnimal.bind(this);
@@ -345,12 +345,12 @@ class Modal extends Phaser.Scene {
       
     }
 
-    // прогресс бар яйца коровы
+    // прогресс бар молока коровы
     if (this.state.modal.type === 1 &&
       this.state.modal.sysType === 1 &&
       this.state.farm === 'Cow') {
 
-      let width: number = Math.round(444 / 100 * (this.state.animal.egg / 10));
+      let width: number = Math.round(444 / 100 * (this.state.animal.milk / 10));
       
       if (width === 440) width = 444;
 
@@ -377,8 +377,8 @@ class Modal extends Phaser.Scene {
 
       } else if (this.state.farm === 'Cow') {
 
-        max = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === this.state.territory.improve).eggStorage;
-        count = this.state.lang.countEggs;
+        max = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === this.state.territory.improve).milkStorage;
+        count = this.state.lang.countMilk;
 
       }
 

@@ -9,12 +9,12 @@ function setCollector(): void {
 
       if (this.state.userCow.collector > 0) {
 
-        for (let i in this.eggs.children.entries) {
+        for (let i in this.cow.children.entries) {
 
-          let egg = this.eggs.children.entries[i];
+          let cow = this.cow.children.entries[i];
 
-          if (egg.timeout > 2 && egg.type !== 0) {
-            this.collectEgg(egg);
+          if (cow.milk >= 1000 && cow.type !== 0) {
+            this.collectMilk(cow);
             break;
           }
         

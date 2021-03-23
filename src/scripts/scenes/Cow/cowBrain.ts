@@ -140,6 +140,9 @@ function cowBrain(): void {
       }
 
     }
+    
+    let statusPosition: number;
+
 
     if (!cow.drag) {
 
@@ -152,8 +155,10 @@ function cowBrain(): void {
         cow.vector === 7 ||
         cow.vector === 8) {
         side = 'left';
+        statusPosition = 50
       } else {
         side = 'right';
+        statusPosition = -50
       }
 
       if (cow.moving || cow.aim) cow.anims.play('cow-move-' + side + cow.type, true);
@@ -161,7 +166,14 @@ function cowBrain(): void {
   
     }
 
+    if (cow.milk >= 900 && !cow.milkStatus.visible) cow.milkStatus.setVisible(true);
+    if (cow.milk < 900 && cow.milkStatus.visible) cow.milkStatus.setVisible(false);
+    cow.milkStatus.setDepth(cow.depth + 1);
+    cow.milkStatus.x = cow.x + statusPosition;
+    cow.milkStatus.y = cow.y - 60;
+
   }
+
 
 }
 

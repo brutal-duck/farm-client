@@ -420,7 +420,7 @@ function repositoryAnimation(): void {
 
     if (territory.type === 5 && territory.repository) {
 
-      let max: number = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === territory.improve).eggStorage;
+      let max: number = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === territory.improve).milkStorage;
       
       if (max === territory.volume) {
 

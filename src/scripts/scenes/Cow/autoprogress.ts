@@ -45,7 +45,7 @@ function autoprogress(load: boolean = false): void {
   
   // считаем сколько снесла корова яиц
   let balance: Ibalance = this.balance();
-  let newEggs: { egg: boolean, id: string, type: number, count: number }[] = [];
+  let newMilk: { milk: boolean, id: string, type: number, count: number }[] = [];
 
   for (let i in this.cow.children.entries) {
 
@@ -57,45 +57,45 @@ function autoprogress(load: boolean = false): void {
 
     let points: IcowPoints = this.settings.cowSettings.find((item: IcowPoints) => item.breed === breed);
 
-    let egg: number = points.egg;
+    let milk: number = points.milk;
 
     if (balance.alarm) {
-      egg = Math.round(egg / 100 * this.settings.cowBadPercent);
-      if (egg < 1) egg = 1;
+      milk = Math.round(milk / 100 * this.settings.cowBadPercent);
+      if (milk < 1) milk = 1;
     }
 
-    let eggs: number = Math.floor((egg * wasCollector) / 1000);
+    let milks: number = Math.floor((milk * wasCollector) / 1000);
 
-    if (eggs === 0) {
-      if (cow.egg + (eggs * wasCollector) > 1000) cow.egg = 1000;
-      else cow.egg += (eggs * wasCollector);
+    if (milks === 0) {
+      if (cow.milk + (milks * wasCollector) > 1000) cow.milk = 1000;
+      else cow.milk += (milks * wasCollector);
     }
     
     if (this.state.userCow.collector === 0) {
-      cow.egg = random(0, 1000);
+      cow.milk = random(0, 1000);
     }
 
-    newEggs.push({
+    newMilk.push({
       id: cow._id,
       type: cow.type,
-      count: eggs,
-      egg: false
+      count: milks,
+      milk: false
     });
 
   }
 
   // добавляем в массив яйца, которые могут лежать на поле
-  for (let i in this.eggs.children.entries) {
+  for (let i in this.milk.children.entries) {
 
-    let egg = this.eggs.children.entries[i];
+    let milk = this.milk.children.entries[i];
 
-    if (egg.type !== 0) {
+    if (milk.type !== 0) {
 
-      newEggs.push({
-        id: egg._id,
-        type: egg.type,
+      newMilk.push({
+        id: milk._id,
+        type: milk.type,
         count: 1,
-        egg: true
+        milk: true
       });
 
     }
@@ -103,17 +103,17 @@ function autoprogress(load: boolean = false): void {
   }
 
   // берем кристаллические корова если есть и формируем обновленный массив
-  let eggs: { egg: boolean, id: string, type: number, count: number }[] = [];
+  let milks: { milk: boolean, id: string, type: number, count: number }[] = [];
 
-  for (let i in newEggs) {
+  for (let i in newMilk) {
 
-    if (newEggs[i].type !== 0) {
+    if (newMilk[i].type !== 0) {
 
-      eggs.push(newEggs[i]);
+      milks.push(newMilk[i]);
 
     } else {
 
-      let cow = this.cow.children.entries.find((data: any) => data._id === newEggs[i].id);
+      let cow = this.cow.children.entries.find((data: any) => data._id === newMilk[i].id);
       let territory = this.currentTerritory(cow.x, cow.y);
 
       let count: number = 0;
@@ -122,10 +122,10 @@ function autoprogress(load: boolean = false): void {
       let minY: number = territory.block * 240 + indent;
       let maxY: number = (territory.block + 1) * 240 - indent;
 
-      if (newEggs[i].count < cow.diamond) {
+      if (newMilk[i].count < cow.diamond) {
 
-        cow.diamond -= newEggs[i].count;
-        count = newEggs[i].count;
+        cow.diamond -= newMilk[i].count;
+        count = newMilk[i].count;
 
       } else {
 
@@ -136,14 +136,14 @@ function autoprogress(load: boolean = false): void {
 
       for (let j: number = 0; j < count; j++) {
         
-        let egg: IcowEgg = {
+        let milk: IcowMilk = {
           type: 0,
           x: random(minX, maxX),
           y: random(minY, maxY),
           _id: 'local_' + randomString(18)
         }
   
-        this.getEgg(egg);
+        this.getMilk(milk);
 
       }
 
@@ -163,70 +163,70 @@ function autoprogress(load: boolean = false): void {
   }
 
   // формируем массив яиц
-  let eggsArr: { id: string, type: number }[] = [];
+  // let milkArr: { id: string, type: number }[] = [];
 
-  for (let i in eggs) {
-    for (let j: number = 0; j < eggs[i].count; j++) {
-      eggsArr.push({
-        id: eggs[i].id,
-        type: eggs[i].type
-      });
-    }
-  }
+  // for (let i in milks) {
+  //   for (let j: number = 0; j < milks[i].count; j++) {
+  //     milkArr.push({
+  //       id: milks[i].id,
+  //       type: milks[i].type
+  //     });
+  //   }
+  // }
 
   // ложим яйца в хранилища
-  let length: number = eggsArr.length;
-  if (percent < 100) length = Math.floor(eggsArr.length / 100 * percent);
+  // let length: number = milkArr.length;
+  // if (percent < 100) length = Math.floor(milkArr.length / 100 * percent);
 
-  for (let i: number = 0; i < length; i++) {
+  // for (let i: number = 0; i < length; i++) {
     
-    let price: number = this.state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === eggsArr[i].type).eggPrice;
-    price *= (1 + feedPercent); // коэфф
+  //   let price: number = this.state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === milkArr[i].type).milkPrice;
+  //   price *= (1 + feedPercent); // коэфф
     
-    for (let j in this.territories.children.entries) {
+  //   for (let j in this.territories.children.entries) {
 
-      if (this.territories.children.entries[j].type === 5) {
+  //     if (this.territories.children.entries[j].type === 5) {
         
-        let territory = this.territories.children.entries[j];
+  //       let territory = this.territories.children.entries[j];
 
-        let max: number = this.settings.territoriesCowSettings.find((item: IterritoriesCowSettings) => item.improve === territory.improve).eggStorage;
+  //       let max: number = this.settings.territoriesCowSettings.find((item: IterritoriesCowSettings) => item.improve === territory.improve).milkStorage;
 
-        if (territory.volume < max && wasCollector > 0) {
+  //       if (territory.volume < max && wasCollector > 0) {
 
-          let egg = eggs.find(data => data.id === eggsArr[i].id);
-          if (egg.count > 0) egg.count--;
+  //         let milkArr = milks.find(data => data.id === milkArr[i].id);
+  //         if (milkArr.count > 0) milkArr.count--;
 
-          territory.money += price;
-          territory.volume++;
-          break;
+  //         territory.money += price;
+  //         territory.volume++;
+  //         break;
 
-        }
+  //       }
         
-      }
+  //     }
       
-    }
+  //   }
 
-  }
+  // }
 
   // убираем яйца, которые собрали с поля
-  for (let i in eggs) {
+  // for (let i in milks) {
 
-    if (eggs[i].egg && eggs[i].count === 0) {
-      let egg = this.eggs.children.entries.find((data: any) => data._id === eggs[i].id);
-      egg.destroy();
-    }
+  //   if (milks[i].milk && milks[i].count === 0) {
+  //     let milk = this.milks.children.entries.find((data: any) => data._id === milks[i].id);
+  //     milk.destroy();
+  //   }
 
-  }
+  // }
 
   // ложим остатки яиц на поле
-  let remainingEggs: number[] = [];
-  for (let i in eggs) {
-    for (let j: number = 0; j < eggs[i].count; j++) {
-      if (!eggs[i].egg) {
-        remainingEggs.push(eggs[i].type);
-      }
-    }
-  }
+  // let remainingMilk: number[] = [];
+  // for (let i in milks) {
+  //   for (let j: number = 0; j < milks[i].count; j++) {
+  //     if (!milks[i].milk) {
+  //       remainingMilk.push(milks[i].type);
+  //     }
+  //   }
+  // }
 
   // формируем свободные места на клетках
   let freeSpace: Iposition[] = [];
@@ -236,15 +236,15 @@ function autoprogress(load: boolean = false): void {
 
     if (territory.type === 2 || territory.type === 3) {
 
-      let count: number = this.settings.territoriesCowSettings.find((item: IterritoriesCowSettings) => item.improve === territory.improve).countEggs;
+      let count: number = this.settings.territoriesCowSettings.find((item: IterritoriesCowSettings) => item.improve === territory.improve).countMilks;
       let minX: number = (territory.position - 1) * 240 + indent;
       let maxX: number = territory.position * 240 - indent;
       let minY: number = territory.block * 240 + indent;
       let maxY: number = (territory.block + 1) * 240 - indent;
 
-      for (let j in this.eggs.children.entries) {
-        let egg = this.eggs.children.entries[j];
-        if (egg.x > minX && egg.x < maxX && egg.y > minY && egg.y < maxY) count--;
+      for (let j in this.milk.children.entries) {
+        let milk = this.mliks.children.entries[j];
+        if (milk.x > minX && milk.x < maxX && milk.y > minY && milk.y < maxY) count--;
       }
 
       for (let j: number = 0; j < count; j++) {
@@ -259,25 +259,25 @@ function autoprogress(load: boolean = false): void {
   }
   
   // ставим оставшиеся яйца на поле
-  let index: number = 0;
-  for (let i in freeSpace) {
+  // let index: number = 0;
+  // for (let i in freeSpace) {
 
-    if (typeof remainingEggs[index] === 'number') {
+  //   if (typeof remainingMilk[index] === 'number') {
 
-      let egg: IcowEgg = {
-        type: remainingEggs[index],
-        x: freeSpace[i].x,
-        y: freeSpace[i].y,
-        _id: 'local_' + randomString(18)
-      }
+  //     let milk: IcowMilk = {
+  //       type: remainingMilk[index],
+  //       x: freeSpace[i].x,
+  //       y: freeSpace[i].y,
+  //       _id: 'local_' + randomString(18)
+  //     }
 
-      this.getEgg(egg);
+  //     this.getMilk(milk);
 
-    } else break;
+  //   } else break;
 
-    index++;
+  //   index++;
 
-  }
+  // }
 
 }
 

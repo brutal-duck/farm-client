@@ -223,7 +223,7 @@ function world(): void {
     if (data.type === 5) {
 
       let percent: number = 0;
-      let max: number = this.state.cowSettings.territoriesCowSettings[data.improve - 1].eggStorage;
+      let max: number = this.state.cowSettings.territoriesCowSettings[data.improve - 1].milkStorage;
   
       if (data.volume > 0) {
         percent = data.volume / (max / 100);
@@ -344,14 +344,14 @@ function world(): void {
 
   // подгружаем коров
   this.state.cow.map((data: Icow) => {
-    this.getCow(data._id, data.type, data.x, data.y, data.counter, data.egg, data.diamond, data.vector, true);
+    this.getCow(data._id, data.type, data.x, data.y, data.counter, data.milk, data.diamond, data.vector, true);
   });
   
   // подгружаем яйца
-  this.eggs = this.physics.add.group();
-  this.state.cowEggs.map((data: IcowEgg) => {
-    this.getEgg(data);
-  });
+  this.milk = this.physics.add.group();
+  // this.state.cowMilk.map((data: IcowMilk) => {
+  //   this.getMilk(data);
+  // });
 
   // туториал, если нужен
   // if (this.state.userCow.tutorial === 0) {

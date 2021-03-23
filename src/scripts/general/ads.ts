@@ -125,7 +125,11 @@ function adReward(): void {
         time = this.state.chickenCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userChicken.collectorLevel).time * 2;
         this.state.userChicken.collector = time * 60;
 
-        // нет коров
+      } else if (this.state.farm === 'Cow') {
+        
+        type = 'milk_picker';
+        time = this.state.cowCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userCow.collectorLevel).time * 2;
+        this.state.userCow.collector = time * 60;
 
       } else if (this.state.farm === 'Event') {
         type = 'resource_catcher';

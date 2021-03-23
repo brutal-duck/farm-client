@@ -8,7 +8,6 @@ function autosave(): void {
   let tasks: Itasks[] = this.partTasks();
   let territories: Iterritories[] = [];
   let cow: Icow[] = [];
-  let eggs: IcowEgg[] = [];
 
   for (let i in this.territories.children.entries) {
 
@@ -27,16 +26,16 @@ function autosave(): void {
 
   for (let i in this.cow.children.entries) {
 
-    let chick = this.cow.children.entries[i];
+    let cw = this.cow.children.entries[i];
     cow.push({
-      _id: chick._id,
-      type: chick.type,
-      egg: chick.egg,
-      x: chick.x,
-      y: chick.y,
-      counter: chick.counter,
-      diamond: chick.diamond,
-      vector: chick.vector
+      _id: cw._id,
+      type: cw.type,
+      milk: cw.milk,
+      x: cw.x,
+      y: cw.y,
+      counter: cw.counter,
+      diamond: cw.diamond,
+      vector: cw.vector
     });
 
   }
@@ -66,24 +65,13 @@ function autosave(): void {
 
   }
 
-  for (let i in this.eggs.children.entries) {
 
-    let egg = this.eggs.children.entries[i];
-    eggs.push({
-      _id: egg._id,
-      x: Math.round(egg.x),
-      y: Math.round(egg.y),
-      type: egg.type
-    });
-
-  }
-
+  // Не использовалось
   // localStorage.user = JSON.stringify(this.state.user);
   // localStorage.userCow = JSON.stringify(this.state.userCow);
   // localStorage.cowTasks = JSON.stringify(tasks);
   // localStorage.cowTerritories = JSON.stringify(territories);
   // localStorage.cow = JSON.stringify(cow);
-  // localStorage.cowEggs = JSON.stringify(eggs);
   // localStorage.cowTime = Math.round(new Date().getTime() / 1000);
   // localStorage.dailyAwards = JSON.stringify(this.state.dailyAwards);
 
@@ -95,34 +83,34 @@ function autosave(): void {
     territories: territories,
     cow: cow,
     user: user,
-    eggs: eggs,
     dailyAwards: this.state.dailyAwards,
   }
-  // axios.post(process.env.API + "/cow/autoSave", data)
-  // .then((res) => {
+
+  axios.post(process.env.API + "/cow/autoSave", data)
+  .then((res) => {
     
-  //   if (this.scene.isActive('Cow')) {
+    if (this.scene.isActive('Cow')) {
 
-  //     if (res.data.error) this.logout();
-  //     else {
+      if (res.data.error) this.logout();
+      else {
 
-  //       if (this.state.user.hash === 'local') {
+        if (this.state.user.hash === 'local') {
           
-  //         this.state.user.id = res.data.newUser._id;
-  //         this.state.user.hash = res.data.newUser.hash;
-  //         this.state.user.counter = res.data.newUser.counter;
+          this.state.user.id = res.data.newUser._id;
+          this.state.user.hash = res.data.newUser.hash;
+          this.state.user.counter = res.data.newUser.counter;
 
-  //         if (this.state.platform === 'web') {
-  //           document.cookie = "farmHASH=" + this.state.user.hash + "; expires=" + res.data.expires + "; path=/;";
-  //         }
+          if (this.state.platform === 'web') {
+            document.cookie = "farmHASH=" + this.state.user.hash + "; expires=" + res.data.expires + "; path=/;";
+          }
 
-  //       }
-  //       if (res.data.donate) this.state.donate = true; 
-  //     }
+        }
+        if (res.data.donate) this.state.donate = true; 
+      }
       
-  //   }
+    }
 
-  // });
+  });
 
 }
 

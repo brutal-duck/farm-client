@@ -698,7 +698,12 @@ function buyNextFarm(): void {
     // progress = this.state.progress.chicken;
     // farm = 'Chicken';
 
-    // нет коров
+  } else if (this.state.farm === 'Cow') {
+
+    user = this.state.userCow;
+    // progress = this.state.progress.cow;
+    // farm = 'Cow';
+
   } 
 
   if (progress.donate) {
@@ -855,7 +860,6 @@ function getNewbieAward(): void {
 
     }
 
-    // нет коров
     if (i === 5 && this.state.dailyAwards[i] && this.state.farm === 'Chicken') {
 
       let type: number = this.state.userChicken.fair + 1;
@@ -877,7 +881,6 @@ function getNewbieAward(): void {
 
     }
 
-    // нет коров
     if (i === 6 && this.state.dailyAwards[i] && this.state.farm === 'Chicken') {
 
       this.state.dailyAwards[i] = false;

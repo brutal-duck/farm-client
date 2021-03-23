@@ -238,18 +238,18 @@ let cowSettings: IcowSettings = {
     { sort: 16, award: 10, improve_territory_2: 350591000, improve_territory_3: 701182000, improve_territory_4: 1402364000, collector: 30 }
   ],
   cowSettings: [
-    { breed: 1, drinking: 2, eating: 10, egg: 100, eggPrice: 100 },
-    { breed: 2, drinking: 2, eating: 11, egg: 100, eggPrice: 200 },
-    { breed: 3, drinking: 3, eating: 12, egg: 100, eggPrice: 400 },
-    { breed: 4, drinking: 3, eating: 13, egg: 100, eggPrice: 800 },
-    { breed: 5, drinking: 3, eating: 14, egg: 100, eggPrice: 1600 },
-    { breed: 6, drinking: 3, eating: 15, egg: 100, eggPrice: 3200 },
-    { breed: 7, drinking: 4, eating: 17, egg: 100, eggPrice: 6400 },
-    { breed: 8, drinking: 4, eating: 19, egg: 100, eggPrice: 12800 },
-    { breed: 9, drinking: 5, eating: 21, egg: 100, eggPrice: 25600 },
-    { breed: 10, drinking: 5, eating: 23, egg: 100, eggPrice: 51200 },
-    { breed: 11, drinking: 6, eating: 25, egg: 100, eggPrice: 102400 },
-    { breed: 12, drinking: 7, eating: 28, egg: 100, eggPrice: 204800 }
+    { breed: 1, drinking: 2, eating: 10, milk: 100, milkPrice: 100 },
+    { breed: 2, drinking: 2, eating: 11, milk: 100, milkPrice: 200 },
+    { breed: 3, drinking: 3, eating: 12, milk: 100, milkPrice: 400 },
+    { breed: 4, drinking: 3, eating: 13, milk: 100, milkPrice: 800 },
+    { breed: 5, drinking: 3, eating: 14, milk: 100, milkPrice: 1600 },
+    { breed: 6, drinking: 3, eating: 15, milk: 100, milkPrice: 3200 },
+    { breed: 7, drinking: 4, eating: 17, milk: 100, milkPrice: 6400 },
+    { breed: 8, drinking: 4, eating: 19, milk: 100, milkPrice: 12800 },
+    { breed: 9, drinking: 5, eating: 21, milk: 100, milkPrice: 25600 },
+    { breed: 10, drinking: 5, eating: 23, milk: 100, milkPrice: 51200 },
+    { breed: 11, drinking: 6, eating: 25, milk: 100, milkPrice: 102400 },
+    { breed: 12, drinking: 7, eating: 28, milk: 100, milkPrice: 204800 }
   ],
   territoriesCowPrice: [
     { block: 1, position: 1, price: 0, unlock: 1 },
@@ -278,10 +278,10 @@ let cowSettings: IcowSettings = {
     { block: 8, position: 3, price: 733054000, unlock: 16 }
   ],
   territoriesCowSettings: [
-    { improve: 1, regeneration: 11, countEggs: 5, unlock_improve: 1, eggStorage: 200 },
-    { improve: 2, regeneration: 22, countEggs: 5, unlock_improve: 2, eggStorage: 700 },
-    { improve: 3, regeneration: 33, countEggs: 5, unlock_improve: 5, eggStorage: 1500 },
-    { improve: 4, regeneration: 44, countEggs: 5, unlock_improve: 8, eggStorage: 4000 }
+    { improve: 1, regeneration: 11, countMilk: 5, unlock_improve: 1, milkStorage: 200 },
+    { improve: 2, regeneration: 22, countMilk: 5, unlock_improve: 2, milkStorage: 700 },
+    { improve: 3, regeneration: 33, countMilk: 5, unlock_improve: 5, milkStorage: 1500 },
+    { improve: 4, regeneration: 44, countMilk: 5, unlock_improve: 8, milkStorage: 4000 }
   ]
 }
 
