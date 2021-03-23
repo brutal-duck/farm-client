@@ -486,10 +486,10 @@ function collectEgg(egg: any, manualСollect: boolean = false): void {
       this.state.userChicken.money += price;
       egg.destroy();
 
-      this.game.scene.keys['ChickenBars'].plusMoneyAnimation({
+      this.game.scene.keys['ChickenBars'].getCurrency({
         x: egg.x,
         y: egg.y - 50
-      });
+      }, 3, 'chickenCoin');
 
       this.tryTask(11, 0);
 
@@ -557,7 +557,7 @@ function collectEgg(egg: any, manualСollect: boolean = false): void {
       farm_id: this.state.farm
     });
 
-    this.game.scene.keys['ChickenBars'].plusDiamondsAnimation(position);
+    this.game.scene.keys['ChickenBars'].plusCurrencyAnimation(position, 'diamond');
     this.state.user.diamonds++;
     egg.destroy();
     this.tryTask(19, 0);

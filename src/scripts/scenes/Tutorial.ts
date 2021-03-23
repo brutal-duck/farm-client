@@ -625,7 +625,7 @@ class Tutorial extends Phaser.Scene {
             color: '#FFFFFF'
           }).setOrigin(0.5, 0.5).setDepth(this.height);
           this.clickShopBtn({ btn: done, title: takeText, img: false }, (): void => {
-            this.game.scene.keys[this.state.farm + 'Bars'].getDiamonds({ x: done.x, y: done.y }, task.diamonds);
+            this.game.scene.keys[this.state.farm + 'Bars'].getCurrency({ x: done.x, y: done.y }, task.diamonds, 'diamond');
             this.game.scene.keys[this.state.farm].doneTutor_60();
           });
 

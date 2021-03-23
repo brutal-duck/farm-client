@@ -808,7 +808,7 @@ class TaskBoard {
         img: false
       }, (): void => {
         if (icon === 'diamond') {
-          this.scene.getDiamonds({ x: this.done.x, y: this.done.y }, task.diamonds);
+          this.scene.getCurrency({ x: this.done.x, y: this.done.y }, task.diamonds, 'diamond');
         } else if (icon === 'sheepCoin') {
           this.scene.plusMoneyAnimation({ x: this.done.x, y: this.done.y });
         }

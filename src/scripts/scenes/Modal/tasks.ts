@@ -162,7 +162,7 @@ function tasksWindow(): void {
 
       this.clickShopBtn({ btn: takeButton, title: takeText, img: false }, (): void => {
         if (iconTexture === 'diamond') {
-          this.game.scene.keys[this.state.farm + 'Bars'].getDiamonds(position, tasks[i].task.diamonds);
+          this.game.scene.keys[this.state.farm + 'Bars'].getCurrency(position, tasks[i].task.diamonds, 'diamond');
         } else if (iconTexture === 'sheepCoin') {
           this.game.scene.keys[this.state.farm + 'Bars'].plusMoneyAnimation(position);
         }

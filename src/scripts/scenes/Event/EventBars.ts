@@ -26,7 +26,7 @@ import {
   menuAnimation,
   pulseBalance,
   increaseDiamonds,
-  plusDiamondsAnimation,
+  plusCurrencyAnimation,
   calendarAnimation,
   newbieAwardAnimation,
   plusDiamonds,
@@ -91,7 +91,7 @@ class EventBars extends Phaser.Scene {
   public pulseBalance = pulseBalance.bind(this);
   public buildMenu = buildMenu.bind(this);
   public increaseDiamonds = increaseDiamonds.bind(this);
-  public plusDiamondsAnimation = plusDiamondsAnimation.bind(this);
+  public plusCurrencyAnimation = plusCurrencyAnimation.bind(this);
   public socialButtons = socialButtons.bind(this);
   public calendarAnimation = calendarAnimation.bind(this);
   public newbieAwardAnimation = newbieAwardAnimation.bind(this);

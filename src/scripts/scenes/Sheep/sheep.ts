@@ -631,7 +631,7 @@ function collectWool(sheep: any, manualСollect: boolean = false): void {
 
     sheep.wool = 0;
     sheep.diamond++;
-    this.game.scene.keys['SheepBars'].plusDiamondsAnimation(position);
+    this.game.scene.keys['SheepBars'].plusCurrencyAnimation(position, 'diamonds');
     this.state.user.diamonds++;
     this.tryTask(19, 0);
 

@@ -189,7 +189,8 @@ class Shop extends Phaser.Scene {
   public create(): void {
 
     this.scene.launch('ShopBars', this.state);
-
+    this.game.scene.keys['Modal'].add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + 70, 'shop-window');
+    
     this.height = Number(this.game.config.height);
 
     let cameraOptions = {

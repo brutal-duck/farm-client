@@ -281,20 +281,20 @@ function increaseDiamonds(): void {
 
 
 // анимация монет от позиции
-function plusDiamondsAnimation(position: Iposition): void {
+function plusCurrencyAnimation(position: Iposition, texture: string): void {
   
   let y = position.y - this.game.scene.keys[this.state.farm].scrolling.scrollY;
 
-  let diamond = this.сurrency.create(position.x, y, 'diamond').setScale(0.16);
+  let сurrency = this.сurrency.create(position.x, y, texture).setScale(0.16);
 
-  diamond.counter = 0;
+  сurrency.counter = 0;
 
   let target: Iposition = { x: 495, y: 30 }
   let aim: Phaser.Math.Vector2 = new Phaser.Math.Vector2();
   aim.x = target.x;
   aim.y = target.y;
-  let distance: number = Phaser.Math.Distance.Between(diamond.x, diamond.y, target.x, target.y) * 2;
-  this.physics.moveToObject(diamond, aim, distance);
+  let distance: number = Phaser.Math.Distance.Between(сurrency.x, сurrency.y, target.x, target.y) * 2;
+  this.physics.moveToObject(сurrency, aim, distance);
 
 }
 
@@ -735,7 +735,7 @@ function plusDiamonds(): void {
 
 
 // получения кристаллов
-function getDiamonds(position: Iposition, counter: number = 1): void {
+function getCurrency(position: Iposition, counter: number = 1, texture: string): void {
 
   if (counter > 5) counter = 5;
 
@@ -745,11 +745,13 @@ function getDiamonds(position: Iposition, counter: number = 1): void {
       x: Phaser.Math.Between(position.x - 30, position.x + 30),
       y: Phaser.Math.Between(position.y - 30, position.y + 30),
     }
-    this.plusDiamondsAnimation(pos);
+    this.plusCurrencyAnimation(pos, texture);
     if (counter <= 0) time.remove(false);
   }, callbackScope: this, loop: true });
 
 }
+
+
 
 function improveCollectorAnim(position: Iposition): void {
   let icon: string;
@@ -783,7 +785,7 @@ export {
   cave,
   pulseBalance,
   increaseDiamonds,
-  plusDiamondsAnimation,
+  plusCurrencyAnimation,
   dragSheep,
   hearts,
   showSheepSprite,
@@ -791,6 +793,6 @@ export {
   newbieAwardAnimation,
   caveIconsAnimation,
   plusDiamonds,
-  getDiamonds,
+  getCurrency,
   improveCollectorAnim
 }
