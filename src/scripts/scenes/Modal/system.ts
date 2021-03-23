@@ -63,6 +63,8 @@ function systemWindow(): void {
         this.sheep();
       } else if (this.state.farm === 'Chicken') {
         this.chicken();
+      } else if (this.state.farm === 'Cow') {
+        this.cow();
       }
       break;
 
@@ -72,6 +74,8 @@ function systemWindow(): void {
         this.sheepTerritory();
       } else if (this.state.farm === 'Chicken') {
         this.chickenTerritory();
+      } else if (this.state.farm === 'Cow') {
+        this.cowTerritory();
       } else if (this.state.farm === 'Event') {
         this.eventTerritory();
       }
@@ -95,6 +99,8 @@ function systemWindow(): void {
         this.sheepConvertor();
       } else if (this.state.farm === 'Chicken') {
         this.chickenConvertor();
+      } else if (this.state.farm === 'Cow') {
+        this.cowConvertor();
       } else if (this.state.farm === 'Event') {
         this.eventConvertor();
       }
@@ -107,6 +113,8 @@ function systemWindow(): void {
         this.confirmSheepExchangeTerritory();
       } else if (this.state.farm === 'Chicken') {
         this.confirmChickenExchangeTerritory();
+      } else if (this.state.farm === 'Cow') {
+        this.confirmCowExchangeTerritory();
       }
 
       break;
@@ -117,6 +125,8 @@ function systemWindow(): void {
         this.confirmExpelSheep();
       } else if (this.state.farm === 'Chicken') {
         this.confirmExpelChicken();
+      } else if (this.state.farm === 'Cow') {
+        this.confirmExpelCow();
       } else if (this.state.farm === 'Event') {
         this.confirmExpelAnimal();
       }
@@ -129,6 +139,8 @@ function systemWindow(): void {
         this.sheepProfile();
       } else if (this.state.farm === 'Chicken') {
         this.chickenProfile();
+      } else if (this.state.farm === 'Cow') {
+        this.cowProfile();
       } else if (this.state.farm === 'Event') {
         this.eventProfile();
       }
@@ -156,6 +168,8 @@ function systemWindow(): void {
         this.diamondSheepAd();
       } else if (this.state.farm === 'Chicken') {
         this.diamondChickenAd();
+      } else if (this.state.farm === 'Cow') {
+        this.diamondCowAd();
       }
       
       break;
@@ -166,6 +180,8 @@ function systemWindow(): void {
         this.improveCollectorSheep();
       } else if (this.state.farm === 'Chicken') {
         this.improveCollectorChicken();
+      } else if (this.state.farm === 'Cow') {
+        this.improveCollectorCow();
       } else if (this.state.farm === 'Event') {
         this.improveCollectorEvent();
       }
@@ -177,6 +193,8 @@ function systemWindow(): void {
         this.sheepWoolRepositoryExchange();
       } else if (this.state.farm === 'Chicken') {
         this.chickenEggRepositoryExchange();
+      } else if (this.state.farm === 'Cow') {
+        this.cowMilkRepositoryExchange();
       }
       break;
     
@@ -232,6 +250,43 @@ function chickenTerritory(): void {
 
     case 5: // хранилище яиц
       this.chickenEggsRepository();
+      break;
+
+    default:
+      this.scene.stop();
+      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+      break;
+  }
+
+}
+
+// окно коровьей территории
+function cowTerritory(): void {
+  
+  switch (this.state.territory.type) {
+
+    case 0: // территория для покупки
+      this.buyCowTerritory();
+      break;
+
+    case 1: // купленная земля
+      this.boughtCowLand();
+      break;
+
+    case 2: // пастбище
+      this.cowPasture();
+      break;
+      
+    case 3: // поилка
+      this.cowWater();
+      break;
+
+    case 4: // ярмарка
+      this.cowFair();
+      break;
+
+    case 5: // хранилище яиц
+      this.cowMilkRepository();
       break;
 
     default:
@@ -323,6 +378,7 @@ function resizeWindowTop(height: number): void {
 export {
   systemWindow,
   chickenTerritory,
+  cowTerritory,
   sheepTerritory,
   resizeWindow,
   resizeWindowTop,

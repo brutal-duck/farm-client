@@ -47,6 +47,7 @@ class Boot extends Phaser.Scene {
 
       if ((this.state.farm === 'Sheep' && this.scene.isActive('Sheep')) ||
         (this.state.farm === 'Chicken' && this.scene.isActive('Chicken')) ||
+        (this.state.farm === 'Cow' && this.scene.isActive('Cow')) ||
         (this.state.farm === 'Event' && this.scene.isActive('Event'))) {
         this.game.scene.keys[this.state.farm].autosave();
       }
@@ -172,7 +173,8 @@ class Boot extends Phaser.Scene {
     this.scene.stop();
 
     if (localStorage.farm === 'Sheep' ||
-      localStorage.farm === 'Chicken') {
+      localStorage.farm === 'Chicken' ||
+      localStorage.farm === 'Cow') {
       this.scene.start(localStorage.farm + 'Preload', this.state);
     } else {
       this.scene.start('SheepPreload', this.state);

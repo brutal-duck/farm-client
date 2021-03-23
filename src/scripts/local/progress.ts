@@ -1,10 +1,12 @@
-import { sheepSettings, chickenSettings } from './settings';
+import { sheepSettings, chickenSettings, cowSettings } from './settings';
 
 export default (): Iprogress => {
 
   let sheepPart: number = 1;
   let chickenPart: number = 0;
+  let cowPart: number = 0;
   let openChicken: boolean = false;
+  let openCow: boolean = false;
   let eventMaxLevelAnimal: number = 0
 
   if (localStorage.userSheep) sheepPart = JSON.parse(localStorage.userSheep).part;
@@ -13,6 +15,13 @@ export default (): Iprogress => {
 
     chickenPart = JSON.parse(localStorage.userChicken).part;
     if (chickenPart > 0) openChicken = true;
+
+  }
+
+  if (localStorage.userCow) {
+
+    cowPart = JSON.parse(localStorage.userCow).part;
+    if (cowPart > 0) openCow = true;
 
   }
 
@@ -29,6 +38,14 @@ export default (): Iprogress => {
       part: chickenPart,
       max: chickenSettings.chickenParts.length,
       open: openChicken,
+      price: 300000000,
+      unlock: 8,
+      donate: false
+    },
+    cow: {
+      part: cowPart,
+      max: cowSettings.cowParts.length,
+      open: openCow,
       price: 300000000,
       unlock: 8,
       donate: false

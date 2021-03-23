@@ -87,6 +87,10 @@ function changeSprite(territory: any): void {
 
       max = this.state.chickenSettings.territoriesChickenSettings[territory.improve - 1].eggStorage;
 
+    } else if (this.state.farm === 'Cow') {
+
+      max = this.state.cowSettings.territoriesCowSettings[territory.improve - 1].eggStorage;
+
     }
 
     if (territory.volume > 0) {
@@ -135,7 +139,7 @@ function changeSprite(territory: any): void {
 function fairLevelUp(): void {
 
   let fairs: IfairLevel[] = [];
-  let user: IuserSheep | IuserChicken;
+  let user: IuserSheep | IuserChicken | IuserCow;
   let updateAnimalBuy: any;
 
   if (this.state.farm === 'Sheep') {
@@ -154,6 +158,15 @@ function fairLevelUp(): void {
     updateAnimalBuy = (): void => {
       this.game.scene.keys['ChickenBars'].chickenBuy.setTexture('chicken-buy-icon-' + this.maxBreedForBuy());
       this.game.scene.keys['ChickenBars'].updateChickenPrice();
+    }
+    
+  } else if (this.state.farm === 'Cow') {
+
+    user = this.state.userCow;
+    fairs = this.state.cowSettings.cowFairLevels;
+    updateAnimalBuy = (): void => {
+      this.game.scene.keys['CowBars'].cowBuy.setTexture('cow-buy-icon-' + this.maxBreedForBuy());
+      this.game.scene.keys['CowBars'].updateCowPrice();
     }
     
   }
@@ -248,7 +261,7 @@ function fairLevelUp(): void {
 // улучшение территории
 function improveTerritory(): void {
 
-  let user: IuserSheep | IuserChicken;
+  let user: IuserSheep | IuserChicken | IuserCow;
   let territoriesSettings: any = [];
   let parts: Ipart[] = [];
 
@@ -263,6 +276,12 @@ function improveTerritory(): void {
     user = this.state.userChicken;
     territoriesSettings = this.state.chickenSettings.territoriesChickenSettings;
     parts = this.state.chickenSettings.chickenParts;
+    
+  } else if (this.state.farm === 'Cow') {
+
+    user = this.state.userCow;
+    territoriesSettings = this.state.cowSettings.territoriesCowSettings;
+    parts = this.state.cowSettings.cowParts;
     
   }
 
@@ -367,7 +386,7 @@ function improveTerritory(): void {
 // смена территории
 function exchangeTerritory(): void {
 
-  let user: IuserSheep | IuserChicken;
+  let user: IuserSheep | IuserChicken | IuserCow;
   let parts: Ipart[] = [];
   let sell: any;
   let farm: string = this.state.farm.toLowerCase();
@@ -382,6 +401,12 @@ function exchangeTerritory(): void {
 
     user = this.state.userChicken;
     parts = this.state.chickenSettings.chickenParts;
+    sell = (): void => this.sellEggs();
+    
+  } else if (this.state.farm === 'Cow') {
+
+    user = this.state.userCow;
+    parts = this.state.cowSettings.cowParts;
     sell = (): void => this.sellEggs();
     
   }
@@ -555,6 +580,11 @@ function deleteTerritoriesLocks(): void {
     part = this.state.userChicken.part;
     prices = this.state.chickenSettings.territoriesChickenPrice;
     
+  } else if (this.state.farm === 'Cow') {
+
+    part = this.state.userCow.part;
+    prices = this.state.cowSettings.territoriesCowPrice;
+    
   }
 
   for (let i in this.territories.children.entries) {
@@ -704,7 +734,7 @@ function checkExchangeRepository(territory: any): boolean {
 // покупка земли
 function buyTerritory(): void {
 
-  let user: IuserSheep | IuserChicken;
+  let user: IuserSheep | IuserChicken | IuserCow;
   let settings: IterritoriesPrice;
 
   if (this.state.farm === 'Sheep') {
@@ -716,6 +746,11 @@ function buyTerritory(): void {
 
     user = this.state.userChicken;
     settings = this.state.chickenSettings.territoriesChickenPrice.find((data: IterritoriesPrice) => data.block === this.state.territory.block && data.position === this.state.territory.position);
+    
+  } else if (this.state.farm === 'Cow') {
+
+    user = this.state.usercow;
+    settings = this.state.cowSettings.territoriesCowPrice.find((data: IterritoriesPrice) => data.block === this.state.territory.block && data.position === this.state.territory.position);
     
   }
 

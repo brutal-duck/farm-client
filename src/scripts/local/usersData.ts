@@ -53,8 +53,25 @@ let userChicken: IuserChicken = {
   feedBoostTime: 0
 }
 
+let userCow: IuserCow = {
+  money: 1000,
+  fair: 1,
+  part: 1,
+  countCow: 0,
+  collector: 0,
+  collectorLevel: 1,
+  collectorTakenTime: 0,
+  diamondAnimalTime: 0,
+  tutorial: 0,
+  autosaveCounter: 0,
+  diamondAnimalAd: true,
+  takenHerdBoost: 0,
+  feedBoostTime: 0
+}
+
 export {
   userData,
   userSheep,
-  userChicken
+  userChicken,
+  userCow
 }

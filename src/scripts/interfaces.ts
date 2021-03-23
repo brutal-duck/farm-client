@@ -64,6 +64,27 @@ interface IchickenUserAutoSave {
   status: string;
 
 }
+interface IcowUserAutoSave {
+  diamonds: number;
+  xp: number;
+  money: number;
+  fair: number;
+  part: number;
+  countCow: number;
+  collector: number;
+  collectorLevel: number;
+  diamondCowTime: number;
+  tutorial: number;
+  additional_tutorial: IadditionalTutorial;
+  taken_reward: boolean;
+  autosaveCounter: number;
+  diamondCowAd: boolean;
+  takenHerdBoost: number;
+  feedBoostTime: number;
+  eventPoints: number;
+  status: string;
+
+}
 interface IeventUserAutoSave {
   diamonds: number;
   xp: number;
@@ -135,6 +156,21 @@ interface IuserChicken {
   takenHerdBoost: number;
   feedBoostTime: number;
 }
+interface IuserCow {
+  money: number;
+  fair: number;
+  part: number;
+  countCow: number;
+  collector: number;
+  collectorLevel: number;
+  collectorTakenTime: number;
+  diamondAnimalTime: number;
+  tutorial: number;
+  autosaveCounter: number;
+  diamondAnimalAd: boolean;
+  takenHerdBoost: number;
+  feedBoostTime: number;
+}
 interface IuserEvent {
   money: bigint;
   countAnimal: { counter: number }[];
@@ -185,6 +221,16 @@ interface Ichicken {
   vector: number;
   _id?: string;
 }
+interface Icow {
+  type: number;
+  milk: number;
+  x: number;
+  y: number;
+  counter: number;
+  diamond: number;
+  vector: number;
+  _id?: string;
+}
 interface IeventAnimal {
   type: number;
   x: number;
@@ -200,6 +246,12 @@ interface IactiveEventAnimal{
   counter: number;
 }
 interface IchickenEgg {
+  _id?: any;
+  type: number;
+  x: number;
+  y: number;
+}
+interface IcowMilk {
   _id?: any;
   type: number;
   x: number;
@@ -227,6 +279,14 @@ interface IchickenPoints {
   eggPrice: number;
   id?: any;
 }
+interface IcowPoints {
+  breed: number;
+  drinking: number;
+  eating: number;
+  milk: number;
+  milkPrice: number;
+  id?: any;
+}
 interface IeventPoints {
   breed: number;
   resource: number;
@@ -248,6 +308,14 @@ interface IterritoriesChickenSettings {
   countEggs: number;
   unlock_improve: number;
   eggStorage: number;
+  id?: any;
+}
+interface IterritoriesCowSettings {
+  improve: number;
+  regeneration: number;
+  countMilk: number;
+  unlock_improve: number;
+  milkStorage: number;
   id?: any;
 }
 interface IterritoriesEventSettings {
@@ -322,6 +390,23 @@ interface IchickenSettings {
   unlockCollector4: number;
   unlockCollector12: number;
   chickenDiamondsTime: number;
+  feedBoostPrice: number;
+}
+interface IcowSettings {
+  cowBadPercent: number;
+  cowPrice: number;
+  cowSettings: IcowPoints[];
+  territoriesCowPrice: IterritoriesPrice[];
+  territoriesCowSettings: IterritoriesCowSettings[];
+  cowFairLevels: IfairLevel[];
+  cowParts: Ipart[];
+  buyBetterBreedCow: number;
+  doubledСollectorPrice: number;
+  collectorPrice4: number;
+  collectorPrice12: number;
+  unlockCollector4: number;
+  unlockCollector12: number;
+  cowDiamondsTime: number;
   feedBoostPrice: number;
 }
 interface IeventSettings {
@@ -427,6 +512,7 @@ interface IeventProgress {
 interface Iprogress {
   sheep: IpartProgress;
   chicken: IpartProgress;
+  cow: IpartProgress;
   event: IeventProgress;
 }
 interface IcollectorSettings {
@@ -478,14 +564,18 @@ interface Istate {
   timeToNewDay: number;
   sheepSettings: IsheepSettings;
   chickenSettings: IchickenSettings;
+  cowSettings: IcowSettings;
   eventSettings: IeventSettings;
   chickenTerritories: Iterritories[];
+  cowTerritories: Iterritories[];
   sheepTerritories: Iterritories[];
   eventTerritories: IeventTerritories[];
   sheep: Isheep[];
   chicken: Ichicken[];
+  cow: Icow[];
   eventAnimals: IeventAnimal[];
   chickenEggs: IchickenEgg[];
+  cowMilk: IcowMilk[];
   eventResources: IeventResource[];
   lang: any;
   modal: Imodal;
@@ -494,6 +584,7 @@ interface Istate {
   user: Iuser;
   userSheep: IuserSheep;
   userChicken: IuserChicken;
+  userCow: IuserCow;
   userEvent: IuserEvent;
   convertor: Iconvertor;
   exchangeTerritory: number;
@@ -501,6 +592,7 @@ interface Istate {
   packages: Ipackage[];
   sheepTasks: Itasks[];
   chickenTasks: Itasks[];
+  cowTasks: Itasks[];
   name: string;
   avatar: string;
   socket: any;
@@ -521,6 +613,7 @@ interface Istate {
   vkId: number;
   sheepCollectorSettings: IcollectorSettings[];
   chickenCollectorSettings: IcollectorSettings[];
+  cowCollectorSettings: IcollectorSettings[];
   eventCollectorSettings: IcollectorSettings[];
   adBlock: boolean;
   adman: any;

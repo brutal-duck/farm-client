@@ -1,10 +1,12 @@
 // карта
 let sheepCoin: any = require("./../../assets/images/sheep/icons/money.png");
 let chickenCoin: any = require("./../../assets/images/chicken/icons/money.png");
+let cowCoin: any = require("./../../assets/images/cow/icons/money.png");
 let back: any = require("./../../assets/images/icons/back.png");
 let map: any = require("./../../assets/images/map.png");
 let mapLockIcon: any = require("./../../assets/images/icons/map-lock-icon.png");
 let mapChickenIcon: any = require("./../../assets/images/icons/map-chicken-icon.png");
+let mapCowIcon: any = require("./../../assets/images/icons/map-cow-icon.png");
 let mapSheepIcon: any = require("./../../assets/images/icons/map-sheep-icon.png");
 let pointMap: any = require("./../../assets/images/icons/point-map.png");
 let pbChapterMap: any = require("./../../assets/images/modal/pb-chapter-map.png");
@@ -18,12 +20,14 @@ let shopTabActive: any = require("./../../assets/images/modal/shop-tab-active.pn
 let shopTab: any = require("./../../assets/images/modal/shop-tab.png");
 let iconShopSheep: any = require("./../../assets/images/sheep/icons/icon-shop-sheep.png");
 let iconShopChicken: any = require("./../../assets/images/chicken/icons/icon-shop-chicken.png");
+let iconShopCow: any = require("./../../assets/images/cow/icons/icon-shop-cow.png");
 let iconShopBoosts: any = require("./../../assets/images/icons/icon-shop-boosts.png");
 let bankPackage: any = require("./../../assets/images/modal/bank-package.png");
 let stockTape: any = require("./../../assets/images/modal/stock-tape.png");
 let shopBtn: any = require("./../../assets/images/modal/shop-btn.png");
 let sheepMoneyPackage: any = require("./../../assets/images/sheep/money-package.png");
 let chickenMoneyPackage: any = require("./../../assets/images/chicken/money-package.png");
+let cowMoneyPackage: any = require("./../../assets/images/cow/money-package.png");
 let animalShopBg: any = require("./../../assets/images/modal/animal-shop-bg.png");
 let shopWoolCollector: any = require("./../../assets/images/sheep/shop-wool-collector.png");
 let shopEggCollector: any = require("./../../assets/images/chicken/shop-egg-collector.png");
@@ -80,6 +84,7 @@ let bigButtonYellow: any = require("./../../assets/images/modal/btn_ly.png");
 let repositorySellBtn: any = require("./../../assets/images/modal/repository-sell-btn.png");
 let herdBoostRoadSheep: any = require("./../../assets/images/sheep/herd-boost-road-sheep.png");
 let herdBoostRoadChicken: any = require("./../../assets/images/chicken/herd-boost-road-chicken.png");
+let herdBoostRoadCow: any = require("./../../assets/images/cow/herd-boost-road-cow.png");
 let badMergingAnimation: any = require("./../../assets/images/bad-merging-animation.png");
 let boostWindowBg: any = require("./../../assets/images/boost/background.png");
 let boostCountdown: any = require("./../../assets/images/boost/countdown.png");
@@ -87,8 +92,10 @@ let boostLeaves: any = require("./../../assets/images/boost/leaves.png");
 let flags: any = require("./../../assets/images/modal/flags.png");
 let herdBoostSheepIcon: any = require("./../../assets/images/icons/sheep-herd-boost.png");
 let herdBoostChickenIcon: any = require("./../../assets/images/icons/chicken-herd-boost.png");
+let herdBoostCowIcon: any = require("./../../assets/images/icons/cow-herd-boost.png");
 let feedBoostSheepIcon: any = require("./../../assets/images/icons/sheep-feed-boost.png");
 let feedBoostChickenIcon: any = require("./../../assets/images/icons/chicken-feed-boost.png");
+let feedBoostCowIcon: any = require("./../../assets/images/icons/cow-feed-boost.png");
 let feedBoostEventIcon: any = require("./../../assets/images/icons/event-feed-boost.png");
 let herdBoostEventIcon: any = require("./../../assets/images/icons/event-herd-boost.png");
 let iconShopEvent: any = require("./../../assets/images/event/icons/icon-shop-event.png");
@@ -119,11 +126,13 @@ class Preload extends Phaser.Scene {
     // сцена - Map (карта)
     this.load.image('sheepCoin', sheepCoin);
     this.load.image('chickenCoin', chickenCoin);
+    this.load.image('cowCoin', cowCoin);
     this.load.image('back', back);
     this.load.image('map', map);
     this.load.image('map-lock-icon', mapLockIcon);
     this.load.image('map-sheep-icon', mapSheepIcon);
     this.load.image('map-chicken-icon', mapChickenIcon);
+    this.load.image('map-cow-icon', mapCowIcon);
     this.load.image('point-map', pointMap);
     this.load.image('pb-chapter-map', pbChapterMap);
     this.load.image('part-progress', partProgress);
@@ -141,15 +150,18 @@ class Preload extends Phaser.Scene {
     this.load.image('shop-window', shopWindow);
     if (this.state.farm === 'Sheep') this.load.image('icon-shop-sheep', iconShopSheep);
     if (this.state.farm === 'Chicken') this.load.image('icon-shop-chicken', iconShopChicken);
+    if (this.state.farm === 'Cow') this.load.image('icon-shop-cow', iconShopCow);
     this.load.image('icon-shop-boosts', iconShopBoosts);
     this.load.image('bank-package', bankPackage);
     this.load.image('stock-tape', stockTape);
     this.load.image('shop-btn', shopBtn);
     if (this.state.farm === 'Sheep') this.load.image('sheep-money-package', sheepMoneyPackage);
     if (this.state.farm === 'Chicken') this.load.image('chicken-money-package', chickenMoneyPackage);
+    if (this.state.farm === 'Cow') this.load.image('cow-money-package', cowMoneyPackage);
     this.load.image('animal-shop-bg', animalShopBg);
     if (this.state.farm === 'Sheep') this.load.image('shop-sheep-wool-collector', shopWoolCollector);
     if (this.state.farm === 'Chicken') this.load.image('shop-chicken-egg-collector', shopEggCollector);
+    if (this.state.farm === 'Cow') this.load.image('shop-cow-egg-collector', shopEggCollector);
     if (this.state.farm === 'Event') this.load.image('icon-shop-event', iconShopEvent);
     if (this.state.farm === 'Event') this.load.image('event-money-package', eventMoneyPackage);
     if (this.state.farm === 'Event') this.load.image('shop-event-resource-collector', shopResourceCollector);
@@ -215,6 +227,7 @@ class Preload extends Phaser.Scene {
     // буст "стадо"
     if (this.state.farm === 'Sheep') this.load.image('herd-boost-road-sheep', herdBoostRoadSheep);
     if (this.state.farm === 'Chicken') this.load.image('herd-boost-road-chicken', herdBoostRoadChicken);
+    if (this.state.farm === 'Cow') this.load.image('herd-boost-road-cow', herdBoostRoadCow);
     if (this.state.farm === 'Event') this.load.image('herd-boost-road-event', herdBoostRoadEvent);
     this.load.image('bad-merging-animation', badMergingAnimation);
     this.load.image('boost-window-bg', boostWindowBg);
@@ -223,8 +236,10 @@ class Preload extends Phaser.Scene {
     this.load.image('flags', flags);
     this.load.image('sheep-herd-boost-icon', herdBoostSheepIcon);
     this.load.image('chicken-herd-boost-icon', herdBoostChickenIcon);
+    this.load.image('cow-herd-boost-icon', herdBoostCowIcon);
     this.load.image('sheep-feed-boost-icon', feedBoostSheepIcon);
     this.load.image('chicken-herd-boost-icon', feedBoostChickenIcon);
+    this.load.image('cow-herd-boost-icon', feedBoostCowIcon);
     this.load.image('event-herd-boost-icon', herdBoostEventIcon);
     this.load.image('event-feed-boost-icon', feedBoostEventIcon);
     this.load.image('unicorn-status', unicornStatus);

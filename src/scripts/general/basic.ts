@@ -331,6 +331,11 @@ function convertDiamonds(diamonds: number): number {
     fairLevels = this.state.chickenSettings.chickenFairLevels;
     fair = this.state.userChicken.fair;
 
+  } else if (this.state.farm === 'Cow') {
+
+    fairLevels = this.state.cowSettings.cowFairLevels;
+    fair = this.state.userCow.fair;
+
   }
 
   let exchange: number = fairLevels.find((item: IfairLevel) => item.level === fair).exchange;
@@ -354,6 +359,11 @@ function convertMoney(money: number): number {
     fairLevels = this.state.chickenSettings.chickenFairLevels;
     fair = this.state.userChicken.fair;
 
+  } else if (this.state.farm === 'Cow') {
+
+    fairLevels = this.state.cowSettings.cowFairLevels;
+    fair = this.state.userCow.fair;
+
   }
 
   let exchange: number = fairLevels.find((item: IfairLevel) => item.level === fair).exchange;
@@ -373,7 +383,7 @@ function convertMoney(money: number): number {
 // обмен и дальнейшая функция
 function exchange(ad: boolean = false): void {
 
-  let user: IuserSheep | IuserChicken;
+  let user: IuserSheep | IuserChicken | IuserCow;
   let buyAnimal: any;
 
   if (this.state.farm === 'Sheep') {
@@ -385,6 +395,11 @@ function exchange(ad: boolean = false): void {
 
     user = this.state.userChicken;
     buyAnimal = (): void => this.buyChicken(this.state.convertor.breed);
+
+  } else if (this.state.farm === 'Cow') {
+
+    user = this.state.userCow;
+    buyAnimal = (): void => this.buyCow(this.state.convertor.breed);
 
   }
   
@@ -448,7 +463,7 @@ function exchange(ad: boolean = false): void {
 // завершение главы
 function donePart(): void {
 
-  let user: IuserSheep | IuserChicken;
+  let user: IuserSheep | IuserChicken | IuserCow;
   let parts: Ipart[];
 
   if (this.state.farm === 'Sheep') {
@@ -460,6 +475,11 @@ function donePart(): void {
 
     user = this.state.userChicken;
     parts = this.state.chickenSettings.chickenParts;
+
+  } else if (this.state.farm === 'Cow') {
+
+    user = this.state.userCow;
+    parts = this.state.cowSettings.cowParts;
 
   }
 
@@ -514,6 +534,7 @@ function pickUpTaskReward(id: number): void {
 
   if (this.state.farm === 'Sheep') tasks = this.state.sheepTasks;
   else if (this.state.farm === 'Chicken') tasks = this.state.chickenTasks;
+  else if (this.state.farm === 'Cow') tasks = this.state.cowTasks;
 
   let task: Itasks = tasks.find((data: Itasks) => data.id === id);
   if (task?.done === 1 && task?.got_awarded === 0) {
@@ -547,6 +568,7 @@ function caveTimer(): void {
 
   if (this.state.farm === 'Sheep') user = this.state.userSheep;
   else if (this.state.farm === 'Chicken') user = this.state.userChicken;
+  else if (this.state.farm === 'Cow') user = this.state.userCow;
 
   if (user.diamondAnimalTime > 0) {
 
@@ -659,7 +681,7 @@ function checkStorage(hash: string): void {
 // покупка следующей фермы
 function buyNextFarm(): void {
 
-  let user: IuserSheep | IuserChicken;
+  let user: IuserSheep | IuserChicken | IuserCow;
   let progress: IpartProgress;
   let farm: string;
   let check: boolean = false;
@@ -675,6 +697,12 @@ function buyNextFarm(): void {
     user = this.state.userChicken;
     // progress = this.state.progress.chicken;
     // farm = 'Chicken';
+
+  } else if (this.state.farm === 'Cow') {
+
+    user = this.state.userCow;
+    // progress = this.state.progress.cow;
+    // farm = 'Cow';
 
   } 
 
@@ -925,7 +953,7 @@ function takeDonate(): void {
 
 function debug(): void {
 
-  let user: IuserSheep | IuserChicken;
+  let user: IuserSheep | IuserChicken | IuserCow;
 
   if (this.state.farm === 'Sheep') {
     user = this.state.userSheep;
@@ -965,6 +993,26 @@ function debug(): void {
     if (checkUsersData && !this.game.scene.keys[this.state.farm].debugLog) {
       this.game.scene.keys[this.state.farm].debugLog = true;
       sendDebug(this.state.userChicken, this.state, 'userChicken');
+    }
+
+  } else if (this.state.farm === 'Cow') {
+    user = this.state.userCow;
+
+    let checkUsersData: boolean = false;
+    if (typeof this.state.userCow.money !== 'number') checkUsersData = true;
+    if (typeof this.state.userCow.fair !== 'number') checkUsersData = true;
+    if (typeof this.state.userCow.part !== 'number') checkUsersData = true;
+    if (typeof this.state.userCow.collector !== 'number') checkUsersData = true;
+    if (typeof this.state.userCow.collectorLevel !== 'number') checkUsersData = true;
+    if (typeof this.state.userCow.collectorTakenTime !== 'number') checkUsersData = true;
+    if (typeof this.state.userCow.diamondAnimalTime !== 'number') checkUsersData = true;
+    if (typeof this.state.userCow.tutorial !== 'number') checkUsersData = true;
+    if (typeof this.state.userCow.autosaveCounter !== 'number') checkUsersData = true;
+    if (typeof this.state.userCow.diamondAnimalAd !== 'boolean') checkUsersData = true;
+    if (typeof this.state.userCow.countCow !== 'number') checkUsersData = true;
+    if (checkUsersData && !this.game.scene.keys[this.state.farm].debugLog) {
+      this.game.scene.keys[this.state.farm].debugLog = true;
+      sendDebug(this.state.userCow, this.state, 'userCow');
     }
 
   }
@@ -1017,7 +1065,8 @@ function loadingScreen(farmType: string): void {
   let general: number = 13; // Количество общих посказок
   let sheep: number = 7; // Количество посказок для овечьей фермы
   let chicken: number = 7; // Количество посказок для куриной фермы
-  let event: number = 4; // Количество посказок для куриной фермы
+  let cow: number = 7; // Количество посказок для коровьей фермы
+  let event: number = 4; // Количество посказок для евентовой фермы
   let helpArr: string[] = [];
 
   // Создаем массив с подсказками
@@ -1026,19 +1075,10 @@ function loadingScreen(farmType: string): void {
   }
   
   // Добавляем в массив подсказки в зависимости от типа фермы
-  if (farmType === 'Sheep') {
-    for (let i: number = 0; i < sheep; i++) {
-      helpArr.push(this.state.lang['helpSheep_' + String(i + 1)]);
-    }
-  } else if (farmType === 'Chicken') {
-    for (let i: number = 0; i < chicken; i++) {
-      helpArr.push(this.state.lang['helpChicken_' + String(i + 1)]);
-    }
-  } else if (farmType === 'Event') {
-    for (let i: number = 0; i < event; i++) {
-      helpArr.push(this.state.lang['helpEvent_' + String(i + 1)]);
-    }
-  }
+  if (farmType === 'Sheep') { for (let i: number = 0; i < sheep; i++) helpArr.push(this.state.lang['helpSheep_' + String(i + 1)]); }
+  else if (farmType === 'Chicken') { for (let i: number = 0; i < chicken; i++) helpArr.push(this.state.lang['helpChicken_' + String(i + 1)]); }
+  else if (farmType === 'Event') { for (let i: number = 0; i < event; i++) helpArr.push(this.state.lang['helpEvent_' + String(i + 1)]); }
+  else if (farmType === 'Cow') { for (let i: number = 0; i < cow; i++) helpArr.push(this.state.lang['helpCow_' + String(i + 1)]); }
 
   let helpText: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 100, helpArr[random(0, helpArr.length - 1)], {
     font: '26px Bip',
@@ -1132,21 +1172,25 @@ function spreadAnimals(): void {
   }
 
   // смотрим, где какая овца сидит
-  for (let i in this[animal].children.entries) {
+  if (this[animal] !== undefined) {
 
-    let c = this[animal].children.entries[i];
-    let territory = this.currentTerritory(c.x, c.y);
-
-    if (territory !== undefined) {
-      
-      territory = allTerritories.find(data => data._id === territory._id);
-
+    for (let i in this[animal].children.entries) {
+  
+      let c = this[animal].children.entries[i];
+      let territory = this.currentTerritory(c.x, c.y);
+  
       if (territory !== undefined) {
-        territory.count.push(this[animal].children.entries[i])
+        
+        territory = allTerritories.find(data => data._id === territory._id);
+  
+        if (territory !== undefined) {
+          territory.count.push(this[animal].children.entries[i])
+        }
+        
       }
       
     }
-    
+
   }
 
   // 2. ОТПРАВЛЯЕМ ОВЕЦ НА САМЫЕ НИЖНИЕ ТЕРРИТОРИИ

@@ -1,6 +1,7 @@
 import { shortNum, shortTime } from './general/basic';
 import SheepBars from './scenes/Sheep/SheepBars';
 import ChickenBars from './scenes/Chicken/ChickenBars';
+import CowBars from './scenes/Cow/CowBars';
 
 // бабл
 function createSpeechBubble(text: string, type: number = 1): void {
@@ -290,6 +291,8 @@ class Collector {
       time = shortTime(this.scene.state.userSheep.collector, this.scene.state.lang);
     } else if (this.scene.state.farm === 'Event') {
       time = shortTime(this.scene.state.userEvent.collector, this.scene.state.lang);
+    } else if (this.scene.state.farm === 'Cow') {
+      time = shortTime(this.scene.state.userCow.collector, this.scene.state.lang);
     }
 
     this.timeCollectorText = this.scene.add.text(230, this.scene.height - 43, time, {
@@ -310,7 +313,9 @@ class Collector {
       this.farmData = this.scene.state.userChicken;
     } else if (this.scene.state.farm === 'Event') {
       this.farmData = this.scene.state.userEvent;
-    }
+    } else if (this.scene.state.farm === 'Cow') {
+      this.farmData = this.scene.state.userCow;
+    } 
 
   }
 
@@ -400,7 +405,7 @@ function shopButton(x: number, y: number, text: string, icon: any = false): any 
     color: '#FFFFFF'
   }).setOrigin(0.5, 0.5);
 
-  if (icon === 'sheepCoin' || icon === 'chickenCoin' || icon === 'diamond' || icon === 'eventCoin') {
+  if (icon === 'sheepCoin' || icon === 'chickenCoin' || icon === 'diamond' || icon === 'eventCoin' || 'cowCoin') {
     img = this.add.image(title.getBounds().left - 25, y - 5, icon).setScale(0.15);
   }
 
@@ -510,7 +515,7 @@ function boostButton(
 // плашка заданий
 class TaskBoard {
 
-  public scene: SheepBars | ChickenBars;
+  public scene: SheepBars | ChickenBars | CowBars;
   public active: boolean;
   public status: number;
   public taskIcon: Phaser.GameObjects.Image;
@@ -537,7 +542,7 @@ class TaskBoard {
   public taskProgress: Phaser.GameObjects.Graphics;
 
   constructor(
-    scene: SheepBars | ChickenBars
+    scene: SheepBars | ChickenBars | CowBars
   ) {
     this.scene = scene;
     this.active = true;
@@ -558,12 +563,16 @@ class TaskBoard {
           if (!this.isGetTop) this.y--;
           else this.y++;
 
-          this.elements.forEach((el: any) => { // ПОМЕНЯТЬ ТИП
+          if (this.elements !== undefined) {
             
-            if (!this.isGetTop) el.setY(el.y - 1)
-            else el.setY(el.y + 1)
-
-          })
+            this.elements.forEach((el: any) => { // ПОМЕНЯТЬ ТИП
+              
+              if (!this.isGetTop) el.setY(el.y - 1)
+              else el.setY(el.y + 1)
+  
+            })
+            
+          }
 
           this.counter++
           
@@ -600,7 +609,7 @@ class TaskBoard {
     else this.status = 3;
 
     let stateParts: Ipart[];
-    let userData: IuserSheep | IuserChicken;
+    let userData: IuserSheep | IuserChicken | IuserCow;
     let countBreed: number;
 
     if (this.scene.state.farm === 'Chicken') {
@@ -614,6 +623,12 @@ class TaskBoard {
       stateParts = this.scene.state.sheepSettings.sheepParts;
       userData = this.scene.state.userSheep;
       countBreed = this.scene.state.sheepSettings.sheepSettings.length;
+      
+    } else if (this.scene.state.farm === 'Cow') {
+
+      stateParts = this.scene.state.cowSettings.cowParts;
+      userData = this.scene.state.userCow;
+      countBreed = this.scene.state.cowSettings.cowSettings.length;
       
     }
 

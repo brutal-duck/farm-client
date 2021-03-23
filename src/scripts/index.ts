@@ -10,6 +10,9 @@ import SheepBars from './scenes/Sheep/SheepBars';
 import ChickenPreload from './scenes/Chicken/ChickenPreload';
 import Chicken from './scenes/Chicken/Main';
 import ChickenBars from './scenes/Chicken/ChickenBars';
+import CowPreload from './scenes/Cow/CowPreload';
+import Cow from './scenes/Cow/Main';
+import CowBars from './scenes/Cow/CowBars';
 import Modal from './scenes/Modal/Modal';
 import Map from './scenes/Map';
 import MapBars from './scenes/MapBars';
@@ -83,6 +86,7 @@ window.onload = (): void => {
         Preload,
         SheepPreload, Sheep, SheepBars,
         ChickenPreload, Chicken, ChickenBars,
+        CowPreload, Cow, CowBars,
         EventPreload, Event, EventBars,
         Modal, 
         Map, MapBars,

@@ -95,6 +95,11 @@ function adReward(): void {
         this.getChicken(id, 0, x, y, 0, 500);
         type = 'crystall_chicken';
 
+      } else if (this.state.farm === 'Cow') {
+        
+        this.getCow(id, 0, x, y, 0, 500);
+        type = 'crystall_cow';
+
       }
 
       this.tryTask(18, 0);
@@ -119,6 +124,12 @@ function adReward(): void {
         type = 'egg_catcher';
         time = this.state.chickenCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userChicken.collectorLevel).time * 2;
         this.state.userChicken.collector = time * 60;
+
+      } else if (this.state.farm === 'Cow') {
+        
+        type = 'milk_picker';
+        time = this.state.cowCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userCow.collectorLevel).time * 2;
+        this.state.userCow.collector = time * 60;
 
       } else if (this.state.farm === 'Event') {
         type = 'resource_catcher';
