@@ -613,7 +613,6 @@ function newbieAwardAnimation(): void {
       if (this.state.daily === 4 && this.state.farm === 'Sheep') {
 
         if (this.scene.isActive('Modal')) this.scene.stop('Modal');
-        if (this.scene.isActive('Block')) this.scene.stop('Block');
         if (this.scene.isActive('Tutorial')) this.scene.stop('Tutorial');
         if (this.scene.isActive('Shop')) this.scene.stop('Shop');
         if (this.scene.isActive('ShopBars')) this.scene.stop('ShopBars');

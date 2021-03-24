@@ -300,7 +300,6 @@ function romanize (num: number): string {
 function logout(): void {
   
   if (this.scene.isActive('Modal')) this.scene.stop('Modal');
-  if (this.scene.isActive('Block')) this.scene.stop('Block');
   if (this.scene.isActive('Tutorial')) this.scene.stop('Tutorial');
   if (this.scene.isActive('MapBars')) this.scene.stop('MapBars');
   if (this.scene.isActive('Map')) this.scene.stop('Map');
@@ -518,7 +517,6 @@ function donePart(): void {
   this.time.addEvent({ delay: 1500, callback: (): void => {
 
     if (!this.scene.isActive('Modal') &&
-      !this.scene.isActive('Block') &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Map')) this.showTasks();
       
@@ -647,13 +645,6 @@ function socialButtons(): void {
       this.scene.isActive('Modal')) {
       this.scene.stop('Modal');
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-    }
-
-    let modal = document.querySelector('.modal');
-
-    if (modal && this.scene.isActive('Block')) {
-      this.scene.stop('Block');
-      modal.remove();
     }
 
   }
@@ -832,7 +823,6 @@ function getNewbieAward(): void {
 
       this.state.dailyAwards[i] = false;
       if (this.scene.isActive('Modal')) this.scene.stop('Modal');
-      if (this.scene.isActive('Block')) this.scene.stop('Block');
       if (this.scene.isActive('Tutorial')) this.scene.stop('Tutorial');
       if (this.scene.isActive('Shop')) this.scene.stop('Shop');
       if (this.scene.isActive('ShopBars')) this.scene.stop('ShopBars');

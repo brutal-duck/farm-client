@@ -182,7 +182,6 @@ function dailyAward(): void {
   if (check && checkBoost &&
     typeof this.state.daily === 'number' &&
     !this.scene.isActive('Modal') &&
-    !this.scene.isActive('Block') &&
     !this.scene.isActive('Tutorial') &&
     !this.scene.isActive('Map')) {
 

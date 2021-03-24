@@ -257,7 +257,6 @@ function interval(): void {
 
     // выдача наград новичка
     if (!this.scene.isActive('Modal') &&
-      !this.scene.isActive('Block') &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Map')) this.getNewbieAward();
 
@@ -289,7 +288,6 @@ function interval(): void {
 
     if (this.state.donate &&
       !this.scene.isActive('Modal') &&
-      !this.scene.isActive('Block') &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Map')) this.showDonate();
 
@@ -339,7 +337,6 @@ function interval(): void {
     if (this.state.progress.event.endTime <= 0 && 
       this.state.progress.event.eventPoints > 0 && this.state.progress.event.open &&
       !this.scene.isActive('Modal') && 
-      !this.scene.isActive('Block') &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Map')) { 
       
@@ -367,7 +364,6 @@ function interval(): void {
       if (this.state.user.additionalTutorial.eventTutorial === 0 &&
         !this.game.scene.keys[`${this.state.farm}Bars`].arrows?.active &&
         !this.scene.isActive('Modal') &&
-        !this.scene.isActive('Block') &&
         !this.scene.isActive('Tutorial') &&
         !this.scene.isActive('Map')) {
         this.game.scene.keys[`${this.state.farm}Bars`].showMapArrows();

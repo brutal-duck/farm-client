@@ -396,14 +396,12 @@ function arrowsBehavior(): void {
     this.arrows.update();
 
     if ((this.scene.isActive('Modal') ||
-      this.scene.isActive('Block') ||
       this.scene.isActive('Tutorial')) &&
       this.arrows.visible) {
       
       this.arrows.setVisible(false);
       
     } else if (!this.scene.isActive('Modal') &&
-      !this.scene.isActive('Block') &&
       !this.scene.isActive('Tutorial') &&
       !this.arrows.visible) {
 

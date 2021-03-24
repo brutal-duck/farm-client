@@ -2,7 +2,6 @@
 function showEventTutorial(additional: boolean | string = false): void {
   
   if (this.scene.isActive('Modal')) this.scene.stop('Modal');
-  if (this.scene.isActive('Block')) this.scene.stop('Block');
   if (this.scene.isActive('Tutorial')) this.scene.stop('Tutorial');
   if (this.state.user.additionalTutorial.eventTutorial > 0) {
     if (this.scene.isActive('MapBars')) this.scene.stop('MapBars');

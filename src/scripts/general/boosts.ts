@@ -32,7 +32,6 @@ function updateNativeShop(): void {
   }
   
   if ((this.scene.isActive('Modal') ||
-  this.scene.isActive('Block') ||
   this.scene.isActive('Tutorial')) &&
   this.game.scene.keys[`${this.state.farm}Bars`].nativeShop.visible ||
   counter <= 0) {
@@ -41,7 +40,6 @@ function updateNativeShop(): void {
     this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setVisible(false);
 
   } else if (!this.scene.isActive('Modal') &&
-  !this.scene.isActive('Block') &&
   !this.scene.isActive('Tutorial') &&
   !this.game.scene.keys[`${this.state.farm}Bars`].nativeShop.visible &&
   counter > 0 &&

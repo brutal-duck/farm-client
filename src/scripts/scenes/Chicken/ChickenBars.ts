@@ -398,7 +398,6 @@ class ChickenBars extends Phaser.Scene {
     // отображение плашки заданий
     if ((this.sendwich ||
       this.scene.isActive('Modal') ||
-      this.scene.isActive('Block') ||
       this.scene.isActive('Tutorial')) &&
       this.taskBoard.active) {
 
@@ -406,7 +405,6 @@ class ChickenBars extends Phaser.Scene {
 
     } else if (!this.sendwich &&
       !this.scene.isActive('Modal') &&
-      !this.scene.isActive('Block') &&
       !this.scene.isActive('Tutorial') &&
       !this.taskBoard.active) {
 

@@ -460,7 +460,6 @@ class SheepBars extends Phaser.Scene {
     // отображение плашки заданий
     if ((this.sendwich ||
       this.scene.isActive('Modal') ||
-      this.scene.isActive('Block') ||
       this.scene.isActive('Tutorial') ||
       this.state.userSheep.tutorial < 70) &&
       this.taskBoard.active) {
@@ -469,7 +468,6 @@ class SheepBars extends Phaser.Scene {
       
     } else if (!this.sendwich &&
       !this.scene.isActive('Modal') &&
-      !this.scene.isActive('Block') &&
       !this.scene.isActive('Tutorial') &&
       this.state.userSheep.tutorial >= 70 &&
       !this.taskBoard.active) {
