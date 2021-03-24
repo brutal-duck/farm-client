@@ -1015,9 +1015,10 @@ function updateImproveCollectorCow(
   }, 
   speed: Phaser.GameObjects.Text, 
   duration: Phaser.GameObjects.Text, 
-  nextLevelText: Phaser.GameObjects.Text): void {
+  nextLevelText: Phaser.GameObjects.Text
+  ): void {
 
-  this.textHeader.setText(this.state.lang.woolCollector + ' ' + this.state.userCow.collectorLevel + ' ' + this.state.lang.shortLevel + '.');
+  this.textHeader.setText(this.state.lang.milkCollector + ' ' + this.state.userCow.collectorLevel + ' ' + this.state.lang.shortLevel + '.');
   let thisLevel: IcollectorSettings = this.state.cowCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userCow.collectorLevel);
   let nextLevel: IcollectorSettings = this.state.cowCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userCow.collectorLevel + 1);
 
@@ -1029,6 +1030,9 @@ function updateImproveCollectorCow(
 
   let position: Iposition;
   let text: string;
+  console.log(nextLevel, 'next');
+  console.log(thisLevel, 'this');
+  
   if (nextLevel.time > thisLevel.time) {
 
     position = {

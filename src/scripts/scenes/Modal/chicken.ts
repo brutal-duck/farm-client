@@ -1017,7 +1017,7 @@ function updateImproveCollectorChicken(
   duration: Phaser.GameObjects.Text, 
   nextLevelText: Phaser.GameObjects.Text): void {
 
-  this.textHeader.setText(this.state.lang.woolCollector + ' ' + this.state.userChicken.collectorLevel + ' ' + this.state.lang.shortLevel + '.');
+  this.textHeader.setText(this.state.lang.eggCollector + ' ' + this.state.userChicken.collectorLevel + ' ' + this.state.lang.shortLevel + '.');
   let thisLevel: IcollectorSettings = this.state.chickenCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userChicken.collectorLevel);
   let nextLevel: IcollectorSettings = this.state.chickenCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userChicken.collectorLevel + 1);
 

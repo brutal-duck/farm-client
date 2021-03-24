@@ -114,9 +114,7 @@ function improveCollector(): void {
     }
     this.state.modal = modal;
     this.scene.launch('Modal', this.state);
-  }
-  
-  if (nextLevel.diamonds) {
+  } else if (nextLevel.diamonds) {
 
     if (this.state.user.diamonds >= nextLevel.price) {
 
