@@ -782,9 +782,9 @@ function improveCollectorAnim(position: Iposition): void {
 
 function openModal(...args: Phaser.Cameras.Scene2D.Camera[]): void {
   this.tweens.add({
-    duration: 150,
+    duration: 100,
     targets: args,
-    zoom: { from: 0.7, to: 1.1 },
+    zoom: { from: 0.85, to: 1.05 },
     onComplete: () => {
       this.tweens.add({
         duration: 100,
