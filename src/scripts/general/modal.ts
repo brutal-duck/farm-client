@@ -1433,12 +1433,23 @@ function profileWindow(): void {
   let support = this.bigButton('green', 'center', 0, this.state.lang.support);
   this.clickModalBtn(support, (): void => {
 
-    let modal: Imodal = {
-      type: 1,
-      sysType: 14
+    if (this.state.platform === 'vk') {
+
+      window.open(process.env.VK_SUPPORT_LINK);
+      
+    } else if (this.state.platform === 'ok') {
+      
+      window.open(process.env.OK_SUPPORT_LINK);
+
+    } else {
+      
+      let modal: Imodal = {
+        type: 1,
+        sysType: 14
+      }
+      this.state.modal = modal;
+      this.game.scene.keys[this.state.farm].scene.launch('Modal', this.state);
     }
-    this.state.modal = modal;
-    this.game.scene.keys[this.state.farm].scene.launch('Modal', this.state);
 
   });
 
