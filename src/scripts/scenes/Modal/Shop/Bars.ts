@@ -10,6 +10,7 @@ class ShopBars extends Phaser.Scene {
   public nativeBoostCounter: Phaser.GameObjects.Text;
   public nativeDiamond: Phaser.GameObjects.Graphics;
   public nativeDiamondCounter: Phaser.GameObjects.Text;
+  public opened: boolean = false;
 
   constructor() {
     super('ShopBars');
@@ -32,9 +33,10 @@ class ShopBars extends Phaser.Scene {
       if (this.state.boughtFeedBoost) {
         this.game.scene.keys[`${this.state.farm}Bars`].showFeedTime();
         this.state.boughtFeedBoost = false;
-      };
+      }
 
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+      this.opened = false;
       this.scene.stop();
       this.scene.stop('Shop');
       this.scene.stop('Modal');
@@ -214,7 +216,12 @@ class ShopBars extends Phaser.Scene {
 
     }
 
-    this.openShop(this.cameras.main, this.game.scene.keys['Modal'].cameras.main, this.game.scene.keys['Shop'].cameras.cameras[0], this.game.scene.keys['Shop'].cameras.cameras[1])
+    if (!this.opened) {
+      this.opened = true;
+      this.openShop(this.cameras.main, this.game.scene.keys['Modal'].cameras.main, 
+      this.game.scene.keys['Shop'].cameras.cameras[0], 
+      this.game.scene.keys['Shop'].cameras.cameras[1])
+    }
   }
 
   public update(): void {
