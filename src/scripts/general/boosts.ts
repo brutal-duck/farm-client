@@ -199,7 +199,7 @@ function collectorBoost(): void {
   let resource: string;
   if (this.state.farm === 'Sheep') resource = 'wool';
   if (this.state.farm === 'Chicken') resource = 'egg';
-  if (this.state.farm === 'Cow') resource = 'egg';
+  if (this.state.farm === 'Cow') resource = 'milk';
   this.add.sprite(0, 20 + this.height, 'boost-bg').setOrigin(0, 0);
   this.add.text(225, 40 + this.height, this.state.lang[`${resource}Collector`], {
     font: '28px Shadow',

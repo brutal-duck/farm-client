@@ -71,6 +71,7 @@ let eventMoneyPackage: any = require("./../../../../assets/images/event/money-pa
 let animalShopBg: any = require("./../../../../assets/images/modal/animal-shop-bg.png");
 let shopWoolCollector: any = require("./../../../../assets/images/sheep/shop-wool-collector.png");
 let shopEggCollector: any = require("./../../../../assets/images/chicken/shop-egg-collector.png");
+let shopMilkCollector: any = require("./../../../../assets/images/cow/shop-milk-collector.png");
 let shopBtnDisable: any = require("./../../../../assets/images/modal/shop-btn-disable.png");
 let boostBtn: any = require("./../../../../assets/images/modal/boost-btn.png");
 let boostBtnDisable: any = require("./../../../../assets/images/modal/boost-btn-disable.png");
@@ -185,7 +186,7 @@ class Shop extends Phaser.Scene {
     this.load.image('animal-shop-bg', animalShopBg);
     if (this.state.farm === 'Sheep') this.load.image('shop-sheep-wool-collector', shopWoolCollector);
     if (this.state.farm === 'Chicken') this.load.image('shop-chicken-egg-collector', shopEggCollector);
-    if (this.state.farm === 'Cow') this.load.image('shop-cow-egg-collector', shopEggCollector);
+    if (this.state.farm === 'Cow') this.load.image('shop-cow-milk-collector', shopMilkCollector);
     if (this.state.farm === 'Event') this.load.image('shop-event-resource-collector', shopResourceCollector);
     this.load.image('shop-btn-disable', shopBtnDisable);
     this.load.image('boost-btn', boostBtn);
