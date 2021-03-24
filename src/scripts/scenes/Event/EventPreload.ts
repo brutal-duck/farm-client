@@ -2,248 +2,263 @@ import axios from 'axios';
 import Socket from '../../Socket';
 import { loadingScreen } from '../../general/basic';
 
-let pixel: any = require("./../../../assets/images/pixel.png");
-let bg: any = require("./../../../assets/images/scroll-bg.png");
-let top: any = require("./../../../assets/images/event/top.png");
-let bottom: any = require("./../../../assets/images/event/bottom.png");
-let topbar: any = require("./../../../assets/images/event/topbar.png");
-let tabbar: any = require("./../../../assets/images/tabbar.png");
-let resourceCollector: any = require("./../../../assets/images/event/event-collector.png");
-let shop: any = require("./../../../assets/images/icons/shop.png");
-let mapIcon: any = require("./../../../assets/images/icons/map.png");
-let sandwich: any = require("./../../../assets/images/icons/sandwich.png");
-let sandwichClose: any = require("./../../../assets/images/icons/sandwich-close.png");
-let profile: any = require("./../../../assets/images/icons/profile.png");
-let chat: any = require("./../../../assets/images/icons/chat.png");
-let forBuying: any = require("./../../../assets/images/event/territories/for-buying.png");
-let lockTerritory: any = require("./../../../assets/images/event/lock-event-territory.png");
-let mergingAnimation: any = require("./../../../assets/images/merging-animation.png");
-let coin: any = require("./../../../assets/images/event/icons/money.png");
-let diamond: any = require("./../../../assets/images/icons/diamonds.png");
-let lock: any = require("./../../../assets/images/icons/lock.png");
-let gift: any = require("./../../../assets/images/icons/gift.png");
-let firework250: any = require("./../../../assets/images/animations/firework250.png");
-let offline: any = require("./../../../assets/images/icons/offline.png");
-let tutorBtn: any = require("./../../../assets/images/modal/tutor-btn.png");
-let heart: any = require("./../../../assets/images/icons/heart.png");
-let calendar: any = require("./../../../assets/images/calendar.png");
-let adIcon: any = require("./../../../assets/images/icons/ad-icon.png");
-let bgAd: any = require("./../../../assets/images/icons/bg-ad.png");
-let bigButtonGreen: any = require("./../../../assets/images/modal/btn_lg.png");
-let grass: any = require("./../../../assets/images/event/territories/grass.png");
-let forest1: any = require("./../../../assets/images/event/territories/forest-1.png");
-let forest2: any = require("./../../../assets/images/event/territories/forest-2.png");
-let forest3: any = require("./../../../assets/images/event/territories/forest-3.png");
-let forest4: any = require("./../../../assets/images/event/territories/forest-4.png");
-let forest5: any = require("./../../../assets/images/event/territories/forest-5.png");
-let forest6: any = require("./../../../assets/images/event/territories/forest-6.png");
-let verticalBorder: any = require("./../../../assets/images/event/territories/vertical-border.png");
-let horizontalBorder1: any = require("./../../../assets/images/event/territories/horizontal-border-1.png");
-let horizontalBorder2: any = require("./../../../assets/images/event/territories/horizontal-border-2.png");
-let horizontalBorder3: any = require("./../../../assets/images/event/territories/horizontal-border-3.png");
-let eventWorkZone: any = require("./../../../assets/images/event/territories/work-zone.png");
-let eventBuyIcon1: any = require("./../../../assets/images/event/icons/event-buy-icon-1.png");
-let eventBuyIcon2: any = require("./../../../assets/images/event/icons/event-buy-icon-2.png");
-let eventBuyIcon3: any = require("./../../../assets/images/event/icons/event-buy-icon-3.png");
-let eventBuyIcon4: any = require("./../../../assets/images/event/icons/event-buy-icon-4.png");
-let eventBuyIcon5: any = require("./../../../assets/images/event/icons/event-buy-icon-5.png");
-let eventBuyIcon6: any = require("./../../../assets/images/event/icons/event-buy-icon-6.png");
-let eventBuyIcon7: any = require("./../../../assets/images/event/icons/event-buy-icon-7.png");
-let eventBuyIcon8: any = require("./../../../assets/images/event/icons/event-buy-icon-8.png");
-let eventBuyIcon9: any = require("./../../../assets/images/event/icons/event-buy-icon-9.png");
-let eventBuyIcon10: any = require("./../../../assets/images/event/icons/event-buy-icon-10.png");
-let eventBuyIcon11: any = require("./../../../assets/images/event/icons/event-buy-icon-11.png");
-let eventBuyIcon12: any = require("./../../../assets/images/event/icons/event-buy-icon-12.png");
-let eventBuyIcon13: any = require("./../../../assets/images/event/icons/event-buy-icon-13.png");
-let eventBuyIcon14: any = require("./../../../assets/images/event/icons/event-buy-icon-14.png");
-let eventBuyIcon15: any = require("./../../../assets/images/event/icons/event-buy-icon-15.png");
-let eventBuyIcon16: any = require("./../../../assets/images/event/icons/event-buy-icon-16.png");
-let eventBuyIcon17: any = require("./../../../assets/images/event/icons/event-buy-icon-17.png");
-let eventBuyIcon18: any = require("./../../../assets/images/event/icons/event-buy-icon-18.png");
-let eventBuyIcon19: any = require("./../../../assets/images/event/icons/event-buy-icon-19.png");
-let eventBuyIcon20: any = require("./../../../assets/images/event/icons/event-buy-icon-20.png");
-let eventBuyIcon21: any = require("./../../../assets/images/event/icons/event-buy-icon-21.png");
-let eventBuyIcon22: any = require("./../../../assets/images/event/icons/event-buy-icon-22.png");
-let eventBuyIcon23: any = require("./../../../assets/images/event/icons/event-buy-icon-23.png");
-let eventBuyIcon24: any = require("./../../../assets/images/event/icons/event-buy-icon-24.png");
-let eventBuyIcon25: any = require("./../../../assets/images/event/icons/event-buy-icon-25.png");
-let eventBuyIcon26: any = require("./../../../assets/images/event/icons/event-buy-icon-26.png");
-let eventBuyIcon27: any = require("./../../../assets/images/event/icons/event-buy-icon-27.png");
-let eventBuyIcon28: any = require("./../../../assets/images/event/icons/event-buy-icon-28.png");
-let eventBuyIcon29: any = require("./../../../assets/images/event/icons/event-buy-icon-29.png");
-let eventBuyIcon30: any = require("./../../../assets/images/event/icons/event-buy-icon-30.png");
-let eventBuyIcon31: any = require("./../../../assets/images/event/icons/event-buy-icon-31.png");
-let eventBuyIcon32: any = require("./../../../assets/images/event/icons/event-buy-icon-32.png");
-let eventBuyIcon33: any = require("./../../../assets/images/event/icons/event-buy-icon-33.png");
-let eventBuyIcon34: any = require("./../../../assets/images/event/icons/event-buy-icon-34.png");
-let eventBuyIcon35: any = require("./../../../assets/images/event/icons/event-buy-icon-35.png");
-let eventBuyIcon36: any = require("./../../../assets/images/event/icons/event-buy-icon-36.png");
-let eventBuyIcon37: any = require("./../../../assets/images/event/icons/event-buy-icon-37.png");
-let eventBuyIcon38: any = require("./../../../assets/images/event/icons/event-buy-icon-38.png");
-let eventBuyIcon39: any = require("./../../../assets/images/event/icons/event-buy-icon-39.png");
-let eventBuyIcon40: any = require("./../../../assets/images/event/icons/event-buy-icon-40.png");
-let eventBuyIcon41: any = require("./../../../assets/images/event/icons/event-buy-icon-41.png");
-let eventBuyIcon42: any = require("./../../../assets/images/event/icons/event-buy-icon-42.png");
-let eventBuyIcon43: any = require("./../../../assets/images/event/icons/event-buy-icon-43.png");
-let eventBuyIcon44: any = require("./../../../assets/images/event/icons/event-buy-icon-44.png");
-let eventBuyIcon45: any = require("./../../../assets/images/event/icons/event-buy-icon-45.png");
-let eventBuyIcon46: any = require("./../../../assets/images/event/icons/event-buy-icon-46.png");
-let eventBuyIcon47: any = require("./../../../assets/images/event/icons/event-buy-icon-47.png");
-let eventBuyIcon48: any = require("./../../../assets/images/event/icons/event-buy-icon-48.png");
-let eventBuyIcon49: any = require("./../../../assets/images/event/icons/event-buy-icon-49.png");
-let eventBuyIcon50: any = require("./../../../assets/images/event/icons/event-buy-icon-50.png");
-let eventBuyIcon51: any = require("./../../../assets/images/event/icons/event-buy-icon-51.png");
-let eventBuyIcon52: any = require("./../../../assets/images/event/icons/event-buy-icon-52.png");
-let eventBuyIcon53: any = require("./../../../assets/images/event/icons/event-buy-icon-53.png");
-let eventBuyIcon54: any = require("./../../../assets/images/event/icons/event-buy-icon-54.png");
-let eventBuyIcon55: any = require("./../../../assets/images/event/icons/event-buy-icon-55.png");
-let eventBuyIcon56: any = require("./../../../assets/images/event/icons/event-buy-icon-56.png");
-let eventBuyIcon57: any = require("./../../../assets/images/event/icons/event-buy-icon-57.png");
-let eventBuyIcon58: any = require("./../../../assets/images/event/icons/event-buy-icon-58.png");
-let eventBuyIcon59: any = require("./../../../assets/images/event/icons/event-buy-icon-59.png");
-let eventBuyIcon60: any = require("./../../../assets/images/event/icons/event-buy-icon-60.png");
-let eventBuyIcon61: any = require("./../../../assets/images/event/icons/event-buy-icon-61.png");
-let eventBuyIcon62: any = require("./../../../assets/images/event/icons/event-buy-icon-62.png");
-let eventBuyIcon63: any = require("./../../../assets/images/event/icons/event-buy-icon-63.png");
-let eventBuyIcon64: any = require("./../../../assets/images/event/icons/event-buy-icon-64.png");
-let eventBuyIcon65: any = require("./../../../assets/images/event/icons/event-buy-icon-65.png");
-let eventBuyIcon66: any = require("./../../../assets/images/event/icons/event-buy-icon-66.png");
-let eventBuyIcon67: any = require("./../../../assets/images/event/icons/event-buy-icon-67.png");
-let eventBuyIcon68: any = require("./../../../assets/images/event/icons/event-buy-icon-68.png");
-let eventBuyIcon69: any = require("./../../../assets/images/event/icons/event-buy-icon-69.png");
-let eventBuyIcon70: any = require("./../../../assets/images/event/icons/event-buy-icon-70.png");
-let eventBuyIcon71: any = require("./../../../assets/images/event/icons/event-buy-icon-71.png");
-let eventBuyIcon72: any = require("./../../../assets/images/event/icons/event-buy-icon-72.png");
-let eventBuyIcon73: any = require("./../../../assets/images/event/icons/event-buy-icon-73.png");
-let eventBuyIcon74: any = require("./../../../assets/images/event/icons/event-buy-icon-74.png");
-let eventBuyIcon75: any = require("./../../../assets/images/event/icons/event-buy-icon-75.png");
-let eventBuyIcon76: any = require("./../../../assets/images/event/icons/event-buy-icon-76.png");
-let eventBuyIcon77: any = require("./../../../assets/images/event/icons/event-buy-icon-77.png");
-let eventBuyIcon78: any = require("./../../../assets/images/event/icons/event-buy-icon-78.png");
-let eventBuyIcon79: any = require("./../../../assets/images/event/icons/event-buy-icon-79.png");
-let eventBuyIcon80: any = require("./../../../assets/images/event/icons/event-buy-icon-80.png");
-let eventBuyIcon81: any = require("./../../../assets/images/event/icons/event-buy-icon-81.png");
-let eventBuyIcon82: any = require("./../../../assets/images/event/icons/event-buy-icon-82.png");
-let eventBuyIcon83: any = require("./../../../assets/images/event/icons/event-buy-icon-83.png");
-let eventBuyIcon84: any = require("./../../../assets/images/event/icons/event-buy-icon-84.png");
-let eventBuyIcon85: any = require("./../../../assets/images/event/icons/event-buy-icon-85.png");
-let eventBuyIcon86: any = require("./../../../assets/images/event/icons/event-buy-icon-86.png");
-let eventBuyIcon87: any = require("./../../../assets/images/event/icons/event-buy-icon-87.png");
-let eventBuyIcon88: any = require("./../../../assets/images/event/icons/event-buy-icon-88.png");
-let eventBuyIcon89: any = require("./../../../assets/images/event/icons/event-buy-icon-89.png");
-let eventBuyIcon90: any = require("./../../../assets/images/event/icons/event-buy-icon-90.png");
-
-let animal1: any = require("./../../../assets/images/event/animal/animal1.png");
-let animal2: any = require("./../../../assets/images/event/animal/animal2.png");
-let animal3: any = require("./../../../assets/images/event/animal/animal3.png");
-let animal4: any = require("./../../../assets/images/event/animal/animal4.png");
-let animal5: any = require("./../../../assets/images/event/animal/animal5.png");
-let animal6: any = require("./../../../assets/images/event/animal/animal6.png");
-let animal7: any = require("./../../../assets/images/event/animal/animal7.png");
-let animal8: any = require("./../../../assets/images/event/animal/animal8.png");
-let animal9: any = require("./../../../assets/images/event/animal/animal9.png");
-let animal10: any = require("./../../../assets/images/event/animal/animal10.png");
-let animal11: any = require("./../../../assets/images/event/animal/animal11.png");
-let animal12: any = require("./../../../assets/images/event/animal/animal12.png");
-let animal13: any = require("./../../../assets/images/event/animal/animal13.png");
-let animal14: any = require("./../../../assets/images/event/animal/animal14.png");
-let animal15: any = require("./../../../assets/images/event/animal/animal15.png");
-let animal16: any = require("./../../../assets/images/event/animal/animal16.png");
-let animal17: any = require("./../../../assets/images/event/animal/animal17.png");
-let animal18: any = require("./../../../assets/images/event/animal/animal18.png");
-let animal19: any = require("./../../../assets/images/event/animal/animal19.png");
-let animal20: any = require("./../../../assets/images/event/animal/animal20.png");
-let animal21: any = require("./../../../assets/images/event/animal/animal21.png");
-let animal22: any = require("./../../../assets/images/event/animal/animal22.png");
-let animal23: any = require("./../../../assets/images/event/animal/animal23.png");
-let animal24: any = require("./../../../assets/images/event/animal/animal24.png");
-let animal25: any = require("./../../../assets/images/event/animal/animal25.png");
-let animal26: any = require("./../../../assets/images/event/animal/animal26.png");
-let animal27: any = require("./../../../assets/images/event/animal/animal27.png");
-let animal28: any = require("./../../../assets/images/event/animal/animal28.png");
-let animal29: any = require("./../../../assets/images/event/animal/animal29.png");
-let animal30: any = require("./../../../assets/images/event/animal/animal30.png");
-let animal31: any = require("./../../../assets/images/event/animal/animal31.png");
-let animal32: any = require("./../../../assets/images/event/animal/animal32.png");
-let animal33: any = require("./../../../assets/images/event/animal/animal33.png");
-let animal34: any = require("./../../../assets/images/event/animal/animal34.png");
-let animal35: any = require("./../../../assets/images/event/animal/animal35.png");
-let animal36: any = require("./../../../assets/images/event/animal/animal36.png");
-let animal37: any = require("./../../../assets/images/event/animal/animal37.png");
-let animal38: any = require("./../../../assets/images/event/animal/animal38.png");
-let animal39: any = require("./../../../assets/images/event/animal/animal39.png");
-let animal40: any = require("./../../../assets/images/event/animal/animal40.png");
-let animal41: any = require("./../../../assets/images/event/animal/animal41.png");
-let animal42: any = require("./../../../assets/images/event/animal/animal42.png");
-let animal43: any = require("./../../../assets/images/event/animal/animal43.png");
-let animal44: any = require("./../../../assets/images/event/animal/animal44.png");
-let animal45: any = require("./../../../assets/images/event/animal/animal45.png");
-let animal46: any = require("./../../../assets/images/event/animal/animal46.png");
-let animal47: any = require("./../../../assets/images/event/animal/animal47.png");
-let animal48: any = require("./../../../assets/images/event/animal/animal48.png");
-let animal49: any = require("./../../../assets/images/event/animal/animal49.png");
-let animal50: any = require("./../../../assets/images/event/animal/animal50.png");
-let animal51: any = require("./../../../assets/images/event/animal/animal51.png");
-let animal52: any = require("./../../../assets/images/event/animal/animal52.png");
-let animal53: any = require("./../../../assets/images/event/animal/animal53.png");
-let animal54: any = require("./../../../assets/images/event/animal/animal54.png");
-let animal55: any = require("./../../../assets/images/event/animal/animal55.png");
-let animal56: any = require("./../../../assets/images/event/animal/animal56.png");
-let animal57: any = require("./../../../assets/images/event/animal/animal57.png");
-let animal58: any = require("./../../../assets/images/event/animal/animal58.png");
-let animal59: any = require("./../../../assets/images/event/animal/animal59.png");
-let animal60: any = require("./../../../assets/images/event/animal/animal60.png");
-let animal61: any = require("./../../../assets/images/event/animal/animal61.png");
-let animal62: any = require("./../../../assets/images/event/animal/animal62.png");
-let animal63: any = require("./../../../assets/images/event/animal/animal63.png");
-let animal64: any = require("./../../../assets/images/event/animal/animal64.png");
-let animal65: any = require("./../../../assets/images/event/animal/animal65.png");
-let animal66: any = require("./../../../assets/images/event/animal/animal66.png");
-let animal67: any = require("./../../../assets/images/event/animal/animal67.png");
-let animal68: any = require("./../../../assets/images/event/animal/animal68.png");
-let animal69: any = require("./../../../assets/images/event/animal/animal69.png");
-let animal70: any = require("./../../../assets/images/event/animal/animal70.png");
-let animal71: any = require("./../../../assets/images/event/animal/animal71.png");
-let animal72: any = require("./../../../assets/images/event/animal/animal72.png");
-let animal73: any = require("./../../../assets/images/event/animal/animal73.png");
-let animal74: any = require("./../../../assets/images/event/animal/animal74.png");
-let animal75: any = require("./../../../assets/images/event/animal/animal75.png");
-let animal76: any = require("./../../../assets/images/event/animal/animal76.png");
-let animal77: any = require("./../../../assets/images/event/animal/animal77.png");
-let animal78: any = require("./../../../assets/images/event/animal/animal78.png");
-let animal79: any = require("./../../../assets/images/event/animal/animal79.png");
-let animal80: any = require("./../../../assets/images/event/animal/animal80.png");
-let animal81: any = require("./../../../assets/images/event/animal/animal81.png");
-let animal82: any = require("./../../../assets/images/event/animal/animal82.png");
-let animal83: any = require("./../../../assets/images/event/animal/animal83.png");
-let animal84: any = require("./../../../assets/images/event/animal/animal84.png");
-let animal85: any = require("./../../../assets/images/event/animal/animal85.png");
-let animal86: any = require("./../../../assets/images/event/animal/animal86.png");
-let animal87: any = require("./../../../assets/images/event/animal/animal87.png");
-let animal88: any = require("./../../../assets/images/event/animal/animal88.png");
-let animal89: any = require("./../../../assets/images/event/animal/animal89.png");
-let animal90: any = require("./../../../assets/images/event/animal/animal90.png");
-
-let cloud: any = require("./../../../assets/images/event/cloud.png");
-let resource: any = require("./../../../assets/images/event/resource.png");
-
-let disableAnimal: any = require("./../../../assets/images/event/animal/disable-animal.png");
-let merging: any = require("./../../../assets/images/event/territories/merging.png");
-let tent: any = require("./../../../assets/images/event/territories/tent.png");
-
-let flower1: any = require("./../../../assets/images/event/territories/flower1.png");
-let flower2: any = require("./../../../assets/images/event/territories/flower2.png");
-let flower3: any = require("./../../../assets/images/event/territories/flower3.png");
-let flower4: any = require("./../../../assets/images/event/territories/flower4.png");
-
-let confetti1: any = require("./../../../assets/images/event/territories/confetti1.png");
-let confetti2: any = require("./../../../assets/images/event/territories/confetti2.png");
-let confetti3: any = require("./../../../assets/images/event/territories/confetti3.png");
-let confetti4: any = require("./../../../assets/images/event/territories/confetti4.png");
-let confetti5: any = require("./../../../assets/images/event/territories/confetti5.png");
-let confetti6: any = require("./../../../assets/images/event/territories/confetti6.png");
-let confetti7: any = require("./../../../assets/images/event/territories/confetti7.png");
-let confetti8: any = require("./../../../assets/images/event/territories/confetti8.png");
+const pixel: any = require("./../../../assets/images/pixel.png");
+const bg: any = require("./../../../assets/images/scroll-bg.png");
+const top: any = require("./../../../assets/images/event/top.png");
+const bottom: any = require("./../../../assets/images/event/bottom.png");
+const topbar: any = require("./../../../assets/images/event/topbar.png");
+const tabbar: any = require("./../../../assets/images/tabbar.png");
+const resourceCollector: any = require("./../../../assets/images/event/event-collector.png");
+const shop: any = require("./../../../assets/images/icons/shop.png");
+const mapIcon: any = require("./../../../assets/images/icons/map.png");
+const sandwich: any = require("./../../../assets/images/icons/sandwich.png");
+const sandwichClose: any = require("./../../../assets/images/icons/sandwich-close.png");
+const profile: any = require("./../../../assets/images/icons/profile.png");
+const chat: any = require("./../../../assets/images/icons/chat.png");
+const forBuying: any = require("./../../../assets/images/event/territories/for-buying.png");
+const lockTerritory: any = require("./../../../assets/images/event/lock-event-territory.png");
+const mergingAnimation: any = require("./../../../assets/images/merging-animation.png");
+const coin: any = require("./../../../assets/images/event/icons/money.png");
+const diamond: any = require("./../../../assets/images/icons/diamonds.png");
+const lock: any = require("./../../../assets/images/icons/lock.png");
+const gift: any = require("./../../../assets/images/icons/gift.png");
+const firework250: any = require("./../../../assets/images/animations/firework250.png");
+const offline: any = require("./../../../assets/images/icons/offline.png");
+const tutorBtn: any = require("./../../../assets/images/modal/tutor-btn.png");
+const heart: any = require("./../../../assets/images/icons/heart.png");
+const calendar: any = require("./../../../assets/images/calendar.png");
+const adIcon: any = require("./../../../assets/images/icons/ad-icon.png");
+const bgAd: any = require("./../../../assets/images/icons/bg-ad.png");
+const bigButtonGreen: any = require("./../../../assets/images/modal/btn_lg.png");
+const grass: any = require("./../../../assets/images/event/territories/grass.png");
+const forest1: any = require("./../../../assets/images/event/territories/forest-1.png");
+const forest2: any = require("./../../../assets/images/event/territories/forest-2.png");
+const forest3: any = require("./../../../assets/images/event/territories/forest-3.png");
+const forest4: any = require("./../../../assets/images/event/territories/forest-4.png");
+const forest5: any = require("./../../../assets/images/event/territories/forest-5.png");
+const forest6: any = require("./../../../assets/images/event/territories/forest-6.png");
+const verticalBorder: any = require("./../../../assets/images/event/territories/vertical-border.png");
+const horizontalBorder1: any = require("./../../../assets/images/event/territories/horizontal-border-1.png");
+const horizontalBorder2: any = require("./../../../assets/images/event/territories/horizontal-border-2.png");
+const horizontalBorder3: any = require("./../../../assets/images/event/territories/horizontal-border-3.png");
+const eventWorkZone: any = require("./../../../assets/images/event/territories/work-zone.png");
+const eventBuyIcon1: any = require("./../../../assets/images/event/icons/event-buy-icon-1.png");
+const eventBuyIcon2: any = require("./../../../assets/images/event/icons/event-buy-icon-2.png");
+const eventBuyIcon3: any = require("./../../../assets/images/event/icons/event-buy-icon-3.png");
+const eventBuyIcon4: any = require("./../../../assets/images/event/icons/event-buy-icon-4.png");
+const eventBuyIcon5: any = require("./../../../assets/images/event/icons/event-buy-icon-5.png");
+const eventBuyIcon6: any = require("./../../../assets/images/event/icons/event-buy-icon-6.png");
+const eventBuyIcon7: any = require("./../../../assets/images/event/icons/event-buy-icon-7.png");
+const eventBuyIcon8: any = require("./../../../assets/images/event/icons/event-buy-icon-8.png");
+const eventBuyIcon9: any = require("./../../../assets/images/event/icons/event-buy-icon-9.png");
+const eventBuyIcon10: any = require("./../../../assets/images/event/icons/event-buy-icon-10.png");
+const eventBuyIcon11: any = require("./../../../assets/images/event/icons/event-buy-icon-11.png");
+const eventBuyIcon12: any = require("./../../../assets/images/event/icons/event-buy-icon-12.png");
+const eventBuyIcon13: any = require("./../../../assets/images/event/icons/event-buy-icon-13.png");
+const eventBuyIcon14: any = require("./../../../assets/images/event/icons/event-buy-icon-14.png");
+const eventBuyIcon15: any = require("./../../../assets/images/event/icons/event-buy-icon-15.png");
+const eventBuyIcon16: any = require("./../../../assets/images/event/icons/event-buy-icon-16.png");
+const eventBuyIcon17: any = require("./../../../assets/images/event/icons/event-buy-icon-17.png");
+const eventBuyIcon18: any = require("./../../../assets/images/event/icons/event-buy-icon-18.png");
+const eventBuyIcon19: any = require("./../../../assets/images/event/icons/event-buy-icon-19.png");
+const eventBuyIcon20: any = require("./../../../assets/images/event/icons/event-buy-icon-20.png");
+const eventBuyIcon21: any = require("./../../../assets/images/event/icons/event-buy-icon-21.png");
+const eventBuyIcon22: any = require("./../../../assets/images/event/icons/event-buy-icon-22.png");
+const eventBuyIcon23: any = require("./../../../assets/images/event/icons/event-buy-icon-23.png");
+const eventBuyIcon24: any = require("./../../../assets/images/event/icons/event-buy-icon-24.png");
+const eventBuyIcon25: any = require("./../../../assets/images/event/icons/event-buy-icon-25.png");
+const eventBuyIcon26: any = require("./../../../assets/images/event/icons/event-buy-icon-26.png");
+const eventBuyIcon27: any = require("./../../../assets/images/event/icons/event-buy-icon-27.png");
+const eventBuyIcon28: any = require("./../../../assets/images/event/icons/event-buy-icon-28.png");
+const eventBuyIcon29: any = require("./../../../assets/images/event/icons/event-buy-icon-29.png");
+const eventBuyIcon30: any = require("./../../../assets/images/event/icons/event-buy-icon-30.png");
+const eventBuyIcon31: any = require("./../../../assets/images/event/icons/event-buy-icon-31.png");
+const eventBuyIcon32: any = require("./../../../assets/images/event/icons/event-buy-icon-32.png");
+const eventBuyIcon33: any = require("./../../../assets/images/event/icons/event-buy-icon-33.png");
+const eventBuyIcon34: any = require("./../../../assets/images/event/icons/event-buy-icon-34.png");
+const eventBuyIcon35: any = require("./../../../assets/images/event/icons/event-buy-icon-35.png");
+const eventBuyIcon36: any = require("./../../../assets/images/event/icons/event-buy-icon-36.png");
+const eventBuyIcon37: any = require("./../../../assets/images/event/icons/event-buy-icon-37.png");
+const eventBuyIcon38: any = require("./../../../assets/images/event/icons/event-buy-icon-38.png");
+const eventBuyIcon39: any = require("./../../../assets/images/event/icons/event-buy-icon-39.png");
+const eventBuyIcon40: any = require("./../../../assets/images/event/icons/event-buy-icon-40.png");
+const eventBuyIcon41: any = require("./../../../assets/images/event/icons/event-buy-icon-41.png");
+const eventBuyIcon42: any = require("./../../../assets/images/event/icons/event-buy-icon-42.png");
+const eventBuyIcon43: any = require("./../../../assets/images/event/icons/event-buy-icon-43.png");
+const eventBuyIcon44: any = require("./../../../assets/images/event/icons/event-buy-icon-44.png");
+const eventBuyIcon45: any = require("./../../../assets/images/event/icons/event-buy-icon-45.png");
+const eventBuyIcon46: any = require("./../../../assets/images/event/icons/event-buy-icon-46.png");
+const eventBuyIcon47: any = require("./../../../assets/images/event/icons/event-buy-icon-47.png");
+const eventBuyIcon48: any = require("./../../../assets/images/event/icons/event-buy-icon-48.png");
+const eventBuyIcon49: any = require("./../../../assets/images/event/icons/event-buy-icon-49.png");
+const eventBuyIcon50: any = require("./../../../assets/images/event/icons/event-buy-icon-50.png");
+const eventBuyIcon51: any = require("./../../../assets/images/event/icons/event-buy-icon-51.png");
+const eventBuyIcon52: any = require("./../../../assets/images/event/icons/event-buy-icon-52.png");
+const eventBuyIcon53: any = require("./../../../assets/images/event/icons/event-buy-icon-53.png");
+const eventBuyIcon54: any = require("./../../../assets/images/event/icons/event-buy-icon-54.png");
+const eventBuyIcon55: any = require("./../../../assets/images/event/icons/event-buy-icon-55.png");
+const eventBuyIcon56: any = require("./../../../assets/images/event/icons/event-buy-icon-56.png");
+const eventBuyIcon57: any = require("./../../../assets/images/event/icons/event-buy-icon-57.png");
+const eventBuyIcon58: any = require("./../../../assets/images/event/icons/event-buy-icon-58.png");
+const eventBuyIcon59: any = require("./../../../assets/images/event/icons/event-buy-icon-59.png");
+const eventBuyIcon60: any = require("./../../../assets/images/event/icons/event-buy-icon-60.png");
+const eventBuyIcon61: any = require("./../../../assets/images/event/icons/event-buy-icon-61.png");
+const eventBuyIcon62: any = require("./../../../assets/images/event/icons/event-buy-icon-62.png");
+const eventBuyIcon63: any = require("./../../../assets/images/event/icons/event-buy-icon-63.png");
+const eventBuyIcon64: any = require("./../../../assets/images/event/icons/event-buy-icon-64.png");
+const eventBuyIcon65: any = require("./../../../assets/images/event/icons/event-buy-icon-65.png");
+const eventBuyIcon66: any = require("./../../../assets/images/event/icons/event-buy-icon-66.png");
+const eventBuyIcon67: any = require("./../../../assets/images/event/icons/event-buy-icon-67.png");
+const eventBuyIcon68: any = require("./../../../assets/images/event/icons/event-buy-icon-68.png");
+const eventBuyIcon69: any = require("./../../../assets/images/event/icons/event-buy-icon-69.png");
+const eventBuyIcon70: any = require("./../../../assets/images/event/icons/event-buy-icon-70.png");
+const eventBuyIcon71: any = require("./../../../assets/images/event/icons/event-buy-icon-71.png");
+const eventBuyIcon72: any = require("./../../../assets/images/event/icons/event-buy-icon-72.png");
+const eventBuyIcon73: any = require("./../../../assets/images/event/icons/event-buy-icon-73.png");
+const eventBuyIcon74: any = require("./../../../assets/images/event/icons/event-buy-icon-74.png");
+const eventBuyIcon75: any = require("./../../../assets/images/event/icons/event-buy-icon-75.png");
+const eventBuyIcon76: any = require("./../../../assets/images/event/icons/event-buy-icon-76.png");
+const eventBuyIcon77: any = require("./../../../assets/images/event/icons/event-buy-icon-77.png");
+const eventBuyIcon78: any = require("./../../../assets/images/event/icons/event-buy-icon-78.png");
+const eventBuyIcon79: any = require("./../../../assets/images/event/icons/event-buy-icon-79.png");
+const eventBuyIcon80: any = require("./../../../assets/images/event/icons/event-buy-icon-80.png");
+const eventBuyIcon81: any = require("./../../../assets/images/event/icons/event-buy-icon-81.png");
+const eventBuyIcon82: any = require("./../../../assets/images/event/icons/event-buy-icon-82.png");
+const eventBuyIcon83: any = require("./../../../assets/images/event/icons/event-buy-icon-83.png");
+const eventBuyIcon84: any = require("./../../../assets/images/event/icons/event-buy-icon-84.png");
+const eventBuyIcon85: any = require("./../../../assets/images/event/icons/event-buy-icon-85.png");
+const eventBuyIcon86: any = require("./../../../assets/images/event/icons/event-buy-icon-86.png");
+const eventBuyIcon87: any = require("./../../../assets/images/event/icons/event-buy-icon-87.png");
+const eventBuyIcon88: any = require("./../../../assets/images/event/icons/event-buy-icon-88.png");
+const eventBuyIcon89: any = require("./../../../assets/images/event/icons/event-buy-icon-89.png");
+const eventBuyIcon90: any = require("./../../../assets/images/event/icons/event-buy-icon-90.png");
+// const eventBuyIcon91: any = require("./../../../assets/images/event/icons/event-buy-icon-91.png");
+// const eventBuyIcon92: any = require("./../../../assets/images/event/icons/event-buy-icon-92.png");
+// const eventBuyIcon93: any = require("./../../../assets/images/event/icons/event-buy-icon-93.png");
+// const eventBuyIcon94: any = require("./../../../assets/images/event/icons/event-buy-icon-94.png");
+// const eventBuyIcon95: any = require("./../../../assets/images/event/icons/event-buy-icon-95.png");
+// const eventBuyIcon96: any = require("./../../../assets/images/event/icons/event-buy-icon-96.png");
+// const eventBuyIcon97: any = require("./../../../assets/images/event/icons/event-buy-icon-97.png");
+// const eventBuyIcon98: any = require("./../../../assets/images/event/icons/event-buy-icon-98.png");
+// const eventBuyIcon99: any = require("./../../../assets/images/event/icons/event-buy-icon-99.png");
+// const eventBuyIcon100: any = require("./../../../assets/images/event/icons/event-buy-icon-100.png");
+const animal1: any = require("./../../../assets/images/event/animal/animal1.png");
+const animal2: any = require("./../../../assets/images/event/animal/animal2.png");
+const animal3: any = require("./../../../assets/images/event/animal/animal3.png");
+const animal4: any = require("./../../../assets/images/event/animal/animal4.png");
+const animal5: any = require("./../../../assets/images/event/animal/animal5.png");
+const animal6: any = require("./../../../assets/images/event/animal/animal6.png");
+const animal7: any = require("./../../../assets/images/event/animal/animal7.png");
+const animal8: any = require("./../../../assets/images/event/animal/animal8.png");
+const animal9: any = require("./../../../assets/images/event/animal/animal9.png");
+const animal10: any = require("./../../../assets/images/event/animal/animal10.png");
+const animal11: any = require("./../../../assets/images/event/animal/animal11.png");
+const animal12: any = require("./../../../assets/images/event/animal/animal12.png");
+const animal13: any = require("./../../../assets/images/event/animal/animal13.png");
+const animal14: any = require("./../../../assets/images/event/animal/animal14.png");
+const animal15: any = require("./../../../assets/images/event/animal/animal15.png");
+const animal16: any = require("./../../../assets/images/event/animal/animal16.png");
+const animal17: any = require("./../../../assets/images/event/animal/animal17.png");
+const animal18: any = require("./../../../assets/images/event/animal/animal18.png");
+const animal19: any = require("./../../../assets/images/event/animal/animal19.png");
+const animal20: any = require("./../../../assets/images/event/animal/animal20.png");
+const animal21: any = require("./../../../assets/images/event/animal/animal21.png");
+const animal22: any = require("./../../../assets/images/event/animal/animal22.png");
+const animal23: any = require("./../../../assets/images/event/animal/animal23.png");
+const animal24: any = require("./../../../assets/images/event/animal/animal24.png");
+const animal25: any = require("./../../../assets/images/event/animal/animal25.png");
+const animal26: any = require("./../../../assets/images/event/animal/animal26.png");
+const animal27: any = require("./../../../assets/images/event/animal/animal27.png");
+const animal28: any = require("./../../../assets/images/event/animal/animal28.png");
+const animal29: any = require("./../../../assets/images/event/animal/animal29.png");
+const animal30: any = require("./../../../assets/images/event/animal/animal30.png");
+const animal31: any = require("./../../../assets/images/event/animal/animal31.png");
+const animal32: any = require("./../../../assets/images/event/animal/animal32.png");
+const animal33: any = require("./../../../assets/images/event/animal/animal33.png");
+const animal34: any = require("./../../../assets/images/event/animal/animal34.png");
+const animal35: any = require("./../../../assets/images/event/animal/animal35.png");
+const animal36: any = require("./../../../assets/images/event/animal/animal36.png");
+const animal37: any = require("./../../../assets/images/event/animal/animal37.png");
+const animal38: any = require("./../../../assets/images/event/animal/animal38.png");
+const animal39: any = require("./../../../assets/images/event/animal/animal39.png");
+const animal40: any = require("./../../../assets/images/event/animal/animal40.png");
+const animal41: any = require("./../../../assets/images/event/animal/animal41.png");
+const animal42: any = require("./../../../assets/images/event/animal/animal42.png");
+const animal43: any = require("./../../../assets/images/event/animal/animal43.png");
+const animal44: any = require("./../../../assets/images/event/animal/animal44.png");
+const animal45: any = require("./../../../assets/images/event/animal/animal45.png");
+const animal46: any = require("./../../../assets/images/event/animal/animal46.png");
+const animal47: any = require("./../../../assets/images/event/animal/animal47.png");
+const animal48: any = require("./../../../assets/images/event/animal/animal48.png");
+const animal49: any = require("./../../../assets/images/event/animal/animal49.png");
+const animal50: any = require("./../../../assets/images/event/animal/animal50.png");
+const animal51: any = require("./../../../assets/images/event/animal/animal51.png");
+const animal52: any = require("./../../../assets/images/event/animal/animal52.png");
+const animal53: any = require("./../../../assets/images/event/animal/animal53.png");
+const animal54: any = require("./../../../assets/images/event/animal/animal54.png");
+const animal55: any = require("./../../../assets/images/event/animal/animal55.png");
+const animal56: any = require("./../../../assets/images/event/animal/animal56.png");
+const animal57: any = require("./../../../assets/images/event/animal/animal57.png");
+const animal58: any = require("./../../../assets/images/event/animal/animal58.png");
+const animal59: any = require("./../../../assets/images/event/animal/animal59.png");
+const animal60: any = require("./../../../assets/images/event/animal/animal60.png");
+const animal61: any = require("./../../../assets/images/event/animal/animal61.png");
+const animal62: any = require("./../../../assets/images/event/animal/animal62.png");
+const animal63: any = require("./../../../assets/images/event/animal/animal63.png");
+const animal64: any = require("./../../../assets/images/event/animal/animal64.png");
+const animal65: any = require("./../../../assets/images/event/animal/animal65.png");
+const animal66: any = require("./../../../assets/images/event/animal/animal66.png");
+const animal67: any = require("./../../../assets/images/event/animal/animal67.png");
+const animal68: any = require("./../../../assets/images/event/animal/animal68.png");
+const animal69: any = require("./../../../assets/images/event/animal/animal69.png");
+const animal70: any = require("./../../../assets/images/event/animal/animal70.png");
+const animal71: any = require("./../../../assets/images/event/animal/animal71.png");
+const animal72: any = require("./../../../assets/images/event/animal/animal72.png");
+const animal73: any = require("./../../../assets/images/event/animal/animal73.png");
+const animal74: any = require("./../../../assets/images/event/animal/animal74.png");
+const animal75: any = require("./../../../assets/images/event/animal/animal75.png");
+const animal76: any = require("./../../../assets/images/event/animal/animal76.png");
+const animal77: any = require("./../../../assets/images/event/animal/animal77.png");
+const animal78: any = require("./../../../assets/images/event/animal/animal78.png");
+const animal79: any = require("./../../../assets/images/event/animal/animal79.png");
+const animal80: any = require("./../../../assets/images/event/animal/animal80.png");
+const animal81: any = require("./../../../assets/images/event/animal/animal81.png");
+const animal82: any = require("./../../../assets/images/event/animal/animal82.png");
+const animal83: any = require("./../../../assets/images/event/animal/animal83.png");
+const animal84: any = require("./../../../assets/images/event/animal/animal84.png");
+const animal85: any = require("./../../../assets/images/event/animal/animal85.png");
+const animal86: any = require("./../../../assets/images/event/animal/animal86.png");
+const animal87: any = require("./../../../assets/images/event/animal/animal87.png");
+const animal88: any = require("./../../../assets/images/event/animal/animal88.png");
+const animal89: any = require("./../../../assets/images/event/animal/animal89.png");
+const animal90: any = require("./../../../assets/images/event/animal/animal90.png");
+// const animal91: any = require("./../../../assets/images/event/animal/animal91.png");
+// const animal92: any = require("./../../../assets/images/event/animal/animal92.png");
+// const animal93: any = require("./../../../assets/images/event/animal/animal93.png");
+// const animal94: any = require("./../../../assets/images/event/animal/animal94.png");
+// const animal95: any = require("./../../../assets/images/event/animal/animal95.png");
+// const animal96: any = require("./../../../assets/images/event/animal/animal96.png");
+// const animal97: any = require("./../../../assets/images/event/animal/animal97.png");
+// const animal98: any = require("./../../../assets/images/event/animal/animal98.png");
+// const animal99: any = require("./../../../assets/images/event/animal/animal99.png");
+// const animal100: any = require("./../../../assets/images/event/animal/animal100.png");
+const cloud: any = require("./../../../assets/images/event/cloud.png");
+const resource: any = require("./../../../assets/images/event/resource.png");
+const disableAnimal: any = require("./../../../assets/images/event/animal/disable-animal.png");
+const merging: any = require("./../../../assets/images/event/territories/merging.png");
+const tent: any = require("./../../../assets/images/event/territories/tent.png");
+const flower1: any = require("./../../../assets/images/event/territories/flower1.png");
+const flower2: any = require("./../../../assets/images/event/territories/flower2.png");
+const flower3: any = require("./../../../assets/images/event/territories/flower3.png");
+const flower4: any = require("./../../../assets/images/event/territories/flower4.png");
+const confetti1: any = require("./../../../assets/images/event/territories/confetti1.png");
+const confetti2: any = require("./../../../assets/images/event/territories/confetti2.png");
+const confetti3: any = require("./../../../assets/images/event/territories/confetti3.png");
+const confetti4: any = require("./../../../assets/images/event/territories/confetti4.png");
+const confetti5: any = require("./../../../assets/images/event/territories/confetti5.png");
+const confetti6: any = require("./../../../assets/images/event/territories/confetti6.png");
+const confetti7: any = require("./../../../assets/images/event/territories/confetti7.png");
+const confetti8: any = require("./../../../assets/images/event/territories/confetti8.png");
 
 let doubleFeedBoost: any = require("./../../../assets/images/icons/double-feed-boost.png");
 let eventFeedBoostMini: any = require("./../../../assets/images/event/icons/event-feed-boost-mini.png");
@@ -1705,6 +1720,76 @@ const testEventSettings: IeventSettings = {
       price: BigInt(1500000000000000000000000000000000000000000000000), 
       exchange: BigInt(3541774862152230000000000000)
     },
+    // { 
+    //   breed: 91, 
+    //   resource: 100, 
+    //   resourcePrice: BigInt(2951479051793530000000000000), 
+    //   price: BigInt(4800000000000000000000000000000000000000000000000), 
+    //   exchange: BigInt(7253554917687780000000000000000)
+    // },
+    // { 
+    //   breed: 92, 
+    //   resource: 100, 
+    //   resourcePrice: BigInt(5902958103587060000000000000), 
+    //   price: BigInt(15000000000000000000000000000000000000000000000000), 
+    //   exchange: BigInt(14507109835375600000000000000000)
+    // },
+    // { 
+    //   breed: 93, 
+    //   resource: 100, 
+    //   resourcePrice: BigInt(11805916207174100000000000000), 
+    //   price: BigInt(48000000000000000000000000000000000000000000000000), 
+    //   exchange: BigInt(29014219670751100000000000000000)
+    // },
+    // { 
+    //   breed: 94, 
+    //   resource: 100, 
+    //   resourcePrice: BigInt(23611832414348200000000000000), 
+    //   price: BigInt(150000000000000000000000000000000000000000000000000), 
+    //   exchange: BigInt(58028439341502200000000000000000)
+    // },
+    // { 
+    //   breed: 95, 
+    //   resource: 100, 
+    //   resourcePrice: BigInt(47223664828696500000000000000), 
+    //   price: BigInt(480000000000000000000000000000000000000000000000000), 
+    //   exchange: BigInt(116056878683004000000000000000000)
+    // },
+    // { 
+    //   breed: 96, 
+    //   resource: 100, 
+    //   resourcePrice: BigInt(94447329657392900000000000000), 
+    //   price: BigInt(1500000000000000000000000000000000000000000000000000), 
+    //   exchange: BigInt(232113757366009000000000000000000)
+    // },
+    // { 
+    //   breed: 97, 
+    //   resource: 100, 
+    //   resourcePrice: BigInt(188894659314786000000000000000), 
+    //   price: BigInt(4800000000000000000000000000000000000000000000000000), 
+    //   exchange: BigInt(464227514732018000000000000000000)
+    // },
+    // { 
+    //   breed: 98, 
+    //   resource: 100, 
+    //   resourcePrice: BigInt(377789318629572000000000000000), 
+    //   price: BigInt(15000000000000000000000000000000000000000000000000000), 
+    //   exchange: BigInt(928455029464035000000000000000000)
+    // },
+    // { 
+    //   breed: 99, 
+    //   resource: 100, 
+    //   resourcePrice: BigInt(755578637259143000000000000000), 
+    //   price: BigInt(48000000000000000000000000000000000000000000000000000), 
+    //   exchange: BigInt(1856910058928070000000000000000000)
+    // },
+    // { 
+    //   breed: 100, 
+    //   resource: 100, 
+    //   resourcePrice: BigInt(1511157274518290000000000000000), 
+    //   price: BigInt(150000000000000000000000000000000000000000000000000000), 
+    //   exchange: BigInt(3713820117856140000000000000000000)
+    // },
   ],
   territoriesEventPrice: [
     { block: 3, position: 1, diamond: 0, price: 0, unlock: 0 },
@@ -1903,6 +1988,16 @@ class EventPreload extends Phaser.Scene {
     this.load.image('event-buy-icon-88', eventBuyIcon88);
     this.load.image('event-buy-icon-89', eventBuyIcon89);
     this.load.image('event-buy-icon-90', eventBuyIcon90);
+    // this.load.image('event-buy-icon-91', eventBuyIcon91);
+    // this.load.image('event-buy-icon-92', eventBuyIcon92);
+    // this.load.image('event-buy-icon-93', eventBuyIcon93);
+    // this.load.image('event-buy-icon-94', eventBuyIcon94);
+    // this.load.image('event-buy-icon-95', eventBuyIcon95);
+    // this.load.image('event-buy-icon-96', eventBuyIcon96);
+    // this.load.image('event-buy-icon-97', eventBuyIcon97);
+    // this.load.image('event-buy-icon-98', eventBuyIcon98);
+    // this.load.image('event-buy-icon-99', eventBuyIcon99);
+    // this.load.image('event-buy-icon-100', eventBuyIcon100);
 
     this.load.image('disable-animal', disableAnimal);
     this.load.image('animal1', animal1);
@@ -1995,6 +2090,16 @@ class EventPreload extends Phaser.Scene {
     this.load.image('animal88', animal88);
     this.load.image('animal89', animal89);
     this.load.image('animal90', animal90);
+    // this.load.image('animal91', animal91);
+    // this.load.image('animal92', animal92);
+    // this.load.image('animal93', animal93);
+    // this.load.image('animal94', animal94);
+    // this.load.image('animal95', animal95);
+    // this.load.image('animal96', animal96);
+    // this.load.image('animal97', animal97);
+    // this.load.image('animal98', animal98);
+    // this.load.image('animal99', animal99);
+    // this.load.image('animal100', animal100);
     this.load.image('cloud', cloud);
     this.load.image('event-resource', resource);
 
