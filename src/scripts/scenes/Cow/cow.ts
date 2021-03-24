@@ -189,9 +189,6 @@ function getCow(
 
   this.click(cow, (): void => {
 
-    console.log(cow.milkStatus);
-    
-
     // let modal: Imodal = {
     //   type: 1,
     //   sysType: 1
@@ -203,7 +200,6 @@ function getCow(
     if (cow.milk >= 900) {
       this.collectMilk(cow, true);
     }
-
 
   });
   
@@ -508,7 +504,7 @@ function buyCow(breed: number, shop: boolean = false): boolean {
 }
 
 
-// собиратель яиц !!!
+// собиратель молока
 function collectMilk(cow: any, manualСollect: boolean = false): void {
 
   let path: Iposition;
@@ -530,7 +526,7 @@ function collectMilk(cow: any, manualСollect: boolean = false): void {
         y: cow.y - 50
       });
 
-      // this.tryTask(11, 0);
+      this.tryTask(11, 0);
 
     } else {
 
@@ -626,16 +622,12 @@ function collectMilk(cow: any, manualСollect: boolean = false): void {
     //   farm_id: this.state.farm
     // });
 
-    // this.game.scene.keys['CowBars'].plusDiamondsAnimation(position);
-    // this.state.user.diamonds++;
-    // cow.destroy();
-    // this.tryTask(19, 0);
-
     cow.milk = 0;
     cow.diamond++;
-    this.game.scene.keys['CowBars'].plusDiamondsAnimation(position);
+    this.game.scene.keys['CowBars'].plusCurrencyAnimation(position, 'diamond');
     this.state.user.diamonds++;
     this.tryTask(19, 0);
+
 
     if (cow.diamond >= 5) {
 
@@ -690,7 +682,7 @@ function sellMilk(): void {
 }
 
 
-// полет яиц !!!
+// полет молока !!!
 function milksFly(): void {
 
   // for (let i in this.milk.children.entries) {
@@ -795,7 +787,9 @@ function dragCowMerging(cow: any): void {
     
     const type: number = cow.type + 1;
 
+    findCow.milkStatus.destroy();
     findCow.destroy();
+    cow.milkStatus.destroy();
     cow.destroy();
 
     const id: string = 'local_' + randomString(18);

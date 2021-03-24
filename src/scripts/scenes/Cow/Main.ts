@@ -136,7 +136,7 @@ class Cow extends Phaser.Scene {
   public autoSaveTimer: number; // таймер для автосохранения
   public autoprogressTimer: number; // таймер для автопрогресса
   public caveIconsTimer: number; // таймер для анимации иконок на пещере
-  public collectorTimer: Phaser.Time.TimerEvent; // интервал собирателя яиц
+  public collectorTimer: Phaser.Time.TimerEvent; // интервал собирателя молока
   public debugLog: boolean; // метка для отлова ошибок
   public herdBoostLvl: number = 5; // уровень старта стадного буста
   public feedBoostMultiplier: number = 2; // множитель для буста 
@@ -275,6 +275,11 @@ class Cow extends Phaser.Scene {
     let cursors = this.input.keyboard.createCursorKeys();
     cursors.space.on('down', (): void => {
 
+      // this.state.newbieTime = 0
+      this.state.daily = Number(this.state.daily) + 1
+      this.state.user.takenReward = false;
+      // this.state.dailyAwards = [false, false, false, false, false, false, false, false]
+
       // let modal: Imodal = {
       //   type: 9,
       // }
@@ -300,7 +305,7 @@ class Cow extends Phaser.Scene {
     // мозг коров
     this.cowBrain();
 
-    // полет яиц в хранилище
+    // полет молока в хранилище
     this.milksFly();
 
     // анимация полных хранилищ

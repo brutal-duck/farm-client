@@ -1,7 +1,7 @@
 import {shortTime} from './../../general/basic';
 function interval(): void {
 
-  // значение отступа для яиц, чтоб не прилегали к краям территории
+  // значение отступа для молока, чтоб не прилегали к краям территории
   let indent: number = 20;
 
   let statusBalance: boolean = false;
@@ -101,7 +101,7 @@ function interval(): void {
 
             cow.milk = 0;
 
-            // рандом разброса яиц
+            // рандом разброса молока
             let minX: number = cow.x - indent;
             let maxX: number = cow.x + indent;
             let minY: number = cow.y + 40 - indent;

@@ -173,7 +173,7 @@ function dailyNewbie(): void {
   }).setOrigin(0.5, 0.5).setStroke('#5226A3', 5);
 
   this.click(bg, () => {
-    if (!this.state.user.takenReward) {
+    if (!this.state.user.takenReward || this.state.daily === 4) {
       this.scene.stop();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
       this.game.scene.keys[this.state.farm].takeNewbieAward();

@@ -89,7 +89,7 @@ function changeSprite(territory: any): void {
 
     } else if (this.state.farm === 'Cow') {
 
-      max = this.state.cowSettings.territoriesCowSettings[territory.improve - 1].eggStorage;
+      max = this.state.cowSettings.territoriesCowSettings[territory.improve - 1].milkStorage;
 
     }
 
@@ -407,7 +407,7 @@ function exchangeTerritory(): void {
 
     user = this.state.userCow;
     parts = this.state.cowSettings.cowParts;
-    sell = (): void => this.sellEggs();
+    sell = (): void => this.sellMilk();
     
   }
 
@@ -749,7 +749,7 @@ function buyTerritory(): void {
     
   } else if (this.state.farm === 'Cow') {
 
-    user = this.state.usercow;
+    user = this.state.userCow;
     settings = this.state.cowSettings.territoriesCowPrice.find((data: IterritoriesPrice) => data.block === this.state.territory.block && data.position === this.state.territory.position);
     
   }
