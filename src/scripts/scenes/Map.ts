@@ -100,6 +100,7 @@ class Map extends Phaser.Scene {
     let sheepPosition: Iposition = { x: 155, y: 145 };
     let chickenPosition: Iposition = { x: 500, y: 270 };
     let eventPosition: Iposition = { x: 580, y: 650 };
+    let cowPosition: Iposition = { x: 30, y: 650 };
 
     if (this.state.farm === 'Sheep') {
       this.pointPosition = sheepPosition;
@@ -107,6 +108,8 @@ class Map extends Phaser.Scene {
       this.pointPosition = chickenPosition;
     } else if (this.state.farm === 'Event') {
       this.pointPosition = eventPosition;
+    } else if (this.state.farm === 'Cow') {
+      this.pointPosition = cowPosition;
     }
 
     this.point.x = this.pointPosition.x;
@@ -179,6 +182,8 @@ class Map extends Phaser.Scene {
     if (progress.open) {
 
       status = 1;
+
+      if (farm === 'Chicken') this.state.dailyAwards[3] = false
 
     } else {
 

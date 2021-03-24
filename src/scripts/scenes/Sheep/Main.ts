@@ -347,10 +347,10 @@ class Sheep extends Phaser.Scene {
       // this.state.user.takenReward = false;
       // this.state.dailyAwards = [false, false, false, false, false, false, false, false]
 
-      // localStorage.farm = 'Cow'
-      // this.scene.stop();
-      // this.scene.stop('SheepBars')
-      // this.scene.start('CowPreload', this.state)
+      localStorage.farm = 'Cow'
+      this.scene.stop();
+      this.scene.stop('SheepBars')
+      this.scene.start('CowPreload', this.state)
       // let modal: Imodal = {
       //   type: 12,
       // }

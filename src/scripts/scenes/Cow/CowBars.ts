@@ -149,7 +149,7 @@ class CowBars extends Phaser.Scene {
       this.game.scene.keys[this.state.farm].buyCow(this.game.scene.keys[this.state.farm].maxBreedForBuy());
     });
     
-    // кнопка собирателя яиц
+    // кнопка собирателя молока
     this.clickButton(collector, (): void => {
 
       let modal: Imodal = {
