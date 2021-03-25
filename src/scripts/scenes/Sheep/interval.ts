@@ -1,10 +1,14 @@
-import { Arrows } from '../../elements';
 import { shortTime } from '../../general/basic';
+import Arrow from './../../components/Arrow';
 
 function interval(): void {
 
   let statusBalance: boolean = false;
   let checkRaiting: boolean = false;
+  let arrowOnStorage: Phaser.GameObjects.Sprite;
+  let arrowOnTerrirory: Phaser.GameObjects.Sprite;
+  let arrowOnMap: Phaser.GameObjects.Sprite;
+  let arrowOnCollector: Phaser.GameObjects.Sprite;
   this.time.addEvent({ delay: 1000, callback: (): void => {
 
     // проверка подключения к интернету
@@ -248,24 +252,21 @@ function interval(): void {
       let task: Itasks = tasks[0];
       
       // задание с продажей шерсти из хранилища
-      if (task?.done === 0 && task?.id === 127 && !this.arrows?.active) {
+      if (task?.done === 0 && task?.id === 127 && !arrowOnStorage) {
 
         let territory: any = this.territories.children.entries.find((data: any) => data.type === 5);
         
         if (territory?.volume > 0) {
-
-          this.arrows = new Arrows(this, { x: territory.x + 120, y: territory.y + 120 }, 120, false, false, true, false, false);
-
+          arrowOnStorage = Arrow.generate(this, 9, { x: territory.x + 120, y: territory.y + 120 });
         }
 
       }
 
       // задание на покупку территории и установку пастбища
-      if (task?.done === 0 && task?.id === 5 && !this.arrows?.active) {
+      if (task?.done === 0 && task?.id === 5 && !arrowOnTerrirory) {
         
         let territory: any = this.territories.children.entries.find((data: any) => data.block === 3 && data.position === 3);
-        this.arrows = new Arrows(this, { x: territory.x + 120, y: territory.y + 180 }, 120, false, false, true, false, false);
-
+        arrowOnTerrirory = Arrow.generate(this, 10, { x: territory.x + 120, y: territory.y + 180 });
       }
 
     }
@@ -274,7 +275,7 @@ function interval(): void {
     if (this.state.user.additionalTutorial.collector) {
 
       if (this.state.userSheep.collector === 0 &&
-        !this.game.scene.keys['SheepBars'].arrows?.active &&
+        !arrowOnCollector &&
         !this.scene.isActive('Modal') &&
         !this.scene.isActive('Tutorial') &&
         !this.scene.isActive('Map')) {
@@ -284,8 +285,7 @@ function interval(): void {
         if (this.counterWithoutCollector >= 10) {
 
           this.counterWithoutCollector = 0;
-          this.game.scene.keys['SheepBars'].showArrows();
-
+          arrowOnCollector = Arrow.generate(this.game.scene.keys['SheepBars'], 18);
         }
 
       }
@@ -312,13 +312,8 @@ function interval(): void {
 
     }
 
-    if (this.game.scene.keys['SheepBars'].arrows?.active && this.state.userSheep.collector > 0) {
-
+    if (arrowOnCollector && this.state.userSheep.collector > 0) {
       this.counterWithoutCollector = 0;
-      if (this.state.user.additionalTutorial.eventTutorial === 0 || !this.state.progress.event.open) {
-        this.game.scene.keys['SheepBars'].arrows.destroy();
-      }
-
     }
 
     if (this.state.newbieTime > 0) this.state.newbieTime--;
@@ -435,11 +430,11 @@ function interval(): void {
       this.state.progress.event.startTime <= 0 && 
       this.state.progress.event.endTime > 0) {
       if (this.state.user.additionalTutorial.eventTutorial === 0 &&
-        !this.game.scene.keys[`${this.state.farm}Bars`].arrows?.active &&
+        !arrowOnMap &&
         !this.scene.isActive('Modal') &&
         !this.scene.isActive('Tutorial') &&
         !this.scene.isActive('Map')) {
-        this.game.scene.keys[`${this.state.farm}Bars`].showMapArrows();
+        arrowOnMap = Arrow.generate(this.game.scene.keys[`${this.state.farm}Bars`], 17)
       }
   
       if (this.state.user.additionalTutorial.eventTutorial === 0 &&

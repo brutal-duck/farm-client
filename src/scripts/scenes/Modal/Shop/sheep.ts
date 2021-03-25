@@ -1,5 +1,4 @@
-import { shortNum, shortTime } from '../../../general/basic';
-import { Arrows } from '../../../elements';
+import { shortNum } from '../../../general/basic';
 
 // монеты
 function sheepMoney(): void {

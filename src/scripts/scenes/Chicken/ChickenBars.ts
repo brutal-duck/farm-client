@@ -14,7 +14,6 @@ import {
   Collector,
   TaskBoard,
   buildMenu,
-  Arrows,
   createSpeechBubble
 } from '../../elements';
 import {
@@ -29,7 +28,7 @@ import {
   firework250,
   getCurrency
 } from '../../general/animations';
-import { pulseCollector, arrowsBehavior } from './animations';
+import { pulseCollector } from './animations';
 import { clickTaskBoard } from '../../general/tasks';
 
 class ChickenBars extends Phaser.Scene {
@@ -75,7 +74,6 @@ class ChickenBars extends Phaser.Scene {
   public calendar: any;
   public nativeShop: Phaser.GameObjects.Graphics;
   public nativeShopCounter: Phaser.GameObjects.Text;
-  public arrows: Arrows;
   public starterpackIcon: Phaser.GameObjects.Image;
 
   public click = click.bind(this);
@@ -98,7 +96,6 @@ class ChickenBars extends Phaser.Scene {
   public showFeedTime = showFeedTime.bind(this);
   public shortTime = shortTime.bind(this);
   public getCurrency = getCurrency.bind(this);
-  public arrowsBehavior = arrowsBehavior.bind(this);
   public createSpeechBubble = createSpeechBubble.bind(this);
   public clickTaskBoard = clickTaskBoard.bind(this);
 
@@ -431,12 +428,8 @@ class ChickenBars extends Phaser.Scene {
     this.socialButtons();
 
     // икнока календарика
-    // this.calendarAnimation();
 
     this.updateNativeShop();
-
-    // укзывающие стрелки
-    this.arrowsBehavior();
 
     if (this.starterpackIcon && this.state.user.starterpack) this.starterpackIcon?.destroy();
 
@@ -588,11 +581,6 @@ class ChickenBars extends Phaser.Scene {
 
   }
 
-  public showMapArrows(): void {
-    
-    this.arrows = new Arrows(this, { x: 510, y: this.height - 90 }, 70, false, false, true, false, false);
-
-  }
 
 }
 

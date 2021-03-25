@@ -1,5 +1,5 @@
 import { random, randomString } from '../../general/basic';
-import { Arrows } from '../../elements';
+import Arrow from './../../components/Arrow';
 
 
 // телепортация овец на свободные территории
@@ -788,11 +788,11 @@ function woolSprite(sheep: any): void {
   }
 
   // стрелки для тутора
-  if (this.state.userSheep.tutorial === 40 && !this.scene.isActive('Tutorial') && sheep.wool >= 900 && !this.arrows) {
+  if (this.state.userSheep.tutorial === 40 && !this.scene.isActive('Tutorial') && sheep.wool >= 900 && !this.arrow) {
     this.woolPB_bg?.destroy();
     this.woolPB_lineBg?.destroy();
     this.woolPB_progress?.destroy();
-    this.arrows = new Arrows(this, sheep, 60, false, false, true, false, false);
+    this.arrow = Arrow.generate(this, 4, sheep);
   }
 
   // прогресс бар для тутора

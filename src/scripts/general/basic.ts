@@ -2,7 +2,6 @@ import axios from 'axios';
 import { FAPI } from '../libs/Fapi.js';
 import bridge from '@vkontakte/vk-bridge';
 import * as amplitude from 'amplitude-js';
-import { Arrows } from '../elements';
 
 // рандомное число
 function random(min: number, max: number): number {

@@ -75,7 +75,6 @@ function doneEventTutor_20(): void {
 function doneEventTutor_30(): void {
   
   this.state.user.additionalTutorial.eventTutorial = 40;
-  this.game.scene.keys['EventBars'].arrows?.destroy();
   this.game.scene.keys['EventBars'].animalBuy.setVisible(true);
   this.game.scene.keys['EventBars'].animalPrice.setVisible(true);
   this.game.scene.keys['EventBars'].animalPriceBubble.setVisible(true);

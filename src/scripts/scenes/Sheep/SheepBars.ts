@@ -14,7 +14,6 @@ import {
   Collector,
   TaskBoard,
   buildMenu,
-  Arrows,
   createSpeechBubble
 } from '../../elements';
 import {
@@ -29,7 +28,7 @@ import {
   firework250,
   getCurrency
 } from '../../general/animations';
-import { pulseCollector, arrowsBehavior } from './animations';
+import { pulseCollector } from './animations';
 import { clickTaskBoard } from '../../general/tasks';
 
 class SheepBars extends Phaser.Scene {
@@ -78,7 +77,6 @@ class SheepBars extends Phaser.Scene {
   public userDiamonds: number; // промежуточные кристаллы
   public stepsDiamonds: number[] = [];
   public offline: Phaser.GameObjects.Sprite;
-  public arrows: Arrows;
   public calendarText: Phaser.GameObjects.Text;
   public calendar: any;
   public nativeShop: Phaser.GameObjects.Graphics;
@@ -97,7 +95,6 @@ class SheepBars extends Phaser.Scene {
   public increaseDiamonds = increaseDiamonds.bind(this);
   public plusCurrencyAnimation = plusCurrencyAnimation.bind(this);
   public socialButtons = socialButtons.bind(this);
-  public arrowsBehavior = arrowsBehavior.bind(this);
   public calendarAnimation = calendarAnimation.bind(this);
   public newbieAwardAnimation = newbieAwardAnimation.bind(this);
   public plusDiamonds = plusDiamonds.bind(this);
@@ -475,9 +472,6 @@ class SheepBars extends Phaser.Scene {
       this.taskBoard.setActive(true);
 
     }
-    
-    // укзывающие стрелки
-    this.arrowsBehavior();
 
     // анимация монет и кристаллов
     this.сurrencyAnimation();
@@ -666,21 +660,6 @@ class SheepBars extends Phaser.Scene {
     }
 
   }
-
-
-  // показать стрелки на подстригателя
-  public showArrows(): void {
-    
-    this.arrows = new Arrows(this, { x: 230, y: this.height - 90 }, 70, false, false, true, false, false);
-
-  }
-
-  public showMapArrows(): void {
-    
-    this.arrows = new Arrows(this, { x: 510, y: this.height - 90 }, 70, false, false, true, false, false);
-
-  }
-
 
   // анимация монет
   public plusMoney(): void {

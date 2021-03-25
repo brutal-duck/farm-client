@@ -97,8 +97,6 @@ function tryTask(type: number, state: number, count: number = 1): void {
         farm_id: this.state.farm
       });
 
-      if (task.id === 127 || task.id === 5) this.arrows?.destroy();
-
     }
 
     this.game.scene.keys[this.state.farm + 'Bars'].taskBoard.update();

@@ -49,7 +49,6 @@ import {
   eventHerdBoost,
   getDiamondPrice
 } from './event';
-import { Arrows } from '../../../elements';
 import { openModal } from '../../../general/animations';
 
 let shopHead: any = require("./../../../../assets/images/modal/shop-head.png");
@@ -103,7 +102,6 @@ class Shop extends Phaser.Scene {
   public collectorTimer: Phaser.GameObjects.Text;
   public herdBoostTimerText: Phaser.GameObjects.Text;
   public freeCollector: any;
-  public arrows: Arrows; // стрелки
 
   // буст
 
@@ -263,7 +261,6 @@ class Shop extends Phaser.Scene {
   
   public update(): void {
     // укзывающие стрелки
-    if (this.arrows?.active) this.arrows.update();
     
     // обновляем время бустера
     this.updateHerdBoostBtn();

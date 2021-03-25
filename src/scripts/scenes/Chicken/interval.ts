@@ -1,4 +1,5 @@
 import {shortTime} from './../../general/basic';
+import Arrow from './../../components/Arrow';
 function interval(): void {
 
   // значение отступа для яиц, чтоб не прилегали к краям территории
@@ -7,6 +8,8 @@ function interval(): void {
   let statusBalance: boolean = false;
 
   let checkRaiting: boolean = false;
+
+  let arrowOnMap: Phaser.GameObjects.Sprite;
   
   this.time.addEvent({ delay: 1000, callback: (): void => {
     
@@ -362,11 +365,10 @@ function interval(): void {
       this.state.progress.event.endTime > 0) {
         
       if (this.state.user.additionalTutorial.eventTutorial === 0 &&
-        !this.game.scene.keys[`${this.state.farm}Bars`].arrows?.active &&
-        !this.scene.isActive('Modal') &&
+        !arrowOnMap && !this.scene.isActive('Modal') &&
         !this.scene.isActive('Tutorial') &&
         !this.scene.isActive('Map')) {
-        this.game.scene.keys[`${this.state.farm}Bars`].showMapArrows();
+        Arrow.generate(this.game.scene.keys[`${this.state.farm}Bars`], 17);
       }
   
       if (this.state.user.additionalTutorial.eventTutorial === 0 &&

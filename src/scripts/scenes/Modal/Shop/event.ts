@@ -1,4 +1,3 @@
-import { Arrows, bigButton } from '../../../elements';
 import { shortNum, shortTime } from '../../../general/basic';
 
 // монеты
@@ -340,10 +339,6 @@ function eventCollectorBoost(): void {
 
   // бесплатный
   if (this.state.userEvent.collector === 0) {
-
-    if (this.state.userEvent.tutorial === 90) {
-      this.arrows = new Arrows(this, { x: 330, y: 100 + this.height }, 100, false, true, false, false, false);
-    }
 
     this.freeCollector = this.boostButton(350, 100 + this.height, String(freeTime), this.state.lang.shortMinutes, this.state.lang.take, 'free');
     this.clickBoostBtn(this.freeCollector, (): void => {

@@ -387,36 +387,8 @@ function repositoryAnimation(): void {
 
 }
 
-
-// поведение стрелок
-function arrowsBehavior(): void {
-  
-  if (this.arrows?.active) {
-    
-    this.arrows.update();
-
-    if ((this.scene.isActive('Modal') ||
-      this.scene.isActive('Tutorial')) &&
-      this.arrows.visible) {
-      
-      this.arrows.setVisible(false);
-      
-    } else if (!this.scene.isActive('Modal') &&
-      !this.scene.isActive('Tutorial') &&
-      !this.arrows.visible) {
-
-      this.arrows.setVisible(true);
-      
-    }
-
-  }
-
-}
-
-
 export {
   animations,
   pulseCollector,
   repositoryAnimation,
-  arrowsBehavior
 }

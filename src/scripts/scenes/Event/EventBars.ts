@@ -18,7 +18,6 @@ import {
   scoreEnding 
 } from './basic';
 import {
-  Arrows,
   Collector
 } from '../../elements';
 import {
@@ -32,7 +31,7 @@ import {
   plusDiamonds,
   firework250,
 } from '../../general/animations';
-import { pulseCollector, plusResourceAnimation, arrowsBehavior} from './animations';
+import { pulseCollector, plusResourceAnimation } from './animations';
 import { showFeedTime } from './../../general/boosts';
 
 class EventBars extends Phaser.Scene {
@@ -78,7 +77,6 @@ class EventBars extends Phaser.Scene {
   public shop: Phaser.GameObjects.Image;
   public map: Phaser.GameObjects.Image;
   public collectorBtn: Phaser.GameObjects.Image;
-  public arrows: Arrows;
   public starterpackIcon: Phaser.GameObjects.Image;
 
   public click = click.bind(this);
@@ -101,7 +99,6 @@ class EventBars extends Phaser.Scene {
   public showFeedTime = showFeedTime.bind(this);
   public updateNativeShop = updateNativeShop.bind(this);
   public updateRaitingsBar = updateRaitingsBar.bind(this);
-  public arrowsBehavior = arrowsBehavior.bind(this);
   public scoreEnding = scoreEnding.bind(this);
   
 
@@ -422,9 +419,6 @@ class EventBars extends Phaser.Scene {
     this.menuAnimation();
 
     this.updateRaitingsBar();
-
-    // укзывающие стрелки
-    this.arrowsBehavior();
 
     if (this.starterpackIcon && this.state.user.starterpack) this.starterpackIcon?.destroy();
 

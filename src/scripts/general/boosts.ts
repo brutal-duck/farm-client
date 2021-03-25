@@ -1,5 +1,5 @@
-import { Arrows } from "../elements";
 import { shortTime, randomString, shortNum } from "./basic";
+import Arrow from './../components/Arrow';
 
 // получение животного по бусту
 function createBoostAnimal(): void {
@@ -237,7 +237,7 @@ function collectorBoost(): void {
   if (this.state[`user${this.state.farm}`].collector === 0) {
 
     if (this.state[`user${this.state.farm}`].tutorial === 90) {
-      this.arrows = new Arrows(this, { x: 330, y: 100 + this.height }, 100, false, true, false, false, false);
+      Arrow.generate(this, 8);
     }
 
     this.freeCollector = this.boostButton(350, 100 + this.height, String(freeTime), this.state.lang.shortMinutes, this.state.lang.take, 'free');

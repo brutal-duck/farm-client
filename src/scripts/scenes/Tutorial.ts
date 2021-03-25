@@ -6,7 +6,7 @@ import {
 import { shortTime } from '../general/basic';
 import { dragSheep, showSheepSprite } from '../general/animations';
 import { dragEventAnimal } from './Event/animations';
-import { Arrows } from '../elements';
+import Arrow from './../components/Arrow';
 
 let farmer: any = require("./../../assets/images/farmer.png");
 
@@ -32,7 +32,6 @@ class Tutorial extends Phaser.Scene {
   public mergPointer: any;
   public showMergPointer: boolean;
   public skipTutorial: boolean;
-  public arrows: Arrows; // стрелки
   public showSheep: boolean;
   
   public click = click.bind(this);
@@ -61,7 +60,6 @@ class Tutorial extends Phaser.Scene {
 
 
   public create(): void {
-
     this.game.scene.keys[this.state.farm].scrolling.wheel = false;
 
     // интерактивный фон
@@ -124,9 +122,6 @@ class Tutorial extends Phaser.Scene {
     // перетаскивание евентовых животных
     if (this.state.farm === 'Event') this.dragEventAnimal();
     
-    // укзывающие стрелки
-    if (this.arrows?.active) this.arrows.update();
-
     // появление спрайта овечки
     this.showSheepSprite();
     
@@ -271,7 +266,8 @@ class Tutorial extends Phaser.Scene {
         this.simpleTutorial();
 
       } else if (this.state.tutorial.additional === 'herdBoost1') {
-        this.arrows = new Arrows(this, { x: 372, y: this.height - 92 }, 70, false, false, false, true, false, true);
+        Arrow.generate(this, 11);
+
         let shopBtn: Phaser.GameObjects.Image = this.add.image(370, this.height - 90, 'shop');
         
         this.topPosition = false;
@@ -314,7 +310,7 @@ class Tutorial extends Phaser.Scene {
           font: '23px Shadow',
           color: '#FFFFFF'
         }).setOrigin(0.5, 0.5).setStroke('#3B5367', 4).setDepth(10).setAlpha(0);
-        this.arrows = new Arrows(this, { x: 455, y: yBtn}, 70, false, false, false, true, false, true);
+        Arrow.generate(this, 12);
 
         this.topPosition = false;
         this.indent = yBtn;
@@ -349,8 +345,9 @@ class Tutorial extends Phaser.Scene {
         });
 
       } else if (this.state.tutorial.additional === 'feedBoost1') {
+        
+        Arrow.generate(this, 13);
 
-        this.arrows = new Arrows(this, { x: 372, y: this.height - 92 }, 70, false, false, false, true, false, true);
         let shopBtn: Phaser.GameObjects.Image = this.add.image(370, this.height - 90, 'shop');
         
         this.topPosition = false;
@@ -392,8 +389,7 @@ class Tutorial extends Phaser.Scene {
           font: '23px Shadow',
           color: '#FFFFFF'
         }).setOrigin(0.5, 0.5).setStroke('#3B5367', 4).setDepth(10).setAlpha(0);
-        this.arrows = new Arrows(this, { x: 455, y: yBtn}, 70, false, false, false, true, false, true);
-
+        Arrow.generate(this, 14)
         this.topPosition = false;
         this.indent = y - 350;
         this.tailX = 430;
@@ -480,8 +476,9 @@ class Tutorial extends Phaser.Scene {
         // второй шаг
         } else if (this.state.tutorial.step === 10) {
 
+          Arrow.generate(this, 1);
+
           this.showSheepMoney();
-          this.arrows = new Arrows(this, { x: 82, y: this.height - 92 }, 70, false, false, false, true, false, true);
           this.tutorText = this.state.lang.sheepTutorial_10;
           let button: Phaser.GameObjects.Sprite = this.add.sprite(82, this.height - 92, 'sheep-buy-icon-1');
           this.clickButton(button, (): void => {
@@ -497,7 +494,8 @@ class Tutorial extends Phaser.Scene {
         // третий шаг
         } else if (this.state.tutorial.step === 20) {
 
-          this.arrows = new Arrows(this, { x: 600, y: 600 }, 120, false, false, true, false, false, true);
+          Arrow.generate(this, 2);
+
           this.tutorText = this.state.lang.sheepTutorial_20;
           let territory: Phaser.GameObjects.Sprite = this.add.sprite(480, 480, 'sheep-bought').setOrigin(0);
           this.click(territory, (): void => {
@@ -514,7 +512,8 @@ class Tutorial extends Phaser.Scene {
         // четвертый шаг
         } else if (this.state.tutorial.step === 30) {
 
-          this.arrows = new Arrows(this, { x: 360, y: 600 }, 120, false, false, true, false, false, true);
+          Arrow.generate(this, 3);
+          
           this.tutorText = this.state.lang.sheepTutorial_30;
           let territory: Phaser.GameObjects.Sprite = this.add.sprite(240, 480, 'sheep-bought').setOrigin(0);
           this.click(territory, (): void => {
@@ -559,7 +558,8 @@ class Tutorial extends Phaser.Scene {
         } else if (this.state.tutorial.step === 50) {
 
           this.showSheepMoney();
-          this.arrows = new Arrows(this, { x: 82, y: this.height - 92 }, 70, false, false, false, true, false, true);
+
+          Arrow.generate(this, 5);
 
           this.game.scene.keys['SheepBars'].sheepBuy.setVisible(false);
           this.game.scene.keys['SheepBars'].sheepPrice.setVisible(false);
@@ -682,7 +682,7 @@ class Tutorial extends Phaser.Scene {
         // девятый шаг
         } else if (this.state.tutorial.step === 80) {
 
-          this.arrows = new Arrows(this, { x: 120, y: 600 }, 120, false, false, true, false, false, true);
+          Arrow.generate(this, 6)
           this.tutorText = this.state.lang.sheepTutorial_80;
           this.skipTutorial = true;
           
@@ -701,7 +701,8 @@ class Tutorial extends Phaser.Scene {
         // десятый шаг
         } else if (this.state.tutorial.step === 90) {
 
-          this.arrows = new Arrows(this, { x: 230, y: this.height - 90 }, 70, false, false, false, true, false, true);
+          Arrow.generate(this, 7);
+
           this.tutorText = this.state.lang.sheepTutorial_90;
           this.skipTutorial = true;
           let button: Phaser.GameObjects.Sprite = this.add.sprite(230, this.height - 90, 'wool-collector');
@@ -829,12 +830,12 @@ class Tutorial extends Phaser.Scene {
           this.tailFlipX = true;
           this.tailFlipY = false;
           this.pointerTutorial();
-          this.arrows = new Arrows(this, { x: 82, y: this.height - 92 }, 70, false, false, false, true, false, true);
+          Arrow.generate(this, 15);
           let button: Phaser.GameObjects.Sprite = this.add.sprite(82, this.height - 92, 'event-buy-icon-1');
           this.clickButton(button, (): void => {
+            Arrow.generate(this.game.scene.keys['EventBars'], 16)
 
             this.game.scene.keys[this.state.farm].buyAnimal(1);
-            this.game.scene.keys['EventBars'].arrows = new Arrows(this.game.scene.keys['EventBars'], { x: 82, y: this.height - 92 }, 70, false, false, false, true, false, true);
             this.game.scene.keys['EventBars'].animalBuy.setVisible(true);
             this.game.scene.keys['EventBars'].animalPrice.setVisible(true);
             this.game.scene.keys['EventBars'].animalPriceBubble.setVisible(true);

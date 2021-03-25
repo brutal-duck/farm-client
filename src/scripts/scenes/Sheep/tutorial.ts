@@ -142,7 +142,6 @@ function doneTutor_40(): void {
     farm_id: this.state.farm
   });
   
-  this.arrows?.destroy();
   this.state.userSheep.tutorial = 50;
 
   this.time.addEvent({ delay: 1000, callback: (): void => {

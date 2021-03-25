@@ -84,7 +84,6 @@ import {
   teleportation, 
   updateTeleportation,
   dragEventAnimal, 
-  arrowsBehavior
 } from './animations';
 import autoprogress from './autoprogress';
 import { 
@@ -212,7 +211,6 @@ class Event extends Phaser.Scene {
   public progressEventTutor_40 = progressEventTutor_40.bind(this);
   public progressEventTutor_50 = progressEventTutor_50.bind(this);
   public dragEventAnimal = dragEventAnimal.bind(this);
-  public arrowsBehavior = arrowsBehavior.bind(this);
   public nextDayTimer = nextDayTimer.bind(this);
   public intervalPorgressCollectorTime = intervalPorgressCollectorTime.bind(this);
   public autoporgressCollectorTime = autoporgressCollectorTime.bind(this);
@@ -261,8 +259,7 @@ class Event extends Phaser.Scene {
     this.animalBrain();
     this.updateTeleportation();  
     if (!this.scene.isActive('Tutorial')) this.dragEventAnimal(true);
-    // укзывающие стрелки
-    this.arrowsBehavior();
+
     if (this.state.user.additionalTutorial.eventTutorial === 30) {
    
       if (this.animals.children.entries.length > 1) {

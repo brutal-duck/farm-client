@@ -74,7 +74,7 @@ import {
   checkExchangeRepository,
   buyTerritory
 } from '../../general/territories';
-import { animations, repositoryAnimation, arrowsBehavior } from './animations';
+import { animations, repositoryAnimation } from './animations';
 import {
   teleportation,
   reverse,
@@ -92,7 +92,7 @@ import {
   dragSheepMerging
 } from './sheep';
 import { installTerritory } from './territories';
-import { createSpeechBubble, mergingCloud, Arrows } from '../../elements';
+import { createSpeechBubble, mergingCloud } from '../../elements';
 import {
   balance,
   sheepPrice,
@@ -160,7 +160,7 @@ class Sheep extends Phaser.Scene {
   public caveTutor: boolean; // метка туториала с кристаллической овцой
   public autoprogressTimer: number; // таймер для автопрогресса
   public takeRewardRegistration: boolean; // метка за сбор награды за регистрацию
-  public arrows: Arrows; // стрелки
+  public arrow: Phaser.GameObjects.Sprite; // стрелки
   public woolPB_bg: Phaser.GameObjects.Graphics; // прогресс-бар для тутора
   public woolPB_lineBg: Phaser.GameObjects.Graphics; // прогресс-бар для тутора
   public woolPB_progress: Phaser.GameObjects.Graphics; // прогресс-бар для тутора
@@ -274,7 +274,6 @@ class Sheep extends Phaser.Scene {
   public onlineStatus = onlineStatus.bind(this);
   public dragSheep = dragSheep.bind(this);
   public hearts = hearts.bind(this);
-  public arrowsBehavior = arrowsBehavior.bind(this);
   public checkDoneTasks = checkDoneTasks.bind(this);
   public collectorTutorial = collectorTutorial.bind(this);
   public buyNextFarm = buyNextFarm.bind(this);
@@ -312,7 +311,7 @@ class Sheep extends Phaser.Scene {
     this.alarm = false;
     this.settings = state.sheepSettings;
     this.showMergPointer = false;
-    this.arrows = null;
+    this.arrow = null;
     this.collectorTimer = null;
     this.counterWithoutCollector = 0;
     this.caveIconsTimer = 0;
@@ -385,8 +384,6 @@ class Sheep extends Phaser.Scene {
     // перетаскивание овец
     this.dragSheep(true);
 
-    // укзывающие стрелки
-    this.arrowsBehavior();
   }
 
   public openEmailWindow(): void {
