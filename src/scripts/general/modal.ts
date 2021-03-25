@@ -1595,7 +1595,7 @@ function updateImproveCollector(
   this.state.farm === 'Chicken' ? 'egg' : 
   this.state.farm === 'Cow' ? 'milk' : '';
 
-  this.textHeader.setText(`this.state.lang[${resource}Collector] ${this.state[`user${this.state.farm}`].collectorLevel} ${this.state.lang.shortLevel}.`);
+  this.textHeader.setText(`${this.state.lang[`${resource}Collector`]} ${this.state[`user${this.state.farm}`].collectorLevel} ${this.state.lang.shortLevel}.`);
 
   const thisLevel: IcollectorSettings = this.state[`${farm}CollectorSettings`]
     .find((data: IcollectorSettings) => data.level === this.state[`user${this.state.farm}`].collectorLevel);
