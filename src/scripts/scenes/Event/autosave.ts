@@ -58,6 +58,8 @@ function autosave(): void {
     eventPoints: this.state.userEvent.maxLevelAnimal,
     additionalTutorial: this.state.user.additionalTutorial,
     status: this.state.user.status,   
+    boosts: this.state.user.boosts,
+
   }
 
   for (let i in this.resources.children.entries) {

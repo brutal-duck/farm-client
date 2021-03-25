@@ -62,6 +62,7 @@ function autosave(): void {
     feedBoostTime: this.state.userSheep.feedBoostTime,
     eventPoints: this.state.progress.event.eventPoints,
     status: this.state.user.status,
+    boosts: this.state.user.boosts,
     
   }
   

@@ -632,6 +632,7 @@ class CowPreload extends Phaser.Scene {
           status: response.data.user.status,
           statuses: response.data.user.statuses,
           starterpack: response.data.user.starterpack,
+          boosts: response.data.user.boosts,
 
         }
 

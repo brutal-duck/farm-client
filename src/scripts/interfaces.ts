@@ -41,6 +41,7 @@ interface IsheepUserAutoSave {
   feedBoostTime: number;
   eventPoints: number;
   status: string;
+  boosts: Iboosts;
   
 }
 interface IchickenUserAutoSave {
@@ -62,6 +63,7 @@ interface IchickenUserAutoSave {
   feedBoostTime: number;
   eventPoints: number;
   status: string;
+  boosts: Iboosts;
 
 }
 interface IcowUserAutoSave {
@@ -83,6 +85,8 @@ interface IcowUserAutoSave {
   feedBoostTime: number;
   eventPoints: number;
   status: string;
+  boosts: Iboosts;
+
 
 }
 interface IeventUserAutoSave {
@@ -100,6 +104,7 @@ interface IeventUserAutoSave {
   eventPoints: number;
   additionalTutorial: IadditionalTutorial;
   status: string;
+  boosts: Iboosts;
   
 }
 // for state
@@ -125,6 +130,7 @@ interface Iuser {
   status: string;
   statuses: string[];
   starterpack: boolean;
+  boosts: Iboosts;
 }
 interface IuserSheep {
   money: number;
@@ -550,6 +556,17 @@ interface IstatusSettings {
   text: string;
   iconTexture: string;
   iconVisible: boolean;
+}
+interface Iboosts {
+  sheep: IfarmBosts;
+  chicken: IfarmBosts;
+  cow: IfarmBosts;
+}
+interface IfarmBosts {
+  collector4: number,
+  collector12: number,
+  herd: number,
+  feed: number,
 }
 interface Istate {
   platform: string;
