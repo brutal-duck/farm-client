@@ -142,8 +142,9 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
         this.horizontalAnim();
         break;
       case 14: 
+        console.log('14')
         this.x = 455 + 70 + this.width / 2;
-        this.y = this.scene.cameras.main.centerY + 120;
+        this.y = this.scene.cameras.main.centerY + 320;
         this.setAngle(180);
         this.fadeIn();
         this.horizontalAnim();
