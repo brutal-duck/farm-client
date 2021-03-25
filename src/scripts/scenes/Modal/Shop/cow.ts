@@ -105,7 +105,7 @@ function cowMoney(): void {
 }
 
 
-// курицы
+// коровы
 function cow(): void {
 
   let rows: number = this.state.cowSettings.cowSettings.length;

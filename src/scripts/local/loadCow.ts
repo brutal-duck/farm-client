@@ -14,7 +14,7 @@ function loadCow(counter: number = 0): void {
   this.state.cowSettings = cowSettings;
   this.state.progress = progress();
   this.state.cow = [];
-  this.state.cowEggs = [];
+  this.state.cowMilk = [];
   this.state.farm = 'Cow';
   this.state.daily = false;
   this.state.newbieTime = 0;
@@ -22,7 +22,7 @@ function loadCow(counter: number = 0): void {
   if (localStorage.dailyAwards) this.state.dailyAwards = JSON.parse(localStorage.dailyAwards);
 
   if (localStorage.cow) this.state.cow = JSON.parse(localStorage.cow);
-  if (localStorage.cowEggs) this.state.cowEggs = JSON.parse(localStorage.cowEggs);
+  if (localStorage.cowMilk) this.state.cowMilk = JSON.parse(localStorage.cowMilk);
 
   if (localStorage.cowTerritories) this.state.cowTerritories = JSON.parse(localStorage.cowTerritories);
   else this.state.cowTerritories = territories;

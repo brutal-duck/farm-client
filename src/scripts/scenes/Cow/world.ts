@@ -212,9 +212,9 @@ function world(): void {
       // graphics2.lineStyle(2, 0x00ff00);
       // graphics2.strokeRect(rightZone.x - rightZone.input.hitArea.width / 2, rightZone.y - rightZone.input.hitArea.height / 2, rightZone.input.hitArea.width, rightZone.input.hitArea.height);
 
-      territory.level = this.add.text(territory.x + 200, territory.y + 202, this.state.userCow.fair, {
+      territory.level = this.add.text(territory.x + 50, territory.y + 220, this.state.userCow.fair, {
         font: '34px Shadow',
-        color: '#b5315a'
+        color: '#df870a'
       }).setOrigin(0.5, 0.5).setDepth(y);
       
     }
