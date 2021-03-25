@@ -30,9 +30,7 @@ import {
   chickenEggsRepository,
   confirmExpelChicken,
   diamondChickenAd,
-  improveCollectorChicken,
   chickenEggRepositoryExchange,
-  updateImproveCollectorChicken
 } from './chicken';
 import {
   cowFair,
@@ -46,9 +44,7 @@ import {
   cowMilkRepository,
   confirmExpelCow,
   diamondCowAd,
-  improveCollectorCow,
   cowMilkRepositoryExchange,
-  updateImproveCollectorCow
 } from './cow';
 import {
   confirmExpelAnimal,
@@ -74,9 +70,7 @@ import {
   sheepWoolRepository,
   confirmExpelSheep,
   diamondSheepAd,
-  improveCollectorSheep,
   sheepWoolRepositoryExchange,
-  updateImproveCollectorSheep
 } from './sheep';
 import {
   tasks,
@@ -88,7 +82,15 @@ import dailyNewbie from './dailyNewbie';
 import nextChapter from './nextChapter';
 import donate from './donate';
 import { bigButton, repositoryBtn, mergingCloud, shopButton } from '../../elements';
-import { changeNickname, addEmail, support, registration, profileWindow } from '../../general/modal';
+import { 
+  changeNickname,
+  addEmail,
+  support,
+  registration,
+  profileWindow,
+  improveCollector,
+  updateImproveCollector
+} from '../../general/modal';
   // буст "Стадо"
 import { herdBoostWindow, getRandomAnimal, getRandomStartPosition } from './herdBoost';
 import { createChatBars } from './Chat/elements';
@@ -182,12 +184,8 @@ class Modal extends Phaser.Scene {
   public diamondChickenAd = diamondChickenAd.bind(this);
   public diamondCowAd = diamondCowAd.bind(this);
   public donate = donate.bind(this);
-  public improveCollectorSheep = improveCollectorSheep.bind(this);
-  public updateImproveCollectorSheep = updateImproveCollectorSheep.bind(this);
-  public improveCollectorChicken = improveCollectorChicken.bind(this);
-  public updateImproveCollectorChicken = updateImproveCollectorChicken.bind(this);
-  public improveCollectorCow = improveCollectorCow.bind(this);
-  public updateImproveCollectorCow = updateImproveCollectorCow.bind(this);
+  public improveCollector = improveCollector.bind(this);
+  public updateImproveCollector = updateImproveCollector.bind(this);
   public herdBoostWindow = herdBoostWindow.bind(this);
   public getRandomAnimal = getRandomAnimal.bind(this);
   public getRandomStartPosition = getRandomStartPosition.bind(this);

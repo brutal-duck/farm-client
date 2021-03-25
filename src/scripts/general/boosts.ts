@@ -114,82 +114,84 @@ function improveCollector(): void {
     }
     this.state.modal = modal;
     this.scene.launch('Modal', this.state);
-  }
-  
-  if (nextLevel.diamonds) {
-
-    if (this.state.user.diamonds >= nextLevel.price) {
-
-      this.tryTask(15, 0, nextLevel.price);
-      this.tryTask(21, nextLevel.level);
-
-      this.state.amplitude.getInstance().logEvent('diamonds_spent', {
-        type: 'improve_collector',
-        count: nextLevel.price,
-        farm_id: this.state.farm
-      });
-
-      this.state.user.diamonds -= nextLevel.price;
-      user.collectorLevel++;
-      this.setCollector();
-
-      this.game.scene.keys['Modal'].improveCollectorAnim({x: this.cameras.main.centerX, y: this.cameras.main.centerY + 10});
-      
-      this.time.addEvent({ delay: 500, callback: (): void => {
-        this.game.scene.keys[this.state.farm + 'Bars'].firework250(230, Number(this.game.config.height) - 70);
-      }, callbackScope: this, loop: false });
-
-    } else {
-
-      this.state.convertor = {
-        fun: 8,
-        count: nextLevel.price - this.state.user.diamonds,
-        diamonds: nextLevel.price - this.state.user.diamonds,
-        type: 2
-      }
-      let modal: Imodal = {
-        type: 1,
-        sysType: 4
-      }
-      this.state.modal = modal;
-      this.scene.launch('Modal', this.state);
-
-    }
-
   } else {
 
-    if (user.money >= nextLevel.price) {
-
-      this.tryTask(21, nextLevel.level);
-      user.money -= nextLevel.price;
-      user.collectorLevel++;
-      this.setCollector();
-
-      this.game.scene.keys['Modal'].improveCollectorAnim({x: this.cameras.main.centerX, y: this.cameras.main.centerY + 10});
-
-      this.time.addEvent({ delay: 500, callback: (): void => {
-        this.game.scene.keys[this.state.farm + 'Bars'].firework250(230, Number(this.game.config.height) - 70);
-      }, callbackScope: this, loop: false });
-
+    if (nextLevel.diamonds) {
+  
+      if (this.state.user.diamonds >= nextLevel.price) {
+  
+        this.tryTask(15, 0, nextLevel.price);
+        this.tryTask(21, nextLevel.level);
+  
+        this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+          type: 'improve_collector',
+          count: nextLevel.price,
+          farm_id: this.state.farm
+        });
+  
+        this.state.user.diamonds -= nextLevel.price;
+        user.collectorLevel++;
+        this.setCollector();
+  
+        this.game.scene.keys['Modal'].improveCollectorAnim({x: this.cameras.main.centerX, y: this.cameras.main.centerY + 10});
+        
+        this.time.addEvent({ delay: 500, callback: (): void => {
+          this.game.scene.keys[this.state.farm + 'Bars'].firework250(230, Number(this.game.config.height) - 70);
+        }, callbackScope: this, loop: false });
+  
+      } else {
+  
+        this.state.convertor = {
+          fun: 8,
+          count: nextLevel.price - this.state.user.diamonds,
+          diamonds: nextLevel.price - this.state.user.diamonds,
+          type: 2
+        }
+        let modal: Imodal = {
+          type: 1,
+          sysType: 4
+        }
+        this.state.modal = modal;
+        this.scene.launch('Modal', this.state);
+  
+      }
+  
     } else {
-
-      let count: number = nextLevel.price - user.money;
-      let diamonds: number = this.convertMoney(count);
-      this.state.convertor = {
-        fun: 8,
-        count: count,
-        diamonds: diamonds,
-        type: 1
+  
+      if (user.money >= nextLevel.price) {
+  
+        this.tryTask(21, nextLevel.level);
+        user.money -= nextLevel.price;
+        user.collectorLevel++;
+        this.setCollector();
+  
+        this.game.scene.keys['Modal'].improveCollectorAnim({x: this.cameras.main.centerX, y: this.cameras.main.centerY + 10});
+  
+        this.time.addEvent({ delay: 500, callback: (): void => {
+          this.game.scene.keys[this.state.farm + 'Bars'].firework250(230, Number(this.game.config.height) - 70);
+        }, callbackScope: this, loop: false });
+  
+      } else {
+  
+        let count: number = nextLevel.price - user.money;
+        let diamonds: number = this.convertMoney(count);
+        this.state.convertor = {
+          fun: 8,
+          count: count,
+          diamonds: diamonds,
+          type: 1
+        }
+        let modal: Imodal = {
+          type: 1,
+          sysType: 4
+        }
+        this.state.modal = modal;
+        this.scene.launch('Modal', this.state);
+  
       }
-      let modal: Imodal = {
-        type: 1,
-        sysType: 4
-      }
-      this.state.modal = modal;
-      this.scene.launch('Modal', this.state);
-
+  
     }
-
+    
   }
   
 }

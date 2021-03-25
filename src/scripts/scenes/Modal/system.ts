@@ -166,13 +166,9 @@ function systemWindow(): void {
 
     case 10: // окно улучшения собирателя
       
-      if (this.state.farm === 'Sheep') {
-        this.improveCollectorSheep();
-      } else if (this.state.farm === 'Chicken') {
-        this.improveCollectorChicken();
-      } else if (this.state.farm === 'Cow') {
-        this.improveCollectorCow();
-      } else if (this.state.farm === 'Event') {
+      if (this.state.farm !== 'Eheep') {
+        this.improveCollector();
+      } else {
         this.improveCollectorEvent();
       }
       
