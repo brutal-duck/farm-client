@@ -128,6 +128,7 @@ class Modal extends Phaser.Scene {
   public eventRatingsScores: Phaser.GameObjects.Text[];
   public eventLeftTime: Phaser.GameObjects.Text;
   public timerNewbieAward: Phaser.GameObjects.Text;
+  public tasksOpened: boolean;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -215,6 +216,7 @@ class Modal extends Phaser.Scene {
   public typePreload = typePreload.bind(this);
   public clickTaskBoard = clickTaskBoard.bind(this);
   public openModal = openModal.bind(this);
+
   
   public init(state: Istate): void {
     this.state = state;
@@ -229,7 +231,7 @@ class Modal extends Phaser.Scene {
 
   public create(): void {
     this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)');
-
+    this.tasksOpened = false;
     this.add.tileSprite(0, 0,
       Number(this.game.config.width),
       Number(this.game.config.height),
