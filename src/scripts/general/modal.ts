@@ -1560,8 +1560,8 @@ function improveCollector(): void {
     const improve = this.bigButton('green', 'left', 90, this.state.lang.improve, right);
     this.clickModalBtn(improve, (): void => {
       this.game.scene.keys[this.state.farm].improveCollector();
-      this.updateImproveCollector(improve, speed, duration, nextLevelText);      
-
+      this.updateImproveCollector(improve, speed, duration, nextLevelText);  
+    
     });
 
   } else {
@@ -1608,9 +1608,12 @@ function updateImproveCollector(
   const durationText: string = `${this.state.lang.duration}: ${thisLevel.time} ${this.state.lang.minutes}`;
   duration.setText(durationText);
 
-  let position: Iposition;
+  let position: Iposition = {
+    x: undefined,
+    y: undefined,
+  };
   let text: string;
-  if (nextLevel.time > thisLevel.time) {
+  if (nextLevel?.time > thisLevel.time) {
 
     position = {
       x: duration.getBounds().right + 10,
@@ -1618,7 +1621,7 @@ function updateImproveCollector(
     }
     text = `(+${(nextLevel.time - thisLevel.time)} ${this.state.lang.shortMinutes})`;
     
-  } else if (nextLevel.speed > thisLevel.speed) {
+  } else if (nextLevel?.speed > thisLevel.speed) {
     
     position = {
       x: speed.getBounds().right + 10,
@@ -1628,7 +1631,7 @@ function updateImproveCollector(
   }
   nextLevelText.setPosition(position.x, position.y);
   nextLevelText.setText(text);
-  if (this.state.userSheep.part >= nextLevel.chapter) {
+  if (this.state.userSheep.part >= nextLevel?.chapter) {
     let icon: string;
     if (nextLevel.diamonds) icon = 'diamond';
     else icon = `${farm}Coin`;
@@ -1651,7 +1654,7 @@ function updateImproveCollector(
 
     let improve = {
       icon: 'lock',
-      text: `${this.state.lang.shortPart} ${nextLevel.chapter}`,
+      text: `${this.state.lang.shortPart} ${nextLevel?.chapter}`,
     }
     this.bigButton('grey', 'left', 90, this.state.lang.improve, improve);
 
