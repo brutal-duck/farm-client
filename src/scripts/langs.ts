@@ -742,7 +742,13 @@ export default {
     newbieAwards: 'Награды новичка',
     stillTimeAward: 'Награды будут доступны',
     toNextAward: 'До следующей награды',
-    
+    dailyNewbieHint0: 'Вы получили $1 монет',
+    dailyNewbieHint1: 'Вы получили 5 кристаллических овец',
+    dailyNewbieHint2: 'Получены три овечки $1 породы',
+    dailyNewbieHint4: 'Получен бесплатный подстригатель на 3 часа',
+    dailyNewbieHint5: 'Получены три курочки $1 породы',
+    dailyNewbieHint6: 'Получен бесплатный собиратель яиц на 3 часа',
+    dailyNewbieHint7: 'Вы получили 10 кристаллических овец',
   },
 
   en: {
@@ -1488,6 +1494,12 @@ export default {
     newbieAwards: 'Награды новичка',
     stillTimeAward: 'Награды будут доступны',
     toNextAward: 'До следующей награды',
-    
+    dailyNewbieHint0: 'Вы получили $1 монет',
+    dailyNewbieHint1: 'Вы получили 5 кристаллических овец',
+    dailyNewbieHint2: 'Получены три овечки $1 породы',
+    dailyNewbieHint4: 'Получен бесплатный подстригатель на 3 часа',
+    dailyNewbieHint5: 'Получены три курочки $1 породы',
+    dailyNewbieHint6: 'Получен бесплатный собиратель яиц на 3 часа',
+    dailyNewbieHint7: 'Вы получили 10 кристаллических овец',
   }
 }

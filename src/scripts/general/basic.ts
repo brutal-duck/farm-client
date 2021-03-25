@@ -2,6 +2,7 @@ import axios from 'axios';
 import { FAPI } from '../libs/Fapi.js';
 import bridge from '@vkontakte/vk-bridge';
 import * as amplitude from 'amplitude-js';
+import Hint from './../components/Hint';
 
 // рандомное число
 function random(min: number, max: number): number {
@@ -774,14 +775,18 @@ function getNewbieAward(): void {
       this.state.dailyAwards[i] = false;
       this.state.userSheep.money += this.convertDiamonds(10);
       this.game.scene.keys['SheepBars'].plusMoney();
+      const text: string = this.state.lang.dailyNewbieHint0.replace('$1', String(this.convertDiamonds(10))); 
+      Hint.create(this.game.scene.keys['SheepBars'], -250, text, 2);
       break;
-
     }
 
     if (i === 1 && this.state.dailyAwards[i] && this.state.farm === 'Sheep') {
 
       this.state.dailyAwards[i] = false;
       let counter: number = 0;
+      const text: string = this.state.lang.dailyNewbieHint1; 
+      Hint.create(this.game.scene.keys['SheepBars'], -250, text, 2);
+
       let timeout: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
         
         counter++;
@@ -789,7 +794,6 @@ function getNewbieAward(): void {
         let y: number = random(510, 690);
         let id: string = 'local_' + randomString(18);
         this.getSheep(id, 0, x, y, 0, 500, -5);
-
         if (counter >= 5) timeout.remove(false);
 
       }, callbackScope: this, loop: true });
@@ -802,6 +806,8 @@ function getNewbieAward(): void {
       this.state.dailyAwards[i] = false;
       let type: number = this.state.userSheep.fair + 1;
       let counter: number = 0;
+      const text: string = this.state.lang.dailyNewbieHint2.replace('$1', String(type)); 
+      Hint.create(this.game.scene.keys['SheepBars'], -250, text, 2);
       let timeout: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
         
         counter++;
@@ -840,7 +846,8 @@ function getNewbieAward(): void {
     }
 
     if (i === 4 && this.state.dailyAwards[i] && this.state.farm === 'Sheep') {
-
+      const text: string = this.state.lang.dailyNewbieHint4; 
+      Hint.create(this.game.scene.keys['SheepBars'], -250, text, 2);
       this.state.dailyAwards[i] = false;
       this.state.userSheep.collector += 3 * 60 * 60;
       this.state.userSheep.collectorTakenTime = this.state.userSheep.collector;
@@ -853,6 +860,9 @@ function getNewbieAward(): void {
 
       let type: number = this.state.userChicken.fair + 1;
       let counter: number = 0;
+      const text: string = this.state.lang.dailyNewbieHint5.replace('$1', String(type)); 
+      Hint.create(this.game.scene.keys['ChickenBars'], -250, text, 2);
+
       let timeout: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
         
         counter++;
@@ -871,7 +881,8 @@ function getNewbieAward(): void {
     }
 
     if (i === 6 && this.state.dailyAwards[i] && this.state.farm === 'Chicken') {
-
+      const text: string = this.state.lang.dailyNewbieHint6; 
+      Hint.create(this.game.scene.keys['ChickenBars'], -250, text, 2);
       this.state.dailyAwards[i] = false;
       this.state.userChicken.collector += 3 * 60 * 60;
       this.state.userChicken.collectorTakenTime = this.state.userChicken.collector;
@@ -881,7 +892,8 @@ function getNewbieAward(): void {
     }
 
     if (i === 7 && this.state.dailyAwards[i] && this.state.farm === 'Sheep') {
-
+      const text: string = this.state.lang.dailyNewbieHint7; 
+      Hint.create(this.game.scene.keys['SheepBars'], -250, text, 2);
       let counter: number = 0;
       let timeout: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
         

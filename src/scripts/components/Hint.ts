@@ -19,7 +19,9 @@ export default class Hint extends Phaser.GameObjects.Text {
     super(scene, scene.cameras.main.centerX, scene.cameras.main.centerY + y, text, {
       fontFamily: 'Bip',
       fontSize: '35px',
-      color: '#FFFFFF'
+      color: '#FFFFFF',
+      wordWrap: { width: 550 },
+      align: 'center',
     })
     this.init(scene, delay);
   }
