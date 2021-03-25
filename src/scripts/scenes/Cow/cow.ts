@@ -276,8 +276,8 @@ function checkMerging(territory: any, cow: any, position: string) {
     // если на этой позиции уже стоит корова
     if (territory.merging.length === 1 && territory.merging[0].position === position) {
 
-      if (position === 'left') position = 'right';
-      else if (position === 'right') position = 'left';
+      if (position === 'top') position = 'bottom';
+      else if (position === 'bottom') position = 'top';
 
     }
 
@@ -288,42 +288,42 @@ function checkMerging(territory: any, cow: any, position: string) {
       position: position
     });
 
-    // ставим коров на парковку
-    if (position === 'left') {
+    // ставим на парковку
+    if (position === 'top') {
 
       cow.anims.play('cow-stay-right' + cow.type, true);
-      cow.y = territory.y + 120;
-      cow.x = territory.x + 70;
       cow.vector = 6;
+      cow.y = territory.y + 30;
+      cow.x = territory.x + 156;
 
-    } else if (position === 'right') {
+    } else if (position === 'bottom') {
 
-      cow.anims.play('cow-stay-left' + cow.type, true);
-      cow.y = territory.y + 120;
-      cow.x = territory.x + 170;
-      cow.vector = 8;
+      cow.anims.play('cow-stay-right' + cow.type, true);
+      cow.vector = 6;
+      cow.y = territory.y + 130;
+      cow.x = territory.x + 156;
 
     }
 
   } else {
 
-    if (check.position === 'left' && position === 'right') check.position = 'right';
-    if (check.position === 'right' && position === 'left') check.position = 'left';
+    if (check.position === 'top' && position === 'bottom') check.position = 'bottom';
+    if (check.position === 'bottom' && position === 'top') check.position = 'top';
 
     // обновляем положение парковки
-    if (position === 'left') {
+    if (position === 'top') {
 
       cow.anims.play('cow-stay-right' + cow.type, true);
-      cow.y = territory.y + 120;
-      cow.x = territory.x + 70;
       cow.vector = 6;
+      cow.y = territory.y + 30;
+      cow.x = territory.x + 90;
 
-    } else if (position === 'right') {
+    } else if (position === 'bottom') {
 
-      cow.anims.play('cow-stay-left' + cow.type, true);
-      cow.y = territory.y + 120;
-      cow.x = territory.x + 170;
-      cow.vector = 8;
+      cow.anims.play('cow-stay-right' + cow.type, true);
+      cow.vector = 6;
+      cow.y = territory.y + 130;
+      cow.x = territory.x + 90;
 
     }
 

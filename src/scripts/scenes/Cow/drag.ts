@@ -54,13 +54,13 @@ function drag(): void {
 
         } else {
 
-          if (zone.type === 'left') {
+          if (zone.type === 'top') {
 
-            this.checkMerging(territory, cow, 'left');
+            this.checkMerging(territory, cow, 'top');
 
-          } else if (zone.type === 'right') {
+          } else if (zone.type === 'bottom') {
 
-            this.checkMerging(territory, cow, 'right');
+            this.checkMerging(territory, cow, 'bottom');
 
           }
 
