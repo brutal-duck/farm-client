@@ -539,7 +539,7 @@ class CowPreload extends Phaser.Scene {
     axios.post(process.env.API + '/cow/loadData', {
       hash: this.state.user.hash
     }).then((response) => {
-      console.log(response.data)
+      // console.log(response.data)
 
     //   // checkStorage(response.data.user.hash);
 

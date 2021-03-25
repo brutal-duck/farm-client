@@ -195,24 +195,27 @@ function world(): void {
 
       territory.merging = [];
       territory.mergingCounter = 0;
+      // territory.y += 16
+      // territory.scaleY = 0.94
+
       this.add.image(x, y - 35, 'cow-tent').setDepth(y).setOrigin(0, 0);
       
-      let leftZone: Phaser.GameObjects.Zone = this.add.zone(x + 45, y + 120, 145, 300).setDropZone(undefined, () => {});
-      leftZone.type = 'left';
-      
+      let topZone: Phaser.GameObjects.Zone = this.add.zone(x + 120, y + 45, 300, 145).setDropZone(undefined, () => {});
+      topZone.type = 'top';
+
       // let graphics1 = this.add.graphics().setDepth(territory.y * 5);
       // graphics1.lineStyle(2, 0xffff00);
-      // graphics1.strokeRect(leftZone.x - leftZone.input.hitArea.width / 2, leftZone.y - leftZone.input.hitArea.height / 2, leftZone.input.hitArea.width, leftZone.input.hitArea.height);
+      // graphics1.strokeRect(topZone.x - topZone.input.hitArea.width / 2, topZone.y - topZone.input.hitArea.height / 2, topZone.input.hitArea.width, topZone.input.hitArea.height);
 
       
-      let rightZone: Phaser.GameObjects.Zone = this.add.zone(x + 190, y + 120, 145, 300).setDropZone(undefined, () => {});
-      rightZone.type = 'right';
+      let bottomZone: Phaser.GameObjects.Zone = this.add.zone(x + 120, y + 190, 300, 145).setDropZone(undefined, () => {});
+      bottomZone.type = 'bottom';
       
       // let graphics2 = this.add.graphics().setDepth(territory.y * 5);
       // graphics2.lineStyle(2, 0x00ff00);
-      // graphics2.strokeRect(rightZone.x - rightZone.input.hitArea.width / 2, rightZone.y - rightZone.input.hitArea.height / 2, rightZone.input.hitArea.width, rightZone.input.hitArea.height);
+      // graphics2.strokeRect(bottomZone.x - bottomZone.input.hitArea.width / 2, bottomZone.y - bottomZone.input.hitArea.height / 2, bottomZone.input.hitArea.width, bottomZone.input.hitArea.height);
 
-      territory.level = this.add.text(territory.x + 50, territory.y + 220, this.state.userCow.fair, {
+      territory.level = this.add.text(territory.x + 47, territory.y + 196, this.state.userCow.fair, {
         font: '34px Shadow',
         color: '#df870a'
       }).setOrigin(0.5, 0.5).setDepth(y);
