@@ -78,6 +78,7 @@ import {
   teleportation,
   reverse,
   aim,
+  spineSheep,
   getCow,
   getMilk,
   checkMerging,
@@ -156,6 +157,7 @@ class Cow extends Phaser.Scene {
   public teleportation = teleportation.bind(this);
   public reverse = reverse.bind(this);
   public aim = aim.bind(this);
+  public spineSheep = spineSheep.bind(this);
   public getCow = getCow.bind(this);
   public getMilk = getMilk.bind(this);
   public currentTerritory = currentTerritory.bind(this);
@@ -269,6 +271,10 @@ class Cow extends Phaser.Scene {
     // интервальные функции
     this.interval();
     this.setCollector();
+
+
+    // Спайновая овца
+    this.spineSheep()
 
 
     console.log(this.state)
