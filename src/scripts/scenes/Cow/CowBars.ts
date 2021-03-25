@@ -9,7 +9,7 @@ import {
   clickShopBtn,
   clickModalBtn,
 } from '../../general/clicks';
-import { showFeedTime, updateNativeShop } from './../../general/boosts';
+import { updateNativeShop } from './../../general/boosts';
 import {
   Collector,
   TaskBoard,
@@ -93,7 +93,6 @@ class CowBars extends Phaser.Scene {
   public plusDiamonds = plusDiamonds.bind(this);
   public firework250 = firework250.bind(this);
   public updateNativeShop = updateNativeShop.bind(this);
-  public showFeedTime = showFeedTime.bind(this);
   public shortTime = shortTime.bind(this);
   public getCurrency = getCurrency.bind(this);
   public createSpeechBubble = createSpeechBubble.bind(this);

@@ -7,6 +7,7 @@ import { shortTime } from '../general/basic';
 import { dragSheep, showSheepSprite } from '../general/animations';
 import { dragEventAnimal } from './Event/animations';
 import Arrow from './../components/Arrow';
+import Hint from './../components/Hint';
 
 let farmer: any = require("./../../assets/images/farmer.png");
 
@@ -420,7 +421,7 @@ class Tutorial extends Phaser.Scene {
           this.scene.stop('Modal');
           this.scene.stop();
           this.state.user.additionalTutorial.feedBoost = true;  
-          this.game.scene.keys['SheepBars'].showFeedTime();
+          Hint.create(this.game.scene.keys['SheepBars'], -250, `${this.state.lang.feedBoostNative} ${shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang)}`, 2);
           this.state[`user${this.state.farm}`].feedBoostTime = 3600;
         });
 

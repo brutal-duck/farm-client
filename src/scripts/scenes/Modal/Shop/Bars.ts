@@ -1,5 +1,7 @@
 import { clickButtonUp } from '../../../general/clicks';
 import { openShop } from '../../../general/animations';
+import Hint from './../../../components/Hint';
+import { shortTime } from '../../../general/basic';
 
 class ShopBars extends Phaser.Scene {
   
@@ -31,7 +33,7 @@ class ShopBars extends Phaser.Scene {
     let close: Phaser.GameObjects.Sprite = this.add.sprite(605, this.cameras.main.centerY - 465, 'shop-close');
     this.clickButtonUp(close, (): void => {
       if (this.state.boughtFeedBoost) {
-        this.game.scene.keys[`${this.state.farm}Bars`].showFeedTime();
+        Hint.create(this.game.scene.keys['SheepBars'], -250, `${this.state.lang.feedBoostNative} ${shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang)}`, 2);
         this.state.boughtFeedBoost = false;
       }
 

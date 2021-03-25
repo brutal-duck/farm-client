@@ -1,4 +1,6 @@
 // системное окно
+import { shortTime } from '../../general/basic';
+import Hint from './../../components/Hint';
 function systemWindow(): void {
   let height:number = 0;
 
@@ -18,7 +20,7 @@ function systemWindow(): void {
 
   this.clickButton(this.close, (): void => {
     if (this.state.boughtFeedBoost) {
-      this.game.scene.keys[`${this.state.farm}Bars`].showFeedTime();
+      Hint.create(this.game.scene.keys['SheepBars'], -250, `${this.state.lang.feedBoostNative} ${shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang)}`, 2);
       this.state.boughtFeedBoost = false;
     };
     if (this.state.modal.sysType === 6) this.state.animal.expel = false;

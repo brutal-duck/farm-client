@@ -1,6 +1,7 @@
 // окно подтверждения изгнания
 import { random, getRandomBool, randomString, shortTime, romanize, shortNum} from "../../general/basic";
 import axios  from 'axios';
+import Hint from './../../components/Hint';
 
 function confirmExpelAnimal(): void {
     
@@ -115,7 +116,7 @@ function eventConvertor(): void {
     let cancel = this.bigButton('yellow', 'center', 140, this.state.lang.cancel);
     this.clickModalBtn(cancel, (): void => {
       if (this.state.boughtFeedBoost) {
-        this.game.scene.keys[`${this.state.farm}Bars`].showFeedTime();
+        Hint.create(this.game.scene.keys['SheepBars'], -250, `${this.state.lang.feedBoostNative} ${shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang)}`, 2);
         this.state.boughtFeedBoost = false;
       };
       this.scene.stop();
@@ -158,7 +159,7 @@ function eventConvertor(): void {
     let cancel = this.bigButton('yellow', 'center', 120, this.state.lang.cancel);
     this.clickModalBtn(cancel, (): void => {
       if (this.state.boughtFeedBoost) {
-        this.game.scene.keys[`${this.state.farm}Bars`].showFeedTime();
+        Hint.create(this.game.scene.keys['SheepBars'], -250, `${this.state.lang.feedBoostNative} ${shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang)}`, 2);
         this.state.boughtFeedBoost = false;
       };
       

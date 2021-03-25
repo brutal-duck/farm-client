@@ -32,7 +32,6 @@ import {
   firework250,
 } from '../../general/animations';
 import { pulseCollector, plusResourceAnimation } from './animations';
-import { showFeedTime } from './../../general/boosts';
 
 class EventBars extends Phaser.Scene {
   constructor() {
@@ -96,7 +95,6 @@ class EventBars extends Phaser.Scene {
   public plusDiamonds = plusDiamonds.bind(this);
   public firework250 = firework250.bind(this);
   public plusResourceAnimation = plusResourceAnimation.bind(this);
-  public showFeedTime = showFeedTime.bind(this);
   public updateNativeShop = updateNativeShop.bind(this);
   public updateRaitingsBar = updateRaitingsBar.bind(this);
   public scoreEnding = scoreEnding.bind(this);
