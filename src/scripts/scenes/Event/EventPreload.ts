@@ -132,16 +132,16 @@ const eventBuyIcon87: any = require("./../../../assets/images/event/icons/event-
 const eventBuyIcon88: any = require("./../../../assets/images/event/icons/event-buy-icon-88.png");
 const eventBuyIcon89: any = require("./../../../assets/images/event/icons/event-buy-icon-89.png");
 const eventBuyIcon90: any = require("./../../../assets/images/event/icons/event-buy-icon-90.png");
-// const eventBuyIcon91: any = require("./../../../assets/images/event/icons/event-buy-icon-91.png");
-// const eventBuyIcon92: any = require("./../../../assets/images/event/icons/event-buy-icon-92.png");
-// const eventBuyIcon93: any = require("./../../../assets/images/event/icons/event-buy-icon-93.png");
-// const eventBuyIcon94: any = require("./../../../assets/images/event/icons/event-buy-icon-94.png");
-// const eventBuyIcon95: any = require("./../../../assets/images/event/icons/event-buy-icon-95.png");
-// const eventBuyIcon96: any = require("./../../../assets/images/event/icons/event-buy-icon-96.png");
-// const eventBuyIcon97: any = require("./../../../assets/images/event/icons/event-buy-icon-97.png");
-// const eventBuyIcon98: any = require("./../../../assets/images/event/icons/event-buy-icon-98.png");
-// const eventBuyIcon99: any = require("./../../../assets/images/event/icons/event-buy-icon-99.png");
-// const eventBuyIcon100: any = require("./../../../assets/images/event/icons/event-buy-icon-100.png");
+const eventBuyIcon91: any = require("./../../../assets/images/event/icons/event-buy-icon-91.png");
+const eventBuyIcon92: any = require("./../../../assets/images/event/icons/event-buy-icon-92.png");
+const eventBuyIcon93: any = require("./../../../assets/images/event/icons/event-buy-icon-93.png");
+const eventBuyIcon94: any = require("./../../../assets/images/event/icons/event-buy-icon-94.png");
+const eventBuyIcon95: any = require("./../../../assets/images/event/icons/event-buy-icon-95.png");
+const eventBuyIcon96: any = require("./../../../assets/images/event/icons/event-buy-icon-96.png");
+const eventBuyIcon97: any = require("./../../../assets/images/event/icons/event-buy-icon-97.png");
+const eventBuyIcon98: any = require("./../../../assets/images/event/icons/event-buy-icon-98.png");
+const eventBuyIcon99: any = require("./../../../assets/images/event/icons/event-buy-icon-99.png");
+const eventBuyIcon100: any = require("./../../../assets/images/event/icons/event-buy-icon-100.png");
 const animal1: any = require("./../../../assets/images/event/animal/animal1.png");
 const animal2: any = require("./../../../assets/images/event/animal/animal2.png");
 const animal3: any = require("./../../../assets/images/event/animal/animal3.png");
@@ -232,16 +232,16 @@ const animal87: any = require("./../../../assets/images/event/animal/animal87.pn
 const animal88: any = require("./../../../assets/images/event/animal/animal88.png");
 const animal89: any = require("./../../../assets/images/event/animal/animal89.png");
 const animal90: any = require("./../../../assets/images/event/animal/animal90.png");
-// const animal91: any = require("./../../../assets/images/event/animal/animal91.png");
-// const animal92: any = require("./../../../assets/images/event/animal/animal92.png");
-// const animal93: any = require("./../../../assets/images/event/animal/animal93.png");
-// const animal94: any = require("./../../../assets/images/event/animal/animal94.png");
-// const animal95: any = require("./../../../assets/images/event/animal/animal95.png");
-// const animal96: any = require("./../../../assets/images/event/animal/animal96.png");
-// const animal97: any = require("./../../../assets/images/event/animal/animal97.png");
-// const animal98: any = require("./../../../assets/images/event/animal/animal98.png");
-// const animal99: any = require("./../../../assets/images/event/animal/animal99.png");
-// const animal100: any = require("./../../../assets/images/event/animal/animal100.png");
+const animal91: any = require("./../../../assets/images/event/animal/animal91.png");
+const animal92: any = require("./../../../assets/images/event/animal/animal92.png");
+const animal93: any = require("./../../../assets/images/event/animal/animal93.png");
+const animal94: any = require("./../../../assets/images/event/animal/animal94.png");
+const animal95: any = require("./../../../assets/images/event/animal/animal95.png");
+const animal96: any = require("./../../../assets/images/event/animal/animal96.png");
+const animal97: any = require("./../../../assets/images/event/animal/animal97.png");
+const animal98: any = require("./../../../assets/images/event/animal/animal98.png");
+const animal99: any = require("./../../../assets/images/event/animal/animal99.png");
+const animal100: any = require("./../../../assets/images/event/animal/animal100.png");
 const cloud: any = require("./../../../assets/images/event/cloud.png");
 const resource: any = require("./../../../assets/images/event/resource.png");
 const disableAnimal: any = require("./../../../assets/images/event/animal/disable-animal.png");
@@ -1720,76 +1720,76 @@ const testEventSettings: IeventSettings = {
       price: BigInt(1500000000000000000000000000000000000000000000000), 
       exchange: BigInt(3541774862152230000000000000)
     },
-    // { 
-    //   breed: 91, 
-    //   resource: 100, 
-    //   resourcePrice: BigInt(2951479051793530000000000000), 
-    //   price: BigInt(4800000000000000000000000000000000000000000000000), 
-    //   exchange: BigInt(7253554917687780000000000000000)
-    // },
-    // { 
-    //   breed: 92, 
-    //   resource: 100, 
-    //   resourcePrice: BigInt(5902958103587060000000000000), 
-    //   price: BigInt(15000000000000000000000000000000000000000000000000), 
-    //   exchange: BigInt(14507109835375600000000000000000)
-    // },
-    // { 
-    //   breed: 93, 
-    //   resource: 100, 
-    //   resourcePrice: BigInt(11805916207174100000000000000), 
-    //   price: BigInt(48000000000000000000000000000000000000000000000000), 
-    //   exchange: BigInt(29014219670751100000000000000000)
-    // },
-    // { 
-    //   breed: 94, 
-    //   resource: 100, 
-    //   resourcePrice: BigInt(23611832414348200000000000000), 
-    //   price: BigInt(150000000000000000000000000000000000000000000000000), 
-    //   exchange: BigInt(58028439341502200000000000000000)
-    // },
-    // { 
-    //   breed: 95, 
-    //   resource: 100, 
-    //   resourcePrice: BigInt(47223664828696500000000000000), 
-    //   price: BigInt(480000000000000000000000000000000000000000000000000), 
-    //   exchange: BigInt(116056878683004000000000000000000)
-    // },
-    // { 
-    //   breed: 96, 
-    //   resource: 100, 
-    //   resourcePrice: BigInt(94447329657392900000000000000), 
-    //   price: BigInt(1500000000000000000000000000000000000000000000000000), 
-    //   exchange: BigInt(232113757366009000000000000000000)
-    // },
-    // { 
-    //   breed: 97, 
-    //   resource: 100, 
-    //   resourcePrice: BigInt(188894659314786000000000000000), 
-    //   price: BigInt(4800000000000000000000000000000000000000000000000000), 
-    //   exchange: BigInt(464227514732018000000000000000000)
-    // },
-    // { 
-    //   breed: 98, 
-    //   resource: 100, 
-    //   resourcePrice: BigInt(377789318629572000000000000000), 
-    //   price: BigInt(15000000000000000000000000000000000000000000000000000), 
-    //   exchange: BigInt(928455029464035000000000000000000)
-    // },
-    // { 
-    //   breed: 99, 
-    //   resource: 100, 
-    //   resourcePrice: BigInt(755578637259143000000000000000), 
-    //   price: BigInt(48000000000000000000000000000000000000000000000000000), 
-    //   exchange: BigInt(1856910058928070000000000000000000)
-    // },
-    // { 
-    //   breed: 100, 
-    //   resource: 100, 
-    //   resourcePrice: BigInt(1511157274518290000000000000000), 
-    //   price: BigInt(150000000000000000000000000000000000000000000000000000), 
-    //   exchange: BigInt(3713820117856140000000000000000000)
-    // },
+    { 
+      breed: 91, 
+      resource: 100, 
+      resourcePrice: BigInt(2951479051793530000000000000), 
+      price: BigInt(4800000000000000000000000000000000000000000000000), 
+      exchange: BigInt(7253554917687780000000000000000)
+    },
+    { 
+      breed: 92, 
+      resource: 100, 
+      resourcePrice: BigInt(5902958103587060000000000000), 
+      price: BigInt(15000000000000000000000000000000000000000000000000), 
+      exchange: BigInt(14507109835375600000000000000000)
+    },
+    { 
+      breed: 93, 
+      resource: 100, 
+      resourcePrice: BigInt(11805916207174100000000000000), 
+      price: BigInt(48000000000000000000000000000000000000000000000000), 
+      exchange: BigInt(29014219670751100000000000000000)
+    },
+    { 
+      breed: 94, 
+      resource: 100, 
+      resourcePrice: BigInt(23611832414348200000000000000), 
+      price: BigInt(150000000000000000000000000000000000000000000000000), 
+      exchange: BigInt(58028439341502200000000000000000)
+    },
+    { 
+      breed: 95, 
+      resource: 100, 
+      resourcePrice: BigInt(47223664828696500000000000000), 
+      price: BigInt(480000000000000000000000000000000000000000000000000), 
+      exchange: BigInt(116056878683004000000000000000000)
+    },
+    { 
+      breed: 96, 
+      resource: 100, 
+      resourcePrice: BigInt(94447329657392900000000000000), 
+      price: BigInt(1500000000000000000000000000000000000000000000000000), 
+      exchange: BigInt(232113757366009000000000000000000)
+    },
+    { 
+      breed: 97, 
+      resource: 100, 
+      resourcePrice: BigInt(188894659314786000000000000000), 
+      price: BigInt(4800000000000000000000000000000000000000000000000000), 
+      exchange: BigInt(464227514732018000000000000000000)
+    },
+    { 
+      breed: 98, 
+      resource: 100, 
+      resourcePrice: BigInt(377789318629572000000000000000), 
+      price: BigInt(15000000000000000000000000000000000000000000000000000), 
+      exchange: BigInt(928455029464035000000000000000000)
+    },
+    { 
+      breed: 99, 
+      resource: 100, 
+      resourcePrice: BigInt(755578637259143000000000000000), 
+      price: BigInt(48000000000000000000000000000000000000000000000000000), 
+      exchange: BigInt(1856910058928070000000000000000000)
+    },
+    { 
+      breed: 100, 
+      resource: 100, 
+      resourcePrice: BigInt(1511157274518290000000000000000), 
+      price: BigInt(150000000000000000000000000000000000000000000000000000), 
+      exchange: BigInt(3713820117856140000000000000000000)
+    },
   ],
   territoriesEventPrice: [
     { block: 3, position: 1, diamond: 0, price: 0, unlock: 0 },
@@ -1988,16 +1988,16 @@ class EventPreload extends Phaser.Scene {
     this.load.image('event-buy-icon-88', eventBuyIcon88);
     this.load.image('event-buy-icon-89', eventBuyIcon89);
     this.load.image('event-buy-icon-90', eventBuyIcon90);
-    // this.load.image('event-buy-icon-91', eventBuyIcon91);
-    // this.load.image('event-buy-icon-92', eventBuyIcon92);
-    // this.load.image('event-buy-icon-93', eventBuyIcon93);
-    // this.load.image('event-buy-icon-94', eventBuyIcon94);
-    // this.load.image('event-buy-icon-95', eventBuyIcon95);
-    // this.load.image('event-buy-icon-96', eventBuyIcon96);
-    // this.load.image('event-buy-icon-97', eventBuyIcon97);
-    // this.load.image('event-buy-icon-98', eventBuyIcon98);
-    // this.load.image('event-buy-icon-99', eventBuyIcon99);
-    // this.load.image('event-buy-icon-100', eventBuyIcon100);
+    this.load.image('event-buy-icon-91', eventBuyIcon91);
+    this.load.image('event-buy-icon-92', eventBuyIcon92);
+    this.load.image('event-buy-icon-93', eventBuyIcon93);
+    this.load.image('event-buy-icon-94', eventBuyIcon94);
+    this.load.image('event-buy-icon-95', eventBuyIcon95);
+    this.load.image('event-buy-icon-96', eventBuyIcon96);
+    this.load.image('event-buy-icon-97', eventBuyIcon97);
+    this.load.image('event-buy-icon-98', eventBuyIcon98);
+    this.load.image('event-buy-icon-99', eventBuyIcon99);
+    this.load.image('event-buy-icon-100', eventBuyIcon100);
 
     this.load.image('disable-animal', disableAnimal);
     this.load.image('animal1', animal1);
@@ -2090,16 +2090,16 @@ class EventPreload extends Phaser.Scene {
     this.load.image('animal88', animal88);
     this.load.image('animal89', animal89);
     this.load.image('animal90', animal90);
-    // this.load.image('animal91', animal91);
-    // this.load.image('animal92', animal92);
-    // this.load.image('animal93', animal93);
-    // this.load.image('animal94', animal94);
-    // this.load.image('animal95', animal95);
-    // this.load.image('animal96', animal96);
-    // this.load.image('animal97', animal97);
-    // this.load.image('animal98', animal98);
-    // this.load.image('animal99', animal99);
-    // this.load.image('animal100', animal100);
+    this.load.image('animal91', animal91);
+    this.load.image('animal92', animal92);
+    this.load.image('animal93', animal93);
+    this.load.image('animal94', animal94);
+    this.load.image('animal95', animal95);
+    this.load.image('animal96', animal96);
+    this.load.image('animal97', animal97);
+    this.load.image('animal98', animal98);
+    this.load.image('animal99', animal99);
+    this.load.image('animal100', animal100);
     this.load.image('cloud', cloud);
     this.load.image('event-resource', resource);
 
