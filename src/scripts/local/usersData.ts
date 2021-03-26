@@ -18,7 +18,27 @@ let userData: Iuser = {
   takenReward: false,
   status: '',
   statuses: [], 
-  starterpack: false
+  starterpack: false,
+  boosts: {
+    sheep: {
+      collector4: 0,
+      collector12: 0,
+      herd: 0,
+      feed: 0
+    },
+    chicken: {
+      collector4: 0,
+      collector12: 0,
+      herd: 0,
+      feed: 0
+    },
+    cow: {
+      collector4: 0,
+      collector12: 0,
+      herd: 0,
+      feed: 0
+    },
+  },
 }
 
 let userSheep: IuserSheep = {

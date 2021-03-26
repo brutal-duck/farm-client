@@ -164,7 +164,27 @@ class Boot extends Phaser.Scene {
       takenReward: true,
       status: ' ',
       statuses: [],
-      starterpack: false
+      starterpack: false,
+      boosts: {
+        sheep: {
+          collector4: 0,
+          collector12: 0,
+          herd: 0,
+          feed: 0
+        },
+        chicken: {
+          collector4: 0,
+          collector12: 0,
+          herd: 0,
+          feed: 0
+        },
+        cow: {
+          collector4: 0,
+          collector12: 0,
+          herd: 0,
+          feed: 0
+        },
+      },
     }
     this.state.platform = this.platform;
     this.state.name = this.name;
