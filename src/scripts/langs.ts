@@ -9,7 +9,7 @@ export default {
     cowBreed1: 'Белая коровка',
     cowBreed2: 'Пятнистая коровка',
     cowBreed3: 'Бурая коровка',
-    cowBreed4: 'Шотландская коровка',
+    cowBreed4: 'Кельтская коровка',
     cowBreed5: 'Степная коровка',
     cowBreed6: 'Индийская коровка',
     cowBreed7: 'Фермерская коровка',

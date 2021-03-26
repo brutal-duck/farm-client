@@ -1,6 +1,7 @@
 import './interfaces';
 import '../css/style.css';
 import * as Phaser from 'phaser';
+import './libs/SpinePlugin.min.js';
 
 import Boot from './scenes/Boot';
 import Preload from './scenes/Preload';
@@ -93,9 +94,14 @@ window.onload = (): void => {
         Chat,
         Tutorial,
       ],
-      loader:{
-        maxParallelDownloads: 128,
-    },
+      loader: { maxParallelDownloads: 128 },
+      plugins: {
+        scene: [{
+          key: 'SpinePlugin',
+          plugin: window['SpinePlugin'],
+          mapping: 'spine'
+        }]
+      },
     }
     
     const game: Phaser.Game = new Phaser.Game(config);

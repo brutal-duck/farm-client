@@ -150,6 +150,31 @@ function aim(cow: any, x: number, y: number): void {
 
 }
 
+// Спайновая овца
+function spineSheep(): void {
+
+  let spineSheep = this.add['spine'](
+    this.cameras.main.centerX,
+    this.cameras.main.centerY - 100,
+    'sheep',
+    'drag',
+    true
+  ).setDepth(5000).setScale(0.3)
+
+  spineSheep.setMix('drag', 'stay_left_1', 0.3)
+  spineSheep.setMix('stay_left_1', 'move_left_1', 0.3)
+  spineSheep.setMix('move_left_1', 'move_left_2', 0.3)
+  spineSheep.setMix('move_left_2', 'stay_left_2', 0.3)
+  spineSheep.setMix('stay_left_2', 'stay_left_3', 0.3)
+  spineSheep.setMix('stay_left_3', 'move_left_3', 0.3)
+  spineSheep.setMix('move_left_1', 'stay_left_2', 0.3)
+  spineSheep.setMix('move_left_2', 'stay_left_3', 0.3)
+  spineSheep.setMix('move_left_3', 'drag', 0.3)
+
+  console.log(spineSheep);
+
+}
+
 
 // функция получения новой коровы
 function getCow(
@@ -291,17 +316,17 @@ function checkMerging(territory: any, cow: any, position: string) {
     // ставим на парковку
     if (position === 'top') {
 
-      cow.anims.play('cow-stay-right' + cow.type, true);
-      cow.vector = 6;
+      cow.anims.play('cow-stay-left' + cow.type, true);
+      cow.vector = 8;
       cow.y = territory.y + 30;
-      cow.x = territory.x + 156;
+      cow.x = territory.x + 160;
 
     } else if (position === 'bottom') {
 
-      cow.anims.play('cow-stay-right' + cow.type, true);
-      cow.vector = 6;
+      cow.anims.play('cow-stay-left' + cow.type, true);
+      cow.vector = 8;
       cow.y = territory.y + 130;
-      cow.x = territory.x + 156;
+      cow.x = territory.x + 160;
 
     }
 
@@ -313,17 +338,17 @@ function checkMerging(territory: any, cow: any, position: string) {
     // обновляем положение парковки
     if (position === 'top') {
 
-      cow.anims.play('cow-stay-right' + cow.type, true);
-      cow.vector = 6;
+      cow.anims.play('cow-stay-left' + cow.type, true);
+      cow.vector = 8;
       cow.y = territory.y + 30;
-      cow.x = territory.x + 90;
+      cow.x = territory.x + 160;
 
     } else if (position === 'bottom') {
 
-      cow.anims.play('cow-stay-right' + cow.type, true);
-      cow.vector = 6;
+      cow.anims.play('cow-stay-left' + cow.type, true);
+      cow.vector = 8;
       cow.y = territory.y + 130;
-      cow.x = territory.x + 90;
+      cow.x = territory.x + 160;
 
     }
 
@@ -809,6 +834,7 @@ export {
   teleportation,
   reverse,
   aim,
+  spineSheep,
   getCow,
   getMilk,
   checkMerging,

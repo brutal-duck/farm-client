@@ -232,6 +232,7 @@ class CowPreload extends Phaser.Scene {
   public socket: boolean;
   public loadTime: number;
   public startTime: number;
+  public isSpineReady: boolean = false;
 
   public loadcow = loadcow.bind(this);
   public loadingScreen = loadingScreen.bind(this);
@@ -479,7 +480,14 @@ class CowPreload extends Phaser.Scene {
     this.load.image('big-btn-green', bigButtonGreen);
     this.load.image('arrow', arrow);
     this.load.image('starterpack-icon', starterpackIcon);
+    
+    if (!this.isSpineReady) {
 
+      this.load.setPath('./src/assets/images/spine/');
+      this.load['spine']('sheep', 'sheepL.json', [ 'sheepL.atlas' ], true)
+      this.isSpineReady = true;
+    }
+    
   }
 
   
