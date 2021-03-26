@@ -1434,11 +1434,11 @@ function profileWindow(): void {
 
     if (this.state.platform === 'vk') {
 
-      window.open(process.env.VK_SUPPORT_LINK);
+      window.open(process.env.VK_SUPPORT_LINK, '_blank');
       
     } else if (this.state.platform === 'ok') {
       
-      window.open(process.env.OK_SUPPORT_LINK);
+      window.open(process.env.OK_SUPPORT_LINK, '_blank');
 
     } else {
       

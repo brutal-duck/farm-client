@@ -497,7 +497,6 @@ function donePart(): void {
   this.state.progress[this.state.farm.toLowerCase()].part = user.part;
   
   this.deleteTerritoriesLocks();
-  this.game.scene.keys[this.state.farm + 'Bars'].taskBoard.update();
   this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
 
   this.state.amplitude.getInstance().logEvent('chapter_done', {
@@ -545,7 +544,6 @@ function pickUpTaskReward(id: number): void {
 
     this.state.user.xp += task.xp;
     task.got_awarded = 1;
-    this.game.scene.keys[this.state.farm + 'Bars'].taskBoard.update();
 
     if (this.scene.isActive('Modal')) {
 
@@ -1034,7 +1032,6 @@ function debug(): void {
 
       fairTask.done = 1;
       fairTask.got_awarded = 1;
-      this.game.scene.keys[this.state.farm + 'Bars'].taskBoard.update();
       this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
       
     }

@@ -99,7 +99,6 @@ function tryTask(type: number, state: number, count: number = 1): void {
 
     }
 
-    this.game.scene.keys[this.state.farm + 'Bars'].taskBoard.update();
     this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
 
   }
@@ -201,8 +200,6 @@ function checkAnimalTask(): void {
       task.progress = count;
     }
     
-    this.game.scene.keys[this.state.farm + 'Bars'].taskBoard.update();
-
   } else if (task?.count === 0) {
 
     let count: number = 0;
@@ -229,8 +226,6 @@ function checkAnimalTask(): void {
 
     }
 
-    this.game.scene.keys[this.state.farm + 'Bars'].taskBoard.update();
-
   } else if (task?.state > 0 && task?.count > 0) {
 
     let count: number = 0;
@@ -248,8 +243,6 @@ function checkAnimalTask(): void {
       task.done = 1;
     }
     
-    this.game.scene.keys[this.state.farm + 'Bars'].taskBoard.update();
-
   }
 
 }
@@ -292,8 +285,6 @@ function checkDoneTasks(): void {
     }
 
   }
-
-  this.game.scene.keys[this.state.farm + 'Bars'].taskBoard.update();
   this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
 
 }

@@ -12,7 +12,6 @@ import {
 import { updateNativeShop } from './../../general/boosts';
 import {
   Collector,
-  TaskBoard,
   buildMenu,
   createSpeechBubble
 } from '../../elements';
@@ -30,6 +29,7 @@ import {
 } from '../../general/animations';
 import { pulseCollector } from './animations';
 import { clickTaskBoard } from '../../general/tasks';
+import TaskBoard from './../../components/TaskBoard';
 
 class ChickenBars extends Phaser.Scene {
   constructor() {
@@ -53,7 +53,6 @@ class ChickenBars extends Phaser.Scene {
   public chickenBuy: Phaser.GameObjects.Image;
   public chickenPrice: Phaser.GameObjects.Text;
   public chickenPriceBubble: Phaser.GameObjects.Graphics;
-  public taskBoard: TaskBoard;
   public partProgress: Phaser.GameObjects.Text;
   public balanceBg: Phaser.GameObjects.Image;
   public waterBg: Phaser.GameObjects.Image;
@@ -293,7 +292,7 @@ class ChickenBars extends Phaser.Scene {
     this.chickenPriceBubble.fillRoundedRect(0, 0, bounds.width + 30, bounds.height, 8);
 
     // плашка заданий
-    this.taskBoard = new TaskBoard(this);
+    TaskBoard.create(this);
 
     // иконка ежедневных наград для новичков
     if (this.state.newbieTime > 0) {
@@ -391,22 +390,6 @@ class ChickenBars extends Phaser.Scene {
       this.part.setText(String(this.state.userChicken.part));
     }
     
-    // отображение плашки заданий
-    if ((this.sendwich ||
-      this.scene.isActive('Modal') ||
-      this.scene.isActive('Tutorial')) &&
-      this.taskBoard.active) {
-
-      this.taskBoard.setActive(false);
-
-    } else if (!this.sendwich &&
-      !this.scene.isActive('Modal') &&
-      !this.scene.isActive('Tutorial') &&
-      !this.taskBoard.active) {
-
-      this.taskBoard.setActive(true);
-
-    }
 
     // анимация монет и кристаллов
     this.сurrencyAnimation();

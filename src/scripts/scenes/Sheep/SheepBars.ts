@@ -12,7 +12,6 @@ import {
 import { updateNativeShop } from './../../general/boosts';
 import {
   Collector,
-  TaskBoard,
   buildMenu,
   createSpeechBubble
 } from '../../elements';
@@ -30,6 +29,7 @@ import {
 } from '../../general/animations';
 import { pulseCollector } from './animations';
 import { clickTaskBoard } from '../../general/tasks';
+import TaskBoard from './../../components/TaskBoard';
 
 class SheepBars extends Phaser.Scene {
   constructor() {
@@ -53,7 +53,6 @@ class SheepBars extends Phaser.Scene {
   public sheepBuy: Phaser.GameObjects.Image;
   public sheepPrice: Phaser.GameObjects.Text;
   public sheepPriceBubble: Phaser.GameObjects.Graphics;
-  public taskBoard: TaskBoard;
   public partProgress: Phaser.GameObjects.Text;
   public balanceBg: Phaser.GameObjects.Image;
   public waterBg: Phaser.GameObjects.Image;
@@ -301,7 +300,7 @@ class SheepBars extends Phaser.Scene {
     this.sheepPriceBubble.fillRoundedRect(0, 0, bounds.width + 30, bounds.height, 8);
 
     // плашка заданий
-    this.taskBoard = new TaskBoard(this);
+    TaskBoard.create(this);
 
     // блокировка баров для туториала
     if (this.state.userSheep.tutorial < 100) {
@@ -451,25 +450,6 @@ class SheepBars extends Phaser.Scene {
 
     if (this.part.text !== String(shortNum(this.state.userSheep.part))) {
       this.part.setText(String(this.state.userSheep.part));
-    }
-    
-    // отображение плашки заданий
-    if ((this.sendwich ||
-      this.scene.isActive('Modal') ||
-      this.scene.isActive('Tutorial') ||
-      this.state.userSheep.tutorial < 70) &&
-      this.taskBoard.active) {
-
-      this.taskBoard.setActive(false);
-      
-    } else if (!this.sendwich &&
-      !this.scene.isActive('Modal') &&
-      !this.scene.isActive('Tutorial') &&
-      this.state.userSheep.tutorial >= 70 &&
-      !this.taskBoard.active) {
-
-      this.taskBoard.setActive(true);
-
     }
 
     // анимация монет и кристаллов
