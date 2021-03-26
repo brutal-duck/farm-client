@@ -1,7 +1,7 @@
 import axios from 'axios';
 import tasks from '../../tasks';
 import Socket from '../../Socket';
-import loadcow from '../../local/loadcow';
+import loadCow from '../../local/loadCow';
 import { loadingScreen } from '../../general/basic';
 import { checkStorage } from '../../general/basic';
 
@@ -234,7 +234,7 @@ class CowPreload extends Phaser.Scene {
   public startTime: number;
   public isSpineReady: boolean = false;
 
-  public loadcow = loadcow.bind(this);
+  public loadCow = loadCow.bind(this);
   public loadingScreen = loadingScreen.bind(this);
 
   constructor() {
