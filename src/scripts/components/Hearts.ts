@@ -16,11 +16,11 @@ export default class Hearts {
     this.init();
   }
   
-  static create(scene: Phaser.Scene, position: Iposition) {
+  static create(scene: Phaser.Scene, position: Iposition): Hearts {
     return new Hearts(scene, position);
   }
 
-  private init() {   
+  private init(): void {   
     this.hearts = this.scene.add.group();
     this.scene.time.addEvent({
       delay: 150,

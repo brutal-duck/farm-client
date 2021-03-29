@@ -21,11 +21,11 @@ export default class Firework {
     this.fireworks = this.scene.add.group();
     this.init();
   }
-  static create(scene: Phaser.Scene, position: Iposition, count: number) {
+  static create(scene: Phaser.Scene, position: Iposition, count: number): Firework {
     return new Firework(scene, position, count);
   }
 
-  private init() {
+  private init(): void {
     if (this.count === 1) {
       this.animation();
     } else if (this.count === 3) {
@@ -88,11 +88,12 @@ export default class Firework {
     })
   }
 
-  private destroy() {
+  private destroy(): void {
     this.spriteBg.destroy();
     this.fireworks.destroy(true);
   }
-  private animation() {
+
+  private animation(): void {
     this.spriteBg = this.scene.add.sprite(this.position.x, this.position.y, 'fireworkBg').setScale(0).setDepth(10000 - 1);
 
     const scaleConfig = { value: { from: 0, to: 1 }, duration: 200, ease: 'Power3' };
@@ -192,7 +193,7 @@ export default class Firework {
     });
   }
 
-  private get firework() {
+  private get firework(): Phaser.GameObjects.Sprite {
     let randomIndex: number = Phaser.Math.Between(1, 3);
     const firework: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.position.x, this.position.y, `firework${randomIndex}`).setScale(0).setDepth(10000);
     this.fireworks.add(firework);

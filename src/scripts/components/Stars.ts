@@ -21,7 +21,7 @@ export default class Stars {
     return new Stars(scene, position);
   }
 
-  private init() {
+  private init(): void {
     this.scene.time.addEvent({
       delay: 100,
       callbackScope: this,
@@ -33,7 +33,7 @@ export default class Stars {
 
   }
 
-  private animation() {
+  private animation(): void {
     const alphaDuration: number = 600;
     const rotationConfig = { value: Math.PI * 2, duration: 300, repeat: -1, ease: 'Power1' };
     const scaleConfig = { value: { from: 0, to: 0.65 }, duration: 300, yoyo: true, ease: 'Power3' };
