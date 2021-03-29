@@ -87,7 +87,7 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
 
   public preUpdate(): void {
 
-    this.checkVisibility()
+    this.checkVisibility();
 
     let stateParts: Ipart[];
     let userData: IuserSheep | IuserChicken | IuserCow;
@@ -131,7 +131,6 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
       && stateParts.length === userData.part) {
       this.status = 4;
     }
-
     if (this.taskStatus === task.done && this.currentTaskProgress === task.progress) return;
     else {
       this.currentTaskProgress = task.progress;
