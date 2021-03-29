@@ -35,14 +35,16 @@ export default class Firework {
         callback: () => {
           this.position = { x: this.position.x + 50, y: this.position.y - 50 };
           this.animation();
-        }
+        },
+      callbackScope: this,
       });
       this.scene.time.addEvent({
         delay: 200,
         callback: () => {
           this.position = { x: this.position.x - 100, y: this.position.y };
           this.animation();
-        }
+        },
+      callbackScope: this,
       });
     } else if (this.count === 5) {
       this.animation();
@@ -51,33 +53,45 @@ export default class Firework {
         callback: () => {
           this.position = { x: this.position.x + 70, y: this.position.y - 70 };
           this.animation();
-        }
+        },
+      callbackScope: this,
       });
       this.scene.time.addEvent({
         delay: 200,
         callback: () => {
           this.position = { x: this.position.x - 140, y: this.position.y };
           this.animation();
-        }
+        },
+        callbackScope: this,
       });
       this.scene.time.addEvent({
         delay: 300,
         callback: () => {
           this.position = { x: this.position.x, y: this.position.y + 140 };
           this.animation();
-        }
+        },
+        callbackScope: this,
       });
       this.scene.time.addEvent({
         delay: 400,
         callback: () => {
           this.position = { x: this.position.x + 140, y: this.position.y };
           this.animation();
-        }
+        },
+        callbackScope: this,
       });
     }
-    
+    this.scene.time.addEvent({
+      delay: 2000,
+      callback: this.destroy,
+      callbackScope: this,
+    })
   }
 
+  private destroy() {
+    this.spriteBg.destroy();
+    this.fireworks.destroy(true);
+  }
   private animation() {
     this.spriteBg = this.scene.add.sprite(this.position.x, this.position.y, 'fireworkBg').setScale(0).setDepth(10000 - 1);
 
