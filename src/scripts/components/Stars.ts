@@ -9,7 +9,7 @@
 export default class Stars {
   public scene: Phaser.Scene;
   public position: Iposition;
-  public stars: Phaser.GameObjects.Sprite [];
+  public stars: Phaser.GameObjects.Group;
 
   constructor(scene: Phaser.Scene, position: Iposition) {
     this.scene = scene;
@@ -28,6 +28,13 @@ export default class Stars {
       repeat: 2,
       callback: () => {
         this.animation();
+      }
+    })
+
+    this.scene.time.addEvent({
+      delay: 2000,
+      callback: () => {
+        this.stars.destroy();
       }
     })
 
@@ -130,6 +137,8 @@ export default class Stars {
   }
 
   private get star(): Phaser.GameObjects.Sprite {
-    return this.scene.add.sprite(this.position.x, this.position.y, 'star').setDepth(10000).setScale(0.6).setAlpha(0);
+    const star: Phaser.GameObjects.Sprite  = this.scene.add.sprite(this.position.x, this.position.y, 'star').setDepth(10000).setScale(0.6).setAlpha(0);
+    this.stars.add(star);
+    return star;
   }
 }
