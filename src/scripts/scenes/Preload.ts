@@ -109,6 +109,10 @@ let unicornStatus: any = require("./../../assets/images/icons/unicorn-status.png
 let starterpackBg: any = require("./../../assets/images/modal/starterpack-bg.png");
 let starterpackShadow: any = require("./../../assets/images/modal/starterpack-icon-shadow.png");
 let herdBoostRoadEvent: any = require("./../../assets/images/event/herd-boost-road-event.png");
+let firework1: any = require("./../../assets/images/animations/firework1.png");
+let firework2: any = require("./../../assets/images/animations/firework2.png");
+let firework3: any = require("./../../assets/images/animations/firework3.png");
+let fireworkBg: any = require("./../../assets/images/animations/fireworkBg.png");
 
 
 class Preload extends Phaser.Scene {
@@ -246,6 +250,10 @@ class Preload extends Phaser.Scene {
     this.load.image('unicorn-status', unicornStatus);
     this.load.image('starterpack-bg', starterpackBg);
     this.load.image('starterpack-shadow', starterpackShadow);
+    this.load.image('firework1', firework1);
+    this.load.image('firework2', firework2);
+    this.load.image('firework3', firework3);
+    this.load.image('fireworkBg', fireworkBg);
   }
 
 }
