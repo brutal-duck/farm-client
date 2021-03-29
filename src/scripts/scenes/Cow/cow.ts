@@ -161,6 +161,8 @@ function spineSheep(): void {
     true
   ).setDepth(5000).setScale(0.3)
 
+  this.physics.add.existing(spineSheep)
+
   spineSheep.setMix('drag', 'stay_left_1', 0.3)
   spineSheep.setMix('stay_left_1', 'move_left_1', 0.3)
   spineSheep.setMix('move_left_1', 'move_left_2', 0.3)
