@@ -327,8 +327,8 @@ function tasksWindow(): void {
 
   this.resizeTasksWindow(height);
 
-  if (!this.state.tasksOpened){
-    this.state.tasksOpened = true;
+  if (!this.tasksOpened){
+    this.tasksOpened = true;
     this.openModal(this.cameras.main);
   }
 

@@ -1147,11 +1147,11 @@ function loadingModal(): void {
   let loadingSprite: Phaser.GameObjects.Sprite;
   let animation: Phaser.Tweens.Tween;
   this.load.on('start', () => {
-    loadingSprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'star');
+    loadingSprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'loading-spinner');
     animation = this.tweens.add({
       targets: loadingSprite,
       rotation: 2 * Math.PI,
-      duration: 200,
+      duration: 700,
       repeat: -1,
     })
   })
