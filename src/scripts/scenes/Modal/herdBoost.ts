@@ -640,18 +640,18 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
   
           this.time.addEvent({ delay: 100, callback: (): void => {
             MergingCloud.create(this, { x, y });
-            animal1?.data.values.woolSprite?.destroy();
-            animal2?.data.values.woolSprite?.destroy();
+            animal1?.data?.values.woolSprite?.destroy();
+            animal2?.data?.values.woolSprite?.destroy();
             animal1?.destroy();
             animal2?.destroy();
           }, callbackScope: this, loop: false });
         } else {
           this.time.addEvent({ delay: 100, callback: (): void => {
             MergingCloud.create(this, { x, y }, true);
-            animal1.data.values.woolSprite?.destroy();
-            animal2.data.values.woolSprite?.destroy();
-            animal1.destroy();
-            animal2.destroy();
+            animal1?.data?.values.woolSprite?.destroy();
+            animal2?.data?.values.woolSprite?.destroy();
+            animal1?.destroy();
+            animal2?.destroy();
           }, callbackScope: this, loop: false });
         }
         this.mergingArray = [];
