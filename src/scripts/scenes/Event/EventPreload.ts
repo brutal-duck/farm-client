@@ -22,7 +22,6 @@ const coin: any = require("./../../../assets/images/event/icons/money.png");
 const diamond: any = require("./../../../assets/images/icons/diamonds.png");
 const lock: any = require("./../../../assets/images/icons/lock.png");
 const gift: any = require("./../../../assets/images/icons/gift.png");
-const firework250: any = require("./../../../assets/images/animations/firework250.png");
 const offline: any = require("./../../../assets/images/icons/offline.png");
 const tutorBtn: any = require("./../../../assets/images/modal/tutor-btn.png");
 const heart: any = require("./../../../assets/images/icons/heart.png");
@@ -259,6 +258,10 @@ const confetti5: any = require("./../../../assets/images/event/territories/confe
 const confetti6: any = require("./../../../assets/images/event/territories/confetti6.png");
 const confetti7: any = require("./../../../assets/images/event/territories/confetti7.png");
 const confetti8: any = require("./../../../assets/images/event/territories/confetti8.png");
+const firework1: any = require("./../../../assets/images/animations/firework1.png");
+const firework2: any = require("./../../../assets/images/animations/firework2.png");
+const firework3: any = require("./../../../assets/images/animations/firework3.png");
+const fireworkBg: any = require("./../../../assets/images/animations/fireworkBg.png");
 
 let doubleFeedBoost: any = require("./../../../assets/images/icons/double-feed-boost.png");
 let eventFeedBoostMini: any = require("./../../../assets/images/event/icons/event-feed-boost-mini.png");
@@ -1871,7 +1874,7 @@ class EventPreload extends Phaser.Scene {
     this.load.image('diamond', diamond);
     this.load.image('lock', lock);
     this.load.image('gift', gift);
-    this.load.spritesheet('firework250', firework250, { frameWidth: 250, frameHeight: 250 });
+
     this.load.image('offline', offline);
     this.load.image('tutor-btn', tutorBtn);
     this.load.image('heart', heart);
@@ -2136,6 +2139,11 @@ class EventPreload extends Phaser.Scene {
     this.load.image('event-tutor-merging',eventTutorMerging);
     this.load.image('event-territory-btn', eventTerritoryBtn);
     this.load.image('starterpack-icon', starterpackIcon);
+
+    this.load.image('firework1', firework1);
+    this.load.image('firework2', firework2);
+    this.load.image('firework3', firework3);
+    this.load.image('fireworkBg', fireworkBg);
 
 
   }

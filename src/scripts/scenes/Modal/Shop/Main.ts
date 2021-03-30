@@ -15,6 +15,7 @@ import {
   payOdnoklassniki,
   payVK,
   shortTime,
+  loadingModal,
 } from '../../../general/basic';
 import {  
   updateHerdBoostBtn,
@@ -155,6 +156,7 @@ class Shop extends Phaser.Scene {
   public eventHerdBoost = eventHerdBoost.bind(this);
   public getDiamondPrice = getDiamondPrice.bind(this);
   public openModal = openModal.bind(this);
+  public loadingModal = loadingModal.bind(this);
 
 
   public init(state: Istate): void {
@@ -164,7 +166,7 @@ class Shop extends Phaser.Scene {
   }
 
   public preload(): void {
-    
+    this.loadingModal();
     this.load.image('shop-head', shopHead);
     this.load.image('shop-close', shopClose);
     this.load.image('shop-tab-active', shopTabActive);

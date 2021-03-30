@@ -1,7 +1,8 @@
 import {
   shortNum,
   shortTime,
-  getStatusSettings
+  getStatusSettings,
+  loadingModal,
 } from '../../general/basic';
 import {
   click,
@@ -81,7 +82,7 @@ import daily from './daily';
 import dailyNewbie from './dailyNewbie';
 import nextChapter from './nextChapter';
 import donate from './donate';
-import { bigButton, repositoryBtn, mergingCloud, shopButton } from '../../elements';
+import { bigButton, repositoryBtn, shopButton } from '../../elements';
 import { 
   changeNickname,
   addEmail,
@@ -190,7 +191,6 @@ class Modal extends Phaser.Scene {
   public herdBoostWindow = herdBoostWindow.bind(this);
   public getRandomAnimal = getRandomAnimal.bind(this);
   public getRandomStartPosition = getRandomStartPosition.bind(this);
-  public mergingCloud = mergingCloud.bind(this);
   public shopButton = shopButton.bind(this);
   public shortTime = shortTime.bind(this);
   public sheepWoolRepositoryExchange = sheepWoolRepositoryExchange.bind(this);
@@ -216,6 +216,7 @@ class Modal extends Phaser.Scene {
   public typePreload = typePreload.bind(this);
   public clickTaskBoard = clickTaskBoard.bind(this);
   public openModal = openModal.bind(this);
+  public loadingModal = loadingModal.bind(this);
 
   
   public init(state: Istate): void {
@@ -224,13 +225,15 @@ class Modal extends Phaser.Scene {
 
 
   public preload(): void {
+    this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)');
+    this.loadingModal();
     this.typePreload();
+
   }
 
 
 
   public create(): void {
-    this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)');
     this.tasksOpened = false;
     this.add.tileSprite(0, 0,
       Number(this.game.config.width),

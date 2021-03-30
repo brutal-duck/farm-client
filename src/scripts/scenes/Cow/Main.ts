@@ -7,11 +7,8 @@ import interval from './interval';
 import autoprogress from './autoprogress';
 import autosave from './autosave';
 import {
-  genAnimations,
-  firework250,
   cave,
   caveIconsAnimation, 
-  hearts
 } from '../../general/animations';
 import {  
   click,
@@ -92,7 +89,7 @@ import {
   dragCowMerging
 } from './cow';
 import { installTerritory } from './territories';
-import { createSpeechBubble, mergingCloud } from '../../elements';
+import { createSpeechBubble } from '../../elements';
 import {
   balance,
   cowPrice,
@@ -152,8 +149,6 @@ class Cow extends Phaser.Scene {
   public click = click.bind(this);
   public clickTerritory = clickTerritory.bind(this);
   public animations = animations.bind(this);
-  public firework250 = firework250.bind(this);
-  public genAnimations = genAnimations.bind(this);
   public teleportation = teleportation.bind(this);
   public reverse = reverse.bind(this);
   public aim = aim.bind(this);
@@ -185,7 +180,6 @@ class Cow extends Phaser.Scene {
   public confirmExpelCow = confirmExpelCow.bind(this);
   public expelCow = expelCow.bind(this);
   public createSpeechBubble = createSpeechBubble.bind(this);
-  public mergingCloud = mergingCloud.bind(this);
   public showBank = showBank.bind(this);
   public freeCollector = freeCollector.bind(this);
   public buyCollector = buyCollector.bind(this);
@@ -232,7 +226,6 @@ class Cow extends Phaser.Scene {
   public random = random.bind(this);
   public randomString = randomString.bind(this);
   public getRandomBool = getRandomBool.bind(this);
-  public hearts = hearts.bind(this);
   public spreadAnimals = spreadAnimals.bind(this);
   public getEventRaiting = getEventRaiting.bind(this);
   public showEventTutorial = showEventTutorial.bind(this);
@@ -257,7 +250,6 @@ class Cow extends Phaser.Scene {
     
     // анимации
     this.animations();
-    this.genAnimations();
 
     // сторим мир
     this.world();

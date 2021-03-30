@@ -2,6 +2,7 @@
 import { random, getRandomBool, randomString, shortTime, romanize, shortNum} from "../../general/basic";
 import axios  from 'axios';
 import Hint from './../../components/Hint';
+import MergingCloud from './../../components/MergingCloud';
 
 function confirmExpelAnimal(): void {
     
@@ -223,7 +224,7 @@ function buyEventTerritory(): void {
 // окно улучшения собирателя 
 function improveCollectorEvent(): void {
 
-  this.textHeader.setText(this.state.lang.eggCollector + ' ' + this.state.userEvent.collectorLevel + ' ' + this.state.lang.shortLevel + '.');
+  this.textHeader.setText(this.state.lang.resourceCollector + ' ' + this.state.userEvent.collectorLevel + ' ' + this.state.lang.shortLevel + '.');
 
   let thisLevel: IcollectorSettings = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userEvent.collectorLevel);
   let nextLevel: IcollectorSettings = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userEvent.collectorLevel + 1);
@@ -714,7 +715,7 @@ function eventDrag(): void {
       animal.data.values.drag = false;
     
       if ((animal.y < 480 && animal.x < 480) || animal.y > 900 || animal.y < 200) {
-          this.mergingCloud({x: animal.x, y: animal.y}, true); // плохое облако на месте животного
+          MergingCloud.create(this, animal, true);
           animal?.data?.values.cloud?.destroy();
           animal.destroy();
       } else {
@@ -800,7 +801,7 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
 
         this.time.addEvent({ delay: 100, callback: (): void => {
           
-          this.mergingCloud({x, y}); // создаем на месте ярмарки хорошее облако
+          MergingCloud.create(this, { x, y });
 
           animal1?.data?.values.cloud?.destroy();
           animal2?.data?.values.cloud?.destroy();
@@ -810,7 +811,7 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
       } else {
         this.time.addEvent({ delay: 100, callback: (): void => {
         
-          this.mergingCloud({x, y}, true); // создаем на месте ярмарки облако
+          MergingCloud.create(this, { x, y }, true);
 
           animal1?.data?.values.cloud?.destroy();
           animal2?.data?.values.cloud?.destroy();
@@ -1516,7 +1517,7 @@ function updateImproveCollectorEvent(
   duration: Phaser.GameObjects.Text, 
   nextLevelText: Phaser.GameObjects.Text): void {
 
-  this.textHeader.setText(this.state.lang.woolCollector + ' ' + this.state.userEvent.collectorLevel + ' ' + this.state.lang.shortLevel + '.');
+  this.textHeader.setText(this.state.lang.resourceCollector + ' ' + this.state.userEvent.collectorLevel + ' ' + this.state.lang.shortLevel + '.');
   let thisLevel: IcollectorSettings = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userEvent.collectorLevel);
   let nextLevel: IcollectorSettings = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userEvent.collectorLevel + 1);
 

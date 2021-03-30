@@ -37,6 +37,7 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
   public positionY: number;
   public animation: Phaser.Tweens.Tween;
   public isUpdated: boolean = false;
+  public taskId: number;
 
   constructor(
     scene: SheepBars | ChickenBars | CowBars
@@ -125,22 +126,22 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
     });
     
     const task: Itasks = tasks[0];
-    if (this.status === 3
-      && task?.done === 1
-      && task?.got_awarded === 1
-      && stateParts.length === userData.part) {
-      this.status = 4;
-    }
-    if (this.taskStatus === task.done && this.currentTaskProgress === task.progress) return;
+    
+    if (this.taskStatus === task.done && this.currentTaskProgress === task.progress && this.taskId === task.id) return;
     else {
       this.currentTaskProgress = task.progress;
       this.taskStatus = task.done;
-
+      this.taskId = task.id;
       if (this.taskStatus === 0) this.status = 1;
       else if (this.taskStatus === 1 && task?.got_awarded === 0) this.status = 2;
       else this.status = 3;
-      this.animation?.remove();
-      this.isUpdated = false;    
+      if (this.status === 3
+        && task?.done === 1
+        && task?.got_awarded === 1
+        && stateParts.length === userData.part) {
+        this.status = 4;
+      }
+      this.isUpdated = false;   
       
     }
   
@@ -171,7 +172,7 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
           color: '#713D1E',
           align: 'left',
           wordWrap: { width: 450 }
-        }).setDepth(this.scene.height).setOrigin(0, 0);
+        }).setDepth(this.scene.height).setOrigin(0, 0).setVisible(false);
   
         const taskTextBounds = this.taskText.getBounds();
             
@@ -188,22 +189,22 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
             font: '20px Bip',
             color: '#525252'
           }
-        ).setDepth(this.scene.height).setOrigin(0, 0.5);
+        ).setDepth(this.scene.height).setOrigin(0, 0.5).setVisible(false);
             
         let height: number = 70 + taskTextBounds.height;
         if (height < 110) height = 110;
 
         this.setPosition(30, this.scene.height - 190 - height);
         this.fillStyle(0xFFEBC5, 1);
-        this.fillRoundedRect(0, 0, 660, height, 8);
-        this.taskIcon = this.scene.add.image(88, this.scene.height  - 190 - height / 2, taskData.icon);
+        this.fillRoundedRect(0, 0, 660, height, 8).setVisible(false);
+        this.taskIcon = this.scene.add.image(88, this.scene.height  - 190 - height / 2, taskData.icon).setVisible(false);
   
         const progress: number = (100 / count * task.progress) * (6.3 / 100) - Math.PI / 2;
-        this.star = this.scene.add.image(630, this.scene.height - 190 - height / 2, 'star');
+        this.star = this.scene.add.image(630, this.scene.height - 190 - height / 2, 'star').setVisible(false);
   
         this.tileSprite = this.scene.add.tileSprite(30, this.scene.height - 190 - height, 660, height, 'modal')
           .setOrigin(0)
-          .setInteractive();
+          .setInteractive().setVisible(false);
         
         this.scene.click(this.tileSprite, () => {
           this.scene.clickTaskBoard(task);
@@ -224,7 +225,7 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
           .arc(this.taskIcon.x, this.taskIcon.y, 51, 0, Math.PI * 2)
           .strokePath()
           .setDepth(3)
-          .setVisible(true);
+          .setVisible(false);
           
       }
       
@@ -237,7 +238,7 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
           color: '#713D1E',
           align: 'left',
           wordWrap: { width: 390 }
-        }).setDepth(this.scene.height).setOrigin(0, 0);
+        }).setDepth(this.scene.height).setOrigin(0, 0).setVisible(false);
       
         const taskTextBounds: Phaser.Geom.Rectangle = this.taskText.getBounds();
         
@@ -257,37 +258,37 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
         this.award = this.scene.add.text(190, this.positionY - 220, String(award), {
           font: '20px Bip',
           color: '#FFFFFF'
-        }).setDepth(this.scene.height).setOrigin(0, 0.5);
+        }).setDepth(this.scene.height).setOrigin(0, 0.5).setVisible(false);
             
         this.diamond = this.scene.add.image(160, this.positionY - 220, icon)
           .setDepth(this.scene.height)
           .setScale(0.1)
-          .setOrigin(0, 0.5);
+          .setOrigin(0, 0.5).setVisible(false);
       
         const bounds = this.award.getBounds();
         this.awardBg = this.scene.add.graphics({ x: bounds.left - 40, y: bounds.top - 3 });
         this.awardBg.fillStyle(0x713D1E, 1);
         this.awardBg.fillRoundedRect(0, 0, bounds.width + 50, bounds.height + 6, 5);
-        this.awardBg.setDepth(this.scene.height - 1);
+        this.awardBg.setDepth(this.scene.height - 1).setVisible(false);
       
         let height: number = 70 + taskTextBounds.height;
         if (height < 110) height = 110;
       
         this.setPosition(30, this.positionY - 190 - height);
         this.fillStyle(0xFFEBC5, 1);
-        this.fillRoundedRect(0, 0, 660, height, 8);
+        this.fillRoundedRect(0, 0, 660, height, 8).setVisible(false);
       
-        this.taskIcon = this.scene.add.image(88, this.positionY - 190 - height / 2, taskData.icon);
+        this.taskIcon = this.scene.add.image(88, this.positionY - 190 - height / 2, taskData.icon).setVisible(false);
         this.taskIcon.setTint(0x777777);
-        this.doneIcon = this.scene.add.image(88, this.positionY - 190 - height / 2, 'completed');
+        this.doneIcon = this.scene.add.image(88, this.positionY - 190 - height / 2, 'completed').setVisible(false);
   
         this.done = this.scene.add.image(620, this.positionY - 190 - height / 2, 'little-button')
-          .setDepth(this.scene.height);
+          .setDepth(this.scene.height).setVisible(false);
       
         this.takeText = this.scene.add.text(620, this.positionY - 193 - height / 2, this.scene.state.lang.pickUp, {
           font: '20px Shadow',
           color: '#FFFFFF'
-        }).setOrigin(0.5, 0.5).setDepth(this.scene.height);
+        }).setOrigin(0.5, 0.5).setDepth(this.scene.height).setVisible(false);
       
         this.scene.clickShopBtn({
           btn: this.done,
@@ -304,21 +305,20 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
       
         this.tileSprite = this.scene.add.tileSprite(30, this.scene.height - 190 - height, 660, height, 'modal')
           .setOrigin(0)
-          .setInteractive();
+          .setInteractive().setVisible(false);
         this.taskProgress?.clear();
       }
       
       if (this.status === 3 && task) {
-      
         this.setPosition(30, this.positionY - 300);
         this.fillStyle(0xFFEBC5, 1);
-        this.fillRoundedRect(0, 0, 660, 110, 8);
+        this.fillRoundedRect(0, 0, 660, 110, 8).setVisible(false);
       
         this.doneButton = this.scene.add.image(this.scene.cameras.main.centerX, this.positionY - 245, 'big-btn-green').setDepth(1);
         this.doneButtonText = this.scene.add.text(this.scene.cameras.main.centerX, this.positionY - 249, this.scene.state.lang.donePart, {
           font: '22px Shadow',
           fill: '#FFFFFF'
-        }).setDepth(1).setOrigin(0.5, 0.5);
+        }).setDepth(1).setOrigin(0.5, 0.5).setVisible(false);
       
         this.scene.clickModalBtn({
           btn: this.doneButton,
@@ -329,25 +329,24 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
       
         this.tileSprite = this.scene.add.tileSprite(30, this.positionY - 300, 660, 110, 'modal')
           .setOrigin(0)
-          .setInteractive();
+          .setInteractive().setVisible(false);
         
         this.taskProgress?.clear();
       }
           
       if (this.status === 4 && task) {
-            
         this.setPosition( 30, this.scene.height - 300);
         this.fillStyle(0xFFEBC5, 1);
-        this.fillRoundedRect(0, 0, 660, 110, 8);
+        this.fillRoundedRect(0, 0, 660, 110, 8).setVisible(false);
       
         this.lastPart = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.height - 245, this.scene.state.lang[this.scene.state.farm.toLowerCase() + 'CompanyDone'], {
           font: '26px Bip',
           fill: '#713D1E'
-        }).setDepth(1).setOrigin(0.5, 0.5);
+        }).setDepth(1).setOrigin(0.5, 0.5).setVisible(false);
       
         this.tileSprite = this.scene.add.tileSprite(30, this.scene.height - 300, 660, 110, 'modal')
           .setOrigin(0)
-          .setInteractive();
+          .setInteractive().setVisible(false);
   
         this.taskProgress?.clear();
       
@@ -355,11 +354,13 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
       
       this.setVisibility(this.active);
           
-      if (this.status === 3 || this.status === 2) {
-        this.setDoneAnim();
-      }
+      
 
     }
+    this.animation?.remove()
+    if ((this.status === 3 || this.status === 2)) {
+      this.setDoneAnim();
+    } 
   }
 
   private checkVisibility(): void {

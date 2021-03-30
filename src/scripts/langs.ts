@@ -104,7 +104,7 @@ export default {
     milkCollector: 'Собиратель',
     eggCollector: 'Собиратель яиц',
     woolCollector: 'Подстригатель',
-    resourceCollector: 'Собиратель радуги',
+    resourceCollector: 'Собиратель',
     take: 'Взять',
     cowProfileName: 'Животновод',
     chickenProfileName: 'Птицевод',

@@ -1,5 +1,7 @@
 import { random, randomString } from '../../general/basic';
 import { cow } from '../Modal/cow';
+import Firework from './../../components/Firework';
+import MergingCloud from './../../components/MergingCloud';
 
 // телепортация коров на свободные территории
 function teleportation(cow: any): void {
@@ -228,7 +230,7 @@ function getCow(
 
   });
   
-  if (type === 0) this.firework250(x, y);
+  if (type === 0) Firework.create(this, { x, y }, 1);
 
   return cow;
 
@@ -368,7 +370,7 @@ function checkMerging(territory: any, cow: any, position: string) {
           x: territory.x + 120,
           y: territory.y + 120
         }
-        this.mergingCloud(position);
+        MergingCloud.create(this, position);
         let type: number = cow1.type + 1;
         cow1.destroy();
         cow2.destroy();
@@ -665,7 +667,7 @@ function collectMilk(cow: any, manualСollect: boolean = false): void {
 
       // }
  
-      this.firework250(cow.x, cow.y);
+      Firework.create(this, cow, 1);
       cow.milkStatus.destroy();
       cow.destroy();
       
@@ -808,7 +810,7 @@ function dragCowMerging(cow: any): void {
       x: cow.x,
       y: cow.y
     }
-    this.mergingCloud(position);
+    MergingCloud.create(this, position);
     
     const type: number = cow.type + 1;
 

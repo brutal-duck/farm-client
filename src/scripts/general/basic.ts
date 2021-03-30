@@ -3,6 +3,7 @@ import { FAPI } from '../libs/Fapi.js';
 import bridge from '@vkontakte/vk-bridge';
 import * as amplitude from 'amplitude-js';
 import Hint from './../components/Hint';
+import Firework from './../components/Firework';
 
 // рандомное число
 function random(min: number, max: number): number {
@@ -508,7 +509,7 @@ function donePart(): void {
 
     this.house.setTexture(this.state.farm.toLowerCase() + '-house-' + user.part);
     let house: Phaser.GameObjects.Sprite = this.territories.children.entries.find((data: any) => data.type === 6);
-    this.firework250(house.x + 120, house.y + 120);
+    Firework.create(this, { x: house.x + 120, y: house.y + 120 }, 3);
     this.checkDoneTasks();
 
   }, callbackScope: this, loop: false });
@@ -813,7 +814,7 @@ function getNewbieAward(): void {
         let y: number = random(510, 690);
         let id: string = 'local_' + randomString(18);
         this.getSheep(id, type, x, y, 0, 500);
-        this.firework250(x, y);
+        Firework.create(this, {x, y}, 1);
 
         if (counter >= 3) timeout.remove(false);
 
@@ -868,7 +869,7 @@ function getNewbieAward(): void {
         let y: number = random(510, 690);
         let id: string = 'local_' + randomString(18);
         this.getChicken(id, type, x, y, 0, 500);
-        this.firework250(x, y);
+        Firework.create(this, {x, y}, 1);
 
         if (counter >= 3) timeout.remove(false);
 
@@ -1140,6 +1141,25 @@ function loadingScreen(farmType: string): void {
     text.setText(percent + '%');
 
   });
+}
+
+function loadingModal(): void {
+  let loadingSprite: Phaser.GameObjects.Sprite;
+  let animation: Phaser.Tweens.Tween;
+  this.load.on('start', () => {
+    loadingSprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'star');
+    animation = this.tweens.add({
+      targets: loadingSprite,
+      rotation: 2 * Math.PI,
+      duration: 200,
+      repeat: -1,
+    })
+  })
+  
+  this.load.on('complete', () => {
+    animation?.remove();
+    loadingSprite?.destroy();
+  })
 }
 
 // Перераспределние животных на поле
@@ -1427,4 +1447,5 @@ export {
   nextDayTimer,
   intervalPorgressCollectorTime,
   autoporgressCollectorTime,
+  loadingModal
 }

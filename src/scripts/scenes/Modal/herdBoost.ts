@@ -1,4 +1,5 @@
 import { random, getRandomBool, randomString, shortTime} from "../../general/basic";
+import MergingCloud from './../../components/MergingCloud';
 
 let x: number = 600;
 let y: number = 360;
@@ -515,9 +516,9 @@ function drag(animal: Phaser.Physics.Arcade.Sprite): void {
       animal.data.values.drag = false;
   
       if ((animal.y < 480 && animal.x < 480) || animal.y > 960 || animal.y < 200) {
-          this.mergingCloud({x: animal.x, y: animal.y}, true); // плохое облако на месте животного
-          animal.data?.values.woolSprite?.destroy();
-          animal.destroy();
+        MergingCloud.create(this, animal, true);
+        animal.data?.values.woolSprite?.destroy();
+        animal.destroy();
           
       } else {
         if (animal.data.values.merging) {
@@ -638,9 +639,7 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
           this.state.herdBoostAnimals.push(newType);
   
           this.time.addEvent({ delay: 100, callback: (): void => {
-            
-            this.mergingCloud({x, y}); // создаем на месте ярмарки хорошее облако
-  
+            MergingCloud.create(this, { x, y });
             animal1?.data.values.woolSprite?.destroy();
             animal2?.data.values.woolSprite?.destroy();
             animal1?.destroy();
@@ -648,9 +647,7 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
           }, callbackScope: this, loop: false });
         } else {
           this.time.addEvent({ delay: 100, callback: (): void => {
-          
-            this.mergingCloud({x, y}, true); // создаем на месте ярмарки облако
-  
+            MergingCloud.create(this, { x, y }, true);
             animal1.data.values.woolSprite?.destroy();
             animal2.data.values.woolSprite?.destroy();
             animal1.destroy();

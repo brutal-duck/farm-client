@@ -1,9 +1,5 @@
 import Scrolling from '../../libs/Scrolling';
-import {
-  genAnimations,
-  firework250,
-  hearts
-} from '../../general/animations';
+
 import {
   click,
   clickTerritory,
@@ -30,7 +26,7 @@ import {
 import {
   checkExchangeRepository,
 } from '../../general/territories';
-import { createSpeechBubble, mergingCloud } from '../../elements';
+import { createSpeechBubble } from '../../elements';
 import {
   findAd,
   watchAd,
@@ -136,15 +132,12 @@ class Event extends Phaser.Scene {
   public collisions = collisions.bind(this);
   public click = click.bind(this);
   public clickTerritory = clickTerritory.bind(this);
-  public firework250 = firework250.bind(this);
-  public genAnimations = genAnimations.bind(this);
   public currentTerritory = currentTerritory.bind(this);
   public confirmExchangeTerritory = confirmExchangeTerritory.bind(this);
   public checkExchangeRepository = checkExchangeRepository.bind(this);
   public convertDiamonds = convertDiamonds.bind(this);
   public exchange = exchange.bind(this);
   public createSpeechBubble = createSpeechBubble.bind(this);
-  public mergingCloud = mergingCloud.bind(this);
   public showBank = showBank.bind(this);
   public freeCollector = freeCollector.bind(this);
   public buyCollector = buyCollector.bind(this);
@@ -192,7 +185,6 @@ class Event extends Phaser.Scene {
   public flyAnimal = flyAnimal.bind(this);
   public updateTeleportation = updateTeleportation.bind(this);
   public getFreeBoostPositions = getFreeBoostPositions.bind(this);
-  public hearts = hearts.bind(this);
   public tryTask = tryTask.bind(this);
   public buildFlowers = buildFlowers.bind(this);
   public buildConfetti = buildConfetti.bind(this);

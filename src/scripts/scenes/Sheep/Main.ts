@@ -13,11 +13,8 @@ import {
   buyCollector,
  } from '../../general/boosts';
 import {
-  genAnimations,
-  firework250,
   cave,
   dragSheep,
-  hearts,
   caveIconsAnimation
 } from '../../general/animations';
 import {
@@ -92,7 +89,7 @@ import {
   dragSheepMerging
 } from './sheep';
 import { installTerritory } from './territories';
-import { createSpeechBubble, mergingCloud } from '../../elements';
+import { createSpeechBubble } from '../../elements';
 import {
   balance,
   sheepPrice,
@@ -133,7 +130,6 @@ import {
 } from '../../general/ads';
 import setCollector from './collector';
 import { showEventTutorial, doneEventTutor_0 } from './../Event/tutorial';
-
 class Sheep extends Phaser.Scene {
   constructor() {
     super('Sheep');
@@ -195,8 +191,6 @@ class Sheep extends Phaser.Scene {
   public click = click.bind(this);
   public clickTerritory = clickTerritory.bind(this);
   public animations = animations.bind(this);
-  public genAnimations = genAnimations.bind(this);
-  public firework250 = firework250.bind(this);
   public teleportation = teleportation.bind(this);
   public reverse = reverse.bind(this);
   public aim = aim.bind(this);
@@ -227,7 +221,6 @@ class Sheep extends Phaser.Scene {
   public expelSheep = expelSheep.bind(this);
   public woolSprite = woolSprite.bind(this);
   public createSpeechBubble = createSpeechBubble.bind(this);
-  public mergingCloud = mergingCloud.bind(this);
   public showBank = showBank.bind(this);
   public freeCollector = freeCollector.bind(this);
   public buyCollector = buyCollector.bind(this);
@@ -273,7 +266,6 @@ class Sheep extends Phaser.Scene {
   public logout = logout.bind(this);
   public onlineStatus = onlineStatus.bind(this);
   public dragSheep = dragSheep.bind(this);
-  public hearts = hearts.bind(this);
   public checkDoneTasks = checkDoneTasks.bind(this);
   public collectorTutorial = collectorTutorial.bind(this);
   public buyNextFarm = buyNextFarm.bind(this);
@@ -323,7 +315,6 @@ class Sheep extends Phaser.Scene {
   public create(): void {
     
     // анимации
-    this.genAnimations();
     this.animations();
     
     // сторим мир

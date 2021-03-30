@@ -113,8 +113,13 @@ let firework1: any = require("./../../assets/images/animations/firework1.png");
 let firework2: any = require("./../../assets/images/animations/firework2.png");
 let firework3: any = require("./../../assets/images/animations/firework3.png");
 let fireworkBg: any = require("./../../assets/images/animations/fireworkBg.png");
-
-
+let tile1: any = require("./../../assets/images/chat-tile-1.png");
+let tile2: any = require("./../../assets/images/chat-tile-2.png");
+let corner1: any = require("./../../assets/images/chat-corner-1.png");
+let corner2: any = require("./../../assets/images/chat-corner-2.png");
+let chatBackground: any = require("./../../assets/images/modal/chat-bg.png");
+let chatSendBtn: any = require("./../../assets/images/modal/chat-send-btn.png");
+let chatEmojiBtn: any = require("./../../assets/images/modal/chat-emoji-btn.png");
 class Preload extends Phaser.Scene {
   constructor() {
     super('Preload');
@@ -254,6 +259,15 @@ class Preload extends Phaser.Scene {
     this.load.image('firework2', firework2);
     this.load.image('firework3', firework3);
     this.load.image('fireworkBg', fireworkBg);
+
+    this.load.image('chat-bg', chatBackground);
+    this.load.image('chat-send-btn', chatSendBtn);
+    this.load.image('chat-emoji-btn', chatEmojiBtn);
+    this.load.image('unicorn-status', unicornStatus);
+    this.load.image('tile1', tile1);
+    this.load.image('tile2', tile2);
+    this.load.image('corner1', corner1);
+    this.load.image('corner2', corner2);
   }
 
 }

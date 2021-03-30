@@ -1,3 +1,4 @@
+import Firework from './../../components/Firework';
 function deleteTerritoriesLocks(): void {
 
   let lvl: number = this.state.userEvent.maxLevelAnimal;
@@ -56,7 +57,7 @@ function buyTerritory(): void {
             territory.data.values.btnText.destroy();
             territory.data.values.forest.destroy();
             territory.setTexture('event-grass');
-            this.firework250(territory.x + 120, territory.y + 120);
+            Firework.create(this, { x: territory.x + 120, y: territory.y + 120 }, 1);
             this.buildBorders();
       
           }, callbackScope: this, loop: false });
@@ -64,7 +65,7 @@ function buyTerritory(): void {
           } else {
       
             let count: number = price - Number(this.state.userEvent.money);
-            let diamonds: number = this.convertMoney(count);
+            let diamonds: number = this.convertMoney(BigInt(count));
             this.state.convertor = {
               fun: 6,
               count: count,
@@ -111,7 +112,7 @@ function buyTerritory(): void {
           territory.data.values.forest.destroy();
           territory.data.values.lock_image.destroy();
           territory.setTexture('event-grass');
-          this.firework250(territory.x + 120, territory.y + 120);
+          Firework.create(this, { x: territory.x + 120, y: territory.y + 120 }, 1);
           this.buildBorders();
       
         }, callbackScope: this, loop: false });

@@ -1,29 +1,5 @@
 import { random, getRandomBool } from './basic';
 
-function genAnimations(): void {
-
-  this.anims.create({
-    key: 'firework250',
-    frames: this.anims.generateFrameNumbers('firework250', { start: 0, end: 7, first: 0 }),
-    frameRate: 15
-  });
-
-}
-
-// салют
-function firework250(x: number, y: number): void {
-
-  let firework: Phaser.GameObjects.Sprite = this.add.sprite(x, y - 30, 'firework250').setDepth(y + 250);
-  firework.anims.play('firework250');
-
-  let timeOut: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 500, callback: (): void => {
-    firework.destroy();
-    timeOut.remove(false);
-  }, callbackScope: this, loop: false });
-
-}
-
-
 // анимация монет и кристаллов
 function сurrencyAnimation(): void {
 
@@ -388,56 +364,6 @@ function dragSheep(sheep: boolean = false): void {
   }
 
 }
-
-
-// вплывающие сердечки
-function hearts(animal: any): void {
-
-  if (animal) {
-    
-    let counter: number = 0;
-    let interval: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 250, callback: (): void => {
-
-      counter++;
-
-      let heart: Phaser.GameObjects.Sprite = this.physics.add.sprite(animal.x + 20, animal.y - 80, 'heart')
-        .setDepth(animal.y + 100)
-        .setScale(random(8, 10) / 10)
-        .setAngle(random(-5, 5));
-
-      let rand: number;
-      if (getRandomBool()) rand = random(-30, -20);
-      else rand = random(20, 30);
-
-      let target: Iposition = {
-        x: animal.x + 20 + rand,
-        y: animal.y - 200
-      }
-      this.physics.moveToObject(heart, target, 100);
-
-      let opacity: number = 1;
-      let timeout: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 30, callback: (): void => {
-
-        opacity -= 0.01;
-        heart.setAlpha(opacity);
-
-        if (opacity <= 0) {
-
-          heart.destroy();
-          timeout.remove(false);
-
-        }
-        
-      }, callbackScope: this, loop: true });
-
-      if (counter > 2) interval.remove(false);
-
-    }, callbackScope: this, loop: true });
-  
-  }
-
-}
-
 
 // появление спрайта овечки
 function showSheepSprite(): void {
@@ -812,8 +738,6 @@ function openShop(...args: Phaser.Cameras.Scene2D.Camera[]): void {
   });
 }
 export {
-  firework250,
-  genAnimations,
   сurrencyAnimation,
   menuAnimation,
   cave,
@@ -821,7 +745,6 @@ export {
   increaseDiamonds,
   plusCurrencyAnimation,
   dragSheep,
-  hearts,
   showSheepSprite,
   calendarAnimation,
   newbieAwardAnimation,

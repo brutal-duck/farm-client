@@ -1,5 +1,7 @@
 import {shortTime} from './../../general/basic';
 import Arrow from './../../components/Arrow';
+import Firework from './../../components/Firework';
+import Hearts from './../../components/Hearts';
 function interval(): void {
 
   // значение отступа для молока, чтоб не прилегали к краям территории
@@ -134,7 +136,7 @@ function interval(): void {
 
             if (cow.type === 0) cow.diamond++;
             if (cow.diamond >= 5 && cow.type === 0) {
-              this.firework250(cow.x, cow.y);
+              Firework.create(this, cow, 1);
               cow.destroy();
             }
 
@@ -300,8 +302,7 @@ function interval(): void {
       if (Phaser.Math.Between(0, 7) >= 5) { // чтобы не так часто появлялись сердца
 
         let randomIndex: number = Phaser.Math.Between(0, this.cow.children.entries.length - 1);
-        this.hearts(this.cow.children.entries[randomIndex]);
-
+        Hearts.create(this, this.cow.children.entries[randomIndex])
       }
 
       this.state.userCow.feedBoostTime--;

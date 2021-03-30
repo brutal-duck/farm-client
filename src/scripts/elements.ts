@@ -76,45 +76,6 @@ function createSpeechBubble(text: string, type: number = 1): void {
 
 }
 
-
-// облако при мерджинге (Добавил type при неудчном мерджинге)
-function mergingCloud(position: Iposition, type: boolean = false): void {
-
-  let x: number = position.x;
-  let y: number = position.y;
-  let cloud = !type 
-    ? this.add.image(x, y, 'merging-animation').setDepth(y + 10000)
-    : this.add.image(x, y, 'bad-merging-animation').setDepth(y + 10000);
-  let cloudText = this.add.text(x, y, this.state.lang.herdBoostBadMerge, {
-    font: '34px Shadow',
-    color: '#1a1a1a',
-    align: 'center'
-  }).setOrigin(0.5, 0.5).setVisible(type).setDepth(y + 10001).setStroke('#cc3737', 2);
-
-  let delay = 10;
-  let interval = this.time.addEvent({ delay: 30, callback: (): void => {
-
-    cloud.y -= 4;
-    cloudText.y = cloud.y;
-    if (delay === 0) {
-
-      let alpha: number = Number(cloud.alpha.toFixed(2)) - 0.02;
-      cloud.setAlpha(alpha);
-      cloudText.setAlpha(alpha);
-
-      if (alpha <= 0.03) {
-        cloud.destroy();
-        cloudText.destroy();
-        interval.remove(false);
-      }
-
-    } else delay--;
-
-  }, callbackScope: this, loop: true });
-  
-}
-
-
 // большая кнопка
 function bigButton(
   color: string,
@@ -551,7 +512,6 @@ function buildMenu(): void {
 
 export {
   createSpeechBubble,
-  mergingCloud,
   bigButton,
   repositoryBtn,
   Collector,

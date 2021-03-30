@@ -315,7 +315,6 @@ let horizontalBorder2: any = require("./../../../assets/images/sheep/territories
 let horizontalBorder3: any = require("./../../../assets/images/sheep/territories/horizontal-border-3.png");
 let tutorMerging: any = require("./../../../assets/images/sheep/tutor-merging.png");
 let gift: any = require("./../../../assets/images/icons/gift.png");
-let firework250: any = require("./../../../assets/images/animations/firework250.png");
 let shaveStatus: any = require("./../../../assets/images/sheep/icons/shave-status.png");
 let offline: any = require("./../../../assets/images/icons/offline.png");
 let arrow: any = require("./../../../assets/images/arrow.png");
@@ -327,6 +326,10 @@ let adIcon: any = require("./../../../assets/images/icons/ad-icon.png");
 let bgAd: any = require("./../../../assets/images/icons/bg-ad.png");
 let bigButtonGreen: any = require("./../../../assets/images/modal/btn_lg.png");
 let starterpackIcon: any = require("./../../../assets/images/icons/starterpack.png");
+let firework1: any = require("./../../../assets/images/animations/firework1.png");
+let firework2: any = require("./../../../assets/images/animations/firework2.png");
+let firework3: any = require("./../../../assets/images/animations/firework3.png");
+let fireworkBg: any = require("./../../../assets/images/animations/fireworkBg.png");
 
 class SheepPreload extends Phaser.Scene {
 
@@ -680,7 +683,6 @@ class SheepPreload extends Phaser.Scene {
     this.load.image('sheep-horizontal-border-3', horizontalBorder3);
     this.load.image('tutor-merging', tutorMerging);
     this.load.image('gift', gift);
-    this.load.spritesheet('firework250', firework250, { frameWidth: 250, frameHeight: 250 });
     this.load.image('shave-status', shaveStatus);
     this.load.image('offline', offline);
     this.load.image('arrow', arrow);
@@ -692,6 +694,10 @@ class SheepPreload extends Phaser.Scene {
     this.load.image('bg-ad', bgAd);
     this.load.image('big-btn-green', bigButtonGreen);
     this.load.image('starterpack-icon', starterpackIcon);
+    this.load.image('firework1', firework1);
+    this.load.image('firework2', firework2);
+    this.load.image('firework3', firework3);
+    this.load.image('fireworkBg', fireworkBg);
   }
   
   

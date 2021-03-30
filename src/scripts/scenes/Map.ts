@@ -1,6 +1,6 @@
 import Scrolling from '../libs/Scrolling';
 import { click, clickShopBtn } from '../general/clicks';
-import { shortNum, getEventRaiting, shortTime } from '../general/basic';
+import { shortNum, getEventRaiting, shortTime, loadingModal} from '../general/basic';
 import { scoreEnding } from './Event/basic';
 
 let sheepCoin: any = require("./../../assets/images/sheep/icons/money.png");
@@ -45,7 +45,7 @@ class Map extends Phaser.Scene {
   public clickShopBtn = clickShopBtn.bind(this);
   public getEventRaiting = getEventRaiting.bind(this); 
   public scoreEnding = scoreEnding.bind(this);
-  
+  public loadingModal = loadingModal.bind(this);
 
   public init(state: Istate): void {
 
@@ -56,7 +56,9 @@ class Map extends Phaser.Scene {
 
 
   public preload(): void {
-
+    this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)');
+    this.loadingModal();
+    
     this.load.image('sheepCoin', sheepCoin);
     this.load.image('chickenCoin', chickenCoin);
     this.load.image('back', back);

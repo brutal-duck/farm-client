@@ -1,4 +1,6 @@
 import { random, randomString } from '../../general/basic';
+import Firework from './../../components/Firework';
+import MergingCloud from './../../components/MergingCloud';
 
 // телепортация куриц на свободные территории
 function teleportation(chicken: any): void {
@@ -197,7 +199,7 @@ function getChicken(
 
   // });
   
-  if (type === 0) this.firework250(x, y);
+  if (type === 0) Firework.create(this, { x, y }, 1);
 
   return chicken;
 
@@ -311,7 +313,7 @@ function checkMerging(territory: any, chicken: any, position: string) {
           x: territory.x + 120,
           y: territory.y + 120
         }
-        this.mergingCloud(position);
+        MergingCloud.create(this, position);
         let type: number = chicken1.type + 1;
         chicken1.destroy();
         chicken2.destroy();
@@ -669,7 +671,7 @@ function dragChickenMerging(chicken: any): void {
       x: chicken.x,
       y: chicken.y
     }
-    this.mergingCloud(position);
+    MergingCloud.create(this, position);
     
     const type: number = chicken.type + 1;
 

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { randomString, shortNum } from './../../general/basic';
+import Firework from './../../components/Firework';
 // цена животного
 function animalPrice(breed: number): {price: bigint, countAnimal: number} {
   let insideCounter: number = this.state.userEvent.countAnimal[breed - 1].counter;
@@ -373,10 +374,6 @@ function improveCollector(): void {
       this.setCollector();
       
       this.game.scene.keys['Modal'].improveCollectorAnim({x: this.cameras.main.centerX, y: this.cameras.main.centerY + 10});
-      
-      this.time.addEvent({ delay: 500, callback: (): void => {
-        this.game.scene.keys[this.state.farm + 'Bars'].firework250(230, Number(this.game.config.height) - 70);
-      }, callbackScope: this, loop: false });
 
     } else {
 
@@ -405,14 +402,10 @@ function improveCollector(): void {
 
       this.game.scene.keys['Modal'].improveCollectorAnim({x: this.cameras.main.centerX, y: this.cameras.main.centerY + 10});
 
-      this.time.addEvent({ delay: 500, callback: (): void => {
-        this.game.scene.keys[this.state.farm + 'Bars'].firework250(230, Number(this.game.config.height) - 70);
-      }, callbackScope: this, loop: false });
-
     } else {
 
       let count: number = nextLevel.price - Number(user.money);
-      let diamonds: number = this.convertMoney(count);
+      let diamonds: number = this.convertMoney(BigInt(count));
       this.state.convertor = {
         fun: 8,
         count: count,
@@ -504,7 +497,7 @@ function createBoostAnimal(positions): void {
       let type = this.state.userEvent.herdBoostAnimals.pop();
       let id: string = 'local_' + randomString(18);
       this.getAnimal(id, type, position.x, position.y);
-      this.firework250(position.x, position.y);
+      Firework.create(this, position, 1);
 
     }
   });
