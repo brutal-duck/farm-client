@@ -65,7 +65,7 @@ function buyTerritory(): void {
           } else {
       
             let count: number = price - Number(this.state.userEvent.money);
-            let diamonds: number = this.convertMoney(count);
+            let diamonds: number = this.convertMoney(BigInt(count));
             this.state.convertor = {
               fun: 6,
               count: count,
