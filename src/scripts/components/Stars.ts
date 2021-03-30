@@ -22,6 +22,7 @@ export default class Stars {
   }
 
   private init(): void {
+    this.stars = this.scene.add.group();
     this.scene.time.addEvent({
       delay: 100,
       callbackScope: this,
