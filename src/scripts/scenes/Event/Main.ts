@@ -1,7 +1,5 @@
 import Scrolling from '../../libs/Scrolling';
 import {
-  genAnimations,
-  firework250,
   hearts
 } from '../../general/animations';
 import {
@@ -136,8 +134,6 @@ class Event extends Phaser.Scene {
   public collisions = collisions.bind(this);
   public click = click.bind(this);
   public clickTerritory = clickTerritory.bind(this);
-  public firework250 = firework250.bind(this);
-  public genAnimations = genAnimations.bind(this);
   public currentTerritory = currentTerritory.bind(this);
   public confirmExchangeTerritory = confirmExchangeTerritory.bind(this);
   public checkExchangeRepository = checkExchangeRepository.bind(this);

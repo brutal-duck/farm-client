@@ -3,6 +3,7 @@ import * as amplitude from 'amplitude-js';
 import { randomString } from './basic';
 import * as platform from 'platform';
 import axios from 'axios';
+import Firework from './../components/Firework';
 
 // поиск рекламы
 function findAd(): void {
@@ -171,7 +172,7 @@ function adReward(): void {
           }
         });
       this.getAnimal(id, breed, position.x, position.y);
-      this.firework250(position.x, position.y);
+      Firework.create(this, { x: position.x, y: position.y }, 1);
 
       this.state.amplitude.getInstance().logEvent('take_event_animal', {
         farm_id: this.state.farm,

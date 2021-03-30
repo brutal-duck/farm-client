@@ -1,29 +1,5 @@
 import { random, getRandomBool } from './basic';
 
-function genAnimations(): void {
-
-  this.anims.create({
-    key: 'firework250',
-    frames: this.anims.generateFrameNumbers('firework250', { start: 0, end: 7, first: 0 }),
-    frameRate: 15
-  });
-
-}
-
-// салют
-function firework250(x: number, y: number): void {
-
-  let firework: Phaser.GameObjects.Sprite = this.add.sprite(x, y - 30, 'firework250').setDepth(y + 250);
-  firework.anims.play('firework250');
-
-  let timeOut: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 500, callback: (): void => {
-    firework.destroy();
-    timeOut.remove(false);
-  }, callbackScope: this, loop: false });
-
-}
-
-
 // анимация монет и кристаллов
 function сurrencyAnimation(): void {
 
@@ -812,8 +788,6 @@ function openShop(...args: Phaser.Cameras.Scene2D.Camera[]): void {
   });
 }
 export {
-  firework250,
-  genAnimations,
   сurrencyAnimation,
   menuAnimation,
   cave,

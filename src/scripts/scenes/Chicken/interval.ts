@@ -1,5 +1,6 @@
 import {shortTime} from './../../general/basic';
 import Arrow from './../../components/Arrow';
+import Firework from './../../components/Firework';
 function interval(): void {
 
   // значение отступа для яиц, чтоб не прилегали к краям территории
@@ -134,7 +135,7 @@ function interval(): void {
 
             if (chicken.type === 0) chicken.diamond++;
             if (chicken.diamond >= 5 && chicken.type === 0) {
-              this.firework250(chicken.x, chicken.y);
+              Firework.create(this, chicken, 1)
               chicken.destroy();
             }
 

@@ -24,7 +24,6 @@ import {
   calendarAnimation,
   newbieAwardAnimation,
   plusDiamonds,
-  firework250,
   getCurrency
 } from '../../general/animations';
 import { pulseCollector } from './animations';
@@ -97,7 +96,6 @@ class SheepBars extends Phaser.Scene {
   public calendarAnimation = calendarAnimation.bind(this);
   public newbieAwardAnimation = newbieAwardAnimation.bind(this);
   public plusDiamonds = plusDiamonds.bind(this);
-  public firework250 = firework250.bind(this);
   public updateNativeShop = updateNativeShop.bind(this);
   public shortTime = shortTime.bind(this);
   public getCurrency = getCurrency.bind(this);

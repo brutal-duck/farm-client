@@ -1,5 +1,6 @@
 import { random, randomString } from '../../general/basic';
 import Arrow from './../../components/Arrow';
+import Firework from './../../components/Firework';
 
 
 // телепортация овец на свободные территории
@@ -217,7 +218,7 @@ function getSheep(
   sheep.shaveStatus = this.add.sprite(x, y, 'shave-status').setVisible(false);
   sheep.anims.play('sheep-stay-' + side + sheep.type, true);
 
-  if (type === 0 && !load) this.firework250(x, y);
+  if (type === 0 && !load) Firework.create(this, { x, y }, 1);
   
   this.click(sheep, (): void => {
 
@@ -450,7 +451,7 @@ function buySheep(breed: number, shop: boolean = false): boolean {
         if (this.state.userSheep.tutorial === 20) {
           
           this.aim(sheep, 360, 600);
-          this.firework250(600, 600);
+          Firework.create(this, { x: 600, y: 600 }, 1);
 
         } else {
           
@@ -646,7 +647,7 @@ function collectWool(sheep: any, manualСollect: boolean = false): void {
 
       }
  
-      this.firework250(sheep.x, sheep.y);
+      Firework.create(this, sheep, 1);
       sheep.woolSprite.destroy();
       sheep.shaveStatus.destroy();
       sheep.destroy();

@@ -13,8 +13,6 @@ import {
   buyCollector,
  } from '../../general/boosts';
 import {
-  genAnimations,
-  firework250,
   cave,
   dragSheep,
   hearts,
@@ -133,7 +131,6 @@ import {
 } from '../../general/ads';
 import setCollector from './collector';
 import { showEventTutorial, doneEventTutor_0 } from './../Event/tutorial';
-
 class Sheep extends Phaser.Scene {
   constructor() {
     super('Sheep');
@@ -195,8 +192,6 @@ class Sheep extends Phaser.Scene {
   public click = click.bind(this);
   public clickTerritory = clickTerritory.bind(this);
   public animations = animations.bind(this);
-  public genAnimations = genAnimations.bind(this);
-  public firework250 = firework250.bind(this);
   public teleportation = teleportation.bind(this);
   public reverse = reverse.bind(this);
   public aim = aim.bind(this);
@@ -323,7 +318,6 @@ class Sheep extends Phaser.Scene {
   public create(): void {
     
     // анимации
-    this.genAnimations();
     this.animations();
     
     // сторим мир

@@ -1,4 +1,5 @@
 import { random, randomString } from '../../general/basic';
+import Firework from './../../components/Firework';
 
 // телепортация куриц на свободные территории
 function teleportation(chicken: any): void {
@@ -197,7 +198,7 @@ function getChicken(
 
   // });
   
-  if (type === 0) this.firework250(x, y);
+  if (type === 0) Firework.create(this, { x, y }, 1);
 
   return chicken;
 

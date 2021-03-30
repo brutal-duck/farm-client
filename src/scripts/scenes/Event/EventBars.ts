@@ -29,7 +29,6 @@ import {
   calendarAnimation,
   newbieAwardAnimation,
   plusDiamonds,
-  firework250,
 } from '../../general/animations';
 import { pulseCollector, plusResourceAnimation } from './animations';
 
@@ -93,7 +92,6 @@ class EventBars extends Phaser.Scene {
   public calendarAnimation = calendarAnimation.bind(this);
   public newbieAwardAnimation = newbieAwardAnimation.bind(this);
   public plusDiamonds = plusDiamonds.bind(this);
-  public firework250 = firework250.bind(this);
   public plusResourceAnimation = plusResourceAnimation.bind(this);
   public updateNativeShop = updateNativeShop.bind(this);
   public updateRaitingsBar = updateRaitingsBar.bind(this);

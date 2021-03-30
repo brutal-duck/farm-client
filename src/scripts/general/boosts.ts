@@ -1,5 +1,6 @@
 import { shortTime, randomString, shortNum } from "./basic";
 import Arrow from './../components/Arrow';
+import Firework from './../components/Firework';
 
 // получение животного по бусту
 function createBoostAnimal(): void {
@@ -13,7 +14,7 @@ function createBoostAnimal(): void {
         let y: number = Phaser.Math.Between(510, 690);
         let id: string = 'local_' + randomString(18);
         this[`get${this.state.farm}`](id, type, x, y, 0, 500);
-        this.firework250(x, y);
+        Firework.create(this, {x, y}, 1);
       }, 
       callbackScope: this, 
       loop: false 
@@ -134,11 +135,7 @@ function improveCollector(): void {
         this.setCollector();
   
         this.game.scene.keys['Modal'].improveCollectorAnim({x: this.cameras.main.centerX, y: this.cameras.main.centerY + 10});
-        
-        this.time.addEvent({ delay: 500, callback: (): void => {
-          this.game.scene.keys[this.state.farm + 'Bars'].firework250(230, Number(this.game.config.height) - 70);
-        }, callbackScope: this, loop: false });
-  
+
       } else {
   
         this.state.convertor = {
@@ -166,10 +163,6 @@ function improveCollector(): void {
         this.setCollector();
   
         this.game.scene.keys['Modal'].improveCollectorAnim({x: this.cameras.main.centerX, y: this.cameras.main.centerY + 10});
-  
-        this.time.addEvent({ delay: 500, callback: (): void => {
-          this.game.scene.keys[this.state.farm + 'Bars'].firework250(230, Number(this.game.config.height) - 70);
-        }, callbackScope: this, loop: false });
   
       } else {
   

@@ -1,5 +1,6 @@
 import {shortTime} from './../../general/basic';
 import Arrow from './../../components/Arrow';
+import Firework from './../../components/Firework';
 function interval(): void {
 
   // значение отступа для молока, чтоб не прилегали к краям территории
@@ -134,7 +135,7 @@ function interval(): void {
 
             if (cow.type === 0) cow.diamond++;
             if (cow.diamond >= 5 && cow.type === 0) {
-              this.firework250(cow.x, cow.y);
+              Firework.create(this, cow, 1);
               cow.destroy();
             }
 

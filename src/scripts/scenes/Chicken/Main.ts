@@ -7,8 +7,6 @@ import interval from './interval';
 import autoprogress from './autoprogress';
 import autosave from './autosave';
 import {
-  genAnimations,
-  firework250,
   cave,
   caveIconsAnimation, 
   hearts
@@ -153,8 +151,6 @@ class Chicken extends Phaser.Scene {
   public click = click.bind(this);
   public clickTerritory = clickTerritory.bind(this);
   public animations = animations.bind(this);
-  public firework250 = firework250.bind(this);
-  public genAnimations = genAnimations.bind(this);
   public teleportation = teleportation.bind(this);
   public reverse = reverse.bind(this);
   public aim = aim.bind(this);
@@ -259,7 +255,6 @@ class Chicken extends Phaser.Scene {
     
     // анимации
     this.animations();
-    this.genAnimations();
 
     // сторим мир
     this.world();

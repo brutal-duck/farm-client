@@ -1,4 +1,5 @@
 // поставить территорию
+import Firework from './../../components/Firework';
 function installTerritory(): void {
 
   if (this.state.exchangeTerritory === 2 ||
@@ -41,7 +42,7 @@ function installTerritory(): void {
         this.state.territory.repository = this.add.image(x, y, 'chicken-repository-1-1')
           .setDepth(this.state.territory.y + 50)
           .setOrigin(0.5, 1);
-        this.firework250(this.state.territory.x + 120, this.state.territory.y + 120);
+        Firework.create(this, { x: this.state.territory.x + 120, y: this.state.territory.y + 120 }, 1);
 
       } else {
 
@@ -50,7 +51,7 @@ function installTerritory(): void {
         this.time.addEvent({ delay: 500, callback: (): void => {
           
           this.changeSprite(this.state.territory);
-          this.firework250(this.state.territory.x + 120, this.state.territory.y + 120);
+          Firework.create(this, { x: this.state.territory.x + 120, y: this.state.territory.y + 120 }, 1);
 
         }, callbackScope: this, loop: false });
 

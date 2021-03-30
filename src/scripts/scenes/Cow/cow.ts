@@ -1,5 +1,6 @@
 import { random, randomString } from '../../general/basic';
 import { cow } from '../Modal/cow';
+import Firework from './../../components/Firework';
 
 // телепортация коров на свободные территории
 function teleportation(cow: any): void {
@@ -228,7 +229,7 @@ function getCow(
 
   });
   
-  if (type === 0) this.firework250(x, y);
+  if (type === 0) Firework.create(this, { x, y }, 1);
 
   return cow;
 
@@ -665,7 +666,7 @@ function collectMilk(cow: any, manualСollect: boolean = false): void {
 
       // }
  
-      this.firework250(cow.x, cow.y);
+      Firework.create(this, cow, 1);
       cow.milkStatus.destroy();
       cow.destroy();
       
