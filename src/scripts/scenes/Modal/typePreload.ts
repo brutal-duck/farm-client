@@ -14,7 +14,6 @@ let dayRed: any = require("./../../../assets/images/daily/day-red.png");
 let awardReceived: any = require("./../../../assets/images/daily/award-received.png");
 let donateBg: any = require("./../../../assets/images/modal/donate.png");
 let doneChapterButton: any = require("./../../../assets/images/modal/done-chapter-button.png");
-let shopWindow: any = require("./../../../assets/images/modal/shop.png");
 let dailyBg: any = require("./../../../assets/images/modal/daily-bg.png");
 let middleButton: any = require("./../../../assets/images/modal/middle-button.png");
 let awardBg: any = require("./../../../assets/images/icons/award-bg.png");
@@ -63,7 +62,10 @@ let ratingBGAfter: any = require("./../../../assets/images/event/modal/raiting-b
 let unicornStatus: any = require("./../../../assets/images/icons/unicorn-status.png");
 let feedBoostChickenIcon: any = require("./../../../assets/images/icons/chicken-feed-boost.png");
 let feedBoostCowIcon: any = require("./../../../assets/images/icons/cow-feed-boost.png");
-
+let tile1: any = require("./../../../assets/images/chat-tile-1.png");
+let tile2: any = require("./../../../assets/images/chat-tile-2.png");
+let corner1: any = require("./../../../assets/images/chat-corner-1.png");
+let corner2: any = require("./../../../assets/images/chat-corner-2.png");
 
 
 export default function typePreload(): void {
@@ -87,7 +89,7 @@ export default function typePreload(): void {
 
         break;
       case 2: // магазин
-        this.load.image('shop-window', shopWindow);
+        // this.load.image('shop-window', shopWindow);
         if (this.state.farm === 'Chicken') this.load.image('chicken-feed-boost-icon', feedBoostChickenIcon); 
         else if (this.state.farm === 'Cow') this.load.image('cow-feed-boost-icon', feedBoostCowIcon); 
         
@@ -152,7 +154,10 @@ export default function typePreload(): void {
         this.load.image('chat-send-btn', chatSendBtn);
         this.load.image('chat-emoji-btn', chatEmojiBtn);
         this.load.image('unicorn-status', unicornStatus);
-
+        this.load.image('tile1', tile1);
+        this.load.image('tile2', tile2);
+        this.load.image('corner1', corner1);
+        this.load.image('corner2', corner2);
         break;
       case 10: // окно автопрогресса ивентовой фермы +
         this.load.image('autoprogress-bg', autoprogressBG);

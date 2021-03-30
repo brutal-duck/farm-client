@@ -1,11 +1,8 @@
 import Scrolling from '../../../libs/Scrolling';
 import axios from 'axios';
-import { getStatusSettings } from '../../../general/basic';
+import { getStatusSettings, loadingModal } from '../../../general/basic';
 
-let tile1: any = require("./../../../../assets/images/chat-tile-1.png");
-let tile2: any = require("./../../../../assets/images/chat-tile-2.png");
-let corner1: any = require("./../../../../assets/images/chat-corner-1.png");
-let corner2: any = require("./../../../../assets/images/chat-corner-2.png");
+
 
 class Chat extends Phaser.Scene {
   constructor() {
@@ -25,6 +22,7 @@ class Chat extends Phaser.Scene {
   public ready: boolean;
 
   public getStatusSettings = getStatusSettings.bind(this);
+  public loadingModal = loadingModal.bind(this);
 
   public init(state: Istate): void {
 
@@ -59,10 +57,6 @@ class Chat extends Phaser.Scene {
   }
 
   public preload(): void {
-    this.load.image('tile1', tile1);
-    this.load.image('tile2', tile2);
-    this.load.image('corner1', corner1);
-    this.load.image('corner2', corner2);
   }
 
   

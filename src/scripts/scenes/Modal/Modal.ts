@@ -1,7 +1,8 @@
 import {
   shortNum,
   shortTime,
-  getStatusSettings
+  getStatusSettings,
+  loadingModal,
 } from '../../general/basic';
 import {
   click,
@@ -216,6 +217,7 @@ class Modal extends Phaser.Scene {
   public typePreload = typePreload.bind(this);
   public clickTaskBoard = clickTaskBoard.bind(this);
   public openModal = openModal.bind(this);
+  public loadingModal = loadingModal.bind(this);
 
   
   public init(state: Istate): void {
@@ -224,13 +226,15 @@ class Modal extends Phaser.Scene {
 
 
   public preload(): void {
+    this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)');
+    this.loadingModal();
     this.typePreload();
+
   }
 
 
 
   public create(): void {
-    this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)');
     this.tasksOpened = false;
     this.add.tileSprite(0, 0,
       Number(this.game.config.width),

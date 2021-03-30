@@ -1143,6 +1143,25 @@ function loadingScreen(farmType: string): void {
   });
 }
 
+function loadingModal(): void {
+  let loadingSprite: Phaser.GameObjects.Sprite;
+  let animation: Phaser.Tweens.Tween;
+  this.load.on('start', () => {
+    loadingSprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'star');
+    animation = this.tweens.add({
+      targets: loadingSprite,
+      rotation: 2 * Math.PI,
+      duration: 200,
+      repeat: -1,
+    })
+  })
+  
+  this.load.on('complete', () => {
+    animation?.remove();
+    loadingSprite?.destroy();
+  })
+}
+
 // Перераспределние животных на поле
 function spreadAnimals(): void {
 
@@ -1428,4 +1447,5 @@ export {
   nextDayTimer,
   intervalPorgressCollectorTime,
   autoporgressCollectorTime,
+  loadingModal
 }
