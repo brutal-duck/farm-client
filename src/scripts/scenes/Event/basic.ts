@@ -405,7 +405,7 @@ function improveCollector(): void {
     } else {
 
       let count: number = nextLevel.price - Number(user.money);
-      let diamonds: number = this.convertMoney(count);
+      let diamonds: number = this.convertMoney(BigInt(count));
       this.state.convertor = {
         fun: 8,
         count: count,

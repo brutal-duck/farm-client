@@ -224,7 +224,7 @@ function buyEventTerritory(): void {
 // окно улучшения собирателя 
 function improveCollectorEvent(): void {
 
-  this.textHeader.setText(this.state.lang.eggCollector + ' ' + this.state.userEvent.collectorLevel + ' ' + this.state.lang.shortLevel + '.');
+  this.textHeader.setText(this.state.lang.resourceCollector + ' ' + this.state.userEvent.collectorLevel + ' ' + this.state.lang.shortLevel + '.');
 
   let thisLevel: IcollectorSettings = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userEvent.collectorLevel);
   let nextLevel: IcollectorSettings = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userEvent.collectorLevel + 1);
@@ -1517,7 +1517,7 @@ function updateImproveCollectorEvent(
   duration: Phaser.GameObjects.Text, 
   nextLevelText: Phaser.GameObjects.Text): void {
 
-  this.textHeader.setText(this.state.lang.woolCollector + ' ' + this.state.userEvent.collectorLevel + ' ' + this.state.lang.shortLevel + '.');
+  this.textHeader.setText(this.state.lang.resourceCollector + ' ' + this.state.userEvent.collectorLevel + ' ' + this.state.lang.shortLevel + '.');
   let thisLevel: IcollectorSettings = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userEvent.collectorLevel);
   let nextLevel: IcollectorSettings = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userEvent.collectorLevel + 1);
 

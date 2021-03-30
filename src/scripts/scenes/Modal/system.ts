@@ -168,7 +168,7 @@ function systemWindow(): void {
 
     case 10: // окно улучшения собирателя
       
-      if (this.state.farm !== 'Eheep') {
+      if (this.state.farm !== 'Event') {
         this.improveCollector();
       } else {
         this.improveCollectorEvent();
