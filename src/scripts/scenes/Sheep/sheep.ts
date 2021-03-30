@@ -1,6 +1,7 @@
 import { random, randomString } from '../../general/basic';
 import Arrow from './../../components/Arrow';
 import Firework from './../../components/Firework';
+import MergingCloud from './../../components/MergingCloud';
 
 
 // телепортация овец на свободные территории
@@ -322,7 +323,7 @@ function checkMerging(territory: any, sheep: any, position: string) {
           x: territory.x + 120,
           y: territory.y + 120
         }
-        this.mergingCloud(position);
+        MergingCloud.create(this, position);
         let type: number = sheep1.type + 1;
         sheep1.woolSprite.destroy();
         sheep2.woolSprite.destroy();
@@ -856,7 +857,7 @@ function dragSheepMerging(sheep: any): void {
       x: sheep.x,
       y: sheep.y
     }
-    this.mergingCloud(position);
+    MergingCloud.create(this, position);
     
     const type: number = sheep.type + 1;
 

@@ -1,9 +1,16 @@
-
 import Sheep from './../scenes/Sheep/Main';
 import Cow from './../scenes/Cow/Main';
 import Chicken from './../scenes/Chicken/Main';
 import Event from './../scenes/Event/Main';
 
+/**
+  *  Анимация облака в позиции сцен    
+  * 
+  *  Конструктор принимает:
+  *1. объект сцены; 
+  *2. объект позиции Iposition {x, y} или животное; 
+  *3. необязательный параметр, если неудачный мерджинг то передать true;  
+*/
 export default class MergingCloud {
 
   private scene: Sheep | Cow | Event | Chicken;

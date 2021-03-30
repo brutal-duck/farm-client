@@ -82,7 +82,7 @@ import daily from './daily';
 import dailyNewbie from './dailyNewbie';
 import nextChapter from './nextChapter';
 import donate from './donate';
-import { bigButton, repositoryBtn, mergingCloud, shopButton } from '../../elements';
+import { bigButton, repositoryBtn, shopButton } from '../../elements';
 import { 
   changeNickname,
   addEmail,
@@ -191,7 +191,6 @@ class Modal extends Phaser.Scene {
   public herdBoostWindow = herdBoostWindow.bind(this);
   public getRandomAnimal = getRandomAnimal.bind(this);
   public getRandomStartPosition = getRandomStartPosition.bind(this);
-  public mergingCloud = mergingCloud.bind(this);
   public shopButton = shopButton.bind(this);
   public shortTime = shortTime.bind(this);
   public sheepWoolRepositoryExchange = sheepWoolRepositoryExchange.bind(this);

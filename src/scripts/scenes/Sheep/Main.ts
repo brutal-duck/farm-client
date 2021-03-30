@@ -89,7 +89,7 @@ import {
   dragSheepMerging
 } from './sheep';
 import { installTerritory } from './territories';
-import { createSpeechBubble, mergingCloud } from '../../elements';
+import { createSpeechBubble } from '../../elements';
 import {
   balance,
   sheepPrice,
@@ -221,7 +221,6 @@ class Sheep extends Phaser.Scene {
   public expelSheep = expelSheep.bind(this);
   public woolSprite = woolSprite.bind(this);
   public createSpeechBubble = createSpeechBubble.bind(this);
-  public mergingCloud = mergingCloud.bind(this);
   public showBank = showBank.bind(this);
   public freeCollector = freeCollector.bind(this);
   public buyCollector = buyCollector.bind(this);

@@ -26,7 +26,7 @@ import {
 import {
   checkExchangeRepository,
 } from '../../general/territories';
-import { createSpeechBubble, mergingCloud } from '../../elements';
+import { createSpeechBubble } from '../../elements';
 import {
   findAd,
   watchAd,
@@ -138,7 +138,6 @@ class Event extends Phaser.Scene {
   public convertDiamonds = convertDiamonds.bind(this);
   public exchange = exchange.bind(this);
   public createSpeechBubble = createSpeechBubble.bind(this);
-  public mergingCloud = mergingCloud.bind(this);
   public showBank = showBank.bind(this);
   public freeCollector = freeCollector.bind(this);
   public buyCollector = buyCollector.bind(this);

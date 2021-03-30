@@ -1,4 +1,5 @@
 import { random, randomString } from '../../general/basic';
+import MergingCloud from './../../components/MergingCloud';
 
 // функция реверсивного движения животного
 function reverse(animal: Phaser.Physics.Arcade.Sprite): void {
@@ -427,7 +428,8 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
         
         this.time.addEvent({ delay: 100, callback: (): void => {
           this.game.scene.keys['EventBars'].updateAnimalPrice();
-          this.mergingCloud(position);
+          MergingCloud.create(this, position);
+
           animal1?.data.values.active?.data.values.cloud.destroy();
           animal2?.data.values.active?.data.values.cloud.destroy();
           animal1?.data.values.active.destroy();
