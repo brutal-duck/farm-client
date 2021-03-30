@@ -365,56 +365,6 @@ function dragSheep(sheep: boolean = false): void {
 
 }
 
-
-// вплывающие сердечки
-function hearts(animal: any): void {
-
-  if (animal) {
-    
-    let counter: number = 0;
-    let interval: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 250, callback: (): void => {
-
-      counter++;
-
-      let heart: Phaser.GameObjects.Sprite = this.physics.add.sprite(animal.x + 20, animal.y - 80, 'heart')
-        .setDepth(animal.y + 100)
-        .setScale(random(8, 10) / 10)
-        .setAngle(random(-5, 5));
-
-      let rand: number;
-      if (getRandomBool()) rand = random(-30, -20);
-      else rand = random(20, 30);
-
-      let target: Iposition = {
-        x: animal.x + 20 + rand,
-        y: animal.y - 200
-      }
-      this.physics.moveToObject(heart, target, 100);
-
-      let opacity: number = 1;
-      let timeout: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 30, callback: (): void => {
-
-        opacity -= 0.01;
-        heart.setAlpha(opacity);
-
-        if (opacity <= 0) {
-
-          heart.destroy();
-          timeout.remove(false);
-
-        }
-        
-      }, callbackScope: this, loop: true });
-
-      if (counter > 2) interval.remove(false);
-
-    }, callbackScope: this, loop: true });
-  
-  }
-
-}
-
-
 // появление спрайта овечки
 function showSheepSprite(): void {
 
@@ -795,7 +745,6 @@ export {
   increaseDiamonds,
   plusCurrencyAnimation,
   dragSheep,
-  hearts,
   showSheepSprite,
   calendarAnimation,
   newbieAwardAnimation,

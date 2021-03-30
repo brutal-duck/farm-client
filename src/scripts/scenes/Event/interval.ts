@@ -1,4 +1,5 @@
 import { randomString, shortNum, shortTime } from '../../general/basic';
+import Hearts from './../../components/Hearts';
 
 function interval(): void {
 
@@ -85,7 +86,7 @@ function interval(): void {
         let randomIndex: number = Phaser.Math.Between(0, this.animals.children.entries.length - 1);
 
         if (this.animals.children.entries[randomIndex].data.values.active.data.values.working) {
-          this.hearts(this.animals.children.entries[randomIndex].data.values.active);
+          Hearts.create(this, this.animals.children.entries[randomIndex].data.values.active);
         }
         
       }

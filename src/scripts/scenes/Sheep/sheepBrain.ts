@@ -1,4 +1,5 @@
 import { random } from '../../general/basic';
+import Hearts from './../../components/Hearts';
 
 function sheepBrain(): void {
 
@@ -115,8 +116,7 @@ function sheepBrain(): void {
               (distance > sheep.distance && sheep.distance > 0)) {
 
               if (sheep.aimX === 600 && sheep.aimY === 600 && this.state.userSheep.tutorial === 30) {
-
-                this.hearts(sheep);
+                Hearts.create(this, sheep);
                 sheep.vector = 6;
                 sheep.anims.play('sheep-stay-right1', true);
                 sheep.woolSprite.setTexture('sheep-right-1-0');

@@ -9,7 +9,6 @@ import autosave from './autosave';
 import {
   cave,
   caveIconsAnimation, 
-  hearts
 } from '../../general/animations';
 import {  
   click,
@@ -228,7 +227,6 @@ class Cow extends Phaser.Scene {
   public random = random.bind(this);
   public randomString = randomString.bind(this);
   public getRandomBool = getRandomBool.bind(this);
-  public hearts = hearts.bind(this);
   public spreadAnimals = spreadAnimals.bind(this);
   public getEventRaiting = getEventRaiting.bind(this);
   public showEventTutorial = showEventTutorial.bind(this);

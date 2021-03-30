@@ -1,6 +1,7 @@
 import {shortTime} from './../../general/basic';
 import Arrow from './../../components/Arrow';
 import Firework from './../../components/Firework';
+import Hearts from './../../components/Hearts';
 function interval(): void {
 
   // значение отступа для яиц, чтоб не прилегали к краям территории
@@ -301,8 +302,7 @@ function interval(): void {
       if (Phaser.Math.Between(0, 7) >= 5) { // чтобы не так часто появлялись сердца
 
         let randomIndex: number = Phaser.Math.Between(0, this.chicken.children.entries.length - 1);
-        this.hearts(this.chicken.children.entries[randomIndex]);
-
+        Hearts.create(this, this.chicken.children.entries[randomIndex])
       }
 
       this.state.userChicken.feedBoostTime--;

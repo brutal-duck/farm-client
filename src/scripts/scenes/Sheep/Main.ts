@@ -15,7 +15,6 @@ import {
 import {
   cave,
   dragSheep,
-  hearts,
   caveIconsAnimation
 } from '../../general/animations';
 import {
@@ -268,7 +267,6 @@ class Sheep extends Phaser.Scene {
   public logout = logout.bind(this);
   public onlineStatus = onlineStatus.bind(this);
   public dragSheep = dragSheep.bind(this);
-  public hearts = hearts.bind(this);
   public checkDoneTasks = checkDoneTasks.bind(this);
   public collectorTutorial = collectorTutorial.bind(this);
   public buyNextFarm = buyNextFarm.bind(this);

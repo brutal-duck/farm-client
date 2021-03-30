@@ -1,7 +1,5 @@
 import Scrolling from '../../libs/Scrolling';
-import {
-  hearts
-} from '../../general/animations';
+
 import {
   click,
   clickTerritory,
@@ -188,7 +186,6 @@ class Event extends Phaser.Scene {
   public flyAnimal = flyAnimal.bind(this);
   public updateTeleportation = updateTeleportation.bind(this);
   public getFreeBoostPositions = getFreeBoostPositions.bind(this);
-  public hearts = hearts.bind(this);
   public tryTask = tryTask.bind(this);
   public buildFlowers = buildFlowers.bind(this);
   public buildConfetti = buildConfetti.bind(this);
