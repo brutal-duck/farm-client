@@ -282,8 +282,8 @@ class Cow extends Phaser.Scene {
     cursors.space.on('down', (): void => {
 
       // this.state.newbieTime = 0
-      this.state.daily = Number(this.state.daily) + 1
-      this.state.user.takenReward = false;
+      // this.state.daily = Number(this.state.daily) + 1
+      // this.state.user.takenReward = false;
       // this.state.dailyAwards = [false, false, false, false, false, false, false, false]
 
       // let modal: Imodal = {
