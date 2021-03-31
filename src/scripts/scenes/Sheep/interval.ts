@@ -186,16 +186,8 @@ function interval(): void {
 
     // бар собирателя
     if (this.state.userSheep.collector > 0) {
-
       this.state.userSheep.collector--;
-      this.game.scene.keys['SheepBars'].collector.update();
-
-    } else if (this.game.scene.keys['SheepBars'].collector.endAngle !==
-      this.game.scene.keys['SheepBars'].collector.startAngle) {
-      
-      this.game.scene.keys['SheepBars'].collector.update();
-
-    }
+    } 
 
     // задание на накопление денег
     this.tryTask(6, this.state.userSheep.money);
