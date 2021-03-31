@@ -51,7 +51,8 @@ import {
   takeNewbieAward,
   showDonate,
   showImproveCollector,
-  startHerdBoost
+  startHerdBoost,
+  openEmailWindow
 } from '../../general/modal';
 import {
   partTasks,
@@ -294,6 +295,7 @@ class Sheep extends Phaser.Scene {
   public nextDayTimer = nextDayTimer.bind(this);
   public intervalPorgressCollectorTime = intervalPorgressCollectorTime.bind(this);
   public autoporgressCollectorTime = autoporgressCollectorTime.bind(this);
+  public openEmailWindow = openEmailWindow.bind(this);
 
   public init(state: Istate): void {
 
@@ -359,36 +361,17 @@ class Sheep extends Phaser.Scene {
 
 
   public update(): void {
-
     // мозг овец
     this.sheepBrain();
-
     // полет шерсти в хранилище
     this.woolFly();
-
     // анимация полных хранилищ
     this.repositoryAnimation();
-
     // анимация пещеры
     this.cave();
-
     // перетаскивание овец
     this.dragSheep(true);
-
   }
-
-  public openEmailWindow(): void {
-
-    let modal: Imodal = {
-      type: 1,
-      sysType: 13
-    }
-    this.state.modal = modal;
-    this.scene.launch('Modal', this.state);
-
-  }
-
-
 }
 
 export default Sheep;
