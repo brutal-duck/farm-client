@@ -1390,16 +1390,19 @@ function intervalPorgressCollectorTime(): void {
   if (this.state.farm === 'Sheep') {
     this.state.progress.sheep.collector = this.state.userSheep.collector;
     if (this.state.progress.chicken.collector > 0) this.state.progress.chicken.collector--;
-
+    if (this.state.progress.cow.collector > 0) this.state.progress.cow.collector--;
   } else if (this.state.farm === 'Chicken') {
-
     this.state.progress.chicken.collector = this.state.userChicken.collector;
     if (this.state.progress.sheep.collector > 0) this.state.progress.sheep.collector--;
-    
+    if (this.state.progress.cow.collector > 0) this.state.progress.cow.collector--;
+  } else if (this.state.farm === 'Cow') {
+    this.state.progress.cow.collector = this.state.userCow.collector;
+    if (this.state.progress.sheep.collector > 0) this.state.progress.sheep.collector--;
+    if (this.state.progress.chicken.collector > 0) this.state.progress.chicken.collector--;
   } else if (this.state.farm === 'Event') {
-    
     if (this.state.progress.chicken.collector > 0) this.state.progress.chicken.collector--;
     if (this.state.progress.sheep.collector > 0) this.state.progress.sheep.collector--;
+    if (this.state.progress.cow.collector > 0) this.state.progress.cow.collector--;
   }
 }
 
@@ -1414,6 +1417,12 @@ function autoporgressCollectorTime(): void {
     this.state.progress.chicken.collector -= this.state.progress.chicken.offlineTime;
   } else {
     this.state.progress.chicken.collector = 0;
+  }
+
+  if (this.state.progress.cow.collector >= this.state.progress.cow.offlineTime) {
+    this.state.progress.cow.collector -= this.state.progress.cow.offlineTime;
+  } else {
+    this.state.progress.cow.collector = 0;
   }
 }
 
