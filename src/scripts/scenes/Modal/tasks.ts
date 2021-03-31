@@ -320,15 +320,14 @@ function tasksWindow(): void {
 
   // Кнопка закрытия
   this.clickButton(this.close, (): void => {
-    this.tasksOpened = false;
+    this.game.scene.keys[this.state.farm].tasksOpened = false;
     this.scene.stop();
     this.game.scene.keys[this.state.farm].scrolling.wheel = true;
   });
 
   this.resizeTasksWindow(height);
-
-  if (!this.state.tasksOpened){
-    this.state.tasksOpened = true;
+  if (!this.game.scene.keys[this.state.farm].tasksOpened){
+    this.game.scene.keys[this.state.farm].tasksOpened = true;
     this.openModal(this.cameras.main);
   }
 

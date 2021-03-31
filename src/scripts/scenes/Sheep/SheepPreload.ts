@@ -330,6 +330,7 @@ let firework1: any = require("./../../../assets/images/animations/firework1.png"
 let firework2: any = require("./../../../assets/images/animations/firework2.png");
 let firework3: any = require("./../../../assets/images/animations/firework3.png");
 let fireworkBg: any = require("./../../../assets/images/animations/fireworkBg.png");
+let loadingSpinner: any = require('./../../../assets/images/animations/loading-spinner.png');
 
 class SheepPreload extends Phaser.Scene {
 
@@ -698,6 +699,7 @@ class SheepPreload extends Phaser.Scene {
     this.load.image('firework2', firework2);
     this.load.image('firework3', firework3);
     this.load.image('fireworkBg', fireworkBg);
+    this.load.image('loading-spinner', loadingSpinner);
   }
   
   

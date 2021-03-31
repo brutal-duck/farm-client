@@ -20,7 +20,7 @@ function systemWindow(): void {
 
   this.clickButton(this.close, (): void => {
     if (this.state.boughtFeedBoost) {
-      Hint.create(this.game.scene.keys['SheepBars'], -250, `${this.state.lang.feedBoostNative} ${shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang)}`, 2);
+      Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, `${this.state.lang.feedBoostNative} ${shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang)}`, 2);
       this.state.boughtFeedBoost = false;
     };
     if (this.state.modal.sysType === 6) this.state.animal.expel = false;
