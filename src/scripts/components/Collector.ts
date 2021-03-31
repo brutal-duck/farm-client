@@ -129,10 +129,14 @@ export default class Collector extends Phaser.GameObjects.Text {
 
   private setPulseAnimation(): void {
     if ((this.scene.state[`user${this.scene.state.farm}`].collector === 0 
-      && this.scene.state.farm !== 'Sheep') 
+      && this.scene.state.farm !== 'Sheep'
+      && this.scene.state.farm !== 'Event') 
       || (this.scene.state[`user${this.scene.state.farm}`].collector === 0 
       && this.scene.state[`user${this.scene.state.farm}`].tutorial >= 100 
-      && this.scene.state.farm === 'Sheep')) {
+      && this.scene.state.farm === 'Sheep') || (
+      this.scene.state.user.additionalTutorial.eventTutorial > 70 
+      && this.scene.state.farm === 'Event' && this.scene.state[`user${this.scene.state.farm}`].collector === 0 
+      )) {
       this.pulseTimer++;
       if (this.pulseTimer === 20) this.setPulseColor(false);
       else if (this.pulseTimer === 40) {

@@ -1,19 +1,3 @@
-// мигание нулевого таймера собирателя
-function pulseCollector(): void {
-
-  if (this.state.userEvent.collector === 0) {
-
-    this.collector.pulseTimer++;
-
-    if (this.collector.pulseTimer === 20) this.collector.setColor(false);
-    else if (this.collector.pulseTimer === 40) {
-      this.collector.pulseTimer = 0;
-      this.collector.setColor(true);
-    }
-
-  }
-
-}
 
 function flyAnimal(): void {
   this.time.addEvent({
@@ -376,7 +360,6 @@ function dragEventAnimal(animal: boolean = false): void {
 
 }
 export {
-  pulseCollector,
   flyAnimal,
   plusResourceAnimation,
   teleportation,

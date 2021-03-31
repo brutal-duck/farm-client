@@ -18,9 +18,6 @@ import {
   scoreEnding 
 } from './basic';
 import {
-  Collector
-} from '../../elements';
-import {
   сurrencyAnimation,
   menuAnimation,
   pulseBalance,
@@ -30,7 +27,8 @@ import {
   newbieAwardAnimation,
   plusDiamonds,
 } from '../../general/animations';
-import { pulseCollector, plusResourceAnimation } from './animations';
+import { plusResourceAnimation } from './animations';
+import Collector from './../../components/Collector';
 
 class EventBars extends Phaser.Scene {
   constructor() {
@@ -82,7 +80,6 @@ class EventBars extends Phaser.Scene {
   public clickShopBtn = clickShopBtn.bind(this);
   public clickModalBtn = clickModalBtn.bind(this);
   public сurrencyAnimation = сurrencyAnimation.bind(this);
-  public pulseCollector = pulseCollector.bind(this);
   public menuAnimation = menuAnimation.bind(this);
   public pulseBalance = pulseBalance.bind(this);
   public buildMenu = buildMenu.bind(this);
@@ -306,7 +303,7 @@ class EventBars extends Phaser.Scene {
       this.shop.setVisible(false);
       this.map.setVisible(false);
       this.collectorBtn.setVisible(false);
-      this.collector.timeCollectorText.setVisible(false);
+      this.collector.setVisible(false);
       this.collector.bubble.setVisible(false);
       this.menu.setVisible(false);
       this.chat.setVisible(false);
@@ -399,9 +396,6 @@ class EventBars extends Phaser.Scene {
     // анимация монет и кристаллов
     this.сurrencyAnimation();
 
-    // мигание нулевого таймера собирателя
-    if (this.state.user.additionalTutorial.eventTutorial > 70) this.pulseCollector();
-    
     // актуальный статус кнопки покупки курицы
     this.buyAnimalStatus();
 
