@@ -26,7 +26,6 @@ import {
   exchange,
   donePart,
   pickUpTaskReward,
-  caveTimer,
   onlineStatus,
   buyNextFarm,
   getNewbieAward,
@@ -258,7 +257,6 @@ class Sheep extends Phaser.Scene {
   public doneTutorCave2 = doneTutorCave2.bind(this);
   public skipTutorial = skipTutorial.bind(this);
   public autoprogress = autoprogress.bind(this);
-  public caveTimer = caveTimer.bind(this);
   public dailyAward = dailyAward.bind(this);
   public logout = logout.bind(this);
   public onlineStatus = onlineStatus.bind(this);

@@ -25,7 +25,6 @@ import {
   plusDiamonds,
   getCurrency
 } from '../../general/animations';
-import { pulseCollector } from './animations';
 import { clickTaskBoard } from '../../general/tasks';
 import TaskBoard from './../../components/TaskBoard';
 import Collector from './../../components/Collector';

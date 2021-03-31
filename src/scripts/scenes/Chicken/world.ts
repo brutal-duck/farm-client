@@ -276,7 +276,6 @@ function world(): void {
     }
 
     if (data.type === 7) {
-
       let x: number = territory.x + 120;
       let y: number = territory.y + 240;
       Cave.create(this, { x, y });

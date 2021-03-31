@@ -17,7 +17,6 @@ import {
   exchange,
   donePart,
   pickUpTaskReward,
-  caveTimer,
   onlineStatus,
   buyNextFarm,
   getNewbieAward,
@@ -195,7 +194,6 @@ class Cow extends Phaser.Scene {
   public showTutorial = showTutorial.bind(this);
   public doneTutor_0 = doneTutor_0.bind(this);
   public autoprogress = autoprogress.bind(this);
-  public caveTimer = caveTimer.bind(this);
   public dailyAward = dailyAward.bind(this);
   public logout = logout.bind(this);
   public onlineStatus = onlineStatus.bind(this);

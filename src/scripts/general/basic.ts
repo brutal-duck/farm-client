@@ -559,53 +559,6 @@ function pickUpTaskReward(id: number): void {
 
 }
 
-
-// таймер кристаллической пещеры
-function caveTimer(): void {
-
-  let user: IuserSheep | IuserChicken;
-
-  if (this.state.farm === 'Sheep') user = this.state.userSheep;
-  else if (this.state.farm === 'Chicken') user = this.state.userChicken;
-  else if (this.state.farm === 'Cow') user = this.state.userCow;
-
-  if (user.diamondAnimalTime > 0) {
-
-    user.diamondAnimalTime--;
-
-    let caveTerritory = this.territories.children.entries.find((data: any) => data.type === 7);
-
-    if (!caveTerritory.timerBg.visible) {
-      caveTerritory.timerBg.setVisible(true);
-    }
-
-    if (!caveTerritory.timer.visible) {
-      caveTerritory.timer.setVisible(true);
-    }
-
-    if (caveTerritory.cave.texture.key !== 'cave-wait') {
-      caveTerritory.cave.setTexture('cave-wait');
-    }
-
-    let time: string = timer(user.diamondAnimalTime);
-
-    caveTerritory.timer.setText(time);
-
-    if (this.scene.isActive('Modal') && this.state.modal?.type === 1 && this.state.modal?.sysType === 9) {
-      this.game.scene.keys['Modal'].caveTimer.setText(this.state.lang.summonTime + time);
-    }
-
-    if (user.diamondAnimalTime === 0) {
-      user.diamondAnimalAd = true;
-      caveTerritory.timer.setVisible(false);
-      caveTerritory.timerBg.setVisible(false);
-    }
-
-  }
-
-}
-
-
 // проверка подключения к интернету
 function onlineStatus(): void {
 
@@ -1443,7 +1396,6 @@ export {
   exchange,
   donePart,
   pickUpTaskReward,
-  caveTimer,
   onlineStatus,
   socialButtons,
   checkStorage,
