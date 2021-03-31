@@ -4,6 +4,7 @@ import bridge from '@vkontakte/vk-bridge';
 import * as amplitude from 'amplitude-js';
 import Hint from './../components/Hint';
 import Firework from './../components/Firework';
+import Stars from './../components/Stars';
 
 // рандомное число
 function random(min: number, max: number): number {
@@ -505,11 +506,12 @@ function donePart(): void {
     chapter: user.part - 1
   });
 
-  this.time.addEvent({ delay: 500, callback: (): void => {
+  this.time.addEvent({ delay: 200, callback: (): void => {
 
     this.house.setTexture(this.state.farm.toLowerCase() + '-house-' + user.part);
     let house: Phaser.GameObjects.Sprite = this.territories.children.entries.find((data: any) => data.type === 6);
-    Firework.create(this, { x: house.x + 120, y: house.y + 120 }, 3);
+    Stars.create(this, { x: house.x + 120, y: house.y + 120 });
+    // Firework.create(this, { x: house.x + 120, y: house.y + 120 }, 3);
     this.checkDoneTasks();
 
   }, callbackScope: this, loop: false });

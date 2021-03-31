@@ -1,5 +1,6 @@
 // территория на которой находится объект
 import Firework from './../components/Firework';
+import Stars from './../components/Stars';
 function currentTerritory(x: number, y: number): object {
 
   let block: number = Math.ceil((y - this.topIndent) / this.height);
@@ -187,11 +188,12 @@ function fairLevelUp(): void {
         this.tryTask(7, user.fair);
         this.tryTask(15, 0, nextFair.price_d);
 
-        this.time.addEvent({ delay: 500, callback: (): void => {
+        this.time.addEvent({ delay: 200, callback: (): void => {
 
           // переделать, взять ярмарку из массива группы
           this.state.territory.level?.setText(user.fair);
-          Firework.create(this, { x: this.state.territory.x + 120, y: this.state.territory.y + 120 }, 3);
+          Stars.create(this, { x: this.state.territory.x + 120, y: this.state.territory.y + 120 });
+          // Firework.create(this, { x: this.state.territory.x + 120, y: this.state.territory.y + 120 }, 3);
 
         }, callbackScope: this, loop: false });
 

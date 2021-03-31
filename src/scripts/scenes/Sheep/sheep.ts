@@ -218,7 +218,6 @@ function getSheep(
   sheep.woolSprite = this.add.sprite(x, y, 'sheep-' + side + '-' + sheep.type + '-' + stage);
   sheep.shaveStatus = this.add.sprite(x, y, 'shave-status').setVisible(false);
   sheep.anims.play('sheep-stay-' + side + sheep.type, true);
-  console.log(anim)
   if (anim) Firework.create(this, { x, y }, 1);
   
   this.click(sheep, (): void => {
