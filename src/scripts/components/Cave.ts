@@ -4,6 +4,13 @@ import Sheep from './../scenes/Sheep/Main';
 import Cow from './../scenes/Cow/Main';
 import { timer } from '../general/basic';
 
+/**
+  *  Пищера для кристаллического животного  
+  * 
+  *  Конструктор принимает:
+  ** Объект сцены, позицию.
+*/
+
 export default class Cave extends Phaser.GameObjects.Sprite {
   public scene: Sheep | Chicken | Cow; 
   private position: Iposition;
@@ -13,7 +20,6 @@ export default class Cave extends Phaser.GameObjects.Sprite {
   private bgAd: Phaser.GameObjects.Sprite;
   private free: Phaser.GameObjects.Text;
   private ad: Phaser.GameObjects.Sprite;
-  private animation: Phaser.Tweens.Tween;
   private currentTimer: number;
 
   constructor(scene: Sheep | Chicken | Cow, position: Iposition) {
@@ -31,10 +37,10 @@ export default class Cave extends Phaser.GameObjects.Sprite {
     this.setOrigin(0.5, 1)
       .setDepth(this.position.y);
     this.pulseTimer = 0;
-    this.build();
+    this.buildElements();
   }
 
-  private build(): void {
+  private buildElements(): void {
 
     this.timerBg = this.scene.add.sprite(this.position.x, this.position.y - 200, 'cave-timer')
       .setDepth(this.position.y)
@@ -66,8 +72,7 @@ export default class Cave extends Phaser.GameObjects.Sprite {
       .setAngle(11)
       .setVisible(false);
 
-    this.setAnimation();
-    
+    this.setPlaneAnimation();
   }
 
   public preUpdate(): void {
@@ -75,9 +80,8 @@ export default class Cave extends Phaser.GameObjects.Sprite {
     this.setTimerText();
   }
 
-  private setAnimation(): void {
-
-    this.animation = this.scene.tweens.add({
+  private setPlaneAnimation(): void {
+    this.scene.tweens.add({
       targets: [ this.bgAd, this.free, this.ad ],
       delay: 5000,
       props: {
@@ -87,39 +91,42 @@ export default class Cave extends Phaser.GameObjects.Sprite {
       },
       loop: -1,
     });
-}
+  }
 
+  private setPulseAnimation(): void {
+    this.pulseTimer++;
+    if (this.pulseTimer === 20) this.setTexture('cave-ready');
+    else if (this.pulseTimer === 40) {
+      this.pulseTimer = 0;
+      this.setTexture('cave-wait');
+    }
+  }
+  
   private checkAndSetState(): void {
-
-  const user: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
-  if (user.part >= 3) {
-    if (user.diamondAnimalTime === 0) {
-      if (!this.bgAd.visible) this.bgAd.visible = true;
-      if (!this.free.visible) this.free.visible = true;
-
-      this.pulseTimer++;
-
-      if (this.pulseTimer === 20) this.setTexture('cave-ready');
-      else if (this.pulseTimer === 40) {
-        this.pulseTimer = 0;
-        this.setTexture('cave-wait');
-      }
-    } else {
-      if (this.free.visible) this.free.visible = false;
-      if (this.scene.state.readyAd && user.diamondAnimalAd) {
+    const user: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
+    if (user.part >= 3) {
+      if (user.diamondAnimalTime <= 0) {
         if (!this.bgAd.visible) this.bgAd.visible = true;
-        if (!this.ad.visible) this.ad.visible = true;
+        if (!this.free.visible) this.free.visible = true;
+        if (this.timer.visible) this.timer.setVisible(false);
+        if (this.timerBg.visible) this.timerBg.setVisible(false);
+        this.setPulseAnimation();
       } else {
-        if (this.bgAd.visible) this.bgAd.visible = false;
-        if (this.ad.visible) this.ad.visible = false;
+        if (this.free.visible) this.free.visible = false;
+        if (this.scene.state.readyAd && user.diamondAnimalAd) {
+          if (!this.bgAd.visible) this.bgAd.visible = true;
+          if (!this.ad.visible) this.ad.visible = true;
+        } else {
+          if (this.bgAd.visible) this.bgAd.visible = false;
+          if (this.ad.visible) this.ad.visible = false;
+        }
       }
     }
   }
-}
 
 // таймер кристаллической пещеры
   private setTimerText(): void {
-  const user: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
+    const user: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
     if (this.currentTimer !== user.diamondAnimalTime) {
       this.currentTimer = user.diamondAnimalTime;
       if (user.diamondAnimalTime > 0) {
@@ -128,12 +135,11 @@ export default class Cave extends Phaser.GameObjects.Sprite {
         
         if (this.texture.key !== 'cave-wait') this.setTexture('cave-wait');
         
-        let time: string = timer(user.diamondAnimalTime);
+        const time: string = timer(user.diamondAnimalTime);
         this.timer.setText(time);
         if (this.scene.scene.isActive('Modal') && this.scene.state.modal?.type === 1 && this.scene.state.modal?.sysType === 9) {
           this.scene.game.scene.keys['Modal'].caveTimer.setText(this.scene.state.lang.summonTime + time);
         }
-      
         if (user.diamondAnimalTime <= 0) {
           user.diamondAnimalAd = true;
           this.timer.setVisible(false);
