@@ -227,9 +227,6 @@ function interval(): void {
     // задание на коровы на поле
     this.checkAnimalTask();
 
-    // таймер кристаллической коровы
-    this.caveTimer();
-
     // баланс-бары
     this.game.scene.keys['CowBars'].setBalanceBars(balance);
     
@@ -256,12 +253,13 @@ function interval(): void {
     if (!this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Map')) this.getNewbieAward();
-
+      
+    // отнимание времени до кристалического животного
+    if (this.state[`user${this.state.farm}`].diamondAnimalTime > 0) {
+      this.state[`user${this.state.farm}`].diamondAnimalTime--;
+    }
     // поиск рекламы
     this.findAd();
-
-    // анимация иконок на пещере
-    this.caveIconsAnimation();
 
     // this.debug();
 

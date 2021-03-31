@@ -12,7 +12,6 @@ function autoprogress(load: boolean = false): void {
   //   this.state.userCow.diamondAnimalTime = 0;
   //   this.state.userCow.diamondAnimalAd = true;
   // }
-  // this.caveTimer();
 
   //  // время буста комбикорм
   //  let wasFeedBoost: number = 0;

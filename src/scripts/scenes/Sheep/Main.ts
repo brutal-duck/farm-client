@@ -13,9 +13,7 @@ import {
   buyCollector,
  } from '../../general/boosts';
 import {
-  cave,
   dragSheep,
-  caveIconsAnimation
 } from '../../general/animations';
 import {
   click,
@@ -166,7 +164,6 @@ class Sheep extends Phaser.Scene {
   public mergPointer: any; // спрайт пальца с перетаскиванием
   public counterWithoutCollector: number;
   public dragScroll: number; // позиция скролла при перетаскивании
-  public caveIconsTimer: number; // таймер для анимации иконок на пещере
   public collectorTimer: Phaser.Time.TimerEvent; // интервал подстригателя
   public debugLog: boolean; // метка для отлова ошибок
   public herdBoostLvl: number = 5; // уровень старта буста стадо
@@ -232,7 +229,6 @@ class Sheep extends Phaser.Scene {
   public pickUpTaskReward = pickUpTaskReward.bind(this);
   public tryTask = tryTask.bind(this);
   public getTaskData = getTaskData.bind(this);
-  public cave = cave.bind(this);
   public takeDiamondSheep = takeDiamondSheep.bind(this);
   public checkAnimalTask = checkAnimalTask.bind(this);
   public showTasks = showTasks.bind(this);
@@ -276,7 +272,6 @@ class Sheep extends Phaser.Scene {
   public findAd = findAd.bind(this);
   public watchAd = watchAd.bind(this);
   public adReward = adReward.bind(this);
-  public caveIconsAnimation = caveIconsAnimation.bind(this);
   public VKOnAdsReady = VKOnAdsReady.bind(this);
   public VKNoAds = VKNoAds.bind(this);
   public showDonate = showDonate.bind(this);
@@ -308,7 +303,6 @@ class Sheep extends Phaser.Scene {
     this.arrow = null;
     this.collectorTimer = null;
     this.counterWithoutCollector = 0;
-    this.caveIconsTimer = 0;
     console.log('Sheep');
     
   }
@@ -367,8 +361,6 @@ class Sheep extends Phaser.Scene {
     this.woolFly();
     // анимация полных хранилищ
     this.repositoryAnimation();
-    // анимация пещеры
-    this.cave();
     // перетаскивание овец
     this.dragSheep(true);
   }

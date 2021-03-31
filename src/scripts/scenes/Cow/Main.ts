@@ -6,10 +6,6 @@ import cowBrain from './cowBrain';
 import interval from './interval';
 import autoprogress from './autoprogress';
 import autosave from './autosave';
-import {
-  cave,
-  caveIconsAnimation, 
-} from '../../general/animations';
 import {  
   click,
   clickTerritory,
@@ -190,7 +186,6 @@ class Cow extends Phaser.Scene {
   public pickUpTaskReward = pickUpTaskReward.bind(this);
   public tryTask = tryTask.bind(this);
   public getTaskData = getTaskData.bind(this);
-  public cave = cave.bind(this);
   public takeDiamondCow = takeDiamondCow.bind(this);
   public checkAnimalTask = checkAnimalTask.bind(this);
   public showTasks = showTasks.bind(this);
@@ -212,7 +207,6 @@ class Cow extends Phaser.Scene {
   public findAd = findAd.bind(this);
   public watchAd = watchAd.bind(this);
   public adReward = adReward.bind(this);
-  public caveIconsAnimation = caveIconsAnimation.bind(this);
   public VKOnAdsReady = VKOnAdsReady.bind(this);
   public VKNoAds = VKNoAds.bind(this);
   public showDonate = showDonate.bind(this);
@@ -308,9 +302,6 @@ class Cow extends Phaser.Scene {
 
     // анимация полных хранилищ
     this.repositoryAnimation();
-
-    // анимация пещеры
-    this.cave();
     
   }
 

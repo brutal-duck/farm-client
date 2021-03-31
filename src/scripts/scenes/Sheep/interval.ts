@@ -195,8 +195,10 @@ function interval(): void {
     // задание на овец на поле
     this.checkAnimalTask();
 
-    // таймер кристаллической овцы
-    this.caveTimer();
+    // отнимание времени до кристалического животного
+    if (this.state[`user${this.state.farm}`].diamondAnimalTime > 0) {
+      this.state[`user${this.state.farm}`].diamondAnimalTime--;
+    }
 
     // баланс-бары
     this.game.scene.keys['SheepBars'].setBalanceBars(balance);
@@ -318,9 +320,6 @@ function interval(): void {
     
     // поиск рекламы
     this.findAd();
-    
-    // анимация иконок на пещере
-    this.caveIconsAnimation();
 
     this.debug();
 
