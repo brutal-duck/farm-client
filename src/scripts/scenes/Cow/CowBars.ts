@@ -11,7 +11,6 @@ import {
 } from '../../general/clicks';
 import { updateNativeShop } from './../../general/boosts';
 import {
-  Collector,
   buildMenu,
   createSpeechBubble
 } from '../../elements';
@@ -29,7 +28,7 @@ import {
 import { pulseCollector } from './animations';
 import { clickTaskBoard } from '../../general/tasks';
 import TaskBoard from './../../components/TaskBoard';
-
+import Collector from './../../components/Collector';
 class CowBars extends Phaser.Scene {
   constructor() {
     super('CowBars');
@@ -79,7 +78,6 @@ class CowBars extends Phaser.Scene {
   public clickShopBtn = clickShopBtn.bind(this);
   public clickModalBtn = clickModalBtn.bind(this);
   public сurrencyAnimation = сurrencyAnimation.bind(this);
-  public pulseCollector = pulseCollector.bind(this);
   public menuAnimation = menuAnimation.bind(this);
   public pulseBalance = pulseBalance.bind(this);
   public buildMenu = buildMenu.bind(this);
@@ -389,9 +387,6 @@ class CowBars extends Phaser.Scene {
     
     // анимация монет и кристаллов
     this.сurrencyAnimation();
-
-    // мигание нулевого таймера собирателя
-    this.pulseCollector();
 
     // анимация меню
     this.menuAnimation();

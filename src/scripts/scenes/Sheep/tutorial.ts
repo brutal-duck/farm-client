@@ -483,7 +483,7 @@ function skipTutorial(): void {
   this.game.scene.keys['SheepBars'].collector.bubble.setVisible(true);
 
   if (this.state.platform === 'web') {
-    this.game.scene.keys['SheepBars'].auth.setVisible(true);
+    this.game.scene.keys['SheepBars'].auth?.setVisible(true);
   } else {
     this.game.scene.keys['SheepBars'].menu.setVisible(true);
     this.game.scene.keys['SheepBars'].chat.setVisible(true);

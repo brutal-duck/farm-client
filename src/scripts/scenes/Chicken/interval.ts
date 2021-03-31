@@ -218,16 +218,8 @@ function interval(): void {
 
     // бар собирателя
     if (this.state.userChicken.collector > 0) {
-
       this.state.userChicken.collector--;
-      this.game.scene.keys['ChickenBars'].collector.update();
-
-    } else if (this.game.scene.keys['ChickenBars'].collector.endAngle !==
-      this.game.scene.keys['ChickenBars'].collector.startAngle) {
-
-      this.game.scene.keys['ChickenBars'].collector.update();
-
-    }
+    } 
 
     // задание на накопление денег
     this.tryTask(6, this.state.userChicken.money);
