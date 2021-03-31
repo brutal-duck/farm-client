@@ -347,7 +347,7 @@ function world(): void {
 
   // подгружаем коров
   this.state.cow.map((data: Icow) => {
-    this.getCow(data._id, data.type, data.x, data.y, data.counter, data.milk, data.diamond, data.vector, true);
+    this.getCow(data._id, data.type, data.x, data.y, data.counter, data.milk, data.diamond, data.vector, false);
   });
   
   // подгружаем яйца

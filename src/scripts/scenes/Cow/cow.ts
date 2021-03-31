@@ -188,7 +188,7 @@ function getCow(
   milk: number = 0,
   diamond: number = 0,
   vector: number = 7,
-  load: boolean = false): void {
+  anim: boolean = true): void {
 
   let cow = this.cow.create(x, y, 'cow' + type).setInteractive().setDepth(y);
   cow.setCollideWorldBounds(true);
@@ -230,7 +230,7 @@ function getCow(
 
   });
   
-  if (type === 0) Firework.create(this, { x, y }, 1);
+  if (anim) Firework.create(this, { x, y }, 1);
 
   return cow;
 
@@ -379,7 +379,7 @@ function checkMerging(territory: any, cow: any, position: string) {
         let id: string = 'local_' + randomString(18);
         let x: number = territory.x + 120;
         let y: number = territory.y + 240;
-        let cow = this.getCow(id, type, x, y, 0, 0);
+        let cow = this.getCow(id, type, x, y, 0, 0, 0, 7, false);
         let aimX: number = random(territory.x + 40, territory.x + 200);
         let aimY: number = random(territory.y + 280, territory.y + 440);
         this.aim(cow, aimX, aimY);
@@ -821,7 +821,7 @@ function dragCowMerging(cow: any): void {
 
     const id: string = 'local_' + randomString(18);
     
-    this.getCow(id, type, position.x, position.y, 0, 0);
+    this.getCow(id, type, position.x, position.y, 0, 0, 0, 7, false);
 
     this.tryTask(2, type);
     this.tryTask(4, type);

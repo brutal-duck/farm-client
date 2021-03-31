@@ -162,7 +162,7 @@ function getChicken(
   egg: number = 0,
   diamond: number = 0,
   vector: number = 7,
-  load: boolean = false): void {
+  anim: boolean = true): void {
 
   let chicken = this.chicken.create(x, y, 'chicken' + type).setInteractive().setDepth(y);
   chicken.setCollideWorldBounds(true);
@@ -199,7 +199,7 @@ function getChicken(
 
   // });
   
-  if (type === 0) Firework.create(this, { x, y }, 1);
+  if (anim) Firework.create(this, { x, y }, 1);
 
   return chicken;
 
@@ -320,7 +320,7 @@ function checkMerging(territory: any, chicken: any, position: string) {
         let id: string = 'local_' + randomString(18);
         let x: number = territory.x + 120;
         let y: number = territory.y + 240;
-        let chicken = this.getChicken(id, type, x, y, 0, 0);
+        let chicken = this.getChicken(id, type, x, y, 0, 0, 0, 7, false);
         let aimX: number = random(territory.x + 40, territory.x + 200);
         let aimY: number = random(territory.y + 280, territory.y + 440);
         this.aim(chicken, aimX, aimY);
@@ -680,7 +680,7 @@ function dragChickenMerging(chicken: any): void {
 
     const id: string = 'local_' + randomString(18);
     
-    this.getChicken(id, type, position.x, position.y, 0, 0);
+    this.getChicken(id, type, position.x, position.y, 0, 0, 0, 7, false);
 
     this.tryTask(2, type);
     this.tryTask(4, type);

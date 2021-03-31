@@ -348,7 +348,7 @@ function world(): void {
 
   // подгружаем овец
   this.state.sheep.map((data: Isheep) => {
-    this.getSheep(data._id, data.type, data.x, data.y, data.counter, data.wool, data.diamond, data.vector, true);
+    this.getSheep(data._id, data.type, data.x, data.y, data.counter, data.wool, data.diamond, data.vector, false);
   });
 
   // шерсть

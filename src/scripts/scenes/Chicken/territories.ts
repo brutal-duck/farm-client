@@ -42,7 +42,7 @@ function installTerritory(): void {
         this.state.territory.repository = this.add.image(x, y, 'chicken-repository-1-1')
           .setDepth(this.state.territory.y + 50)
           .setOrigin(0.5, 1);
-        Firework.create(this, { x: this.state.territory.x + 120, y: this.state.territory.y + 120 }, 1);
+        Firework.create(this, { x: this.state.territory.x + 120, y: this.state.territory.y + 120 }, 3);
 
       } else {
 
@@ -51,7 +51,7 @@ function installTerritory(): void {
         this.time.addEvent({ delay: 500, callback: (): void => {
           
           this.changeSprite(this.state.territory);
-          Firework.create(this, { x: this.state.territory.x + 120, y: this.state.territory.y + 120 }, 1);
+          Firework.create(this, { x: this.state.territory.x + 120, y: this.state.territory.y + 120 }, 3);
 
         }, callbackScope: this, loop: false });
 

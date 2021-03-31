@@ -344,7 +344,7 @@ function world(): void {
 
   // подгружаем куриц
   this.state.chicken.map((data: Ichicken) => {
-    this.getChicken(data._id, data.type, data.x, data.y, data.counter, data.egg, data.diamond, data.vector, true);
+    this.getChicken(data._id, data.type, data.x, data.y, data.counter, data.egg, data.diamond, data.vector, false);
   });
   
   // подгружаем яйца
