@@ -6,10 +6,6 @@ import chickenBrain from './chickenBrain';
 import interval from './interval';
 import autoprogress from './autoprogress';
 import autosave from './autosave';
-import {
-  cave,
-  caveIconsAnimation, 
-} from '../../general/animations';
 import {  
   click,
   clickTerritory,
@@ -21,7 +17,6 @@ import {
   exchange,
   donePart,
   pickUpTaskReward,
-  caveTimer,
   onlineStatus,
   buyNextFarm,
   getNewbieAward,
@@ -190,7 +185,6 @@ class Chicken extends Phaser.Scene {
   public pickUpTaskReward = pickUpTaskReward.bind(this);
   public tryTask = tryTask.bind(this);
   public getTaskData = getTaskData.bind(this);
-  public cave = cave.bind(this);
   public takeDiamondChicken = takeDiamondChicken.bind(this);
   public checkAnimalTask = checkAnimalTask.bind(this);
   public showTasks = showTasks.bind(this);
@@ -200,7 +194,6 @@ class Chicken extends Phaser.Scene {
   public showTutorial = showTutorial.bind(this);
   public doneTutor_0 = doneTutor_0.bind(this);
   public autoprogress = autoprogress.bind(this);
-  public caveTimer = caveTimer.bind(this);
   public dailyAward = dailyAward.bind(this);
   public logout = logout.bind(this);
   public onlineStatus = onlineStatus.bind(this);
@@ -212,7 +205,6 @@ class Chicken extends Phaser.Scene {
   public findAd = findAd.bind(this);
   public watchAd = watchAd.bind(this);
   public adReward = adReward.bind(this);
-  public caveIconsAnimation = caveIconsAnimation.bind(this);
   public VKOnAdsReady = VKOnAdsReady.bind(this);
   public VKNoAds = VKNoAds.bind(this);
   public showDonate = showDonate.bind(this);
@@ -299,13 +291,8 @@ class Chicken extends Phaser.Scene {
 
     // анимация полных хранилищ
     this.repositoryAnimation();
-
-    // анимация пещеры
-    this.cave();
     
   }
-
-
 }
 
 export default Chicken;

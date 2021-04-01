@@ -128,60 +128,6 @@ function menuAnimation(): void {
 
 }
 
-
-// анимация пещеры
-function cave(): void {
-
-  let user: IuserSheep | IuserChicken | IuserCow;
-
-  if (this.state.farm === 'Sheep') {
-    user = this.state.userSheep;
-  } else if (this.state.farm === 'Chicken') {
-    user = this.state.userChicken;
-  } else if (this.state.farm === 'Cow') {
-    user = this.state.userCow;
-  }
-  
-  if (user.part >= 3) {
-
-    let cave = this.territories.children.entries.find((data: any) => data.type === 7).cave;
-
-    if (user.diamondAnimalTime === 0) {
-
-      if (!cave.bgAd.visible) cave.bgAd.visible = true;
-      if (!cave.free.visible) cave.free.visible = true;
-
-      cave.pulseTimer++;
-
-      if (cave.pulseTimer === 20) cave.setTexture('cave-ready');
-      else if (cave.pulseTimer === 40) {
-        cave.pulseTimer = 0;
-        cave.setTexture('cave-wait');
-      }
-
-    } else {
-
-      if (cave.free.visible) cave.free.visible = false;
-
-      if (this.state.readyAd && user.diamondAnimalAd) {
-
-        if (!cave.bgAd.visible) cave.bgAd.visible = true;
-        if (!cave.ad.visible) cave.ad.visible = true;
-
-      } else {
-
-        if (cave.bgAd.visible) cave.bgAd.visible = false;
-        if (cave.ad.visible) cave.ad.visible = false;
-
-      }
-
-    }
-
-  }
-
-}
-
-
 // пульсация баланс-баров
 function pulseBalance(): void {
 
@@ -559,72 +505,6 @@ function newbieAwardAnimation(): void {
 
 }
 
-
-// анимация иконок на кристаллической пещере
-function caveIconsAnimation(): void {
-
-  this.caveIconsTimer++;
-
-  if (this.caveIconsTimer >= 5) {
-
-    this.caveIconsTimer = 0;
-
-    let cave = this.territories.children.entries.find((data: any) => data.type === 7).cave;
-    const y: number = cave.bgAd.y;
-
-    let counter: number = 0;
-    let timeEvent: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 30, callback: (): void => {
-
-      counter++;
-
-      if (counter <= 7) {
-
-        cave.bgAd.scale += 0.05;
-        cave.free.scale += 0.05;
-        cave.ad.scale += 0.05;
-        cave.bgAd.rotation -= 0.05;
-        cave.free.rotation -= 0.05;
-        cave.ad.rotation -= 0.05;
-        cave.bgAd.y -= 3;
-        cave.free.y -= 3;
-        cave.ad.y -= 3;
-      
-      } else {
-
-        cave.bgAd.scale -= 0.05;
-        cave.free.scale -= 0.05;
-        cave.ad.scale -= 0.05;
-        cave.bgAd.rotation += 0.05;
-        cave.free.rotation += 0.05;
-        cave.ad.rotation += 0.05;
-        cave.bgAd.y += 3;
-        cave.free.y += 3;
-        cave.ad.y += 3;
-
-      }
-    
-      if (counter >= 14) {
-
-        cave.bgAd.scale = 1;
-        cave.free.scale = 1;
-        cave.ad.scale = 1;
-        cave.bgAd.rotation = 0;
-        cave.free.setAngle(11);
-        cave.ad.setAngle(11);
-        cave.bgAd.y = y;
-        cave.free.y = y;
-        cave.ad.y = y;
-        timeEvent.remove(false);
-
-      }
-
-    }, callbackScope: this, loop: true });
-
-  }
-
-}
-
-
 // анимация кристаллов
 function plusDiamonds(): void {
     
@@ -740,7 +620,6 @@ function openShop(...args: Phaser.Cameras.Scene2D.Camera[]): void {
 export {
   сurrencyAnimation,
   menuAnimation,
-  cave,
   pulseBalance,
   increaseDiamonds,
   plusCurrencyAnimation,
@@ -748,7 +627,6 @@ export {
   showSheepSprite,
   calendarAnimation,
   newbieAwardAnimation,
-  caveIconsAnimation,
   plusDiamonds,
   getCurrency,
   openShop,

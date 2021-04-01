@@ -218,25 +218,14 @@ function interval(): void {
 
     // бар собирателя
     if (this.state.userCow.collector > 0) {
-
       this.state.userCow.collector--;
-      this.game.scene.keys['CowBars'].collector.update();
-
-    } else if (this.game.scene.keys['CowBars'].collector.endAngle !==
-      this.game.scene.keys['CowBars'].collector.startAngle) {
-
-      this.game.scene.keys['CowBars'].collector.update();
-
-    }
+    } 
 
     // задание на накопление денег
     this.tryTask(6, this.state.userCow.money);
 
     // задание на коровы на поле
     this.checkAnimalTask();
-
-    // таймер кристаллической коровы
-    this.caveTimer();
 
     // баланс-бары
     this.game.scene.keys['CowBars'].setBalanceBars(balance);
@@ -264,12 +253,13 @@ function interval(): void {
     if (!this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Map')) this.getNewbieAward();
-
+      
+    // отнимание времени до кристалического животного
+    if (this.state[`user${this.state.farm}`].diamondAnimalTime > 0) {
+      this.state[`user${this.state.farm}`].diamondAnimalTime--;
+    }
     // поиск рекламы
     this.findAd();
-
-    // анимация иконок на пещере
-    this.caveIconsAnimation();
 
     // this.debug();
 

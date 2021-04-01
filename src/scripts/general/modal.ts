@@ -1661,6 +1661,17 @@ function updateImproveCollector(
   }
   
 }
+
+function openEmailWindow(): void {
+
+  let modal: Imodal = {
+    type: 1,
+    sysType: 13
+  }
+  this.state.modal = modal;
+  this.scene.launch('Modal', this.state);
+
+}
 export {
   confirmExchangeTerritory,
   messageIsSent,
@@ -1678,5 +1689,6 @@ export {
   registration,
   profileWindow,
   improveCollector,
-  updateImproveCollector
+  updateImproveCollector,
+  openEmailWindow
 }

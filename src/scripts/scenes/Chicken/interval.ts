@@ -218,25 +218,14 @@ function interval(): void {
 
     // бар собирателя
     if (this.state.userChicken.collector > 0) {
-
       this.state.userChicken.collector--;
-      this.game.scene.keys['ChickenBars'].collector.update();
-
-    } else if (this.game.scene.keys['ChickenBars'].collector.endAngle !==
-      this.game.scene.keys['ChickenBars'].collector.startAngle) {
-
-      this.game.scene.keys['ChickenBars'].collector.update();
-
-    }
+    } 
 
     // задание на накопление денег
     this.tryTask(6, this.state.userChicken.money);
 
     // задание на кур на поле
     this.checkAnimalTask();
-
-    // таймер кристаллической курицы
-    this.caveTimer();
 
     // баланс-бары
     this.game.scene.keys['ChickenBars'].setBalanceBars(balance);
@@ -268,8 +257,10 @@ function interval(): void {
     // поиск рекламы
     this.findAd();
 
-    // анимация иконок на пещере
-    this.caveIconsAnimation();
+    // отнимание времени до кристалического животного
+    if (this.state[`user${this.state.farm}`].diamondAnimalTime > 0) {
+      this.state[`user${this.state.farm}`].diamondAnimalTime--;
+    }
 
     this.debug();
 

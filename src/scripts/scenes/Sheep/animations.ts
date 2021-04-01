@@ -327,25 +327,6 @@ function animations(): void {
 
 }
 
-
-// мигание нулевого таймера собирателя
-function pulseCollector(): void {
-
-  if (this.state.userSheep.collector === 0 && this.state.userSheep.tutorial >= 100) {
-
-    this.collector.pulseTimer++;
-
-    if (this.collector.pulseTimer === 20) this.collector.setColor(false);
-    else if (this.collector.pulseTimer === 40) {
-      this.collector.pulseTimer = 0;
-      this.collector.setColor(true);
-    }
-
-  }
-
-}
-
-
 // анимация полных хранилищ
 function repositoryAnimation(): void {
   
@@ -389,6 +370,5 @@ function repositoryAnimation(): void {
 
 export {
   animations,
-  pulseCollector,
   repositoryAnimation,
 }

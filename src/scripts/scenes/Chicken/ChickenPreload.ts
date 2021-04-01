@@ -223,6 +223,8 @@ const firework1: any = require("./../../../assets/images/animations/firework1.pn
 const firework2: any = require("./../../../assets/images/animations/firework2.png");
 const firework3: any = require("./../../../assets/images/animations/firework3.png");
 const fireworkBg: any = require("./../../../assets/images/animations/fireworkBg.png");
+let loadingSpinner: any = require('./../../../assets/images/animations/loading-spinner.png');
+
 class ChickenPreload extends Phaser.Scene {
 
   public lang: string; // индекс языка
@@ -480,6 +482,7 @@ class ChickenPreload extends Phaser.Scene {
     this.load.image('firework2', firework2);
     this.load.image('firework3', firework3);
     this.load.image('fireworkBg', fireworkBg);
+    this.load.image('loading-spinner', loadingSpinner);
   }
 
   

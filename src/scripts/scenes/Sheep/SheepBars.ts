@@ -11,7 +11,6 @@ import {
 } from '../../general/basic';
 import { updateNativeShop } from './../../general/boosts';
 import {
-  Collector,
   buildMenu,
   createSpeechBubble
 } from '../../elements';
@@ -26,9 +25,9 @@ import {
   plusDiamonds,
   getCurrency
 } from '../../general/animations';
-import { pulseCollector } from './animations';
 import { clickTaskBoard } from '../../general/tasks';
 import TaskBoard from './../../components/TaskBoard';
+import Collector from './../../components/Collector';
 
 class SheepBars extends Phaser.Scene {
   constructor() {
@@ -86,7 +85,6 @@ class SheepBars extends Phaser.Scene {
   public clickShopBtn = clickShopBtn.bind(this);
   public clickModalBtn = clickModalBtn.bind(this);
   public сurrencyAnimation = сurrencyAnimation.bind(this);
-  public pulseCollector = pulseCollector.bind(this);
   public menuAnimation = menuAnimation.bind(this);
   public pulseBalance = pulseBalance.bind(this);
   public buildMenu = buildMenu.bind(this);
@@ -280,7 +278,7 @@ class SheepBars extends Phaser.Scene {
     this.сurrency = this.physics.add.group();
 
     // круглый бар собирателя
-    this.collector = new Collector(this, 230, this.height - 90, 44);
+    this.collector = Collector.create(this, 230, this.height - 90, 44);
 
     // цена быстрой покупки
     let breed: number = this.game.scene.keys[this.state.farm].maxBreedForBuy();
@@ -308,7 +306,7 @@ class SheepBars extends Phaser.Scene {
       this.shop.setVisible(false);
       this.map.setVisible(false);
       this.collectorBtn.setVisible(false);
-      this.collector.timeCollectorText.setVisible(false);
+      this.collector.setVisible(false);
       this.collector.bubble.setVisible(false);
 
       if (this.state.platform === 'web') this.auth?.setVisible(false);
@@ -452,9 +450,6 @@ class SheepBars extends Phaser.Scene {
 
     // анимация монет и кристаллов
     this.сurrencyAnimation();
-
-    // мигание нулевого таймера собирателя
-    this.pulseCollector();
 
     // анимация меню
     this.menuAnimation();

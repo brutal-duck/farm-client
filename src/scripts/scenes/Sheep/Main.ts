@@ -13,9 +13,7 @@ import {
   buyCollector,
  } from '../../general/boosts';
 import {
-  cave,
   dragSheep,
-  caveIconsAnimation
 } from '../../general/animations';
 import {
   click,
@@ -28,7 +26,6 @@ import {
   exchange,
   donePart,
   pickUpTaskReward,
-  caveTimer,
   onlineStatus,
   buyNextFarm,
   getNewbieAward,
@@ -51,7 +48,8 @@ import {
   takeNewbieAward,
   showDonate,
   showImproveCollector,
-  startHerdBoost
+  startHerdBoost,
+  openEmailWindow
 } from '../../general/modal';
 import {
   partTasks,
@@ -165,7 +163,6 @@ class Sheep extends Phaser.Scene {
   public mergPointer: any; // спрайт пальца с перетаскиванием
   public counterWithoutCollector: number;
   public dragScroll: number; // позиция скролла при перетаскивании
-  public caveIconsTimer: number; // таймер для анимации иконок на пещере
   public collectorTimer: Phaser.Time.TimerEvent; // интервал подстригателя
   public debugLog: boolean; // метка для отлова ошибок
   public herdBoostLvl: number = 5; // уровень старта буста стадо
@@ -231,7 +228,6 @@ class Sheep extends Phaser.Scene {
   public pickUpTaskReward = pickUpTaskReward.bind(this);
   public tryTask = tryTask.bind(this);
   public getTaskData = getTaskData.bind(this);
-  public cave = cave.bind(this);
   public takeDiamondSheep = takeDiamondSheep.bind(this);
   public checkAnimalTask = checkAnimalTask.bind(this);
   public showTasks = showTasks.bind(this);
@@ -261,7 +257,6 @@ class Sheep extends Phaser.Scene {
   public doneTutorCave2 = doneTutorCave2.bind(this);
   public skipTutorial = skipTutorial.bind(this);
   public autoprogress = autoprogress.bind(this);
-  public caveTimer = caveTimer.bind(this);
   public dailyAward = dailyAward.bind(this);
   public logout = logout.bind(this);
   public onlineStatus = onlineStatus.bind(this);
@@ -275,7 +270,6 @@ class Sheep extends Phaser.Scene {
   public findAd = findAd.bind(this);
   public watchAd = watchAd.bind(this);
   public adReward = adReward.bind(this);
-  public caveIconsAnimation = caveIconsAnimation.bind(this);
   public VKOnAdsReady = VKOnAdsReady.bind(this);
   public VKNoAds = VKNoAds.bind(this);
   public showDonate = showDonate.bind(this);
@@ -294,6 +288,7 @@ class Sheep extends Phaser.Scene {
   public nextDayTimer = nextDayTimer.bind(this);
   public intervalPorgressCollectorTime = intervalPorgressCollectorTime.bind(this);
   public autoporgressCollectorTime = autoporgressCollectorTime.bind(this);
+  public openEmailWindow = openEmailWindow.bind(this);
 
   public init(state: Istate): void {
 
@@ -306,7 +301,6 @@ class Sheep extends Phaser.Scene {
     this.arrow = null;
     this.collectorTimer = null;
     this.counterWithoutCollector = 0;
-    this.caveIconsTimer = 0;
     console.log('Sheep');
     
   }
@@ -359,36 +353,15 @@ class Sheep extends Phaser.Scene {
 
 
   public update(): void {
-
     // мозг овец
     this.sheepBrain();
-
     // полет шерсти в хранилище
     this.woolFly();
-
     // анимация полных хранилищ
     this.repositoryAnimation();
-
-    // анимация пещеры
-    this.cave();
-
     // перетаскивание овец
     this.dragSheep(true);
-
   }
-
-  public openEmailWindow(): void {
-
-    let modal: Imodal = {
-      type: 1,
-      sysType: 13
-    }
-    this.state.modal = modal;
-    this.scene.launch('Modal', this.state);
-
-  }
-
-
 }
 
 export default Sheep;

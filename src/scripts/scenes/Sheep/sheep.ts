@@ -177,7 +177,7 @@ function getSheep(
   wool: number = 0,
   diamond: number = 0,
   vector: number = 7,
-  load: boolean = false): void {
+  anim: boolean = true): void {
 
   let sheep = this.sheep.create(x, y, 'sheep' + type)
     .setInteractive()
@@ -218,8 +218,7 @@ function getSheep(
   sheep.woolSprite = this.add.sprite(x, y, 'sheep-' + side + '-' + sheep.type + '-' + stage);
   sheep.shaveStatus = this.add.sprite(x, y, 'shave-status').setVisible(false);
   sheep.anims.play('sheep-stay-' + side + sheep.type, true);
-
-  if (type === 0 && !load) Firework.create(this, { x, y }, 1);
+  if (anim) Firework.create(this, { x, y }, 1);
   
   this.click(sheep, (): void => {
 
@@ -334,7 +333,7 @@ function checkMerging(territory: any, sheep: any, position: string) {
         let id: string = 'local_' + randomString(18);
         let x: number = territory.x + 120;
         let y: number = territory.y + 240;
-        let sheep = this.getSheep(id, type, x, y, 0, 0);
+        let sheep = this.getSheep(id, type, x, y, 0, 0, 0, 7, false);
         let aimX: number = random(territory.x + 40, territory.x + 200);
         let aimY: number = random(territory.y + 280, territory.y + 440);
         this.aim(sheep, aimX, aimY);
@@ -871,7 +870,7 @@ function dragSheepMerging(sheep: any): void {
 
     const id: string = 'local_' + randomString(18);
 
-    this.getSheep(id, type, position.x, position.y, 0, 0);
+    this.getSheep(id, type, position.x, position.y, 0, 0, 0, 7, false);
 
     this.tryTask(2, type);
     this.tryTask(4, type);

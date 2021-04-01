@@ -56,15 +56,9 @@ function interval(): void {
     
     // бар собирателя
     if (this.state.userEvent.collector > 0) {
-
       this.state.userEvent.collector--;
-      this.game.scene.keys['EventBars'].collector.update();
-
-    } else if (this.game.scene.keys['EventBars'].collector.endAngle !== this.game.scene.keys['EventBars'].collector.startAngle) {
-
-      this.game.scene.keys['EventBars'].collector.update();
-
-    }
+    } 
+    
     if (this.state.userEvent.herdBoostAnimals.length > 0) {
       this.startCreateHerdBoostAnimal = true;
     }

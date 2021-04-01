@@ -57,7 +57,7 @@ function buyTerritory(): void {
             territory.data.values.btnText.destroy();
             territory.data.values.forest.destroy();
             territory.setTexture('event-grass');
-            Firework.create(this, { x: territory.x + 120, y: territory.y + 120 }, 1);
+            Firework.create(this, { x: territory.x + 120, y: territory.y + 120 }, 3);
             this.buildBorders();
       
           }, callbackScope: this, loop: false });
@@ -112,7 +112,7 @@ function buyTerritory(): void {
           territory.data.values.forest.destroy();
           territory.data.values.lock_image.destroy();
           territory.setTexture('event-grass');
-          Firework.create(this, { x: territory.x + 120, y: territory.y + 120 }, 1);
+          Firework.create(this, { x: territory.x + 120, y: territory.y + 120 }, 3);
           this.buildBorders();
       
         }, callbackScope: this, loop: false });

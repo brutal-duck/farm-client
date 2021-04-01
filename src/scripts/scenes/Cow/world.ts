@@ -1,4 +1,5 @@
 import Scrolling from '../../libs/Scrolling';
+import Cave from './../../components/Cave';
 
 function world(): void {
 
@@ -278,38 +279,9 @@ function world(): void {
     }
 
     if (data.type === 7) {
-
       let x: number = territory.x + 120;
       let y: number = territory.y + 240;
-      let texture: string = 'cave-wait';
-
-      if (this.state.userCow.part < 3) texture = 'cave-disable';
-
-      territory.cave = this.add.sprite(x, y, texture)
-        .setOrigin(0.5, 1)
-        .setDepth(territory.y);
-      
-      territory.timerBg = this.add.sprite(x, y - 200, 'cave-timer')
-        .setDepth(territory.y)
-        .setVisible(false);
-
-      territory.timer = this.add.text(x, y - 203, '3:00:00', {
-        font: '28px Shadow',
-        color: '#455409'
-      }).setOrigin(0.5, 0.5).setDepth(territory.y).setVisible(false);
-
-      territory.cave.pulseTimer = 0;
-
-      territory.cave.bgAd = this.add.sprite(x + 50, y - 90, 'bg-ad')
-        .setDepth(territory.y).setVisible(false);
-      territory.cave.free = this.add.text(x + 50, y - 90, 'free', {
-        font: '26px Bip',
-        color: '#FBE2D2'
-      }).setOrigin(0.5, 0.5).setDepth(territory.y).setAngle(11).setStroke('#793510', 4).setVisible(false);
-            
-      territory.cave.ad = this.add.sprite(x + 50, y - 90, 'ad-icon')
-        .setDepth(territory.y).setAngle(11).setVisible(false);
-
+      Cave.create(this, { x, y });
     }
 
     this.clickTerritory(territory, (): void => {
@@ -347,7 +319,7 @@ function world(): void {
 
   // подгружаем коров
   this.state.cow.map((data: Icow) => {
-    this.getCow(data._id, data.type, data.x, data.y, data.counter, data.milk, data.diamond, data.vector, true);
+    this.getCow(data._id, data.type, data.x, data.y, data.counter, data.milk, data.diamond, data.vector, false);
   });
   
   // подгружаем яйца

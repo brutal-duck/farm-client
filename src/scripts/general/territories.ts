@@ -1,5 +1,6 @@
 // территория на которой находится объект
 import Firework from './../components/Firework';
+import Stars from './../components/Stars';
 function currentTerritory(x: number, y: number): object {
 
   let block: number = Math.ceil((y - this.topIndent) / this.height);
@@ -187,11 +188,12 @@ function fairLevelUp(): void {
         this.tryTask(7, user.fair);
         this.tryTask(15, 0, nextFair.price_d);
 
-        this.time.addEvent({ delay: 500, callback: (): void => {
+        this.time.addEvent({ delay: 200, callback: (): void => {
 
           // переделать, взять ярмарку из массива группы
           this.state.territory.level?.setText(user.fair);
-          Firework.create(this, { x: this.state.territory.x + 120, y: this.state.territory.y + 120 }, 3);
+          Stars.create(this, { x: this.state.territory.x + 120, y: this.state.territory.y + 120 });
+          // Firework.create(this, { x: this.state.territory.x + 120, y: this.state.territory.y + 120 }, 3);
 
         }, callbackScope: this, loop: false });
 
@@ -334,7 +336,7 @@ function improveTerritory(): void {
           this.tryTask(17, improve);
 
           this.state.territory.repository.setTexture(this.state.farm.toLowerCase() + '-repository-' + improve + '-1');
-          Firework.create(this, { x: this.state.territory.x + 120, y: this.state.territory.y + 120 }, 1);
+          Firework.create(this, { x: this.state.territory.x + 120, y: this.state.territory.y + 120 }, 3);
 
         } else {
 
@@ -351,7 +353,7 @@ function improveTerritory(): void {
           this.time.addEvent({ delay: 500, callback: (): void => {
             
             this.changeSprite(this.state.territory);
-            Firework.create(this, { x: this.state.territory.x + 120, y: this.state.territory.y + 120 }, 1);
+            Firework.create(this, { x: this.state.territory.x + 120, y: this.state.territory.y + 120 }, 3);
 
           }, callbackScope: this, loop: false });
 
@@ -471,7 +473,7 @@ function exchangeTerritory(): void {
           this.state.territory.repository = this.add.image(x, y, farm + '-repository-1-1')
             .setDepth(this.state.territory.y + 50)
             .setOrigin(0.5, 1);
-          Firework.create(this, { x: this.state.territory.x + 120, y: this.state.territory.y + 120 }, 1);
+          Firework.create(this, { x: this.state.territory.x + 120, y: this.state.territory.y + 120 }, 3);
   
         } else {
     
@@ -534,7 +536,7 @@ function exchangeTerritory(): void {
         this.time.addEvent({ delay: 500, callback: (): void => {
 
           this.changeSprite(this.state.territory);
-          Firework.create(this, { x: this.state.territory.x + 120, y: this.state.territory.y + 120 }, 1);
+          Firework.create(this, { x: this.state.territory.x + 120, y: this.state.territory.y + 120 }, 3);
 
         }, callbackScope: this, loop: false });
 
@@ -778,7 +780,7 @@ function buyTerritory(): void {
 
         territory.forest.destroy();
         territory.setTexture(this.state.farm.toLowerCase() + '-bought');
-        Firework.create(this, { x: territory.x + 120, y: territory.y + 120 }, 1);
+        Firework.create(this, { x: territory.x + 120, y: territory.y + 120 }, 3);
         this.buildBorders();
 
       }, callbackScope: this, loop: false });

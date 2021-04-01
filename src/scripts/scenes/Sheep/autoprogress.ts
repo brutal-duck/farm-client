@@ -7,7 +7,6 @@ function autoprogress(load: boolean = false): void {
     this.state.userSheep.diamondAnimalTime = 0;
     this.state.userSheep.diamondAnimalAd = true;
   }
-  this.caveTimer();
   this.autoporgressCollectorTime();
   // время буста комбикорм
   let wasFeedBoost: number = 0;

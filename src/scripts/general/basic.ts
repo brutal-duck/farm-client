@@ -4,6 +4,7 @@ import bridge from '@vkontakte/vk-bridge';
 import * as amplitude from 'amplitude-js';
 import Hint from './../components/Hint';
 import Firework from './../components/Firework';
+import Stars from './../components/Stars';
 
 // рандомное число
 function random(min: number, max: number): number {
@@ -505,11 +506,12 @@ function donePart(): void {
     chapter: user.part - 1
   });
 
-  this.time.addEvent({ delay: 500, callback: (): void => {
+  this.time.addEvent({ delay: 200, callback: (): void => {
 
     this.house.setTexture(this.state.farm.toLowerCase() + '-house-' + user.part);
     let house: Phaser.GameObjects.Sprite = this.territories.children.entries.find((data: any) => data.type === 6);
-    Firework.create(this, { x: house.x + 120, y: house.y + 120 }, 3);
+    Stars.create(this, { x: house.x + 120, y: house.y + 120 });
+    // Firework.create(this, { x: house.x + 120, y: house.y + 120 }, 3);
     this.checkDoneTasks();
 
   }, callbackScope: this, loop: false });
@@ -556,53 +558,6 @@ function pickUpTaskReward(id: number): void {
   }
 
 }
-
-
-// таймер кристаллической пещеры
-function caveTimer(): void {
-
-  let user: IuserSheep | IuserChicken;
-
-  if (this.state.farm === 'Sheep') user = this.state.userSheep;
-  else if (this.state.farm === 'Chicken') user = this.state.userChicken;
-  else if (this.state.farm === 'Cow') user = this.state.userCow;
-
-  if (user.diamondAnimalTime > 0) {
-
-    user.diamondAnimalTime--;
-
-    let caveTerritory = this.territories.children.entries.find((data: any) => data.type === 7);
-
-    if (!caveTerritory.timerBg.visible) {
-      caveTerritory.timerBg.setVisible(true);
-    }
-
-    if (!caveTerritory.timer.visible) {
-      caveTerritory.timer.setVisible(true);
-    }
-
-    if (caveTerritory.cave.texture.key !== 'cave-wait') {
-      caveTerritory.cave.setTexture('cave-wait');
-    }
-
-    let time: string = timer(user.diamondAnimalTime);
-
-    caveTerritory.timer.setText(time);
-
-    if (this.scene.isActive('Modal') && this.state.modal?.type === 1 && this.state.modal?.sysType === 9) {
-      this.game.scene.keys['Modal'].caveTimer.setText(this.state.lang.summonTime + time);
-    }
-
-    if (user.diamondAnimalTime === 0) {
-      user.diamondAnimalAd = true;
-      caveTerritory.timer.setVisible(false);
-      caveTerritory.timerBg.setVisible(false);
-    }
-
-  }
-
-}
-
 
 // проверка подключения к интернету
 function onlineStatus(): void {
@@ -1388,16 +1343,19 @@ function intervalPorgressCollectorTime(): void {
   if (this.state.farm === 'Sheep') {
     this.state.progress.sheep.collector = this.state.userSheep.collector;
     if (this.state.progress.chicken.collector > 0) this.state.progress.chicken.collector--;
-
+    if (this.state.progress.cow.collector > 0) this.state.progress.cow.collector--;
   } else if (this.state.farm === 'Chicken') {
-
     this.state.progress.chicken.collector = this.state.userChicken.collector;
     if (this.state.progress.sheep.collector > 0) this.state.progress.sheep.collector--;
-    
+    if (this.state.progress.cow.collector > 0) this.state.progress.cow.collector--;
+  } else if (this.state.farm === 'Cow') {
+    this.state.progress.cow.collector = this.state.userCow.collector;
+    if (this.state.progress.sheep.collector > 0) this.state.progress.sheep.collector--;
+    if (this.state.progress.chicken.collector > 0) this.state.progress.chicken.collector--;
   } else if (this.state.farm === 'Event') {
-    
     if (this.state.progress.chicken.collector > 0) this.state.progress.chicken.collector--;
     if (this.state.progress.sheep.collector > 0) this.state.progress.sheep.collector--;
+    if (this.state.progress.cow.collector > 0) this.state.progress.cow.collector--;
   }
 }
 
@@ -1412,6 +1370,12 @@ function autoporgressCollectorTime(): void {
     this.state.progress.chicken.collector -= this.state.progress.chicken.offlineTime;
   } else {
     this.state.progress.chicken.collector = 0;
+  }
+
+  if (this.state.progress.cow.collector >= this.state.progress.cow.offlineTime) {
+    this.state.progress.cow.collector -= this.state.progress.cow.offlineTime;
+  } else {
+    this.state.progress.cow.collector = 0;
   }
 }
 
@@ -1432,7 +1396,6 @@ export {
   exchange,
   donePart,
   pickUpTaskReward,
-  caveTimer,
   onlineStatus,
   socialButtons,
   checkStorage,

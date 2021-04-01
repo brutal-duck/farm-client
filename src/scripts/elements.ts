@@ -1,5 +1,3 @@
-import { shortTime } from './general/basic';
-
 // бабл
 function createSpeechBubble(text: string, type: number = 1): void {
   
@@ -65,7 +63,7 @@ function createSpeechBubble(text: string, type: number = 1): void {
     duration: 1000,
     alpha: 0,
     ease: 'Power1',
-    onComplete: () => {
+    onComplete: (): void => {
       bubble?.destroy();
       bubbleText?.destroy();
       bubbleFarmer?.destroy();
@@ -191,164 +189,6 @@ function repositoryBtn(
   };
 
 }
-
-
-// круговой бар собирателя
-class Collector {
-
-  public x: number;
-  public y: number;
-  public radius: number;
-  public startAngle: number;
-  public endAngle: number;
-  public color: number;
-  public weight: number;
-  public collector: Phaser.GameObjects.Graphics;
-  public scene: any;
-  public percent: number;
-  public timeCollectorText: Phaser.GameObjects.Text;
-  public bubble: Phaser.GameObjects.Graphics;
-  public pulseTimer: number = 0;
-  public farmData: any;
-
-  constructor(
-    scene: any,
-    x: number,
-    y: number,
-    radius: number
-  ) {
-    this.scene = scene;
-    this.x = x || 400;
-    this.y = y || 300;
-    this.radius = radius || 40;
-    this.startAngle = -1.66;
-    this.endAngle = -1.66;
-    this.color = 0x89DE3D;
-    this.weight = 10;
-    this.init();
-  }
-
-  public init(): void {
-    
-    if (this.scene.state.farm === 'Event') {
-      this.weight = 15;
-      this.color = 0x750296;
-    }
-    this.percent = 6.3 / 100;
-    this.collector = this.scene.add.graphics();
-    this.collector.lineStyle(this.weight, this.color, 1);
-    this.collector.beginPath();
-    this.collector.arc(this.x, this.y, this.radius, this.startAngle, this.endAngle);
-    this.collector.strokePath();
-
-    let time: string; 
-
-    if (this.scene.state.farm === 'Chicken') {
-      time = shortTime(this.scene.state.userChicken.collector, this.scene.state.lang);
-    } else if (this.scene.state.farm === 'Sheep') {
-      time = shortTime(this.scene.state.userSheep.collector, this.scene.state.lang);
-    } else if (this.scene.state.farm === 'Event') {
-      time = shortTime(this.scene.state.userEvent.collector, this.scene.state.lang);
-    } else if (this.scene.state.farm === 'Cow') {
-      time = shortTime(this.scene.state.userCow.collector, this.scene.state.lang);
-    }
-
-    this.timeCollectorText = this.scene.add.text(230, this.scene.height - 43, time, {
-      font: '28px Bip',
-      color: '#925C28',
-      align: 'center'
-    }).setDepth(this.scene.height).setOrigin(0.5, 0.5);
-
-    let bounds = this.timeCollectorText.getBounds();
-    this.bubble = this.scene.add.graphics({ x: bounds.left - 15, y: bounds.top });
-    this.bubble.fillStyle(0xffffff, 1);
-    this.bubble.strokeRoundedRect(0, 0, bounds.width + 30, bounds.height, 8);
-    this.bubble.fillRoundedRect(0, 0, bounds.width + 30, bounds.height, 8);
-
-    if (this.scene.state.farm === 'Sheep') {
-      this.farmData = this.scene.state.userSheep;
-    } else if (this.scene.state.farm === 'Chicken') {
-      this.farmData = this.scene.state.userChicken;
-    } else if (this.scene.state.farm === 'Event') {
-      this.farmData = this.scene.state.userEvent;
-    } else if (this.scene.state.farm === 'Cow') {
-      this.farmData = this.scene.state.userCow;
-    } 
-
-  }
-
-  public update(): void {
-
-    let percent: number = 0;
-    
-    if (this.farmData.collector > 0 && this.farmData.collectorTakenTime > 0) {
-      percent = Math.round(this.farmData.collector / (this.farmData.collectorTakenTime / 100));
-    }
-
-    this.endAngle = percent * this.percent + this.startAngle;
-
-    this.collector.clear();
-    this.collector.lineStyle(this.weight, this.color, 1);
-    this.collector.beginPath();
-    this.collector.arc(this.x, this.y, this.radius, this.startAngle, this.endAngle);
-    this.collector.strokePath();
-    
-    let time: string = shortTime(this.farmData.collector, this.scene.state.lang);
-    this.timeCollectorText.setText(time);
-    this.timeCollectorText.setColor('#925C28');
-
-    if (this.bubble.visible) {
-
-      this.bubble.destroy();
-      let bounds = this.timeCollectorText.getBounds();
-      this.bubble = this.scene.add.graphics({ x: bounds.left - 15, y: bounds.top });
-      this.bubble.fillStyle(0xffffff, 1);
-      this.bubble.fillRoundedRect(0, 0, bounds.width + 30, bounds.height, 8);
-
-    }
-
-    if (this.scene.scene.isActive('Shop') && this.scene.state.modal?.shopType === 4) {
-
-      if (this.farmData.collector === 0) {
-
-        this.scene.scene.stop('Shop');
-        this.scene.scene.launch('Shop', this.scene.state);
-
-      } else if (this.scene.game.scene.keys['Shop'].collectorTimer?.active) {
-
-        this.scene.game.scene.keys['Shop'].collectorTimer.setText(this.scene.state.lang.still + ' ' + time);
-        
-      }
-
-    }
-
-  }
-
-  public setColor(status: boolean): void {
-
-    let textColor: string;
-    let bubbleColor: number;
-
-    if (status) {
-      textColor = '#FFFFFF';
-      bubbleColor = 0xC70000;
-    } else {
-      textColor = '#C70000';
-      bubbleColor = 0xFFFFFF;
-    }
-    
-    this.timeCollectorText.setColor(textColor);
-    this.bubble.destroy();
-    let bounds = this.timeCollectorText.getBounds();
-    this.bubble = this.scene.add.graphics({ x: bounds.left - 15, y: bounds.top });
-    this.bubble.fillStyle(bubbleColor, 1);
-    this.bubble.fillRoundedRect(0, 0, bounds.width + 30, bounds.height, 8);
-
-  }
-
-}
-
-
 // кнопка в магазине
 function shopButton(x: number, y: number, text: string, icon: any = false): any {
   
@@ -514,7 +354,6 @@ export {
   createSpeechBubble,
   bigButton,
   repositoryBtn,
-  Collector,
   shopButton,
   boostButton,
   buildMenu,
