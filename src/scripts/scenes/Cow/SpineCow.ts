@@ -1,6 +1,6 @@
 export default class SpineCow {
-  spine: any
-  scene: any
+  public spine: any
+  private scene: any
 
   constructor(
     scene: Phaser.Scene,
@@ -16,17 +16,20 @@ export default class SpineCow {
     // @ts-ignore
     this.spine = scene.add.spine(x, y, spine, animation, play)
     this.spine.setDepth(1000).setScale(1)
-    this.spine.customParams = {
-      animation
-    }
+    this.spine.customParams = { animation }
 
     this.scene.physics.add.existing(this.spine);  // Создаем физическое тело для Spine
     
     this.spine.play(this.spine.customParams.animation, true)
-    this.spine.setMix('move', 'stay', 0.2)
-    this.spine.setMix('stay', 'move', 0.2)
+    this.spine.setMix('move', 'stay', 0.3)
+    this.spine.setMix('move', 'eat', 0.3)
+    this.spine.setMix('stay', 'move', 0.3)
+    this.spine.setMix('stay', 'eat', 0.3)
+    this.spine.setMix('eat', 'stay', 0.3)
+    this.spine.setMix('eat', 'move', 0.3)
 
     // this.setSkin('blue')
+    
   }
 
   getAttachments() {
@@ -57,14 +60,14 @@ export default class SpineCow {
 
     let timeline: Phaser.Tweens.Timeline = this.scene.tweens.createTimeline({
       loop: -1,
-      loopDelay: 2000,
+      loopDelay: 2500,
     });
 
     timeline.add({
       targets: this.spine,
       x: '+= 240',
       ease: 'Linear',
-      delay: 1500,
+      delay: 2500,
       duration: 3000,
       onUpdate: (): void => { this.setAnimation('move', true) },
       onComplete: (): void => { this.setAnimation('stay', true) },
@@ -74,16 +77,26 @@ export default class SpineCow {
       targets: this.spine,
       scaleX: {from: 1, to: -1},
       ease: 'Linear',
-      delay: 1500,
+      delay: 2500,
       duration: 0,
       onUpdate: (): void => { this.setAttachment('tag', 'tag-flip') }
     })
 
     timeline.add({
       targets: this.spine,
+      scaleX: {from: -1, to: -1},
+      ease: 'Linear',
+      delay: 100,
+      duration: 2000,
+      onUpdate: (): void => { this.setAnimation('eat', false) },
+      onComplete: (): void => { this.setAnimation('stay', true) },
+    })
+
+    timeline.add({
+      targets: this.spine,
       x: '-= 240',
       ease: 'Linear',
-      delay: 1500,
+      delay: 3500,
       duration: 3000,
       onUpdate: (): void => { this.setAnimation('move', true) },
       onComplete: (): void => { this.setAnimation('stay', true) }
@@ -93,7 +106,7 @@ export default class SpineCow {
       targets: this.spine,
       scaleX: {from: -1, to: 1},
       ease: 'Linear',
-      delay: 1500,
+      delay: 2500,
       duration: 0,
       onUpdate: (): void => { this.setAttachment('tag', 'tag') }
     })

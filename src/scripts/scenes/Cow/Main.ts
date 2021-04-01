@@ -259,9 +259,9 @@ class Cow extends Phaser.Scene {
 
     // @ts-ignore
     let cow: SpineCow = new SpineCow(this, this.cameras.main.centerX, this.cameras.main.centerY - 40)
+    cow.move()
     // console.log(cow.spine.getCurrentAnimation().name);
 
-    cow.move()
     
     
 
