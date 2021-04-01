@@ -12,7 +12,7 @@ import {
 import { updateNativeShop } from './../../general/boosts';
 import {
   buildMenu,
-  createSpeechBubble
+  
 } from '../../elements';
 import {
   сurrencyAnimation,
@@ -90,7 +90,6 @@ class ChickenBars extends Phaser.Scene {
   public updateNativeShop = updateNativeShop.bind(this);
   public shortTime = shortTime.bind(this);
   public getCurrency = getCurrency.bind(this);
-  public createSpeechBubble = createSpeechBubble.bind(this);
   public clickTaskBoard = clickTaskBoard.bind(this);
 
 

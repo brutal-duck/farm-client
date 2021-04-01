@@ -1,4 +1,5 @@
 import { randomString } from '../../general/basic';
+import SpeechBubble from './../../components/SpeechBuble';
 
 // расчет баланса фермы
 function balance(): Ibalance {
@@ -195,7 +196,7 @@ function takeDiamondCow(): void {
       this.scene.launch('Modal', this.state);
 
     } else {
-      this.createSpeechBubble(this.state.lang.cowCaveMessage, 2);
+      SpeechBubble.create(this, this.state.lang.cowCaveMessage, 2);
     }
 
   }

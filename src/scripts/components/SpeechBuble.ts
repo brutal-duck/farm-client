@@ -25,14 +25,14 @@ const BASIC_SETTINGS: {
 }
 
 /**
-  * Подсказывающий бабл 
-  * Конструктор принимает:
-  ** Объект сцены, текст и номер типа куда будет направлен указатель.
+  * Подсказывающий бабл  
+  * Конструктор принимает:  
+  * Объект сцены, текст и номер типа куда будет направлен указатель.
   * 
-  *   Типы:
-  *1	Указывает на ярмарку;
-  *2	Указывает на пещеру; 
-  *3	Вызывается в барах, в верхнем правом углу, под монетами. 
+  * Типы: 
+  *1.	Указывает на ярмарку;  
+  *2.	Указывает на пещеру;   
+  *3.	Вызывается в барах, в верхнем правом углу, под монетами.   
 */
 export default class SpeechBubble {
   private text: string;
@@ -91,6 +91,7 @@ export default class SpeechBubble {
       this.triangleCoords.point3Y = bubleTextHeight / 2 + 25;
       this.bubbleFarmer.setPosition(this.bubble.x + this.width + 20, this.bubble.y + (bubleTextHeight / 2)).setVisible(true);
     } 
+    this.bubble.setPosition(this.x, this.y);
     this.bubbleText.setPosition(this.x + 20, this.bubble.y + 20);
   }
 

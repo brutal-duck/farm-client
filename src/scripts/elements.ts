@@ -1,79 +1,3 @@
-// бабл
-function createSpeechBubble(text: string, type: number = 1): void {
-  
-  let x = 120;
-  let y = 360;
-  let width = 340;
-
-  if (type === 2) {
-    y = 220;
-    x = 260;
-  } 
-
-  if (type === 3) {
-    y = 165;
-    x = 205;
-  } 
-
-  let bubble: Phaser.GameObjects.Graphics = this.add.graphics({ x: x, y: y });
-
-  bubble.fillStyle(0xFFFFFF, 1);
-
-  let bubbleText: Phaser.GameObjects.Text = this.add.text(x + 20, y, text, {
-    font: '24px Bip',
-    color: '#823431',
-    align: 'left',
-    wordWrap: { width: width }
-  }).setDepth(y + 240);
-
-  let bubleTextHeight = bubbleText.getBounds().height + 40;
-  bubbleText.setPosition(x + 20, bubble.y + 20);
-  bubble.fillRoundedRect(0, 0, width, bubleTextHeight, 16);
-
-  let point1X = width;
-  let point1Y = 40;
-  let point2X = width;
-  let point2Y = 10;
-  let point3X = width + 40;
-  let point3Y = 20;
-
-  if (type === 2) {
-    point1X = 0;
-    point2X = 0;
-    point3X = -40;
-  }
-  if (type === 3) {
-    point1Y = bubleTextHeight / 2 - 15;
-    point2Y = bubleTextHeight / 2 + 15;
-    point3Y = bubleTextHeight / 2 + 25;
-  }
-
-  bubble.fillTriangle(point1X, point1Y, point2X, point2Y, point3X, point3Y);
-  bubble.setDepth(y + 240);
-
-  let bubbleFarmer: Phaser.GameObjects.Image;
-  let bubbleBg: Phaser.GameObjects.Graphics = this.add.graphics();
-  if (type === 3 ) {
-    bubbleFarmer = this.add.image(bubble.x + width + 20, bubble.y + (bubleTextHeight / 2), 'farmer').setOrigin(0, 0.5).setScale(0.5);
-    bubbleBg.fillStyle(0x000000, 0.5).fillRoundedRect(bubble.x - 20, bubble.y - 20, width + bubbleFarmer.displayWidth + 60, bubleTextHeight + 40, 16)
-  }
-  let anims: Phaser.Tweens.Tween = this.tweens.add({
-    targets: [bubble, bubbleText, bubbleFarmer, bubbleBg],
-    delay: 3000,
-    duration: 1000,
-    alpha: 0,
-    ease: 'Power1',
-    onComplete: (): void => {
-      bubble?.destroy();
-      bubbleText?.destroy();
-      bubbleFarmer?.destroy();
-      bubbleBg?.destroy();
-      anims.remove();
-    },
-  });
-
-}
-
 // большая кнопка
 function bigButton(
   color: string,
@@ -351,7 +275,6 @@ function buildMenu(): void {
 }
 
 export {
-  createSpeechBubble,
   bigButton,
   repositoryBtn,
   shopButton,

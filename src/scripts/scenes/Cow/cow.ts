@@ -3,6 +3,7 @@ import { cow } from '../Modal/cow';
 import Firework from './../../components/Firework';
 import MergingCloud from './../../components/MergingCloud';
 import Milk from './../../components/Milk';
+import SpeechBubble from './../../components/SpeechBuble';
 
 // телепортация коров на свободные территории
 function teleportation(cow: any): void {
@@ -340,8 +341,7 @@ function checkMerging(territory: any, cow: any, position: string) {
     } else {
 
       if (cow1 && cow2) {
-
-        this.createSpeechBubble(this.state.lang.mergingMessageBreed);
+        SpeechBubble.create(this, this.state.lang.mergingMessageBreed, 1);
         this.cancelMerging(territory, cow1, cow2);
 
       } else {

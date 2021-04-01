@@ -2,6 +2,7 @@ import { random, randomString } from '../../general/basic';
 import Firework from './../../components/Firework';
 import MergingCloud from './../../components/MergingCloud';
 import Egg from './../../components/Egg';
+import SpeechBubble from './../../components/SpeechBuble';
 
 // телепортация куриц на свободные территории
 function teleportation(chicken: any): void {
@@ -307,8 +308,7 @@ function checkMerging(territory: any, chicken: any, position: string) {
     } else {
 
       if (chicken1 && chicken2) {
-
-        this.createSpeechBubble(this.state.lang.mergingMessageBreed);
+        SpeechBubble.create(this, this.state.lang.mergingMessageBreed, 2);
         this.cancelMerging(territory, chicken1, chicken2);
 
       } else {

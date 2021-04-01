@@ -82,7 +82,6 @@ import {
   dragCowMerging
 } from './cow';
 import { installTerritory } from './territories';
-import { createSpeechBubble } from '../../elements';
 import {
   balance,
   cowPrice,
@@ -170,7 +169,6 @@ class Cow extends Phaser.Scene {
   public sellMilk = sellMilk.bind(this);
   public confirmExpelCow = confirmExpelCow.bind(this);
   public expelCow = expelCow.bind(this);
-  public createSpeechBubble = createSpeechBubble.bind(this);
   public showBank = showBank.bind(this);
   public freeCollector = freeCollector.bind(this);
   public buyCollector = buyCollector.bind(this);

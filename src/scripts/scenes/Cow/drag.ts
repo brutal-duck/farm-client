@@ -1,4 +1,5 @@
 import { random } from "../../general/basic";
+import SpeechBubble from './../../components/SpeechBuble';
 
 function drag(): void {
 
@@ -38,20 +39,14 @@ function drag(): void {
       if (territory.type === 4) {
 
         if (cow.type === 0) {
-
-          this.createSpeechBubble(this.state.lang.mergingDiamondCow);
+          SpeechBubble.create(this, this.state.lang.mergingDiamondCow, 1);
           this.cancelMerging(territory, cow, false);
-
         } else if (cow.type === this.state.cowSettings.cowSettings.length) {
-          
-          this.createSpeechBubble(this.state.lang.mergingMessageBreedMax);
+          SpeechBubble.create(this, this.state.lang.mergingMessageBreedMax, 1);
           this.cancelMerging(territory, cow, false);
-
         } else if (this.state.userCow.fair < cow.type) {
-
-          this.createSpeechBubble(this.state.lang.needImproveFair);
+          SpeechBubble.create(this, this.state.lang.needImproveFair, 1);
           this.cancelMerging(territory, cow, false);
-
         } else {
 
           if (zone.type === 'top') {

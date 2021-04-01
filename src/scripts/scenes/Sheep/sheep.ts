@@ -3,6 +3,7 @@ import Arrow from './../../components/Arrow';
 import Firework from './../../components/Firework';
 import MergingCloud from './../../components/MergingCloud';
 import Wool from './../../components/Wool';
+import SpeechBubble from './../../components/SpeechBuble';
 
 
 // телепортация овец на свободные территории
@@ -353,10 +354,8 @@ function checkMerging(territory: any, sheep: any, position: string) {
     } else {
 
       if (sheep1 && sheep2) {
-
-        this.createSpeechBubble(this.state.lang.mergingMessageBreed);
+        SpeechBubble.create(this, this.state.lang.mergingMessageBreed, 1);
         this.cancelMerging(territory, sheep1, sheep2);
-
       } else {
         
         // костыль
