@@ -112,6 +112,8 @@ import {
 } from '../../general/ads';
 import setCollector from './collector';
 import { showEventTutorial, doneEventTutor_0 } from '../Event/tutorial';
+import SpineCow from './SpineCow'
+
 
 class Cow extends Phaser.Scene {
   constructor() {
@@ -254,6 +256,33 @@ class Cow extends Phaser.Scene {
 
 
   public create(): void {
+
+    // @ts-ignore
+    let cow: SpineCow = new SpineCow(this, this.cameras.main.centerX, this.cameras.main.centerY - 40)
+    // console.log(cow.spine.getCurrentAnimation().name);
+
+    cow.move()
+    
+    
+
+    // this.scene.scene.time.addEvent({
+    //   delay: 3000,
+    //   callback: (): void => {
+  
+    //     // this.player.setSkin('green')
+    //     // cow.setAttachment('tag', 'tag-flip')
+    //     // cow.spine.setScale(-1, 1)
+
+    //     // cow.setAnimation('stay', true)
+    //     if (cow.spine.getCurrentAnimation().name === 'stay') cow.setAnimation('move', true)
+    //     else if (cow.spine.getCurrentAnimation().name === 'move') cow.setAnimation('stay', true)
+  
+    //   },
+    //   loop: true
+    // })
+
+    console.log(cow);
+
     
     // анимации
     this.animations();

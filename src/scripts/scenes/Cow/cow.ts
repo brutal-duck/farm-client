@@ -150,59 +150,35 @@ function aim(cow: any, x: number, y: number): void {
 
 }
 
-// Спайновая овца
+// Спайновая корова
 function spineSheep(): void {
 
-  let spineSheep = this.add['spine'](
-    this.cameras.main.centerX,
-    this.cameras.main.centerY - 100,
-    'sheep',
-    'drag',
-    true
-  ).setDepth(5000).setScale(-0.3, 0.3)
+  // @ts-ignore
+  // let cow = new SpineCow(, this.cameras.main.centerX, this.cameras.main.centerY - 100)
 
-  this.physics.add.existing(spineSheep)
+  // spineSheep.setMix('drag', 'stay_left_1', 0.3)
+  // spineSheep.setMix('stay_left_1', 'move_left_1', 0.3)
+  // spineSheep.setMix('move_left_1', 'move_left_2', 0.3)
+  // spineSheep.setMix('move_left_2', 'stay_left_2', 0.3)
+  // spineSheep.setMix('stay_left_2', 'stay_left_3', 0.3)
+  // spineSheep.setMix('stay_left_3', 'move_left_3', 0.3)
+  // spineSheep.setMix('move_left_1', 'stay_left_2', 0.3)
+  // spineSheep.setMix('move_left_2', 'stay_left_3', 0.3)
+  // spineSheep.setMix('move_left_3', 'drag', 0.3)
 
-  spineSheep.setMix('drag', 'stay_left_1', 0.3)
-  spineSheep.setMix('stay_left_1', 'move_left_1', 0.3)
-  spineSheep.setMix('move_left_1', 'move_left_2', 0.3)
-  spineSheep.setMix('move_left_2', 'stay_left_2', 0.3)
-  spineSheep.setMix('stay_left_2', 'stay_left_3', 0.3)
-  spineSheep.setMix('stay_left_3', 'move_left_3', 0.3)
-  spineSheep.setMix('move_left_1', 'stay_left_2', 0.3)
-  spineSheep.setMix('move_left_2', 'stay_left_3', 0.3)
-  spineSheep.setMix('move_left_3', 'drag', 0.3)
-
-
-
-  console.log(spineSheep);
-
-  // let cow = this.add['spine'](
-  //   this.cameras.main.centerX,
-  //   this.cameras.main.centerY - 100,
-  //   'boy',
-  //   'idle',
-  //   true
-  // ).setDepth(5000)
-
-  // this.physics.add.existing(spineSheep)
-
-  // spineSheep.setAnimation(0, "move-right", true)
-  // spineSheep.setMix('move-right', 'move-left', 0.3)
-
-  // let o = JSON.parse(JSON.stringify(cow.skeletonData.skins[0]))
-  // cow.skeletonData.skins.push(o)
-  // console.log(cow);
-  
   // this.scene.scene.time.addEvent({
   //   delay: 3000,
-  //   callback: () => {
-  //     cow.setSkinByName('right')
-  //     cow.setAnimation(0, "move-right", true)
+  //   callback: (): void => {
+
+  //     // this.player.setSkin('green')
+  //     this.player.setAttachment('tag', 'tag-flip')
+  //     this.player.spine.setScale(-1, 1)
+
   //   },
-  //   loop: false
+  //   loop: true
   // })
 
+  // console.log(cow);
 
 }
 
