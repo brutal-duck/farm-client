@@ -102,7 +102,7 @@ class Map extends Phaser.Scene {
     let sheepPosition: Iposition = { x: 155, y: 145 };
     let chickenPosition: Iposition = { x: 500, y: 270 };
     let eventPosition: Iposition = { x: 580, y: 650 };
-    let cowPosition: Iposition = { x: 30, y: 650 };
+    let cowPosition: Iposition = { x: 100, y: 650 };
 
     if (this.state.farm === 'Sheep') {
       this.pointPosition = sheepPosition;
@@ -150,6 +150,9 @@ class Map extends Phaser.Scene {
         this.scene.launch('Modal', this.state);
       })
     }
+
+    this.cowFarm()
+
   }
 
 
@@ -293,6 +296,33 @@ class Map extends Phaser.Scene {
       }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
 
     }
+
+  }
+
+  public cowFarm(): void {
+
+    this.add.text(160, 540, 'COW\nFARM', {font: '50px Shadow', color: 'white', align: 'center'}).setStroke('black', 6)
+
+    let zone: Phaser.GameObjects.Zone = this.add.zone(180, 600, 280, 140).setDropZone(undefined, () => {});
+    
+    let graphics: Phaser.GameObjects.Graphics = this.add.graphics();
+    graphics.lineStyle(2, 0xFFFF00);
+    graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+  
+    this.click(zone, (): void => {
+
+      if (this.state.farm !== 'Cow') {
+
+        this.scene.stop();
+        this.scene.stop('MapBars');
+        this.scene.stop(this.state.farm);
+        this.scene.stop(this.state.farm + 'Bars');
+        this.scene.start('CowPreload', this.state)
+        localStorage.farm = 'Cow'
+
+      }
+
+    });
 
   }
 

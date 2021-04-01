@@ -3,7 +3,8 @@
     "module": "commonjs",
     "lib": [ "dom", "es5", "es6", "es2015", "es2017", "es2015.promise" ],
     "target": "es5",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    // "esModuleInterop": true
   },
   "exclude": ["node_modules", "dist"]
 }

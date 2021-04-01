@@ -1,7 +1,7 @@
 import './interfaces';
 import '../css/style.css';
 import * as Phaser from 'phaser';
-import './libs/SpinePlugin.min.js';
+import './libs/SpinePlugin.js';
 
 import Boot from './scenes/Boot';
 import Preload from './scenes/Preload';
@@ -96,11 +96,7 @@ window.onload = (): void => {
       ],
       loader: { maxParallelDownloads: 128 },
       plugins: {
-        scene: [{
-          key: 'SpinePlugin',
-          plugin: window['SpinePlugin'],
-          mapping: 'spine'
-        }]
+        scene: [{ key: 'SpinePlugin', plugin: window["SpinePlugin"], start: true, sceneKey: 'spine' }]
       },
     }
     

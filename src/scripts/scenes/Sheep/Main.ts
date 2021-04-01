@@ -323,26 +323,23 @@ class Sheep extends Phaser.Scene {
     // let cursors = this.input.keyboard.createCursorKeys();
     // cursors.space.on('down', (): void => {
 
-    //   // this.state.daily = 8
-    //   // this.state.user.takenReward = false;
-    //   // this.state.dailyAwards = [false, false, false, false, false, false, false, false]
+      // this.state.daily = 8
+      // this.state.user.takenReward = false;
+      // this.state.dailyAwards = [false, false, false, false, false, false, false, false]
 
-    //   // localStorage.farm = 'Cow'
-    //   // this.scene.stop();
-    //   // this.scene.stop('SheepBars')
-    //   // this.scene.start('CowPreload', this.state)
-    //   // let modal: Imodal = {
-    //   //   type: 12,
-    //   // }
-    //   // this.state.modal = modal;
-    //   // this.scene.launch('Modal', this.state);
-    //   // this.state.userSheep.feedBoostTimer = 10
-    //   // this.state.user.diamonds = 10000000;
-    //   // let tasks = this.partTasks();
-    //   // for (let i in tasks) {
-    //   //   tasks[i].done = 1;
-    //   //   tasks[i].got_awarded = 1;
-    //   // }
+    
+      // let modal: Imodal = {
+      //   type: 12,
+      // }
+      // this.state.modal = modal;
+      // this.scene.launch('Modal', this.state);
+      // this.state.userSheep.feedBoostTimer = 10
+      // this.state.user.diamonds = 10000000;
+      // let tasks = this.partTasks();
+      // for (let i in tasks) {
+      //   tasks[i].done = 1;
+      //   tasks[i].got_awarded = 1;
+      // }
     // });
 
   }

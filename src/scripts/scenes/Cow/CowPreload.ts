@@ -493,8 +493,10 @@ class CowPreload extends Phaser.Scene {
     if (!this.isSpineReady) {
 
       this.load.setPath('./src/assets/images/spine/');
-      this.load['spine']('sheep', 'sheepL.json', [ 'sheepL.atlas' ], true)
+      // @ts-ignore
+      this.load.spine('cow', 'cow.json', 'cow.atlas', true)
       this.isSpineReady = true;
+      
     }
     
   }
