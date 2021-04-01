@@ -80,7 +80,6 @@ import {
   buySheep,
   collectWool,
   sellWool,
-  woolFly,
   confirmExpelSheep,
   expelSheep,
   woolSprite,
@@ -213,7 +212,6 @@ class Sheep extends Phaser.Scene {
   public buySheep = buySheep.bind(this);
   public collectWool = collectWool.bind(this);
   public sellWool = sellWool.bind(this);
-  public woolFly = woolFly.bind(this);
   public confirmExpelSheep = confirmExpelSheep.bind(this);
   public expelSheep = expelSheep.bind(this);
   public woolSprite = woolSprite.bind(this);
@@ -355,8 +353,6 @@ class Sheep extends Phaser.Scene {
   public update(): void {
     // мозг овец
     this.sheepBrain();
-    // полет шерсти в хранилище
-    this.woolFly();
     // анимация полных хранилищ
     this.repositoryAnimation();
     // перетаскивание овец

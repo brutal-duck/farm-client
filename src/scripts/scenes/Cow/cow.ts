@@ -628,59 +628,6 @@ function sellMilk(): void {
 
 }
 
-
-// полет молока !!!
-function milksFly(): void {
-
-  // for (let i in this.milk.children.entries) {
-
-  //   let milk = this.milk.children.entries[i];
-
-  //   if (milk.body.speed > 0) {
-
-  //     milk.setDepth(milk.y + 100);
-  //     let distance = Phaser.Math.Distance.Between(milk.x, milk.y, milk.target.x, milk.target.y) * 3;
-
-  //     if (milk.x < 0 ||
-  //       milk.x > 720 ||
-  //       milk.y < 0 ||
-  //       (distance > milk.distance && milk.distance > 0) ||
-  //       distance < 100) {
-        
-  //       milk.destroy();
-        
-  //     } else milk.distance = distance;
-
-  //   }
-
-  // }
-
-  for (let i in this.milk.children.entries) {
-
-    let milk = this.milk.children.entries[i];
-
-    if (milk.body.speed > 0) {
-
-      milk.setDepth(milk.y + 100);
-      let distance = Phaser.Math.Distance.Between(milk.x, milk.y, milk.target.x, milk.target.y) * 3;
-
-      if (milk.x < 0 ||
-        milk.x > 720 ||
-        milk.y < 0 ||
-        (distance > milk.distance && milk.distance > 0) ||
-        distance < 100) {
-        
-        milk.destroy();
-        
-      } else milk.distance = distance;
-
-    }
-
-  }
-  
-}
-
-
 // подтверждение продажи коровы
 function confirmExpelCow(): void {
 
@@ -763,7 +710,6 @@ export {
   buyCow,
   collectMilk,
   sellMilk,
-  milksFly,
   confirmExpelCow,
   expelCow,
   dragCowMerging

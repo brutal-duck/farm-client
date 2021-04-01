@@ -77,7 +77,6 @@ import {
   buyCow,
   collectMilk,
   sellMilk,
-  milksFly,
   confirmExpelCow,
   expelCow,
   dragCowMerging
@@ -169,7 +168,6 @@ class Cow extends Phaser.Scene {
   public buyCow = buyCow.bind(this);
   public collectMilk = collectMilk.bind(this);
   public sellMilk = sellMilk.bind(this);
-  public milksFly = milksFly.bind(this);
   public confirmExpelCow = confirmExpelCow.bind(this);
   public expelCow = expelCow.bind(this);
   public createSpeechBubble = createSpeechBubble.bind(this);
@@ -289,16 +287,10 @@ class Cow extends Phaser.Scene {
 
 
   public update(): void {
-
     // мозг коров
     this.cowBrain();
-
-    // полет молока в хранилище
-    this.milksFly();
-
     // анимация полных хранилищ
     this.repositoryAnimation();
-    
   }
 
 

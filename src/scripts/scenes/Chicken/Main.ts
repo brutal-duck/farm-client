@@ -78,7 +78,6 @@ import {
   buyChicken,
   collectEgg,
   sellEggs,
-  eggsFly,
   confirmExpelChicken,
   expelChicken,
   dragChickenMerging
@@ -169,7 +168,6 @@ class Chicken extends Phaser.Scene {
   public buyChicken = buyChicken.bind(this);
   public collectEgg = collectEgg.bind(this);
   public sellEggs = sellEggs.bind(this);
-  public eggsFly = eggsFly.bind(this);
   public confirmExpelChicken = confirmExpelChicken.bind(this);
   public expelChicken = expelChicken.bind(this);
   public createSpeechBubble = createSpeechBubble.bind(this);
@@ -280,16 +278,10 @@ class Chicken extends Phaser.Scene {
 
 
   public update(): void {
-
     // мозг куриц
     this.chickenBrain();
-
-    // полет яиц в хранилище
-    this.eggsFly();
-
     // анимация полных хранилищ
     this.repositoryAnimation();
-    
   }
 }
 

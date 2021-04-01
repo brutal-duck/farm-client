@@ -534,37 +534,6 @@ function sellEggs(): void {
   }
 
 }
-
-
-// полет яиц
-function eggsFly(): void {
-
-  for (let i in this.eggs.children.entries) {
-
-    let egg = this.eggs.children.entries[i];
-
-    if (egg.body.speed > 0) {
-
-      egg.setDepth(egg.y + 100);
-      let distance = Phaser.Math.Distance.Between(egg.x, egg.y, egg.target.x, egg.target.y) * 3;
-
-      if (egg.x < 0 ||
-        egg.x > 720 ||
-        egg.y < 0 ||
-        (distance > egg.distance && egg.distance > 0) ||
-        distance < 100) {
-        
-        egg.destroy();
-        
-      } else egg.distance = distance;
-
-    }
-
-  }
-  
-}
-
-
 // подтверждение продажи курицы
 function confirmExpelChicken(): void {
 
@@ -643,7 +612,6 @@ export {
   buyChicken,
   collectEgg,
   sellEggs,
-  eggsFly,
   confirmExpelChicken,
   expelChicken,
   dragChickenMerging

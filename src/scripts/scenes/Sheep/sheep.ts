@@ -656,36 +656,6 @@ function sellWool(): void {
 
 }
 
-
-// полет шерсти
-function woolFly(): void {
-
-  for (let i in this.wool.children.entries) {
-
-    let wool = this.wool.children.entries[i];
-
-    if (wool.body.speed > 0) {
-
-      wool.setDepth(wool.y + 100);
-      let distance = Phaser.Math.Distance.Between(wool.x, wool.y, wool.target.x, wool.target.y) * 3;
-
-      if (wool.x < 0 ||
-        wool.x > 720 ||
-        wool.y < 0 ||
-        (distance > wool.distance && wool.distance > 0) ||
-        distance < 100) {
-        
-        wool.destroy();
-        
-      } else wool.distance = distance;
-
-    }
-
-  }
-  
-}
-
-
 // подтверждение продажи овцы
 function confirmExpelSheep(): void {
 
@@ -860,7 +830,6 @@ export {
   buySheep,
   collectWool,
   sellWool,
-  woolFly,
   confirmExpelSheep,
   expelSheep,
   woolSprite,
