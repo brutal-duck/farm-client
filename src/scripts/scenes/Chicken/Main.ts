@@ -73,7 +73,6 @@ import {
   reverse,
   aim,
   getChicken,
-  getEgg,
   checkMerging,
   cancelMerging,
   buyChicken,
@@ -149,7 +148,6 @@ class Chicken extends Phaser.Scene {
   public reverse = reverse.bind(this);
   public aim = aim.bind(this);
   public getChicken = getChicken.bind(this);
-  public getEgg = getEgg.bind(this);
   public currentTerritory = currentTerritory.bind(this);
   public changeSprite = changeSprite.bind(this);
   public fairLevelUp = fairLevelUp.bind(this);

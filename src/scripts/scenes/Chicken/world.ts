@@ -1,5 +1,6 @@
 import Scrolling from '../../libs/Scrolling';
 import Cave from './../../components/Cave';
+import Egg from './../../components/Egg';
 
 function world(): void {
 
@@ -322,7 +323,7 @@ function world(): void {
   // подгружаем яйца
   this.eggs = this.physics.add.group();
   this.state.chickenEggs.map((data: IchickenEgg) => {
-    this.getEgg(data);
+    Egg.create(this, data)
   });
 
   // туториал, если нужен

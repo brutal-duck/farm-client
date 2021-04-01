@@ -72,7 +72,6 @@ import {
   aim,
   spineSheep,
   getCow,
-  getMilk,
   checkMerging,
   cancelMerging,
   buyCow,
@@ -149,7 +148,6 @@ class Cow extends Phaser.Scene {
   public aim = aim.bind(this);
   public spineSheep = spineSheep.bind(this);
   public getCow = getCow.bind(this);
-  public getMilk = getMilk.bind(this);
   public currentTerritory = currentTerritory.bind(this);
   public changeSprite = changeSprite.bind(this);
   public fairLevelUp = fairLevelUp.bind(this);

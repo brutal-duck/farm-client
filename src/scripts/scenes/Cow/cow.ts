@@ -2,6 +2,7 @@ import { random, randomString } from '../../general/basic';
 import { cow } from '../Modal/cow';
 import Firework from './../../components/Firework';
 import MergingCloud from './../../components/MergingCloud';
+import Milk from './../../components/Milk';
 
 // телепортация коров на свободные территории
 function teleportation(cow: any): void {
@@ -235,61 +236,6 @@ function getCow(
   return cow;
 
 }
-
-
-// переместить яйцо в хранилище !!!
-function getMilk(data: IcowMilk): void {
-
-  let milk = this.milk.create(data.x, data.y, 'cow-milk' + data.type);
-  milk.setDepth(data.y);
-  milk.type = data.type;
-  milk._id = data._id;
-  milk.click = true;
-  milk.distance = 0;
-  milk.timeout = 0;
-
-  this.click(milk, (): void => {
-
-    if (milk.click) {
-
-      let manualСollect: boolean = false;
-
-      if (milk.type !== 0) manualСollect = true;
-
-      this.collectMilk(milk, manualСollect);
-
-    }
-    
-  });
-
-}
-
-// function getMilk(data: IcowMilk): void {
-
-//   let milk = this.milk.create(data.x, data.y, 'cow-milk' + data.type);
-//   milk.setDepth(data.y);
-//   milk.type = data.type;
-//   milk._id = data._id;
-//   milk.click = true;
-//   milk.distance = 0;
-//   milk.timeout = 0;
-
-//   this.click(milk, (): void => {
-
-//     if (milk.click) {
-
-//       let manualСollect: boolean = false;
-
-//       if (milk.type !== 0) manualСollect = true;
-
-//       this.collectMilk(milk, manualСollect);
-
-//     }
-    
-//   });
-
-// }
-
 
 // мерджинг
 function checkMerging(territory: any, cow: any, position: string) {
@@ -590,52 +536,26 @@ function collectMilk(cow: any, manualСollect: boolean = false): void {
       }
 
       if (length) {
-
-        // let milk = this.milk.create(cow.x, cow.y - 50, 'cow-milk' + cow.type);
+        Milk.create(this, { x: cow.x, y: cow.y - 50}, cow.type, path);
         let milk = this.milk.create(cow.x, cow.y - 50, 'cow-milk' + '0');
-        milk.setDepth(cow.y);
-        milk.type = cow.type;
-        milk._id = cow._id;
-        milk.distance = 0;
-
-        if (milk) {
-
-          length *= 3;
-          let price: number = this.state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === milk.type).milkPrice;
-          if (this.state.userCow.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
-          milk.click = false;
-          repository.volume++;
-          repository.money += price;
-          let target = new Phaser.Math.Vector2();
-          milk.distance = length;
-          target.x = path.x;
-          target.y = path.y;
-          milk.target = path;
-          this.physics.moveToObject(milk, target, length);
-          
-        } else {
-        
-          if (manualСollect) {
-  
-            let modal: Imodal = {
-              type: 1,
-              sysType: 3,
-              height: 150,
-              message: this.state.lang.haveNotSpaceRepository
-            }
-            this.state.modal = modal;
-            this.scene.launch('Modal', this.state);
-  
+        let price: number = this.state.cowSettings.cowSettings.find((data:IcowPoints) => data.breed === milk.type).milkPrice;
+        if (this.state.userCow.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
+        repository.volume++;
+        repository.money += price;
+      } else {
+        if (manualСollect) {
+          const modal: Imodal = {
+            type: 1,
+            sysType: 3,
+            height: 150,
+            message: this.state.lang.haveNotSpaceRepository
           }
-  
+          this.state.modal = modal;
+          this.scene.launch('Modal', this.state);
         }
-
-        // console.log('have not space for milk');
-
       }
-
+      // console.log('have not space for milk');
     }
-
   } else {
 
     let position: Iposition = {
@@ -838,7 +758,6 @@ export {
   aim,
   spineSheep,
   getCow,
-  getMilk,
   checkMerging,
   cancelMerging,
   buyCow,

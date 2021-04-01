@@ -2,6 +2,7 @@ import { random, randomString } from '../../general/basic';
 import Arrow from './../../components/Arrow';
 import Firework from './../../components/Firework';
 import MergingCloud from './../../components/MergingCloud';
+import Wool from './../../components/Wool';
 
 
 // телепортация овец на свободные территории
@@ -564,49 +565,22 @@ function collectWool(sheep: any, manualСollect: boolean = false): void {
             let distance: number = Phaser.Math.Distance.Between(sheep.x, sheep.y - 50, position.x, position.y);
             
             if (length === undefined || distance < length) {
-
               length = distance;
               path = position;
               repository = territory;
-
             }
-
           }
-
         }
-
       }
-
       if (length) {
-
-        let wool = this.wool.create(sheep.x, sheep.y - 50, 'sheep-wool' + sheep.type);
-        wool.setDepth(sheep.y);
-        wool.type = sheep.type;
-        wool._id = sheep._id;
-        wool.distance = 0;
-
-        if (wool) {
-
-          length *= 3;
-          let price: number = this.state.sheepSettings.sheepSettings.find((data: IsheepPoints) => data.breed === wool.type).long_wool;
-          if (this.state.userSheep.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
-          wool.click = false;
-          repository.volume++;
-          repository.money += price;
-          let target = new Phaser.Math.Vector2();
-          wool.distance = length;
-          target.x = path.x;
-          target.y = path.y;
-          wool.target = path;
-          this.physics.moveToObject(wool, target, length);
-
-        }
-
+        let price: number = this.state.sheepSettings.sheepSettings.find((data: IsheepPoints) => data.breed === sheep.type).long_wool;
+        if (this.state.userSheep.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
+        repository.volume++;
+        repository.money += price;
+        Wool.create(this, { x: sheep.x, y: sheep.y - 50 }, sheep.type, path);
       } else {
-        
         if (manualСollect) {
-
-          let modal: Imodal = {
+          const modal: Imodal = {
             type: 1,
             sysType: 3,
             height: 150,
@@ -614,15 +588,10 @@ function collectWool(sheep: any, manualСollect: boolean = false): void {
           }
           this.state.modal = modal;
           this.scene.launch('Modal', this.state);
-
         }
-
         // console.log('have not space for wool');
-
       }
-
     }
-
   } else {
 
     let position: Iposition = {
