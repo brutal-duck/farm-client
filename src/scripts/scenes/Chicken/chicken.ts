@@ -308,7 +308,7 @@ function checkMerging(territory: any, chicken: any, position: string) {
     } else {
 
       if (chicken1 && chicken2) {
-        SpeechBubble.create(this, this.state.lang.mergingMessageBreed, 2);
+        SpeechBubble.create(this, this.state.lang.mergingMessageBreed, 1);
         this.cancelMerging(territory, chicken1, chicken2);
 
       } else {

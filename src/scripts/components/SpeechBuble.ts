@@ -7,23 +7,6 @@ interface ItriangleCoords {
   point3Y: number;
 }
 
-const BASIC_SETTINGS: {
-  width: number,
-  position: Iposition,
-  triangleCoords: ItriangleCoords
-} = {
-  width: 340,
-  position: { x: 120, y: 360 },
-  triangleCoords: {
-    point1X: 340,
-    point1Y: 40,
-    point2X: 340,
-    point2Y: 10,
-    point3X: 380,
-    point3Y: 20,
-  },
-}
-
 /**
   * Подсказывающий бабл  
   * Конструктор принимает:  
@@ -37,15 +20,22 @@ const BASIC_SETTINGS: {
 export default class SpeechBubble {
   private text: string;
   private type: number;
-  private x: number = BASIC_SETTINGS.position.x;
-  private y: number = BASIC_SETTINGS.position.y;
-  private width: number = BASIC_SETTINGS.width;
+  private x: number = 120;
+  private y: number = 360;
+  private width: number = 340;
   private scene: Phaser.Scene;
   private bubble: Phaser.GameObjects.Graphics;
   private bubbleText: Phaser.GameObjects.Text;
   private bubbleFarmer: Phaser.GameObjects.Image;
   private bubbleBg: Phaser.GameObjects.Graphics;
-  private triangleCoords: ItriangleCoords = BASIC_SETTINGS.triangleCoords;
+  private triangleCoords: ItriangleCoords = {
+    point1X: 340,
+    point1Y: 40,
+    point2X: 340,
+    point2Y: 10,
+    point3X: 380,
+    point3Y: 20,
+  };
   constructor(scene: Phaser.Scene, text: string, type: number = 1) {
     this.text = text;
     this.type = type;
@@ -58,7 +48,6 @@ export default class SpeechBubble {
   }
 
   private init(): void {
-  
     this.bubble = this.scene.add.graphics({ x: this.x, y: this.y }).setDepth(this.y + 240);
     this.bubbleBg = this.scene.add.graphics();
     this.bubbleText = this.scene.add.text(0, 0, this.text, {
