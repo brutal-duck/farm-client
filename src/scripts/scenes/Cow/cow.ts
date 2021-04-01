@@ -543,9 +543,8 @@ function collectMilk(cow: any, manualСollect: boolean = false): void {
       }
 
       if (length) {
-        Milk.create(this, { x: cow.x, y: cow.y - 50}, cow.type, path);
-        let milk = this.milk.create(cow.x, cow.y - 50, 'cow-milk' + '0');
-        let price: number = this.state.cowSettings.cowSettings.find((data:IcowPoints) => data.breed === milk.type).milkPrice;
+        Milk.create(this, { x: cow.x, y: cow.y - 50}, 0, path); // вместо нуля поставить cow.type
+        let price: number = this.state.cowSettings.cowSettings.find((data:IcowPoints) => data.breed === cow.type).milkPrice;
         if (this.state.userCow.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
         repository.volume++;
         repository.money += price;
