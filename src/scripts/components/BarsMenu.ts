@@ -95,7 +95,7 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
 
   private setVisibility(): void {
 
-    if (this.scene.state.platform === 'web' && this.scene.state.user.login === '' && !this.authIcon.visible) { 
+    if (this.scene.state.platform === 'web' && this.scene.state.user.login === '' && (!this.authIcon.visible || this.scene.state.farm === 'Event' && !this.visible)) { 
       this.authIcon.setVisible(true);
       this.setVisible(false);
       this.profileIcon.setVisible(false);
@@ -121,13 +121,14 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       this.authIcon.setVisible(true);
     }
 
-    if (this.scene.state.farm === 'Event' && this.scene.state.user.additionalTutorial.eventTutorial < 80 && this.authIcon.visible) {
-      this.authIcon.setVisible(false);
+    if (this.scene.state.farm === 'Event' && this.scene.state.user.additionalTutorial.eventTutorial < 80 && this.visible) {
       this.setVisible(false);
       this.chatIcon.setVisible(false);
       this.profileIcon.setVisible(false);
-    } else if (this.scene.state.farm === 'Event' && this.scene.state.user.additionalTutorial.eventTutorial >= 80 && !this.authIcon.visible && !this.visible) {
-      this.authIcon.setVisible(true);
+    } else if (this.scene.state.farm === 'Event' && this.scene.state.user.additionalTutorial.eventTutorial >= 80 &&  !this.visible) {
+      this.setVisible(true);
+      this.profileIcon.setVisible(true);
+      this.chatIcon.setVisible(true);
     }
   }
 
