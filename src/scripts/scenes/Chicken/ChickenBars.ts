@@ -1,6 +1,5 @@
 import {
   shortNum,
-  socialButtons,
   shortTime
 } from '../../general/basic';
 import {
@@ -11,12 +10,7 @@ import {
 } from '../../general/clicks';
 import { updateNativeShop } from './../../general/boosts';
 import {
-  buildMenu,
-  
-} from '../../elements';
-import {
   сurrencyAnimation,
-  menuAnimation,
   pulseBalance,
   increaseDiamonds,
   plusCurrencyAnimation,
@@ -28,6 +22,7 @@ import {
 import { clickTaskBoard } from '../../general/tasks';
 import TaskBoard from './../../components/TaskBoard';
 import Collector from './../../components/Collector';
+import BarsMenu from './../../components/BarsMenu';
 
 class ChickenBars extends Phaser.Scene {
   constructor() {
@@ -42,12 +37,7 @@ class ChickenBars extends Phaser.Scene {
   public cursors: any;
   public сurrency: Phaser.GameObjects.Group; // группа монет и кристаллов для анимации
   public collector: Collector;
-  public sendwich: boolean;
-  public chat: Phaser.GameObjects.Image;
-  public profile: Phaser.GameObjects.Image;
-  public menu: Phaser.GameObjects.Image;
-  public auth: Phaser.GameObjects.Image;
-  public sendwichTimer: number;
+  public menu: BarsMenu;
   public chickenBuy: Phaser.GameObjects.Image;
   public chickenPrice: Phaser.GameObjects.Text;
   public chickenPriceBubble: Phaser.GameObjects.Graphics;
@@ -78,12 +68,9 @@ class ChickenBars extends Phaser.Scene {
   public clickShopBtn = clickShopBtn.bind(this);
   public clickModalBtn = clickModalBtn.bind(this);
   public сurrencyAnimation = сurrencyAnimation.bind(this);
-  public menuAnimation = menuAnimation.bind(this);
   public pulseBalance = pulseBalance.bind(this);
-  public buildMenu = buildMenu.bind(this);
   public increaseDiamonds = increaseDiamonds.bind(this);
   public plusCurrencyAnimation = plusCurrencyAnimation.bind(this);
-  public socialButtons = socialButtons.bind(this);
   public calendarAnimation = calendarAnimation.bind(this);
   public newbieAwardAnimation = newbieAwardAnimation.bind(this);
   public plusDiamonds = plusDiamonds.bind(this);
@@ -98,8 +85,6 @@ class ChickenBars extends Phaser.Scene {
     
     this.state = state;
     this.height = Number(this.game.config.height);
-    this.sendwich = false;
-    this.sendwichTimer = 0;
     this.increaseAnimation = false;
     this.countIncrease = 0;
     this.userDiamonds = this.state.user.diamonds;
@@ -173,28 +158,7 @@ class ChickenBars extends Phaser.Scene {
       
     });
 
-    // социальные иконки
-    if (this.state.platform === 'web' && this.state.user.login === '') {
-
-      this.auth = this.add.image(650, this.height - 90, 'profile');
-
-      this.clickButton(this.auth, (): void => {
-        let modal: Imodal = {
-          type: 1,
-          sysType: 15
-        }
-        this.state.modal = modal;
-        this.scene.launch('Modal', this.state);
-      });
-
-    } else this.buildMenu();
-
-    this.offline = this.add.sprite(650, this.height - 90, 'offline')
-      .setInteractive()
-      .setDepth(this.height + 4)
-      .setVisible(false);
-
-    if (!this.state.online) this.offline.setVisible(true);
+    this.menu = BarsMenu.create(this);
 
     // монеты и кристаллы
     this.diamonds = this.add.text(590, 38, '', {
@@ -388,18 +352,12 @@ class ChickenBars extends Phaser.Scene {
 
     // анимация монет и кристаллов
     this.сurrencyAnimation();
-
-    // анимация меню
-    this.menuAnimation();
     
     // пульсация баланс-баров
     this.pulseBalance();
 
     // актуальный статус кнопки покупки курицы
     this.buyChickenStatus();
-
-    // отображение кнопок социальных механик
-    this.socialButtons();
 
     // икнока календарика
 

@@ -1226,8 +1226,6 @@ function registration(): void {
               this.secondInput.remove();
               this.mainInput.remove();
               this.scene.stop();
-              this.game.scene.keys[this.state.farm + 'Bars'].auth.destroy();
-              this.game.scene.keys[this.state.farm + 'Bars'].buildMenu();
 
             } else {
 

@@ -6,21 +6,17 @@ import {
 } from '../../general/clicks';
 import {
   shortNum,
-  socialButtons,
   shortTime,
 } from '../../general/basic';
 import {
   updateNativeShop, 
 } from '../../general/boosts';
 import { 
-  buildMenu,
   updateRaitingsBar,
   scoreEnding 
 } from './basic';
 import {
   сurrencyAnimation,
-  menuAnimation,
-  pulseBalance,
   increaseDiamonds,
   plusCurrencyAnimation,
   calendarAnimation,
@@ -29,6 +25,7 @@ import {
 } from '../../general/animations';
 import { plusResourceAnimation } from './animations';
 import Collector from './../../components/Collector';
+import BarsMenu from './../../components/BarsMenu';
 
 class EventBars extends Phaser.Scene {
   constructor() {
@@ -43,12 +40,7 @@ class EventBars extends Phaser.Scene {
   public cursors: any;
   public сurrency: Phaser.GameObjects.Group; // группа монет и кристаллов для анимации
   public collector: Collector;
-  public sendwich: boolean;
-  public chat: Phaser.GameObjects.Image;
-  public profile: Phaser.GameObjects.Image;
-  public menu: Phaser.GameObjects.Image;
-  public auth: Phaser.GameObjects.Image;
-  public sendwichTimer: number;
+  public menu: BarsMenu;
   public animalBuy: Phaser.GameObjects.Image;
   public animalPrice: Phaser.GameObjects.Text;
   public animalPriceBubble: Phaser.GameObjects.Graphics;
@@ -80,12 +72,8 @@ class EventBars extends Phaser.Scene {
   public clickShopBtn = clickShopBtn.bind(this);
   public clickModalBtn = clickModalBtn.bind(this);
   public сurrencyAnimation = сurrencyAnimation.bind(this);
-  public menuAnimation = menuAnimation.bind(this);
-  public pulseBalance = pulseBalance.bind(this);
-  public buildMenu = buildMenu.bind(this);
   public increaseDiamonds = increaseDiamonds.bind(this);
   public plusCurrencyAnimation = plusCurrencyAnimation.bind(this);
-  public socialButtons = socialButtons.bind(this);
   public calendarAnimation = calendarAnimation.bind(this);
   public newbieAwardAnimation = newbieAwardAnimation.bind(this);
   public plusDiamonds = plusDiamonds.bind(this);
@@ -99,8 +87,6 @@ class EventBars extends Phaser.Scene {
     
     this.state = state;
     this.height = Number(this.game.config.height);
-    this.sendwich = false;
-    this.sendwichTimer = 0;
     this.increaseAnimation = false;
     this.countIncrease = 0;
     this.userDiamonds = this.state.user.diamonds;
@@ -191,21 +177,7 @@ class EventBars extends Phaser.Scene {
       
     });
 
-    // социальные иконки
-    if (this.state.platform === 'web' && this.state.user.login === '') {
-
-      this.auth = this.add.image(650, this.height - 90, 'profile');
-
-      this.clickButton(this.auth, (): void => {
-        let modal: Imodal = {
-          type: 1,
-          sysType: 15
-        }
-        this.state.modal = modal;
-        this.scene.launch('Modal', this.state);
-      });
-
-    } else this.buildMenu();
+    this.menu = BarsMenu.create(this);
 
     this.offline = this.add.sprite(650, this.height - 90, 'offline')
       .setInteractive()
@@ -305,18 +277,12 @@ class EventBars extends Phaser.Scene {
       this.collectorBtn.setVisible(false);
       this.collector.setVisible(false);
       this.collector.bubble.setVisible(false);
-      this.menu.setVisible(false);
-      this.chat.setVisible(false);
-      this.profile.setVisible(false);
-
     }
 
     if (this.state.user.additionalTutorial.eventTutorial < 30) {
-
       this.animalBuy.setVisible(false);
       this.animalPrice.setVisible(false);
       this.animalPriceBubble.setVisible(false);
-
     }
 
     if (!this.state.user.starterpack) {
@@ -399,14 +365,8 @@ class EventBars extends Phaser.Scene {
     // актуальный статус кнопки покупки курицы
     this.buyAnimalStatus();
 
-    // отображение кнопок социальных механик
-    this.socialButtons();
-
     // Обновление натива магазина
     this.updateNativeShop();
-
-    // Анимация меню
-    this.menuAnimation();
 
     this.updateRaitingsBar();
 
