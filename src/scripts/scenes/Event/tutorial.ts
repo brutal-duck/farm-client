@@ -142,9 +142,6 @@ function doneEventTutor_70(): void {
   this.game.scene.keys['EventBars'].collectorBtn.setVisible(true);
   this.game.scene.keys['EventBars'].collector.setVisible(true);
   this.game.scene.keys['EventBars'].collector.bubble.setVisible(true);
-  this.game.scene.keys['EventBars'].menu.setVisible(true);
-  this.game.scene.keys['EventBars'].chat.setVisible(true);
-  this.game.scene.keys['EventBars'].profile.setVisible(true);
   this.scene.stop('Tutorial');
   
 }

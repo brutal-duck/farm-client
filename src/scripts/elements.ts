@@ -233,51 +233,10 @@ function boostButton(
 
 }
 
-// кнопки меню
-function buildMenu(): void {
-  
-  this.profile = this.add.image(650, this.height - 90, 'profile').setScale(0.8).setDepth(this.height + 2);
-  this.chat = this.add.image(650, this.height - 90, 'chat').setScale(0.8).setDepth(this.height + 2);
-  this.menu = this.add.image(650, this.height - 90, 'sandwich').setDepth(this.height + 3);
-
-  this.clickButton(this.profile, (): void => {
-
-    let modal: Imodal = {
-      type: 1,
-      sysType: 7
-    }
-    this.state.modal = modal;
-    this.scene.launch('Modal', this.state);
-
-  });
-
-  this.clickButton(this.chat, (): void => {
-    
-    let modal: Imodal = { type: 9 }
-    this.state.modal = modal;
-    this.scene.launch('Modal', this.state);
-
-  });
-
-  this.clickButton(this.menu, (): void => {
-
-    this.sendwich = !this.sendwich;
-    this.sendwichTimer = 0;
-
-    if (this.sendwich) {
-      this.menu.setTexture('sandwich-close');
-    } else {
-      this.menu.setTexture('sandwich');
-    }
-
-  });
-
-}
 
 export {
   bigButton,
   repositoryBtn,
   shopButton,
   boostButton,
-  buildMenu,
 }

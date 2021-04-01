@@ -42,92 +42,6 @@ function сurrencyAnimation(): void {
 
 }
 
-
-// анимация меню
-function menuAnimation(): void {
-  
-  if (this.menu) {
-
-    if (this.sendwich) {
-
-      this.sendwichTimer++;
-
-      if (this.sendwichTimer >= 250) {
-        this.sendwich = false;
-        this.sendwichTimer = 0;
-        this.menu.setTexture('sandwich');
-      }
-
-    }
-
-    if (this.sendwich && this.chat.y > this.height - 230) {
-      
-      let step: number = this.chat.y - 7;
-      let scale: number = this.chat.scale += 0.01;
-
-      if (step <= this.height - 230) {
-        step = this.height - 230;
-        scale = 1;
-      }
-
-      if (this.chat.scale > 1) scale = 1;
-
-      this.chat.y = step;
-      this.chat.setScale(scale);
-
-    } else if (!this.sendwich && this.chat.y < this.menu.y) {
-
-      let step: number = this.chat.y + 7;
-      let scale: number = this.chat.scale -= 0.03;
-
-      if (step >= this.menu.y) {
-        step = this.menu.y;
-        scale = 0.8;
-      }
-
-      if (this.chat.scale < 0.8) scale = 0.8;
-      
-      this.chat.y = step;
-      this.chat.setScale(scale);
-
-    }
-
-    if (this.sendwich && this.profile.y > this.height - 370) {
-
-      let step: number = this.profile.y - 14;
-      let scale: number = this.profile.scale += 0.01;
-
-      if (step <= this.height - 370) {
-        step = this.height - 370;
-        scale = 1;
-      }
-
-      if (this.profile.scale > 1) scale = 1;
-
-      this.profile.y = step;
-      this.profile.setScale(scale);
-
-    } else if (!this.sendwich && this.profile.y < this.menu.y) {
-
-      let step: number = this.profile.y + 14;
-      let scale: number = this.profile.scale -= 0.03;
-
-      if (step >= this.menu.y) {
-        step = this.menu.y;
-        scale = 0.8;
-      }
-      
-      if (this.profile.scale < 0.8) scale = 0.8;
-      
-      this.profile.y = step;
-      this.profile.setScale(scale);
-
-    }
-
-  }
-
-}
-
 // пульсация баланс-баров
 function pulseBalance(): void {
 
@@ -619,7 +533,6 @@ function openShop(...args: Phaser.Cameras.Scene2D.Camera[]): void {
 }
 export {
   сurrencyAnimation,
-  menuAnimation,
   pulseBalance,
   increaseDiamonds,
   plusCurrencyAnimation,

@@ -11,9 +11,6 @@ import {
 } from '../../general/clicks';
 import { updateNativeShop } from './../../general/boosts';
 import {
-  buildMenu,
-} from '../../elements';
-import {
   сurrencyAnimation,
   menuAnimation,
   pulseBalance,
@@ -74,7 +71,6 @@ class CowBars extends Phaser.Scene {
   public сurrencyAnimation = сurrencyAnimation.bind(this);
   public menuAnimation = menuAnimation.bind(this);
   public pulseBalance = pulseBalance.bind(this);
-  public buildMenu = buildMenu.bind(this);
   public increaseDiamonds = increaseDiamonds.bind(this);
   public plusCurrencyAnimation = plusCurrencyAnimation.bind(this);
   public socialButtons = socialButtons.bind(this);
