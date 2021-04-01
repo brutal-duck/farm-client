@@ -95,7 +95,7 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
 
   private setVisibility(): void {
 
-    if (this.scene.state.platform === 'web' && this.scene.state.user.login === '' && (!this.authIcon.visible || this.scene.state.farm === 'Event' && !this.visible)) { 
+    if (this.scene.state.platform === 'web' && this.scene.state.user.login === '' && !this.authIcon.visible) { 
       this.authIcon.setVisible(true);
       this.setVisible(false);
       this.profileIcon.setVisible(false);
@@ -112,13 +112,18 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       this.hideElements();
     }
 
-    if (this.scene.state.farm === 'Sheep' && this.scene.state.userSheep.tutorial < 100 && this.authIcon.visible) {
+    if (this.scene.state.farm === 'Sheep' && this.scene.state.userSheep.tutorial < 100) {
       this.authIcon.setVisible(false);
       this.setVisible(false);
       this.chatIcon.setVisible(false);
       this.profileIcon.setVisible(false);
-    } else if (this.scene.state.farm === 'Sheep' && this.scene.state.userSheep.tutorial >= 100 && !this.authIcon.visible && !this.visible) {
+    } else if (this.scene.state.farm === 'Sheep' && this.scene.state.userSheep.tutorial >= 100 && this.scene.state.platform === 'web' && !this.visible) {
       this.authIcon.setVisible(true);
+    } else if (this.scene.state.farm === 'Sheep' && this.scene.state.userSheep.tutorial >= 100 && this.scene.state.platform !== 'web') {
+      this.authIcon.setVisible(false);
+      this.setVisible(true);
+      this.chatIcon.setVisible(true);
+      this.profileIcon.setVisible(true);
     }
 
     if (this.scene.state.farm === 'Event' && this.scene.state.user.additionalTutorial.eventTutorial < 80 && this.visible) {
@@ -130,6 +135,8 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       this.profileIcon.setVisible(true);
       this.chatIcon.setVisible(true);
     }
+
+
   }
 
   private tickShowTimerAndSetState(): void {
