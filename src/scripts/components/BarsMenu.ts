@@ -153,7 +153,7 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
 
 
   private showElements(): void {
-    const duration: number = 500;
+    const duration: number = 350;
     this.profileAnim = this.scene.add.tween({
       targets: this.profileIcon,
       duration: duration,
@@ -174,7 +174,7 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
   }
 
   private hideElements(): void {
-    const duration: number = 500;
+    const duration: number = 350;
     this.profileAnim = this.scene.add.tween({
       targets: this.profileIcon,
       duration: duration,
