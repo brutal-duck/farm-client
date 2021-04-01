@@ -1,4 +1,5 @@
 import { random, randomString } from '../../general/basic';
+import Egg from './../../components/Egg';
 
 // расчет прогресса во время отсутствия
 function autoprogress(load: boolean = false): void {
@@ -92,7 +93,7 @@ function autoprogress(load: boolean = false): void {
 
       newEggs.push({
         id: egg._id,
-        type: egg.type,
+        type: egg.animalType,
         count: 1,
         egg: true
       });
@@ -142,8 +143,7 @@ function autoprogress(load: boolean = false): void {
           _id: 'local_' + randomString(18)
         }
   
-        this.getEgg(egg);
-
+        Egg.create(this, egg);
       }
 
     }
@@ -162,13 +162,13 @@ function autoprogress(load: boolean = false): void {
   }
 
   // формируем массив яиц
-  let eggsArr: { id: string, type: number }[] = [];
+  let eggsArr: { id: string, type: string }[] = [];
 
   for (let i in eggs) {
     for (let j: number = 0; j < eggs[i].count; j++) {
       eggsArr.push({
         id: eggs[i].id,
-        type: eggs[i].type
+        type: String(eggs[i].type)
       });
     }
   }
@@ -179,7 +179,7 @@ function autoprogress(load: boolean = false): void {
 
   for (let i: number = 0; i < length; i++) {
     
-    let price: number = this.state.chickenSettings.chickenSettings.find((data: IchickenPoints) => data.breed === eggsArr[i].type).eggPrice;
+    let price: number = this.state.chickenSettings.chickenSettings.find((data: IchickenPoints) => String(data.breed) === eggsArr[i].type).eggPrice;
     price *= (1 + feedPercent); // коэфф
     
     for (let j in this.territories.children.entries) {
@@ -270,7 +270,7 @@ function autoprogress(load: boolean = false): void {
         _id: 'local_' + randomString(18)
       }
 
-      this.getEgg(egg);
+      Egg.create(this, egg);
 
     } else break;
 

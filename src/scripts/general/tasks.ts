@@ -1,4 +1,5 @@
 import AllTasks from '../tasks';
+import SpeechBubble from './../components/SpeechBuble';
 
 // список заданий текущей главы
 function partTasks(): Itasks[] {
@@ -320,7 +321,7 @@ function clickTaskBoard(task: Itasks): void {
   
   const mergeAnimalBubble = (): void => {
     this.game.scene.keys[this.state.farm].scrolling.scrollY = 0; 
-    this.game.scene.keys[this.state.farm].createSpeechBubble(this.state.lang.taskHelp_2);
+    SpeechBubble.create(this.game.scene.keys[this.state.farm], this.state.lang.taskHelp_2, 1);
   }
   
   const openShopBoosters = (): void => {
@@ -334,7 +335,7 @@ function clickTaskBoard(task: Itasks): void {
   
   const takeAnimalBubble = (): void => {
     this.game.scene.keys[this.state.farm].scrolling.scrollY = 0; 
-    this.game.scene.keys[this.state.farm].createSpeechBubble(this.state.lang.taskHelp_4);
+    SpeechBubble.create(this.game.scene.keys[this.state.farm], this.state.lang.taskHelp_4, 1);
   }
   
   const openMerg = (): void => {
@@ -351,7 +352,8 @@ function clickTaskBoard(task: Itasks): void {
     }
   
     if (territory) openTerritoryWindow(territory);
-    else this.game.scene.keys[this.state.farm + 'Bars'].createSpeechBubble(this.state.lang.taskHelp_8, 3);
+    else SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_8, 3);
+    
     
   }
   
@@ -363,7 +365,7 @@ function clickTaskBoard(task: Itasks): void {
       if (territory) break;
     }
     if (territory) openTerritoryWindow(territory);
-    else this.game.scene.keys[this.state.farm + 'Bars'].createSpeechBubble(this.state.lang.taskHelp_9, 3);
+    else SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_9, 3);
   }
   
   const openStorageToImproveOrSpeechBuble = (): void => {
@@ -374,21 +376,21 @@ function clickTaskBoard(task: Itasks): void {
       if (territory) break;
     }
     if (territory) openTerritoryWindow(territory);
-    else this.game.scene.keys[this.state.farm + 'Bars'].createSpeechBubble(this.state.lang.taskHelp_9, 3);
+    else SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_9, 3);
   }
   
   const openNotFreeStorageOrSpeechBubble = (): void => {
     let storage: any = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => el.type === 5 && el.money > 0);
     this.state.territory = undefined;
     if (storage) openTerritoryWindow(storage);
-    else this.game.scene.keys[this.state.farm + 'Bars'].createSpeechBubble(this.state.lang.taskHelp_6, 3);
+    else SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_6, 3);
   }
   
   const openStorageOrSpeechBuble = (): void => {
     let storage: any = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => el.type === 5);
     this.state.territory = undefined;
     if (storage) openTerritoryWindow(storage); 
-    else this.game.scene.keys[this.state.farm + 'Bars'].createSpeechBubble(this.state.lang.taskHelp_20, 3);
+    else SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_6, 3);
   }
   
   const findUnlockTerritoryForBuy = (): any => {
@@ -416,7 +418,8 @@ function clickTaskBoard(task: Itasks): void {
       else {
         territory = findUnlockTerritoryForBuy();
         if (territory) openTerritoryWindow(territory);
-        else this.game.scene.keys[this.state.farm + 'Bars'].createSpeechBubble(this.state.lang[`taskHelp_5_${task.state}`], 3);
+        else SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang[`taskHelp_5_${task.state}`], 3);
+        
       }
     }
   }
@@ -453,14 +456,14 @@ function clickTaskBoard(task: Itasks): void {
       openRegisterWindow();
       break;
     case 11: 
-      this.game.scene.keys[this.state.farm + 'Bars'].createSpeechBubble(this.state.lang[`taskHelp${this.state.farm}_11`], 3);
+      SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang[`taskHelp${this.state.farm}_11`], 3);
       break;
     case 12: 
       break;
     case 13: 
       break;
     case 14: 
-      this.game.scene.keys[this.state.farm + 'Bars'].createSpeechBubble(this.state.lang[`taskHelp${this.state.farm}_14`], 3);
+      SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang[`taskHelp${this.state.farm}_14`], 3);
       break;
     case 15: 
       openShopBoosters();
@@ -475,7 +478,7 @@ function clickTaskBoard(task: Itasks): void {
       this.game.scene.keys[this.state.farm][`takeDiamond${this.state.farm}`]();
       break;
     case 19: 
-      this.game.scene.keys[this.state.farm + 'Bars'].createSpeechBubble(this.state.lang[`taskHelp${this.state.farm}_19`], 3);
+      SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang[`taskHelp${this.state.farm}_19`], 3);
       break;
     case 20: 
       openStorageOrSpeechBuble();

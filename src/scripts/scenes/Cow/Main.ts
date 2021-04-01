@@ -72,19 +72,16 @@ import {
   aim,
   spineSheep,
   getCow,
-  getMilk,
   checkMerging,
   cancelMerging,
   buyCow,
   collectMilk,
   sellMilk,
-  milksFly,
   confirmExpelCow,
   expelCow,
   dragCowMerging
 } from './cow';
 import { installTerritory } from './territories';
-import { createSpeechBubble } from '../../elements';
 import {
   balance,
   cowPrice,
@@ -149,7 +146,6 @@ class Cow extends Phaser.Scene {
   public aim = aim.bind(this);
   public spineSheep = spineSheep.bind(this);
   public getCow = getCow.bind(this);
-  public getMilk = getMilk.bind(this);
   public currentTerritory = currentTerritory.bind(this);
   public changeSprite = changeSprite.bind(this);
   public fairLevelUp = fairLevelUp.bind(this);
@@ -171,10 +167,8 @@ class Cow extends Phaser.Scene {
   public buyCow = buyCow.bind(this);
   public collectMilk = collectMilk.bind(this);
   public sellMilk = sellMilk.bind(this);
-  public milksFly = milksFly.bind(this);
   public confirmExpelCow = confirmExpelCow.bind(this);
   public expelCow = expelCow.bind(this);
-  public createSpeechBubble = createSpeechBubble.bind(this);
   public showBank = showBank.bind(this);
   public freeCollector = freeCollector.bind(this);
   public buyCollector = buyCollector.bind(this);
@@ -291,16 +285,10 @@ class Cow extends Phaser.Scene {
 
 
   public update(): void {
-
     // мозг коров
     this.cowBrain();
-
-    // полет молока в хранилище
-    this.milksFly();
-
     // анимация полных хранилищ
     this.repositoryAnimation();
-    
   }
 
 

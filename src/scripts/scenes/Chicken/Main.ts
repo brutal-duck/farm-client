@@ -73,19 +73,16 @@ import {
   reverse,
   aim,
   getChicken,
-  getEgg,
   checkMerging,
   cancelMerging,
   buyChicken,
   collectEgg,
   sellEggs,
-  eggsFly,
   confirmExpelChicken,
   expelChicken,
   dragChickenMerging
 } from './chicken';
 import { installTerritory } from './territories';
-import { createSpeechBubble } from '../../elements';
 import {
   balance,
   chickenPrice,
@@ -149,7 +146,6 @@ class Chicken extends Phaser.Scene {
   public reverse = reverse.bind(this);
   public aim = aim.bind(this);
   public getChicken = getChicken.bind(this);
-  public getEgg = getEgg.bind(this);
   public currentTerritory = currentTerritory.bind(this);
   public changeSprite = changeSprite.bind(this);
   public fairLevelUp = fairLevelUp.bind(this);
@@ -171,10 +167,8 @@ class Chicken extends Phaser.Scene {
   public buyChicken = buyChicken.bind(this);
   public collectEgg = collectEgg.bind(this);
   public sellEggs = sellEggs.bind(this);
-  public eggsFly = eggsFly.bind(this);
   public confirmExpelChicken = confirmExpelChicken.bind(this);
   public expelChicken = expelChicken.bind(this);
-  public createSpeechBubble = createSpeechBubble.bind(this);
   public showBank = showBank.bind(this);
   public freeCollector = freeCollector.bind(this);
   public buyCollector = buyCollector.bind(this);
@@ -282,16 +276,10 @@ class Chicken extends Phaser.Scene {
 
 
   public update(): void {
-
     // мозг куриц
     this.chickenBrain();
-
-    // полет яиц в хранилище
-    this.eggsFly();
-
     // анимация полных хранилищ
     this.repositoryAnimation();
-    
   }
 }
 

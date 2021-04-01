@@ -1,6 +1,8 @@
 import { random, randomString } from '../../general/basic';
 import Firework from './../../components/Firework';
 import MergingCloud from './../../components/MergingCloud';
+import Egg from './../../components/Egg';
+import SpeechBubble from './../../components/SpeechBuble';
 
 // телепортация куриц на свободные территории
 function teleportation(chicken: any): void {
@@ -205,35 +207,6 @@ function getChicken(
 
 }
 
-
-// переместить яйцо в хранилище
-function getEgg(data: IchickenEgg): void {
-
-  let egg = this.eggs.create(data.x, data.y, 'chicken-egg' + data.type);
-  egg.setDepth(data.y);
-  egg.type = data.type;
-  egg._id = data._id;
-  egg.click = true;
-  egg.distance = 0;
-  egg.timeout = 0;
-
-  this.click(egg, (): void => {
-
-    if (egg.click) {
-
-      let manualСollect: boolean = false;
-
-      if (egg.type !== 0) manualСollect = true;
-
-      this.collectEgg(egg, manualСollect);
-
-    }
-    
-  });
-
-}
-
-
 // мерджинг
 function checkMerging(territory: any, chicken: any, position: string) {
 
@@ -335,8 +308,7 @@ function checkMerging(territory: any, chicken: any, position: string) {
     } else {
 
       if (chicken1 && chicken2) {
-
-        this.createSpeechBubble(this.state.lang.mergingMessageBreed);
+        SpeechBubble.create(this, this.state.lang.mergingMessageBreed, 1);
         this.cancelMerging(territory, chicken1, chicken2);
 
       } else {
@@ -473,86 +445,58 @@ function buyChicken(breed: number, shop: boolean = false): boolean {
 
 
 // собиратель яиц
-function collectEgg(egg: any, manualСollect: boolean = false): void {
-
+function collectEgg(egg: Egg, manualСollect: boolean = false): void {
   let path: Iposition;
   let length: number;
   let repository: any = false;
-
-  if (egg.type !== 0) {
+  if (egg.animalType !== 0) {
 
     if (manualСollect) {
-
-      let price: number = this.state.chickenSettings.chickenSettings.find((data: IchickenPoints) => data.breed === egg.type).eggPrice;
+      let price: number = this.state.chickenSettings.chickenSettings.find((data: IchickenPoints) => data.breed === egg.animalType).eggPrice;
       if (this.state.userChicken.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
       this.state.userChicken.money += price;
       egg.destroy();
-
       this.game.scene.keys['ChickenBars'].getCurrency({
         x: egg.x,
         y: egg.y - 50
       }, 3, 'chickenCoin');
-
       this.tryTask(11, 0);
 
     } else {
-
       for (let i in this.territories.children.entries) {
-
-        let territory = this.territories.children.entries[i];
-
+        const territory = this.territories.children.entries[i];
         if (territory.type === 5) {
-          
-          let max: number = this.state.chickenSettings.territoriesChickenSettings.find((data: IterritoriesChickenSettings) => data.improve === territory.improve).eggStorage;
+          const max: number = this.state.chickenSettings.territoriesChickenSettings.find((data: IterritoriesChickenSettings) => data.improve === territory.improve).eggStorage;
 
           if (max > territory.volume) {
-
-            let position: Iposition = {
+            const position: Iposition = {
               x: territory.x + 120,
               y: territory.y + 120
-            }
-            let distance: number = Phaser.Math.Distance.Between(egg.x, egg.y, position.x, position.y);
+            };
+            const distance: number = Phaser.Math.Distance.Between(egg.x, egg.y, position.x, position.y);
             
             if (length === undefined || distance < length) {
-
               length = distance;
               path = position;
               repository = territory;
-
             }
-
           }
-
         }
-
       }
-
       if (length) {
-
         length *= 3;
-        let price: number = this.state.chickenSettings.chickenSettings.find((data: IchickenPoints) => data.breed === egg.type).eggPrice;
+        let price: number = this.state.chickenSettings.chickenSettings.find((data: IchickenPoints) => data.breed === egg.animalType).eggPrice;
         if (this.state.userChicken.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
-        egg.click = false;
         repository.volume++;
         repository.money += price;
-        let target = new Phaser.Math.Vector2();
-        egg.distance = length;
-        target.x = path.x;
-        target.y = path.y;
-        egg.target = path;
-        this.physics.moveToObject(egg, target, length);
-
+        egg.flyToPoint(path);
       } // else console.log('have not space for eggs');
-
     }
-
   } else {
-
     let position: Iposition = {
       x: egg.x,
       y: egg.y
     }
-
     this.state.amplitude.getInstance().logEvent('diamonds_get', {
       type: 'diamond_animal',
       count: 1,
@@ -563,9 +507,7 @@ function collectEgg(egg: any, manualСollect: boolean = false): void {
     this.state.user.diamonds++;
     egg.destroy();
     this.tryTask(19, 0);
-
   }
-
 }
 
 
@@ -592,37 +534,6 @@ function sellEggs(): void {
   }
 
 }
-
-
-// полет яиц
-function eggsFly(): void {
-
-  for (let i in this.eggs.children.entries) {
-
-    let egg = this.eggs.children.entries[i];
-
-    if (egg.body.speed > 0) {
-
-      egg.setDepth(egg.y + 100);
-      let distance = Phaser.Math.Distance.Between(egg.x, egg.y, egg.target.x, egg.target.y) * 3;
-
-      if (egg.x < 0 ||
-        egg.x > 720 ||
-        egg.y < 0 ||
-        (distance > egg.distance && egg.distance > 0) ||
-        distance < 100) {
-        
-        egg.destroy();
-        
-      } else egg.distance = distance;
-
-    }
-
-  }
-  
-}
-
-
 // подтверждение продажи курицы
 function confirmExpelChicken(): void {
 
@@ -696,13 +607,11 @@ export {
   reverse,
   aim,
   getChicken,
-  getEgg,
   checkMerging,
   cancelMerging,
   buyChicken,
   collectEgg,
   sellEggs,
-  eggsFly,
   confirmExpelChicken,
   expelChicken,
   dragChickenMerging

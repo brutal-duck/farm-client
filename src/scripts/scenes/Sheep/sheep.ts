@@ -2,6 +2,8 @@ import { random, randomString } from '../../general/basic';
 import Arrow from './../../components/Arrow';
 import Firework from './../../components/Firework';
 import MergingCloud from './../../components/MergingCloud';
+import Wool from './../../components/Wool';
+import SpeechBubble from './../../components/SpeechBuble';
 
 
 // телепортация овец на свободные территории
@@ -352,10 +354,8 @@ function checkMerging(territory: any, sheep: any, position: string) {
     } else {
 
       if (sheep1 && sheep2) {
-
-        this.createSpeechBubble(this.state.lang.mergingMessageBreed);
+        SpeechBubble.create(this, this.state.lang.mergingMessageBreed, 1);
         this.cancelMerging(territory, sheep1, sheep2);
-
       } else {
         
         // костыль
@@ -564,49 +564,22 @@ function collectWool(sheep: any, manualСollect: boolean = false): void {
             let distance: number = Phaser.Math.Distance.Between(sheep.x, sheep.y - 50, position.x, position.y);
             
             if (length === undefined || distance < length) {
-
               length = distance;
               path = position;
               repository = territory;
-
             }
-
           }
-
         }
-
       }
-
       if (length) {
-
-        let wool = this.wool.create(sheep.x, sheep.y - 50, 'sheep-wool' + sheep.type);
-        wool.setDepth(sheep.y);
-        wool.type = sheep.type;
-        wool._id = sheep._id;
-        wool.distance = 0;
-
-        if (wool) {
-
-          length *= 3;
-          let price: number = this.state.sheepSettings.sheepSettings.find((data: IsheepPoints) => data.breed === wool.type).long_wool;
-          if (this.state.userSheep.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
-          wool.click = false;
-          repository.volume++;
-          repository.money += price;
-          let target = new Phaser.Math.Vector2();
-          wool.distance = length;
-          target.x = path.x;
-          target.y = path.y;
-          wool.target = path;
-          this.physics.moveToObject(wool, target, length);
-
-        }
-
+        let price: number = this.state.sheepSettings.sheepSettings.find((data: IsheepPoints) => data.breed === sheep.type).long_wool;
+        if (this.state.userSheep.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
+        repository.volume++;
+        repository.money += price;
+        Wool.create(this, { x: sheep.x, y: sheep.y - 50 }, sheep.type, path);
       } else {
-        
         if (manualСollect) {
-
-          let modal: Imodal = {
+          const modal: Imodal = {
             type: 1,
             sysType: 3,
             height: 150,
@@ -614,15 +587,10 @@ function collectWool(sheep: any, manualСollect: boolean = false): void {
           }
           this.state.modal = modal;
           this.scene.launch('Modal', this.state);
-
         }
-
         // console.log('have not space for wool');
-
       }
-
     }
-
   } else {
 
     let position: Iposition = {
@@ -686,36 +654,6 @@ function sellWool(): void {
   }
 
 }
-
-
-// полет шерсти
-function woolFly(): void {
-
-  for (let i in this.wool.children.entries) {
-
-    let wool = this.wool.children.entries[i];
-
-    if (wool.body.speed > 0) {
-
-      wool.setDepth(wool.y + 100);
-      let distance = Phaser.Math.Distance.Between(wool.x, wool.y, wool.target.x, wool.target.y) * 3;
-
-      if (wool.x < 0 ||
-        wool.x > 720 ||
-        wool.y < 0 ||
-        (distance > wool.distance && wool.distance > 0) ||
-        distance < 100) {
-        
-        wool.destroy();
-        
-      } else wool.distance = distance;
-
-    }
-
-  }
-  
-}
-
 
 // подтверждение продажи овцы
 function confirmExpelSheep(): void {
@@ -891,7 +829,6 @@ export {
   buySheep,
   collectWool,
   sellWool,
-  woolFly,
   confirmExpelSheep,
   expelSheep,
   woolSprite,

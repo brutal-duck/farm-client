@@ -11,12 +11,7 @@ import {
 } from '../../general/clicks';
 import { updateNativeShop } from './../../general/boosts';
 import {
-  buildMenu,
-  createSpeechBubble
-} from '../../elements';
-import {
   сurrencyAnimation,
-  menuAnimation,
   pulseBalance,
   increaseDiamonds,
   plusCurrencyAnimation,
@@ -28,6 +23,7 @@ import {
 import { clickTaskBoard } from '../../general/tasks';
 import TaskBoard from './../../components/TaskBoard';
 import Collector from './../../components/Collector';
+import BarsMenu from './../../components/BarsMenu';
 class CowBars extends Phaser.Scene {
   constructor() {
     super('CowBars');
@@ -41,12 +37,7 @@ class CowBars extends Phaser.Scene {
   public cursors: any;
   public сurrency: Phaser.GameObjects.Group; // группа монет и кристаллов для анимации
   public collector: Collector;
-  public sendwich: boolean;
-  public chat: Phaser.GameObjects.Image;
-  public profile: Phaser.GameObjects.Image;
-  public menu: Phaser.GameObjects.Image;
-  public auth: Phaser.GameObjects.Image;
-  public sendwichTimer: number;
+  public menu: BarsMenu;
   public cowBuy: Phaser.GameObjects.Image;
   public cowPrice: Phaser.GameObjects.Text;
   public cowPriceBubble: Phaser.GameObjects.Graphics;
@@ -77,9 +68,7 @@ class CowBars extends Phaser.Scene {
   public clickShopBtn = clickShopBtn.bind(this);
   public clickModalBtn = clickModalBtn.bind(this);
   public сurrencyAnimation = сurrencyAnimation.bind(this);
-  public menuAnimation = menuAnimation.bind(this);
   public pulseBalance = pulseBalance.bind(this);
-  public buildMenu = buildMenu.bind(this);
   public increaseDiamonds = increaseDiamonds.bind(this);
   public plusCurrencyAnimation = plusCurrencyAnimation.bind(this);
   public socialButtons = socialButtons.bind(this);
@@ -89,7 +78,6 @@ class CowBars extends Phaser.Scene {
   public updateNativeShop = updateNativeShop.bind(this);
   public shortTime = shortTime.bind(this);
   public getCurrency = getCurrency.bind(this);
-  public createSpeechBubble = createSpeechBubble.bind(this);
   public clickTaskBoard = clickTaskBoard.bind(this);
 
 
@@ -98,8 +86,6 @@ class CowBars extends Phaser.Scene {
     
     this.state = state;
     this.height = Number(this.game.config.height);
-    this.sendwich = false;
-    this.sendwichTimer = 0;
     this.increaseAnimation = false;
     this.countIncrease = 0;
     this.userDiamonds = this.state.user.diamonds;
@@ -173,21 +159,7 @@ class CowBars extends Phaser.Scene {
       
     });
 
-    // социальные иконки
-    if (this.state.platform === 'web' && this.state.user.login === '') {
-
-      this.auth = this.add.image(650, this.height - 90, 'profile');
-
-      this.clickButton(this.auth, (): void => {
-        let modal: Imodal = {
-          type: 1,
-          sysType: 15
-        }
-        this.state.modal = modal;
-        this.scene.launch('Modal', this.state);
-      });
-
-    } else this.buildMenu();
+    this.menu = BarsMenu.create(this);
 
     this.offline = this.add.sprite(650, this.height - 90, 'offline')
       .setInteractive()
@@ -387,17 +359,11 @@ class CowBars extends Phaser.Scene {
     // анимация монет и кристаллов
     this.сurrencyAnimation();
 
-    // анимация меню
-    this.menuAnimation();
-    
     // пульсация баланс-баров
     this.pulseBalance();
 
     // актуальный статус кнопки покупки корова
     this.buyCowStatus();
-
-    // отображение кнопок социальных механик
-    this.socialButtons();
 
     this.updateNativeShop();
 

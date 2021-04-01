@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Egg from './../../components/Egg';
 
 // автосохранение
 function autosave(): void {
@@ -44,7 +45,7 @@ function autosave(): void {
   if (typeof this.state.userChicken.autosaveCounter === 'number') this.state.userChicken.autosaveCounter++;
   else this.state.userChicken.autosaveCounter = 0;
 
-  let user: IchickenUserAutoSave = {
+  const user: IchickenUserAutoSave = {
     diamonds: this.state.user.diamonds,
     xp: this.state.user.xp,
     money: this.state.userChicken.money,
@@ -68,15 +69,13 @@ function autosave(): void {
   }
 
   for (let i in this.eggs.children.entries) {
-
-    let egg = this.eggs.children.entries[i];
+    const egg: Egg = this.eggs.children.entries[i];
     eggs.push({
       _id: egg._id,
       x: Math.round(egg.x),
       y: Math.round(egg.y),
-      type: egg.type
+      type: egg.animalType
     });
-
   }
 
   // localStorage.user = JSON.stringify(this.state.user);

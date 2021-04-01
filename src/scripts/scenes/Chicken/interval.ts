@@ -2,6 +2,7 @@ import {shortTime} from './../../general/basic';
 import Arrow from './../../components/Arrow';
 import Firework from './../../components/Firework';
 import Hearts from './../../components/Hearts';
+import Egg from './../../components/Egg';
 function interval(): void {
 
   // значение отступа для яиц, чтоб не прилегали к краям территории
@@ -131,8 +132,7 @@ function interval(): void {
               y: this.random(minY, maxY),
               _id: 'local_' + this.randomString(18)
             }
-
-            this.getEgg(egg);
+            Egg.create(this, egg);
 
             if (chicken.type === 0) chicken.diamond++;
             if (chicken.diamond >= 5 && chicken.type === 0) {

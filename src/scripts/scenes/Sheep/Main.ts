@@ -80,14 +80,12 @@ import {
   buySheep,
   collectWool,
   sellWool,
-  woolFly,
   confirmExpelSheep,
   expelSheep,
   woolSprite,
   dragSheepMerging
 } from './sheep';
 import { installTerritory } from './territories';
-import { createSpeechBubble } from '../../elements';
 import {
   balance,
   sheepPrice,
@@ -213,11 +211,9 @@ class Sheep extends Phaser.Scene {
   public buySheep = buySheep.bind(this);
   public collectWool = collectWool.bind(this);
   public sellWool = sellWool.bind(this);
-  public woolFly = woolFly.bind(this);
   public confirmExpelSheep = confirmExpelSheep.bind(this);
   public expelSheep = expelSheep.bind(this);
   public woolSprite = woolSprite.bind(this);
-  public createSpeechBubble = createSpeechBubble.bind(this);
   public showBank = showBank.bind(this);
   public freeCollector = freeCollector.bind(this);
   public buyCollector = buyCollector.bind(this);
@@ -355,8 +351,6 @@ class Sheep extends Phaser.Scene {
   public update(): void {
     // мозг овец
     this.sheepBrain();
-    // полет шерсти в хранилище
-    this.woolFly();
     // анимация полных хранилищ
     this.repositoryAnimation();
     // перетаскивание овец
