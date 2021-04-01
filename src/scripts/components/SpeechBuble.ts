@@ -1,3 +1,29 @@
+interface ItriangleCoords {
+  point1X: number;
+  point1Y: number;
+  point2X: number;
+  point2Y: number;
+  point3X: number;
+  point3Y: number;
+}
+
+const BASIC_SETTINGS: {
+  width: number,
+  position: Iposition,
+  triangleCoords: ItriangleCoords
+} = {
+  width: 340,
+  position: { x: 120, y: 360 },
+  triangleCoords: {
+    point1X: 340,
+    point1Y: 40,
+    point2X: 340,
+    point2Y: 10,
+    point3X: 380,
+    point3Y: 20,
+  },
+}
+
 /**
   * Подсказывающий бабл 
   * Конструктор принимает:
@@ -11,29 +37,15 @@
 export default class SpeechBubble {
   private text: string;
   private type: number;
-  private x: number = 120;
-  private y: number = 360;
-  private width: number = 340;
+  private x: number = BASIC_SETTINGS.position.x;
+  private y: number = BASIC_SETTINGS.position.y;
+  private width: number = BASIC_SETTINGS.width;
   private scene: Phaser.Scene;
   private bubble: Phaser.GameObjects.Graphics;
   private bubbleText: Phaser.GameObjects.Text;
   private bubbleFarmer: Phaser.GameObjects.Image;
   private bubbleBg: Phaser.GameObjects.Graphics;
-  private triangleCoords: {
-    point1X: number,
-    point1Y: number,
-    point2X: number,
-    point2Y: number,
-    point3X: number,
-    point3Y: number,
-  } = {
-    point1X: 340,
-    point1Y: 40,
-    point2X: 340,
-    point2Y: 10,
-    point3X: 380,
-    point3Y: 20,
-  };
+  private triangleCoords: ItriangleCoords = BASIC_SETTINGS.triangleCoords;
   constructor(scene: Phaser.Scene, text: string, type: number = 1) {
     this.text = text;
     this.type = type;
