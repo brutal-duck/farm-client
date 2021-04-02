@@ -29,7 +29,7 @@ function autosave(): void {
     let cw = this.cow.children.entries[i];
     cow.push({
       _id: cw._id,
-      type: cw.type,
+      type: cw.animalType,
       milk: cw.milk,
       x: cw.x,
       y: cw.y,

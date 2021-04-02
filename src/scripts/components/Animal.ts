@@ -113,7 +113,7 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
   }
 
   public eating() {
-
+    
   }
 
   public startDrag() {

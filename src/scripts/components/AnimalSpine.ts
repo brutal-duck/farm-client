@@ -13,7 +13,7 @@ export default class AnimalSpine {
     // @ts-ignore
     this.spine = scene.add.spine(x, y, spine, animation, play)
     this.spine.setDepth(y + 1000);
-    this.spine.customParams = { animation }
+    this.spine.customParams = { animation };
     this.spine.play(this.spine.customParams.animation, true);
     this.spine.skeletonData.animations.forEach(anim1 => {
       this.spine.skeletonData.animations.forEach(anim2 => {

@@ -1,5 +1,6 @@
 import Scrolling from '../../libs/Scrolling';
 import Cave from './../../components/Cave';
+import CowSprite from './../../components/CowSprite';
 
 function world(): void {
 
@@ -319,11 +320,12 @@ function world(): void {
 
   // подгружаем коров
   this.state.cow.map((data: Icow) => {
-    this.getCow(data._id, data.type, data.x, data.y, data.counter, data.milk, data.diamond, data.vector, false);
+    new CowSprite(this, { x: data.x, y: data.y }, data.type, data._id, data.counter, data.diamond, data.vector, false);
+    // this.getCow(data._id, data.type, data.x, data.y, data.counter, data.milk, data.diamond, data.vector, false);
   });
   
   // подгружаем яйца
-  this.milk = this.physics.add.group();
+  // this.milk = this.physics.add.group();
   // this.state.cowMilk.map((data: IcowMilk) => {
   //   this.getMilk(data);
   // });

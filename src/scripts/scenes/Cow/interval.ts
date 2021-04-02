@@ -83,69 +83,6 @@ function interval(): void {
 
       }
 
-      if (cow.milk === 1000) {
-
-        let territory = this.currentTerritory(cow.x, cow.y);
-
-        if (territory) {
-          
-          let countMilk: number = this.settings.territoriesCowSettings.find((item: IterritoriesCowSettings) => item.improve === territory.improve).countMilk;
-
-          let milks: number = 0;
-
-          for (let i in this.milk.children.entries) {
-
-            let milk = this.milk.children.entries[i];
-            let ter = this.currentTerritory(milk.x, milk.y);
-
-            if (ter?.block === territory.block && ter?.position === territory.position) milks++;
-
-          }
-
-          if (milks < countMilk && !cow.drag && (territory.type === 2 || territory.type === 3)) {
-
-            cow.milk = 0;
-
-            // рандом разброса молока
-            let minX: number = cow.x - indent;
-            let maxX: number = cow.x + indent;
-            let minY: number = cow.y + 40 - indent;
-            let maxY: number = cow.y + 40 + indent;
-
-            let left: number = (territory.position - 1) * 240 + indent;
-            let right: number = territory.position * 240 - indent;
-            let top: number = (territory.block) * 240 + indent;
-            let bottom: number = (territory.block + 1) * 240 - indent;
-
-            if (left > minX) minX = left;
-            if (maxX > right) maxX = right;
-            if (top > minY) minY = top;
-            if (maxY > bottom) {
-              maxY = bottom;
-              if (maxY < minY) minY -= 40;
-            }
- 
-            let milk: IcowMilk = {
-              type: cow.animalType,
-              x: this.random(minX, maxX),
-              y: this.random(minY, maxY),
-              _id: 'local_' + this.randomString(18)
-            }
-
-            this.getMilk(milk);
-
-            if (cow.animalType === 0) cow.diamond++;
-            if (cow.diamond >= 5 && cow.animalType === 0) {
-              Firework.create(this, cow, 1);
-              cow.destroy();
-            }
-
-          }
-
-        }
-
-      }
-
       // отнимаем очки у территории
       let territory = this.currentTerritory(cow.x, cow.y);
 
