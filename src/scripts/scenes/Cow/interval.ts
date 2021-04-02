@@ -63,8 +63,8 @@ function interval(): void {
       
       let breed: number;
 
-      if (cow.type === 0) breed = 1;
-      else breed = cow.type;
+      if (cow.animalType === 0) breed = 1;
+      else breed = cow.animalType;
       
       let points: IcowPoints = this.settings.cowSettings.find((item: IcowPoints) => item.breed === breed);
 
@@ -126,7 +126,7 @@ function interval(): void {
             }
  
             let milk: IcowMilk = {
-              type: cow.type,
+              type: cow.animalType,
               x: this.random(minX, maxX),
               y: this.random(minY, maxY),
               _id: 'local_' + this.randomString(18)
@@ -134,8 +134,8 @@ function interval(): void {
 
             this.getMilk(milk);
 
-            if (cow.type === 0) cow.diamond++;
-            if (cow.diamond >= 5 && cow.type === 0) {
+            if (cow.animalType === 0) cow.diamond++;
+            if (cow.diamond >= 5 && cow.animalType === 0) {
               Firework.create(this, cow, 1);
               cow.destroy();
             }

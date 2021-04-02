@@ -19,8 +19,8 @@ function balance(): Ibalance {
     let cow = this.cow.children.entries[i];
 
     let breed: number;
-    if (cow.type === 0) breed = 1;
-    else breed = cow.type;
+    if (cow.animalType === 0) breed = 1;
+    else breed = cow.animalType;
 
     let points: IcowPoints = this.settings.cowSettings.find((item: IcowPoints) => item.breed === breed);
     

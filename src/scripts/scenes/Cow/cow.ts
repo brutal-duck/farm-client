@@ -1,13 +1,12 @@
 import { random, randomString } from '../../general/basic';
-import { cow } from '../Modal/cow';
 import Firework from './../../components/Firework';
 import MergingCloud from './../../components/MergingCloud';
 import Milk from './../../components/Milk';
 import SpeechBubble from './../../components/SpeechBuble';
+import CowSprite from './../../components/CowSprite';
 
 // телепортация коров на свободные территории
 function teleportation(cow: any): void {
-
   let territories = [];
 
   // берем только нужные территории
@@ -65,7 +64,6 @@ function teleportation(cow: any): void {
   cow.aimX = 0;
   cow.aimY = 0;
   cow.distance = 0;
-
 }
 
 
@@ -205,16 +203,9 @@ function getCow(
   cow.moving = false; // движение
   cow.vector = vector; // вектор движения
   cow.counter = counter; // счетчик
-  cow.aim = false; // цель движения
-  cow.aimX = 0; // точка X цели
-  cow.aimY = 0; // точка Y цели
-  cow.distance = 0; // дистанция для целей
-  cow.drag = false; // метка перетаскивания
-  cow.body.onWorldBounds = true; // отскок от границ мира
-  cow.collision = 1; // временно врубаем счетчик коллизии
+
   cow.body.mass = 0; // вроде как инерция
-  cow.changeVector = false; // метка смены вектора
-  cow.merging = false; // метка коровы в мерджинге
+
   cow.type = type; // порода коровы
   cow.milk = milk; // молоко
   cow._id = id; // id
@@ -360,12 +351,8 @@ function checkMerging(territory: any, cow: any, position: string) {
         territory.merging = [];
 
       }
-
     }
-
-
   }
-  
 }
 
 
@@ -425,7 +412,7 @@ function buyCow(breed: number, shop: boolean = false): boolean {
       let x: number = random(530, 660);
       let y: number = random(530, 540);
       let id: string = 'local_' + randomString(18);
-      this.getCow(id, breed, x, y);
+      new CowSprite(this, { x, y }, breed, id);
       this.state.userCow.money -= cowPrice.price;
       this.state.userCow.countCow = cowPrice.countCow;
       this.game.scene.keys['CowBars'].updateCowPrice();
@@ -491,12 +478,12 @@ function collectMilk(cow: any, manualСollect: boolean = false): void {
   let length: number;
   let repository: any = false;
 
-  if (cow.type !== 0) {
+  if (cow.animalType !== 0) {
 
     if (manualСollect) {
 
       cow.milk = 0
-      let price: number = this.state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === cow.type).milkPrice;
+      let price: number = this.state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === cow.animalType).milkPrice;
       if (this.state.userCow.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
       this.state.userCow.money += price;
       // milk.destroy();
@@ -544,7 +531,7 @@ function collectMilk(cow: any, manualСollect: boolean = false): void {
 
       if (length) {
         Milk.create(this, { x: cow.x, y: cow.y - 50}, 0, path); // вместо нуля поставить cow.type
-        let price: number = this.state.cowSettings.cowSettings.find((data:IcowPoints) => data.breed === cow.type).milkPrice;
+        let price: number = this.state.cowSettings.cowSettings.find((data:IcowPoints) => data.breed === cow.animalType).milkPrice;
         if (this.state.userCow.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
         repository.volume++;
         repository.money += price;
@@ -664,12 +651,12 @@ function dragCowMerging(cow: any): void {
 
     if (data.x - (data.width / 2) <= cow.x && data.x + (data.width / 2) >= cow.x &&
       data.y - (data.height / 2) <= cow.y && data.y + (data.height / 2) >= cow.y &&
-      data.type === cow.type &&
-      cow.type > 0 &&
-      cow.type < max &&
+      data.type === cow.animalType &&
+      cow.animalType > 0 &&
+      cow.animalType < max &&
       data._id !== cow._id &&
       this.state.userCow.tutorial >= 0 &&
-      this.state.userCow.fair >= cow.type) {
+      this.state.userCow.fair >= cow.animalType) {
 
       return data;
 
@@ -685,7 +672,7 @@ function dragCowMerging(cow: any): void {
     }
     MergingCloud.create(this, position);
     
-    const type: number = cow.type + 1;
+    const type: number = cow.animalType + 1;
 
     findCow.milkStatus.destroy();
     findCow.destroy();

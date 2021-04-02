@@ -13,7 +13,7 @@ function setCollector(): void {
 
           let cow = this.cow.children.entries[i];
 
-          if (cow.milk >= 1000 && cow.type !== 0) {
+          if (cow.milk >= 1000 && cow.animalType !== 0) {
             this.collectMilk(cow);
             break;
           }

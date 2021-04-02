@@ -1,6 +1,6 @@
 export default class SpineCow {
   public spine: any
-  private scene: any
+  private scene: Phaser.Scene;
 
   constructor(
     scene: Phaser.Scene,
@@ -14,12 +14,10 @@ export default class SpineCow {
     this.scene = scene
 
     // @ts-ignore
-    this.spine = scene.add.spine(x, y, spine, animation, play)
+    this.spine = scene.add.spine(x, y, spine, animation, play);
+    this.scene.add.existing(this.spine);
     this.spine.setDepth(1000).setScale(1)
     this.spine.customParams = { animation }
-
-    this.scene.physics.add.existing(this.spine);  // Создаем физическое тело для Spine
-    
     this.spine.play(this.spine.customParams.animation, true)
     this.spine.setMix('move', 'stay', 0.3)
     this.spine.setMix('move', 'eat', 0.3)
@@ -79,7 +77,13 @@ export default class SpineCow {
       ease: 'Linear',
       delay: 2500,
       duration: 0,
-      onUpdate: (): void => { this.setAttachment('tag', 'tag-flip') }
+      onUpdate: (): void => { 
+        this.setAttachment('tag', 'tag-flip') 
+      },
+      onComplete: (): void => {
+        this.spine.body
+        console.log(this.spine.body)
+      }
     })
 
     timeline.add({
@@ -108,7 +112,9 @@ export default class SpineCow {
       ease: 'Linear',
       delay: 2500,
       duration: 0,
-      onUpdate: (): void => { this.setAttachment('tag', 'tag') }
+      onUpdate: (): void => { 
+        this.setAttachment('tag', 'tag') 
+      }
     })
 
     timeline.play()

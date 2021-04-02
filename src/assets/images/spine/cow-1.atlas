@@ -1,14 +1,14 @@
 
-cow.png
+cow-1.png
 size: 129,250
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 shadow
   rotate: false
-  xy: 1, 149
-  size: 99, 33
-  orig: 101, 35
+  xy: 1, 152
+  size: 99, 32
+  orig: 101, 34
   offset: 1, 1
   index: -1
 leg-hind-left
@@ -20,9 +20,9 @@ leg-hind-left
   index: -1
 tail
   rotate: false
-  xy: 111, 1
-  size: 16, 37
-  orig: 18, 39
+  xy: 110, 1
+  size: 17, 37
+  orig: 19, 39
   offset: 1, 1
   index: -1
 leg-front-left
@@ -34,21 +34,21 @@ leg-front-left
   index: -1
 body
   rotate: false
-  xy: 1, 82
+  xy: 1, 85
   size: 79, 65
   orig: 81, 67
   offset: 1, 1
   index: -1
 leg-hind-right
   rotate: false
-  xy: 91, 1
+  xy: 90, 1
   size: 18, 63
   orig: 20, 65
   offset: 1, 1
   index: -1
 leg-front-right
   rotate: false
-  xy: 82, 82
+  xy: 82, 85
   size: 18, 63
   orig: 20, 65
   offset: 1, 1
@@ -56,21 +56,21 @@ leg-front-right
 head
   rotate: false
   xy: 1, 1
-  size: 88, 79
-  orig: 90, 81
+  size: 87, 82
+  orig: 89, 84
   offset: 1, 1
   index: -1
 tag-flip
   rotate: false
-  xy: 1, 184
-  size: 23, 31
-  orig: 25, 33
+  xy: 1, 186
+  size: 20, 30
+  orig: 22, 32
   offset: 1, 1
   index: -1
 tag
   rotate: false
-  xy: 1, 217
-  size: 20, 31
-  orig: 22, 33
+  xy: 1, 218
+  size: 20, 30
+  orig: 22, 32
   offset: 1, 1
   index: -1

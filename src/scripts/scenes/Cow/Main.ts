@@ -101,7 +101,8 @@ import {
 } from '../../general/ads';
 import setCollector from './collector';
 import { showEventTutorial, doneEventTutor_0 } from '../Event/tutorial';
-import SpineCow from './SpineCow'
+
+import CowSprite from '../../components/CowSprite';
 
 
 class Cow extends Phaser.Scene {
@@ -235,39 +236,12 @@ class Cow extends Phaser.Scene {
 
 
   public create(): void {
-
-    // @ts-ignore
-    let cow: SpineCow = new SpineCow(this, this.cameras.main.centerX, this.cameras.main.centerY - 40)
-    cow.move()
-    // console.log(cow.spine.getCurrentAnimation().name);
-
-    
-    
-
-    // this.scene.scene.time.addEvent({
-    //   delay: 3000,
-    //   callback: (): void => {
-  
-    //     // this.player.setSkin('green')
-    //     // cow.setAttachment('tag', 'tag-flip')
-    //     // cow.spine.setScale(-1, 1)
-
-    //     // cow.setAnimation('stay', true)
-    //     if (cow.spine.getCurrentAnimation().name === 'stay') cow.setAnimation('move', true)
-    //     else if (cow.spine.getCurrentAnimation().name === 'move') cow.setAnimation('stay', true)
-  
-    //   },
-    //   loop: true
-    // })
-
-    console.log(cow);
-
-    
     // анимации
     this.animations();
 
     // сторим мир
     this.world();
+    const cow1: CowSprite = new CowSprite(this, { x: this.cameras.main.centerX, y: this.cameras.main.centerY -10 }, 1, '0');
 
     // перетаскивание
     this.drag();
@@ -315,7 +289,7 @@ class Cow extends Phaser.Scene {
 
   public update(): void {
     // мозг коров
-    this.cowBrain();
+    // this.cowBrain();
     // анимация полных хранилищ
     this.repositoryAnimation();
   }
