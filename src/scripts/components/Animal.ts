@@ -351,7 +351,6 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
     // }
   }
 
-  
   public setBrain(): void {
       // если не перетаскиваем
     if (!this.drag) {
@@ -484,5 +483,10 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
       if (this.moving || this.aim) this[`start${side}Moving`]();
       else this[`stay${side}`]();
     }
+  }
+
+  public destroy(): void {
+    super.destroy();
+    this.animalSpine.destroy();
   }
 }

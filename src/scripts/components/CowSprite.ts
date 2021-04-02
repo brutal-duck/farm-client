@@ -24,9 +24,9 @@ export default class CowSprite extends Animal {
     super.init();
     this.scene.cow.add(this);
     this.milkStatus = this.scene.add.sprite(this.x, this.y, 'milk-status').setVisible(false);
-    this.setListener();
+    this.setListeners();
   }
-  public setListener(): void {
+  public setListeners(): void {
     this.scene.click(this, (): void => {
 
       // let modal: Imodal = {
@@ -43,6 +43,7 @@ export default class CowSprite extends Animal {
   
     });
   }
+
   public setBrain(): void {
     super.setBrain();
     let statusPosition: number;
@@ -57,7 +58,7 @@ export default class CowSprite extends Animal {
         statusPosition = -50
       }
     if (this.milk >= 900 && !this.milkStatus.visible) this.milkStatus.setVisible(true);
-    if (this.milk < 900 && this.milkStatus.visible) this.milkStatus.setVisible(false);
+    if ((this.milk < 900 || this.drag) && this.milkStatus.visible) this.milkStatus.setVisible(false);
     this.milkStatus.setDepth(this.depth + 1);
     this.milkStatus.x = this.x + statusPosition;
     this.milkStatus.y = this.y - 60;

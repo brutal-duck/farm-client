@@ -645,13 +645,12 @@ function expelCow(): void {
 
 // мерджинг на поле
 function dragCowMerging(cow: any): void {
-  
   let max: number = this.state.cowSettings.cowSettings.length;
   let findCow: any = this.cow.children.entries.find((data: any) => {
 
     if (data.x - (data.width / 2) <= cow.x && data.x + (data.width / 2) >= cow.x &&
       data.y - (data.height / 2) <= cow.y && data.y + (data.height / 2) >= cow.y &&
-      data.type === cow.animalType &&
+      data.animalType === cow.animalType &&
       cow.animalType > 0 &&
       cow.animalType < max &&
       data._id !== cow._id &&
@@ -681,8 +680,7 @@ function dragCowMerging(cow: any): void {
 
     const id: string = 'local_' + randomString(18);
     
-    this.getCow(id, type, position.x, position.y, 0, 0, 0, 7, false);
-
+    new CowSprite(this, position, type, id, 0, 0, 7, false)
     this.tryTask(2, type);
     this.tryTask(4, type);
     this.checkAnimalTask();

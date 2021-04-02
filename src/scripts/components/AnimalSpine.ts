@@ -60,4 +60,8 @@ export default class AnimalSpine {
       this.spine.scaleX *= -1;
     }
   }
+
+  public destroy(): void {
+    this.spine.destroy();
+  }
 }
