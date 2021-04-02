@@ -1,12 +1,13 @@
 import AnimalSpine from './animalSpine'
 import Cow from './../scenes/Cow/Main';
 import Firework from './Firework';
-import MergingCloud from './MergingCloud';
+import Sheep from './../scenes/Sheep/Main';
+import Chicken from './../scenes/Chicken/Main';
 
-export default class Animal extends Phaser.Physics.Arcade.Sprite {
+export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
   public animalSpine: AnimalSpine;
   public type: string;
-  public scene: Cow;
+  public scene: Cow | Sheep | Chicken;
   public drag: boolean;
   public moving: boolean;
   public vector: number;
@@ -26,7 +27,7 @@ export default class Animal extends Phaser.Physics.Arcade.Sprite {
   public merging: boolean;
 
   constructor(
-    scene: Cow, 
+    scene: Cow | Sheep | Chicken, 
     position: Iposition, 
     texture: string,   
     id: string,
@@ -47,7 +48,7 @@ export default class Animal extends Phaser.Physics.Arcade.Sprite {
 
   }
 
-  private init(): void {
+  public init(): void {
     this.moving = false; // движение
     this.aim = false; // цель движения
     this.aimX = 0; // точка X цели
@@ -58,6 +59,7 @@ export default class Animal extends Phaser.Physics.Arcade.Sprite {
     this.changeVector = false; // метка смены вектора
     this.merging = false; // метка коровы в мерджинге
     this.distance = 0;
+    this.velocity = 0;
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     this.setDepth(this.y + 1000);
@@ -97,12 +99,14 @@ export default class Animal extends Phaser.Physics.Arcade.Sprite {
   }
 
   public startRightMoving() {
+    this.moving = true;
     this.setFlipX(false);
     this.animalSpine.setAnimation('move', true);
     this.animalSpine.setAttachment('tag', 'tag');
   }
 
   public startLeftMoving() {
+    this.moving = true;
     this.setFlipX(true);
     this.animalSpine.setAnimation('move', true);
     this.animalSpine.setAttachment('tag', 'tag-flip');
@@ -230,6 +234,8 @@ export default class Animal extends Phaser.Physics.Arcade.Sprite {
   public checkMerging(territory: any, position: string) {
   
     this.merging = true;
+    this.aim = false;
+
     territory.mergingCounter = 1;
     let check = territory.merging.find((data: any) => data._id === this._id);
   
@@ -345,63 +351,53 @@ export default class Animal extends Phaser.Physics.Arcade.Sprite {
     // }
   }
 
+  
   public setBrain(): void {
-    
       // если не перетаскиваем
     if (!this.drag) {
-
       let territory = this.scene.currentTerritory(this.x, this.y);
-      console.log(territory)
       if (territory) {
 
         if (territory.type !== 4 || this.aim) {
-
+          
           // проверка, не находится ли за бортом
           if (territory.type !== 2 && territory.type !== 3 && territory.type !== 4) {
 
             if (territory.type === 0 && this.expel) {
-              
               this.aim = false;
               this.spread = false;
               this.moving = false;
               this.setVelocity(0, 0);
               this.body.reset(this.x, this.y);
-
             } else this.scene.teleportation(this);
 
           }
 
           // если нет цели у коровы
           if (!this.aim && !this.expel) {
-
             // шанс смены вектора движения
             if (Phaser.Math.Between(1, 170) === 1) {
               this.changeVector = true;
               this.vector = Phaser.Math.Between(1, 8);
             }
-
             // шанс остановки или продолжения движения
             if (this.counter > Phaser.Math.Between(130, 170)) {
 
               if (this.counter >= 400) this.counter = 0;
 
               if (this.moving !== false) {
-
                 this.moving = false;
                 this.setVelocity(0, 0);
                 this.body.reset(this.x, this.y);
-
               }
 
             } else {
               
               if (!this.moving || this.changeVector) {
-
                 this.body.reset(this.x, this.y);
                 this.setVelocity(0, 0);
                 let x: number = Phaser.Math.Between(this.velocity - 10, this.velocity + 10);
                 let y: number = Phaser.Math.Between(this.velocity - 10, this.velocity + 10);
-
                 switch (this.vector) {
                   case 1: this.setVelocity(x, y); break;
                   case 2: this.setVelocity(-x, y); break;
@@ -412,12 +408,9 @@ export default class Animal extends Phaser.Physics.Arcade.Sprite {
                   case 7: this.setVelocity(0, y); break;
                   case 8: this.setVelocity(-x, 0); break;
                 }
-
               }
-
               this.moving = true;
               this.changeVector = false;
-
             }
 
             // счетчик коллизий для обратного движения
@@ -445,19 +438,15 @@ export default class Animal extends Phaser.Physics.Arcade.Sprite {
               this.distance = 0;
 
             } else {
-
               this.distance = distance;
-
             }
-      
           }
-          
         }
 
         // уход от границ
         if (((territory.position === 1 && this.x < this.width / 2) ||
-        (territory.position === 3 && this.x > (3 * this.height) - this.width / 2) ||
-        (territory.block === 8 && this.y > this.scene.topIndent + (8 * this.height) - this.height / 2))
+        (territory.position === 3 && this.x > (3 * this.scene.height) - this.width / 2) ||
+        (territory.block === 8 && this.y > this.scene.topIndent + (8 * this.scene.height) - this.height / 2))
         && !this.aim) {
 
         let aimX: number = Phaser.Math.Between(territory.x + Math.ceil(this.width / 2), territory.x - Math.ceil(this.width / 2) + 240);
@@ -466,52 +455,34 @@ export default class Animal extends Phaser.Physics.Arcade.Sprite {
 
         }
 
-      } else this.scene.teleportation(this);
+      } else {
+        this.scene.teleportation(this)
+      };
 
       this.setDepth(this.y + Math.round((this.height / 2) + 1)); // z-index
 
       // уход с ярмарки, если там не нужно быть
       if (territory.type === 4 && !this.merging && !this.aim) {
-
         this.merging = false;
         let randomX: number = Phaser.Math.Between(territory.x + 40, territory.x + 200);
         let randomY: number = Phaser.Math.Between(territory.y + 280, territory.y + 440);
         this.setAim(randomX, randomY);
 
       }
-
     }
-    
-    let statusPosition: number;
-
-
     if (!this.drag) {
-
       let side: string;
-
       if (this.merging) this.moving = false;
-
       if (this.vector === 2 ||
         this.vector === 3 ||
         this.vector === 7 ||
         this.vector === 8) {
         side = 'Left';
-        statusPosition = 50
       } else {
         side = 'Right';
-        statusPosition = -50
       }
-
-      if (this.moving || this.aim) this[`start${side}Moving`]()
+      if (this.moving || this.aim) this[`start${side}Moving`]();
       else this[`stay${side}`]();
-  
     }
-
-    // if (this.milk >= 900 && !this.milkStatus.visible) this.milkStatus.setVisible(true);
-    // if (this.milk < 900 && cow.milkStatus.visible) this.milkStatus.setVisible(false);
-    // this.milkStatus.setDepth(cow.depth + 1);
-    // cow.milkStatus.x = cow.x + statusPosition;
-    // cow.milkStatus.y = cow.y - 60;
-
   }
 }
