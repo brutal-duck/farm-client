@@ -1,5 +1,6 @@
 import { randomString } from '../../general/basic';
 import SpeechBubble from '../../components/animations/SpeechBuble';
+import CowSprite from './../../components/Animal/CowSprite';
 
 // расчет баланса фермы
 function balance(): Ibalance {
@@ -16,7 +17,7 @@ function balance(): Ibalance {
 
   for (let i in this.cow.children.entries) {
 
-    let cow = this.cow.children.entries[i];
+    let cow: CowSprite = this.cow.children.entries[i];
 
     let breed: number;
     if (cow.animalType === 0) breed = 1;

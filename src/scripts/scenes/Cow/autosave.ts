@@ -1,4 +1,5 @@
 import axios from 'axios';
+import CowSprite from './../../components/Animal/CowSprite';
 
 // автосохранение
 function autosave(): void {
@@ -26,7 +27,7 @@ function autosave(): void {
 
   for (let i in this.cow.children.entries) {
 
-    let cw = this.cow.children.entries[i];
+    let cw: CowSprite = this.cow.children.entries[i];
     cow.push({
       _id: cw._id,
       type: cw.animalType,

@@ -26,7 +26,7 @@ function teleportation(cow: any): void {
   // смотрим, где какая корова сидит
   for (let i in this.cow.children.entries) {
 
-    let c = this.cow.children.entries[i];
+    let c: CowSprite = this.cow.children.entries[i];
     let territory = this.currentTerritory(c.x, c.y);
 
     if (territory !== undefined) {
@@ -464,7 +464,7 @@ function expelCow(): void {
 // мерджинг на поле
 function dragCowMerging(cow: any): void {
   let max: number = this.state.cowSettings.cowSettings.length;
-  let findCow: any = this.cow.children.entries.find((data: any) => {
+  let findCow: CowSprite = this.cow.children.entries.find((data: any) => {
 
     if (data.x - (data.width / 2) <= cow.x && data.x + (data.width / 2) >= cow.x &&
       data.y - (data.height / 2) <= cow.y && data.y + (data.height / 2) >= cow.y &&

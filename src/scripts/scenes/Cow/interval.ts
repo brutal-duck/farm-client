@@ -2,6 +2,7 @@ import {shortTime} from './../../general/basic';
 import Arrow from '../../components/animations/Arrow';
 import Firework from '../../components/animations/Firework';
 import Hearts from '../../components/animations/Hearts';
+import CowSprite from './../../components/Animal/CowSprite';
 function interval(): void {
 
   // значение отступа для молока, чтоб не прилегали к краям территории
@@ -59,7 +60,7 @@ function interval(): void {
     // поедание территорий коровами
     for (let i in this.cow.children.entries) {
 
-      let cow = this.cow.children.entries[i];
+      let cow: CowSprite = this.cow.children.entries[i];
       
       let breed: number;
 
@@ -118,8 +119,8 @@ function interval(): void {
         if (territory.mergingCounter > 0) territory.mergingCounter++;
         if (territory.mergingCounter > this.state.maxMerginTime) {
 
-          let cow1: any;
-          let cow2: any;
+          let cow1: CowSprite | boolean;
+          let cow2: CowSprite | boolean;
 
           switch (territory.merging.length) {
             case 0:
