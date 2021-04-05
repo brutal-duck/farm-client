@@ -241,7 +241,6 @@ class Cow extends Phaser.Scene {
 
     // сторим мир
     this.world();
-    const cow1: CowSprite = new CowSprite(this, { x: this.cameras.main.centerX, y: this.cameras.main.centerY -10 }, 1, '0');
 
     // перетаскивание
     this.drag();

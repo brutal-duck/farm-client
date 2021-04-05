@@ -18,7 +18,11 @@ export default class AnimalSpine {
     this.spine.skeletonData.animations.forEach(anim1 => {
       this.spine.skeletonData.animations.forEach(anim2 => {
         if (anim1 !== anim2) {
-          this.spine.setMix(anim1.name, anim2.name, 0.3);
+          if (anim1.name === 'drag' || anim2.name === 'drag') {
+            this.spine.setMix(anim1.name, anim2.name, 0.1);
+          } else {
+            this.spine.setMix(anim1.name, anim2.name, 0.3);
+          }
         }
       });
     });
