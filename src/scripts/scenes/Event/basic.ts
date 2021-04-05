@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { randomString, shortNum } from './../../general/basic';
-import Firework from './../../components/Firework';
+import Firework from '../../components/animations/Firework';
 // цена животного
 function animalPrice(breed: number): {price: bigint, countAnimal: number} {
   let insideCounter: number = this.state.userEvent.countAnimal[breed - 1].counter;

@@ -1,6 +1,6 @@
 import { clickButtonUp } from '../../../general/clicks';
 import { openShop } from '../../../general/animations';
-import Hint from './../../../components/Hint';
+import Hint from '../../../components/animations/Hint';
 import { shortTime } from '../../../general/basic';
 
 class ShopBars extends Phaser.Scene {

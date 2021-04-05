@@ -1,8 +1,8 @@
 
-import Chicken from './../scenes/Chicken/Main';
-import Sheep from './../scenes/Sheep/Main';
-import Cow from './../scenes/Cow/Main';
-import { timer } from '../general/basic';
+import Chicken from '../../scenes/Chicken/Main';
+import Sheep from '../../scenes/Sheep/Main';
+import Cow from '../../scenes/Cow/Main';
+import { timer } from '../../general/basic';
 
 /**
   *  Пищера для кристаллического животного  

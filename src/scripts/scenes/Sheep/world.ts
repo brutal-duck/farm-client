@@ -1,5 +1,5 @@
 import Scrolling from '../../libs/Scrolling';
-import Cave from './../../components/Cave';
+import Cave from '../../components/gameObjects/Cave';
 
 function world(): void {
 

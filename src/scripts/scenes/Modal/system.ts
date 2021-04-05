@@ -1,6 +1,6 @@
 // системное окно
 import { shortTime } from '../../general/basic';
-import Hint from './../../components/Hint';
+import Hint from '../../components/animations/Hint';
 function systemWindow(): void {
   let height:number = 0;
 

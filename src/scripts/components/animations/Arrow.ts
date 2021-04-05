@@ -1,7 +1,7 @@
-import Sheep from './../scenes/Sheep/Main';
-import SheepBars from './../scenes/Sheep/SheepBars';
-import Tutorial from './../scenes/Tutorial';
-import Shop from './../scenes/Modal/Shop/Main';
+import Sheep from '../../scenes/Sheep/Main';
+import SheepBars from '../../scenes/Sheep/SheepBars';
+import Tutorial from '../../scenes/Tutorial';
+import Shop from '../../scenes/Modal/Shop/Main';
 /**
   *  Конструктор принимает:
   ** Объект сцены, состояние(номер типа) и необязательный параметр позиции.

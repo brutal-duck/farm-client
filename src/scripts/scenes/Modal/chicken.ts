@@ -1,5 +1,5 @@
 import { shortNum, romanize, timer, shortTime } from "../../general/basic";
-import Hint from './../../components/Hint';
+import Hint from '../../components/animations/Hint';
 
 // ярмарка
 function chickenFair(): void {

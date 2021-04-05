@@ -1,7 +1,7 @@
 import Scrolling from '../../libs/Scrolling';
-import Cave from './../../components/Cave';
-import CowSprite from './../../components/CowSprite';
-import CowGroup from './../../components/CowGroup';
+import Cave from '../../components/gameObjects/Cave';
+import CowSprite from '../../components/Animal/CowSprite';
+import CowGroup from '../../components/AnimalGroup/CowGroup';
 
 function world(): void {
 

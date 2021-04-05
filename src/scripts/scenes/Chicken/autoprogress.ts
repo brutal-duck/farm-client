@@ -1,5 +1,5 @@
 import { random, randomString } from '../../general/basic';
-import Egg from './../../components/Egg';
+import Egg from '../../components/Resource/Egg';
 
 // расчет прогресса во время отсутствия
 function autoprogress(load: boolean = false): void {

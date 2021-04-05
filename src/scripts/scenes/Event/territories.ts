@@ -1,4 +1,4 @@
-import Firework from './../../components/Firework';
+import Firework from '../../components/animations/Firework';
 function deleteTerritoriesLocks(): void {
 
   let lvl: number = this.state.userEvent.maxLevelAnimal;

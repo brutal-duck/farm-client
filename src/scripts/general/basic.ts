@@ -2,9 +2,9 @@ import axios from 'axios';
 import { FAPI } from '../libs/Fapi.js';
 import bridge from '@vkontakte/vk-bridge';
 import * as amplitude from 'amplitude-js';
-import Hint from './../components/Hint';
-import Firework from './../components/Firework';
-import Stars from './../components/Stars';
+import Hint from '../components/animations/Hint';
+import Firework from '../components/animations/Firework';
+import Stars from '../components/animations/Stars';
 
 // рандомное число
 function random(min: number, max: number): number {

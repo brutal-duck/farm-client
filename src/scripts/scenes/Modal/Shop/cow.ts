@@ -1,5 +1,5 @@
 import { shortNum, shortTime } from '../../../general/basic';
-import AnimalSpine from './../../../components/AnimalSpine';
+import AnimalSpine from '../../../components/Animal/AnimalSpine';
 
 // монеты
 function cowMoney(): void {

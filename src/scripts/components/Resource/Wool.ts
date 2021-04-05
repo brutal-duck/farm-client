@@ -1,5 +1,5 @@
 import Resource from './Resource';
-import Sheep from './../scenes/Sheep/Main';
+import Sheep from '../../scenes/Sheep/Main';
 
 export default class Wool extends Resource {
   public scene: Sheep;

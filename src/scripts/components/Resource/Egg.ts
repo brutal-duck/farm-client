@@ -1,5 +1,5 @@
 import Resource from "./Resource";
-import Chicken from './../scenes/Chicken/Main';
+import Chicken from '../../scenes/Chicken/Main';
 
 export default class Egg extends Resource {
   public scene: Chicken;

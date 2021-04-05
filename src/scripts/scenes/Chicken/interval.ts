@@ -1,8 +1,8 @@
 import {shortTime} from './../../general/basic';
-import Arrow from './../../components/Arrow';
-import Firework from './../../components/Firework';
-import Hearts from './../../components/Hearts';
-import Egg from './../../components/Egg';
+import Arrow from '../../components/animations/Arrow';
+import Firework from '../../components/animations/Firework';
+import Hearts from '../../components/animations/Hearts';
+import Egg from '../../components/Resource/Egg';
 function interval(): void {
 
   // значение отступа для яиц, чтоб не прилегали к краям территории

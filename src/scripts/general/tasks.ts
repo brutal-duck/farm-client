@@ -1,5 +1,5 @@
 import AllTasks from '../tasks';
-import SpeechBubble from './../components/SpeechBuble';
+import SpeechBubble from '../components/animations/SpeechBuble';
 
 // список заданий текущей главы
 function partTasks(): Itasks[] {

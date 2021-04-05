@@ -6,8 +6,8 @@ import {
 import { shortTime } from '../general/basic';
 import { dragSheep, showSheepSprite } from '../general/animations';
 import { dragEventAnimal } from './Event/animations';
-import Arrow from './../components/Arrow';
-import Hint from './../components/Hint';
+import Arrow from '../components/animations/Arrow';
+import Hint from '../components/animations/Hint';
 
 let farmer: any = require("./../../assets/images/farmer.png");
 

@@ -1,5 +1,5 @@
 import { random, getRandomBool, randomString, shortTime} from "../../general/basic";
-import MergingCloud from './../../components/MergingCloud';
+import MergingCloud from '../../components/animations/MergingCloud';
 
 let x: number = 600;
 let y: number = 360;

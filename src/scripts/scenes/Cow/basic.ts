@@ -1,5 +1,5 @@
 import { randomString } from '../../general/basic';
-import SpeechBubble from './../../components/SpeechBuble';
+import SpeechBubble from '../../components/animations/SpeechBuble';
 
 // расчет баланса фермы
 function balance(): Ibalance {

@@ -1,5 +1,5 @@
 import { random, randomString } from '../../general/basic';
-import MergingCloud from './../../components/MergingCloud';
+import MergingCloud from '../../components/animations/MergingCloud';
 
 // функция реверсивного движения животного
 function reverse(animal: Phaser.Physics.Arcade.Sprite): void {

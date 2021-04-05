@@ -1,5 +1,5 @@
 import { random } from "../../general/basic";
-import SpeechBubble from './../../components/SpeechBuble';
+import SpeechBubble from '../../components/animations/SpeechBuble';
 
 function drag(): void {
 

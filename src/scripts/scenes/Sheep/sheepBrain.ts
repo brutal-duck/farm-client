@@ -1,5 +1,5 @@
 import { random } from '../../general/basic';
-import Hearts from './../../components/Hearts';
+import Hearts from '../../components/animations/Hearts';
 
 function sheepBrain(): void {
 

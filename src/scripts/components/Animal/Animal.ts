@@ -1,8 +1,8 @@
 import AnimalSpine from './AnimalSpine'
-import Cow from './../scenes/Cow/Main';
-import Firework from './Firework';
-import Sheep from './../scenes/Sheep/Main';
-import Chicken from './../scenes/Chicken/Main';
+import Cow from '../../scenes/Cow/Main';
+import Firework from '../animations/Firework';
+import Sheep from '../../scenes/Sheep/Main';
+import Chicken from '../../scenes/Chicken/Main';
 
 export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
   public animalSpine: AnimalSpine;

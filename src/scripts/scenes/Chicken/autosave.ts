@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Egg from './../../components/Egg';
+import Egg from '../../components/Resource/Egg';
 
 // автосохранение
 function autosave(): void {

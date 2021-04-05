@@ -1,6 +1,6 @@
 import { shortTime } from '../../general/basic';
-import Arrow from './../../components/Arrow';
-import Hearts from './../../components/Hearts';
+import Arrow from '../../components/animations/Arrow';
+import Hearts from '../../components/animations/Hearts';
 
 function interval(): void {
 

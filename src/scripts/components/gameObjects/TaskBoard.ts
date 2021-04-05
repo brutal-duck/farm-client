@@ -1,6 +1,6 @@
-import SheepBars from './../scenes/Sheep/SheepBars';
-import ChickenBars from './../scenes/Chicken/ChickenBars';
-import CowBars from './../scenes/Cow/CowBars';
+import SheepBars from '../../scenes/Sheep/SheepBars';
+import ChickenBars from '../../scenes/Chicken/ChickenBars';
+import CowBars from '../../scenes/Cow/CowBars';
 
 /**
   *  Планка заданий в барах сцен    

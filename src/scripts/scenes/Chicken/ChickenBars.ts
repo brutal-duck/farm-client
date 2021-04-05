@@ -20,9 +20,9 @@ import {
   getCurrency
 } from '../../general/animations';
 import { clickTaskBoard } from '../../general/tasks';
-import TaskBoard from './../../components/TaskBoard';
-import Collector from './../../components/Collector';
-import BarsMenu from './../../components/BarsMenu';
+import TaskBoard from '../../components/gameObjects/TaskBoard';
+import Collector from '../../components/gameObjects/Collector';
+import BarsMenu from '../../components/gameObjects/BarsMenu';
 
 class ChickenBars extends Phaser.Scene {
   constructor() {

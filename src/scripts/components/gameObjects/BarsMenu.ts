@@ -1,8 +1,8 @@
 
-import SheepBars from './../scenes/Sheep/SheepBars';
-import ChickenBars from './../scenes/Chicken/ChickenBars';
-import CowBars from './../scenes/Cow/CowBars';
-import EventBars from './../scenes/Event/EventBars';
+import SheepBars from '../../scenes/Sheep/SheepBars';
+import ChickenBars from '../../scenes/Chicken/ChickenBars';
+import CowBars from '../../scenes/Cow/CowBars';
+import EventBars from '../../scenes/Event/EventBars';
 
 export default class BarsMenu extends Phaser.GameObjects.Sprite {
   public scene: SheepBars | ChickenBars | CowBars | EventBars; 

@@ -1,6 +1,6 @@
 import { shortTime, randomString, shortNum } from "./basic";
-import Arrow from './../components/Arrow';
-import Firework from './../components/Firework';
+import Arrow from '../components/animations/Arrow';
+import Firework from '../components/animations/Firework';
 
 // получение животного по бусту
 function createBoostAnimal(): void {

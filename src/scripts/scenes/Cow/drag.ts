@@ -1,6 +1,6 @@
 import { random } from "../../general/basic";
-import SpeechBubble from './../../components/SpeechBuble';
-import CowSprite from './../../components/CowSprite';
+import SpeechBubble from '../../components/animations/SpeechBuble';
+import CowSprite from '../../components/Animal/CowSprite';
 
 function drag(): void {
 

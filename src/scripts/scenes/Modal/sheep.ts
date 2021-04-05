@@ -1,6 +1,6 @@
 import { shortNum, romanize, timer, shortTime } from "../../general/basic";
 import { FAPI } from '../../libs/Fapi.js';
-import Hint from './../../components/Hint';
+import Hint from '../../components/animations/Hint';
 
 // ярмарка
 function sheepFair(): void {

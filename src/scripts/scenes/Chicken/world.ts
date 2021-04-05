@@ -1,6 +1,6 @@
 import Scrolling from '../../libs/Scrolling';
-import Cave from './../../components/Cave';
-import Egg from './../../components/Egg';
+import Cave from '../../components/gameObjects/Cave';
+import Egg from '../../components/Resource/Egg';
 
 function world(): void {
 

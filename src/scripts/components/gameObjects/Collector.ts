@@ -1,8 +1,8 @@
-import { shortTime } from "../general/basic";
-import SheepBars from './../scenes/Sheep/SheepBars';
-import ChickenBars from './../scenes/Chicken/ChickenBars';
-import EventBars from './../scenes/Event/EventBars';
-import CowBars from './../scenes/Cow/CowBars';
+import { shortTime } from "../../general/basic";
+import SheepBars from '../../scenes/Sheep/SheepBars';
+import ChickenBars from '../../scenes/Chicken/ChickenBars';
+import EventBars from '../../scenes/Event/EventBars';
+import CowBars from '../../scenes/Cow/CowBars';
 
 /**
   *  Круговой бар собирателя    

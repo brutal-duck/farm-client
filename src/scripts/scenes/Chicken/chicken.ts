@@ -1,8 +1,8 @@
 import { random, randomString } from '../../general/basic';
-import Firework from './../../components/Firework';
-import MergingCloud from './../../components/MergingCloud';
-import Egg from './../../components/Egg';
-import SpeechBubble from './../../components/SpeechBuble';
+import Firework from '../../components/animations/Firework';
+import MergingCloud from '../../components/animations/MergingCloud';
+import Egg from '../../components/Resource/Egg';
+import SpeechBubble from '../../components/animations/SpeechBuble';
 
 // телепортация куриц на свободные территории
 function teleportation(chicken: any): void {

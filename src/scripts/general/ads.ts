@@ -3,7 +3,7 @@ import * as amplitude from 'amplitude-js';
 import { randomString } from './basic';
 import * as platform from 'platform';
 import axios from 'axios';
-import Firework from './../components/Firework';
+import Firework from '../components/animations/Firework';
 
 // поиск рекламы
 function findAd(): void {

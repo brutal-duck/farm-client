@@ -1,9 +1,9 @@
 import { random, randomString } from '../../general/basic';
-import Firework from './../../components/Firework';
-import MergingCloud from './../../components/MergingCloud';
-import Milk from './../../components/Milk';
-import SpeechBubble from './../../components/SpeechBuble';
-import CowSprite from './../../components/CowSprite';
+import Firework from '../../components/animations/Firework';
+import MergingCloud from '../../components/animations/MergingCloud';
+import Milk from '../../components/Resource/Milk';
+import SpeechBubble from '../../components/animations/SpeechBuble';
+import CowSprite from '../../components/Animal/CowSprite';
 
 // телепортация коров на свободные территории
 function teleportation(cow: any): void {

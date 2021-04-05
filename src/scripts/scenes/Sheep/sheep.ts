@@ -1,9 +1,9 @@
 import { random, randomString } from '../../general/basic';
-import Arrow from './../../components/Arrow';
-import Firework from './../../components/Firework';
-import MergingCloud from './../../components/MergingCloud';
-import Wool from './../../components/Wool';
-import SpeechBubble from './../../components/SpeechBuble';
+import Arrow from '../../components/animations/Arrow';
+import Firework from '../../components/animations/Firework';
+import MergingCloud from '../../components/animations/MergingCloud';
+import Wool from '../../components/Resource/Wool';
+import SpeechBubble from '../../components/animations/SpeechBuble';
 
 
 // телепортация овец на свободные территории

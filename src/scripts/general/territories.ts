@@ -1,6 +1,6 @@
 // территория на которой находится объект
-import Firework from './../components/Firework';
-import Stars from './../components/Stars';
+import Firework from '../components/animations/Firework';
+import Stars from '../components/animations/Stars';
 function currentTerritory(x: number, y: number): object {
 
   let block: number = Math.ceil((y - this.topIndent) / this.height);

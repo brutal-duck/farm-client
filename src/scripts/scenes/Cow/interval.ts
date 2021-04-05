@@ -1,7 +1,7 @@
 import {shortTime} from './../../general/basic';
-import Arrow from './../../components/Arrow';
-import Firework from './../../components/Firework';
-import Hearts from './../../components/Hearts';
+import Arrow from '../../components/animations/Arrow';
+import Firework from '../../components/animations/Firework';
+import Hearts from '../../components/animations/Hearts';
 function interval(): void {
 
   // значение отступа для молока, чтоб не прилегали к краям территории

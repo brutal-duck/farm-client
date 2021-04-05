@@ -24,8 +24,8 @@ import {
   plusDiamonds,
 } from '../../general/animations';
 import { plusResourceAnimation } from './animations';
-import Collector from './../../components/Collector';
-import BarsMenu from './../../components/BarsMenu';
+import Collector from '../../components/gameObjects/Collector';
+import BarsMenu from '../../components/gameObjects/BarsMenu';
 
 class EventBars extends Phaser.Scene {
   constructor() {

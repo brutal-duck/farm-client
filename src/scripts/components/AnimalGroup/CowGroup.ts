@@ -1,6 +1,6 @@
 
-import CowSprite from './CowSprite';
-import Cow from './../scenes/Cow/Main';
+import CowSprite from '../Animal/CowSprite';
+import Cow from '../../scenes/Cow/Main';
 
 export default class CowGroup extends Phaser.Physics.Arcade.Group {
   public children: Phaser.Structs.Set<CowSprite>

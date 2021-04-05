@@ -1,8 +1,8 @@
 // окно подтверждения изгнания
 import { random, getRandomBool, randomString, shortTime, romanize, shortNum} from "../../general/basic";
 import axios  from 'axios';
-import Hint from './../../components/Hint';
-import MergingCloud from './../../components/MergingCloud';
+import Hint from '../../components/animations/Hint';
+import MergingCloud from '../../components/animations/MergingCloud';
 
 function confirmExpelAnimal(): void {
     

@@ -1,5 +1,5 @@
 // поставить территорию
-import Firework from './../../components/Firework';
+import Firework from '../../components/animations/Firework';
 function installTerritory(): void {
 
   if (this.state.exchangeTerritory === 2 ||

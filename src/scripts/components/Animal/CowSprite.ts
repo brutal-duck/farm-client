@@ -1,6 +1,6 @@
 
 import Animal from './Animal';
-import Cow from './../scenes/Cow/Main';
+import Cow from '../../scenes/Cow/Main';
 
 export default class CowSprite extends Animal {
   public animalType: number;
