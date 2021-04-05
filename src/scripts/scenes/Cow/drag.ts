@@ -4,11 +4,11 @@ import CowSprite from './../../components/CowSprite';
 
 function drag(): void {
 
-  this.input.on('dragstart', (pointer: any, cow: any): void => {
+  this.input.on('dragstart', (pointer: any, cow: CowSprite): void => {
     cow.startDrag()
   });
 
-  this.input.on('drag', (pointer: any, cow: any, dragX: number, dragY: number): void => {
+  this.input.on('drag', (pointer: any, cow: CowSprite, dragX: number, dragY: number): void => {
     cow.dragging(dragX, dragY);
   });
 

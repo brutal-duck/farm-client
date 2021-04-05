@@ -129,7 +129,7 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
   public dragging(dragX, dragY) {
     if (this.drag) {
       this.setPosition(dragX, dragY);
-      this.setDepth(dragY + Math.round((this.height / 2) + 100));
+      this.setDepth(dragY + Math.round((this.height / 2) + 1000));
     }
   }
 
