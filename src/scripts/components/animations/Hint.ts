@@ -1,4 +1,8 @@
 
+import SheepBars from './../../scenes/Sheep/SheepBars';
+import ChickenBars from './../../scenes/Chicken/ChickenBars';
+import CowBars from './../../scenes/Cow/CowBars';
+import EventBars from './../../scenes/Event/EventBars';
 /**
   *  Советы в барах сцен    
   * 
@@ -11,11 +15,11 @@
 
 export default class Hint extends Phaser.GameObjects.Text {
   
-  public scene: Phaser.Scene;
+  public scene: SheepBars | ChickenBars | CowBars | EventBars;
   public delay: number;
   public bg: Phaser.GameObjects.Graphics;
 
-  constructor (scene: Phaser.Scene, y: number, text: string, delay: number) {
+  constructor (scene: SheepBars | ChickenBars | CowBars | EventBars, y: number, text: string, delay: number) {
     super(scene, scene.cameras.main.centerX, scene.cameras.main.centerY + y, text, {
       fontFamily: 'Bip',
       fontSize: '35px',
@@ -26,11 +30,12 @@ export default class Hint extends Phaser.GameObjects.Text {
     this.init(scene, delay);
   }
 
-  static create(scene: Phaser.Scene, y: number, text: string, delay: number): Hint {
+  static create(scene: SheepBars | ChickenBars | CowBars | EventBars, y: number, text: string, delay: number): Hint {
+    if (scene.hint) scene.hint.destroy();
     return new Hint(scene, y, text, delay);
   }
   
-  private init(scene: Phaser.Scene, delay: number): void {
+  private init(scene: SheepBars | ChickenBars | CowBars | EventBars, delay: number): void {
     this.scene = scene;
     this.delay = delay;
     this.scene.add.existing(this);

@@ -26,6 +26,7 @@ import {
 import { plusResourceAnimation } from './animations';
 import Collector from '../../components/gameObjects/Collector';
 import BarsMenu from '../../components/gameObjects/BarsMenu';
+import Hint from './../../components/animations/Hint';
 
 class EventBars extends Phaser.Scene {
   constructor() {
@@ -66,7 +67,8 @@ class EventBars extends Phaser.Scene {
   public map: Phaser.GameObjects.Image;
   public collectorBtn: Phaser.GameObjects.Image;
   public starterpackIcon: Phaser.GameObjects.Image;
-
+  public hint: Hint;
+  
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);

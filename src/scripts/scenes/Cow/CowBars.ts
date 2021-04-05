@@ -24,6 +24,7 @@ import { clickTaskBoard } from '../../general/tasks';
 import TaskBoard from '../../components/gameObjects/TaskBoard';
 import Collector from '../../components/gameObjects/Collector';
 import BarsMenu from '../../components/gameObjects/BarsMenu';
+import Hint from './../../components/animations/Hint';
 class CowBars extends Phaser.Scene {
   constructor() {
     super('CowBars');
@@ -62,6 +63,7 @@ class CowBars extends Phaser.Scene {
   public nativeShop: Phaser.GameObjects.Graphics;
   public nativeShopCounter: Phaser.GameObjects.Text;
   public starterpackIcon: Phaser.GameObjects.Image;
+  public hint: Hint;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -79,7 +81,6 @@ class CowBars extends Phaser.Scene {
   public shortTime = shortTime.bind(this);
   public getCurrency = getCurrency.bind(this);
   public clickTaskBoard = clickTaskBoard.bind(this);
-
 
 
   public init(state: Istate): void {

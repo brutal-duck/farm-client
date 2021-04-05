@@ -23,6 +23,7 @@ import { clickTaskBoard } from '../../general/tasks';
 import TaskBoard from '../../components/gameObjects/TaskBoard';
 import Collector from '../../components/gameObjects/Collector';
 import BarsMenu from '../../components/gameObjects/BarsMenu';
+import Hint from './../../components/animations/Hint';
 
 class ChickenBars extends Phaser.Scene {
   constructor() {
@@ -62,6 +63,7 @@ class ChickenBars extends Phaser.Scene {
   public nativeShop: Phaser.GameObjects.Graphics;
   public nativeShopCounter: Phaser.GameObjects.Text;
   public starterpackIcon: Phaser.GameObjects.Image;
+  public hint: Hint;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
