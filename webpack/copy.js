@@ -1,9 +1,6 @@
 const fse = require('fs-extra');
 
-let srcDir = './src/assets/spine';
-let destDir = './build/src/assets/spine';
-
-fse.copy(srcDir, destDir, (err) => {
+fse.copy('./src/assets/spine', './build/src/assets/spine', (err) => {
   if (err) {
     console.log("ERROR BUILD", err);
   } else {
