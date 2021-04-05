@@ -71,13 +71,21 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
   }
 
   public createSpine(): void {
-    this.animalSpine = AnimalSpine.create(this.scene, this.body.x, this.body.y, this.type);
+    this.scene.time.addEvent({
+      delay: 100,
+      callback: () => {
+        this.animalSpine = AnimalSpine.create(this.scene, this.body.x, this.body.y, this.type);
+      },
+      callbackScope: this
+    })
   }
 
   public preUpdate() {
     // update spine animation
-    this.animalSpine.update(this);
-    this.setBrain();
+    if (this.scene) {
+      this.animalSpine?.update(this);
+      this.setBrain();
+    }
   }
 
   public stayRight() {
@@ -85,8 +93,8 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
     this.moving = false;
     this.body.reset(this.x, this.y);
     this.setFlipX(false);
-    this.animalSpine.setAnimation('stay', true); 
-    this.animalSpine.setAttachment('tag', 'tag');
+    this.animalSpine?.setAnimation('stay', true); 
+    this.animalSpine?.setAttachment('tag', 'tag');
   }
 
   public stayLeft() {
@@ -94,22 +102,22 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
     this.moving = false;
     this.body.reset(this.x, this.y);
     this.setFlipX(true);
-    this.animalSpine.setAnimation('stay', true); 
-    this.animalSpine.setAttachment('tag', 'tag-flip');
+    this.animalSpine?.setAnimation('stay', true); 
+    this.animalSpine?.setAttachment('tag', 'tag-flip');
   }
 
   public startRightMoving() {
     this.moving = true;
     this.setFlipX(false);
-    this.animalSpine.setAnimation('move', true);
-    this.animalSpine.setAttachment('tag', 'tag');
+    this.animalSpine?.setAnimation('move', true);
+    this.animalSpine?.setAttachment('tag', 'tag');
   }
 
   public startLeftMoving() {
     this.moving = true;
     this.setFlipX(true);
-    this.animalSpine.setAnimation('move', true);
-    this.animalSpine.setAttachment('tag', 'tag-flip');
+    this.animalSpine?.setAnimation('move', true);
+    this.animalSpine?.setAttachment('tag', 'tag-flip');
   }
 
   public eating() {
@@ -123,7 +131,7 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
     this.setVelocity(0, 0); // отменяем передвижение
     this.setCollideWorldBounds(true) // чтобы не могли перетащить за пределы
     this.drag = true;
-    this.animalSpine.setAnimation('drag', true);
+    this.animalSpine?.setAnimation('drag', true);
   }
 
   public dragging(dragX, dragY) {
@@ -134,7 +142,7 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
   }
 
   public endDrag() {
-    this.animalSpine.setAnimation('stay', true);
+    this.animalSpine?.setAnimation('stay', true);
     this.scene.scrolling.enabled = true; // включаем скролл
     this.scene.scrolling.wheel = true; // включаем колесо
     this.setCollideWorldBounds(true);
@@ -366,8 +374,9 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
   }
 
   public destroy(): void {
+    this.animalSpine?.destroy();
     super.destroy();
-    this.animalSpine.destroy();
+    
   }
 
   public get openedTerritory(): any[] {

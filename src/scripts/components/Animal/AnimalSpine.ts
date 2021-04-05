@@ -1,7 +1,7 @@
 import Animal from './Animal';
 
 export default class AnimalSpine {
-  public spine: any
+  public spine: any;
   constructor(
     scene: Phaser.Scene,
     x: number,
@@ -11,7 +11,7 @@ export default class AnimalSpine {
     play: boolean = true
   ) {
     // @ts-ignore
-    this.spine = scene.add.spine(x, y, spine, animation, play)
+    this.spine = scene.add.spine(x, y, spine, animation, play);
     this.spine.setDepth(y);
     if (play && animation) {
       this.spine.customParams = { animation };
@@ -58,20 +58,20 @@ export default class AnimalSpine {
   }
 
   public update(player: Animal) {
-    // spine position
-    this.spine.x = player.body.center.x;
-    this.spine.y = player.body.center.y;
-    // spine flip
-    if (player.flipX !== this.spine.flipX) {
-      this.spine.flipX = player.flipX;
-      this.spine.scaleX *= -1;
+    if (player) {
+      // spine position
+      this.spine.x = player.body.center.x;
+      this.spine.y = player.body.center.y;
+      // spine flip
+      if (player.flipX !== this.spine.flipX) {
+        this.spine.flipX = player.flipX;
+        this.spine.scaleX *= -1;
+      }
     }
   }
 
   public destroy(): void {
-    // this.spine.play('', false);
     this.spine.destroy();
-    console.log(this.spine)
   }
 
   public setDepth(value: number): void {

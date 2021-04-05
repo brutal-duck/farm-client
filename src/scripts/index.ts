@@ -70,7 +70,7 @@ window.onload = (): void => {
 
     // конфиг игры
     let config: Phaser.Types.Core.GameConfig = {
-      type: Phaser.AUTO,
+      type: Phaser.WEBGL,
       width: canvasWidth,
       height: canvasHeight,
       parent: 'root',

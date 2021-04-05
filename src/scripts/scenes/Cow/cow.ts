@@ -134,10 +134,10 @@ function checkMerging(territory: any, cow: CowSprite, position: string) {
         }
         MergingCloud.create(this, position);
         let type: number = cow1.animalType + 1;
-        cow1.destroy();
-        cow2.destroy();
-        cow1.milkStatus.destroy();
-        cow2.milkStatus.destroy();
+        // cow1.destroy();
+        // cow2.destroy();
+        // cow1.milkStatus.destroy();
+        // cow2.milkStatus.destroy();
         let id: string = 'local_' + randomString(18);
         let x: number = territory.x + 120;
         let y: number = territory.y + 240;
