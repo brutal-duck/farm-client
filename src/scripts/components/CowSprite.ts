@@ -1,7 +1,9 @@
 
 import Animal from './Animal';
 import Cow from './../scenes/Cow/Main';
-
+import SpeechBubble from './SpeechBuble';
+import MergingCloud from './MergingCloud';
+import { randomString } from '../general/basic';
 
 export default class CowSprite extends Animal {
   public animalType: number;
@@ -53,9 +55,9 @@ export default class CowSprite extends Animal {
         this.vector === 3 ||
         this.vector === 7 ||
         this.vector === 8) {
-        statusPosition = 50
+        statusPosition = 50;
       } else {
-        statusPosition = -50
+        statusPosition = -50;
       }
     if (this.milk >= 900 && !this.milkStatus.visible) this.milkStatus.setVisible(true);
     if ((this.milk < 900 || this.drag) && this.milkStatus.visible) this.milkStatus.setVisible(false);
@@ -64,4 +66,6 @@ export default class CowSprite extends Animal {
     this.milkStatus.y = this.y - 60;
     }
   }
+
+  
 }

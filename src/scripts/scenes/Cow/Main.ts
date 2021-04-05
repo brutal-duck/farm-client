@@ -68,10 +68,6 @@ import {
 import { animations, repositoryAnimation } from './animations';
 import {
   teleportation,
-  reverse,
-  aim,
-  spineSheep,
-  getCow,
   checkMerging,
   cancelMerging,
   buyCow,
@@ -101,9 +97,6 @@ import {
 } from '../../general/ads';
 import setCollector from './collector';
 import { showEventTutorial, doneEventTutor_0 } from '../Event/tutorial';
-
-import CowSprite from '../../components/CowSprite';
-
 
 class Cow extends Phaser.Scene {
   constructor() {
@@ -145,10 +138,6 @@ class Cow extends Phaser.Scene {
   public clickTerritory = clickTerritory.bind(this);
   public animations = animations.bind(this);
   public teleportation = teleportation.bind(this);
-  public reverse = reverse.bind(this);
-  public aim = aim.bind(this);
-  public spineSheep = spineSheep.bind(this);
-  public getCow = getCow.bind(this);
   public currentTerritory = currentTerritory.bind(this);
   public changeSprite = changeSprite.bind(this);
   public fairLevelUp = fairLevelUp.bind(this);
@@ -252,12 +241,6 @@ class Cow extends Phaser.Scene {
     this.interval();
     this.setCollector();
 
-
-    // Спайновая овца
-    this.spineSheep()
-
-
-    console.log(this.state)
     let cursors = this.input.keyboard.createCursorKeys();
     cursors.space.on('down', (): void => {
 

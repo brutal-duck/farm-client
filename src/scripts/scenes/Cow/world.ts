@@ -323,12 +323,6 @@ function world(): void {
     new CowSprite(this, { x: data.x, y: data.y }, data.type, data._id, data.counter, data.diamond, data.vector, false);
     // this.getCow(data._id, data.type, data.x, data.y, data.counter, data.milk, data.diamond, data.vector, false);
   });
-  
-  // подгружаем яйца
-  // this.milk = this.physics.add.group();
-  // this.state.cowMilk.map((data: IcowMilk) => {
-  //   this.getMilk(data);
-  // });
 
   // туториал, если нужен
   // if (this.state.userCow.tutorial === 0) {

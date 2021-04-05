@@ -1,5 +1,6 @@
 import { random } from "../../general/basic";
 import SpeechBubble from './../../components/SpeechBuble';
+import CowSprite from './../../components/CowSprite';
 
 function drag(): void {
 
@@ -12,7 +13,7 @@ function drag(): void {
   });
 
   // дропзоны для мерджинга
-  this.input.on('drop', (pointer: any, cow: any, zone: any): void => {
+  this.input.on('drop', (pointer: any, cow: CowSprite, zone: any): void => {
 
     let territory = this.currentTerritory(cow.x, cow.y);
     if (territory) {
@@ -28,15 +29,15 @@ function drag(): void {
           this.cancelMerging(territory, cow, false);
         } else {
           if (zone.type === 'top') {
-            cow.checkMerging(territory, 'top');
+            this.checkMerging(territory, cow, 'top');
           } else if (zone.type === 'bottom') {
-            cow.checkMerging(territory, 'bottom');
+            this.checkMerging(territory, cow, 'bottom');
           }
         }
       } else {
         let randomX: number = random(territory.x + 40, territory.x + 200);
         let randomY: number = random(territory.y + 280, territory.y + 440);
-        this.aim(cow, randomX, randomY);
+        cow.setAim(randomX, randomY);
       }
      } else this.teleportation(cow);
   });

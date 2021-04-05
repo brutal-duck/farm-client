@@ -128,8 +128,7 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
 
   public dragging(dragX, dragY) {
     if (this.drag) {
-      this.x = dragX;
-      this.y = dragY;
+      this.setPosition(dragX, dragY);
       this.setDepth(dragY + Math.round((this.height / 2) + 100));
     }
   }
@@ -231,125 +230,6 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
 
   }
 
-  public checkMerging(territory: any, position: string) {
-  
-    this.merging = true;
-    this.aim = false;
-
-    territory.mergingCounter = 1;
-    let check = territory.merging.find((data: any) => data._id === this._id);
-  
-    if (check === undefined) {
-  
-      // если на этой позиции уже стоит корова
-      if (territory.merging.length === 1 && territory.merging[0].position === position) {
-  
-        if (position === 'top') position = 'bottom';
-        else if (position === 'bottom') position = 'top';
-  
-      }
-  
-      // запоминаем
-      territory.merging.push({
-        _id: this._id,
-        type: this.type,
-        position: position
-      });
-  
-      // ставим на парковку
-      if (position === 'top') {
-  
-        this.stayRight();
-        this.vector = 8;
-        this.y = territory.y + 30;
-        this.x = territory.x + 160;
-  
-      } else if (position === 'bottom') {
-  
-        this.stayRight();
-        this.vector = 8;
-        this.y = territory.y + 130;
-        this.x = territory.x + 160;
-  
-      }
-  
-    } else {
-  
-      if (check.position === 'top' && position === 'bottom') check.position = 'bottom';
-      if (check.position === 'bottom' && position === 'top') check.position = 'top';
-  
-      // обновляем положение парковки
-      if (position === 'top') {
-  
-        this.stayRight();
-        this.vector = 8;
-        this.y = territory.y + 30;
-        this.x = territory.x + 160;
-  
-      } else if (position === 'bottom') {
-  
-        this.stayRight();
-        this.vector = 8;
-        this.y = territory.y + 130;
-        this.x = territory.x + 160;
-  
-      }
-  
-    }
-  
-    // проверяем успешный на мерджинг
-    // if (territory.merging.length === 2) {
-  
-    //   let cow1 = this.scene.cow.children.entries.find((data: any) => data._id === territory.merging[0]._id);
-    //   let cow2 = this.scene.cow.children.entries.find((data: any) => data._id === territory.merging[1]._id);
-  
-    //   if (cow1?.type === cow2?.type) {
-        
-    //     this.scene.time.addEvent({ delay: 100, callback: (): void => {
-  
-    //       // let position: Iposition = {
-    //       //   x: territory.x + 120,
-    //       //   y: territory.y + 120
-    //       // }
-    //       // MergingCloud.create(this.scene, position);
-    //       // let type: number = cow1.type + 1;
-    //       // cow1.destroy();
-    //       // cow2.destroy();
-    //       // cow1.milkStatus.destroy();
-    //       // cow2.milkStatus.destroy();
-    //       // let id: string = 'local_' + randomString(18);
-    //       // let x: number = territory.x + 120;
-    //       // let y: number = territory.y + 240;
-    //       // let cow = this.getCow(id, type, x, y, 0, 0, 0, 7, false);
-    //       // let aimX: number = random(territory.x + 40, territory.x + 200);
-    //       // let aimY: number = random(territory.y + 280, territory.y + 440);
-    //       // this.aim(cow, aimX, aimY);
-    //       // this.tryTask(2, type);
-    //       // this.tryTask(4, type);
-    //       // this.checkAnimalTask();
-  
-    //     }, callbackScope: this, loop: false });
-  
-    //     territory.merging = [];
-  
-    //   } else {
-  
-    //     if (cow1 && cow2) {
-    //       SpeechBubble.create(this, this.state.lang.mergingMessageBreed, 1);
-    //       this.cancelMerging(territory, cow1, cow2);
-  
-    //     } else {
-          
-    //       // костыль
-    //       for (let i in this.cow.children.entries) this.cow.children.entries[i].merging = false;
-    //       if (cow1) this.teleportation(cow2);
-    //       if (cow2) this.teleportation(cow2);
-    //       territory.merging = [];
-  
-    //     }
-    //   }
-    // }
-  }
 
   public setBrain(): void {
       // если не перетаскиваем
