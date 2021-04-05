@@ -132,7 +132,7 @@ export default function typePreload(): void {
         this.load.image('day-purple', dayPurple);
         this.load.image('day-red', dayRed);
         this.load.image('award-received', awardReceived);
-        this.load.image('done-chapter-button', doneChapterButton);
+        this.load.image('tasks-close', tasksClose);
         break;
       case 7: // окно выдачи донатных кристаллов +
         this.load.image('done-chapter-button', doneChapterButton);
