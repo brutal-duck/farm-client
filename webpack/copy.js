@@ -1,17 +1,12 @@
 const fse = require('fs-extra');
 
-const fs = require('fs');
-// fs.mkdir('./build/src/assets/spine/', { recursive: true }, (err) => {
-//   if (err) throw err;
-// });
+let srcDir = './src/assets/spine';
+let destDir = './build/src/assets/spine';
 
-// const srcDir = './src/assets/spine';
-// const destDir = './build/src/assets/spine/';
-
-fse.copySync('./src/assets/spine', './build/src/assets/spine', (err) => {
+fse.copy(srcDir, destDir, (err) => {
   if (err) {
-    console.log("ERROR!", err);
+    console.log("ERROR BUILD", err);
   } else {
-    console.log("SUCCESS!");
+    console.log("SUCCESS BUILD WITH SPINE");
   }
 });
