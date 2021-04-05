@@ -230,7 +230,7 @@ function buyCow(breed: number, shop: boolean = false): boolean {
       let x: number = random(530, 660);
       let y: number = random(530, 540);
       let id: string = 'local_' + randomString(18);
-      this.cow.generate(this, { x, y }, breed, id);
+      this.cow.generate(this, { x, y }, breed, id, 0, 0, 7, true);
       this.state.userCow.money -= cowPrice.price;
       this.state.userCow.countCow = cowPrice.countCow;
       this.game.scene.keys['CowBars'].updateCowPrice();

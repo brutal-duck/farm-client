@@ -69,7 +69,9 @@ export default class AnimalSpine {
   }
 
   public destroy(): void {
+    // this.spine.play('', false);
     this.spine.destroy();
+    console.log(this.spine)
   }
 
   public setDepth(value: number): void {

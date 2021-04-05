@@ -14,7 +14,7 @@ export default class CowSprite extends Animal {
     counter: number = 0,
     diamond: number = 0,
     vector: number = 7,
-    fireworkAnim: boolean = false){
+    fireworkAnim: boolean = false) {
     super(scene, position, `cow-${animalType}`, id, counter, diamond, vector, fireworkAnim);
     this.animalType = animalType;
     this.milk = 0;
@@ -38,9 +38,9 @@ export default class CowSprite extends Animal {
     this.milkStatus = this.scene.add.sprite(this.x, this.y, 'milk-status').setVisible(false);
     this.setListeners();
   }
+
   public setListeners(): void {
     this.scene.click(this, (): void => {
-
       // let modal: Imodal = {
       //   type: 1,
       //   sysType: 1
@@ -48,38 +48,38 @@ export default class CowSprite extends Animal {
       // this.state.modal = modal;
       // this.state.animal = cow;
       // this.scene.launch('Modal', this.state);
-  
       if (this.milk >= 900) {
         this.scene.collectMilk(this, true);
       }
-  
     });
   }
 
   public setBrain(): void {
     super.setBrain();
-    let statusPosition: number;
+    this.setMilkStatusPosition();
+    this.setMilkStatusVisibility();
+  }
+
+  private setMilkStatusPosition(): void {
+    let statusPosition: number = -50;
     if (!this.drag) {
       if (this.merging) this.moving = false;
-      if (this.vector === 2 ||
-        this.vector === 3 ||
-        this.vector === 7 ||
-        this.vector === 8) {
-        statusPosition = 50;
-      } else {
-        statusPosition = -50;
-      }
-   
+      if (this.vector === 2 || this.vector === 3 || this.vector === 7 || this.vector === 8) {
+        statusPosition *= -1;
+      } 
+
     this.milkStatus.setDepth(this.depth + 1);
     this.milkStatus.setPosition(this.x + statusPosition, this.y - 60)
     }
+  }
 
+  private setMilkStatusVisibility(): void {
     if (this.milk >= 900 && !this.milkStatus.visible) this.milkStatus.setVisible(true);
     if ((this.milk < 900 || this.drag) && this.milkStatus.visible) this.milkStatus.setVisible(false);
   }
 
   public teleportation(): void {
-    const territories = this.openedTerritory;
+    const territories: any[] = this.openedTerritory;
 
     // смотрим, где какая корова сидит
     for (let i in this.scene.cow.children.entries) {
