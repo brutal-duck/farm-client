@@ -63,7 +63,7 @@ class CowBars extends Phaser.Scene {
   public nativeShop: Phaser.GameObjects.Graphics;
   public nativeShopCounter: Phaser.GameObjects.Text;
   public starterpackIcon: Phaser.GameObjects.Image;
-  public hint: Hint;
+  public hints: Phaser.GameObjects.Group;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -91,6 +91,7 @@ class CowBars extends Phaser.Scene {
     this.countIncrease = 0;
     this.userDiamonds = this.state.user.diamonds;
     this.stepsDiamonds = [];
+    this.hints = this.add.group();
     
   }
 

@@ -67,8 +67,8 @@ class EventBars extends Phaser.Scene {
   public map: Phaser.GameObjects.Image;
   public collectorBtn: Phaser.GameObjects.Image;
   public starterpackIcon: Phaser.GameObjects.Image;
-  public hint: Hint;
-  
+  public hints: Phaser.GameObjects.Group;
+
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
@@ -93,6 +93,7 @@ class EventBars extends Phaser.Scene {
     this.countIncrease = 0;
     this.userDiamonds = this.state.user.diamonds;
     this.stepsDiamonds = [];
+    this.hints = this.add.group();
     
   }
 
