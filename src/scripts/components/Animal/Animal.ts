@@ -62,7 +62,7 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
     this.basicVelocity = 20;
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
-    this.setDepth(this.y + 1000);
+    this.setDepth(this.y);
     this.setAlpha(0.0000001);
     this.setInteractive();
     this.scene.input.setDraggable(this);
