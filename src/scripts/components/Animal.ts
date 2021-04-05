@@ -1,4 +1,4 @@
-import AnimalSpine from './animalSpine'
+import AnimalSpine from './AnimalSpine'
 import Cow from './../scenes/Cow/Main';
 import Firework from './Firework';
 import Sheep from './../scenes/Sheep/Main';
@@ -368,5 +368,24 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
   public destroy(): void {
     super.destroy();
     this.animalSpine.destroy();
+  }
+
+  public get openedTerritory(): any[] {
+    let territories: any[] = [];
+
+  // берем только нужные территории
+    for (let i in this.scene.territories.children.entries) {
+      
+      const territory: any = this.scene.territories.children.entries[i];
+      if (territory.type === 2 || territory.type === 3) {
+        territories.push({
+          _id: territory._id,
+          block: territory.block,
+          position: territory.position,
+          count: 0
+        });
+      }
+    }
+    return territories;
   }
 }

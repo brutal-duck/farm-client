@@ -97,6 +97,7 @@ import {
 } from '../../general/ads';
 import setCollector from './collector';
 import { showEventTutorial, doneEventTutor_0 } from '../Event/tutorial';
+import CowGroup from '../../components/CowGroup';
 
 class Cow extends Phaser.Scene {
   constructor() {
@@ -105,7 +106,7 @@ class Cow extends Phaser.Scene {
   
   public state: Istate;
   public scrolling: Scrolling;
-  public cow: Phaser.Physics.Arcade.Group;
+  public cow: CowGroup;
   public territories: Phaser.Physics.Arcade.Group;
   public milk: Phaser.Physics.Arcade.Group;
   public bubble: Phaser.GameObjects.Graphics;;

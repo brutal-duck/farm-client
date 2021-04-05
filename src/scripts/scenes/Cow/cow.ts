@@ -141,7 +141,8 @@ function checkMerging(territory: any, cow: CowSprite, position: string) {
         let id: string = 'local_' + randomString(18);
         let x: number = territory.x + 120;
         let y: number = territory.y + 240;
-        const cow: CowSprite = new CowSprite(this, { x, y }, type, id, 0, 0, 7, false);
+        
+        const cow: CowSprite = this.cow.generate(this, { x, y }, type, id, 0, 0, 7, false);
         let aimX: number = random(territory.x + 40, territory.x + 200);
         let aimY: number = random(territory.y + 280, territory.y + 440);
         cow.setAim( aimX, aimY);
@@ -229,7 +230,7 @@ function buyCow(breed: number, shop: boolean = false): boolean {
       let x: number = random(530, 660);
       let y: number = random(530, 540);
       let id: string = 'local_' + randomString(18);
-      new CowSprite(this, { x, y }, breed, id);
+      this.cow.generate(this, { x, y }, breed, id);
       this.state.userCow.money -= cowPrice.price;
       this.state.userCow.countCow = cowPrice.countCow;
       this.game.scene.keys['CowBars'].updateCowPrice();
@@ -496,8 +497,7 @@ function dragCowMerging(cow: any): void {
     cow.destroy();
 
     const id: string = 'local_' + randomString(18);
-    
-    new CowSprite(this, position, type, id, 0, 0, 7, false)
+    this.cow.generate(this, position, type, id, 0, 0, 7, false);
     this.tryTask(2, type);
     this.tryTask(4, type);
     this.checkAnimalTask();
