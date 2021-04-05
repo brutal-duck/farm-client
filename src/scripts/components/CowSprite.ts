@@ -28,6 +28,14 @@ export default class CowSprite extends Animal {
     diamond: number = 0,
     vector: number = 7,
     fireworkAnim: boolean = false): CowSprite {
+      console.log(scene, 'scene')
+      console.log(position, 'position')
+      console.log(animalType, 'animalType')
+      console.log(id, 'id')
+      console.log(counter, 'counter')
+      console.log(diamond, 'diamond')
+      console.log( vector, 'vector')
+      console.log(fireworkAnim, 'fireworkAnim')
     const cowSprite: CowSprite = new CowSprite(scene, position, animalType, id, counter, diamond, vector, fireworkAnim);
     return cowSprite;
   }

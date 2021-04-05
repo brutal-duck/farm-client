@@ -165,8 +165,8 @@ function takeDiamondCow(): void {
       if (this.cow.children.entries.length <= 50) {
 
         let id: string = 'local_' + randomString(18);
-        this.getCow(id, 0, x, y, 0, 500);
-
+        this.cow.generate(this, { x, y }, 0, id, 0, 0);
+        // this.getCow(id, 0, x, y, 0, 500);
       } else {
 
         let diamondCow = this.cow.children.entries.find((data: any) => data.type === 0);
@@ -180,7 +180,8 @@ function takeDiamondCow(): void {
         } else {
           
           let id: string = 'local_' + randomString(18);
-          this.getCow(id, 0, x, y, 0, 500);
+          this.cow.generate(this, { x, y }, 0, id,);
+          // this.getCow(id, 0, x, y, 0, 500);
 
         }
 
