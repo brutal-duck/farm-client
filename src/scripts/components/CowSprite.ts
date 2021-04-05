@@ -42,6 +42,7 @@ export default class CowSprite extends Animal {
 
   public init(): void {
     super.init();
+    this.basicVelocity = 30;
     this.milkStatus = this.scene.add.sprite(this.x, this.y, 'milk-status').setVisible(false);
     this.setListeners();
   }

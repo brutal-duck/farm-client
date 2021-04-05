@@ -110,7 +110,6 @@ class Cow extends Phaser.Scene {
   public milk: Phaser.Physics.Arcade.Group;
   public bubble: Phaser.GameObjects.Graphics;;
   public bubbleText: Phaser.GameObjects.Text;
-  public velocity: number = 40; // дефолтное ускорение коров
   public topIndent: number = 240; // верхний отступ для блоков территорий
   public bottomIndent: number = 240; // нижний отступ мира (не считая нахлест)
   public height: number; // ширина-высота территории

@@ -20,7 +20,7 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
   public aimY: number;
   public collision: number;
   public spread: boolean;
-  public velocity: number;
+  public basicVelocity: number;
   public distance: number;
   public expel: boolean;
   public changeVector: boolean;
@@ -45,7 +45,6 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
     this.counter = counter; // счетчик
     this.init();
     if (fireworkAnim) Firework.create(scene, position, 1);
-
   }
 
   public init(): void {
@@ -59,7 +58,7 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
     this.changeVector = false; // метка смены вектора
     this.merging = false; // метка коровы в мерджинге
     this.distance = 0;
-    this.velocity = 0;
+    this.basicVelocity = 20;
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     this.setDepth(this.y + 1000);
@@ -151,8 +150,8 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
 
     this.collision = 1;
   
-    let x: number = Phaser.Math.Between(this.velocity - 5, this.velocity + 5);
-    let y: number = Phaser.Math.Between(this.velocity - 5, this.velocity + 5);
+    let x: number = Phaser.Math.Between(this.basicVelocity - 5, this.basicVelocity + 5);
+    let y: number = Phaser.Math.Between(this.basicVelocity - 5, this.basicVelocity + 5);
     
     this.setVelocity(0, 0);
     this.body.reset(this.x, this.y);
@@ -275,8 +274,8 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
               if (!this.moving || this.changeVector) {
                 this.body.reset(this.x, this.y);
                 this.setVelocity(0, 0);
-                let x: number = Phaser.Math.Between(this.velocity - 10, this.velocity + 10);
-                let y: number = Phaser.Math.Between(this.velocity - 10, this.velocity + 10);
+                let x: number = Phaser.Math.Between(this.basicVelocity - 10, this.basicVelocity + 10);
+                let y: number = Phaser.Math.Between(this.basicVelocity - 10, this.basicVelocity + 10);
                 switch (this.vector) {
                   case 1: this.setVelocity(x, y); break;
                   case 2: this.setVelocity(-x, y); break;
