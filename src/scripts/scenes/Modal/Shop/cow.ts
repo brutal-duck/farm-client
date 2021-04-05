@@ -124,8 +124,7 @@ function cow(): void {
       this.add.sprite(110, y + this.height + 110, 'disable-cow');
     } else {
 
-      let sprite: Phaser.GameObjects.Sprite = this.add.sprite(110, y + this.height + 110, 'cow' + cow.breed);
-      sprite.anims.play('cow-drag' + cow.breed, true);
+      const sprite: Phaser.GameObjects.Sprite = this.add.sprite(110, y + this.height + 110, 'cow' + cow.breed);
 
     }
 

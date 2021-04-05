@@ -290,7 +290,7 @@ function buyCow(breed: number, shop: boolean = false): boolean {
 
 
 // собиратель молока
-function collectMilk(cow: any, manualСollect: boolean = false): void {
+function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
 
   let path: Iposition;
   let length: number;

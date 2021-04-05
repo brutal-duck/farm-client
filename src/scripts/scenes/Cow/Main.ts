@@ -64,7 +64,7 @@ import {
   checkExchangeRepository,
   buyTerritory
 } from '../../general/territories';
-import { animations, repositoryAnimation } from './animations';
+import { repositoryAnimation } from './animations';
 import {
   teleportation,
   checkMerging,
@@ -135,7 +135,6 @@ class Cow extends Phaser.Scene {
   public interval = interval.bind(this);
   public click = click.bind(this);
   public clickTerritory = clickTerritory.bind(this);
-  public animations = animations.bind(this);
   public teleportation = teleportation.bind(this);
   public currentTerritory = currentTerritory.bind(this);
   public changeSprite = changeSprite.bind(this);
@@ -224,9 +223,6 @@ class Cow extends Phaser.Scene {
 
 
   public create(): void {
-    // анимации
-    this.animations();
-
     // сторим мир
     this.world();
 
@@ -269,8 +265,6 @@ class Cow extends Phaser.Scene {
 
 
   public update(): void {
-    // мозг коров
-    // this.cowBrain();
     // анимация полных хранилищ
     this.repositoryAnimation();
   }
