@@ -6,26 +6,29 @@ export default class AnimalSpine {
     scene: Phaser.Scene,
     x: number,
     y: number,
-    spine: string = 'cow',
+    spine: string,
     animation: string = 'stay',
     play: boolean = true
   ) {
     // @ts-ignore
     this.spine = scene.add.spine(x, y, spine, animation, play)
-    this.spine.setDepth(y + 1000);
-    this.spine.customParams = { animation };
-    this.spine.play(this.spine.customParams.animation, true);
-    this.spine.skeletonData.animations.forEach(anim1 => {
-      this.spine.skeletonData.animations.forEach(anim2 => {
-        if (anim1 !== anim2) {
-          if (anim1.name === 'drag' || anim2.name === 'drag') {
-            this.spine.setMix(anim1.name, anim2.name, 0.1);
-          } else {
-            this.spine.setMix(anim1.name, anim2.name, 0.3);
+    this.spine.setDepth(y);
+    if (play && animation) {
+      this.spine.customParams = { animation };
+      this.spine.play(this.spine.customParams.animation, play);
+      this.spine.skeletonData.animations.forEach(anim1 => {
+        this.spine.skeletonData.animations.forEach(anim2 => {
+          if (anim1 !== anim2) {
+            if (anim1.name === 'drag' || anim2.name === 'drag') {
+              this.spine.setMix(anim1.name, anim2.name, 0.1);
+            } else {
+              this.spine.setMix(anim1.name, anim2.name, 0.3);
+            }
           }
-        }
+        });
       });
-    });
+    }
+    
   }
 
   static create(
