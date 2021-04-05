@@ -494,17 +494,26 @@ class CowPreload extends Phaser.Scene {
 
       this.load.setPath('./src/assets/spine/');
       // @ts-ignore
-      this.load.spine('cow-0', 'cow-0.json', 'cow-0.atlas', true)
+      this.load.spine('cow-0', 'cow-0.json', 'cow-0.atlas', true);
       // @ts-ignore
-      this.load.spine('cow-1', 'cow-1.json', 'cow-1.atlas', true)
+      this.load.spine('cow-1', 'cow-1.json', 'cow-1.atlas', true);
       // @ts-ignore
-      this.load.spine('cow-2', 'cow-2.json', 'cow-2.atlas', true)
+      this.load.spine('cow-2', 'cow-2.json', 'cow-2.atlas', true);
       // @ts-ignore
-      this.load.spine('cow-3', 'cow-3.json', 'cow-3.atlas', true)
+      this.load.spine('cow-3', 'cow-3.json', 'cow-3.atlas', true);
       // @ts-ignore
-      this.load.spine('cow-4', 'cow-4.json', 'cow-4.atlas', true)
+      this.load.spine('cow-4', 'cow-4.json', 'cow-4.atlas', true);
       // @ts-ignore
-      this.load.spine('cow-5', 'cow-5.json', 'cow-5.atlas', true)
+      this.load.spine('cow-5', 'cow-5.json', 'cow-5.atlas', true);
+      // @ts-ignore
+      this.load.spine('cow-6', 'cow-6.json', 'cow-6.atlas', true);
+      // @ts-ignore
+      this.load.spine('cow-7', 'cow-7.json', 'cow-7.atlas', true);
+      // @ts-ignore
+      this.load.spine('cow-8', 'cow-8.json', 'cow-8.atlas', true);
+      // @ts-ignore
+      this.load.spine('cow-9', 'cow-9.json', 'cow-9.atlas', true);
+      
       this.isSpineReady = true;
       
     }
