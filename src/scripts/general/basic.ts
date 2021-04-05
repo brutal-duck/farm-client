@@ -730,7 +730,7 @@ function getNewbieAward(): void {
       this.state.userSheep.money += this.convertDiamonds(10);
       this.game.scene.keys['SheepBars'].plusMoney();
       const text: string = this.state.lang.dailyNewbieHint0.replace('$1', String(this.convertDiamonds(10))); 
-      this.game.scene.keys[`${this.state.farm}Bars`].hint = Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
+      Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
       break;
     }
 
@@ -739,7 +739,7 @@ function getNewbieAward(): void {
       this.state.dailyAwards[i] = false;
       let counter: number = 0;
       const text: string = this.state.lang.dailyNewbieHint1; 
-      this.game.scene.keys[`${this.state.farm}Bars`].hint = Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
+      Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
 
       let timeout: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
         
@@ -761,7 +761,7 @@ function getNewbieAward(): void {
       let type: number = this.state.userSheep.fair + 1;
       let counter: number = 0;
       const text: string = this.state.lang.dailyNewbieHint2.replace('$1', String(type)); 
-      this.game.scene.keys[`${this.state.farm}Bars`].hint = Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
+      Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
       let timeout: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
         
         counter++;
@@ -815,7 +815,7 @@ function getNewbieAward(): void {
       let type: number = this.state.userChicken.fair + 1;
       let counter: number = 0;
       const text: string = this.state.lang.dailyNewbieHint5.replace('$1', String(type)); 
-      this.game.scene.keys[`${this.state.farm}Bars`].hint = Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
+      Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
 
       let timeout: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
         
@@ -836,7 +836,7 @@ function getNewbieAward(): void {
 
     if (i === 6 && this.state.dailyAwards[i] && this.state.farm === 'Chicken') {
       const text: string = this.state.lang.dailyNewbieHint6; 
-      this.game.scene.keys[`${this.state.farm}Bars`].hint = Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
+      Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
       this.state.dailyAwards[i] = false;
       this.state.userChicken.collector += 3 * 60 * 60;
       this.state.userChicken.collectorTakenTime = this.state.userChicken.collector;
@@ -847,7 +847,7 @@ function getNewbieAward(): void {
 
     if (i === 7 && this.state.dailyAwards[i] && this.state.farm === 'Sheep') {
       const text: string = this.state.lang.dailyNewbieHint7; 
-      this.game.scene.keys[`${this.state.farm}Bars`].hint = Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
+      Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
       let counter: number = 0;
       let timeout: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
         
