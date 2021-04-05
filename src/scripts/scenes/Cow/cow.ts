@@ -121,8 +121,8 @@ function checkMerging(territory: any, cow: CowSprite, position: string) {
   // проверяем успешный на мерджинг
   if (territory.merging.length === 2) {
 
-    let cow1 = this.cow.children.entries.find((data: any) => data._id === territory.merging[0]._id);
-    let cow2 = this.cow.children.entries.find((data: any) => data._id === territory.merging[1]._id);
+    let cow1: CowSprite = this.cow.children.entries.find((data: any) => data._id === territory.merging[0]._id);
+    let cow2: CowSprite = this.cow.children.entries.find((data: any) => data._id === territory.merging[1]._id);
 
     if (cow1?.animalType === cow2?.animalType) {
       
@@ -164,8 +164,8 @@ function checkMerging(territory: any, cow: CowSprite, position: string) {
         
         // костыль
         for (let i in this.cow.children.entries) this.cow.children.entries[i].merging = false;
-        if (cow1) this.teleportation(cow2);
-        if (cow2) this.teleportation(cow2);
+        if (cow1) cow2.teleportation();
+        if (cow2) cow2.teleportation();
         territory.merging = [];
 
       }

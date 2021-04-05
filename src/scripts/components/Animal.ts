@@ -388,4 +388,10 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
     }
     return territories;
   }
+
+  public setDepth(value: number): this {
+    super.setDepth(value);
+    this.animalSpine?.setDepth(value);
+    return this;
+  }
 }

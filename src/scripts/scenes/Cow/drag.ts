@@ -39,10 +39,10 @@ function drag(): void {
         let randomY: number = random(territory.y + 280, territory.y + 440);
         cow.setAim(randomX, randomY);
       }
-     } else this.teleportation(cow);
+     } else cow.teleportation();
   });
 
-  this.input.on('dragend', (pointer: any, cow: any): void => {
+  this.input.on('dragend', (pointer: any, cow: CowSprite): void => {
     cow.endDrag();
     let typeTerritory = this.currentTerritory(cow.x, cow.y);
     if (typeTerritory) {
@@ -71,7 +71,7 @@ function drag(): void {
       cow.expel = true;
       this.state.animal = cow;
       this.confirmExpelCow();
-      this.teleportation(cow);
+      cow.teleportation();
     }
   });
 }

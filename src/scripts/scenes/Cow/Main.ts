@@ -2,7 +2,6 @@ import Scrolling from '../../libs/Scrolling';
 import collisions from '../../general/collisions';
 import world from './world';
 import drag from './drag';
-import cowBrain from './cowBrain';
 import interval from './interval';
 import autoprogress from './autoprogress';
 import autosave from './autosave';
@@ -133,7 +132,6 @@ class Cow extends Phaser.Scene {
   public world = world.bind(this);
   public drag = drag.bind(this);
   public collisions = collisions.bind(this);
-  public cowBrain = cowBrain.bind(this);
   public interval = interval.bind(this);
   public click = click.bind(this);
   public clickTerritory = clickTerritory.bind(this);

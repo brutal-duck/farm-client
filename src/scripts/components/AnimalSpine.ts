@@ -68,4 +68,8 @@ export default class AnimalSpine {
   public destroy(): void {
     this.spine.destroy();
   }
+
+  public setDepth(value: number): void {
+    this.spine.setDepth(value);
+  }
 }
