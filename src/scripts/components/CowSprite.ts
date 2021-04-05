@@ -28,14 +28,16 @@ export default class CowSprite extends Animal {
     diamond: number = 0,
     vector: number = 7,
     fireworkAnim: boolean = false): CowSprite {
-      console.log(scene, 'scene')
-      console.log(position, 'position')
-      console.log(animalType, 'animalType')
-      console.log(id, 'id')
-      console.log(counter, 'counter')
-      console.log(diamond, 'diamond')
-      console.log( vector, 'vector')
-      console.log(fireworkAnim, 'fireworkAnim')
+      if (animalType === 0) {
+        console.log(scene, 'scene')
+        console.log(position, 'position')
+        console.log(animalType, 'animalType')
+        console.log(id, 'id')
+        console.log(counter, 'counter')
+        console.log(diamond, 'diamond')
+        console.log( vector, 'vector')
+        console.log(fireworkAnim, 'fireworkAnim')
+      }
     const cowSprite: CowSprite = new CowSprite(scene, position, animalType, id, counter, diamond, vector, fireworkAnim);
     return cowSprite;
   }
@@ -77,12 +79,13 @@ export default class CowSprite extends Animal {
       } else {
         statusPosition = -50;
       }
+   
+    this.milkStatus.setDepth(this.depth + 1);
+    this.milkStatus.setPosition(this.x + statusPosition, this.y - 60)
+    }
+
     if (this.milk >= 900 && !this.milkStatus.visible) this.milkStatus.setVisible(true);
     if ((this.milk < 900 || this.drag) && this.milkStatus.visible) this.milkStatus.setVisible(false);
-    this.milkStatus.setDepth(this.depth + 1);
-    this.milkStatus.x = this.x + statusPosition;
-    this.milkStatus.y = this.y - 60;
-    }
   }
 
   public teleportation(): void {

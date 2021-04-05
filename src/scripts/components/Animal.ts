@@ -53,6 +53,7 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
     this.aimX = 0; // точка X цели
     this.aimY = 0; // точка Y цели
     this.collision = 1;
+    this.drag = false;
     this.spread = false;
     this.expel = false; // метка изгнания
     this.changeVector = false; // метка смены вектора
