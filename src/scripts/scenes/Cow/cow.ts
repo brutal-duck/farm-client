@@ -66,183 +66,12 @@ function teleportation(cow: any): void {
   cow.distance = 0;
 }
 
-
-// функция реверсивного движения коровы
-function reverse(cow: any): void {
-
-  cow.collision = 1;
-
-  let x: number = random(this.velocity - 5, this.velocity + 5);
-  let y: number = random(this.velocity - 5, this.velocity + 5);
-  
-  cow.setVelocity(0, 0);
-  cow.body.reset(cow.x, cow.y);
-
-  switch(cow.vector) {
-    case 1:
-      cow.vector = 3;
-      cow.setVelocity(-x, -y);
-      break;
-    case 2:
-      cow.vector = 4;
-      cow.setVelocity(x, -y);
-      break;
-    case 3:
-      cow.vector = 1;
-      cow.setVelocity(x, y);
-      break;
-    case 4:
-      cow.vector = 2;
-      cow.setVelocity(-x, y);
-      break;
-    case 5:
-      cow.vector = 7;
-      cow.setVelocity(0, y);
-      break;
-    case 6:
-      cow.vector = 8;
-      cow.setVelocity(-x, 0);
-      break;
-    case 7:
-      cow.vector = 5;
-      cow.setVelocity(0, -y);
-      break;
-    case 8:
-      cow.vector = 6;
-      cow.setVelocity(x, 0);
-      break;
-  }
-
-}
-
-
-// функция получения цели для точки движения коровы
-function aim(cow: any, x: number, y: number): void {
-
-  if (cow.x < x && cow.y > y) cow.vector = 4;
-  else if (cow.x < x && cow.y < y) cow.vector = 1;
-  else if (cow.x > x && cow.y < y) cow.vector = 2;
-  else if (cow.x > x && cow.y > y) cow.vector = 3;
-  else if (cow.x === x && cow.y > y) cow.vector = 5;
-  else if (cow.x === x && cow.y < y) cow.vector = 7;
-  else if (cow.x < x && cow.y === y) cow.vector = 6;
-  else if (cow.x > x && cow.y === y) cow.vector = 8;
-
-  cow.aim = true;
-  cow.aimX = x;
-  cow.aimY = y;
-  cow.distance = 0;
-  let target: Iposition = new Phaser.Math.Vector2();
-  target.x = x;
-  target.y = y;
-  let distance: number = Phaser.Math.Distance.Between(cow.x, cow.y, target.x, target.y);
-  let coefficient: number = 1;
-
-  if (distance >= 400) {
-    coefficient = 0.15;
-  } else if (distance < 400 && distance >= 300) {
-    coefficient = 0.20;
-  } else if (distance < 300 && distance >= 200) {
-    coefficient = 0.25;
-  } else if (distance < 200 && distance >= 100) {
-    coefficient = 0.5;
-  }
-
-  this.physics.moveToObject(cow, target, distance * coefficient);
-
-}
-
-// Спайновая корова
-function spineSheep(): void {
-
-  // @ts-ignore
-  // let cow = new SpineCow(, this.cameras.main.centerX, this.cameras.main.centerY - 100)
-
-  // spineSheep.setMix('drag', 'stay_left_1', 0.3)
-  // spineSheep.setMix('stay_left_1', 'move_left_1', 0.3)
-  // spineSheep.setMix('move_left_1', 'move_left_2', 0.3)
-  // spineSheep.setMix('move_left_2', 'stay_left_2', 0.3)
-  // spineSheep.setMix('stay_left_2', 'stay_left_3', 0.3)
-  // spineSheep.setMix('stay_left_3', 'move_left_3', 0.3)
-  // spineSheep.setMix('move_left_1', 'stay_left_2', 0.3)
-  // spineSheep.setMix('move_left_2', 'stay_left_3', 0.3)
-  // spineSheep.setMix('move_left_3', 'drag', 0.3)
-
-  // this.scene.scene.time.addEvent({
-  //   delay: 3000,
-  //   callback: (): void => {
-
-  //     // this.player.setSkin('green')
-  //     this.player.setAttachment('tag', 'tag-flip')
-  //     this.player.spine.setScale(-1, 1)
-
-  //   },
-  //   loop: true
-  // })
-
-  // console.log(cow);
-
-}
-
-
-// функция получения новой коровы
-function getCow(
-  id: string,
-  type: number,
-  x: number,
-  y: number,
-  counter: number = 0,
-  milk: number = 0,
-  diamond: number = 0,
-  vector: number = 7,
-  anim: boolean = true): void {
-
-  let cow = this.cow.create(x, y, 'cow' + type).setInteractive().setDepth(y);
-  cow.setCollideWorldBounds(true);
-  this.input.setDraggable(cow); // задали перетаскивание
-  cow.moving = false; // движение
-  cow.vector = vector; // вектор движения
-  cow.counter = counter; // счетчик
-
-  cow.body.mass = 0; // вроде как инерция
-
-  cow.type = type; // порода коровы
-  cow.milk = milk; // молоко
-  cow._id = id; // id
-  cow.diamond = diamond; // счетчик кристаллов для кристаллическлй коровы.
-  cow.expel = false; // метка изгнания
-  cow.spread = false;
-  cow.milkStatus = this.add.sprite(x, y, 'milk-status').setVisible(false)
-
-  this.click(cow, (): void => {
-
-    // let modal: Imodal = {
-    //   type: 1,
-    //   sysType: 1
-    // }
-    // this.state.modal = modal;
-    // this.state.animal = cow;
-    // this.scene.launch('Modal', this.state);
-
-    if (cow.milk >= 900) {
-      this.collectMilk(cow, true);
-    }
-
-  });
-  
-  if (anim) Firework.create(this, { x, y }, 1);
-
-  return cow;
-
-}
-
 // мерджинг
-function checkMerging(territory: any, cow: any, position: string) {
+function checkMerging(territory: any, cow: CowSprite, position: string) {
 
   cow.merging = true;
   territory.mergingCounter = 1;
   let check = territory.merging.find((data: any) => data._id === cow._id);
-
   if (check === undefined) {
 
     // если на этой позиции уже стоит корова
@@ -250,31 +79,25 @@ function checkMerging(territory: any, cow: any, position: string) {
 
       if (position === 'top') position = 'bottom';
       else if (position === 'bottom') position = 'top';
-
+      console.log('check === undefined')
     }
 
     // запоминаем
     territory.merging.push({
       _id: cow._id,
-      type: cow.type,
+      animalType: cow.animalType,
       position: position
     });
 
     // ставим на парковку
     if (position === 'top') {
-
-      cow.anims.play('cow-stay-left' + cow.type, true);
       cow.vector = 8;
       cow.y = territory.y + 30;
       cow.x = territory.x + 160;
-
     } else if (position === 'bottom') {
-
-      cow.anims.play('cow-stay-left' + cow.type, true);
       cow.vector = 8;
       cow.y = territory.y + 130;
       cow.x = territory.x + 160;
-
     }
 
   } else {
@@ -284,19 +107,13 @@ function checkMerging(territory: any, cow: any, position: string) {
 
     // обновляем положение парковки
     if (position === 'top') {
-
-      cow.anims.play('cow-stay-left' + cow.type, true);
       cow.vector = 8;
       cow.y = territory.y + 30;
       cow.x = territory.x + 160;
-
     } else if (position === 'bottom') {
-
-      cow.anims.play('cow-stay-left' + cow.type, true);
       cow.vector = 8;
       cow.y = territory.y + 130;
       cow.x = territory.x + 160;
-
     }
 
   }
@@ -304,10 +121,10 @@ function checkMerging(territory: any, cow: any, position: string) {
   // проверяем успешный на мерджинг
   if (territory.merging.length === 2) {
 
-    let cow1 = this.cow.children.entries.find((data: any) => data._id === territory.merging[0]._id);
-    let cow2 = this.cow.children.entries.find((data: any) => data._id === territory.merging[1]._id);
+    let cow1: CowSprite = this.cow.children.entries.find((data: any) => data._id === territory.merging[0]._id);
+    let cow2: CowSprite = this.cow.children.entries.find((data: any) => data._id === territory.merging[1]._id);
 
-    if (cow1?.type === cow2?.type) {
+    if (cow1?.animalType === cow2?.animalType) {
       
       this.time.addEvent({ delay: 100, callback: (): void => {
 
@@ -316,7 +133,7 @@ function checkMerging(territory: any, cow: any, position: string) {
           y: territory.y + 120
         }
         MergingCloud.create(this, position);
-        let type: number = cow1.type + 1;
+        let type: number = cow1.animalType + 1;
         cow1.destroy();
         cow2.destroy();
         cow1.milkStatus.destroy();
@@ -324,10 +141,11 @@ function checkMerging(territory: any, cow: any, position: string) {
         let id: string = 'local_' + randomString(18);
         let x: number = territory.x + 120;
         let y: number = territory.y + 240;
-        let cow = this.getCow(id, type, x, y, 0, 0, 0, 7, false);
+        
+        const cow: CowSprite = this.cow.generate(this, { x, y }, type, id, 0, 0, 7, false);
         let aimX: number = random(territory.x + 40, territory.x + 200);
         let aimY: number = random(territory.y + 280, territory.y + 440);
-        this.aim(cow, aimX, aimY);
+        cow.setAim( aimX, aimY);
         this.tryTask(2, type);
         this.tryTask(4, type);
         this.checkAnimalTask();
@@ -346,8 +164,8 @@ function checkMerging(territory: any, cow: any, position: string) {
         
         // костыль
         for (let i in this.cow.children.entries) this.cow.children.entries[i].merging = false;
-        if (cow1) this.teleportation(cow2);
-        if (cow2) this.teleportation(cow2);
+        if (cow1) cow2.teleportation();
+        if (cow2) cow2.teleportation();
         territory.merging = [];
 
       }
@@ -357,7 +175,7 @@ function checkMerging(territory: any, cow: any, position: string) {
 
 
 // отмена мерджинга
-function cancelMerging(territory: any, cow1: any, cow2: any) {
+function cancelMerging(territory: any, cow1: CowSprite, cow2: CowSprite) {
 
   this.time.addEvent({ delay: 100, callback: (): void => {
 
@@ -366,7 +184,7 @@ function cancelMerging(territory: any, cow1: any, cow2: any) {
       cow1.merging = false;
       let randomX: number = random(territory.x + 40, territory.x + 200);
       let randomY: number = random(territory.y + 280, territory.y + 440);
-      this.aim(cow1, randomX, randomY);
+      cow1.setAim(randomX, randomY);
 
     }
 
@@ -375,17 +193,17 @@ function cancelMerging(territory: any, cow1: any, cow2: any) {
       cow2.merging = false;
       let randomX: number = random(territory.x + 40, territory.x + 200);
       let randomY: number = random(territory.y + 280, territory.y + 440);
-      this.aim(cow2, randomX, randomY);
+      cow2.setAim(randomX, randomY);
 
     }
 
     for (let i in territory.merging) {
 
-      let cow = this.cow.children.entries.find((data: any) => data._id === territory.merging[i]._id);
+      let cow: CowSprite = this.cow.children.entries.find((data: any) => data._id === territory.merging[i]._id);
       let randomX: number = random(territory.x + 40, territory.x + 200);
       let randomY: number = random(territory.y + 280, territory.y + 440);
-      this.aim(cow, randomX, randomY);
-      cow.mergin = false;
+      cow.setAim(randomX, randomY);
+      cow.merging = false;
 
     }
     
@@ -412,7 +230,7 @@ function buyCow(breed: number, shop: boolean = false): boolean {
       let x: number = random(530, 660);
       let y: number = random(530, 540);
       let id: string = 'local_' + randomString(18);
-      new CowSprite(this, { x, y }, breed, id);
+      this.cow.generate(this, { x, y }, breed, id);
       this.state.userCow.money -= cowPrice.price;
       this.state.userCow.countCow = cowPrice.countCow;
       this.game.scene.keys['CowBars'].updateCowPrice();
@@ -679,8 +497,7 @@ function dragCowMerging(cow: any): void {
     cow.destroy();
 
     const id: string = 'local_' + randomString(18);
-    
-    new CowSprite(this, position, type, id, 0, 0, 7, false)
+    this.cow.generate(this, position, type, id, 0, 0, 7, false);
     this.tryTask(2, type);
     this.tryTask(4, type);
     this.checkAnimalTask();
@@ -692,10 +509,6 @@ function dragCowMerging(cow: any): void {
 
 export {
   teleportation,
-  reverse,
-  aim,
-  spineSheep,
-  getCow,
   checkMerging,
   cancelMerging,
   buyCow,

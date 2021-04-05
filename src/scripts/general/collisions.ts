@@ -36,7 +36,11 @@ function collisions(): void {
 
           let x: number = random(minX, maxX);
           let y: number = random(mixY, maxY);
-          this.aim(animal, x, y);
+          if (this.state.farm === 'Cow') {
+            animal.setAim(x, y);
+          } else {
+            this.aim(animal, x, y);
+          }
 
         }
 
@@ -57,7 +61,11 @@ function collisions(): void {
       let territory = this.currentTerritory(animal1.x, animal1.y);
       
       if (territory.type !== 4) {
-        this.reverse(animal1);
+        if (this.state.farm === 'Cow') {
+          animal1.setReverse();
+        } else {
+          this.reverse(animal1);
+        }
       }
       
     }

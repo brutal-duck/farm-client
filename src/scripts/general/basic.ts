@@ -1191,7 +1191,11 @@ function spreadAnimals(): void {
         animalWithoutAim.spread = true;
         let randomX: number = Phaser.Math.Between(allTerritories[i].x - 10, allTerritories[i].x + 10);
         let randomY: number = Phaser.Math.Between(allTerritories[i].y - 10, allTerritories[i].y + 10);
-        this.aim(animalWithoutAim, randomX, randomY);
+        if (this.state.farm === 'Cow') {
+          animalWithoutAim.setAim(randomX, randomY);
+        } else {
+          this.aim(animalWithoutAim, randomX, randomY);
+        }
         localSpread = true;
 
       }
@@ -1232,7 +1236,12 @@ function spreadAnimals(): void {
             animalWithoutAim.spread = true;
             let randomX: number = Phaser.Math.Between(bottomTerritory.x - 10, bottomTerritory.x + 10);
             let randomY: number = Phaser.Math.Between(bottomTerritory.y - 10, bottomTerritory.y + 10);
-            this.aim(animalWithoutAim, randomX, randomY);
+            if (this.state.farm === 'Cow') {
+              animalWithoutAim.setAim(randomX, randomY);
+            } else {
+              this.aim(animalWithoutAim, randomX, randomY);
+
+            }
             
             break;
   
@@ -1278,7 +1287,12 @@ function spreadAnimals(): void {
             animalWithoutAim.spread = true;
             let randomX: number = Phaser.Math.Between(nearTerritories[0].x - 10, nearTerritories[0].x + 10);
             let randomY: number = Phaser.Math.Between(nearTerritories[0].y - 10, nearTerritories[0].y + 10);
-            this.aim(animalWithoutAim, randomX, randomY);
+
+            if (this.state.farm === 'Cow') {
+              animalWithoutAim.setAim(randomX, randomY);
+            } else {
+              this.aim(animalWithoutAim, randomX, randomY);
+            }
 
             break;
   

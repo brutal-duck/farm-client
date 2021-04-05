@@ -2,7 +2,6 @@ import Scrolling from '../../libs/Scrolling';
 import collisions from '../../general/collisions';
 import world from './world';
 import drag from './drag';
-import cowBrain from './cowBrain';
 import interval from './interval';
 import autoprogress from './autoprogress';
 import autosave from './autosave';
@@ -68,10 +67,6 @@ import {
 import { animations, repositoryAnimation } from './animations';
 import {
   teleportation,
-  reverse,
-  aim,
-  spineSheep,
-  getCow,
   checkMerging,
   cancelMerging,
   buyCow,
@@ -101,9 +96,7 @@ import {
 } from '../../general/ads';
 import setCollector from './collector';
 import { showEventTutorial, doneEventTutor_0 } from '../Event/tutorial';
-
-import CowSprite from '../../components/CowSprite';
-
+import CowGroup from '../../components/CowGroup';
 
 class Cow extends Phaser.Scene {
   constructor() {
@@ -112,7 +105,7 @@ class Cow extends Phaser.Scene {
   
   public state: Istate;
   public scrolling: Scrolling;
-  public cow: Phaser.Physics.Arcade.Group;
+  public cow: CowGroup;
   public territories: Phaser.Physics.Arcade.Group;
   public milk: Phaser.Physics.Arcade.Group;
   public bubble: Phaser.GameObjects.Graphics;;
@@ -139,16 +132,11 @@ class Cow extends Phaser.Scene {
   public world = world.bind(this);
   public drag = drag.bind(this);
   public collisions = collisions.bind(this);
-  public cowBrain = cowBrain.bind(this);
   public interval = interval.bind(this);
   public click = click.bind(this);
   public clickTerritory = clickTerritory.bind(this);
   public animations = animations.bind(this);
   public teleportation = teleportation.bind(this);
-  public reverse = reverse.bind(this);
-  public aim = aim.bind(this);
-  public spineSheep = spineSheep.bind(this);
-  public getCow = getCow.bind(this);
   public currentTerritory = currentTerritory.bind(this);
   public changeSprite = changeSprite.bind(this);
   public fairLevelUp = fairLevelUp.bind(this);
@@ -241,7 +229,6 @@ class Cow extends Phaser.Scene {
 
     // сторим мир
     this.world();
-    const cow1: CowSprite = new CowSprite(this, { x: this.cameras.main.centerX, y: this.cameras.main.centerY -10 }, 1, '0');
 
     // перетаскивание
     this.drag();
@@ -253,12 +240,6 @@ class Cow extends Phaser.Scene {
     this.interval();
     this.setCollector();
 
-
-    // Спайновая овца
-    this.spineSheep()
-
-
-    console.log(this.state)
     let cursors = this.input.keyboard.createCursorKeys();
     cursors.space.on('down', (): void => {
 
