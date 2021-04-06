@@ -209,7 +209,6 @@ function checkAnimalTask(): void {
         for (let j = 0; j < animals.length; j++) {
   
           if (settings[i].breed === animals[j].type) {
-            console.log(animals[j].type)
             count++
             break;
           }
@@ -248,7 +247,6 @@ function checkAnimalTask(): void {
   } else {
     let tasks: Itasks[] = this.partTasks();
     let task: Itasks = tasks.find((data: Itasks) => data.type === 14);
-    console.log(task)
     if (task?.state === 0 && task?.count > 0 && task?.done === 0) {
   
       let count: number = animals.length;
