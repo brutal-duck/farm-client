@@ -1547,7 +1547,6 @@ function improveCollector(): void {
   }
 
   if (this.state[`user${this.state.farm}`].part >= nextLevel.chapter) {
-    console.log('this')
     if (nextLevel.diamonds) icon = 'diamond';
     else icon = `${farm}Coin`;
 
