@@ -1547,7 +1547,7 @@ function improveCollector(): void {
   }
 
   if (this.state[`user${this.state.farm}`].part >= nextLevel.chapter) {
-
+    console.log('this')
     if (nextLevel.diamonds) icon = 'diamond';
     else icon = `${farm}Coin`;
 
@@ -1629,7 +1629,7 @@ function updateImproveCollector(
   }
   nextLevelText.setPosition(position.x, position.y);
   nextLevelText.setText(text);
-  if (this.state.userSheep.part >= nextLevel?.chapter) {
+  if (this.state[`user${this.state.farm}`].part >= nextLevel?.chapter) {
     let icon: string;
     if (nextLevel.diamonds) icon = 'diamond';
     else icon = `${farm}Coin`;
