@@ -207,7 +207,8 @@ function fairLevelUp(): void {
           this.state.amplitude.getInstance().logEvent('diamonds_spent', {
             type: 'fair',
             count: nextFair.price_d,
-            farm_id: this.state.farm
+            farm_id: this.state.farm,
+            chapter: this.state[`user${this.state.farm}`].part,
           });
           
         }

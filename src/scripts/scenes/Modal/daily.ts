@@ -391,7 +391,8 @@ function daily(): void {
       this.state.amplitude.getInstance().logEvent('diamonds_get', {
         type: 'daily_award',
         count: awards[day].count,
-        farm_id: this.state.farm
+        farm_id: this.state.farm,
+        chapter: this.state[`user${this.state.farm}`].part,
       });
 
     }

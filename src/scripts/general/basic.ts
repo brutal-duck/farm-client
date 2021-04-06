@@ -432,7 +432,8 @@ function exchange(ad: boolean = false): void {
       this.state.amplitude.getInstance().logEvent('diamonds_spent', {
         type: 'convertor',
         count: this.state.convertor.diamonds,
-        farm_id: this.state.farm
+        farm_id: this.state.farm,
+        chapter: this.state[`user${this.state.farm}`].part,
       });
 
       this.tryTask(15, 0, this.state.convertor.diamonds);
@@ -491,7 +492,8 @@ function donePart(): void {
   this.state.amplitude.getInstance().logEvent('diamonds_get', {
     type: 'part_award',
     farm_id: this.state.farm,
-    count: award
+    count: award,
+    chapter: this.state[`user${this.state.farm}`].part,
   });
   
   this.scrolling.scrollY = 0;

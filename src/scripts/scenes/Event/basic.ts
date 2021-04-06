@@ -218,7 +218,7 @@ function freeCollector(type: number = 1): void {
         // this.state.amplitude.getInstance().logEvent('diamonds_spent', {
         //   type: 'collector',
         //   count: doubleTimePrice,
-        //   farm_id: this.state.farm
+        //   farm_id: this.state.farm,
         // });
 
       } else {
@@ -279,7 +279,7 @@ function buyCollector(type: number): void {
       // this.state.amplitude.getInstance().logEvent('diamonds_spent', {
       //   type: 'collector',
       //   count: settings['collectorPrice' + hours],
-      //   farm_id: this.state.farm
+      //   farm_id: this.state.farm,
       // });
 
     } else {
@@ -363,11 +363,11 @@ function improveCollector(): void {
 
     if (this.state.user.diamonds >= nextLevel.price) {
 
-      this.state.amplitude.getInstance().logEvent('diamonds_spent', {
-        type: 'improve_collector',
-        count: nextLevel.price,
-        farm_id: this.state.farm
-      });
+      // this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+      //   type: 'improve_collector',
+      //   count: nextLevel.price,
+      //   farm_id: this.state.farm,
+      // });
 
       this.state.user.diamonds -= nextLevel.price;
       user.collectorLevel++;

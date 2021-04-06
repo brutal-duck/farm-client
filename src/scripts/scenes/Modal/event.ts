@@ -1492,7 +1492,7 @@ function endEventModal(): void {
     this.state.amplitude.getInstance().logEvent('diamonds_get', {
       type: 'other',
       farm_id: 'Event',
-      count: diamonds
+      count: diamonds,
     });
     this.game.scene.keys[this.state.farm].scrolling.wheel = true;
     this.game.scene.keys[this.state.farm].autosave();

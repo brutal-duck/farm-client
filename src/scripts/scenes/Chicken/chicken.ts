@@ -500,7 +500,8 @@ function collectEgg(egg: Egg, manualСollect: boolean = false): void {
     this.state.amplitude.getInstance().logEvent('diamonds_get', {
       type: 'diamond_animal',
       count: 1,
-      farm_id: this.state.farm
+      farm_id: this.state.farm,
+      chapter: this.state[`user${this.state.farm}`].part,
     });
 
     this.game.scene.keys['ChickenBars'].plusCurrencyAnimation(position, 'diamond');

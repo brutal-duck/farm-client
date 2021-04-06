@@ -127,7 +127,8 @@ function improveCollector(): void {
         this.state.amplitude.getInstance().logEvent('diamonds_spent', {
           type: 'improve_collector',
           count: nextLevel.price,
-          farm_id: this.state.farm
+          farm_id: this.state.farm,
+          chapter: this.state[`user${this.state.farm}`].part,
         });
   
         this.state.user.diamonds -= nextLevel.price;
@@ -511,7 +512,8 @@ function feedBoost(): void {
       this.state.amplitude.getInstance().logEvent('diamonds_spent', {
         type: 'booster_feed_x2',
         count: this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice,
-        farm_id: this.state.farm
+        farm_id: this.state.farm,
+        chapter: this.state[`user${this.state.farm}`].part,
       });
 
       if (this.state[`user${this.state.farm}`].feedBoostTime + 7200 > this.game.scene.keys[this.state.farm].feedBoostStack * 3600) {
@@ -684,7 +686,8 @@ function freeCollector(type: number = 1): void {
         this.state.amplitude.getInstance().logEvent('diamonds_spent', {
           type: 'collector',
           count: doubleTimePrice,
-          farm_id: this.state.farm
+          farm_id: this.state.farm,
+          chapter: this.state[`user${this.state.farm}`].part,
         });
 
       } else {
@@ -765,7 +768,8 @@ function buyCollector(type: number): void {
       this.state.amplitude.getInstance().logEvent('diamonds_spent', {
         type: 'collector',
         count: settings['collectorPrice' + hours],
-        farm_id: this.state.farm
+        farm_id: this.state.farm,
+        chapter: this.state[`user${this.state.farm}`].part,
       });
 
     } else {

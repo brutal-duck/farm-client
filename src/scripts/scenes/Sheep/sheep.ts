@@ -623,7 +623,8 @@ function collectWool(sheep: any, manualСollect: boolean = false): void {
       this.state.amplitude.getInstance().logEvent('diamonds_get', {
         type: 'diamond_animal',
         count: 5,
-        farm_id: this.state.farm
+        farm_id: this.state.farm,
+        chapter: this.state[`user${this.state.farm}`].part,
       });
     }
 

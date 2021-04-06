@@ -375,7 +375,8 @@ function stopBoostScene(): void {
       this.state.amplitude.getInstance().logEvent('diamonds_spent', {
         type: 'herd',
         count: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
-        farm_id: this.state.farm
+        farm_id: this.state.farm,
+        chapter: this.state[`user${this.state.farm}`].part,
       });
     }
     this.state[`user${this.state.farm}`].takenHerdBoost++;
