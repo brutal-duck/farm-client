@@ -890,10 +890,16 @@ function takeDonate(): void {
         let pack: Ipackage = this.state.packages.find((data: Ipackage) => data.id === res.data.package);
         this.state.user.diamonds += res.data.donate;
         this.state.user.starterpack = true;
+
+        const chapter: string = this.state.farm === 'Event' ? `${this.state.farm}` : `${this.state.farm}_${this.state[`user${this.state.farm}`].part}`;
+        const eventPorerties: any = {
+          'chapter': chapter,
+          'stock': this.state.stock,
+        };
         let revenue: amplitude.Revenue = new amplitude.Revenue()
           .setProductId('Product #' + res.data.package)
           .setPrice(pack.price)
-          .setEventProperties(this.state.stock);
+          .setEventProperties(eventPorerties);
         this.state.amplitude.logRevenueV2(revenue);
         this.game.scene.keys[this.state.farm + 'Bars'].plusDiamonds();
         this.autosave();
