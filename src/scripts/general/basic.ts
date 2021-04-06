@@ -808,8 +808,9 @@ function getNewbieAward(): void {
       this.state.userSheep.collector += 3 * 60 * 60;
       this.state.userSheep.collectorTakenTime = this.state.userSheep.collector;
       this.game.scene.keys[`${this.state.farm}Bars`].collector.update();
+      this.tryTask(3, 0, 3 * 60 * 60);
       break;
-
+      
     }
 
     if (i === 5 && this.state.dailyAwards[i] && this.state.farm === 'Chicken') {
@@ -843,6 +844,7 @@ function getNewbieAward(): void {
       this.state.userChicken.collector += 3 * 60 * 60;
       this.state.userChicken.collectorTakenTime = this.state.userChicken.collector;
       this.game.scene.keys[this.state.farm + 'Bars'].collector.update();
+      this.tryTask(3, 0, 3 * 60 * 60);
       break;
 
     }
