@@ -18,6 +18,8 @@ export default class CowSprite extends Animal {
     super(scene, position, `cow-${animalType}`, id, counter, diamond, vector, fireworkAnim);
     this.animalType = animalType;
     this.milk = 0;
+    console.log(this.animalType)
+
   }
 
   static create(scene: Cow, 
@@ -58,8 +60,19 @@ export default class CowSprite extends Animal {
     super.setBrain();
     this.setMilkStatusPosition();
     this.setMilkStatusVisibility();
+    this.setDiamondStage();
   }
 
+  private setDiamondStage(): void {
+    if (this.animalType === 0) {
+      let stage: number;
+      if (this.milk <= 200) stage = 1;
+      else if (this.milk > 200 && this.milk <= 600) stage = 2;
+      else if (this.milk > 600 && this.milk <= 900) stage = 3;
+      else stage = 3;
+      this.animalSpine?.setAttachment('horns', `horns-${stage}`);
+    }
+  }
   private setMilkStatusPosition(): void {
     let statusPosition: number = -50;
     if (!this.drag) {
