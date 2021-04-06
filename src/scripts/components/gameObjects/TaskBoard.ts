@@ -317,7 +317,7 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
         this.doneButton = this.scene.add.image(this.scene.cameras.main.centerX, this.positionY - 245, 'big-btn-green').setDepth(1);
         this.doneButtonText = this.scene.add.text(this.scene.cameras.main.centerX, this.positionY - 249, this.scene.state.lang.donePart, {
           font: '22px Shadow',
-          fill: '#FFFFFF'
+          color: '#FFFFFF'
         }).setDepth(1).setOrigin(0.5, 0.5).setVisible(false);
       
         this.scene.clickModalBtn({
@@ -341,7 +341,7 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
       
         this.lastPart = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.height - 245, this.scene.state.lang[this.scene.state.farm.toLowerCase() + 'CompanyDone'], {
           font: '26px Bip',
-          fill: '#713D1E'
+          color: '#713D1E'
         }).setDepth(1).setOrigin(0.5, 0.5).setVisible(false);
       
         this.tileSprite = this.scene.add.tileSprite(30, this.scene.height - 300, 660, 110, 'modal')
