@@ -65,12 +65,17 @@ export default class CowSprite extends Animal {
 
   private setDiamondStage(): void {
     if (this.animalType === 0) {
+      console.log(this.animalSpine);
       let stage: number;
-      if (this.milk <= 200) stage = 1;
-      else if (this.milk > 200 && this.milk <= 600) stage = 2;
-      else if (this.milk > 600 && this.milk <= 900) stage = 3;
+      if (this.milk <= 200) stage = 0;
+      else if (this.milk > 200 && this.milk <= 600) stage = 1;
+      else if (this.milk > 600 && this.milk <= 900) stage = 2;
       else stage = 3;
-      this.animalSpine?.setAttachment('horns', `horns-${stage}`);
+      if (stage === 0) {
+        this.animalSpine?.setAttachment('horns', null);
+      } else {
+        this.animalSpine?.setAttachment('horns', `horns-${stage}`);
+      }
     }
   }
   private setMilkStatusPosition(): void {
