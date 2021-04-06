@@ -38,6 +38,7 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
   public animation: Phaser.Tweens.Tween;
   public isUpdated: boolean = false;
   public taskId: number;
+  public gotAward: number;
 
   constructor(
     scene: SheepBars | ChickenBars | CowBars
@@ -127,9 +128,10 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
     
     const task: Itasks = tasks[0];
     
-    if (this.taskStatus === task.done && this.currentTaskProgress === task.progress && this.taskId === task.id) return;
+    if (this.taskStatus === task.done && this.currentTaskProgress === task.progress && this.taskId === task.id && this.gotAward === task.got_awarded) return;
     else {
       this.currentTaskProgress = task.progress;
+      this.gotAward = task.got_awarded;
       this.taskStatus = task.done;
       this.taskId = task.id;
       if (this.taskStatus === 0) this.status = 1;
