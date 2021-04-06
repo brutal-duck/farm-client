@@ -1111,6 +1111,7 @@ function loadingModal(): void {
   let animation: Phaser.Tweens.Tween;
   let pixel: Phaser.GameObjects.TileSprite;
   this.load.on('start', () => {
+    this.scene.launch('Block');
     loadingSprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'loading-spinner');
     animation = this.tweens.add({
       targets: loadingSprite,
@@ -1121,6 +1122,7 @@ function loadingModal(): void {
   });
   
   this.load.on('complete', () => {
+    this.scene.stop('Block');
     animation?.remove();
     loadingSprite?.destroy();
     pixel?.destroy();
