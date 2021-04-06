@@ -18,8 +18,6 @@ export default class CowSprite extends Animal {
     super(scene, position, `cow-${animalType}`, id, counter, diamond, vector, fireworkAnim);
     this.animalType = animalType;
     this.milk = 0;
-    console.log(this.animalType)
-
   }
 
   static create(scene: Cow, 
@@ -65,7 +63,6 @@ export default class CowSprite extends Animal {
 
   private setDiamondStage(): void {
     if (this.animalType === 0) {
-      console.log(this.animalSpine);
       let stage: number;
       if (this.milk <= 200) stage = 0;
       else if (this.milk > 200 && this.milk <= 600) stage = 1;
