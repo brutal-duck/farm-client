@@ -167,7 +167,6 @@ function getTaskData(task: Itasks): ItaskData {
 
 // проверка задания "животные на поле"
 function checkAnimalTask(): void {
-
   let animals: any;
   let settings: IchickenPoints[] | IsheepPoints[] = [];
 
@@ -187,63 +186,123 @@ function checkAnimalTask(): void {
     settings = this.state.cowSettings.cowSettings;
 
   }
-
-  let tasks: Itasks[] = this.partTasks();
-  let task: Itasks = tasks.find((data: Itasks) => data.type === 14);
-
-  if (task?.state === 0 && task?.count > 0 && task?.done === 0) {
-
-    let count: number = animals.length;
-    task.progress = count;
-
-    if (task.count <= count) {
-      task.done = 1;
-      task.progress = count;
-    }
+  if (this.state.farm !== 'Cow') {
     
-  } else if (task?.count === 0) {
-
-    let count: number = 0;
-
-    for (let i: number = 0; i < settings.length; i++) {
-
-      for (let j = 0; j < animals.length; j++) {
-
-        if (settings[i].breed === animals[j].type) {
-          count++
-          break;
-        }
-
+    let tasks: Itasks[] = this.partTasks();
+    let task: Itasks = tasks.find((data: Itasks) => data.type === 14);
+    if (task?.state === 0 && task?.count > 0 && task?.done === 0) {
+  
+      let count: number = animals.length;
+      task.progress = count;
+  
+      if (task.count <= count) {
+        task.done = 1;
+        task.progress = count;
       }
-
-    }
-
-    task.progress = count;
-
-    if (settings.length <= count) {
-
-      task.done = 1;
+      
+    } else if (task?.count === 0) {
+  
+      let count: number = 0;
+  
+      for (let i: number = 0; i < settings.length; i++) {
+  
+        for (let j = 0; j < animals.length; j++) {
+  
+          if (settings[i].breed === animals[j].type) {
+            console.log(animals[j].type)
+            count++
+            break;
+          }
+  
+        }
+  
+      }
+  
       task.progress = count;
-
-    }
-
-  } else if (task?.state > 0 && task?.count > 0) {
-
-    let count: number = 0;
-    for (let i in animals) {
-
-      let chicken = animals[i];
-      if (task.state === chicken.type) count++
-
-    }
-
-    task.progress = count;
-
-    if (task.count <= count) {
+  
+      if (settings.length <= count) {
+  
+        task.done = 1;
+        task.progress = count;
+  
+      }
+  
+    } else if (task?.state > 0 && task?.count > 0) {
+  
+      let count: number = 0;
+      for (let i in animals) {
+  
+        let chicken = animals[i];
+        if (task.state === chicken.type) count++
+  
+      }
+  
       task.progress = count;
-      task.done = 1;
+  
+      if (task.count <= count) {
+        task.progress = count;
+        task.done = 1;
+      }
+      
     }
-    
+  } else {
+    let tasks: Itasks[] = this.partTasks();
+    let task: Itasks = tasks.find((data: Itasks) => data.type === 14);
+    console.log(task)
+    if (task?.state === 0 && task?.count > 0 && task?.done === 0) {
+  
+      let count: number = animals.length;
+      task.progress = count;
+  
+      if (task.count <= count) {
+        task.done = 1;
+        task.progress = count;
+      }
+      
+    } else if (task?.count === 0) {
+  
+      let count: number = 0;
+  
+      for (let i: number = 0; i < settings.length; i++) {
+  
+        for (let j = 0; j < animals.length; j++) {
+  
+          if (settings[i].breed === animals[j].animalType) {
+            count++
+            break;
+          }
+  
+        }
+  
+      }
+  
+      task.progress = count;
+  
+      if (settings.length <= count) {
+  
+        task.done = 1;
+        task.progress = count;
+  
+      }
+  
+    } else if (task?.state > 0 && task?.count > 0) {
+  
+      let count: number = 0;
+      for (let i in animals) {
+  
+        let chicken = animals[i];
+        if (task.state === chicken.animalType) count++
+  
+      }
+  
+      task.progress = count;
+  
+      if (task.count <= count) {
+        task.progress = count;
+        task.done = 1;
+      }
+      
+    }
   }
 
 }
