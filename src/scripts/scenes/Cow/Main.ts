@@ -237,30 +237,30 @@ class Cow extends Phaser.Scene {
     this.interval();
     this.setCollector();
 
-    let cursors = this.input.keyboard.createCursorKeys();
-    cursors.space.on('down', (): void => {
+    // let cursors = this.input.keyboard.createCursorKeys();
+    // cursors.space.on('down', (): void => {
+    //   this.state.userCow.diamondAnimalTime = 0
+    //   // this.state.newbieTime = 0
+    //   // this.state.daily = Number(this.state.daily) + 1
+    //   // this.state.user.takenReward = false;
+    //   // this.state.dailyAwards = [false, false, false, false, false, false, false, false]
 
-      // this.state.newbieTime = 0
-      // this.state.daily = Number(this.state.daily) + 1
-      // this.state.user.takenReward = false;
-      // this.state.dailyAwards = [false, false, false, false, false, false, false, false]
+    //   // let modal: Imodal = {
+    //   //   type: 9,
+    //   // }
 
-      // let modal: Imodal = {
-      //   type: 9,
-      // }
+    //   // this.state.modal = modal;
+    //   // this.scene.launch('Modal', this.state);
 
-      // this.state.modal = modal;
-      // this.scene.launch('Modal', this.state);
-
-      // this.state.userSheep.feedBoostTimer = 10
-      // this.scene.launch('Modal', this.state);
-      this.state.user.diamonds = 10000000;
-      // let tasks = this.partTasks();
-      // for (let i in tasks) {
-      //   tasks[i].done = 1;
-      //   tasks[i].got_awarded = 1;
-      // }
-    });
+    //   // this.state.userSheep.feedBoostTimer = 10
+    //   // this.scene.launch('Modal', this.state);
+    //   // this.state.user.diamonds = 10000000;
+    //   // let tasks = this.partTasks();
+    //   // for (let i in tasks) {
+    //   //   tasks[i].done = 1;
+    //   //   tasks[i].got_awarded = 1;
+    //   // }
+    // });
     
 
   }

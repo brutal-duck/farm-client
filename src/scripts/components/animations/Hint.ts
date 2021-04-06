@@ -79,7 +79,6 @@ export default class Hint extends Phaser.GameObjects.Text {
       duration: 300,
       onComplete: () => {
         this.bg.destroy();
-        console.log(this)
         this.destroy();
         tween.remove();
       },

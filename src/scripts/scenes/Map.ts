@@ -151,7 +151,7 @@ class Map extends Phaser.Scene {
       })
     }
 
-    this.cowFarm()
+    // this.cowFarm()
 
   }
 
