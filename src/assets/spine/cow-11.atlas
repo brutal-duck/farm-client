@@ -1,97 +1,83 @@
 
-cow-0.png
-size: 254,154
+cow-11.png
+size: 239,241
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 shadow
   rotate: false
-  xy: 91, 69
+  xy: 58, 169
   size: 99, 33
   orig: 101, 35
   offset: 1, 1
   index: -1
 leg-hind-left
   rotate: false
-  xy: 61, 89
-  size: 18, 62
-  orig: 20, 64
+  xy: 159, 169
+  size: 18, 63
+  orig: 20, 65
   offset: 1, 1
   index: -1
 tail
   rotate: false
-  xy: 234, 1
-  size: 18, 36
-  orig: 20, 38
+  xy: 58, 204
+  size: 29, 35
+  orig: 31, 37
   offset: 1, 1
   index: -1
 leg-front-left
   rotate: false
-  xy: 41, 89
+  xy: 179, 169
   size: 18, 62
   orig: 20, 64
   offset: 1, 1
   index: -1
 body
   rotate: false
-  xy: 91, 1
+  xy: 1, 101
   size: 79, 66
   orig: 81, 68
   offset: 1, 1
   index: -1
 leg-hind-right
   rotate: false
-  xy: 1, 89
-  size: 18, 63
-  orig: 20, 65
+  xy: 199, 169
+  size: 18, 62
+  orig: 20, 64
   offset: 1, 1
   index: -1
 leg-front-right
   rotate: false
-  xy: 21, 89
-  size: 18, 63
-  orig: 20, 65
+  xy: 219, 169
+  size: 18, 62
+  orig: 20, 64
+  offset: 1, 1
+  index: -1
+clothes
+  rotate: false
+  xy: 1, 169
+  size: 55, 61
+  orig: 57, 63
   offset: 1, 1
   index: -1
 head
   rotate: false
   xy: 1, 1
-  size: 88, 86
-  orig: 90, 88
+  size: 89, 98
+  orig: 91, 100
+  offset: 1, 1
+  index: -1
+tag
+  rotate: false
+  xy: 89, 204
+  size: 20, 30
+  orig: 22, 32
   offset: 1, 1
   index: -1
 tag-flip
   rotate: false
-  xy: 234, 39
-  size: 1, 1
-  orig: 1, 1
-  offset: 0, 0
-  index: -1
-tag
-  rotate: false
-  xy: 234, 42
-  size: 1, 1
-  orig: 1, 1
-  offset: 0, 0
-  index: -1
-horns-3
-  rotate: false
-  xy: 172, 1
-  size: 60, 43
-  orig: 62, 45
-  offset: 1, 1
-  index: -1
-horns-1
-  rotate: false
-  xy: 192, 83
-  size: 49, 24
-  orig: 51, 26
-  offset: 1, 1
-  index: -1
-horns-2
-  rotate: false
-  xy: 192, 46
-  size: 55, 35
-  orig: 57, 37
+  xy: 111, 204
+  size: 20, 30
+  orig: 22, 32
   offset: 1, 1
   index: -1

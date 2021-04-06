@@ -25,6 +25,7 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
   public expel: boolean;
   public changeVector: boolean;
   public merging: boolean;
+  public timeToCreate: number;
 
   constructor(
     scene: Cow | Sheep | Chicken, 
@@ -71,11 +72,19 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
   }
 
   public createSpine(): void {
-    this.scene.time.addEvent({
-      delay: 100,
+    
+    const timer = this.scene.time.addEvent({
+      delay: 0,
       callback: () => {
-        this.animalSpine = AnimalSpine.create(this.scene, this.body.x, this.body.y, this.type);
+        //@ts-ignore
+        if (this.scene.timeToCreateAnimal < this.scene.time.now) {
+          this.animalSpine = AnimalSpine.create(this.scene, this.body.x, this.body.y, this.type);
+          //@ts-ignore
+          this.scene.timeToCreateAnimal = this.scene.time.now + 25;
+          timer.remove();
+        }
       },
+      loop: true,
       callbackScope: this
     })
   }

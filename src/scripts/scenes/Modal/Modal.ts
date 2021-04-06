@@ -220,11 +220,12 @@ class Modal extends Phaser.Scene {
   
   public init(state: Istate): void {
     this.state = state;
+
   }
 
 
   public preload(): void {
-    this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)');
+    this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)')
     this.loadingModal();
     this.typePreload();
 
@@ -233,12 +234,11 @@ class Modal extends Phaser.Scene {
 
 
   public create(): void {
-    this.add.tileSprite(0, 0,
+    const modal = this.add.tileSprite(0, 0,
       Number(this.game.config.width),
       Number(this.game.config.height),
       'modal'
     ).setOrigin(0).setInteractive();
-      
     // тип окна
     switch (this.state.modal.type) {
       case 1: // системное окно

@@ -1107,19 +1107,27 @@ function loadingScreen(farmType: string): void {
 function loadingModal(): void {
   let loadingSprite: Phaser.GameObjects.Sprite;
   let animation: Phaser.Tweens.Tween;
+  let pixel: Phaser.GameObjects.TileSprite;
   this.load.on('start', () => {
+    pixel = this.add.tileSprite(0, 0,
+      Number(this.game.config.width),
+      Number(this.game.config.height),
+      'modal',
+    ).setOrigin(0).setInteractive();
+    console.log(pixel)
     loadingSprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'loading-spinner');
     animation = this.tweens.add({
       targets: loadingSprite,
       rotation: 2 * Math.PI,
       duration: 700,
       repeat: -1,
-    })
-  })
+    });
+  });
   
   this.load.on('complete', () => {
     animation?.remove();
     loadingSprite?.destroy();
+    pixel?.destroy();
   })
 }
 

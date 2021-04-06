@@ -513,6 +513,12 @@ class CowPreload extends Phaser.Scene {
       this.load.spine('cow-8', 'cow-8.json', 'cow-8.atlas', true);
       // @ts-ignore
       this.load.spine('cow-9', 'cow-9.json', 'cow-9.atlas', true);
+      // @ts-ignore
+      this.load.spine('cow-10', 'cow-10.json', 'cow-10.atlas', true);
+      // @ts-ignore
+      this.load.spine('cow-11', 'cow-11.json', 'cow-11.atlas', true);
+      // @ts-ignore
+      this.load.spine('cow-12', 'cow-12.json', 'cow-12.atlas', true);
       
       this.isSpineReady = true;
       
