@@ -1109,12 +1109,6 @@ function loadingModal(): void {
   let animation: Phaser.Tweens.Tween;
   let pixel: Phaser.GameObjects.TileSprite;
   this.load.on('start', () => {
-    pixel = this.add.tileSprite(0, 0,
-      Number(this.game.config.width),
-      Number(this.game.config.height),
-      'modal',
-    ).setOrigin(0).setInteractive();
-    console.log(pixel)
     loadingSprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'loading-spinner');
     animation = this.tweens.add({
       targets: loadingSprite,

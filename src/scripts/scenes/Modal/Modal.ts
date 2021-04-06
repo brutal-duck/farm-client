@@ -234,7 +234,7 @@ class Modal extends Phaser.Scene {
 
 
   public create(): void {
-    const modal = this.add.tileSprite(0, 0,
+    this.add.tileSprite(0, 0,
       Number(this.game.config.width),
       Number(this.game.config.height),
       'modal'
