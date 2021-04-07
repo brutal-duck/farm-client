@@ -9,7 +9,6 @@ import { dragEventAnimal } from './Event/animations';
 import Arrow from '../components/animations/Arrow';
 import Hint from '../components/animations/Hint';
 
-let farmer: any = require("./../../assets/images/farmer.png");
 
 class Tutorial extends Phaser.Scene {
   constructor() {
@@ -56,7 +55,6 @@ class Tutorial extends Phaser.Scene {
 
 
   public preload(): void {
-    this.load.image('farmer', farmer);
   }
 
 

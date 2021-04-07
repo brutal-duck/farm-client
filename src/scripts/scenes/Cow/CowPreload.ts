@@ -226,6 +226,7 @@ let firework2: any = require("./../../../assets/images/animations/firework2.png"
 let firework3: any = require("./../../../assets/images/animations/firework3.png");
 let fireworkBg: any = require("./../../../assets/images/animations/fireworkBg.png");
 let loadingSpinner: any = require('./../../../assets/images/animations/loading-spinner.png');
+let farmer: any = require("./../../../assets/images/farmer.png");
 
 
 class CowPreload extends Phaser.Scene {
@@ -489,6 +490,7 @@ class CowPreload extends Phaser.Scene {
     this.load.image('firework3', firework3);
     this.load.image('fireworkBg', fireworkBg);
     this.load.image('loading-spinner', loadingSpinner);
+    this.load.image('farmer', farmer);
     
     if (!this.isSpineReady) {
 
