@@ -22,20 +22,20 @@ export default class BigInteger {
   /**
   *  Деление двух чисел (x / y)
   */
-   static divide(x: string, y: string): string {
+  static divide(x: string, y: string): string {
     return String(JSBI.divide(JSBI.BigInt(x), JSBI.BigInt(y)));
   }
   /**
   *  Возведение в степень
   *  (x ** y)
   */
-   static exponentiate(x: string, y: string): string {
+  static exponentiate(x: string, y: string): string {
     return String(JSBI.exponentiate(JSBI.BigInt(x), JSBI.BigInt(y)));
   }
   /**
   *  Остаток от деления (x % y)
   */
-   static remainder(x: string, y: string): string {
+  static remainder(x: string, y: string): string {
     return String(JSBI.remainder(JSBI.BigInt(x), JSBI.BigInt(y)));
   }
   /**
@@ -71,7 +71,7 @@ export default class BigInteger {
   /**
   * Больше или равно (x >= y)
   */
-   static greaterThanOrEqual(x: string, y: string): boolean {
+  static greaterThanOrEqual(x: string, y: string): boolean {
     return JSBI.greaterThanOrEqual(JSBI.BigInt(x), JSBI.BigInt(y))
   }
 } 
