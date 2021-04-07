@@ -2150,7 +2150,6 @@ class EventPreload extends Phaser.Scene {
 
   
   public create(): void {
-    console.log('eventPreload')
     this.loadingReady = true;
   }
 
