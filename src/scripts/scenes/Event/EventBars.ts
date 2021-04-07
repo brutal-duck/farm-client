@@ -19,14 +19,12 @@ import {
   сurrencyAnimation,
   increaseDiamonds,
   plusCurrencyAnimation,
-  calendarAnimation,
   newbieAwardAnimation,
   plusDiamonds,
 } from '../../general/animations';
 import { plusResourceAnimation } from './animations';
 import Collector from '../../components/gameObjects/Collector';
 import BarsMenu from '../../components/gameObjects/BarsMenu';
-import Hint from './../../components/animations/Hint';
 import BigInteger from '../../libs/BigInteger';
 
 class EventBars extends Phaser.Scene {
@@ -77,7 +75,6 @@ class EventBars extends Phaser.Scene {
   public сurrencyAnimation = сurrencyAnimation.bind(this);
   public increaseDiamonds = increaseDiamonds.bind(this);
   public plusCurrencyAnimation = plusCurrencyAnimation.bind(this);
-  public calendarAnimation = calendarAnimation.bind(this);
   public newbieAwardAnimation = newbieAwardAnimation.bind(this);
   public plusDiamonds = plusDiamonds.bind(this);
   public plusResourceAnimation = plusResourceAnimation.bind(this);

@@ -14,7 +14,6 @@ import {
   pulseBalance,
   increaseDiamonds,
   plusCurrencyAnimation,
-  calendarAnimation,
   newbieAwardAnimation,
   plusDiamonds,
   getCurrency
@@ -23,7 +22,6 @@ import { clickTaskBoard } from '../../general/tasks';
 import TaskBoard from '../../components/gameObjects/TaskBoard';
 import Collector from '../../components/gameObjects/Collector';
 import BarsMenu from '../../components/gameObjects/BarsMenu';
-import Hint from './../../components/animations/Hint';
 
 class ChickenBars extends Phaser.Scene {
   constructor() {
@@ -73,7 +71,6 @@ class ChickenBars extends Phaser.Scene {
   public pulseBalance = pulseBalance.bind(this);
   public increaseDiamonds = increaseDiamonds.bind(this);
   public plusCurrencyAnimation = plusCurrencyAnimation.bind(this);
-  public calendarAnimation = calendarAnimation.bind(this);
   public newbieAwardAnimation = newbieAwardAnimation.bind(this);
   public plusDiamonds = plusDiamonds.bind(this);
   public updateNativeShop = updateNativeShop.bind(this);

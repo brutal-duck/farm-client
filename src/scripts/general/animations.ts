@@ -264,67 +264,6 @@ function showSheepSprite(): void {
 
 }
 
-
-// поведение иконки календарика для ежедневных подарков новичка
-function calendarAnimation(): void {
-
-  if (this.calendar?.scene) {
-
-    if (this.state.farm === 'Sheep') {
-
-      if (this.state.userSheep.part >= 4 && !this.calendar.visible) {
-        this.calendar.setVisible(true);
-      } else if (this.state.userSheep.part < 4 && this.calendar.visible) {
-        this.calendar.setVisible(false);
-      }
-
-    }
-
-    this.calendar.counter++;
-
-    if (this.calendar.counter >= 250) {
-
-      this.calendar.counter = 0;
-      let counter: number = 0;
-      let timeEvent: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 30, callback: (): void => {
-
-        counter++;
-
-        if (counter <= 7) {
-
-          this.calendar.y--;
-          this.calendarText.y--;
-          this.calendar.scale += 0.02;
-          this.calendarText.scale += 0.02;
-        
-        } else {
-          
-          this.calendar.y++;
-          this.calendarText.y++;
-          this.calendar.scale -= 0.02;
-          this.calendarText.scale -= 0.02;
-
-        }
-      
-        if (counter >= 14) {
-
-          timeEvent.remove(false);
-          this.calendar.scale = 1;
-          this.calendarText.scale = 1;
-          this.calendar.y = 77;
-          this.calendarText.y = 85;
-
-        }
-
-      }, callbackScope: this, loop: true });
-
-    }
-
-  }
-
-}
-
-
 // анимация летящей плашки награды на значек карты
 function newbieAwardAnimation(): void {
 
@@ -538,7 +477,6 @@ export {
   plusCurrencyAnimation,
   dragSheep,
   showSheepSprite,
-  calendarAnimation,
   newbieAwardAnimation,
   plusDiamonds,
   getCurrency,

@@ -15,7 +15,6 @@ import {
   pulseBalance,
   increaseDiamonds,
   plusCurrencyAnimation,
-  calendarAnimation,
   newbieAwardAnimation,
   plusDiamonds,
   getCurrency
@@ -81,7 +80,6 @@ class SheepBars extends Phaser.Scene {
   public pulseBalance = pulseBalance.bind(this);
   public increaseDiamonds = increaseDiamonds.bind(this);
   public plusCurrencyAnimation = plusCurrencyAnimation.bind(this);
-  public calendarAnimation = calendarAnimation.bind(this);
   public newbieAwardAnimation = newbieAwardAnimation.bind(this);
   public plusDiamonds = plusDiamonds.bind(this);
   public updateNativeShop = updateNativeShop.bind(this);
