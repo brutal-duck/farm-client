@@ -35,7 +35,7 @@ export default class Stars {
     this.scene.time.addEvent({
       delay: 2000,
       callback: () => {
-        this.stars.destroy();
+        this.stars.destroy(true);
       }
     })
 

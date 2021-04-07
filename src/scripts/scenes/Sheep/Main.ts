@@ -126,6 +126,7 @@ import {
 } from '../../general/ads';
 import setCollector from './collector';
 import { showEventTutorial, doneEventTutor_0 } from './../Event/tutorial';
+import MoneyAnimation from './../../components/animations/MoneyAnimation';
 
 class Sheep extends Phaser.Scene {
   constructor() {
@@ -321,15 +322,15 @@ class Sheep extends Phaser.Scene {
     this.interval();
     this.setCollector();
 
-    // let cursors = this.input.keyboard.createCursorKeys();
-    // cursors.space.on('down', (): void => {
-    //   // this.state.user.diamonds = 10000000;
-    //   // let tasks = this.partTasks();
-    //   // for (let i in tasks) {
-    //   //   tasks[i].done = 1;
-    //   //   tasks[i].got_awarded = 1;
-    //   // }
-    // });
+    let cursors = this.input.keyboard.createCursorKeys();
+    cursors.space.on('down', (): void => {
+      // this.state.user.diamonds = 10000000;
+      // let tasks = this.partTasks();
+      // for (let i in tasks) {
+      //   tasks[i].done = 1;
+      //   tasks[i].got_awarded = 1;
+      // }
+    });
 
   }
 

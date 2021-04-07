@@ -559,42 +559,6 @@ class SheepBars extends Phaser.Scene {
 
   }
 
-  // анимация монет
-  public plusMoney(): void {
-    
-    let x = this.cameras.main.centerX;
-    let y = this.cameras.main.centerY;
-
-    let img1 = this.сurrency.create(x, y, 'sheepCoin').setScale(0.2);
-    let img2 = this.сurrency.create(x, y, 'sheepCoin').setScale(0.2);
-    let img3 = this.сurrency.create(x, y, 'sheepCoin').setScale(0.2);
-    let img4 = this.сurrency.create(x, y, 'sheepCoin').setScale(0.2);
-    let img5 = this.сurrency.create(x, y, 'sheepCoin').setScale(0.2);
-    let img6 = this.сurrency.create(x, y, 'sheepCoin').setScale(0.2);
-    let img7 = this.сurrency.create(x, y, 'sheepCoin').setScale(0.2);
-    let img8 = this.сurrency.create(x, y, 'sheepCoin').setScale(0.2);
-
-    img1.setVelocity(350, 350);
-    img2.setVelocity(500, 0);
-    img3.setVelocity(350, -350);
-    img4.setVelocity(-350, 350);
-    img5.setVelocity(-500, 0);
-    img6.setVelocity(-350, -350);
-    img7.setVelocity(0, -500);
-    img8.setVelocity(0, 500);
-
-    img1.counter = 1;
-    img2.counter = 1;
-    img3.counter = 1;
-    img4.counter = 1;
-    img5.counter = 1;
-    img6.counter = 1;
-    img7.counter = 1;
-    img8.counter = 1;
-
-  }
-
-
 }
 
 export default SheepBars;

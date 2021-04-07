@@ -4,6 +4,7 @@ import axios  from 'axios';
 import Hint from '../../components/animations/Hint';
 import MergingCloud from '../../components/animations/MergingCloud';
 import BigInteger from './../../libs/BigInteger';
+import MoneyAnimation from './../../components/animations/MoneyAnimation';
 
 function confirmExpelAnimal(): void {
     
@@ -953,7 +954,7 @@ function eventProgress(): void {
       this.state.userEvent.money = BigInteger.add(this.state.userEvent.money, this.state.modal.eventParams.offlineProgress);
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
       this.scene.stop();
-      this.game.scene.keys['EventBars'].plusMoney();
+      MoneyAnimation.create(this.game.scene.keys['EventBars']);
 
     } else {
       

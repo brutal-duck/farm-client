@@ -6,6 +6,7 @@ import Hint from '../components/animations/Hint';
 import Firework from '../components/animations/Firework';
 import Stars from '../components/animations/Stars';
 import BigInteger from '../libs/BigInteger';
+import MoneyAnimation from './../components/animations/MoneyAnimation';
 
 // рандомное число
 function random(min: number, max: number): number {
@@ -730,7 +731,7 @@ function getNewbieAward(): void {
 
       this.state.dailyAwards[i] = false;
       this.state.userSheep.money += this.convertDiamonds(10);
-      this.game.scene.keys['SheepBars'].plusMoney();
+      MoneyAnimation.create(this.game.scene.keys['SheepBars']);
       const text: string = this.state.lang.dailyNewbieHint0.replace('$1', String(this.convertDiamonds(10))); 
       Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
       break;
