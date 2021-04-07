@@ -340,6 +340,7 @@ function improveCollector(): void {
 
 
   let nextLevel: IcollectorSettings = collectorSettings.find((data: IcollectorSettings) => data.level === user.collectorLevel + 1);
+  let secondNextLevel: IcollectorSettings = collectorSettings.find((data: IcollectorSettings) => data.level === user.collectorLevel + 2);
   
   if (!nextLevel) {
     
@@ -418,6 +419,21 @@ function improveCollector(): void {
 
     }
 
+  }
+
+  if (!secondNextLevel) {
+    this.scene.stop('Modal');
+    this.scene.stop('Shop');
+    this.scene.stop('ShopBars');
+
+    let modal: Imodal = {
+      type: 1,
+      sysType: 3,
+      message: this.state.lang.maxLevelCollector,
+      height: 150
+    }
+    this.state.modal = modal;
+    this.scene.launch('Modal', this.state);
   }
   
 }
