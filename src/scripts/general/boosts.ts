@@ -19,6 +19,7 @@ function createBoostAnimal(): void {
       callbackScope: this, 
       loop: false 
     });
+    this.tryTask(2, type);
     this.tryTask(4, type);
   });
 
