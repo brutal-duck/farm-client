@@ -1,4 +1,4 @@
-import { random, getRandomBool } from './basic';
+import Currency from './../components/animations/Currency';
 
 // анимация монет и кристаллов
 function сurrencyAnimation(): void {
@@ -116,26 +116,6 @@ function increaseDiamonds(): void {
   }
 
 }
-
-
-// анимация монет от позиции
-function plusCurrencyAnimation(position: Iposition, texture: string): void {
-  
-  let y = position.y - this.game.scene.keys[this.state.farm].scrolling.scrollY;
-
-  let сurrency = this.сurrency.create(position.x, y, texture).setScale(0.16);
-
-  сurrency.counter = 0;
-
-  let target: Iposition = { x: 495, y: 30 }
-  let aim: Phaser.Math.Vector2 = new Phaser.Math.Vector2();
-  aim.x = target.x;
-  aim.y = target.y;
-  let distance: number = Phaser.Math.Distance.Between(сurrency.x, сurrency.y, target.x, target.y) * 2;
-  this.physics.moveToObject(сurrency, aim, distance);
-
-}
-
 
 // перетаскивание овец
 function dragSheep(sheep: boolean = false): void {
@@ -394,7 +374,7 @@ function plusDiamonds(): void {
 }
 
 
-// получения кристаллов
+// получения нескольких ресурсов
 function getCurrency(position: Iposition, counter: number = 1, texture: string): void {
 
   if (counter > 5) counter = 5;
@@ -403,15 +383,17 @@ function getCurrency(position: Iposition, counter: number = 1, texture: string):
     counter--;
     const pos: Iposition = {
       x: Phaser.Math.Between(position.x - 30, position.x + 30),
-      y: Phaser.Math.Between(position.y - 30, position.y + 30),
+      y: Phaser.Math.Between(position.y - this.game.scene.keys[this.state.farm].scrolling.scrollY - 30, position.y - this.game.scene.keys[this.state.farm].scrolling.scrollY + 30),
     }
-    this.plusCurrencyAnimation(pos, texture);
+    let target = { x: 495, y: 30 };
+    if (texture !== 'diamond') {
+      target = { x: 495, y: 120}
+    }
+    Currency.create(this.game.scene.keys[`${this.state.farm}Bars`], pos, target, texture, 400);
     if (counter <= 0) time.remove(false);
   }, callbackScope: this, loop: true });
 
 }
-
-
 
 function improveCollectorAnim(position: Iposition): void {
   let icon: string;
@@ -470,11 +452,19 @@ function openShop(...args: Phaser.Cameras.Scene2D.Camera[]): void {
     onCompleteScope: this,
   });
 }
+
+function plusMoneyAnimation(position: Iposition): void {
+  let y = position.y - this.game.scene.keys[this.state.farm].scrolling.scrollY;
+  let target: Iposition = { x: 495, y: 120 };
+  Currency.create(this, { x: position.x - 70, y: y }, target, `${this.state.farm.toLowerCase()}Coin`, 400, 0.2);
+  Currency.create(this, { x: position.x + 70, y: y }, target, `${this.state.farm.toLowerCase()}Coin`, 400, 0.2);
+  Currency.create(this, { x: position.x, y: y - 30 }, target, `${this.state.farm.toLowerCase()}Coin`, 400, 0.2);
+}
+
 export {
   сurrencyAnimation,
   pulseBalance,
   increaseDiamonds,
-  plusCurrencyAnimation,
   dragSheep,
   showSheepSprite,
   newbieAwardAnimation,
@@ -482,5 +472,6 @@ export {
   getCurrency,
   openShop,
   improveCollectorAnim,
-  openModal
+  openModal,
+  plusMoneyAnimation
 }

@@ -13,10 +13,10 @@ import {
   сurrencyAnimation,
   pulseBalance,
   increaseDiamonds,
-  plusCurrencyAnimation,
   newbieAwardAnimation,
   plusDiamonds,
-  getCurrency
+  getCurrency,
+  plusMoneyAnimation
 } from '../../general/animations';
 import { clickTaskBoard } from '../../general/tasks';
 import TaskBoard from '../../components/gameObjects/TaskBoard';
@@ -70,13 +70,13 @@ class ChickenBars extends Phaser.Scene {
   public сurrencyAnimation = сurrencyAnimation.bind(this);
   public pulseBalance = pulseBalance.bind(this);
   public increaseDiamonds = increaseDiamonds.bind(this);
-  public plusCurrencyAnimation = plusCurrencyAnimation.bind(this);
   public newbieAwardAnimation = newbieAwardAnimation.bind(this);
   public plusDiamonds = plusDiamonds.bind(this);
   public updateNativeShop = updateNativeShop.bind(this);
   public shortTime = shortTime.bind(this);
   public getCurrency = getCurrency.bind(this);
   public clickTaskBoard = clickTaskBoard.bind(this);
+  public plusMoneyAnimation = plusMoneyAnimation.bind(this);
 
 
 
@@ -366,36 +366,6 @@ class ChickenBars extends Phaser.Scene {
     if (this.starterpackIcon && this.state.user.starterpack) this.starterpackIcon?.destroy();
 
   }
-
-
-  // анимация монет от позиции
-  public plusMoneyAnimation(position: Iposition): void {
-    
-    let y = position.y - this.game.scene.keys['Chicken'].scrolling.scrollY;
-
-    let img1 = this.сurrency.create(position.x - 70, y, 'chickenCoin').setScale(0.2);
-    let img2 = this.сurrency.create(position.x + 70, y, 'chickenCoin').setScale(0.2);
-    let img3 = this.сurrency.create(position.x, y - 30, 'chickenCoin').setScale(0.2);
-
-    img1.counter = 0;
-    img2.counter = 0;
-    img3.counter = 0;
-
-    let target: Iposition = { x: 495, y: 120 }
-    let aim = new Phaser.Math.Vector2();
-    aim.x = target.x;
-    aim.y = target.y;
-    let distance: number = Phaser.Math.Distance.Between(img1.x, img1.y, target.x, target.y) * 2;
-    this.physics.moveToObject(img1, aim, distance);
-    
-    distance = Phaser.Math.Distance.Between(img2.x, img2.y, target.x, target.y) * 2;
-    this.physics.moveToObject(img2, aim, distance);
-    
-    distance = Phaser.Math.Distance.Between(img3.x, img3.y, target.x, target.y) * 2;
-    this.physics.moveToObject(img3, aim, distance);
-
-  }
-
 
   // обновление цены покупки кур
   public updateChickenPrice(): void {

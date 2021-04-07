@@ -504,7 +504,7 @@ function collectEgg(egg: Egg, manualСollect: boolean = false): void {
       chapter: this.state[`user${this.state.farm}`].part,
     });
 
-    this.game.scene.keys['ChickenBars'].plusCurrencyAnimation(position, 'diamond');
+    this.game.scene.keys['ChickenBars'].getCurrency(position, 1, 'diamond');
     this.state.user.diamonds++;
     egg.destroy();
     this.tryTask(19, 0);

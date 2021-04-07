@@ -126,6 +126,7 @@ import {
 } from '../../general/ads';
 import setCollector from './collector';
 import { showEventTutorial, doneEventTutor_0 } from './../Event/tutorial';
+
 class Sheep extends Phaser.Scene {
   constructor() {
     super('Sheep');
@@ -322,24 +323,12 @@ class Sheep extends Phaser.Scene {
 
     // let cursors = this.input.keyboard.createCursorKeys();
     // cursors.space.on('down', (): void => {
-
-      // this.state.daily = 8
-      // this.state.user.takenReward = false;
-      // this.state.dailyAwards = [false, false, false, false, false, false, false, false]
-
-    
-      // let modal: Imodal = {
-      //   type: 12,
-      // }
-      // this.state.modal = modal;
-      // this.scene.launch('Modal', this.state);
-      // this.state.userSheep.feedBoostTimer = 10
-      // this.state.user.diamonds = 10000000;
-      // let tasks = this.partTasks();
-      // for (let i in tasks) {
-      //   tasks[i].done = 1;
-      //   tasks[i].got_awarded = 1;
-      // }
+    //   // this.state.user.diamonds = 10000000;
+    //   // let tasks = this.partTasks();
+    //   // for (let i in tasks) {
+    //   //   tasks[i].done = 1;
+    //   //   tasks[i].got_awarded = 1;
+    //   // }
     // });
 
   }

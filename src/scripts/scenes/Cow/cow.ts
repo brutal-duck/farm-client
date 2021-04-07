@@ -384,7 +384,7 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
 
     cow.milk = 0;
     cow.diamond++;
-    this.game.scene.keys['CowBars'].plusCurrencyAnimation(position, 'diamond');
+    this.game.scene.keys['CowBars'].getCurrency(position, 1, 'diamond');
     this.state.user.diamonds++;
     this.tryTask(19, 0);
 

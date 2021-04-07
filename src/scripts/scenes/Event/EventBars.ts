@@ -18,7 +18,6 @@ import {
 import {
   сurrencyAnimation,
   increaseDiamonds,
-  plusCurrencyAnimation,
   newbieAwardAnimation,
   plusDiamonds,
 } from '../../general/animations';
@@ -74,7 +73,6 @@ class EventBars extends Phaser.Scene {
   public clickModalBtn = clickModalBtn.bind(this);
   public сurrencyAnimation = сurrencyAnimation.bind(this);
   public increaseDiamonds = increaseDiamonds.bind(this);
-  public plusCurrencyAnimation = plusCurrencyAnimation.bind(this);
   public newbieAwardAnimation = newbieAwardAnimation.bind(this);
   public plusDiamonds = plusDiamonds.bind(this);
   public plusResourceAnimation = plusResourceAnimation.bind(this);
