@@ -27,6 +27,7 @@ import { plusResourceAnimation } from './animations';
 import Collector from '../../components/gameObjects/Collector';
 import BarsMenu from '../../components/gameObjects/BarsMenu';
 import Hint from './../../components/animations/Hint';
+import BigInteger from '../../libs/BigInteger';
 
 class EventBars extends Phaser.Scene {
   constructor() {
@@ -397,16 +398,16 @@ class EventBars extends Phaser.Scene {
   public buyAnimalStatus(): void {
 
     let breed: number = this.game.scene.keys['Event'].maxBreedForBuy();
-    let price: number = this.game.scene.keys[this.state.farm].animalPrice(breed).price
+    let price: string = this.game.scene.keys[this.state.farm].animalPrice(breed).price
     
     if ((this.state.userEvent.herdBoostAnimals.length > 0 || 
-      price > this.state.userEvent.money || 
+      BigInteger.greaterThan(price, this.state.userEvent.money) || 
       (this.state.user.additionalTutorial.eventTutorial < 70 &&
       this.state.user.additionalTutorial.eventTutorial !== 30)) && 
       this.animalBuy.tintBottomLeft === 0xFFFFFF) {
       this.animalBuy.setTint(0x777777);
     } else if (this.state.userEvent.herdBoostAnimals.length <= 0 && 
-      price <= this.state.userEvent.money && 
+      BigInteger.lessThanOrEqual(price, this.state.userEvent.money) &&
       this.animalBuy.tintBottomLeft === 0x777777 &&
       (this.state.user.additionalTutorial.eventTutorial > 70 ||
       this.state.user.additionalTutorial.eventTutorial === 30)) {

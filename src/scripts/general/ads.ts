@@ -4,6 +4,7 @@ import { randomString } from './basic';
 import * as platform from 'platform';
 import axios from 'axios';
 import Firework from '../components/animations/Firework';
+import BigInteger from '../libs/BigInteger';
 
 // поиск рекламы
 function findAd(): void {
@@ -181,7 +182,7 @@ function adReward(): void {
       type = 'take_event_animal';
       break;
     case 5:
-      this.state.userEvent.money += this.state.modal.eventParams.offlineProgress;
+      this.state.userEvent.money = BigInteger.add(this.state.userEvent.money, this.state.modal.eventParams.offlineProgress);
       this.game.scene.keys[this.state.farm + 'Bars'].plusMoney();
       this.state.amplitude.getInstance().logEvent('take_double_profit_event', {
         farm_id: this.state.farm,

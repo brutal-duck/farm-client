@@ -46,7 +46,7 @@ function autosave(): void {
   let user: IeventUserAutoSave = {
     diamonds: this.state.user.diamonds,
     xp: this.state.user.xp,
-    money: String(this.state.userEvent.money),
+    money: this.state.userEvent.money,
     herdBoostAnimals: this.state.userEvent.herdBoostAnimals,
     takenHerdBoost: this.state.userEvent.takenHerdBoost,
     feedBoostTime: this.state.userEvent.feedBoostTime,

@@ -5,6 +5,7 @@ import * as amplitude from 'amplitude-js';
 import Hint from '../components/animations/Hint';
 import Firework from '../components/animations/Firework';
 import Stars from '../components/animations/Stars';
+import BigInteger from '../libs/BigInteger';
 
 // рандомное число
 function random(min: number, max: number): number {
@@ -33,23 +34,23 @@ function randomString(length: number = 5): string {
 }
 
 // сокращенные числа
-function shortNum(num: number | bigint): string {
+function shortNum(num: number | string): string {
 
   if (typeof num === 'number') num = Number(num.toFixed(0));
   
-	num = BigInt(num);
-
-	if (num < BigInt(9999)) return String(num);
+	num = String(num);
+  
+	if (BigInteger.lessThan(num, '9999')) return num;
 	else {
 		
 		let pow10: number = 0; // Начальная степень
-		let index: string = String(num).slice(1, 3); // Второе и третье число в num для составления выходного числа
+		let index: string = num.slice(1, 3); // Второе и третье число в num для составления выходного числа
 
-    let leftover: string = String(num);
+    let leftover: string = num;
 
 		// Сокращаем число, определяя степень
-		while ( num >= BigInt(10) ) {
-			num /= BigInt(10);
+		while (BigInteger.greaterThanOrEqual(num, '10')) {
+      num = BigInteger.divide(String(num), '10');
 			pow10 += 1;
 		}
 
@@ -67,7 +68,7 @@ function shortNum(num: number | bigint): string {
 	
 			let character1 = 97, character2 = 97;
 	
-			while ( pow10correctly > 5 ) {
+			while (pow10correctly > 5) {
 				character2 += 1;
 				if ( character2 > 122 ) {
 					character1 += 1;

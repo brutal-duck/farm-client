@@ -1,5 +1,6 @@
 import { random, randomString } from '../../general/basic';
 import MergingCloud from '../../components/animations/MergingCloud';
+import BigInteger from '../../libs/BigInteger';
 
 // функция реверсивного движения животного
 function reverse(animal: Phaser.Physics.Arcade.Sprite): void {
@@ -201,10 +202,10 @@ function getResource(data: IeventResource): Phaser.Physics.Arcade.Sprite {
 
 function collectResource(resource: Phaser.Physics.Arcade.Sprite): void {
   
-  let price: bigint = this.state.eventSettings.eventSettings.find((data: IeventPoints) => data.breed === resource.data.values.type).resourcePrice;
-  if (this.state.userEvent.feedBoostTime > 0) price *= this.feedBoostMultiplier;
+  let price: string = this.state.eventSettings.eventSettings.find((data: IeventPoints) => data.breed === resource.data.values.type).resourcePrice;
+  if (this.state.userEvent.feedBoostTime > 0) price = BigInteger.multiply(price, this.feedBoostMultiplier);
   resource.data.values.click = false;
-  this.state.userEvent.money += price;
+  this.state.userEvent.money = BigInteger.add(this.state.userEvent.money, price);
   this.game.scene.keys['EventBars'].plusResourceAnimation({x: resource.x, y: resource.y});
   resource.destroy();
 
@@ -215,7 +216,7 @@ function buyAnimal(breed: number, shop: boolean = false, diamond: number = 0): b
 
   let success: boolean = false;
 
-    let animalPrice = this.animalPrice(breed);
+    let animalPrice: { price: string, countAnimal: number } = this.animalPrice(breed);
     if (diamond > 0) {
       if (this.state.user.diamonds >= diamond) {
         success = true;
@@ -250,7 +251,7 @@ function buyAnimal(breed: number, shop: boolean = false, diamond: number = 0): b
 
     } else {
       
-      if (this.state.userEvent.money >= animalPrice.price) {
+      if (BigInteger.greaterThanOrEqual(this.state.userEvent.money, animalPrice.price)) {
 
         let {x, y} = this.getFreePosition();
         if (x === null || y === null) return;
@@ -258,7 +259,8 @@ function buyAnimal(breed: number, shop: boolean = false, diamond: number = 0): b
         this.currentTerritory(x, y).data.values.animal = breed;
         let id: string = 'local_' + randomString(18);
         this.getAnimal(id, breed, x, y);
-        this.state.userEvent.money -= animalPrice.price;
+        
+        this.state.userEvent.money = BigInteger.subtract(this.state.userEvent.money , animalPrice.price);
         this.state.userEvent.countAnimal[breed - 1].counter = animalPrice.countAnimal;
         this.game.scene.keys['EventBars'].updateAnimalPrice();
 
@@ -269,8 +271,8 @@ function buyAnimal(breed: number, shop: boolean = false, diamond: number = 0): b
             this.scene.stop('ShopBars');
             this.scene.stop('Modal');
           }
-
-          let count: number = animalPrice.price - this.state.userEvent.money;
+          
+          let count: string =  BigInteger.subtract(animalPrice.price, this.state.userEvent.money);
           let diamonds: number = this.convertMoney(count);
           this.state.convertor = {
             fun: 1,

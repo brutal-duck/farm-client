@@ -121,7 +121,7 @@ class Event extends Phaser.Scene {
   public herdBoostLvl: number = 4;
   public feedBoostLvl: number = 5;
   public startCreateHerdBoostAnimal: boolean = false; // метка начала создания животных
-  public feedBoostMultiplier: bigint = BigInt(2);
+  public feedBoostMultiplier: string = '2';
   public feedBoostStack: number = 11; // максимальный стек часов
   public mergTutor: number; // счетчик для повтора туториала про мерджинг
   public showMergPointer: boolean; // показ пальца с перетаскиванием овец для тутора

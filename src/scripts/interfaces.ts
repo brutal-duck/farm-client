@@ -178,7 +178,7 @@ interface IuserCow {
   feedBoostTime: number;
 }
 interface IuserEvent {
-  money: bigint;
+  money: string;
   countAnimal: { counter: number }[];
   collector: number;
   collectorLevel: number;
@@ -296,9 +296,9 @@ interface IcowPoints {
 interface IeventPoints {
   breed: number;
   resource: number;
-  resourcePrice: bigint;
-  price: bigint;
-  exchange: bigint;
+  resourcePrice: string;
+  price: string;
+  exchange: string;
   id?: any;
 }
 interface IterritoriesSheepSettings {
@@ -464,7 +464,7 @@ interface ItasksParams {
 }
 interface IeventParams {
   offlineTime: number;
-  offlineProgress: bigint;
+  offlineProgress: string;
   collectorTime: number;
 }
 interface Imodal {
@@ -479,7 +479,7 @@ interface Imodal {
 }
 interface Iconvertor {
   fun: number;
-  count: number | bigint;
+  count: number | string;
   diamonds: number;
   type: number;
   breed?: number;

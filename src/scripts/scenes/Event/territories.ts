@@ -1,4 +1,5 @@
 import Firework from '../../components/animations/Firework';
+import BigInteger from './../../libs/BigInteger';
 function deleteTerritoriesLocks(): void {
 
   let lvl: number = this.state.userEvent.maxLevelAnimal;
@@ -37,8 +38,8 @@ function buyTerritory(): void {
   
   
         let price: number = settings.price;
-  
-        if (this.state.userEvent.money >= BigInt(price)) {
+        
+        if (BigInteger.greaterThanOrEqual(this.state.userEvent.money, String(price))) {
           
           this.state.amplitude.getInstance().logEvent('buy_territory', {
             block: this.state.territory.data.values.block,
@@ -47,7 +48,8 @@ function buyTerritory(): void {
           });
       
           this.state.territory.data.values.type = 2;
-          this.state.userEvent.money -= BigInt(price);
+          
+          this.state.userEvent.money = BigInteger.subtract(this.state.userEvent.money, String(price));
       
           const territory: Phaser.Physics.Arcade.Sprite = this.state.territory;
       
@@ -63,9 +65,9 @@ function buyTerritory(): void {
           }, callbackScope: this, loop: false });
       
           } else {
-      
-            let count: number = price - Number(this.state.userEvent.money);
-            let diamonds: number = this.convertMoney(BigInt(count));
+            
+            let count: string = BigInteger.subtract(String(price), this.state.userEvent.money)
+            let diamonds: number = this.convertMoney(count);
             this.state.convertor = {
               fun: 6,
               count: count,

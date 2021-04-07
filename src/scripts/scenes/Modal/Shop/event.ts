@@ -1,4 +1,5 @@
 import { shortNum, shortTime } from '../../../general/basic';
+import BigInteger from './../../../libs/BigInteger';
 
 // монеты
 function animalMoney(): void {
@@ -157,8 +158,8 @@ function animals(): void {
       fill: '#FFFFFF'
     }).setOrigin(0, 0.5);
     let boundsResource = resource.getBounds();
-
-    let resourcePrice: Phaser.GameObjects.Text = this.add.text(boundsResource.right, center, String(shortNum(animal.resourcePrice / BigInt(10))), {
+    
+    let resourcePrice: Phaser.GameObjects.Text = this.add.text(boundsResource.right, center, String(shortNum(BigInteger.divide(animal.resourcePrice, String(10)))), {
       font: '20px Shadow',
       fill: '#ECC896'
     }).setOrigin(0, 0.5);

@@ -1,16 +1,15 @@
 import axios from 'axios';
 import { randomString, shortNum } from './../../general/basic';
 import Firework from '../../components/animations/Firework';
+import BigInteger from '../../libs/BigInteger';
 // цена животного
-function animalPrice(breed: number): {price: bigint, countAnimal: number} {
+function animalPrice(breed: number): {price: string, countAnimal: number} {
   let insideCounter: number = this.state.userEvent.countAnimal[breed - 1].counter;
-  let insidePrice: bigint = this.state.eventSettings.eventSettings[breed - 1].price;
-  let coefficient: bigint = BigInt(this.state.eventSettings.priceCoefficient);
+  let insidePrice: string = this.state.eventSettings.eventSettings[breed - 1].price;
+  let coefficient: string = String(this.state.eventSettings.priceCoefficient);
   
   for (let i = 1; i < insideCounter; i++) {
-    
-    insidePrice += insidePrice * coefficient / BigInt(100);
-
+    insidePrice = BigInteger.add(insidePrice, BigInteger.divide(BigInteger.multiply(insidePrice, coefficient), '100'))
   }
   
   insideCounter++;
@@ -129,25 +128,25 @@ function maxBreedForBuy(): number {
   if (breed <= 0) {
     breed = 1;
   } else if (this.state.userEvent.maxLevelAnimal <= 10) {
-    let currentPrice: bigint;
-    let breedPrice: bigint;
+    let currentPrice: string;
+    let breedPrice: string;
     for (let i = breed; i >= 1; i--) {
 
       currentPrice = this.animalPrice(i).price;
       breedPrice = this.animalPrice(breed).price;
-      if (currentPrice <= breedPrice) {
+      if (BigInteger.lessThanOrEqual(currentPrice, breedPrice)) {
         breedPrice = currentPrice;
         breed = i ;
       }
     }
   } else if (this.state.userEvent.maxLevelAnimal > 10) {
-    let currentPrice: bigint;
-    let breedPrice: bigint;
+    let currentPrice: string;
+    let breedPrice: string;
     for (let i = breed; i >= this.state.userEvent.maxLevelAnimal - 9; i--) {
 
       currentPrice = this.animalPrice(i).price;
       breedPrice = this.animalPrice(breed).price;
-      if (currentPrice <= breedPrice) {
+      if (BigInteger.lessThanOrEqual(currentPrice, breedPrice)) {
         breedPrice = currentPrice;
         breed = i ;
       }
@@ -304,33 +303,32 @@ function buyCollector(type: number): void {
   
 }
 
-function convertDiamonds(diamonds: number): bigint {
+function convertDiamonds(diamonds: number): string {
   
   let breedSettings: IeventPoints[] = this.state.eventSettings.eventSettings;
   let maxLevel: number = this.state.userEvent.maxLevelAnimal;
   
   let setting: IeventPoints = breedSettings.find((item: IeventPoints) => item.breed === maxLevel);
-  let exchange: bigint;
+  let exchange: string;
 
   if (setting) {
     exchange = setting.exchange;
   } else {
-    exchange = BigInt(1);
+    exchange = String(1);
   }
-  
-  return exchange *= BigInt(diamonds);
-
+  exchange = BigInteger.multiply(exchange, String(diamonds));
+  return exchange;
 }
 
-function convertMoney(money: bigint): number {
+function convertMoney(money: string): number {
 
   let breedSettings: IeventPoints[] = this.state.eventSettings.eventSettings;
   let maxLevel: number = this.state.userEvent.maxLevelAnimal;
   
   let setting: IeventPoints = breedSettings.find((item: IeventPoints) => item.breed === maxLevel);
-  let exchange: bigint = setting ? setting.exchange : BigInt(1);
-
-  return Math.ceil(Number(money / exchange));;
+  let exchange: string = setting ? setting.exchange : String(1);
+  
+  return Number(BigInteger.divide(money, exchange));
 
 }
 
@@ -394,9 +392,8 @@ function improveCollector(): void {
 
   } else {
 
-    if (user.money >= nextLevel.price) {
-
-      user.money -= BigInt(nextLevel.price);
+    if (BigInteger.greaterThanOrEqual(user.money, String(nextLevel.price))) {
+      user.money = BigInteger.subtract(user.money, String(nextLevel.price));
       user.collectorLevel++;
       this.setCollector();
 
@@ -404,8 +401,8 @@ function improveCollector(): void {
 
     } else {
 
-      let count: number = nextLevel.price - Number(user.money);
-      let diamonds: number = this.convertMoney(BigInt(count));
+      let count: string = BigInteger.subtract(String(nextLevel.price), user.money);
+      let diamonds: number = this.convertMoney(count);
       this.state.convertor = {
         fun: 8,
         count: count,
@@ -451,8 +448,7 @@ function exchange(ad: boolean = false): void {
   } else {
 
     this.state.user.diamonds -= this.state.convertor.diamonds;
-    user.money += BigInt(this.convertDiamonds(this.state.convertor.diamonds));
-
+    user.money = BigInteger.add(user.money, this.convertDiamonds(this.state.convertor.diamonds));
     if (!ad) {
 
       // this.state.amplitude.getInstance().logEvent('diamonds_spent', {

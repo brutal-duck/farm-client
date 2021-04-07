@@ -3,6 +3,7 @@ import { random, getRandomBool, randomString, shortTime, romanize, shortNum} fro
 import axios  from 'axios';
 import Hint from '../../components/animations/Hint';
 import MergingCloud from '../../components/animations/MergingCloud';
+import BigInteger from './../../libs/BigInteger';
 
 function confirmExpelAnimal(): void {
     
@@ -934,8 +935,7 @@ function eventProgress(): void {
     img1: img1
   }, (): void => {
 
-    this.state.userEvent.money += this.state.modal.eventParams.offlineProgress;
-
+    this.state.userEvent.money = BigInteger.add(this.state.userEvent.money, this.state.modal.eventParams.offlineProgress);
     if (ad && doubleProfitPrice === 5) {
 
       this.game.scene.keys[this.state.farm].watchAd(5);
@@ -950,7 +950,7 @@ function eventProgress(): void {
         count: doubleProfitPrice,
         farm_id: this.state.farm
       });
-      this.state.userEvent.money += this.state.modal.eventParams.offlineProgress;
+      this.state.userEvent.money = BigInteger.add(this.state.userEvent.money, this.state.modal.eventParams.offlineProgress);
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
       this.scene.stop();
       this.game.scene.keys['EventBars'].plusMoney();
@@ -975,8 +975,7 @@ function eventProgress(): void {
 
     let pickUp = this.shopButton(this.cameras.main.centerX + 9, this.cameras.main.centerY + 276 - height, this.state.lang.pickUp);
     this.clickShopBtn(pickUp, (): void => {
-      
-      this.state.userEvent.money += this.state.modal.eventParams.offlineProgress;
+      this.state.userEvent.money = BigInteger.add(this.state.userEvent.money, this.state.modal.eventParams.offlineProgress);
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
       this.scene.stop();
   

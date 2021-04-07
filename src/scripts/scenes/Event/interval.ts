@@ -1,5 +1,6 @@
 import { randomString, shortNum, shortTime } from '../../general/basic';
 import Hearts from '../../components/animations/Hearts';
+import BigInteger from '../../libs/BigInteger';
 
 function interval(): void {
 
@@ -127,23 +128,23 @@ function interval(): void {
     }
     this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setText(nativeCount);
 
-    let proceeds: bigint = BigInt(0);
+    let proceeds: string = String(0);
     this.animals.children.entries.forEach(animal => {
       if (animal.data.values.active.data.values.working) {
-        let price: bigint = this.state.eventSettings.eventSettings.find((data: IeventPoints) => data.breed === animal.data.values.type).resourcePrice;
-        proceeds += price;
+        let price: string = this.state.eventSettings.eventSettings.find((data: IeventPoints) => data.breed === animal.data.values.type).resourcePrice;
+        proceeds = BigInteger.add(proceeds, price);
       }
     });
     
-    if (this.state.userEvent.collector <= 0) proceeds = BigInt(0);
+    if (this.state.userEvent.collector <= 0) proceeds = String(0);
     if (this.state.userEvent.collector > 0 && this.state.userEvent.feedBoostTime <= 0) {
-      this.game.scene.keys['EventBars'].proceedsText.setText(this.state.lang.income + ' ' + shortNum( proceeds / BigInt(10)) + '/' + this.state.lang.seconds);
+      this.game.scene.keys['EventBars'].proceedsText.setText(this.state.lang.income + ' ' + shortNum(BigInteger.divide(proceeds, String(10))) + '/' + this.state.lang.seconds);
   
     } else if (this.state.userEvent.feedBoostTime > 0) { 
-      this.game.scene.keys['EventBars'].proceedsText.setText(shortNum( proceeds / BigInt(10)) + '/' + this.state.lang.seconds);
+      this.game.scene.keys['EventBars'].proceedsText.setText(shortNum(BigInteger.divide(proceeds, String(10))) + '/' + this.state.lang.seconds);
 
     } else if (this.state.userEvent.feedBoostTime <= 0) {
-      this.game.scene.keys['EventBars'].proceedsText.setText(this.state.lang.income + ' ' + shortNum( proceeds / BigInt(10)) + '/' + this.state.lang.seconds);
+      this.game.scene.keys['EventBars'].proceedsText.setText(this.state.lang.income + ' ' + shortNum(BigInteger.divide(proceeds, String(10))) + '/' + this.state.lang.seconds);
     } 
     
     // Обновление иконки feed буста

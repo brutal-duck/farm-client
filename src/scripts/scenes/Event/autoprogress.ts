@@ -1,4 +1,5 @@
 import { random, randomString } from '../../general/basic';
+import BigInteger from '../../libs/BigInteger';
 
 // расчет прогресса во время отсутствия
 function autoprogress(load: boolean = false): void {
@@ -28,11 +29,11 @@ function autoprogress(load: boolean = false): void {
 
   // процент ресурсов под бустом
   let feedBoostNumberPercent: number;
-  let feedPercent: bigint = BigInt(100);
+  let feedPercent: string = String(100);
   if (wasFeedBoost > 0) {
     feedBoostNumberPercent = 100 + Number((wasFeedBoost / wasCollector).toFixed(2)) * 100;
     if (feedBoostNumberPercent >= 200 ) feedBoostNumberPercent = 200;
-    feedPercent = BigInt(feedBoostNumberPercent);
+    feedPercent = String(feedBoostNumberPercent);
   }
   
 
@@ -110,15 +111,15 @@ function autoprogress(load: boolean = false): void {
   }
 
   // сохраняем ресурсы
-  let income: bigint = BigInt(0);
+  let income: string = String(0);
   let length: number = resourceArr.length;
   
   if (percent < 100) length = Math.floor(length / 100 * percent);
 
   for (let i: number = 0; i < length; i++) {
 
-    let price: bigint = this.state.eventSettings.eventSettings.find((data: IeventPoints) => data.breed === resourceArr[i].type).resourcePrice;
-    price = (price * feedPercent) / BigInt(100); // коэфф
+    let price: string = this.state.eventSettings.eventSettings.find((data: IeventPoints) => data.breed === resourceArr[i].type).resourcePrice;
+    price = BigInteger.divide(BigInteger.multiply(price, feedPercent), String(100)); // коэфф
     
     
     if (wasCollector > 0) {
@@ -127,11 +128,11 @@ function autoprogress(load: boolean = false): void {
 
       if (resource.count > 0) resource.count--;
 
-      income += price;
+      income = BigInteger.add(income, price);
 
     }
   }
-  if (this.state.offlineTime > 900 && income > 0) {
+  if (this.state.offlineTime > 900 && BigInteger.greaterThan(income, '0')) {
     let modal: Imodal = {
       type: 10,
       eventParams: {
@@ -146,7 +147,7 @@ function autoprogress(load: boolean = false): void {
     this.state.modal = modal;
     this.scene.launch('Modal', this.state);
   } else {
-    this.state.userEvent.money += income;
+    this.state.userEvent.money = BigInteger.add(this.state.userEvent.money, income);
   }
   
   

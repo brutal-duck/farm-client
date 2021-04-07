@@ -23,7 +23,7 @@ export default class BigInteger {
   *  Деление двух чисел (x / y)
   */
    static divide(x: string, y: string): string {
-    return String(JSBI.multiply(JSBI.BigInt(x), JSBI.BigInt(y)));
+    return String(JSBI.divide(JSBI.BigInt(x), JSBI.BigInt(y)));
   }
   /**
   *  Возведение в степень
@@ -57,7 +57,7 @@ export default class BigInteger {
     return JSBI.lessThan(JSBI.BigInt(x), JSBI.BigInt(y))
   }
   /**
-  * Меньше или равно (x < y)
+  * Меньше или равно (x <= y)
   */
   static lessThanOrEqual(x: string, y: string): boolean {
     return JSBI.lessThanOrEqual(JSBI.BigInt(x), JSBI.BigInt(y))
@@ -69,7 +69,7 @@ export default class BigInteger {
     return JSBI.greaterThan(JSBI.BigInt(x), JSBI.BigInt(y))
   }
   /**
-  * Больше или равно (x > y)
+  * Больше или равно (x >= y)
   */
    static greaterThanOrEqual(x: string, y: string): boolean {
     return JSBI.greaterThanOrEqual(JSBI.BigInt(x), JSBI.BigInt(y))
