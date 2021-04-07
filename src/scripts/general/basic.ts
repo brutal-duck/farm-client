@@ -514,17 +514,16 @@ function donePart(): void {
     this.house.setTexture(this.state.farm.toLowerCase() + '-house-' + user.part);
     let house: Phaser.GameObjects.Sprite = this.territories.children.entries.find((data: any) => data.type === 6);
     Stars.create(this, { x: house.x + 120, y: house.y + 120 });
-    // Firework.create(this, { x: house.x + 120, y: house.y + 120 }, 3);
     this.checkDoneTasks();
 
   }, callbackScope: this, loop: false });
 
   this.time.addEvent({ delay: 1500, callback: (): void => {
-
-    if (!this.scene.isActive('Modal') &&
+    if (user.part !== 3 && user.part !== 5 && user.part !== 6 && this.state.tutorial >= 100 || user.part !== 4) {
+      if (!this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Map')) this.showTasks();
-      
+    }
   }, callbackScope: this, loop: false });
 
 }
