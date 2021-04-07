@@ -113,41 +113,37 @@ function autoprogress(load: boolean = false): void {
 
     } else {
 
+      
       let chicken = this.chicken.children.entries.find((data: any) => data._id === newEggs[i].id);
-      let territory = this.currentTerritory(chicken.x, chicken.y);
-
-      let count: number = 0;
-      let minX: number = (territory.position - 1) * 240 + indent;
-      let maxX: number = territory.position * 240 - indent;
-      let minY: number = territory.block * 240 + indent;
-      let maxY: number = (territory.block + 1) * 240 - indent;
-
-      if (newEggs[i].count < chicken.diamond) {
-
-        chicken.diamond -= newEggs[i].count;
-        count = newEggs[i].count;
-
-      } else {
-
-        count = 5 - chicken.diamond;
-        chicken.destroy();
-        
-      }
-
-      for (let j: number = 0; j < count; j++) {
-        
-        let egg: IchickenEgg = {
-          type: 0,
-          x: random(minX, maxX),
-          y: random(minY, maxY),
-          _id: 'local_' + randomString(18)
-        }
+      if (chicken) {
+        let territory = this.currentTerritory(chicken?.x, chicken?.y);
+        if (territory) {
+          let count: number = 0;
+          let minX: number = (territory.position - 1) * 240 + indent;
+          let maxX: number = territory.position * 240 - indent;
+          let minY: number = territory.block * 240 + indent;
+          let maxY: number = (territory.block + 1) * 240 - indent;
   
-        Egg.create(this, egg);
+          if (newEggs[i].count < chicken.diamond) {
+            chicken.diamond -= newEggs[i].count;
+            count = newEggs[i].count;
+          } else {
+            count = 5 - chicken.diamond;
+            chicken.destroy();
+          }
+          for (let j: number = 0; j < count; j++) {
+  
+            let egg: IchickenEgg = {
+              type: 0,
+              x: Phaser.Math.Between(minX, maxX),
+              y: Phaser.Math.Between(minY, maxY),
+              _id: 'local_' + randomString(18)
+            }
+            Egg.create(this, egg);
+          }
+        }
       }
-
     }
-
   }
 
   // скорость сборки
@@ -243,7 +239,7 @@ function autoprogress(load: boolean = false): void {
 
       for (let j in this.eggs.children.entries) {
         let egg = this.eggs.children.entries[j];
-        if (egg.x > minX && egg.x < maxX && egg.y > minY && egg.y < maxY) count--;
+        if (egg?.x > minX && egg?.x < maxX && egg?.y > minY && egg?.y < maxY) count--;
       }
 
       for (let j: number = 0; j < count; j++) {
@@ -265,8 +261,8 @@ function autoprogress(load: boolean = false): void {
 
       let egg: IchickenEgg = {
         type: remainingEggs[index],
-        x: freeSpace[i].x,
-        y: freeSpace[i].y,
+        x: freeSpace[i]?.x,
+        y: freeSpace[i]?.y,
         _id: 'local_' + randomString(18)
       }
 
