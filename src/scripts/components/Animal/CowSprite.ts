@@ -7,6 +7,7 @@ export default class CowSprite extends Animal {
   public milk: number;
   public milkStatus: Phaser.GameObjects.Sprite;
   public scene: Cow;
+  public hornsSprite: Phaser.GameObjects.Sprite;
   constructor(scene: Cow, 
     position: Iposition, 
     breed: number,   
@@ -36,7 +37,19 @@ export default class CowSprite extends Animal {
     super.init();
     this.basicVelocity = 30;
     this.milkStatus = this.scene.add.sprite(this.x, this.y, 'milk-status').setVisible(false);
+    if (this.breed === 0) this.createDiamondHorns();
     this.setListeners();
+  }
+
+  private createDiamondHorns(): void {
+    let side = 'right';
+    if (this.vector === 2 || this.vector === 3 || this.vector === 7 || this.vector === 8) side = 'left';
+    let stage: number;
+    if (this.milk <= 200) stage = 1;
+    else if (this.milk > 200 && this.milk <= 600) stage = 2;
+    else if (this.milk > 600 && this.milk <= 900) stage = 3;
+    else stage = 4;
+    this.hornsSprite = this.scene.add.sprite(this.x, this.y, `${this.type}-${side}-${this.breed}-${stage}`).setDepth(this.depth); 
   }
 
   public setListeners(): void {
@@ -66,18 +79,18 @@ export default class CowSprite extends Animal {
   }
 
   private setDiamondStage(): void {
-    // if (this.breed === 0) {
-    //   let stage: number;
-    //   if (this.milk <= 200) stage = 0;
-    //   else if (this.milk > 200 && this.milk <= 600) stage = 1;
-    //   else if (this.milk > 600 && this.milk <= 900) stage = 2;
-    //   else stage = 3;
-    //   if (stage === 0) {
-    //     this.animalSpine?.setAttachment('horns', null);
-    //   } else {
-    //     this.animalSpine?.setAttachment('horns', `horns-${stage}`);
-    //   }
-    // }
+    if (this.breed === 0) {
+      let side = 'right';
+      if (this.vector === 2 || this.vector === 3 || this.vector === 7 || this.vector === 8) side = 'left';
+      let stage: number;
+      if (this.milk <= 200) stage = 1;
+      else if (this.milk > 200 && this.milk <= 600) stage = 2;
+      else if (this.milk > 600 && this.milk <= 900) stage = 3;
+      else stage = 4;
+      this.hornsSprite.setTexture(`${this.type}-${side}-${this.breed}-${stage}`); 
+      this.hornsSprite.setDepth(this.depth);
+      this.hornsSprite.setPosition(this.x, this.y);
+    }
   }
   private setMilkStatusPosition(): void {
     let statusPosition: number = -50;
