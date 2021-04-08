@@ -350,7 +350,21 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
         this.taskProgress?.clear();
       
       }
-      this.setVisibility(false);
+
+      let checkSheepTutor: boolean = true;
+      if (this.scene.state.farm === 'Sheep' && this.scene.state.userSheep.tutorial < 100) checkSheepTutor = false;
+  
+      if ((this.scene.menu.isOpened ||
+        this.scene.scene.isActive('Modal') ||
+        this.scene.scene.isActive('Tutorial')) &&
+        !checkSheepTutor) {
+        this.setVisibility(false);
+      } else if (!this.scene.menu.isOpened &&
+        !this.scene.scene.isActive('Modal') &&
+        !this.scene.scene.isActive('Tutorial') &&
+        checkSheepTutor) {
+        this.setVisibility(true);
+      }
     }
     this.animation?.remove()
     if ((this.status === 3 || this.status === 2)) {
