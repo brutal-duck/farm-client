@@ -105,7 +105,7 @@ class Cow extends Phaser.Scene {
   
   public state: Istate;
   public scrolling: Scrolling;
-  public cow: CowGroup;
+  public animalGroup: CowGroup;
   public territories: Phaser.Physics.Arcade.Group;
   public milk: Phaser.Physics.Arcade.Group;
   public bubble: Phaser.GameObjects.Graphics;;
@@ -127,7 +127,6 @@ class Cow extends Phaser.Scene {
   public feedBoostMultiplier: number = 2; // множитель для буста 
   public feedBoostLvl: number = 6; // уровень старта буста комбикорм
   public feedBoostStack: number = 11; // максимальный стек часов
-  public timeToCreateAnimal: number;
 
   public world = world.bind(this);
   public drag = drag.bind(this);
@@ -224,7 +223,6 @@ class Cow extends Phaser.Scene {
 
 
   public create(): void {
-    this.timeToCreateAnimal = this.time.now;
     // сторим мир
     this.world();
 

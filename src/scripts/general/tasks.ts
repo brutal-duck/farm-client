@@ -182,7 +182,7 @@ function checkAnimalTask(): void {
 
   } else if (this.state.farm === 'Cow') {
 
-    animals = this.cow.children.entries;
+    animals = this.animalGroup.children.entries;
     settings = this.state.cowSettings.cowSettings;
 
   }

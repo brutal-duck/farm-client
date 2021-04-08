@@ -315,12 +315,11 @@ function world(): void {
   this.buildBorders();
   
   // группа коров
-  this.cow = new CowGroup(this);
+  this.animalGroup = new CowGroup(this);
 
   // подгружаем коров
   this.state.cow.map((data: Icow) => {
-    this.cow.generate(this, { x: data.x, y: data.y }, data.type, data._id, data.counter, data.diamond, data.vector, false)
-    // this.getCow(data._id, data.type, data.x, data.y, data.counter, data.milk, data.diamond, data.vector, false);
+    this.animalGroup.generate(this, { x: data.x, y: data.y }, data.type, data._id, data.counter, data.diamond, data.vector, false)
   });
 
   // туториал, если нужен

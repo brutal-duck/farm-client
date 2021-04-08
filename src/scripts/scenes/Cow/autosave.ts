@@ -25,9 +25,9 @@ function autosave(): void {
 
   }
 
-  for (let i in this.cow.children.entries) {
+  for (let i in this.animalGroup.children.entries) {
 
-    let cw: CowSprite = this.cow.children.entries[i];
+    let cw: CowSprite = this.animalGroup.children.entries[i];
     cow.push({
       _id: cw._id,
       type: cw.breed,

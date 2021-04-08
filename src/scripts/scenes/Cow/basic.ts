@@ -15,9 +15,9 @@ function balance(): Ibalance {
   let notEnoughGrass: boolean = false;
   let notEnoughWater: boolean = false;
 
-  for (let i in this.cow.children.entries) {
+  for (let i in this.animalGroup.children.entries) {
 
-    let cow: CowSprite = this.cow.children.entries[i];
+    let cow: CowSprite = this.animalGroup.children.entries[i];
 
     let breed: number;
     if (cow.breed === 0) breed = 1;

@@ -58,9 +58,9 @@ function interval(): void {
     }
     
     // поедание территорий коровами
-    for (let i in this.cow.children.entries) {
+    for (let i in this.animalGroup.children.entries) {
 
-      let cow: CowSprite = this.cow.children.entries[i];
+      let cow: CowSprite = this.animalGroup.children.entries[i];
       
       let breed: number;
 
@@ -128,12 +128,12 @@ function interval(): void {
               cow2 = false;
               break;
             case 1:
-              cow1 = this.cow.children.entries.find((data: any) => data._id === territory.merging[0]._id);
+              cow1 = this.animalGroup.children.entries.find((data: any) => data._id === territory.merging[0]._id);
               cow2 = false;
               break;
             case 2:
-              cow1 = this.cow.children.entries.find((data: any) => data._id === territory.merging[0]._id);
-              cow2 = this.cow.children.entries.find((data: any) => data._id === territory.merging[1]._id);;
+              cow1 = this.animalGroup.children.entries.find((data: any) => data._id === territory.merging[0]._id);
+              cow2 = this.animalGroup.children.entries.find((data: any) => data._id === territory.merging[1]._id);;
               break;
             default:
               break;
@@ -229,15 +229,15 @@ function interval(): void {
 
       if (Phaser.Math.Between(0, 7) >= 5) { // чтобы не так часто появлялись сердца
 
-        let randomIndex: number = Phaser.Math.Between(0, this.cow.children.entries.length - 1);
-        Hearts.create(this, this.cow.children.entries[randomIndex])
+        let randomIndex: number = Phaser.Math.Between(0, this.animalGroup.children.entries.length - 1);
+        Hearts.create(this, this.animalGroup.children.entries[randomIndex])
       }
 
       this.state.userCow.feedBoostTime--;
     }
 
     // Проверяем и запускаем распростанение овец по полю
-    if (this.cow.children.entries.every(el => el.spread === false)) {
+    if (this.animalGroup.children.entries.every(el => el.spread === false)) {
       
       this.spreadAnimals();
 
