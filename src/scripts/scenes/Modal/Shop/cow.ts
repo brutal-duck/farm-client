@@ -1,5 +1,4 @@
 import { shortNum, shortTime } from '../../../general/basic';
-import AnimalSpine from '../../../components/Animal/AnimalSpine';
 import MoneyAnimation from './../../../components/animations/MoneyAnimation';
 
 // монеты
@@ -129,10 +128,7 @@ function cow(): void {
     if (this.state.userCow.fair + 1 < cow.breed) {
       this.add.sprite(110, y + this.height + 110, 'disable-cow');
     } else {
-      
-      
-      const sprite: AnimalSpine = AnimalSpine.create(this, 110, y + this.height + 110, 'cow-' + cow.breed, '', false);
-
+      const sprite: Phaser.GameObjects.Sprite = this.add.sprite(110, y + this.height + 110, 'cow' + cow.breed);
     }
 
     // описание

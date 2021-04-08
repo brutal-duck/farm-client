@@ -30,7 +30,7 @@ function autosave(): void {
     let cw: CowSprite = this.cow.children.entries[i];
     cow.push({
       _id: cw._id,
-      type: cw.animalType,
+      type: cw.breed,
       milk: cw.milk,
       x: cw.x,
       y: cw.y,

@@ -85,7 +85,7 @@ function checkMerging(territory: any, cow: CowSprite, position: string) {
     // запоминаем
     territory.merging.push({
       _id: cow._id,
-      animalType: cow.animalType,
+      breed: cow.breed,
       position: position
     });
 
@@ -124,7 +124,7 @@ function checkMerging(territory: any, cow: CowSprite, position: string) {
     let cow1: CowSprite = this.cow.children.entries.find((data: any) => data._id === territory.merging[0]._id);
     let cow2: CowSprite = this.cow.children.entries.find((data: any) => data._id === territory.merging[1]._id);
 
-    if (cow1?.animalType === cow2?.animalType) {
+    if (cow1?.breed === cow2?.breed) {
       
       this.time.addEvent({ delay: 100, callback: (): void => {
 
@@ -133,7 +133,7 @@ function checkMerging(territory: any, cow: CowSprite, position: string) {
           y: territory.y + 120
         }
         MergingCloud.create(this, position);
-        let type: number = cow1.animalType + 1;
+        let type: number = cow1.breed + 1;
         // cow1.destroy();
         // cow2.destroy();
         // cow1.milkStatus.destroy();
@@ -296,12 +296,12 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
   let length: number;
   let repository: any = false;
 
-  if (cow.animalType !== 0) {
+  if (cow.breed !== 0) {
 
     if (manualСollect) {
 
       cow.milk = 0
-      let price: number = this.state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === cow.animalType).milkPrice;
+      let price: number = this.state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === cow.breed).milkPrice;
       if (this.state.userCow.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
       this.state.userCow.money += price;
       // milk.destroy();
@@ -349,7 +349,7 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
 
       if (length) {
         Milk.create(this, { x: cow.x, y: cow.y - 50}, 0, path); // вместо нуля поставить cow.type
-        let price: number = this.state.cowSettings.cowSettings.find((data:IcowPoints) => data.breed === cow.animalType).milkPrice;
+        let price: number = this.state.cowSettings.cowSettings.find((data:IcowPoints) => data.breed === cow.breed).milkPrice;
         if (this.state.userCow.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
         repository.volume++;
         repository.money += price;
@@ -471,12 +471,12 @@ function dragCowMerging(cow: any): void {
 
     if (data.x - (data.width / 2) <= cow.x && data.x + (data.width / 2) >= cow.x &&
       data.y - (data.height / 2) <= cow.y && data.y + (data.height / 2) >= cow.y &&
-      data.animalType === cow.animalType &&
-      cow.animalType > 0 &&
-      cow.animalType < max &&
+      data.breed === cow.breed &&
+      cow.breed > 0 &&
+      cow.breed < max &&
       data._id !== cow._id &&
       this.state.userCow.tutorial >= 0 &&
-      this.state.userCow.fair >= cow.animalType) {
+      this.state.userCow.fair >= cow.breed) {
 
       return data;
 
@@ -492,7 +492,7 @@ function dragCowMerging(cow: any): void {
     }
     MergingCloud.create(this, position);
     
-    const type: number = cow.animalType + 1;
+    const type: number = cow.breed + 1;
 
     findCow.milkStatus.destroy();
     findCow.destroy();

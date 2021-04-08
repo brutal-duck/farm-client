@@ -1,11 +1,9 @@
-import AnimalSpine from './AnimalSpine'
 import Cow from '../../scenes/Cow/Main';
 import Firework from '../animations/Firework';
 import Sheep from '../../scenes/Sheep/Main';
 import Chicken from '../../scenes/Chicken/Main';
 
 export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
-  public animalSpine: AnimalSpine;
   public type: string;
   public scene: Cow | Sheep | Chicken;
   public drag: boolean;
@@ -26,20 +24,23 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
   public changeVector: boolean;
   public merging: boolean;
   public timeToCreate: number;
+  public breed: number;
 
   constructor(
     scene: Cow | Sheep | Chicken, 
     position: Iposition, 
-    texture: string,   
+    type: string, 
+    breed: number,
     id: string,
     counter: number = 0,
     diamond: number = 0,
     vector: number = 7,
     fireworkAnim: boolean = false
     ) {
-    super(scene, position.x, position.y, 'cow1');
+    super(scene, position.x, position.y, `${type}${breed}`);
     this.scene = scene;
-    this.type = texture;
+    this.type = type;
+    this.breed = breed;
     this.vector = vector; // вектор движения
     this._id = id;
     this.diamond = diamond;
@@ -64,73 +65,15 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     this.setDepth(this.y);
-    this.setAlpha(0.0000001);
     this.setInteractive();
     this.scene.input.setDraggable(this);
-
-    this.createSpine();
-  }
-
-  public createSpine(): void {
-    
-    const timer = this.scene.time.addEvent({
-      delay: 0,
-      callback: () => {
-        //@ts-ignore
-        if (this.scene.timeToCreateAnimal < this.scene.time.now) {
-          this.animalSpine = AnimalSpine.create(this.scene, this.body.x, this.body.y, this.type);
-          //@ts-ignore
-          this.scene.timeToCreateAnimal = this.scene.time.now + 25;
-          timer.remove();
-        }
-      },
-      loop: true,
-      callbackScope: this
-    })
   }
 
   public preUpdate() {
     // update spine animation
     if (this.scene) {
-      this.animalSpine?.update(this);
       this.setBrain();
     }
-  }
-
-  public stayRight() {
-    this.setVelocity(0, 0); // отменяем передвижение
-    this.moving = false;
-    this.body.reset(this.x, this.y);
-    this.setFlipX(false);
-    this.animalSpine?.setAnimation('stay', true); 
-    this.animalSpine?.setAttachment('tag', 'tag');
-  }
-
-  public stayLeft() {
-    this.setVelocity(0, 0); // отменяем передвижение
-    this.moving = false;
-    this.body.reset(this.x, this.y);
-    this.setFlipX(true);
-    this.animalSpine?.setAnimation('stay', true); 
-    this.animalSpine?.setAttachment('tag', 'tag-flip');
-  }
-
-  public startRightMoving() {
-    this.moving = true;
-    this.setFlipX(false);
-    this.animalSpine?.setAnimation('move', true);
-    this.animalSpine?.setAttachment('tag', 'tag');
-  }
-
-  public startLeftMoving() {
-    this.moving = true;
-    this.setFlipX(true);
-    this.animalSpine?.setAnimation('move', true);
-    this.animalSpine?.setAttachment('tag', 'tag-flip');
-  }
-
-  public eating() {
-    
   }
 
   public startDrag() {
@@ -140,7 +83,6 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
     this.setVelocity(0, 0); // отменяем передвижение
     this.setCollideWorldBounds(true) // чтобы не могли перетащить за пределы
     this.drag = true;
-    this.animalSpine?.setAnimation('drag', true);
   }
 
   public dragging(dragX, dragY) {
@@ -151,7 +93,6 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
   }
 
   public endDrag() {
-    this.animalSpine?.setAnimation('stay', true);
     this.scene.scrolling.enabled = true; // включаем скролл
     this.scene.scrolling.wheel = true; // включаем колесо
     this.setCollideWorldBounds(true);
@@ -373,19 +314,13 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
         this.vector === 3 ||
         this.vector === 7 ||
         this.vector === 8) {
-        side = 'Left';
+        side = 'left';
       } else {
-        side = 'Right';
+        side = 'right';
       }
-      if (this.moving || this.aim) this[`start${side}Moving`]();
-      else this[`stay${side}`]();
+      if (this.moving || this.aim) this.anims.play(`${this.type}-move-${side}${this.breed}`, true);
+      else this.anims.play(`${this.type}-stay-${side}${this.breed}`, true);
     }
-  }
-
-  public destroy(): void {
-    this.animalSpine?.destroy();
-    super.destroy();
-    
   }
 
   public get openedTerritory(): any[] {
@@ -407,9 +342,4 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
     return territories;
   }
 
-  public setDepth(value: number): this {
-    super.setDepth(value);
-    this.animalSpine?.setDepth(value);
-    return this;
-  }
 }

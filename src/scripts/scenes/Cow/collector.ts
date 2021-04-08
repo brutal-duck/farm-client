@@ -14,7 +14,7 @@ function setCollector(): void {
 
           let cow: CowSprite = this.cow.children.entries[i];
 
-          if (cow.milk >= 1000 && cow.animalType !== 0) {
+          if (cow.milk >= 1000 && cow.breed !== 0) {
             this.collectMilk(cow);
             break;
           }

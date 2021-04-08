@@ -18,13 +18,13 @@ function drag(): void {
     let territory = this.currentTerritory(cow.x, cow.y);
     if (territory) {
       if (territory.type === 4) {
-        if (cow.animalType === 0) {
+        if (cow.breed === 0) {
           SpeechBubble.create(this, this.state.lang.mergingDiamondCow, 1);
           this.cancelMerging(territory, cow, false);
-        } else if (cow.animalType === this.state.cowSettings.cowSettings.length) {
+        } else if (cow.breed === this.state.cowSettings.cowSettings.length) {
           SpeechBubble.create(this, this.state.lang.mergingMessageBreedMax, 1);
           this.cancelMerging(territory, cow, false);
-        } else if (this.state.userCow.fair < cow.animalType) {
+        } else if (this.state.userCow.fair < cow.breed) {
           SpeechBubble.create(this, this.state.lang.needImproveFair, 1);
           this.cancelMerging(territory, cow, false);
         } else {

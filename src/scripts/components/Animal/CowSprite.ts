@@ -3,32 +3,32 @@ import Animal from './Animal';
 import Cow from '../../scenes/Cow/Main';
 
 export default class CowSprite extends Animal {
-  public animalType: number;
+  public breed: number;
   public milk: number;
   public milkStatus: Phaser.GameObjects.Sprite;
   public scene: Cow;
   constructor(scene: Cow, 
     position: Iposition, 
-    animalType: number,   
+    breed: number,   
     id: string,
     counter: number = 0,
     diamond: number = 0,
     vector: number = 7,
     fireworkAnim: boolean = false) {
-    super(scene, position, `cow-${animalType}`, id, counter, diamond, vector, fireworkAnim);
-    this.animalType = animalType;
+    super(scene, position, 'cow', breed, id, counter, diamond, vector, fireworkAnim);
+    this.breed = breed;
     this.milk = 0;
   }
 
   static create(scene: Cow, 
     position: Iposition, 
-    animalType: number,   
+    breed: number,   
     id: string,
     counter: number = 0,
     diamond: number = 0,
     vector: number = 7,
     fireworkAnim: boolean = false): CowSprite {
-    const cowSprite: CowSprite = new CowSprite(scene, position, animalType, id, counter, diamond, vector, fireworkAnim);
+    const cowSprite: CowSprite = new CowSprite(scene, position, breed, id, counter, diamond, vector, fireworkAnim);
     return cowSprite;
   }
 
@@ -54,6 +54,10 @@ export default class CowSprite extends Animal {
     });
   }
 
+  public startDrag(): void {
+    super.startDrag();
+    this.anims.play(`${this.type}-drag${this.breed}`, true);
+  }
   public setBrain(): void {
     super.setBrain();
     this.setMilkStatusPosition();
@@ -62,18 +66,18 @@ export default class CowSprite extends Animal {
   }
 
   private setDiamondStage(): void {
-    if (this.animalType === 0) {
-      let stage: number;
-      if (this.milk <= 200) stage = 0;
-      else if (this.milk > 200 && this.milk <= 600) stage = 1;
-      else if (this.milk > 600 && this.milk <= 900) stage = 2;
-      else stage = 3;
-      if (stage === 0) {
-        this.animalSpine?.setAttachment('horns', null);
-      } else {
-        this.animalSpine?.setAttachment('horns', `horns-${stage}`);
-      }
-    }
+    // if (this.breed === 0) {
+    //   let stage: number;
+    //   if (this.milk <= 200) stage = 0;
+    //   else if (this.milk > 200 && this.milk <= 600) stage = 1;
+    //   else if (this.milk > 600 && this.milk <= 900) stage = 2;
+    //   else stage = 3;
+    //   if (stage === 0) {
+    //     this.animalSpine?.setAttachment('horns', null);
+    //   } else {
+    //     this.animalSpine?.setAttachment('horns', `horns-${stage}`);
+    //   }
+    // }
   }
   private setMilkStatusPosition(): void {
     let statusPosition: number = -50;

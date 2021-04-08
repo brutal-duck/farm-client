@@ -64,7 +64,7 @@ import {
   checkExchangeRepository,
   buyTerritory
 } from '../../general/territories';
-import { repositoryAnimation } from './animations';
+import { repositoryAnimation, animations } from './animations';
 import {
   teleportation,
   checkMerging,
@@ -207,6 +207,7 @@ class Cow extends Phaser.Scene {
   public showEventTutorial = showEventTutorial.bind(this);
   public doneEventTutor_0 = doneEventTutor_0.bind(this);
   public nextDayTimer = nextDayTimer.bind(this);
+  public animations = animations.bind(this);
 
   public init(state: Istate): void {
 
@@ -236,6 +237,8 @@ class Cow extends Phaser.Scene {
     // интервальные функции
     this.interval();
     this.setCollector();
+
+    this.animations();
 
     // let cursors = this.input.keyboard.createCursorKeys();
     // cursors.space.on('down', (): void => {

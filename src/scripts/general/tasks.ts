@@ -265,7 +265,7 @@ function checkAnimalTask(): void {
   
         for (let j = 0; j < animals.length; j++) {
   
-          if (settings[i].breed === animals[j].animalType) {
+          if (settings[i].breed === animals[j].breed) {
             count++
             break;
           }
@@ -289,7 +289,7 @@ function checkAnimalTask(): void {
       for (let i in animals) {
   
         let chicken = animals[i];
-        if (task.state === chicken.animalType) count++
+        if (task.state === chicken.breed) count++
   
       }
   
