@@ -164,45 +164,33 @@ function dailyAward(): void {
   let checkBoost: boolean = true;
 
   if (this.state.farm === 'Sheep') {
-
     if (this.state.userSheep.tutorial >= 100 && this.state.userSheep.part > 3 && !this.state.user.takenReward) check = true;
     if (!this.state.user.additionalTutorial.herdBoost && this.state.userSheep.part >= this.game.scene.keys[this.state.farm].herdBoostLvl || 
       !this.state.user.additionalTutorial.feedBoost && this.state.userSheep.part >= this.game.scene.keys[this.state.farm].feedBoostLvl) checkBoost = false;
-
   } else if (this.state.farm === 'Chicken') {
-
     if (this.state.userChicken.tutorial > 0 && !this.state.user.takenReward) check = true;
-
   } else if (this.state.farm === 'Cow') {
-
     if (/*this.state.userCow.tutorial > 0 && */!this.state.user.takenReward) check = true;
-
   }
 
-  if (check && checkBoost &&
+  if (check && checkBoost && this.dailyStartCheck &&
     typeof this.state.daily === 'number' &&
     !this.scene.isActive('Modal') &&
     !this.scene.isActive('Tutorial') &&
     !this.scene.isActive('Map')) {
-
+    this.dailyStartCheck = false;
     // дейлики для новичка
     if (this.state.newbieTime > 0) {
-
-      let modal: Imodal = { type: 6 }
+      const modal: Imodal = { type: 6 }
       this.state.modal = modal;
       this.scene.launch('Modal', this.state);
-
     // дейлики для старых
     } else {
-
-      let modal: Imodal = { type: 4 }
+      const modal: Imodal = { type: 4 }
       this.state.modal = modal;
       this.scene.launch('Modal', this.state);
-
     }
-
   }
-
 }
 
 
