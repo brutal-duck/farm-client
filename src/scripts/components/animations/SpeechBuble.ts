@@ -78,7 +78,7 @@ export default class SpeechBubble {
       this.triangleCoords.point1Y = bubleTextHeight / 2 - 15;
       this.triangleCoords.point2Y = bubleTextHeight / 2 + 15;
       this.triangleCoords.point3Y = bubleTextHeight / 2 + 25;
-      this.bubbleFarmer.setPosition(this.scene.cameras.main.width - 20, this.bubble.y - (bubleTextHeight / 2)).setOrigin(1, 0.7).setVisible(true);
+      this.bubbleFarmer.setPosition(this.scene.cameras.main.width - 20, this.bubble.y - (bubleTextHeight / 2) - 95).setOrigin(1, 0.5).setVisible(true);
     } 
     this.bubble.setPosition(this.x, this.y);
     this.bubbleText.setPosition(this.x + 20, this.bubble.y + 20);

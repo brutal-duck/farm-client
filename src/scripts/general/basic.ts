@@ -1366,22 +1366,19 @@ function autoporgressCollectorTime(): void {
 }
 
 function remainderSellResource(): void {
-  const delay: number = 10;
+  const delay: number = 5;
   const remainderMaxPart: number = 9;
   const remainderPercent: number = 60;
   if (this.state[`user${this.state.farm}`].part <= remainderMaxPart) {
-    console.log('1')
     this.remaindSellTimer++;
     if (this.remaindSellTimer >= delay) {
-      console.log('2')
-
       const storages: any[] = this.territories.children.entries.filter(el => el.type === 5)
       const check: any = storages.find(el => el.volume >= 10 * remainderPercent);
-      if (check) {
-        if (!this.scene.isActive('Modal') &&
-        !this.scene.isActive('Tutorial') &&
-        !this.scene.isActive('Map'))
-        SpeechBubble.create(this.game.scene.keys[`${this.state.farm}Bars`], this.state.lang.helpSheep_1, 3);
+      if (check && 
+      !this.scene.isActive('Modal') &&
+      !this.scene.isActive('Tutorial') &&
+      !this.scene.isActive('Map')) {
+        SpeechBubble.create(this.game.scene.keys[`${this.state.farm}Bars`], this.state.lang[`help${this.state.farm}_1`], 3);
         this.remaindSellTimer = 0;
       }
     }
