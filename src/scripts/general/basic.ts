@@ -320,66 +320,22 @@ function logout(): void {
 
 
 function convertDiamonds(diamonds: number): number {
-
-  let fairLevels: any;
-  let fair: number;
+  const farm: string = this.state.farm.toLowerCase();
+  const partsSettings: Ipart[] = this.state[`${farm}Settings`][`${farm}Parts`];
+  const part: number = this.state[`user${this.state.farm}`].part;
   
-  if (this.state.farm === 'Sheep') {
-
-    fairLevels = this.state.sheepSettings.sheepFairLevels;
-    fair = this.state.userSheep.fair;
-
-  } else if (this.state.farm === 'Chicken') {
-
-    fairLevels = this.state.chickenSettings.chickenFairLevels;
-    fair = this.state.userChicken.fair;
-
-  } else if (this.state.farm === 'Cow') {
-
-    fairLevels = this.state.cowSettings.cowFairLevels;
-    fair = this.state.userCow.fair;
-
-  }
-
-  let exchange: number = fairLevels.find((item: IfairLevel) => item.level === fair).exchange;
+  let exchange: number = partsSettings.find((item: Ipart) => item.sort === part).exchange;
   return exchange *= diamonds;
-
 }
 
 
 function convertMoney(money: number): number {
+  const farm: string = this.state.farm.toLowerCase();
+  const partsSettings: Ipart[] = this.state[`${farm}Settings`][`${farm}Parts`];
+  const part: number = this.state[`user${this.state.farm}`].part;
 
-  let fairLevels: IfairLevel[];
-  let fair: number;
-  
-  if (this.state.farm === 'Sheep') {
-
-    fairLevels = this.state.sheepSettings.sheepFairLevels;
-    fair = this.state.userSheep.fair;
-
-  } else if (this.state.farm === 'Chicken') {
-
-    fairLevels = this.state.chickenSettings.chickenFairLevels;
-    fair = this.state.userChicken.fair;
-
-  } else if (this.state.farm === 'Cow') {
-
-    fairLevels = this.state.cowSettings.cowFairLevels;
-    fair = this.state.userCow.fair;
-
-  }
-
-  let exchange: number = fairLevels.find((item: IfairLevel) => item.level === fair).exchange;
-  let needDiamonds: number = 1;
-  let sumExchange: number = exchange;
-
-  while (sumExchange < money) {
-    needDiamonds++;
-    sumExchange = sumExchange + exchange;
-  }
-
-  return needDiamonds;
-
+  const exchange: number = partsSettings.find((item: Ipart) => item.sort === part).exchange;
+  return Math.ceil(money / exchange);
 }
 
 

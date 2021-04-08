@@ -349,7 +349,6 @@ interface IeventTerritoriesPrice {
   id?: any;
 }
 interface IfairLevel {
-  exchange: number;
   level: number;
   part_unlock: number;
   price_d: number;
@@ -363,6 +362,7 @@ interface Ipart {
   improve_territory_2: number;
   improve_territory_3: number;
   improve_territory_4: number;
+  exchange: number;
 }
 interface IsheepSettings {
   sheepBadPercent: number;
