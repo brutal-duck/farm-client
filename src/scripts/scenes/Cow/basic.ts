@@ -151,7 +151,6 @@ function takeDiamondCow(): void {
   if (this.state.userCow.part >= 3) {
 
     if (this.state.userCow.diamondAnimalTime === 0) {
-
       this.state.amplitude.getInstance().logEvent('take_diamond_animal', {
         farm_id: this.state.farm,
         price: 'hard'
@@ -163,46 +162,31 @@ function takeDiamondCow(): void {
       let x: number = Phaser.Math.Between(530, 660);
       let y: number = Phaser.Math.Between(530, 540);
 
-      if (this.cow.children.entries.length <= 50) {
-
+      if (this.animalGroup.children.entries.length <= 50) {
         let id: string = 'local_' + randomString(18);
-        this.cow.generate(this, { x, y }, 0, id, 0, 0);
-        // this.getCow(id, 0, x, y, 0, 500);
+        this.animalGroup.generate(this, { x, y }, 0, id, 0, 0);
       } else {
-
-        let diamondCow = this.cow.children.entries.find((data: any) => data.type === 0);
-
+        let diamondCow = this.animalGroup.children.entries.find((data: any) => data.type === 0);
         if (diamondCow) {
-
           diamondCow.diamond = 0;
           diamondCow.x = x;
           diamondCow.y = y;
-
         } else {
-          
           let id: string = 'local_' + randomString(18);
-          this.cow.generate(this, { x, y }, 0, id,);
-          // this.getCow(id, 0, x, y, 0, 500);
-
+          this.animalGroup.generate(this, { x, y }, 0, id,);
         }
-
       }
-
     } else if (this.state.readyAd && this.state.userCow.diamondAnimalAd) {
-
       let modal: Imodal = {
         type: 1,
         sysType: 9
       }
       this.state.modal = modal;
       this.scene.launch('Modal', this.state);
-
     } else {
       SpeechBubble.create(this, this.state.lang.cowCaveMessage, 2);
     }
-
   }
-  
 }
 
 

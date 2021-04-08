@@ -49,7 +49,7 @@ export default class CowSprite extends Animal {
     else if (this.milk > 200 && this.milk <= 600) stage = 2;
     else if (this.milk > 600 && this.milk <= 900) stage = 3;
     else stage = 4;
-    this.hornsSprite = this.scene.add.sprite(this.x, this.y, `${this.type}-${side}-${this.breed}-${stage}`).setDepth(this.depth); 
+    this.hornsSprite = this.scene.add.sprite(this.x, this.y, `${this.type}-horns-${stage}`).setDepth(this.depth).setOrigin(0.5, 1); 
   }
 
   public setListeners(): void {
@@ -70,6 +70,7 @@ export default class CowSprite extends Animal {
   public startDrag(): void {
     super.startDrag();
     this.play(`${this.type}-drag${this.breed}`, true);
+
   }
   public setBrain(): void {
     super.setBrain();
@@ -87,9 +88,16 @@ export default class CowSprite extends Animal {
       else if (this.milk > 200 && this.milk <= 600) stage = 2;
       else if (this.milk > 600 && this.milk <= 900) stage = 3;
       else stage = 4;
-      this.hornsSprite.setTexture(`${this.type}-${side}-${this.breed}-${stage}`); 
-      this.hornsSprite.setDepth(this.depth);
-      this.hornsSprite.setPosition(this.x, this.y);
+      let dx: number = 10;
+      let dy: number = 43;
+      if (side === 'left' && !this.drag) this.hornsSprite.setFlipX(true);
+      else {
+        dx *= -1;
+        this.hornsSprite.setFlipX(false);
+      }
+      this.hornsSprite.setTexture(`${this.type}-horns-${stage}`); 
+      this.hornsSprite.setDepth(this.depth + 1);
+      this.hornsSprite.setPosition(this.x - dx, this.y - dy);
     }
   }
   private setMilkStatusPosition(): void {
