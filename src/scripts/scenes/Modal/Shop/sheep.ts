@@ -1,4 +1,5 @@
 import { shortNum } from '../../../general/basic';
+import MoneyAnimation from './../../../components/animations/MoneyAnimation';
 
 // монеты
 function sheepMoney(): void {
@@ -28,6 +29,7 @@ function sheepMoney(): void {
       this.scene.stop();
       this.scene.stop('ShopBars');
       this.scene.stop('Modal');
+      MoneyAnimation.create(this.game.scene.keys[`${this.state.farm}Bars`], `${this.state.farm.toLowerCase()}Coin`);
 
     });
     
@@ -53,6 +55,8 @@ function sheepMoney(): void {
       this.scene.stop('ShopBars');
       this.scene.stop('Modal');
 
+      MoneyAnimation.create(this.game.scene.keys[`${this.state.farm}Bars`], `${this.state.farm.toLowerCase()}Coin`);
+
     });
 
     if (right) {
@@ -71,6 +75,7 @@ function sheepMoney(): void {
         this.scene.stop();
         this.scene.stop('ShopBars');
         this.scene.stop('Modal');
+        MoneyAnimation.create(this.game.scene.keys[`${this.state.farm}Bars`], `${this.state.farm.toLowerCase()}Coin`);
 
       });
 
@@ -96,12 +101,10 @@ function sheepMoney(): void {
         this.scene.stop('ShopBars');
         this.scene.stop('Modal');
 
+        MoneyAnimation.create(this.game.scene.keys[`${this.state.farm}Bars`], `${this.state.farm.toLowerCase()}Coin`);
       });
-
     }
-
   }
-
 }
 
 

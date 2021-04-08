@@ -1,5 +1,6 @@
 import { shortNum, shortTime } from '../../../general/basic';
 import AnimalSpine from '../../../components/Animal/AnimalSpine';
+import MoneyAnimation from './../../../components/animations/MoneyAnimation';
 
 // монеты
 function cowMoney(): void {
@@ -29,6 +30,7 @@ function cowMoney(): void {
       this.scene.stop();
       this.scene.stop('ShopBars');
       this.scene.stop('Modal');
+      MoneyAnimation.create(this.game.scene.keys[`${this.state.farm}Bars`], `${this.state.farm.toLowerCase()}Coin`);
 
     });
     
@@ -53,6 +55,7 @@ function cowMoney(): void {
       this.scene.stop();
       this.scene.stop('ShopBars');
       this.scene.stop('Modal');
+      MoneyAnimation.create(this.game.scene.keys[`${this.state.farm}Bars`], `${this.state.farm.toLowerCase()}Coin`);
 
     });
 
@@ -72,6 +75,7 @@ function cowMoney(): void {
         this.scene.stop();
         this.scene.stop('ShopBars');
         this.scene.stop('Modal');
+        MoneyAnimation.create(this.game.scene.keys[`${this.state.farm}Bars`], `${this.state.farm.toLowerCase()}Coin`);
 
       });
 
@@ -96,6 +100,7 @@ function cowMoney(): void {
         this.scene.stop();
         this.scene.stop('ShopBars');
         this.scene.stop('Modal');
+        MoneyAnimation.create(this.game.scene.keys[`${this.state.farm}Bars`], `${this.state.farm.toLowerCase()}Coin`);
 
       });
 
