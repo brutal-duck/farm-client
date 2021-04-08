@@ -45,7 +45,7 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
   ) {
     super(scene)
     this.scene = scene;
-    this.isVisibile = true;
+    this.isVisibile = false;
     this.init();
   }
 
@@ -229,9 +229,7 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
           .setDepth(3)
           .setVisible(false);
           
-      }
-      
-      if (this.status === 2 && task) {
+      } else if (this.status === 2 && task) {
       
         const taskData: ItaskData = this.scene.game.scene.keys[this.scene.state.farm].getTaskData(task);
             
@@ -309,9 +307,8 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
           .setOrigin(0)
           .setInteractive().setVisible(false);
         this.taskProgress?.clear();
-      }
-      
-      if (this.status === 3 && task) {
+      } else if (this.status === 3 && task) {
+
         this.setPosition(30, this.positionY - 300);
         this.fillStyle(0xFFEBC5, 1);
         this.fillRoundedRect(0, 0, 660, 110, 8).setVisible(false);
@@ -353,11 +350,7 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
         this.taskProgress?.clear();
       
       }
-      
-      this.setVisibility(this.active);
-          
-      
-
+      this.setVisibility(false);
     }
     this.animation?.remove()
     if ((this.status === 3 || this.status === 2)) {
@@ -372,7 +365,7 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
     if ((this.scene.menu.isOpened ||
       this.scene.scene.isActive('Modal') ||
       this.scene.scene.isActive('Tutorial')) &&
-      this.isVisibile || !checkSheepTutor) {
+      this.isVisibile || !checkSheepTutor && this.isVisibile) {
       this.setVisibility(false);
     } else if (!this.scene.menu.isOpened &&
       !this.scene.scene.isActive('Modal') &&
