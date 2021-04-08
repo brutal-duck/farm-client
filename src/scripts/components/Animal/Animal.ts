@@ -68,7 +68,8 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
     this.scene.input.setDraggable(this);
   }
 
-  public preUpdate() {
+  public preUpdate(time: number, delta: number) {
+    super.preUpdate(time, delta)
     // update spine animation
     if (this.scene) {
       this.setBrain();
@@ -318,8 +319,8 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
         side = 'right';
       }
       if ((this.moving || this.aim) && !this.merging) {
-        this.anims.play(`${this.type}-move-${side}${this.breed}`, true);
-      } else this.anims.play(`${this.type}-stay-${side}${this.breed}`, true);
+        this.play(`${this.type}-move-${side}${this.breed}`, true);
+      } else this.play(`${this.type}-stay-${side}${this.breed}`, true);
     }
   }
 

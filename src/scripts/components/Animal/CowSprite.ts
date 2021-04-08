@@ -69,7 +69,7 @@ export default class CowSprite extends Animal {
 
   public startDrag(): void {
     super.startDrag();
-    this.anims.play(`${this.type}-drag${this.breed}`, true);
+    this.play(`${this.type}-drag${this.breed}`, true);
   }
   public setBrain(): void {
     super.setBrain();

@@ -42,7 +42,7 @@ function animations(): void {
     frames: this.anims.generateFrameNumbers('cow1', { start: 0, end: 5 }),
     forward: false,
     frameRate: 10,
-    repeat: -1
+    repeat: -1,
   });
   this.anims.create({
     key: 'cow-stay-right1',

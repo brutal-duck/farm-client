@@ -262,18 +262,14 @@ class Cow extends Phaser.Scene {
     //   //   tasks[i].got_awarded = 1;
     //   // }
     // });
-
+    
   }
 
 
   public update(): void {
     // анимация полных хранилищ
     this.repositoryAnimation();
-    // console.log(this.time)
 
-    // this.animalGroup.children.entries.forEach(cow => {
-    //   cow.play('cow-move-right1')
-    // })
   }
 
 

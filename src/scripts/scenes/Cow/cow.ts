@@ -121,8 +121,8 @@ function checkMerging(territory: any, cow: CowSprite, position: string) {
   // проверяем успешный на мерджинг
   if (territory.merging.length === 2) {
 
-    let cow1: CowSprite = this.cow.children.entries.find((data: any) => data._id === territory.merging[0]._id);
-    let cow2: CowSprite = this.cow.children.entries.find((data: any) => data._id === territory.merging[1]._id);
+    let cow1: CowSprite = this.animalGroup.children.entries.find((data: any) => data._id === territory.merging[0]._id);
+    let cow2: CowSprite = this.animalGroup.children.entries.find((data: any) => data._id === territory.merging[1]._id);
 
     if (cow1?.breed === cow2?.breed) {
       
@@ -134,15 +134,15 @@ function checkMerging(territory: any, cow: CowSprite, position: string) {
         }
         MergingCloud.create(this, position);
         let type: number = cow1.breed + 1;
-        // cow1.destroy();
-        // cow2.destroy();
-        // cow1.milkStatus.destroy();
-        // cow2.milkStatus.destroy();
+        cow1.destroy();
+        cow2.destroy();
+        cow1.milkStatus.destroy();
+        cow2.milkStatus.destroy();
         let id: string = 'local_' + randomString(18);
         let x: number = territory.x + 120;
         let y: number = territory.y + 240;
         
-        const cow: CowSprite = this.cow.generate(this, { x, y }, type, id, 0, 0, 7, false);
+        const cow: CowSprite = this.animalGroup.generate(this, { x, y }, type, id, 0, 0, 7, false);
         let aimX: number = random(territory.x + 40, territory.x + 200);
         let aimY: number = random(territory.y + 280, territory.y + 440);
         cow.setAim( aimX, aimY);

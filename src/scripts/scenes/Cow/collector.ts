@@ -7,32 +7,21 @@ function setCollector(): void {
 
     delay: delay,
     callback: (): void => {
-
       if (this.state.userCow.collector > 0) {
-
-        for (let i in this.cow.children.entries) {
-
-          let cow: CowSprite = this.cow.children.entries[i];
-
+        for (let i in this.animalGroup.children.entries) {
+          let cow: CowSprite = this.animalGroup.children.entries[i];
           if (cow.milk >= 1000 && cow.breed !== 0) {
             this.collectMilk(cow);
             break;
           }
-        
         }
-        
       }
-    
     },
     callbackScope: this,
     loop: true
-
   }
-  
-
   if (this.collectorTimer) this.collectorTimer.reset(config);
   else this.collectorTimer = this.time.addEvent(config);
-
 }
 
 export default setCollector;
