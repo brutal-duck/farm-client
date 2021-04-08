@@ -465,10 +465,9 @@ function expelCow(): void {
 
 
 // мерджинг на поле
-function dragCowMerging(cow: any): void {
+function dragCowMerging(cow: CowSprite): void {
   let max: number = this.state.cowSettings.cowSettings.length;
-  let findCow: CowSprite = this.cow.children.entries.find((data: any) => {
-
+  let findCow: CowSprite = this.animalGroup.children.entries.find((data: any) => {
     if (data.x - (data.width / 2) <= cow.x && data.x + (data.width / 2) >= cow.x &&
       data.y - (data.height / 2) <= cow.y && data.y + (data.height / 2) >= cow.y &&
       data.breed === cow.breed &&
@@ -477,36 +476,27 @@ function dragCowMerging(cow: any): void {
       data._id !== cow._id &&
       this.state.userCow.tutorial >= 0 &&
       this.state.userCow.fair >= cow.breed) {
-
       return data;
-
     } else return false;
-
   });
 
   if (findCow) {
-
     const position: Iposition = {
       x: cow.x,
       y: cow.y
     }
     MergingCloud.create(this, position);
-    
     const type: number = cow.breed + 1;
-
     findCow.milkStatus.destroy();
     findCow.destroy();
     cow.milkStatus.destroy();
     cow.destroy();
-
     const id: string = 'local_' + randomString(18);
     this.cow.generate(this, position, type, id, 0, 0, 7, false);
     this.tryTask(2, type);
     this.tryTask(4, type);
     this.checkAnimalTask();
-
   }
-
 }
 
 
