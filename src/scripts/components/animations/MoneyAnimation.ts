@@ -147,7 +147,6 @@ export default class MoneyAnimation  {
         alpha: alphaConfig,
       },
       onComplete: () => {
-        console.log('this')
         this.flyToBar(moneySprite6);
       },
       onCompleteScope: this,
