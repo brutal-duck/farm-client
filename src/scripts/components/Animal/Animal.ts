@@ -342,4 +342,50 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
     return territories;
   }
 
+
+
+
+  public teleportation(): void {
+    const territories: any[] = this.openedTerritory;
+
+    // смотрим, где какая корова сидит
+    // @ts-ignore Убрать игнор, когда animalGroup появится во всех сценах
+    for (let i in this.scene.animalGroup.children.entries) {
+    // @ts-ignore Убрать игнор, когда animalGroup появится во всех сценах
+      const c: Animal = this.scene.animalGroup.children.entries[i];
+      let territory = this.scene.currentTerritory(c.x, c.y);
+
+      if (territory !== undefined) {
+        territory = territories.find(data => data._id === territory._id);
+        if (territory !== undefined) {
+          territory.count++;
+        }
+      }
+    }
+
+    // сортируем, чтобы взять первую с наименьшим количеством
+    territories.sort((x1, x2) => {
+      if (x1.count < x2.count) return -1;
+      if (x1.count > x2.count) return 1;
+      return 0;
+    });
+
+    let halfWidth: number = Math.ceil(this.width / 2) + 1;
+    let halfHeight: number = Math.ceil(this.height / 2) + 1;
+
+    let minX: number = (territories[0].position - 1) * this.scene.height + halfWidth;
+    let maxX: number = territories[0].position * this.scene.height - halfWidth;
+
+    let mixY: number = (territories[0].block - 1) * this.scene.height + halfHeight + this.scene.topIndent;
+    let maxY: number = territories[0].block * this.scene.height - halfHeight + this.scene.topIndent;
+
+    this.x = Phaser.Math.Between(minX, maxX);
+    this.y = Phaser.Math.Between(mixY, maxY);
+    this.counter = 200;
+    this.aim = false;
+    this.aimX = 0;
+    this.aimY = 0;
+    this.distance = 0;
+  }
+
 }
