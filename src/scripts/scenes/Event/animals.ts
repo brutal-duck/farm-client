@@ -1,6 +1,7 @@
 import { random, randomString } from '../../general/basic';
 import MergingCloud from '../../components/animations/MergingCloud';
 import BigInteger from '../../libs/BigInteger';
+import Currency from './../../components/animations/Currency';
 
 // функция реверсивного движения животного
 function reverse(animal: Phaser.Physics.Arcade.Sprite): void {
@@ -206,9 +207,8 @@ function collectResource(resource: Phaser.Physics.Arcade.Sprite): void {
   if (this.state.userEvent.feedBoostTime > 0) price = BigInteger.multiply(price, this.feedBoostMultiplier);
   resource.data.values.click = false;
   this.state.userEvent.money = BigInteger.add(this.state.userEvent.money, price);
-  this.game.scene.keys['EventBars'].plusResourceAnimation({x: resource.x, y: resource.y});
+  Currency.create(this.game.scene.keys['EventBars'], resource, { x: 495, y: 80 }, 'event-resource', 400, 1, true);
   resource.destroy();
-
 }
 
 // покупка курицы

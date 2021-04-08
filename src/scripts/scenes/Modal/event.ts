@@ -1497,7 +1497,7 @@ function endEventModal(): void {
     this.game.scene.keys[this.state.farm].scrolling.wheel = true;
     this.game.scene.keys[this.state.farm].autosave();
     this.scene.stop('Modal');
-    this.game.scene.keys[this.state.farm + 'Bars'].plusDiamonds();
+    MoneyAnimation.create(this.game.scene.keys[this.state.farm + 'Bars'], 'diamond');
     
   });
   this.openModal(this.cameras.main);

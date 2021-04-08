@@ -9,19 +9,21 @@ export default class Currency {
   public anim: Phaser.Tweens.Tween;
   public duration: number;
   public scale: number;
-  constructor(scene: Phaser.Scene, position: Iposition, target: Iposition, texture: string, duration: number = 300, scale: number = 0.16) {
+  public rotation: boolean;
+  constructor(scene: Phaser.Scene, position: Iposition, target: Iposition, texture: string, duration: number = 300, scale: number = 0.16, rotation?: boolean) {
     this.scene = scene;
     this.position = position;
     this.target = target;
     this.texture = texture;
     this.duration = duration;
     this.scale = scale;
+    this.rotation = rotation;
     this.createSprite();
     this.setAnimation();
   }
 
-  static create(scene: Phaser.Scene, position: Iposition, target: Iposition, texture: string, duration?: number, scale?: number): Currency {
-    return new Currency(scene, position, target, texture, duration, scale);
+  static create(scene: Phaser.Scene, position: Iposition, target: Iposition, texture: string, duration?: number, scale?: number, rotation?: boolean): Currency {
+    return new Currency(scene, position, target, texture, duration, scale, rotation);
   }
 
   public createSprite(): void {
@@ -37,6 +39,14 @@ export default class Currency {
       onComplete: (): void => {
         this.sprite.destroy();
       }
-    })
+    });
+    if (this.rotation) {
+      this.scene.add.tween({
+        targets: this.sprite,
+        rotation: - 2 * Math.PI,
+        duration: 400, 
+        repeat: -1,
+      })
+    }
   }
 }

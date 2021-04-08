@@ -10,11 +10,9 @@ import {
 } from '../../general/clicks';
 import { updateNativeShop } from './../../general/boosts';
 import {
-  сurrencyAnimation,
   pulseBalance,
   increaseDiamonds,
   newbieAwardAnimation,
-  plusDiamonds,
   getCurrency,
   plusMoneyAnimation
 } from '../../general/animations';
@@ -34,7 +32,6 @@ class ChickenBars extends Phaser.Scene {
   public diamonds: any;
   public part: any;
   public cursors: any;
-  public сurrency: Phaser.GameObjects.Group; // группа монет и кристаллов для анимации
   public collector: Collector;
   public menu: BarsMenu;
   public chickenBuy: Phaser.GameObjects.Image;
@@ -67,11 +64,9 @@ class ChickenBars extends Phaser.Scene {
   public clickButton = clickButton.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
   public clickModalBtn = clickModalBtn.bind(this);
-  public сurrencyAnimation = сurrencyAnimation.bind(this);
   public pulseBalance = pulseBalance.bind(this);
   public increaseDiamonds = increaseDiamonds.bind(this);
   public newbieAwardAnimation = newbieAwardAnimation.bind(this);
-  public plusDiamonds = plusDiamonds.bind(this);
   public updateNativeShop = updateNativeShop.bind(this);
   public shortTime = shortTime.bind(this);
   public getCurrency = getCurrency.bind(this);
@@ -228,10 +223,6 @@ class ChickenBars extends Phaser.Scene {
     this.grassBar = this.add.graphics();
     this.setBalanceBars(this.game.scene.keys[this.state.farm].balance());
 
-
-    // монеты и кристаллы для анимации
-    this.сurrency = this.physics.add.group();
-
     // круглый бар собирателя
     this.collector = new Collector(this, 230, this.height - 90, 44);
 
@@ -348,11 +339,7 @@ class ChickenBars extends Phaser.Scene {
     if (this.part.text !== String(shortNum(this.state.userChicken.part))) {
       this.part.setText(String(this.state.userChicken.part));
     }
-    
 
-    // анимация монет и кристаллов
-    this.сurrencyAnimation();
-    
     // пульсация баланс-баров
     this.pulseBalance();
 

@@ -1,47 +1,5 @@
 import Currency from './../components/animations/Currency';
 
-// анимация монет и кристаллов
-function сurrencyAnimation(): void {
-
-  for (let i in this.сurrency.children.entries) {
-
-    let coin = this.сurrency.children.entries[i];
-    let target: Iposition;
-    
-    if (coin.texture.key !== 'diamond') target = { x: 495, y: 120 }
-    else target = { x: 495, y: 30 };
-
-    if (coin.counter > 0 && coin.counter < 25) coin.counter++;
-    else if (coin.counter === 25) {
-
-      coin.body.reset(coin.x, coin.y);
-      coin.counter = 0;
-      let aim: Phaser.Math.Vector2 = new Phaser.Math.Vector2();
-      aim.x = target.x;
-      aim.y = target.y;
-      let distance: number = Phaser.Math.Distance.Between(coin.x, coin.y, target.x, target.y) * 2;
-      this.physics.moveToObject(coin, aim, distance);
-
-    } else {
-
-      let distance = Phaser.Math.Distance.Between(coin.x, coin.y, target.x, target.y) * 2;
-
-      if (coin.x < 0 ||
-        coin.x > 720 ||
-        coin.y < 0 ||
-        (distance > coin.distance && coin.distance > 0) ||
-        distance < 100) {
-        
-        coin.destroy();
-        
-      } else coin.distance = distance;
-
-    }
-
-  }
-
-}
-
 // пульсация баланс-баров
 function pulseBalance(): void {
 
@@ -74,7 +32,6 @@ function pulseBalance(): void {
   }
 
 }
-
 
 // анимация прибавления кристаллов
 function increaseDiamonds(): void {
@@ -338,42 +295,6 @@ function newbieAwardAnimation(): void {
 
 }
 
-// анимация кристаллов
-function plusDiamonds(): void {
-    
-  let x = this.cameras.main.centerX;
-  let y = this.cameras.main.centerY;
-
-  let img1 = this.сurrency.create(x, y, 'diamond').setScale(0.2);
-  let img2 = this.сurrency.create(x, y, 'diamond').setScale(0.2);
-  let img3 = this.сurrency.create(x, y, 'diamond').setScale(0.2);
-  let img4 = this.сurrency.create(x, y, 'diamond').setScale(0.2);
-  let img5 = this.сurrency.create(x, y, 'diamond').setScale(0.2);
-  let img6 = this.сurrency.create(x, y, 'diamond').setScale(0.2);
-  let img7 = this.сurrency.create(x, y, 'diamond').setScale(0.2);
-  let img8 = this.сurrency.create(x, y, 'diamond').setScale(0.2);
-
-  img1.setVelocity(350, 350);
-  img2.setVelocity(500, 0);
-  img3.setVelocity(350, -350);
-  img4.setVelocity(-350, 350);
-  img5.setVelocity(-500, 0);
-  img6.setVelocity(-350, -350);
-  img7.setVelocity(0, -500);
-  img8.setVelocity(0, 500);
-
-  img1.counter = 1;
-  img2.counter = 1;
-  img3.counter = 1;
-  img4.counter = 1;
-  img5.counter = 1;
-  img6.counter = 1;
-  img7.counter = 1;
-  img8.counter = 1;
-
-}
-
-
 // получения нескольких ресурсов
 function getCurrency(position: Iposition, counter: number = 1, texture: string): void {
 
@@ -462,13 +383,11 @@ function plusMoneyAnimation(position: Iposition): void {
 }
 
 export {
-  сurrencyAnimation,
   pulseBalance,
   increaseDiamonds,
   dragSheep,
   showSheepSprite,
   newbieAwardAnimation,
-  plusDiamonds,
   getCurrency,
   openShop,
   improveCollectorAnim,

@@ -9,15 +9,15 @@ export default class MoneyAnimation  {
   public texture: string;
   public money: Phaser.GameObjects.Group;
 
-  constructor(scene: SheepBars | ChickenBars | CowBars | EventBars) {
+  constructor(scene: SheepBars | ChickenBars | CowBars | EventBars, texture: string) {
     this.scene = scene;
     this.position = { x: this.scene.cameras.main.centerX, y: this.scene.cameras.main.centerY };
-    this.texture  = `${this.scene.state.farm.toLowerCase()}Coin`;
+    this.texture  = texture;
     this.init();
   }
 
-  static create(scene: SheepBars | ChickenBars | CowBars | EventBars): MoneyAnimation {
-    return new MoneyAnimation(scene);
+  static create(scene: SheepBars | ChickenBars | CowBars | EventBars, texture: string = `${scene.state.farm.toLowerCase()}Coin`): MoneyAnimation {
+    return new MoneyAnimation(scene, texture);
   }
 
   private init(): void {

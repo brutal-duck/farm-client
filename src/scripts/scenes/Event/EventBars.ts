@@ -16,12 +16,9 @@ import {
   scoreEnding 
 } from './basic';
 import {
-  сurrencyAnimation,
   increaseDiamonds,
   newbieAwardAnimation,
-  plusDiamonds,
 } from '../../general/animations';
-import { plusResourceAnimation } from './animations';
 import Collector from '../../components/gameObjects/Collector';
 import BarsMenu from '../../components/gameObjects/BarsMenu';
 import BigInteger from '../../libs/BigInteger';
@@ -37,7 +34,6 @@ class EventBars extends Phaser.Scene {
   public diamonds: any;
   public part: any;
   public cursors: any;
-  public сurrency: Phaser.GameObjects.Group; // группа монет и кристаллов для анимации
   public collector: Collector;
   public menu: BarsMenu;
   public animalBuy: Phaser.GameObjects.Image;
@@ -71,11 +67,8 @@ class EventBars extends Phaser.Scene {
   public clickButton = clickButton.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
   public clickModalBtn = clickModalBtn.bind(this);
-  public сurrencyAnimation = сurrencyAnimation.bind(this);
   public increaseDiamonds = increaseDiamonds.bind(this);
   public newbieAwardAnimation = newbieAwardAnimation.bind(this);
-  public plusDiamonds = plusDiamonds.bind(this);
-  public plusResourceAnimation = plusResourceAnimation.bind(this);
   public updateNativeShop = updateNativeShop.bind(this);
   public updateRaitingsBar = updateRaitingsBar.bind(this);
   public scoreEnding = scoreEnding.bind(this);
@@ -232,9 +225,6 @@ class EventBars extends Phaser.Scene {
       }
     });
     
-    // монеты и кристаллы для анимации
-    this.сurrency = this.physics.add.group();
-
     // круглый бар собирателя
     this.collector = new Collector(this, 230, this.height - 90, 44);
 
@@ -314,8 +304,6 @@ class EventBars extends Phaser.Scene {
 
   public update(): void {
 
-    this.сurrency.children.entries.forEach((item: Phaser.GameObjects.Sprite) => item.angle += 20); // при полете ресурсов их вращаем
-
     if (this.userDiamonds < this.state.user.diamonds) {
 
       if (this.countIncrease === 0) {
@@ -357,9 +345,6 @@ class EventBars extends Phaser.Scene {
     if (this.money.text !== String(shortNum(this.state.userEvent.money))) {
       this.money.setText(shortNum(this.state.userEvent.money));
     }    
-
-    // анимация монет и кристаллов
-    this.сurrencyAnimation();
 
     // актуальный статус кнопки покупки курицы
     this.buyAnimalStatus();

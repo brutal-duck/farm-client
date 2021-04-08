@@ -906,7 +906,7 @@ function takeDonate(): void {
           .setPrice(pack.price)
           .setEventProperties(eventPorerties);
         this.state.amplitude.logRevenueV2(revenue);
-        this.game.scene.keys[this.state.farm + 'Bars'].plusDiamonds();
+        MoneyAnimation.create(this.game.scene.keys[this.state.farm + 'Bars'], 'diamond');
         this.autosave();
 
       }
