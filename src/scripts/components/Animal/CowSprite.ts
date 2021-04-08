@@ -151,4 +151,9 @@ export default class CowSprite extends Animal {
     this.aimY = 0;
     this.distance = 0;
   }
+
+  public destroy(): void {
+    super.destroy();
+    this.hornsSprite?.destroy();
+  }
 }
