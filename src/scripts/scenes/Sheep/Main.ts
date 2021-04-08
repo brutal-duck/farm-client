@@ -37,6 +37,7 @@ import {
   nextDayTimer,
   intervalPorgressCollectorTime,
   autoporgressCollectorTime,
+  remainderSellResource
 } from '../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -170,6 +171,8 @@ class Sheep extends Phaser.Scene {
   public feedBoostLvl: number = 6; // уровень старта буста комбикорм
   public feedBoostStack: number = 11; // максимальный стек часов
   public dailyStartCheck: boolean = true; // запущено ли открытие окна daily
+  public remaindSellTimer: number = 0;
+
   public readonly moneyTasks: { id: number, money: number }[] = [
     {
       id: 127,
@@ -288,6 +291,7 @@ class Sheep extends Phaser.Scene {
   public intervalPorgressCollectorTime = intervalPorgressCollectorTime.bind(this);
   public autoporgressCollectorTime = autoporgressCollectorTime.bind(this);
   public openEmailWindow = openEmailWindow.bind(this);
+  public remainderSellResource = remainderSellResource.bind(this);
 
   public init(state: Istate): void {
 

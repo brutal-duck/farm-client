@@ -7,6 +7,7 @@ import Firework from '../components/animations/Firework';
 import Stars from '../components/animations/Stars';
 import BigInteger from '../libs/BigInteger';
 import MoneyAnimation from './../components/animations/MoneyAnimation';
+import SpeechBubble from './../components/animations/SpeechBuble';
 
 // рандомное число
 function random(min: number, max: number): number {
@@ -1364,6 +1365,29 @@ function autoporgressCollectorTime(): void {
   }
 }
 
+function remainderSellResource(): void {
+  const delay: number = 10;
+  const remainderMaxPart: number = 9;
+  const remainderPercent: number = 60;
+  if (this.state[`user${this.state.farm}`].part <= remainderMaxPart) {
+    console.log('1')
+    this.remaindSellTimer++;
+    if (this.remaindSellTimer >= delay) {
+      console.log('2')
+
+      const storages: any[] = this.territories.children.entries.filter(el => el.type === 5)
+      const check: any = storages.find(el => el.volume >= 10 * remainderPercent);
+      if (check) {
+        if (!this.scene.isActive('Modal') &&
+        !this.scene.isActive('Tutorial') &&
+        !this.scene.isActive('Map'))
+        SpeechBubble.create(this.game.scene.keys[`${this.state.farm}Bars`], this.state.lang.helpSheep_1, 3);
+        this.remaindSellTimer = 0;
+      }
+    }
+  }
+}
+
 export {
   random,
   getRandomBool,
@@ -1395,5 +1419,6 @@ export {
   nextDayTimer,
   intervalPorgressCollectorTime,
   autoporgressCollectorTime,
-  loadingModal
+  loadingModal,
+  remainderSellResource
 }

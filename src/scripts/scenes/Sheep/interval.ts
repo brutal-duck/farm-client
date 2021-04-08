@@ -11,7 +11,8 @@ function interval(): void {
   let arrowOnMap: Phaser.GameObjects.Sprite;
   let arrowOnCollector: Phaser.GameObjects.Sprite;
   this.time.addEvent({ delay: 1000, callback: (): void => {
-
+    
+    this.remainderSellResource();
     // проверка подключения к интернету
     this.onlineStatus();
 
