@@ -352,7 +352,7 @@ class CowPreload extends Phaser.Scene {
     this.load.image('cow-right-0-2', cowRight_0_2);
     this.load.image('cow-right-0-3', cowRight_0_3);
     this.load.image('cow-right-0-4', cowRight_0_4);
-    this.load.spritesheet('cow1', cow1, { frameWidth: 115, frameHeight: 143 });
+    this.load.spritesheet('cow1', cow1, { frameWidth: 134, frameHeight: 154 });
     this.load.spritesheet('cow2', cow2, { frameWidth: 115, frameHeight: 143 });
     this.load.spritesheet('cow3', cow3, { frameWidth: 115, frameHeight: 143 });
     this.load.spritesheet('cow4', cow4, { frameWidth: 115, frameHeight: 137 });

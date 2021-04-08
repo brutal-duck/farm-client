@@ -24,9 +24,9 @@ function teleportation(cow: any): void {
   }
   
   // смотрим, где какая корова сидит
-  for (let i in this.cow.children.entries) {
+  for (let i in this.animalGroup.children.entries) {
 
-    let c: CowSprite = this.cow.children.entries[i];
+    let c: CowSprite = this.animalGroup.children.entries[i];
     let territory = this.currentTerritory(c.x, c.y);
 
     if (territory !== undefined) {
@@ -163,7 +163,7 @@ function checkMerging(territory: any, cow: CowSprite, position: string) {
       } else {
         
         // костыль
-        for (let i in this.cow.children.entries) this.cow.children.entries[i].merging = false;
+        for (let i in this.animalGroup.children.entries) this.animalGroup.children.entries[i].merging = false;
         if (cow1) cow2.teleportation();
         if (cow2) cow2.teleportation();
         territory.merging = [];
@@ -199,9 +199,9 @@ function cancelMerging(territory: any, cow1: CowSprite, cow2: CowSprite) {
 
     for (let i in territory.merging) {
 
-      let cow: CowSprite = this.cow.children.entries.find((data: any) => data._id === territory.merging[i]._id);
-      let randomX: number = random(territory.x + 40, territory.x + 200);
-      let randomY: number = random(territory.y + 280, territory.y + 440);
+      let cow: CowSprite = this.animalGroup.children.entries.find((data: any) => data._id === territory.merging[i]._id);
+      let randomX: number = Phaser.Math.Between(territory.x + 40, territory.x + 200);
+      let randomY: number = Phaser.Math.Between(territory.y + 280, territory.y + 440);
       cow.setAim(randomX, randomY);
       cow.merging = false;
 
@@ -220,7 +220,7 @@ function buyCow(breed: number, shop: boolean = false): boolean {
 
   let success: boolean = false;
 
-  if (this.cow.children.entries.length < 50) {
+  if (this.animalGroup.children.entries.length < 50) {
 
     let cowPrice = this.cowPrice(breed);
 
@@ -230,7 +230,7 @@ function buyCow(breed: number, shop: boolean = false): boolean {
       let x: number = random(530, 660);
       let y: number = random(530, 540);
       let id: string = 'local_' + randomString(18);
-      this.cow.generate(this, { x, y }, breed, id, 0, 0, 7, true);
+      this.animalGroup.generate(this, { x, y }, breed, id, 0, 0, 7, true);
       this.state.userCow.money -= cowPrice.price;
       this.state.userCow.countCow = cowPrice.countCow;
       this.game.scene.keys['CowBars'].updateCowPrice();
@@ -492,7 +492,7 @@ function dragCowMerging(cow: CowSprite): void {
     cow.milkStatus.destroy();
     cow.destroy();
     const id: string = 'local_' + randomString(18);
-    this.cow.generate(this, position, type, id, 0, 0, 7, false);
+    this.animalGroup.generate(this, position, type, id, 0, 0, 7, false);
     this.tryTask(2, type);
     this.tryTask(4, type);
     this.checkAnimalTask();

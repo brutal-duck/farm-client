@@ -3,7 +3,7 @@ function animations(): void {
   // кристаллическая курица
   this.anims.create({
     key: 'cow-move-right0',
-    frames: this.anims.generateFrameNumbers('cow0', { start: 10, end: 6 }),
+    frames: this.anims.generateFrameNumbers('cow0', { start: 8, end: 6 }),
     frameRate: 10,
     repeat: -1
   });
@@ -16,7 +16,7 @@ function animations(): void {
   });
   this.anims.create({
     key: 'cow-stay-right0',
-    frames: [ { key: 'cow0', frame: 10 } ],
+    frames: [ { key: 'cow0', frame: 8 } ],
     frameRate: 20
   });
   this.anims.create({
@@ -33,20 +33,20 @@ function animations(): void {
   // первая порода
   this.anims.create({
     key: 'cow-move-right1',
-    frames: this.anims.generateFrameNumbers('cow1', { start: 10, end: 6 }),
+    frames: this.anims.generateFrameNumbers('cow1', { start: 7, end: 12 }),
     frameRate: 10,
     repeat: -1
   });
   this.anims.create({
     key: 'cow-move-left1',
-    frames: this.anims.generateFrameNumbers('cow1', { start: 0, end: 4 }),
+    frames: this.anims.generateFrameNumbers('cow1', { start: 0, end: 5 }),
     forward: false,
     frameRate: 10,
     repeat: -1
   });
   this.anims.create({
     key: 'cow-stay-right1',
-    frames: [ { key: 'cow1', frame: 10 } ],
+    frames: [ { key: 'cow1', frame: 7 } ],
     frameRate: 20
   });
   this.anims.create({
@@ -56,7 +56,7 @@ function animations(): void {
   });
   this.anims.create({
     key: 'cow-drag1',
-    frames: [ { key: 'cow1', frame: 5 } ],
+    frames: [ { key: 'cow1', frame: 6 } ],
     frameRate: 20
   });
 

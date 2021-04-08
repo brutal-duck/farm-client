@@ -12,7 +12,6 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
   public _id: string;
   public diamond: number;
   public counter: number;
-  public anim: boolean;
   public aim: boolean; 
   public aimX: number;
   public aimY: number;
@@ -318,8 +317,9 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
       } else {
         side = 'right';
       }
-      if (this.moving || this.aim) this.anims.play(`${this.type}-move-${side}${this.breed}`, true);
-      else this.anims.play(`${this.type}-stay-${side}${this.breed}`, true);
+      if ((this.moving || this.aim) && !this.merging) {
+        this.anims.play(`${this.type}-move-${side}${this.breed}`, true);
+      } else this.anims.play(`${this.type}-stay-${side}${this.breed}`, true);
     }
   }
 
