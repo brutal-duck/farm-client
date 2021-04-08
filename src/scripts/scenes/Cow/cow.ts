@@ -91,13 +91,13 @@ function checkMerging(territory: any, cow: CowSprite, position: string) {
 
     // ставим на парковку
     if (position === 'top') {
-      cow.vector = 8;
+      cow.vector = 4;
       cow.y = territory.y + 30;
-      cow.x = territory.x + 160;
+      cow.x = territory.x + 165;
     } else if (position === 'bottom') {
-      cow.vector = 8;
+      cow.vector = 4;
       cow.y = territory.y + 130;
-      cow.x = territory.x + 160;
+      cow.x = territory.x + 165;
     }
 
   } else {
@@ -107,13 +107,13 @@ function checkMerging(territory: any, cow: CowSprite, position: string) {
 
     // обновляем положение парковки
     if (position === 'top') {
-      cow.vector = 8;
+      cow.vector = 4;
       cow.y = territory.y + 30;
-      cow.x = territory.x + 160;
+      cow.x = territory.x + 165;
     } else if (position === 'bottom') {
-      cow.vector = 8;
+      cow.vector = 4;
       cow.y = territory.y + 130;
-      cow.x = territory.x + 160;
+      cow.x = territory.x + 165;
     }
 
   }
