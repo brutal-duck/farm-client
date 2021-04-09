@@ -1357,14 +1357,22 @@ function autoporgressCollectorTime(): void {
 }
 
 function remainderSellResource(): void {
-  const delay: number = 5;
+  const delay: number = 10;
   const remainderMaxPart: number = 9;
-  const remainderPercent: number = 60;
+  const remainderPercent: number = 0.6;
   if (this.state[`user${this.state.farm}`].part <= remainderMaxPart) {
+    console.log(this.remaindSellTimer)
     this.remaindSellTimer++;
     if (this.remaindSellTimer >= delay) {
       const storages: any[] = this.territories.children.entries.filter(el => el.type === 5)
-      const check: any = storages.find(el => el.volume >= 10 * remainderPercent);
+      let check: boolean = false;
+      for (let i: number =0; i < storages.length; i++) {
+        const setting = this.state.sheepSettings.territoriesSheepSettings.find(elSetting => elSetting.improve === storages[i].improve);
+        if (storages[i].volume >= setting.woolStorage * remainderPercent) {
+          check = true;
+          break;
+        }
+      }
       if (check && 
       !this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
