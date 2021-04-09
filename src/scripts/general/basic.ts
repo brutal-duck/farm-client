@@ -362,17 +362,13 @@ function exchange(ad: boolean = false): void {
     buyAnimal = (): void => this.buyCow(this.state.convertor.breed);
 
   }
-  
   if (this.state.convertor.diamonds > this.state.user.diamonds) {
-
-    let countResources = this.state.convertor.diamonds - this.state.user.diamonds;
-
+    const countResources = this.state.convertor.diamonds - this.state.user.diamonds;
+    
     this.time.addEvent({ delay: 100, callback: (): void => {
-
       this.state.convertor.type = 2;
       this.state.convertor.count = countResources;
-
-      let modal: Imodal = {
+      const modal: Imodal = {
         type: 1,
         sysType: 4
       }
@@ -380,14 +376,12 @@ function exchange(ad: boolean = false): void {
       this.scene.launch('Modal', this.state);
       
     }, callbackScope: this, loop: false });
-
   } else {
-
     this.state.user.diamonds -= this.state.convertor.diamonds;
     user.money += this.convertDiamonds(this.state.convertor.diamonds);
 
+    MoneyAnimation.create(this.game.scene.keys[`${this.state.farm}Bars`]);
     if (!ad) {
-
       this.state.amplitude.getInstance().logEvent('diamonds_spent', {
         type: 'convertor',
         count: this.state.convertor.diamonds,
@@ -396,7 +390,6 @@ function exchange(ad: boolean = false): void {
       });
 
       this.tryTask(15, 0, this.state.convertor.diamonds);
-
     }
 
     if (this.state.convertor.fun === 1) {
@@ -416,9 +409,7 @@ function exchange(ad: boolean = false): void {
     } else if (this.state.convertor.fun === 8) {
       this.improveCollector();
     }
-
   }
-  
 }
 
 // завершение главы

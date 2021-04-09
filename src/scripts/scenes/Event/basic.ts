@@ -2,6 +2,7 @@ import axios from 'axios';
 import { randomString, shortNum } from './../../general/basic';
 import Firework from '../../components/animations/Firework';
 import BigInteger from '../../libs/BigInteger';
+import MoneyAnimation from './../../components/animations/MoneyAnimation';
 // цена животного
 function animalPrice(breed: number): {price: string, countAnimal: number} {
   let insideCounter: number = this.state.userEvent.countAnimal[breed - 1].counter;
@@ -460,11 +461,12 @@ function exchange(ad: boolean = false): void {
       this.scene.launch('Modal', this.state);
       
     }, callbackScope: this, loop: false });
-
   } else {
-
+    
     this.state.user.diamonds -= this.state.convertor.diamonds;
     user.money = BigInteger.add(user.money, this.convertDiamonds(this.state.convertor.diamonds));
+    
+    MoneyAnimation.create(this.game.scene.keys[`${this.state.farm}Bars`]);
     if (!ad) {
 
       // this.state.amplitude.getInstance().logEvent('diamonds_spent', {
