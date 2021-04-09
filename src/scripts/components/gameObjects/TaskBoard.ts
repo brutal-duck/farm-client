@@ -253,10 +253,10 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
         this.star.setPosition(630, this.scene.height - 190 - height / 2);
 
         this.tileSprite
+          .removeAllListeners()
           .setPosition(30, this.scene.height - 190 - height)
           .setDisplaySize(660, height);
 
-        this.tileSprite.removeAllListeners();
         this.scene.click(this.tileSprite, () => {
           this.scene.clickTaskBoard(task);
         });
@@ -348,6 +348,7 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
         });
       
         this.tileSprite
+          .removeAllListeners()
           .setPosition(30, this.scene.height - 190 - height)
           .setDisplaySize(660, height);
 
@@ -372,6 +373,7 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
         });
         
         this.tileSprite
+          .removeAllListeners()
           .setPosition(30, this.positionY - 300)
           .setDisplaySize(660, 110);
 
@@ -388,6 +390,7 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
         this.lastPart.setPosition(this.scene.cameras.main.centerX, this.scene.height - 245);
 
         this.tileSprite
+          .removeAllListeners()
           .setPosition(30, this.positionY - 300)
           .setDisplaySize(660, 110);
 
@@ -444,7 +447,7 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
     const timeline: Phaser.Tweens.Timeline = this.scene.tweens.createTimeline();
     timeline.add({
       targets: args,
-      y: '-=160',
+      y: `-=160`,
       duration: 500,
       ease: 'Power3',
     });
@@ -533,8 +536,7 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
     const oldTaskIcon: Phaser.GameObjects.Image = this.scene.add.image(88, this.positionY - 190 - height / 2, taskData.icon).setDepth(oldTaskBoard.depth);
     oldTaskIcon.setTint(0x777777);
     const oldDoneIcon: Phaser.GameObjects.Image = this.scene.add.image(88, this.positionY - 190 - height / 2, 'completed').setDepth(oldTaskBoard.depth);
-    
-    this.flyOutOldBoardAnim(oldTaskBoard, oldTaskIcon, oldDoneIcon, oldTaskText);
+    this.flyOutOldBoardAnim(oldTaskText, oldTaskBoard, oldTaskIcon, oldDoneIcon);
   }
 
   private checkVisibility(): void {
@@ -576,7 +578,6 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
 
   private shownElements(): void {
     this.hideAllElement();
-
     this.isVisibile = true;
 
     if (this.status === 1) {

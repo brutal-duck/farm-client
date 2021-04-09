@@ -1361,7 +1361,6 @@ function remainderSellResource(): void {
   const remainderMaxPart: number = 9;
   const remainderPercent: number = 0.6;
   if (this.state[`user${this.state.farm}`].part <= remainderMaxPart) {
-    console.log(this.remaindSellTimer)
     this.remaindSellTimer++;
     if (this.remaindSellTimer >= delay) {
       const storages: any[] = this.territories.children.entries.filter(el => el.type === 5)
