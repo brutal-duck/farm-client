@@ -1,5 +1,4 @@
 import { shortNum, shortTime } from '../../../general/basic';
-import MoneyAnimation from './../../../components/animations/MoneyAnimation';
 
 // монеты
 function cowMoney(): void {
@@ -29,8 +28,6 @@ function cowMoney(): void {
       this.scene.stop();
       this.scene.stop('ShopBars');
       this.scene.stop('Modal');
-      MoneyAnimation.create(this.game.scene.keys[`${this.state.farm}Bars`], `${this.state.farm.toLowerCase()}Coin`);
-
     });
     
     let count: string = String(shortNum(this.game.scene.keys[this.state.farm].convertDiamonds(left)));
@@ -54,8 +51,6 @@ function cowMoney(): void {
       this.scene.stop();
       this.scene.stop('ShopBars');
       this.scene.stop('Modal');
-      MoneyAnimation.create(this.game.scene.keys[`${this.state.farm}Bars`], `${this.state.farm.toLowerCase()}Coin`);
-
     });
 
     if (right) {
@@ -74,8 +69,6 @@ function cowMoney(): void {
         this.scene.stop();
         this.scene.stop('ShopBars');
         this.scene.stop('Modal');
-        MoneyAnimation.create(this.game.scene.keys[`${this.state.farm}Bars`], `${this.state.farm.toLowerCase()}Coin`);
-
       });
 
       let count: string = String(shortNum(this.game.scene.keys[this.state.farm].convertDiamonds(right)));
@@ -99,8 +92,6 @@ function cowMoney(): void {
         this.scene.stop();
         this.scene.stop('ShopBars');
         this.scene.stop('Modal');
-        MoneyAnimation.create(this.game.scene.keys[`${this.state.farm}Bars`], `${this.state.farm.toLowerCase()}Coin`);
-
       });
 
     }
