@@ -64,7 +64,7 @@ export default class SpeechBubble {
   }
 
   private setPosition(): void {
-    let bubleTextHeight = this.bubbleText.getBounds().height + 40;
+    const bubleTextHeight = this.bubbleText.getBounds().height + 40;
     if (this.type === 2) {
       this.y = 220;
       this.x = 260;
@@ -79,7 +79,6 @@ export default class SpeechBubble {
       this.triangleCoords.point2Y = bubleTextHeight / 2 + 15;
       this.triangleCoords.point3Y = bubleTextHeight / 2 + 25;
       this.bubbleFarmer.setPosition(this.scene.cameras.main.width - 20, this.y + this.triangleCoords.point2Y).setOrigin(1, 0.5).setVisible(true);
-      bubleTextHeight = bubleTextHeight < this.bubbleFarmer.height ? this.bubbleFarmer.height + 40 : bubleTextHeight;
     } 
     this.bubble.setPosition(this.x, this.y);
     this.bubbleText.setPosition(this.x + 20, this.bubble.y + 20);
@@ -100,7 +99,7 @@ export default class SpeechBubble {
     if (this.type === 3) {
       this.bubbleBg
         .fillStyle(0x000000, 0.5)
-        .fillRoundedRect(this.bubble.x - 20, this.bubble.y - 20, this.width + this.bubbleFarmer.displayWidth + 60, bubleTextHeight + 40, 16);
+        .fillRoundedRect(this.bubble.x - 20, this.bubble.y - 20, this.width + this.bubbleFarmer.displayWidth + 60, bubleTextHeight + 60, 16);
     }
   }
 
