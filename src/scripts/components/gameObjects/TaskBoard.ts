@@ -45,6 +45,9 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
   public listButtonText: Phaser.GameObjects.Text;
   public listIsOpen: boolean = false;
   public listButtondY: number = 0;
+  public listTimer: Phaser.Time.TimerEvent;
+  public listTime: number = 0;
+  public listMoving: boolean = false;
 
   constructor(
     scene: SheepBars | ChickenBars | CowBars
@@ -65,6 +68,15 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
 
     this.positionY = this.scene.height;
     this.createElements();
+
+    this.listTimer = this.scene.time.addEvent({
+      delay: 1000,
+      callback: (): void => {
+        console.log('this')
+        this.tickListTimer();
+      },
+      loop: true,
+    });
   }
 
   private createElements(): void {
@@ -290,7 +302,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
         this.listButton.setPosition(this.tileSprite.getBounds().right, this.tileSprite.getBounds().top).setDisplaySize(20, 20).setOrigin(1);
         this.listButtonText.setPosition(this.listButton.x, this.listButton.y).setOrigin(1, 0.5);
         this.scene.click(this.listButton, () => {
-          this.toggleList();
+          if (!this.listMoving) this.toggleList();
         });
       } else if (this.status === 2 && task) {
       
@@ -570,20 +582,21 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
 
     if ((this.scene.menu.isOpened ||
       this.scene.scene.isActive('Modal') ||
-      this.scene.scene.isActive('Tutorial') || this.listIsOpen) &&
+      this.scene.scene.isActive('Tutorial')) &&
       this.isVisibile || !checkSheepTutor && this.isVisibile) {
       this.hideAllElement();
       this.hideListButton();
     } else if (!this.scene.menu.isOpened &&
       !this.scene.scene.isActive('Modal') &&
       !this.scene.scene.isActive('Tutorial') &&
-      !this.isVisibile && checkSheepTutor && !this.listIsOpen) {
+      !this.isVisibile && checkSheepTutor) {
         this.shownElements();
     } 
   }
 
   private hideAllElement(): void {
     this.isVisibile = false;
+    this.hideListButton();
     this.setVisible(false);
     this.taskIcon?.setVisible(false);
     this.tileSprite?.setVisible(false);
@@ -670,7 +683,8 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       if (x1.sort > x2.sort) return 1;
       return 0;
     });
-    this.dY = 0;
+    tasksParams.splice(0, 1);
+    this.dY = this.displayHeight - 10;
 
     for (let i: number = 0; i < tasksParams.length; i += 1) {    
       const task: Itasks = tasksParams[i];
@@ -678,7 +692,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       const icon: Phaser.GameObjects.Image = this.scene.add.sprite(0, 0, taskData.icon).setVisible(false).setScale(0.9);
       this.dY += (icon.height + 20);
     }
-    this.listButtondY = this.dY - 105;
+    this.listButtondY = this.dY - this.displayHeight;
   }
 
   private createAllTasks(): void {
@@ -693,16 +707,15 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       return 0;
     });
 
-    let last: boolean = false;
+    tasksParams.pop()
     for (let i: number = 0; i < tasksParams.length; i += 1) {    
       const task: Itasks = tasksParams[i];
       const taskData: ItaskData = this.scene.game.scene.keys[this.scene.state.farm].getTaskData(task);
-      if (i === tasksParams.length - 1) last = true;
-      this.createTaskListElement(task, taskData,  last);
+      this.createTaskListElement(task, taskData);
     }
   }
 
-  private createTaskListElement(task: Itasks, taskData: ItaskData, last: boolean): void {
+  private createTaskListElement(task: Itasks, taskData: ItaskData): void {
     let icon: Phaser.GameObjects.Image = this.scene.add.sprite(88, this.positionY - 250, taskData.icon).setDepth(1).setScale(0.9).setAlpha(0);
     let text: Phaser.GameObjects.Text = this.scene.add.text(icon.getBounds().right + 20, this.positionY - 250, taskData.name, {
       font: '24px Bip',
@@ -713,12 +726,11 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
     let height = icon.height + 20;
 
     const bgTile: Phaser.GameObjects.TileSprite = this.scene.add.tileSprite(this.scene.cameras.main.centerX, this.positionY - 250, 660, height, 'white-pixel');
-    bgTile.setTint(0xFFEBC5).setInteractive();
-    let lineTile: Phaser.GameObjects.TileSprite = null;
-    if (!last) {
-      lineTile = this.scene.add.tileSprite(this.scene.cameras.main.centerX, bgTile.y + bgTile.height / 2, 640, 3, 'white-pixel').setDepth(1).setAlpha(0);
-      lineTile.setTint(0x858585);
-    }
+    bgTile.setTint(0xFFEBC5).setInteractive().setDepth(-1);
+    let lineTile: Phaser.GameObjects.TileSprite = this.scene.add.tileSprite(this.scene.cameras.main.centerX, bgTile.y + bgTile.height / 2 - 5, 620, 3, 'white-pixel')
+      .setDepth(1)
+      .setAlpha(0);
+    lineTile.setTint(0x858585);
 
     let completed: Phaser.GameObjects.Sprite = null;
     if (task.done === 1 && task.got_awarded === 1) {
@@ -727,7 +739,6 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       text.setColor('#494949').setAlpha(0);
     }    
     this.dY -= (height);
-    console.log(this.dY);
     const targets: any[] = [ icon, text, lineTile, completed,  bgTile ];
     this.taskListElements = [...this.taskListElements, targets];
     this.openTaskListAnimation(targets)
@@ -738,7 +749,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
     const timeline: Phaser.Tweens.Timeline = this.scene.tweens.timeline();
     timeline.add({
       targets: targets,
-      duration: 700,
+      duration: 500,
       y: `-=${this.dY}`,
       ease: 'Power1', 
     });
@@ -747,6 +758,9 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       targets: target,
       alpha: { from: 0, to: 1},
       duration: 300,
+      onComplete: (): void => {
+        this.listMoving = false;
+      }
     });
     timeline.play();
     
@@ -757,20 +771,20 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
     this.taskListElements.forEach((array: any[], index)=> {
       const timeline: Phaser.Tweens.Timeline = this.scene.tweens.timeline();
       const targets = [...array];
-      this.dY = (array[0].height + 20) * index; 
+      this.dY = (105) * (index + 1); 
       targets.pop();
       timeline.add({
         targets: targets,
-        alpha: { from: 1, to: 0},
+        alpha: { from: 1, to: 0 },
         duration: 300,
       });
       timeline.add({
         targets: array,
-        duration: 700,
+        duration: 500,
         y: `+=${this.dY}`,
         ease: 'Power1', 
         onComplete: (): void => {
-          console.log('complete')
+          this.listMoving = false;
           array.forEach(el => {
             el?.destroy();
           })
@@ -785,14 +799,17 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       }
     });
     this.scene.time.addEvent({
-      delay: 950,
+      delay: 750,
       callback: (): void => {
+        this.listTime = 0;
         this.listIsOpen = false;
       }
     })
   }
   
+  // private  
   private toggleList(): void {
+    this.listMoving = true;
     if (!this.listIsOpen) {
       this.listIsOpen = true;
       this.listButtonText.setFlipY(true);
@@ -806,18 +823,50 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
   private moveListButtonTop(): void {
     this.scene.tweens.add({
       targets: [ this.listButton, this.listButtonText ],
+      onStart: (): void => {
+        this.listButton.setAlpha(0);
+        this.listButtonText.setAlpha(0);
+      },
       y: `-=${this.listButtondY}`,
-      duration: 700,
+      duration: 500,
       ease: 'Power1',
+      onComplete: (): void => {
+        this.fadeOutListButton()
+      }
     })
   }
 
   private moveListButtonButtom(): void {
     this.scene.tweens.add({
       targets: [ this.listButton, this.listButtonText ],
+      onStart: (): void => {
+        this.listButton.setAlpha(0);
+        this.listButtonText.setAlpha(0);
+      },
       y: `+=${this.listButtondY}`,
-      duration: 700,
+      duration: 500,
       ease: 'Power1',
-    })
+      onComplete: (): void => {
+        this.fadeOutListButton()
+      }
+    });
+  }
+
+  private fadeOutListButton(): void {
+    this.scene.tweens.add({
+      targets: [ this.listButton, this.listButtonText ],
+      alpha: 1,
+      duration: 300,
+    });
+  }
+
+  private tickListTimer(): void {
+
+    if (this.listIsOpen) {
+      this.listTime++;
+    }
+    if (this.listTime > 3 && !this.listMoving) {
+      this.closeTaskListAnimation();
+    }
   }
 }
