@@ -166,6 +166,10 @@ function getChicken(
   vector: number = 7,
   anim: boolean = true): void {
 
+  if (type > this.state.chickenSettings.chickenSettings.length) {
+    type = this.state.chickenSettings.chickenSettings.length;
+  }
+
   let chicken = this.chicken.create(x, y, 'chicken' + type).setInteractive().setDepth(y);
   chicken.setCollideWorldBounds(true);
   this.input.setDraggable(chicken); // задали перетаскивание

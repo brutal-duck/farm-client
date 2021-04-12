@@ -180,7 +180,10 @@ function getSheep(
   diamond: number = 0,
   vector: number = 7,
   anim: boolean = true): void {
-
+  if (type > this.state.sheepSettings.sheepSettings.length) {
+    type = this.state.sheepSettings.sheepSettings.length;
+  }
+  
   let sheep = this.sheep.create(x, y, 'sheep' + type)
     .setInteractive()
     .setDepth(y)
