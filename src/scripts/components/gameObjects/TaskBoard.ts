@@ -188,7 +188,6 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
     else {
       if (this.taskId !== task.id) {
         setter = true;
-        this.flyInMainBoardAnim();
       }
       this.currentTaskProgress = task.progress;
       this.gotAward = task.got_awarded;
@@ -409,8 +408,11 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
         !this.scene.scene.isActive('Modal') &&
         !this.scene.scene.isActive('Tutorial') &&
         checkSheepTutor) {
+        if (setter) {
+          this.setStartY();
+          this.flyInMainBoardAnim();
+        }
         this.shownElements();
-        if (setter) this.setStartY();
       }
     }
   }
@@ -484,6 +486,7 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
   }
 
   private flyInMainBoardAnim(): void {
+    this.removeButtonsInteractive();
     this.scene.tweens.add({
       duration: 500,
       targets: [
@@ -507,6 +510,9 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
       alpha: { from: 0, to: 1 },
       y: '-=250',
       ease: 'Power3',
+      onComplete: (): void => {
+        this.setButtonsInteractive();
+      }
     });
   }
 
@@ -608,5 +614,15 @@ export default class TaskBoard extends Phaser.GameObjects.Graphics{
       this.lastPart.setVisible(true);
       this.tileSprite.setVisible(true);
     }
+  }
+
+  private setButtonsInteractive(): void {
+    this.doneButton.setInteractive();
+    this.done.setInteractive();
+  }
+
+  private removeButtonsInteractive(): void {
+    this.doneButton.removeInteractive();
+    this.done.removeInteractive();
   }
 }
