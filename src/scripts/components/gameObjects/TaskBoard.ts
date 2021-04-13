@@ -18,7 +18,6 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
   public taskStatus: number;
   public currentTaskProgress: number;
   public taskIcon: Phaser.GameObjects.Sprite;
-  public tileSprite: Phaser.GameObjects.TileSprite;
   public star: Phaser.GameObjects.Sprite;
   public doneText: Phaser.GameObjects.Text;
   public taskText: Phaser.GameObjects.Text;
@@ -79,11 +78,6 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
 
   private createElements(): void {
     this.taskIcon = this.scene.add.sprite(0, 0, ' ')
-      .setVisible(false);
-
-    this.tileSprite = this.scene.add.tileSprite(0, 0, 0, 0, 'modal')
-      .setInteractive()
-      .setOrigin(0)
       .setVisible(false);
 
     this.star = this.scene.add.sprite(0, 0, 'star')
@@ -256,6 +250,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
         this
           .setPosition(30, this.scene.height - 190 - height)
           .setDisplaySize(660, height)
+          .removeAllListeners()
           .setTint(0xFFEBC5);
 
         this.taskIcon
@@ -267,12 +262,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
 
         this.star.setPosition(630, this.scene.height - 190 - height / 2);
 
-        this.tileSprite
-          .removeAllListeners()
-          .setPosition(30, this.scene.height - 190 - height)
-          .setDisplaySize(660, height);
-
-        this.scene.click(this.tileSprite, () => {
+        this.scene.click(this, () => {
           this.scene.clickTaskBoard(task);
         });
       
@@ -293,7 +283,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
           .strokePath()
           .setDepth(3);
           
-        this.listButton.setPosition(this.tileSprite.getBounds().right - this.listButton.width / 2, this.tileSprite.getBounds().top - this.listButton.height / 2 + 10)
+        this.listButton.setPosition(this.getBounds().right - this.listButton.width / 2, this.getBounds().top - this.listButton.height / 2 + 10)
 
         this.scene.click(this.listButton, () => {
           if (!this.listMoving) this.toggleList();
@@ -340,6 +330,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
         this
           .setPosition(30, this.positionY - 190 - height)
           .setDisplaySize(660, height)
+          .removeAllListeners()
           .setTint(0xFFEBC5);
         
         this.taskIcon
@@ -367,16 +358,12 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
           this.createOldBoard(task);
         });
       
-        this.tileSprite
-          .removeAllListeners()
-          .setPosition(30, this.scene.height - 190 - height)
-          .setDisplaySize(660, height);
-
         this.taskProgress?.clear();
       } else if (this.status === 3 && task) {
         this
           .setPosition(30, this.positionY - 300)
           .setDisplaySize(660, 110)
+          .removeAllListeners()
           .setTint(0xFFEBC5);
       
         this.doneButton.setPosition(this.scene.cameras.main.centerX, this.positionY - 245);
@@ -392,11 +379,6 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
           this.scene.game.scene.keys[this.scene.state.farm].nextPart();
         });
         
-        this.tileSprite
-          .removeAllListeners()
-          .setPosition(30, this.positionY - 300)
-          .setDisplaySize(660, 110);
-
         this.taskProgress?.clear();
       }
           
@@ -404,16 +386,11 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
 
         this
           .setPosition( 30, this.scene.height - 300)
+          .removeAllListeners()
           .setDisplaySize(660, 110)
           .setTint(0xFFEBC5);
       
         this.lastPart.setPosition(this.scene.cameras.main.centerX, this.scene.height - 245);
-
-        this.tileSprite
-          .removeAllListeners()
-          .setPosition(30, this.positionY - 300)
-          .setDisplaySize(660, 110);
-
         this.taskProgress?.clear();
       }
 
@@ -447,7 +424,6 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       targets: [
         this, 
         this.taskIcon,
-        this.tileSprite,
         this.star,
         this.doneText,
         this.taskText,
@@ -494,7 +470,6 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
     const dYanim: number = 250;
     this.setY(this.y + dYanim);
     this.taskIcon.setY(this.taskIcon.y + dYanim);
-    this.tileSprite.setY(this.tileSprite.y + dYanim);
     this.star.setY(this.star.y + dYanim);
     this.doneText.setY(this.doneText.y + dYanim);
     this.taskText.setY(this.taskText.y + dYanim);
@@ -518,7 +493,6 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       targets: [
         this, 
         this.taskIcon,
-        this.tileSprite,
         this.star,
         this.doneText,
         this.taskText,
@@ -597,7 +571,6 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
     this.hideListButton();
     this.setVisible(false);
     this.taskIcon?.setVisible(false);
-    this.tileSprite?.setVisible(false);
     this.star?.setVisible(false);
     this.doneText?.setVisible(false);
     this.taskText?.setVisible(false);
@@ -624,7 +597,6 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       this.setVisible(true);
       this.star?.setVisible(true);
       this.taskIcon?.setVisible(true);
-      this.tileSprite?.setVisible(true);
       this.doneText?.setVisible(true);
       this.taskText?.setVisible(true);
       this.taskProgress?.setVisible(true);
@@ -638,16 +610,13 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       this.taskIcon.setVisible(true);
       this.done.setVisible(true);
       this.takeText.setVisible(true);
-      this.tileSprite.setVisible(true);
     } else if (this.status === 3) {
       this.setVisible(true);
       this.doneButton.setVisible(true);
       this.doneButtonText.setVisible(true);
-      this.tileSprite.setVisible(true);
     } else if (this.status === 4) {
       this.setVisible(true);
       this.lastPart.setVisible(true);
-      this.tileSprite.setVisible(true);
     }
   }
 
@@ -804,7 +773,6 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
     })
   }
   
-
   private toggleList(): void {
     this.listMoving = true;
     if (!this.listIsOpen) {
@@ -855,15 +823,9 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
   }
 
   private tickListTimer(): void {
-
-    if (this.listIsOpen) {
-      this.listTime++;
-    }
-    if (this.listTime > 3 && !this.listMoving) {
-      this.closeTaskListAnimation();
-    }
+    if (this.listIsOpen) this.listTime++;
+    if (this.listTime > 3 && !this.listMoving) this.closeTaskListAnimation();
   }
-
 
   private hideTaskListElements(): void {
     this.closeTaskListAnimation();
