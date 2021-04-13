@@ -2,6 +2,7 @@ import Scrolling from '../../libs/Scrolling';
 import Cave from '../../components/gameObjects/Cave';
 import CowSprite from '../../components/Animal/CowSprite';
 import CowGroup from '../../components/AnimalGroup/CowGroup';
+import Territory from './../../components/Territories/Territory';
 
 function world(): void {
 
@@ -125,191 +126,30 @@ function world(): void {
 
     }
 
-    let territory = this.territories.create(x, y, type);
-    territory.setOrigin(0, 0);
-    territory.setDepth(y);
-    territory._id = data._id;
-    territory.block = data.block;
-    territory.position = data.position;
-    territory.type = data.type;
-    territory.volume = data.volume;
-    territory.improve = data.improve;
-    territory.money = data.money;
+    let territory: Territory = new Territory(this, x, y, type, data);
 
-    // заборы
     let topBorder: number = 1;
     let bottomBorder: number = 1;
 
-    if (data.position === 1) {
+    if (territory.position === 1) {
       topBorder = 1;
       bottomBorder = 3;
-    } else if (data.position === 2) {
+    } else if (territory.position === 2) {
       topBorder = 2;
       bottomBorder = 1;
-    } else if (data.position === 3) {
+    } else if (territory.position === 3) {
       topBorder = 3;
       bottomBorder = 2;
     }
 
-    territory.borderTop = this.add.sprite(territory.x, territory.y + 15, 'cow-horizontal-border-' + topBorder)
-      .setOrigin(0, 1)
-      .setDepth(territory.y)
-      .setVisible(false);
-    
-    territory.borderLeft = this.add.sprite(territory.x, territory.y, 'cow-vertical-border')
-      .setOrigin(0, 0)
-      .setDepth(territory.y)
-      .setVisible(false);
+    territory.createBorders(topBorder, bottomBorder)
+    territory.createForest(forest);
 
-    territory.borderRight = this.add.sprite(territory.x + 240, territory.y, 'cow-vertical-border')
-      .setOrigin(1, 0)
-      .setDepth(territory.y)
-      .setVisible(false);
+    territory.createMetgingZone();
 
-    territory.borderBottom = this.add.sprite(territory.x, territory.y + 240, 'cow-horizontal-border-' + bottomBorder)
-      .setOrigin(0, 1)
-      .setDepth(territory.y + 240)
-      .setVisible(false);
-
-    if (data.type === 0) {
-
-      let x: number = territory.x + 120;
-      let y: number = territory.y + 120;
-
-      let unlock: number = this.state.cowSettings.territoriesCowPrice.find((data: IterritoriesPrice) => data.block === territory.block && data.position === territory.position).unlock;
-
-      territory.forest = this.add.image(territory.x + 120, territory.y + 240, 'cow-forest-' + forest)
-        .setOrigin(0.5, 1)
-        .setDepth(territory.y + 1);
-
-      if (unlock > this.state.userCow.part) {
-
-        territory.lock_image = this.add.image(x, y, 'lock-territory').setDepth(territory.y + 2);
-        territory.lock_text = this.add.text(x, y - 37, this.state.lang.part + ' ' + unlock, {
-          font: '26px Shadow',
-          color: '#ECDFDF'
-        }).setOrigin(0.5, 0.5).setDepth(territory.y + 2);
-
-      }
-
-    }
-
-    if (data.type === 4) {
-
-      territory.merging = [];
-      territory.mergingCounter = 0;
-      // territory.y += 16
-      // territory.scaleY = 0.94
-
-      this.add.image(x, y - 35, 'cow-tent').setDepth(y).setOrigin(0, 0);
-      
-      let topZone: Phaser.GameObjects.Zone = this.add.zone(x + 120, y + 45, 300, 145).setDropZone(undefined, () => {});
-      topZone.type = 'top';
-
-      // let graphics1 = this.add.graphics().setDepth(territory.y * 5);
-      // graphics1.lineStyle(2, 0xffff00);
-      // graphics1.strokeRect(topZone.x - topZone.input.hitArea.width / 2, topZone.y - topZone.input.hitArea.height / 2, topZone.input.hitArea.width, topZone.input.hitArea.height);
-
-      
-      let bottomZone: Phaser.GameObjects.Zone = this.add.zone(x + 120, y + 190, 300, 145).setDropZone(undefined, () => {});
-      bottomZone.type = 'bottom';
-      
-      // let graphics2 = this.add.graphics().setDepth(territory.y * 5);
-      // graphics2.lineStyle(2, 0x00ff00);
-      // graphics2.strokeRect(bottomZone.x - bottomZone.input.hitArea.width / 2, bottomZone.y - bottomZone.input.hitArea.height / 2, bottomZone.input.hitArea.width, bottomZone.input.hitArea.height);
-
-      territory.level = this.add.text(territory.x + 47, territory.y + 196, this.state.userCow.fair, {
-        font: '34px Shadow',
-        color: '#df870a'
-      }).setOrigin(0.5, 0.5).setDepth(y);
-      
-    }
-
-    // Отрисовка хранилища
-    if (data.type === 5) {
-
-      let percent: number = 0;
-      let max: number = this.state.cowSettings.territoriesCowSettings[data.improve - 1].milkStorage;
-  
-      if (data.volume > 0) {
-        percent = data.volume / (max / 100);
-      }
-    
-      switch (data.improve) {
-        case 1:
-          type = 'cow-repository-1-';
-          break;
-        case 2:
-          type = 'cow-repository-2-';
-          break;
-        case 3:
-          type = 'cow-repository-3-';
-          break;
-        case 4:
-          type = 'cow-repository-4-';
-          break;
-      }
-  
-      if (percent < 25) {
-        type += 1;
-      } else if (percent >= 25 && percent < 50) {
-        type += 2;
-      } else if (percent >= 50 && percent < 75) {
-        type += 3;
-      } else {
-        type += 4;
-      }
-
-      let x: number = territory.x + 120;
-      let y: number = territory.y + 240;
-
-      territory.repository = this.add.image(x, y, type)
-        .setDepth(territory.y + 50)
-        .setOrigin(0.5, 1);
-
-    }
-
-    if (data.type === 6) {
-
-      let x: number = territory.x + 120;
-      let y: number = territory.y + 240;
-
-      this.house = this.add.image(x, y, 'cow-house-' + this.state.userCow.part)
-        .setOrigin(0.5, 1)
-        .setDepth(territory.y);
-
-    }
-
-    if (data.type === 7) {
-      let x: number = territory.x + 120;
-      let y: number = territory.y + 240;
-      Cave.create(this, { x, y });
-    }
-
-    this.clickTerritory(territory, (): void => {
-      
-      if (territory.type !== 6 && territory.type !== 7) {
-
-        let modal: Imodal = {
-          type: 1,
-          sysType: 2
-        }
-        this.state.modal = modal;
-        this.state.territory = territory;
-        this.scene.launch('Modal', this.state);
-
-      } else if (territory.type === 6) {
-        
-        this.showTasks();
-
-      } else if (territory.type === 7) {
-        
-        this.takeDiamondCow();
-
-      }
-
-    });
-
+    territory.createRepositorySprite();
+    territory.createHouseSprite();
+    territory.createCave();
   });
 
   this.buildBorders();

@@ -1,6 +1,7 @@
 import { randomString } from '../../general/basic';
 import SpeechBubble from '../../components/animations/SpeechBuble';
 import CowSprite from './../../components/Animal/CowSprite';
+import Territory from './../../components/Territories/Territory';
 
 // расчет баланса фермы
 function balance(): Ibalance {
@@ -181,10 +182,146 @@ function takeDiamondCow(): void {
   }
 }
 
+function buildBorders(): void {
+  
+  for (let i in this.territories.children.entries) {
+    const territory: Territory = this.territories.children.entries[i];
+    if (territory.territoryType === 7) {
+      territory.borderTop.setVisible(true);
+      territory.borderLeft.setVisible(true);
+      const bottomTer: Territory = this.territories.children.entries.find((data: any) => data.block === 2 && data.position === 1)
+      if (bottomTer.territoryType === 0) territory.borderBottom.setVisible(true);
+      else territory.borderBottom.setVisible(false);
+
+    }
+
+    if (territory.territoryType === 6) {
+      territory.borderTop.setVisible(true);
+    }
+
+    if (territory.territoryType === 1 ||
+      territory.territoryType === 2 ||
+      territory.territoryType === 3 ||
+      territory.territoryType === 5) {
+
+      if (territory.position === 1) {
+        territory.borderLeft.setVisible(true);
+      }
+
+      if (territory.position === 3) {
+        territory.borderRight.setVisible(true);
+      }
+      
+      if (territory.block !== 8) {
+        const topTer: Territory = this.territories.children.entries.find((data: any) => data.block === territory.block - 1 && data.position === territory.position);
+        const bottomTer: Territory = this.territories.children.entries.find((data: any) => data.block === territory.block + 1 && data.position === territory.position);
+        if (topTer !== undefined && topTer.territoryType === 0) {
+          territory.borderTop.setVisible(true);
+        } else {
+          territory.borderTop.setVisible(false);
+        }
+        if (bottomTer.territoryType === 1 ||
+          bottomTer.territoryType === 2 ||
+          bottomTer.territoryType === 3 ||
+          bottomTer.territoryType === 5) {
+          territory.borderBottom.setVisible(false);
+        } else {
+          territory.borderBottom.setVisible(true);
+        }
+
+        if (territory.position === 1) {
+          const centerTer: Territory = this.territories.children.entries.find((data: any) => data.block === territory.block && data.position === 2);
+          if (centerTer.territoryType === 0) {
+            territory.borderRight.setVisible(true);
+          } else {
+            territory.borderRight.setVisible(false);
+          }
+        }
+        if (territory.position === 2) {
+          const leftTer: Territory = this.territories.children.entries.find((data: any) => data.block === territory.block && data.position === 1);
+          const rightTer: Territory = this.territories.children.entries.find((data: any) => data.block === territory.block && data.position === 3);
+          if (leftTer.territoryType === 0) {
+            territory.borderLeft.setVisible(true);
+          } else {
+            territory.borderLeft.setVisible(false);
+          }
+          if (rightTer.territoryType === 0) {
+            territory.borderRight.setVisible(true);
+          } else {
+            territory.borderRight.setVisible(false);
+          }
+        }
+        if (territory.position === 3) {
+          const centerTer: Territory = this.territories.children.entries.find((data: any) => data.block === territory.block && data.position === 2);
+          if (centerTer.territoryType === 0) {
+            territory.borderLeft.setVisible(true);
+          } else {
+            territory.borderLeft.setVisible(false);
+          }
+        }
+      } else {
+        territory.borderBottom.setVisible(true);
+      }
+    }
+  }
+}
+
+function collisions(): void {
+
+  this.physics.add.overlap(this.animalGroup, this.territories, (animal: CowSprite, territory: Territory): void => {
+    if (territory.territoryType !== 2 &&
+      territory.territoryType !== 3 &&
+      !animal.drag &&
+      !animal.aim) {
+
+      let halfWidth: number = Math.ceil(animal.width / 2) + 1;
+      let halfHeight: number = Math.ceil(animal.height / 2) + 1;
+
+      let territory: Territory = this.currentTerritory(animal.x, animal.y);
+      if (territory === undefined) {
+        animal.teleportation();
+
+      } else {
+
+        if (territory.territoryType === 2 || territory.territoryType === 3) {
+
+          let minX: number = (territory.position - 1) * this.height + halfWidth;
+          let maxX: number = territory.position * this.height - halfWidth;
+        
+          let mixY: number = (territory.block - 1) * this.height + halfHeight + this.topIndent;
+          let maxY: number = territory.block * this.height - halfHeight + this.topIndent;
+
+          let x: number = Phaser.Math.Between(minX, maxX);
+          let y: number = Phaser.Math.Between(mixY, maxY);
+          animal.setAim(x, y);
+        }
+      }
+    }
+  }, null, this);
+
+  this.physics.add.overlap(this.animalGroup, this.animalGroup, (animal1: CowSprite, animal2: CowSprite): void => {
+
+    if (!animal1.drag &&
+      !animal2.drag &&
+      animal1.collision === 0 &&
+      animal1.moving &&
+      !animal1.aim) {
+      let territory: Territory = this.currentTerritory(animal1.x, animal1.y);
+      
+      if (territory.territoryType !== 4) {
+        animal1.setReverse();
+      }
+    }
+  }, null, this);
+}
+
+
 
 export {
   balance,
   cowPrice,
   maxBreedForBuy,
-  takeDiamondCow
+  takeDiamondCow,
+  buildBorders,
+  collisions
 }

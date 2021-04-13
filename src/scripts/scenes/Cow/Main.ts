@@ -1,5 +1,4 @@
 import Scrolling from '../../libs/Scrolling';
-import collisions from '../../general/collisions';
 import world from './world';
 import drag from './drag';
 import interval from './interval';
@@ -60,7 +59,6 @@ import {
   improveTerritory,
   exchangeTerritory,
   deleteTerritoriesLocks,
-  buildBorders,
   checkExchangeRepository,
   buyTerritory
 } from '../../general/territories';
@@ -81,7 +79,9 @@ import {
   balance,
   cowPrice,
   maxBreedForBuy,
-  takeDiamondCow
+  takeDiamondCow,
+  buildBorders,
+  collisions,
 } from './basic';
 import { 
   showTutorial,

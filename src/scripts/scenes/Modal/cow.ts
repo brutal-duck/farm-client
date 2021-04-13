@@ -38,7 +38,7 @@ function cowFair(): void {
         this.clickModalBtn(button, (): void => {
           this.scene.stop();
           this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-          this.game.scene.keys[this.state.farm].fairLevelUp();
+          this.game.scene.keys[this.state.farm].territories.children.entries.find(el => el.territoryType === 4).fairLevelUp();
         });
 
       } else {
@@ -51,7 +51,7 @@ function cowFair(): void {
         this.clickModalBtn(button, (): void => {
           this.scene.stop();
           this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-          this.game.scene.keys[this.state.farm].fairLevelUp();
+          this.game.scene.keys[this.state.farm].territories.children.entries.find(el => el.territoryType === 4).fairLevelUp();
         });
         
       }
@@ -90,13 +90,13 @@ function cow(): void {
 
   this.textHeader.setText(this.state.lang.cow);
 
-  if (this.state.animal.type !== 0) {
+  if (this.state.animal.breed !== 0) {
 
-    let icon: string = 'cow' + this.state.animal.type;
+    let icon: string = 'cow' + this.state.animal.breed;
     let sprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 145, icon);
-    sprite.anims.play('cow-drag' + this.state.animal.type, true);
+    sprite.anims.play('cow-drag' + this.state.animal.breed, true);
 
-    let breed: string = this.state.lang['cowBreed' + this.state.animal.type];
+    let breed: string = this.state.lang['cowBreed' + this.state.animal.breed];
     this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 35, breed, {
       font: '30px Bip',
       color: '#925C28',
@@ -148,11 +148,11 @@ function cow(): void {
 
   } else {
 
-    let icon: string = 'cow' + this.state.animal.type;
+    let icon: string = 'cow' + this.state.animal.breed;
     let sprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 85, icon);
     sprite.anims.play('cow-drag0', true);
 
-    let breed: string = this.state.lang['cowBreed' + this.state.animal.type];
+    let breed: string = this.state.lang['cowBreed' + this.state.animal.breed];
     this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 25, breed, {
       font: '30px Bip',
       color: '#925C28',
@@ -275,40 +275,33 @@ function cowPasture(): void {
 // окно поилки
 function cowWater(): void {
 
-  let water: string = this.state.lang.water.replace('$1', this.state.territory.improve);
+  const water: string = this.state.lang.water.replace('$1', this.state.territory.improve);
   this.textHeader.setText(water);
 
-  let part: Ipart = this.state.cowSettings.cowParts.find((data: Ipart) => data.sort === this.state.userCow.part);
-
-  let exchange = {
-    icon: 'cowCoin',
-    text: shortNum(part.improve_territory_2)
+  let improve: number = this.state.territory.improve + 1;
+  if (improve > this.state.cowSettings.territoriesCowSettings.length) {
+    improve = this.state.cowSettings.territoriesCowSettings.length;
   }
-
+  let settings: IterritoriesCowSettings = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === improve);
+  
+  const exchange = {
+    icon: 'cowCoin',
+    text: shortNum(settings.improvePrice)
+  }
   if (this.state.territory.improve < this.state.cowSettings.territoriesCowSettings.length) {
-
-    let price: number;
-
-    let lock: number = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === this.state.territory.improve + 1).unlock_improve;
     
-    if (this.state.userCow.part >= lock) {
+    if (this.state.userCow.part >= settings.unlock_improve) {
 
-      if (this.state.territory.improve === 1) {
-        price = part.improve_territory_2;
-      } else if (this.state.territory.improve === 2) {
-        price = part.improve_territory_3;
-      } else {
-        price = part.improve_territory_4;
-      }
+      const price: number = settings.improvePrice;
 
-      let improve = {
+      const improve = {
         icon: 'cowCoin',
         text: shortNum(price)
       }
 
-      let improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.improve + 1);
+      const improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.improve + 1);
 
-      let button = this.bigButton('blue', 'left', -60, improveText, improve);
+      const button = this.bigButton('blue', 'left', -60, improveText, improve);
       this.clickModalBtn(button, (): void => {
         this.scene.stop();
         this.game.scene.keys[this.state.farm].scrolling.wheel = true;
@@ -317,12 +310,12 @@ function cowWater(): void {
 
     } else {
       
-      let improve = {
+      const improve = {
         icon: 'lock',
-        text: this.state.lang.shortPart + ' ' + lock
+        text: this.state.lang.shortPart + ' ' + settings.unlock_improve
       }
 
-      let improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.improve + 1);
+      const improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.improve + 1);
 
       this.bigButton('grey', 'left', -60, improveText, improve);
 
@@ -346,14 +339,14 @@ function cowWater(): void {
 
   } else {
 
-    let button1 = this.bigButton('green', 'left', -15, this.state.lang.exchangeGrass, exchange);
+    const button1 = this.bigButton('green', 'left', -15, this.state.lang.exchangeGrass, exchange);
     this.clickModalBtn(button1, (): void => {
       this.scene.stop();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
       this.game.scene.keys[this.state.farm].confirmExchangeTerritory(2);
     });
 
-    let button2 = this.bigButton('orange', 'left', 75, this.state.lang.exchangeRepository, exchange);
+    const button2 = this.bigButton('orange', 'left', 75, this.state.lang.exchangeRepository, exchange);
     this.clickModalBtn(button2, (): void => {
       this.scene.stop();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
@@ -413,53 +406,43 @@ function boughtCowLand(): void {
 
 // земля для покупки
 function buyCowTerritory(): void {
-  
   this.textHeader.setText(this.state.lang.buyTerritory);
 
-  let settings: IterritoriesPrice = this.state.cowSettings.territoriesCowPrice.find((data: IterritoriesPrice) => data.block === this.state.territory.block && data.position === this.state.territory.position);
+  const settings: IterritoriesPrice = this.state.cowSettings.territoriesCowPrice.find((data: IterritoriesPrice) => {
+    return data.block === this.state.territory.block && data.position === this.state.territory.position;
+  });
 
   if (this.state.userCow.part >= settings.unlock) {
-
     // 70% от суммы покупки
-    let price = Math.round((settings.price / 100) * 70);
-
-    let right = {
+    const price = Math.round((settings.price / 100) * 70);
+    const right = {
       icon: 'cowCoin',
       text: shortNum(price)
     }
-  
-    let button = this.bigButton('yellow', 'left', 20, this.state.lang.buyTerritory, right);
+    const button = this.bigButton('yellow', 'left', 20, this.state.lang.buyTerritory, right);
     this.clickModalBtn(button, (): void => {
       this.scene.stop();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].buyTerritory();
+      this.state.territory.buyTerritory();
     });
 
   } else {
-
-    let right = {
+    const right = {
       icon: 'lock',
       text: this.state.lang.shortPart + ' ' + settings.unlock
     }
-  
     this.bigButton('grey', 'left', 20, this.state.lang.buyTerritory, right);
-
   }
-  
   this.resizeWindow(130);
-
 }
 
 
 // окно конвертора куриной фермы
 function cowConvertor(): void {
-
   this.textHeader.setText(this.state.lang.exchange);
-
   if (this.state.convertor.type === 1) {
 
     this.resizeWindow(300);
-
     let count: number | string = shortNum(this.state.convertor.count);
     let length: number = String(count).length * 10 + 15;
 
@@ -598,7 +581,7 @@ function confirmCowExchangeTerritory(): void {
 
   let repository: string = '';
 
-  if (this.state.territory.type === 5) {
+  if (this.state.territory.territoryType === 5) {
     repository = ' ' + this.state.lang.MilkWillBeSold;
   }
 
@@ -621,7 +604,7 @@ function confirmCowExchangeTerritory(): void {
     this.clickModalBtn(confirm, (): void => {
       this.scene.stop();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].exchangeTerritory();
+      this.state.territory.exchangeTerritory();
     });
 
   } else if (this.state.exchangeTerritory === 3) {
@@ -630,7 +613,7 @@ function confirmCowExchangeTerritory(): void {
     this.clickModalBtn(confirm, (): void => {
       this.scene.stop();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].exchangeTerritory();
+      this.state.territory.exchangeTerritory();
     });
 
   } else if (this.state.exchangeTerritory === 5) {
@@ -639,7 +622,7 @@ function confirmCowExchangeTerritory(): void {
     this.clickModalBtn(confirm, (): void => {
       this.scene.stop();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].exchangeTerritory();
+      this.state.territory.exchangeTerritory();
     });
 
   }
@@ -653,11 +636,15 @@ function cowMilkRepository(): void {
   let repository: string = this.state.lang.repository.replace('$1', this.state.territory.improve);
   this.textHeader.setText(repository);
 
-  let part: Ipart = this.state.cowSettings.cowParts.find((data: Ipart) => data.sort === this.state.userCow.part);
-
+  let improve: number = this.state.territory.improve + 1;
+  if (improve > this.state.cowSettings.territoriesCowSettings.length) {
+    improve = this.state.cowSettings.territoriesCowSettings.length;
+  }
+  let settings: IterritoriesCowSettings = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === improve);
+  
   let exchange = {
     icon: 'cowCoin',
-    text: shortNum(part.improve_territory_2)
+    text: shortNum(settings.improvePrice)
   }
 
   let milkMoney = {
@@ -667,18 +654,8 @@ function cowMilkRepository(): void {
 
   if (this.state.territory.improve < this.state.cowSettings.territoriesCowSettings.length) {
 
-    let price: number;
-    let lock: number = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === this.state.territory.improve + 1).unlock_improve;
-    
-    if (this.state.userCow.part >= lock) {
-
-      if (this.state.territory.improve === 1) {
-        price = part.improve_territory_2;
-      } else if (this.state.territory.improve === 2) {
-        price = part.improve_territory_3;
-      } else {
-        price = part.improve_territory_4;
-      }
+    if (this.state.userCow.part >= settings.unlock_improve) {
+      const price: number = settings.improvePrice;
 
       let improve = {
         icon: 'cowCoin',
@@ -696,7 +673,7 @@ function cowMilkRepository(): void {
       
       let improve = {
         icon: 'lock',
-        text: this.state.lang.shortPart + ' ' + lock
+        text: this.state.lang.shortPart + ' ' + settings.unlock_improve
       }
       let improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.improve + 1);
       this.bigButton('grey', 'left', 110, improveText, improve);

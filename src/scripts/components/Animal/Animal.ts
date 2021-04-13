@@ -2,6 +2,7 @@ import Cow from '../../scenes/Cow/Main';
 import Firework from '../animations/Firework';
 import Sheep from '../../scenes/Sheep/Main';
 import Chicken from '../../scenes/Chicken/Main';
+import Territory from './../Territories/Territory';
 
 export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
   public type: string;
@@ -192,21 +193,21 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
   public setBrain(): void {
       // если не перетаскиваем
     if (!this.drag) {
-      let territory = this.scene.currentTerritory(this.x, this.y);
+      let territory: Territory = this.scene.currentTerritory(this.x, this.y);
       if (territory) {
 
-        if (territory.type !== 4 || this.aim) {
+        if (territory.territoryType !== 4 || this.aim) {
           
           // проверка, не находится ли за бортом
-          if (territory.type !== 2 && territory.type !== 3 && territory.type !== 4) {
+          if (territory.territoryType !== 2 && territory.territoryType !== 3 && territory.territoryType !== 4) {
 
-            if (territory.type === 0 && this.expel) {
+            if (territory.territoryType === 0 && this.expel) {
               this.aim = false;
               this.spread = false;
               this.moving = false;
               this.setVelocity(0, 0);
               this.body.reset(this.x, this.y);
-            } else this.scene.teleportation(this);
+            } else this.teleportation();
 
           }
 
@@ -293,13 +294,13 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
         }
 
       } else {
-        this.scene.teleportation(this)
+        this.teleportation()
       };
 
       this.setDepth(this.y + Math.round((this.height / 2) + 1)); // z-index
 
       // уход с ярмарки, если там не нужно быть
-      if (territory.type === 4 && !this.merging && !this.aim) {
+      if (territory.territoryType === 4 && !this.merging && !this.aim) {
         this.merging = false;
         let randomX: number = Phaser.Math.Between(territory.x + 40, territory.x + 200);
         let randomY: number = Phaser.Math.Between(territory.y + 280, territory.y + 440);
@@ -330,8 +331,9 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
   // берем только нужные территории
     for (let i in this.scene.territories.children.entries) {
       
-      const territory: any = this.scene.territories.children.entries[i];
-      if (territory.type === 2 || territory.type === 3) {
+      //@ts-ignore
+      const territory: Territory = this.scene.territories.children.entries[i];
+      if (territory.territoryType === 2 || territory.territoryType === 3) {
         territories.push({
           _id: territory._id,
           block: territory.block,
@@ -348,8 +350,7 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
 
   public teleportation(): void {
     const territories: any[] = this.openedTerritory;
-
-    // смотрим, где какая корова сидит
+    // смотрим, где какая корова сидит  
     // @ts-ignore Убрать игнор, когда animalGroup появится во всех сценах
     for (let i in this.scene.animalGroup.children.entries) {
     // @ts-ignore Убрать игнор, когда animalGroup появится во всех сценах
@@ -373,7 +374,6 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
 
     let halfWidth: number = Math.ceil(this.width / 2) + 1;
     let halfHeight: number = Math.ceil(this.height / 2) + 1;
-
     let minX: number = (territories[0].position - 1) * this.scene.height + halfWidth;
     let maxX: number = territories[0].position * this.scene.height - halfWidth;
 

@@ -409,6 +409,39 @@ class Modal extends Phaser.Scene {
       
     }
 
+    if (this.state.farm === 'Cow' && this.state.territory?.territoryType === 5 && this.state.modal?.sysType === 2) {
+
+      const max: number = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === this.state.territory.improve).milkStorage;
+      const count: string = this.state.lang.countMilk;
+      let percent: number = 0;
+
+      if (this.state.territory.volume > 0) {
+        percent = this.state.territory.volume / (max / 100);
+      }
+      
+      let width: number = Math.round(444 / 100 * percent);
+
+      if (this.progressBar.displayWidth !== width) {
+        this.progressBar.setDisplaySize(width, 16);
+      }
+
+      if (this.progressButton.text1.text !== shortNum(this.state.territory.volume)) {
+        this.progressButton.text1.setText(shortNum(this.state.territory.volume));
+        this.progressButton.img1.x = 555 - this.progressButton.text1.displayWidth;
+      }
+
+      let volume: string = count + ': ' + this.state.territory.volume + ' / ' + max;
+      if (this.progressText.text !== volume) this.progressText.setText(volume);
+
+      if (this.state[`user${this.state.farm}`].feedBoostTime > 0) {
+        this.feedBoostText?.setText(this.state.lang.feedBoostCounterText + this.shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang));
+        this.feedBoostText?.setVisible(true);
+      } else {
+        this.feedBoostText?.setVisible(false);
+      }
+      
+    }
+
 
     // Обновление таблицы рейтингов евента
     if (this.state.progress.event.updateRaitings && this.state.modal.type === 11) {

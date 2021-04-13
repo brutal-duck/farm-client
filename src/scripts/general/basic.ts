@@ -461,8 +461,7 @@ function donePart(): void {
   this.time.addEvent({ delay: 200, callback: (): void => {
 
     this.house.setTexture(this.state.farm.toLowerCase() + '-house-' + user.part);
-    let house: Phaser.GameObjects.Sprite = this.territories.children.entries.find((data: any) => data.type === 6);
-    Stars.create(this, { x: house.x + 120, y: house.y + 120 });
+    Stars.create(this, { x: this.house.x + 120, y: this.house.y + 120 });
     this.checkDoneTasks();
 
   }, callbackScope: this, loop: false });

@@ -386,10 +386,8 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
 
 // продать яйца из хранилища
 function sellMilk(): void {
-
   if (this.state.territory) {
-
-    if (this.state.territory.type === 5 && this.state.territory.volume > 0) {
+    if (this.state.territory.territoryType === 5 && this.state.territory.volume > 0) {
 
       this.tryTask(20, 0);
 
@@ -401,11 +399,8 @@ function sellMilk(): void {
         x: this.state.territory.x + 120,
         y: this.state.territory.y + 120
       });
-
     }
-
   }
-
 }
 
 // подтверждение продажи коровы

@@ -251,7 +251,7 @@ function chickenTerritory(): void {
 // окно коровьей территории
 function cowTerritory(): void {
   
-  switch (this.state.territory.type) {
+  switch (this.state.territory.territoryType) {
 
     case 0: // территория для покупки
       this.buyCowTerritory();
