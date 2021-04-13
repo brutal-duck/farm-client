@@ -226,6 +226,7 @@ const fireworkBg: any = require("./../../../assets/images/animations/fireworkBg.
 let loadingSpinner: any = require('./../../../assets/images/animations/loading-spinner.png');
 let farmer: any = require("./../../../assets/images/farmer.png");
 let whitePixel: any = require("./../../../assets/images/white-pixel.jpg");
+let scrollArrow: any = require("./../../../assets/images/scroll-arrow.png");
 
 class ChickenPreload extends Phaser.Scene {
 
@@ -487,6 +488,7 @@ class ChickenPreload extends Phaser.Scene {
     this.load.image('loading-spinner', loadingSpinner);
     this.load.image('farmer', farmer);
     this.load.image('white-pixel', whitePixel);
+    this.load.image('scroll-arrow', scrollArrow);
 
     
   }
