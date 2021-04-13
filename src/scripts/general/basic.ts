@@ -1357,7 +1357,7 @@ function autoporgressCollectorTime(): void {
 }
 
 function remainderSellResource(): void {
-  const delay: number = 10;
+  const delay: number = 30;
   const remainderMaxPart: number = 9;
   const remainderPercent: number = 0.6;
   if (this.state[`user${this.state.farm}`].part <= remainderMaxPart) {
