@@ -187,32 +187,24 @@ function cow(): void {
 
 // окно пастбища
 function cowPasture(): void {
-
   let pasture: string = this.state.lang.pasture.replace('$1', this.state.territory.improve);
   this.textHeader.setText(pasture);
-
-  let part: Ipart = this.state.cowSettings.cowParts.find((data: Ipart) => data.sort === this.state.userCow.part);
-
+  
+  let improve: number = this.state.territory.improve + 1;
+  if (improve > this.state.cowSettings.territoriesCowSettings.length) {
+    improve = this.state.cowSettings.territoriesCowSettings.length;
+  }
+  let settings: IterritoriesCowSettings = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === improve);
+  
   let exchange = {
     icon: 'cowCoin',
-    text: shortNum(part.improve_territory_2)
+    text: shortNum(settings.improvePrice)
   }
 
   if (this.state.territory.improve < this.state.cowSettings.territoriesCowSettings.length) {
 
-    let price: number;
-
-    let lock: number = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === this.state.territory.improve + 1).unlock_improve;
-    
-    if (this.state.userCow.part >= lock) {
-
-      if (this.state.territory.improve === 1) {
-        price = part.improve_territory_2;
-      } else if (this.state.territory.improve === 2) {
-        price = part.improve_territory_3;
-      } else {
-        price = part.improve_territory_4;
-      }
+    if (this.state.userCow.part >= settings.unlock_improve) {
+      const price = settings.improvePrice;
 
       let improve = {
         icon: 'cowCoin',
@@ -232,7 +224,7 @@ function cowPasture(): void {
       
       let improve = {
         icon: 'lock',
-        text: this.state.lang.shortPart + ' ' + lock
+        text: this.state.lang.shortPart + ' ' + settings.unlock_improve
       }
 
       let improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.improve + 1);

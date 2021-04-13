@@ -574,7 +574,12 @@ class CowPreload extends Phaser.Scene {
           cowDiamondsTime: response.data.cowDiamondsTime,
           feedBoostPrice: response.data.feedBoostPrice,
         }
+        cowSettings.territoriesCowSettings[0].improvePrice = 0;
+        cowSettings.territoriesCowSettings[1].improvePrice = 7000;
+        cowSettings.territoriesCowSettings[2].improvePrice = 253000;
+        cowSettings.territoriesCowSettings[3].improvePrice = 6432000;
 
+        console.log(cowSettings.territoriesCowSettings)
         this.state.cowSettings = cowSettings;
 
         const cow: Icow[] = [];

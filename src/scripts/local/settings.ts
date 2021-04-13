@@ -278,10 +278,10 @@ let cowSettings: IcowSettings = {
     { block: 8, position: 3, price: 733054000, unlock: 16 }
   ],
   territoriesCowSettings: [
-    { improve: 1, regeneration: 11, countMilk: 5, unlock_improve: 1, milkStorage: 200 },
-    { improve: 2, regeneration: 22, countMilk: 5, unlock_improve: 2, milkStorage: 700 },
-    { improve: 3, regeneration: 33, countMilk: 5, unlock_improve: 5, milkStorage: 1500 },
-    { improve: 4, regeneration: 44, countMilk: 5, unlock_improve: 8, milkStorage: 4000 }
+    { improve: 1, regeneration: 11, countMilk: 5, unlock_improve: 1, milkStorage: 200, improvePrice: 0 },
+    { improve: 2, regeneration: 22, countMilk: 5, unlock_improve: 2, milkStorage: 700, improvePrice: 7000 },
+    { improve: 3, regeneration: 33, countMilk: 5, unlock_improve: 5, milkStorage: 1500, improvePrice: 253000 },
+    { improve: 4, regeneration: 44, countMilk: 5, unlock_improve: 8, milkStorage: 4000, improvePrice: 6432000 },
   ]
 }
 

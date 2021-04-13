@@ -321,6 +321,7 @@ interface IterritoriesCowSettings {
   countMilk: number;
   unlock_improve: number;
   milkStorage: number;
+  improvePrice: number;
   id?: any;
 }
 interface IterritoriesEventSettings {
