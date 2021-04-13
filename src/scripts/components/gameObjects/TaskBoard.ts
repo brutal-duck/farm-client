@@ -282,8 +282,11 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
           .arc(0, 0, 51, 0, Math.PI * 2)
           .strokePath()
           .setDepth(3);
-          
-        this.listButton.setPosition(this.getBounds().right - this.listButton.width / 2, this.getBounds().top - this.listButton.height / 2 + 10)
+         
+         
+        if (!this.listIsOpen) {
+          this.listButton.setPosition(this.getBounds().right - this.listButton.width / 2, this.getBounds().top - this.listButton.height / 2 + 10);
+        }
 
         this.scene.click(this.listButton, () => {
           if (!this.listMoving) this.toggleList();
@@ -564,6 +567,10 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       !this.isVisibile && checkSheepTutor) {
         this.shownElements();
     } 
+
+    if (!this.listIsOpen) {
+      this.setMainPositionListButton();
+    }
   }
 
   private hideAllElement(): void {
@@ -753,16 +760,12 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
           this.listMoving = false;
           array.forEach(el => {
             el?.destroy();
-          })
+          });
+          this.setMainPositionListButton();
+          this.fadeOutListButton();
         }
       });
       timeline.play();
-    });
-    this.scene.time.addEvent({
-      delay: 300,
-      callback: (): void => {
-        this.moveListButtonButtom();
-      }
     });
     this.scene.time.addEvent({
       delay: 750,
@@ -784,8 +787,17 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
   }
 
   private moveListButtonTop(): void {
-    this.scene.tweens.add({
+    const anim: Phaser.Tweens.Tween = this.scene.tweens.add({
       targets: [ this.listButton ],
+      onUpdate: (): void => {
+        this.listButton.setAlpha(0)
+        if (this.scene.menu.isOpened ||
+          this.scene.scene.isActive('Modal') ||
+          this.scene.scene.isActive('Tutorial')) {
+            this.setMainPositionListButton();
+            anim.stop();
+        }
+      },
       onStart: (): void => {
         this.listButton.setAlpha(0);
       },
@@ -793,32 +805,16 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       duration: 500,
       ease: 'Power1',
       onComplete: (): void => {
-        this.fadeOutListButton()
-      }
-    })
-  }
-
-  private moveListButtonButtom(): void {
-    this.scene.tweens.add({
-      targets: [ this.listButton ],
-      onStart: (): void => {
-        this.listButton.setAlpha(0);
-      },
-      y: `+=${this.listButtondY}`,
-      duration: 500,
-      ease: 'Power1',
-      onComplete: (): void => {
-        this.listButton.setFlipY(false);
         this.fadeOutListButton();
       }
-    });
+    })
   }
 
   private fadeOutListButton(): void {
     this.scene.tweens.add({
       targets: [ this.listButton ],
       alpha: 1,
-      duration: 300,
+      duration: 150,
     });
   }
 
@@ -828,9 +824,18 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
   }
 
   private hideTaskListElements(): void {
-    this.closeTaskListAnimation();
+    if (!this.listMoving) this.closeTaskListAnimation();
+    else {
+      this.listIsOpen = false;
+    }
     this.taskListElements.forEach(array => {
       array.forEach(el => el?.setVisible(false));
     })
+  }
+
+  private setMainPositionListButton(): void {
+    this.listButton.setFlipY(false);
+    this.fadeOutListButton();
+    this.listButton.setPosition(this.getBounds().right - this.listButton.width / 2, this.getBounds().top - this.listButton.height / 2 + 10);
   }
 }
