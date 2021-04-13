@@ -575,8 +575,6 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
   private checkVisibility(): void {
     let checkSheepTutor: boolean = true;
     if (this.scene.state.farm === 'Sheep' && this.scene.state.userSheep.tutorial < 100) checkSheepTutor = false;
-        console.log(this.scene.scene.isActive('Tutorial'))
-        console.log(this.isVisibile)
     if ((this.scene.menu.isOpened ||
       this.scene.scene.isActive('Modal') ||
       this.scene.scene.isActive('Tutorial')) &&
