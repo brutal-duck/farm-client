@@ -10,7 +10,7 @@ function setCollector(): void {
       if (this.state.userCow.collector > 0) {
         for (let i in this.animalGroup.children.entries) {
           let cow: CowSprite = this.animalGroup.children.entries[i];
-          if (cow.milk >= 1000 && cow.breed !== 0) {
+          if (cow.milk >= cow.settings.maxMilkVolume && cow.breed !== 0) {
             this.collectMilk(cow);
             break;
           }

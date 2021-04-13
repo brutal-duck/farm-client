@@ -18,16 +18,8 @@ function balance(): Ibalance {
   for (let i in this.animalGroup.children.entries) {
 
     let cow: CowSprite = this.animalGroup.children.entries[i];
-
-    let breed: number;
-    if (cow.breed === 0) breed = 1;
-    else breed = cow.breed;
-
-    let points: IcowPoints = this.settings.cowSettings.find((item: IcowPoints) => item.breed === breed);
-    
-    grassConsumption += points.eating;
-    waterConsumption += points.drinking;
-
+    grassConsumption += cow.settings.eating;
+    waterConsumption += cow.settings.drinking;
   }
   
   grassConsumption = Math.round(grassConsumption / 2);

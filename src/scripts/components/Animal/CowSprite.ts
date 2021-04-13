@@ -8,6 +8,7 @@ export default class CowSprite extends Animal {
   public milkStatus: Phaser.GameObjects.Sprite;
   public scene: Cow;
   public hornsSprite: Phaser.GameObjects.Sprite;
+  public settings: IcowPoints;
   constructor(scene: Cow, 
     position: Iposition, 
     breed: number,   
@@ -39,6 +40,11 @@ export default class CowSprite extends Animal {
     this.milkStatus = this.scene.add.sprite(this.x, this.y, 'milk-status').setVisible(false);
     if (this.breed === 0) this.createDiamondHorns();
     this.setListeners();
+    if (this.breed !== 0) {
+      this.settings = this.scene.settings.cowSettings.find((item: IcowPoints) => item.breed === this.breed);
+    } else {
+      this.settings = this.scene.settings.cowSettings.find((item: IcowPoints) => item.breed === 1);
+    }
   }
 
   private createDiamondHorns(): void {
@@ -61,7 +67,8 @@ export default class CowSprite extends Animal {
       // this.state.modal = modal;
       // this.state.animal = cow;
       // this.scene.launch('Modal', this.state);
-      if (this.milk >= 900) {
+      const milkLevel: number =(this.settings.maxMilkVolume - 6 * (this.settings.maxMilkVolume / 60));
+      if (this.milk >= milkLevel) {
         this.scene.collectMilk(this, true);
       }
     });
@@ -84,9 +91,9 @@ export default class CowSprite extends Animal {
       let side = 'right';
       if (this.vector === 2 || this.vector === 3 || this.vector === 7 || this.vector === 8) side = 'left';
       let stage: number;
-      if (this.milk <= 200) stage = 1;
-      else if (this.milk > 200 && this.milk <= 600) stage = 2;
-      else if (this.milk > 600 && this.milk <= 900) stage = 3;
+      if (this.milk <= this.settings.maxMilkVolume * 0.2) stage = 1;
+      else if (this.milk > this.settings.maxMilkVolume * 0.2 && this.milk <= this.settings.maxMilkVolume * 0.6) stage = 2;
+      else if (this.milk > this.settings.maxMilkVolume * 0.6 && this.milk <= this.settings.maxMilkVolume * 0.9) stage = 3;
       else stage = 4;
       let dx: number = 10;
       let dy: number = 43;
@@ -114,12 +121,14 @@ export default class CowSprite extends Animal {
   }
 
   private setMilkStatusVisibility(): void {
-    if (this.milk >= 900 && !this.milkStatus.visible) this.milkStatus.setVisible(true);
-    if ((this.milk < 900 || this.drag) && this.milkStatus.visible) this.milkStatus.setVisible(false);
+    const milkLevel: number =(this.settings.maxMilkVolume - 6 * (this.settings.maxMilkVolume / 60));
+    if (this.milk >=  milkLevel && !this.milkStatus.visible) this.milkStatus.setVisible(true);
+    if ((this.milk < milkLevel || this.drag) && this.milkStatus.visible) this.milkStatus.setVisible(false);
   }
 
   public destroy(): void {
     super.destroy();
     this.hornsSprite?.destroy();
+    this.milkStatus?.destroy();
   }
 }

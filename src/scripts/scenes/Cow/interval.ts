@@ -13,6 +13,8 @@ function interval(): void {
   let checkRaiting: boolean = false;
 
   let arrowOnMap: Phaser.GameObjects.Sprite;
+
+  const milkDelay: number = 60;
   
   this.time.addEvent({ delay: 1000, callback: (): void => {
     
@@ -61,67 +63,58 @@ function interval(): void {
     for (let i in this.animalGroup.children.entries) {
 
       let cow: CowSprite = this.animalGroup.children.entries[i];
-      
-      let breed: number;
-
-      if (cow.breed === 0) breed = 1;
-      else breed = cow.breed;
-      
-      let points: IcowPoints = this.settings.cowSettings.find((item: IcowPoints) => item.breed === breed);
-
       // зарождение яйца
-      if (cow.milk < 1000) {
-
-        let milk: number = points.milk;
-
-        if (balance.alarm) {
-          milk = Math.round(milk / 100 * this.settings.cowBadPercent);
-          if (milk < 1) milk = 1;
+      if (cow.breed !== 0) {
+        if (cow.milk < cow.settings.maxMilkVolume) {
+          let milk: number = cow.settings.maxMilkVolume / milkDelay;
+    
+          if (balance.alarm) {
+            milk = Math.round(milk / 100 * this.settings.cowBadPercent);
+            if (milk < 1) milk = 1;
+          }
+          cow.milk += milk;
+          if (cow.milk > cow.settings.maxMilkVolume) {
+            cow.milk = cow.settings.maxMilkVolume;
+          }
         }
-
-        cow.milk += milk;
-        if (cow.milk > 1000) cow.milk = 1000;
-
+      } else {
+        if (cow.milk < cow.settings.maxMilkVolume) {
+          let milk: number = cow.settings.maxMilkVolume / 10;
+    
+          if (balance.alarm) {
+            milk = Math.round(milk / 100 * this.settings.cowBadPercent);
+            if (milk < 1) milk = 1;
+          }
+          cow.milk += milk;
+          if (cow.milk > cow.settings.maxMilkVolume) {
+            cow.milk = cow.settings.maxMilkVolume;
+          }
+        }
       }
-
       // отнимаем очки у территории
       let territory = this.currentTerritory(cow.x, cow.y);
-
-      if (territory && !cow.drag) {
-
-        if (territory.type === 2) {
-
-          if (points.eating > territory.volume) territory.volume = 0;
-          else territory.volume -= points.eating;
   
+      if (territory && !cow.drag) {
+        if (territory.type === 2) {
+          if (cow.settings.eating > territory.volume) territory.volume = 0;
+          else territory.volume -= cow.settings.eating;
         } else if (territory.type === 3) {
-
-          if (points.drinking > territory.volume) territory.volume = 0;
-          else territory.volume -= points.drinking;
-
+          if (cow.settings.drinking > territory.volume) territory.volume = 0;
+          else territory.volume -= cow.settings.drinking;
         }
-
       }
-
     }
-
     // меняем спрайты территорий, если нужно
     for (let i in this.territories.children.entries) {
-
       let territory = this.territories.children.entries[i];
-
       if (territory.type === 2 || territory.type === 3 || territory.type === 5) {
         this.changeSprite(territory);
       }
-
       if (territory.type === 4) {
-
         if (territory.mergingCounter > 0) territory.mergingCounter++;
         if (territory.mergingCounter > this.state.maxMerginTime) {
-
           let cow1: CowSprite | boolean;
           let cow2: CowSprite | boolean;
-
           switch (territory.merging.length) {
             case 0:
               cow1 = false;
@@ -138,13 +131,9 @@ function interval(): void {
             default:
               break;
           }
-
           this.cancelMerging(territory, cow1, cow2);
-
         }
-
       }
-
     }
 
     // for (let i in this.milk.children.entries) {

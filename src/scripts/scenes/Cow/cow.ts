@@ -136,15 +136,13 @@ function checkMerging(territory: any, cow: CowSprite, position: string) {
         let type: number = cow1.breed + 1;
         cow1.destroy();
         cow2.destroy();
-        cow1.milkStatus.destroy();
-        cow2.milkStatus.destroy();
         let id: string = 'local_' + randomString(18);
         let x: number = territory.x + 120;
         let y: number = territory.y + 240;
         
         const cow: CowSprite = this.animalGroup.generate(this, { x, y }, type, id, 0, 0, 7, false);
-        let aimX: number = random(territory.x + 40, territory.x + 200);
-        let aimY: number = random(territory.y + 280, territory.y + 440);
+        let aimX: number = Phaser.Math.Between(territory.x + 40, territory.x + 200);
+        let aimY: number = Phaser.Math.Between(territory.y + 280, territory.y + 440);
         cow.setAim( aimX, aimY);
         this.tryTask(2, type);
         this.tryTask(4, type);
@@ -299,76 +297,48 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
   if (cow.breed !== 0) {
 
     if (manualСollect) {
-
-      cow.milk = 0
-      let price: number = this.state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === cow.breed).milkPrice;
-      if (this.state.userCow.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
-      this.state.userCow.money += price;
-      // milk.destroy();
-
-      this.game.scene.keys['CowBars'].plusMoneyAnimation({
-        x: cow.x,
-        y: cow.y - 50
-      });
-
       this.tryTask(11, 0);
+    }
+    for (let i in this.territories.children.entries) {
+      const territory = this.territories.children.entries[i];
+      if (territory.type === 5) {
+        const max: number = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === territory.improve).milkStorage;
+        if (max > territory.volume + cow.milk) {
+          cow.milk = 0;
+          const position: Iposition = {
+            x: territory.x + 120,
+            y: territory.y + 120
+          }
+          const distance: number = Phaser.Math.Distance.Between(cow.x, cow.y - 50, position.x, position.y);
+          if (length === undefined || distance < length) {
+            length = distance;
+            path = position;
+            repository = territory;
+          }
+        }
+      }
+    }
 
+    if (length) {
+      Milk.create(this, { x: cow.x, y: cow.y - 50}, 0, path);
+      let price: number = 0;
+      if (this.state.userCow.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
+      repository.volume += cow.settings.maxMilkVolume;
+      repository.money += price;
     } else {
-
-      for (let i in this.territories.children.entries) {
-
-        let territory = this.territories.children.entries[i];
-
-        if (territory.type === 5) {
-          
-          let max: number = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === territory.improve).milkStorage;
-
-          if (max > territory.volume) {
-
-            cow.milk = 0
-
-            let position: Iposition = {
-              x: territory.x + 120,
-              y: territory.y + 120
-            }
-            let distance: number = Phaser.Math.Distance.Between(cow.x, cow.y - 50, position.x, position.y);
-            
-            if (length === undefined || distance < length) {
-
-              length = distance;
-              path = position;
-              repository = territory;
-
-            }
-
-          }
-
+      if (manualСollect) {
+        const modal: Imodal = {
+          type: 1,
+          sysType: 3,
+          height: 150,
+          message: this.state.lang.haveNotSpaceRepository
         }
-
+        this.state.modal = modal;
+        this.scene.launch('Modal', this.state);
       }
-
-      if (length) {
-        Milk.create(this, { x: cow.x, y: cow.y - 50}, 0, path); // вместо нуля поставить cow.type
-        let price: number = this.state.cowSettings.cowSettings.find((data:IcowPoints) => data.breed === cow.breed).milkPrice;
-        if (this.state.userCow.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
-        repository.volume++;
-        repository.money += price;
-      } else {
-        if (manualСollect) {
-          const modal: Imodal = {
-            type: 1,
-            sysType: 3,
-            height: 150,
-            message: this.state.lang.haveNotSpaceRepository
-          }
-          this.state.modal = modal;
-          this.scene.launch('Modal', this.state);
-        }
-      }
-      // console.log('have not space for milk');
+      console.log('have not space for milk');
     }
   } else {
-
     let position: Iposition = {
       x: cow.x,
       y: cow.y - 50
@@ -401,20 +371,16 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
       // }
  
       Firework.create(this, cow, 1);
-      cow.milkStatus.destroy();
       cow.destroy();
       
-      this.state.amplitude.getInstance().logEvent('diamonds_get', {
-        type: 'diamond_animal',
-        count: 5,
-        farm_id: this.state.farm,
-        chapter: this.state[`user${this.state.farm}`].part,
-      });
+      // this.state.amplitude.getInstance().logEvent('diamonds_get', {
+      //   type: 'diamond_animal',
+      //   count: 5,
+      //   farm_id: this.state.farm,
+      //   chapter: this.state[`user${this.state.farm}`].part,
+      // });
     }
-
-
   }
-
 }
 
 
@@ -423,11 +389,11 @@ function sellMilk(): void {
 
   if (this.state.territory) {
 
-    if (this.state.territory.type === 5 && this.state.territory.money > 0) {
+    if (this.state.territory.type === 5 && this.state.territory.volume > 0) {
 
       this.tryTask(20, 0);
 
-      this.state.userCow.money += this.state.territory.money;
+      this.state.userCow.money += this.state.territory.volume;
       this.state.territory.money = 0;
       this.state.territory.volume = 0;
       
@@ -457,10 +423,7 @@ function confirmExpelCow(): void {
 
 // продажа коровы
 function expelCow(): void {
-
-  this.state.animal.milkStatus.destroy();
   this.state.animal.destroy();
-
 }
 
 
@@ -487,9 +450,7 @@ function dragCowMerging(cow: CowSprite): void {
     }
     MergingCloud.create(this, position);
     const type: number = cow.breed + 1;
-    findCow.milkStatus.destroy();
     findCow.destroy();
-    cow.milkStatus.destroy();
     cow.destroy();
     const id: string = 'local_' + randomString(18);
     this.animalGroup.generate(this, position, type, id, 0, 0, 7, false);

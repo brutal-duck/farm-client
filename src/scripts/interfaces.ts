@@ -289,8 +289,7 @@ interface IcowPoints {
   breed: number;
   drinking: number;
   eating: number;
-  milk: number;
-  milkPrice: number;
+  maxMilkVolume: number;
   id?: any;
 }
 interface IeventPoints {

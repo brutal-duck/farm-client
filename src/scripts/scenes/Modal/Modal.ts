@@ -385,10 +385,16 @@ class Modal extends Phaser.Scene {
       if (this.progressBar.displayWidth !== width) {
         this.progressBar.setDisplaySize(width, 16);
       }
-
-      if (this.progressButton.text1.text !== shortNum(this.state.territory.money)) {
-        this.progressButton.text1.setText(shortNum(this.state.territory.money));
-        this.progressButton.img1.x = 555 - this.progressButton.text1.displayWidth;
+      if (this.state.farm !== 'Cow') {
+        if (this.progressButton.text1.text !== shortNum(this.state.territory.money)) {
+          this.progressButton.text1.setText(shortNum(this.state.territory.money));
+          this.progressButton.img1.x = 555 - this.progressButton.text1.displayWidth;
+        }
+      } else {
+        if (this.progressButton.text1.text !== shortNum(this.state.territory.volume)) {
+          this.progressButton.text1.setText(shortNum(this.state.territory.volume));
+          this.progressButton.img1.x = 555 - this.progressButton.text1.displayWidth;
+        }
       }
 
       let volume: string = count + ': ' + this.state.territory.volume + ' / ' + max;

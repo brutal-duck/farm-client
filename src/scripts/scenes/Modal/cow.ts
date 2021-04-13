@@ -108,9 +108,7 @@ function cow(): void {
     this.progressBar = this.add.tileSprite(136, this.cameras.main.centerY + 35, 0, 16, 'green-progress')
       .setOrigin(0, 0.5);
 
-    let points: IcowPoints = this.state.cowSettings.cowSettings.find((item: IcowPoints) => item.breed === this.state.animal.type);
-    
-    let milkSpeed: number = Math.round(1000 / points.milk);
+    let milkSpeed: number = Math.round(this.state.animal.settings.maxMilkVolume / 60);
 
     this.add.text(132, this.cameras.main.centerY + 90, this.state.lang.milkSpeed, {
       font: '28px Bip',
@@ -127,7 +125,7 @@ function cow(): void {
       color: '#925C28'
     }).setOrigin(0, 0.5);
 
-    let price: Phaser.GameObjects.Text = this.add.text(588, this.cameras.main.centerY + 135, String(points.milkPrice), {
+    let price: Phaser.GameObjects.Text = this.add.text(588, this.cameras.main.centerY + 135, String(this.state.animal.settings.maxMilkVolume), {
       font: '28px Bip',
       color: '#925C28'
     }).setOrigin(1, 0.5);
@@ -168,7 +166,7 @@ function cow(): void {
 
     let points: IcowPoints = this.state.cowSettings.cowSettings.find((item: IcowPoints) => item.breed === 1);
     
-    let milkSpeed: number = Math.round(1000 / points.milk);
+    let milkSpeed: number = Math.round(points.maxMilkVolume / 60);
 
     this.add.text(132, this.cameras.main.centerY + 150, this.state.lang.diamondSpeed, {
       font: '28px Bip',
@@ -672,7 +670,7 @@ function cowMilkRepository(): void {
 
   let milkMoney = {
     icon: 'cowCoin',
-    text: shortNum(this.state.territory.money)
+    text: shortNum(this.state.territory.volume)
   }
 
   if (this.state.territory.improve < this.state.cowSettings.territoriesCowSettings.length) {
@@ -721,11 +719,11 @@ function cowMilkRepository(): void {
     this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 120, 'pb-chapter-modal');
     this.progressBar = this.add.tileSprite(136, this.cameras.main.centerY - 120, 0, 16, 'green-progress')
       .setOrigin(0, 0.5);
-
+    console.log(milkMoney);
     this.progressButton = this.repositoryBtn(10, this.state.lang.sellMilk, milkMoney);
     this.clickModalBtn(this.progressButton, (): void => {
 
-      if (this.state.territory.money > 0) {
+      if (this.state.territory.volume > 0) {
         this.scene.stop();
         this.game.scene.keys[this.state.farm].scrolling.wheel = true;
         this.game.scene.keys[this.state.farm].sellMilk();
@@ -767,7 +765,7 @@ function cowMilkRepository(): void {
     this.progressButton = this.repositoryBtn(60, this.state.lang.sellMilk, milkMoney);
     this.clickModalBtn(this.progressButton, (): void => {
 
-      if (this.state.territory.money > 0) {
+      if (this.state.territory.volume > 0) {
         this.scene.stop();
         this.game.scene.keys[this.state.farm].scrolling.wheel = true;
         this.game.scene.keys[this.state.farm].sellMilk();

@@ -141,7 +141,7 @@ function cow(): void {
     }).setOrigin(0, 0.5);
     let boundsMilk = milk.getBounds();
 
-    let milkPrice: Phaser.GameObjects.Text = this.add.text(boundsMilk.right, center, String(shortNum(cow.milkPrice)), {
+    let milkPrice: Phaser.GameObjects.Text = this.add.text(boundsMilk.right, center, String(shortNum(cow.maxMilkVolume)), {
       font: '20px Shadow',
       fill: '#ECC896'
     }).setOrigin(0, 0.5);
