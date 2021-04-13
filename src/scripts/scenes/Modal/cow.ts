@@ -719,7 +719,6 @@ function cowMilkRepository(): void {
     this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 120, 'pb-chapter-modal');
     this.progressBar = this.add.tileSprite(136, this.cameras.main.centerY - 120, 0, 16, 'green-progress')
       .setOrigin(0, 0.5);
-    console.log(milkMoney);
     this.progressButton = this.repositoryBtn(10, this.state.lang.sellMilk, milkMoney);
     this.clickModalBtn(this.progressButton, (): void => {
 
