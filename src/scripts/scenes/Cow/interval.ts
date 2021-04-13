@@ -64,33 +64,20 @@ function interval(): void {
 
       let cow: CowSprite = this.animalGroup.children.entries[i];
       // зарождение яйца
-      if (cow.breed !== 0) {
-        if (cow.milk < cow.settings.maxMilkVolume) {
-          let milk: number = cow.settings.maxMilkVolume / milkDelay;
-    
-          if (balance.alarm) {
-            milk = Math.round(milk / 100 * this.settings.cowBadPercent);
-            if (milk < 1) milk = 1;
-          }
-          cow.milk += milk;
-          if (cow.milk > cow.settings.maxMilkVolume) {
-            cow.milk = cow.settings.maxMilkVolume;
-          }
+      if (cow.milk < cow.settings.maxMilkVolume) {
+        let milk: number = cow.settings.maxMilkVolume / milkDelay;
+        if (cow.breed === 0) milk = cow.settings.maxMilkVolume / 10;
+  
+        if (balance.alarm) {
+          milk = Math.round(milk / 100 * this.settings.cowBadPercent);
+          if (milk < 1) milk = 1;
         }
-      } else {
-        if (cow.milk < cow.settings.maxMilkVolume) {
-          let milk: number = cow.settings.maxMilkVolume / 10;
-    
-          if (balance.alarm) {
-            milk = Math.round(milk / 100 * this.settings.cowBadPercent);
-            if (milk < 1) milk = 1;
-          }
-          cow.milk += milk;
-          if (cow.milk > cow.settings.maxMilkVolume) {
-            cow.milk = cow.settings.maxMilkVolume;
-          }
+        cow.milk += milk;
+        if (cow.milk > cow.settings.maxMilkVolume) {
+          cow.milk = cow.settings.maxMilkVolume;
         }
       }
+      
       // отнимаем очки у территории
       let territory = this.currentTerritory(cow.x, cow.y);
   
