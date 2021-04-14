@@ -1,5 +1,5 @@
-import { click, clickShopBtn } from '../general/clicks';
-import { shortNum, getEventRaiting, shortTime, loadingModal} from '../general/basic';
+import { click, clickShopBtn, clickButton } from '../general/clicks';
+import { shortNum, getEventRaiting, shortTime, loadingModal, getStatusSettings } from '../general/basic';
 import { scoreEnding } from './Event/basic';
 
 const sheepCoin: string = require("./../../assets/images/sheep/icons/money.png");
@@ -16,6 +16,9 @@ const mapBtn: string = require("./../../assets/images/modal/map-btn.png");
 const mapCloud: string = require("./../../assets/images/event/map-cloud.png");
 const mapEventFarm: string = require("./../../assets/images/event/map-event-farm.png");
 const mapEventIsland: string = require("./../../assets/images/event/map-event-island.png");
+
+const background: string = require('./../../assets/images/profile/background.jpg');
+const backButton: string = require('./../../assets/images/profile/back-button.png');
 
 class Profile extends Phaser.Scene {
   constructor() {
@@ -37,12 +40,19 @@ class Profile extends Phaser.Scene {
   public eventStartTime: Phaser.GameObjects.Text;
   public eventStartBg: Phaser.GameObjects.Graphics;
   public eventZone: Phaser.GameObjects.Zone;
+  public backBtn: Phaser.GameObjects.Sprite;
+  public avatar: Phaser.GameObjects.Sprite;
+  public diamondsText: Phaser.GameObjects.Text;
+
+
 
   public click = click.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
   public getEventRaiting = getEventRaiting.bind(this); 
   public scoreEnding = scoreEnding.bind(this);
   public loadingModal = loadingModal.bind(this);
+  public clickButton = clickButton.bind(this);
+  public getStatusSettings = getStatusSettings.bind(this);
 
   public init(state: Istate): void {
     this.state = state;
@@ -57,7 +67,6 @@ class Profile extends Phaser.Scene {
     this.load.image('sheepCoin', sheepCoin);
     this.load.image('chickenCoin', chickenCoin);
     this.load.image('back', back);
-    this.load.image('map', map);
     this.load.image('map-lock-icon', mapLockIcon);
     this.load.image('map-sheep-icon', mapSheepIcon);
     this.load.image('map-chicken-icon', mapChickenIcon);
@@ -69,6 +78,9 @@ class Profile extends Phaser.Scene {
     this.load.image('map-event-farm', mapEventFarm);
     this.load.image('map-event-island', mapEventIsland);
 
+    this.load.image('profile-bg', background);
+    this.load.image('back-button', backButton);
+
   }
 
 
@@ -76,11 +88,27 @@ class Profile extends Phaser.Scene {
 
     if (this.state.progress.event.eventPoints >= 0 && this.state.progress.event.open) this.getEventRaiting(); // получаем новые рейтинги
     
-    this.bg = this.add.sprite(0, 0, 'map')
+    this.bg = this.add.sprite(0, 0, 'profile-bg')
       .setInteractive()
       .setOrigin(0, 0);
 
-    this.point = this.add.sprite(0, 0, 'point-map').setOrigin(0.5, 1).setDepth(100);
+    this.backBtn = this.add.sprite(630, 80, 'back-button');
+    this.createElements();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    this.point = this.add.sprite(0, 0, 'point-map').setOrigin(0.5, 1).setDepth(100).setVisible(false);
     
     let sheepPosition: Iposition = { x: 155, y: 145 };
     let chickenPosition: Iposition = { x: 500, y: 270 };
@@ -110,6 +138,7 @@ class Profile extends Phaser.Scene {
     this.cowFarm();
 
     this.createPointerAnim();
+    this.setListeners();
   }
 
   private createPointerAnim(): void {
@@ -122,6 +151,64 @@ class Profile extends Phaser.Scene {
     });
   }
 
+
+  private createElements(): void {
+    this.createProfileInfo();
+
+  }
+
+  private createProfileInfo(): void {
+    const farmer: Phaser.GameObjects.Sprite = this.add.sprite(80, 75, 'farmer').setScale(0.45).setVisible(true);
+    let avatar: Phaser.GameObjects.Sprite;
+    if (this.state.platform === 'web') {
+      avatar = farmer;
+      avatar.setVisible(true);
+    } else {
+      avatar = this.add.sprite(farmer.x, farmer.y, 'avatar');
+      avatar.setMask(new Phaser.Display.Masks.BitmapMask(this, farmer));
+      if (avatar.texture.key === '__MISSING') {
+        avatar = farmer;
+        avatar.setVisible(true);
+      }
+    }
+    const avatarGeom: Phaser.Geom.Rectangle = avatar.getBounds();
+    const status: IstatusSettings = this.getStatusSettings(this.state.user.status);
+    if (status) {
+      this.add.sprite(avatarGeom.right - 15, avatarGeom.top + 15, status.iconTexture).setVisible(status.iconVisible);
+    }
+
+    const text: Phaser.GameObjects.Text = this.add.text(avatarGeom.right + 110, avatarGeom.centerY, this.state.user.login,  {
+      font: '32px Shadow',
+      color: '#FFFFFF',
+      align: 'center',
+      wordWrap: { width: 220 },
+    }).setOrigin(0.5);
+
+    if (text.displayWidth > 200) {
+      const multiply: number = text.displayWidth / 200;
+      text.setFontSize(parseInt(text.style.fontSize) / multiply);
+    }
+
+    this.diamondsText = this.add.text(this.cameras.main.centerX + 120, 95, shortNum(this.state.user.diamonds), {
+      font: '32px Shadow',
+      color: '#FFFFFF',
+      align: 'center',
+      wordWrap: { width: 220 },
+    }).setOrigin(0.5);
+  }
+
+
+
+  private setListeners(): void {
+    this.clickButton(this.backBtn, () => {
+      this.game.scene.keys[this.state.farm].scrolling.downHandler();
+      this.game.scene.keys[this.state.farm].scrolling.enabled = true;
+      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+      this.scene.stop();
+    });
+  }
+
+  
   public update(): void {
     this.updateEvent();
   }
