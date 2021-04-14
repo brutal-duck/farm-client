@@ -1458,24 +1458,11 @@ function profileWindow(): void {
   star.y = avatar.y - 65;
   level.y = star.y;
 
-  if (this.state.platform === 'vk') {
-
-    const graphic: Phaser.GameObjects.Graphics = this.add.graphics(0, 0);
-    graphic.fillCircle(avatar.x, avatar.y, 75).fillStyle(0xffffff);
-    const mask = graphic.createGeometryMask();
-    avatar.setMask(mask);
-    
-  } else if (this.state.platform === 'ok') {
-    
-    const graphic: Phaser.GameObjects.Graphics = this.add.graphics(0, 0);
-    graphic.fillCircle(avatar.x, avatar.y, 75).fillStyle(0xffffff);
-    const mask = graphic.createGeometryMask();
-    avatar.setMask(mask);
-    
+  if (this.state.platform !== 'web') {
+    const mask: Phaser.GameObjects.Sprite = this.add.sprite(avatar.x, avatar.y, 'farmer').setScale(0.6).setVisible(false);
+    avatar.mask = new Phaser.Display.Masks.BitmapMask(this, mask);
   } 
-
   this.resizeWindow(height);
-
 }
 
 
