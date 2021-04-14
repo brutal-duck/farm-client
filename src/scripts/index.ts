@@ -25,6 +25,7 @@ import EventBars from './scenes/Event/EventBars';
 import Event from './scenes/Event/Main';
 import EventPreload from './scenes/Event/EventPreload';
 import Block from './scenes/Block';
+import Profile from './scenes/Profile';
 
 // eruda
 if (process.env.DEV_CLIENT === window.location.origin) {
@@ -88,6 +89,7 @@ window.onload = (): void => {
         ChickenPreload, Chicken, ChickenBars,
         CowPreload, Cow, CowBars,
         EventPreload, Event, EventBars,
+        Profile,
         Modal, Block,
         Map, MapBars,
         Shop, ShopBars,
