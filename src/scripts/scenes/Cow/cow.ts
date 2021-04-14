@@ -303,7 +303,7 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
       const territory: Territory = this.territories.children.entries[i];
       if (territory.territoryType === 5) {
         const max: number = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === territory.improve).milkStorage;
-        if (max > territory.volume + cow.milk) {
+        if (max >= territory.volume + cow.milk) {
           cow.milk = 0;
           const position: Iposition = {
             x: territory.x + 120,
