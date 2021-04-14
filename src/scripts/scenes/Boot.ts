@@ -8,15 +8,15 @@ import * as amplitude from 'amplitude-js';
 import { okCallback } from '../general/callbacks';
 amplitude.getInstance().init(process.env.AMPLITUDE);
 
-let headerSyst: any = require("./../../assets/images/modal/header-syst.png");
-let midSyst: any = require("./../../assets/images/modal/mid-syst.png");
-let bottomSyst: any = require("./../../assets/images/modal/bottom-syst.png");
-let pbEmptyCorner: any = require("./../../assets/images/modal/pb_empty_corner.png");
-let pbEmptyMid: any = require("./../../assets/images/modal/pb_empty_mid.png");
-let pbFullCorner: any = require("./../../assets/images/modal/pb_full_corner.png");
-let pbFullMid: any = require("./../../assets/images/modal/pb_full_mid.png");
-let modal: any = require("./../../assets/images/modal/modal.png");
-let close: any = require("./../../assets/images/modal/header_close.png");
+const headerSyst: string = require("./../../assets/images/modal/header-syst.png");
+const midSyst: string = require("./../../assets/images/modal/mid-syst.png");
+const bottomSyst: string = require("./../../assets/images/modal/bottom-syst.png");
+const pbEmptyCorner: string = require("./../../assets/images/modal/pb_empty_corner.png");
+const pbEmptyMid: string = require("./../../assets/images/modal/pb_empty_mid.png");
+const pbFullCorner: string = require("./../../assets/images/modal/pb_full_corner.png");
+const pbFullMid: string = require("./../../assets/images/modal/pb_full_mid.png");
+const modal: string = require("./../../assets/images/modal/modal.png");
+const close: string = require("./../../assets/images/modal/header_close.png");
 
 class Boot extends Phaser.Scene {
   constructor() {

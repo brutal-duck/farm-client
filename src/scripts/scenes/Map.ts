@@ -3,20 +3,20 @@ import { click, clickShopBtn } from '../general/clicks';
 import { shortNum, getEventRaiting, shortTime, loadingModal} from '../general/basic';
 import { scoreEnding } from './Event/basic';
 
-let sheepCoin: any = require("./../../assets/images/sheep/icons/money.png");
-let chickenCoin: any = require("./../../assets/images/chicken/icons/money.png");
-let back: any = require("./../../assets/images/icons/back.png");
-let map: any = require("./../../assets/images/map.png");
-let mapLockIcon: any = require("./../../assets/images/icons/map-lock-icon.png");
-let mapChickenIcon: any = require("./../../assets/images/icons/map-chicken-icon.png");
-let mapSheepIcon: any = require("./../../assets/images/icons/map-sheep-icon.png");
-let pointMap: any = require("./../../assets/images/icons/point-map.png");
-let pbChapterMap: any = require("./../../assets/images/modal/pb-chapter-map.png");
-let partProgress: any = require("./../../assets/images/modal/part-progress.png");
-let mapBtn: any = require("./../../assets/images/modal/map-btn.png");
-let mapCloud: any = require("./../../assets/images/event/map-cloud.png");
-let mapEventFarm: any = require("./../../assets/images/event/map-event-farm.png");
-let mapEventIsland: any = require("./../../assets/images/event/map-event-island.png");
+const sheepCoin: string = require("./../../assets/images/sheep/icons/money.png");
+const chickenCoin: string = require("./../../assets/images/chicken/icons/money.png");
+const back: string = require("./../../assets/images/icons/back.png");
+const map: string = require("./../../assets/images/map.png");
+const mapLockIcon: string = require("./../../assets/images/icons/map-lock-icon.png");
+const mapChickenIcon: string = require("./../../assets/images/icons/map-chicken-icon.png");
+const mapSheepIcon: string = require("./../../assets/images/icons/map-sheep-icon.png");
+const pointMap: string = require("./../../assets/images/icons/point-map.png");
+const pbChapterMap: string = require("./../../assets/images/modal/pb-chapter-map.png");
+const partProgress: string = require("./../../assets/images/modal/part-progress.png");
+const mapBtn: string = require("./../../assets/images/modal/map-btn.png");
+const mapCloud: string = require("./../../assets/images/event/map-cloud.png");
+const mapEventFarm: string = require("./../../assets/images/event/map-event-farm.png");
+const mapEventIsland: string = require("./../../assets/images/event/map-event-island.png");
 
 class Map extends Phaser.Scene {
   constructor() {

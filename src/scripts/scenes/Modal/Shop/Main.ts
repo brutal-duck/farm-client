@@ -52,44 +52,44 @@ import {
 } from './event';
 import { openModal } from '../../../general/animations';
 
-let shopHead: any = require("./../../../../assets/images/modal/shop-head.png");
-let shopClose: any = require("./../../../../assets/images/modal/shop-close.png");
-let shopTabActive: any = require("./../../../../assets/images/modal/shop-tab-active.png");
-let shopTab: any = require("./../../../../assets/images/modal/shop-tab.png");
-let iconShopSheep: any = require("./../../../../assets/images/sheep/icons/icon-shop-sheep.png");
-let iconShopChicken: any = require("./../../../../assets/images/chicken/icons/icon-shop-chicken.png");
-let iconShopCow: any = require("./../../../../assets/images/cow/icons/icon-shop-cow.png");
-let iconShopEvent: any = require("./../../../../assets/images/event/icons/icon-shop-event.png");
-let iconShopBoosts: any = require("./../../../../assets/images/icons/icon-shop-boosts.png");
-let bankPackage: any = require("./../../../../assets/images/modal/bank-package.png");
-let stockTape: any = require("./../../../../assets/images/modal/stock-tape.png");
-let shopBtn: any = require("./../../../../assets/images/modal/shop-btn.png");
-let sheepMoneyPackage: any = require("./../../../../assets/images/sheep/money-package.png");
-let chickenMoneyPackage: any = require("./../../../../assets/images/chicken/money-package.png");
-let cowMoneyPackage: any = require("./../../../../assets/images/cow/money-package.png");
-let eventMoneyPackage: any = require("./../../../../assets/images/event/money-package.png");
-let animalShopBg: any = require("./../../../../assets/images/modal/animal-shop-bg.png");
-let shopWoolCollector: any = require("./../../../../assets/images/sheep/shop-wool-collector.png");
-let shopEggCollector: any = require("./../../../../assets/images/chicken/shop-egg-collector.png");
-let shopMilkCollector: any = require("./../../../../assets/images/cow/shop-milk-collector.png");
-let shopBtnDisable: any = require("./../../../../assets/images/modal/shop-btn-disable.png");
-let boostBtn: any = require("./../../../../assets/images/modal/boost-btn.png");
-let boostBtnDisable: any = require("./../../../../assets/images/modal/boost-btn-disable.png");
-let boostBtnAd: any = require("./../../../../assets/images/modal/boost-btn-ad.png");
-let levelBg: any = require("./../../../../assets/images/modal/level-bg.png");
-let boostBg: any = require("./../../../../assets/images/modal/boost-bg.png");
-let improveCollector: any = require("./../../../../assets/images/modal/improve-collector.png");
-let shopResourceCollector: any = require("./../../../../assets/images/event/shop-resource-collector.png");
-let starterpackBg: any = require("./../../../../assets/images/modal/starterpack-bg.png");
-let starterpackShadow: any = require("./../../../../assets/images/modal/starterpack-icon-shadow.png");
-let herdBoostSheepIcon: any = require("./../../../../assets/images/icons/sheep-herd-boost.png");
-let herdBoostChickenIcon: any = require("./../../../../assets/images/icons/chicken-herd-boost.png");
-let herdBoostCowIcon: any = require("./../../../../assets/images/icons/cow-herd-boost.png");
-let herdBoostEventIcon: any = require("./../../../../assets/images/icons/event-herd-boost.png");
-let feedBoostSheepIcon: any = require("./../../../../assets/images/icons/sheep-feed-boost.png");
-let feedBoostChickenIcon: any = require("./../../../../assets/images/icons/chicken-feed-boost.png");
-let feedBoostCowIcon: any = require("./../../../../assets/images/icons/cow-feed-boost.png");
-let feedBoostEventIcon: any = require("./../../../../assets/images/icons/event-feed-boost.png");
+const shopHead: string = require("./../../../../assets/images/modal/shop-head.png");
+const shopClose: string = require("./../../../../assets/images/modal/shop-close.png");
+const shopTabActive: string = require("./../../../../assets/images/modal/shop-tab-active.png");
+const shopTab: string = require("./../../../../assets/images/modal/shop-tab.png");
+const iconShopSheep: string = require("./../../../../assets/images/sheep/icons/icon-shop-sheep.png");
+const iconShopChicken: string = require("./../../../../assets/images/chicken/icons/icon-shop-chicken.png");
+const iconShopCow: string = require("./../../../../assets/images/cow/icons/icon-shop-cow.png");
+const iconShopEvent: string = require("./../../../../assets/images/event/icons/icon-shop-event.png");
+const iconShopBoosts: string = require("./../../../../assets/images/icons/icon-shop-boosts.png");
+const bankPackage: string = require("./../../../../assets/images/modal/bank-package.png");
+const stockTape: string = require("./../../../../assets/images/modal/stock-tape.png");
+const shopBtn: string = require("./../../../../assets/images/modal/shop-btn.png");
+const sheepMoneyPackage: string = require("./../../../../assets/images/sheep/money-package.png");
+const chickenMoneyPackage: string = require("./../../../../assets/images/chicken/money-package.png");
+const cowMoneyPackage: string = require("./../../../../assets/images/cow/money-package.png");
+const eventMoneyPackage: string = require("./../../../../assets/images/event/money-package.png");
+const animalShopBg: string = require("./../../../../assets/images/modal/animal-shop-bg.png");
+const shopWoolCollector: string = require("./../../../../assets/images/sheep/shop-wool-collector.png");
+const shopEggCollector: string = require("./../../../../assets/images/chicken/shop-egg-collector.png");
+const shopMilkCollector: string = require("./../../../../assets/images/cow/shop-milk-collector.png");
+const shopBtnDisable: string = require("./../../../../assets/images/modal/shop-btn-disable.png");
+const boostBtn: string = require("./../../../../assets/images/modal/boost-btn.png");
+const boostBtnDisable: string = require("./../../../../assets/images/modal/boost-btn-disable.png");
+const boostBtnAd: string = require("./../../../../assets/images/modal/boost-btn-ad.png");
+const levelBg: string = require("./../../../../assets/images/modal/level-bg.png");
+const boostBg: string = require("./../../../../assets/images/modal/boost-bg.png");
+const improveCollector: string = require("./../../../../assets/images/modal/improve-collector.png");
+const shopResourceCollector: string = require("./../../../../assets/images/event/shop-resource-collector.png");
+const starterpackBg: string = require("./../../../../assets/images/modal/starterpack-bg.png");
+const starterpackShadow: string = require("./../../../../assets/images/modal/starterpack-icon-shadow.png");
+const herdBoostSheepIcon: string = require("./../../../../assets/images/icons/sheep-herd-boost.png");
+const herdBoostChickenIcon: string = require("./../../../../assets/images/icons/chicken-herd-boost.png");
+const herdBoostCowIcon: string = require("./../../../../assets/images/icons/cow-herd-boost.png");
+const herdBoostEventIcon: string = require("./../../../../assets/images/icons/event-herd-boost.png");
+const feedBoostSheepIcon: string = require("./../../../../assets/images/icons/sheep-feed-boost.png");
+const feedBoostChickenIcon: string = require("./../../../../assets/images/icons/chicken-feed-boost.png");
+const feedBoostCowIcon: string = require("./../../../../assets/images/icons/cow-feed-boost.png");
+const feedBoostEventIcon: string = require("./../../../../assets/images/icons/event-feed-boost.png");
 
 class Shop extends Phaser.Scene {
   constructor() {
@@ -106,7 +106,6 @@ class Shop extends Phaser.Scene {
   public freeCollector: any;
 
   // буст
-
   public herdBoostBtnRightText: Phaser.GameObjects.Text;
   public herdBoostBtnLeftText: Phaser.GameObjects.Text;
   public herdBoostDiamondBtn: Phaser.GameObjects.Sprite;
