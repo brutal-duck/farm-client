@@ -45,7 +45,7 @@ window.onload = (): void => {
 
     let width: number = 0;
     let height: number = 0;
-    let root: any = document.querySelector('#root');
+    let root: HTMLElement = document.querySelector('#root');
     let clientHeight: number = Math.round(document.body.clientHeight);
     let clientWidth: number = Math.round(document.body.clientWidth);
     let canvasWidth: number = 720;
