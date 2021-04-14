@@ -8,6 +8,7 @@ import Stars from '../components/animations/Stars';
 import BigInteger from '../libs/BigInteger';
 import MoneyAnimation from './../components/animations/MoneyAnimation';
 import SpeechBubble from './../components/animations/SpeechBuble';
+import daily from './../scenes/Modal/daily';
 
 // рандомное число
 function random(min: number, max: number): number {
@@ -1307,6 +1308,7 @@ function nextDayTimer(): void {
       if (!res.data.error) {
         if (this.state.user.takenReward) {
           this.state.daily++;
+          this.game.scene.keys[`${this.state.farm}Bars`].calendarText.setText(String(Number(this.state.daily)));
           this.state.user.takenReward = false;
         }
       }
