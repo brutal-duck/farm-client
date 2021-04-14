@@ -181,7 +181,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         this.scene.state.territory = this;
         this.scene.scene.launch('Modal', this.scene.state);
       } else if (this.territoryType === 6) {
-        if (this.scene.state[`user${this.scene.state.farm}`].collectorLevel < this.scene.state[`${this.scene.state.farm.toLowerCase()}CollectorSettings`].length) {
+        if (this.scene.state[`user${this.scene.state.farm}`].collectorLevel < this.state[`${this.scene.state.farm.toLowerCase()}CollectorSettings`].length) {
           this.scene.showImproveCollector();
         }
       } else if (this.territoryType === 7) {
