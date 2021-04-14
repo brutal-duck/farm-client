@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { romanize } from './basic';
+import { romanize, shortNum } from './basic';
 
 // окно подтверждения смены территории
 function confirmExchangeTerritory(type: number): void {
@@ -1540,7 +1540,7 @@ function improveCollector(): void {
 
     const right = {
       icon: icon,
-      text: String(nextLevel.price)
+      text: shortNum(nextLevel.price)
     }
     const improve = this.bigButton('green', 'left', 90, this.state.lang.improve, right);
     this.clickModalBtn(improve, (): void => {
@@ -1623,7 +1623,7 @@ function updateImproveCollector(
 
     let right = {
       icon: icon,
-      text: String(nextLevel.price)
+      text: shortNum(nextLevel.price)
     }
 
     btn.text1.setText(right.text);
