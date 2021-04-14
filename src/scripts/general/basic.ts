@@ -420,23 +420,17 @@ function donePart(): void {
   let parts: Ipart[];
 
   if (this.state.farm === 'Sheep') {
-
     user = this.state.userSheep;
     parts = this.state.sheepSettings.sheepParts;
-
   } else if (this.state.farm === 'Chicken') {
-
     user = this.state.userChicken;
     parts = this.state.chickenSettings.chickenParts;
-
   } else if (this.state.farm === 'Cow') {
-
     user = this.state.userCow;
     parts = this.state.cowSettings.cowParts;
-
   }
 
-  let award: number = parts.find((data: Ipart) => data.sort === user.part).award;
+  const award: number = parts.find((data: Ipart) => data.sort === user.part).award;
 
   this.state.user.diamonds += award;
 
@@ -459,12 +453,10 @@ function donePart(): void {
     chapter: user.part - 1
   });
 
+  this.autosave();
+  
   this.time.addEvent({ delay: 200, callback: (): void => {
-
-    this.house.setTexture(this.state.farm.toLowerCase() + '-house-' + user.part);
-    Stars.create(this, { x: this.house.x + 120, y: this.house.y + 120 });
     this.checkDoneTasks();
-
   }, callbackScope: this, loop: false });
 
   this.time.addEvent({ delay: 1500, callback: (): void => {

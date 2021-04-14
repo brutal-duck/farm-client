@@ -270,7 +270,7 @@ function world(): void {
       let x: number = territory.x + 120;
       let y: number = territory.y + 240;
 
-      this.house = this.add.image(x, y, 'chicken-house-' + this.state.userChicken.part)
+      this.house = this.add.image(x, y, 'chicken-house-sprite')
         .setOrigin(0.5, 1)
         .setDepth(territory.y);
 
@@ -296,8 +296,9 @@ function world(): void {
 
       } else if (territory.type === 6) {
         
-        this.showTasks();
-
+        if (this.state[`user${this.state.farm}`].collectorLevel < this.state[`${this.state.farm.toLowerCase()}CollectorSettings`].length) {
+          this.showImproveCollector();
+        }
       } else if (territory.type === 7) {
         
         this.takeDiamondChicken();

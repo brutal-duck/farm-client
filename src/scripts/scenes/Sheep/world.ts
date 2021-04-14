@@ -267,10 +267,9 @@ function world(): void {
       let x: number = territory.x + 120;
       let y: number = territory.y + 240;
 
-      this.house = this.add.image(x, y, 'sheep-house-' + this.state.userSheep.part)
+      this.house = this.add.image(x, y, 'sheep-house-sprite')
         .setOrigin(0.5, 1)
         .setDepth(territory.y);
-
     }
 
     if (data.type === 7) {
@@ -295,17 +294,13 @@ function world(): void {
           this.scene.launch('Modal', this.state);
 
         } else if (territory.type === 6) {
-          
-          this.showTasks();
-
+          if (this.state[`user${this.state.farm}`].collectorLevel < this.state[`${this.state.farm.toLowerCase()}CollectorSettings`].length) {
+            this.showImproveCollector();
+          }
         } else if (territory.type === 7) {
-          
           this.takeDiamondSheep();
-
         }
-
       }
-
     });
 
   });

@@ -158,10 +158,9 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
   public createHouseSprite(): void {
     if (this.territoryType === 6) {
-      this.scene.house = this.scene.add.sprite(this.x + 120, this.y + 240, 'cow-house-' + this.scene.state.userCow.part)
+      this.scene.house = this.scene.add.sprite(this.x + 120, this.y + 240, `${this.scene.state.farm.toLowerCase()}-house-sprite`)
         .setOrigin(0.5, 1)
         .setDepth(this.y);
-
     }
   }
 
@@ -182,7 +181,9 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         this.scene.state.territory = this;
         this.scene.scene.launch('Modal', this.scene.state);
       } else if (this.territoryType === 6) {
-        this.scene.showTasks();
+        if (this.scene.state[`user${this.scene.state.farm}`].collectorLevel < this.state[`${this.scene.state.farm.toLowerCase()}CollectorSettings`].length) {
+          this.scene.showImproveCollector();
+        }
       } else if (this.territoryType === 7) {
         this.scene.takeDiamondCow();
       }

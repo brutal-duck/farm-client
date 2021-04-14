@@ -1475,11 +1475,9 @@ function improveCollector(): void {
   this.state.farm === 'Cow' ? 'milk' : '';
   
   this.textHeader.setText(`${this.state.lang[`${resource}Collector`]} ${this.state[`user${this.state.farm}`].collectorLevel} ${this.state.lang.shortLevel}.`);
-  const thisLevel: IcollectorSettings = this.state[`${farm}CollectorSettings`]
-    .find((data: IcollectorSettings) => data.level === this.state[`user${this.state.farm}`].collectorLevel);
-  const nextLevel: IcollectorSettings = this.state[`${farm}CollectorSettings`]
-    .find((data: IcollectorSettings) => data.level === this.state[`user${this.state.farm}`].collectorLevel + 1);
-
+  const thisLevel: IcollectorSettings = this.state[`${farm}CollectorSettings`].find((data: IcollectorSettings) => data.level === this.state[`user${this.state.farm}`].collectorLevel);
+  const nextLevel: IcollectorSettings = this.state[`${farm}CollectorSettings`].find((data: IcollectorSettings) => data.level === this.state[`user${this.state.farm}`].collectorLevel + 1);
+  
   const speedText: string = `${this.state.lang.power}: ${thisLevel.speed} ${this.state.lang[`unit${this.state.farm}`]}/${this.state.lang.seconds}`;
   const speed: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY - 80, speedText, {
     font: '30px Bip',
