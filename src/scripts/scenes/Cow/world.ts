@@ -42,95 +42,13 @@ function world(): void {
     if (data.block === 0) y++;
     y += this.topIndent;
 
-    let type: string;
-
-    if (data.type === 0) {
-
-      type = 'cow-for-buying';
-
-    } else if (data.type === 1) {
-
-      type = 'cow-bought';
-
-    } else if (data.type === 2) {
-
-      switch (data.improve) {
-        case 1:
-          type = 'cow-grass1-';
-          break;
-        case 2:
-          type = 'cow-grass2-';
-          break;
-        case 3:
-          type = 'cow-grass3-';
-          break;
-        case 4:
-          type = 'cow-grass4-';
-          break;
-      }
-
-      if (data.volume < 200) {
-        type += 1;
-      } else if (data.volume >= 200 && data.volume < 400) {
-        type += 2;
-      } else if (data.volume >= 400 && data.volume < 600) {
-        type += 3;
-      } else if (data.volume >= 600 && data.volume < 800) {
-        type += 4;
-      } else if (data.volume >= 800) {
-        type += 5;
-      }
-      
-    } else if (data.type === 3) {
-
-      switch (data.improve) {
-        case 1:
-          type = 'cow-water1-';
-          break;
-        case 2:
-          type = 'cow-water2-';
-          break;
-        case 3:
-          type = 'cow-water3-';
-          break;
-        case 4:
-          type = 'cow-water4-';
-          break;
-      }
-
-      if (data.volume < 250) {
-        type += 1;
-      } else if (data.volume >= 250 && data.volume < 500) {
-        type += 2;
-      } else if (data.volume >= 500 && data.volume < 750) {
-        type += 3;
-      } else if (data.volume >= 750) {
-        type += 4;
-      }
-
-    } else if (data.type === 4) {
-
-      type = 'cow-merging';
-
-    } else if (data.type === 5) {
-
-      type = 'cow-repository';
-
-    } else if (data.type === 6) {
-
-      type = 'cow-house';
-
-    } else if (data.type === 7) {
-
-      type = 'cow-ground';
-
-    }
+    const type: string = getTerritoryType.bind(this)(data);
 
     let territory: Territory = new Territory(this, x, y, type, data);
 
     let topBorder: number = 1;
     let bottomBorder: number = 1;
-
+  
     if (territory.position === 1) {
       topBorder = 1;
       bottomBorder = 3;
@@ -144,9 +62,7 @@ function world(): void {
 
     territory.createBorders(topBorder, bottomBorder)
     territory.createForest(forest);
-
     territory.createMetgingZone();
-
     territory.createRepositorySprite();
     territory.createHouseSprite();
     territory.createCave();
@@ -172,4 +88,33 @@ function world(): void {
   
 }
 
+function getTerritoryType(data: Iterritories): string {
+  let type: string;
+
+  if (data.type === 0) type = 'cow-for-buying';
+  else if (data.type === 1) type = 'cow-bought';
+  else if (data.type === 2) {
+    type = `${this.state.farm.toLowerCase()}-grass${data.improve}-`;
+
+    if (data.volume < 200) type += 1;
+    else if (data.volume >= 200 && data.volume < 400) type += 2;
+    else if (data.volume >= 400 && data.volume < 600) type += 3;
+    else if (data.volume >= 600 && data.volume < 800) type += 4;
+    else if (data.volume >= 800) type += 5;
+    
+  } else if (data.type === 3) {
+    type = `${this.state.farm.toLowerCase()}-water${data.improve}-`;
+
+    if (data.volume < 250) type += 1;
+    else if (data.volume >= 250 && data.volume < 500) type += 2;
+    else if (data.volume >= 500 && data.volume < 750) type += 3;
+    else if (data.volume >= 750) type += 4;
+
+  } else if (data.type === 4) type = 'cow-merging';
+  else if (data.type === 5) type = 'cow-repository';
+  else if (data.type === 6) type = 'cow-house';
+  else if (data.type === 7) type = 'cow-ground';
+  
+  return type;
+}
 export default world;
