@@ -3,6 +3,7 @@ import Arrow from '../../components/animations/Arrow';
 import Firework from '../../components/animations/Firework';
 import Hearts from '../../components/animations/Hearts';
 import CowSprite from './../../components/Animal/CowSprite';
+import Territory from './../../components/Territories/Territory';
 function interval(): void {
 
   // значение отступа для молока, чтоб не прилегали к краям территории
@@ -79,13 +80,13 @@ function interval(): void {
       }
       
       // отнимаем очки у территории
-      let territory = this.currentTerritory(cow.x, cow.y);
+      let territory: Territory = this.currentTerritory(cow.x, cow.y);
   
       if (territory && !cow.drag) {
-        if (territory.type === 2) {
+        if (territory.territoryType === 2) {
           if (cow.settings.eating > territory.volume) territory.volume = 0;
           else territory.volume -= cow.settings.eating;
-        } else if (territory.type === 3) {
+        } else if (territory.territoryType === 3) {
           if (cow.settings.drinking > territory.volume) territory.volume = 0;
           else territory.volume -= cow.settings.drinking;
         }
@@ -93,11 +94,11 @@ function interval(): void {
     }
     // меняем спрайты территорий, если нужно
     for (let i in this.territories.children.entries) {
-      let territory = this.territories.children.entries[i];
-      if (territory.type === 2 || territory.type === 3 || territory.type === 5) {
-        this.changeSprite(territory);
+      const territory: Territory = this.territories.children.entries[i];
+      if (territory.territoryType === 2 || territory.territoryType === 3 || territory.territoryType === 5) {
+        territory.changeSprite();
       }
-      if (territory.type === 4) {
+      if (territory.territoryType === 4) {
         if (territory.mergingCounter > 0) territory.mergingCounter++;
         if (territory.mergingCounter > this.state.maxMerginTime) {
           let cow1: CowSprite | boolean;

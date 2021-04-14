@@ -54,13 +54,7 @@ import {
 } from '../../general/tasks';
 import {
   currentTerritory,
-  changeSprite,
-  fairLevelUp,
-  improveTerritory,
-  exchangeTerritory,
   deleteTerritoriesLocks,
-  checkExchangeRepository,
-  buyTerritory
 } from '../../general/territories';
 import { repositoryAnimation, animations } from './animations';
 import {
@@ -137,15 +131,9 @@ class Cow extends Phaser.Scene {
   public clickTerritory = clickTerritory.bind(this);
   public teleportation = teleportation.bind(this);
   public currentTerritory = currentTerritory.bind(this);
-  public changeSprite = changeSprite.bind(this);
-  public fairLevelUp = fairLevelUp.bind(this);
-  public improveTerritory = improveTerritory.bind(this);
   public confirmExchangeTerritory = confirmExchangeTerritory.bind(this);
-  public exchangeTerritory = exchangeTerritory.bind(this);
   public installTerritory = installTerritory.bind(this);
   public deleteTerritoriesLocks = deleteTerritoriesLocks.bind(this);
-  public buyTerritory = buyTerritory.bind(this);
-  public checkExchangeRepository = checkExchangeRepository.bind(this);
   public repositoryAnimation = repositoryAnimation.bind(this);
   public balance = balance.bind(this);
   public convertDiamonds = convertDiamonds.bind(this);

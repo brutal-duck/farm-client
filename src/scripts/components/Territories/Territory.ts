@@ -421,22 +421,17 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     if (this.territoryType === 5) {
       
       let max: number;
-      const percent: number = this.volume > 0 ? this.volume / (max / 100) : 0;
-  
+      
       if (this.scene.state.farm === 'Sheep') {
-  
         max = this.scene.state.sheepSettings.territoriesSheepSettings[this.improve - 1].woolStorage;
-  
       } else if (this.scene.state.farm === 'Chicken') {
-  
         max = this.scene.state.chickenSettings.territoriesChickenSettings[this.improve - 1].eggStorage;
-  
       } else if (this.scene.state.farm === 'Cow') {
-  
         max = this.scene.state.cowSettings.territoriesCowSettings[this.improve - 1].milkStorage;
-  
       }
-      sprite = `${farm}-repository${this.improve}-`;
+      
+      const percent: number = this.volume > 0 ? this.volume / (max / 100) : 0;
+      sprite = `${farm}-repository-${this.improve}-`;
 
       if (percent < 25) {
         sprite += 1;
@@ -447,13 +442,11 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       } else {
         sprite += 4;
       }
-  
       if (this.repository.texture.key !== sprite) {
         this.repository.setTexture(sprite);
       }
-  
     }
-  
+
     if (this.texture.key !== sprite && this.territoryType !== 5) {
       this.setTexture(sprite);
     } 
@@ -620,4 +613,5 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       }
     }
   }  
+
 }
