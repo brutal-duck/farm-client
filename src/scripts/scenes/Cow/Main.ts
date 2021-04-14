@@ -54,7 +54,6 @@ import {
 } from '../../general/tasks';
 import {
   currentTerritory,
-  deleteTerritoriesLocks,
 } from '../../general/territories';
 import { repositoryAnimation, animations } from './animations';
 import {
@@ -68,7 +67,10 @@ import {
   expelCow,
   dragCowMerging
 } from './cow';
-import { installTerritory } from './territories';
+import { 
+  installTerritory,  
+  deleteTerritoriesLocks
+} from './territories';
 import {
   balance,
   cowPrice,

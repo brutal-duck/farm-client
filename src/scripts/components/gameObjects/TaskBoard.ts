@@ -62,7 +62,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
 
   private init(): void {
     this.scene.add.existing(this);
-    this.setOrigin(0).setVisible(false);
+    this.setOrigin(0).setVisible(false).setInteractive();
 
     this.positionY = this.scene.height;
     this.createElements();
@@ -596,6 +596,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
   private hideListButton(): void {
     this.listButton?.setVisible(false);
   }
+
   private shownElements(): void {
     this.hideAllElement();
     this.isVisibile = true;
