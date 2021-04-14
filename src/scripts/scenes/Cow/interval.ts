@@ -1,20 +1,13 @@
 import {shortTime} from './../../general/basic';
 import Arrow from '../../components/animations/Arrow';
-import Firework from '../../components/animations/Firework';
 import Hearts from '../../components/animations/Hearts';
 import CowSprite from './../../components/Animal/CowSprite';
 import Territory from './../../components/Territories/Territory';
 function interval(): void {
 
-  // значение отступа для молока, чтоб не прилегали к краям территории
-  let indent: number = 20;
-
   let statusBalance: boolean = false;
-
   let checkRaiting: boolean = false;
-
   let arrowOnMap: Phaser.GameObjects.Sprite;
-
   const milkDelay: number = 60;
   
   this.time.addEvent({ delay: 1000, callback: (): void => {
@@ -56,8 +49,7 @@ function interval(): void {
     
     // поедание территорий коровами
     for (let i in this.animalGroup.children.entries) {
-
-      let cow: CowSprite = this.animalGroup.children.entries[i];
+      const cow: CowSprite = this.animalGroup.children.entries[i];
       // зарождение яйца
       if (cow.milk < cow.settings.maxMilkVolume) {
         let milk: number = cow.settings.maxMilkVolume / milkDelay;
@@ -74,8 +66,7 @@ function interval(): void {
       }
       
       // отнимаем очки у территории
-      let territory: Territory = this.currentTerritory(cow.x, cow.y);
-  
+      const territory: Territory = this.currentTerritory(cow.x, cow.y);
       if (territory && !cow.drag) {
         if (territory.territoryType === 2) {
           if (cow.settings.eating > territory.volume) territory.volume = 0;
@@ -86,6 +77,7 @@ function interval(): void {
         }
       }
     }
+
     // меняем спрайты территорий, если нужно
     for (let i in this.territories.children.entries) {
       const territory: Territory = this.territories.children.entries[i];
@@ -117,13 +109,6 @@ function interval(): void {
         }
       }
     }
-
-    // for (let i in this.milk.children.entries) {
-
-    //   let milk = this.milk.children.entries[i];
-    //   milk.timeout++;
-    
-    // }
 
     // бар собирателя
     if (this.state.userCow.collector > 0) {
@@ -195,23 +180,17 @@ function interval(): void {
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Map')) this.showDonate();
 
-    // уменьшаем время буста комбикорм
     if (this.state.userCow.feedBoostTime > 0) {
-
-      if (Phaser.Math.Between(0, 7) >= 5) { // чтобы не так часто появлялись сердца
-
+      if (Phaser.Math.Between(0, 7) >= 5) { 
         let randomIndex: number = Phaser.Math.Between(0, this.animalGroup.children.entries.length - 1);
         Hearts.create(this, this.animalGroup.children.entries[randomIndex])
       }
-
       this.state.userCow.feedBoostTime--;
     }
 
     // Проверяем и запускаем распростанение овец по полю
     if (this.animalGroup.children.entries.every(el => el.spread === false)) {
-      
       this.spreadAnimals();
-
     }
 
     // обновление времени евента
@@ -249,30 +228,24 @@ function interval(): void {
       }
       
       if (this.state.progress.event.updateRaitings) {
-
-        let modal: Imodal = {
+        const modal: Imodal = {
           type: 12,
         };
-
         this.state.modal = modal;
         this.scene.launch('Modal', this.state);
-
       }
     }
 
     if ((this.state.name !== '' || this.state.user.login !== '') && 
       this.state.progress.event.startTime <= 0 && 
       this.state.progress.event.endTime > 0) {
-        
       if (this.state.user.additionalTutorial.eventTutorial === 0 &&
         !arrowOnMap &&
         !this.scene.isActive('Modal') &&
         !this.scene.isActive('Tutorial') &&
         !this.scene.isActive('Map')) {
-        
         arrowOnMap = Arrow.generate(this.game.scene.keys[`${this.state.farm}Bars`], 17)
       }
-  
       if (this.state.user.additionalTutorial.eventTutorial === 0 &&
         !this.scene.isActive('Tutorial') &&
         this.scene.isActive('Map')) {
@@ -280,13 +253,7 @@ function interval(): void {
         this.showEventTutorial();
       }
     }
-
   }, callbackScope: this, loop: true });
-
-  // проверка доната 
-  
-  
-
 }
 
 export default interval;
