@@ -44,20 +44,14 @@ function interval(): void {
 
     // восстановаление территорий
     for (let i in this.territories.children.entries) {
-
-      let territory = this.territories.children.entries[i];
-
-      if ((territory.type === 2 || territory.type === 3) && territory.volume < 1000) {
-
-        let reg: number = this.settings.territoriesCowSettings.find((item: IterritoriesCowSettings) => item.improve === territory.improve).regeneration;
+      const territory: Territory = this.territories.children.entries[i];
+      if ((territory.territoryType === 2 || territory.territoryType === 3) && territory.volume < 1000) {
+        const reg: number = this.settings.territoriesCowSettings.find((item: IterritoriesCowSettings) => item.improve === territory.improve).regeneration;
         territory.volume += reg;
-  
         if (territory.volume > 1000) {
           territory.volume = 1000;
         }
-  
       }
-
     }
     
     // поедание территорий коровами

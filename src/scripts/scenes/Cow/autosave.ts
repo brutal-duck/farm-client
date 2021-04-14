@@ -1,32 +1,30 @@
 import axios from 'axios';
 import CowSprite from './../../components/Animal/CowSprite';
+import Territory from './../../components/Territories/Territory';
 
 // автосохранение
 function autosave(): void {
   
   this.autoSaveTimer = 0;
-
+  
   let tasks: Itasks[] = this.partTasks();
   let territories: Iterritories[] = [];
   let cow: Icow[] = [];
 
   for (let i in this.territories.children.entries) {
-
-    let territory = this.territories.children.entries[i];
+    const territory: Territory = this.territories.children.entries[i];
     territories.push({
       _id: territory._id,
       block: territory.block,
       position: territory.position,
-      type: territory.type,
+      type: territory.territoryType,
       volume: territory.volume,
       improve: territory.improve,
       money: territory.money
     });
-
   }
 
   for (let i in this.animalGroup.children.entries) {
-
     let cw: CowSprite = this.animalGroup.children.entries[i];
     cow.push({
       _id: cw._id,
@@ -38,7 +36,6 @@ function autosave(): void {
       diamond: cw.diamond,
       vector: cw.vector
     });
-
   }
   
   if (typeof this.state.userCow.autosaveCounter === 'number') this.state.userCow.autosaveCounter++;
@@ -91,28 +88,20 @@ function autosave(): void {
   .then((res) => {
     
     if (this.scene.isActive('Cow')) {
-
       if (res.data.error) this.logout();
       else {
-
         if (this.state.user.hash === 'local') {
-          
           this.state.user.id = res.data.newUser._id;
           this.state.user.hash = res.data.newUser.hash;
           this.state.user.counter = res.data.newUser.counter;
-
           if (this.state.platform === 'web') {
             document.cookie = "farmHASH=" + this.state.user.hash + "; expires=" + res.data.expires + "; path=/;";
           }
-
         }
         if (res.data.donate) this.state.donate = true; 
       }
-      
     }
-
   });
-
 }
 
 export default autosave;

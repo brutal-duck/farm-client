@@ -381,7 +381,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   }
 
   public changeSprite(): void {
-  
     let farm: string = this.scene.state.farm.toLowerCase();
   
     let sprite: string = this.texture.key;

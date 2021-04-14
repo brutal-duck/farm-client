@@ -5,7 +5,6 @@ import Territory from './../../components/Territories/Territory';
 
 // расчет баланса фермы
 function balance(): Ibalance {
-
   let waterConsumption: number = 0;
   let grassConsumption: number = 0;
   let waterRecovery: number = 0;
@@ -28,20 +27,16 @@ function balance(): Ibalance {
 
   for (let i in this.territories.children.entries) {
 
-    let territory = this.territories.children.entries[i];
+    const territory: Territory = this.territories.children.entries[i];
 
-    if (territory.type === 2 || territory.type === 3) {
-      
-      let reg: number = this.settings.territoriesCowSettings.find(item => item.improve === territory.improve).regeneration;
-
-      if (territory.type === 2) {
+    if (territory.territoryType === 2 || territory.territoryType === 3) {
+      const reg: number = this.settings.territoriesCowSettings.find(item => item.improve === territory.improve).regeneration;
+      if (territory.territoryType === 2) {
         grassRecovery += reg;
       } else {
         waterRecovery += reg;
       }
-
     }
-
   }
 
   if (waterRecovery > 0) {
@@ -94,7 +89,6 @@ function balance(): Ibalance {
     notEnoughGrass: notEnoughGrass,
     notEnoughWater: notEnoughWater
   }
-
 }
 
 
