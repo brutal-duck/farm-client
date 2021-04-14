@@ -1376,6 +1376,26 @@ function remainderSellResource(): void {
   }
 }
 
+function createTaskZone(): void {
+  this.taskZone = this.add.zone(this.cameras.main.centerX, 75, 200, 150).setDepth(1).setDropZone(undefined, () => {});
+
+  const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
+  graphics
+    .lineStyle(2, 0xFFFF00)
+    .setDepth(1)
+    .strokeRect(
+      this.taskZone.x - this.taskZone.input.hitArea.width / 2,
+      this.taskZone.y - this.taskZone.input.hitArea.height / 2,
+      this.taskZone.input.hitArea.width, 
+      this.taskZone.input.hitArea.height
+    );
+    
+  this.click(this.taskZone, () => {
+    this.game.scene.keys[this.state.farm].showTasks();
+  });
+}
+
+
 export {
   random,
   getRandomBool,
@@ -1408,5 +1428,6 @@ export {
   intervalPorgressCollectorTime,
   autoporgressCollectorTime,
   loadingModal,
-  remainderSellResource
+  remainderSellResource,
+  createTaskZone
 }

@@ -1,7 +1,7 @@
 import {
   shortNum,
-  socialButtons,
-  shortTime
+  shortTime,
+  createTaskZone
 } from '../../general/basic';
 import {
   click,
@@ -52,13 +52,13 @@ class CowBars extends Phaser.Scene {
   public countIncrease: number; // колличество пульсаций
   public userDiamonds: number; // промежуточные кристаллы
   public stepsDiamonds: number[] = [];
-  public offline: Phaser.GameObjects.Sprite;
   public calendarText: Phaser.GameObjects.Text;
   public calendar: any;
   public nativeShop: Phaser.GameObjects.Graphics;
   public nativeShopCounter: Phaser.GameObjects.Text;
   public starterpackIcon: Phaser.GameObjects.Image;
   public hints: Phaser.GameObjects.Group;
+  public taskZone: Phaser.GameObjects.Zone;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -66,13 +66,13 @@ class CowBars extends Phaser.Scene {
   public clickModalBtn = clickModalBtn.bind(this);
   public pulseBalance = pulseBalance.bind(this);
   public increaseDiamonds = increaseDiamonds.bind(this);
-  public socialButtons = socialButtons.bind(this);
   public newbieAwardAnimation = newbieAwardAnimation.bind(this);
   public updateNativeShop = updateNativeShop.bind(this);
   public shortTime = shortTime.bind(this);
   public clickTaskBoard = clickTaskBoard.bind(this);
   public plusMoneyAnimation = plusMoneyAnimation.bind(this);
   public getCurrency = getCurrency.bind(this);
+  public createTaskZone = createTaskZone.bind(this);
 
   public init(state: Istate): void {
     
@@ -153,13 +153,7 @@ class CowBars extends Phaser.Scene {
     });
 
     this.menu = BarsMenu.create(this);
-
-    this.offline = this.add.sprite(650, this.height - 90, 'offline')
-      .setInteractive()
-      .setDepth(this.height + 4)
-      .setVisible(false);
-
-    if (!this.state.online) this.offline.setVisible(true);
+    this.createTaskZone();
 
     // монеты и кристаллы
     this.diamonds = this.add.text(590, 38, '', {
@@ -252,12 +246,12 @@ class CowBars extends Phaser.Scene {
     // иконка ежедневных наград для новичков
     if (this.state.newbieTime > 0) {
   
-      this.calendar = this.add.sprite(283, 77, 'calendar');
+      this.calendar = this.add.sprite(283, 77, 'calendar').setDepth(2);
       this.calendar.counter = 0;
       this.calendarText = this.add.text(285, 85, String(Number(this.state.daily)), {
         font: '25px Bip',
         color: '#285881'
-      }).setOrigin(0.5, 0.5);
+      }).setOrigin(0.5, 0.5).setDepth(2);
 
       this.click(this.calendar, (): void => {
 

@@ -276,6 +276,7 @@ function doneTutor_90(): void {
   
   this.state.userSheep.tutorial = 100;
 
+  this.game.scene.keys['SheepBars'].taskZone.setVisible(true);
   this.game.scene.keys['SheepBars'].addDiamonds.setVisible(true);
   this.game.scene.keys['SheepBars'].addMoney.setVisible(true);
   this.game.scene.keys['SheepBars'].shop.setVisible(true);
@@ -462,6 +463,7 @@ function skipTutorial(): void {
     this.sheep.children.entries[i].shaveStatus.setVisible(true);
   }
 
+  this.game.scene.keys['SheepBars'].taskZone.setVisible(true);
   this.game.scene.keys['SheepBars'].sheepBuy.setVisible(true);
   this.game.scene.keys['SheepBars'].sheepPrice.setVisible(true);
   this.game.scene.keys['SheepBars'].sheepPriceBubble.setVisible(true);
