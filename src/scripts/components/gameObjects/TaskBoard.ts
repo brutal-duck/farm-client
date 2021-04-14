@@ -693,7 +693,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
     let icon: Phaser.GameObjects.Image = this.scene.add.sprite(88, this.positionY - 250, taskData.icon).setDepth(1).setScale(0.9).setAlpha(0);
     let text: Phaser.GameObjects.Text = this.scene.add.text(icon.getBounds().right + 20, this.positionY - 250, taskData.name, {
       font: '24px Bip',
-      color: '#944000',
+      color: '#713D1E',
       align: 'left',
       wordWrap: { width: 460 }
     }).setDepth(1).setOrigin(0, 0.5).setAlpha(0);
