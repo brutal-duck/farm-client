@@ -191,17 +191,15 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
   // покупка земли
   public buyTerritory(): void {
-    // const territory: Territory = this.scene.state.territory;
-    let user: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
-    let settings: IterritoriesPrice = this.scene.state.cowSettings.territoriesCowPrice.find((data: IterritoriesPrice) => data.block === this.block && data.position === this.position);;
+    const user: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
+    const settings: IterritoriesPrice = this.scene.state.cowSettings.territoriesCowPrice.find((data: IterritoriesPrice) => data.block === this.block && data.position === this.position);
 
 
     if (user.part >= settings.unlock && this.territoryType === 0) {
       // 70% от суммы покупки
-      let price = Math.round((settings.price / 100) * 70);
+      const price = Math.round((settings.price / 100) * 70);
 
       if (user.money >= price) {
-
         this.scene.state.amplitude.getInstance().logEvent('buy_territory', {
           block: this.block,
           position: this.position,
@@ -243,7 +241,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     this.scene.state.modal = modal;
     this.scene.scene.launch('Modal', this.scene.state);
   }
-
 
   public exchangeTerritory(): void {
     
@@ -531,4 +528,96 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       }
     }
   }
+
+  public improveTerritory(): void {
+
+    let user: IuserSheep | IuserChicken | IuserCow;
+    let territoriesSettings: any = [];
+    let parts: Ipart[] = [];
+  
+    if (this.scene.state.farm === 'Sheep') {
+  
+      user = this.scene.state.userSheep;
+      territoriesSettings = this.scene.state.sheepSettings.territoriesSheepSettings;
+  
+    } else if (this.scene.state.farm === 'Chicken') {
+  
+      user = this.scene.state.userChicken;
+      territoriesSettings = this.scene.state.chickenSettings.territoriesChickenSettings;
+      
+    } else if (this.scene.state.farm === 'Cow') {
+  
+      user = this.scene.state.userCow;
+      territoriesSettings = this.scene.state.cowSettings.territoriesCowSettings;
+      
+    }
+  
+    if (this.improve < territoriesSettings.length &&
+      (this.territoryType === 2 ||
+      this.territoryType === 3 ||
+      this.territoryType === 5)) {
+  
+      let settings: IterritoriesCowSettings = territoriesSettings.find((data: any) => data.improve === this.improve + 1);
+      
+      if (user.part >= settings.unlock_improve) {
+          
+          const improve: number = this.improve + 1;
+          let price: number = settings.improvePrice;
+
+        if (user.money >= price) {
+  
+          let territory: string;
+  
+          if (this.territoryType === 2) territory = 'grass';
+          else if (this.territoryType === 3) territory = 'water';
+          else if (this.territoryType === 5) territory = 'repository';
+    
+          this.scene.state.amplitude.getInstance().logEvent('improve_territory', {
+            block: this.block,
+            position: this.position,
+            farm_id: this.scene.state.farm,
+            level: improve,
+            type: territory
+          });
+  
+          this.improve = improve;
+          user.money -= price;
+  
+          if (this.territoryType === 5) {
+  
+            this.scene.tryTask(17, improve);
+  
+            this.repository.setTexture(this.scene.state.farm.toLowerCase() + '-repository-' + improve + '-1');
+            Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
+  
+          } else {
+  
+            if (this.territoryType === 2) {
+              this.scene.tryTask(8, improve);
+            }
+  
+            if (this.territoryType === 3) {
+              this.scene.tryTask(9, improve);
+            }
+  
+            this.volume = 1000;
+  
+            this.scene.time.addEvent({ delay: 500, callback: (): void => {
+              
+              this.changeSprite();
+              Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
+  
+            }, callbackScope: this, loop: false });
+  
+          }
+        
+        } else {
+  
+          let count: number = price - user.money;
+          let diamonds: number = this.scene.convertMoney(count);
+          this.openConvertor(count, diamonds, 3, 1);
+        }
+      }
+    }
+  }  
 }
