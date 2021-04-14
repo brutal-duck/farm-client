@@ -255,6 +255,7 @@ function collectorBoost(): void {
     this.freeCollector = this.boostButton(350, 100 + this.height, String(freeTime), this.state.lang.shortMinutes, this.state.lang.take, 'free');
     this.clickBoostBtn(this.freeCollector, (): void => {
       this.game.scene.keys[this.state.farm].freeCollector(1);
+      this.game.scene.keys[this.state.farm].autosave();
     });
 
   } else {
@@ -294,6 +295,7 @@ function collectorBoost(): void {
       let doubleCollector = this.boostButton(350, 160 + this.height, String(doubleTime), this.state.lang.shortMinutes, String(doubleTimePrice), 'ad-diamond');
       this.clickBoostBtn(doubleCollector, (): void => {
         this.game.scene.keys[this.state.farm].freeCollector(2);
+        this.game.scene.keys[this.state.farm].autosave();
       });
 
     }
@@ -314,6 +316,7 @@ function collectorBoost(): void {
     let hours4 = this.boostButton(350, 220 + this.height, '4', this.state.lang.shortHours, String(this.state[`${this.state.farm.toLowerCase()}Settings`].collectorPrice4), 'diamond');
     this.clickBoostBtn(hours4, (): void => {
       this.game.scene.keys[this.state.farm].buyCollector(3);
+      this.game.scene.keys[this.state.farm].autosave();
     });
 
   } else {
@@ -328,6 +331,7 @@ function collectorBoost(): void {
     let hours12 = this.boostButton(350, 280 + this.height, '12', this.state.lang.shortHours, String(this.state[`${this.state.farm.toLowerCase()}Settings`].collectorPrice12), 'diamond');
     this.clickBoostBtn(hours12, (): void => {
       this.game.scene.keys[this.state.farm].buyCollector(4);
+      this.game.scene.keys[this.state.farm].autosave();
     });
 
   } else {
@@ -360,24 +364,18 @@ function collectorBoost(): void {
   } else {
     
     if (this.state[`user${this.state.farm}`].collector > 0) {
-
       this.collectorTimer.y += 45;
       collectorSprite.y += 25;
       levelBg.y += 25;
       userLevel.y += 25;
       levelText.y += 25;
-
     } else {
-
       collectorSprite.y += 35;
       levelBg.y += 35;
       userLevel.y += 35;
       levelText.y += 35;
-
     }
-
   }
-
 }
 
 
