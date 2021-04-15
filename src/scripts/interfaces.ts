@@ -2,6 +2,10 @@ interface Iposition {
   x: number;
   y: number;
 }
+interface Isize {
+  width: number;
+  height: number;
+}
 interface Ibalance {
   alarm: boolean;
   grassConsumption: number;

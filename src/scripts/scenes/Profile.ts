@@ -2,23 +2,9 @@ import { click, clickShopBtn, clickButton } from '../general/clicks';
 import { shortNum, getEventRaiting, shortTime, loadingModal, getStatusSettings } from '../general/basic';
 import { scoreEnding } from './Event/basic';
 
-const sheepCoin: string = require("./../../assets/images/sheep/icons/money.png");
-const chickenCoin: string = require("./../../assets/images/chicken/icons/money.png");
-const back: string = require("./../../assets/images/icons/back.png");
-const map: string = require("./../../assets/images/map.png");
-const mapLockIcon: string = require("./../../assets/images/icons/map-lock-icon.png");
-const mapChickenIcon: string = require("./../../assets/images/icons/map-chicken-icon.png");
-const mapSheepIcon: string = require("./../../assets/images/icons/map-sheep-icon.png");
-const pointMap: string = require("./../../assets/images/icons/point-map.png");
-const pbChapterMap: string = require("./../../assets/images/modal/pb-chapter-map.png");
-const partProgress: string = require("./../../assets/images/modal/part-progress.png");
-const mapBtn: string = require("./../../assets/images/modal/map-btn.png");
-const mapCloud: string = require("./../../assets/images/event/map-cloud.png");
-const mapEventFarm: string = require("./../../assets/images/event/map-event-farm.png");
-const mapEventIsland: string = require("./../../assets/images/event/map-event-island.png");
-
 const background: string = require('./../../assets/images/profile/background.jpg');
 const backButton: string = require('./../../assets/images/profile/back-button.png');
+const farms: string = require('./../../assets/images/profile/farms.png');
 
 class Profile extends Phaser.Scene {
   constructor() {
@@ -27,9 +13,6 @@ class Profile extends Phaser.Scene {
   
   public state: Istate;
   public bg: Phaser.GameObjects.Sprite;
-  public point: Phaser.GameObjects.Sprite;
-  public pointPosition: Iposition;
-  public pointAnimation: number;
   public eventScore: Phaser.GameObjects.Text;
   public eventPlace: Phaser.GameObjects.Text;
   public eventEndText: Phaser.GameObjects.Text;
@@ -43,6 +26,7 @@ class Profile extends Phaser.Scene {
   public backBtn: Phaser.GameObjects.Sprite;
   public avatar: Phaser.GameObjects.Sprite;
   public diamondsText: Phaser.GameObjects.Text;
+  
 
 
 
@@ -56,105 +40,35 @@ class Profile extends Phaser.Scene {
 
   public init(state: Istate): void {
     this.state = state;
-    this.pointAnimation = 0;
   }
 
 
   public preload(): void {
     this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)');
     this.loadingModal();
-    
-    this.load.image('sheepCoin', sheepCoin);
-    this.load.image('chickenCoin', chickenCoin);
-    this.load.image('back', back);
-    this.load.image('map-lock-icon', mapLockIcon);
-    this.load.image('map-sheep-icon', mapSheepIcon);
-    this.load.image('map-chicken-icon', mapChickenIcon);
-    this.load.image('point-map', pointMap);
-    this.load.image('pb-chapter-map', pbChapterMap);
-    this.load.image('part-progress', partProgress);
-    this.load.image('map-btn', mapBtn);
-    this.load.image('map-cloud', mapCloud);
-    this.load.image('map-event-farm', mapEventFarm);
-    this.load.image('map-event-island', mapEventIsland);
-
     this.load.image('profile-bg', background);
     this.load.image('back-button', backButton);
-
+    this.load.image('farms', farms);
   }
 
 
   public create(): void {
-
     if (this.state.progress.event.eventPoints >= 0 && this.state.progress.event.open) this.getEventRaiting(); // получаем новые рейтинги
     
     this.bg = this.add.sprite(0, 0, 'profile-bg')
       .setInteractive()
       .setOrigin(0, 0);
 
-    this.backBtn = this.add.sprite(630, 80, 'back-button');
     this.createElements();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    this.point = this.add.sprite(0, 0, 'point-map').setOrigin(0.5, 1).setDepth(100).setVisible(false);
-    
-    let sheepPosition: Iposition = { x: 155, y: 145 };
-    let chickenPosition: Iposition = { x: 500, y: 270 };
-    let eventPosition: Iposition = { x: 580, y: 650 };
-    let cowPosition: Iposition = { x: 100, y: 650 };
-
-    if (this.state.farm === 'Sheep') {
-      this.pointPosition = sheepPosition;
-    } else if (this.state.farm === 'Chicken') {
-      this.pointPosition = chickenPosition;
-    } else if (this.state.farm === 'Event') {
-      this.pointPosition = eventPosition;
-    } else if (this.state.farm === 'Cow') {
-      this.pointPosition = cowPosition;
-    }
-
-    this.point.x = this.pointPosition.x;
-    this.point.y = this.pointPosition.y;
-
-    this.build(sheepPosition, 'Sheep', this.state.progress.sheep);
-
-    this.state.progress.chicken.unlock = 1; // костыль для покупки куриной фермы
-    this.build(chickenPosition,'Chicken', this.state.progress.chicken);
-    
-    // Евентовая ферма на карте
-    this.buildEvent();
-    this.cowFarm();
-
-    this.createPointerAnim();
     this.setListeners();
   }
 
-  private createPointerAnim(): void {
-    this.tweens.add({
-      targets: this.point,
-      y: `-=20`,
-      yoyo: true,
-      repeat: -1,
-      duration: 250
-    });
-  }
-
-
   private createElements(): void {
-    this.createProfileInfo();
+    this.backBtn = this.add.sprite(630, 80, 'back-button');
 
+    this.createProfileInfo();
+    this.createFarms();
+    this.createShopZone();
   }
 
   private createProfileInfo(): void {
@@ -197,160 +111,58 @@ class Profile extends Phaser.Scene {
     }).setOrigin(0.5);
   }
 
-
-
-  private setListeners(): void {
-    this.clickButton(this.backBtn, () => {
-      this.game.scene.keys[this.state.farm].scrolling.downHandler();
-      this.game.scene.keys[this.state.farm].scrolling.enabled = true;
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.scene.stop();
-    });
+  private createFarms(): void {
+    this.add.sprite(720, 750, 'farms').setOrigin(1, 0);
+    this.createChickenFarm();
+    this.createSheepFarm();
+    this.createCowFarm();
+    this.createEventFarm();
   }
 
+  private createSheepFarm(): void {
+    const farmPosition: Iposition = { x: 160, y: 740 };
+    const zoneSize: Isize = { width: 320, height: 240}
+    this.add.text(farmPosition.x + 115, farmPosition.y + 90, `${this.state.progress.sheep.part}/${this.state.progress.sheep.max}`, {
+      font: '20px Shadow',
+      color: '#FBD0B9'
+    }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
+    this.createFarmZone(farmPosition, 'Sheep', zoneSize);
+  }
   
-  public update(): void {
-    this.updateEvent();
+  private createChickenFarm(): void {
+    const farmPosition: Iposition = { x: 580, y: 950 };
+    const zoneSize: Isize = { width: 280, height: 280}
+    this.add.text(farmPosition.x - 75, farmPosition.y + 30, `${this.state.progress.chicken.part}/${this.state.progress.chicken.max}`, {
+      font: '20px Shadow',
+      color: '#FBD0B9'
+    }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
+    this.createFarmZone(farmPosition, 'Chicken', zoneSize);
   }
 
-
-  // строим информацию о фермах
-  public build(position: Iposition, farm: string, progress: IpartProgress): void {
-
-    // 1 - открыта
-    // 2 - купить
-    // 3 - закрыто
-
-    let status: number;
-
-    if (progress.open) {
-      status = 1;
-      if (farm === 'Chicken') this.state.dailyAwards[3] = false
-    } else {
-      let previousPart: number = this.previousPartAndCoin(farm).part;
-      if (previousPart >= progress.unlock) {
-        status = 2;
-      } else {
-        status = 3;
-      }
-    }
-
-    if (status === 1 || status === 2) {
-      this.add.sprite(position.x - 79, position.y + 52, 'map-' + farm.toLowerCase() + '-icon');
-    } else {
-      this.add.sprite(position.x - 79, position.y + 52, 'map-lock-icon');
-    }
-
-    if (status === 1) {
-      
-      let tileX: number = position.x - 34;
-      let percent: number = Math.round(100 / progress.max *  progress.part * (275 / 100));
-      this.add.sprite(position.x + 35, position.y + 28, 'pb-chapter-map')
-        .setOrigin(0.5, 0);
-      this.add.tileSprite(tileX, position.y + 34, percent, 16, 'part-progress')
-        .setOrigin(0, 0)
-        .setScale(0.5);
-
-      this.add.text(position.x - 39, position.y + 70, this.state.lang.part + ' ' + progress.part + ' / ' + progress.max, {
-        font: '22px Shadow',
-        color: '#FBD0B9'
-      }).setOrigin(0, 0.5).setStroke('#522007', 5);
-
-      let zone: Phaser.GameObjects.Zone = this.add.zone(position.x, position.y + 70, 280, 140).setDropZone(undefined, () => {});
-    
-      // let graphics: Phaser.GameObjects.Graphics = this.add.graphics();
-      // graphics.lineStyle(2, 0xFFFF00);
-      // graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
-  
-      this.click(zone, (): void => {
-  
-        if (this.state.farm !== farm) {
-          this.game.scene.keys[this.state.farm].autosave();
-          this.scene.stop();
-          this.scene.stop(this.state.farm);
-          this.scene.stop(this.state.farm + 'Bars');
-          this.scene.start(farm + 'Preload', this.state);
-        } else {
-          this.game.scene.keys[this.state.farm].scrolling.downHandler();
-          this.game.scene.keys[this.state.farm].scrolling.enabled = true;
-          this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-          this.scene.stop();
-        }
-  
-      }, 8);
-
-    } else if (status === 2) {
-
-      let count: string = String(shortNum(progress.price));
-      let icon: string;
-      
-      if (progress.donate) icon = 'diamond';
-      else icon = this.previousPartAndCoin(farm).coin;
-
-      let btn: Phaser.GameObjects.Sprite = this.add.sprite(position.x + 35, position.y + 55, 'map-btn');
-      let title: Phaser.GameObjects.Text = this.add.text(position.x + 47, position.y + 52, count, {
-        font: '22px Shadow',
-        color: '#FBD0B9',
-        wordWrap: { width: 165 }
-      }).setOrigin(0.5, 0.5).setStroke('#1F530A', 5);
-
-      let left: number = title.getBounds().left - 17;
-      let img: Phaser.GameObjects.Sprite = this.add.sprite(left, position.y + 52, icon).setScale(0.12);
-
-      this.clickShopBtn({ btn: btn, title: title, img: img }, (): void => {
-        
-        this.game.scene.keys[this.state.farm].buyNextFarm();
-        this.game.scene.keys[this.state.farm].scrolling.downHandler();
-        this.game.scene.keys[this.state.farm].scrolling.enabled = true;
-        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-        this.scene.stop();
-      });
-
-    } else if (status === 3) {
-
-      let text: string = this.state.lang.openFarm.replace('$1', progress.unlock);
-
-      this.add.text(position.x + 35, position.y + 55, text, {
-        font: '18px Shadow',
-        color: '#FBD0B9',
-        wordWrap: { width: 165 }
-      }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
-    }
+  private createCowFarm(): void {
+    const farmPosition: Iposition = { x: 160, y: 1000 };
+    const zoneSize: Isize = { width: 320, height: 240}
+    this.add.text(farmPosition.x + 115, farmPosition.y + 90, `${this.state.progress.cow.part}/${this.state.progress.cow.max}`, {
+      font: '20px Shadow',
+      color: '#FBD0B9'
+    }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
+    this.add.text(farmPosition.x - 100, farmPosition.y, 'COW\nFARM', {font: '50px Shadow', color: 'white', align: 'center'}).setStroke('black', 6)
+    this.createFarmZone(farmPosition, 'Cow', zoneSize);
   }
 
-  public cowFarm(): void {
-
-    this.add.text(160, 540, 'COW\nFARM', {font: '50px Shadow', color: 'white', align: 'center'}).setStroke('black', 6)
-
-    let zone: Phaser.GameObjects.Zone = this.add.zone(180, 600, 280, 140).setDropZone(undefined, () => {});
-    
-    let graphics: Phaser.GameObjects.Graphics = this.add.graphics();
-    graphics.lineStyle(2, 0xFFFF00);
-    graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
-  
-    this.click(zone, (): void => {
-
-      if (this.state.farm !== 'Cow') {
-        this.scene.stop();
-        this.scene.stop(this.state.farm);
-        this.scene.stop(this.state.farm + 'Bars');
-        this.scene.start('CowPreload', this.state)
-        localStorage.farm = 'Cow'
-      }
-    });
-  }
-
-  public buildEvent(): void {
-    this.eventCloud = this.add.sprite(550, 750, 'map-cloud').setVisible(false);
+  private createEventFarm(): void {
+    // this.eventCloud = this.add.sprite(550, 750, 'map-cloud').setVisible(false);
     this.eventMapFarm = this.add.sprite(720, 730, 'map-event-farm').setOrigin(1, 0.5).setVisible(false);
-    this.eventZone = this.add.zone(570, 720, 220, 160).setDropZone(undefined, () => {});
+    this.eventZone = this.add.zone(570, 790, 300, 170).setDropZone(undefined, () => {});
 
-    // this.add.graphics({
-    //   fillStyle: {
-    //     color: 0xffffff,
-    //     alpha: 0.6
-    //   },
-    // }).fillRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.width, zone.height);
+    this.add.graphics()
+      .lineStyle(5, 0x00FFFF)
+      .strokeRect(
+        this.eventZone.x - this.eventZone.input.hitArea.width / 2,
+        this.eventZone.y - this.eventZone.input.hitArea.height / 2,
+        this.eventZone.width,
+        this.eventZone.height
+      );
 
     this.eventScore = this.add.text(580, 675, '- ' + this.state.lang.eventScores, {
       fontSize: '21px',
@@ -415,9 +227,71 @@ class Profile extends Phaser.Scene {
 
       }
     });
-  };
+  }
 
-  public updateEvent(): void {
+  private createFarmZone(farmPosition: Iposition, farmName: string, zoneSize: Isize): void {
+    const zone: Phaser.GameObjects.Zone = this.add.zone(farmPosition.x, farmPosition.y + 70, zoneSize.width, zoneSize.height).setDropZone(undefined, () => {});
+      
+    const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
+    graphics.lineStyle(5, 0xFFFF00);
+    graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+
+    this.click(zone, (): void => {
+      if (this.state.farm !== farmName) {
+        this.game.scene.keys[this.state.farm].autosave();
+        this.scene.stop();
+        this.scene.stop(this.state.farm);
+        this.scene.stop(this.state.farm + 'Bars');
+        this.scene.start(farmName + 'Preload', this.state);
+      } else {
+        this.game.scene.keys[this.state.farm].scrolling.downHandler();
+        this.game.scene.keys[this.state.farm].scrolling.enabled = true;
+        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+        this.scene.stop();
+      }
+    }, 8);
+  }
+
+  private setListeners(): void {
+    this.clickButton(this.backBtn, () => {
+      this.game.scene.keys[this.state.farm].scrolling.downHandler();
+      this.game.scene.keys[this.state.farm].scrolling.enabled = true;
+      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+      this.scene.stop();
+    });
+  }
+
+  private createShopZone(): void {
+    const shopPosition: Iposition = {
+      x: 290,
+      y: 600
+    }
+    const zoneSize: Isize = {
+      width: 170,
+      height: 170
+    }
+    const zone: Phaser.GameObjects.Zone = this.add.zone(shopPosition.x, shopPosition.y, zoneSize.width, zoneSize.height).setDropZone(undefined, () => {});
+      
+    const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
+    graphics.lineStyle(5, 0xFF0000);
+    graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+
+    this.click(zone, (): void => {
+      const modal: Imodal = {
+        type: 2,
+        shopType: this.state.modal?.shopType || 1
+      }
+      this.state.modal = modal;
+      this.scene.launch('Modal', this.state);
+  
+    });
+  }
+
+  public update(): void {
+    this.updateEvent();
+  }
+
+  private updateEvent(): void {
     
     if (this.state.progress.event.startTime > 0 && 
       this.state.progress.event.open && 
@@ -479,7 +353,7 @@ class Profile extends Phaser.Scene {
     }
 
     if (!this.state.progress.event.open) {
-      this.eventCloud.setVisible(true);
+      this.eventCloud?.setVisible(true);
       this.eventStartText.setVisible(false);
       this.eventStartTime.setVisible(false);
       this.eventStartBg.setVisible(false);
@@ -500,29 +374,6 @@ class Profile extends Phaser.Scene {
       this.state.progress.event.updateRaitings = false;
     }
     
-  }
-
-  // предыдущая глава
-  public previousPartAndCoin(farm: string): { part: number, coin: string } {
-
-    let part: number;
-    let coin: string;
-
-    switch(farm) {
-      case 'Sheep':
-        part = 0;
-        break;
-      case 'Chicken':
-        part = this.state.progress.sheep.part;
-        coin = 'sheepCoin';
-        break;
-    }
-
-    return {
-      part: part,
-      coin: coin
-    }
-
   }
 
 }
