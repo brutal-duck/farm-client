@@ -4,7 +4,10 @@ import { scoreEnding } from './Event/basic';
 
 const background: string = require('./../../assets/images/profile/background.jpg');
 const backButton: string = require('./../../assets/images/profile/back-button.png');
-const farms: string = require('./../../assets/images/profile/farms.png');
+const sheepFarm: string = require('./../../assets/images/profile/sheep-farm.png');
+const chickenFarm: string = require('./../../assets/images/profile/chicken-farm.png');
+const cowFarm: string = require('./../../assets/images/profile/cow-farm.png');
+const eventFarm: string = require('./../../assets/images/profile/event-farm.png');
 
 class Profile extends Phaser.Scene {
   constructor() {
@@ -45,7 +48,10 @@ class Profile extends Phaser.Scene {
     this.loadingModal();
     this.load.image('profile-bg', background);
     this.load.image('back-button', backButton);
-    this.load.image('farms', farms);
+    this.load.image('sheep-farm', sheepFarm);
+    this.load.image('chicken-farm', chickenFarm);
+    this.load.image('cow-farm', cowFarm);
+    this.load.image('event-farm', eventFarm);
   }
 
 
@@ -108,7 +114,6 @@ class Profile extends Phaser.Scene {
   }
 
   private createFarms(): void {
-    this.add.sprite(720, 750, 'farms').setOrigin(1, 0);
     this.createChickenFarm();
     this.createSheepFarm();
     this.createCowFarm();
@@ -116,24 +121,26 @@ class Profile extends Phaser.Scene {
   }
 
   private createSheepFarm(): void {
-    const farmPosition: Iposition = { x: 160, y: 740 };
+    const farmPosition: Iposition = { x: 160, y: 810 };
     const zoneSize: Isize = { width: 320, height: 240 };
-    this.add.text(farmPosition.x + 115, farmPosition.y + 90, `${this.state.progress.sheep.part}/${this.state.progress.sheep.max}`, {
-      font: '20px Shadow',
+    const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'sheep-farm');
+    this.add.text(farmPosition.x + 110, farmPosition.y + 5, `${this.state.progress.sheep.part}/${this.state.progress.sheep.max}`, {
+      font: '28px Shadow',
       color: '#FBD0B9'
     }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
-    this.createFarmZone(farmPosition, 'Sheep', zoneSize);
+    // this.createFarmZone(farmPosition, 'Sheep', zoneSize);
   }
   
   private createChickenFarm(): void {
-    const farmPosition: Iposition = { x: 580, y: 950 };
+    const farmPosition: Iposition = { x: 720, y: 1025 };
     const zoneSize: Isize = { width: 280, height: 280 };
     if (this.state.progress.chicken.open) {
-      this.add.text(farmPosition.x - 75, farmPosition.y + 30, `${this.state.progress.chicken.part}/${this.state.progress.chicken.max}`, {
-        font: '20px Shadow',
+      const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'chicken-farm').setOrigin(1, 0.5);
+      this.add.text(farmPosition.x - 215, farmPosition.y - 25, `${this.state.progress.chicken.part}/${this.state.progress.chicken.max}`, {
+        font: '28px Shadow',
         color: '#FBD0B9'
       }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
-      this.createFarmZone(farmPosition, 'Chicken', zoneSize);
+      // this.createFarmZone(farmPosition, 'Chicken', zoneSize);
     } else {
       this.add.graphics({ x: farmPosition.x, y: farmPosition.y })
         .fillStyle(0x000000, 0.5)
@@ -161,16 +168,17 @@ class Profile extends Phaser.Scene {
   }
 
   private createCowFarm(): void {
-    const farmPosition: Iposition = { x: 160, y: 1000 };
+    const farmPosition: Iposition = { x: 0, y: 1050 };
     const zoneSize: Isize = { width: 320, height: 240 };
 
     if (this.state.progress.cow.open) {
-      this.add.text(farmPosition.x + 115, farmPosition.y + 90, `${this.state.progress.cow.part}/${this.state.progress.cow.max}`, {
-        font: '20px Shadow',
+      const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'cow-farm').setOrigin(0, 0.5);
+
+      this.add.text(farmPosition.x + 290, farmPosition.y + 5, `${this.state.progress.cow.part}/${this.state.progress.cow.max}`, {
+        font: '28px Shadow',
         color: '#FBD0B9'
       }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
-      this.add.text(farmPosition.x - 100, farmPosition.y, 'COW\nFARM', {font: '50px Shadow', color: 'white', align: 'center'}).setStroke('black', 6)
-      this.createFarmZone(farmPosition, 'Cow', zoneSize);
+      // this.createFarmZone(farmPosition, 'Cow', zoneSize);
     } else if (this.state.progress.chicken.part >= this.state.progress.cow.unlock){
       this.add.graphics({ x: farmPosition.x, y: farmPosition.y })
       .fillStyle(0x000000, 0.5)
@@ -204,50 +212,53 @@ class Profile extends Phaser.Scene {
   }
 
   private createEventFarm(): void {
-    // this.eventCloud = this.add.sprite(550, 750, 'map-cloud').setVisible(false);
-    this.eventMapFarm = this.add.sprite(720, 730, 'map-event-farm').setOrigin(1, 0.5).setVisible(false);
+    const farmPosition: Iposition = {
+      x: 720,
+      y: 775
+    }
+    this.eventMapFarm = this.add.sprite(farmPosition.x, farmPosition.y, 'event-farm').setOrigin(1, 0.5).setVisible(true);
     this.eventZone = this.add.zone(570, 790, 300, 170).setDropZone(undefined, () => {});
 
-    this.add.graphics()
-      .lineStyle(5, 0x00FFFF)
-      .strokeRect(
-        this.eventZone.x - this.eventZone.input.hitArea.width / 2,
-        this.eventZone.y - this.eventZone.input.hitArea.height / 2,
-        this.eventZone.width,
-        this.eventZone.height
-      );  
+    // this.add.graphics()
+    //   .lineStyle(5, 0x00FFFF)
+    //   .strokeRect(
+    //     this.eventZone.x - this.eventZone.input.hitArea.width / 2,
+    //     this.eventZone.y - this.eventZone.input.hitArea.height / 2,
+    //     this.eventZone.width,
+    //     this.eventZone.height
+    //   );  
 
-    this.eventScore = this.add.text(580, 675, '- ' + this.state.lang.eventScores, {
+    this.eventScore = this.add.text(farmPosition.x - 122, farmPosition.y - 58, '- ' + this.state.lang.eventScores, {
       fontSize: '21px',
       color: '#6e00c7',
       fontFamily: 'Shadow'
     }).setOrigin(0.5, 0.5).setVisible(false);
 
-    this.eventPlace = this.add.text(580, 720, '- ' + this.state.lang.eventPlace, {
-      fontSize: '21px',
+    this.eventPlace = this.add.text(farmPosition.x - 122, farmPosition.y - 20, '- ' + this.state.lang.eventPlace, {
+      fontSize: '18px',
       color: '#f0e8ce',
       fontFamily: 'Shadow'
     }).setOrigin(0.5, 0.5).setVisible(false);
 
-    this.eventEndText = this.add.text(580, 740, this.state.lang.eventLastTime, {
-      fontSize: '16px',
+    this.eventEndText = this.add.text(farmPosition.x - 122, farmPosition.y, this.state.lang.eventLastTime, {
+      fontSize: '14px',
       color: '#530d8e',
       fontFamily: 'Shadow'
     }).setOrigin(0.5, 0.5).setVisible(false);
 
-    this.eventEndTime = this.add.text(580, 760, '-', {
-      fontSize: '24px',
+    this.eventEndTime = this.add.text(farmPosition.x - 122, farmPosition.y + 15, '-', {
+      fontSize: '18px',
       color: '#cbff40',
       fontFamily: 'Shadow'
     }).setOrigin(0.5, 0.5).setVisible(false);
     
-    this.eventStartText = this.add.text(570, 740, this.state.lang.eventStart, {
+    this.eventStartText = this.add.text(farmPosition.x - 150, farmPosition.y, this.state.lang.eventStart, {
       fontSize: '16px',
       color: '#ffe9e4',
       fontFamily: 'Shadow'
     }).setOrigin(0.5, 0.5).setDepth(1).setVisible(false);
 
-    this.eventStartTime = this.add.text(570, 760, '-', {
+    this.eventStartTime = this.add.text(farmPosition.x - 150, farmPosition.y, '-', {
       fontSize: '21px',
       color: '#cbff40',
       fontFamily: 'Shadow'
