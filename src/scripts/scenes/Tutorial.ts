@@ -784,8 +784,8 @@ class Tutorial extends Phaser.Scene {
                 if (alpha2 >= 1) {
                   this.pointerTutorial();
                   this.generalClick = (): void => {
-                    this.game.scene.keys[this.state.farm].autosave();
                     this.game.scene.keys[this.state.farm].doneEventTutor_0();
+                    this.game.scene.keys[this.state.farm].autosave();
                   };
                   timer.remove();
 
