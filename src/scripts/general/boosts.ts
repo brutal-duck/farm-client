@@ -10,11 +10,15 @@ function createBoostAnimal(): void {
     this.time.addEvent({ 
       delay: 100, 
       callback: (): void => {
-        let x: number = Phaser.Math.Between(270, 690);
+        let x: number = Phaser.Math.Between(510, 690);
         let y: number = Phaser.Math.Between(510, 690);
         let id: string = 'local_' + randomString(18);
-        this[`get${this.state.farm}`](id, type, x, y, 0, 500);
-        Firework.create(this, {x, y}, 1);
+        if (this.state.farm !== 'Cow') {
+          this[`get${this.state.farm}`](id, type, x, y, 0, 500);
+          Firework.create(this, {x, y}, 1);
+        } else {
+          this.animalGroup.generate(this, {x, y}, type, id, 0, 0, 7, true);
+        }
       }, 
       callbackScope: this, 
       loop: false 
