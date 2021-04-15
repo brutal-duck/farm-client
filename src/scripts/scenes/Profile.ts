@@ -131,23 +131,79 @@ class Profile extends Phaser.Scene {
   
   private createChickenFarm(): void {
     const farmPosition: Iposition = { x: 580, y: 950 };
-    const zoneSize: Isize = { width: 280, height: 280}
-    this.add.text(farmPosition.x - 75, farmPosition.y + 30, `${this.state.progress.chicken.part}/${this.state.progress.chicken.max}`, {
-      font: '20px Shadow',
-      color: '#FBD0B9'
-    }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
-    this.createFarmZone(farmPosition, 'Chicken', zoneSize);
+    const zoneSize: Isize = { width: 280, height: 280};
+    if (this.state.progress.chicken.open) {
+      this.add.text(farmPosition.x - 75, farmPosition.y + 30, `${this.state.progress.chicken.part}/${this.state.progress.chicken.max}`, {
+        font: '20px Shadow',
+        color: '#FBD0B9'
+      }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
+      this.createFarmZone(farmPosition, 'Chicken', zoneSize);
+    } else {
+      this.add.graphics({ x: farmPosition.x, y: farmPosition.y })
+        .fillStyle(0x000000, 0.5)
+        .fillRoundedRect(-100, 0, 200, 70, 8);
+      const btn: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y + 35, 'map-btn');
+      const title: Phaser.GameObjects.Text = this.add.text(btn.x + 15, btn.y - 5, shortNum(this.state.progress.chicken.price), {
+        font: '22px Shadow',
+        color: '#FBD0B9',
+        wordWrap: { width: 165 }
+      }).setOrigin(0.5, 0.5).setStroke('#1F530A', 5);
+
+      const left: number = title.getBounds().left - 17;
+      const img: Phaser.GameObjects.Sprite = this.add.sprite(left, title.y, 'sheepCoin').setScale(0.12);
+
+      this.clickShopBtn({ btn: btn, title: title, img: img }, (): void => {
+        console.log('Купил куриную ферму')
+        // this.game.scene.keys[this.state.farm].buyNextFarm();
+        // this.game.scene.keys[this.state.farm].scrolling.downHandler();
+        // this.game.scene.keys[this.state.farm].scrolling.enabled = true;
+        // this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+        // this.scene.stop();
+      });
+    }
   }
 
   private createCowFarm(): void {
     const farmPosition: Iposition = { x: 160, y: 1000 };
-    const zoneSize: Isize = { width: 320, height: 240}
-    this.add.text(farmPosition.x + 115, farmPosition.y + 90, `${this.state.progress.cow.part}/${this.state.progress.cow.max}`, {
-      font: '20px Shadow',
-      color: '#FBD0B9'
-    }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
-    this.add.text(farmPosition.x - 100, farmPosition.y, 'COW\nFARM', {font: '50px Shadow', color: 'white', align: 'center'}).setStroke('black', 6)
-    this.createFarmZone(farmPosition, 'Cow', zoneSize);
+    const zoneSize: Isize = { width: 320, height: 240};
+
+    if (this.state.progress.cow.open) {
+      this.add.text(farmPosition.x + 115, farmPosition.y + 90, `${this.state.progress.cow.part}/${this.state.progress.cow.max}`, {
+        font: '20px Shadow',
+        color: '#FBD0B9'
+      }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
+      this.add.text(farmPosition.x - 100, farmPosition.y, 'COW\nFARM', {font: '50px Shadow', color: 'white', align: 'center'}).setStroke('black', 6)
+      this.createFarmZone(farmPosition, 'Cow', zoneSize);
+    } else if (this.state.progress.chicken.part > this.state.progress.cow.unlock){
+      this.add.graphics({ x: farmPosition.x, y: farmPosition.y })
+      .fillStyle(0x000000, 0.5)
+      .fillRoundedRect(-100, 0, 200, 70, 8);
+      const btn: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y + 35, 'map-btn');
+      const title: Phaser.GameObjects.Text = this.add.text(btn.x + 15, btn.y - 5, shortNum(this.state.progress.cow.price), {
+        font: '22px Shadow',
+        color: '#FBD0B9',
+        wordWrap: { width: 165 }
+      }).setOrigin(0.5, 0.5).setStroke('#1F530A', 5);
+
+      const left: number = title.getBounds().left - 17;
+      const img: Phaser.GameObjects.Sprite = this.add.sprite(left, title.y, 'chickenCoin').setScale(0.12);
+
+      this.clickShopBtn({ btn: btn, title: title, img: img }, (): void => {
+        console.log('Купил коровью ферму')
+        // this.game.scene.keys[this.state.farm].buyNextFarm();
+        // this.game.scene.keys[this.state.farm].scrolling.downHandler();
+        // this.game.scene.keys[this.state.farm].scrolling.enabled = true;
+        // this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+        // this.scene.stop();
+      });
+    } else {
+      this.add.text(farmPosition.x, farmPosition.y, `Уровень открытия ${this.state.progress.cow.unlock}`, {
+        font: '22px Shadow',
+        color: '#FBD0B9',
+        wordWrap: { width: 165 },
+        align: 'center'
+      }).setOrigin(0.5);
+    }
   }
 
   private createEventFarm(): void {
