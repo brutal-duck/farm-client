@@ -142,6 +142,7 @@ class Profile extends Phaser.Scene {
       this.add.graphics({ x: farmPosition.x, y: farmPosition.y })
         .fillStyle(0x000000, 0.5)
         .fillRoundedRect(-100, 0, 200, 70, 8);
+
       const btn: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y + 35, 'map-btn');
       const title: Phaser.GameObjects.Text = this.add.text(btn.x + 15, btn.y - 5, shortNum(this.state.progress.chicken.price), {
         font: '22px Shadow',
@@ -174,7 +175,7 @@ class Profile extends Phaser.Scene {
       }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
       this.add.text(farmPosition.x - 100, farmPosition.y, 'COW\nFARM', {font: '50px Shadow', color: 'white', align: 'center'}).setStroke('black', 6)
       this.createFarmZone(farmPosition, 'Cow', zoneSize);
-    } else if (this.state.progress.chicken.part > this.state.progress.cow.unlock){
+    } else if (this.state.progress.chicken.part >= this.state.progress.cow.unlock){
       this.add.graphics({ x: farmPosition.x, y: farmPosition.y })
       .fillStyle(0x000000, 0.5)
       .fillRoundedRect(-100, 0, 200, 70, 8);
@@ -199,7 +200,7 @@ class Profile extends Phaser.Scene {
     } else {
       this.add.text(farmPosition.x, farmPosition.y, `Уровень открытия ${this.state.progress.cow.unlock}`, {
         font: '22px Shadow',
-        color: '#FBD0B9',
+        color: '#FFFFFF',
         wordWrap: { width: 165 },
         align: 'center'
       }).setOrigin(0.5);
