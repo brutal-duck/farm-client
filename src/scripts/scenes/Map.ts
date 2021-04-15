@@ -287,7 +287,7 @@ class Map extends Phaser.Scene {
 
     } else if (status === 3) {
 
-      let text: string = this.state.lang.openFarm.replace('$1', progress.unlock);
+      let text: string = this.state.lang.openFarm.replace('$1', String(progress.unlock));
 
       this.add.text(position.x + 35, position.y + 55, text, {
         font: '18px Shadow',
