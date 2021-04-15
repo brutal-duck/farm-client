@@ -9,7 +9,7 @@ let chicken: Ichicken[];
 let chickenEggs: IchickenEgg[];
 let cow: Icow[];
 let cowMilk: IcowMilk[];
-let lang: object;
+let lang: { [key: string]: string };
 let modal: Imodal;
 let animal: any;
 let territory: any;

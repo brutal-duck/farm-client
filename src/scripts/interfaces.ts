@@ -598,7 +598,7 @@ interface Istate {
   chickenEggs: IchickenEgg[];
   cowMilk: IcowMilk[];
   eventResources: IeventResource[];
-  lang: any;
+  lang: { [key: string]: string };
   modal: Imodal;
   animal: any;
   territory: any;

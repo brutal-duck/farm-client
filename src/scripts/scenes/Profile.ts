@@ -27,9 +27,6 @@ class Profile extends Phaser.Scene {
   public avatar: Phaser.GameObjects.Sprite;
   public diamondsText: Phaser.GameObjects.Text;
   
-
-
-
   public click = click.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
   public getEventRaiting = getEventRaiting.bind(this); 
@@ -90,19 +87,18 @@ class Profile extends Phaser.Scene {
     if (status) {
       this.add.sprite(avatarGeom.right - 15, avatarGeom.top + 15, status.iconTexture).setVisible(status.iconVisible);
     }
-
+    
     const text: Phaser.GameObjects.Text = this.add.text(avatarGeom.right + 110, avatarGeom.centerY, this.state.user.login,  {
       font: '32px Shadow',
       color: '#FFFFFF',
       align: 'center',
       wordWrap: { width: 220 },
     }).setOrigin(0.5);
-
+    if (!this.state.user.login) text.setText(this.state.lang.unknownFarmer);
     if (text.displayWidth > 200) {
       const multiply: number = text.displayWidth / 200;
       text.setFontSize(parseInt(text.style.fontSize) / multiply);
     }
-
     this.diamondsText = this.add.text(this.cameras.main.centerX + 120, 95, shortNum(this.state.user.diamonds), {
       font: '32px Shadow',
       color: '#FFFFFF',
@@ -121,7 +117,7 @@ class Profile extends Phaser.Scene {
 
   private createSheepFarm(): void {
     const farmPosition: Iposition = { x: 160, y: 740 };
-    const zoneSize: Isize = { width: 320, height: 240}
+    const zoneSize: Isize = { width: 320, height: 240 };
     this.add.text(farmPosition.x + 115, farmPosition.y + 90, `${this.state.progress.sheep.part}/${this.state.progress.sheep.max}`, {
       font: '20px Shadow',
       color: '#FBD0B9'
@@ -131,7 +127,7 @@ class Profile extends Phaser.Scene {
   
   private createChickenFarm(): void {
     const farmPosition: Iposition = { x: 580, y: 950 };
-    const zoneSize: Isize = { width: 280, height: 280};
+    const zoneSize: Isize = { width: 280, height: 280 };
     if (this.state.progress.chicken.open) {
       this.add.text(farmPosition.x - 75, farmPosition.y + 30, `${this.state.progress.chicken.part}/${this.state.progress.chicken.max}`, {
         font: '20px Shadow',
@@ -155,18 +151,18 @@ class Profile extends Phaser.Scene {
 
       this.clickShopBtn({ btn: btn, title: title, img: img }, (): void => {
         console.log('Купил куриную ферму')
-        // this.game.scene.keys[this.state.farm].buyNextFarm();
-        // this.game.scene.keys[this.state.farm].scrolling.downHandler();
-        // this.game.scene.keys[this.state.farm].scrolling.enabled = true;
-        // this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-        // this.scene.stop();
+        this.game.scene.keys[this.state.farm].buyNextFarm();
+        this.game.scene.keys[this.state.farm].scrolling.downHandler();
+        this.game.scene.keys[this.state.farm].scrolling.enabled = true;
+        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+        this.scene.stop();
       });
     }
   }
 
   private createCowFarm(): void {
     const farmPosition: Iposition = { x: 160, y: 1000 };
-    const zoneSize: Isize = { width: 320, height: 240};
+    const zoneSize: Isize = { width: 320, height: 240 };
 
     if (this.state.progress.cow.open) {
       this.add.text(farmPosition.x + 115, farmPosition.y + 90, `${this.state.progress.cow.part}/${this.state.progress.cow.max}`, {
@@ -219,7 +215,7 @@ class Profile extends Phaser.Scene {
         this.eventZone.y - this.eventZone.input.hitArea.height / 2,
         this.eventZone.width,
         this.eventZone.height
-      );
+      );  
 
     this.eventScore = this.add.text(580, 675, '- ' + this.state.lang.eventScores, {
       fontSize: '21px',
@@ -339,8 +335,8 @@ class Profile extends Phaser.Scene {
         shopType: this.state.modal?.shopType || 1
       }
       this.state.modal = modal;
+      this.scene.stop();
       this.scene.launch('Modal', this.state);
-  
     });
   }
 
