@@ -2,16 +2,16 @@
 const sheepCoin: string = require("./../../assets/images/sheep/icons/money.png");
 const chickenCoin: string = require("./../../assets/images/chicken/icons/money.png");
 const cowCoin: string = require("./../../assets/images/cow/icons/money.png");
-const back: string = require("./../../assets/images/icons/back.png");
-const map: string = require("./../../assets/images/map.png");
-const mapLockIcon: string = require("./../../assets/images/icons/map-lock-icon.png");
-const mapChickenIcon: string = require("./../../assets/images/icons/map-chicken-icon.png");
-const mapCowIcon: string = require("./../../assets/images/icons/map-cow-icon.png");
-const mapSheepIcon: string = require("./../../assets/images/icons/map-sheep-icon.png");
-const pointMap: string = require("./../../assets/images/icons/point-map.png");
-const pbChapterMap: string = require("./../../assets/images/modal/pb-chapter-map.png");
-const partProgress: string = require("./../../assets/images/modal/part-progress.png");
-const mapBtn: string = require("./../../assets/images/modal/map-btn.png");
+// const back: string = require("./../../assets/images/icons/back.png");
+// const map: string = require("./../../assets/images/map.png");
+// const mapLockIcon: string = require("./../../assets/images/icons/map-lock-icon.png");
+// const mapChickenIcon: string = require("./../../assets/images/icons/map-chicken-icon.png");
+// const mapCowIcon: string = require("./../../assets/images/icons/map-cow-icon.png");
+// const mapSheepIcon: string = require("./../../assets/images/icons/map-sheep-icon.png");
+// const pointMap: string = require("./../../assets/images/icons/point-map.png");
+// const pbChapterMap: string = require("./../../assets/images/modal/pb-chapter-map.png");
+// const partProgress: string = require("./../../assets/images/modal/part-progress.png");
+// const mapBtn: string = require("./../../assets/images/modal/map-btn.png");
 
 // магазин
 const shopHead: string = require("./../../assets/images/modal/shop-head.png");
@@ -100,9 +100,9 @@ const herdBoostEventIcon: string = require("./../../assets/images/icons/event-he
 const iconShopEvent: string = require("./../../assets/images/event/icons/icon-shop-event.png");
 const eventMoneyPackage: string = require("./../../assets/images/event/money-package.png");
 const shopResourceCollector: string = require("./../../assets/images/event/shop-resource-collector.png");
-const mapCloud: string = require("./../../assets/images/event/map-cloud.png");
-const mapEventFarm: string = require("./../../assets/images/event/map-event-farm.png");
-const mapEventIsland: string = require("./../../assets/images/event/map-event-island.png");
+// const mapCloud: string = require("./../../assets/images/event/map-cloud.png");
+// const mapEventFarm: string = require("./../../assets/images/event/map-event-farm.png");
+// const mapEventIsland: string = require("./../../assets/images/event/map-event-island.png");
 const unicornStatus: string = require("./../../assets/images/icons/unicorn-status.png");
 const starterpackBg: string = require("./../../assets/images/modal/starterpack-bg.png");
 const starterpackShadow: string = require("./../../assets/images/modal/starterpack-icon-shadow.png");
@@ -118,6 +118,18 @@ const corner2: string = require("./../../assets/images/chat-corner-2.png");
 const chatBackground: string = require("./../../assets/images/modal/chat-bg.png");
 const chatSendBtn: string = require("./../../assets/images/modal/chat-send-btn.png");
 const chatEmojiBtn: string = require("./../../assets/images/modal/chat-emoji-btn.png");
+
+
+const profileBackground: string = require('./../../assets/images/profile/background.jpg');
+const profileBackButton: string = require('./../../assets/images/profile/back-button.png');
+const profileSheepFarm: string = require('./../../assets/images/profile/sheep-farm.png');
+const profileChickenFarm: string = require('./../../assets/images/profile/chicken-farm.png');
+const profileCowFarm: string = require('./../../assets/images/profile/cow-farm.png');
+const profileEventFarm: string = require('./../../assets/images/profile/event-farm.png');
+const profileSticker: string = require('./../../assets/images/profile/sticker.png');
+const profileCowFarmLock: string = require('./../../assets/images/profile/cow-farm-lock.png');
+const profileLockIcon: string = require('./../../assets/images/icons/profile-lock-icon.png');
+const profileEventIsland: string = require('./../../assets/images/profile/event-island.png');
 class Preload extends Phaser.Scene {
   constructor() {
     super('Preload');
@@ -135,19 +147,32 @@ class Preload extends Phaser.Scene {
     this.load.image('sheepCoin', sheepCoin);
     this.load.image('chickenCoin', chickenCoin);
     this.load.image('cowCoin', cowCoin);
-    this.load.image('back', back);
-    this.load.image('map', map);
-    this.load.image('map-lock-icon', mapLockIcon);
-    this.load.image('map-sheep-icon', mapSheepIcon);
-    this.load.image('map-chicken-icon', mapChickenIcon);
-    this.load.image('map-cow-icon', mapCowIcon);
-    this.load.image('point-map', pointMap);
-    this.load.image('pb-chapter-map', pbChapterMap);
-    this.load.image('part-progress', partProgress);
-    this.load.image('map-btn', mapBtn);
-    this.load.image('map-cloud', mapCloud);
-    this.load.image('map-event-farm', mapEventFarm);
-    this.load.image('map-event-island', mapEventIsland);
+    // this.load.image('back', back);
+    // this.load.image('map', map);
+    // this.load.image('map-lock-icon', mapLockIcon);
+    // this.load.image('map-sheep-icon', mapSheepIcon);
+    // this.load.image('map-chicken-icon', mapChickenIcon);
+    // this.load.image('map-cow-icon', mapCowIcon);
+    // this.load.image('point-map', pointMap);
+    // this.load.image('pb-chapter-map', pbChapterMap);
+    // this.load.image('part-progress', partProgress);
+    // this.load.image('map-btn', mapBtn);
+    // this.load.image('map-cloud', mapCloud);
+    // this.load.image('map-event-farm', mapEventFarm);
+    // this.load.image('map-event-island', mapEventIsland);
+
+    //сцена Profile (профиль)
+    this.load.image('profile-bg', profileBackground);
+    this.load.image('profile-back-button', profileBackButton);
+    this.load.image('profile-sheep-farm', profileSheepFarm);
+    this.load.image('profile-chicken-farm', profileChickenFarm);
+    this.load.image('profile-cow-farm', profileCowFarm);
+    this.load.image('profile-event-farm', profileEventFarm);
+    this.load.image('profile-sticker', profileSticker);
+    this.load.image('profile-cow-farm-lock', profileCowFarmLock);
+    this.load.image('profile-lock-icon', profileLockIcon);
+    this.load.image('profile-event-island', profileEventIsland);
+
 
 
     // магазин

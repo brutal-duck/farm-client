@@ -749,7 +749,7 @@ export default {
     dailyNewbieHint5: 'Получены три курочки $1 породы',
     dailyNewbieHint6: 'Получен бесплатный собиратель яиц на 3 часа',
     dailyNewbieHint7: 'Вы получили 10 кристаллических овец',
-    unknownFarmer: 'Неопознаный фермер',
+    unknownFarmer: 'Неопознанный фермер',
     unlockNextUpdate: 'Станет доступно в следующем обновлении'
 
   },
@@ -1504,7 +1504,7 @@ export default {
     dailyNewbieHint5: 'Получены три курочки $1 породы',
     dailyNewbieHint6: 'Получен бесплатный собиратель яиц на 3 часа',
     dailyNewbieHint7: 'Вы получили 10 кристаллических овец',
-    unknownFarmer: 'Неопознаный фермер',
+    unknownFarmer: 'Неопознанный фермер',
     unlockNextUpdate: 'Станет доступно в следующем обновлении'
   }
 }
