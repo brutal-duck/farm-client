@@ -307,8 +307,7 @@ function logout(): void {
   
   if (this.scene.isActive('Modal')) this.scene.stop('Modal');
   if (this.scene.isActive('Tutorial')) this.scene.stop('Tutorial');
-  if (this.scene.isActive('MapBars')) this.scene.stop('MapBars');
-  if (this.scene.isActive('Map')) this.scene.stop('Map');
+  if (this.scene.isActive('Profile')) this.scene.stop('Profile');
   if (this.scene.isActive(this.state.farm)) this.scene.stop(this.state.farm);
   if (this.scene.isActive(this.state.farm + 'Bars')) this.scene.stop(this.state.farm + 'Bars');
   let modal: Imodal = {
@@ -463,7 +462,7 @@ function donePart(): void {
     if (user.part !== 3 && user.part !== 5 && user.part !== 6 && this.state.tutorial >= 100 || user.part !== 4) {
       if (!this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
-      !this.scene.isActive('Map')) this.showTasks();
+      !this.scene.isActive('Profile')) this.showTasks();
     }
   }, callbackScope: this, loop: false });
 
@@ -728,8 +727,7 @@ function getNewbieAward(): void {
       if (this.scene.isActive('Tutorial')) this.scene.stop('Tutorial');
       if (this.scene.isActive('Shop')) this.scene.stop('Shop');
       if (this.scene.isActive('ShopBars')) this.scene.stop('ShopBars');
-      if (this.scene.isActive('Map')) this.scene.stop('Map');
-      if (this.scene.isActive('MapBars')) this.scene.stop('MapBars');
+      if (this.scene.isActive('Profile')) this.scene.stop('Profile');
       this.scene.stop('Sheep');
       this.scene.stop('SheepBars');
       this.scene.start('ChickenPreload', this.state);
@@ -1368,7 +1366,7 @@ function remainderSellResource(): void {
       if (check && 
       !this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
-      !this.scene.isActive('Map')) {
+      !this.scene.isActive('Profile')) {
         SpeechBubble.create(this.game.scene.keys[`${this.state.farm}Bars`], this.state.lang[`help${this.state.farm}_1`], 3);
         this.remaindSellTimer = 0;
       }

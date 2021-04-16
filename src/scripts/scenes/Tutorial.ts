@@ -8,6 +8,7 @@ import { dragSheep, showSheepSprite } from '../general/animations';
 import { dragEventAnimal } from './Event/animations';
 import Arrow from '../components/animations/Arrow';
 import Hint from '../components/animations/Hint';
+import Firework from './../components/animations/Firework';
 
 
 class Tutorial extends Phaser.Scene {
@@ -746,11 +747,11 @@ class Tutorial extends Phaser.Scene {
         
         if (this.state.tutorial.step === 0) {
           
-          this.add.image(720, 775, 'map-event-island').setOrigin(1, 0.5);
-          let eventCloud: Phaser.GameObjects.Image = this.add.image(550, 750, 'map-cloud');
-          let eventFarm: Phaser.GameObjects.Image = this.add.image(720, 730, 'map-event-farm').setOrigin(1, 0.5).setAlpha(0);
-          let eventFarmText: Phaser.GameObjects.Text = this.add.text(580,740, this.state.lang.eventFarm, {
-            fontSize: '21px',
+          this.add.sprite(720, 775, 'profile-event-island').setOrigin(1, 0.5);
+          Firework.create(this, { x: 580, y: 775 }, 5);
+          const eventFarm: Phaser.GameObjects.Image = this.add.image(720, 775, 'profile-event-farm').setOrigin(1, 0.5).setAlpha(0);
+          const eventFarmText: Phaser.GameObjects.Text = this.add.text(600,765, this.state.lang.eventFarm, {
+            fontSize: '18px',
             color: '#f0e8ce',
             fontFamily: 'Shadow',
             wordWrap: { width: 150 },
@@ -764,37 +765,50 @@ class Tutorial extends Phaser.Scene {
           this.tailFlipY = false;
           this.tutorText = this.state.lang.eventWelcome;
           
-
-          let alpha1: number = 1;
-          let alpha2: number = 0;
-          let timer: Phaser.Time.TimerEvent = this.time.addEvent({
-            delay: 50,
-            callbackScope: this,
-            callback: () => {
-
-              alpha1 -= 0.05;
-              eventCloud.setAlpha(alpha1);
-
-              if (alpha1 < 0) {
-
-                eventCloud.setVisible(false);
-                alpha2 += 0.05;
-                eventFarm.setAlpha(alpha2);
-                eventFarmText.setAlpha(alpha2);
-                if (alpha2 >= 1) {
-                  this.pointerTutorial();
-                  this.generalClick = (): void => {
-                    this.game.scene.keys[this.state.farm].doneEventTutor_0();
-                    this.game.scene.keys[this.state.farm].autosave();
-                  };
-                  timer.remove();
-
-                }
-                
-              }
-            },
-            loop: true
+          this.tweens.add({
+            targets: [eventFarm, eventFarmText],
+            delay: 500,
+            alpha: 1,
+            duration: 1200,
+            onComplete: (): void => {
+              this.pointerTutorial();
+              this.generalClick = (): void => {
+                this.game.scene.keys[this.state.farm].doneEventTutor_0();
+                this.game.scene.keys[this.state.farm].autosave();
+              };
+            }
           })
+
+          // let alpha1: number = 1;
+          // let alpha2: number = 0;
+          // let timer: Phaser.Time.TimerEvent = this.time.addEvent({
+          //   delay: 50,
+          //   callbackScope: this,
+          //   callback: () => {
+
+          //     alpha1 -= 0.05;
+          //     eventCloud.setAlpha(alpha1);
+
+          //     if (alpha1 < 0) {
+
+          //       eventCloud.setVisible(false);
+          //       alpha2 += 0.05;
+          //       eventFarm.setAlpha(alpha2);
+          //       eventFarmText.setAlpha(alpha2);
+          //       if (alpha2 >= 1) {
+          //         this.pointerTutorial();
+          //         this.generalClick = (): void => {
+          //           this.game.scene.keys[this.state.farm].doneEventTutor_0();
+          //           this.game.scene.keys[this.state.farm].autosave();
+          //         };
+          //         timer.remove();
+
+          //       }
+                
+          //     }
+          //   },
+          //   loop: true
+          // })
           
         } else if (this.state.tutorial.step === 10) {
 

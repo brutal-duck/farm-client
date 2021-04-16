@@ -165,7 +165,7 @@ class EventBars extends Phaser.Scene {
       this.game.scene.keys[this.state.farm].scrolling.downHandler();
       this.game.scene.keys[this.state.farm].scrolling.enabled = false;
       this.game.scene.keys[this.state.farm].scrolling.wheel = false;
-      this.scene.launch('Map', this.state);
+      this.scene.launch('Profile', this.state);
       
     });
 

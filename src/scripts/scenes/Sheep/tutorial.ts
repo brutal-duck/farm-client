@@ -4,7 +4,7 @@ function showTutorial(additional: boolean | string = false): void {
   if (this.scene.isActive('Modal')) this.scene.stop('Modal');
   if (this.scene.isActive('Tutorial')) this.scene.stop('Tutorial');
   if (this.scene.isActive('MapBars')) this.scene.stop('MapBars');
-  if (this.scene.isActive('Map')) this.scene.stop('Map');
+  if (this.scene.isActive('Profile')) this.scene.stop('Profile');
 
   let tutorial: Itutorial = {
     farm: 1,

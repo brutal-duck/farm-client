@@ -4,8 +4,7 @@ function showEventTutorial(additional: boolean | string = false): void {
   if (this.scene.isActive('Modal')) this.scene.stop('Modal');
   if (this.scene.isActive('Tutorial')) this.scene.stop('Tutorial');
   if (this.state.user.additionalTutorial.eventTutorial > 0) {
-    if (this.scene.isActive('MapBars')) this.scene.stop('MapBars');
-    if (this.scene.isActive('Map')) this.scene.stop('Map');
+    if (this.scene.isActive('Profile')) this.scene.stop('Profile');
   }
 
   let tutorial: Itutorial = {
@@ -38,8 +37,7 @@ function doneEventTutor_0(): void {
   this.scene.stop('Tutorial');
   this.scene.stop(this.state.farm);
   this.scene.stop(this.state.farm + 'Bars');
-  this.scene.stop('Map');
-  this.scene.stop('MapBars');
+  this.scene.stop('Profile');
   this.scene.start('EventPreload', this.state);
   
 }

@@ -50,7 +50,7 @@ function interval(): void {
       this.state.userSheep.diamondAnimalTime === 0 &&
       !this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
-      !this.scene.isActive('Map')) {
+      !this.scene.isActive('Profile')) {
 
       this.caveTutor = true;
       this.time.addEvent({ delay: 300, callback: (): void => {
@@ -63,7 +63,7 @@ function interval(): void {
     !this.state.user.additionalTutorial.herdBoost &&
     !this.scene.isActive('Modal') &&
     !this.scene.isActive('Tutorial') &&
-    !this.scene.isActive('Map')) {
+    !this.scene.isActive('Profile')) {
     this.showTutorial('herdBoost1');
     }
 
@@ -72,7 +72,7 @@ function interval(): void {
       !this.state.user.additionalTutorial.feedBoost &&
       !this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
-      !this.scene.isActive('Map')) {
+      !this.scene.isActive('Profile')) {
       this.showTutorial('feedBoost1');
       }
 
@@ -274,7 +274,7 @@ function interval(): void {
         !arrowOnCollector &&
         !this.scene.isActive('Modal') &&
         !this.scene.isActive('Tutorial') &&
-        !this.scene.isActive('Map')) {
+        !this.scene.isActive('Profile')) {
 
         this.counterWithoutCollector++;
 
@@ -296,7 +296,7 @@ function interval(): void {
           this.state.userSheep.part >= 2 &&
           !this.scene.isActive('Modal') &&
           !this.scene.isActive('Tutorial') &&
-          !this.scene.isActive('Map')) {
+          !this.scene.isActive('Profile')) {
 
           this.counterWithoutCollector = 0;
           this.state.user.additionalTutorial.collector = true;
@@ -317,7 +317,7 @@ function interval(): void {
     // выдача наград новичка
     if (!this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
-      !this.scene.isActive('Map')) this.getNewbieAward();
+      !this.scene.isActive('Profile')) this.getNewbieAward();
     
     // поиск рекламы
     this.findAd();
@@ -347,7 +347,7 @@ function interval(): void {
     if (this.state.donate &&
       !this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
-      !this.scene.isActive('Map')) this.showDonate();
+      !this.scene.isActive('Profile')) this.showDonate();
       
     // уменьшаем время буста комбикорм
     if (this.state.userSheep.feedBoostTime > 0) {
@@ -374,31 +374,30 @@ function interval(): void {
     
     if (this.state.progress.event.endTime > 0) {
       this.state.progress.event.endTime--;
-      if ( this.scene.isActive('Map')) {
-        this.game.scene.keys['Map'].eventEndTime?.setText(shortTime(this.state.progress.event.endTime, this.state.lang));
+      if ( this.scene.isActive('Profile')) {
+        this.game.scene.keys['Profile'].eventEndTime?.setText(shortTime(this.state.progress.event.endTime, this.state.lang));
       } 
     }
 
     if (this.state.progress.event.startTime > 0) {
       this.state.progress.event.startTime--;
-      if (this.scene.isActive('Map')) {
-        this.game.scene.keys['Map'].eventStartTime?.setText(shortTime(this.state.progress.event.startTime, this.state.lang));
+      if (this.scene.isActive('Profile')) {
+        this.game.scene.keys['Profile'].eventStartTime?.setText(shortTime(this.state.progress.event.startTime, this.state.lang));
       }
     }
 
     if (this.state.progress.event.endTime <= 0 && 
       this.state.progress.event.eventPoints > 0 && this.state.progress.event.open &&
-      this.scene.isActive('Map')) {
+      this.scene.isActive('Profile')) {
       this.autosave();
-      this.scene.stop('Map');
-      this.scene.stop('MapBars');
+      this.scene.stop('Profile');
     }
     
     if (this.state.progress.event.endTime <= 0 && 
       this.state.progress.event.eventPoints > 0 && this.state.progress.event.open &&
       !this.scene.isActive('Modal') && 
       !this.scene.isActive('Tutorial') &&
-      !this.scene.isActive('Map')) { 
+      !this.scene.isActive('Profile')) { 
       
       if (!checkRaiting) {
         this.getEventRaiting();
@@ -426,15 +425,14 @@ function interval(): void {
         !arrowOnMap &&
         !this.scene.isActive('Modal') &&
         !this.scene.isActive('Tutorial') &&
-        !this.scene.isActive('Map')) {
+        !this.scene.isActive('Profile')) {
         arrowOnMap = Arrow.generate(this.game.scene.keys[`${this.state.farm}Bars`], 17)
       }
   
       if (this.state.user.additionalTutorial.eventTutorial === 0 &&
         !this.scene.isActive('Tutorial') &&
-        this.scene.isActive('Map') &&
+        this.scene.isActive('Profile') &&
         this.state.progress.event.startTime <= 0) {
-        this.game.scene.keys[`Map`].scrolling.wheel = false;
         this.showEventTutorial();
       }
     }

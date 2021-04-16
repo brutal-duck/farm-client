@@ -50,15 +50,15 @@ class Profile extends Phaser.Scene {
     this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)');
     this.loadingModal();
     this.load.image('profile-bg', background);
-    this.load.image('back-button', backButton);
-    this.load.image('sheep-farm', sheepFarm);
-    this.load.image('chicken-farm', chickenFarm);
-    this.load.image('cow-farm', cowFarm);
-    this.load.image('event-farm', eventFarm);
-    this.load.image('sticker', sticker);
-    this.load.image('cow-farm-lock', cowFarmLock);
+    this.load.image('profile-back-button', backButton);
+    this.load.image('profile-sheep-farm', sheepFarm);
+    this.load.image('profile-chicken-farm', chickenFarm);
+    this.load.image('profile-cow-farm', cowFarm);
+    this.load.image('profile-event-farm', eventFarm);
+    this.load.image('profile-sticker', sticker);
+    this.load.image('profile-cow-farm-lock', cowFarmLock);
     this.load.image('profile-lock-icon', profileLockIcon);
-    this.load.image('event-island', eventIsland);
+    this.load.image('profile-event-island', eventIsland);
   }
 
 
@@ -78,7 +78,7 @@ class Profile extends Phaser.Scene {
   }
 
   private createElements(): void {
-    this.backBtn = this.add.sprite(630, 80, 'back-button');
+    this.backBtn = this.add.sprite(630, 80, 'profile-back-button');
 
     this.createProfileInfo();
     this.createFarms();
@@ -134,7 +134,7 @@ class Profile extends Phaser.Scene {
 
   private createSheepFarm(): void {
     const farmPosition: Iposition = { x: 160, y: 810 };
-    const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'sheep-farm');
+    const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-sheep-farm');
     this.add.text(farmPosition.x + 110, farmPosition.y + 5, `${this.state.progress.sheep.part}/${this.state.progress.sheep.max}`, {
       font: '28px Shadow',
       color: '#ffe5d7'
@@ -158,7 +158,7 @@ class Profile extends Phaser.Scene {
   private createChickenFarm(): void {
     const farmPosition: Iposition = { x: 720, y: 1025 };
     if (this.state.progress.chicken.open) {
-      const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'chicken-farm').setOrigin(1, 0.5);
+      const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-chicken-farm').setOrigin(1, 0.5);
       this.add.text(farmPosition.x - 215, farmPosition.y - 25, `${this.state.progress.chicken.part}/${this.state.progress.chicken.max}`, {
         font: '28px Shadow',
         color: '#ffe5d7'
@@ -180,8 +180,8 @@ class Profile extends Phaser.Scene {
       }, 8);
 
     } else {
-      this.add.sprite(farmPosition.x, farmPosition.y, 'chicken-farm').setOrigin(1, 0.5);
-      this.add.sprite(farmPosition.x, farmPosition.y, 'sticker').setOrigin(1, 0.5)
+      this.add.sprite(farmPosition.x, farmPosition.y, 'profile-chicken-farm').setOrigin(1, 0.5);
+      this.add.sprite(farmPosition.x, farmPosition.y, 'profile-sticker').setOrigin(1, 0.5)
       const btn: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x - 125, farmPosition.y + 0, 'map-btn');
       const title: Phaser.GameObjects.Text = this.add.text(btn.x + 15, btn.y - 5, shortNum(this.state.progress.chicken.price), {
         font: '22px Shadow',
@@ -206,7 +206,7 @@ class Profile extends Phaser.Scene {
     const farmPosition: Iposition = { x: 0, y: 1050 };
 
     if (this.state.progress.cow.open) {
-      const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'cow-farm').setOrigin(0, 0.5);
+      const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-cow-farm').setOrigin(0, 0.5);
 
       this.add.text(farmPosition.x + 290, farmPosition.y + 5, `${this.state.progress.cow.part}/${this.state.progress.cow.max}`, {
         font: '28px Shadow',
@@ -250,7 +250,7 @@ class Profile extends Phaser.Scene {
         // this.scene.stop();
       });
     } else {
-      this.add.sprite(farmPosition.x, farmPosition.y, 'cow-farm-lock').setOrigin(0, 0.5);
+      this.add.sprite(farmPosition.x, farmPosition.y, 'profile-cow-farm-lock').setOrigin(0, 0.5);
       this.add.sprite(farmPosition.x + 150, farmPosition.y - 25, 'profile-lock-icon');
       this.add.text(farmPosition.x + 150, farmPosition.y + 30, `Уровень открытия ${this.state.progress.cow.unlock}`, {
         font: '22px Shadow',
@@ -263,7 +263,7 @@ class Profile extends Phaser.Scene {
 
   private createLockedCowFarm(): void {
     const farmPosition: Iposition = { x: 0, y: 1050 };
-    this.add.sprite(farmPosition.x, farmPosition.y, 'cow-farm-lock').setOrigin(0, 0.5);
+    this.add.sprite(farmPosition.x, farmPosition.y, 'profile-cow-farm-lock').setOrigin(0, 0.5);
     const text: Phaser.GameObjects.Text = this.add.text(farmPosition.x + 150, farmPosition.y, this.state.lang.unlockNextUpdate, {
       font: '20px Shadow',
       color: '#fbd0b9',
@@ -284,7 +284,7 @@ class Profile extends Phaser.Scene {
       x: 720,
       y: 775
     }
-    this.eventMapFarm = this.add.sprite(farmPosition.x, farmPosition.y, 'event-farm').setOrigin(1, 0.5).setVisible(false);
+    this.eventMapFarm = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-event-farm').setOrigin(1, 0.5).setVisible(false);
     this.eventZone = this.add.zone(570, 790, 300, 170).setDropZone(undefined, () => {});
 
     // this.add.graphics()
@@ -320,7 +320,7 @@ class Profile extends Phaser.Scene {
       fontFamily: 'Shadow'
     }).setOrigin(0.5, 0.5).setVisible(false);
     
-    this.eventIsland = this.add.sprite(farmPosition.x, farmPosition.y, 'event-island').setOrigin(1, 0.5).setVisible(false);
+    this.eventIsland = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-event-island').setOrigin(1, 0.5).setVisible(false);
     this.eventStartText = this.add.text(farmPosition.x - 150, farmPosition.y + 30, this.state.lang.eventStart, {
       fontSize: '16px',
       color: '#fbd0b9',
@@ -423,7 +423,10 @@ class Profile extends Phaser.Scene {
     
     if (this.state.progress.event.startTime > 0 && 
       this.state.progress.event.open && 
-      this.state.user.additionalTutorial.eventTutorial === 0) {
+      this.state.user.additionalTutorial.eventTutorial === 0 && 
+      (this.state.progress.sheep.part > 4 || 
+      this.state.progress.chicken.part >= 1) && 
+      this.state.user.login) {
 
         if (!this.eventStartText?.visible) {
         this.eventIsland?.setVisible(true);
@@ -442,7 +445,10 @@ class Profile extends Phaser.Scene {
     } else if (this.state.progress.event.startTime <= 0 && 
       this.state.progress.event.open && 
       this.state.user.additionalTutorial.eventTutorial > 0 &&
-      this.state.progress.event.endTime > 0 && (this.state.progress.sheep.part > 4 || this.state.progress.chicken.part >= 1)) {
+      this.state.progress.event.endTime > 0 && 
+      (this.state.progress.sheep.part > 4 || 
+      this.state.progress.chicken.part >= 1) && 
+      this.state.user.login) {
 
       if (!this.eventMapFarm?.visible) {
 
