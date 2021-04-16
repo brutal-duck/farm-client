@@ -82,7 +82,6 @@ function tryTask(type: number, state: number, count: number = 1): void {
 
   let tasks: Itasks[] = this.partTasks();
   let task: Itasks = tasks.find((data: Itasks) => data.type === type);
-
   if (task?.done === 0 &&
     task?.progress < task?.count &&
     (task?.state === state || task?.state === 0 || (task?.type === 6 && task?.state <= state))) {
@@ -145,6 +144,9 @@ function getTaskData(task: Itasks): ItaskData {
     case 18: num = 13; break;
     case 19: num = 13; break;
     case 20: num = 31; break;
+    case 21: num = 32; break; 
+    case 22: num = 33; break;
+    case 23: num = 34; break;
     default: num = 21; break;
   }
 
@@ -153,7 +155,7 @@ function getTaskData(task: Itasks): ItaskData {
   if (!name) {
     name = this.state.lang.taskName;
   }
-
+  if (task.type === 128) console.log(task)
   name = name.replace('$1', String(task.count));
   name = name.replace('$2', String(task.state));
 
@@ -338,10 +340,14 @@ function checkDoneTasks(): void {
       } else {
         tasks[i].progress = count;
       }
-
-
     }
-
+    
+    if (tasks[i].type === 23) {
+      if (this.state[`user${this.state.farm}`].collectorLevel >= tasks[i].state) {
+        tasks[i].progress += 1;
+        tasks[i].done = 1;
+      }
+    }
   }
   this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
 

@@ -4,6 +4,7 @@ import Firework from '../components/animations/Firework';
 
 // получение животного по бусту
 function createBoostAnimal(): void {
+  this.tryTask(22, 0);
   if (this.state.herdBoostAnimals.length === 0) return;
   
   this.state.herdBoostAnimals.forEach(type => {
@@ -142,7 +143,7 @@ function improveCollector(): void {
         this.setCollector();
   
         this.game.scene.keys['Modal'].improveCollectorAnim({x: this.cameras.main.centerX, y: this.cameras.main.centerY + 10});
-
+        this.game.scene.keys[this.state.farm].tryTask(23, user.collectorLevel);
       } else {
   
         this.state.convertor = {
@@ -170,6 +171,7 @@ function improveCollector(): void {
         this.setCollector();
   
         this.game.scene.keys['Modal'].improveCollectorAnim({x: this.cameras.main.centerX, y: this.cameras.main.centerY + 10});
+        this.game.scene.keys[this.state.farm].tryTask(23, user.collectorLevel);
   
       } else {
   
@@ -382,7 +384,6 @@ function collectorBoost(): void {
   }
 }
 
-
 function herdBoost(): void {
   let y: number = 335 + this.height;
   this.add.tileSprite(0, y, 466, 235, 'boost-bg').setOrigin(0, 0);
@@ -453,6 +454,8 @@ function herdBoost(): void {
 }
 
 function feedBoost(): void {
+  const ONE_HOUR: number = 3600;
+
   let y: number = 585 + this.height;
   this.add.tileSprite(0, y, 466, 270, 'boost-bg').setOrigin(0, 0);
   this.add.text(240, y + 20, this.state.lang.feedBoostTitle, { 
@@ -498,7 +501,7 @@ function feedBoost(): void {
   
   this.feedProgressBar.setDataEnabled();
   this.feedProgressBar.data.values.maxWidth = 408; // максимальная ширина бара
- let progress: number = (this.state[`user${this.state.farm}`].feedBoostTime / (3600 * this.game.scene.keys[this.state.farm].feedBoostStack)) * this.feedProgressBar.data.values.maxWidth;
+  let progress: number = (this.state[`user${this.state.farm}`].feedBoostTime / (ONE_HOUR * this.game.scene.keys[this.state.farm].feedBoostStack)) * this.feedProgressBar.data.values.maxWidth;
   this.feedProgressBar.setDisplaySize(progress, 16);
   this.feedProgressText = this.add.text(240, y + 200, this.state.lang.still + ' ' + shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang), {
     font: '21px Shadow',
@@ -511,7 +514,6 @@ function feedBoost(): void {
     
     if (this.state.user.diamonds >= this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice) {
 
-      this.state.user.diamonds -= this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice;
 
       this.state.amplitude.getInstance().logEvent('diamonds_spent', {
         type: 'booster_feed_x2',
@@ -520,7 +522,7 @@ function feedBoost(): void {
         chapter: this.state[`user${this.state.farm}`].part,
       });
 
-      if (this.state[`user${this.state.farm}`].feedBoostTime + 7200 > this.game.scene.keys[this.state.farm].feedBoostStack * 3600) {
+      if (this.state[`user${this.state.farm}`].feedBoostTime + 2 * ONE_HOUR > this.game.scene.keys[this.state.farm].feedBoostStack * ONE_HOUR) {
 
         this.scene.stop('Shop');
         this.scene.stop('ShopBars');
@@ -536,30 +538,35 @@ function feedBoost(): void {
         this.scene.launch('Modal', this.state);
         
       } else {
-        
+
+        this.state.user.diamonds -= this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice;
+
         this.state.boughtFeedBoost = true;
         this.game.scene.keys[this.state.farm].tryTask(15, 0, this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice);
         
         if (this.state[`user${this.state.farm}`].feedBoostTime <= 0) {
-          this.state[`user${this.state.farm}`].feedBoostTime += 3600; // прибавить час
+          this.state[`user${this.state.farm}`].feedBoostTime += ONE_HOUR; // прибавить час
 
           this.state.amplitude.getInstance().logEvent('booster_feed_x2', {
             price: this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice,
             time: 1,
             farm_id: this.state.farm
           });
-
+          this.game.scene.keys[this.state.farm].tryTask(21, 0, 1);
         } else {
           
-          let time: number = Math.ceil(this.state[`user${this.state.farm}`].feedBoostTime / 3600 / 2) + 1;
-         
+          const time: number = Math.ceil(this.state[`user${this.state.farm}`].feedBoostTime / ONE_HOUR / 2) + 1;
+
+          
           this.state.amplitude.getInstance().logEvent('booster_feed_x2', {
             price: this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice,
             time: time,
             farm_id: this.state.farm
           });
+          
+          this.state[`user${this.state.farm}`].feedBoostTime += 2 * ONE_HOUR; // прибавить 2часа
 
-          this.state[`user${this.state.farm}`].feedBoostTime += 7200; // прибавить 2часа
+          this.game.scene.keys[this.state.farm].tryTask(21, 0, 2);
         }
       }
       
