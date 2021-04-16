@@ -158,7 +158,6 @@ function getTaskData(task: Itasks): ItaskData {
   if (task.type === 128) console.log(task)
   name = name.replace('$1', String(task.count));
   name = name.replace('$2', String(task.state));
-
   return {
     icon: this.state.farm.toLowerCase() + '-task-icon-' + num,
     name: name
@@ -416,8 +415,6 @@ function clickTaskBoard(task: Itasks): void {
   
     if (territory) openTerritoryWindow(territory);
     else SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_8, 3);
-    
-    
   }
   
   const openDrinkerOrSpeechBuble = (): void => {
@@ -543,8 +540,14 @@ function clickTaskBoard(task: Itasks): void {
     case 19: 
       SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang[`taskHelp${this.state.farm}_19`], 3);
       break;
-    case 20: 
-      openStorageOrSpeechBuble();
+    case 21: 
+      openShopBoosters();
+      break;
+    case 22: 
+      openShopBoosters();
+      break;
+    case 23: 
+      this.game.scene.keys[this.state.farm].showImproveCollector();
       break;
   }
 }

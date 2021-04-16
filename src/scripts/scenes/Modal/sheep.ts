@@ -895,7 +895,7 @@ function sheepWoolRepositoryExchange(): void {
     icon: 'sheepCoin',
     text: shortNum(part.improve_territory_2)
   }
-  let textTitle: string = this.state.lang.exchangeRepositoryTitle.replace('1$', this.state.territory.improve);
+  let textTitle: string = this.state.lang.exchangeRepositoryTitle.replace('$1', this.state.territory.improve);
 
   let title: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 100, textTitle, {
     font: '26px Bip',

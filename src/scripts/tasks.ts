@@ -816,7 +816,7 @@ export default [
     progress: 0,
     part: 14,
     sort: 3,
-    type: 15,
+    type: 22,
     state: 0,
     count: 5,
     diamonds: 3,

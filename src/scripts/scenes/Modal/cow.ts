@@ -742,7 +742,7 @@ function cowMilkRepositoryExchange(): void {
     text: shortNum(settings.improvePrice)
   }
 
-  const textTitle: string = this.state.lang.exchangeRepositoryTitle.replace('1$', this.state.territory.improve);
+  const textTitle: string = this.state.lang.exchangeRepositoryTitle.replace('$1', this.state.territory.improve);
 
   const title: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 100, textTitle, {
     font: '26px Bip',
