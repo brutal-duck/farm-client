@@ -759,7 +759,7 @@ class Tutorial extends Phaser.Scene {
           }).setOrigin(0.5, 0.5).setAlpha(0);
           
           this.topPosition = false;
-          this.indent = 750;
+          this.indent = this.height - 600;
           this.tailX = 430;
           this.tailFlipX = false;
           this.tailFlipY = false;
@@ -777,39 +777,7 @@ class Tutorial extends Phaser.Scene {
                 this.game.scene.keys[this.state.farm].autosave();
               };
             }
-          })
-
-          // let alpha1: number = 1;
-          // let alpha2: number = 0;
-          // let timer: Phaser.Time.TimerEvent = this.time.addEvent({
-          //   delay: 50,
-          //   callbackScope: this,
-          //   callback: () => {
-
-          //     alpha1 -= 0.05;
-          //     eventCloud.setAlpha(alpha1);
-
-          //     if (alpha1 < 0) {
-
-          //       eventCloud.setVisible(false);
-          //       alpha2 += 0.05;
-          //       eventFarm.setAlpha(alpha2);
-          //       eventFarmText.setAlpha(alpha2);
-          //       if (alpha2 >= 1) {
-          //         this.pointerTutorial();
-          //         this.generalClick = (): void => {
-          //           this.game.scene.keys[this.state.farm].doneEventTutor_0();
-          //           this.game.scene.keys[this.state.farm].autosave();
-          //         };
-          //         timer.remove();
-
-          //       }
-                
-          //     }
-          //   },
-          //   loop: true
-          // })
-          
+          });
         } else if (this.state.tutorial.step === 10) {
 
           this.tutorText = this.state.lang.eventTutorial_10;

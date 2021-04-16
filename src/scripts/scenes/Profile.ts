@@ -12,6 +12,7 @@ const sticker: string = require('./../../assets/images/profile/sticker.png');
 const cowFarmLock: string = require('./../../assets/images/profile/cow-farm-lock.png');
 const profileLockIcon: string = require('./../../assets/images/icons/profile-lock-icon.png');
 const eventIsland: string = require('./../../assets/images/profile/event-island.png');
+const btn: string = require('./../../assets/images/profile/btn.png');
 
 class Profile extends Phaser.Scene {
   constructor() {
@@ -59,6 +60,7 @@ class Profile extends Phaser.Scene {
     this.load.image('profile-cow-farm-lock', cowFarmLock);
     this.load.image('profile-lock-icon', profileLockIcon);
     this.load.image('profile-event-island', eventIsland);
+    this.load.image('profile-btn', btn);
   }
 
 
@@ -182,7 +184,7 @@ class Profile extends Phaser.Scene {
     } else {
       this.add.sprite(farmPosition.x, farmPosition.y, 'profile-chicken-farm').setOrigin(1, 0.5);
       this.add.sprite(farmPosition.x, farmPosition.y, 'profile-sticker').setOrigin(1, 0.5)
-      const btn: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x - 125, farmPosition.y + 0, 'map-btn');
+      const btn: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x - 125, farmPosition.y + 0, 'profile-btn');
       const title: Phaser.GameObjects.Text = this.add.text(btn.x + 15, btn.y - 5, shortNum(this.state.progress.chicken.price), {
         font: '22px Shadow',
         color: '#FBD0B9',
@@ -231,7 +233,7 @@ class Profile extends Phaser.Scene {
       this.add.graphics({ x: farmPosition.x, y: farmPosition.y })
       .fillStyle(0x2b3d11, 0.5)
       .fillRoundedRect(-100, 0, 200, 70, 8);
-      const btn: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y + 35, 'map-btn');
+      const btn: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y + 35, 'profile-btn');
       const title: Phaser.GameObjects.Text = this.add.text(btn.x + 15, btn.y - 5, shortNum(this.state.progress.cow.price), {
         font: '22px Shadow',
         color: '#FBD0B9',
@@ -506,7 +508,9 @@ class Profile extends Phaser.Scene {
       this.eventEndTime.setText(shortTime(this.state.progress.event.endTime, this.state.lang));
       this.state.progress.event.updateRaitings = false;
     }
-    
+    if (!this.state.user.login) {
+      this.eventZone?.destroy();
+    }
   }
 
 }

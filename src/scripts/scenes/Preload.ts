@@ -130,6 +130,7 @@ const profileSticker: string = require('./../../assets/images/profile/sticker.pn
 const profileCowFarmLock: string = require('./../../assets/images/profile/cow-farm-lock.png');
 const profileLockIcon: string = require('./../../assets/images/icons/profile-lock-icon.png');
 const profileEventIsland: string = require('./../../assets/images/profile/event-island.png');
+const profileBtn: string = require('./../../assets/images/profile/btn.png');
 class Preload extends Phaser.Scene {
   constructor() {
     super('Preload');
@@ -172,6 +173,7 @@ class Preload extends Phaser.Scene {
     this.load.image('profile-cow-farm-lock', profileCowFarmLock);
     this.load.image('profile-lock-icon', profileLockIcon);
     this.load.image('profile-event-island', profileEventIsland);
+    this.load.image('profile-btn', profileBtn);
 
 
 
