@@ -430,9 +430,9 @@ class Modal extends Phaser.Scene {
         this.progressButton.img1.x = 555 - this.progressButton.text1.displayWidth;
       }
 
-      let volume: string = count + ': ' + this.state.territory.volume + ' / ' + max;
+      let volume: string = `${count}: ${this.state.territory.volume} / ${max}`;
       if (this.state.farm === 'Cow') {
-        volume = count + ': ' + this.state.territory.volume + ' / ' + shortNum(max);
+        volume = `${count}: ${shortNum(this.state.territory.volume)} / ${shortNum(max)}`;
       }
       if (this.progressText.text !== volume) this.progressText.setText(volume);
 

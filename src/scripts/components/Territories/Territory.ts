@@ -25,7 +25,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   public lock_text: Phaser.GameObjects.Text;
 
   // тип территории 4
-  public merging: CowSprite[];
+  public merging: Imerging[];
   public mergingCounter: number;
   public levelText: Phaser.GameObjects.Text;
 
@@ -60,10 +60,10 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   }
 
   private createImproveText(): void {
-    this.improveText = this.scene.add.text(this.x + 30, this.y + 13, String(this.improve), {
+    this.improveText = this.scene.add.text(this.x + 40, this.y + 30, String(this.improve), {
       font: '26px Shadow',
       color: '#ECDFDF',
-    }).setStroke('#000000', 3).setDepth(this.depth + 2);
+    }).setStroke('#000000', 3).setDepth(this.depth + 2).setOrigin(0.5);
   }
 
   public createBorders(topBorder: number, bottomBorder: number): void {
@@ -404,6 +404,9 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
   public changeSprite(): void {
     let farm: string = this.scene.state.farm.toLowerCase();
+    if ((this.territoryType === 2 || this.territoryType === 3 || this.territoryType === 5) && ! this.improveText) {
+      this.createImproveText();
+    }
   
     let sprite: string = this.texture.key;
     let stage: number = 1;
@@ -481,8 +484,9 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     if (this.texture.key !== sprite && this.territoryType !== 5) {
       this.setTexture(sprite);
     } 
-
-    this.improveText?.setText(String(this.improve));
+    if (this.improveText?.text !== String(this.improve)) {
+      this.improveText?.setText(String(this.improve));
+    }
   }
 
   // улучшение ярмарки

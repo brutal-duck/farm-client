@@ -345,9 +345,6 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
     return territories;
   }
 
-
-
-
   public teleportation(): void {
     const territories: any[] = this.openedTerritory;
     // смотрим, где какая корова сидит  

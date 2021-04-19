@@ -1,19 +1,20 @@
 import { random } from "../../general/basic";
 import SpeechBubble from '../../components/animations/SpeechBuble';
 import CowSprite from '../../components/Animal/CowSprite';
+import Territory from './../../components/Territories/Territory';
 
 function drag(): void {
 
-  this.input.on('dragstart', (pointer: any, cow: CowSprite): void => {
+  this.input.on('dragstart', (pointer: Phaser.Input.Pointer, cow: CowSprite): void => {
     cow.startDrag()
   });
 
-  this.input.on('drag', (pointer: any, cow: CowSprite, dragX: number, dragY: number): void => {
+  this.input.on('drag', (pointer: Phaser.Input.Pointer, cow: CowSprite, dragX: number, dragY: number): void => {
     cow.dragging(dragX, dragY);
   });
 
   // дропзоны для мерджинга
-  this.input.on('drop', (pointer: any, cow: CowSprite, zone: any): void => {
+  this.input.on('drop', (pointer: Phaser.Input.Pointer, cow: CowSprite, zone: any): void => {
 
     let territory = this.currentTerritory(cow.x, cow.y);
     if (territory) {
@@ -42,26 +43,27 @@ function drag(): void {
      } else cow.teleportation();
   });
 
-  this.input.on('dragend', (pointer: any, cow: CowSprite): void => {
+  this.input.on('dragend', (pointer: Phaser.Input.Pointer, cow: CowSprite): void => {
     cow.endDrag();
-    let typeTerritory = this.currentTerritory(cow.x, cow.y);
-    if (typeTerritory) {
-      if (typeTerritory.type !== 4) {
+    let territory: Territory = this.currentTerritory(cow.x, cow.y);
+    if (territory) {
+      if (territory.territoryType !== 4) {
         // мерджинг на поле
         this.dragCowMerging(cow);
         // удаление животного
-        if (typeTerritory.type === 0) {
+        if (territory.territoryType === 0) {
           cow.expel = true;
           this.state.animal = cow;
           this.confirmExpelCow();
         } else cow.expel = false;
         for (let i in this.territories.children.entries) {
-          let territory = this.territories.children.entries[i];
-          if (territory.type === 4) {
-            let check = territory.merging.find((data: Imerging) => data._id === cow._id);
+          let ter: Territory = this.territories.children.entries[i];
+          this
+          if (ter.territoryType === 4) {
+            let check = ter.merging.find((data: Imerging) => data._id === cow._id);
             if (check) {
-              territory.merging.splice(0, 1);
-              territory.mergingCounter = 0;
+              ter.merging.splice(0, 1);
+              ter.mergingCounter = 0;
               break;
             }
           } else cow.merging = false;
