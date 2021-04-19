@@ -188,7 +188,7 @@ function autoprogress(load: boolean = false): void {
         
   //       let territory = this.territories.children.entries[j];
 
-  //       let max: number = this.settings.territoriesCowSettings.find((item: IterritoriesCowSettings) => item.improve === territory.improve).milkStorage;
+  //       let max: number = this.settings.territoriesCowSettings.find((item: IterritoriesCowSettings) => item.improve === territory.improve).storage;
 
   //       if (territory.volume < max && wasCollector > 0) {
 

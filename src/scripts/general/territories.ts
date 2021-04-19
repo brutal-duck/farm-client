@@ -91,7 +91,7 @@ function changeSprite(territory: any): void {
 
     } else if (this.state.farm === 'Cow') {
 
-      max = this.state.cowSettings.territoriesCowSettings[territory.improve - 1].milkStorage;
+      max = this.state.cowSettings.territoriesCowSettings[territory.improve - 1].storage;
 
     }
 
