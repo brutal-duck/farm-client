@@ -436,7 +436,7 @@ function clickTaskBoard(task: Itasks): void {
       if (territory) break;
     }
     if (territory) openTerritoryWindow(territory);
-    else SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_9, 3);
+    else SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_17, 3);
   }
   
   const openNotFreeStorageOrSpeechBubble = (): void => {
