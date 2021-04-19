@@ -14,8 +14,6 @@ import CowPreload from './scenes/Cow/CowPreload';
 import Cow from './scenes/Cow/Main';
 import CowBars from './scenes/Cow/CowBars';
 import Modal from './scenes/Modal/Modal';
-import Map from './scenes/Map';
-import MapBars from './scenes/MapBars';
 import Shop from './scenes/Modal/Shop/Main';
 import ShopBars from './scenes/Modal/Shop/Bars';
 import Chat from './scenes/Modal/Chat/Main';
@@ -91,7 +89,6 @@ window.onload = (): void => {
         EventPreload, Event, EventBars,
         Modal, Block,
         Profile,
-        Map, MapBars,
         Shop, ShopBars,
         Chat,
         Tutorial,
