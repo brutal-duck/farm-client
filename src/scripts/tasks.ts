@@ -294,7 +294,7 @@ export default [
     type: 22,
     state: 0,
     count: 1,
-    diamonds: 20,
+    diamonds: 3,
     xp: 0,
     id: 63,
     necessary: 1

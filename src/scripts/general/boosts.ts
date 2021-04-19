@@ -129,7 +129,7 @@ function improveCollector(): void {
       if (this.state.user.diamonds >= nextLevel.price) {
   
         this.tryTask(15, 0, nextLevel.price);
-        this.tryTask(21, nextLevel.level);
+        this.tryTask(23, nextLevel.level);
   
         this.state.amplitude.getInstance().logEvent('diamonds_spent', {
           type: 'improve_collector',
@@ -165,7 +165,7 @@ function improveCollector(): void {
   
       if (user.money >= nextLevel.price) {
   
-        this.tryTask(21, nextLevel.level);
+        this.tryTask(23, nextLevel.level);
         user.money -= nextLevel.price;
         user.collectorLevel++;
         this.setCollector();
