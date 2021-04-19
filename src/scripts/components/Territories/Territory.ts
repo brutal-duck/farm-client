@@ -130,11 +130,21 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   }
 
   public createRepositorySprite(): void {
+    let stage: number = 1;
+    if (this.improve >= 5) {
+      stage = 2;
+      if (this.improve >= 10) {
+        stage = 3
+        if (this.improve >= 15) {
+          stage = 4
+        }
+      }
+    }
     if (this.territoryType === 5) {
       
       let percent: number = 0;
-      let max: number = this.scene.state.cowSettings.territoriesCowSettings[this.improve - 1].milkStorage;
-      let type: string = `cow-repository-${this.improve}-`;
+      let max: number = this.scene.state.cowSettings.territoriesCowSettings[this.improve - 1].storage;
+      let type: string = `cow-repository-${stage}-`;
 
       if (this.volume > 0) {
         percent = this.volume / (max / 100);
@@ -264,11 +274,11 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       this.scene.state.exchangeTerritory === 3 ||
       this.scene.state.exchangeTerritory === 5) {
       
-      let settings: IterritoriesCowSettings = territoriesSettings.find((data: IterritoriesCowSettings) => data.improve === 2);
+      const settings: IterritoriesCowSettings = territoriesSettings.find((data: IterritoriesCowSettings) => data.improve === 2);
   
       if (this.scene.state.exchangeTerritory === 5) {
   
-        let check: boolean = this.checkExchangeRepository();
+        const check: boolean = this.checkExchangeRepository();
   
         if (!check) {
   
@@ -283,7 +293,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
           
         } else {
   
-          if (user.money >= settings.improvePrice) {
+          if (user.money >= settings.improvePastureMoneyPrice) {
   
             let from: string;
   
@@ -302,7 +312,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
             });
   
             this.territoryType = this.scene.state.exchangeTerritory;
-            user.money -= settings.improvePrice;
+            user.money -= settings.improvePastureMoneyPrice;
             this.improve = 1;
             this.volume = 0;
             this.money = 0;
@@ -318,7 +328,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
             Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
     
           } else {
-            let count: number = settings.improvePrice - user.money;
+            let count: number = settings.improvePastureMoneyPrice - user.money;
             let diamonds: number = this.scene.convertMoney(count);
             this.openConvertor(count, diamonds, 6, 1);
           }
@@ -327,7 +337,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   
       } else {
         
-        if (user.money >= settings.improvePrice) {
+        if (user.money >= settings.improvePastureMoneyPrice) {
   
           let from: string;
   
@@ -355,7 +365,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
           }
     
           this.territoryType = this.scene.state.exchangeTerritory;
-          user.money -= settings.improvePrice;
+          user.money -= settings.improvePastureMoneyPrice;
           this.improve = 1;
           this.volume = 1000;
           
@@ -367,7 +377,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
           }, callbackScope: this, loop: false });
   
         } else {
-          const count: number = settings.improvePrice - user.money;
+          const count: number = settings.improvePastureMoneyPrice - user.money;
           const diamonds: number = this.scene.convertMoney(count);
           this.openConvertor(count, diamonds, 6, 1);
         }
@@ -385,9 +395,19 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     let farm: string = this.scene.state.farm.toLowerCase();
   
     let sprite: string = this.texture.key;
+    let stage: number = 1;
+    if (this.improve >= 5) {
+      stage = 2;
+      if (this.improve >= 10) {
+        stage = 3
+        if (this.improve >= 15) {
+          stage = 4
+        }
+      }
+    }
   
     if (this.territoryType === 2) {
-      sprite = `${farm}-grass${this.improve}-`
+      sprite = `${farm}-grass${stage}-`
 
       if (this.volume < 200) {
         sprite += 1;
@@ -404,7 +424,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     }
   
     if (this.territoryType === 3) {
-      sprite = `${farm}-water${this.improve}-`
+      sprite = `${farm}-water${stage}-`
   
       if (this.volume < 250) {
         sprite += 1;
@@ -427,11 +447,11 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       } else if (this.scene.state.farm === 'Chicken') {
         max = this.scene.state.chickenSettings.territoriesChickenSettings[this.improve - 1].eggStorage;
       } else if (this.scene.state.farm === 'Cow') {
-        max = this.scene.state.cowSettings.territoriesCowSettings[this.improve - 1].milkStorage;
+        max = this.scene.state.cowSettings.territoriesCowSettings[this.improve - 1].storage;
       }
       
       const percent: number = this.volume > 0 ? this.volume / (max / 100) : 0;
-      sprite = `${farm}-repository-${this.improve}-`;
+      sprite = `${farm}-repository-${stage}-`;
 
       if (percent < 25) {
         sprite += 1;
@@ -526,7 +546,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
     let user: IuserSheep | IuserChicken | IuserCow;
     let territoriesSettings: any = [];
-    let parts: Ipart[] = [];
   
     if (this.scene.state.farm === 'Sheep') {
   
@@ -550,68 +569,124 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       this.territoryType === 3 ||
       this.territoryType === 5)) {
   
-      let settings: IterritoriesCowSettings = territoriesSettings.find((data: any) => data.improve === this.improve + 1);
+        const settings: IterritoriesCowSettings = territoriesSettings.find((data: any) => data.improve === this.improve + 1);
       
       if (user.part >= settings.unlock_improve) {
-          
-          const improve: number = this.improve + 1;
-          let price: number = settings.improvePrice;
-
-        if (user.money >= price) {
-  
-          let territory: string;
-  
-          if (this.territoryType === 2) territory = 'grass';
-          else if (this.territoryType === 3) territory = 'water';
-          else if (this.territoryType === 5) territory = 'repository';
-    
-          this.scene.state.amplitude.getInstance().logEvent('improve_territory', {
-            block: this.block,
-            position: this.position,
-            farm_id: this.scene.state.farm,
-            level: improve,
-            type: territory
-          });
-  
-          this.improve = improve;
-          user.money -= price;
-  
-          if (this.territoryType === 5) {
-  
-            this.scene.tryTask(17, improve);
-  
-            this.repository.setTexture(this.scene.state.farm.toLowerCase() + '-repository-' + improve + '-1');
-            Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
-  
-          } else {
-  
-            if (this.territoryType === 2) {
-              this.scene.tryTask(8, improve);
-            }
-  
-            if (this.territoryType === 3) {
-              this.scene.tryTask(9, improve);
-            }
-  
-            this.volume = 1000;
-  
-            this.scene.time.addEvent({ delay: 500, callback: (): void => {
-              
-              this.changeSprite();
-              Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
-  
-            }, callbackScope: this, loop: false });
-  
+        if (this.territoryType === 5) {
+          if (settings.improveStorageMoneyPrice) {
+            this.moneyImprove(user, settings.improveStorageMoneyPrice);
+          } else if (settings.improveStorageDiamondPrice) {
+            this.diamondImprove(settings.improveStorageDiamondPrice);
           }
-        
-        } else {
-  
-          let count: number = price - user.money;
-          let diamonds: number = this.scene.convertMoney(count);
-          this.openConvertor(count, diamonds, 3, 1);
+        } else if (this.territoryType === 2 || this.territoryType === 3){
+          if (settings.improvePastureMoneyPrice) {
+            this.moneyImprove(user, settings.improvePastureMoneyPrice);
+          } else if (settings.improvePastureDiamondPrice) {
+            this.diamondImprove(settings.improvePastureDiamondPrice);
+          }
         }
       }
     }
   }  
 
+  private moneyImprove(user: IuserSheep | IuserChicken | IuserCow, price: number) {
+    const improve: number = this.improve + 1;
+    if (user.money >= price) {
+  
+      let territory: string;
+
+      if (this.territoryType === 2) territory = 'grass';
+      else if (this.territoryType === 3) territory = 'water';
+      else if (this.territoryType === 5) territory = 'repository';
+
+      this.scene.state.amplitude.getInstance().logEvent('improve_territory', {
+        block: this.block,
+        position: this.position,
+        farm_id: this.scene.state.farm,
+        level: improve,
+        type: territory
+      });
+
+      this.improve = improve;
+      user.money -= price;
+
+      if (this.territoryType === 5) {
+        this.scene.tryTask(17, improve);
+        this.changeSprite();
+        Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
+
+      } else {
+
+        if (this.territoryType === 2) {
+          this.scene.tryTask(8, improve);
+        }
+
+        if (this.territoryType === 3) {
+          this.scene.tryTask(9, improve);
+        }
+
+        this.volume = 1000;
+
+        this.scene.time.addEvent({ delay: 500, callback: (): void => {
+          
+          this.changeSprite();
+          Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
+
+        }, callbackScope: this, loop: false });
+
+      }
+    
+    } else {
+
+      let count: number = price - user.money;
+      let diamonds: number = this.scene.convertMoney(count);
+      this.openConvertor(count, diamonds, 3, 1);
+    }
+  };
+  
+  private diamondImprove(price: number) {
+    const improve: number = this.improve + 1;
+    if (this.scene.state.user.diamonds >= price) {
+  
+      let territory: string;
+
+      if (this.territoryType === 2) territory = 'grass';
+      else if (this.territoryType === 3) territory = 'water';
+      else if (this.territoryType === 5) territory = 'repository';
+
+      this.scene.state.amplitude.getInstance().logEvent('improve_territory', {
+        block: this.block,
+        position: this.position,
+        farm_id: this.scene.state.farm,
+        level: improve,
+        type: territory
+      });
+
+      this.improve = improve;
+      this.scene.state.user.diamonds -= price;
+
+      if (this.territoryType === 5) {
+        this.scene.tryTask(17, improve);
+        this.changeSprite();
+        Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
+
+      } else {
+        if (this.territoryType === 2) {
+          this.scene.tryTask(8, improve);
+        }
+        if (this.territoryType === 3) {
+          this.scene.tryTask(9, improve);
+        }
+        this.volume = 1000;
+        this.scene.time.addEvent({ delay: 500, callback: (): void => {
+          this.changeSprite();
+          Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
+        }, callbackScope: this, loop: false });
+      }
+    } else {
+      let count: number = price - this.scene.state.user.diamonds;
+      let diamonds: number = this.scene.convertDiamonds(count);
+      this.openConvertor(count, diamonds, 3, 1);
+    }
+  };
 }

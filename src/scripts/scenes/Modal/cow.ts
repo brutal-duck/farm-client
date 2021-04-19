@@ -198,7 +198,7 @@ function cowPasture(): void {
     .find((data: IterritoriesCowSettings) => data.improve === improve);
     
   const exchangePrice: number = this.state.cowSettings.territoriesCowSettings
-    .find((data: IterritoriesCowSettings) => data.improve === 2).improvePrice;
+    .find((data: IterritoriesCowSettings) => data.improve === 2).improvePastureMoneyPrice;
   
   const exchange = {
     icon: 'cowCoin',
@@ -207,10 +207,19 @@ function cowPasture(): void {
 
   if (this.state.territory.improve < this.state.cowSettings.territoriesCowSettings.length) {
     if (this.state.userCow.part >= settings.unlock_improve) {
-      const improve = {
-        icon: 'cowCoin',
-        text: shortNum(settings.improvePrice)
+      let improve: any;
+      if (settings.improvePastureMoneyPrice) {
+        improve = {
+          icon: 'cowCoin',
+          text: shortNum(settings.improvePastureMoneyPrice)
+        }
+      } else if (settings.improvePastureDiamondPrice) {
+        improve = {
+          icon: 'diamond',
+          text: shortNum(settings.improvePastureDiamondPrice)
+        }
       }
+      
       const improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.improve + 1);
       const button = this.bigButton('green', 'left', -60, improveText, improve);
       this.clickModalBtn(button, (): void => {
@@ -268,17 +277,24 @@ function cowWater(): void {
     improve = this.state.cowSettings.territoriesCowSettings.length;
   }
   const settings: IterritoriesCowSettings = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === improve);
-  const exchangePrice: number = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === 2).improvePrice;
+  const exchangePrice: number = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === 2).improvePastureMoneyPrice;
   const exchange = {
     icon: 'cowCoin',
     text: shortNum(exchangePrice)
   }
   if (this.state.territory.improve < this.state.cowSettings.territoriesCowSettings.length) {
     if (this.state.userCow.part >= settings.unlock_improve) {
-      const price: number = settings.improvePrice;
-      const improve = {
-        icon: 'cowCoin',
-        text: shortNum(price)
+      let improve: any;
+      if (settings.improvePastureMoneyPrice) {
+        improve = {
+          icon: 'cowCoin',
+          text: shortNum(settings.improvePastureMoneyPrice)
+        }
+      } else if (settings.improvePastureDiamondPrice) {
+        improve = {
+          icon: 'diamond',
+          text: shortNum(settings.improvePastureDiamondPrice)
+        }
       }
       const improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.improve + 1);
 
@@ -620,11 +636,17 @@ function cowMilkRepository(): void {
   if (this.state.territory.improve < this.state.cowSettings.territoriesCowSettings.length) {
 
     if (this.state.userCow.part >= settings.unlock_improve) {
-      const price: number = settings.improvePrice;
-
-      let improve = {
-        icon: 'cowCoin',
-        text: shortNum(price)
+      let improve: any;
+      if (settings.improveStorageMoneyPrice) {
+        improve = {
+          icon: 'cowCoin',
+          text: shortNum(settings.improveStorageMoneyPrice)
+        }
+      } else if (settings.improveStorageDiamondPrice) {
+        improve = {
+          icon: 'diamond',
+          text: shortNum(settings.improveStorageDiamondPrice)
+        }
       }
       let improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.improve + 1);
       let button = this.bigButton('orange', 'left', 110, improveText, improve);
@@ -739,7 +761,7 @@ function cowMilkRepositoryExchange(): void {
   
   const exchange = {
     icon: 'cowCoin',
-    text: shortNum(settings.improvePrice)
+    text: shortNum(settings.improvePastureMoneyPrice)
   }
 
   const textTitle: string = this.state.lang.exchangeRepositoryTitle.replace('$1', this.state.territory.improve);

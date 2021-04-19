@@ -90,11 +90,20 @@ function world(): void {
 
 function getTerritoryType(data: Iterritories): string {
   let type: string;
-
+  let stage: number = 1;
+  if (data.improve >= 5) {
+    stage = 2;
+    if (data.improve >= 10) {
+      stage = 3
+      if (data.improve >= 15) {
+        stage = 4
+      }
+    }
+  }
   if (data.type === 0) type = 'cow-for-buying';
   else if (data.type === 1) type = 'cow-bought';
   else if (data.type === 2) {
-    type = `${this.state.farm.toLowerCase()}-grass${data.improve}-`;
+    type = `${this.state.farm.toLowerCase()}-grass${stage}-`;
 
     if (data.volume < 200) type += 1;
     else if (data.volume >= 200 && data.volume < 400) type += 2;
@@ -103,7 +112,7 @@ function getTerritoryType(data: Iterritories): string {
     else if (data.volume >= 800) type += 5;
     
   } else if (data.type === 3) {
-    type = `${this.state.farm.toLowerCase()}-water${data.improve}-`;
+    type = `${this.state.farm.toLowerCase()}-water${stage}-`;
 
     if (data.volume < 250) type += 1;
     else if (data.volume >= 250 && data.volume < 500) type += 2;
