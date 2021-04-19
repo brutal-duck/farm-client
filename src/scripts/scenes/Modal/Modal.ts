@@ -371,7 +371,7 @@ class Modal extends Phaser.Scene {
 
       } else if (this.state.farm === 'Cow') {
 
-        max = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === this.state.territory.improve).milkStorage;
+        max = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === this.state.territory.improve).storage;
         count = this.state.lang.countMilk;
 
       }
@@ -411,7 +411,7 @@ class Modal extends Phaser.Scene {
 
     if (this.state.farm === 'Cow' && this.state.territory?.territoryType === 5 && this.state.modal?.sysType === 2) {
 
-      const max: number = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === this.state.territory.improve).milkStorage;
+      const max: number = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === this.state.territory.improve).storage;
       const count: string = this.state.lang.countMilk;
       let percent: number = 0;
 
@@ -431,6 +431,9 @@ class Modal extends Phaser.Scene {
       }
 
       let volume: string = count + ': ' + this.state.territory.volume + ' / ' + max;
+      if (this.state.farm === 'Cow') {
+        volume = count + ': ' + this.state.territory.volume + ' / ' + shortNum(max);
+      }
       if (this.progressText.text !== volume) this.progressText.setText(volume);
 
       if (this.state[`user${this.state.farm}`].feedBoostTime > 0) {

@@ -322,10 +322,14 @@ interface IterritoriesChickenSettings {
 interface IterritoriesCowSettings {
   improve: number;
   regeneration: number;
-  countMilk: number;
   unlock_improve: number;
-  milkStorage: number;
-  improvePrice: number;
+  storage: number;
+  improvePastureMoneyPrice: number;
+  improveStorageMoneyPrice: number;
+  improveFactoryMoneyPrice: number;
+  improvePastureDiamondPrice: number;
+  improveStorageDiamondPrice: number;
+  improveFactoryDiamondPrice: number;
   id?: any;
 }
 interface IterritoriesEventSettings {
