@@ -68,7 +68,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
   public createBorders(topBorder: number, bottomBorder: number): void {
     const farm: string = this.scene.state.farm.toLowerCase();
-    this.borderTop = this.scene.add.sprite(this.x, this.y + 15, `farm-horizontal-border-${topBorder}`)
+    this.borderTop = this.scene.add.sprite(this.x, this.y + 15, `${farm}-horizontal-border-${topBorder}`)
     .setOrigin(0, 1)
     .setDepth(this.y)
     .setVisible(false);
@@ -411,6 +411,10 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     if ((this.territoryType === 2 || this.territoryType === 3 || this.territoryType === 5) && ! this.improveText) {
       this.createImproveText();
     }
+
+    if (this.improveText?.text !== String(this.improve)) {
+      this.improveText?.setText(String(this.improve));
+    }
   
     let sprite: string = this.texture.key;
     let stage: number = 1;
@@ -488,9 +492,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     if (this.texture.key !== sprite && this.territoryType !== 5) {
       this.setTexture(sprite);
     } 
-    if (this.improveText?.text !== String(this.improve)) {
-      this.improveText?.setText(String(this.improve));
-    }
+    
   }
 
   // улучшение ярмарки
