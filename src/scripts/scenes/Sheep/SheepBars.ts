@@ -22,6 +22,7 @@ import { clickTaskBoard } from '../../general/tasks';
 import TaskBoard from '../../components/gameObjects/TaskBoard';
 import Collector from '../../components/gameObjects/Collector';
 import BarsMenu from '../../components/gameObjects/BarsMenu';
+import SpeechBubble from './../../components/animations/SpeechBuble';
 
 class SheepBars extends Phaser.Scene {
   constructor() {
@@ -222,6 +223,13 @@ class SheepBars extends Phaser.Scene {
     this.add.sprite(352, 0, 'sheep-leaves').setOrigin(0.5, 0);
 
     this.balanceBg = this.add.image(0, 0, 'green-balance-bg').setOrigin(0, 0);
+
+    this.click(this.balanceBg, (): void => {
+      if (this.state.userSheep.tutorial >= 100)  {
+        SpeechBubble.create(this, this.state.lang.remainderBalance, 3);
+      }
+    });
+
     this.waterBalance = this.add.image(70, 10, 'water-balance').setOrigin(0.5, 0).setDepth(2);
     this.grassBalance = this.add.image(170, 10, 'grass-balance').setOrigin(0.5, 0).setDepth(2);
     this.waterBg = this.add.image(70, 10, 'resource-enough').setOrigin(0.5, 0).setDepth(1);

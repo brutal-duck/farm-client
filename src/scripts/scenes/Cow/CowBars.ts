@@ -21,6 +21,7 @@ import { clickTaskBoard } from './basic';
 import TaskBoard from '../../components/gameObjects/TaskBoard';
 import Collector from '../../components/gameObjects/Collector';
 import BarsMenu from '../../components/gameObjects/BarsMenu';
+import SpeechBubble from './../../components/animations/SpeechBuble';
 class CowBars extends Phaser.Scene {
   constructor() {
     super('CowBars');
@@ -204,6 +205,9 @@ class CowBars extends Phaser.Scene {
     this.add.sprite(352, 0, 'cow-leaves').setOrigin(0.5, 0);
 
     this.balanceBg = this.add.image(0, 0, 'green-balance-bg').setOrigin(0, 0);
+    this.click(this.balanceBg, (): void => {
+      SpeechBubble.create(this, this.state.lang.remainderBalance, 3);
+    });
     this.add.sprite(70, 10, 'water-balance').setOrigin(0.5, 0).setDepth(2);
     this.add.sprite(170, 10, 'grass-balance').setOrigin(0.5, 0).setDepth(2);
     this.waterBg = this.add.image(70, 10, 'resource-enough').setOrigin(0.5, 0).setDepth(1);
