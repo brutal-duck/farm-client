@@ -14,7 +14,7 @@ function setCollector(): void {
           const cow: CowSprite = this.animalGroup.children.entries[i];
           const freeStorage: Territory = storages.find((el: Territory) => {
             return this.state.cowSettings.territoriesCowSettings
-              .find((data: IterritoriesCowSettings) => data.improve === el.improve).milkStorage >= cow.milk + el.volume;
+              .find((data: IterritoriesCowSettings) => data.improve === el.improve).storage >= cow.milk + el.volume;
           });
           if (cow.milk >= cow.settings.maxMilkVolume && cow.breed !== 0 && freeStorage) {
             this.collectMilk(cow);
