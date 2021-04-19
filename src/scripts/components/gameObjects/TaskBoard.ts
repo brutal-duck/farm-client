@@ -46,6 +46,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
   public listTimer: Phaser.Time.TimerEvent;
   public listTime: number = 0;
   public listMoving: boolean = false;
+  public isMoving: boolean = false;
 
   constructor(
     scene: SheepBars | ChickenBars | CowBars
@@ -181,7 +182,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       countBreed = this.scene.state.cowSettings.cowSettings.length;
       
     }
-
+    
     const tasks: Itasks[] = this.scene.game.scene.keys[this.scene.state.farm].partTasks();
     tasks.sort((x1: Itasks, x2: Itasks) => {
       if (x1.got_awarded < x2.got_awarded) return -1;
@@ -196,7 +197,13 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
     let setter: boolean = false;
 
     const task: Itasks = tasks[0];
-    if (this.taskStatus === task.done && this.currentTaskProgress === task.progress && this.taskId === task.id && this.gotAward === task.got_awarded) return;
+
+    if (
+      this.taskStatus === task.done && 
+      this.currentTaskProgress === task.progress && 
+      this.taskId === task.id && 
+      this.gotAward === task.got_awarded ||
+      this.isMoving) return;
     else {
       if (this.taskId !== task.id) {
         setter = true;
@@ -227,7 +234,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       this.taskProgress?.clear();
 
       if (this.status === 1 && task) {
-            
+            console.log('1')
         const taskData: ItaskData = this.scene.game.scene.keys[this.scene.state.farm].getTaskData(task);
         
         this.taskText
@@ -292,7 +299,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
           if (!this.listMoving) this.toggleList();
         });
       } else if (this.status === 2 && task) {
-      
+        console.log('2')
         const taskData: ItaskData = this.scene.game.scene.keys[this.scene.state.farm].getTaskData(task);
         
         this.taskText
@@ -342,7 +349,6 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
           .setTint(0x777777);
 
         this.done.setPosition(620, this.positionY - 190 - height / 2);
-      
         this.takeText.setPosition(620, this.positionY - 193 - height / 2);
         
         this.done.removeAllListeners();
@@ -413,7 +419,6 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
         !this.scene.scene.isActive('Tutorial') &&
         checkSheepTutor) {
         if (setter) {
-          this.setStartY();
           this.flyInMainBoardAnim();
         }
         this.shownElements();
@@ -422,7 +427,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
   }
 
   private setDoneAnim(): void {
-    this.closeTaskListAnimation();
+    if (this.listIsOpen) this.closeTaskListAnimation();
     this.animation = this.scene.tweens.add({
       targets: [
         this, 
@@ -490,6 +495,9 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
   }
 
   private flyInMainBoardAnim(): void {
+    this.isMoving = true;
+    this.setStartY();
+    console.log('flyIn')
     this.removeButtonsInteractive();
     this.scene.tweens.add({
       duration: 500,
@@ -515,6 +523,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       y: '-=250',
       ease: 'Power3',
       onComplete: (): void => {
+        this.isMoving = false;
         this.setButtonsInteractive();
       }
     });
