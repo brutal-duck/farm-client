@@ -334,7 +334,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   
             this.setTexture(farm + '-repository');
             this.repository = this.scene.add.sprite(x, y, farm + '-repository-1-1')
-              .setDepth(this.y + 50)
+              .setDepth(this.y + 1)
               .setOrigin(0.5, 1);
             Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
     
