@@ -810,6 +810,15 @@ function buyTerritory(): void {
 
 }
 
+function findFreeTerritory (x: number, y: number): Iposition {
+  const territory: any = this.currentTerritory(x, y);
+  if (territory) {
+    if (territory.type === 2 || territory.type === 3) {
+      return { x: territory.x + 120, y: territory.y + 120 };
+    } else return this.findFreeTerritory(x - 240, y);
+  } else if (y > 0) return this.findFreeTerritory(600, y - 240);
+  else return;
+} 
 
 export {
   currentTerritory,
@@ -820,5 +829,6 @@ export {
   deleteTerritoriesLocks,
   buildBorders,
   checkExchangeRepository,
-  buyTerritory
+  buyTerritory,
+  findFreeTerritory
 }

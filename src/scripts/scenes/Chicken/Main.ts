@@ -65,7 +65,8 @@ import {
   deleteTerritoriesLocks,
   buildBorders,
   checkExchangeRepository,
-  buyTerritory
+  buyTerritory,
+  findFreeTerritory
 } from '../../general/territories';
 import { animations, repositoryAnimation } from './animations';
 import {
@@ -220,6 +221,7 @@ class Chicken extends Phaser.Scene {
   public nextDayTimer = nextDayTimer.bind(this);
   public intervalPorgressCollectorTime = intervalPorgressCollectorTime.bind(this);
   public autoporgressCollectorTime = autoporgressCollectorTime.bind(this);
+  public findFreeTerritory = findFreeTerritory.bind(this);
 
   public init(state: Istate): void {
 

@@ -54,6 +54,7 @@ import {
 } from '../../general/tasks';
 import {
   currentTerritory,
+  findFreeTerritory
 } from '../../general/territories';
 import { repositoryAnimation, animations } from './animations';
 import {
@@ -198,6 +199,7 @@ class Cow extends Phaser.Scene {
   public doneEventTutor_0 = doneEventTutor_0.bind(this);
   public nextDayTimer = nextDayTimer.bind(this);
   public animations = animations.bind(this);
+  public findFreeTerritory = findFreeTerritory.bind(this);
 
   public init(state: Istate): void {
 

@@ -68,7 +68,8 @@ import {
   deleteTerritoriesLocks,
   buildBorders,
   checkExchangeRepository,
-  buyTerritory
+  buyTerritory,
+  findFreeTerritory
 } from '../../general/territories';
 import { animations, repositoryAnimation } from './animations';
 import {
@@ -291,6 +292,7 @@ class Sheep extends Phaser.Scene {
   public autoporgressCollectorTime = autoporgressCollectorTime.bind(this);
   public openEmailWindow = openEmailWindow.bind(this);
   public remainderSellResource = remainderSellResource.bind(this);
+  public findFreeTerritory = findFreeTerritory.bind(this);
 
   public init(state: Istate): void {
 
