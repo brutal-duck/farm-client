@@ -17,6 +17,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   public borderBottom: Phaser.GameObjects.Sprite;
   public borderLeft: Phaser.GameObjects.Sprite;
   public borderRight: Phaser.GameObjects.Sprite;
+  public improveText: Phaser.GameObjects.Text;
 
   // тип территории 0
   public forest: Phaser.GameObjects.Sprite;
@@ -53,6 +54,16 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     this.improve = data.improve;
     this.money = data.money;
     this.setListeners();
+    if (this.territoryType === 2 || this.territoryType === 3 || this.territoryType === 5) {
+      this.createImproveText();
+    }
+  }
+
+  private createImproveText(): void {
+    this.improveText = this.scene.add.text(this.x + 30, this.y + 13, String(this.improve), {
+      font: '26px Shadow',
+      color: '#ECDFDF',
+    }).setStroke('#000000', 3).setDepth(this.depth + 2);
   }
 
   public createBorders(topBorder: number, bottomBorder: number): void {
@@ -160,7 +171,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       }
 
       this.repository = this.scene.add.sprite(this.x + 120, this.y + 240, type)
-        .setDepth(this.y + 50)
+        .setDepth(this.y + 1)
         .setOrigin(0.5, 1);
 
     }
@@ -470,6 +481,8 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     if (this.texture.key !== sprite && this.territoryType !== 5) {
       this.setTexture(sprite);
     } 
+
+    this.improveText?.setText(String(this.improve));
   }
 
   // улучшение ярмарки
