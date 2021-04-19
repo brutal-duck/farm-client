@@ -60,43 +60,47 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   }
 
   private createImproveText(): void {
-    this.improveText = this.scene.add.text(this.x + 40, this.y + 30, String(this.improve), {
+    this.improveText = this.scene.add.text(this.x + 38, this.y + 24, String(this.improve), {
       font: '26px Shadow',
-      color: '#ECDFDF',
-    }).setStroke('#000000', 3).setDepth(this.depth + 2).setOrigin(0.5);
+      color: '#ffe571',
+    }).setStroke('#000000', 1).setDepth(this.depth + 2).setOrigin(0.5);
   }
 
   public createBorders(topBorder: number, bottomBorder: number): void {
-    this.borderTop = this.scene.add.sprite(this.x, this.y + 15, `cow-horizontal-border-${topBorder}`)
+    const farm: string = this.scene.state.farm.toLowerCase();
+    this.borderTop = this.scene.add.sprite(this.x, this.y + 15, `farm-horizontal-border-${topBorder}`)
     .setOrigin(0, 1)
     .setDepth(this.y)
     .setVisible(false);
   
-    this.borderLeft = this.scene.add.sprite(this.x, this.y, 'cow-vertical-border')
+    this.borderLeft = this.scene.add.sprite(this.x, this.y, `${farm}-vertical-border`)
       .setOrigin(0, 0)
       .setDepth(this.y)
       .setVisible(false);
 
-    this.borderRight = this.scene.add.sprite(this.x + 240, this.y, 'cow-vertical-border')
+    this.borderRight = this.scene.add.sprite(this.x + 240, this.y, `${farm}-vertical-border`)
       .setOrigin(1, 0)
       .setDepth(this.y)
       .setVisible(false);
 
-    this.borderBottom = this.scene.add.sprite(this.x, this.y + 240, `cow-horizontal-border-${bottomBorder}`)
+    this.borderBottom = this.scene.add.sprite(this.x, this.y + 240, `${farm}-horizontal-border-${bottomBorder}`)
       .setOrigin(0, 1)
       .setDepth(this.y + 240)
       .setVisible(false);
   }
 
   public createForest(forest: number): void {
+    const farm: string = this.scene.state.farm.toLowerCase();
+    const territoriesPrice: IterritoriesPrice[] = this.scene.state[`${farm}Settings`][`territories${this.scene.state.farm}Price`];
+    const part: number = this.scene.state[`user${this.scene.state.farm}`].part;
     if (this.territoryType === 0) {
-      let unlock: number = this.scene.state.cowSettings.territoriesCowPrice.find((data: IterritoriesPrice) => data.block === this.block && data.position === this.position).unlock;
+      const unlock: number = territoriesPrice.find((data: IterritoriesPrice) => data.block === this.block && data.position === this.position).unlock;
 
-      this.forest = this.scene.add.sprite(this.x + 120, this.y + 240, `cow-forest-${forest}`)
+      this.forest = this.scene.add.sprite(this.x + 120, this.y + 240, `${farm}-forest-${forest}`)
         .setOrigin(0.5, 1)
         .setDepth(this.y + 1);
 
-      if (unlock > this.scene.state.userCow.part) {
+      if (unlock > part) {
 
         this.lock_image = this.scene.add.sprite(this.x + 120, this.y + 120, 'lock-territory').setDepth(this.y + 2);
         this.lock_text = this.scene.add.text(this.x + 120, this.y + 120 - 37, this.scene.state.lang.part + ' ' + unlock, {
@@ -108,14 +112,14 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   }
 
   public createMetgingZone(): void {
+    const farm: string = this.scene.state.farm.toLowerCase();
+    const fairLevel: string = String(this.scene.state[`user${this.scene.state.farm}`].fair);
+
     if (this.territoryType === 4) {
 
       this.merging = [];
       this.mergingCounter = 0;
-      // this.y += 16
-      // this.scaleY = 0.94
-
-      this.scene.add.sprite(this.x, this.y - 35, 'cow-tent').setDepth(this.y).setOrigin(0, 0);
+      this.scene.add.sprite(this.x, this.y - 35, `${farm}-tent`).setDepth(this.y).setOrigin(0, 0);
       
       let topZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.x + 120, this.y + 45, 300, 145).setDropZone(undefined, () => {});
       topZone.type = 'top';
@@ -132,7 +136,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       // graphics2.lineStyle(2, 0x00ff00);
       // graphics2.strokeRect(bottomZone.x - bottomZone.input.hitArea.width / 2, bottomZone.y - bottomZone.input.hitArea.height / 2, bottomZone.input.hitArea.width, bottomZone.input.hitArea.height);
 
-      this.levelText = this.scene.add.text(this.x + 47, this.y + 196, String(this.scene.state.userCow.fair), {
+      this.levelText = this.scene.add.text(this.x + 47, this.y + 196, fairLevel, {
         font: '34px Shadow',
         color: '#df870a'
       }).setOrigin(0.5, 0.5).setDepth(this.y);
@@ -141,6 +145,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   }
 
   public createRepositorySprite(): void {
+    const farm: string = this.scene.state.farm.toLowerCase();
     let stage: number = 1;
     if (this.improve >= 5) {
       stage = 2;
@@ -155,7 +160,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       
       let percent: number = 0;
       let max: number = this.scene.state.cowSettings.territoriesCowSettings[this.improve - 1].storage;
-      let type: string = `cow-repository-${stage}-`;
+      let type: string = `${farm}-repository-${stage}-`;
 
       if (this.volume > 0) {
         percent = this.volume / (max / 100);
@@ -213,9 +218,10 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
   // покупка земли
   public buyTerritory(): void {
+    const farm: string = this.scene.state.farm.toLowerCase();
     const user: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
-    const settings: IterritoriesPrice = this.scene.state.cowSettings.territoriesCowPrice.find((data: IterritoriesPrice) => data.block === this.block && data.position === this.position);
-
+    const territoriesPrice: IterritoriesPrice[] = this.scene.state[`${farm}Settings`][`territories${this.scene.state.farm}Price`];
+    const settings: IterritoriesPrice = territoriesPrice.find((data: IterritoriesPrice) => data.block === this.block && data.position === this.position);
 
     if (user.part >= settings.unlock && this.territoryType === 0) {
       // 70% от суммы покупки
@@ -234,13 +240,11 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
         this.scene.time.addEvent({ delay: 500, callback: (): void => {
           this.forest?.destroy();
-          this.setTexture(this.scene.state.farm.toLowerCase() + '-bought');
+          this.setTexture(`${farm}-bought`);
           Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
           this.scene.buildBorders();
         }, callbackScope: this, loop: false });
-
       } else {
-
         const count: number = price - user.money;
         const diamonds: number = this.scene.convertMoney(count);
         this.openConvertor(count, diamonds, 6, 1);
@@ -285,7 +289,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       this.scene.state.exchangeTerritory === 3 ||
       this.scene.state.exchangeTerritory === 5) {
       
-      const settings: IterritoriesCowSettings = territoriesSettings.find((data: IterritoriesCowSettings) => data.improve === 2);
+      const settings: IterritoriesCowSettings = territoriesSettings.find(data => data.improve === 2);
   
       if (this.scene.state.exchangeTerritory === 5) {
   
