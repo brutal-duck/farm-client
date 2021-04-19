@@ -98,7 +98,9 @@ private createProfileInfo(): void {
       avatar.setVisible(true);
     } else {
       avatar = this.add.sprite(farmer.x, farmer.y, 'avatar');
-      avatar.setScale(0.8);
+      if (this.state.platform === 'vk') {
+        avatar.setScale(0.6);
+      }
       avatar.setMask(new Phaser.Display.Masks.BitmapMask(this, farmer));
       if (avatar.texture.key === '__MISSING') {
         avatar = farmer;
