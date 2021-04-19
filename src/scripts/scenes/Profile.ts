@@ -13,6 +13,7 @@ const cowFarmLock: string = require('./../../assets/images/profile/cow-farm-lock
 const profileLockIcon: string = require('./../../assets/images/icons/profile-lock-icon.png');
 const eventIsland: string = require('./../../assets/images/profile/event-island.png');
 const btn: string = require('./../../assets/images/profile/btn.png');
+const pointer: string = require('./../../assets/images/profile/pointer.png');
 
 class Profile extends Phaser.Scene {
   constructor() {
@@ -61,6 +62,7 @@ class Profile extends Phaser.Scene {
     this.load.image('profile-lock-icon', profileLockIcon);
     this.load.image('profile-event-island', eventIsland);
     this.load.image('profile-btn', btn);
+    this.load.image('profile-pointer', pointer);
   }
 
 
@@ -85,6 +87,7 @@ class Profile extends Phaser.Scene {
     this.createProfileInfo();
     this.createFarms();
     this.createShop();
+    this.creaetePointer();
   }
 
   private createProfileInfo(): void {
@@ -95,6 +98,7 @@ class Profile extends Phaser.Scene {
       avatar.setVisible(true);
     } else {
       avatar = this.add.sprite(farmer.x, farmer.y, 'avatar');
+      avatar.setScale(0.65);
       avatar.setMask(new Phaser.Display.Masks.BitmapMask(this, farmer));
       if (avatar.texture.key === '__MISSING') {
         avatar = farmer;
@@ -106,14 +110,14 @@ class Profile extends Phaser.Scene {
     if (status) {
       this.add.sprite(avatarGeom.right - 15, avatarGeom.top + 15, status.iconTexture).setVisible(status.iconVisible);
     }
-    
-    const text: Phaser.GameObjects.Text = this.add.text(avatarGeom.right + 110, avatarGeom.centerY, this.state.user.login,  {
+    let login: string = this.state.platform === 'web' ? this.state.user.login : this.state.name;
+    if (!login) login = this.state.lang.unknownFarmer;
+    const text: Phaser.GameObjects.Text = this.add.text(avatarGeom.right + 110, avatarGeom.centerY, login,  {
       font: '32px Shadow',
       color: '#FFFFFF',
       align: 'center',
       wordWrap: { width: 220 },
     }).setOrigin(0.5);
-    if (!this.state.user.login) text.setText(this.state.lang.unknownFarmer);
     if (text.displayWidth > 200) {
       const multiply: number = text.displayWidth / 200;
       text.setFontSize(parseInt(text.style.fontSize) / multiply);
@@ -360,6 +364,33 @@ class Profile extends Phaser.Scene {
 
       }
     });
+  }
+
+  private creaetePointer(): void {
+    const pointer = this.add.sprite(0, 0, 'profile-pointer').setOrigin(0.5, 1).setDepth(100);
+    
+    const sheepPosition: Iposition = { x: 220, y: 740 };
+    const chickenPosition: Iposition = { x: 610, y: 940 };
+    const eventPosition: Iposition =  { x: 600, y: 700 };
+    const cowPosition: Iposition = { x: 160, y: 980 };
+
+    if (this.state.farm === 'Sheep') {
+      pointer.setPosition(sheepPosition.x, sheepPosition.y)
+    } else if (this.state.farm === 'Chicken') {
+      pointer.setPosition(chickenPosition.x, chickenPosition.y)
+    } else if (this.state.farm === 'Event') {
+      pointer.setPosition(eventPosition.x, eventPosition.y)
+    } else if (this.state.farm === 'Cow') {
+      pointer.setPosition(cowPosition.x, cowPosition.y)
+    }
+
+    this.tweens.add({
+      targets: pointer,
+      y: '-=20',
+      duration: 300,
+      yoyo: true,
+      repeat: -1
+    })
   }
 
   private setListeners(): void {
