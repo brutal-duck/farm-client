@@ -693,6 +693,7 @@ function getNewbieAward(): void {
         let y: number = random(510, 690);
         let id: string = 'local_' + randomString(18);
         this.getSheep(id, 0, x, y, 0, 500, -5);
+        this.tryTask(18, 0);
         if (counter >= 5) timeout.remove(false);
 
       }, callbackScope: this, loop: true });
@@ -715,7 +716,9 @@ function getNewbieAward(): void {
         let id: string = 'local_' + randomString(18);
         this.getSheep(id, type, x, y, 0, 500);
         Firework.create(this, {x, y}, 1);
-
+        this.tryTask(2, 0);
+        this.tryTask(2, type);
+        this.tryTask(4, type);
         if (counter >= 3) timeout.remove(false);
 
       }, callbackScope: this, loop: true });
@@ -770,7 +773,9 @@ function getNewbieAward(): void {
         let id: string = 'local_' + randomString(18);
         this.getChicken(id, type, x, y, 0, 500);
         Firework.create(this, {x, y}, 1);
-
+        this.tryTask(2, 0);
+        this.tryTask(2, type);
+        this.tryTask(4, type);
         if (counter >= 3) timeout.remove(false);
 
       }, callbackScope: this, loop: true });
@@ -802,7 +807,7 @@ function getNewbieAward(): void {
         let y: number = random(510, 690);
         let id: string = 'local_' + randomString(18);
         this.getSheep(id, 0, x, y, 0, 500, -5);
-
+        this.tryTask(18, 0);
         if (counter >= 10) timeout.remove(false);
 
       }, callbackScope: this, loop: true });
