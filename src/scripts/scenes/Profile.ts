@@ -459,7 +459,7 @@ class Profile extends Phaser.Scene {
       this.state.user.additionalTutorial.eventTutorial === 0 && 
       (this.state.progress.sheep.part > 4 || 
       this.state.progress.chicken.part >= 1) && 
-      this.state.user.login) {
+      (this.state.user.login || this.state.name)) {
 
         if (!this.eventStartText?.visible) {
         this.eventIsland?.setVisible(true);
@@ -481,7 +481,7 @@ class Profile extends Phaser.Scene {
       this.state.progress.event.endTime > 0 && 
       (this.state.progress.sheep.part > 4 || 
       this.state.progress.chicken.part >= 1) && 
-      this.state.user.login) {
+      (this.state.user.login || this.state.name)) {
 
       if (!this.eventMapFarm?.visible) {
 
@@ -500,7 +500,6 @@ class Profile extends Phaser.Scene {
       this.state.user.additionalTutorial.eventTutorial === 0) {
       this.eventIsland?.setVisible(true);
       this.eventZone?.destroy();
-
     } 
     
     if (this.state.progress.event.endTime <= 0 && this.state.progress.event.open) {
@@ -539,11 +538,10 @@ class Profile extends Phaser.Scene {
       this.eventEndTime.setText(shortTime(this.state.progress.event.endTime, this.state.lang));
       this.state.progress.event.updateRaitings = false;
     }
-    if (!this.state.user.login) {
+    if (!this.state.user.login && !this.state.name) {
       this.eventZone?.destroy();
     }
   }
-
 }
 
 export default Profile;
