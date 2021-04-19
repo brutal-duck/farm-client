@@ -462,6 +462,33 @@ private createProfileInfo(): void {
       (this.state.progress.sheep.part > 4 || 
       this.state.progress.chicken.part >= 1) && 
       (this.state.user.login || this.state.name)) {
+        if (!this.eventStartText?.visible) {
+        this.eventIsland?.setVisible(true);
+        this.eventStartText?.setY(795);
+        this.eventStartText?.setVisible(true);
+        this.eventStartTime?.setVisible(true);
+        this.eventStartBg?.setVisible(true);
+        this.eventMapFarm?.setVisible(false);
+        this.eventPlace?.setVisible(false);
+        this.eventScore?.setVisible(false);
+        this.eventEndTime?.setVisible(false);
+        this.eventEndText?.setVisible(false);
+        this.eventZone?.destroy();
+      } 
+    }
+
+
+
+
+
+
+
+    if (this.state.progress.event.startTime > 0 && 
+      this.state.progress.event.open && 
+      this.state.user.additionalTutorial.eventTutorial === 0 && 
+      (this.state.progress.sheep.part > 4 || 
+      this.state.progress.chicken.part >= 1) && 
+      (this.state.user.login || this.state.name)) {
 
         if (!this.eventStartText?.visible) {
         this.eventIsland?.setVisible(true);
@@ -485,7 +512,6 @@ private createProfileInfo(): void {
       (this.state.user.login || this.state.name)) {
 
       if (!this.eventMapFarm?.visible) {
-        this.eventZone?.destroy();
         this.eventStartText?.setVisible(false);
         this.eventStartTime?.setVisible(false);
         this.eventStartBg?.setVisible(false);
@@ -494,16 +520,13 @@ private createProfileInfo(): void {
         this.eventScore?.setVisible(true);
         this.eventEndTime?.setVisible(true);
         this.eventEndText?.setVisible(true);
-
       }   
     } else if (this.state.progress.event.startTime <= 0 && 
       this.state.progress.event.open && 
       this.state.user.additionalTutorial.eventTutorial === 0) {
       this.eventIsland?.setVisible(true);
       this.eventZone?.destroy();
-    } 
-    
-    if (this.state.progress.event.endTime <= 0 && this.state.progress.event.open) {
+    } else  if (this.state.progress.event.endTime <= 0 && this.state.progress.event.open) {
       this.eventIsland?.setVisible(false);
       this.eventStartText?.setVisible(true);
       this.eventStartText?.setY(805);
@@ -516,9 +539,7 @@ private createProfileInfo(): void {
       this.eventEndTime?.setVisible(false);
       this.eventEndText?.setVisible(false);
       this.eventZone?.destroy();
-    }
-
-    if (!this.state.progress.event.open) {
+    } else if (!this.state.progress.event.open) {
       this.eventIsland?.setVisible(false);
       this.eventStartText?.setVisible(false);
       this.eventStartTime?.setVisible(false);
@@ -529,7 +550,10 @@ private createProfileInfo(): void {
       this.eventEndTime?.setVisible(false);
       this.eventEndText?.setVisible(false);
       this.eventZone?.destroy();
+    } else if (!this.state.user.login && !this.state.name) {
+      this.eventZone?.destroy();
     }
+
 
     if (this.state.progress.event.updateRaitings) {
       const points: number = this.state.progress.event.eventPoints >= 0 ? this.state.progress.event.eventPoints : 0;
@@ -538,9 +562,6 @@ private createProfileInfo(): void {
       this.eventPlace.setText(this.state.progress.event.userEventRaiting.place + ' ' + this.state.lang.eventPlace);
       this.eventEndTime.setText(shortTime(this.state.progress.event.endTime, this.state.lang));
       this.state.progress.event.updateRaitings = false;
-    }
-    if (!this.state.user.login && !this.state.name) {
-      this.eventZone?.destroy();
     }
   }
 }
