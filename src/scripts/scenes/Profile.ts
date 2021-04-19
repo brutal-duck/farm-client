@@ -271,7 +271,7 @@ private createProfileInfo(): void {
 
   private createLockedCowFarm(): void {
     const farmPosition: Iposition = { x: 0, y: 1050 };
-    this.add.sprite(farmPosition.x, farmPosition.y, 'profile-cow-farm-lock').setOrigin(0, 0.5);
+    const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-cow-farm-lock').setOrigin(0, 0.5);
     const text: Phaser.GameObjects.Text = this.add.text(farmPosition.x + 150, farmPosition.y, this.state.lang.unlockNextUpdate, {
       font: '20px Shadow',
       color: '#fbd0b9',
@@ -284,6 +284,20 @@ private createProfileInfo(): void {
       .fillStyle(0x2b3d11, 0.5)
       .fillRoundedRect(0, 0, textBounds.width + 40, textBounds.height + 40).setDepth(1);
     
+    this.click(farmSprite, (): void => {
+      if (this.state.farm !== 'Cow') {
+        this.game.scene.keys[this.state.farm].autosave();
+        this.scene.stop();
+        this.scene.stop(this.state.farm);
+        this.scene.stop(this.state.farm + 'Bars');
+        this.scene.start('Cow' + 'Preload', this.state);
+      } else {
+        this.game.scene.keys[this.state.farm].scrolling.downHandler();
+        this.game.scene.keys[this.state.farm].scrolling.enabled = true;
+        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+        this.scene.stop();
+      }
+    }, 8);
     
   }
 
@@ -455,34 +469,6 @@ private createProfileInfo(): void {
   }
 
   private updateEvent(): void {
-    
-    if (this.state.progress.event.startTime > 0 && 
-      this.state.progress.event.open && 
-      this.state.user.additionalTutorial.eventTutorial === 0 && 
-      (this.state.progress.sheep.part > 4 || 
-      this.state.progress.chicken.part >= 1) && 
-      (this.state.user.login || this.state.name)) {
-        if (!this.eventStartText?.visible) {
-        this.eventIsland?.setVisible(true);
-        this.eventStartText?.setY(795);
-        this.eventStartText?.setVisible(true);
-        this.eventStartTime?.setVisible(true);
-        this.eventStartBg?.setVisible(true);
-        this.eventMapFarm?.setVisible(false);
-        this.eventPlace?.setVisible(false);
-        this.eventScore?.setVisible(false);
-        this.eventEndTime?.setVisible(false);
-        this.eventEndText?.setVisible(false);
-        this.eventZone?.destroy();
-      } 
-    }
-
-
-
-
-
-
-
     if (this.state.progress.event.startTime > 0 && 
       this.state.progress.event.open && 
       this.state.user.additionalTutorial.eventTutorial === 0 && 
