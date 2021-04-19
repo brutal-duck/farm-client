@@ -90,7 +90,7 @@ class Profile extends Phaser.Scene {
     this.creaetePointer();
   }
 
-  private createProfileInfo(): void {
+private createProfileInfo(): void {
     const farmer: Phaser.GameObjects.Sprite = this.add.sprite(80, 75, 'farmer').setScale(0.45).setVisible(true);
     let avatar: Phaser.GameObjects.Sprite;
     if (this.state.platform === 'web') {
@@ -98,14 +98,14 @@ class Profile extends Phaser.Scene {
       avatar.setVisible(true);
     } else {
       avatar = this.add.sprite(farmer.x, farmer.y, 'avatar');
-      avatar.setScale(0.65);
+      avatar.setScale(0.8);
       avatar.setMask(new Phaser.Display.Masks.BitmapMask(this, farmer));
       if (avatar.texture.key === '__MISSING') {
         avatar = farmer;
         avatar.setVisible(true);
       }
     }
-    const avatarGeom: Phaser.Geom.Rectangle = avatar.getBounds();
+    const avatarGeom: Phaser.Geom.Rectangle = farmer.getBounds();
     const status: IstatusSettings = this.getStatusSettings(this.state.user.status);
     if (status) {
       this.add.sprite(avatarGeom.right - 15, avatarGeom.top + 15, status.iconTexture).setVisible(status.iconVisible);
@@ -369,7 +369,7 @@ class Profile extends Phaser.Scene {
   private creaetePointer(): void {
     const pointer = this.add.sprite(0, 0, 'profile-pointer').setOrigin(0.5, 1).setDepth(100);
     
-    const sheepPosition: Iposition = { x: 220, y: 740 };
+    const sheepPosition: Iposition = { x: 140, y: 740 };
     const chickenPosition: Iposition = { x: 610, y: 940 };
     const eventPosition: Iposition =  { x: 600, y: 700 };
     const cowPosition: Iposition = { x: 160, y: 980 };
@@ -473,7 +473,6 @@ class Profile extends Phaser.Scene {
         this.eventEndTime?.setVisible(false);
         this.eventEndText?.setVisible(false);
         this.eventZone?.destroy();
-
       } 
     } else if (this.state.progress.event.startTime <= 0 && 
       this.state.progress.event.open && 
@@ -484,7 +483,7 @@ class Profile extends Phaser.Scene {
       (this.state.user.login || this.state.name)) {
 
       if (!this.eventMapFarm?.visible) {
-
+        this.eventZone?.destroy();
         this.eventStartText?.setVisible(false);
         this.eventStartTime?.setVisible(false);
         this.eventStartBg?.setVisible(false);
@@ -503,7 +502,7 @@ class Profile extends Phaser.Scene {
     } 
     
     if (this.state.progress.event.endTime <= 0 && this.state.progress.event.open) {
-      this.eventIsland?.setVisible(true);
+      this.eventIsland?.setVisible(false);
       this.eventStartText?.setVisible(true);
       this.eventStartText?.setY(805);
       this.eventStartTime?.setVisible(false);
