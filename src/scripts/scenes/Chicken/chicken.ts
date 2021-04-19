@@ -376,7 +376,22 @@ function cancelMerging(territory: any, chicken1: any, chicken2: any) {
 
 // покупка курицы
 function buyChicken(breed: number, shop: boolean = false): boolean {
-
+  const startFindY = this.height + this.scrolling.scrollY + 300;
+  
+  const findFreeTerritory = (x: number, y: number): Iposition => {
+    const territory: any = this.currentTerritory(x, y);
+    if (territory) {
+      if (territory.type === 2 || territory.type === 3) {
+        return { x: territory.x + 120, y: territory.y + 120 };
+      } else if (y < 240) {
+        return findFreeTerritory(x + 240, startFindY);
+      } else return findFreeTerritory(x, y - 240);
+    } else if (y < 240) {
+      return findFreeTerritory(x - 240, startFindY);
+    } else if (x < 0) return;
+    else return findFreeTerritory(x, y - 240);
+  } 
+  
   let success: boolean = false;
 
   if (this.chicken.children.entries.length < 50) {
@@ -388,6 +403,14 @@ function buyChicken(breed: number, shop: boolean = false): boolean {
       success = true;
       let x: number = random(530, 660);
       let y: number = random(530, 540);
+
+      if (this.scrolling.scrollY > 300) {
+        const position: Iposition = findFreeTerritory(600, startFindY);
+        if (position) {
+          x = Phaser.Math.Between(position.x - 50, position.x + 50);
+          y = Phaser.Math.Between(position.y - 10, position.y + 10);
+        }
+      }
       let id: string = 'local_' + randomString(18);
       this.getChicken(id, breed, x, y);
       this.state.userChicken.money -= chickenPrice.price;
