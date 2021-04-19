@@ -234,7 +234,6 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       this.taskProgress?.clear();
 
       if (this.status === 1 && task) {
-            console.log('1')
         const taskData: ItaskData = this.scene.game.scene.keys[this.scene.state.farm].getTaskData(task);
         
         this.taskText
@@ -299,7 +298,6 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
           if (!this.listMoving) this.toggleList();
         });
       } else if (this.status === 2 && task) {
-        console.log('2')
         const taskData: ItaskData = this.scene.game.scene.keys[this.scene.state.farm].getTaskData(task);
         
         this.taskText
@@ -497,7 +495,6 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
   private flyInMainBoardAnim(): void {
     this.isMoving = true;
     this.setStartY();
-    console.log('flyIn')
     this.removeButtonsInteractive();
     this.scene.tweens.add({
       duration: 500,
