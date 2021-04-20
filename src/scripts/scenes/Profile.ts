@@ -469,52 +469,67 @@ private createProfileInfo(): void {
   }
 
   private updateEvent(): void {
-    if (this.state.progress.event.startTime > 0 && 
+    if (
+      this.state.progress.event.startTime > 0 && 
       this.state.progress.event.open && 
       this.state.user.additionalTutorial.eventTutorial === 0 && 
       (this.state.progress.sheep.part > 4 || 
       this.state.progress.chicken.part >= 1) && 
-      (this.state.user.login || this.state.name)) {
+      (this.state.user.login || this.state.name) &&
+      !this.eventStartText?.visible
+    ) {
+      this.eventIsland?.setVisible(true);
+      this.eventStartText?.setY(795);
+      this.eventStartText?.setVisible(true);
+      this.eventStartTime?.setVisible(true);
+      this.eventStartBg?.setVisible(true);
+      this.eventMapFarm?.setVisible(false);
+      this.eventPlace?.setVisible(false);
+      this.eventScore?.setVisible(false);
+      this.eventEndTime?.setVisible(false);
+      this.eventEndText?.setVisible(false);
+      this.eventZone?.destroy();
 
-        if (!this.eventStartText?.visible) {
-        this.eventIsland?.setVisible(true);
-        this.eventStartText?.setY(795);
-        this.eventStartText?.setVisible(true);
-        this.eventStartTime?.setVisible(true);
-        this.eventStartBg?.setVisible(true);
-        this.eventMapFarm?.setVisible(false);
-        this.eventPlace?.setVisible(false);
-        this.eventScore?.setVisible(false);
-        this.eventEndTime?.setVisible(false);
-        this.eventEndText?.setVisible(false);
-        this.eventZone?.destroy();
-      } 
-    } else if (this.state.progress.event.startTime <= 0 && 
+    } else if (
+      this.state.progress.event.startTime <= 0 && 
       this.state.progress.event.open && 
       this.state.user.additionalTutorial.eventTutorial > 0 &&
       this.state.progress.event.endTime > 0 && 
       (this.state.progress.sheep.part > 4 || 
       this.state.progress.chicken.part >= 1) && 
-      (this.state.user.login || this.state.name)) {
-
-      if (!this.eventMapFarm?.visible) {
-        this.eventStartText?.setVisible(false);
-        this.eventStartTime?.setVisible(false);
-        this.eventStartBg?.setVisible(false);
-        this.eventMapFarm?.setVisible(true);
-        this.eventPlace?.setVisible(true);
-        this.eventScore?.setVisible(true);
-        this.eventEndTime?.setVisible(true);
-        this.eventEndText?.setVisible(true);
-      }   
-    } else if (this.state.progress.event.startTime <= 0 && 
+      (this.state.user.login || this.state.name) &&
+      !this.eventMapFarm?.visible
+    ) {
+      this.eventStartText?.setVisible(false);
+      this.eventStartTime?.setVisible(false);
+      this.eventStartBg?.setVisible(false);
+      this.eventMapFarm?.setVisible(true);
+      this.eventPlace?.setVisible(true);
+      this.eventScore?.setVisible(true);
+      this.eventEndTime?.setVisible(true);
+      this.eventEndText?.setVisible(true);
+      
+    } else if (
+      this.state.progress.event.startTime <= 0 && 
       this.state.progress.event.open && 
       this.state.user.additionalTutorial.eventTutorial === 0 && 
-      (this.state.user.login || this.state.name)) {
+      (this.state.user.login || this.state.name) && 
+      (this.state.progress.sheep.part > 4 || 
+      this.state.progress.chicken.part >= 1) && 
+      this.state.progress.event.endTime > 0 &&
+      this.eventZone.active
+    ) {
       this.eventIsland?.setVisible(true);
       this.eventZone?.destroy();
-    } else if (this.state.progress.event.endTime <= 0 && this.state.progress.event.open && 
-      (this.state.user.login || this.state.name)) {
+
+    } else if (
+      this.state.progress.event.endTime <= 0 && 
+      this.state.progress.event.open && 
+      (this.state.user.login || this.state.name) && 
+      (this.state.progress.sheep.part > 4 || 
+      this.state.progress.chicken.part >= 1) 
+      && !this.eventStartText.visible
+    ) {
       this.eventIsland?.setVisible(false);
       this.eventStartText?.setVisible(true);
       this.eventStartText?.setY(805);
@@ -527,8 +542,15 @@ private createProfileInfo(): void {
       this.eventEndTime?.setVisible(false);
       this.eventEndText?.setVisible(false);
       this.eventZone?.destroy();
-    } else if (!this.state.progress.event.open && 
-      (this.state.user.login || this.state.name)) {
+
+    } else if (
+      ((!this.state.user.login && 
+      !this.state.name || 
+      this.state.progress.sheep.part <= 4 && 
+      this.state.progress.chicken.part < 1) || 
+      !this.state.progress.event.open) && 
+      this.eventZone.active 
+    ) {
       this.eventIsland?.setVisible(false);
       this.eventStartText?.setVisible(false);
       this.eventStartTime?.setVisible(false);
@@ -539,15 +561,7 @@ private createProfileInfo(): void {
       this.eventEndTime?.setVisible(false);
       this.eventEndText?.setVisible(false);
       this.eventZone?.destroy();
-    } else if (
-      (!this.state.user.login && 
-      !this.state.name || 
-      this.state.progress.sheep.part <= 4 || 
-      this.state.progress.chicken.part < 1) && 
-      this.eventZone
-    ) {
-      this.eventIsland.setVisible(false);
-      this.eventZone?.destroy();
+
     }
 
 

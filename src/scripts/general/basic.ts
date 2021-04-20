@@ -1408,8 +1408,9 @@ function logAmplitudeEvent(eventName: string, data: IamplitudeData): void {
     const balance: Ibalance = this.balance();
     const waterPercent: number = balance.notEnoughWater? -1 * balance.waterPercent : balance.waterPercent;
     const grassPercent: number = balance.notEnoughGrass ? -1 * balance.grassPercent : balance.grassPercent;
-    let countAnimal: number = this[this.state.farm.toLowerCase()].children.entries.length;
-    if (this.state.farm === 'Cow') countAnimal = this.animalGroup.children.entries.length;
+    let countAnimal: number = this[this.state.farm.toLowerCase()]?.children.entries.length;
+    if (!countAnimal) countAnimal = 0;
+    if (this.state.farm === 'Cow') countAnimal = this.animalGroup?.children.entries.length;
     eventData = {
       farm_id: this.state.farm,
       chapter: this.state[`user${this.state.farm}`].part,
@@ -1422,7 +1423,9 @@ function logAmplitudeEvent(eventName: string, data: IamplitudeData): void {
       balanceGrassPercent: grassPercent,
     }
   } else {
-    const countAnimal: number = this.animals.children.entries.length;
+    let countAnimal: number = this.animals?.children.entries.length;
+    if (!countAnimal) countAnimal = 0;
+
     eventData = {
       farm_id: this.state.farm,
       chapter: this.state[`user${this.state.farm}`].maxLevelAnimal,
@@ -1446,8 +1449,9 @@ function logAmplitudeRevenue(productId: string, price: number, type: string,  da
     const balance: Ibalance = this.balance();
     const waterPercent: number = balance.notEnoughWater? -1 * balance.waterPercent : balance.waterPercent;
     const grassPercent: number = balance.notEnoughGrass ? -1 * balance.grassPercent : balance.grassPercent;
-    let countAnimal: number = this[this.state.farm.toLowerCase()].children.entries.length;
-    if (this.state.farm === 'Cow') countAnimal = this.animalGroup.children.entries.length;
+    let countAnimal: number = this[this.state.farm.toLowerCase()]?.children.entries.length;
+    if (this.state.farm === 'Cow') countAnimal = this.animalGroup?.children.entries.length;
+    if (!countAnimal) countAnimal = 0;
 
     revenueData = {
       farm_id: this.state.farm,
@@ -1461,7 +1465,8 @@ function logAmplitudeRevenue(productId: string, price: number, type: string,  da
       balanceGrassPercent: grassPercent,
     }
   } else {
-    const countAnimal: number = this.animals.children.entries.length;
+    let countAnimal: number = this.animals?.children.entries.length;
+    if (!countAnimal) countAnimal = 0;
 
     revenueData = {
       farm_id: this.state.farm,

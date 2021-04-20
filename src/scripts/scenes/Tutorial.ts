@@ -493,7 +493,7 @@ class Tutorial extends Phaser.Scene {
         if (this.state.tutorial.step === 0) {
 
           // this.state.amplitude.getInstance().logEvent('tutor_after_load', {});
-          this.logAmplitudeEvent('tutor_after_load', {});
+          this.game.scene.keys[this.state.farm].logAmplitudeEvent('tutor_after_load', {});
           this.tutorText = this.state.lang.sheepTutorial_0;
           this.generalClick = (): void => this.game.scene.keys[this.state.farm].doneTutor_0();
           this.simpleTutorial();

@@ -14,6 +14,7 @@ import {
   nextDayTimer,
   intervalPorgressCollectorTime,
   autoporgressCollectorTime,
+  logAmplitudeEvent
 } from '../../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -204,7 +205,7 @@ class Event extends Phaser.Scene {
   public nextDayTimer = nextDayTimer.bind(this);
   public intervalPorgressCollectorTime = intervalPorgressCollectorTime.bind(this);
   public autoporgressCollectorTime = autoporgressCollectorTime.bind(this);
-
+  public logAmplitudeEvent = logAmplitudeEvent.bind(this);
   
   public init(state: Istate): void {
     this.state = state;
