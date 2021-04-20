@@ -15,7 +15,8 @@ interface ItriangleCoords {
   * Типы: 
   *1.	Указывает на ярмарку;  
   *2.	Указывает на пещеру;   
-  *3.	Вызывается в барах, в верхнем правом углу, под монетами.   
+  *3.	Вызывается в барах, в верхнем правом углу, под монетами;   
+  *4. Вызывается в барах, указывает на баланс бар.  
 */
 export default class SpeechBubble {
   private text: string;
@@ -80,6 +81,16 @@ export default class SpeechBubble {
       this.triangleCoords.point3Y = bubleTextHeight / 2 + 25;
       this.bubbleFarmer.setPosition(this.scene.cameras.main.width - 20, this.y + this.triangleCoords.point2Y).setOrigin(1, 0.5).setVisible(true);
     } 
+    if (this.type === 4) {
+      this.y = 160;
+      this.x = 20;
+      this.triangleCoords.point1Y = -15;
+      this.triangleCoords.point2Y = 0;
+      this.triangleCoords.point3Y = 0;
+      this.triangleCoords.point1X = 80;
+      this.triangleCoords.point2X = 65;
+      this.triangleCoords.point3X = 95;
+    }
     this.bubble.setPosition(this.x, this.y);
     this.bubbleText.setPosition(this.x + 20, this.bubble.y + 20);
   }

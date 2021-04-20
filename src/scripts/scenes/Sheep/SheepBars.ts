@@ -226,7 +226,7 @@ class SheepBars extends Phaser.Scene {
 
     this.click(this.balanceBg, (): void => {
       if (this.state.userSheep.tutorial >= 100)  {
-        SpeechBubble.create(this, this.state.lang.remainderBalance, 3);
+        SpeechBubble.create(this, this.state.lang.remainderBalance, 4);
       }
     });
 

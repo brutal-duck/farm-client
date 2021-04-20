@@ -209,7 +209,7 @@ class ChickenBars extends Phaser.Scene {
     this.balanceBg = this.add.image(0, 0, 'green-balance-bg').setOrigin(0, 0);
 
     this.click(this.balanceBg, (): void => {
-        SpeechBubble.create(this, this.state.lang.remainderBalance, 3);
+        SpeechBubble.create(this, this.state.lang.remainderBalance, 4);
     });
     this.add.sprite(70, 10, 'water-balance').setOrigin(0.5, 0).setDepth(2);
     this.add.sprite(170, 10, 'grass-balance').setOrigin(0.5, 0).setDepth(2);
