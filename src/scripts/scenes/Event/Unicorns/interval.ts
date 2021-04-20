@@ -1,6 +1,6 @@
-import { randomString, shortNum, shortTime } from '../../general/basic';
-import Hearts from '../../components/animations/Hearts';
-import BigInteger from '../../libs/BigInteger';
+import { randomString, shortNum, shortTime } from '../../../general/basic';
+import Hearts from '../../../components/animations/Hearts';
+import BigInteger from '../../../libs/BigInteger';
 
 function interval(): void {
 

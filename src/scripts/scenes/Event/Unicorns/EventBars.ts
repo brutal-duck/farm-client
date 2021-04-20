@@ -3,14 +3,14 @@ import {
   clickButton,
   clickShopBtn,
   clickModalBtn,
-} from '../../general/clicks';
+} from '../../../general/clicks';
 import {
   shortNum,
   shortTime,
-} from '../../general/basic';
+} from '../../../general/basic';
 import {
   updateNativeShop, 
-} from '../../general/boosts';
+} from '../../../general/boosts';
 import { 
   updateRaitingsBar,
   scoreEnding 
@@ -18,10 +18,10 @@ import {
 import {
   increaseDiamonds,
   newbieAwardAnimation,
-} from '../../general/animations';
-import Collector from '../../components/gameObjects/Collector';
-import BarsMenu from '../../components/gameObjects/BarsMenu';
-import BigInteger from '../../libs/BigInteger';
+} from '../../../general/animations';
+import Collector from '../../../components/gameObjects/Collector';
+import BarsMenu from '../../../components/gameObjects/BarsMenu';
+import BigInteger from '../../../libs/BigInteger';
 
 class EventBars extends Phaser.Scene {
   constructor() {

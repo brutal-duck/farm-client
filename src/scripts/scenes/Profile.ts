@@ -1,6 +1,6 @@
 import { click, clickShopBtn, clickButton } from '../general/clicks';
 import { shortNum, getEventRaiting, shortTime, loadingModal, getStatusSettings } from '../general/basic';
-import { scoreEnding } from './Event/basic';
+import { scoreEnding } from './Event/Unicorns/basic';
 
 const background: string = require('./../../assets/images/profile/background.jpg');
 const backButton: string = require('./../../assets/images/profile/back-button.png');
@@ -509,10 +509,12 @@ private createProfileInfo(): void {
       }   
     } else if (this.state.progress.event.startTime <= 0 && 
       this.state.progress.event.open && 
-      this.state.user.additionalTutorial.eventTutorial === 0) {
+      this.state.user.additionalTutorial.eventTutorial === 0 && 
+      (this.state.user.login || this.state.name)) {
       this.eventIsland?.setVisible(true);
       this.eventZone?.destroy();
-    } else  if (this.state.progress.event.endTime <= 0 && this.state.progress.event.open) {
+    } else if (this.state.progress.event.endTime <= 0 && this.state.progress.event.open && 
+      (this.state.user.login || this.state.name)) {
       this.eventIsland?.setVisible(false);
       this.eventStartText?.setVisible(true);
       this.eventStartText?.setY(805);
@@ -525,7 +527,8 @@ private createProfileInfo(): void {
       this.eventEndTime?.setVisible(false);
       this.eventEndText?.setVisible(false);
       this.eventZone?.destroy();
-    } else if (!this.state.progress.event.open) {
+    } else if (!this.state.progress.event.open && 
+      (this.state.user.login || this.state.name)) {
       this.eventIsland?.setVisible(false);
       this.eventStartText?.setVisible(false);
       this.eventStartTime?.setVisible(false);
@@ -536,7 +539,14 @@ private createProfileInfo(): void {
       this.eventEndTime?.setVisible(false);
       this.eventEndText?.setVisible(false);
       this.eventZone?.destroy();
-    } else if (!this.state.user.login && !this.state.name) {
+    } else if (
+      (!this.state.user.login && 
+      !this.state.name || 
+      this.state.progress.sheep.part <= 4 || 
+      this.state.progress.chicken.part < 1) && 
+      this.eventZone
+    ) {
+      this.eventIsland.setVisible(false);
       this.eventZone?.destroy();
     }
 

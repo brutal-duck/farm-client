@@ -3,7 +3,7 @@ import { shopButton, boostButton } from '../../../elements';
 import { cowPrice } from '../../Cow/basic';
 import { chickenPrice } from '../../Chicken/basic';
 import { sheepPrice } from '../../Sheep/basic';
-import { animalPrice } from '../../Event/basic';
+import { animalPrice } from '../../Event/Unicorns/basic';
 import {
   click,
   clickShopBtn,

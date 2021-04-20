@@ -1,5 +1,5 @@
-import { random, randomString } from '../../general/basic';
-import BigInteger from '../../libs/BigInteger';
+import { random, randomString } from '../../../general/basic';
+import BigInteger from '../../../libs/BigInteger';
 
 // расчет прогресса во время отсутствия
 function autoprogress(load: boolean = false): void {

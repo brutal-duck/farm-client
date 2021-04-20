@@ -1,4 +1,4 @@
-import { random } from '../../general/basic';
+import { random } from '../../../general/basic';
 
 function collisions(): void {
 

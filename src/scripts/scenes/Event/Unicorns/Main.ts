@@ -1,10 +1,10 @@
-import Scrolling from '../../libs/Scrolling';
+import Scrolling from '../../../libs/Scrolling';
 
 import {
   click,
   clickTerritory,
   doubleClick,
-} from '../../general/clicks';
+} from '../../../general/clicks';
 import {
   logout,
   onlineStatus,
@@ -14,7 +14,7 @@ import {
   nextDayTimer,
   intervalPorgressCollectorTime,
   autoporgressCollectorTime,
-} from '../../general/basic';
+} from '../../../general/basic';
 import {
   confirmExchangeTerritory,
   messageIsSent,
@@ -22,17 +22,17 @@ import {
   showDonate,
   showImproveCollector,
   startHerdBoost
-} from '../../general/modal';
+} from '../../../general/modal';
 import {
   checkExchangeRepository,
-} from '../../general/territories';
+} from '../../../general/territories';
 import {
   findAd,
   watchAd,
   adReward,
   VKOnAdsReady,
   VKNoAds
-} from '../../general/ads';
+} from '../../../general/ads';
 import world from './world';
 import { 
   maxBreedForBuy, 

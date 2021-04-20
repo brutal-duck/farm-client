@@ -1,4 +1,4 @@
-import Scrolling from '../../libs/Scrolling';
+import Scrolling from '../../../libs/Scrolling';
 
 function world(): void {
 

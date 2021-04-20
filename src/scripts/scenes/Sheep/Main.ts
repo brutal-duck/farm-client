@@ -128,7 +128,7 @@ import {
   VKNoAds
 } from '../../general/ads';
 import setCollector from './collector';
-import { showEventTutorial, doneEventTutor_0 } from './../Event/tutorial';
+import { showEventTutorial, doneEventTutor_0 } from './../Event/Unicorns/tutorial';
 
 class Sheep extends Phaser.Scene {
   constructor() {

@@ -1,5 +1,5 @@
-import Firework from '../../components/animations/Firework';
-import BigInteger from './../../libs/BigInteger';
+import Firework from '../../../components/animations/Firework';
+import BigInteger from './../../../libs/BigInteger';
 function deleteTerritoriesLocks(): void {
 
   let lvl: number = this.state.userEvent.maxLevelAnimal;

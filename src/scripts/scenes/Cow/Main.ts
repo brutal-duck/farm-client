@@ -92,7 +92,7 @@ import {
   VKNoAds
 } from '../../general/ads';
 import setCollector from './collector';
-import { showEventTutorial, doneEventTutor_0 } from '../Event/tutorial';
+import { showEventTutorial, doneEventTutor_0 } from '../Event/Unicorns/tutorial';
 import CowGroup from '../../components/AnimalGroup/CowGroup';
 
 class Cow extends Phaser.Scene {

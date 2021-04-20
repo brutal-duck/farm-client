@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { randomString, shortNum } from './../../general/basic';
-import Firework from '../../components/animations/Firework';
-import BigInteger from '../../libs/BigInteger';
-import MoneyAnimation from './../../components/animations/MoneyAnimation';
+import { randomString, shortNum } from './../../../general/basic';
+import Firework from '../../../components/animations/Firework';
+import BigInteger from '../../../libs/BigInteger';
+import MoneyAnimation from './../../../components/animations/MoneyAnimation';
 // цена животного
 function animalPrice(breed: number): {price: string, countAnimal: number} {
   let insideCounter: number = this.state.userEvent.countAnimal[breed - 1].counter;

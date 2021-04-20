@@ -5,7 +5,7 @@ import {
 } from '../general/clicks';
 import { shortTime, logAmplitudeEvent } from '../general/basic';
 import { dragSheep, showSheepSprite } from '../general/animations';
-import { dragEventAnimal } from './Event/animations';
+import { dragEventAnimal } from './Event/Unicorns/animations';
 import Arrow from '../components/animations/Arrow';
 import Hint from '../components/animations/Hint';
 import Firework from './../components/animations/Firework';

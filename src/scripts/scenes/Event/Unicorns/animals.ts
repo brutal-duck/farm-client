@@ -1,7 +1,7 @@
-import { random, randomString } from '../../general/basic';
-import MergingCloud from '../../components/animations/MergingCloud';
-import BigInteger from '../../libs/BigInteger';
-import Currency from './../../components/animations/Currency';
+import { random, randomString } from '../../../general/basic';
+import MergingCloud from '../../../components/animations/MergingCloud';
+import BigInteger from '../../../libs/BigInteger';
+import Currency from './../../../components/animations/Currency';
 
 // функция реверсивного движения животного
 function reverse(animal: Phaser.Physics.Arcade.Sprite): void {

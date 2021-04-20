@@ -19,9 +19,9 @@ import ShopBars from './scenes/Modal/Shop/Bars';
 import Chat from './scenes/Modal/Chat/Main';
 import Tutorial from './scenes/Tutorial';
 import * as eruda from 'eruda';
-import EventBars from './scenes/Event/EventBars';
-import Event from './scenes/Event/Main';
-import EventPreload from './scenes/Event/EventPreload';
+import EventBars from './scenes/Event/Unicorns/EventBars';
+import Event from './scenes/Event/Unicorns/Main';
+import EventPreload from './scenes/Event/Unicorns/EventPreload';
 import Block from './scenes/Block';
 import Profile from './scenes/Profile';
 
