@@ -75,7 +75,7 @@ function world(): void {
 
   // подгружаем коров
   this.state.cow.map((data: Icow) => {
-    this.animalGroup.generate(this, { x: data.x, y: data.y }, data.type, data._id, data.counter, data.diamond, data.vector, false)
+    this.animalGroup.generate({ x: data.x, y: data.y }, data.type, data._id, data.counter, data.milk, data.diamond, data.vector, false)
   });
 
   // туториал, если нужен

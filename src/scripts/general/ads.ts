@@ -100,7 +100,7 @@ function adReward(): void {
 
       } else if (this.state.farm === 'Cow') {
         
-        this.getCow(id, 0, x, y, 0, 500);
+        this.animalGroup.generate({ x, y }, 0, id, 0, 500, 0, 7, true);
         type = 'crystall_cow';
 
       }

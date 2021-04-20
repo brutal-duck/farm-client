@@ -238,7 +238,7 @@ function buyCow(breed: number, shop: boolean = false): boolean {
       }
 
       let id: string = 'local_' + randomString(18);
-      this.animalGroup.generate(this, { x, y }, breed, id, 0, 0, 7, true);
+      this.animalGroup.generate({ x, y }, breed, id, 0, 0, 7, true);
       this.state.userCow.money -= cowPrice.price;
       this.state.userCow.countCow = cowPrice.countCow;
       this.game.scene.keys['CowBars'].updateCowPrice();
@@ -457,7 +457,7 @@ function dragCowMerging(cow: CowSprite): void {
     findCow.destroy();
     cow.destroy();
     const id: string = 'local_' + randomString(18);
-    this.animalGroup.generate(this, position, type, id, 0, 0, 7, false);
+    this.animalGroup.generate(position, type, id, 0, 0, 7, false);
     this.tryTask(2, type);
     this.tryTask(4, type);
     this.checkAnimalTask();

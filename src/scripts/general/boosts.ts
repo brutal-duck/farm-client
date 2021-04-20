@@ -18,7 +18,7 @@ function createBoostAnimal(): void {
           this[`get${this.state.farm}`](id, type, x, y, 0, 500);
           Firework.create(this, {x, y}, 1);
         } else {
-          this.animalGroup.generate(this, {x, y}, type, id, 0, 0, 7, true);
+          this.animalGroup.generate({x, y}, type, id, 0, 0, 0, 7, true);
         }
       }, 
       callbackScope: this, 

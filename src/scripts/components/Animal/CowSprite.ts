@@ -14,12 +14,13 @@ export default class CowSprite extends Animal {
     breed: number,   
     id: string,
     counter: number = 0,
+    milk: number = 0,
     diamond: number = 0,
     vector: number = 7,
     fireworkAnim: boolean = false) {
     super(scene, position, 'cow', breed, id, counter, diamond, vector, fireworkAnim);
     this.breed = breed;
-    this.milk = 0;
+    this.milk = milk;
   }
 
   static create(scene: Cow, 
@@ -27,10 +28,11 @@ export default class CowSprite extends Animal {
     breed: number,   
     id: string,
     counter: number = 0,
+    milk: number = 0,
     diamond: number = 0,
     vector: number = 7,
     fireworkAnim: boolean = false): CowSprite {
-    const cowSprite: CowSprite = new CowSprite(scene, position, breed, id, counter, diamond, vector, fireworkAnim);
+    const cowSprite: CowSprite = new CowSprite(scene, position, breed, id, counter, milk, diamond, vector, fireworkAnim);
     return cowSprite;
   }
 
