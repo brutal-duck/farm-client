@@ -20,6 +20,7 @@ interface Ibalance {
 interface Imerging {
   _id: string;
   type: number;
+  position?: string;
 }
 interface IshopButtons {
   text: Phaser.GameObjects.Text;

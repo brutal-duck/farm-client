@@ -68,11 +68,10 @@ function teleportation(cow: any): void {
 }
 
 // мерджинг
-function checkMerging(territory: any, cow: CowSprite, position: string) {
-
+function checkMerging(territory: Territory, cow: CowSprite, position: string) {
   cow.merging = true;
   territory.mergingCounter = 1;
-  let check = territory.merging.find((data: any) => data._id === cow._id);
+  const check = territory.merging.find((data: any) => data._id === cow._id);
   if (check === undefined) {
 
     // если на этой позиции уже стоит корова
@@ -86,7 +85,7 @@ function checkMerging(territory: any, cow: CowSprite, position: string) {
     // запоминаем
     territory.merging.push({
       _id: cow._id,
-      breed: cow.breed,
+      type: cow.breed,
       position: position
     });
 
@@ -122,51 +121,44 @@ function checkMerging(territory: any, cow: CowSprite, position: string) {
   // проверяем успешный на мерджинг
   if (territory.merging.length === 2) {
 
-    let cow1: CowSprite = this.animalGroup.children.entries.find((data: any) => data._id === territory.merging[0]._id);
-    let cow2: CowSprite = this.animalGroup.children.entries.find((data: any) => data._id === territory.merging[1]._id);
+    const cow1: CowSprite = this.animalGroup.children.entries.find((data: any) => data._id === territory.merging[0]._id);
+    const cow2: CowSprite = this.animalGroup.children.entries.find((data: any) => data._id === territory.merging[1]._id);
 
     if (cow1?.breed === cow2?.breed) {
       
       this.time.addEvent({ delay: 100, callback: (): void => {
 
-        let position: Iposition = {
+        const position: Iposition = {
           x: territory.x + 120,
           y: territory.y + 120
         }
         MergingCloud.create(this, position);
-        let type: number = cow1.breed + 1;
+        const type: number = cow1.breed + 1;
         cow1.destroy();
         cow2.destroy();
-        let id: string = 'local_' + randomString(18);
-        let x: number = territory.x + 120;
-        let y: number = territory.y + 240;
+        const id: string = 'local_' + randomString(18);
+        const x: number = territory.x + 120;
+        const y: number = territory.y + 240;
         
-        const cow: CowSprite = this.animalGroup.generate(this, { x, y }, type, id, 0, 0, 7, false);
-        let aimX: number = Phaser.Math.Between(territory.x + 40, territory.x + 200);
-        let aimY: number = Phaser.Math.Between(territory.y + 280, territory.y + 440);
-        cow.setAim( aimX, aimY);
+        const cow: CowSprite = this.animalGroup.generate({ x, y }, type, id, 0, 0, 7, false);
+        const aimX: number = Phaser.Math.Between(territory.x + 40, territory.x + 200);
+        const aimY: number = Phaser.Math.Between(territory.y + 280, territory.y + 440);
+        cow.setAim(aimX, aimY);
         this.tryTask(2, type);
         this.tryTask(4, type);
         this.checkAnimalTask();
-
       }, callbackScope: this, loop: false });
-
       territory.merging = [];
-
     } else {
-
       if (cow1 && cow2) {
         SpeechBubble.create(this, this.state.lang.mergingMessageBreed, 1);
         this.cancelMerging(territory, cow1, cow2);
-
       } else {
-        
         // костыль
         for (let i in this.animalGroup.children.entries) this.animalGroup.children.entries[i].merging = false;
         if (cow1) cow2.teleportation();
         if (cow2) cow2.teleportation();
         territory.merging = [];
-
       }
     }
   }

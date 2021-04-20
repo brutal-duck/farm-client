@@ -300,7 +300,7 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
       this.setDepth(this.y + Math.round((this.height / 2) + 1)); // z-index
 
       // уход с ярмарки, если там не нужно быть
-      if (territory.territoryType === 4 && !this.merging && !this.aim) {
+      if (territory?.territoryType === 4 && !this.merging && !this.aim) {
         this.merging = false;
         let randomX: number = Phaser.Math.Between(territory.x + 40, territory.x + 200);
         let randomY: number = Phaser.Math.Between(territory.y + 280, territory.y + 440);

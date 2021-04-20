@@ -14,11 +14,11 @@ function drag(): void {
   });
 
   // дропзоны для мерджинга
-  this.input.on('drop', (pointer: Phaser.Input.Pointer, cow: CowSprite, zone: any): void => {
+  this.input.on('drop', (pointer: Phaser.Input.Pointer, cow: CowSprite, zone: Phaser.GameObjects.Zone): void => {
 
-    let territory = this.currentTerritory(cow.x, cow.y);
+    const territory: Territory = this.currentTerritory(cow.x, cow.y);
     if (territory) {
-      if (territory.type === 4) {
+      if (territory.territoryType === 4) {
         if (cow.breed === 0) {
           SpeechBubble.create(this, this.state.lang.mergingDiamondCow, 1);
           this.cancelMerging(territory, cow, false);
@@ -36,8 +36,8 @@ function drag(): void {
           }
         }
       } else {
-        let randomX: number = random(territory.x + 40, territory.x + 200);
-        let randomY: number = random(territory.y + 280, territory.y + 440);
+        let randomX: number = Phaser.Math.Between(territory.x + 40, territory.x + 200);
+        let randomY: number = Phaser.Math.Between(territory.y + 280, territory.y + 440);
         cow.setAim(randomX, randomY);
       }
      } else cow.teleportation();
