@@ -295,6 +295,7 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
   let path: Iposition;
   let length: number;
   let repository: any = false;
+  let milk: number = 0;
 
   if (cow.breed !== 0) {
     if (manualСollect) {
@@ -304,7 +305,8 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
       const territory: Territory = this.territories.children.entries[i];
       if (territory.territoryType === 5) {
         const max: number = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === territory.improve).storage;
-        if (max >= territory.volume + cow.milk) {
+        if (max > territory.volume + cow.milk) {
+          milk = cow.milk;
           cow.milk = 0;
           const position: Iposition = {
             x: territory.x + 120,
@@ -316,6 +318,21 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
             path = position;
             repository = territory;
           }
+          break;
+        } else if (max > territory.volume) {
+          milk = max - territory.volume;
+          cow.milk -= milk;
+          const position: Iposition = {
+            x: territory.x + 120,
+            y: territory.y + 120
+          }
+          const distance: number = Phaser.Math.Distance.Between(cow.x, cow.y - 50, position.x, position.y);
+          if (length === undefined || distance < length) {
+            length = distance;
+            path = position;
+            repository = territory;
+          }
+          break;
         }
       }
     }
@@ -324,7 +341,7 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
       Milk.create(this, { x: cow.x, y: cow.y - 50}, 0, path);
       let price: number = 0;
       if (this.state.userCow.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
-      repository.volume += cow.settings.maxMilkVolume;
+      repository.volume += milk;
       repository.money += price;
     } else {
       if (manualСollect) {

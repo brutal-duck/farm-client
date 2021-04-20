@@ -1,7 +1,7 @@
 import Sheep from '../../scenes/Sheep/Main';
 import Cow from '../../scenes/Cow/Main';
 import Chicken from '../../scenes/Chicken/Main';
-import Event from '../../scenes/Event/Main';
+import Event from '../../scenes/Event/Unicorns/Main';
 
 /**
   *  Анимация облака в позиции сцен    

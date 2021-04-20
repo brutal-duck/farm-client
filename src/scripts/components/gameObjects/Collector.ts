@@ -1,7 +1,7 @@
 import { shortTime } from "../../general/basic";
 import SheepBars from '../../scenes/Sheep/SheepBars';
 import ChickenBars from '../../scenes/Chicken/ChickenBars';
-import EventBars from '../../scenes/Event/EventBars';
+import EventBars from '../../scenes/Event/Unicorns/EventBars';
 import CowBars from '../../scenes/Cow/CowBars';
 
 /**

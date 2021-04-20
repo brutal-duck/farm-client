@@ -10,17 +10,31 @@ function setCollector(): void {
     callback: (): void => {
       if (this.state.userCow.collector > 0) {
         const storages: Territory[] = this.territories.children.entries.filter((el: Territory) => el.territoryType === 5);
-        for (let i in this.animalGroup.children.entries) {
-          const cow: CowSprite = this.animalGroup.children.entries[i];
-          const freeStorage: Territory = storages.find((el: Territory) => {
-            return this.state.cowSettings.territoriesCowSettings
-              .find((data: IterritoriesCowSettings) => data.improve === el.improve).storage >= cow.milk + el.volume;
-          });
-          if (cow.milk >= cow.settings.maxMilkVolume && cow.breed !== 0 && freeStorage) {
-            this.collectMilk(cow);
+        for (let i in storages) {
+          const storage: Territory = storages[i];
+          const max: number = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === storage.improve).storage;
+          if (storage.volume < max) {
+            for (let i in this.animalGroup.children.entries) {
+              const cow: CowSprite = this.animalGroup.children.entries[i];
+              if (cow.milk >= cow.settings.maxMilkVolume) {
+                this.collectMilk(cow);
+                break;
+              }
+            }
             break;
           }
         }
+        // for (let i in this.animalGroup.children.entries) {
+        //   const cow: CowSprite = this.animalGroup.children.entries[i];
+        //   const freeStorage: Territory = storages.find((el: Territory) => {
+        //     return this.state.cowSettings.territoriesCowSettings
+        //       .find((data: IterritoriesCowSettings) => data.improve === el.improve).storage >= cow.milk + el.volume;
+        //   });
+        //   if (cow.milk >= cow.settings.maxMilkVolume && cow.breed !== 0 && freeStorage) {
+        //     this.collectMilk(cow);
+        //     break;
+        //   }
+        // }
       }
     },
     callbackScope: this,
