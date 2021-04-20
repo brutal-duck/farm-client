@@ -838,7 +838,7 @@ function diamondCowAd(): void {
   this.textHeader.setText(this.state.lang.summonCow);
 
   let sprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 145, 'cow0');
-  sprite.anims.play('cow-drag0', true);
+  sprite.play('cow-stay-right0', true);
 
   let time: string = timer(this.state.userCow.diamondAnimalTime);
   this.caveTimer = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 55, this.state.lang.summonTime + time, {

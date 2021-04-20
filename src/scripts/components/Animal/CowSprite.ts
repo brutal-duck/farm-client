@@ -78,8 +78,21 @@ export default class CowSprite extends Animal {
 
   public startDrag(): void {
     super.startDrag();
-    this.play(`${this.type}-drag${this.breed}`, true);
+    let side: string;
+    if (this.vector === 2 ||
+      this.vector === 3 ||
+      this.vector === 7 ||
+      this.vector === 8) {
+      side = 'left';
+    } else {
+      side = 'right';
+    }
+    this.play(`${this.type}-stay-${side}${this.breed}`, true);
+  }
 
+  public dragging(dragX: number, dragY: number): void {
+    super.dragging(dragX, dragY);
+    this.play(`${this.type}-drag${this.breed}`, true);
   }
   public setBrain(): void {
     super.setBrain();
@@ -100,10 +113,10 @@ export default class CowSprite extends Animal {
       let dx: number = 10;
       let dy: number = 43;
       if (side === 'left' && !this.drag) this.hornsSprite.setFlipX(true);
-      else {
+      else if (side === 'right' || this.drag && this.anims.currentAnim.key === `${this.type}-drag${this.breed}`) {
         dx *= -1;
         this.hornsSprite.setFlipX(false);
-      }
+      } 
       this.hornsSprite.setTexture(`${this.type}-horns-${stage}`); 
       this.hornsSprite.setDepth(this.depth + 1);
       this.hornsSprite.setPosition(this.x - dx, this.y - dy);

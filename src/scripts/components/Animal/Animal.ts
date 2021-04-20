@@ -71,7 +71,6 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
 
   public preUpdate(time: number, delta: number) {
     super.preUpdate(time, delta)
-    // update spine animation
     if (this.scene) {
       this.setBrain();
     }
@@ -86,7 +85,7 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
     this.drag = true;
   }
 
-  public dragging(dragX, dragY) {
+  public dragging(dragX: number, dragY: number) {
     if (this.drag) {
       this.setPosition(dragX, dragY);
       this.setDepth(dragY + Math.round((this.height / 2) + 1000));
