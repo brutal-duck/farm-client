@@ -327,10 +327,21 @@ interface IterritoriesCowSettings {
   storage: number;
   improvePastureMoneyPrice: number;
   improveStorageMoneyPrice: number;
-  improveFactoryMoneyPrice: number;
   improvePastureDiamondPrice: number;
   improveStorageDiamondPrice: number;
-  improveFactoryDiamondPrice: number;
+  id?: any;
+}
+interface IfactorySettings {
+  improve: number;
+  unlock_improve: number;
+  improveMoneyPrice: number;
+  improveDiamondPrice: number;
+  processingTime: number;
+  lotSize: number;
+  clabberPercent: number;
+  pasteurizedMilkPercent: number;
+  chocolatePercent: number;
+  cheesePercent: number;
   id?: any;
 }
 interface IterritoriesEventSettings {
@@ -414,6 +425,7 @@ interface IcowSettings {
   territoriesCowPrice: IterritoriesPrice[];
   territoriesCowSettings: IterritoriesCowSettings[];
   cowFairLevels: IfairLevel[];
+  cowFactorySettings: IfactorySettings[];
   cowParts: Ipart[];
   buyBetterBreedCow: number;
   doubledСollectorPrice: number;
