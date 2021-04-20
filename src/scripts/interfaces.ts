@@ -576,6 +576,24 @@ interface IfarmBosts {
   herd: number,
   feed: number,
 }
+interface IamplitudeData {
+  farm_id?: string;
+  chapter?: number;
+  diamonds?: number;
+  money?: number;
+  fairLevel?: number;
+  collector?: number;
+  countAnimal?: number;
+  balanceWaterPercent?: number;
+  balanceGrassPercent?: number;
+  type?: string;
+  count?: number;
+  price?: number;
+  level?: number;
+  block?: number;
+  position?: number;
+  step?: number;
+}
 interface Istate {
   platform: string;
   autoSaveSpeed: number;

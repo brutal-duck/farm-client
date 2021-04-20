@@ -1401,6 +1401,43 @@ function createTaskZone(): void {
   });
 }
 
+function logAmplitudeEvent(eventName: string, data: IamplitudeData): void {
+  let eventData: IamplitudeData;
+
+  if (this.state.farm !== 'Event') {
+    const balance: Ibalance = this.balance();
+    const waterPercent: number = balance.notEnoughWater? -1 * balance.waterPercent : balance.waterPercent;
+    const grassPercent: number = balance.notEnoughGrass ? -1 * balance.grassPercent : balance.grassPercent;
+    let countAnimal: number = this[this.state.farm.toLowerCase()].children.entries.length;
+    if (this.state.farm === 'Cow') countAnimal = this.animalGroup.children.entries.length;
+    eventData = {
+      farm_id: this.state.farm,
+      chapter: this.state[`user${this.state.farm}`].part,
+      diamonds: this.state.user.diamonds,
+      money: this.state[`user${this.state.farm}`].money,
+      fairLevel: this.state[`user${this.state.farm}`].fair,
+      collector: this.state[`user${this.state.farm}`].collector,
+      countAnimal: countAnimal,
+      balanceWaterPercent: waterPercent,
+      balanceGrassPercent: grassPercent,
+    }
+  } else {
+    const countAnimal: number = this.animals.children.entries.length;
+    eventData = {
+      farm_id: this.state.farm,
+      chapter: this.state[`user${this.state.farm}`].maxLevelAnimal,
+      diamonds: this.state.user.diamonds,
+      money: this.state[`user${this.state.farm}`].money,
+      collector: this.state[`user${this.state.farm}`].collector,
+      countAnimal: countAnimal,
+    }
+  }
+  for (const key in data) {
+    eventData[key] = data[key];
+  }
+  this.state.amplitude.getInstance().logEvent(eventName, eventData);
+}
+
 
 export {
   random,
@@ -1435,5 +1472,6 @@ export {
   autoporgressCollectorTime,
   loadingModal,
   remainderSellResource,
-  createTaskZone
+  createTaskZone,
+  logAmplitudeEvent
 }
