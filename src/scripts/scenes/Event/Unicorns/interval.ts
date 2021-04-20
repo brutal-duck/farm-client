@@ -55,61 +55,61 @@ function interval(): void {
     
     }
     
-    // // бар собирателя
-    // if (this.state.userEvent.collector > 0) {
-    //   this.state.userEvent.collector--;
-    // } 
+    // бар собирателя
+    if (this.state.userEvent.collector > 0) {
+      this.state.userEvent.collector--;
+    } 
     
-    // if (this.state.userEvent.herdBoostAnimals.length > 0) {
-    //   this.startCreateHerdBoostAnimal = true;
-    // }
-    // if (this.startCreateHerdBoostAnimal) {
-    //   let freePositions: Iposition[] = this.getFreeBoostPositions();
+    if (this.state.userEvent.herdBoostAnimals.length > 0) {
+      this.startCreateHerdBoostAnimal = true;
+    }
+    if (this.startCreateHerdBoostAnimal) {
+      let freePositions: Iposition[] = this.getFreeBoostPositions();
 
-    //   this.createBoostAnimal(freePositions);
+      this.createBoostAnimal(freePositions);
 
-    // }
+    }
 
-    // if (this.scene.isActive('Modal') && this.state.modal.type === 11) {
-    //   this.game.scene.keys['Modal'].eventLeftTime.setText(shortTime(this.state.progress.event.endTime, this.state.lang));
-    // }
-    // // уменьшаем время буста комбикорм
-    // if (this.state.userEvent.feedBoostTime > 0) {
+    if (this.scene.isActive('Modal') && this.state.modal.type === 11) {
+      this.game.scene.keys['Modal'].eventLeftTime.setText(shortTime(this.state.progress.event.endTime, this.state.lang));
+    }
+    // уменьшаем время буста комбикорм
+    if (this.state.userEvent.feedBoostTime > 0) {
 
-    //   if (Phaser.Math.Between(0, 7) >= 5) { // чтобы не так часто появлялись сердца
+      if (Phaser.Math.Between(0, 7) >= 5) { // чтобы не так часто появлялись сердца
 
-    //     let randomIndex: number = Phaser.Math.Between(0, this.animals.children.entries.length - 1);
+        let randomIndex: number = Phaser.Math.Between(0, this.animals.children.entries.length - 1);
 
-    //     if (this.animals.children.entries[randomIndex].data.values.active.data.values.working) {
-    //       Hearts.create(this, this.animals.children.entries[randomIndex].data.values.active);
-    //     }
+        if (this.animals.children.entries[randomIndex].data.values.active.data.values.working) {
+          Hearts.create(this, this.animals.children.entries[randomIndex].data.values.active);
+        }
         
-    //   }
+      }
 
-    //   this.state.userEvent.feedBoostTime--;
-    //   this.game.scene.keys['EventBars'].feedBoostTime.setText(shortTime(this.state.userEvent.feedBoostTime,this.state.lang))
-    // }
+      this.state.userEvent.feedBoostTime--;
+      this.game.scene.keys['EventBars'].feedBoostTime.setText(shortTime(this.state.userEvent.feedBoostTime,this.state.lang))
+    }
     
-    // // автосохранение
-    // this.autoSaveTimer++;
-    // if (this.autoSaveTimer >= this.state.autoSaveSpeed) this.autosave();
+    // автосохранение
+    this.autoSaveTimer++;
+    if (this.autoSaveTimer >= this.state.autoSaveSpeed) this.autosave();
 
-    // // автопрогресс в случае неактивности
-    // let time: number = Math.round(new Date().getTime() / 1000);
+    // автопрогресс в случае неактивности
+    let time: number = Math.round(new Date().getTime() / 1000);
 
-    // if (time > this.autoprogressTimer + 5) {
-    //   this.state.offlineTime = time - this.autoprogressTimer;
-    //   this.autoprogress();
-    // }
+    if (time > this.autoprogressTimer + 5) {
+      this.state.offlineTime = time - this.autoprogressTimer;
+      this.autoprogress();
+    }
     
-    // this.autoprogressTimer = time;
+    this.autoprogressTimer = time;
 
-    // // // поиск рекламы
-    // this.findAd();
+    // // поиск рекламы
+    this.findAd();
     
-    // // this.debug();
+    // this.debug();
 
-    // this.nextDayTimer();
+    this.nextDayTimer();
 
 
     // if (this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
