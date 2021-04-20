@@ -31,6 +31,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
   // тип территории 5
   public repository: Phaser.GameObjects.Sprite;
+  public repositoryAnim: Phaser.Tweens.Tween;
 
   // тип территории 6
   public house: Phaser.GameObjects.Sprite;
@@ -178,7 +179,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       this.repository = this.scene.add.sprite(this.x + 120, this.y + 240, type)
         .setDepth(this.y + 1)
         .setOrigin(0.5, 1);
-
     }
   }
 
@@ -712,4 +712,32 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       this.openConvertor(count, diamonds, 3, 1);
     }
   };
+
+  private setRepositoryAnim(): void {
+    this.repositoryAnim = this.scene.tweens.add({
+      targets: [this.improveText, this.repository],
+      y: '-=5',
+      yoyo: true,
+      duration: 250,
+      repeat: -1,
+    })
+  }
+
+  private checkFullRepository(): void {
+    if (this.territoryType === 5) {
+      const max: number = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`territories${this.scene.state.farm}Settings`]
+        .find(data => data.improve === this.improve).storage * 0.9;
+      if (this.volume >= max && !this.repositoryAnim) {
+        this.setRepositoryAnim();
+      } else if (this.volume < max && this.repositoryAnim) {
+        this.repository.setPosition(this.x + 120, this.y + 240);
+        this.repositoryAnim.remove();
+        this.repositoryAnim = null;
+      }
+    }
+  }
+  public preUpdate(time: number, delta: number): void {
+    super.preUpdate(time, delta);
+    this.checkFullRepository();
+  }
 }
