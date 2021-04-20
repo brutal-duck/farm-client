@@ -593,6 +593,7 @@ interface IamplitudeData {
   block?: number;
   position?: number;
   step?: number;
+  stock?: boolean;
 }
 interface Istate {
   platform: string;

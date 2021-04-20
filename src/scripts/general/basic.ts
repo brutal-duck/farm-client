@@ -1439,6 +1439,54 @@ function logAmplitudeEvent(eventName: string, data: IamplitudeData): void {
 }
 
 
+function logAmplitudeRevenue(productId: string, price: number, type: string,  data: IamplitudeData): void {
+  let revenueData: IamplitudeData;
+
+  if (this.state.farm !== 'Event' && data.farm_id !== 'Event') {
+    const balance: Ibalance = this.balance();
+    const waterPercent: number = balance.notEnoughWater? -1 * balance.waterPercent : balance.waterPercent;
+    const grassPercent: number = balance.notEnoughGrass ? -1 * balance.grassPercent : balance.grassPercent;
+    let countAnimal: number = this[this.state.farm.toLowerCase()].children.entries.length;
+    if (this.state.farm === 'Cow') countAnimal = this.animalGroup.children.entries.length;
+
+    revenueData = {
+      farm_id: this.state.farm,
+      chapter: this.state[`user${this.state.farm}`].part,
+      diamonds: this.state.user.diamonds,
+      money: this.state[`user${this.state.farm}`].money,
+      fairLevel: this.state[`user${this.state.farm}`].fair,
+      collector: this.state[`user${this.state.farm}`].collector,
+      countAnimal: countAnimal,
+      balanceWaterPercent: waterPercent,
+      balanceGrassPercent: grassPercent,
+    }
+  } else {
+    const countAnimal: number = this.animals.children.entries.length;
+
+    revenueData = {
+      farm_id: this.state.farm,
+      chapter: this.state[`user${this.state.farm}`].maxLevelAnimal,
+      diamonds: this.state.user.diamonds,
+      money: this.state[`user${this.state.farm}`].money,
+      collector: this.state[`user${this.state.farm}`].collector,
+      countAnimal: countAnimal,
+    }
+  }
+  for (const key in data) {
+    revenueData[key] = data[key];
+  }
+
+  const revenue: amplitude.Revenue = new amplitude.Revenue()
+    .setProductId(productId)
+    .setPrice(price)
+    .setEventProperties(revenueData);
+
+  if (type) revenue.setRevenueType(type);
+
+  this.state.amplitude.logRevenueV2(revenue);
+}
+
+
 export {
   random,
   getRandomBool,
@@ -1473,5 +1521,6 @@ export {
   loadingModal,
   remainderSellResource,
   createTaskZone,
-  logAmplitudeEvent
+  logAmplitudeEvent,
+  logAmplitudeRevenue
 }
