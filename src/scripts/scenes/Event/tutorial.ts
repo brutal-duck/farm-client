@@ -27,7 +27,11 @@ function showEventTutorial(additional: boolean | string = false): void {
 // завершение первого шага (зазывание на карте)
 function doneEventTutor_0(): void {
 
-  this.state.amplitude.getInstance().logEvent('event_started', {
+  // this.state.amplitude.getInstance().logEvent('event_started', {
+  //   step: 0,
+  //   farm_id: 'Event'
+  // });
+  this.logAmplitudeEvent('tutorial', {
     step: 0,
     farm_id: 'Event'
   });
@@ -45,7 +49,9 @@ function doneEventTutor_0(): void {
 
 // завершение второго шага (приветствие часть 1)
 function doneEventTutor_10(): void {
-
+  this.logAmplitudeEvent('tutorial', {
+    step: 10,
+  });
   this.state.user.additionalTutorial.eventTutorial = 20;
   this.scene.stop('Tutorial');
 
@@ -59,7 +65,9 @@ function doneEventTutor_10(): void {
 
 // завершение третьего шага (приветствие часть 2)
 function doneEventTutor_20(): void {
-
+  this.logAmplitudeEvent('tutorial', {
+    step: 20,
+  });
   this.state.user.additionalTutorial.eventTutorial = 30;
   this.scene.stop('Tutorial');
   this.time.addEvent({ delay: 1000, callback: (): void => {
@@ -71,7 +79,9 @@ function doneEventTutor_20(): void {
 
 // завершение четвертого шага (купи 2 единорога)
 function doneEventTutor_30(): void {
-  
+  this.logAmplitudeEvent('tutorial', {
+    step: 30,
+  });
   this.state.user.additionalTutorial.eventTutorial = 40;
   this.game.scene.keys['EventBars'].animalBuy.setVisible(true);
   this.game.scene.keys['EventBars'].animalPrice.setVisible(true);
@@ -87,7 +97,9 @@ function doneEventTutor_30(): void {
 
 // завершение пятого шага (смерджи два единорога)
 function doneEventTutor_40(): void {
-
+  this.logAmplitudeEvent('tutorial', {
+    step: 40,
+  });
   this.showMergPointer = false;
   this.mergPointer?.data.values.animal?.destroy();
   this.mergPointer?.destroy();
@@ -102,7 +114,9 @@ function doneEventTutor_40(): void {
 
 // завершение шестого шага (отправь на работу единорога)
 function doneEventTutor_50(): void {
-
+  this.logAmplitudeEvent('tutorial', {
+    step: 50,
+  });
   this.mergPointer?.data.values.animal?.destroy();
   this.mergPointer?.destroy();
   this.state.user.additionalTutorial.eventTutorial = 60;
@@ -116,7 +130,9 @@ function doneEventTutor_50(): void {
 
 // завершение седьмого шага (заключение часть 1)
 function doneEventTutor_60(): void {
-
+  this.logAmplitudeEvent('tutorial', {
+    step: 60,
+  });
   this.state.user.additionalTutorial.eventTutorial = 70;
   this.scene.stop('Tutorial');
 
@@ -130,9 +146,13 @@ function doneEventTutor_60(): void {
 // завершение восьмого шага (заключение часть 2)
 function doneEventTutor_70(): void {
 
-  this.state.amplitude.getInstance().logEvent('event_tutor_complete', {
+  // this.state.amplitude.getInstance().logEvent('event_tutor_complete', {
+  //   farm_id: this.state.farm,
+  //   step: 70,
+  // });
+  
+  this.logAmplitudeEvent('tutorial', {
     step: 70,
-    farm_id: this.state.farm
   });
   this.state.user.additionalTutorial.eventTutorial = 80;
   this.game.scene.keys['EventBars'].shop.setVisible(true);

@@ -1404,7 +1404,7 @@ function createTaskZone(): void {
 function logAmplitudeEvent(eventName: string, data: IamplitudeData): void {
   let eventData: IamplitudeData;
 
-  if (this.state.farm !== 'Event') {
+  if (this.state.farm !== 'Event' && data.farm_id !== 'Event') {
     const balance: Ibalance = this.balance();
     const waterPercent: number = balance.notEnoughWater? -1 * balance.waterPercent : balance.waterPercent;
     const grassPercent: number = balance.notEnoughGrass ? -1 * balance.grassPercent : balance.grassPercent;

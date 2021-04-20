@@ -3,7 +3,7 @@ import {
   clickButton,
   clickShopBtn, 
 } from '../general/clicks';
-import { shortTime } from '../general/basic';
+import { shortTime, logAmplitudeEvent } from '../general/basic';
 import { dragSheep, showSheepSprite } from '../general/animations';
 import { dragEventAnimal } from './Event/animations';
 import Arrow from '../components/animations/Arrow';
@@ -41,6 +41,7 @@ class Tutorial extends Phaser.Scene {
   public dragSheep = dragSheep.bind(this);
   public showSheepSprite = showSheepSprite.bind(this);
   public dragEventAnimal = dragEventAnimal.bind(this);
+  public logAmplitudeEvent = logAmplitudeEvent.bind(this);
 
   public init(state: Istate): void {
 
@@ -136,8 +137,8 @@ class Tutorial extends Phaser.Scene {
 
       if (this.state.tutorial.additional === 'balance') {
 
-        this.state.amplitude.getInstance().logEvent('tutorial_balance', {});
-
+        // this.state.amplitude.getInstance().logEvent('tutorial_balance', {});
+        this.logAmplitudeEvent('tutorial_balance', {});
         this.tutorText = this.state.lang.addTutorialBalance;
         this.showContinue = true;
         this.generalClick = (): void => {
@@ -207,7 +208,10 @@ class Tutorial extends Phaser.Scene {
 
       } else if (this.state.tutorial.additional === 'cave1') {
 
-        this.state.amplitude.getInstance().logEvent('tutorial_cave', {
+        // this.state.amplitude.getInstance().logEvent('tutorial_cave', {
+        //   step: 1
+        // });
+        this.logAmplitudeEvent('tutorial_cave', {
           step: 1
         });
 
@@ -227,7 +231,11 @@ class Tutorial extends Phaser.Scene {
         
       } else if (this.state.tutorial.additional === 'cave2') {
 
-        this.state.amplitude.getInstance().logEvent('tutorial_cave', {
+        // this.state.amplitude.getInstance().logEvent('tutorial_cave', {
+        //   step: 2
+        // });
+
+        this.logAmplitudeEvent('tutorial_cave', {
           step: 2
         });
 
@@ -254,7 +262,11 @@ class Tutorial extends Phaser.Scene {
 
       } else if (this.state.tutorial.additional === 'cave3') {
 
-        this.state.amplitude.getInstance().logEvent('tutorial_cave', {
+        // this.state.amplitude.getInstance().logEvent('tutorial_cave', {
+        //   step: 3
+        // });
+
+        this.logAmplitudeEvent('tutorial_cave', {
           step: 3
         });
 
@@ -266,6 +278,9 @@ class Tutorial extends Phaser.Scene {
         this.simpleTutorial();
 
       } else if (this.state.tutorial.additional === 'herdBoost1') {
+        this.logAmplitudeEvent('tutorial_herd_boost', {
+          step: 1
+        });
         Arrow.generate(this, 11);
 
         let shopBtn: Phaser.GameObjects.Image = this.add.image(370, this.height - 90, 'shop');
@@ -290,6 +305,9 @@ class Tutorial extends Phaser.Scene {
         }); 
 
       } else if (this.state.tutorial.additional === 'herdBoost2') {
+        this.logAmplitudeEvent('tutorial_herd_boost', {
+          step: 2
+        });
         // окно буста
         let bg: Phaser.GameObjects.TileSprite = this.add.tileSprite(130, this.cameras.main.centerY - 20, 460, 235, 'boost-bg').setOrigin(0, 0).setAlpha(0);
         let title: Phaser.GameObjects.Text = this.add.text(365 + 5, this.cameras.main.centerY + 15, this.state.lang.herdBoostTitleSheep, { 
@@ -345,7 +363,9 @@ class Tutorial extends Phaser.Scene {
         });
 
       } else if (this.state.tutorial.additional === 'feedBoost1') {
-        
+        this.logAmplitudeEvent('tutorial_feed_boost', {
+          step: 1
+        });
         Arrow.generate(this, 13);
 
         let shopBtn: Phaser.GameObjects.Image = this.add.image(370, this.height - 90, 'shop');
@@ -370,6 +390,9 @@ class Tutorial extends Phaser.Scene {
         }); 
 
       } else if (this.state.tutorial.additional === 'feedBoost2') {
+        this.logAmplitudeEvent('tutorial_feed_boost', {
+          step: 2
+        });
         // окно буста
         let y: number = this.cameras.main.centerY + 220;
         let bg: Phaser.GameObjects.TileSprite = this.add.tileSprite(130, y, 460, 230, 'boost-bg').setOrigin(0, 0).setAlpha(0);
@@ -469,7 +492,8 @@ class Tutorial extends Phaser.Scene {
         // первый шаг
         if (this.state.tutorial.step === 0) {
 
-          this.state.amplitude.getInstance().logEvent('tutor_after_load', {});
+          // this.state.amplitude.getInstance().logEvent('tutor_after_load', {});
+          this.logAmplitudeEvent('tutor_after_load', {});
           this.tutorText = this.state.lang.sheepTutorial_0;
           this.generalClick = (): void => this.game.scene.keys[this.state.farm].doneTutor_0();
           this.simpleTutorial();
