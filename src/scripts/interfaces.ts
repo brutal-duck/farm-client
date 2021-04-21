@@ -340,8 +340,9 @@ interface IfactorySettings {
   lotSize: number;
   clabberPercent: number;
   pasteurizedMilkPercent: number;
-  chocolatePercent: number;
   cheesePercent: number;
+  chocolatePercent: number;
+  efficiency: number;
   id?: any;
 }
 interface IterritoriesEventSettings {

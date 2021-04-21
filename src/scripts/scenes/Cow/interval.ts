@@ -8,7 +8,7 @@ function interval(): void {
   let statusBalance: boolean = false;
   let checkRaiting: boolean = false;
   let arrowOnMap: Phaser.GameObjects.Sprite;
-  const milkDelay: number = 60;
+  const milkDelay: number = 5;
   
   this.time.addEvent({ delay: 1000, callback: (): void => {
     
@@ -251,6 +251,9 @@ function interval(): void {
         this.showEventTutorial();
       }
     }
+
+    const factoryTerritory: Territory = this.territories.children.entries.find((data: Territory) => data.territoryType === 8);
+    factoryTerritory.productionOfProducts();
   }, callbackScope: this, loop: true });
 }
 

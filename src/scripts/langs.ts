@@ -759,6 +759,11 @@ export default {
     unlockNextUpdate: 'Скоро в игре',
     remainderBalance: 'Следи, чтобы всегда было достаточно воды и травы для животных, иначе твой доход упадет.',
     slotSize: 'Размер партии',
+    produced: 'Производится',
+    clabber: 'Простокваша',
+    pasteurizedMilk: 'Пастеризованное молоко',
+    cheese: 'Сыр',
+    chocolate: 'Шоколад',
   },
 
   en: {
@@ -1521,6 +1526,11 @@ export default {
     unlockNextUpdate: 'Скоро в игре',
     remainderBalance: 'Следи, чтобы всегда было достаточно воды и травы для животных, иначе твой доход упадет.',
     slotSize: 'Размер партии',
+    produced: 'Производится',
+    clabber: 'Простокваша',
+    pasteurizedMilk: 'Пастеризованное молоко',
+    cheese: 'Сыр',
+    chocolate: 'Шоколад',
 
   }
 }

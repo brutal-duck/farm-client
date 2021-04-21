@@ -38,8 +38,13 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
   // тип территории 8
   public factory: Phaser.GameObjects.Sprite;
-  public productionTimer: number;
+  public factorySettings: IfactorySettings;
+  public productionTimer: number = 0;
   public currentProduction: string;
+  public clabberMoney: number = 0;
+  public pasteurizedMilkMoney: number = 0;
+  public cheeseMoney: number = 0;
+  public chocolateMoney: number = 0;
 
   constructor(scene: Cow, x: number, y: number, type: string, data: Iterritories) {
     super(scene, x, y, type);
@@ -211,6 +216,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       fontSize: '30px',
       fontFamily: 'Shadow'
     }).setStroke('#000000', 3).setOrigin(0.5).setDepth(this.y + 2);
+    this.factorySettings = this.scene.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === this.improve);
   }
 
   private setListeners(): void {
@@ -767,6 +773,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
           user.money -= nextImprove.improveMoneyPrice;
           this.scene.state.user.diamonds -= nextImprove.improveDiamondPrice;
           this.improve += 1;
+          this.factorySettings = nextImprove;
           this.scene.time.addEvent({ delay: 200, callback: (): void => {
             this.improveText?.setText(String(this.improve));
             Stars.create(this.scene, { x: this.x + 120, y: this.y + 120 });
@@ -799,5 +806,106 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         }
       }
     }
+  }
+
+
+  public productionOfProducts(): void {
+    let resourceAmount: number = 0;
+
+    if (this.territoryType === 8) {
+      if (this.productionTimer <= 0) {
+        this.endProduction();
+        const storages: Territory[] = this.scene.territories.children.entries.filter((data: Territory) => data.territoryType === 5) as Territory[];
+        
+        storages.forEach((storage: Territory) => {
+          resourceAmount += storage.volume;
+        });
+
+        if (resourceAmount >= this.factorySettings.lotSize) {
+          this.productionTimer = this.factorySettings.processingTime;
+          let lot: number = this.factorySettings.lotSize;
+          for (let i in storages) {
+            const storage: Territory = storages[i];
+            if (storage.volume > lot) {
+              storage.volume -= lot;
+              lot = 0;
+            } else {
+              lot -= storage.volume;
+              storage.volume = 0;
+            }
+          }
+          this.startProduction();
+        } else {
+          console.log('Недостаточно молока для производства');
+        }
+      } else {
+        this.productionTimer -= 1;
+      }
+    }
+  }
+  private startProduction(): void {
+    const productId = this.getRandomProductId();
+    if (productId) {
+      this.currentProduction = productId === 1 ? 'clabber' :
+        productId === 2 ? 'pasteurizedMilk' : 
+        productId === 3 ? 'cheese' : 
+        productId === 4 ? 'chocolate' : '';
+      console.log(this.currentProduction);
+    } else {
+      this.startProduction();
+    }
+  }
+
+  private endProduction(): void {
+    if (this.currentProduction) {
+      this[`${this.currentProduction}Money`] += this.factorySettings.lotSize * this.scene[`${this.currentProduction}Multiply`];
+      this.money += this.factorySettings.lotSize * this.scene[`${this.currentProduction}Multiply`];
+      this.currentProduction = '';
+    }
+    console.log(this.clabberMoney, 'простокваша')
+    console.log(this.pasteurizedMilkMoney, 'пастеризованное молоко')
+    console.log(this.cheeseMoney, 'сыр')
+    console.log(this.chocolateMoney, 'шоколад')
+
+    console.log(this.money, 'общие деньги')
+  }
+  private getRandomProductId(): number {
+    const pull: number[] = [ this.factorySettings.clabberPercent, this.factorySettings.pasteurizedMilkPercent, this.factorySettings.cheesePercent ];
+    let booster: boolean = false;
+    if (booster) pull.push(this.factorySettings.chocolatePercent);
+
+    const totalCounter: number = pull.reduce((prev, current) => prev += current);
+
+    const arrRange: {
+      id: number,
+      bottom: number,
+      top: number
+    }[] = [];
+
+    let current: number = 0;
+    let previos: number = 0;
+    for (let i: number = 0; i < pull.length; i += 1) {
+      if (pull[i] !== 0) {
+        current = pull[i] + previos;
+        arrRange.push({
+          id: i + 1, 
+          bottom: previos, 
+          top: current 
+        })
+        previos = current;
+      }
+    }
+
+    const randomIndex: number = Phaser.Math.Between(0, totalCounter - 1);
+    let productId: number;
+
+    for (let i: number = 0; i < arrRange.length; i += 1) {
+      if (arrRange[i].bottom < randomIndex && arrRange[i].top >= randomIndex) {
+        productId = arrRange[i].id;
+      }
+    }
+    console.log(randomIndex);
+    console.log(productId);
+    return productId;
   }
 }

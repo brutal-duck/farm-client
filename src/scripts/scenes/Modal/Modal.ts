@@ -46,7 +46,8 @@ import {
   confirmExpelCow,
   diamondCowAd,
   cowMilkRepositoryExchange,
-  cowFactory
+  cowFactory,
+  updateFactoryModal
 } from './cow';
 import {
   confirmExpelAnimal,
@@ -219,7 +220,8 @@ class Modal extends Phaser.Scene {
   public openModal = openModal.bind(this);
   public loadingModal = loadingModal.bind(this);
   public cowFactory = cowFactory.bind(this);
-  
+  public updateFactoryModal = updateFactoryModal.bind(this);
+
   public init(state: Istate): void {
     this.state = state;
   }
@@ -467,32 +469,8 @@ class Modal extends Phaser.Scene {
   
     if (this.state.modal.type === 6) this.timerNewbieAward.setText(shortTime(this.state.timeToNewDay, this.state.lang));
 
-    if (this.state.territory.territoryType === 8 && this.state.modal?.sysType === 2 && this.state.farm === 'Cow') {
-      
-      let max: number = 0;
-      let currentVolume: number = 0;
-      let count = this.state.lang.countMilk;
-      let percent: number = 0;
-      const territorySettings: IterritoriesCowSettings[] = this.state.cowSettings.territoriesCowSettings;
-
-      const storages: Territory[] = this.game.scene.keys[this.state.farm].territories.children.entries.filter((data: Territory) => data.territoryType === 5);
-      storages.forEach((storage: Territory) => {
-        max += territorySettings.find((data: IterritoriesCowSettings) => data.improve === storage.improve).storage;
-        currentVolume += storage.volume;
-      })
-
-      if (currentVolume > 0) {
-        percent = currentVolume / (max / 100);
-      }
-      
-      let width: number = Math.round(444 / 100 * percent);
-
-      if (this.progressBar.displayWidth !== width) {
-        this.progressBar.setDisplaySize(width, 16);
-      }
-
-      let volume: string = `${count}: ${shortNum(currentVolume)} / ${shortNum(max)}`;
-      if (this.progressText.text !== volume) this.progressText.setText(volume);
+    if (this.state.territory?.territoryType === 8 && this.state.modal?.sysType === 2 && this.state.farm === 'Cow') {
+      this.updateFactoryModal();
     }
   }
 }
