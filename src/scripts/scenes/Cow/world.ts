@@ -62,10 +62,6 @@ function world(): void {
 
     territory.createBorders(topBorder, bottomBorder)
     territory.createForest(forest);
-    territory.createMetgingZone();
-    territory.createRepositorySprite();
-    territory.createHouseSprite();
-    territory.createCave();
   });
 
   this.buildBorders();
@@ -123,6 +119,7 @@ function getTerritoryType(data: Iterritories): string {
   else if (data.type === 5) type = 'cow-repository';
   else if (data.type === 6) type = 'cow-house';
   else if (data.type === 7) type = 'cow-ground';
+  else if (data.type === 8) type = 'cow-repository';
   
   return type;
 }

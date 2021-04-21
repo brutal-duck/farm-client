@@ -277,6 +277,10 @@ function cowTerritory(): void {
       this.cowMilkRepository();
       break;
 
+    case 8: // хранилище яиц
+      this.cowFactory();
+      break;
+
     default:
       this.scene.stop();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;

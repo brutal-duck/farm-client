@@ -753,6 +753,93 @@ function cowMilkRepository(): void {
 
 }
 
+function cowFactory(): void {
+  
+  const factory: string = this.state.lang.factory.replace('$1', this.state.territory.improve);
+  this.textHeader.setText(factory);
+
+  let improve: number = this.state.territory.improve + 1;
+  if (improve > this.state.cowSettings.cowFactorySettings.length) {
+    improve = this.state.cowSettings.cowFactorySettings.length;
+  }
+  const settings: IfactorySettings = this.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === improve);
+
+  if (settings) {
+    if (this.state.userCow.part >= settings.unlock_improve) {
+      let improve: any;
+      if (settings.improveMoneyPrice) {
+        improve = {
+          icon: 'cowCoin',
+          text: shortNum(settings.improveMoneyPrice)
+        };
+      } else if (settings.improveDiamondPrice) {
+        improve = {
+          icon: 'diamond',
+          text: shortNum(settings.improveDiamondPrice)
+        };
+      }
+      const improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.improve + 1);
+      const button = this.bigButton('orange', 'left', 110, improveText, improve);
+      this.clickModalBtn(button, (): void => {
+        this.scene.stop();
+        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+        this.state.territory.improveFactory();
+      });
+
+    } else {
+      
+      let improve = {
+        icon: 'lock',
+        text: this.state.lang.shortPart + ' ' + settings.unlock_improve
+      }
+      let improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.improve + 1);
+      this.bigButton('grey', 'left', 110, improveText, improve);
+    }
+
+    this.progressText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 160, '', {
+      font: '26px Bip',
+      color: '#925C28'
+    }).setOrigin(0.5, 0.5);
+
+    this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 120, 'pb-chapter-modal');
+    this.progressBar = this.add.tileSprite(136, this.cameras.main.centerY - 120, 0, 16, 'green-progress')
+      .setOrigin(0, 0.5);
+
+    // this.clickModalBtn(this.progressButton, (): void => {
+    //   if (this.state.territory.volume > 0) {
+    //     this.scene.stop();
+    //     this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+    //     this.game.scene.keys[this.state.farm].sellMilk();
+    //   }
+    // });
+
+    this.resizeWindow(430);
+
+  } else {
+
+    this.progressText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 120, '', {
+      font: '26px Bip',
+      color: '#925C28'
+    }).setOrigin(0.5, 0.5);
+
+    this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 70, 'pb-chapter-modal');
+    this.progressBar = this.add.tileSprite(136, this.cameras.main.centerY - 70, 0, 16, 'green-progress')
+      .setOrigin(0, 0.5);
+
+    // this.progressButton = this.repositoryBtn(60, this.state.lang.sellMilk, milkMoney);
+    // this.clickModalBtn(this.progressButton, (): void => {
+
+    //   if (this.state.territory.volume > 0) {
+    //     this.scene.stop();
+    //     this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+    //     this.game.scene.keys[this.state.farm].sellMilk();
+    //   }
+
+    // });
+    this.resizeWindow(330);
+  }
+}
+
 function cowMilkRepositoryExchange(): void {
   const repository: string = this.state.lang.repository.replace('$1', this.state.territory.improve);
   this.textHeader.setText(repository);
@@ -892,4 +979,5 @@ export {
   confirmExpelCow,
   diamondCowAd,
   cowMilkRepositoryExchange,
+  cowFactory
 }

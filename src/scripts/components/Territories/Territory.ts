@@ -36,6 +36,9 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   // тип территории 6
   public house: Phaser.GameObjects.Sprite;
 
+  // тип территории 8
+  public factory: Phaser.GameObjects.Sprite;
+
   constructor(scene: Cow, x: number, y: number, type: string, data: Iterritories) {
     super(scene, x, y, type);
 
@@ -54,9 +57,24 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     this.volume = data.volume;
     this.improve = data.improve;
     this.money = data.money;
+    this.createElements();
     this.setListeners();
-    if (this.territoryType === 2 || this.territoryType === 3 || this.territoryType === 5) {
+  }
+
+  private createElements(): void {
+    if (this.territoryType === 2 || this.territoryType === 3 || this.territoryType === 5 || this.territoryType === 8) {
       this.createImproveText();
+    }
+    if (this.territoryType === 4) {
+      this.createMetgingZone();
+    } else if (this.territoryType === 5) {
+      this.createRepositorySprite();
+    } else if (this.territoryType === 6) {
+      this.createHouseSprite();
+    } else if (this.territoryType === 7) {
+      this.createCave();
+    } else if (this.territoryType === 8) {
+      this.createFactorySprite();
     }
   }
 
@@ -112,40 +130,33 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  public createMetgingZone(): void {
+  private createMetgingZone(): void {
     const farm: string = this.scene.state.farm.toLowerCase();
     const fairLevel: string = String(this.scene.state[`user${this.scene.state.farm}`].fair);
 
-    if (this.territoryType === 4) {
-
-      this.merging = [];
-      this.mergingCounter = 0;
-      this.scene.add.sprite(this.x, this.y - 35, `${farm}-tent`).setDepth(this.y).setOrigin(0, 0);
-      
-      let topZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.x + 120, this.y + 45, 300, 145).setDropZone(undefined, () => {});
-      topZone.type = 'top';
-
-      // let graphics1 = this.add.graphics().setDepth(territory.y * 5);
-      // graphics1.lineStyle(2, 0xffff00);
-      // graphics1.strokeRect(topZone.x - topZone.input.hitArea.width / 2, topZone.y - topZone.input.hitArea.height / 2, topZone.input.hitArea.width, topZone.input.hitArea.height);
-
-      
-      let bottomZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.x + 120, this.y + 190, 300, 145).setDropZone(undefined, () => {});
-      bottomZone.type = 'bottom';
-      
-      // let graphics2 = this.add.graphics().setDepth(territory.y * 5);
-      // graphics2.lineStyle(2, 0x00ff00);
-      // graphics2.strokeRect(bottomZone.x - bottomZone.input.hitArea.width / 2, bottomZone.y - bottomZone.input.hitArea.height / 2, bottomZone.input.hitArea.width, bottomZone.input.hitArea.height);
-
-      this.levelText = this.scene.add.text(this.x + 47, this.y + 196, fairLevel, {
-        font: '34px Shadow',
-        color: '#df870a'
-      }).setOrigin(0.5, 0.5).setDepth(this.y);
-      
-    }
+    this.merging = [];
+    this.mergingCounter = 0;
+    this.scene.add.sprite(this.x, this.y - 35, `${farm}-tent`).setDepth(this.y).setOrigin(0, 0);
+    
+    let topZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.x + 120, this.y + 45, 300, 145).setDropZone(undefined, () => {});
+    topZone.type = 'top';
+    // let graphics1 = this.add.graphics().setDepth(territory.y * 5);
+    // graphics1.lineStyle(2, 0xffff00);
+    // graphics1.strokeRect(topZone.x - topZone.input.hitArea.width / 2, topZone.y - topZone.input.hitArea.height / 2, topZone.input.hitArea.width, topZoneinput.hitArea.height);
+    
+    let bottomZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.x + 120, this.y + 190, 300, 145).setDropZone(undefined, () => {});
+    bottomZone.type = 'bottom';
+    
+    // let graphics2 = this.add.graphics().setDepth(territory.y * 5);
+    // graphics2.lineStyle(2, 0x00ff00);
+    // graphics2.strokeRect(bottomZone.x - bottomZone.input.hitArea.width / 2, bottomZone.y - bottomZone.input.hitArea.height / 2, bottomZone.input.hitAreawidth, bottomZone.input.hitArea.height);
+    this.levelText = this.scene.add.text(this.x + 47, this.y + 196, fairLevel, {
+      font: '34px Shadow',
+      color: '#df870a'
+    }).setOrigin(0.5, 0.5).setDepth(this.y);
   }
 
-  public createRepositorySprite(): void {
+  private createRepositorySprite(): void {
     const farm: string = this.scene.state.farm.toLowerCase();
     let stage: number = 1;
     if (this.improve >= 5) {
@@ -157,43 +168,47 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         }
       }
     }
-    if (this.territoryType === 5) {
       
-      let percent: number = 0;
-      let max: number = this.scene.state.cowSettings.territoriesCowSettings[this.improve - 1].storage;
-      let type: string = `${farm}-repository-${stage}-`;
+    let percent: number = 0;
+    let max: number = this.scene.state.cowSettings.territoriesCowSettings[this.improve - 1].storage;
+    let type: string = `${farm}-repository-${stage}-`;
 
-      if (this.volume > 0) {
-        percent = this.volume / (max / 100);
-      }
-      if (percent < 25) {
-        type += 1;
-      } else if (percent >= 25 && percent < 50) {
-        type += 2;
-      } else if (percent >= 50 && percent < 75) {
-        type += 3;
-      } else {
-        type += 4;
-      }
-
-      this.repository = this.scene.add.sprite(this.x + 120, this.y + 240, type)
-        .setDepth(this.y + 1)
-        .setOrigin(0.5, 1);
+    if (this.volume > 0) {
+      percent = this.volume / (max / 100);
     }
+    if (percent < 25) {
+      type += 1;
+    } else if (percent >= 25 && percent < 50) {
+      type += 2;
+    } else if (percent >= 50 && percent < 75) {
+      type += 3;
+    } else {
+      type += 4;
+    }
+
+    this.repository = this.scene.add.sprite(this.x + 120, this.y + 240, type)
+      .setDepth(this.y + 1)
+      .setOrigin(0.5, 1);
   }
 
-  public createHouseSprite(): void {
-    if (this.territoryType === 6) {
-      this.scene.house = this.scene.add.sprite(this.x + 120, this.y + 240, `${this.scene.state.farm.toLowerCase()}-house-sprite`)
-        .setOrigin(0.5, 1)
-        .setDepth(this.y);
-    }
+  private createHouseSprite(): void {
+    this.scene.house = this.scene.add.sprite(this.x + 120, this.y + 240, `${this.scene.state.farm.toLowerCase()}-house-sprite`)
+      .setOrigin(0.5, 1)
+      .setDepth(this.y);
   }
 
-  public createCave(): void {
-    if (this.territoryType === 7) {
-      Cave.create(this.scene, { x: this.x + 120, y: this.y + 240 });
-    }
+  private createCave(): void {
+    Cave.create(this.scene, { x: this.x + 120, y: this.y + 240 });
+  }
+
+  private createFactorySprite(): void {
+    this.factory = this.scene.add.sprite(this.x + 120, this.y + 120, 'cow-repository-1-1')
+      .setDepth(this.y + 1);
+    this.scene.add.text(this.x + 120, this.y + 120, 'FACTORY', {
+      color: '#ffffff',
+      fontSize: '30px',
+      fontFamily: 'Shadow'
+    }).setStroke('#000000', 3).setOrigin(0.5).setDepth(this.y + 2);
   }
 
   private setListeners(): void {
@@ -216,7 +231,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     });
   }
 
-  // покупка земли
   public buyTerritory(): void {
     const farm: string = this.scene.state.farm.toLowerCase();
     const user: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
@@ -495,7 +509,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     
   }
 
-  // улучшение ярмарки
   public fairLevelUp(): void {
 
     const fairs: IfairLevel[] = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`${this.scene.state.farm.toLowerCase()}FairLevels`];
@@ -553,11 +566,11 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
         } else {
           if (this.scene.state.user.diamonds < nextFair.price_d) {
-            let count: number = nextFair.price_d - this.scene.state.user.diamonds;
+            const count: number = nextFair.price_d - this.scene.state.user.diamonds;
             this.openConvertor(count, count, 2, 2);
           } else {
-            let count: number = nextFair.price_m - user.money;
-            let diamonds: number = this.scene.convertMoney(count);
+            const count: number = nextFair.price_m - user.money;
+            const diamonds: number = this.scene.convertMoney(count);
             this.openConvertor(count, diamonds, 2, 1);
           }
         }
@@ -713,7 +726,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     }
   };
 
-  private setRepositoryAnim(): void {
+  private createFullStorageAnim(): void {
     this.repositoryAnim = this.scene.tweens.add({
       targets: [this.improveText, this.repository],
       y: '-=5',
@@ -723,12 +736,12 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     })
   }
 
-  private checkFullRepository(): void {
+  private checkAndSetRepositoryAnim(): void {
     if (this.territoryType === 5) {
       const max: number = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`territories${this.scene.state.farm}Settings`]
         .find(data => data.improve === this.improve).storage * 0.9;
       if (this.volume >= max && !this.repositoryAnim) {
-        this.setRepositoryAnim();
+        this.createFullStorageAnim();
       } else if (this.volume < max && this.repositoryAnim) {
         this.repository.setPosition(this.x + 120, this.y + 240);
         this.repositoryAnim.remove();
@@ -738,6 +751,51 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   }
   public preUpdate(time: number, delta: number): void {
     super.preUpdate(time, delta);
-    this.checkFullRepository();
+    this.checkAndSetRepositoryAnim();
+  }
+
+  public improveFactory(): void {
+    const settings: IfactorySettings[] = this.scene.state.cowSettings.cowFactorySettings;
+    const user: IuserCow = this.scene.state.userCow;
+
+    const nextImprove = settings.find((item: IfactorySettings) => item.improve === this.improve + 1);
+    if (nextImprove && this.improve < settings.length) {
+      if (user.part >= nextImprove.unlock_improve) {
+        if (user.money >= nextImprove.improveMoneyPrice && this.scene.state.user.diamonds >= nextImprove.improveDiamondPrice) {
+          user.money -= nextImprove.improveMoneyPrice;
+          this.scene.state.user.diamonds -= nextImprove.improveDiamondPrice;
+          this.improve += 1;
+          this.scene.time.addEvent({ delay: 200, callback: (): void => {
+            this.improveText?.setText(String(this.improve));
+            Stars.create(this.scene, { x: this.x + 120, y: this.y + 120 });
+
+          }, callbackScope: this, loop: false });
+
+          this.scene.state.amplitude.getInstance().logEvent('factory_up', {
+            level: user.fair,
+            farm_id: this.scene.state.farm
+          });
+
+          if (nextImprove.improveDiamondPrice > 0) {
+            this.scene.state.amplitude.getInstance().logEvent('diamonds_spent', {
+              type: 'factory',
+              count: nextImprove.improveDiamondPrice,
+              farm_id: this.scene.state.farm,
+              chapter: this.scene.state[`user${this.scene.state.farm}`].part,
+            });
+            this.scene.tryTask(15, 0, nextImprove.improveDiamondPrice);
+          }
+        } else {
+          if (this.scene.state.user.diamonds < nextImprove.improveDiamondPrice) {
+            const count: number = nextImprove.improveDiamondPrice - this.scene.state.user.diamonds;
+            this.openConvertor(count, count, 2, 2);
+          } else {
+            const count: number = nextImprove.improveMoneyPrice - user.money;
+            const diamonds: number = this.scene.convertMoney(count);
+            this.openConvertor(count, diamonds, 2, 1);
+          }
+        }
+      }
+    }
   }
 }

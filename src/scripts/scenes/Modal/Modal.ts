@@ -46,6 +46,7 @@ import {
   confirmExpelCow,
   diamondCowAd,
   cowMilkRepositoryExchange,
+  cowFactory
 } from './cow';
 import {
   confirmExpelAnimal,
@@ -98,6 +99,7 @@ import { createChatBars } from './Chat/elements';
 import { improveCollectorAnim, openModal } from '../../general/animations';
 import { clickTaskBoard } from '../../general/tasks';
 import typePreload from './typePreload';
+import Territory from './../../components/Territories/Territory';
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -216,22 +218,17 @@ class Modal extends Phaser.Scene {
   public clickTaskBoard = clickTaskBoard.bind(this);
   public openModal = openModal.bind(this);
   public loadingModal = loadingModal.bind(this);
-
+  public cowFactory = cowFactory.bind(this);
   
   public init(state: Istate): void {
     this.state = state;
-
   }
-
 
   public preload(): void {
     this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)')
     this.loadingModal();
     this.typePreload();
-
   }
-
-
 
   public create(): void {
     this.add.tileSprite(0, 0,
@@ -289,10 +286,7 @@ class Modal extends Phaser.Scene {
         this.game.scene.keys[this.state.farm].scrolling.wheel = true;
         break;
     }
-
-    
   }
-
 
   public update(): void {
     
@@ -375,7 +369,7 @@ class Modal extends Phaser.Scene {
         count = this.state.lang.countMilk;
 
       }
-
+      console.log('tuta')
       if (this.state.territory.volume > 0) {
         percent = this.state.territory.volume / (max / 100);
       }
@@ -445,7 +439,6 @@ class Modal extends Phaser.Scene {
       
     }
 
-
     // Обновление таблицы рейтингов евента
     if (this.state.progress.event.updateRaitings && this.state.modal.type === 11) {
 
@@ -476,9 +469,34 @@ class Modal extends Phaser.Scene {
   
     if (this.state.modal.type === 6) this.timerNewbieAward.setText(shortTime(this.state.timeToNewDay, this.state.lang));
 
+    if (this.state.territory.territoryType === 8 && this.state.modal?.sysType === 2 && this.state.farm === 'Cow') {
+      
+      let max: number = 0;
+      let currentVolume: number = 0;
+      let count = this.state.lang.countMilk;
+      let percent: number = 0;
+      const territorySettings: IterritoriesCowSettings[] = this.state.cowSettings.territoriesCowSettings;
+
+      const storages: Territory[] = this.game.scene.keys[this.state.farm].territories.children.entries.filter((data: Territory) => data.territoryType === 5);
+      storages.forEach((storage: Territory) => {
+        max += territorySettings.find((data: IterritoriesCowSettings) => data.improve === storage.improve).storage;
+        currentVolume += storage.volume;
+      })
+
+      if (currentVolume > 0) {
+        percent = currentVolume / (max / 100);
+      }
+      
+      let width: number = Math.round(444 / 100 * percent);
+
+      if (this.progressBar.displayWidth !== width) {
+        this.progressBar.setDisplaySize(width, 16);
+      }
+
+      let volume: string = `${count}: ${shortNum(currentVolume)} / ${shortNum(max)}`;
+      if (this.progressText.text !== volume) this.progressText.setText(volume);
+    }
   }
-
-
 }
 
 export default Modal;
