@@ -8,7 +8,7 @@ function interval(): void {
   let statusBalance: boolean = false;
   let checkRaiting: boolean = false;
   let arrowOnMap: Phaser.GameObjects.Sprite;
-  const milkDelay: number = 5;
+  const milkDelay: number = 60;
   
   this.time.addEvent({ delay: 1000, callback: (): void => {
     
