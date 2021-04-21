@@ -112,21 +112,21 @@ function interval(): void {
     this.nextDayTimer();
 
 
-    // if (this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
-    //  this.state[`user${this.state.farm}`].takenHerdBoost <= 0 && 
-    //  this.state.user.additionalTutorial.herdBoost) {
-    //   this.state.nativeCounter[3] = 1;
-    // } else this.state.nativeCounter[3] = 0;
+    if (this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
+     this.state[`user${this.state.farm}`].takenHerdBoost <= 0 && 
+     this.state.user.additionalTutorial.herdBoost) {
+      this.state.nativeCounter[3] = 1;
+    } else this.state.nativeCounter[3] = 0;
 
-    // if (!this.state.user.starterpack && this.state.user.additionalTutorial.eventTutorial > 70) this.state.nativeCounter[0] = 1;
-    // else this.state.nativeCounter[0] = 0;
+    if (!this.state.user.starterpack && this.state.user.additionalTutorial.eventTutorial > 70) this.state.nativeCounter[0] = 1;
+    else this.state.nativeCounter[0] = 0;
 
-    // let nativeCount = 0;
+    let nativeCount = 0;
     
-    // for (let i = 0; i < this.state.nativeCounter.length; i++) {
-    //   nativeCount += this.state.nativeCounter[i];
-    // }
-    // this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setText(nativeCount);
+    for (let i = 0; i < this.state.nativeCounter.length; i++) {
+      nativeCount += this.state.nativeCounter[i];
+    }
+    this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setText(nativeCount);
 
     // let proceeds: string = String(0);
     // this.animals.children.entries.forEach(animal => {
@@ -147,46 +147,46 @@ function interval(): void {
     //   this.game.scene.keys['EventBars'].proceedsText.setText(this.state.lang.income + ' ' + shortNum(BigInteger.divide(proceeds, String(10))) + '/' + this.state.lang.seconds);
     // } 
     
-    // // Обновление иконки feed буста
-    // if (this.state.userEvent.maxLevelAnimal >= this.game.scene.keys['Event'].feedBoostLvl &&
-    // this.state.user.additionalTutorial.feedBoost) {
+    // Обновление иконки feed буста
+    if (this.state.userEvent.maxLevelAnimal >= this.game.scene.keys['Event'].feedBoostLvl &&
+    this.state.user.additionalTutorial.feedBoost) {
       
-    //   if (this.state.userEvent.feedBoostTime > 0 && !this.game.scene.keys['EventBars'].feedBoostTime.visible) {
-    //     this.game.scene.keys['EventBars'].proceedsText.y = 80;
-    //     this.game.scene.keys['EventBars'].proceedsText.setColor('#cbff40');
-    //     this.game.scene.keys['EventBars'].feedBoostDoubledIcon.setVisible(true);
-    //     this.game.scene.keys['EventBars'].feedBoostIcon.setVisible(true);
-    //     this.game.scene.keys['EventBars'].feedBoostTime.setVisible(true);
-    //   } else if (this.state.userEvent.feedBoostTime <= 0 && this.game.scene.keys['EventBars'].feedBoostTime.visible) {
-    //     this.game.scene.keys['EventBars'].proceedsText.y = 92;
-    //     this.game.scene.keys['EventBars'].proceedsText.setColor('#f2ede4');
-    //     this.game.scene.keys['EventBars'].feedBoostDoubledIcon.setVisible(false);
-    //     this.game.scene.keys['EventBars'].feedBoostIcon.setVisible(false);
-    //     this.game.scene.keys['EventBars'].feedBoostTime.setVisible(false);
-    //   }
+      if (this.state.userEvent.feedBoostTime > 0 && !this.game.scene.keys['EventBars'].feedBoostTime.visible) {
+        this.game.scene.keys['EventBars'].proceedsText.y = 80;
+        this.game.scene.keys['EventBars'].proceedsText.setColor('#cbff40');
+        this.game.scene.keys['EventBars'].feedBoostDoubledIcon.setVisible(true);
+        this.game.scene.keys['EventBars'].feedBoostIcon.setVisible(true);
+        this.game.scene.keys['EventBars'].feedBoostTime.setVisible(true);
+      } else if (this.state.userEvent.feedBoostTime <= 0 && this.game.scene.keys['EventBars'].feedBoostTime.visible) {
+        this.game.scene.keys['EventBars'].proceedsText.y = 92;
+        this.game.scene.keys['EventBars'].proceedsText.setColor('#f2ede4');
+        this.game.scene.keys['EventBars'].feedBoostDoubledIcon.setVisible(false);
+        this.game.scene.keys['EventBars'].feedBoostIcon.setVisible(false);
+        this.game.scene.keys['EventBars'].feedBoostTime.setVisible(false);
+      }
       
-    // }
+    }
 
-    // // повтор шага туториала про мерджинг животных
-    // if ((this.state.user.additionalTutorial.eventTutorial === 40 || 
-    //   this.state.user.additionalTutorial.eventTutorial === 50) && 
-    //   !this.scene.isActive('Tutorial')) {
+    // повтор шага туториала про мерджинг животных
+    if ((this.state.user.additionalTutorial.eventTutorial === 40 || 
+      this.state.user.additionalTutorial.eventTutorial === 50) && 
+      !this.scene.isActive('Tutorial')) {
 
-    //   this.mergTutor++;
-    //   let dragAnimal: any = this.animals.children.entries.find((data: any) => data.data.values.active.data.values.drag);
+      this.mergTutor++;
+      let dragAnimal: any = this.animals.children.entries.find((data: any) => data.data.values.active.data.values.drag);
 
-    //   if (this.mergTutor > 5 && !dragAnimal) this.showEventTutorial();
+      if (this.mergTutor > 5 && !dragAnimal) this.showEventTutorial();
 
-    // }
+    }
 
-    // // обновление времени евента
+     // обновление времени евента
 
-    // if (this.state.progress.event.endTime > 0) {
-    //   this.state.progress.event.endTime--;
-    //   if ( this.scene.isActive('Profile')) {
-    //     this.game.scene.keys['Profile'].eventEndTime?.setText(shortTime(this.state.progress.event.endTime, this.state.lang));
-    //   } 
-    // }
+    if (this.state.progress.event.endTime > 0) {
+      this.state.progress.event.endTime--;
+      if ( this.scene.isActive('Profile')) {
+        this.game.scene.keys['Profile'].eventEndTime?.setText(shortTime(this.state.progress.event.endTime, this.state.lang));
+      } 
+    }
 
     // if (this.state.progress.event.endTime <= 0 && this.scene.isActive('Event')) {
     //   this.autosave();
