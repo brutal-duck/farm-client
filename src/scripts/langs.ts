@@ -98,6 +98,7 @@ export default {
     seconds: 'сек.',
     ruble: 'руб',
     voices: 'глс',
+    litres: 'л.',
     free: 'бесплатно',
     milkPrice: 'Цена молока: ',
     eggPrice: 'Цена яйца: ',
@@ -758,8 +759,9 @@ export default {
     unknownFarmer: 'Неопознанный фермер',
     unlockNextUpdate: 'Скоро в игре',
     remainderBalance: 'Следи, чтобы всегда было достаточно воды и травы для животных, иначе твой доход упадет.',
-    slotSize: 'Размер партии',
+    lotSize: 'Размер партии',
     efficiency: 'Эффективность',
+    processingTime: 'Время переработки',
     produced: 'Производится',
     clabber: 'Простокваша',
     pasteurizedMilk: 'Пастеризованное молоко',
@@ -1528,7 +1530,7 @@ export default {
     unknownFarmer: 'Неопознанный фермер',
     unlockNextUpdate: 'Скоро в игре',
     remainderBalance: 'Следи, чтобы всегда было достаточно воды и травы для животных, иначе твой доход упадет.',
-    slotSize: 'Размер партии',
+    lotSize: 'Размер партии',
     efficiency: 'Эффективность',
     produced: 'Производится',
     clabber: 'Простокваша',
@@ -1536,6 +1538,8 @@ export default {
     cheese: 'Сыр',
     chocolate: 'Шоколад',
     sellProduct: 'Продать товар',
+    litres: 'л.',
+    processingTime: 'Время переработки',
 
   }
 }

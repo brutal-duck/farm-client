@@ -238,7 +238,6 @@ class Chicken extends Phaser.Scene {
 
 
   public create(): void {
-    
     // анимации
     this.animations();
 

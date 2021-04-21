@@ -34,10 +34,18 @@ function systemWindow(): void {
       this.mainInput.remove();
       if (this.secondInput !== undefined) this.secondInput.remove();
     }
-
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-
+    if (this.state.modal.sysType !== 16 && this.state.modal.sysType !== 17) {
+      this.scene.stop();
+      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+    }
+    if (this.state.modal.sysType === 16 || this.state.modal.sysType === 17) {
+      const modal: Imodal = {
+        type: 1,
+        sysType: 2
+      }
+      this.state.modal = modal;
+      this.scene.restart(this.state);
+    }
   });
 
   // блокирование крестика для туториала
@@ -200,6 +208,14 @@ function systemWindow(): void {
 
     case 15: // Окно регистрации
       this.registration();
+      break;
+    
+    case 16: // Окно улучшения фабрики
+      this.improveFactoryWindow();
+      break;
+
+    case 17: // Окно ветрины фабрики
+      this.improveFactoryWindow();
       break;
 
     default:      

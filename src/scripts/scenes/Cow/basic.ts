@@ -508,6 +508,20 @@ function clickTaskBoard(task: Itasks): void {
   }
 }
 
+// окно улучшения собирателя
+function showImproveFactory(): void {
+
+  this.scene.stop('Shop');
+  this.scene.stop('ShopBars');
+
+  let modal: Imodal = {
+    type: 1,
+    sysType: 16
+  }
+  this.state.modal = modal;
+  this.scene.launch('Modal', this.state);
+
+}
 
 export {
   balance,
@@ -516,5 +530,6 @@ export {
   takeDiamondCow,
   buildBorders,
   collisions,
-  clickTaskBoard
+  clickTaskBoard,
+  showImproveFactory
 }

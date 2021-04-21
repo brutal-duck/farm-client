@@ -896,7 +896,7 @@ function cowFactory(): void {
 
   const nextImproveSettings: IfactorySettings = this.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === improve);
 
-  if (!nextImproveSettings) {
+  if (nextImproveSettings) {
     if (this.state.userCow.part >= nextImproveSettings.unlock_improve) {
       let improve: any;
       if (nextImproveSettings.improveMoneyPrice) {
@@ -914,8 +914,7 @@ function cowFactory(): void {
       const button = this.bigButton('orange', 'left', -70, improveText, improve);
       this.clickModalBtn(button, (): void => {
         this.scene.stop();
-        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-        this.state.territory.improveFactory();
+        this.game.scene.keys[this.state.farm].showImproveFactory();
       });
 
     } else {
@@ -1071,6 +1070,111 @@ function updateFactoryModal(): void {
   }
 }
 
+function improveFactoryWindow(): void {
+  const factory: string = this.state.lang.factory.replace('$1', this.state.territory.improve);
+  this.textHeader.setText(factory);
+  
+  const thisLevel: IfactorySettings = this.state.territory.factorySettings;
+  const nextLevel: IfactorySettings = this.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === this.state.territory.improve + 1);
+  
+  const lotSize: string = `${this.state.lang.lotSize}: ${thisLevel.lotSize} ${this.state.lang.litres}`;
+  const lot: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY - 100, lotSize, {
+    font: '30px Bip',
+    color: '#925C28'
+  });
+  
+  const time: string = thisLevel.processingTime / 60 < 1 ? `${thisLevel.processingTime} ${this.state.lang.seconds}`: 
+  `${shortNum(thisLevel.processingTime / 60)} ${this.state.lang.minutes}`;
+
+  const durationText: string = `${this.state.lang.processingTime}: ${time}`;
+  const duration: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY - 50, durationText, {
+    font: '30px Bip',
+    color: '#925C28'
+  });
+
+  const efficiencyText: string = `${this.state.lang.efficiency}: ${thisLevel.efficiency}%`;
+  const efficiency: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY, efficiencyText, {
+    font: '30px Bip',
+    color: '#925C28'
+  });
+
+  let icon: string;
+  let text: string;
+
+  if (nextLevel.processingTime > thisLevel.processingTime) {
+
+    const position: Iposition = {
+      x: duration.getBounds().right + 10,
+      y: duration.y
+    }
+    const time: string = (nextLevel.processingTime - thisLevel.processingTime) / 60 < 1 ? 
+    `${(nextLevel.processingTime - thisLevel.processingTime)} ${this.state.lang.seconds}`: 
+    `${shortNum(nextLevel.processingTime - thisLevel.processingTime)} ${this.state.lang.minutes}`;
+
+    const text: string = `(+${time}`;
+    this.add.text(position.x, position.y, text, {
+      font: '30px Bip',
+      color: '#57A90E'
+    });
+    
+  } 
+  
+  if (nextLevel.lotSize > thisLevel.lotSize) {
+
+    const position: Iposition = {
+      x: lot.getBounds().right + 10,
+      y: lot.y
+    }
+    const text: string = `(+${shortNum(nextLevel.lotSize - thisLevel.lotSize)} ${this.state.lang.litres})`;
+    this.add.text(position.x, position.y, text, {
+      font: '30px Bip',
+      color: '#57A90E'
+    });
+
+  }
+
+  if (nextLevel.efficiency > thisLevel.efficiency) {
+
+    const position: Iposition = {
+      x: efficiency.getBounds().right + 10,
+      y: efficiency.y
+    }
+    const text: string = `(+${shortNum(nextLevel.efficiency - thisLevel.efficiency)}%)`;
+    this.add.text(position.x, position.y, text, {
+      font: '30px Bip',
+      color: '#57A90E'
+    });
+
+  }
+
+  if (this.state[`user${this.state.farm}`].part >= nextLevel.unlock_improve) {
+    if (nextLevel.improveDiamondPrice) {
+      icon = 'diamond';
+      text = String(nextLevel.improveDiamondPrice);
+    } else {
+      icon = `cowCoin`;
+      text = String(nextLevel.improveMoneyPrice);
+    }
+
+    const right = {
+      icon: icon,
+      text: shortNum(text)
+    }
+    const improve = this.bigButton('green', 'left', 90, this.state.lang.improve, right);
+    this.clickModalBtn(improve, (): void => {
+      this.state.territory.improveFactory();
+    });
+
+  } else {
+
+    let improve = {
+      icon: 'lock',
+      text: `${this.state.lang.shortPart} ${nextLevel.unlock_improve}`,
+    }
+    this.bigButton('grey', 'left', 90, this.state.lang.improve, improve);
+  }
+  this.resizeWindow(250);
+}
 export {
   cowFair,
   cow,
@@ -1085,5 +1189,6 @@ export {
   diamondCowAd,
   cowMilkRepositoryExchange,
   cowFactory,
-  updateFactoryModal
+  updateFactoryModal,
+  improveFactoryWindow
 }
