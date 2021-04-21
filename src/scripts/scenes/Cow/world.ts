@@ -96,6 +96,9 @@ function getTerritoryType(data: Iterritories): string {
       }
     }
   }
+  if (data.block === 3 && data.position === 1 && data.type !== 8) {
+    data.type = 8;
+  }
   if (data.type === 0) type = 'cow-for-buying';
   else if (data.type === 1) type = 'cow-bought';
   else if (data.type === 2) {
