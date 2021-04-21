@@ -186,7 +186,6 @@ function buildBorders(): void {
       const bottomTer: Territory = this.territories.children.entries.find((data: any) => data.block === 2 && data.position === 1)
       if (bottomTer.territoryType === 0) territory.borderBottom.setVisible(true);
       else territory.borderBottom.setVisible(false);
-
     }
 
     if (territory.territoryType === 6) {
@@ -196,7 +195,8 @@ function buildBorders(): void {
     if (territory.territoryType === 1 ||
       territory.territoryType === 2 ||
       territory.territoryType === 3 ||
-      territory.territoryType === 5) {
+      territory.territoryType === 5 || 
+      territory.territoryType === 8) {
 
       if (territory.position === 1) {
         territory.borderLeft.setVisible(true);
@@ -217,7 +217,8 @@ function buildBorders(): void {
         if (bottomTer.territoryType === 1 ||
           bottomTer.territoryType === 2 ||
           bottomTer.territoryType === 3 ||
-          bottomTer.territoryType === 5) {
+          bottomTer.territoryType === 5 ||
+          bottomTer.territoryType === 8) {
           territory.borderBottom.setVisible(false);
         } else {
           territory.borderBottom.setVisible(true);
