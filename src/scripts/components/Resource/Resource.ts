@@ -17,7 +17,7 @@ export default abstract class Resource extends Phaser.GameObjects.Sprite {
       x: target.x,
       y: target.y,
       onStart: (): void => {
-        this.setDepth(this.y + 1000);
+        this.setDepth(this.y);
       },
       onComplete: ():void => {
         this.destroy();
