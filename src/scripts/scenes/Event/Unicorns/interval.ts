@@ -159,7 +159,7 @@ function interval(): void {
       this.game.scene.keys['EventBars'].proceedsText.setText(text3);
     } 
     
-    
+
     // Обновление иконки feed буста
     if (this.state.userEvent.maxLevelAnimal >= this.game.scene.keys['Event'].feedBoostLvl &&
     this.state.user.additionalTutorial.feedBoost) {
@@ -210,18 +210,18 @@ function interval(): void {
       this.scene.start('SheepPreload', this.state);
     }
 
-    if (this.state.progress.event.startTime > 0) {
-      this.state.progress.event.startTime--;
-      if (this.scene.isActive('Profile')) {
-        this.game.scene.keys['Profile'].eventStartTime?.setText(shortTime(this.state.progress.event.startTime, this.state.lang));
-      }
-    }
+    // if (this.state.progress.event.startTime > 0) {
+    //   this.state.progress.event.startTime--;
+    //   if (this.scene.isActive('Profile')) {
+    //     this.game.scene.keys['Profile'].eventStartTime?.setText(shortTime(this.state.progress.event.startTime, this.state.lang));
+    //   }
+    // }
     
-    if (this.state.userEvent.timeToAd > 0) {
-      --this.state.userEvent.timeToAd;
-    }
+    // if (this.state.userEvent.timeToAd > 0) {
+    //   --this.state.userEvent.timeToAd;
+    // }
 
-    this.intervalPorgressCollectorTime();
+    // this.intervalPorgressCollectorTime();
 
   }, callbackScope: this, loop: true });
 
