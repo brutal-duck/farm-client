@@ -132,6 +132,13 @@ class Modal extends Phaser.Scene {
   public eventRatingsScores: Phaser.GameObjects.Text[];
   public eventLeftTime: Phaser.GameObjects.Text;
   public timerNewbieAward: Phaser.GameObjects.Text;
+  public factoryProductText: Phaser.GameObjects.Text;
+  public factoryProgressBar: Phaser.GameObjects.TileSprite;
+  public factorySellButton: any;
+  public clabberMoneyText: Phaser.GameObjects.Text;
+  public pasteurizedMilkMoneyText: Phaser.GameObjects.Text;
+  public cheeseMoneyText: Phaser.GameObjects.Text;
+  public chocolateMoneyText: Phaser.GameObjects.Text;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);

@@ -889,9 +889,14 @@ function cowFactory(): void {
   if (improve > this.state.cowSettings.cowFactorySettings.length) {
     improve = this.state.cowSettings.cowFactorySettings.length;
   }
+  const milkMoney = {
+    icon: 'cowCoin',
+    text: shortNum(this.state.territory.money)
+  }
+
   const nextImproveSettings: IfactorySettings = this.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === improve);
 
-  if (nextImproveSettings) {
+  if (!nextImproveSettings) {
     if (this.state.userCow.part >= nextImproveSettings.unlock_improve) {
       let improve: any;
       if (nextImproveSettings.improveMoneyPrice) {
@@ -906,7 +911,7 @@ function cowFactory(): void {
         };
       }
       const improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.improve + 1);
-      const button = this.bigButton('orange', 'left', 110, improveText, improve);
+      const button = this.bigButton('orange', 'left', -70, improveText, improve);
       this.clickModalBtn(button, (): void => {
         this.scene.stop();
         this.game.scene.keys[this.state.farm].scrolling.wheel = true;
@@ -920,55 +925,118 @@ function cowFactory(): void {
         text: this.state.lang.shortPart + ' ' + nextImproveSettings.unlock_improve
       }
       let improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.improve + 1);
-      this.bigButton('grey', 'left', 110, improveText, improve);
+      this.bigButton('grey', 'left', -70, improveText, improve);
     }
+    
+    const product: string = this.state.territory.currentProduction ? this.state.lang[this.state.territory.currentProduction] : '';
 
-    this.progressText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 160, `${this.state.lang.produced}: ${this.state.lang[this.state.territory.currentProduction]}`, {
+    this.factoryProductText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 220, `${this.state.lang.produced}: ${product}`, {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0.5);
 
-    this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 120, 'pb-chapter-modal');
-    this.progressBar = this.add.tileSprite(136, this.cameras.main.centerY - 120, 0, 16, 'green-progress')
+    this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 180, 'pb-chapter-modal');
+    this.factoryProgressBar = this.add.tileSprite(136, this.cameras.main.centerY - 180, 0, 16, 'green-progress')
       .setOrigin(0, 0.5);
 
-    // this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 100, `${this.state.lang.slotSize}: ${this.state.territory.factorySettings.lotSize}`, {
-    //   font: '26px Bip',
-    //   color: '#925C28'
-    // }).setOrigin(0.5, 0.5);
+    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 140, `${this.state.lang.efficiency}: ${this.state.territory.factorySettings.efficiency}%`, {
+      font: '26px Bip',
+      color: '#925C28'
+    }).setOrigin(0.5, 0.5);
+    const clabberSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX - 150, this.cameras.main.centerY + 30, 'clabber');
+    const clabberGeom: Phaser.Geom.Rectangle = clabberSprite.getBounds();
+    this.clabberMoneyText = this.add.text(clabberGeom.centerX, clabberGeom.bottom, shortNum(this.state.territory.clabberMoney), {
+      font: '26px Bip',
+      color: '#925C28'
+    }).setOrigin(0.5, 0);
+    const pasteurizedMilkSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX - 50, this.cameras.main.centerY + 30, 'pasteurized-milk');
+    const pasteurizedMilkGeom: Phaser.Geom.Rectangle = pasteurizedMilkSprite.getBounds();
+    this.pasteurizedMilkMoneyText = this.add.text(pasteurizedMilkGeom.centerX, pasteurizedMilkGeom.bottom, shortNum(this.state.territory.pasteurizedMilkMoney), {
+      font: '26px Bip',
+      color: '#925C28'
+    }).setOrigin(0.5, 0);
+    const cheeseSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX + 50, this.cameras.main.centerY + 30, 'pasteurized-milk');
+    const cheeseGeom: Phaser.Geom.Rectangle = cheeseSprite.getBounds();
+    this.cheeseMoneyText = this.add.text(cheeseGeom.centerX, cheeseGeom.bottom, shortNum(this.state.territory.cheeseMoney), {
+      font: '26px Bip',
+      color: '#925C28'
+    }).setOrigin(0.5, 0);
 
-    // this.clickModalBtn(this.progressButton, (): void => {
-    //   if (this.state.territory.volume > 0) {
-    //     this.scene.stop();
-    //     this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-    //     this.game.scene.keys[this.state.farm].sellMilk();
-    //   }
-    // });
+    const chocolateSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX + 150, this.cameras.main.centerY + 30, 'pasteurized-milk');
+    const chocolateGeom: Phaser.Geom.Rectangle = chocolateSprite.getBounds();
+    this.chocolateMoneyText = this.add.text(chocolateGeom.centerX, chocolateGeom.bottom, shortNum(this.state.territory.chocolateMoney), {
+      font: '26px Bip',
+      color: '#925C28'
+    }).setOrigin(0.5, 0);
 
-    this.resizeWindow(430);
+    chocolateSprite.setTint(0x000000);
+
+    this.factorySellButton = this.repositoryBtn(220, this.state.lang.sellProduct, milkMoney);
+    this.clickModalBtn(this.factorySellButton, (): void => {
+      if (this.state.territory.money > 0) {
+        this.scene.stop();
+        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+        this.state.territory.sellProducts();
+      }
+    });
+
+    this.resizeWindow(500);
 
   } else {
 
-    this.progressText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 120, `${this.state.lang.produced}: ${this.state.lang[this.state.territory.currentProduction]}`, {
+    const product: string = this.state.territory.currentProduction ? this.state.lang[this.state.territory.currentProduction] : '';
+
+    this.factoryProductText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 170, `${this.state.lang.produced}: ${product}`, {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0.5);
 
-    this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 70, 'pb-chapter-modal');
-    this.progressBar = this.add.tileSprite(136, this.cameras.main.centerY - 70, 0, 16, 'green-progress')
+    this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 130, 'pb-chapter-modal');
+    this.factoryProgressBar = this.add.tileSprite(136, this.cameras.main.centerY - 130, 0, 16, 'green-progress')
       .setOrigin(0, 0.5);
 
-    // this.progressButton = this.repositoryBtn(60, this.state.lang.sellMilk, milkMoney);
-    // this.clickModalBtn(this.progressButton, (): void => {
+    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 90, `${this.state.lang.efficiency}: ${this.state.territory.factorySettings.efficiency}%`, {
+      font: '26px Bip',
+      color: '#925C28'
+    }).setOrigin(0.5, 0.5);
+    const clabberSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX - 150, this.cameras.main.centerY, 'clabber');
+    const clabberGeom: Phaser.Geom.Rectangle = clabberSprite.getBounds();
+    this.clabberMoneyText = this.add.text(clabberGeom.centerX, clabberGeom.bottom, shortNum(this.state.territory.clabberMoney), {
+      font: '26px Bip',
+      color: '#925C28'
+    }).setOrigin(0.5, 0);
+    const pasteurizedMilkSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX - 50, this.cameras.main.centerY, 'pasteurized-milk');
+    const pasteurizedMilkGeom: Phaser.Geom.Rectangle = pasteurizedMilkSprite.getBounds();
+    this.pasteurizedMilkMoneyText = this.add.text(pasteurizedMilkGeom.centerX, pasteurizedMilkGeom.bottom, shortNum(this.state.territory.pasteurizedMilkMoney), {
+      font: '26px Bip',
+      color: '#925C28'
+    }).setOrigin(0.5, 0);
+    const cheeseSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX + 50, this.cameras.main.centerY, 'pasteurized-milk');
+    const cheeseGeom: Phaser.Geom.Rectangle = cheeseSprite.getBounds();
+    this.cheeseMoneyText = this.add.text(cheeseGeom.centerX, cheeseGeom.bottom, shortNum(this.state.territory.cheeseMoney), {
+      font: '26px Bip',
+      color: '#925C28'
+    }).setOrigin(0.5, 0);
 
-    //   if (this.state.territory.volume > 0) {
-    //     this.scene.stop();
-    //     this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-    //     this.game.scene.keys[this.state.farm].sellMilk();
-    //   }
+    const chocolateSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX + 150, this.cameras.main.centerY, 'pasteurized-milk');
+    const chocolateGeom: Phaser.Geom.Rectangle = chocolateSprite.getBounds();
+    this.chocolateMoneyText = this.add.text(chocolateGeom.centerX, chocolateGeom.bottom, shortNum(this.state.territory.chocolateMoney), {
+      font: '26px Bip',
+      color: '#925C28'
+    }).setOrigin(0.5, 0);
 
-    // });
-    this.resizeWindow(330);
+    chocolateSprite.setTint(0x000000);
+
+    this.factorySellButton = this.repositoryBtn(170, this.state.lang.sellProduct, milkMoney);
+    this.clickModalBtn(this.factorySellButton, (): void => {
+      if (this.state.territory.money > 0) {
+        this.scene.stop();
+        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+        this.state.territory.sellProducts();
+      }
+    });
+
+    this.resizeWindow(400);
   }
 }
 
@@ -982,14 +1050,25 @@ function updateFactoryModal(): void {
     percent = 100 - factoryTerritory.productionTimer / (factoryTerritory.factorySettings.processingTime / 100);
   }
   
-  let width: number = Math.round(444 / 100 * percent);
+  const width: number = Math.round(444 / 100 * percent);
 
-  if (this.progressBar.displayWidth !== width) {
-    this.progressBar.setDisplaySize(width, 16);
+  if (this.factoryProgressBar.displayWidth !== width) {
+    this.factoryProgressBar.setDisplaySize(width, 16);
+  }
+  const product: string = this.state.territory.currentProduction ? this.state.lang[this.state.territory.currentProduction] : '';
+  
+  const volume: string = `${this.state.lang.produced}: ${product}`;
+  if (this.factoryProductText.text !== volume) {
+    this.factoryProductText.setText(volume);
   }
 
-  let volume: string = `${this.state.lang.produced}: ${this.state.lang[factoryTerritory.currentProduction]}`;
-  if (this.progressText.text !== volume) this.progressText.setText(volume);
+  if (this.factorySellButton.text1.text !== this.state.territory.money) {
+    this.factorySellButton.text1.setText(this.state.territory.money);
+    this.clabberMoneyText.setText(this.state.territory.clabberMoney);
+    this.pasteurizedMilkMoneyText.setText(this.state.territory.pasteurizedMilkMoney);
+    this.cheeseMoneyText.setText(this.state.territory.cheeseMoney);
+    this.chocolateMoneyText.setText(this.state.territory.chocolateMoney);
+  }
 }
 
 export {

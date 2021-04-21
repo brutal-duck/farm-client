@@ -908,4 +908,21 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     console.log(productId);
     return productId;
   }
+
+  public sellProducts(): void {
+    if (this.territoryType === 8 && this.money > 0) {
+
+      this.scene.state.userCow.money += this.money;
+      this.money = 0;
+      this.clabberMoney = 0;
+      this.pasteurizedMilkMoney = 0;
+      this.cheeseMoney = 0;
+      this.chocolateMoney = 0;
+      
+      this.scene.game.scene.keys['CowBars'].plusMoneyAnimation({
+        x: this.x + 120,
+        y: this.y + 120
+      });
+    }
+  }
 }

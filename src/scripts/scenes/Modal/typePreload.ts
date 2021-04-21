@@ -63,6 +63,10 @@ const tile1: string = require("./../../../assets/images/chat-tile-1.png");
 const tile2: string = require("./../../../assets/images/chat-tile-2.png");
 const corner1: string = require("./../../../assets/images/chat-corner-1.png");
 const corner2: string = require("./../../../assets/images/chat-corner-2.png");
+const clabber: string = require("./../../../assets/images/modal/clabber.png");
+const pasteurizedMilk: string = require("./../../../assets/images/modal/pasteurized-milk.png");
+const cheese: string = require("./../../../assets/images/modal/cheese.png");
+const chocolate: string = require("./../../../assets/images/modal/chocolate.png");
 
 
 export default function typePreload(): void {
@@ -84,6 +88,12 @@ export default function typePreload(): void {
         this.load.image('green-progress', greenProgress);
         this.load.image('middle-button', middleButton);
 
+        if (this.state.farm === 'Cow') {
+          this.load.image('clabber', clabber);
+          this.load.image('pasteurized-milk', pasteurizedMilk);
+          this.load.image('cheese', cheese);
+          this.load.image('chocolate', chocolate);
+        }
         break;
       case 2: // магазин
         // this.load.image('shop-window', shopWindow);
