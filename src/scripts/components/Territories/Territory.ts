@@ -38,6 +38,8 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
   // тип территории 8
   public factory: Phaser.GameObjects.Sprite;
+  public productionTimer: number;
+  public currentProduction: string;
 
   constructor(scene: Cow, x: number, y: number, type: string, data: Iterritories) {
     super(scene, x, y, type);

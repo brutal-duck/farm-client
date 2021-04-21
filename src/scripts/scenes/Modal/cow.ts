@@ -630,9 +630,8 @@ function cowMilkRepository(): void {
 
   let milkMoney = {
     icon: 'cowCoin',
-    text: shortNum(this.state.territory.volume)
+    text: shortNum(this.state.territory.volume * this.game.scene.keys[this.state.farm].milkMultiply)
   }
-
   if (this.state.territory.improve < this.state.cowSettings.territoriesCowSettings.length) {
 
     if (this.state.userCow.part >= settings.unlock_improve) {
@@ -762,20 +761,22 @@ function cowFactory(): void {
   if (improve > this.state.cowSettings.cowFactorySettings.length) {
     improve = this.state.cowSettings.cowFactorySettings.length;
   }
-  const settings: IfactorySettings = this.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === improve);
+  const nextImproveSettings: IfactorySettings = this.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === improve);
 
-  if (settings) {
-    if (this.state.userCow.part >= settings.unlock_improve) {
+  const currnetSettings: IfactorySettings = this.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === this.state.territory.improve);
+
+  if (nextImproveSettings) {
+    if (this.state.userCow.part >= nextImproveSettings.unlock_improve) {
       let improve: any;
-      if (settings.improveMoneyPrice) {
+      if (nextImproveSettings.improveMoneyPrice) {
         improve = {
           icon: 'cowCoin',
-          text: shortNum(settings.improveMoneyPrice)
+          text: shortNum(nextImproveSettings.improveMoneyPrice)
         };
-      } else if (settings.improveDiamondPrice) {
+      } else if (nextImproveSettings.improveDiamondPrice) {
         improve = {
           icon: 'diamond',
-          text: shortNum(settings.improveDiamondPrice)
+          text: shortNum(nextImproveSettings.improveDiamondPrice)
         };
       }
       const improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.improve + 1);
@@ -790,7 +791,7 @@ function cowFactory(): void {
       
       let improve = {
         icon: 'lock',
-        text: this.state.lang.shortPart + ' ' + settings.unlock_improve
+        text: this.state.lang.shortPart + ' ' + nextImproveSettings.unlock_improve
       }
       let improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.improve + 1);
       this.bigButton('grey', 'left', 110, improveText, improve);
@@ -804,6 +805,11 @@ function cowFactory(): void {
     this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 120, 'pb-chapter-modal');
     this.progressBar = this.add.tileSprite(136, this.cameras.main.centerY - 120, 0, 16, 'green-progress')
       .setOrigin(0, 0.5);
+
+    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 100, `${this.state.lang.slotSize}: ${currnetSettings.lotSize}`, {
+      font: '26px Bip',
+      color: '#925C28'
+    }).setOrigin(0.5, 0.5);
 
     // this.clickModalBtn(this.progressButton, (): void => {
     //   if (this.state.territory.volume > 0) {

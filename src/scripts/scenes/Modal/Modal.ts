@@ -369,7 +369,6 @@ class Modal extends Phaser.Scene {
         count = this.state.lang.countMilk;
 
       }
-      console.log('tuta')
       if (this.state.territory.volume > 0) {
         percent = this.state.territory.volume / (max / 100);
       }
@@ -400,7 +399,6 @@ class Modal extends Phaser.Scene {
       } else {
         this.feedBoostText?.setVisible(false);
       }
-      
     }
 
     if (this.state.farm === 'Cow' && this.state.territory?.territoryType === 5 && this.state.modal?.sysType === 2) {
@@ -419,8 +417,8 @@ class Modal extends Phaser.Scene {
         this.progressBar.setDisplaySize(width, 16);
       }
 
-      if (this.progressButton.text1.text !== shortNum(this.state.territory.volume)) {
-        this.progressButton.text1.setText(shortNum(this.state.territory.volume));
+      if (this.progressButton.text1.text !== shortNum(this.state.territory.volume * this.game.scene.keys[this.state.farm].milkMultiply)) {
+        this.progressButton.text1.setText(shortNum(this.state.territory.volume * this.game.scene.keys[this.state.farm].milkMultiply));
         this.progressButton.img1.x = 555 - this.progressButton.text1.displayWidth;
       }
 

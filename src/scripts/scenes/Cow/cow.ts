@@ -409,7 +409,7 @@ function sellMilk(): void {
 
       this.tryTask(20, 0);
 
-      this.state.userCow.money += this.state.territory.volume;
+      this.state.userCow.money += this.state.territory.volume * this.milkMultiply;
       this.state.territory.money = 0;
       this.state.territory.volume = 0;
       

@@ -125,6 +125,11 @@ class Cow extends Phaser.Scene {
   public feedBoostLvl: number = 6; // уровень старта буста комбикорм
   public feedBoostStack: number = 11; // максимальный стек часов
   public dailyStartCheck: boolean = true; // запущено ли открытие окна daily
+  public milkMultiply: number = 0.2;
+  public clabberMultiply: number = 0.5;
+  public pasteurizedMilkMultiply: number = 1;
+  public cheeseMultiply: number = 1.5;
+  public chocolateMultiply: number = 2.5;
 
   public world = world.bind(this);
   public drag = drag.bind(this);

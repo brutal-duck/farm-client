@@ -758,7 +758,7 @@ export default {
     unknownFarmer: 'Неопознанный фермер',
     unlockNextUpdate: 'Скоро в игре',
     remainderBalance: 'Следи, чтобы всегда было достаточно воды и травы для животных, иначе твой доход упадет.',
-
+    slotSize: 'Размер партии',
   },
 
   en: {
@@ -1520,6 +1520,7 @@ export default {
     unknownFarmer: 'Неопознанный фермер',
     unlockNextUpdate: 'Скоро в игре',
     remainderBalance: 'Следи, чтобы всегда было достаточно воды и травы для животных, иначе твой доход упадет.',
+    slotSize: 'Размер партии',
 
   }
 }
