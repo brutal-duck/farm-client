@@ -1082,7 +1082,7 @@ function improveFactoryWindow(): void {
   const thisLevel: IfactorySettings = this.state.territory.factorySettings;
   const nextLevel: IfactorySettings = this.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === this.state.territory.improve + 1);
   
-  const lotSize: string = `${this.state.lang.lotSize}: ${thisLevel.lotSize} ${this.state.lang.litres}`;
+  const lotSize: string = `${this.state.lang.lotSize}: ${shortNum(thisLevel.lotSize)} ${this.state.lang.litres}`;
   const lot: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY - 100, lotSize, {
     font: '30px Bip',
     color: '#925C28'
