@@ -1002,7 +1002,9 @@ class CowPreload extends Phaser.Scene {
 
         cowSettings.territoriesCowSettings = territoriesCowSettings;
         console.log(cowSettings.territoriesCowSettings)
+        
         this.state.cowSettings = cowSettings;
+        console.log(this.state.cowSettings)
 
         const cow: Icow[] = [];
 
