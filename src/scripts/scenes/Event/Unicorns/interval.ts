@@ -128,24 +128,37 @@ function interval(): void {
     }
     this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setText(nativeCount);
 
-    // let proceeds: string = String(0);
-    // this.animals.children.entries.forEach(animal => {
-    //   if (animal.data.values.active.data.values.working) {
-    //     let price: string = this.state.eventSettings.eventSettings.find((data: IeventPoints) => data.breed === animal.data.values.type).resourcePrice;
-    //     proceeds = BigInteger.add(proceeds, price);
-    //   }
-    // });
+    let proceeds: string = String(0);
+    this.animals.children.entries.forEach(animal => {
+      if (animal.data.values.active.data.values.working) {
+        let price: string = this.state.eventSettings.eventSettings.find((data: IeventPoints) => data.breed === animal.data.values.type).resourcePrice;
+        proceeds = BigInteger.add(proceeds, price);
+      }
+    });
     
-    // if (this.state.userEvent.collector <= 0) proceeds = String(0);
-    // if (this.state.userEvent.collector > 0 && this.state.userEvent.feedBoostTime <= 0) {
-    //   this.game.scene.keys['EventBars'].proceedsText.setText(this.state.lang.income + ' ' + shortNum(BigInteger.divide(proceeds, String(10))) + '/' + this.state.lang.seconds);
+    if (this.state.userEvent.collector <= 0) proceeds = String(0);
+    const text1: string = `${this.state.lang.income} ${shortNum(BigInteger.divide(proceeds, String(10)))}/${this.state.lang.seconds}`;
+    const text2: string = `${shortNum(BigInteger.divide(proceeds, String(10)))}/${this.state.lang.seconds}`;
+    const text3: string = `${this.state.lang.income} ${shortNum(BigInteger.divide(proceeds, String(10)))}/${this.state.lang.seconds}`;
+    if (
+      this.state.userEvent.collector > 0 && 
+      this.state.userEvent.feedBoostTime <= 0 && 
+      this.game.scene.keys['EventBars'].proceedsText.text !== text1
+    ) {
+      this.game.scene.keys['EventBars'].proceedsText.setText(text1);
   
-    // } else if (this.state.userEvent.feedBoostTime > 0) { 
-    //   this.game.scene.keys['EventBars'].proceedsText.setText(shortNum(BigInteger.divide(proceeds, String(10))) + '/' + this.state.lang.seconds);
-
-    // } else if (this.state.userEvent.feedBoostTime <= 0) {
-    //   this.game.scene.keys['EventBars'].proceedsText.setText(this.state.lang.income + ' ' + shortNum(BigInteger.divide(proceeds, String(10))) + '/' + this.state.lang.seconds);
-    // } 
+    } else if (
+      this.state.userEvent.feedBoostTime > 0 &&
+      this.game.scene.keys['EventBars'].proceedsText.text !== text2
+    ) { 
+      this.game.scene.keys['EventBars'].proceedsText.setText(text2);
+    } else if (
+      this.state.userEvent.feedBoostTime <= 0 &&
+      this.game.scene.keys['EventBars'].proceedsText.text !== text3
+    ) {
+      this.game.scene.keys['EventBars'].proceedsText.setText(text3);
+    } 
+    
     
     // Обновление иконки feed буста
     if (this.state.userEvent.maxLevelAnimal >= this.game.scene.keys['Event'].feedBoostLvl &&
@@ -188,27 +201,27 @@ function interval(): void {
       } 
     }
 
-    // if (this.state.progress.event.endTime <= 0 && this.scene.isActive('Event')) {
-    //   this.autosave();
-    //   this.scene.stop('Profile');
-    //   this.scene.stop('MapBars');
-    //   this.scene.stop('Event');
-    //   this.scene.stop('EventBars');
-    //   this.scene.start('SheepPreload', this.state);
-    // }
+    if (this.state.progress.event.endTime <= 0 && this.scene.isActive('Event')) {
+      this.autosave();
+      this.scene.stop('Profile');
+      this.scene.stop('MapBars');
+      this.scene.stop('Event');
+      this.scene.stop('EventBars');
+      this.scene.start('SheepPreload', this.state);
+    }
 
-    // if (this.state.progress.event.startTime > 0) {
-    //   this.state.progress.event.startTime--;
-    //   if (this.scene.isActive('Profile')) {
-    //     this.game.scene.keys['Profile'].eventStartTime?.setText(shortTime(this.state.progress.event.startTime, this.state.lang));
-    //   }
-    // }
+    if (this.state.progress.event.startTime > 0) {
+      this.state.progress.event.startTime--;
+      if (this.scene.isActive('Profile')) {
+        this.game.scene.keys['Profile'].eventStartTime?.setText(shortTime(this.state.progress.event.startTime, this.state.lang));
+      }
+    }
     
-    // if (this.state.userEvent.timeToAd > 0) {
-    //   --this.state.userEvent.timeToAd;
-    // }
+    if (this.state.userEvent.timeToAd > 0) {
+      --this.state.userEvent.timeToAd;
+    }
 
-    // this.intervalPorgressCollectorTime();
+    this.intervalPorgressCollectorTime();
 
   }, callbackScope: this, loop: true });
 
