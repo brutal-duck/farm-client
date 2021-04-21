@@ -79,7 +79,8 @@ import {
   takeDiamondCow,
   buildBorders,
   collisions,
-  showImproveFactory
+  showImproveFactory,
+  showFactoryBoost
 } from './basic';
 import { 
   showTutorial,
@@ -207,6 +208,7 @@ class Cow extends Phaser.Scene {
   public animations = animations.bind(this);
   public findFreeTerritory = findFreeTerritory.bind(this);
   public showImproveFactory = showImproveFactory.bind(this);
+  public showFactoryBoost = showFactoryBoost.bind(this);
 
   public init(state: Istate): void {
 

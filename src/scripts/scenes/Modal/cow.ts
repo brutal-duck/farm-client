@@ -970,6 +970,11 @@ function cowFactory(): void {
 
     chocolateSprite.setTint(0x000000);
 
+    this.click(chocolateSprite, (): void => {
+      this.scene.stop();
+      this.game.scene.keys[this.state.farm].showFactoryBoost();
+    });
+
     this.factorySellButton = this.repositoryBtn(220, this.state.lang.sellProduct, milkMoney);
     this.clickModalBtn(this.factorySellButton, (): void => {
       if (this.state.territory.money > 0) {
@@ -1175,6 +1180,58 @@ function improveFactoryWindow(): void {
   }
   this.resizeWindow(250);
 }
+
+function factoryBoostWindow(): void {
+  const price: number = 25;
+  const multiplyTime: number = 1;
+  const ONE_HOUR: number = 3600;
+
+  this.textHeader.setText(this.state.lang.showCase);
+  const sprite: Phaser.GameObjects.Sprite = this.add.sprite(140, this.cameras.main.centerY, 'chocolate');
+  const spriteGeom: Phaser.Geom.Rectangle = sprite.getBounds();
+  const text1: Phaser.GameObjects.Text = this.add.text(spriteGeom.right + 30, this.cameras.main.centerY - 125, this.state.lang.showCaseText1, {
+    font: '26px Bip',
+    color: '#925C28',
+    wordWrap: { width: 400 },
+    align: 'left',
+  }).setOrigin(0, 0);
+  const text1Geom: Phaser.Geom.Rectangle = text1.getBounds()
+  this.add.text(text1Geom.centerX, text1Geom.bottom + 10, this.state.lang.showCaseText2, {
+    font: '26px Bip',
+    color: '#925C28',
+    wordWrap: { width: 400 },
+    align: 'left',
+  }).setOrigin(0.5, 0);
+  const text = this.state.lang.buyCocoaBeans.replace('$1', multiplyTime);
+  const right1 = {
+    text: price,
+    icon: 'diamond'}
+  const button = this.bigButton('green', 'left', 135, text, right1);
+  this.clickModalBtn(button, (): void => {
+    this.scene.stop();
+    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+
+    if (this.state.user.diamonds >= price) {
+      this.state.user.diamonds -= price;
+      console.log('Купил бустер, но ничего не произошло');
+    } else {
+      const countResources = price - this.state.user.diamonds;
+      this.state.convertor = {
+        fun: 2,
+        count: countResources,
+        diamonds: countResources,
+        type: 2
+      }
+      const modal: Imodal = {
+        type: 1,
+        sysType: 4
+      }
+      this.state.modal = modal;
+      this.scene.restart(this.state);
+    }
+  });
+  this.resizeWindow(280);
+}
 export {
   cowFair,
   cow,
@@ -1190,5 +1247,6 @@ export {
   cowMilkRepositoryExchange,
   cowFactory,
   updateFactoryModal,
-  improveFactoryWindow
+  improveFactoryWindow,
+  factoryBoostWindow
 }

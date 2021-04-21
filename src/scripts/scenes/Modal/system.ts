@@ -215,7 +215,7 @@ function systemWindow(): void {
       break;
 
     case 17: // Окно ветрины фабрики
-      this.improveFactoryWindow();
+      this.factoryBoostWindow();
       break;
 
     default:      

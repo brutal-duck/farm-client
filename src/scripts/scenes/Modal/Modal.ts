@@ -48,7 +48,8 @@ import {
   cowMilkRepositoryExchange,
   cowFactory,
   updateFactoryModal,
-  improveFactoryWindow
+  improveFactoryWindow,
+  factoryBoostWindow
 } from './cow';
 import {
   confirmExpelAnimal,
@@ -230,6 +231,7 @@ class Modal extends Phaser.Scene {
   public cowFactory = cowFactory.bind(this);
   public updateFactoryModal = updateFactoryModal.bind(this);
   public improveFactoryWindow = improveFactoryWindow.bind(this);
+  public factoryBoostWindow = factoryBoostWindow.bind(this);
 
   public init(state: Istate): void {
     this.state = state;
