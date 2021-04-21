@@ -217,6 +217,7 @@ let cowSettings: IcowSettings = {
       pasteurizedMilkPercent: 0,
       cheesePercent: 0,
       chocolatePercent: 100,
+      efficiency: 20,
     },
     { 
       improve: 2,
@@ -229,6 +230,7 @@ let cowSettings: IcowSettings = {
       pasteurizedMilkPercent: 30,
       cheesePercent: 0,
       chocolatePercent: 100,
+      efficiency: 50,
     },
     { 
       improve: 3,
@@ -241,6 +243,7 @@ let cowSettings: IcowSettings = {
       pasteurizedMilkPercent: 40,
       cheesePercent: 0,
       chocolatePercent: 100,
+      efficiency: 55,
     },
     { 
       improve: 4,
@@ -253,6 +256,7 @@ let cowSettings: IcowSettings = {
       pasteurizedMilkPercent: 45,
       cheesePercent: 0,
       chocolatePercent: 100,
+      efficiency: 60,
     },
     { 
       improve: 5,
@@ -265,6 +269,7 @@ let cowSettings: IcowSettings = {
       pasteurizedMilkPercent: 45,
       cheesePercent: 20,
       chocolatePercent: 100,
+      efficiency: 93,
     },
     { 
       improve: 6,
@@ -277,6 +282,7 @@ let cowSettings: IcowSettings = {
       pasteurizedMilkPercent: 45,
       cheesePercent: 20,
       chocolatePercent: 100,
+      efficiency: 93,
     },
     { 
       improve: 7,
@@ -289,6 +295,7 @@ let cowSettings: IcowSettings = {
       pasteurizedMilkPercent: 43,
       cheesePercent: 32,
       chocolatePercent: 100,
+      efficiency: 104,
     },
     { 
       improve: 8,
@@ -301,6 +308,7 @@ let cowSettings: IcowSettings = {
       pasteurizedMilkPercent: 43,
       cheesePercent: 32,
       chocolatePercent: 100,
+      efficiency: 104,
     },
     { 
       improve: 9,
@@ -313,6 +321,7 @@ let cowSettings: IcowSettings = {
       pasteurizedMilkPercent: 43,
       cheesePercent: 32,
       chocolatePercent: 100,
+      efficiency: 104,
     },
     { 
       improve: 10,
@@ -325,6 +334,7 @@ let cowSettings: IcowSettings = {
       pasteurizedMilkPercent: 43,
       cheesePercent: 32,
       chocolatePercent: 100,
+      efficiency: 104,
     },
     { 
       improve: 11,
@@ -337,6 +347,7 @@ let cowSettings: IcowSettings = {
       pasteurizedMilkPercent: 45,
       cheesePercent: 35,
       chocolatePercent: 100,
+      efficiency: 108,
     },
     { 
       improve: 12,
@@ -349,6 +360,7 @@ let cowSettings: IcowSettings = {
       pasteurizedMilkPercent: 50,
       cheesePercent: 30,
       chocolatePercent: 100,
+      efficiency: 105,
     },
     { 
       improve: 13,
@@ -361,6 +373,7 @@ let cowSettings: IcowSettings = {
       pasteurizedMilkPercent: 50,
       cheesePercent: 30,
       chocolatePercent: 100,
+      efficiency: 105,
     },
     { 
       improve: 14,
@@ -373,6 +386,7 @@ let cowSettings: IcowSettings = {
       pasteurizedMilkPercent: 50,
       cheesePercent: 30,
       chocolatePercent: 100,
+      efficiency: 105,
     },
     { 
       improve: 15,
@@ -385,6 +399,7 @@ let cowSettings: IcowSettings = {
       pasteurizedMilkPercent: 35,
       cheesePercent: 45,
       chocolatePercent: 100,
+      efficiency: 113,
     },
     { 
       improve: 16,
@@ -397,6 +412,7 @@ let cowSettings: IcowSettings = {
       pasteurizedMilkPercent: 35,
       cheesePercent: 45,
       chocolatePercent: 100,
+      efficiency: 113,
     },
     { 
       improve: 17,
@@ -409,6 +425,7 @@ let cowSettings: IcowSettings = {
       pasteurizedMilkPercent: 35,
       cheesePercent: 45,
       chocolatePercent: 100,
+      efficiency: 113,
     },
     { 
       improve: 18,
@@ -421,6 +438,7 @@ let cowSettings: IcowSettings = {
       pasteurizedMilkPercent: 30,
       cheesePercent: 65,
       chocolatePercent: 100,
+      efficiency: 130,
     },
     { 
       improve: 19,
@@ -433,6 +451,7 @@ let cowSettings: IcowSettings = {
       pasteurizedMilkPercent: 30,
       cheesePercent: 65,
       chocolatePercent: 100,
+      efficiency: 130,
     },
     { 
       improve: 20,
@@ -445,6 +464,7 @@ let cowSettings: IcowSettings = {
       pasteurizedMilkPercent: 30,
       cheesePercent: 65,
       chocolatePercent: 100,
+      efficiency: 130,
     },
   ],
   cowFairLevels: [
