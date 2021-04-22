@@ -26,6 +26,7 @@ import {
   spreadAnimals,
   getEventRaiting,
   nextDayTimer,
+  logAmplitudeEvent,
 } from '../../general/basic';
 import {
   improveCollector,
@@ -210,6 +211,7 @@ class Cow extends Phaser.Scene {
   public findFreeTerritory = findFreeTerritory.bind(this);
   public showImproveFactory = showImproveFactory.bind(this);
   public showFactoryBoost = showFactoryBoost.bind(this);
+  public logAmplitudeEvent = logAmplitudeEvent.bind(this);
 
   public init(state: Istate): void {
 

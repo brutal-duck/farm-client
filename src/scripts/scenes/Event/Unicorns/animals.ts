@@ -339,9 +339,7 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
     if (animal.data.values.base.data.values.type > this.state.userEvent.maxLevelAnimal) {
       this.state.userEvent.maxLevelAnimal = animal.data.values.base.data.values.type;
       this.deleteTerritoriesLocks();
-      // показать экран нового единорога
       this.getEventRaiting();
-      console.log('новый единорог получен!')
     }
     
     if (check === undefined) {
@@ -372,9 +370,7 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
     if (animal.data.values.type > this.state.userEvent.maxLevelAnimal) {
       this.state.userEvent.maxLevelAnimal = animal.data.values.type;
       this.deleteTerritoriesLocks();
-      // показать экран нового единорога
       this.getEventRaiting();
-      console.log('новый единорог получен!')
     }
 
     if (check === undefined) {

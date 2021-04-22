@@ -30,6 +30,7 @@ import {
   nextDayTimer,
   intervalPorgressCollectorTime,
   autoporgressCollectorTime,
+  logAmplitudeEvent,
 } from '../../general/basic';
 import {
   improveCollector,
@@ -222,6 +223,7 @@ class Chicken extends Phaser.Scene {
   public intervalPorgressCollectorTime = intervalPorgressCollectorTime.bind(this);
   public autoporgressCollectorTime = autoporgressCollectorTime.bind(this);
   public findFreeTerritory = findFreeTerritory.bind(this);
+  public logAmplitudeEvent = logAmplitudeEvent.bind(this);
 
   public init(state: Istate): void {
 
