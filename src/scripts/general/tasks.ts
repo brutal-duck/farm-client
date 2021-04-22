@@ -326,9 +326,13 @@ function checkDoneTasks(): void {
 
       for (let j in this.territories.children.entries) {
 
-        if (type === this.territories.children.entries[j].type &&
-          this.territories.children.entries[j].improve === tasks[i].state) count++
-
+        if (this.state.farm !== 'Cow') {
+          if (type === this.territories.children.entries[j].type &&
+            this.territories.children.entries[j].improve >= tasks[i].state) count++
+        } else {
+          if (type === this.territories.children.entries[j].territoryType &&
+            this.territories.children.entries[j].improve >= tasks[i].state) count++
+        }
       }
 
       if (count >= tasks[i].count) {
