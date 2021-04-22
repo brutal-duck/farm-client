@@ -389,8 +389,8 @@ function buyChicken(breed: number, shop: boolean = false): boolean {
       let x: number = random(530, 660);
       let y: number = random(530, 540);
 
-      if (this.scrolling.scrollY > 300) {
-        const position: Iposition = this.findFreeTerritory(600, this.height + this.scrolling.scrollY + 300);
+      if (this.scrolling.scrollY > 350) {
+        const position: Iposition = this.findFreeTerritory(600, this.height + this.scrolling.scrollY + 250);
         if (position) {
           x = Phaser.Math.Between(position.x - 50, position.x + 50);
           y = Phaser.Math.Between(position.y - 10, position.y + 10);
