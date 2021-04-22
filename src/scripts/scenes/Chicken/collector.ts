@@ -13,7 +13,7 @@ function setCollector(): void {
 
           let egg = this.eggs.children.entries[i];
 
-          if (egg.timeout > 2 && egg.type !== 0) {
+          if (egg.timeout > 2 && egg.animalType !== 0) {
             this.collectEgg(egg);
             break;
           }
