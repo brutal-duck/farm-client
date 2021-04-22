@@ -1094,6 +1094,7 @@ class CowPreload extends Phaser.Scene {
           diamondAnimalAd: response.data.user.diamonds_cow_ad,
           takenHerdBoost: response.data.user.takenHerdBoostCow,
           feedBoostTime: response.data.user.feedBoostTimeCow,
+          factoryBoostTime: 0,
         }
         
         const Amplitude = this.state.amplitude;

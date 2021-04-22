@@ -507,6 +507,10 @@ function cowConvertor(): void {
         Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, `${this.state.lang.feedBoostNative} ${shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang)}`, 2);
         this.state.boughtFeedBoost = false;
       };
+      if (this.state.boughtFactoryBoost) {
+        Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, `${this.state.lang.factoryBoostNative} ${shortTime(this.state[`user${this.state.farm}`].factoryBoostTime, this.state.lang)}`, 2);
+        this.state.boughtFactoryBoost = false;
+      };
       this.scene.stop();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
     });
@@ -1183,7 +1187,8 @@ function improveFactoryWindow(): void {
 
 function factoryBoostWindow(): void {
   const price: number = 25;
-  const multiplyTime: number = 1;
+  let multiplyTime: number = 1;
+  if (this.state.userCow.factoryBoostTime > 0) multiplyTime = 2;
   const ONE_HOUR: number = 3600;
 
   this.textHeader.setText(this.state.lang.showCase);
@@ -1208,12 +1213,45 @@ function factoryBoostWindow(): void {
     icon: 'diamond'}
   const button = this.bigButton('green', 'left', 135, text, right1);
   this.clickModalBtn(button, (): void => {
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-
+    
     if (this.state.user.diamonds >= price) {
-      this.state.user.diamonds -= price;
-      console.log('Купил бустер, но ничего не произошло');
+      
+      if (this.state.userCow.factoryBoostTime <= 0) {
+        this.state.user.diamonds -= price;
+        this.state.userCow.factoryBoostTime += ONE_HOUR;
+
+        this.state.boughtFactoryBoost = true;
+
+        this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+          type: 'booster_factory',
+          count: price,
+          farm_id: this.state.farm,
+          chapter: this.state[`user${this.state.farm}`].part,
+        });
+
+        button.title.setText(this.state.lang.buyCocoaBeans.replace('$1', 2));
+      } else {
+        if (this.state.userCow.factoryBoostTime / ONE_HOUR + 2 > this.game.scene.keys['Cow'].factoryBoostStack) {
+          const modal: Imodal = {
+            type: 1,
+            sysType: 3,
+            height: 150,
+            message: this.state.lang.factoryBoostMaxTime
+          }
+          this.state.modal = modal;
+          this.scene.restart(this.state);
+        } else {
+          this.state.boughtFactoryBoost = true;
+          this.state.user.diamonds -= price;
+          this.state.userCow.factoryBoostTime += 2 * ONE_HOUR;
+          this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+            type: 'booster_factory',
+            count: price,
+            farm_id: this.state.farm,
+            chapter: this.state[`user${this.state.farm}`].part,
+          });
+        }
+      }
     } else {
       const countResources = price - this.state.user.diamonds;
       this.state.convertor = {
@@ -1232,6 +1270,7 @@ function factoryBoostWindow(): void {
   });
   this.resizeWindow(280);
 }
+
 export {
   cowFair,
   cow,

@@ -513,15 +513,6 @@ function feedBoost(): void {
   this.clickModalBtn({ btn: this.feedBoostBtn, title: this.feedBoostBtnLeftText, text1: this.feedBoostBtnRightText, img1: this.feedBoostDiamondBtn }, (): void => {
     
     if (this.state.user.diamonds >= this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice) {
-
-
-      this.state.amplitude.getInstance().logEvent('diamonds_spent', {
-        type: 'booster_feed_x2',
-        count: this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice,
-        farm_id: this.state.farm,
-        chapter: this.state[`user${this.state.farm}`].part,
-      });
-
       if (this.state[`user${this.state.farm}`].feedBoostTime + 2 * ONE_HOUR > this.game.scene.keys[this.state.farm].feedBoostStack * ONE_HOUR) {
 
         this.scene.stop('Shop');
@@ -538,6 +529,13 @@ function feedBoost(): void {
         this.scene.launch('Modal', this.state);
         
       } else {
+
+        this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+          type: 'booster_feed_x2',
+          count: this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice,
+          farm_id: this.state.farm,
+          chapter: this.state[`user${this.state.farm}`].part,
+        });
 
         this.state.user.diamonds -= this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice;
 

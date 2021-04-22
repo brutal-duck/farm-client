@@ -181,6 +181,7 @@ interface IuserCow {
   diamondAnimalAd: boolean;
   takenHerdBoost: number;
   feedBoostTime: number;
+  factoryBoostTime: number;
 }
 interface IuserEvent {
   money: string;
@@ -677,6 +678,7 @@ interface Istate {
   adman: any;
   donate: boolean;
   boughtFeedBoost: boolean;
+  boughtFactoryBoost: boolean;
   chat: Ichat[];
   stock: string;
   starterpack: boolean;

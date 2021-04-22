@@ -58,7 +58,8 @@ let cowCollectorSettings: IcollectorSettings[];
 let adBlock: boolean;
 let adman: any;
 let donate: boolean;
-let boughtFeedBoost: boolean;
+let boughtFeedBoost: boolean = false;
+let boughtFactoryBoost: boolean = false;
 let eventSettings: IeventSettings;
 let eventTerritories: IeventTerritories[];
 let eventAnimals: IeventAnimal[];
@@ -142,7 +143,8 @@ let state: Istate = {
   boughtFeedBoost, // куплен ли буст
   chat, // сообщения в чат
   starterpack, // забрал ли юзер стартерпак
-  stock // тип акции, собтия для revenue
+  stock, // тип акции, собтия для revenue
+  boughtFactoryBoost, // куплен ли шоколад
 }
 
 export default state;

@@ -132,6 +132,7 @@ class Cow extends Phaser.Scene {
   public pasteurizedMilkMultiply: number = 1;
   public cheeseMultiply: number = 1.5;
   public chocolateMultiply: number = 2.5;
+  public factoryBoostStack: number = 11;
 
   public world = world.bind(this);
   public drag = drag.bind(this);
@@ -242,7 +243,7 @@ class Cow extends Phaser.Scene {
 
     // let cursors = this.input.keyboard.createCursorKeys();
     // cursors.space.on('down', (): void => {
-    //   this.state.userCow.diamondAnimalTime = 0
+    //   // this.state.userCow.diamondAnimalTime = 0
     //   // this.state.newbieTime = 0
     //   // this.state.daily = Number(this.state.daily) + 1
     //   // this.state.user.takenReward = false;

@@ -86,7 +86,8 @@ let userCow: IuserCow = {
   autosaveCounter: 0,
   diamondAnimalAd: true,
   takenHerdBoost: 0,
-  feedBoostTime: 0
+  feedBoostTime: 0,
+  factoryBoostTime: 0,
 }
 
 export {

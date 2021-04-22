@@ -23,6 +23,10 @@ function systemWindow(): void {
       Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, `${this.state.lang.feedBoostNative} ${shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang)}`, 2);
       this.state.boughtFeedBoost = false;
     };
+    if (this.state.boughtFactoryBoost) {
+      Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, `${this.state.lang.factoryBoostNative} ${shortTime(this.state[`user${this.state.farm}`].factoryBoostTime, this.state.lang)}`, 2);
+      this.state.boughtFactoryBoost = false;
+    };
     if (this.state.modal.sysType === 6) this.state.animal.expel = false;
     if (
       this.state.modal.sysType === 12 || 

@@ -201,7 +201,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   private createHouseSprite(): void {
     this.scene.house = this.scene.add.sprite(this.x + 120, this.y + 240, `${this.scene.state.farm.toLowerCase()}-house-sprite`)
       .setOrigin(0.5, 1)
-      .setDepth(this.y);
+      .setDepth(this.y + 1);
   }
 
   private createCave(): void {
@@ -859,7 +859,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         productId === 2 ? 'pasteurizedMilk' : 
         productId === 3 ? 'cheese' : 
         productId === 4 ? 'chocolate' : '';
-      console.log(this.currentProduction);
     } else {
       this.startProduction();
     }
@@ -870,21 +869,20 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       this[`${this.currentProduction}Money`] += this.factorySettings.lotSize * this.scene[`${this.currentProduction}Multiply`];
       this.money += this.factorySettings.lotSize * this.scene[`${this.currentProduction}Multiply`];
       this.currentProduction = '';
+      console.log(this.clabberMoney, 'простокваша')
+      console.log(this.pasteurizedMilkMoney, 'пастеризованное молоко')
+      console.log(this.cheeseMoney, 'сыр')
+      console.log(this.chocolateMoney, 'шоколад')
+  
+      console.log(this.money, 'общие деньги')
     }
-    console.log(this.clabberMoney, 'простокваша')
-    console.log(this.pasteurizedMilkMoney, 'пастеризованное молоко')
-    console.log(this.cheeseMoney, 'сыр')
-    console.log(this.chocolateMoney, 'шоколад')
-
-    console.log(this.money, 'общие деньги')
   }
+
   private getRandomProductId(): number {
     const pull: number[] = [ this.factorySettings.clabberPercent, this.factorySettings.pasteurizedMilkPercent, this.factorySettings.cheesePercent ];
-    let booster: boolean = false;
-    if (booster) pull.push(this.factorySettings.chocolatePercent);
+    if (this.scene.state.userCow.factoryBoostTime > 0) pull.push(this.factorySettings.chocolatePercent);
 
     const totalCounter: number = pull.reduce((prev, current) => prev += current);
-
     const arrRange: {
       id: number,
       bottom: number,
@@ -905,7 +903,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       }
     }
 
-    const randomIndex: number = Phaser.Math.Between(0, totalCounter - 1);
+    const randomIndex: number = Phaser.Math.Between(1, totalCounter);
     let productId: number;
 
     for (let i: number = 0; i < arrRange.length; i += 1) {
@@ -913,8 +911,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         productId = arrRange[i].id;
       }
     }
-    console.log(randomIndex);
-    console.log(productId);
+    console.log(arrRange)
     return productId;
   }
 
