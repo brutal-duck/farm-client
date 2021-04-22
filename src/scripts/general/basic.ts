@@ -440,7 +440,6 @@ function donePart(): void {
     chapter: this.state[`user${this.state.farm}`].part,
   });
   
-  this.scrolling.scrollY = 0;
   user.part++;
   this.state.progress[this.state.farm.toLowerCase()].part = user.part;
   

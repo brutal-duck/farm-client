@@ -1092,6 +1092,7 @@ function updateFactoryModal(): void {
       this.pasteurizedMilkMoneyText.setText(shortNum(this.state.territory.pasteurizedMilkMoney));
       this.cheeseMoneyText.setText(shortNum(this.state.territory.cheeseMoney));
       this.chocolateMoneyText.setText(shortNum(this.state.territory.chocolateMoney));
+      this.factorySellButton.img1.setX(this.factorySellButton.text1.getBounds().left - 10);
     }
   
     if (this.state.userCow.factoryBoostTime > 0) {
