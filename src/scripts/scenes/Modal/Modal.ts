@@ -141,6 +141,8 @@ class Modal extends Phaser.Scene {
   public pasteurizedMilkMoneyText: Phaser.GameObjects.Text;
   public cheeseMoneyText: Phaser.GameObjects.Text;
   public chocolateMoneyText: Phaser.GameObjects.Text;
+  public factoryBoostTimer: Phaser.GameObjects.Text;
+  public chocolateSprite: Phaser.GameObjects.Sprite;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -480,9 +482,8 @@ class Modal extends Phaser.Scene {
   
     if (this.state.modal.type === 6) this.timerNewbieAward.setText(shortTime(this.state.timeToNewDay, this.state.lang));
 
-    if (this.state.territory?.territoryType === 8 && this.state.modal?.sysType === 2 && this.state.farm === 'Cow') {
-      this.updateFactoryModal();
-    }
+    this.updateFactoryModal();
+    
   }
 }
 

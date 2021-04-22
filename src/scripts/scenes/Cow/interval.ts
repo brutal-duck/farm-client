@@ -188,6 +188,10 @@ function interval(): void {
       this.state.userCow.feedBoostTime--;
     }
 
+    if (this.state.userCow.factoryBoostTime > 0) {
+      this.state.userCow.factoryBoostTime--;
+    }
+
     // Проверяем и запускаем распростанение овец по полю
     if (this.animalGroup.children.entries.every(el => el.spread === false)) {
       this.spreadAnimals();

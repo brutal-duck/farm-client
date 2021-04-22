@@ -965,16 +965,24 @@ function cowFactory(): void {
       color: '#925C28'
     }).setOrigin(0.5, 0);
 
-    const chocolateSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX + 150, this.cameras.main.centerY + 30, 'pasteurized-milk');
-    const chocolateGeom: Phaser.Geom.Rectangle = chocolateSprite.getBounds();
+    this.chocolateSprite = this.add.sprite(this.cameras.main.centerX + 150, this.cameras.main.centerY + 30, 'pasteurized-milk');
+    const chocolateGeom: Phaser.Geom.Rectangle = this.chocolateSprite.getBounds();
     this.chocolateMoneyText = this.add.text(chocolateGeom.centerX, chocolateGeom.bottom, shortNum(this.state.territory.chocolateMoney), {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0);
 
-    chocolateSprite.setTint(0x000000);
 
-    this.click(chocolateSprite, (): void => {
+    if (this.state.userCow.factoryBoostTime <= 0) {
+      this.chocolateSprite.setAlpha(0.5);
+    } else {
+      this.factoryBoostTimer = this.add.text(chocolateGeom.centerX, chocolateGeom.top, shortTime(this.state.userCow.factoryBoostTime, this.state.lang), {
+        font: '26px Bip',
+        color: '#925C28'
+      }).setOrigin(0.5);
+    }
+
+    this.click(this.chocolateSprite, (): void => {
       this.scene.stop();
       this.game.scene.keys[this.state.farm].showFactoryBoost();
     });
@@ -1033,7 +1041,14 @@ function cowFactory(): void {
       color: '#925C28'
     }).setOrigin(0.5, 0);
 
-    chocolateSprite.setTint(0x000000);
+    if (this.state.userCow.factoryBoostTime <= 0) {
+      chocolateSprite.setAlpha(0.5);
+    } else {
+      this.factoryBoostTimer = this.add.text(chocolateGeom.centerX, chocolateGeom.top, shortTime(this.state.userCow.factoryBoostTime, this.state.lang), {
+        font: '26px Bip',
+        color: '#925C28'
+      }).setOrigin(0.5);
+    }
 
     this.factorySellButton = this.repositoryBtn(170, this.state.lang.sellProduct, milkMoney);
     this.clickModalBtn(this.factorySellButton, (): void => {
@@ -1049,33 +1064,58 @@ function cowFactory(): void {
 }
 
 function updateFactoryModal(): void {
-  let percent: number = 0;
-
-  const factoryTerritory: Territory = this.state.territory;
-
-
-  if (factoryTerritory.productionTimer > 0) {
-    percent = 100 - factoryTerritory.productionTimer / (factoryTerritory.factorySettings.processingTime / 100);
-  }
+  if (this.state.territory?.territoryType === 8 && this.state.modal?.sysType === 2 && this.state.farm === 'Cow') {
+    let percent: number = 0;
   
-  const width: number = Math.round(444 / 100 * percent);
-
-  if (this.factoryProgressBar.displayWidth !== width) {
-    this.factoryProgressBar.setDisplaySize(width, 16);
-  }
-  const product: string = this.state.territory.currentProduction ? this.state.lang[this.state.territory.currentProduction] : '';
+    const factoryTerritory: Territory = this.state.territory;
   
-  const volume: string = `${this.state.lang.produced}: ${product}`;
-  if (this.factoryProductText.text !== volume) {
-    this.factoryProductText.setText(volume);
+  
+    if (factoryTerritory.productionTimer > 0) {
+      percent = 100 - factoryTerritory.productionTimer / (factoryTerritory.factorySettings.processingTime / 100);
+    }
+    
+    const width: number = Math.round(444 / 100 * percent);
+  
+    if (this.factoryProgressBar.displayWidth !== width) {
+      this.factoryProgressBar.setDisplaySize(width, 16);
+    }
+    const product: string = this.state.territory.currentProduction ? this.state.lang[this.state.territory.currentProduction] : '';
+    
+    const volume: string = `${this.state.lang.produced}: ${product}`;
+    if (this.factoryProductText.text !== volume) {
+      this.factoryProductText.setText(volume);
+    }
+  
+    if (this.factorySellButton.text1.text !== shortNum(this.state.territory.money)) {
+      this.factorySellButton.text1.setText(shortNum(this.state.territory.money));
+      this.clabberMoneyText.setText(shortNum(this.state.territory.clabberMoney));
+      this.pasteurizedMilkMoneyText.setText(shortNum(this.state.territory.pasteurizedMilkMoney));
+      this.cheeseMoneyText.setText(shortNum(this.state.territory.cheeseMoney));
+      this.chocolateMoneyText.setText(shortNum(this.state.territory.chocolateMoney));
+    }
+  
+    if (this.state.userCow.factoryBoostTime > 0) {
+      if (this.factoryBoostTimer.text !== shortTime(this.state.userCow.factoryBoostTime, this.state.lang)) {
+        this.factoryBoostTimer.setText(shortTime(this.state.userCow.factoryBoostTime, this.state.lang));
+      }
+    } else {
+      if (this.factoryBoostTimer?.visible) {
+        this.chocolateSprite.setAlpha(0.5);
+        this.factoryBoostTimer.setVisible(false);
+      }
+    }
   }
+  if (this.state.modal?.sysType === 17 && this.state.farm === 'Cow') {
+    if (this.state.userCow.factoryBoostTime > 0) {
+      if (this.factoryBoostTimer.text !== shortTime(this.state.userCow.factoryBoostTime, this.state.lang)) {
+        this.factoryBoostTimer.setText(shortTime(this.state.userCow.factoryBoostTime, this.state.lang));
+      }
+    } else {
+      if (this.factoryBoostTimer?.visible) {
 
-  if (this.factorySellButton.text1.text !== shortNum(this.state.territory.money)) {
-    this.factorySellButton.text1.setText(shortNum(this.state.territory.money));
-    this.clabberMoneyText.setText(shortNum(this.state.territory.clabberMoney));
-    this.pasteurizedMilkMoneyText.setText(shortNum(this.state.territory.pasteurizedMilkMoney));
-    this.cheeseMoneyText.setText(shortNum(this.state.territory.cheeseMoney));
-    this.chocolateMoneyText.setText(shortNum(this.state.territory.chocolateMoney));
+        this.factoryBoostTimer.setVisible(false);
+      }
+    }
   }
 }
 
@@ -1212,6 +1252,12 @@ function factoryBoostWindow(): void {
     text: price,
     icon: 'diamond'}
   const button = this.bigButton('green', 'left', 135, text, right1);
+
+  this.factoryBoostTimer = this.add.text(spriteGeom.centerX, spriteGeom.top, shortTime(this.state.userCow.factoryBoostTime, this.state.lang), {
+    font: '26px Bip',
+    color: '#925C28'
+  }).setOrigin(0.5);
+
   this.clickModalBtn(button, (): void => {
     
     if (this.state.user.diamonds >= price) {
@@ -1230,6 +1276,11 @@ function factoryBoostWindow(): void {
         });
 
         button.title.setText(this.state.lang.buyCocoaBeans.replace('$1', 2));
+
+        this.factoryBoostTimer = this.add.text(spriteGeom.centerX, spriteGeom.top, shortTime(this.state.userCow.factoryBoostTime, this.state.lang), {
+          font: '26px Bip',
+          color: '#925C28'
+        }).setOrigin(0.5);
       } else {
         if (this.state.userCow.factoryBoostTime / ONE_HOUR + 2 > this.game.scene.keys['Cow'].factoryBoostStack) {
           const modal: Imodal = {
