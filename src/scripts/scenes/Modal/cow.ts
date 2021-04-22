@@ -1066,12 +1066,12 @@ function updateFactoryModal(): void {
     this.factoryProductText.setText(volume);
   }
 
-  if (this.factorySellButton.text1.text !== this.state.territory.money) {
-    this.factorySellButton.text1.setText(this.state.territory.money);
-    this.clabberMoneyText.setText(this.state.territory.clabberMoney);
-    this.pasteurizedMilkMoneyText.setText(this.state.territory.pasteurizedMilkMoney);
-    this.cheeseMoneyText.setText(this.state.territory.cheeseMoney);
-    this.chocolateMoneyText.setText(this.state.territory.chocolateMoney);
+  if (this.factorySellButton.text1.text !== shortNum(this.state.territory.money)) {
+    this.factorySellButton.text1.setText(shortNum(this.state.territory.money));
+    this.clabberMoneyText.setText(shortNum(this.state.territory.clabberMoney));
+    this.pasteurizedMilkMoneyText.setText(shortNum(this.state.territory.pasteurizedMilkMoney));
+    this.cheeseMoneyText.setText(shortNum(this.state.territory.cheeseMoney));
+    this.chocolateMoneyText.setText(shortNum(this.state.territory.chocolateMoney));
   }
 }
 
