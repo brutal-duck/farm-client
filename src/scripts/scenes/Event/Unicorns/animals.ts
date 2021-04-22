@@ -207,7 +207,12 @@ function collectResource(resource: Phaser.Physics.Arcade.Sprite): void {
   if (this.state.userEvent.feedBoostTime > 0) price = BigInteger.multiply(price, this.feedBoostMultiplier);
   resource.data.values.click = false;
   this.state.userEvent.money = BigInteger.add(this.state.userEvent.money, price);
-  Currency.create(this.game.scene.keys['EventBars'], resource, { x: 495, y: 80 }, 'event-resource', 400, 1, true);
+  const startPosition: Iposition = {
+    x: resource.x,
+    y: resource.y - this.scrolling.scrollY
+  }
+  const flyResource: Currency = Currency.create(this.game.scene.keys['EventBars'], startPosition, { x: 495, y: 80 }, 'event-resource', 400, 1, true);
+  flyResource.sprite.setDepth(-1);
   resource.destroy();
 }
 
