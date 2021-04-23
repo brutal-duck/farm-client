@@ -1517,9 +1517,9 @@ function updateImproveCollectorEvent(
   duration: Phaser.GameObjects.Text, 
   nextLevelText: Phaser.GameObjects.Text): void {
 
-  this.textHeader.setText(this.state.lang.resourceCollector + ' ' + this.state.userEvent.collectorLevel + ' ' + this.state.lang.shortLevel + '.');
-  let thisLevel: IcollectorSettings = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userEvent.collectorLevel);
-  let nextLevel: IcollectorSettings = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userEvent.collectorLevel + 1);
+  this.textHeader.setText(this.state.lang.resourceCollector + ' ' + this.state.userUnicorn.collectorLevel + ' ' + this.state.lang.shortLevel + '.');
+  let thisLevel: IcollectorSettings = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userUnicorn.collectorLevel);
+  let nextLevel: IcollectorSettings = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userUnicorn.collectorLevel + 1);
 
   let speedText: string = this.state.lang.power + ': ' + thisLevel.speed + ' ' + this.state.lang.unitEvent + '/' + this.state.lang.seconds;
   speed.setText(speedText);
@@ -1547,7 +1547,7 @@ function updateImproveCollectorEvent(
   }
   nextLevelText.setPosition(position.x, position.y);
   nextLevelText.setText(text);
-  if (this.state.userEvent.maxLevelAnimal >= nextLevel.chapter) {
+  if (this.state.userUnicorn.maxLevelAnimal >= nextLevel.chapter) {
     let icon: string;
     if (nextLevel.diamonds) icon = 'diamond';
     else icon = 'unicornCoin';
