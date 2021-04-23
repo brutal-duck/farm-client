@@ -103,8 +103,7 @@ private createProfileInfo(): void {
       }
       avatar.setMask(new Phaser.Display.Masks.BitmapMask(this, farmer));
       if (avatar.texture.key === '__MISSING') {
-        avatar = farmer;
-        avatar.setVisible(true);
+        avatar.setTexture('farmer');
       }
     }
     const avatarGeom: Phaser.Geom.Rectangle = farmer.getBounds();
@@ -284,20 +283,20 @@ private createProfileInfo(): void {
       .fillStyle(0x2b3d11, 0.5)
       .fillRoundedRect(0, 0, textBounds.width + 40, textBounds.height + 40).setDepth(1);
     
-    // this.click(farmSprite, (): void => {
-    //   if (this.state.farm !== 'Cow') {
-    //     this.game.scene.keys[this.state.farm].autosave();
-    //     this.scene.stop();
-    //     this.scene.stop(this.state.farm);
-    //     this.scene.stop(this.state.farm + 'Bars');
-    //     this.scene.start('Cow' + 'Preload', this.state);
-    //   } else {
-    //     this.game.scene.keys[this.state.farm].scrolling.downHandler();
-    //     this.game.scene.keys[this.state.farm].scrolling.enabled = true;
-    //     this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-    //     this.scene.stop();
-    //   }
-    // }, 8);
+    this.click(farmSprite, (): void => {
+      if (this.state.farm !== 'Cow') {
+        this.game.scene.keys[this.state.farm].autosave();
+        this.scene.stop();
+        this.scene.stop(this.state.farm);
+        this.scene.stop(this.state.farm + 'Bars');
+        this.scene.start('Cow' + 'Preload', this.state);
+      } else {
+        this.game.scene.keys[this.state.farm].scrolling.downHandler();
+        this.game.scene.keys[this.state.farm].scrolling.enabled = true;
+        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+        this.scene.stop();
+      }
+    }, 8);
     
   }
 
