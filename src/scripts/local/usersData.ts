@@ -38,6 +38,7 @@ let userData: Iuser = {
       herd: 0,
       feed: 0
     },
+    fortune: 0,
   },
 }
 

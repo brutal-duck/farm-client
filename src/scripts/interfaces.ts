@@ -585,12 +585,13 @@ interface Iboosts {
   sheep: IfarmBosts;
   chicken: IfarmBosts;
   cow: IfarmBosts;
+  fortune: number;
 }
 interface IfarmBosts {
-  collector4: number,
-  collector12: number,
-  herd: number,
-  feed: number,
+  collector4: number;
+  collector12: number;
+  herd: number;
+  feed: number;
 }
 interface IamplitudeData {
   farm_id?: string;
