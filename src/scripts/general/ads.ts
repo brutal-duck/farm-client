@@ -134,10 +134,10 @@ function adReward(): void {
         time = this.state.cowCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userCow.collectorLevel).time * 2;
         this.state.userCow.collector = time * 60;
 
-      } else if (this.state.farm === 'Event') {
+      } else if (this.state.farm === 'Unicorn') {
         type = 'resource_catcher';
-        time = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userEvent.collectorLevel).time * 2;
-        this.state.userEvent.collector = time * 60;
+        time = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userUnicorn.collectorLevel).time * 2;
+        this.state.userUnicorn.collector = time * 60;
       }
       this.autosave();
       this.tryTask(3, 0, time);
@@ -150,9 +150,9 @@ function adReward(): void {
       break;
     
     case 4: 
-      let position = this.game.scene.keys['Event'].getFreePosition();
+      let position = this.game.scene.keys['Unicorn'].getFreePosition();
       if (position.x === null || position.y === null) return;
-      let breed: number = this.state.userEvent.maxLevelAnimal - 3;
+      let breed: number = this.state.userUnicorn.maxLevelAnimal - 3;
       if (breed < 2) breed = 2;
       this.currentTerritory(position.x, position.y).data.values.animal = breed;
       id = 'local_' + randomString(18);
@@ -165,12 +165,12 @@ function adReward(): void {
       axios.post(process.env.API + "/takeAd", data)
         .then((response) => {
           if (response.data.success) {
-            if (this.state.userEvent.takenAd === 0) this.state.userEvent.timeToAd += 60;
-            else if (this.state.userEvent.takenAd === 1) this.state.userEvent.timeToAd += 300;
-            else if (this.state.userEvent.takenAd === 2) this.state.userEvent.timeToAd += 1800;
-            else if (this.state.userEvent.takenAd === 3) this.state.userEvent.timeToAd += 7200;
-            else if (this.state.userEvent.takenAd >= 4) this.state.userEvent.timeToAd += 86400;
-            this.state.userEvent.takenAd += 1;
+            if (this.state.userUnicorn.takenAd === 0) this.state.userUnicorn.timeToAd += 60;
+            else if (this.state.userUnicorn.takenAd === 1) this.state.userUnicorn.timeToAd += 300;
+            else if (this.state.userUnicorn.takenAd === 2) this.state.userUnicorn.timeToAd += 1800;
+            else if (this.state.userUnicorn.takenAd === 3) this.state.userUnicorn.timeToAd += 7200;
+            else if (this.state.userUnicorn.takenAd >= 4) this.state.userUnicorn.timeToAd += 86400;
+            this.state.userUnicorn.takenAd += 1;
           }
         });
       this.getAnimal(id, breed, position.x, position.y);
@@ -183,7 +183,7 @@ function adReward(): void {
       type = 'take_event_animal';
       break;
     case 5:
-      this.state.userEvent.money = BigInteger.add(this.state.userEvent.money, this.state.modal.eventParams.offlineProgress);
+      this.state.userUnicorn.money = BigInteger.add(this.state.userUnicorn.money, this.state.modal.eventParams.offlineProgress);
       MoneyAnimation.create(this.game.scene.keys[this.state.farm + 'Bars']);
       this.state.amplitude.getInstance().logEvent('take_double_profit_event', {
         farm_id: this.state.farm,

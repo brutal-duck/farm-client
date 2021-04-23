@@ -60,11 +60,11 @@ let adman: any;
 let donate: boolean;
 let boughtFeedBoost: boolean = false;
 let boughtFactoryBoost: boolean = false;
-let eventSettings: IeventSettings;
+let unicornSettings: IeventSettings;
 let eventTerritories: IeventTerritories[];
 let eventAnimals: IeventAnimal[];
 let eventResources: IeventResource[];
-let userEvent: IuserEvent;
+let userUnicorn: IuserEvent;
 let eventCollectorSettings: IcollectorSettings[];
 let chat: Ichat[] = [];
 let starterpack: boolean = false;
@@ -83,7 +83,7 @@ let state: Istate = {
   sheepSettings, // настройки и параметры
   chickenSettings, // настройки и параметры
   cowSettings, // настройки и параметры
-  eventSettings, // настройки и параметры
+  unicornSettings, // настройки и параметры
   farm, // имя сцены активной фермы (записывается в localStorage)
   chickenTerritories, // юзерский массив сохраненных территорий кур
   cowTerritories, // юзерский массив сохраненных территорий коров
@@ -100,7 +100,7 @@ let state: Istate = {
   userSheep, // массив данных юзера для овечьей фермы
   userChicken, // массив данных юзера для куринной фермы
   userCow, // массив данных юзера для коровьей фермы
-  userEvent, // массив данных юзера для евентовой фермы
+  userUnicorn, // массив данных юзера для евентовой фермы
   sheepTasks, // задания овечьей фермы
   chickenTasks, // задания куриной фермы
   cowTasks, // задания коровьей фермы

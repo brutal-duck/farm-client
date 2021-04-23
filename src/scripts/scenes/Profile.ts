@@ -78,7 +78,9 @@ class Profile extends Phaser.Scene {
   }
 
   public update(): void {
-    this.updateEvent();
+    if (this.state.progress.event.type === 1) {
+      this.updateUnicornFarm();
+    }
   }
 
   private createElements(): void {
@@ -136,7 +138,9 @@ private createProfileInfo(): void {
     this.createSheepFarm();
     this.createLockedCowFarm();
     // this.createCowFarm();
-    this.createEventFarm();
+    if (this.state.progress.event.type === 1) {
+      this.createUnicornFarm();
+    }
   }
 
   private createSheepFarm(): void {
@@ -300,7 +304,7 @@ private createProfileInfo(): void {
     
   }
 
-  private createEventFarm(): void {
+  private createUnicornFarm(): void {
     const farmPosition: Iposition = {
       x: 720,
       y: 775
@@ -362,13 +366,13 @@ private createProfileInfo(): void {
     }).fillRoundedRect(this.eventStartText.getBounds().left - 25, this.eventStartText.getBounds().top - 20, this.eventStartText.width + 50, 60).setVisible(false);
 
     this.click(this.eventZone, (): void => {
-      if (this.state.farm !== 'Event') {
+      if (this.state.farm !== 'Unicorn') {
   
         this.game.scene.keys[this.state.farm].autosave();
         this.scene.stop();
         this.scene.stop(this.state.farm);
         this.scene.stop(this.state.farm + 'Bars');
-        this.scene.start('EventPreload', this.state);
+        this.scene.start('UnicornPreload', this.state);
 
       } else {
 
@@ -393,7 +397,7 @@ private createProfileInfo(): void {
       pointer.setPosition(sheepPosition.x, sheepPosition.y)
     } else if (this.state.farm === 'Chicken') {
       pointer.setPosition(chickenPosition.x, chickenPosition.y)
-    } else if (this.state.farm === 'Event') {
+    } else if (this.state.farm === 'Unicorn') {
       pointer.setPosition(eventPosition.x, eventPosition.y)
     } else if (this.state.farm === 'Cow') {
       pointer.setPosition(cowPosition.x, cowPosition.y)
@@ -467,7 +471,7 @@ private createProfileInfo(): void {
     }
   }
 
-  private updateEvent(): void {
+  private updateUnicornFarm(): void {
     if (
       this.state.progress.event.startTime > 0 && 
       this.state.progress.event.open && 

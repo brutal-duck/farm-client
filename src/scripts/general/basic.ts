@@ -841,7 +841,7 @@ function takeDonate(): void {
         this.state.user.diamonds += res.data.donate;
         this.state.user.starterpack = true;
 
-        const chapter: string = this.state.farm === 'Event' ? `${this.state.farm}` : `${this.state.farm}_${this.state[`user${this.state.farm}`].part}`;
+        const chapter: string = this.state.farm === 'Unicorn' ? `${this.state.farm}` : `${this.state.farm}_${this.state[`user${this.state.farm}`].part}`;
         const eventPorerties: any = {
           'chapter': chapter,
           'stock': this.state.stock,
@@ -987,7 +987,7 @@ function loadingScreen(farmType: string): void {
   // Добавляем в массив подсказки в зависимости от типа фермы
   if (farmType === 'Sheep') { for (let i: number = 0; i < sheep; i++) helpArr.push(this.state.lang['helpSheep_' + String(i + 1)]); }
   else if (farmType === 'Chicken') { for (let i: number = 0; i < chicken; i++) helpArr.push(this.state.lang['helpChicken_' + String(i + 1)]); }
-  else if (farmType === 'Event') { for (let i: number = 0; i < event; i++) helpArr.push(this.state.lang['helpEvent_' + String(i + 1)]); }
+  else if (farmType === 'Unicorn') { for (let i: number = 0; i < event; i++) helpArr.push(this.state.lang['helpEvent_' + String(i + 1)]); }
   else if (farmType === 'Cow') { for (let i: number = 0; i < cow; i++) helpArr.push(this.state.lang['helpCow_' + String(i + 1)]); }
 
   let helpText: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 100, helpArr[random(0, helpArr.length - 1)], {
@@ -1270,7 +1270,7 @@ function getEventRaiting(): void {
     login = this.state.name
   } else login = this.state.user.login
 
-  let score: number = this.state.farm === 'Event' ? this.state.userEvent.maxLevelAnimal : this.state.progress.event.eventPoints;
+  let score: number = this.state.farm === 'Unicorn' ? this.state.userUnicorn.maxLevelAnimal : this.state.progress.event.eventPoints;
 
   this.state.socket.io.emit('setRating', {
     name: login,
@@ -1327,7 +1327,7 @@ function intervalPorgressCollectorTime(): void {
     this.state.progress.cow.collector = this.state.userCow.collector;
     if (this.state.progress.sheep.collector > 0) this.state.progress.sheep.collector--;
     if (this.state.progress.chicken.collector > 0) this.state.progress.chicken.collector--;
-  } else if (this.state.farm === 'Event') {
+  } else if (this.state.farm === 'Unicorn') {
     if (this.state.progress.chicken.collector > 0) this.state.progress.chicken.collector--;
     if (this.state.progress.sheep.collector > 0) this.state.progress.sheep.collector--;
     if (this.state.progress.cow.collector > 0) this.state.progress.cow.collector--;
@@ -1403,7 +1403,7 @@ function createTaskZone(): void {
 function logAmplitudeEvent(eventName: string, data: IamplitudeData): void {
   let eventData: IamplitudeData;
 
-  if (this.state.farm !== 'Event' && data.farm_id !== 'Event') {
+  if (this.state.farm !== 'Unicorn' && data.farm_id !== 'Unicorn') {
     const balance: Ibalance = this.balance();
     const waterPercent: number = balance.notEnoughWater? -1 * balance.waterPercent : balance.waterPercent;
     const grassPercent: number = balance.notEnoughGrass ? -1 * balance.grassPercent : balance.grassPercent;
@@ -1444,7 +1444,7 @@ function logAmplitudeEvent(eventName: string, data: IamplitudeData): void {
 function logAmplitudeRevenue(productId: string, price: number, type: string,  data: IamplitudeData): void {
   let revenueData: IamplitudeData;
 
-  if (this.state.farm !== 'Event' && data.farm_id !== 'Event') {
+  if (this.state.farm !== 'Unicorn' && data.farm_id !== 'Unicorn') {
     const balance: Ibalance = this.balance();
     const waterPercent: number = balance.notEnoughWater? -1 * balance.waterPercent : balance.waterPercent;
     const grassPercent: number = balance.notEnoughGrass ? -1 * balance.grassPercent : balance.grassPercent;

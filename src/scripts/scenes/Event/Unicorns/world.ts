@@ -78,22 +78,22 @@ function world(): void {
       bottomBorder = 2;
     }
 
-    territory.data.values.borderTop = this.add.sprite(territory.x, territory.y + 15, 'event-horizontal-border-' + topBorder)
+    territory.data.values.borderTop = this.add.sprite(territory.x, territory.y + 15, 'unicorn-horizontal-border-' + topBorder)
       .setOrigin(0, 1)
       .setDepth(territory.y + 1)
       .setVisible(false);
     
-    territory.data.values.borderLeft = this.add.sprite(territory.x, territory.y, 'event-vertical-border')
+    territory.data.values.borderLeft = this.add.sprite(territory.x, territory.y, 'unicorn-vertical-border')
       .setOrigin(0, 0)
       .setDepth(territory.y + 1)
       .setVisible(false);
 
-    territory.data.values.borderRight = this.add.sprite(territory.x + 240, territory.y, 'event-vertical-border')
+    territory.data.values.borderRight = this.add.sprite(territory.x + 240, territory.y, 'unicorn-vertical-border')
       .setOrigin(1, 0)
       .setDepth(territory.y + 1)
       .setVisible(false);
 
-    territory.data.values.borderBottom = this.add.sprite(territory.x, territory.y + 240, 'event-horizontal-border-' + bottomBorder)
+    territory.data.values.borderBottom = this.add.sprite(territory.x, territory.y + 240, 'unicorn-horizontal-border-' + bottomBorder)
       .setOrigin(0, 1)
       .setDepth(territory.y + 1)
       .setVisible(false);
@@ -103,7 +103,7 @@ function world(): void {
       let x: number = territory.x + 120;
       let y: number = territory.y + 120;
 
-      const unlock: number = this.state.eventSettings.territoriesEventPrice.find((data: IterritoriesPrice) => data.block === territory.data.values.block && data.position === territory.data.values.position).unlock;
+      const unlock: number = this.state.unicornSettings.territoriesUnicornPrice.find((data: IterritoriesPrice) => data.block === territory.data.values.block && data.position === territory.data.values.position).unlock;
 
       territory.data.values.forest = this.add.image(territory.x + 120, territory.y + 240, 'event-forest-' + forest)
         .setOrigin(0.5, 1)
@@ -117,7 +117,7 @@ function world(): void {
       territory.data.values.lock_image = this.add.image(x, y, 'lock-event-territory').setDepth(territory.y + 3).setVisible(false);
 
         // проверка на замок
-      if (unlock > this.state.userEvent.maxLevelAnimal) {
+      if (unlock > this.state.userUnicorn.maxLevelAnimal) {
         territory.data.values.btn.setVisible(false);
         territory.data.values.btnText.setVisible(false);
         territory.data.values.lock_image = this.add.image(x, y, 'lock-event-territory').setDepth(territory.y + 3).setVisible(true);

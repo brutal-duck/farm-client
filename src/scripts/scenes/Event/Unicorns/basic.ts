@@ -5,9 +5,9 @@ import BigInteger from '../../../libs/BigInteger';
 import MoneyAnimation from './../../../components/animations/MoneyAnimation';
 // цена животного
 function animalPrice(breed: number): {price: string, countAnimal: number} {
-  let insideCounter: number = this.state.userEvent.countAnimal[breed - 1].counter;
-  let insidePrice: string = this.state.eventSettings.eventSettings[breed - 1].price;
-  let coefficient: string = String(this.state.eventSettings.priceCoefficient);
+  let insideCounter: number = this.state.userUnicorn.countAnimal[breed - 1].counter;
+  let insidePrice: string = this.state.unicornSettings.unicornSettings[breed - 1].price;
+  let coefficient: string = String(this.state.unicornSettings.priceCoefficient);
   
   for (let i = 1; i < insideCounter; i++) {
     insidePrice = BigInteger.add(insidePrice, BigInteger.divide(BigInteger.multiply(insidePrice, coefficient), '100'))
@@ -24,7 +24,7 @@ function animalPrice(breed: number): {price: string, countAnimal: number} {
 function getFreePosition(): {x: number, y: number} {
   let x: number = 120;
   let y: number = this.topIndent + 600;
-  for (let i = 0; i < this.state.eventSettings.eventSettings.length; i ++ ) {
+  for (let i = 0; i < this.state.unicornSettings.unicornSettings.length; i ++ ) {
     let territory: Phaser.Physics.Arcade.Sprite = this.currentTerritory(x, y);
     if (territory.data.values.type !== 0) {
       if (territory.data.values.merging.length !== 0) {
@@ -87,7 +87,7 @@ function getFreeBoostPositions(): Iposition[] {
   let x: number = 120;
   let y: number = this.topIndent + 600;
   let positions: Iposition[] = [];
-  for (let i = 0; i < this.state.eventSettings.eventSettings.length; i ++ ) { // убрать жесткое число
+  for (let i = 0; i < this.state.unicornSettings.unicornSettings.length; i ++ ) { // убрать жесткое число
     if (this.currentTerritory(x, y)?.data.values.type !== 0) {
       if (this.currentTerritory(x, y)?.data.values.merging.length !== 0) {
         x += 240;
@@ -124,11 +124,11 @@ function getFreeBoostPositions(): Iposition[] {
 // максимальная порода для покупки
 function maxBreedForBuy(): number {
 
-  let breed: number = this.state.userEvent.maxLevelAnimal - 4;
+  let breed: number = this.state.userUnicorn.maxLevelAnimal - 4;
   
   if (breed <= 0) {
     breed = 1;
-  } else if (this.state.userEvent.maxLevelAnimal <= 10) {
+  } else if (this.state.userUnicorn.maxLevelAnimal <= 10) {
     let currentPrice: string;
     let breedPrice: string;
     for (let i = breed; i >= 1; i--) {
@@ -140,10 +140,10 @@ function maxBreedForBuy(): number {
         breed = i ;
       }
     }
-  } else if (this.state.userEvent.maxLevelAnimal > 10) {
+  } else if (this.state.userUnicorn.maxLevelAnimal > 10) {
     let currentPrice: string;
     let breedPrice: string;
-    for (let i = breed; i >= this.state.userEvent.maxLevelAnimal - 9; i--) {
+    for (let i = breed; i >= this.state.userUnicorn.maxLevelAnimal - 9; i--) {
 
       currentPrice = this.animalPrice(i).price;
       breedPrice = this.animalPrice(breed).price;
@@ -169,9 +169,9 @@ function currentTerritory(x: number, y: number): object {
 // бесплатный собиратель
 function freeCollector(type: number = 1): void {
 
-  let user: IuserEvent = this.state.userEvent;
+  let user: IuserEvent = this.state.userUnicorn;
   let settings: IcollectorSettings[] = this.state.eventCollectorSettings;
-  let doubledСollectorPrice: number = this.state.eventSettings.doubledСollectorPrice;
+  let doubledСollectorPrice: number = this.state.unicornSettings.doubledСollectorPrice;
 
 
   this.scrolling.wheel = true;
@@ -248,8 +248,8 @@ function freeCollector(type: number = 1): void {
 // покупка собирателя
 function buyCollector(type: number): void {
 
-  let user: IuserEvent = this.state.userEvent;
-  let settings: IeventSettings = this.state.eventSettings;
+  let user: IuserEvent = this.state.userUnicorn;
+  let settings: IeventSettings = this.state.unicornSettings;
 
   let hours: number;
 
@@ -306,8 +306,8 @@ function buyCollector(type: number): void {
 
 function convertDiamonds(diamonds: number): string {
   
-  let breedSettings: IeventPoints[] = this.state.eventSettings.eventSettings;
-  let maxLevel: number = this.state.userEvent.maxLevelAnimal;
+  let breedSettings: IeventPoints[] = this.state.unicornSettings.unicornSettings;
+  let maxLevel: number = this.state.userUnicorn.maxLevelAnimal;
   
   let setting: IeventPoints = breedSettings.find((item: IeventPoints) => item.breed === maxLevel);
   let exchange: string;
@@ -323,8 +323,8 @@ function convertDiamonds(diamonds: number): string {
 
 function convertMoney(money: string): number {
 
-  let breedSettings: IeventPoints[] = this.state.eventSettings.eventSettings;
-  let maxLevel: number = this.state.userEvent.maxLevelAnimal;
+  let breedSettings: IeventPoints[] = this.state.unicornSettings.unicornSettings;
+  let maxLevel: number = this.state.userUnicorn.maxLevelAnimal;
   
   let setting: IeventPoints = breedSettings.find((item: IeventPoints) => item.breed === maxLevel);
   let exchange: string = setting ? setting.exchange : String(1);
@@ -336,7 +336,7 @@ function convertMoney(money: string): number {
 // улучшение собирателей
 function improveCollector(): void {
 
-  let user: IuserEvent = this.state.userEvent;
+  let user: IuserEvent = this.state.userUnicorn;
   let collectorSettings: IcollectorSettings[] = this.state.eventCollectorSettings;
 
 
@@ -441,7 +441,7 @@ function improveCollector(): void {
 
 function exchange(ad: boolean = false): void {
 
-  let user: IuserEvent  = this.state.userEvent;
+  let user: IuserEvent  = this.state.userUnicorn;
   let buyAnimal = (): void => this.buyAnimal(this.state.convertor.breed);
 
   if (this.state.convertor.diamonds > this.state.user.diamonds) {
@@ -500,15 +500,15 @@ function exchange(ad: boolean = false): void {
 }
 
 function createBoostAnimal(positions): void {
-  if (this.state.userEvent.herdBoostAnimals.length === 0) {
+  if (this.state.userUnicorn.herdBoostAnimals.length === 0) {
     this.startCreateHerdBoostAnimal = false;
     return;
   };
 
   positions.forEach(position => {
-    if (this.state.userEvent.herdBoostAnimals.length > 0) {
+    if (this.state.userUnicorn.herdBoostAnimals.length > 0) {
       
-      let type = this.state.userEvent.herdBoostAnimals.pop();
+      let type = this.state.userUnicorn.herdBoostAnimals.pop();
       let id: string = 'local_' + randomString(18);
       this.getAnimal(id, type, position.x, position.y);
       Firework.create(this, position, 1);

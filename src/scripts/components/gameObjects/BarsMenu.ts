@@ -2,10 +2,10 @@
 import SheepBars from '../../scenes/Sheep/SheepBars';
 import ChickenBars from '../../scenes/Chicken/ChickenBars';
 import CowBars from '../../scenes/Cow/CowBars';
-import EventBars from '../../scenes/Event/Unicorns/EventBars';
+import UnicornBars from '../../scenes/Event/Unicorns/UnicornBars';
 
 export default class BarsMenu extends Phaser.GameObjects.Sprite {
-  public scene: SheepBars | ChickenBars | CowBars | EventBars; 
+  public scene: SheepBars | ChickenBars | CowBars | UnicornBars; 
   private profileIcon: Phaser.GameObjects.Sprite;
   private chatIcon: Phaser.GameObjects.Sprite;
   private authIcon: Phaser.GameObjects.Sprite;
@@ -15,11 +15,11 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
   private profileAnim: Phaser.Tweens.Tween;
   private chatAnim: Phaser.Tweens.Tween;
 
-  constructor(scene: SheepBars | ChickenBars | CowBars | EventBars) {
+  constructor(scene: SheepBars | ChickenBars | CowBars | UnicornBars) {
     super(scene, 650, scene.height - 90, 'sandwich');
     this.init();
   }
-  static create(scene: SheepBars | ChickenBars | CowBars | EventBars): BarsMenu {
+  static create(scene: SheepBars | ChickenBars | CowBars | UnicornBars): BarsMenu {
     return new BarsMenu(scene);
   }
 
@@ -126,11 +126,11 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       this.profileIcon.setVisible(true);
     }
 
-    if (this.scene.state.farm === 'Event' && this.scene.state.user.additionalTutorial.eventTutorial < 80 && this.visible) {
+    if (this.scene.state.farm === 'Unicorn' && this.scene.state.user.additionalTutorial.eventTutorial < 80 && this.visible) {
       this.setVisible(false);
       this.chatIcon.setVisible(false);
       this.profileIcon.setVisible(false);
-    } else if (this.scene.state.farm === 'Event' && this.scene.state.user.additionalTutorial.eventTutorial >= 80 &&  !this.visible) {
+    } else if (this.scene.state.farm === 'Unicorn' && this.scene.state.user.additionalTutorial.eventTutorial >= 80 &&  !this.visible) {
       this.setVisible(true);
       this.profileIcon.setVisible(true);
       this.chatIcon.setVisible(true);

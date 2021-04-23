@@ -8,23 +8,23 @@ function autoprogress(load: boolean = false): void {
    // время буста комбикорм
   let wasFeedBoost: number = 0;
 
-  if (this.state.userEvent.feedBoostTime >= this.state.offlineTime) {
-    this.state.userEvent.feedBoostTime -= this.state.offlineTime;
+  if (this.state.userUnicorn.feedBoostTime >= this.state.offlineTime) {
+    this.state.userUnicorn.feedBoostTime -= this.state.offlineTime;
     wasFeedBoost = this.state.offlineTime;
   } else {
-    wasFeedBoost = this.state.userEvent.feedBoostTime;
-    this.state.userEvent.feedBoostTime = 0;
+    wasFeedBoost = this.state.userUnicorn.feedBoostTime;
+    this.state.userUnicorn.feedBoostTime = 0;
   }
 
   // время собирателя
   let wasCollector: number = 0;
 
-  if (this.state.userEvent.collector >= this.state.offlineTime) {
-    this.state.userEvent.collector -= this.state.offlineTime;
+  if (this.state.userUnicorn.collector >= this.state.offlineTime) {
+    this.state.userUnicorn.collector -= this.state.offlineTime;
     wasCollector = this.state.offlineTime;
   } else {
-    wasCollector = this.state.userEvent.collector;
-    this.state.userEvent.collector = 0;
+    wasCollector = this.state.userUnicorn.collector;
+    this.state.userUnicorn.collector = 0;
   }
 
   // процент ресурсов под бустом
@@ -37,7 +37,7 @@ function autoprogress(load: boolean = false): void {
   }
   
 
-  if (!load) this.game.scene.keys['EventBars'].collector.update();
+  if (!load) this.game.scene.keys['UnicornBars'].collector.update();
   if (!load) this.state.timeToNewDay -= this.state.offlineTime;
   
   // считаем сколько появилось ресурсов
@@ -48,7 +48,7 @@ function autoprogress(load: boolean = false): void {
     let animal = this.animals.children.entries[i];
     let breed: number = animal.data.values.type;
 
-    let points: IeventPoints = this.state.eventSettings.eventSettings.find((item: IeventPoints) => item.breed === breed);
+    let points: IeventPoints = this.state.unicornSettings.unicornSettings.find((item: IeventPoints) => item.breed === breed);
 
     let resource: number = points.resource;
 
@@ -59,7 +59,7 @@ function autoprogress(load: boolean = false): void {
       else animal.data.values.active.data.values.resource += (resources * wasCollector);
     }
     
-    if (this.state.userEvent.collector === 0) {
+    if (this.state.userUnicorn.collector === 0) {
       animal.data.values.resource = random(0, 1000);
     }
 
@@ -89,7 +89,7 @@ function autoprogress(load: boolean = false): void {
 
   // скорость сборки
   let percent: number = 100;
-  let speed: number = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userEvent.collectorLevel).speed;
+  let speed: number = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userUnicorn.collectorLevel).speed;
 
   if (this.animals.children.entries.length > speed * 10) {
 
@@ -118,7 +118,7 @@ function autoprogress(load: boolean = false): void {
 
   for (let i: number = 0; i < length; i++) {
 
-    let price: string = this.state.eventSettings.eventSettings.find((data: IeventPoints) => data.breed === resourceArr[i].type).resourcePrice;
+    let price: string = this.state.unicornSettings.unicornSettings.find((data: IeventPoints) => data.breed === resourceArr[i].type).resourcePrice;
     price = BigInteger.divide(BigInteger.multiply(price, feedPercent), String(100)); // коэфф
     
     
@@ -147,7 +147,7 @@ function autoprogress(load: boolean = false): void {
     this.state.modal = modal;
     this.scene.launch('Modal', this.state);
   } else {
-    this.state.userEvent.money = BigInteger.add(this.state.userEvent.money, income);
+    this.state.userUnicorn.money = BigInteger.add(this.state.userUnicorn.money, income);
   }
   
   

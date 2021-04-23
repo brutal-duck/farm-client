@@ -320,7 +320,7 @@ function improveCollectorAnim(position: Iposition): void {
   if (this.state.farm === 'Sheep') icon = 'wool-collector';
   else if (this.state.farm === 'Chicken') icon = 'egg-collector';
   else if (this.state.farm === 'Cow') icon = 'milk-collector';
-  else if (this.state.farm === 'Event') icon = 'event-collector';
+  else if (this.state.farm === 'Unicorn') icon = 'event-collector';
   
   let sprite: Phaser.GameObjects.Sprite = this.add.sprite(position.x, position.y, icon); 
 

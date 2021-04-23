@@ -239,8 +239,8 @@ function dragEventAnimal(animal: boolean = false): void {
         this.mergPointer.stop = false;
         this.mergPointer.setVisible(true);
         this.mergPointer.data.values.animal.setVisible(true);
-        let animal1: Phaser.Physics.Arcade.Sprite = this.game.scene.keys['Event'].animals.getChildren()[0];
-        let animal2: Phaser.Physics.Arcade.Sprite = this.game.scene.keys['Event'].animals.getChildren()[1];
+        let animal1: Phaser.Physics.Arcade.Sprite = this.game.scene.keys['Unicorn'].animals.getChildren()[0];
+        let animal2: Phaser.Physics.Arcade.Sprite = this.game.scene.keys['Unicorn'].animals.getChildren()[1];
         target.x = animal2.x;
         target.y = animal2.y;
         this.mergPointer.x = animal1.x;
@@ -296,7 +296,7 @@ function dragEventAnimal(animal: boolean = false): void {
         target.x = 360;
         target.y = 360;
         
-        let animal: Phaser.Physics.Arcade.Sprite = this.game.scene.keys['Event'].animals.getChildren()[0];
+        let animal: Phaser.Physics.Arcade.Sprite = this.game.scene.keys['Unicorn'].animals.getChildren()[0];
         this.mergPointer.setX(animal.x);
         this.mergPointer.setY(animal.y);
         this.mergPointer?.data?.values.animal?.setX(this.mergPointer.x);

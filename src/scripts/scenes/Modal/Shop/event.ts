@@ -114,7 +114,7 @@ function getDiamondPrice(devisor, breed): number {
 // животные
 function animals(): void {
 
-  let rows: number = this.state.eventSettings.eventSettings.length;
+  let rows: number = this.state.unicornSettings.unicornSettings.length;
   let height: number = rows * 270 + 40;
   this.scrolling.bottom = this.height - this.heightWindow + height;
   
@@ -123,10 +123,10 @@ function animals(): void {
     let y: number = i * 270 + 40;
     this.add.sprite(0, y + this.height, 'animal-shop-bg').setOrigin(0, 0);
 
-    let animal: IeventPoints = this.state.eventSettings.eventSettings.find((data: IeventPoints) => data.breed === i + 1);
+    let animal: IeventPoints = this.state.unicornSettings.unicornSettings.find((data: IeventPoints) => data.breed === i + 1);
 
     // иконка
-    if (this.state.userEvent.maxLevelAnimal < animal.breed) {
+    if (this.state.userUnicorn.maxLevelAnimal < animal.breed) {
       this.add.sprite(110, y + this.height + 110, 'disable-animal');
     } else {
 
@@ -162,11 +162,11 @@ function animals(): void {
     // кнопка покупки
     let heightBtn: number = 0;
     let btn: any = false;
-    if (animal.breed <= this.state.userEvent.maxLevelAnimal - 4 || animal.breed === 1) {
+    if (animal.breed <= this.state.userUnicorn.maxLevelAnimal - 4 || animal.breed === 1) {
 
       let price: string = String(shortNum(this.animalPrice(animal.breed).price));
       
-      btn = this.shopButton(330, center, price, 'eventCoin');
+      btn = this.shopButton(330, center, price, 'unicornCoin');
       this.clickShopBtn(btn, (): void => {
 
         let result: boolean = this.game.scene.keys[this.state.farm].buyAnimal(animal.breed, true);
@@ -182,11 +182,11 @@ function animals(): void {
 
       heightBtn = btn.btn.height;
 
-    } else if (animal.breed <= this.state.userEvent.maxLevelAnimal - 3 || animal.breed === 2 && this.state.userEvent.maxLevelAnimal > 2) {
+    } else if (animal.breed <= this.state.userUnicorn.maxLevelAnimal - 3 || animal.breed === 2 && this.state.userUnicorn.maxLevelAnimal > 2) {
 
       const diamondPrice = this.getDiamondPrice(4, animal.breed);
 
-      if (this.state.readyAd && this.state.userEvent.timeToAd <= 0) {
+      if (this.state.readyAd && this.state.userUnicorn.timeToAd <= 0) {
         
         btn = this.shopButton(330, center,  this.state.lang.pickUp, 'ad-icon');
         this.clickShopBtn(btn, (): void => {
@@ -233,7 +233,7 @@ function animals(): void {
 
       heightBtn = btn.btn.height;
 
-    } else if (animal.breed <= this.state.userEvent.maxLevelAnimal - 2 || animal.breed === 3 && this.state.userEvent.maxLevelAnimal > 3) {
+    } else if (animal.breed <= this.state.userUnicorn.maxLevelAnimal - 2 || animal.breed === 3 && this.state.userUnicorn.maxLevelAnimal > 3) {
 
       const diamondPrice = this.getDiamondPrice(2, animal.breed);
       
@@ -252,7 +252,7 @@ function animals(): void {
 
       heightBtn = btn.btn.height;
 
-    } else if (animal.breed <= this.state.userEvent.maxLevelAnimal - 1 || animal.breed === 4 && this.state.userEvent.maxLevelAnimal > 4) {
+    } else if (animal.breed <= this.state.userUnicorn.maxLevelAnimal - 1 || animal.breed === 4 && this.state.userUnicorn.maxLevelAnimal > 4) {
 
       const diamondPrice = this.getDiamondPrice(1, animal.breed);
       
@@ -308,8 +308,8 @@ function eventCollectorBoost(): void {
   let collectorSprite: Phaser.GameObjects.Sprite = this.add.sprite(40, 65 + this.height, `shop-event-resource-collector`).setOrigin(0, 0);
   let levelBg: Phaser.GameObjects.Sprite = this.add.sprite(10, 55 + this.height, 'level-bg').setOrigin(0, 0);
   
-  let level: string = String(this.state.userEvent.collectorLevel);
-  if (this.state.userEvent.collectorLevel === this.state.eventCollectorSettings.length) level = 'Max';
+  let level: string = String(this.state.userUnicorn.collectorLevel);
+  if (this.state.userUnicorn.collectorLevel === this.state.eventCollectorSettings.length) level = 'Max';
 
   let userLevel: Phaser.GameObjects.Text = this.add.text(52, 90 + this.height, level, {
     font: '26px Bip',
@@ -320,10 +320,10 @@ function eventCollectorBoost(): void {
     color: '#F8DF86'
   }).setOrigin(0.5, 0.5).setStroke('#B66B06', 2);
 
-  let freeTime: number = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userEvent.collectorLevel).time;
+  let freeTime: number = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userUnicorn.collectorLevel).time;
 
   // осталось времени
-  if (this.state.userEvent.collector > 0) {
+  if (this.state.userUnicorn.collector > 0) {
 
     let time: string = shortTime(this.state[`user${this.state.farm}`].collector, this.state.lang);
     this.collectorTimer = this.add.text(120, 235 + this.height, this.state.lang.still + ' ' + time, {
@@ -334,7 +334,7 @@ function eventCollectorBoost(): void {
   }
 
   // бесплатный
-  if (this.state.userEvent.collector === 0) {
+  if (this.state.userUnicorn.collector === 0) {
 
     this.freeCollector = this.boostButton(350, 100 + this.height, String(freeTime), this.state.lang.shortMinutes, this.state.lang.take, 'free');
     this.clickBoostBtn(this.freeCollector, (): void => {
@@ -350,9 +350,9 @@ function eventCollectorBoost(): void {
   // удвоенный собиратель
   let doubleTime: number = freeTime * 2;
 
-  let doubleTimePrice: number = Math.floor(doubleTime / 60 * this.state.eventSettings.doubledСollectorPrice);
+  let doubleTimePrice: number = Math.floor(doubleTime / 60 * this.state.unicornSettings.doubledСollectorPrice);
   
-  if (this.state.userEvent.collector === 0) {
+  if (this.state.userUnicorn.collector === 0) {
 
     if (this.state.readyAd) {
 
@@ -387,35 +387,35 @@ function eventCollectorBoost(): void {
   }
 
   // 4 часа собирателя
-  if (this.state.eventSettings.unlockCollector4 <= this.state.userEvent.maxLevelAnimal) {
+  if (this.state.unicornSettings.unlockCollector4 <= this.state.userUnicorn.maxLevelAnimal) {
 
-    let hours4 = this.boostButton(350, 220 + this.height, '4', this.state.lang.shortHours, String(this.state.eventSettings.collectorPrice4), 'diamond');
+    let hours4 = this.boostButton(350, 220 + this.height, '4', this.state.lang.shortHours, String(this.state.unicornSettings.collectorPrice4), 'diamond');
     this.clickBoostBtn(hours4, (): void => {
       this.game.scene.keys[this.state.farm].buyCollector(3);
     });
 
   } else {
 
-    this.boostButton(350, 220 + this.height, '4', this.state.lang.shortHours, String(this.state.eventSettings.unlockCollector4), 'lock');
+    this.boostButton(350, 220 + this.height, '4', this.state.lang.shortHours, String(this.state.unicornSettings.unlockCollector4), 'lock');
     
   }
 
   // 12 часа собирателя
-  if (this.state.eventSettings.unlockCollector12 <= this.state.userEvent.maxLevelAnimal) {
+  if (this.state.unicornSettings.unlockCollector12 <= this.state.userUnicorn.maxLevelAnimal) {
 
-    let hours12 = this.boostButton(350, 280 + this.height, '12', this.state.lang.shortHours, String(this.state.eventSettings.collectorPrice12), 'diamond');
+    let hours12 = this.boostButton(350, 280 + this.height, '12', this.state.lang.shortHours, String(this.state.unicornSettings.collectorPrice12), 'diamond');
     this.clickBoostBtn(hours12, (): void => {
       this.game.scene.keys[this.state.farm].buyCollector(4);
     });
 
   } else {
 
-    this.boostButton(350, 280 + this.height, '12', this.state.lang.shortHours, String(this.state.eventSettings.unlockCollector12), 'lock');
+    this.boostButton(350, 280 + this.height, '12', this.state.lang.shortHours, String(this.state.unicornSettings.unlockCollector12), 'lock');
     
   }
 
   // кнопка улучшения
-  if (this.state.userEvent.collectorLevel < this.state.eventCollectorSettings.length) {
+  if (this.state.userUnicorn.collectorLevel < this.state.eventCollectorSettings.length) {
     
     let improve: Phaser.GameObjects.Sprite = this.add.sprite(120, 285 + this.height, 'improve-collector');
     let improveText: Phaser.GameObjects.Text = this.add.text(120, 281 + this.height, this.state.lang.improve, {
@@ -427,14 +427,14 @@ function eventCollectorBoost(): void {
       this.game.scene.keys[this.state.farm].showImproveCollector();
     });
 
-    if (this.state.userEvent.collector === 0) {
+    if (this.state.userUnicorn.collector === 0) {
       improve.y -= 15;
       improveText.y -= 15;
     }
 
   } else {
     
-    if (this.state.userEvent.collector > 0) {
+    if (this.state.userUnicorn.collector > 0) {
 
       this.collectorTimer.y += 45;
       collectorSprite.y += 25;

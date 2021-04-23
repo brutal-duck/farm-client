@@ -11,83 +11,62 @@ function interval(): void {
     
     for (let i in this.animals.children.entries) {
 
-      let animal: Phaser.Physics.Arcade.Sprite = this.animals.children.entries[i].data.values.active;
-      
-      let breed: number = animal.data.values.base.data.values.type;
+      const animal: Phaser.Physics.Arcade.Sprite = this.animals.children.entries[i].data.values.active;
+      const breed: number = animal.data.values.base.data.values.type;
+      const points: IeventPoints = this.state.unicornSettings.unicornSettings.find((item: IeventPoints) => item.breed === breed);
 
-      
-      let points: IeventPoints = this.state.eventSettings.eventSettings.find((item: IeventPoints) => item.breed === breed);
-
-      
       if (animal.data.values.working) {
         // зарождение ресурса
         if (animal.data.values.resource < 1000) {
-
-          let resource: number = points.resource;
-
-          animal.data.values.resource += resource;
-
+        const resource: number = points.resource;
+        animal.data.values.resource += resource;
         if (animal.data.values.resource > 1000) animal.data.values.resource = 1000;
-
       }
 
       if (animal.data.values.resource === 1000 && this.resources.getLength() <= this.maxCountResource) {
-        
-        let resource: IeventResource = {
+        const resource: IeventResource = {
           type: animal.data.values.base.data.values.type,
           x: animal.x,
           y: animal.y + animal.height / 2,
           _id: 'local_' + randomString(18)
-        }
-       
+        };
         this.getResource(resource);
-
         animal.data.values.resource = 0;  
-
         }
       }
     }    
 
     for (let i in this.resources.children.entries) {
-
-      let resource: Phaser.Physics.Arcade.Sprite = this.resources.children.entries[i];
+      const resource: Phaser.Physics.Arcade.Sprite = this.resources.children.entries[i];
       resource.data.values.timeout++;
-    
     }
     
     // бар собирателя
-    if (this.state.userEvent.collector > 0) {
-      this.state.userEvent.collector--;
+    if (this.state.userUnicorn.collector > 0) {
+      this.state.userUnicorn.collector--;
     } 
     
-    if (this.state.userEvent.herdBoostAnimals.length > 0) {
+    if (this.state.userUnicorn.herdBoostAnimals.length > 0) {
       this.startCreateHerdBoostAnimal = true;
     }
     if (this.startCreateHerdBoostAnimal) {
-      let freePositions: Iposition[] = this.getFreeBoostPositions();
-
+      const freePositions: Iposition[] = this.getFreeBoostPositions();
       this.createBoostAnimal(freePositions);
-
     }
 
     if (this.scene.isActive('Modal') && this.state.modal.type === 11) {
       this.game.scene.keys['Modal'].eventLeftTime.setText(shortTime(this.state.progress.event.endTime, this.state.lang));
     }
     // уменьшаем время буста комбикорм
-    if (this.state.userEvent.feedBoostTime > 0) {
-
+    if (this.state.userUnicorn.feedBoostTime > 0) {
       if (Phaser.Math.Between(0, 7) >= 5) { // чтобы не так часто появлялись сердца
-
-        let randomIndex: number = Phaser.Math.Between(0, this.animals.children.entries.length - 1);
-
+        const randomIndex: number = Phaser.Math.Between(0, this.animals.children.entries.length - 1);
         if (this.animals.children.entries[randomIndex].data.values.active.data.values.working) {
           Hearts.create(this, this.animals.children.entries[randomIndex].data.values.active);
         }
-        
       }
-
-      this.state.userEvent.feedBoostTime--;
-      this.game.scene.keys['EventBars'].feedBoostTime.setText(shortTime(this.state.userEvent.feedBoostTime,this.state.lang))
+      this.state.userUnicorn.feedBoostTime--;
+      this.game.scene.keys['UnicornBars'].feedBoostTime.setText(shortTime(this.state.userUnicorn.feedBoostTime,this.state.lang))
     }
     
     // автосохранение
@@ -131,53 +110,53 @@ function interval(): void {
     let proceeds: string = String(0);
     this.animals.children.entries.forEach(animal => {
       if (animal.data.values.active.data.values.working) {
-        let price: string = this.state.eventSettings.eventSettings.find((data: IeventPoints) => data.breed === animal.data.values.type).resourcePrice;
+        let price: string = this.state.unicornSettings.unicornSettings.find((data: IeventPoints) => data.breed === animal.data.values.type).resourcePrice;
         proceeds = BigInteger.add(proceeds, price);
       }
     });
     
-    if (this.state.userEvent.collector <= 0) proceeds = String(0);
+    if (this.state.userUnicorn.collector <= 0) proceeds = String(0);
     const text1: string = `${this.state.lang.income} ${shortNum(BigInteger.divide(proceeds, String(10)))}/${this.state.lang.seconds}`;
     const text2: string = `${shortNum(BigInteger.divide(proceeds, String(10)))}/${this.state.lang.seconds}`;
     const text3: string = `${this.state.lang.income} ${shortNum(BigInteger.divide(proceeds, String(10)))}/${this.state.lang.seconds}`;
+    
     if (
-      this.state.userEvent.collector > 0 && 
-      this.state.userEvent.feedBoostTime <= 0 && 
-      this.game.scene.keys['EventBars'].proceedsText.text !== text1
+      this.state.userUnicorn.collector > 0 && 
+      this.state.userUnicorn.feedBoostTime <= 0 && 
+      this.game.scene.keys['UnicornBars'].proceedsText.text !== text1
     ) {
-      this.game.scene.keys['EventBars'].proceedsText.setText(text1);
+      this.game.scene.keys['UnicornBars'].proceedsText.setText(text1);
   
     } else if (
-      this.state.userEvent.feedBoostTime > 0 &&
-      this.game.scene.keys['EventBars'].proceedsText.text !== text2
+      this.state.userUnicorn.feedBoostTime > 0 &&
+      this.game.scene.keys['UnicornBars'].proceedsText.text !== text2
     ) { 
-      this.game.scene.keys['EventBars'].proceedsText.setText(text2);
+      this.game.scene.keys['UnicornBars'].proceedsText.setText(text2);
     } else if (
-      this.state.userEvent.feedBoostTime <= 0 &&
-      this.game.scene.keys['EventBars'].proceedsText.text !== text3
+      this.state.userUnicorn.feedBoostTime <= 0 &&
+      this.game.scene.keys['UnicornBars'].proceedsText.text !== text3
     ) {
-      this.game.scene.keys['EventBars'].proceedsText.setText(text3);
+      this.game.scene.keys['UnicornBars'].proceedsText.setText(text3);
     } 
     
 
     // Обновление иконки feed буста
-    if (this.state.userEvent.maxLevelAnimal >= this.game.scene.keys['Event'].feedBoostLvl &&
+    if (this.state.userUnicorn.maxLevelAnimal >= this.game.scene.keys['Unicorn'].feedBoostLvl &&
     this.state.user.additionalTutorial.feedBoost) {
       
-      if (this.state.userEvent.feedBoostTime > 0 && !this.game.scene.keys['EventBars'].feedBoostTime.visible) {
-        this.game.scene.keys['EventBars'].proceedsText.y = 80;
-        this.game.scene.keys['EventBars'].proceedsText.setColor('#cbff40');
-        this.game.scene.keys['EventBars'].feedBoostDoubledIcon.setVisible(true);
-        this.game.scene.keys['EventBars'].feedBoostIcon.setVisible(true);
-        this.game.scene.keys['EventBars'].feedBoostTime.setVisible(true);
-      } else if (this.state.userEvent.feedBoostTime <= 0 && this.game.scene.keys['EventBars'].feedBoostTime.visible) {
-        this.game.scene.keys['EventBars'].proceedsText.y = 92;
-        this.game.scene.keys['EventBars'].proceedsText.setColor('#f2ede4');
-        this.game.scene.keys['EventBars'].feedBoostDoubledIcon.setVisible(false);
-        this.game.scene.keys['EventBars'].feedBoostIcon.setVisible(false);
-        this.game.scene.keys['EventBars'].feedBoostTime.setVisible(false);
+      if (this.state.userUnicorn.feedBoostTime > 0 && !this.game.scene.keys['UnicornBars'].feedBoostTime.visible) {
+        this.game.scene.keys['UnicornBars'].proceedsText.y = 80;
+        this.game.scene.keys['UnicornBars'].proceedsText.setColor('#cbff40');
+        this.game.scene.keys['UnicornBars'].feedBoostDoubledIcon.setVisible(true);
+        this.game.scene.keys['UnicornBars'].feedBoostIcon.setVisible(true);
+        this.game.scene.keys['UnicornBars'].feedBoostTime.setVisible(true);
+      } else if (this.state.userUnicorn.feedBoostTime <= 0 && this.game.scene.keys['UnicornBars'].feedBoostTime.visible) {
+        this.game.scene.keys['UnicornBars'].proceedsText.y = 92;
+        this.game.scene.keys['UnicornBars'].proceedsText.setColor('#f2ede4');
+        this.game.scene.keys['UnicornBars'].feedBoostDoubledIcon.setVisible(false);
+        this.game.scene.keys['UnicornBars'].feedBoostIcon.setVisible(false);
+        this.game.scene.keys['UnicornBars'].feedBoostTime.setVisible(false);
       }
-      
     }
 
     // повтор шага туториала про мерджинг животных
@@ -186,10 +165,8 @@ function interval(): void {
       !this.scene.isActive('Tutorial')) {
 
       this.mergTutor++;
-      let dragAnimal: any = this.animals.children.entries.find((data: any) => data.data.values.active.data.values.drag);
-
+      const dragAnimal: Phaser.GameObjects.Sprite = this.animals.children.entries.find((data: Phaser.GameObjects.Sprite) => data.data.values.active.data.values.drag);
       if (this.mergTutor > 5 && !dragAnimal) this.showEventTutorial();
-
     }
 
      // обновление времени евента
@@ -201,12 +178,12 @@ function interval(): void {
       } 
     }
 
-    if (this.state.progress.event.endTime <= 0 && this.scene.isActive('Event')) {
+    if (this.state.progress.event.endTime <= 0 && this.scene.isActive('Unicorn')) {
       this.autosave();
       this.scene.stop('Profile');
       this.scene.stop('MapBars');
-      this.scene.stop('Event');
-      this.scene.stop('EventBars');
+      this.scene.stop('Unicorn');
+      this.scene.stop('UnicornBars');
       this.scene.start('SheepPreload', this.state);
     }
 
@@ -217,14 +194,13 @@ function interval(): void {
       }
     }
     
-    if (this.state.userEvent.timeToAd > 0) {
-      --this.state.userEvent.timeToAd;
+    if (this.state.userUnicorn.timeToAd > 0) {
+      --this.state.userUnicorn.timeToAd;
     }
 
     this.intervalPorgressCollectorTime();
 
   }, callbackScope: this, loop: true });
-
 }
 
 export default interval;

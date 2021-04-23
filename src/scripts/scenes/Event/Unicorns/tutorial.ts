@@ -12,10 +12,10 @@ function showEventTutorial(additional: boolean | string = false): void {
     step: this.state.user.additionalTutorial.eventTutorial,
     additional: additional
   }
-  if (this.game.scene.keys['Event'].mergPointer) {
+  if (this.game.scene.keys['Unicorn'].mergPointer) {
     
-    this.game.scene.keys['Event'].mergPointer?.data?.values.animal?.destroy();
-    this.game.scene.keys['Event'].mergPointer?.destroy();
+    this.game.scene.keys['Unicorn'].mergPointer?.data?.values.animal?.destroy();
+    this.game.scene.keys['Unicorn'].mergPointer?.destroy();
 
   }
   this.state.tutorial = tutorial;
@@ -29,11 +29,11 @@ function doneEventTutor_0(): void {
 
   // this.state.amplitude.getInstance().logEvent('event_started', {
   //   step: 0,
-  //   farm_id: 'Event'
+  //   farm_id: 'Unicorn'
   // });
   this.logAmplitudeEvent('tutorial', {
     step: 0,
-    farm_id: 'Event'
+    farm_id: 'Unicorn'
   });
   this.state.user.eventPoints = 0;
   this.state.user.additionalTutorial.eventTutorial = 10;
@@ -42,7 +42,7 @@ function doneEventTutor_0(): void {
   this.scene.stop(this.state.farm);
   this.scene.stop(this.state.farm + 'Bars');
   this.scene.stop('Profile');
-  this.scene.start('EventPreload', this.state);
+  this.scene.start('UnicornPreload', this.state);
   
 }
 
@@ -83,9 +83,9 @@ function doneEventTutor_30(): void {
     step: 30,
   });
   this.state.user.additionalTutorial.eventTutorial = 40;
-  this.game.scene.keys['EventBars'].animalBuy.setVisible(true);
-  this.game.scene.keys['EventBars'].animalPrice.setVisible(true);
-  this.game.scene.keys['EventBars'].animalPriceBubble.setVisible(true);
+  this.game.scene.keys['UnicornBars'].animalBuy.setVisible(true);
+  this.game.scene.keys['UnicornBars'].animalPrice.setVisible(true);
+  this.game.scene.keys['UnicornBars'].animalPriceBubble.setVisible(true);
   this.scene.stop('Tutorial');
   this.time.addEvent({ delay: 500, callback: (): void => {
     this.showEventTutorial();
@@ -155,11 +155,11 @@ function doneEventTutor_70(): void {
     step: 70,
   });
   this.state.user.additionalTutorial.eventTutorial = 80;
-  this.game.scene.keys['EventBars'].shop.setVisible(true);
-  this.game.scene.keys['EventBars'].map.setVisible(true);
-  this.game.scene.keys['EventBars'].collectorBtn.setVisible(true);
-  this.game.scene.keys['EventBars'].collector.setVisible(true);
-  this.game.scene.keys['EventBars'].collector.bubble.setVisible(true);
+  this.game.scene.keys['UnicornBars'].shop.setVisible(true);
+  this.game.scene.keys['UnicornBars'].map.setVisible(true);
+  this.game.scene.keys['UnicornBars'].collectorBtn.setVisible(true);
+  this.game.scene.keys['UnicornBars'].collector.setVisible(true);
+  this.game.scene.keys['UnicornBars'].collector.bubble.setVisible(true);
   this.scene.stop('Tutorial');
   
 }

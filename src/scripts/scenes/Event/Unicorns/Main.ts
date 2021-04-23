@@ -94,9 +94,9 @@ import {
   progressEventTutor_40,
   progressEventTutor_50
 } from './tutorial';
-class Event extends Phaser.Scene {
+class Unicorn extends Phaser.Scene {
   constructor() {
-    super('Event');
+    super('Unicorn');
   }
 
   public state: Istate;
@@ -104,7 +104,7 @@ class Event extends Phaser.Scene {
   public animals: Phaser.Physics.Arcade.Group;
   public territories: Phaser.Physics.Arcade.Group;
   public resources: Phaser.Physics.Arcade.Group;
-  public bubble: Phaser.GameObjects.Graphics;;
+  public bubble: Phaser.GameObjects.Graphics;
   public bubbleText: Phaser.GameObjects.Text;
   public topIndent: number = 140; // верхний отступ для блоков территорий
   public bottomIndent: number = 240; // нижний отступ мира (не считая нахлест)
@@ -167,7 +167,6 @@ class Event extends Phaser.Scene {
   public checkMerging = checkMerging.bind(this);
   public teleportation = teleportation.bind(this);
   public animalBrain = animalBrain.bind(this);
-  public collisions = collisions.bind(this);
   public reverse = reverse.bind(this);
   public aim = aim.bind(this);
   public getResource = getResource.bind(this);
@@ -187,7 +186,6 @@ class Event extends Phaser.Scene {
   public tryTask = tryTask.bind(this);
   public buildFlowers = buildFlowers.bind(this);
   public buildConfetti = buildConfetti.bind(this);
-
   public autoprogress = autoprogress.bind(this);
   public getEventRaiting = getEventRaiting.bind(this);
   public doubleClick = doubleClick.bind(this);
@@ -209,12 +207,11 @@ class Event extends Phaser.Scene {
   
   public init(state: Istate): void {
     this.state = state;
-    console.log('Event');
-    this.state.farm = 'Event';
+    console.log('Unicorn');
+    this.state.farm = 'Unicorn';
     this.collectorTimer = null;
 
-    if (this.state.userEvent.takenHerdBoost <= 0) this.state.userEvent.takenHerdBoost = 1;
-    
+    if (this.state.userUnicorn.takenHerdBoost <= 0) this.state.userUnicorn.takenHerdBoost = 1;
   }
 
 
@@ -236,7 +233,6 @@ class Event extends Phaser.Scene {
     //   //   tasks[i].got_awarded = 1;
     //   // }
     // });
-
   }
 
 
@@ -244,33 +240,24 @@ class Event extends Phaser.Scene {
     this.animalBrain();
     this.updateTeleportation();  
     if (!this.scene.isActive('Tutorial')) this.dragEventAnimal(true);
-
     if (this.state.user.additionalTutorial.eventTutorial === 30) {
-   
       if (this.animals.children.entries.length > 1) {
         this.doneEventTutor_30();
       }
-      
     }  
 
     if (this.state.user.additionalTutorial.eventTutorial === 40) {
-
-      if (this.state.userEvent.maxLevelAnimal >= 2) {
+      if (this.state.userUnicorn.maxLevelAnimal >= 2) {
         this.doneEventTutor_40();
       }
     }
     
     if (this.state.user.additionalTutorial.eventTutorial === 50 && !this.scene.isActive('Tutorial')) {
-      
       this.animals.children.entries.forEach((animal) => {
         if (animal.data.values.active.data.values.working) this.doneEventTutor_50();
       });
-
     }
-    
   }
-
-
 }
 
-export default Event;
+export default Unicorn;

@@ -439,9 +439,9 @@ interface IcowSettings {
   feedBoostPrice: number;
 }
 interface IeventSettings {
-  eventSettings: IeventPoints[]; // нужно попарвить
-  territoriesEventPrice: IeventTerritoriesPrice[];
-  territoriesEventSettings: IterritoriesEventSettings[];
+  unicornSettings: IeventPoints[]; // нужно попарвить
+  territoriesUnicornPrice: IeventTerritoriesPrice[];
+  territoriesUnicornSettings: IterritoriesEventSettings[];
   buyBetterBreedAnimal: number;
   doubledСollectorPrice: number;
   collectorPrice4: number;
@@ -537,6 +537,7 @@ interface IeventProgress {
   eventRaitings: IeventRaiting[];
   userEventRaiting: IeventRaiting;
   updateRaitings: boolean;
+  type: number;
 }
 interface Iprogress {
   sheep: IpartProgress;
@@ -624,7 +625,7 @@ interface Istate {
   sheepSettings: IsheepSettings;
   chickenSettings: IchickenSettings;
   cowSettings: IcowSettings;
-  eventSettings: IeventSettings;
+  unicornSettings: IeventSettings;
   chickenTerritories: Iterritories[];
   cowTerritories: Iterritories[];
   sheepTerritories: Iterritories[];
@@ -644,7 +645,7 @@ interface Istate {
   userSheep: IuserSheep;
   userChicken: IuserChicken;
   userCow: IuserCow;
-  userEvent: IuserEvent;
+  userUnicorn: IuserEvent;
   convertor: Iconvertor;
   exchangeTerritory: number;
   farm: string;

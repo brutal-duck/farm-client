@@ -1284,7 +1284,7 @@ function profileWindow(): void {
   let avatar: Phaser.GameObjects.Sprite;
   let login: string = this.state.user.login;
   let farm: string = this.state.farm.toLowerCase();
-  let userFarmPart: number = this.state.farm !== 'Event' ? 
+  let userFarmPart: number = this.state.farm !== 'Unicorn' ? 
   this.state[`user${this.state.farm}`].part : 
   this.state[`user${this.state.farm}`].maxLevelAnimal;
 

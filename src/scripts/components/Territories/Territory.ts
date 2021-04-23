@@ -196,6 +196,11 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     this.repository = this.scene.add.sprite(this.x + 120, this.y + 240, type)
       .setDepth(this.y + 1)
       .setOrigin(0.5, 1);
+    
+    this.improveText.setPosition(this.improveText.x + 140, this.improveText.y + 113);
+    this.improveText.setStyle({fontSize: '32px'});
+    this.improveText.setDepth(10000);
+    this.improveText.setText('20')
   }
 
   private createHouseSprite(): void {
@@ -757,6 +762,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       }
     }
   }
+
   public preUpdate(time: number, delta: number): void {
     super.preUpdate(time, delta);
     this.checkAndSetRepositoryAnim();
@@ -852,6 +858,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       }
     }
   }
+  
   private startProduction(): void {
     const productId = this.getRandomProductId();
     if (productId) {

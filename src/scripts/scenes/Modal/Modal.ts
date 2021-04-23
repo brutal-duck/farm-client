@@ -275,7 +275,7 @@ class Modal extends Phaser.Scene {
         this.donate();
         break;
       case 8: // окно стадного буста
-        if (this.state.farm !== 'Event') {
+        if (this.state.farm !== 'Unicorn') {
           this.herdBoostWindow();
         } else {
           this.eventDrag();

@@ -173,7 +173,7 @@ class Shop extends Phaser.Scene {
     if (this.state.farm === 'Sheep') this.load.image('icon-shop-sheep', iconShopSheep);
     if (this.state.farm === 'Chicken') this.load.image('icon-shop-chicken', iconShopChicken);
     if (this.state.farm === 'Cow') this.load.image('icon-shop-cow', iconShopCow);
-    if (this.state.farm === 'Event') this.load.image('icon-shop-event', iconShopEvent);
+    if (this.state.farm === 'Unicorn') this.load.image('icon-shop-event', iconShopEvent);
     this.load.image('icon-shop-boosts', iconShopBoosts);
     this.load.image('bank-package', bankPackage);
     this.load.image('stock-tape', stockTape);
@@ -181,12 +181,12 @@ class Shop extends Phaser.Scene {
     if (this.state.farm === 'Sheep') this.load.image('sheep-money-package', sheepMoneyPackage);
     if (this.state.farm === 'Chicken') this.load.image('chicken-money-package', chickenMoneyPackage);
     if (this.state.farm === 'Cow') this.load.image('cow-money-package', cowMoneyPackage);
-    if (this.state.farm === 'Event') this.load.image('event-money-package', eventMoneyPackage);
+    if (this.state.farm === 'Unicorn') this.load.image('event-money-package', eventMoneyPackage);
     this.load.image('animal-shop-bg', animalShopBg);
     if (this.state.farm === 'Sheep') this.load.image('shop-sheep-wool-collector', shopWoolCollector);
     if (this.state.farm === 'Chicken') this.load.image('shop-chicken-egg-collector', shopEggCollector);
     if (this.state.farm === 'Cow') this.load.image('shop-cow-milk-collector', shopMilkCollector);
-    if (this.state.farm === 'Event') this.load.image('shop-event-resource-collector', shopResourceCollector);
+    if (this.state.farm === 'Unicorn') this.load.image('shop-event-resource-collector', shopResourceCollector);
     this.load.image('shop-btn-disable', shopBtnDisable);
     this.load.image('boost-btn', boostBtn);
     this.load.image('boost-btn-disable', boostBtnDisable);
@@ -199,11 +199,11 @@ class Shop extends Phaser.Scene {
     if (this.state.farm === 'Sheep') this.load.image('sheep-herd-boost-icon', herdBoostSheepIcon);
     if (this.state.farm === 'Chicken') this.load.image('chicken-herd-boost-icon', herdBoostChickenIcon);
     if (this.state.farm === 'Cow') this.load.image('cow-herd-boost-icon', herdBoostCowIcon);
-    if (this.state.farm === 'Event') this.load.image('event-herd-boost-icon', herdBoostEventIcon);
+    if (this.state.farm === 'Unicorn') this.load.image('unicorn-herd-boost-icon', herdBoostEventIcon);
     if (this.state.farm === 'Sheep') this.load.image('sheep-feed-boost-icon', feedBoostSheepIcon);
     if (this.state.farm === 'Chicken') this.load.image('chicken-feed-boost-icon', feedBoostChickenIcon);
     if (this.state.farm === 'Cow') this.load.image('cow-feed-boost-icon', feedBoostCowIcon);
-    if (this.state.farm === 'Event') this.load.image('event-feed-boost-icon', feedBoostEventIcon);
+    if (this.state.farm === 'Unicorn') this.load.image('unicorn-feed-boost-icon', feedBoostEventIcon);
 
   }
 
@@ -226,8 +226,8 @@ class Shop extends Phaser.Scene {
     };
     this.scrolling = new Scrolling(this, cameraOptions);
 
-    if (this.state.farm === 'Event' && this.state.modal.shopType === 3 && this.game.scene.keys['Event'].scrollPoint) {
-      this.scrolling.scrollY = this.game.scene.keys['Event'].scrollPoint
+    if (this.state.farm === 'Unicorn' && this.state.modal.shopType === 3 && this.game.scene.keys['Unicorn'].scrollPoint) {
+      this.scrolling.scrollY = this.game.scene.keys['Unicorn'].scrollPoint
     }
 
     this.input.on('pointerup', (): void => {
@@ -244,14 +244,14 @@ class Shop extends Phaser.Scene {
       if (this.state.farm === 'Sheep') this.sheepMoney();
       else if (this.state.farm === 'Chicken') this.chickenMoney();
       else if (this.state.farm === 'Cow') this.cowMoney();
-      else if (this.state.farm === 'Event') this.animalMoney();
+      else if (this.state.farm === 'Unicorn') this.animalMoney();
 
     } else if (this.state.modal.shopType === 3) {
 
       if (this.state.farm === 'Sheep') this.sheep();
       else if (this.state.farm === 'Chicken') this.chicken();
       else if (this.state.farm === 'Cow') this.cow();
-      else if (this.state.farm === 'Event') this.animals();
+      else if (this.state.farm === 'Unicorn') this.animals();
 
     } else if (this.state.modal.shopType === 4) {   
       this.boosts();
@@ -269,13 +269,13 @@ class Shop extends Phaser.Scene {
 
     this.updateFeedBoostBtn();
 
-    if (this.state.farm === 'Event') {
+    if (this.state.farm === 'Unicorn') {
       this.updateEventHerdBoostBtn();
       this.updateEventFeedBoostBtn();
     }
 
-    if (this.state.farm === 'Event' && this.state.modal.shopType === 3) {
-      this.game.scene.keys['Event'].scrollPoint = this.scrolling.scrollY;
+    if (this.state.farm === 'Unicorn' && this.state.modal.shopType === 3) {
+      this.game.scene.keys['Unicorn'].scrollPoint = this.scrolling.scrollY;
     }
     
   }
@@ -316,7 +316,7 @@ class Shop extends Phaser.Scene {
         this.feedBoost();
       }
 
-    } else if (this.state.farm === 'Event') {
+    } else if (this.state.farm === 'Unicorn') {
       this.eventCollectorBoost();
 
       if (this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].herdBoostLvl && 
@@ -342,7 +342,7 @@ class Shop extends Phaser.Scene {
     if (!this.state.user.starterpack && 
       (this.state.userSheep?.part > 4 ||
         this.state.userChicken?.part >= 1 ||
-        this.state.userEvent?.maxLevelAnimal >= 1 ||
+        this.state.userUnicorn?.maxLevelAnimal >= 1 ||
         this.state.userCow?.part >= 1
       )) {
 
@@ -405,7 +405,7 @@ class Shop extends Phaser.Scene {
       if (!this.state.user.starterpack && 
         (this.state.userSheep?.part > 4 ||
           this.state.userChicken?.part >= 1 ||
-          this.state.userEvent?.maxLevelAnimal >= 1 ||
+          this.state.userUnicorn?.maxLevelAnimal >= 1 ||
           this.state.userCow?.part >= 1
         )) y += 248;
       
@@ -453,7 +453,7 @@ class Shop extends Phaser.Scene {
         !this.state.user.starterpack && 
         (this.state.userSheep?.part > 4 ||
           this.state.userChicken?.part >= 1 ||
-          this.state.userEvent?.maxLevelAnimal >= 1 ||
+          this.state.userUnicorn?.maxLevelAnimal >= 1 ||
           this.state.userCow?.part >= 1
         )) {
         let starterpackIcon: Phaser.GameObjects.Image = this.add.image(30, y + this.height + 20, 'starterpack-icon').setScale(0.4);
@@ -539,7 +539,7 @@ class Shop extends Phaser.Scene {
           !this.state.user.starterpack && 
           (this.state.userSheep?.part > 4 ||
           this.state.userChicken?.part >= 1 ||
-          this.state.userEvent?.maxLevelAnimal >= 1 ||
+          this.state.userUnicorn?.maxLevelAnimal >= 1 ||
           this.state.userCow?.part >= 1
         )) {
           let starterpackIcon: Phaser.GameObjects.Image = this.add.image(270, y + this.height + 20, 'starterpack-icon').setScale(0.4).setDepth(3);

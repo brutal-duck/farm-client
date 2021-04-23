@@ -200,9 +200,9 @@ class Preload extends Phaser.Scene {
     if (this.state.farm === 'Sheep') this.load.image('shop-sheep-wool-collector', shopWoolCollector);
     if (this.state.farm === 'Chicken') this.load.image('shop-chicken-egg-collector', shopEggCollector);
     if (this.state.farm === 'Cow') this.load.image('shop-cow-milk-collector', shopMilkCollector);
-    if (this.state.farm === 'Event') this.load.image('icon-shop-event', iconShopEvent);
-    if (this.state.farm === 'Event') this.load.image('event-money-package', eventMoneyPackage);
-    if (this.state.farm === 'Event') this.load.image('shop-event-resource-collector', shopResourceCollector);
+    if (this.state.farm === 'Unicorn') this.load.image('icon-shop-event', iconShopEvent);
+    if (this.state.farm === 'Unicorn') this.load.image('event-money-package', eventMoneyPackage);
+    if (this.state.farm === 'Unicorn') this.load.image('shop-event-resource-collector', shopResourceCollector);
     this.load.image('shop-btn-disable', shopBtnDisable);
     this.load.image('boost-btn', boostBtn);
     this.load.image('boost-btn-disable', boostBtnDisable);
@@ -266,7 +266,7 @@ class Preload extends Phaser.Scene {
     if (this.state.farm === 'Sheep') this.load.image('herd-boost-road-sheep', herdBoostRoadSheep);
     if (this.state.farm === 'Chicken') this.load.image('herd-boost-road-chicken', herdBoostRoadChicken);
     if (this.state.farm === 'Cow') this.load.image('herd-boost-road-cow', herdBoostRoadCow);
-    if (this.state.farm === 'Event') this.load.image('herd-boost-road-event', herdBoostRoadEvent);
+    if (this.state.farm === 'Unicorn') this.load.image('herd-boost-road-event', herdBoostRoadEvent);
     this.load.image('bad-merging-animation', badMergingAnimation);
     this.load.image('boost-window-bg', boostWindowBg);
     this.load.image('boost-countdown', boostCountdown);

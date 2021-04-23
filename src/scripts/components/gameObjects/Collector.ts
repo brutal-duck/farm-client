@@ -1,7 +1,7 @@
 import { shortTime } from "../../general/basic";
 import SheepBars from '../../scenes/Sheep/SheepBars';
 import ChickenBars from '../../scenes/Chicken/ChickenBars';
-import EventBars from '../../scenes/Event/Unicorns/EventBars';
+import UnicornBars from '../../scenes/Event/Unicorns/UnicornBars';
 import CowBars from '../../scenes/Cow/CowBars';
 
 /**
@@ -23,7 +23,7 @@ export default class Collector extends Phaser.GameObjects.Text {
   public color: number;
   public weight: number;
   public collector: Phaser.GameObjects.Graphics;
-  public scene: SheepBars | ChickenBars | EventBars | CowBars;
+  public scene: SheepBars | ChickenBars | UnicornBars | CowBars;
   public percent: number;
   public bubble: Phaser.GameObjects.Graphics;
   public pulseTimer: number = 0;
@@ -31,7 +31,7 @@ export default class Collector extends Phaser.GameObjects.Text {
   private time: number;
 
   constructor(
-    scene: SheepBars | ChickenBars | EventBars | CowBars,
+    scene: SheepBars | ChickenBars | UnicornBars | CowBars,
     x: number,
     y: number,
     radius: number,
@@ -52,7 +52,7 @@ export default class Collector extends Phaser.GameObjects.Text {
     this.init();
   }
 
-  static create(scene: SheepBars | ChickenBars | EventBars | CowBars, x: number = 400, y: number = 300, radius: number = 40): Collector {
+  static create(scene: SheepBars | ChickenBars | UnicornBars | CowBars, x: number = 400, y: number = 300, radius: number = 40): Collector {
     return new Collector(scene, x, y, radius);
   }
 
@@ -62,7 +62,7 @@ export default class Collector extends Phaser.GameObjects.Text {
     this.setDepth(this.scene.height);
     this.setOrigin(0.5, 0.5);
 
-    if (this.scene.state.farm === 'Event') {
+    if (this.scene.state.farm === 'Unicorn') {
       this.weight = 15;
       this.color = 0x750296;
     }
@@ -130,12 +130,12 @@ export default class Collector extends Phaser.GameObjects.Text {
   private setPulseAnimation(): void {
     if ((this.scene.state[`user${this.scene.state.farm}`].collector === 0 
       && this.scene.state.farm !== 'Sheep'
-      && this.scene.state.farm !== 'Event') 
+      && this.scene.state.farm !== 'Unicorn') 
       || (this.scene.state[`user${this.scene.state.farm}`].collector === 0 
       && this.scene.state[`user${this.scene.state.farm}`].tutorial >= 100 
       && this.scene.state.farm === 'Sheep') || (
       this.scene.state.user.additionalTutorial.eventTutorial > 70 
-      && this.scene.state.farm === 'Event' && this.scene.state[`user${this.scene.state.farm}`].collector === 0 
+      && this.scene.state.farm === 'Unicorn' && this.scene.state[`user${this.scene.state.farm}`].collector === 0 
       )) {
       this.pulseTimer++;
       if (this.pulseTimer === 20) this.setPulseColor(false);

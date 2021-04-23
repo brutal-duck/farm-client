@@ -149,7 +149,7 @@ export default function typePreload(): void {
         if (this.state.farm === 'Sheep') this.load.image('herd-boost-road-sheep', herdBoostRoadSheep);
         if (this.state.farm === 'Chicken') this.load.image('herd-boost-road-chicken', herdBoostRoadChicken);
         if (this.state.farm === 'Cow') this.load.image('herd-boost-road-cow', herdBoostRoadCow);
-        if (this.state.farm === 'Event') this.load.image('herd-boost-road-event', herdBoostRoadEvent);
+        if (this.state.farm === 'Unicorn') this.load.image('herd-boost-road-unicorn', herdBoostRoadEvent);
         this.load.image('bad-merging-animation', badMergingAnimation);
         this.load.image('boost-window-bg', boostWindowBg);
         this.load.image('boost-countdown', boostCountdown);

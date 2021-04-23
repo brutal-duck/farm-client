@@ -1,7 +1,7 @@
 import Sheep from '../../scenes/Sheep/Main';
 import Cow from '../../scenes/Cow/Main';
 import Chicken from '../../scenes/Chicken/Main';
-import Event from '../../scenes/Event/Unicorns/Main';
+import Unicorn from '../../scenes/Event/Unicorns/Main';
 
 /**
   *  Анимация облака в позиции сцен    
@@ -13,19 +13,19 @@ import Event from '../../scenes/Event/Unicorns/Main';
 */
 export default class MergingCloud {
 
-  private scene: Sheep | Cow | Event | Chicken;
+  private scene: Sheep | Cow | Unicorn | Chicken;
   private position: Iposition | Phaser.GameObjects.Sprite | Phaser.Physics.Arcade.Sprite;
   private clouds: Phaser.GameObjects.Group;
   private type: boolean;
   
-  constructor(scene: Sheep | Cow | Event | Chicken, position: Iposition | Phaser.GameObjects.Sprite | Phaser.Physics.Arcade.Sprite, type: boolean = false) {
+  constructor(scene: Sheep | Cow | Unicorn | Chicken, position: Iposition | Phaser.GameObjects.Sprite | Phaser.Physics.Arcade.Sprite, type: boolean = false) {
     this.scene = scene;
     this.position = position;
     this.type = type;
     this.init();
   }
   
-  static create(scene: Sheep | Cow | Event | Chicken, position: Iposition | Phaser.GameObjects.Sprite | Phaser.Physics.Arcade.Sprite, type: boolean = false): MergingCloud {
+  static create(scene: Sheep | Cow | Unicorn | Chicken, position: Iposition | Phaser.GameObjects.Sprite | Phaser.Physics.Arcade.Sprite, type: boolean = false): MergingCloud {
     return new MergingCloud(scene, position, type);
   }
 

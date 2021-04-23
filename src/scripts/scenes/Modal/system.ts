@@ -89,7 +89,7 @@ function systemWindow(): void {
         this.chickenTerritory();
       } else if (this.state.farm === 'Cow') {
         this.cowTerritory();
-      } else if (this.state.farm === 'Event') {
+      } else if (this.state.farm === 'Unicorn') {
         this.eventTerritory();
       }
       
@@ -114,7 +114,7 @@ function systemWindow(): void {
         this.chickenConvertor();
       } else if (this.state.farm === 'Cow') {
         this.cowConvertor();
-      } else if (this.state.farm === 'Event') {
+      } else if (this.state.farm === 'Unicorn') {
         this.eventConvertor();
       }
 
@@ -140,7 +140,7 @@ function systemWindow(): void {
         this.confirmExpelChicken();
       } else if (this.state.farm === 'Cow') {
         this.confirmExpelCow();
-      } else if (this.state.farm === 'Event') {
+      } else if (this.state.farm === 'Unicorn') {
         this.confirmExpelAnimal();
       }
       
@@ -180,7 +180,7 @@ function systemWindow(): void {
 
     case 10: // окно улучшения собирателя
       
-      if (this.state.farm !== 'Event') {
+      if (this.state.farm !== 'Unicorn') {
         this.improveCollector();
       } else {
         this.improveCollectorEvent();

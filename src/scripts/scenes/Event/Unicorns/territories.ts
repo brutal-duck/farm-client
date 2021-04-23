@@ -2,8 +2,8 @@ import Firework from '../../../components/animations/Firework';
 import BigInteger from './../../../libs/BigInteger';
 function deleteTerritoriesLocks(): void {
 
-  let lvl: number = this.state.userEvent.maxLevelAnimal;
-  let prices: IeventTerritoriesPrice[] = this.state.eventSettings.territoriesEventPrice;
+  let lvl: number = this.state.userUnicorn.maxLevelAnimal;
+  let prices: IeventTerritoriesPrice[] = this.state.unicornSettings.territoriesUnicornPrice;
 
   for (let i in this.territories.children.entries) {
     
@@ -30,16 +30,16 @@ function deleteTerritoriesLocks(): void {
 function buyTerritory(): void {
 
   let settings: IeventTerritoriesPrice;
-  settings = this.state.eventSettings.territoriesEventPrice.find((data: IeventTerritoriesPrice) => data.block === this.state.territory.data.values.block && data.position === this.state.territory.data.values.position);
+  settings = this.state.unicornSettings.territoriesUnicornPrice.find((data: IeventTerritoriesPrice) => data.block === this.state.territory.data.values.block && data.position === this.state.territory.data.values.position);
   if (!settings) return;
   if (this.state.territory.data.values.type === 0) {
 
-    if (this.state.userEvent.maxLevelAnimal >= settings.unlock) {
+    if (this.state.userUnicorn.maxLevelAnimal >= settings.unlock) {
   
   
         let price: number = settings.price;
         
-        if (BigInteger.greaterThanOrEqual(this.state.userEvent.money, String(price))) {
+        if (BigInteger.greaterThanOrEqual(this.state.userUnicorn.money, String(price))) {
           
           this.state.amplitude.getInstance().logEvent('buy_territory', {
             block: this.state.territory.data.values.block,
@@ -49,7 +49,7 @@ function buyTerritory(): void {
       
           this.state.territory.data.values.type = 2;
           
-          this.state.userEvent.money = BigInteger.subtract(this.state.userEvent.money, String(price));
+          this.state.userUnicorn.money = BigInteger.subtract(this.state.userUnicorn.money, String(price));
       
           const territory: Phaser.Physics.Arcade.Sprite = this.state.territory;
       
@@ -66,7 +66,7 @@ function buyTerritory(): void {
       
           } else {
             
-            let count: string = BigInteger.subtract(String(price), this.state.userEvent.money)
+            let count: string = BigInteger.subtract(String(price), this.state.userUnicorn.money)
             let diamonds: number = this.convertMoney(count);
             this.state.convertor = {
               fun: 6,

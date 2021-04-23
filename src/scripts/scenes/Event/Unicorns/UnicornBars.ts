@@ -23,9 +23,9 @@ import Collector from '../../../components/gameObjects/Collector';
 import BarsMenu from '../../../components/gameObjects/BarsMenu';
 import BigInteger from '../../../libs/BigInteger';
 
-class EventBars extends Phaser.Scene {
+class UnicornBars extends Phaser.Scene {
   constructor() {
-    super('EventBars');
+    super('UnicornBars');
   }
   
   public state: Istate;
@@ -95,7 +95,7 @@ class EventBars extends Phaser.Scene {
     this.click(raitingZone, () => {
       if (this.state.user.additionalTutorial.eventTutorial > 70) {
 
-        this.game.scene.keys['Event'].getEventRaiting();
+        this.game.scene.keys['Unicorn'].getEventRaiting();
         const modal: Imodal = {
           type: 11
         }
@@ -131,7 +131,7 @@ class EventBars extends Phaser.Scene {
     // быстрая покупка Животного
     this.clickButton(this.animalBuy, (): void => {
       if (this.state.user.additionalTutorial.eventTutorial > 70 || this.state.user.additionalTutorial.eventTutorial === 30)
-      this.game.scene.keys[this.state.farm].buyAnimal(this.game.scene.keys['Event'].maxBreedForBuy());
+      this.game.scene.keys[this.state.farm].buyAnimal(this.game.scene.keys['Unicorn'].maxBreedForBuy());
       this.updateAnimalPrice();
     });
     
@@ -253,7 +253,7 @@ class EventBars extends Phaser.Scene {
 
     this.feedBoostDoubledIcon = this.add.image(this.cameras.main.centerX + 60, 50, 'double-feed-boost').setVisible(false);
     this.feedBoostIcon = this.add.image(this.cameras.main.centerX - 50, 105, 'event-feed-boost-mini').setVisible(false);
-    this.feedBoostTime = this.add.text(this.feedBoostIcon.getBounds().right + 5, 105, shortTime(this.state.userEvent.feedBoostTime, this.state.lang), {
+    this.feedBoostTime = this.add.text(this.feedBoostIcon.getBounds().right + 5, 105, shortTime(this.state.userUnicorn.feedBoostTime, this.state.lang), {
       font: '21px Shadow',
       color: '#f2ede4'
     }).setOrigin(0, 0.5).setVisible(false);
@@ -342,8 +342,8 @@ class EventBars extends Phaser.Scene {
       this.diamonds.setText(String(shortNum(this.userDiamonds)));
     }
     // установка денег 
-    if (this.money.text !== String(shortNum(this.state.userEvent.money))) {
-      this.money.setText(shortNum(this.state.userEvent.money));
+    if (this.money.text !== String(shortNum(this.state.userUnicorn.money))) {
+      this.money.setText(shortNum(this.state.userUnicorn.money));
     }    
 
     // актуальный статус кнопки покупки курицы
@@ -361,8 +361,8 @@ class EventBars extends Phaser.Scene {
   // обновление цены покупки кур
   public updateAnimalPrice(): void {
     
-    let breed: number = this.game.scene.keys['Event'].maxBreedForBuy();
-    let price: string = String(shortNum(this.game.scene.keys['Event'].animalPrice(breed).price));
+    let breed: number = this.game.scene.keys['Unicorn'].maxBreedForBuy();
+    let price: string = String(shortNum(this.game.scene.keys['Unicorn'].animalPrice(breed).price));
     let animalIcon: string = 'event-buy-icon-' + breed;
     this.animalBuy.setTexture(animalIcon);
     this.animalPrice.setText(price);
@@ -377,17 +377,17 @@ class EventBars extends Phaser.Scene {
   // затемнение на кнопке покупки животного
   public buyAnimalStatus(): void {
 
-    let breed: number = this.game.scene.keys['Event'].maxBreedForBuy();
+    let breed: number = this.game.scene.keys['Unicorn'].maxBreedForBuy();
     let price: string = this.game.scene.keys[this.state.farm].animalPrice(breed).price
     
-    if ((this.state.userEvent.herdBoostAnimals.length > 0 || 
-      BigInteger.greaterThan(price, this.state.userEvent.money) || 
+    if ((this.state.userUnicorn.herdBoostAnimals.length > 0 || 
+      BigInteger.greaterThan(price, this.state.userUnicorn.money) || 
       (this.state.user.additionalTutorial.eventTutorial < 70 &&
       this.state.user.additionalTutorial.eventTutorial !== 30)) && 
       this.animalBuy.tintBottomLeft === 0xFFFFFF) {
       this.animalBuy.setTint(0x777777);
-    } else if (this.state.userEvent.herdBoostAnimals.length <= 0 && 
-      BigInteger.lessThanOrEqual(price, this.state.userEvent.money) &&
+    } else if (this.state.userUnicorn.herdBoostAnimals.length <= 0 && 
+      BigInteger.lessThanOrEqual(price, this.state.userUnicorn.money) &&
       this.animalBuy.tintBottomLeft === 0x777777 &&
       (this.state.user.additionalTutorial.eventTutorial > 70 ||
       this.state.user.additionalTutorial.eventTutorial === 30)) {
@@ -398,4 +398,4 @@ class EventBars extends Phaser.Scene {
 
 }
 
-export default EventBars;
+export default UnicornBars;

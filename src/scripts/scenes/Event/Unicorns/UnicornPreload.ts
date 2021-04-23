@@ -1092,7 +1092,7 @@ const testEventSettings: IeventSettings = {
   unlockCollector4: 5,
   unlockCollector12: 8,
   priceCoefficient: 7,
-  eventSettings: [
+  unicornSettings: [
     { 
       breed: 1, 
       resource: 100, 
@@ -1794,7 +1794,7 @@ const testEventSettings: IeventSettings = {
       exchange: '3713820117856140000000000000000000'
     },
   ],
-  territoriesEventPrice: [
+  territoriesUnicornPrice: [
     { block: 3, position: 1, diamond: 0, price: 0, unlock: 0 },
     { block: 3, position: 2, diamond: 0, price: 0, unlock: 0 },
     { block: 3, position: 3, diamond: 0, price: 0, unlock: 0 },
@@ -1808,7 +1808,7 @@ const testEventSettings: IeventSettings = {
     { block: 6, position: 2, diamond: 300, price: 150000, unlock: 14 },
     { block: 6, position: 3, diamond: 400, price: 200000, unlock: 16 },
   ],
-  territoriesEventSettings: [
+  territoriesUnicornSettings: [
     { improve: 1, regeneration: 11, countResources: 5, unlock_improve: 1, resourceStorage: 200 },
     { improve: 2, regeneration: 22, countResources: 5, unlock_improve: 2, resourceStorage: 700 },
     { improve: 3, regeneration: 33, countResources: 5, unlock_improve: 5, resourceStorage: 1500 },
@@ -1827,7 +1827,7 @@ class EventPreload extends Phaser.Scene {
   public loadingScreen = loadingScreen.bind(this);
 
   constructor() {
-    super('EventPreload');
+    super('UnicornPreload');
   }
 
   
@@ -1838,10 +1838,10 @@ class EventPreload extends Phaser.Scene {
     this.loadingReady = false;
     this.loadUser();
     // ---------- Тестовые настройки, не с бека --------//
-    this.state.eventSettings = testEventSettings;
+    this.state.unicornSettings = testEventSettings;
     this.state.eventCollectorSettings = testCollector;
     // ------------------------------------------------//
-    this.state.farm = 'Event';
+    this.state.farm = 'Unicorn';
     this.startTime = Math.round(new Date().getTime() / 1000);
 
     if (!this.state.socket) {
@@ -1853,7 +1853,7 @@ class EventPreload extends Phaser.Scene {
   }
   
   public preload(): void {
-    this.loadingScreen('Event');
+    this.loadingScreen('Unicorn');
     
     this.load.image('bg', bg);
     this.load.image('event-top', top);
@@ -1870,7 +1870,7 @@ class EventPreload extends Phaser.Scene {
     this.load.image('event-for-buying', forBuying);
     this.load.image('lock-event-territory', lockTerritory);
     this.load.image('merging-animation', mergingAnimation);
-    this.load.image('eventCoin', coin);
+    this.load.image('unicornCoin', coin);
     this.load.image('diamond', diamond);
     this.load.image('lock', lock);
     this.load.image('gift', gift);
@@ -1892,10 +1892,10 @@ class EventPreload extends Phaser.Scene {
     this.load.image('event-forest-5', forest5);
     this.load.image('event-forest-6', forest6);
 
-    this.load.image('event-vertical-border', verticalBorder);
-    this.load.image('event-horizontal-border-1', horizontalBorder1);
-    this.load.image('event-horizontal-border-2', horizontalBorder2);
-    this.load.image('event-horizontal-border-3', horizontalBorder3);
+    this.load.image('unicorn-vertical-border', verticalBorder);
+    this.load.image('unicorn-horizontal-border-1', horizontalBorder1);
+    this.load.image('unicorn-horizontal-border-2', horizontalBorder2);
+    this.load.image('unicorn-horizontal-border-3', horizontalBorder3);
 
 
     this.load.image('event-work-zone', eventWorkZone);
@@ -2107,8 +2107,8 @@ class EventPreload extends Phaser.Scene {
     this.load.image('event-resource', resource);
 
     this.load.image('pixel', pixel);
-    this.load.image('event-merging', merging);
-    this.load.image('event-tent', tent);
+    this.load.image('unicorn-merging', merging);
+    this.load.image('unicorn-tent', tent);
 
     this.load.image('flower1', flower1);
     this.load.image('flower2', flower2);
@@ -2192,8 +2192,8 @@ class EventPreload extends Phaser.Scene {
       this.state.offlineTime += this.startTime;
       
       this.scene.stop();
-      this.scene.start('Event', this.state); // сцена с евентом
-      this.scene.start('EventBars', this.state); // сцена с барами
+      this.scene.start('Unicorn', this.state); // сцена с евентом
+      this.scene.start('UnicornBars', this.state); // сцена с барами
       this.scene.start('Preload', this.state); // сцена с подзагрузкой
 
     }
@@ -2220,7 +2220,7 @@ class EventPreload extends Phaser.Scene {
       //   const eventSettings: IeventSettings = {  // IeventSettings Нужно делать интерфейс
       //     territoriesEventSettings: response.data.territoriesEventSettings,
       //     eventSettings: response.data.eventSettings,
-      //     territoriesEventPrice: response.data.territoriesEventPrice,
+      //     territoriesUnicornPrice: response.data.territoriesUnicornPrice,
       //     buyBetterBreedAnimal: response.data.buyBetterBreedAnimal,
       //     doubledСollectorPrice: response.data.doubledСollectorPrice,
       //     collectorPrice4: response.data.collectorPrice4,
@@ -2297,13 +2297,13 @@ class EventPreload extends Phaser.Scene {
         }
 
         const countAnimal = response.data.event.countAnimal;
-        if (countAnimal.length < this.state.eventSettings.eventSettings.length) {
-          let addCounter: number = this.state.eventSettings.eventSettings.length - countAnimal.length;
+        if (countAnimal.length < this.state.unicornSettings.unicornSettings.length) {
+          let addCounter: number = this.state.unicornSettings.unicornSettings.length - countAnimal.length;
           for (let i = 0; i < addCounter; i++) {
             countAnimal.push({ counter: 1 });
           }
         }
-        const userEvent: IuserEvent = {  
+        const userUnicorn: IuserEvent = {  
           money: response.data.event.money,
           countAnimal: countAnimal,
           collector: response.data.event.collector,
@@ -2328,8 +2328,8 @@ class EventPreload extends Phaser.Scene {
         this.state.eventAnimals = eventAnimals;
         this.state.eventResources = eventResources; 
         this.state.user = user;
-        this.state.userEvent = userEvent;
-        this.state.farm = 'Event';
+        this.state.userUnicorn = userUnicorn;
+        this.state.farm = 'Unicorn';
         this.userReady = true;
         this.state.nativeCounter = [0, 0, 0, 0];
     })

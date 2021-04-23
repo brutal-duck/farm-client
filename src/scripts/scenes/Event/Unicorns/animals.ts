@@ -203,15 +203,15 @@ function getResource(data: IeventResource): Phaser.Physics.Arcade.Sprite {
 
 function collectResource(resource: Phaser.Physics.Arcade.Sprite): void {
   
-  let price: string = this.state.eventSettings.eventSettings.find((data: IeventPoints) => data.breed === resource.data.values.type).resourcePrice;
-  if (this.state.userEvent.feedBoostTime > 0) price = BigInteger.multiply(price, this.feedBoostMultiplier);
+  let price: string = this.state.unicornSettings.unicornSettings.find((data: IeventPoints) => data.breed === resource.data.values.type).resourcePrice;
+  if (this.state.userUnicorn.feedBoostTime > 0) price = BigInteger.multiply(price, this.feedBoostMultiplier);
   resource.data.values.click = false;
-  this.state.userEvent.money = BigInteger.add(this.state.userEvent.money, price);
+  this.state.userUnicorn.money = BigInteger.add(this.state.userUnicorn.money, price);
   const startPosition: Iposition = {
     x: resource.x,
     y: resource.y - this.scrolling.scrollY
   }
-  const flyResource: Currency = Currency.create(this.game.scene.keys['EventBars'], startPosition, { x: 495, y: 80 }, 'event-resource', 400, 1, true);
+  const flyResource: Currency = Currency.create(this.game.scene.keys['UnicornBars'], startPosition, { x: 495, y: 80 }, 'event-resource', 400, 1, true);
   flyResource.sprite.setDepth(-1);
   resource.destroy();
 }
@@ -231,7 +231,7 @@ function buyAnimal(breed: number, shop: boolean = false, diamond: number = 0): b
         let id: string = 'local_' + randomString(18);
         this.getAnimal(id, breed, x, y);
         this.state.user.diamonds -= diamond;
-        this.state.userEvent.countAnimal[breed - 1].counter = animalPrice.countAnimal;
+        this.state.userUnicorn.countAnimal[breed - 1].counter = animalPrice.countAnimal;
 
         this.state.amplitude.getInstance().logEvent('diamonds_spent', {
           type: 'buy_unicorn',
@@ -256,7 +256,7 @@ function buyAnimal(breed: number, shop: boolean = false, diamond: number = 0): b
 
     } else {
       
-      if (BigInteger.greaterThanOrEqual(this.state.userEvent.money, animalPrice.price)) {
+      if (BigInteger.greaterThanOrEqual(this.state.userUnicorn.money, animalPrice.price)) {
 
         let {x, y} = this.getFreePosition();
         if (x === null || y === null) return;
@@ -265,9 +265,9 @@ function buyAnimal(breed: number, shop: boolean = false, diamond: number = 0): b
         let id: string = 'local_' + randomString(18);
         this.getAnimal(id, breed, x, y);
         
-        this.state.userEvent.money = BigInteger.subtract(this.state.userEvent.money , animalPrice.price);
-        this.state.userEvent.countAnimal[breed - 1].counter = animalPrice.countAnimal;
-        this.game.scene.keys['EventBars'].updateAnimalPrice();
+        this.state.userUnicorn.money = BigInteger.subtract(this.state.userUnicorn.money , animalPrice.price);
+        this.state.userUnicorn.countAnimal[breed - 1].counter = animalPrice.countAnimal;
+        this.game.scene.keys['UnicornBars'].updateAnimalPrice();
 
       } else {
           
@@ -277,7 +277,7 @@ function buyAnimal(breed: number, shop: boolean = false, diamond: number = 0): b
             this.scene.stop('Modal');
           }
           
-          let count: string =  BigInteger.subtract(animalPrice.price, this.state.userEvent.money);
+          let count: string =  BigInteger.subtract(animalPrice.price, this.state.userUnicorn.money);
           let diamonds: number = this.convertMoney(count);
           this.state.convertor = {
             fun: 1,
@@ -336,8 +336,8 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
     let check: any = territory?.data.values.merging.find((data: any) => data._id === animal.data.values.base.data.values._id);
     oldTerritory = this.currentTerritory(animal.data.values.base.x, animal.data.values.base.y);
     
-    if (animal.data.values.base.data.values.type > this.state.userEvent.maxLevelAnimal) {
-      this.state.userEvent.maxLevelAnimal = animal.data.values.base.data.values.type;
+    if (animal.data.values.base.data.values.type > this.state.userUnicorn.maxLevelAnimal) {
+      this.state.userUnicorn.maxLevelAnimal = animal.data.values.base.data.values.type;
       this.deleteTerritoriesLocks();
       this.getEventRaiting();
     }
@@ -367,8 +367,8 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
     let check = territory?.data.values.merging.find((data: any) => data._id === animal.data.values._id);
     oldTerritory = this.currentTerritory(animal.data.values.oldX, animal.data.values.oldY);
 
-    if (animal.data.values.type > this.state.userEvent.maxLevelAnimal) {
-      this.state.userEvent.maxLevelAnimal = animal.data.values.type;
+    if (animal.data.values.type > this.state.userUnicorn.maxLevelAnimal) {
+      this.state.userUnicorn.maxLevelAnimal = animal.data.values.type;
       this.deleteTerritoriesLocks();
       this.getEventRaiting();
     }
@@ -409,7 +409,7 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
         const type: number = animal1.data.values.type + 1;
         const id: string = 'local_' + randomString(18);
 
-        if (type > this.state.eventSettings.eventSettings.length) {
+        if (type > this.state.unicornSettings.unicornSettings.length) {
           let modal: Imodal = {
             type: 1,
             sysType: 3,
@@ -430,7 +430,7 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
         this.getAnimal(id, type, position.x, position.y, 0, 0);
         
         this.time.addEvent({ delay: 100, callback: (): void => {
-          this.game.scene.keys['EventBars'].updateAnimalPrice();
+          this.game.scene.keys['UnicornBars'].updateAnimalPrice();
           MergingCloud.create(this, position);
 
           animal1?.data.values.active?.data.values.cloud.destroy();

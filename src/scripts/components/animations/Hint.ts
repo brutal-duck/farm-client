@@ -2,7 +2,7 @@
 import SheepBars from './../../scenes/Sheep/SheepBars';
 import ChickenBars from './../../scenes/Chicken/ChickenBars';
 import CowBars from './../../scenes/Cow/CowBars';
-import EventBars from './../../scenes/Event/Unicorns/EventBars';
+import UnicornBars from '../../scenes/Event/Unicorns/UnicornBars';
 /**
   *  Советы в барах сцен    
   * 
@@ -15,11 +15,11 @@ import EventBars from './../../scenes/Event/Unicorns/EventBars';
 
 export default class Hint extends Phaser.GameObjects.Text {
   
-  public scene: SheepBars | ChickenBars | CowBars | EventBars;
+  public scene: SheepBars | ChickenBars | CowBars | UnicornBars;
   public delay: number;
   public bg: Phaser.GameObjects.Graphics;
 
-  constructor (scene: SheepBars | ChickenBars | CowBars | EventBars, y: number, text: string, delay: number) {
+  constructor (scene: SheepBars | ChickenBars | CowBars | UnicornBars, y: number, text: string, delay: number) {
     super(scene, scene.cameras.main.centerX, scene.cameras.main.centerY + y, text, {
       fontFamily: 'Bip',
       fontSize: '35px',
@@ -30,7 +30,7 @@ export default class Hint extends Phaser.GameObjects.Text {
     this.init(scene, delay);
   }
 
-  static create(scene: SheepBars | ChickenBars | CowBars | EventBars, y: number, text: string, delay: number): Hint {
+  static create(scene: SheepBars | ChickenBars | CowBars | UnicornBars, y: number, text: string, delay: number): Hint {
     const newHint: Hint = new Hint(scene, y, text, delay);
 
     if (scene.hints.children.entries.length > 0) {
@@ -53,7 +53,7 @@ export default class Hint extends Phaser.GameObjects.Text {
     return newHint;
   }
   
-  private init(scene: SheepBars | ChickenBars | CowBars | EventBars, delay: number): void {
+  private init(scene: SheepBars | ChickenBars | CowBars | UnicornBars, delay: number): void {
     this.scene = scene;
     this.delay = delay;
     this.scene.add.existing(this);

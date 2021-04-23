@@ -120,7 +120,7 @@ class Tutorial extends Phaser.Scene {
     if (this.state.farm === 'Sheep') this.dragSheep();
     
     // перетаскивание евентовых животных
-    if (this.state.farm === 'Event') this.dragEventAnimal();
+    if (this.state.farm === 'Unicorn') this.dragEventAnimal();
     
     // появление спрайта овечки
     this.showSheepSprite();
@@ -838,12 +838,12 @@ class Tutorial extends Phaser.Scene {
           Arrow.generate(this, 15);
           let button: Phaser.GameObjects.Sprite = this.add.sprite(82, this.height - 92, 'event-buy-icon-1');
           this.clickButton(button, (): void => {
-            Arrow.generate(this.game.scene.keys['EventBars'], 16)
+            Arrow.generate(this.game.scene.keys['UnicornBars'], 16)
 
             this.game.scene.keys[this.state.farm].buyAnimal(1);
-            this.game.scene.keys['EventBars'].animalBuy.setVisible(true);
-            this.game.scene.keys['EventBars'].animalPrice.setVisible(true);
-            this.game.scene.keys['EventBars'].animalPriceBubble.setVisible(true);
+            this.game.scene.keys['UnicornBars'].animalBuy.setVisible(true);
+            this.game.scene.keys['UnicornBars'].animalPrice.setVisible(true);
+            this.game.scene.keys['UnicornBars'].animalPriceBubble.setVisible(true);
             this.scene.stop('Tutorial');
             
           });
@@ -860,8 +860,8 @@ class Tutorial extends Phaser.Scene {
           this.pointerTutorial();
           this.generalClick = (): void => {this.game.scene.keys[this.state.farm].progressEventTutor_40();}
          
-          let animal1: Phaser.Physics.Arcade.Sprite = this.game.scene.keys['Event'].animals.getChildren()[0];
-          let animal2: Phaser.Physics.Arcade.Sprite = this.game.scene.keys['Event'].animals.getChildren()[1];
+          let animal1: Phaser.Physics.Arcade.Sprite = this.game.scene.keys['Unicorn'].animals.getChildren()[0];
+          let animal2: Phaser.Physics.Arcade.Sprite = this.game.scene.keys['Unicorn'].animals.getChildren()[1];
           
           this.game.scene.keys[this.state.farm].showMergPointer = false;
           this.game.scene.keys[this.state.farm].mergPointer?.destroy();
@@ -890,7 +890,7 @@ class Tutorial extends Phaser.Scene {
           this.pointerTutorial();
           this.add.image(0, 140, 'event-work-zone').setOrigin(0, 0);
 
-          let animal: Phaser.Physics.Arcade.Sprite = this.game.scene.keys['Event'].animals.getChildren()[0];
+          let animal: Phaser.Physics.Arcade.Sprite = this.game.scene.keys['Unicorn'].animals.getChildren()[0];
           this.physics.add.sprite(animal.x, animal.y, 'animal' + animal.data.values.type).setDepth(this.height);
           this.time.addEvent({ delay: 500, callback: (): void => {
 

@@ -162,7 +162,7 @@ function createWorld(): any[] {
   } else if (farm === 'chicken') {
     yTent = y - 17;
     yTextLevel = y + 82;
-  } else if (farm === 'event') {
+  } else if (farm === 'unicorn') {
     yTent = y - 17;
     yTextLevel = y + 82;
   }
@@ -178,7 +178,7 @@ function createWorld(): any[] {
     color: '#b5315a'
   }).setOrigin(0.5, 0.5).setDepth(y * 2).setAlpha(0);
   
-  if (farm === 'event') textLevel.setText(this.state.userEvent.maxLevelAnimal);
+  if (farm === 'unicorn') textLevel.setText(this.state.userUnicorn.maxLevelAnimal);
   // дорога
   let road: Phaser.GameObjects.Sprite = this.add.sprite(xRoad, yRoad, `herd-boost-road-${farm}`)
     .setOrigin(0)
@@ -249,7 +249,7 @@ function createAnimals(timerText, allItems, boostCounterWindow): void {
     // graphics2.lineStyle(2, 0x00ff00);
     // graphics2.strokeRect(rightZone.x - rightZone.input.hitArea.width / 2, rightZone.y - rightZone.input.hitArea.height / 2, rightZone.input.hitArea.width, rightZone.input.hitArea.height);
 
-  } else if (this.state.farm === 'event') {
+  } else if (this.state.farm === 'unicorn') {
     // дроп зоны 
     let leftZone: Phaser.GameObjects.Zone = this.add.zone(x - 75, y - 30, 145, 300).setDropZone(undefined, () => {});
     leftZone.type = 'left';
@@ -287,7 +287,7 @@ function createAnimals(timerText, allItems, boostCounterWindow): void {
     delay: this.state.herdBoostTime / 3 * 1000,
     loop: true,
     callback: () => {
-      if (this.state.farm === 'Event') return;
+      if (this.state.farm === 'Unicorn') return;
       this.getRandomAnimal(animal, true);
     },
     callbackScope: this
@@ -391,7 +391,7 @@ function getRandomAnimal(type: string, crystal: boolean = false): void {
   // Изменение рандома
   let randomArray: number[] = [];
   let max: number = this.state[`user${this.state.farm}`].fair;
-  if (this.state.farm === 'Event') max = this.state[`user${this.state.farm}`].maxLevelAnimal;
+  if (this.state.farm === 'Unicorn') max = this.state[`user${this.state.farm}`].maxLevelAnimal;
 
   for (let i: number = 0; i < max; i++) {
     randomArray.push(i ** 2 * 100);

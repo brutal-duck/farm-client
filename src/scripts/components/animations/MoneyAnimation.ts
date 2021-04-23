@@ -1,22 +1,22 @@
 import SheepBars from './../../scenes/Sheep/SheepBars';
 import ChickenBars from './../../scenes/Chicken/ChickenBars';
 import CowBars from './../../scenes/Cow/CowBars';
-import EventBars from './../../scenes/Event/Unicorns/EventBars';
+import UnicornBars from '../../scenes/Event/Unicorns/UnicornBars';
 
 export default class MoneyAnimation  {
-  public scene: SheepBars | ChickenBars | CowBars | EventBars;
+  public scene: SheepBars | ChickenBars | CowBars | UnicornBars;
   public position: Iposition;
   public texture: string;
   public money: Phaser.GameObjects.Group;
 
-  constructor(scene: SheepBars | ChickenBars | CowBars | EventBars, texture: string) {
+  constructor(scene: SheepBars | ChickenBars | CowBars | UnicornBars, texture: string) {
     this.scene = scene;
     this.position = { x: this.scene.cameras.main.centerX, y: this.scene.cameras.main.centerY };
     this.texture  = texture;
     this.init();
   }
 
-  static create(scene: SheepBars | ChickenBars | CowBars | EventBars, texture: string = `${scene.state.farm.toLowerCase()}Coin`): MoneyAnimation {
+  static create(scene: SheepBars | ChickenBars | CowBars | UnicornBars, texture: string = `${scene.state.farm.toLowerCase()}Coin`): MoneyAnimation {
     return new MoneyAnimation(scene, texture);
   }
 

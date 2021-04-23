@@ -68,7 +68,7 @@ function eventConvertor(): void {
       align: 'center'
     }).setOrigin(0, 0.5);
 
-    this.add.sprite(border.right + 5, this.cameras.main.centerY - 10, 'eventCoin')
+    this.add.sprite(border.right + 5, this.cameras.main.centerY - 10, 'unicornCoin')
       .setOrigin(0, 0.5)
       .setScale(0.15);
 
@@ -177,14 +177,14 @@ function eventConvertor(): void {
 function buyEventTerritory(): void {
   this.textHeader.setText(this.state.lang.buyTerritory);
 
-  let settings: IeventTerritoriesPrice = this.state.eventSettings.territoriesEventPrice.find((data: IeventTerritoriesPrice) => data.block === this.state.territory.block && data.position === this.state.territory.position);
+  let settings: IeventTerritoriesPrice = this.state.unicornSettings.territoriesUnicornPrice.find((data: IeventTerritoriesPrice) => data.block === this.state.territory.block && data.position === this.state.territory.position);
 
-  if (this.state.userEvent.maxLevelAnimal >= settings.unlock) {
+  if (this.state.userUnicorn.maxLevelAnimal >= settings.unlock) {
 
       let price: number = settings.price;
   
       let right = {
-        icon: 'eventCoin',
+        icon: 'unicornCoin',
         text: this.shortNum(price)
       }
     
@@ -226,10 +226,10 @@ function buyEventTerritory(): void {
 // окно улучшения собирателя 
 function improveCollectorEvent(): void {
 
-  this.textHeader.setText(this.state.lang.resourceCollector + ' ' + this.state.userEvent.collectorLevel + ' ' + this.state.lang.shortLevel + '.');
+  this.textHeader.setText(this.state.lang.resourceCollector + ' ' + this.state.userUnicorn.collectorLevel + ' ' + this.state.lang.shortLevel + '.');
 
-  let thisLevel: IcollectorSettings = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userEvent.collectorLevel);
-  let nextLevel: IcollectorSettings = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userEvent.collectorLevel + 1);
+  let thisLevel: IcollectorSettings = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userUnicorn.collectorLevel);
+  let nextLevel: IcollectorSettings = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userUnicorn.collectorLevel + 1);
 
   let speedText: string = this.state.lang.power + ': ' + thisLevel.speed + ' ' + this.state.lang.unitEvent + '/' + this.state.lang.seconds;
   let speed: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY - 80, speedText, {
@@ -272,10 +272,10 @@ function improveCollectorEvent(): void {
 
   }
 
-  if (this.state.userEvent.maxLevelAnimal >= nextLevel.chapter) {
+  if (this.state.userUnicorn.maxLevelAnimal >= nextLevel.chapter) {
 
     if (nextLevel.diamonds) icon = 'diamond';
-    else icon = 'eventCoin';
+    else icon = 'unicornCoin';
 
     let right = {
       icon: icon,
@@ -458,7 +458,7 @@ function createWorld(): any[] {
     // ярмарка и тент
   let fairy: Phaser.Physics.Arcade.Sprite = this.add.sprite(x, y + 5, `${farm}-merging`).setDepth(y).setAlpha(0);
   
-  if (farm === 'event') {
+  if (farm === 'unicorn') {
     yTent = y - 17;
     yTextLevel = y + 82;
   }
@@ -472,7 +472,7 @@ function createWorld(): any[] {
     color: '#b5315a'
   }).setOrigin(0.5, 0.5).setDepth(y * 2).setAlpha(0);
   
-  if (farm === 'event') textLevel.setText(this.state.userEvent.maxLevelAnimal);
+  if (farm === 'event') textLevel.setText(this.state.userUnicorn.maxLevelAnimal);
   // дорога
   let road: Phaser.GameObjects.Sprite = this.add.sprite(xRoad, yRoad, `herd-boost-road-${farm}`)
     .setOrigin(0)
@@ -600,7 +600,7 @@ function stopBoostScene(): void {
   this.input.on('pointerdown', ()=>{
     this.state[`user${this.state.farm}`].takenHerdBoost++;
     this.scene.stop();
-    this.game.scene.keys['Event'].startCreateHerdBoostAnimal = true;
+    this.game.scene.keys['Unicorn'].startCreateHerdBoostAnimal = true;
     console.log(this.state.herdBoostAnimals);
     
   });
@@ -799,7 +799,7 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
           : animal.data.values.type;
         if (animal1.data.values.type === 0 && animal2.data.values.type === 0) newType = 0;
         this.state.herdBoostAnimals.push(newType);
-        this.state.userEvent.herdBoostAnimals.push(newType);
+        this.state.userUnicorn.herdBoostAnimals.push(newType);
 
         this.time.addEvent({ delay: 100, callback: (): void => {
           
@@ -936,7 +936,7 @@ function eventProgress(): void {
     img1: img1
   }, (): void => {
 
-    this.state.userEvent.money = BigInteger.add(this.state.userEvent.money, this.state.modal.eventParams.offlineProgress);
+    this.state.userUnicorn.money = BigInteger.add(this.state.userUnicorn.money, this.state.modal.eventParams.offlineProgress);
     if (ad && doubleProfitPrice === 5) {
 
       this.game.scene.keys[this.state.farm].watchAd(5);
@@ -951,10 +951,10 @@ function eventProgress(): void {
         count: doubleProfitPrice,
         farm_id: this.state.farm
       });
-      this.state.userEvent.money = BigInteger.add(this.state.userEvent.money, this.state.modal.eventParams.offlineProgress);
+      this.state.userUnicorn.money = BigInteger.add(this.state.userUnicorn.money, this.state.modal.eventParams.offlineProgress);
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
       this.scene.stop();
-      MoneyAnimation.create(this.game.scene.keys['EventBars']);
+      MoneyAnimation.create(this.game.scene.keys['UnicornBars']);
 
     } else {
       
@@ -976,7 +976,7 @@ function eventProgress(): void {
 
     let pickUp = this.shopButton(this.cameras.main.centerX + 9, this.cameras.main.centerY + 276 - height, this.state.lang.pickUp);
     this.clickShopBtn(pickUp, (): void => {
-      this.state.userEvent.money = BigInteger.add(this.state.userEvent.money, this.state.modal.eventParams.offlineProgress);
+      this.state.userUnicorn.money = BigInteger.add(this.state.userUnicorn.money, this.state.modal.eventParams.offlineProgress);
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
       this.scene.stop();
   
@@ -1468,7 +1468,7 @@ function endEventModal(): void {
   
   this.clickModalBtn({ btn, title, img1: coin }, (): void => {
     this.state.amplitude.getInstance().logEvent('event_finished', {
-      farm_id: 'Event'
+      farm_id: 'Unicorn'
     });
     if (this.state.progress.event.userEventRaiting.place <= 3) {
 
@@ -1491,7 +1491,7 @@ function endEventModal(): void {
     this.state.user.diamonds += diamonds;
     this.state.amplitude.getInstance().logEvent('diamonds_get', {
       type: 'other',
-      farm_id: 'Event',
+      farm_id: 'Unicorn',
       count: diamonds,
     });
     this.game.scene.keys[this.state.farm].scrolling.wheel = true;
@@ -1550,7 +1550,7 @@ function updateImproveCollectorEvent(
   if (this.state.userEvent.maxLevelAnimal >= nextLevel.chapter) {
     let icon: string;
     if (nextLevel.diamonds) icon = 'diamond';
-    else icon = 'eventCoin';
+    else icon = 'unicornCoin';
 
     let right = {
       icon: icon,

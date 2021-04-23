@@ -57,7 +57,8 @@ export default (): Iprogress => {
       open: false,
       eventRaitings: [],
       userEventRaiting: null,
-      updateRaitings: false
+      updateRaitings: false,
+      type: 1,
     }
   }
 

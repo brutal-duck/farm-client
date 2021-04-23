@@ -19,9 +19,9 @@ import ShopBars from './scenes/Modal/Shop/Bars';
 import Chat from './scenes/Modal/Chat/Main';
 import Tutorial from './scenes/Tutorial';
 import * as eruda from 'eruda';
-import EventBars from './scenes/Event/Unicorns/EventBars';
-import Event from './scenes/Event/Unicorns/Main';
-import EventPreload from './scenes/Event/Unicorns/EventPreload';
+import UnicornBars from './scenes/Event/Unicorns/UnicornBars';
+import Unicorn from './scenes/Event/Unicorns/Main';
+import UnicornPreload from './scenes/Event/Unicorns/UnicornPreload';
 import Block from './scenes/Block';
 import Profile from './scenes/Profile';
 
@@ -86,7 +86,7 @@ window.onload = (): void => {
         SheepPreload, Sheep, SheepBars,
         ChickenPreload, Chicken, ChickenBars,
         CowPreload, Cow, CowBars,
-        EventPreload, Event, EventBars,
+        UnicornPreload, Unicorn, UnicornBars,
         Modal, Block,
         Profile,
         Shop, ShopBars,

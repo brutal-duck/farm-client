@@ -40,22 +40,22 @@ function autosave(): void {
 
   }
   
-  if (typeof this.state.userEvent.autosaveCounter === 'number') this.state.userEvent.autosaveCounter++;
-  else this.state.userEvent.autosaveCounter = 0;
+  if (typeof this.state.userUnicorn.autosaveCounter === 'number') this.state.userUnicorn.autosaveCounter++;
+  else this.state.userUnicorn.autosaveCounter = 0;
 
   let user: IeventUserAutoSave = {
     diamonds: this.state.user.diamonds,
     xp: this.state.user.xp,
-    money: this.state.userEvent.money,
-    herdBoostAnimals: this.state.userEvent.herdBoostAnimals,
-    takenHerdBoost: this.state.userEvent.takenHerdBoost,
-    feedBoostTime: this.state.userEvent.feedBoostTime,
-    countAnimal: this.state.userEvent.countAnimal,
-    collector: this.state.userEvent.collector,
-    collectorLevel: this.state.userEvent.collectorLevel,
-    tutorial: this.state.userEvent.tutorial,
-    autosaveCounter: this.state.userEvent.autosaveCounter, 
-    eventPoints: this.state.userEvent.maxLevelAnimal,
+    money: this.state.userUnicorn.money,
+    herdBoostAnimals: this.state.userUnicorn.herdBoostAnimals,
+    takenHerdBoost: this.state.userUnicorn.takenHerdBoost,
+    feedBoostTime: this.state.userUnicorn.feedBoostTime,
+    countAnimal: this.state.userUnicorn.countAnimal,
+    collector: this.state.userUnicorn.collector,
+    collectorLevel: this.state.userUnicorn.collectorLevel,
+    tutorial: this.state.userUnicorn.tutorial,
+    autosaveCounter: this.state.userUnicorn.autosaveCounter, 
+    eventPoints: this.state.userUnicorn.maxLevelAnimal,
     additionalTutorial: this.state.user.additionalTutorial,
     status: this.state.user.status,   
     boosts: this.state.user.boosts,
@@ -87,7 +87,7 @@ function autosave(): void {
   axios.post(process.env.API + "/event/autoSave", data)
   .then((res) => {
     
-    if (this.scene.isActive('Event')) {
+    if (this.scene.isActive('Unicorn')) {
 
       if (res.data.error) this.logout();
       else {
