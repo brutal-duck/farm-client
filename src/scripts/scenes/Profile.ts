@@ -67,7 +67,7 @@ class Profile extends Phaser.Scene {
 
 
   public create(): void {
-    if (this.state.progress.event.eventPoints >= 0 && this.state.progress.event.open) this.getEventRaiting(); // получаем новые рейтинги
+    if (this.state.progress.event.eventPoints >= 0 && this.state.progress.event.open && this.state.progress.event.type === 1) this.getEventRaiting(); // получаем новые рейтинги
     
     this.bg = this.add.sprite(0, 0, 'profile-bg')
       .setInteractive()

@@ -162,7 +162,7 @@ function adReward(): void {
         hash: this.state.user.hash,
         counter: this.state.user.counter,
       }
-      axios.post(process.env.API + "/takeAd", data)
+      axios.post(process.env.API + "/unicorn/takeAd", data)
         .then((response) => {
           if (response.data.success) {
             if (this.state.userUnicorn.takenAd === 0) this.state.userUnicorn.timeToAd += 60;

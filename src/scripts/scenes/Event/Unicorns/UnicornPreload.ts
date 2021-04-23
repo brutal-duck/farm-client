@@ -2203,7 +2203,7 @@ class EventPreload extends Phaser.Scene {
   
   public loadUser(): void {
   
-    axios.post(process.env.API + '/event/loadData', {
+    axios.post(process.env.API + '/unicorn/loadData', {
       hash: this.state.user.hash
     }).then((response) => {
 

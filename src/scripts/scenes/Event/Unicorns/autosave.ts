@@ -84,7 +84,7 @@ function autosave(): void {
     resources: resources,
   }
 
-  axios.post(process.env.API + "/event/autoSave", data)
+  axios.post(process.env.API + "/unicorn/autoSave", data)
   .then((res) => {
     
     if (this.scene.isActive('Unicorn')) {
