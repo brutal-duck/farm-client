@@ -184,6 +184,7 @@ class Boot extends Phaser.Scene {
           herd: 0,
           feed: 0
         },
+        fortune: 0,
       },
     }
     this.state.platform = this.platform;
