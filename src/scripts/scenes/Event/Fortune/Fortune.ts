@@ -101,7 +101,6 @@ export default class Fortune extends Phaser.Scene {
 
   public create(): void {
     console.log('Fortune Create')
-    this.state.user.boosts.fortune = 1;
     this.add.tileSprite(0, 0,
       Number(this.game.config.width),
       Number(this.game.config.height),
