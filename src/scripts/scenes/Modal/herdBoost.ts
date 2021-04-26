@@ -368,10 +368,9 @@ function moveToEnd(boostCounterWindow): void {
 }
 
 function stopBoostScene(): void {
-  this.input.on('pointerdown', ()=>{
-    this.state.user.diamonds -= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost;
+  this.input.on('pointerdown', ()=> {
     if (this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost > 0) {
-      this.game.scene.keys[this.state.farm].tryTask(15, 0, this.state.herdBoostPrice);
+      this.game.scene.keys[this.state.farm].tryTask(15, 0, this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost);
       this.state.amplitude.getInstance().logEvent('diamonds_spent', {
         type: 'herd',
         count: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
@@ -379,7 +378,6 @@ function stopBoostScene(): void {
         chapter: this.state[`user${this.state.farm}`].part,
       });
     }
-    this.state[`user${this.state.farm}`].takenHerdBoost++;
     this.scene.stop();
     this.game.scene.keys[this.state.farm].createBoostAnimal();
   });

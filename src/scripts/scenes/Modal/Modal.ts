@@ -143,6 +143,9 @@ class Modal extends Phaser.Scene {
   public chocolateMoneyText: Phaser.GameObjects.Text;
   public factoryBoostTimer: Phaser.GameObjects.Text;
   public chocolateSprite: Phaser.GameObjects.Sprite;
+  public feedBoostNative: Phaser.GameObjects.Text;
+  public herdBoostNative: Phaser.GameObjects.Text;
+
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
