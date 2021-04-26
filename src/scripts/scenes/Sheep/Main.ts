@@ -329,8 +329,8 @@ class Sheep extends Phaser.Scene {
     this.interval();
     this.setCollector();
 
-    // let cursors = this.input.keyboard.createCursorKeys();
-    // cursors.space.on('down', (): void => {
+    let cursors = this.input.keyboard.createCursorKeys();
+    cursors.space.on('down', (): void => {
     //   // this.state.daily = 2;
     //   // this.state.user.takenReward = false;
     //   // this.state.user.diamonds = 10000000;
@@ -339,10 +339,8 @@ class Sheep extends Phaser.Scene {
     //   //   tasks[i].done = 1;
     //   //   tasks[i].got_awarded = 1;
     //   // }
-    //   // this.scene.stop();
-    //   // this.scene.stop('SheepBars');
-    //   // this.scene.start('Fortune', this.state);
-    // });
+      this.scene.launch('Fortune', this.state);
+    });
 
   }
 
