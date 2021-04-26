@@ -7,6 +7,12 @@ const btn: string = require('../../../../assets/images/event/fortune/btn.png');
 const wheel: string = require('../../../../assets/images/event/fortune/wheel.png');
 const pointer: string = require('../../../../assets/images/event/fortune/pointer.png');
 
+interface IfortuneUser {
+  name: string;
+  count: string;
+  time: number;
+}
+
 export default class Fortune extends Phaser.Scene {
   constructor() {
     super('Fortune');
@@ -25,6 +31,59 @@ export default class Fortune extends Phaser.Scene {
   public closeBtn: Phaser.GameObjects.Sprite;
   public moneyPull: number = 1000;
   public moneyPullText: Phaser.GameObjects.Text;
+  public userList: IfortuneUser[] = [
+    {
+      name: 'александр',
+      count: '100',
+      time: 1010
+    },
+    {
+      name: 'дмитрий-владимирович крузенштерн',
+      count: '1000',
+      time: 2000
+    },
+    {
+      name: 'александр',
+      count: '1200',
+      time: 3000
+    },
+    {
+      name: 'але2213123ксандр',
+      count: '100',
+      time: 4000
+    },
+    {
+      name: 'алексвфыв а   ндр',
+      count: '100',
+      time: 5000
+    },{
+      name: 'алексфывыфвфы андр',
+      count: '1050',
+      time: 6000
+    },
+    {
+      name: 'александр',
+      count: '100',
+      time: 7000
+    },
+    {
+      name: 'Не александр',
+      count: '50',
+      time: 8000
+    },
+    {
+      name: 'вфывфывфывфыв',
+      count: '100',
+      time: 9000
+    },
+    {
+      name: 'алексаячсячсячсндр',
+      count: '100',
+      time: 10000
+    }
+  ];
+
+  public listElements: any[] = [];
 
   public clickModalBtn = clickModalBtn.bind(this);
   public clickButton = clickButton.bind(this);
@@ -42,8 +101,15 @@ export default class Fortune extends Phaser.Scene {
 
   public create(): void {
     console.log('Fortune Create')
-    this.state.user.boosts.fortune = 1
+    this.state.user.boosts.fortune = 1;
+    this.add.tileSprite(0, 0,
+      Number(this.game.config.width),
+      Number(this.game.config.height),
+      'modal'
+    ).setOrigin(0).setInteractive();
+    this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)');
     this.createElements();
+    this.creaeteList();
     this.setListeners();
   }
 
@@ -76,8 +142,14 @@ export default class Fortune extends Phaser.Scene {
     }).setOrigin(0.5, 0);
     this.btnImg = this.add.sprite(this.btnText2.getBounds().right, this.btnText2.getBounds().centerX, 'diamond').setScale(0.10).setOrigin(0, 0.5);
 
-    this.moneyPullText = this.add.text(modalGeom.centerX + 150, modalGeom.centerY - 280, String(this.moneyPull), {
-      font: '40px Shadow',
+    this.add.text(modalGeom.centerX + 120, modalGeom.centerY - 320, 'Главный приз', {
+      font: '32px Shadow',
+      color: '#ffffff',
+      align: 'center',
+    }).setOrigin(0.5);
+
+    this.moneyPullText = this.add.text(modalGeom.centerX + 120, modalGeom.centerY - 250, String(this.moneyPull), {
+      font: '45px Shadow',
       color: '#ffffff'
     }).setOrigin(0.5);
 
@@ -85,8 +157,56 @@ export default class Fortune extends Phaser.Scene {
     this.pointer = this.add.sprite(modalGeom.centerX - 145, modalGeom.centerY - 190, 'fortune-pointer');
     this.closeBtn = this.add.sprite(modalGeom.right - 70, modalGeom.top + 40,'tasks-close')
     
+    this.add.text(modalGeom.centerX + 30, modalGeom.centerY + 45, 'Последние победители', {
+      font: '24px Shadow',
+      color: '#ffffff',
+      align: 'center',
+      wordWrap: { width: 200 },
+    }).setShadow(0, 2, '#000000', 3).setOrigin(0.5);
   }
 
+  private creaeteList(): void {
+    let startY: number = this.cameras.main.centerY + 120;
+    for (let i: number = 0; i < this.userList.length; i++) {
+      const name: Phaser.GameObjects.Text = this.add.text(160, startY, this.userList[i].name, {
+        font: '21px Bip',
+        color: '#793D0A',
+        align: 'left'
+      }).setCrop(0, 0, 220, 30).setOrigin(0, 0.5);
+      const count: Phaser.GameObjects.Text = this.add.text(420, startY, this.userList[i].count, {
+        font: '21px Bip',
+        color: '#793D0A',
+        align: 'left'
+      }).setOrigin(0, 0.5);
+      const diamond: Phaser.GameObjects.Sprite = this.add.sprite(405, startY, 'diamond').setScale(0.11).setAngle(-10);
+      const time: Phaser.GameObjects.Text = this.add.text(500, startY, shortTime(this.userList[i].time, this.state.lang), {
+        font: '21px Bip',
+        color: '#793D0A',
+        align: 'left'
+      }).setOrigin(0, 0.5);
+      
+      startY += 30
+
+      this.listElements.push({
+        name,
+        count,
+        diamond,
+        time
+      });
+    }
+  }
+
+  private destoryListElemets(): void {
+    if (this.listElements.length > 0) {
+      this.listElements.forEach(el => {
+        el?.name?.destroy();
+        el?.count?.destroy();
+        el?.diamond?.destroy();
+        el?.time?.destroy();
+      });
+      this.listElements = [];
+    }
+  }
 
   private removeInteractiveElements(): void {
     this.closeBtn.removeInteractive();
@@ -152,18 +272,28 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private startScrollWheel(): void {
-    let duration: number = 250;
+    const endAngle = this.prizeId === 1 ? -330 :
+    this.prizeId === 2 ? -150 :
+    this.prizeId === 3 || this.prizeId === 4 || this.prizeId === 5 ? -30 :
+    this.prizeId === 6 ? -210 :
+    this.prizeId === 7 ? -90 :
+    this.prizeId === 8 ? -270 : 0;
+
     this.tweens.add({
       targets: this.wheel,
       onUpdate: (): void => {
         this.removeInteractiveElements();
       },
       onUpdateScope: this,
-      duration: duration,
-      angle: '-=360',
-      repeat: 1,
-      onComplete: this.endScrollWheel,
-          onCompleteScope: this,
+      duration: 2500,
+      angle: { from: 0, to: -1440 + endAngle + Phaser.Math.Between(0, 22) * Phaser.Math.RND.pick(Phaser.Math.RND.signs)},
+      ease: 'Power1',
+      // onComplete: this.endScrollWheel,
+      onComplete: () => {
+        this.setInteractiveElements();
+        this.getPrize();
+      },
+      onCompleteScope: this,
     })
   }
 
@@ -178,7 +308,6 @@ export default class Fortune extends Phaser.Scene {
     this.tweens.add({
       targets: this.wheel,
       duration: 500,
-      ease: 'Power3',
       angle: endAngle + Phaser.Math.Between(0, 28) * Phaser.Math.RND.pick(Phaser.Math.RND.signs),
       onComplete: () => {
         this.setInteractiveElements();

@@ -141,6 +141,7 @@ private createProfileInfo(): void {
     if (this.state.progress.event.type === 1) {
       this.createUnicornFarm();
     }
+    this.createFotrune();
   }
 
   private createSheepFarm(): void {
@@ -469,6 +470,32 @@ private createProfileInfo(): void {
         this.scene.launch('Modal', this.state);
       })
     }
+  }
+
+  private createFotrune(): void {
+    const shopPosition: Iposition = {
+      x: 500,
+      y: 600
+    }
+    const zoneSize: Isize = {
+      width: 170,
+      height: 170
+    }
+    const zone: Phaser.GameObjects.Zone = this.add.zone(shopPosition.x, shopPosition.y, zoneSize.width, zoneSize.height).setDropZone(undefined, () => {});
+    this.add.text(shopPosition.x, shopPosition.y, 'КОЛЕСО ФОРТУНЫ', {
+      font: '32px Shadow',
+      color: '#ffffff',
+      align: 'center',
+      wordWrap: { width: 170 }
+    }).setOrigin(0.5).setStroke('#000000', 2);
+    const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
+    graphics.lineStyle(5, 0xFF0000);
+    graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+
+    this.click(zone, (): void => {
+      this.scene.stop();
+      this.scene.launch('Fortune', this.state);
+    });
   }
 
   private updateUnicornFarm(): void {
