@@ -493,7 +493,7 @@ private createProfileInfo(): void {
     graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
 
     this.click(zone, (): void => {
-      this.scene.stop();
+      this.scene.stop('Profile');
       this.scene.launch('Fortune', this.state);
     });
   }

@@ -1,6 +1,7 @@
 import { shortTime } from '../../../general/basic';
 import { clickModalBtn, clickButton } from '../../../general/clicks';
 import CowSprite from './../../../components/Animal/CowSprite';
+import { loadingModal } from './../../../general/basic';
 
 const modal: string = require('../../../../assets/images/event/fortune/modal.png');
 const btn: string = require('../../../../assets/images/event/fortune/btn.png');
@@ -87,12 +88,14 @@ export default class Fortune extends Phaser.Scene {
 
   public clickModalBtn = clickModalBtn.bind(this);
   public clickButton = clickButton.bind(this);
+  public loadingModal = loadingModal.bind(this);
 
   public init(state: Istate): void {
     this.state = state;
   }
 
   public preload(): void {
+    this.loadingModal();
     this.load.image('fortune-modal', modal);
     this.load.image('fortune-btn', btn);
     this.load.image('fortune-wheel', wheel);
@@ -289,19 +292,19 @@ export default class Fortune extends Phaser.Scene {
           this.removeInteractiveElements();
         },
         onUpdateScope: this,
-        duration: 2500,
-        angle: { from: 0, to: -1430 },
-        ease: 'Power1',
+        duration: 3500,
+        angle: { from: 0, to: -2160 },
+        ease: 'Power3',
       });
       this.tweens.add({
-        delay: 2100,
+        delay: 2500,
         onStart:(): void => {
           anim.stop();
           anim.remove();
         },
         targets: this.wheel,
         ease: 'Power2',
-        duration: 900,
+        duration: 2000,
         angle: endAngle + dAngle,
         onUpdate: (): void => {
           this.removeInteractiveElements();
@@ -321,9 +324,9 @@ export default class Fortune extends Phaser.Scene {
           this.removeInteractiveElements();
         },
         onUpdateScope: this,
-        duration: 2500,
-        angle: { from: 0, to: -1370 },
-        ease: 'Power1',
+        duration: 3500,
+        angle: { from: 0, to: -2090 },
+        ease: 'Power3',
         onComplete: () => {
           this.setAngle(dAngle);
           this.setInteractiveElements();
@@ -338,9 +341,9 @@ export default class Fortune extends Phaser.Scene {
           this.removeInteractiveElements();
         },
         onUpdateScope: this,
-        duration: 2500,
-        angle: { from: 0, to: -1440 + endAngle + dAngle},
-        ease: 'Power1',
+        duration: 3500,
+        angle: { from: 0, to: -2160 + endAngle + dAngle},
+        ease: 'Power3',
         onComplete: () => {
           this.setAngle(dAngle);
           this.setInteractiveElements();
