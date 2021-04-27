@@ -324,6 +324,7 @@ export default class Fortune extends Phaser.Scene {
     this.prizeId === 8 ? -270 : 0;
 
     const dAngle: number = Phaser.Math.Between(1, 22) * Phaser.Math.RND.pick(Phaser.Math.RND.signs);
+    // const dAngle: number = -25;
 
     if (dAngle > 10 && (this.prizeId === 3 || this.prizeId === 4 || this.prizeId === 5)) {
       let anim = this.tweens.add({
@@ -365,7 +366,7 @@ export default class Fortune extends Phaser.Scene {
         },
         onUpdateScope: this,
         duration: 3500,
-        angle: { from: 0, to: -2090 },
+        angle: { from: 0, to: -2093 },
         ease: 'Power3',
         onComplete: () => {
           this.setAngle(dAngle);
@@ -462,8 +463,9 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private getFreeTickets(): void {
-    this.state.user.boosts.fortune += 10;
-    const text: string = this.state.lang.fortuneHint_6.replace('$1', String(10));
+    const count: number = Phaser.Math.Between(1, 5);
+    this.state.user.boosts.fortune += count;
+    const text: string = this.state.lang.fortuneHint_6.replace('$1', String(count));
     Hint.create(this, -250, text, 3);
   }
 
@@ -533,7 +535,8 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private getRandomIndexPrize(): void {
-    const pull: number[] = [ 26, 500, 3445, 2584, 1723, 861, 861, 500 ];
+    // const pull: number[] = [ 26, 500, 3445, 2584, 1723, 861, 861, 500 ];
+    const pull: number[] = [ 26, 500, 1579, 1579, 1579, 1579, 1579, 1579 ];
 
     const totalCounter: number = pull.reduce((prev, current) => prev += current);
     const arrRange: {
