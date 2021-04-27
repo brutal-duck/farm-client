@@ -27,7 +27,7 @@ export default class Fortune extends Phaser.Scene {
   public wheel: Phaser.GameObjects.Sprite;
   public pointer: Phaser.GameObjects.Sprite;
   public prizeId: number;
-  public price: number = 10;
+  public readonly price: number = 10;
   public closeBtn: Phaser.GameObjects.Sprite;
   public moneyPull: number = 1000;
   public moneyPullText: Phaser.GameObjects.Text;
@@ -100,6 +100,7 @@ export default class Fortune extends Phaser.Scene {
   }
 
   public create(): void {
+    this.state.user.boosts.fortune = 0;
     console.log('Fortune Create')
     this.add.tileSprite(0, 0,
       Number(this.game.config.width),
@@ -139,7 +140,7 @@ export default class Fortune extends Phaser.Scene {
       color: '#ffffff',
       align: 'center'
     }).setOrigin(0.5, 0);
-    this.btnImg = this.add.sprite(this.btnText2.getBounds().right, this.btnText2.getBounds().centerX, 'diamond').setScale(0.10).setOrigin(0, 0.5);
+    this.btnImg = this.add.sprite(this.btnText2.getBounds().right, this.btnText2.getBounds().centerY, 'diamond').setScale(0.10).setOrigin(0, 0.5);
 
     this.add.text(modalGeom.centerX + 120, modalGeom.centerY - 320, 'Главный приз', {
       font: '32px Shadow',
@@ -307,7 +308,7 @@ export default class Fortune extends Phaser.Scene {
         },
         onUpdateScope: this,
         onComplete: (): void => {
-          this.setAngle(`-=${dAngle}`);
+          this.setAngle(dAngle);
           this.setInteractiveElements();
           this.getPrize();
         },
@@ -324,7 +325,7 @@ export default class Fortune extends Phaser.Scene {
         angle: { from: 0, to: -1370 },
         ease: 'Power1',
         onComplete: () => {
-          this.setAngle(`-=${dAngle}`);
+          this.setAngle(dAngle);
           this.setInteractiveElements();
           this.getPrize();
         },
@@ -341,7 +342,7 @@ export default class Fortune extends Phaser.Scene {
         angle: { from: 0, to: -1440 + endAngle + dAngle},
         ease: 'Power1',
         onComplete: () => {
-          this.setAngle(`-=${dAngle}`);
+          this.setAngle(dAngle);
           this.setInteractiveElements();
           this.getPrize();
         },
@@ -350,11 +351,14 @@ export default class Fortune extends Phaser.Scene {
     }
   }
 
-  private setAngle(dAngle: string): void {
+  private setAngle(dAngle: number): void {
+    const percent: number = Math.abs(Math.round(dAngle / 22 * 100));
+    const duration: number = 200 + 200 * percent / 100;
+
     this.tweens.add({
-      duration: 300,
+      duration: duration,
       targets: this.wheel,
-      angle: dAngle,      
+      angle: `-=${dAngle}`,      
     });
   }
   private getPrize(): void {
@@ -420,11 +424,14 @@ export default class Fortune extends Phaser.Scene {
     if (this.state.progress.chicken.open) {
       if (Phaser.Math.Between(1, 2) === 1) {
         this.state.user.boosts.sheep.feed += 1;
+        console.log('для овец')
       } else {
         this.state.user.boosts.chicken.feed += 1;
+        console.log('для кур')
       }
     } else {
       this.state.user.boosts.sheep.feed += 1;
+      console.log('для овец')
     }
   }
 
@@ -432,11 +439,14 @@ export default class Fortune extends Phaser.Scene {
     if (this.state.progress.chicken.open) {
       if (Phaser.Math.Between(1, 2) === 1) {
         this.state.user.boosts.sheep.herd += 1;
+        console.log('для овец')
       } else {
         this.state.user.boosts.chicken.herd += 1;
+        console.log('для кур')
       }
     } else {
       this.state.user.boosts.sheep.herd += 1;
+      console.log('для овец')
     }
   }
 
