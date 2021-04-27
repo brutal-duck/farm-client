@@ -267,7 +267,7 @@ export default class Fortune extends Phaser.Scene {
       this.btnText2.setText(String(this.state.user.boosts.fortune));
       this.btnImg.setTexture('fortune-ticket')
         .setPosition(this.btnText2.getBounds().right, this.btnText2.getBounds().centerY)
-        .setScale(0.5);
+        .setScale(0.4);
     } else if (this.state.user.boosts.fortune <= 0 && (this.btnText1.text !== this.state.lang.buyTicket || this.btnText2.text !== String(this.price))) {
       this.btnText1.setText(this.state.lang.buyTicket);
       this.btnText2.setText(String(this.price));
