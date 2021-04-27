@@ -114,7 +114,7 @@ function updateHerdBoostBtn(): void {
         this.herdBoostNative.bg
           .clear()
           .fillStyle(0x00ccFF, 1)
-          .fillEllipse(textGeom.right - plusTextGeom.width / 2, textGeom.centerY, textGeom.width + plusTextGeom.width + 20, textGeom.height + 10);
+          .fillEllipse(textGeom.right - plusTextGeom.width / 2 + 5, textGeom.centerY, textGeom.width + plusTextGeom.width + 20, textGeom.height + 10);
       }
     } 
     if (this.state.user.boosts[this.state.farm.toLowerCase()].herd > 0 && !this.herdBoostBtn.data.values.updated) {
