@@ -40,6 +40,7 @@ export default class Fortune extends Phaser.Scene {
     time: 10000,
     prize: '8888',
   };
+  public whellIsScrolling: boolean = false;
   public lastestWinnerText: Phaser.GameObjects.Text;
   public userList: IfortuneUser[] = [
     {
@@ -103,6 +104,7 @@ export default class Fortune extends Phaser.Scene {
   }
 
   public create(): void {
+    this.state.user.boosts.fortune = 5
     console.log('Fortune Create')
     this.add.tileSprite(0, 0,
       Number(this.game.config.width),
@@ -255,20 +257,27 @@ export default class Fortune extends Phaser.Scene {
     this.btn.setInteractive();
     this.closeBtn.setTint(0xffffff);
     this.btn.setTint(0xffffff);
+    this.whellIsScrolling = false;
   }
 
   private updateElements(): void {
     if (
       this.state.user.boosts.fortune > 0 && 
       (this.btnText1.text !== this.state.lang.scroll || 
-      this.btnText2.text !== String(this.state.user.boosts.fortune))
+      this.btnText2.text !== String(this.state.user.boosts.fortune)) && 
+      !this.whellIsScrolling
     ) {
       this.btnText1.setText(this.state.lang.scroll);
       this.btnText2.setText(String(this.state.user.boosts.fortune));
       this.btnImg.setTexture('fortune-ticket')
         .setPosition(this.btnText2.getBounds().right, this.btnText2.getBounds().centerY)
         .setScale(0.4);
-    } else if (this.state.user.boosts.fortune <= 0 && (this.btnText1.text !== this.state.lang.buyTicket || this.btnText2.text !== String(this.price))) {
+    } else if (
+      this.state.user.boosts.fortune <= 0 && 
+      (this.btnText1.text !== this.state.lang.buyTicket ||
+      this.btnText2.text !== String(this.price)) && 
+      !this.whellIsScrolling
+    ) {
       this.btnText1.setText(this.state.lang.buyTicket);
       this.btnText2.setText(String(this.price));
       this.btnImg.setTexture('diamond')
@@ -297,7 +306,8 @@ export default class Fortune extends Phaser.Scene {
 
   private handlerStartBtn(): void {
     this.getRandomIndexPrize();
-
+    this.setUpdatedButton();
+    this.whellIsScrolling = true;
     const type: string = this.prizeId === 1 ? 'джекпот' :
     this.prizeId === 2 ? 'регулярный приз, 5% от фонда' :
     this.prizeId === 3 ? '10 минут монет' : 
@@ -395,16 +405,29 @@ export default class Fortune extends Phaser.Scene {
     }
   }
 
+  private setUpdatedButton(): void {
+    if (this.state.user.boosts.fortune > 1) {
+      this.btnText2.setText(String(this.state.user.boosts.fortune - 1));
+    } else if (this.state.user.boosts.fortune === 1) {
+      this.btnText1.setText(this.state.lang.buyTicket);
+      this.btnText2.setText(String(this.price));
+      this.btnImg.setTexture('diamond')
+        .setPosition(this.btnText2.getBounds().right, this.btnText2.getBounds().centerY)
+        .setScale(0.1);
+    }
+  }
+
   private setAngle(dAngle: number): void {
     const percent: number = Math.abs(Math.round(dAngle / 22 * 100));
     const duration: number = 200 + 200 * percent / 100;
-
+    
     this.tweens.add({
       duration: duration,
       targets: this.wheel,
       angle: `-=${dAngle}`,    
     });
   }
+
   private getPrize(): void {
     if (this.state.user.boosts.fortune > 0) {
       this.state.user.boosts.fortune -= 1;
