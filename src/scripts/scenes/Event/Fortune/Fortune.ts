@@ -36,7 +36,7 @@ export default class Fortune extends Phaser.Scene {
   public moneyPull: number = 1000;
   public moneyPullText: Phaser.GameObjects.Text;
   public lastestWinner: any = {
-    name: 'Курочкин',
+    name: 'крузинштерн',
     time: 10000,
     prize: '8888',
   };
@@ -157,7 +157,7 @@ export default class Fortune extends Phaser.Scene {
     }).setOrigin(0.5);
 
     this.wheel = this.add.sprite(modalGeom.centerX - 130, modalGeom.centerY - 180, 'fortune-wheel');
-    this.pointer = this.add.sprite(modalGeom.centerX - 130, modalGeom.centerY - 185, 'fortune-pointer');
+    this.pointer = this.add.sprite(modalGeom.centerX - 128, modalGeom.centerY - 185, 'fortune-pointer');
     this.closeBtn = this.add.sprite(modalGeom.right - 70, modalGeom.top + 40,'tasks-close')
     
     this.add.text(modalGeom.centerX + 50, modalGeom.centerY + 45, this.state.lang.latestWinners, {
@@ -167,17 +167,37 @@ export default class Fortune extends Phaser.Scene {
       wordWrap: { width: 200 },
     }).setShadow(0, 2, '#000000', 3).setOrigin(0.5);
     
-    const text: string = this.state.lang.lastTimePrize
-      .replace('$1', this.lastestWinner.prize)
-      .replace('$2', this.lastestWinner.name)
-      .replace('$3', shortTime(this.lastestWinner.time, this.state.lang));
+    const text1: string = this.state.lang.lastTimePrize
+      .replace('$1', this.lastestWinner.prize);
 
-    this.lastestWinnerText = this.add.text(modalGeom.centerX + 160, modalGeom.centerY - 135, text,{
+    this.lastestWinnerText = this.add.text(modalGeom.centerX + 163, modalGeom.centerY - 160, text1,{
       font: '18px Shadow',
-      color: '#fff9ea',
+      color: '#ffd595',
       align: 'center',
-      wordWrap: { width: 210 },
+      wordWrap: { width: 240 },
     }).setOrigin(0.5);
+
+    this.lastestWinnerText.setDataEnabled();
+    const winnerTextGeom: Phaser.Geom.Rectangle = this.lastestWinnerText.getBounds();
+
+    this.lastestWinnerText.data.values.name = this.add.text(winnerTextGeom.centerX, winnerTextGeom.bottom, this.lastestWinner.name,{
+      font: '18px Shadow',
+      color: '#f9eee1',
+    }).setOrigin(0.5, 0);
+
+    const nameTextGeom: Phaser.Geom.Rectangle = this.lastestWinnerText.data.values.name.getBounds();
+
+    if (nameTextGeom.width > 210) {
+      this.lastestWinnerText.data.values.name.setCrop(0, 0, 210, 40);
+      this.lastestWinnerText.data.values.name.setOrigin(0);
+      this.lastestWinnerText.data.values.name.setX(modalGeom.centerX + 50);
+    }
+
+    this.lastestWinnerText.data.values.time = this.add.text(winnerTextGeom.centerX, winnerTextGeom.bottom + 20, 
+      `${shortTime(this.lastestWinner.time, this.state.lang)} ${this.state.lang.back}`,{
+        font: '18px Shadow',
+        color: '#f2ff25',
+    }).setOrigin(0.5, 0);
   }
 
   private creaeteList(): void {

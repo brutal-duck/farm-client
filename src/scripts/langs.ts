@@ -788,7 +788,8 @@ export default {
     fairClose: 'Ярмарка закроется через',
     fortuneWheel: 'Колесо Фортуны',
     latestWinners: 'Последние победители',
-    lastTimePrize: 'Последний раз главный приз ($1) забрал $2 $3 назад'
+    lastTimePrize: 'Последний раз выйграл главный приз ($1)',
+    back: 'Назад',
   },
 
   en: {
@@ -1580,5 +1581,8 @@ export default {
     fairClose: 'Ярмарка закроется через',
     fortuneWheel: 'Колесо Фортуны',
     latestWinners: 'Последние победители',
+    lastTimePrize: 'Последний раз выйграл главный приз ($1)',
+    back: 'Назад',
+
   }
 }
