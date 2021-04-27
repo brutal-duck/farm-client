@@ -308,6 +308,7 @@ function logout(): void {
   if (this.scene.isActive('Modal')) this.scene.stop('Modal');
   if (this.scene.isActive('Tutorial')) this.scene.stop('Tutorial');
   if (this.scene.isActive('Profile')) this.scene.stop('Profile');
+  if (this.scene.isActive('Fortune')) this.scene.stop('Fortune');
   if (this.scene.isActive(this.state.farm)) this.scene.stop(this.state.farm);
   if (this.scene.isActive(this.state.farm + 'Bars')) this.scene.stop(this.state.farm + 'Bars');
   let modal: Imodal = {
