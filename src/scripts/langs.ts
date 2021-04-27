@@ -784,10 +784,11 @@ export default {
     fortuneHint_6: 'Ты выйграл $1 билетиков!',
     mainPrize: 'Главный приз',
     buyTicket: 'Купить билет',
-    scrollForTicket: 'Крутить за билет',
+    scroll: 'Крутить',
     fairClose: 'Ярмарка закроется через',
     fortuneWheel: 'Колесо Фортуны',
     latestWinners: 'Последние победители',
+    lastTimePrize: 'Последний раз главный приз ($1) забрал $2 $3 назад'
   },
 
   en: {
@@ -1575,7 +1576,7 @@ export default {
     fortuneHint_6: 'Ты выйграл $1 билетиков!',
     mainPrize: 'Главный приз',
     buyTicket: 'Купить билет',
-    scrollForTicket: 'Крутить за билет',
+    scroll: 'Крутить',
     fairClose: 'Ярмарка закроется через',
     fortuneWheel: 'Колесо Фортуны',
     latestWinners: 'Последние победители',

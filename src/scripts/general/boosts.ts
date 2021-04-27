@@ -475,10 +475,10 @@ function herdBoost(): void {
     this.herdBoostNative = this.add.text(xBtn + 90, yBtn - 60, this.state.user.boosts[this.state.farm.toLowerCase()].herd, {
       font: '28px Shadow',
       color: '#FFFFFF'
-    }).setDepth(1)
+    }).setDepth(2)
       .setOrigin(0.5);
 
-    this.herdBoostNative.bg = this.add.graphics();
+    this.herdBoostNative.bg = this.add.graphics().setDepth(1);
     if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0) {
       this.herdBoostNative.setX(xBtn + 80);
       const textGeom: Phaser.Geom.Rectangle = this.herdBoostNative.getBounds();

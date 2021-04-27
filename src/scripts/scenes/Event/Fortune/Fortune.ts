@@ -8,6 +8,7 @@ const modal: string = require('../../../../assets/images/event/fortune/modal.png
 const btn: string = require('../../../../assets/images/event/fortune/btn.png');
 const wheel: string = require('../../../../assets/images/event/fortune/wheel.png');
 const pointer: string = require('../../../../assets/images/event/fortune/pointer.png');
+const ticket: string = require('../../../../assets/images/event/fortune/ticket.png');
 
 interface IfortuneUser {
   name: string;
@@ -34,6 +35,12 @@ export default class Fortune extends Phaser.Scene {
   public closeBtn: Phaser.GameObjects.Sprite;
   public moneyPull: number = 1000;
   public moneyPullText: Phaser.GameObjects.Text;
+  public lastestWinner: any = {
+    name: 'Курочкин',
+    time: 10000,
+    prize: '8888',
+  };
+  public lastestWinnerText: Phaser.GameObjects.Text;
   public userList: IfortuneUser[] = [
     {
       name: 'александр',
@@ -74,16 +81,6 @@ export default class Fortune extends Phaser.Scene {
       count: '50',
       time: 8000
     },
-    {
-      name: 'вфывфывфывфыв',
-      count: '100',
-      time: 9000
-    },
-    {
-      name: 'алексаячсячсячсндр',
-      count: '100',
-      time: 10000
-    }
   ];
 
   public listElements: any[] = [];
@@ -102,6 +99,7 @@ export default class Fortune extends Phaser.Scene {
     this.load.image('fortune-btn', btn);
     this.load.image('fortune-wheel', wheel);
     this.load.image('fortune-pointer', pointer);
+    this.load.image('fortune-ticket', ticket);
   }
 
   public create(): void {
@@ -134,7 +132,7 @@ export default class Fortune extends Phaser.Scene {
       color: '#66222c'
     }).setOrigin(0.5, 0);
 
-    this.btn = this.add.sprite(modalGeom.centerX + 140, modalGeom.centerY - 50, 'fortune-btn');
+    this.btn = this.add.sprite(modalGeom.centerX + 140, modalGeom.centerY - 35, 'fortune-btn');
     this.btnText1 = this.add.text(this.btn.x, this.btn.y - 5, this.state.lang.buyTicket, {
       font: '20px Shadow',
       color: '#ffffff',
@@ -153,7 +151,7 @@ export default class Fortune extends Phaser.Scene {
       align: 'center',
     }).setOrigin(0.5);
 
-    this.moneyPullText = this.add.text(modalGeom.centerX + 145, modalGeom.centerY - 200, String(this.moneyPull), {
+    this.moneyPullText = this.add.text(modalGeom.centerX + 145, modalGeom.centerY - 220, String(this.moneyPull), {
       font: '45px Shadow',
       color: '#ffffff'
     }).setOrigin(0.5);
@@ -168,29 +166,41 @@ export default class Fortune extends Phaser.Scene {
       align: 'center',
       wordWrap: { width: 200 },
     }).setShadow(0, 2, '#000000', 3).setOrigin(0.5);
+    
+    const text: string = this.state.lang.lastTimePrize
+      .replace('$1', this.lastestWinner.prize)
+      .replace('$2', this.lastestWinner.name)
+      .replace('$3', shortTime(this.lastestWinner.time, this.state.lang));
+
+    this.lastestWinnerText = this.add.text(modalGeom.centerX + 160, modalGeom.centerY - 135, text,{
+      font: '18px Shadow',
+      color: '#fff9ea',
+      align: 'center',
+      wordWrap: { width: 210 },
+    }).setOrigin(0.5);
   }
 
   private creaeteList(): void {
     let startY: number = this.cameras.main.centerY + 120;
     for (let i: number = 0; i < this.userList.length; i++) {
-      const name: Phaser.GameObjects.Text = this.add.text(160, startY, this.userList[i].name, {
+      const name: Phaser.GameObjects.Text = this.add.text(180, startY, this.userList[i].name, {
         font: '21px Bip',
         color: '#793D0A',
         align: 'left'
-      }).setCrop(0, 0, 220, 30).setOrigin(0, 0.5);
-      const count: Phaser.GameObjects.Text = this.add.text(420, startY, this.userList[i].count, {
+      }).setCrop(0, 0, 210, 30).setOrigin(0, 0.5);
+      const count: Phaser.GameObjects.Text = this.add.text(440, startY, this.userList[i].count, {
         font: '21px Bip',
         color: '#793D0A',
         align: 'left'
       }).setOrigin(0, 0.5);
-      const diamond: Phaser.GameObjects.Sprite = this.add.sprite(405, startY, 'diamond').setScale(0.11).setAngle(-10);
-      const time: Phaser.GameObjects.Text = this.add.text(500, startY, shortTime(this.userList[i].time, this.state.lang), {
+      const diamond: Phaser.GameObjects.Sprite = this.add.sprite(425, startY, 'diamond').setScale(0.11).setAngle(-10);
+      const time: Phaser.GameObjects.Text = this.add.text(520, startY, shortTime(this.userList[i].time, this.state.lang), {
         font: '21px Bip',
         color: '#793D0A',
         align: 'left'
       }).setOrigin(0, 0.5);
       
-      startY += 30
+      startY += 40
 
       this.listElements.push({
         name,
@@ -228,14 +238,22 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private updateElements(): void {
-    if (this.state.user.boosts.fortune > 0 && this.btnText2.text !== String(this.state.user.boosts.fortune)) {
-      this.btnText1.setText(this.state.lang.scrollForTicket);
+    if (
+      this.state.user.boosts.fortune > 0 && 
+      (this.btnText1.text !== this.state.lang.scroll || 
+      this.btnText2.text !== String(this.state.user.boosts.fortune))
+    ) {
+      this.btnText1.setText(this.state.lang.scroll);
       this.btnText2.setText(String(this.state.user.boosts.fortune));
-      this.btnImg.setTexture('sheepCoin').setPosition(this.btnText2.getBounds().right, this.btnText2.getBounds().centerY);
-    } else if (this.state.user.boosts.fortune <= 0 && this.btnText2.text !== String(this.price)) {
+      this.btnImg.setTexture('fortune-ticket')
+        .setPosition(this.btnText2.getBounds().right, this.btnText2.getBounds().centerY)
+        .setScale(0.5);
+    } else if (this.state.user.boosts.fortune <= 0 && (this.btnText1.text !== this.state.lang.buyTicket || this.btnText2.text !== String(this.price))) {
       this.btnText1.setText(this.state.lang.buyTicket);
       this.btnText2.setText(String(this.price));
-      this.btnImg.setTexture('diamond').setPosition(this.btnText2.getBounds().right, this.btnText2.getBounds().centerY);
+      this.btnImg.setTexture('diamond')
+        .setPosition(this.btnText2.getBounds().right, this.btnText2.getBounds().centerY)
+        .setScale(0.10);
     }
 
     if (this.moneyPullText.text !== String(this.moneyPull)) {
@@ -495,7 +513,7 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private getRandomIndexPrize(): void {
-    const pull: number[] = [ 26, 500, 3445, 2584, 1723, 861, 861, 5000000 ];
+    const pull: number[] = [ 26, 500, 3445, 2584, 1723, 861, 861, 500 ];
 
     const totalCounter: number = pull.reduce((prev, current) => prev += current);
     const arrRange: {
