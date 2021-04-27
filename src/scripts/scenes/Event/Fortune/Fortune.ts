@@ -1,7 +1,8 @@
-import { shortTime } from '../../../general/basic';
+import { shortNum, shortTime } from '../../../general/basic';
 import { clickModalBtn, clickButton } from '../../../general/clicks';
 import CowSprite from './../../../components/Animal/CowSprite';
 import { loadingModal } from './../../../general/basic';
+import Hint from './../../../components/animations/Hint';
 
 const modal: string = require('../../../../assets/images/event/fortune/modal.png');
 const btn: string = require('../../../../assets/images/event/fortune/btn.png');
@@ -20,6 +21,7 @@ export default class Fortune extends Phaser.Scene {
   }
 
   public state: Istate;
+  public hints: Phaser.GameObjects.Group;
   public endTimeText: Phaser.GameObjects.Text;
   public btn: Phaser.GameObjects.Sprite;
   public btnText1: Phaser.GameObjects.Text;
@@ -103,7 +105,6 @@ export default class Fortune extends Phaser.Scene {
   }
 
   public create(): void {
-    this.state.user.boosts.fortune = 0;
     console.log('Fortune Create')
     this.add.tileSprite(0, 0,
       Number(this.game.config.width),
@@ -121,48 +122,49 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private createElements(): void {
+    this.hints = this.add.group();
     const modalSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'fortune-modal').setInteractive();
     const modalGeom: Phaser.Geom.Rectangle = modalSprite.getBounds();
-    this.add.text(modalGeom.centerX, modalGeom.top + 30, 'Колесо фортуны', {
-      font: '24px Shadow',
-      color: '#ffffff'
+    this.add.text(modalGeom.centerX + 20, modalGeom.top + 30, this.state.lang.fortuneWheel, {
+      font: '35px Shadow',
+      color: '#edd9fd'
     }).setOrigin(0.5, 0);
-    this.endTimeText = this.add.text(modalGeom.centerX, modalGeom.top + 80, `Ярмарка закроется через ${shortTime(this.state.progress.event.endTime, this.state.lang)}`, {
+    this.endTimeText = this.add.text(modalGeom.centerX + 20, modalGeom.top + 80, `${this.state.lang.fairClose} ${shortTime(this.state.progress.event.endTime, this.state.lang)}`, {
       font: '24px Shadow',
-      color: '#ffffff'
+      color: '#66222c'
     }).setOrigin(0.5, 0);
 
     this.btn = this.add.sprite(modalGeom.centerX + 140, modalGeom.centerY - 50, 'fortune-btn');
-    this.btnText1 = this.add.text(this.btn.x, this.btn.y - 5, 'купить билетик', {
-      font: '16px Shadow',
+    this.btnText1 = this.add.text(this.btn.x, this.btn.y - 5, this.state.lang.buyTicket, {
+      font: '20px Shadow',
       color: '#ffffff',
       align: 'center'
     }).setOrigin(0.5, 1);
     this.btnText2 = this.add.text(this.btnText1.getBounds().centerX, this.btnText1.getBounds().bottom + 5, String(this.price), {
-      font: '16px Shadow',
+      font: '20px Shadow',
       color: '#ffffff',
       align: 'center'
     }).setOrigin(0.5, 0);
     this.btnImg = this.add.sprite(this.btnText2.getBounds().right, this.btnText2.getBounds().centerY, 'diamond').setScale(0.10).setOrigin(0, 0.5);
 
-    this.add.text(modalGeom.centerX + 120, modalGeom.centerY - 320, 'Главный приз', {
-      font: '32px Shadow',
+    this.add.text(modalGeom.centerX + 145, modalGeom.centerY - 340, this.state.lang.mainPrize, {
+      font: '25px Shadow',
       color: '#ffffff',
       align: 'center',
     }).setOrigin(0.5);
 
-    this.moneyPullText = this.add.text(modalGeom.centerX + 120, modalGeom.centerY - 250, String(this.moneyPull), {
+    this.moneyPullText = this.add.text(modalGeom.centerX + 145, modalGeom.centerY - 200, String(this.moneyPull), {
       font: '45px Shadow',
       color: '#ffffff'
     }).setOrigin(0.5);
 
-    this.wheel = this.add.sprite(modalGeom.centerX - 145, modalGeom.centerY - 185, 'fortune-wheel');
-    this.pointer = this.add.sprite(modalGeom.centerX - 145, modalGeom.centerY - 190, 'fortune-pointer');
+    this.wheel = this.add.sprite(modalGeom.centerX - 130, modalGeom.centerY - 180, 'fortune-wheel');
+    this.pointer = this.add.sprite(modalGeom.centerX - 130, modalGeom.centerY - 185, 'fortune-pointer');
     this.closeBtn = this.add.sprite(modalGeom.right - 70, modalGeom.top + 40,'tasks-close')
     
-    this.add.text(modalGeom.centerX + 30, modalGeom.centerY + 45, 'Последние победители', {
+    this.add.text(modalGeom.centerX + 50, modalGeom.centerY + 45, this.state.lang.latestWinners, {
       font: '24px Shadow',
-      color: '#ffffff',
+      color: '#fff9ea',
       align: 'center',
       wordWrap: { width: 200 },
     }).setShadow(0, 2, '#000000', 3).setOrigin(0.5);
@@ -226,12 +228,12 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private updateElements(): void {
-    if (this.state.user.boosts.fortune > 0 && this.btnText2.text !== `Остался ${this.state.user.boosts.fortune}`) {
-      this.btnText1.setText('Играть');
-      this.btnText2.setText(`Остался ${this.state.user.boosts.fortune}`);
+    if (this.state.user.boosts.fortune > 0 && this.btnText2.text !== String(this.state.user.boosts.fortune)) {
+      this.btnText1.setText(this.state.lang.scrollForTicket);
+      this.btnText2.setText(String(this.state.user.boosts.fortune));
       this.btnImg.setTexture('sheepCoin').setPosition(this.btnText2.getBounds().right, this.btnText2.getBounds().centerY);
     } else if (this.state.user.boosts.fortune <= 0 && this.btnText2.text !== String(this.price)) {
-      this.btnText1.setText('Купить билетик');
+      this.btnText1.setText(this.state.lang.buyTicket);
       this.btnText2.setText(String(this.price));
       this.btnImg.setTexture('diamond').setPosition(this.btnText2.getBounds().right, this.btnText2.getBounds().centerY);
     }
@@ -361,7 +363,7 @@ export default class Fortune extends Phaser.Scene {
     this.tweens.add({
       duration: duration,
       targets: this.wheel,
-      angle: `-=${dAngle}`,      
+      angle: `-=${dAngle}`,    
     });
   }
   private getPrize(): void {
@@ -379,6 +381,8 @@ export default class Fortune extends Phaser.Scene {
       case 2:
         // 5 процентов от всей суммы
         this.getFreeDiamonds(5);
+        const text: string = this.state.lang.fortuneHint_2.replace('$1', String(Math.round(5 * this.moneyPull / 100)));
+        Hint.create(this, -250, text, 3);
         break;
       case 3:
         // 10 минут монеток
@@ -421,6 +425,8 @@ export default class Fortune extends Phaser.Scene {
 
   private getFreeTickets(): void {
     this.state.user.boosts.fortune += 10;
+    const text: string = this.state.lang.fortuneHint_6.replace('$1', String(10));
+    Hint.create(this, -250, text, 3);
   }
 
   private getFreeFeedBoost(): void {
@@ -428,13 +434,16 @@ export default class Fortune extends Phaser.Scene {
       if (Phaser.Math.Between(1, 2) === 1) {
         this.state.user.boosts.sheep.feed += 1;
         console.log('для овец')
+        Hint.create(this, -250, this.state.lang.fortuneHint_4_Sheep, 3);
       } else {
         this.state.user.boosts.chicken.feed += 1;
+        Hint.create(this, -250, this.state.lang.fortuneHint_4_Chicken, 3);
         console.log('для кур')
       }
     } else {
       this.state.user.boosts.sheep.feed += 1;
       console.log('для овец')
+      Hint.create(this, -250, this.state.lang.fortuneHint_4_Sheep, 3);
     }
   }
 
@@ -442,13 +451,16 @@ export default class Fortune extends Phaser.Scene {
     if (this.state.progress.chicken.open) {
       if (Phaser.Math.Between(1, 2) === 1) {
         this.state.user.boosts.sheep.herd += 1;
+        Hint.create(this, -250, this.state.lang.fortuneHint_5_Sheep, 3);
         console.log('для овец')
       } else {
         this.state.user.boosts.chicken.herd += 1;
+        Hint.create(this, -250, this.state.lang.fortuneHint_5_Chicken, 3);
         console.log('для кур')
       }
     } else {
       this.state.user.boosts.sheep.herd += 1;
+      Hint.create(this, -250, this.state.lang.fortuneHint_5_Sheep, 3);
       console.log('для овец')
     }
   }
@@ -478,10 +490,12 @@ export default class Fortune extends Phaser.Scene {
       });
       this.state.userCow.money += (income * time);
     }
+    const text: string = this.state.lang.fortuneHint_3.replace('$1', shortNum(income * time));
+    Hint.create(this, -250, text, 3);
   }
 
   private getRandomIndexPrize(): void {
-    const pull: number[] = [26, 500, 3445, 2584, 1723, 861, 861, 500];
+    const pull: number[] = [ 26, 500, 3445, 2584, 1723, 861, 861, 5000000 ];
 
     const totalCounter: number = pull.reduce((prev, current) => prev += current);
     const arrRange: {
