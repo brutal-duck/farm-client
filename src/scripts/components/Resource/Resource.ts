@@ -7,7 +7,7 @@ export default abstract class Resource extends Phaser.GameObjects.Sprite {
 
   public init(): void {
     this.scene.add.existing(this);
-    this.setDepth(this.y)
+    this?.setDepth(this?.y)
   }
 
   public flyToPoint(target: Iposition): void {
@@ -17,10 +17,10 @@ export default abstract class Resource extends Phaser.GameObjects.Sprite {
       x: target.x,
       y: target.y,
       onStart: (): void => {
-        this.setDepth(this.y);
+        this?.setDepth(this?.y);
       },
       onComplete: ():void => {
-        this.destroy();
+        this?.destroy();
       }
     });
   }
