@@ -94,22 +94,27 @@ function updateHerdBoostBtn(): void {
       this.herdBoostBtnLeftText.setOrigin(0.5, 0.5);
       this.herdBoostBtnRightText.setVisible(false);
       this.herdBoostTimerText.setVisible(false);
+      
       if (this.state.user.boosts[this.state.farm.toLowerCase()].herd > 0) {
-          this.herdBoostNative.bg
-            .clear()
-            .fillStyle(0x00ccFF, 1)
-            .fillEllipse(xBtn + 90, yBtn - 60, 60, 40);
-
-        this.herdBoostNative.setX(xBtn + 80);
-        this.herdBoostNative.setY(yBtn - 61);
+        this.herdBoostNative.setX(this.herdBoostBtn.getBounds().right - this.herdBoostNative.getBounds().width);
+        this.herdBoostNative.setY(this.herdBoostBtn.getBounds().top);
+        const textGeom: Phaser.Geom.Rectangle = this.herdBoostNative.getBounds();
         if (!this.herdBoostNative.plusText) {
-          this.herdBoostNative.plusText = this.add.text(xBtn + 87, yBtn - 61, '+1', {
+          this.herdBoostNative.plusText = this.add.text(textGeom.right, textGeom.centerY, '+1', {
             font: '28px Shadow',
             color: '#00ff00'
           }).setOrigin(0, 0.5).setDepth(4);
         } else {
-          this.herdBoostNative.plusText.setY(yBtn - 61)
+          this.herdBoostNative.plusText.setY(textGeom.centerY);
+          this.herdBoostNative.plusText.setX(textGeom.right);
         }
+
+        const plusTextGeom: Phaser.Geom.Rectangle = this.herdBoostNative.plusText.getBounds();
+
+        this.herdBoostNative.bg
+          .clear()
+          .fillStyle(0x00ccFF, 1)
+          .fillEllipse(textGeom.right - plusTextGeom.width / 2, textGeom.centerY, textGeom.width + plusTextGeom.width + 20, textGeom.height + 10);
       }
     } 
     if (this.state.user.boosts[this.state.farm.toLowerCase()].herd > 0 && !this.herdBoostBtn.data.values.updated) {
@@ -120,10 +125,13 @@ function updateHerdBoostBtn(): void {
       this.herdBoostBtnLeftText.setOrigin(0.5, 0.5);
       this.herdBoostBtnRightText.setVisible(false);
       this.herdBoostNative.setY(this.herdBoostNative.y + 25); 
+
+      const textGeom: Phaser.Geom.Rectangle = this.herdBoostNative.getBounds();
+      const width: number = textGeom.width + 5 < 40 ? 40 : textGeom.width + 5;
       this.herdBoostNative.bg
         .clear()
         .fillStyle(0x00ccFF, 1)
-        .fillCircle(this.herdBoostNative.x, this.herdBoostNative.y, 20);
+        .fillEllipse(textGeom.centerX, textGeom.centerY, width, 40);
     }
   }
 }
@@ -472,23 +480,25 @@ function herdBoost(): void {
 
     this.herdBoostNative.bg = this.add.graphics();
     if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0) {
-
-      this.herdBoostNative.bg
-        .clear()
-        .fillStyle(0x00ccFF, 1)
-        .fillEllipse(xBtn + 90, yBtn - 60, 60, 40);
-
-      this.herdBoostNative.setX(xBtn + 80)
-      this.herdBoostNative.plusText = this.add.text(xBtn + 87, yBtn - 60, '+1', {
+      this.herdBoostNative.setX(xBtn + 80);
+      const textGeom: Phaser.Geom.Rectangle = this.herdBoostNative.getBounds();
+      this.herdBoostNative.plusText = this.add.text(textGeom.right, textGeom.centerY, '+1', {
         font: '28px Shadow',
         color: '#00ff00'
       }).setOrigin(0, 0.5).setDepth(4);
+      const plusTextGeom: Phaser.Geom.Rectangle = this.herdBoostNative.plusText.getBounds();
 
-    } else {
       this.herdBoostNative.bg
         .clear()
         .fillStyle(0x00ccFF, 1)
-        .fillCircle(this.herdBoostNative.x, this.herdBoostNative.y, 20);
+        .fillEllipse(textGeom.right - plusTextGeom.width / 2, textGeom.centerY, textGeom.width + plusTextGeom.width + 20, textGeom.height + 20);
+        
+    } else {
+      const textGeom: Phaser.Geom.Rectangle = this.herdBoostNative.getBounds();
+      this.herdBoostNative.bg
+        .clear()
+        .fillStyle(0x00ccFF, 1)
+        .fillEllipse(textGeom.centerX, textGeom.centerY, textGeom.width + 10, textGeom.height + 10);
     }
   }
   
@@ -713,12 +723,17 @@ function updateFeedBoostBtn(): void {
     this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].feedBoostLvl &&
     this.state.user.additionalTutorial.feedBoost
   ) {
-
     if (this.state.user.boosts[this.state.farm.toLowerCase()].feed > 0) {
       this.feedBoostNative.setText(this.state.user.boosts[this.state.farm.toLowerCase()].feed);
       this.feedBoostBtnLeftText.setText(this.state.lang.pickUp);
       this.feedBoostNative.setVisible(true);
       this.feedBoostNative.bg.setVisible(true);
+      const textGeom: Phaser.Geom.Rectangle = this.feedBoostNative.getBounds();
+      const width: number = textGeom.width + 5 < 40 ? 40 : textGeom.width + 5;
+      this.feedBoostNative.bg
+        .clear()
+        .fillStyle(0x00ccFF, 1)
+        .fillEllipse(textGeom.centerX, textGeom.centerY, width, 40);
       this.feedBoostBtnRightText.setVisible(false);
       this.feedBoostDiamondBtn.setVisible(false);
       this.feedBoostBtnLeftText.setX(this.feedBoostBtn.x + this.feedBoostBtnLeftText.width / 2);
