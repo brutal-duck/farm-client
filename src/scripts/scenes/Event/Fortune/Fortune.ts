@@ -147,7 +147,7 @@ export default class Fortune extends Phaser.Scene {
     this.btnImg = this.add.sprite(this.btnText2.getBounds().left, this.btnText2.getBounds().centerY, 'diamond').setScale(0.10).setOrigin(1, 0.5);
 
     this.add.text(modalGeom.centerX + 145, modalGeom.centerY - 340, this.state.lang.mainPrize, {
-      font: '25px Shadow',
+      font: '24px Shadow',
       color: '#ffffff',
       align: 'center',
     }).setOrigin(0.5);
