@@ -220,6 +220,7 @@ export default class Fortune extends Phaser.Scene {
     this.closeBtn.setTint(0xffffff);
     this.btn.setTint(0xffffff);
   }
+
   private updateElements(): void {
     if (this.state.user.boosts.fortune > 0 && this.btnText2.text !== `Остался ${this.state.user.boosts.fortune}`) {
       this.btnText1.setText('Играть');
@@ -271,51 +272,91 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private startScrollWheel(): void {
-    const endAngle = this.prizeId === 1 ? -330 :
+    const endAngle: number = this.prizeId === 1 ? -330 :
     this.prizeId === 2 ? -150 :
     this.prizeId === 3 || this.prizeId === 4 || this.prizeId === 5 ? -30 :
     this.prizeId === 6 ? -210 :
     this.prizeId === 7 ? -90 :
     this.prizeId === 8 ? -270 : 0;
 
-    this.tweens.add({
-      targets: this.wheel,
-      onUpdate: (): void => {
-        this.removeInteractiveElements();
-      },
-      onUpdateScope: this,
-      duration: 2500,
-      angle: { from: 0, to: -1440 + endAngle + Phaser.Math.Between(0, 22) * Phaser.Math.RND.pick(Phaser.Math.RND.signs)},
-      ease: 'Power1',
-      // onComplete: this.endScrollWheel,
-      onComplete: () => {
-        this.setInteractiveElements();
-        this.getPrize();
-      },
-      onCompleteScope: this,
-    })
+    const dAngle: number = Phaser.Math.Between(1, 22) * Phaser.Math.RND.pick(Phaser.Math.RND.signs);
+
+    if (dAngle > 10 && (this.prizeId === 3 || this.prizeId === 4 || this.prizeId === 5)) {
+      let anim = this.tweens.add({
+        targets: this.wheel,
+        onUpdate: (): void => {
+          this.removeInteractiveElements();
+        },
+        onUpdateScope: this,
+        duration: 2500,
+        angle: { from: 0, to: -1430 },
+        ease: 'Power1',
+      });
+      this.tweens.add({
+        delay: 2100,
+        onStart:(): void => {
+          anim.stop();
+          anim.remove();
+        },
+        targets: this.wheel,
+        ease: 'Power2',
+        duration: 900,
+        angle: endAngle + dAngle,
+        onUpdate: (): void => {
+          this.removeInteractiveElements();
+        },
+        onUpdateScope: this,
+        onComplete: (): void => {
+          this.setAngle(`-=${dAngle}`);
+          this.setInteractiveElements();
+          this.getPrize();
+        },
+        onCompleteScope: this,
+      })
+    } else if (dAngle < -10 && this.prizeId === 8) {
+      this.tweens.add({
+        targets: this.wheel,
+        onUpdate: (): void => {
+          this.removeInteractiveElements();
+        },
+        onUpdateScope: this,
+        duration: 2500,
+        angle: { from: 0, to: -1370 },
+        ease: 'Power1',
+        onComplete: () => {
+          this.setAngle(`-=${dAngle}`);
+          this.setInteractiveElements();
+          this.getPrize();
+        },
+        onCompleteScope: this,
+      });
+    } else {
+      this.tweens.add({
+        targets: this.wheel,
+        onUpdate: (): void => {
+          this.removeInteractiveElements();
+        },
+        onUpdateScope: this,
+        duration: 2500,
+        angle: { from: 0, to: -1440 + endAngle + dAngle},
+        ease: 'Power1',
+        onComplete: () => {
+          this.setAngle(`-=${dAngle}`);
+          this.setInteractiveElements();
+          this.getPrize();
+        },
+        onCompleteScope: this,
+      });
+    }
   }
 
-  private endScrollWheel(): void {
-    const endAngle = this.prizeId === 1 ? -330 :
-    this.prizeId === 2 ? -150 :
-    this.prizeId === 3 || this.prizeId === 4 || this.prizeId === 5 ? -30 :
-    this.prizeId === 6 ? -210 :
-    this.prizeId === 7 ? -90 :
-    this.prizeId === 8 ? -270 : 0;
-
+  private setAngle(dAngle: string): void {
     this.tweens.add({
+      duration: 300,
       targets: this.wheel,
-      duration: 500,
-      angle: endAngle + Phaser.Math.Between(0, 28) * Phaser.Math.RND.pick(Phaser.Math.RND.signs),
-      onComplete: () => {
-        this.setInteractiveElements();
-        this.getPrize();
-      },
-      onCompleteScope: this,
-    })
+      angle: dAngle,      
+    });
   }
-
   private getPrize(): void {
     if (this.state.user.boosts.fortune > 0) {
       this.state.user.boosts.fortune -= 1;
