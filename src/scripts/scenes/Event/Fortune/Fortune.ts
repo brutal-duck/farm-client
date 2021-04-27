@@ -104,7 +104,6 @@ export default class Fortune extends Phaser.Scene {
   }
 
   public create(): void {
-    this.state.user.boosts.fortune = 5
     console.log('Fortune Create')
     this.add.tileSprite(0, 0,
       Number(this.game.config.width),
@@ -135,17 +134,17 @@ export default class Fortune extends Phaser.Scene {
     }).setOrigin(0.5, 0);
 
     this.btn = this.add.sprite(modalGeom.centerX + 140, modalGeom.centerY - 35, 'fortune-btn');
-    this.btnText1 = this.add.text(this.btn.x, this.btn.y - 5, this.state.lang.buyTicket, {
+    this.btnText1 = this.add.text(this.btn.x + 5, this.btn.y - 5, this.state.lang.buyTicket, {
       font: '20px Shadow',
       color: '#ffffff',
       align: 'center'
     }).setOrigin(0.5, 1);
-    this.btnText2 = this.add.text(this.btnText1.getBounds().centerX, this.btnText1.getBounds().bottom + 5, String(this.price), {
+    this.btnText2 = this.add.text(this.btnText1.getBounds().centerX + 10, this.btnText1.getBounds().bottom + 5, String(this.price), {
       font: '20px Shadow',
       color: '#ffffff',
       align: 'center'
     }).setOrigin(0.5, 0);
-    this.btnImg = this.add.sprite(this.btnText2.getBounds().right, this.btnText2.getBounds().centerY, 'diamond').setScale(0.10).setOrigin(0, 0.5);
+    this.btnImg = this.add.sprite(this.btnText2.getBounds().left, this.btnText2.getBounds().centerY, 'diamond').setScale(0.10).setOrigin(1, 0.5);
 
     this.add.text(modalGeom.centerX + 145, modalGeom.centerY - 340, this.state.lang.mainPrize, {
       font: '25px Shadow',
@@ -270,7 +269,7 @@ export default class Fortune extends Phaser.Scene {
       this.btnText1.setText(this.state.lang.scroll);
       this.btnText2.setText(String(this.state.user.boosts.fortune));
       this.btnImg.setTexture('fortune-ticket')
-        .setPosition(this.btnText2.getBounds().right, this.btnText2.getBounds().centerY)
+        .setPosition(this.btnText2.getBounds().left, this.btnText2.getBounds().centerY)
         .setScale(0.4);
     } else if (
       this.state.user.boosts.fortune <= 0 && 
@@ -281,7 +280,7 @@ export default class Fortune extends Phaser.Scene {
       this.btnText1.setText(this.state.lang.buyTicket);
       this.btnText2.setText(String(this.price));
       this.btnImg.setTexture('diamond')
-        .setPosition(this.btnText2.getBounds().right, this.btnText2.getBounds().centerY)
+        .setPosition(this.btnText2.getBounds().left, this.btnText2.getBounds().centerY)
         .setScale(0.10);
     }
 
@@ -412,7 +411,7 @@ export default class Fortune extends Phaser.Scene {
       this.btnText1.setText(this.state.lang.buyTicket);
       this.btnText2.setText(String(this.price));
       this.btnImg.setTexture('diamond')
-        .setPosition(this.btnText2.getBounds().right, this.btnText2.getBounds().centerY)
+        .setPosition(this.btnText2.getBounds().left, this.btnText2.getBounds().centerY)
         .setScale(0.1);
     }
   }
