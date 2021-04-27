@@ -29,6 +29,7 @@ const mapIcon: string = require("./../../../assets/images/icons/map.png");
 const sandwich: string = require("./../../../assets/images/icons/sandwich.png");
 const sandwichClose: string = require("./../../../assets/images/icons/sandwich-close.png");
 const profile: string = require("./../../../assets/images/icons/profile.png");
+const fortune: string = require("./../../../assets/images/icons/fortune.png");
 const chat: string = require("./../../../assets/images/icons/chat.png");
 const forBuying: string = require("./../../../assets/images/cow/territories/for-buying.png");
 const bought: string = require("./../../../assets/images/cow/territories/bought.png");
@@ -270,6 +271,7 @@ class CowPreload extends Phaser.Scene {
     this.load.image('sandwich', sandwich);
     this.load.image('sandwich-close', sandwichClose);
     this.load.image('profile', profile);
+    this.load.image('fortune-icon', fortune);
     this.load.image('chat', chat);
     this.load.image('cow-for-buying', forBuying);
     this.load.image('cow-bought', bought);
