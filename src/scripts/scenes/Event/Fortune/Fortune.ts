@@ -353,8 +353,6 @@ export default class Fortune extends Phaser.Scene {
         onUpdateScope: this,
         onComplete: (): void => {
           this.setAngle(dAngle);
-          this.setInteractiveElements();
-          this.getPrize();
         },
         onCompleteScope: this,
       })
@@ -370,8 +368,6 @@ export default class Fortune extends Phaser.Scene {
         ease: 'Power3',
         onComplete: () => {
           this.setAngle(dAngle);
-          this.setInteractiveElements();
-          this.getPrize();
         },
         onCompleteScope: this,
       });
@@ -387,8 +383,6 @@ export default class Fortune extends Phaser.Scene {
         ease: 'Power3',
         onComplete: () => {
           this.setAngle(dAngle);
-          this.setInteractiveElements();
-          this.getPrize();
         },
         onCompleteScope: this,
       });
@@ -414,7 +408,16 @@ export default class Fortune extends Phaser.Scene {
     this.tweens.add({
       duration: duration,
       targets: this.wheel,
-      angle: `-=${dAngle}`,    
+      angle: `-=${dAngle}`, 
+      onComplete: (): void => {
+        this.time.addEvent({
+          delay: 200,
+          callback: () => {
+            this.getPrize();
+            this.setInteractiveElements();
+          }
+        })
+      }   
     });
   }
 
