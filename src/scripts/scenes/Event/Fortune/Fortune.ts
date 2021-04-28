@@ -253,6 +253,8 @@ export default class Fortune extends Phaser.Scene {
       
           const nameTextGeom: Phaser.Geom.Rectangle = this.lastestWinnerText.data.values.name.getBounds();
           if (nameTextGeom.width > 210) {
+            this.lastestWinnerText.data.values.name.setCrop(0, 0, 210, 40);
+            this.lastestWinnerText.data.values.name.setOrigin(0);
             this.lastestWinnerText.data.values.name.setX(this.cameras.main.centerX + 50);
           }
       
@@ -471,7 +473,6 @@ export default class Fortune extends Phaser.Scene {
       this.state.user.boosts.fortune -= 1;
     } else {
       this.state.user.diamonds -= this.price;
-      this.state.fortuneData.pull += this.price;
     }
     switch (this.prizeId) {
       case 1:
