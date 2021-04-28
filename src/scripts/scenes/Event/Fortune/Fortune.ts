@@ -425,7 +425,7 @@ export default class Fortune extends Phaser.Scene {
         data = {
           name: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
           spending: 0,
-          prize: 5 * this.state.fortuneData.pull / 100,
+          prize: Math.round(5 * this.state.fortuneData.pull / 100),
           jackpot: false,
         }
       }
@@ -441,7 +441,7 @@ export default class Fortune extends Phaser.Scene {
         data = {
           name: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
           spending: this.price,
-          prize: 5 * this.state.fortuneData.pull / 100,
+          prize: Math.round(5 * this.state.fortuneData.pull / 100),
           jackpot: false,
         }
       } else if ( this.prizeId >= 3 && this.prizeId <= 8) {
