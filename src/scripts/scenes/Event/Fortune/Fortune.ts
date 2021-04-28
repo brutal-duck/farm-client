@@ -565,23 +565,32 @@ export default class Fortune extends Phaser.Scene {
           income += this.state.sheepSettings.sheepSettings.find((data: any) => data.breed === child.type).long_wool / 10;
         }
       });
-      this.state.userSheep.money += (income * time);
+      if (income > 0) {
+        this.state.userSheep.money += (income * time);
+      } else this.state.userSheep.money += 1000;
     } else if (this.state.farm === 'Chicken') {
       this.game.scene.keys['Chicken'].chicken.children.iterate((child: any) => {
         if (child.type !== 0) {
           income += this.state.chickenSettings.chickenSettings.find((data: any) => data.breed === child.type).eggPrice / 10;
         }
       });
-      this.state.userChicken.money += (income * time);
+      if (income > 0) {
+        this.state.userChicken.money += (income * time);
+      } else this.state.userChicken.money += 1000;
     } else if (this.state.farm === 'Cow') {
       this.game.scene.keys['Cow'].animalGroup.children.iterate((child: CowSprite) => {
         if (child.breed !== 0) {
           income += child.settings.maxMilkVolume / 60 * 0.2;
         }
       });
-      this.state.userCow.money += (income * time);
+      if (income > 0) {
+        this.state.userCow.money += (income * time);
+      } else {
+        this.state.userCow.money += 1000;
+      }
     }
-    const text: string = this.state.lang.fortuneHint_3.replace('$1', shortNum(income * time));
+    const text: string = income > 0 ? this.state.lang.fortuneHint_3.replace('$1', shortNum(income * time)) : this.state.lang.fortuneHint_3.replace('$1', '1000');
+
     Hint.create(this, -250, text, 3);
   }
 
