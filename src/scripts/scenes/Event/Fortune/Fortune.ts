@@ -156,7 +156,7 @@ export default class Fortune extends Phaser.Scene {
 
   private creaeteList(): void {
     let startY: number = this.cameras.main.centerY + 120;
-    this.currentList.reverse();
+    this.currentList?.reverse();
     for (let i: number = 0; i < this.currentList.length; i++) {
       const name: Phaser.GameObjects.Text = this.add.text(180, startY, this.currentList[i].name, {
         font: '21px Bip',
@@ -413,7 +413,7 @@ export default class Fortune extends Phaser.Scene {
 
   private sendSocket(): void {
     let data: any;
-    if (this.state.user.boosts.fortune > 1) {
+    if (this.state.user.boosts.fortune >= 1) {
       if (this.prizeId === 1) {
         data = {
           name: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
@@ -452,8 +452,8 @@ export default class Fortune extends Phaser.Scene {
           jackpot: false,
         }
       }
-      this.state.socket.io.emit('fortune-send', data);
     }
+    this.state.socket.io.emit('fortune-send', data);
   }
   private getPrize(): void {
     this.sendSocket();
