@@ -214,6 +214,7 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private updateElements(): void {
+    if (this.whellIsScrolling) return;
     if (this.state.fortuneData?.pull) {
       if (
         this.state.user.boosts.fortune > 0 && 
@@ -304,7 +305,11 @@ export default class Fortune extends Phaser.Scene {
     if (this.state.user.boosts.fortune > 0) {
       this.startScrollWheel();
     } else {
-      this.startScrollWheel();
+      if (this.state.user.diamonds >= this.price) {
+        this.startScrollWheel();
+      } else {
+        console.log('net denyag')
+      }
     }
   }
 
