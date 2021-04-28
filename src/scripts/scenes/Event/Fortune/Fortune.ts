@@ -32,7 +32,7 @@ export default class Fortune extends Phaser.Scene {
   public moneyPullText: Phaser.GameObjects.Text;
   public whellIsScrolling: boolean = false;
   public lastestWinnerText: Phaser.GameObjects.Text;
-  public currentList: IfortuneUser[];
+  public currentList: IfortuneUser[] = [];
 
   public listElements: any[] = [];
 
@@ -69,6 +69,7 @@ export default class Fortune extends Phaser.Scene {
     ).setOrigin(0).setInteractive();
     this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)');
     this.createElements();
+    this.creaeteList();
     this.setListeners();
   }
 
@@ -155,6 +156,7 @@ export default class Fortune extends Phaser.Scene {
 
   private creaeteList(): void {
     let startY: number = this.cameras.main.centerY + 120;
+    this.currentList.reverse();
     for (let i: number = 0; i < this.currentList.length; i++) {
       const name: Phaser.GameObjects.Text = this.add.text(180, startY, this.currentList[i].name, {
         font: '21px Bip',
