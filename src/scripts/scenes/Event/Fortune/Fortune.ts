@@ -421,7 +421,7 @@ export default class Fortune extends Phaser.Scene {
     });
   }
 
-  private sendSocket(): void {
+  private sendSocket(prize: number = 0): void {
     let data: any = {
       name: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
       spending: 0,
@@ -433,14 +433,14 @@ export default class Fortune extends Phaser.Scene {
         data = {
           name: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
           spending: 0,
-          prize: Math.round(70 * this.state.fortuneData.pull / 100),
+          prize: prize,
           jackpot: true,
         }
       } else if ( this.prizeId === 2) {
         data = {
           name: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
           spending: 0,
-          prize: Math.round(5 * this.state.fortuneData.pull / 100),
+          prize: prize,
           jackpot: false,
         }
       }
@@ -449,14 +449,14 @@ export default class Fortune extends Phaser.Scene {
         data = {
           name: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
           spending: this.price,
-          prize: Math.round(70 * this.state.fortuneData.pull / 100),
+          prize: prize,
           jackpot: true,
         }
       } else if ( this.prizeId === 2) {
         data = {
           name: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
           spending: this.price,
-          prize: Math.round(5 * this.state.fortuneData.pull / 100),
+          prize: prize,
           jackpot: false,
         }
       } else if ( this.prizeId >= 3 && this.prizeId <= 8) {
@@ -471,7 +471,13 @@ export default class Fortune extends Phaser.Scene {
     this.state.socket.io.emit('fortune-send', data);
   }
   private getPrize(): void {
-    this.sendSocket();
+    let prize: number = 0;
+    if (this.prizeId === 1) {
+      prize = Math.round(70 * this.state.fortuneData.pull / 100);
+    } else {
+      prize = Math.round(5 * this.state.fortuneData.pull / 100);
+    }
+    this.sendSocket(prize);
     if (this.state.user.boosts.fortune > 0) {
       this.state.user.boosts.fortune -= 1;
     } else {
@@ -480,14 +486,14 @@ export default class Fortune extends Phaser.Scene {
     switch (this.prizeId) {
       case 1:
         // джекпот (70%)
-        const text1: string = this.state.lang.fortuneHint_2.replace('$1', String(Math.round(70 * this.state.fortuneData.pull / 100)));
+        const text1: string = this.state.lang.fortuneHint_2.replace('$1', String(prize));
         Hint.create(this, -250, text1, 3);
         this.getJackpot();
         break;
       case 2:
         // 5 процентов от всей суммы
         this.getFreeDiamonds(5);
-        const text: string = this.state.lang.fortuneHint_2.replace('$1', String(Math.round(5 * this.state.fortuneData.pull / 100)));
+        const text: string = this.state.lang.fortuneHint_2.replace('$1', String(prize));
         Hint.create(this, -250, text, 3);
         break;
       case 3:
