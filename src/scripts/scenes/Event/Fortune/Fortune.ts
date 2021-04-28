@@ -477,6 +477,8 @@ export default class Fortune extends Phaser.Scene {
     switch (this.prizeId) {
       case 1:
         // джекпот (70%)
+        const text1: string = this.state.lang.fortuneHint_2.replace('$1', String(Math.round(70 * this.state.fortuneData.pull / 100)));
+        Hint.create(this, -250, text1, 3);
         this.getJackpot();
         break;
       case 2:
