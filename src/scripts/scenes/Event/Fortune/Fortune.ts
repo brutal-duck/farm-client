@@ -10,11 +10,7 @@ const wheel: string = require('../../../../assets/images/event/fortune/wheel.png
 const pointer: string = require('../../../../assets/images/event/fortune/pointer.png');
 const ticket: string = require('../../../../assets/images/event/fortune/ticket.png');
 
-interface IfortuneUser {
-  name: string;
-  count: string;
-  time: number;
-}
+
 
 export default class Fortune extends Phaser.Scene {
   constructor() {
@@ -33,56 +29,10 @@ export default class Fortune extends Phaser.Scene {
   public prizeId: number;
   public readonly price: number = 10;
   public closeBtn: Phaser.GameObjects.Sprite;
-  public moneyPull: number = 1000;
   public moneyPullText: Phaser.GameObjects.Text;
-  public lastestWinner: any = {
-    name: 'крузинштерн',
-    time: 10000,
-    prize: '8888',
-  };
   public whellIsScrolling: boolean = false;
   public lastestWinnerText: Phaser.GameObjects.Text;
-  public userList: IfortuneUser[] = [
-    {
-      name: 'александр',
-      count: '100',
-      time: 1010
-    },
-    {
-      name: 'дмитрий-владимирович крузенштерн',
-      count: '1000',
-      time: 2000
-    },
-    {
-      name: 'александр',
-      count: '1200',
-      time: 3000
-    },
-    {
-      name: 'але2213123ксандр',
-      count: '100',
-      time: 4000
-    },
-    {
-      name: 'алексвфыв а   ндр',
-      count: '100',
-      time: 5000
-    },{
-      name: 'алексфывыфвфы андр',
-      count: '1050',
-      time: 6000
-    },
-    {
-      name: 'александр',
-      count: '100',
-      time: 7000
-    },
-    {
-      name: 'Не александр',
-      count: '50',
-      time: 8000
-    },
-  ];
+  public currentList: IfortuneUser[];
 
   public listElements: any[] = [];
 
@@ -104,6 +54,13 @@ export default class Fortune extends Phaser.Scene {
   }
 
   public create(): void {
+    const data = {
+      name: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
+      spending: 0,
+      prize: 0,
+      jackpot: false,
+    }
+    this.state.socket.io.emit('fortune-send', data);
     console.log('Fortune Create')
     this.add.tileSprite(0, 0,
       Number(this.game.config.width),
@@ -112,7 +69,6 @@ export default class Fortune extends Phaser.Scene {
     ).setOrigin(0).setInteractive();
     this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)');
     this.createElements();
-    this.creaeteList();
     this.setListeners();
   }
 
@@ -152,7 +108,7 @@ export default class Fortune extends Phaser.Scene {
       align: 'center',
     }).setOrigin(0.5);
 
-    this.moneyPullText = this.add.text(modalGeom.centerX + 145, modalGeom.centerY - 220, String(this.moneyPull), {
+    this.moneyPullText = this.add.text(modalGeom.centerX + 145, modalGeom.centerY - 220, ' ', {
       font: '45px Shadow',
       color: '#ffffff'
     }).setOrigin(0.5);
@@ -168,10 +124,7 @@ export default class Fortune extends Phaser.Scene {
       wordWrap: { width: 200 },
     }).setShadow(0, 2, '#000000', 3).setOrigin(0.5);
     
-    const text1: string = this.state.lang.lastTimePrize
-      .replace('$1', this.lastestWinner.prize);
-
-    this.lastestWinnerText = this.add.text(modalGeom.centerX + 163, modalGeom.centerY - 160, text1,{
+    this.lastestWinnerText = this.add.text(modalGeom.centerX + 163, modalGeom.centerY - 160, ' ',{
       font: '18px Shadow',
       color: '#ffd595',
       align: 'center',
@@ -181,7 +134,7 @@ export default class Fortune extends Phaser.Scene {
     this.lastestWinnerText.setDataEnabled();
     const winnerTextGeom: Phaser.Geom.Rectangle = this.lastestWinnerText.getBounds();
 
-    this.lastestWinnerText.data.values.name = this.add.text(winnerTextGeom.centerX, winnerTextGeom.bottom, this.lastestWinner.name,{
+    this.lastestWinnerText.data.values.name = this.add.text(winnerTextGeom.centerX, winnerTextGeom.bottom, ' ',{
       font: '18px Shadow',
       color: '#f9eee1',
     }).setOrigin(0.5, 0);
@@ -194,8 +147,7 @@ export default class Fortune extends Phaser.Scene {
       this.lastestWinnerText.data.values.name.setX(modalGeom.centerX + 50);
     }
 
-    this.lastestWinnerText.data.values.time = this.add.text(winnerTextGeom.centerX, winnerTextGeom.bottom + 20, 
-      `${shortTime(this.lastestWinner.time, this.state.lang)} ${this.state.lang.back}`,{
+    this.lastestWinnerText.data.values.time = this.add.text(winnerTextGeom.centerX, winnerTextGeom.bottom + 20, ' ', {
         font: '18px Shadow',
         color: '#f2ff25',
     }).setOrigin(0.5, 0);
@@ -203,19 +155,19 @@ export default class Fortune extends Phaser.Scene {
 
   private creaeteList(): void {
     let startY: number = this.cameras.main.centerY + 120;
-    for (let i: number = 0; i < this.userList.length; i++) {
-      const name: Phaser.GameObjects.Text = this.add.text(180, startY, this.userList[i].name, {
+    for (let i: number = 0; i < this.currentList.length; i++) {
+      const name: Phaser.GameObjects.Text = this.add.text(180, startY, this.currentList[i].name, {
         font: '21px Bip',
         color: '#793D0A',
         align: 'left'
       }).setCrop(0, 0, 210, 30).setOrigin(0, 0.5);
-      const count: Phaser.GameObjects.Text = this.add.text(440, startY, this.userList[i].count, {
+      const count: Phaser.GameObjects.Text = this.add.text(440, startY, this.currentList[i].prize, {
         font: '21px Bip',
         color: '#793D0A',
         align: 'left'
       }).setOrigin(0, 0.5);
       const diamond: Phaser.GameObjects.Sprite = this.add.sprite(425, startY, 'diamond').setScale(0.11).setAngle(-10);
-      const time: Phaser.GameObjects.Text = this.add.text(520, startY, shortTime(this.userList[i].time, this.state.lang), {
+      const time: Phaser.GameObjects.Text = this.add.text(520, startY, shortTime(this.currentList[i].time, this.state.lang), {
         font: '21px Bip',
         color: '#793D0A',
         align: 'left'
@@ -260,33 +212,63 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private updateElements(): void {
-    if (
-      this.state.user.boosts.fortune > 0 && 
-      (this.btnText1.text !== this.state.lang.scroll || 
-      this.btnText2.text !== String(this.state.user.boosts.fortune)) && 
-      !this.whellIsScrolling
-    ) {
-      this.btnText1.setText(this.state.lang.scroll);
-      this.btnText2.setText(String(this.state.user.boosts.fortune));
-      this.btnImg.setTexture('fortune-ticket')
-        .setPosition(this.btnText2.getBounds().left, this.btnText2.getBounds().centerY)
-        .setScale(0.4);
-    } else if (
-      this.state.user.boosts.fortune <= 0 && 
-      (this.btnText1.text !== this.state.lang.buyTicket ||
-      this.btnText2.text !== String(this.price)) && 
-      !this.whellIsScrolling
-    ) {
-      this.btnText1.setText(this.state.lang.buyTicket);
-      this.btnText2.setText(String(this.price));
-      this.btnImg.setTexture('diamond')
-        .setPosition(this.btnText2.getBounds().left, this.btnText2.getBounds().centerY)
-        .setScale(0.10);
+    if (this.state.fortuneData?.pull) {
+      if (
+        this.state.user.boosts.fortune > 0 && 
+        (this.btnText1.text !== this.state.lang.scroll || 
+        this.btnText2.text !== String(this.state.user.boosts.fortune)) && 
+        !this.whellIsScrolling
+      ) {
+        this.btnText1.setText(this.state.lang.scroll);
+        this.btnText2.setText(String(this.state.user.boosts.fortune));
+        this.btnImg.setTexture('fortune-ticket')
+          .setPosition(this.btnText2.getBounds().left, this.btnText2.getBounds().centerY)
+          .setScale(0.4);
+      } else if (
+        this.state.user.boosts.fortune <= 0 && 
+        (this.btnText1.text !== this.state.lang.buyTicket ||
+        this.btnText2.text !== String(this.price)) && 
+        !this.whellIsScrolling
+      ) {
+        this.btnText1.setText(this.state.lang.buyTicket);
+        this.btnText2.setText(String(this.price));
+        this.btnImg.setTexture('diamond')
+          .setPosition(this.btnText2.getBounds().left, this.btnText2.getBounds().centerY)
+          .setScale(0.10);
+      }
+      if (this.moneyPullText.text !== String(this.state.fortuneData.pull)) {
+        this.moneyPullText.setText(String(this.state.fortuneData.pull));
+      }
+  
+      const text1: string = this.state.lang.lastTimePrize.replace('$1', this.state.fortuneData?.lastWinner?.prize);
+  
+      if (this.lastestWinnerText.text !== text1) {
+        if (this.state.fortuneData.lastWinner) {
+          this.lastestWinnerText.setText(text1).setVisible(true);
+          this.lastestWinnerText.data.values.name.setText(this.state.fortuneData.lastWinner?.name).setVisible(true);
+          this.lastestWinnerText.data.values.name.setY(this.lastestWinnerText.getBounds().bottom);
+      
+          const nameTextGeom: Phaser.Geom.Rectangle = this.lastestWinnerText.data.values.name.getBounds();
+          if (nameTextGeom.width > 210) {
+            this.lastestWinnerText.data.values.name.setX(this.cameras.main.centerX + 50);
+          }
+      
+          this.lastestWinnerText.data.values.time.setText(`${shortTime(this.state.fortuneData.lastWinner?.time, this.state.lang)} ${this.state.lang.back}`).setVisible(true);
+          this.lastestWinnerText.data.values.time.setY(nameTextGeom.bottom);
+        } else {
+          this.lastestWinnerText.setVisible(false);
+          this.lastestWinnerText.data.values.name.setVisible(false);
+          this.lastestWinnerText.data.values.time.setVisible(false);
+        }
+      }
+
+      if (JSON.stringify(this.state.fortuneData.recentWinners) !== JSON.stringify(this.currentList)) {
+        this.currentList = this.state.fortuneData.recentWinners;
+        this.destoryListElemets();
+        this.creaeteList();
+      }
     }
 
-    if (this.moneyPullText.text !== String(this.moneyPull)) {
-      this.moneyPullText.setText(String(this.moneyPull));
-    }
   }
 
   private setListeners(): void {
@@ -427,12 +409,57 @@ export default class Fortune extends Phaser.Scene {
     });
   }
 
+  private sendSocket(): void {
+    let data: any;
+    if (this.state.user.boosts.fortune > 1) {
+      if (this.prizeId === 1) {
+        data = {
+          name: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
+          spending: 0,
+          prize: 1,
+          jackpot: true,
+        }
+      } else if ( this.prizeId === 2) {
+        data = {
+          name: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
+          spending: 0,
+          prize: 1,
+          jackpot: false,
+        }
+      }
+    } else {
+      if (this.prizeId === 1) {
+        data = {
+          name: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
+          spending: this.price,
+          prize: 1,
+          jackpot: true,
+        }
+      } else if ( this.prizeId === 2) {
+        data = {
+          name: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
+          spending: this.price,
+          prize: 1,
+          jackpot: false,
+        }
+      } else if ( this.prizeId >= 3 && this.prizeId <= 8) {
+        data = {
+          name: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
+          spending: this.price,
+          prize: 0,
+          jackpot: false,
+        }
+      }
+      this.state.socket.io.emit('fortune-send', data);
+    }
+  }
   private getPrize(): void {
+    this.sendSocket();
     if (this.state.user.boosts.fortune > 0) {
       this.state.user.boosts.fortune -= 1;
     } else {
       this.state.user.diamonds -= this.price;
-      this.moneyPull += this.price;
+      this.state.fortuneData.pull += this.price;
     }
     switch (this.prizeId) {
       case 1:
@@ -442,7 +469,7 @@ export default class Fortune extends Phaser.Scene {
       case 2:
         // 5 процентов от всей суммы
         this.getFreeDiamonds(5);
-        const text: string = this.state.lang.fortuneHint_2.replace('$1', String(Math.round(5 * this.moneyPull / 100)));
+        const text: string = this.state.lang.fortuneHint_2.replace('$1', String(Math.round(5 * this.state.fortuneData.pull / 100)));
         Hint.create(this, -250, text, 3);
         break;
       case 3:
@@ -475,8 +502,8 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private getFreeDiamonds(percent: number): void {
-    this.moneyPull -= Math.round(percent * this.moneyPull / 100);
-    this.state.user.diamonds += Math.round(percent * this.moneyPull / 100);
+    this.state.fortuneData.pull -= Math.round(percent * this.state.fortuneData.pull / 100);
+    this.state.user.diamonds += Math.round(percent * this.state.fortuneData.pull / 100);
   }
 
   private getJackpot(): void {

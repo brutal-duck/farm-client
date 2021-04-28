@@ -612,6 +612,16 @@ interface IamplitudeData {
   step?: number;
   stock?: boolean;
 }
+interface IfortuneUser {
+  name: string;
+  prize: string;
+  time: number;
+}
+interface IfortuneData {
+  pull: number,
+  recentWinners: IfortuneUser[];
+  lastWinner: IfortuneUser;
+}
 interface Istate {
   platform: string;
   autoSaveSpeed: number;
@@ -684,4 +694,5 @@ interface Istate {
   chat: Ichat[];
   stock: string;
   starterpack: boolean;
+  fortuneData: IfortuneData;
 }

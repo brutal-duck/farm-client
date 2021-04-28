@@ -30,6 +30,11 @@ export default class Socket {
       // console.log(this.state);
     });
 
+    this.io.on('fortune', (data: any) => {
+      this.state.fortuneData = data;
+      console.log(this.state.fortuneData)
+    })
+
   }
 
 }

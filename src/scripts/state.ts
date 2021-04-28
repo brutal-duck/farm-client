@@ -69,6 +69,7 @@ let eventCollectorSettings: IcollectorSettings[];
 let chat: Ichat[] = [];
 let starterpack: boolean = false;
 let stock: string = '';
+let fortuneData: IfortuneData;
 
 let state: Istate = {
   // записываемые в localStorage
@@ -145,6 +146,7 @@ let state: Istate = {
   starterpack, // забрал ли юзер стартерпак
   stock, // тип акции, собтия для revenue
   boughtFactoryBoost, // куплен ли шоколад
+  fortuneData,
 }
 
 export default state;
