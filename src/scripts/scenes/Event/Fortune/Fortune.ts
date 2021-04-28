@@ -417,7 +417,12 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private sendSocket(): void {
-    let data: any;
+    let data: any = {
+      name: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
+      spending: 0,
+      prize: 0,
+      jackpot: false,
+    };
     if (this.state.user.boosts.fortune >= 1) {
       if (this.prizeId === 1) {
         data = {
