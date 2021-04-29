@@ -313,27 +313,34 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private handlerStartBtn(): void {
-    this.removeInteractiveElements();
-    this.getRandomIndexPrize();
-    this.setUpdatedButton();
-    this.whellIsScrolling = true;
-    // const type: string = this.prizeId === 1 ? 'джекпот' :
-    // this.prizeId === 2 ? 'регулярный приз, 5% от фонда' :
-    // this.prizeId === 3 ? '10 минут монет' : 
-    // this.prizeId === 4 ? '15 минут монет' :
-    // this.prizeId === 5 ? '30 минут монет' :
-    // this.prizeId === 6 ? 'переполох' :
-    // this.prizeId === 7 ? 'комбикорм' : 
-    // this.prizeId === 8 ? 'билеты' : '';
 
-    // console.log(type);
     if (this.state.user.boosts.fortune > 0) {
+      this.removeInteractiveElements();
+      this.getRandomIndexPrize();
+      this.setUpdatedButton();
+      this.whellIsScrolling = true;
       this.startScrollWheel();
     } else {
       if (this.state.user.diamonds >= this.price) {
         this.startScrollWheel();
+        this.removeInteractiveElements();
+        this.getRandomIndexPrize();
+        this.setUpdatedButton();
+        this.whellIsScrolling = true;
       } else {
-        console.log('net denyag')
+        this.state.convertor = {
+          fun: 8,
+          count: this.price - this.state.user.diamonds,
+          diamonds: this.price - this.state.user.diamonds,
+          type: 2
+        }
+        let modal: Imodal = {
+          type: 1,
+          sysType: 4
+        }
+        this.scene.stop('Fortune');
+        this.state.modal = modal;
+        this.scene.launch('Modal', this.state);
       }
     }
   }
@@ -508,6 +515,7 @@ export default class Fortune extends Phaser.Scene {
     if (this.state.user.boosts.fortune > 0) {
       this.state.user.boosts.fortune -= 1;
     } else {
+
       this.state.user.diamonds -= this.price;
 
       this.game.scene.keys[this.state.farm].logAmplitudeEvent('diamonds_spent', {
@@ -712,16 +720,13 @@ export default class Fortune extends Phaser.Scene {
     if (this.state.progress.chicken.open) {
       if (Phaser.Math.Between(1, 2) === 1) {
         this.state.user.boosts.sheep.feed += 1;
-        console.log('для овец')
         Hint.create(this, -250, this.state.lang.fortuneHint_4_Sheep, 3);
       } else {
         this.state.user.boosts.chicken.feed += 1;
         Hint.create(this, -250, this.state.lang.fortuneHint_4_Chicken, 3);
-        console.log('для кур')
       }
     } else {
       this.state.user.boosts.sheep.feed += 1;
-      console.log('для овец')
       Hint.create(this, -250, this.state.lang.fortuneHint_4_Sheep, 3);
     }
   }
@@ -731,16 +736,13 @@ export default class Fortune extends Phaser.Scene {
       if (Phaser.Math.Between(1, 2) === 1) {
         this.state.user.boosts.sheep.herd += 1;
         Hint.create(this, -250, this.state.lang.fortuneHint_5_Sheep, 3);
-        console.log('для овец')
       } else {
         this.state.user.boosts.chicken.herd += 1;
         Hint.create(this, -250, this.state.lang.fortuneHint_5_Chicken, 3);
-        console.log('для кур')
       }
     } else {
       this.state.user.boosts.sheep.herd += 1;
       Hint.create(this, -250, this.state.lang.fortuneHint_5_Sheep, 3);
-      console.log('для овец')
     }
   }
 
@@ -784,7 +786,7 @@ export default class Fortune extends Phaser.Scene {
 
   private getRandomIndexPrize(): void {
     // const pull: number[] = [ 26, 500, 3445, 2584, 1723, 861, 861, 500 ];
-    const pull: number[] = [ 26, 400, 1579, 1579, 1579, 1579, 1579, 1579 ];
+    const pull: number[] = [ 26, 300, 1579, 1579, 1579, 1579, 1579, 1579 ];
 
     const totalCounter: number = pull.reduce((prev, current) => prev += current);
     const arrRange: {
