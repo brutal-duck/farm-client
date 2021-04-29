@@ -172,13 +172,13 @@ export default class Fortune extends Phaser.Scene {
         color: '#793D0A',
         align: 'left'
       }).setCrop(0, 0, 210, 30).setOrigin(0, 0.5);
-      const count: Phaser.GameObjects.Text = this.add.text(440, startY, this.currentList[i].prize, {
+      const count: Phaser.GameObjects.Text = this.add.text(440, startY, shortNum(this.currentList[i].prize), {
         font: '21px Bip',
         color: '#793D0A',
         align: 'left'
       }).setOrigin(0, 0.5);
       const diamond: Phaser.GameObjects.Sprite = this.add.sprite(425, startY, 'diamond').setScale(0.11).setAngle(-10);
-      const time: Phaser.GameObjects.Text = this.add.text(520, startY, this.currentList[i].time > 0 ? `${shortTime(this.currentList[i].time, this.state.lang)}` : this.state.lang.now, {
+      const time: Phaser.GameObjects.Text = this.add.text(500, startY, this.currentList[i].time > 0 ? `${shortTime(this.currentList[i].time, this.state.lang)}` : this.state.lang.now, {
         font: '21px Bip',
         color: '#793D0A',
         align: 'left'
@@ -256,7 +256,8 @@ export default class Fortune extends Phaser.Scene {
       const text1: string = this.state.lang.lastTimePrize.replace('$1', this.state.fortuneData?.lastWinner?.prize);
   
       if (this.lastestWinnerText.text !== text1 || 
-        this.lastestWinnerText.data.values.name.text !== this.state.fortuneData.lastWinner?.name) {
+        this.lastestWinnerText.data.values.name.text !== this.state.fortuneData.lastWinner?.name ||
+        this.lastestWinnerText.data.values.time.text !== `${shortTime(this.state.fortuneData.lastWinner?.time, this.state.lang)} ${this.state.lang.back}`) {
         if (this.state.fortuneData.lastWinner) {
           this.lastestWinnerText.setText(text1).setVisible(true);
           this.lastestWinnerText.data.values.name.setText(this.state.fortuneData.lastWinner?.name).setVisible(true);
@@ -765,7 +766,7 @@ export default class Fortune extends Phaser.Scene {
 
   private getRandomIndexPrize(): void {
     // const pull: number[] = [ 26, 500, 3445, 2584, 1723, 861, 861, 500 ];
-    const pull: number[] = [ 26, 500, 1579, 1579, 1579, 1579, 1579, 1579 ];
+    const pull: number[] = [ 26, 400, 1579, 1579, 1579, 1579, 1579, 1579 ];
 
     const totalCounter: number = pull.reduce((prev, current) => prev += current);
     const arrRange: {

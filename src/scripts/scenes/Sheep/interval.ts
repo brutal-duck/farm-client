@@ -50,7 +50,8 @@ function interval(): void {
       this.state.userSheep.diamondAnimalTime === 0 &&
       !this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
-      !this.scene.isActive('Profile')) {
+      !this.scene.isActive('Profile') &&
+      !this.scene.isActive('Fortune')) {
 
       this.caveTutor = true;
       this.time.addEvent({ delay: 300, callback: (): void => {
@@ -63,7 +64,8 @@ function interval(): void {
     !this.state.user.additionalTutorial.herdBoost &&
     !this.scene.isActive('Modal') &&
     !this.scene.isActive('Tutorial') &&
-    !this.scene.isActive('Profile')) {
+    !this.scene.isActive('Profile')&&
+    !this.scene.isActive('Fortune')) {
     this.showTutorial('herdBoost1');
     }
 
@@ -72,7 +74,8 @@ function interval(): void {
       !this.state.user.additionalTutorial.feedBoost &&
       !this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
-      !this.scene.isActive('Profile')) {
+      !this.scene.isActive('Profile')&&
+      !this.scene.isActive('Fortune')) {
       this.showTutorial('feedBoost1');
       }
 
@@ -274,7 +277,8 @@ function interval(): void {
         !arrowOnCollector &&
         !this.scene.isActive('Modal') &&
         !this.scene.isActive('Tutorial') &&
-        !this.scene.isActive('Profile')) {
+        !this.scene.isActive('Profile') &&
+        !this.scene.isActive('Fortune')) {
 
         this.counterWithoutCollector++;
 
