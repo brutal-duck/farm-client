@@ -630,11 +630,8 @@ private createProfileInfo(): void {
       this.eventEndText?.setVisible(false);
       this.eventZone?.destroy();
 
-    } else {
-      this.eventZone?.destroy();
-    }
-
-
+    } 
+    
     if (this.state.progress.event.updateRaitings && this.state.progress.event.type === 1) {
       const points: number = this.state.progress.event.eventPoints >= 0 ? this.state.progress.event.eventPoints : 0;
 
