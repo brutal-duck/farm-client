@@ -10,10 +10,13 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
   private chatIcon: Phaser.GameObjects.Sprite;
   private authIcon: Phaser.GameObjects.Sprite;
   private offlineIcon: Phaser.GameObjects.Sprite;
+  private fortuneIcon: Phaser.GameObjects.Sprite;
   public isOpened: boolean = false;
   private showTimer: number = 0;
   private profileAnim: Phaser.Tweens.Tween;
   private chatAnim: Phaser.Tweens.Tween;
+  private fortuneAnim: Phaser.Tweens.Tween;
+
 
   constructor(scene: SheepBars | ChickenBars | CowBars | UnicornBars) {
     super(scene, 650, scene.height - 90, 'sandwich');
@@ -39,10 +42,11 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
     this.profileIcon = this.scene.add.sprite(this.x, this.y, 'profile').setScale(0.8).setDepth(this.y + 2);
     this.chatIcon = this.scene.add.sprite(this.x, this.y, 'chat').setScale(0.8).setDepth(this.y + 2);
     this.authIcon = this.scene.add.sprite(this.x, this.y, 'profile').setVisible(false).setDepth(this.y + 2);
+    this.fortuneIcon = this.scene.add.sprite(this.x, this.y, 'fortune-icon').setScale(0.8).setVisible(false).setDepth(this.y + 2);
     this.offlineIcon = this.scene.add.sprite(this.x, this.y, 'offline')
-    .setInteractive()
-    .setDepth(this.y + 4)
-    .setVisible(false);
+      .setInteractive()
+      .setDepth(this.y + 4)
+      .setVisible(false);
   }
 
   private setListeners(): void {
@@ -67,9 +71,12 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       this.scene.state.modal = modal;
       this.scene.scene.launch('Modal', this.scene.state);
     });
+    this.scene.clickButton(this.fortuneIcon, (): void => {
+      this.scene.scene.launch('Fortune', this.scene.state);
+    });
     this.scene.clickButton(this, (): void => {
       this.removeAmimation();
-      if (!this.profileAnim && !this.chatAnim) {
+      if (!this.profileAnim && !this.chatAnim && !this.fortuneAnim) {
         this.isOpened = !this.isOpened;
         this.showTimer = 0;
         if (!this.isOpened) {
@@ -88,7 +95,8 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
     this.profileAnim = undefined;
     this.chatAnim?.remove();
     this.chatAnim = undefined;
-    
+    this.fortuneAnim?.remove();
+    this.fortuneAnim = undefined;
   }
 
 
@@ -136,7 +144,19 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       this.chatIcon.setVisible(true);
     }
 
-
+    if (
+      this.scene.state.progress.event.type === 2 && 
+      this.scene.state.progress.event.open && 
+      this.scene.state.progress.event.endTime > 0 &&
+      this.scene.state.progress.event.startTime < 0 && 
+      this.scene.state.progress.event.eventPoints > 0
+    ) {
+      if (this.scene.state.platform === 'web' && this.scene.state.user.login === '') {
+        this.fortuneIcon.setVisible(false);
+      } else {
+        this.fortuneIcon.setVisible(true);
+      }
+    }
   }
 
   private tickShowTimerAndSetState(): void {
@@ -154,6 +174,13 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
 
   private showElements(): void {
     const duration: number = 350;
+    this.fortuneAnim = this.scene.add.tween({
+      targets: this.fortuneIcon,
+      y: { from: this.y, to: this.y - 375 },
+      duration: duration,
+      ease: 'Power1',
+      scale: 1,
+    });
     this.profileAnim = this.scene.add.tween({
       targets: this.profileIcon,
       duration: duration,
@@ -189,8 +216,15 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       ease: 'Power1',
       scale: 0.8,
       onComplete: (): void => {
-        this.removeAmimation()
+        this.removeAmimation();
       }
+    });
+    this.fortuneAnim = this.scene.add.tween({
+      targets: this.fortuneIcon,
+      y: { from: this.fortuneIcon.y, to: this.y },
+      duration: duration,
+      ease: 'Power1',
+      scale: 0.8,
     });
   }
 }
