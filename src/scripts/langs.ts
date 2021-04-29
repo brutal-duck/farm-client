@@ -793,6 +793,7 @@ export default {
     back: 'Назад',
     taken: 'Забрал',
     now: 'Сейчас',
+    jackpotCongratulations: 'Поздравляем! вы выйграли',
   },
 
   en: {
@@ -1589,6 +1590,6 @@ export default {
     back: 'Назад',
     taken: 'Забрал',
     now: 'Сейчас',
-
+    jackpotCongratulations: 'Поздравляем! вы выйграли',
   }
 }

@@ -1,14 +1,19 @@
 import { shortNum, shortTime } from '../../../general/basic';
-import { clickModalBtn, clickButton } from '../../../general/clicks';
+import { clickModalBtn, clickButton, click } from '../../../general/clicks';
 import CowSprite from './../../../components/Animal/CowSprite';
 import { loadingModal } from './../../../general/basic';
 import Hint from './../../../components/animations/Hint';
+import Firework from './../../../components/animations/Firework';
+import Currency from './../../../components/animations/Currency';
 
 const modal: string = require('../../../../assets/images/event/fortune/modal.png');
 const btn: string = require('../../../../assets/images/event/fortune/btn.png');
 const wheel: string = require('../../../../assets/images/event/fortune/wheel.png');
 const pointer: string = require('../../../../assets/images/event/fortune/pointer.png');
 const ticket: string = require('../../../../assets/images/event/fortune/ticket.png');
+const jackpotBg: string = require('../../../../assets/images/event/fortune/jackpot-bg.png');
+const doneChapterButton: string = require("../../../../assets/images/modal/done-chapter-button.png");
+
 
 
 
@@ -33,11 +38,18 @@ export default class Fortune extends Phaser.Scene {
   public whellIsScrolling: boolean = false;
   public lastestWinnerText: Phaser.GameObjects.Text;
   public currentList: IfortuneUser[] = [];
+  public jackpotBg: Phaser.GameObjects.TileSprite;
+  public jackpotModal: Phaser.GameObjects.Sprite;
+  public jackpotBtn: Phaser.GameObjects.Sprite;
+  public jackpotText: Phaser.GameObjects.Text;
+  public jackpotCount: Phaser.GameObjects.Text;
+  public jackpotDiamond: Phaser.GameObjects.Sprite;
 
   public listElements: any[] = [];
 
   public clickModalBtn = clickModalBtn.bind(this);
   public clickButton = clickButton.bind(this);
+  public click = click.bind(this);
   public loadingModal = loadingModal.bind(this);
 
   public init(state: Istate): void {
@@ -51,6 +63,9 @@ export default class Fortune extends Phaser.Scene {
     this.load.image('fortune-wheel', wheel);
     this.load.image('fortune-pointer', pointer);
     this.load.image('fortune-ticket', ticket);
+    this.load.image('fortune-jackpot-bg', jackpotBg);
+    this.load.image('done-chapter-button', doneChapterButton);
+
   }
 
   public create(): void {
@@ -493,8 +508,6 @@ export default class Fortune extends Phaser.Scene {
     switch (this.prizeId) {
       case 1:
         // джекпот (70%)
-        const text1: string = this.state.lang.fortuneHint_2.replace('$1', String(prize));
-        Hint.create(this, -250, text1, 3);
         this.getJackpot(prize);
         break;
       case 2:
@@ -502,6 +515,8 @@ export default class Fortune extends Phaser.Scene {
         this.getFreeDiamonds(prize);
         const text: string = this.state.lang.fortuneHint_2.replace('$1', String(prize));
         Hint.create(this, -250, text, 3);
+        this.getCurrency(this.wheel, prize, 'diamond');
+
         break;
       case 3:
         // 10 минут монеток
@@ -543,9 +558,14 @@ export default class Fortune extends Phaser.Scene {
 
   private getJackpot(prize: number): void {
     this.getFreeDiamonds(prize);
-    // ОТПРАВИТь что ты крут
     this.sendChatMassage(prize);
-    this.showJackpotWindow(prize);
+    Firework.create(this, this.wheel, 5);
+    this.time.addEvent({
+      delay: 700,
+      callback: (): void => {
+        this.showJackpotWindow(prize);
+      }
+    })
   }
 
   private sendChatMassage(prize: number): void {
@@ -572,7 +592,91 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private showJackpotWindow(prize: number): void {
+    const bg: Phaser.GameObjects.TileSprite = this.add.tileSprite(0, 0, this.cameras.main.width, this.cameras.main.height, 'white-pixel')
+      .setInteractive()
+      .setOrigin(0)
+      .setDepth(1)
+      .setTint(0x000000)
+      .setAlpha(0.5);
 
+    const modal: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'fortune-jackpot-bg')
+      .setDepth(1);
+
+    const text: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX - 7, this.cameras.main.centerY + 10, this.state.lang.jackpotCongratulations, {
+      font: '30px Shadow',
+      color: '#793D0A',
+      align: 'center',
+      wordWrap: { width: 250 },
+    }).setDepth(1)
+      .setOrigin(0.5, 0);
+    const textGeom: Phaser.Geom.Rectangle = text.getBounds();
+    const count: Phaser.GameObjects.Text = this.add.text(textGeom.centerX, textGeom.bottom + 5, String(prize), {
+      font: '32px Shadow',
+      color: '#FFFFFF',
+      align: 'center',
+    }).setDepth(1)
+      .setOrigin(0.5, 0)
+      .setShadow(3, 5, '#3F3F3F', 5);
+    const countGeom: Phaser.Geom.Rectangle = count.getBounds()
+
+    const diamond: Phaser.GameObjects.Sprite = this.add.sprite(countGeom.left - 5, countGeom.centerY, 'diamond')
+      .setOrigin(1, 0.5)
+      .setScale(0.1)
+      .setDepth(1);
+
+    const button: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX - 7, this.cameras.main.centerY + 180, 'done-chapter-button').setDepth(1);
+    const buttonGeom: Phaser.Geom.Rectangle = button.getBounds();
+
+    const btnText: Phaser.GameObjects.Text = this.add.text(buttonGeom.centerX, buttonGeom.centerY - 7, this.state.lang.pickUp, {
+      font: '32px Shadow',
+      fill: '#FFD2D2',
+      align: 'center'
+    }).setOrigin(0.5, 0.5).setStroke('#2C5D0C', 5).setDepth(1);
+
+    const btn: any = {
+      btn: button,
+      title: btnText,
+    }
+
+    this.clickModalBtn(btn, (): void => {
+      bg?.destroy();
+      modal?.destroy();
+      text?.destroy();
+      count?.destroy();
+      diamond?.destroy();
+      button?.destroy();
+      btnText?.destroy();
+      this.getCurrency({ x: this.cameras.main.centerX, y: this.cameras.main.centerY }, prize, 'diamond');
+    });
+    this.click(bg, (): void => {
+      bg?.destroy();
+      modal?.destroy();
+      text?.destroy();
+      count?.destroy();
+      diamond?.destroy();
+      button?.destroy();
+      btnText?.destroy();
+      this.getCurrency({ x: this.cameras.main.centerX, y: this.cameras.main.centerY }, prize, 'diamond');
+    });
+  }
+
+  private getCurrency(position: Iposition, counter: number = 1, texture: string): void {
+
+    if (counter > 5) counter = 5;
+  
+    let time: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
+      counter--;
+      const pos: Iposition = {
+        x: Phaser.Math.Between(position.x - 30, position.x + 30),
+        y: Phaser.Math.Between(position.y - this.game.scene.keys[this.state.farm].scrolling.scrollY - 30, position.y - this.game.scene.keys[this.state.farm].scrolling.scrollY + 30),
+      }
+      let target = { x: 495, y: 30 };
+      if (texture !== 'diamond') {
+        target = { x: 495, y: 120}
+      }
+      Currency.create(this, pos, target, texture, 400);
+      if (counter <= 0) time.remove(false);
+    }, callbackScope: this, loop: true });
   }
 
   private getFreeTickets(): void {
@@ -661,7 +765,7 @@ export default class Fortune extends Phaser.Scene {
 
   private getRandomIndexPrize(): void {
     // const pull: number[] = [ 26, 500, 3445, 2584, 1723, 861, 861, 500 ];
-    const pull: number[] = [ 26, 500, 1579, 1579, 1579, 1579, 1579, 1579 ];
+    const pull: number[] = [ 260000000, 500, 1579, 1579, 1579, 1579, 1579, 1579 ];
 
     const totalCounter: number = pull.reduce((prev, current) => prev += current);
     const arrRange: {
