@@ -322,11 +322,11 @@ export default class Fortune extends Phaser.Scene {
       this.startScrollWheel();
     } else {
       if (this.state.user.diamonds >= this.price) {
-        this.startScrollWheel();
         this.removeInteractiveElements();
         this.getRandomIndexPrize();
         this.setUpdatedButton();
         this.whellIsScrolling = true;
+        this.startScrollWheel();
       } else {
         this.state.convertor = {
           fun: 8,
