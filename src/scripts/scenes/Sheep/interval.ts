@@ -387,8 +387,10 @@ function interval(): void {
     }
 
     if (this.state.progress.event.endTime <= 0 && 
-      this.state.progress.event.eventPoints > 0 && this.state.progress.event.open &&
-      this.scene.isActive('Profile')) {
+      this.state.progress.event.eventPoints > 0 && 
+      this.state.progress.event.open &&
+      this.scene.isActive('Profile') && 
+      this.state.progress.event.type === 1) {
       this.autosave();
       this.scene.stop('Profile');
     }
@@ -397,7 +399,8 @@ function interval(): void {
       this.state.progress.event.eventPoints > 0 && this.state.progress.event.open &&
       !this.scene.isActive('Modal') && 
       !this.scene.isActive('Tutorial') &&
-      !this.scene.isActive('Profile')) { 
+      !this.scene.isActive('Profile') && 
+      this.state.progress.event.type === 1) { 
       
       if (!checkRaiting) {
         this.getEventRaiting();
