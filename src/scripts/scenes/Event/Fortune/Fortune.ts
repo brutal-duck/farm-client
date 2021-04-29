@@ -565,7 +565,7 @@ export default class Fortune extends Phaser.Scene {
       callback: (): void => {
         this.showJackpotWindow(prize);
       }
-    })
+    });
   }
 
   private sendChatMassage(prize: number): void {

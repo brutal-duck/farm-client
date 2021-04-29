@@ -51,7 +51,6 @@ class Profile extends Phaser.Scene {
 
 
   public preload(): void {
-    this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)');
     this.loadingModal();
     this.load.image('profile-bg', background);
     this.load.image('profile-back-button', backButton);

@@ -243,12 +243,12 @@ class Modal extends Phaser.Scene {
   }
 
   public preload(): void {
-    this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)')
     this.loadingModal();
     this.typePreload();
   }
-
+  
   public create(): void {
+    this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)');
     this.add.tileSprite(0, 0,
       Number(this.game.config.width),
       Number(this.game.config.height),
