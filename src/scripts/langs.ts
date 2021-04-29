@@ -791,6 +791,7 @@ export default {
     lastTimePrize: 'Последний раз выйграл главный приз ($1)',
     back: 'Назад',
     taken: 'Забрал',
+    now: 'Сейчас',
   },
 
   en: {
@@ -1585,5 +1586,7 @@ export default {
     lastTimePrize: 'Последний раз выйграл главный приз ($1)',
     back: 'Назад',
     taken: 'Забрал',
+    now: 'Сейчас',
+
   }
 }

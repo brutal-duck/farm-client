@@ -125,7 +125,7 @@ export default class Fortune extends Phaser.Scene {
       wordWrap: { width: 200 },
     }).setShadow(0, 2, '#000000', 3).setOrigin(0.5);
     
-    this.lastestWinnerText = this.add.text(modalGeom.centerX + 163, modalGeom.centerY - 160, ' ',{
+    this.lastestWinnerText = this.add.text(modalGeom.centerX + 163, modalGeom.centerY - 160, ' ', {
       font: '18px Shadow',
       color: '#ffd595',
       align: 'center',
@@ -135,7 +135,7 @@ export default class Fortune extends Phaser.Scene {
     this.lastestWinnerText.setDataEnabled();
     const winnerTextGeom: Phaser.Geom.Rectangle = this.lastestWinnerText.getBounds();
 
-    this.lastestWinnerText.data.values.name = this.add.text(winnerTextGeom.centerX, winnerTextGeom.bottom, ' ',{
+    this.lastestWinnerText.data.values.name = this.add.text(winnerTextGeom.centerX, winnerTextGeom.bottom, ' ', {
       font: '18px Shadow',
       color: '#f9eee1',
     }).setOrigin(0.5, 0);
@@ -169,7 +169,7 @@ export default class Fortune extends Phaser.Scene {
         align: 'left'
       }).setOrigin(0, 0.5);
       const diamond: Phaser.GameObjects.Sprite = this.add.sprite(425, startY, 'diamond').setScale(0.11).setAngle(-10);
-      const time: Phaser.GameObjects.Text = this.add.text(520, startY, shortTime(this.currentList[i].time, this.state.lang), {
+      const time: Phaser.GameObjects.Text = this.add.text(520, startY, this.currentList[i].time > 0 ? `${shortTime(this.currentList[i].time, this.state.lang)}` : this.state.lang.now, {
         font: '21px Bip',
         color: '#793D0A',
         align: 'left'
@@ -215,6 +215,7 @@ export default class Fortune extends Phaser.Scene {
 
   private updateElements(): void {
     if (this.whellIsScrolling) return;
+
     if (this.state.fortuneData?.pull) {
       if (
         this.state.user.boosts.fortune > 0 && 
@@ -245,7 +246,8 @@ export default class Fortune extends Phaser.Scene {
   
       const text1: string = this.state.lang.lastTimePrize.replace('$1', this.state.fortuneData?.lastWinner?.prize);
   
-      if (this.lastestWinnerText.text !== text1) {
+      if (this.lastestWinnerText.text !== text1 || 
+        this.lastestWinnerText.data.values.name.text !== this.state.fortuneData.lastWinner?.name) {
         if (this.state.fortuneData.lastWinner) {
           this.lastestWinnerText.setText(text1).setVisible(true);
           this.lastestWinnerText.data.values.name.setText(this.state.fortuneData.lastWinner?.name).setVisible(true);
@@ -258,7 +260,7 @@ export default class Fortune extends Phaser.Scene {
             this.lastestWinnerText.data.values.name.setX(this.cameras.main.centerX + 50);
           }
       
-          this.lastestWinnerText.data.values.time.setText(`${shortTime(this.state.fortuneData.lastWinner?.time, this.state.lang)} ${this.state.lang.back}`).setVisible(true);
+          this.lastestWinnerText.data.values.time.setText(this.state.fortuneData.lastWinner?.time > 0 ? `${shortTime(this.state.fortuneData.lastWinner?.time, this.state.lang)} ${this.state.lang.back}` : this.state.lang.now).setVisible(true);
           this.lastestWinnerText.data.values.time.setY(nameTextGeom.bottom);
         } else {
           this.lastestWinnerText.setVisible(false);
@@ -470,6 +472,7 @@ export default class Fortune extends Phaser.Scene {
     }
     this.state.socket.io.emit('fortune-send', data);
   }
+
   private getPrize(): void {
     let prize: number = 0;
     if (this.prizeId === 1) {
@@ -478,21 +481,31 @@ export default class Fortune extends Phaser.Scene {
       prize = Math.round(5 * this.state.fortuneData.pull / 100);
     }
     this.sendSocket(prize);
+
+    this.state.progress.event.eventPoints += 1;
+
     if (this.state.user.boosts.fortune > 0) {
       this.state.user.boosts.fortune -= 1;
     } else {
       this.state.user.diamonds -= this.price;
+
+      this.game.scene.keys[this.state.farm].logAmplitudeEvent('diamonds_spent', {
+        type: 'fortune',
+        count: this.price,
+        countFortune: this.state.progress.event.eventPoints,
+      });
     }
+
     switch (this.prizeId) {
       case 1:
         // джекпот (70%)
         const text1: string = this.state.lang.fortuneHint_2.replace('$1', String(prize));
         Hint.create(this, -250, text1, 3);
-        this.getJackpot();
+        this.getJackpot(prize);
         break;
       case 2:
         // 5 процентов от всей суммы
-        this.getFreeDiamonds(5);
+        this.getFreeDiamonds(prize);
         const text: string = this.state.lang.fortuneHint_2.replace('$1', String(prize));
         Hint.create(this, -250, text, 3);
         break;
@@ -525,18 +538,54 @@ export default class Fortune extends Phaser.Scene {
     }
   }
 
-  private getFreeDiamonds(percent: number): void {
-    this.state.fortuneData.pull -= Math.round(percent * this.state.fortuneData.pull / 100);
-    this.state.user.diamonds += Math.round(percent * this.state.fortuneData.pull / 100);
+  private getFreeDiamonds(prize: number): void {
+    this.state.user.diamonds += prize;
+
+    this.game.scene.keys[this.state.farm].logAmplitudeEvent('diamonds_get', {
+      type: 'fortune',
+      count: prize,
+    })
   }
 
-  private getJackpot(): void {
-    this.getFreeDiamonds(70);
+  private getJackpot(prize: number): void {
+    this.getFreeDiamonds(prize);
     // ОТПРАВИТь что ты крут
+    this.sendChatMassage(prize);
+    this.showJackpotWindow(prize);
+  }
+
+  private sendChatMassage(prize: number): void {
+    const KEY: string = 
+    `6307b55e185c4058b9c12d9d076ddae6
+    26cd32b7a7d1d6096528ae647c235d6f
+    adde749a4a6c3186a429f98b4c7abe18
+    6ec1fb0bf90ee695df541d93ce8ac263
+    12a9cd2785f399c0938e15d19b2ce7ba
+    47c922da1f077a8508b6fccf572d08c8
+    59a38e7c495a71393839f19a2a6dd372
+    f7f581c3cb90712919777fc0b3ff232a
+    76f8f2b2a7f03cf307f788961513e8c9
+    04961f62df30faa6a4ffbc16cfe059b4`;
+
+    this.state.socket.io.emit('send', {
+      id: this.state.user.id,
+      hash: this.state.user.hash,
+      login: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
+      text: `${KEY}_${prize}`,
+      type: 1,
+      status: this.state.user.status
+    });
+  }
+
+  private showJackpotWindow(prize: number): void {
+
   }
 
   private getFreeTickets(): void {
-    const count: number = Phaser.Math.Between(1, 5);
+    const random: number = Phaser.Math.Between(1, 100)
+    const count: number = random >= 1 && random < 10 ? 3 :
+    random >= 10 && random < 30 ? 2 : 1;
+    console.log(random)
     this.state.user.boosts.fortune += count;
     const text: string = this.state.lang.fortuneHint_6.replace('$1', String(count));
     Hint.create(this, -250, text, 3);
