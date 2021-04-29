@@ -170,28 +170,29 @@ function interval(): void {
     }
 
      // обновление времени евента
-
-    if (this.state.progress.event.endTime > 0) {
-      this.state.progress.event.endTime--;
-      if ( this.scene.isActive('Profile')) {
-        this.game.scene.keys['Profile'].eventEndTime?.setText(shortTime(this.state.progress.event.endTime, this.state.lang));
-      } 
-    }
-
-    if (this.state.progress.event.endTime <= 0 && this.scene.isActive('Unicorn')) {
-      this.autosave();
-      this.scene.stop('Profile');
-      this.scene.stop('MapBars');
-      this.scene.stop('Unicorn');
-      this.scene.stop('UnicornBars');
-      this.scene.start('SheepPreload', this.state);
-    }
-
-    if (this.state.progress.event.startTime > 0) {
-      this.state.progress.event.startTime--;
-      if (this.scene.isActive('Profile')) {
-        this.game.scene.keys['Profile'].eventStartTime?.setText(shortTime(this.state.progress.event.startTime, this.state.lang));
-      }
+     if (this.state.progress.event.type === 1) {
+       if (this.state.progress.event.endTime > 0) {
+         this.state.progress.event.endTime--;
+         if ( this.scene.isActive('Profile')) {
+           this.game.scene.keys['Profile'].eventEndTime?.setText(shortTime(this.state.progress.event.endTime, this.state.lang));
+         } 
+       }
+   
+       if (this.state.progress.event.endTime <= 0 && this.scene.isActive('Unicorn')) {
+         this.autosave();
+         this.scene.stop('Profile');
+         this.scene.stop('MapBars');
+         this.scene.stop('Unicorn');
+         this.scene.stop('UnicornBars');
+         this.scene.start('SheepPreload', this.state);
+       }
+   
+       if (this.state.progress.event.startTime > 0) {
+         this.state.progress.event.startTime--;
+         if (this.scene.isActive('Profile')) {
+           this.game.scene.keys['Profile'].eventStartTime?.setText(shortTime(this.state.progress.event.startTime, this.state.lang));
+         }
+       }
     }
     
     if (this.state.userUnicorn.timeToAd > 0) {

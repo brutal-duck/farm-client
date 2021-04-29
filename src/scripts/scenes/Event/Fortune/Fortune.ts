@@ -103,19 +103,13 @@ export default class Fortune extends Phaser.Scene {
     }).setOrigin(0.5, 0);
     this.btnImg = this.add.sprite(this.btnText2.getBounds().left, this.btnText2.getBounds().centerY, 'diamond').setScale(0.10).setOrigin(1, 0.5);
 
-    this.add.text(modalGeom.centerX + 145, modalGeom.centerY - 340, this.state.lang.mainPrize, {
-      font: '24px Shadow',
-      color: '#ffffff',
-      align: 'center',
-    }).setOrigin(0.5);
-
-    this.moneyPullText = this.add.text(modalGeom.centerX + 145, modalGeom.centerY - 220, ' ', {
+    this.moneyPullText = this.add.text(modalGeom.centerX + 140, modalGeom.centerY - 240, ' ', {
       font: '45px Shadow',
       color: '#ffffff'
     }).setOrigin(0.5);
 
-    this.wheel = this.add.sprite(modalGeom.centerX - 130, modalGeom.centerY - 180, 'fortune-wheel');
-    this.pointer = this.add.sprite(modalGeom.centerX - 128, modalGeom.centerY - 185, 'fortune-pointer');
+    this.wheel = this.add.sprite(modalGeom.centerX - 142, modalGeom.centerY - 180, 'fortune-wheel');
+    this.pointer = this.add.sprite(modalGeom.centerX - 138, modalGeom.centerY - 185, 'fortune-pointer');
     this.closeBtn = this.add.sprite(modalGeom.right - 70, modalGeom.top + 40,'tasks-close')
     
     this.add.text(modalGeom.centerX + 50, modalGeom.centerY + 45, this.state.lang.latestWinners, {
@@ -125,7 +119,7 @@ export default class Fortune extends Phaser.Scene {
       wordWrap: { width: 200 },
     }).setShadow(0, 2, '#000000', 3).setOrigin(0.5);
     
-    this.lastestWinnerText = this.add.text(modalGeom.centerX + 163, modalGeom.centerY - 160, ' ', {
+    this.lastestWinnerText = this.add.text(modalGeom.centerX + 155, modalGeom.centerY - 180, ' ', {
       font: '18px Shadow',
       color: '#ffd595',
       align: 'center',
@@ -257,7 +251,7 @@ export default class Fortune extends Phaser.Scene {
           if (nameTextGeom.width > 210) {
             this.lastestWinnerText.data.values.name.setCrop(0, 0, 210, 40);
             this.lastestWinnerText.data.values.name.setOrigin(0);
-            this.lastestWinnerText.data.values.name.setX(this.cameras.main.centerX + 50);
+            this.lastestWinnerText.data.values.name.setX(this.cameras.main.centerX + 43);
           }
       
           this.lastestWinnerText.data.values.time.setText(this.state.fortuneData.lastWinner?.time > 0 ? `${shortTime(this.state.fortuneData.lastWinner?.time, this.state.lang)} ${this.state.lang.back}` : this.state.lang.now).setVisible(true);

@@ -14,6 +14,7 @@ const profileLockIcon: string = require('./../../assets/images/icons/profile-loc
 const eventIsland: string = require('./../../assets/images/profile/event-island.png');
 const btn: string = require('./../../assets/images/profile/btn.png');
 const pointer: string = require('./../../assets/images/profile/pointer.png');
+const fortune: string = require('./../../assets/images/profile/event-fortune.png');
 
 class Profile extends Phaser.Scene {
   constructor() {
@@ -35,6 +36,7 @@ class Profile extends Phaser.Scene {
   public avatar: Phaser.GameObjects.Sprite;
   public diamondsText: Phaser.GameObjects.Text;
   public eventIsland: Phaser.GameObjects.Sprite;
+  public currentEndTime: string = ' ';
   
   public click = click.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
@@ -63,6 +65,7 @@ class Profile extends Phaser.Scene {
     this.load.image('profile-event-island', eventIsland);
     this.load.image('profile-btn', btn);
     this.load.image('profile-pointer', pointer);
+    this.load.image('profile-fortune', fortune);
   }
 
 
@@ -78,9 +81,7 @@ class Profile extends Phaser.Scene {
   }
 
   public update(): void {
-    if (this.state.progress.event.type === 1) {
-      this.updateUnicornFarm();
-    }
+    this.updateEvent();
   }
 
   private createElements(): void {
@@ -140,8 +141,9 @@ private createProfileInfo(): void {
     // this.createCowFarm();
     if (this.state.progress.event.type === 1) {
       this.createUnicornFarm();
+    } else if (this.state.progress.event.type === 2) {
+      this.createFortuneWheel();
     }
-    this.createFotrune();
   }
 
   private createSheepFarm(): void {
@@ -386,6 +388,68 @@ private createProfileInfo(): void {
     });
   }
 
+  private createFortuneWheel(): void {
+    const data = {
+      name: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
+      spending: 0,
+      prize: 0,
+      jackpot: false,
+    }
+    this.state.socket.io.emit('fortune-send', data);
+    const farmPosition: Iposition = {
+      x: 720,
+      y: 775
+    }
+    this.eventMapFarm = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-fortune').setOrigin(1, 0.5).setVisible(false);
+    this.eventZone = this.add.zone(570, 790, 300, 170).setDropZone(undefined, () => {});
+
+    // this.add.graphics()
+    //   .lineStyle(5, 0x00FFFF)
+    //   .strokeRect(
+    //     this.eventZone.x - this.eventZone.input.hitArea.width / 2,
+    //     this.eventZone.y - this.eventZone.input.hitArea.height / 2,
+    //     this.eventZone.width,
+    //     this.eventZone.height
+    //   );  
+
+    this.eventScore = this.add.text(farmPosition.x - 290, farmPosition.y + 20, ` - `, {
+      fontSize: '25px',
+      color: '#ffffff',
+      fontFamily: 'Shadow'
+    }).setOrigin(0.5, 0.5).setVisible(false);
+
+    this.eventEndTime = this.add.text(farmPosition.x - 290, farmPosition.y + 40, `${this.state.lang.lastTime} ${shortTime(this.state.progress.event.endTime, this.state.lang)}`, {
+      fontSize: '12px',
+      color: '#942600',
+      fontFamily: 'Shadow'
+    }).setOrigin(0.5, 0.5).setVisible(false);
+    
+    this.eventIsland = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-event-island').setOrigin(1, 0.5).setVisible(false);
+    this.eventStartText = this.add.text(farmPosition.x - 150, farmPosition.y + 30, this.state.lang.eventStart, {
+      fontSize: '16px',
+      color: '#fbd0b9',
+      fontFamily: 'Shadow'
+    }).setOrigin(0.5, 0.5).setDepth(1).setVisible(false);
+    
+    this.eventStartTime = this.add.text(farmPosition.x - 150, farmPosition.y + 40, shortTime(this.state.progress.event.startTime, this.state.lang), {
+      fontSize: '21px',
+      color: '#cbff40',
+      fontFamily: 'Shadow'
+    }).setOrigin(0.5, 0.5).setDepth(2).setVisible(false);
+
+    this.eventStartBg = this.add.graphics({
+      fillStyle: {
+        color: 0x2b3d11,
+        alpha: 0.5
+      },
+    }).fillRoundedRect(this.eventStartText.getBounds().left - 25, this.eventStartText.getBounds().top - 20, this.eventStartText.width + 50, 60).setVisible(false);
+
+    this.click(this.eventZone, (): void => {
+      this.scene.stop('Profile');
+      this.scene.launch('Fortune', this.state);
+    });
+  }
+
   private creaetePointer(): void {
     const pointer = this.add.sprite(0, 0, 'profile-pointer').setOrigin(0.5, 1).setDepth(100);
     
@@ -472,33 +536,7 @@ private createProfileInfo(): void {
     }
   }
 
-  private createFotrune(): void {
-    const shopPosition: Iposition = {
-      x: 500,
-      y: 600
-    }
-    const zoneSize: Isize = {
-      width: 170,
-      height: 170
-    }
-    const zone: Phaser.GameObjects.Zone = this.add.zone(shopPosition.x, shopPosition.y, zoneSize.width, zoneSize.height).setDropZone(undefined, () => {});
-    this.add.text(shopPosition.x, shopPosition.y, 'КОЛЕСО ФОРТУНЫ', {
-      font: '32px Shadow',
-      color: '#ffffff',
-      align: 'center',
-      wordWrap: { width: 170 }
-    }).setOrigin(0.5).setStroke('#000000', 2);
-    const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
-    graphics.lineStyle(5, 0xFF0000);
-    graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
-
-    this.click(zone, (): void => {
-      this.scene.stop('Profile');
-      this.scene.launch('Fortune', this.state);
-    });
-  }
-
-  private updateUnicornFarm(): void {
+  private updateEvent(): void {
     if (
       this.state.progress.event.startTime > 0 && 
       this.state.progress.event.open && 
@@ -592,16 +630,31 @@ private createProfileInfo(): void {
       this.eventEndText?.setVisible(false);
       this.eventZone?.destroy();
 
+    } else {
+      this.eventZone?.destroy();
     }
 
 
-    if (this.state.progress.event.updateRaitings) {
+    if (this.state.progress.event.updateRaitings && this.state.progress.event.type === 1) {
       const points: number = this.state.progress.event.eventPoints >= 0 ? this.state.progress.event.eventPoints : 0;
 
       this.eventScore.setText(points + ' ' + this.scoreEnding(points, this.state.lang));
       this.eventPlace.setText(this.state.progress.event.userEventRaiting.place + ' ' + this.state.lang.eventPlace);
       this.eventEndTime.setText(shortTime(this.state.progress.event.endTime, this.state.lang));
       this.state.progress.event.updateRaitings = false;
+    }
+
+    if (this.state.progress.event.type === 2 && this.state.progress.event.startTime < 0) {
+      if (this.eventScore.text !== String(this.state.fortuneData?.pull)) {
+        this.eventScore.setText(String(this.state.fortuneData?.pull));
+      }
+      
+      const time: string = `${shortTime(this.state.progress.event.endTime, this.state.lang)}`
+      if (this.currentEndTime !== time) {
+        this.currentEndTime = time;
+        const text: string = `${this.state.lang.lastTime} ${this.currentEndTime}`;
+        this.eventEndTime.setText(text);
+      }
     }
   }
 }
