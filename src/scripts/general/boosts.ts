@@ -102,19 +102,16 @@ function updateHerdBoostBtn(): void {
         if (!this.herdBoostNative.plusText) {
           this.herdBoostNative.plusText = this.add.text(textGeom.right, textGeom.centerY, '+1', {
             font: '28px Shadow',
-            color: '#00ff00'
-          }).setOrigin(0, 0.5).setDepth(4);
+            color: '#69f225'
+          }).setOrigin(0, 0.5).setDepth(4).setShadow(3, 5, '#724719', 5);
         } else {
           this.herdBoostNative.plusText.setY(textGeom.centerY);
           this.herdBoostNative.plusText.setX(textGeom.right);
         }
 
         const plusTextGeom: Phaser.Geom.Rectangle = this.herdBoostNative.plusText.getBounds();
-
-        this.herdBoostNative.bg
-          .clear()
-          .fillStyle(0x00ccFF, 1)
-          .fillEllipse(textGeom.right - plusTextGeom.width / 2 + 5, textGeom.centerY, textGeom.width + plusTextGeom.width + 20, textGeom.height + 10);
+        this.herdBoostNative.bg.setPosition(textGeom.right - plusTextGeom.width / 2 + 5, textGeom.centerY)
+          .setDisplaySize(textGeom.width + plusTextGeom.width + 60, textGeom.height + 20);
       }
     } 
     if (this.state.user.boosts[this.state.farm.toLowerCase()].herd > 0 && !this.herdBoostBtn.data.values.updated) {
@@ -128,10 +125,9 @@ function updateHerdBoostBtn(): void {
 
       const textGeom: Phaser.Geom.Rectangle = this.herdBoostNative.getBounds();
       const width: number = textGeom.width + 5 < 40 ? 40 : textGeom.width + 5;
-      this.herdBoostNative.bg
-        .clear()
-        .fillStyle(0x00ccFF, 1)
-        .fillEllipse(textGeom.centerX, textGeom.centerY, width, 40);
+      
+      this.herdBoostNative.bg.setPosition(textGeom.centerX, textGeom.centerY)
+        .setDisplaySize(width + 20, textGeom.height + 20);
     }
   }
 }
@@ -476,29 +472,26 @@ function herdBoost(): void {
       font: '28px Shadow',
       color: '#FFFFFF'
     }).setDepth(2)
-      .setOrigin(0.5);
+      .setOrigin(0.5)
+      .setShadow(3, 5, '#724719', 5);
 
-    this.herdBoostNative.bg = this.add.graphics().setDepth(1);
+    this.herdBoostNative.bg = this.add.sprite(0, 0, 'native-bg').setDepth(1);
     if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0) {
       this.herdBoostNative.setX(xBtn + 80);
       const textGeom: Phaser.Geom.Rectangle = this.herdBoostNative.getBounds();
       this.herdBoostNative.plusText = this.add.text(textGeom.right, textGeom.centerY, '+1', {
         font: '28px Shadow',
         color: '#00ff00'
-      }).setOrigin(0, 0.5).setDepth(4);
+      }).setOrigin(0, 0.5).setDepth(4).setShadow(3, 5, '#724719', 5);
       const plusTextGeom: Phaser.Geom.Rectangle = this.herdBoostNative.plusText.getBounds();
 
-      this.herdBoostNative.bg
-        .clear()
-        .fillStyle(0x00ccFF, 1)
-        .fillEllipse(textGeom.right - plusTextGeom.width / 2, textGeom.centerY, textGeom.width + plusTextGeom.width + 20, textGeom.height + 20);
+      this.herdBoostNative.bg.setPosition(textGeom.right - plusTextGeom.width / 2, textGeom.centerY)
+        .setDisplaySize(textGeom.width + plusTextGeom.width + 20, textGeom.height + 20);
         
     } else {
       const textGeom: Phaser.Geom.Rectangle = this.herdBoostNative.getBounds();
-      this.herdBoostNative.bg
-        .clear()
-        .fillStyle(0x00ccFF, 1)
-        .fillEllipse(textGeom.centerX, textGeom.centerY, textGeom.width + 10, textGeom.height + 10);
+      this.herdBoostNative.bg.setPosition(textGeom.centerX, textGeom.centerY)
+        .setDisplaySize(textGeom.width + 10, textGeom.height + 10);
     }
   }
   
@@ -584,13 +577,10 @@ function feedBoost(): void {
     color: '#FFFFFF'
   }).setDepth(1)
     .setOrigin(0.5)
-    .setVisible(false);
+    .setVisible(false)
+    .setShadow(3, 5, '#724719', 5);
 
-    this.feedBoostNative.bg = this.add.graphics();
-  this.feedBoostNative.bg
-    .fillStyle(0x00ccFF, 1)
-    .fillCircle(this.feedBoostNative.x, this.feedBoostNative.y, 20)
-    .setVisible(false);
+    this.feedBoostNative.bg = this.add.sprite(this.feedBoostNative.x, this.feedBoostNative.y, 'native-bg');
   
   this.feedBoostDiamondBtn.setX(this.feedBoostBtn.x + this.feedBoostBtnLeftText.width - 25 - this.feedBoostBtnRightText.width);
   this.feedBoostBtnLeftText.setX(this.feedBoostDiamondBtn.getBounds().left - 2);
@@ -729,11 +719,9 @@ function updateFeedBoostBtn(): void {
       this.feedBoostNative.setVisible(true);
       this.feedBoostNative.bg.setVisible(true);
       const textGeom: Phaser.Geom.Rectangle = this.feedBoostNative.getBounds();
-      const width: number = textGeom.width + 5 < 40 ? 40 : textGeom.width + 5;
-      this.feedBoostNative.bg
-        .clear()
-        .fillStyle(0x00ccFF, 1)
-        .fillEllipse(textGeom.centerX, textGeom.centerY, width, 40);
+      const width: number = textGeom.width + 30 < 40 ? 40 : textGeom.width + 30;
+
+      this.feedBoostNative.bg.setDisplaySize(width, textGeom.height + 20);
       this.feedBoostBtnRightText.setVisible(false);
       this.feedBoostDiamondBtn.setVisible(false);
       this.feedBoostBtnLeftText.setX(this.feedBoostBtn.x + this.feedBoostBtnLeftText.width / 2);

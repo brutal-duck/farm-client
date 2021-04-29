@@ -303,6 +303,7 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private handlerStartBtn(): void {
+    this.removeInteractiveElements();
     this.getRandomIndexPrize();
     this.setUpdatedButton();
     this.whellIsScrolling = true;
