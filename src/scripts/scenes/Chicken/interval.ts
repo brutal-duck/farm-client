@@ -353,6 +353,12 @@ function interval(): void {
       }
     }
     
+    if (this.state.progress.event.type === 2) {
+      if (this.state.progress.event.endTime > 0) {
+        this.state.progress.event.endTime--;
+      }
+    }
+
     if ((this.state.name !== '' || this.state.user.login !== '') && 
       this.state.progress.event.startTime <= 0 && 
       this.state.progress.event.endTime > 0) {

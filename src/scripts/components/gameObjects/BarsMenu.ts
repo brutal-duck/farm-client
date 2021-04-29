@@ -156,6 +156,8 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       } else {
         this.fortuneIcon.setVisible(true);
       }
+    } else {
+      this.fortuneIcon.setVisible(false);
     }
   }
 

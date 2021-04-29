@@ -406,7 +406,8 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
   
       if ((this.scene.menu.isOpened ||
         this.scene.scene.isActive('Modal') ||
-        this.scene.scene.isActive('Tutorial')) &&
+        this.scene.scene.isActive('Tutorial') ||
+        this.scene.scene.isActive('Fortune')) &&
         !checkSheepTutor) {
           this.hideAllElement();
           if (this.listIsOpen) {
@@ -415,6 +416,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       } else if (!this.scene.menu.isOpened &&
         !this.scene.scene.isActive('Modal') &&
         !this.scene.scene.isActive('Tutorial') &&
+        !this.scene.scene.isActive('Fortune') &&
         checkSheepTutor) {
         if (setter) {
           this.flyInMainBoardAnim();
@@ -560,7 +562,8 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
     if (this.scene.state.farm === 'Sheep' && this.scene.state.userSheep.tutorial < 100) checkSheepTutor = false;
     if ((this.scene.menu.isOpened ||
       this.scene.scene.isActive('Modal') ||
-      this.scene.scene.isActive('Tutorial')) &&
+      this.scene.scene.isActive('Tutorial') ||
+      this.scene.scene.isActive('Fortune')) &&
       this.isVisibile || !checkSheepTutor && this.isVisibile) {
       this.hideAllElement();
       this.hideListButton();
@@ -570,6 +573,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
     } else if (!this.scene.menu.isOpened &&
       !this.scene.scene.isActive('Modal') &&
       !this.scene.scene.isActive('Tutorial') &&
+      !this.scene.scene.isActive('Fortune') &&
       !this.isVisibile && checkSheepTutor) {
         this.shownElements();
     } 
@@ -800,7 +804,8 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
         this.listButton.setAlpha(0)
         if (this.scene.menu.isOpened ||
           this.scene.scene.isActive('Modal') ||
-          this.scene.scene.isActive('Tutorial')) {
+          this.scene.scene.isActive('Tutorial') ||
+          this.scene.scene.isActive('Fortune')) {
             this.setMainPositionListButton();
             anim.stop();
         }

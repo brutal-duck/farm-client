@@ -197,6 +197,12 @@ function interval(): void {
       this.spreadAnimals();
     }
 
+    if (this.state.progress.event.type === 2) {
+      if (this.state.progress.event.endTime > 0) {
+        this.state.progress.event.endTime--;
+      }
+    }
+    
     if (this.state.progress.event.type === 1) {
       // обновление времени евента
       if (this.state.progress.event.endTime > 0) {

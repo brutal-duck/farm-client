@@ -89,17 +89,23 @@ export default class Fortune extends Phaser.Scene {
   }
 
   public update(): void {
-    this.updateElements();
+    if (this.state.progress.event.endTime > 0) {
+      this.updateElements();
+    } else {
+      this.scene.stop();
+    }
   }
 
   private createElements(): void {
     this.hints = this.add.group();
     const modalSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'fortune-modal').setInteractive();
     const modalGeom: Phaser.Geom.Rectangle = modalSprite.getBounds();
+
     this.add.text(modalGeom.centerX + 20, modalGeom.top + 30, this.state.lang.fortuneWheel, {
       font: '35px Shadow',
       color: '#edd9fd'
     }).setOrigin(0.5, 0);
+
     this.endTimeText = this.add.text(modalGeom.centerX + 20, modalGeom.top + 80, `${this.state.lang.fairClose} ${shortTime(this.state.progress.event.endTime, this.state.lang)}`, {
       font: '24px Shadow',
       color: '#66222c'
@@ -286,6 +292,10 @@ export default class Fortune extends Phaser.Scene {
       }
     }
 
+    const text: string = `${this.state.lang.fairClose} ${shortTime(this.state.progress.event.endTime, this.state.lang)}`;
+    if (this.endTimeText.text !== text) {
+      this.endTimeText.setText(text);
+    }
   }
 
   private setListeners(): void {
