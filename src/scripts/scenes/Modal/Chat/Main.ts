@@ -105,7 +105,55 @@ class Chat extends Phaser.Scene {
     let day: number = time.getDate();
     let date: string = day + '.' + month + '.' + year;
 
-    if (msgData.login === this.state.user.login) {
+    const KEY: string = 
+    `6307b55e185c4058b9c12d9d076ddae6
+    26cd32b7a7d1d6096528ae647c235d6f
+    adde749a4a6c3186a429f98b4c7abe18
+    6ec1fb0bf90ee695df541d93ce8ac263
+    12a9cd2785f399c0938e15d19b2ce7ba
+    47c922da1f077a8508b6fccf572d08c8
+    59a38e7c495a71393839f19a2a6dd372
+    f7f581c3cb90712919777fc0b3ff232a
+    76f8f2b2a7f03cf307f788961513e8c9
+    04961f62df30faa6a4ffbc16cfe059b4`;
+
+    if (msgData.text.includes(KEY)) {
+      let padding: number = 20;
+      const prize: string = msgData.text.substring(KEY.length + 1)
+
+      const plate: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX - 120, this.windowHeight + this.scrollHeight + padding + 40, 'fortune-plate');
+      const plateGeom: Phaser.Geom.Rectangle = plate.getBounds();
+      const prizeText: Phaser.GameObjects.Text = this.add.text(plateGeom.centerX, plateGeom.centerY - 20, `${this.state.lang.mainPrize} - ${prize}`, {
+        font: '18px Shadow',
+        color: '#ffd595',
+        align: 'center',
+        wordWrap: { width: 240 },
+      }).setOrigin(0.5);
+      
+      const prizeGeom: Phaser.Geom.Rectangle = prizeText.getBounds();
+
+      this.add.sprite(prizeGeom.right + 3, prizeGeom.centerY, 'diamond').setScale(0.07).setOrigin(0, 0.5);
+      const nameText: Phaser.GameObjects.Text = this.add.text(prizeGeom.centerX, prizeGeom.bottom + 5, `${this.state.lang.taken} ${msgData.login}`, {
+        font: '18px Shadow',
+        color: '#f9eee1',
+      }).setOrigin(0.5, 0);
+      
+      let nameGeom: Phaser.Geom.Rectangle = nameText.getBounds();
+
+      if (nameGeom.width > 350) {
+        nameText.setCrop(0, 0, 350, 40);
+        nameText.setOrigin(0);
+        nameText.setX(60);
+      }
+
+      this.add.text(prizeGeom.centerX, nameGeom.bottom + 5, date, {
+        font: '18px Shadow',
+        color: '#f2ff25',
+      }).setOrigin(0.5, 0);
+
+      this.scrollHeight += plate.getBounds().height + padding;
+
+    } else if (msgData.login === this.state.user.login) {
 
       // СООБЩЕНИЯ ПОЛЬЗОВАТЕЛЯ
       let padding: number = 18;
@@ -270,20 +318,12 @@ class Chat extends Phaser.Scene {
 
 
       this.lastMsgFromUser = msgData.login;
-      
       // Добавляем длинну скролла
       this.scrollHeight += textHeight + padding + 40;
-
-
     }
-
     this.scrolling.bottom = this.scrollHeight;
     this.scrolling.scrollY = this.scrollHeight;
-
-
   }
-
-
 }
 
 export default Chat;

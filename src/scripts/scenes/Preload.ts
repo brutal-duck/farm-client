@@ -118,6 +118,7 @@ const corner2: string = require("./../../assets/images/chat-corner-2.png");
 const chatBackground: string = require("./../../assets/images/modal/chat-bg.png");
 const chatSendBtn: string = require("./../../assets/images/modal/chat-send-btn.png");
 const chatEmojiBtn: string = require("./../../assets/images/modal/chat-emoji-btn.png");
+const fortunePlate: string = require("./../../assets/images/event/fortune/chat-plate.png");
 
 
 const profileBackground: string = require('./../../assets/images/profile/background.jpg');
@@ -296,6 +297,7 @@ class Preload extends Phaser.Scene {
     this.load.image('tile2', tile2);
     this.load.image('corner1', corner1);
     this.load.image('corner2', corner2);
+    this.load.image('fortune-plate', fortunePlate);
   }
 
 }

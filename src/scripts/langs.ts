@@ -790,6 +790,7 @@ export default {
     latestWinners: 'Последние победители',
     lastTimePrize: 'Последний раз выйграл главный приз ($1)',
     back: 'Назад',
+    taken: 'Забрал',
   },
 
   en: {
@@ -1583,6 +1584,6 @@ export default {
     latestWinners: 'Последние победители',
     lastTimePrize: 'Последний раз выйграл главный приз ($1)',
     back: 'Назад',
-
+    taken: 'Забрал',
   }
 }
