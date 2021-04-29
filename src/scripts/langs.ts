@@ -794,6 +794,7 @@ export default {
     taken: 'Забрал',
     now: 'Сейчас',
     jackpotCongratulations: 'Поздравляем! вы выйграли',
+    fortuneWelcome: 'Испытай колесо фортуны! Попробуй выйграть главный приз!',
   },
 
   en: {
@@ -1591,5 +1592,6 @@ export default {
     taken: 'Забрал',
     now: 'Сейчас',
     jackpotCongratulations: 'Поздравляем! вы выйграли',
+    fortuneWelcome: 'Испытай колесо фортуны! Попробуй выйграть главный приз!',
   }
 }

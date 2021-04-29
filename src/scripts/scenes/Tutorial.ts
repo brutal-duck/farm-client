@@ -921,6 +921,41 @@ class Tutorial extends Phaser.Scene {
         }
         
         
+      } else if (this.state.tutorial.farm === 4) { 
+        if (this.state.tutorial.step === 0) {
+          
+          this.add.sprite(720, 775, 'profile-event-island').setOrigin(1, 0.5);
+          Firework.create(this, { x: 580, y: 775 }, 5);
+          const eventFarm: Phaser.GameObjects.Image = this.add.image(720, 775, 'profile-fortune').setOrigin(1, 0.5).setAlpha(0);
+          // const eventFarmText: Phaser.GameObjects.Text = this.add.text(600,765, this.state.lang.eventFarm, {
+          //   fontSize: '18px',
+          //   color: '#f0e8ce',
+          //   fontFamily: 'Shadow',
+          //   wordWrap: { width: 150 },
+          //   align: 'center'
+          // }).setOrigin(0.5, 0.5).setAlpha(0);
+          
+          this.topPosition = false;
+          this.indent = this.height - 600;
+          this.tailX = 430;
+          this.tailFlipX = false;
+          this.tailFlipY = false;
+          this.tutorText = this.state.lang.fortuneWelcome;
+          
+          this.tweens.add({
+            targets: [ eventFarm ],
+            delay: 500,
+            alpha: 1,
+            duration: 1200,
+            onComplete: (): void => {
+              this.pointerTutorial();
+              this.generalClick = (): void => {
+                this.game.scene.keys[this.state.farm].doneEventTutor_0();
+                this.game.scene.keys[this.state.farm].autosave();
+              };
+            }
+          });
+        }
       } else {
         this.fail();
       }

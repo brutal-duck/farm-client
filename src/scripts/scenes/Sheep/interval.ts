@@ -421,25 +421,23 @@ function interval(): void {
     }
 
     // туториал по ивентовой ферме
-    if (this.state.progress.event.type === 1) {
-      if (this.state.userSheep.part > 4 && 
-        (this.state.name !== '' || this.state.user.login !== '') && 
-        this.state.progress.event.startTime <= 0 && 
-        this.state.progress.event.endTime > 0) {
-        if (this.state.user.additionalTutorial.eventTutorial === 0 &&
-          !arrowOnMap &&
-          !this.scene.isActive('Modal') &&
-          !this.scene.isActive('Tutorial') &&
-          !this.scene.isActive('Profile')) {
-          arrowOnMap = Arrow.generate(this.game.scene.keys[`${this.state.farm}Bars`], 17)
-        }
-    
-        if (this.state.user.additionalTutorial.eventTutorial === 0 &&
-          !this.scene.isActive('Tutorial') &&
-          this.scene.isActive('Profile') &&
-          this.state.progress.event.startTime <= 0) {
-          this.showEventTutorial();
-        }
+    if (this.state.userSheep.part > 4 && 
+      (this.state.name !== '' || this.state.user.login !== '') && 
+      this.state.progress.event.startTime <= 0 && 
+      this.state.progress.event.endTime > 0) {
+      if (this.state.user.additionalTutorial.eventTutorial === 0 &&
+        !arrowOnMap &&
+        !this.scene.isActive('Modal') &&
+        !this.scene.isActive('Tutorial') &&
+        !this.scene.isActive('Profile')) {
+        arrowOnMap = Arrow.generate(this.game.scene.keys[`${this.state.farm}Bars`], 17)
+      }
+  
+      if (this.state.user.additionalTutorial.eventTutorial === 0 &&
+        !this.scene.isActive('Tutorial') &&
+        this.scene.isActive('Profile') &&
+        this.state.progress.event.startTime <= 0) {
+        this.showEventTutorial();
       }
     }
 

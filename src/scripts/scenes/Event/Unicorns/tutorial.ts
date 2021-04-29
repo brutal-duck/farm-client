@@ -6,17 +6,25 @@ function showEventTutorial(additional: boolean | string = false): void {
   if (this.state.user.additionalTutorial.eventTutorial > 0) {
     if (this.scene.isActive('Profile')) this.scene.stop('Profile');
   }
-
-  let tutorial: Itutorial = {
-    farm: 3,
-    step: this.state.user.additionalTutorial.eventTutorial,
-    additional: additional
-  }
-  if (this.game.scene.keys['Unicorn'].mergPointer) {
+  let tutorial: Itutorial;
+  if (this.state.progress.event.type === 1) {
+    tutorial = {
+      farm: 3,
+      step: this.state.user.additionalTutorial.eventTutorial,
+      additional: additional
+    };
     
-    this.game.scene.keys['Unicorn'].mergPointer?.data?.values.animal?.destroy();
-    this.game.scene.keys['Unicorn'].mergPointer?.destroy();
+    if (this.game.scene.keys['Unicorn'].mergPointer) {
+      this.game.scene.keys['Unicorn'].mergPointer?.data?.values.animal?.destroy();
+      this.game.scene.keys['Unicorn'].mergPointer?.destroy();
+    }
 
+  } else if (this.state.progress.event.type === 2) {
+    tutorial = {
+      farm: 4,
+      step: this.state.user.additionalTutorial.eventTutorial,
+      additional: additional
+    };
   }
   this.state.tutorial = tutorial;
   this.scene.launch('Tutorial', this.state);
@@ -26,24 +34,34 @@ function showEventTutorial(additional: boolean | string = false): void {
 
 // завершение первого шага (зазывание на карте)
 function doneEventTutor_0(): void {
+  if (this.state.progress.event.type === 1) {
+    this.logAmplitudeEvent('tutorial', {
+      step: 0,
+      farm_id: 'Unicorn'
+    });
+    this.state.user.eventPoints = 0;
+    this.state.user.additionalTutorial.eventTutorial = 10;
+    
+    this.scene.stop('Tutorial');
+    this.scene.stop(this.state.farm);
+    this.scene.stop(this.state.farm + 'Bars');
+    this.scene.stop('Profile');
+    this.scene.start('UnicornPreload', this.state);
 
-  // this.state.amplitude.getInstance().logEvent('event_started', {
-  //   step: 0,
-  //   farm_id: 'Unicorn'
-  // });
-  this.logAmplitudeEvent('tutorial', {
-    step: 0,
-    farm_id: 'Unicorn'
-  });
-  this.state.user.eventPoints = 0;
-  this.state.user.additionalTutorial.eventTutorial = 10;
-  
-  this.scene.stop('Tutorial');
-  this.scene.stop(this.state.farm);
-  this.scene.stop(this.state.farm + 'Bars');
-  this.scene.stop('Profile');
-  this.scene.start('UnicornPreload', this.state);
-  
+  } else if (this.state.progress.event.type === 2) {
+
+    this.logAmplitudeEvent('tutorial', {
+      step: 0,
+      farm_id: 'Fortune'
+    });
+    this.state.user.eventPoints = 1;
+    this.state.user.additionalTutorial.eventTutorial = 10;
+    
+    this.scene.stop('Tutorial');
+    this.scene.stop('Profile');
+    this.scene.start(this.state.farm + 'Preload');
+    this.scene.launch('Fortune', this.state);
+  }
 }
 
 
