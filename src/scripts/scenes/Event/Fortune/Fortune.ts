@@ -784,7 +784,7 @@ export default class Fortune extends Phaser.Scene {
 
   private getRandomIndexPrize(): void {
     // const pull: number[] = [ 26, 500, 3445, 2584, 1723, 861, 861, 500 ];
-    const pull: number[] = [ 260000, 400, 1579, 1579, 1579, 1579, 1579, 1579 ];
+    const pull: number[] = [ 26, 400, 1579, 1579, 1579, 1579, 1579, 1579 ];
 
     const totalCounter: number = pull.reduce((prev, current) => prev += current);
     const arrRange: {
