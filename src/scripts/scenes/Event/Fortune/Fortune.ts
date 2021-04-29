@@ -598,13 +598,13 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private showJackpotWindow(prize: number): void {
-    this.time.addEvent({
+    const timer: Phaser.Time.TimerEvent = this.time.addEvent({
       delay: 500,
       callback: (): void => {
 
         const position: any = {
           x: this.cameras.main.centerX + Phaser.Math.RND.pick(Phaser.Math.RND.signs) * Phaser.Math.Between(100, 180),
-          y: this.cameras.main.centerY + Phaser.Math.RND.pick(Phaser.Math.RND.signs) * Phaser.Math.Between(100, 180),
+          y: this.cameras.main.centerY - 100 + Phaser.Math.RND.pick(Phaser.Math.RND.signs) * Phaser.Math.Between(100, 180),
         }
         Firework.create(this, position, 1);
       }, 
@@ -657,6 +657,7 @@ export default class Fortune extends Phaser.Scene {
     }
 
     this.clickModalBtn(btn, (): void => {
+      timer?.remove();
       bg?.destroy();
       modal?.destroy();
       text?.destroy();
@@ -667,6 +668,7 @@ export default class Fortune extends Phaser.Scene {
       this.getCurrency({ x: this.cameras.main.centerX, y: this.cameras.main.centerY }, prize, 'diamond');
     });
     this.click(bg, (): void => {
+      timer?.remove();
       bg?.destroy();
       modal?.destroy();
       text?.destroy();
@@ -782,7 +784,7 @@ export default class Fortune extends Phaser.Scene {
 
   private getRandomIndexPrize(): void {
     // const pull: number[] = [ 26, 500, 3445, 2584, 1723, 861, 861, 500 ];
-    const pull: number[] = [ 26, 400, 1579, 1579, 1579, 1579, 1579, 1579 ];
+    const pull: number[] = [ 260000, 400, 1579, 1579, 1579, 1579, 1579, 1579 ];
 
     const totalCounter: number = pull.reduce((prev, current) => prev += current);
     const arrRange: {
