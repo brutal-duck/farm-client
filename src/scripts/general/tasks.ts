@@ -99,7 +99,7 @@ function tryTask(type: number, state: number, count: number = 1): void {
     this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
   }
 
-  if (task?.progress >= task?.count && task?.type === 21) {
+  if (task?.progress >= task?.count && (task?.type === 21 || task?.type === 22)) {
     task.done = 1;
     this.state.amplitude.getInstance().logEvent('task_done', {
       task_id: task.id,
