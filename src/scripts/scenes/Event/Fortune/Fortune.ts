@@ -571,13 +571,7 @@ export default class Fortune extends Phaser.Scene {
   private getJackpot(prize: number): void {
     this.getFreeDiamonds(prize);
     this.sendChatMassage(prize);
-    Firework.create(this, this.wheel, 5);
-    this.time.addEvent({
-      delay: 700,
-      callback: (): void => {
-        this.showJackpotWindow(prize);
-      }
-    });
+    this.showJackpotWindow(prize);
   }
 
   private sendChatMassage(prize: number): void {
@@ -604,6 +598,18 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private showJackpotWindow(prize: number): void {
+    this.time.addEvent({
+      delay: 500,
+      callback: (): void => {
+
+        const position: any = {
+          x: this.cameras.main.centerX + Phaser.Math.RND.pick(Phaser.Math.RND.signs) * Phaser.Math.Between(100, 180),
+          y: this.cameras.main.centerY + Phaser.Math.RND.pick(Phaser.Math.RND.signs) * Phaser.Math.Between(100, 180),
+        }
+        Firework.create(this, position, 1);
+      }, 
+      repeat: -1
+    });
     const bg: Phaser.GameObjects.TileSprite = this.add.tileSprite(0, 0, this.cameras.main.width, this.cameras.main.height, 'white-pixel')
       .setInteractive()
       .setOrigin(0)
