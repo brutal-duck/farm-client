@@ -317,16 +317,16 @@ export default class Fortune extends Phaser.Scene {
     this.getRandomIndexPrize();
     this.setUpdatedButton();
     this.whellIsScrolling = true;
-    const type: string = this.prizeId === 1 ? 'джекпот' :
-    this.prizeId === 2 ? 'регулярный приз, 5% от фонда' :
-    this.prizeId === 3 ? '10 минут монет' : 
-    this.prizeId === 4 ? '15 минут монет' :
-    this.prizeId === 5 ? '30 минут монет' :
-    this.prizeId === 6 ? 'переполох' :
-    this.prizeId === 7 ? 'комбикорм' : 
-    this.prizeId === 8 ? 'билеты' : '';
+    // const type: string = this.prizeId === 1 ? 'джекпот' :
+    // this.prizeId === 2 ? 'регулярный приз, 5% от фонда' :
+    // this.prizeId === 3 ? '10 минут монет' : 
+    // this.prizeId === 4 ? '15 минут монет' :
+    // this.prizeId === 5 ? '30 минут монет' :
+    // this.prizeId === 6 ? 'переполох' :
+    // this.prizeId === 7 ? 'комбикорм' : 
+    // this.prizeId === 8 ? 'билеты' : '';
 
-    console.log(type);
+    // console.log(type);
     if (this.state.user.boosts.fortune > 0) {
       this.startScrollWheel();
     } else {
@@ -695,7 +695,6 @@ export default class Fortune extends Phaser.Scene {
     const random: number = Phaser.Math.Between(1, 100)
     const count: number = random >= 1 && random < 10 ? 3 :
     random >= 10 && random < 30 ? 2 : 1;
-    console.log(random)
     this.state.user.boosts.fortune += count;
     const text: string = this.state.lang.fortuneHint_6.replace('$1', String(count));
     Hint.create(this, -250, text, 3);

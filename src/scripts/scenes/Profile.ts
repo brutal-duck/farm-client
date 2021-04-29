@@ -171,11 +171,11 @@ private createProfileInfo(): void {
   private createChickenFarm(): void {
     const farmPosition: Iposition = { x: 720, y: 1025 };
     if (this.state.progress.chicken.open) {
-      const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-chicken-farm').setOrigin(1, 0.5);
+      const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-chicken-farm').setOrigin(1, 0.5).setDepth(1);
       this.add.text(farmPosition.x - 215, farmPosition.y - 25, `${this.state.progress.chicken.part}/${this.state.progress.chicken.max}`, {
         font: '28px Shadow',
         color: '#ffe5d7'
-      }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
+      }).setOrigin(0.5, 0.5).setStroke('#522007', 5).setDepth(1);
 
       this.click(farmSprite, (): void => {
         if (this.state.farm !== 'Chicken') {
@@ -193,17 +193,17 @@ private createProfileInfo(): void {
       }, 8);
 
     } else {
-      this.add.sprite(farmPosition.x, farmPosition.y, 'profile-chicken-farm').setOrigin(1, 0.5);
-      this.add.sprite(farmPosition.x, farmPosition.y, 'profile-sticker').setOrigin(1, 0.5)
-      const btn: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x - 125, farmPosition.y + 0, 'profile-btn');
+      this.add.sprite(farmPosition.x, farmPosition.y, 'profile-chicken-farm').setOrigin(1, 0.5).setDepth(1);
+      this.add.sprite(farmPosition.x, farmPosition.y, 'profile-sticker').setOrigin(1, 0.5).setDepth(1)
+      const btn: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x - 125, farmPosition.y + 0, 'profile-btn').setDepth(1);
       const title: Phaser.GameObjects.Text = this.add.text(btn.x + 15, btn.y - 5, shortNum(this.state.progress.chicken.price), {
         font: '22px Shadow',
         color: '#FBD0B9',
         wordWrap: { width: 165 }
-      }).setOrigin(0.5, 0.5).setStroke('#1F530A', 5);
+      }).setOrigin(0.5, 0.5).setStroke('#1F530A', 5).setDepth(1);
 
       const left: number = title.getBounds().left - 17;
-      const img: Phaser.GameObjects.Sprite = this.add.sprite(left, title.y, 'sheepCoin').setScale(0.12);
+      const img: Phaser.GameObjects.Sprite = this.add.sprite(left, title.y, 'sheepCoin').setScale(0.12).setDepth(1);
 
       this.clickShopBtn({ btn: btn, title: title, img: img }, (): void => {
         this.game.scene.keys[this.state.farm].buyNextFarm();
