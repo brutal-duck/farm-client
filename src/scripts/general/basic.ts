@@ -1060,12 +1060,7 @@ function loadingModal(): void {
   let animation: Phaser.Tweens.Tween;
   let pixel: Phaser.GameObjects.TileSprite;
   this.load.on('start', () => {
-    // this.scene.launch('Block');
-    pixel = this.add.tileSprite(0, 0,
-      Number(this.game.config.width),
-      Number(this.game.config.height),
-      'white-pixel'
-    ).setOrigin(0).setTint(0x000000).setAlpha(0.5).setInteractive();
+    this.scene.launch('Block');
     loadingSprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'loading-spinner');
     animation = this.tweens.add({
       targets: loadingSprite,

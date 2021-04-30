@@ -54,6 +54,7 @@ export default class Fortune extends Phaser.Scene {
   }
 
   public preload(): void {
+    this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)');
     this.loadingModal();
     this.load.image('fortune-modal', modal);
     this.load.image('fortune-btn', btn);
@@ -79,7 +80,6 @@ export default class Fortune extends Phaser.Scene {
       Number(this.game.config.height),
       'modal'
     ).setOrigin(0).setInteractive();
-    this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)');
     this.createElements();
     this.creaeteList();
     this.setListeners();
