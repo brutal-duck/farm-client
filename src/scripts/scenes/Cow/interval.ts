@@ -250,7 +250,8 @@ function interval(): void {
 
     if ((this.state.name !== '' || this.state.user.login !== '') && 
       this.state.progress.event.startTime <= 0 && 
-      this.state.progress.event.endTime > 0) {
+      this.state.progress.event.endTime > 0 &&
+      this.state.progress.event.open) {
       if (this.state.user.additionalTutorial.eventTutorial === 0 &&
         !arrowOnMap &&
         !this.scene.isActive('Modal') &&
@@ -260,7 +261,8 @@ function interval(): void {
       }
       if (this.state.user.additionalTutorial.eventTutorial === 0 &&
         !this.scene.isActive('Tutorial') &&
-        this.scene.isActive('Profile')) {
+        this.scene.isActive('Profile') &&
+        this.state.progress.event.open) {
         this.showEventTutorial();
       }
     }
