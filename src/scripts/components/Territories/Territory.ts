@@ -197,10 +197,34 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       .setDepth(this.y + 1)
       .setOrigin(0.5, 1);
     
-    this.improveText.setPosition(this.improveText.x + 140, this.improveText.y + 113);
-    this.improveText.setStyle({fontSize: '32px'});
-    this.improveText.setDepth(10000);
-    this.improveText.setText('20')
+    this.setPositionImproveRepository();
+
+  }
+
+  private setPositionImproveRepository(): void {
+    const position: Iposition = {
+      x: this.improveText.x,
+      y: this.improveText.y,
+    };
+
+    if (this.improve < 5) {
+      position.x = this.x + 127;
+      position.y = this.y + 125;
+    } else if (this.improve < 10) {
+      position.x = this.x + 87;
+      position.y = this.y + 140;
+    } else if (this.improve < 15) {
+      position.x = this.x + 168;
+      position.y = this.y + 138;
+    } else {
+      position.x = this.x + 130;
+      position.y = this.y + 140;
+    }
+    if (this.improveText.x !== position.x || this.improveText.y !== position.y) {
+      this.improveText.setPosition(position.x, position.y);
+      this.improveText.setStyle({ fontSize: '32px' });
+      this.improveText.setDepth(this.repository.depth + 1);
+    }
   }
 
   private createHouseSprite(): void {
@@ -514,6 +538,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       if (this.repository.texture.key !== sprite) {
         this.repository.setTexture(sprite);
       }
+      this.setPositionImproveRepository();
     }
 
     if (this.texture.key !== sprite && this.territoryType !== 5) {
