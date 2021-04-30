@@ -14,9 +14,6 @@ const ticket: string = require('../../../../assets/images/event/fortune/ticket.p
 const jackpotBg: string = require('../../../../assets/images/event/fortune/jackpot-bg.png');
 const doneChapterButton: string = require("../../../../assets/images/modal/done-chapter-button.png");
 
-
-
-
 export default class Fortune extends Phaser.Scene {
   constructor() {
     super('Fortune');
@@ -32,7 +29,7 @@ export default class Fortune extends Phaser.Scene {
   public wheel: Phaser.GameObjects.Sprite;
   public pointer: Phaser.GameObjects.Sprite;
   public prizeId: number;
-  public readonly price: number = 10;
+  public readonly price: number = 20;
   public closeBtn: Phaser.GameObjects.Sprite;
   public moneyPullText: Phaser.GameObjects.Text;
   public whellIsScrolling: boolean = false;
