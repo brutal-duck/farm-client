@@ -59,7 +59,6 @@ function doneEventTutor_0(): void {
     
     this.scene.stop('Tutorial');
     this.scene.stop('Profile');
-    this.scene.start(this.state.farm + 'Preload');
     this.scene.launch('Fortune', this.state);
   }
 }
