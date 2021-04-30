@@ -153,7 +153,7 @@ class Chat extends Phaser.Scene {
 
       this.scrollHeight += plate.getBounds().height + padding;
 
-    } else if (msgData.login === this.state.user.login) {
+    } else if (msgData.login === this.state.user.login || msgData.login === this.state.name) {
 
       // СООБЩЕНИЯ ПОЛЬЗОВАТЕЛЯ
       let padding: number = 18;
