@@ -177,7 +177,8 @@ function dailyAward(): void {
     typeof this.state.daily === 'number' &&
     !this.scene.isActive('Modal') &&
     !this.scene.isActive('Tutorial') &&
-    !this.scene.isActive('Profile')) {
+    !this.scene.isActive('Profile') && 
+    !this.scene.isActive('Fortune')) {
     this.dailyStartCheck = false;
     // дейлики для новичка
     if (this.state.newbieTime > 0) {

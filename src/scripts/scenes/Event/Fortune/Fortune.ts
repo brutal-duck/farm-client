@@ -271,8 +271,11 @@ export default class Fortune extends Phaser.Scene {
             this.lastestWinnerText.data.values.name.setCrop(0, 0, 210, 40);
             this.lastestWinnerText.data.values.name.setOrigin(0);
             this.lastestWinnerText.data.values.name.setX(this.cameras.main.centerX + 43);
+          } else {
+            this.lastestWinnerText.data.values.name.setOrigin(0.5, 0);
+            this.lastestWinnerText.data.values.name.setX(this.lastestWinnerText.getBounds().centerX);
           }
-      
+          
           this.lastestWinnerText.data.values.time.setText(this.state.fortuneData.lastWinner?.time > 0 ? `${shortTime(this.state.fortuneData.lastWinner?.time, this.state.lang)} ${this.state.lang.back}` : this.state.lang.now).setVisible(true);
           this.lastestWinnerText.data.values.time.setY(nameTextGeom.bottom);
         } else {
@@ -788,7 +791,8 @@ export default class Fortune extends Phaser.Scene {
 
   private getRandomIndexPrize(): void {
     // const pull: number[] = [ 26, 500, 3445, 2584, 1723, 861, 861, 500 ];
-    const pull: number[] = [ 26, 300, 1579, 1579, 1579, 1579, 1579, 1579 ];
+    // const pull: number[] = [ 26, 300, 1579, 1579, 1579, 1579, 1579, 1579 ];
+    const pull: number[] = [ 25, 270, 1579, 1579, 1579, 1579, 1579, 1579 ];
 
     const totalCounter: number = pull.reduce((prev, current) => prev += current);
     const arrRange: {
