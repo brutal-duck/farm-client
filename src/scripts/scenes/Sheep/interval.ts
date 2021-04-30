@@ -283,7 +283,6 @@ function interval(): void {
         this.counterWithoutCollector++;
 
         if (this.counterWithoutCollector >= 10) {
-
           this.counterWithoutCollector = 0;
           arrowOnCollector = Arrow.generate(this.game.scene.keys['SheepBars'], 18);
         }
@@ -300,7 +299,8 @@ function interval(): void {
           this.state.userSheep.part >= 2 &&
           !this.scene.isActive('Modal') &&
           !this.scene.isActive('Tutorial') &&
-          !this.scene.isActive('Profile')) {
+          !this.scene.isActive('Profile') &&
+          !this.scene.isActive('Fortune')) {
 
           this.counterWithoutCollector = 0;
           this.state.user.additionalTutorial.collector = true;
