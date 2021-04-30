@@ -74,7 +74,6 @@ export default class Fortune extends Phaser.Scene {
       jackpot: false,
     }
     this.state.socket.io.emit('fortune-send', data);
-    console.log('Fortune Create')
     this.add.tileSprite(0, 0,
       Number(this.game.config.width),
       Number(this.game.config.height),
@@ -504,7 +503,7 @@ export default class Fortune extends Phaser.Scene {
   private getPrize(): void {
     let prize: number = 0;
     if (this.prizeId === 1) {
-      prize = Math.round(70 * this.state.fortuneData.pull / 100);
+      prize = Math.round(50 * this.state.fortuneData.pull / 100);
     } else {
       prize = Math.round(5 * this.state.fortuneData.pull / 100);
     }
@@ -792,7 +791,7 @@ export default class Fortune extends Phaser.Scene {
   private getRandomIndexPrize(): void {
     // const pull: number[] = [ 26, 500, 3445, 2584, 1723, 861, 861, 500 ];
     // const pull: number[] = [ 26, 300, 1579, 1579, 1579, 1579, 1579, 1579 ];
-    const pull: number[] = [ 23, 250, 1579, 1579, 1579, 1579, 1579, 1579 ];
+    const pull: number[] = [ 15, 250, 1579, 1579, 1579, 1579, 1579, 1579 ];
 
     const totalCounter: number = pull.reduce((prev, current) => prev += current);
     const arrRange: {
