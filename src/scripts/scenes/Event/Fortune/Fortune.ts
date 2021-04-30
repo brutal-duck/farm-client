@@ -503,7 +503,7 @@ export default class Fortune extends Phaser.Scene {
   private getPrize(): void {
     let prize: number = 0;
     if (this.prizeId === 1) {
-      prize = Math.round(50 * this.state.fortuneData.pull / 100);
+      prize = Math.round(70 * this.state.fortuneData.pull / 100);
     } else {
       prize = Math.round(5 * this.state.fortuneData.pull / 100);
     }
@@ -519,7 +519,7 @@ export default class Fortune extends Phaser.Scene {
 
       this.game.scene.keys[this.state.farm].logAmplitudeEvent('diamonds_spent', {
         type: 'fortune',
-        count: this.price / 2,
+        count: this.price,
         countFortune: this.state.progress.event.eventPoints,
       });
     }
