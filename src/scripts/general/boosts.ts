@@ -5,7 +5,6 @@ import Firework from '../components/animations/Firework';
 // получение животного по бусту
 function createBoostAnimal(): void {
   this.tryTask(22, 0);
-  console.log(this.state.user.diamonds, 'до')
   if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0) {
     this.state.user.diamonds -= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost;
     this.state[`user${this.state.farm}`].takenHerdBoost += 1;
@@ -16,8 +15,6 @@ function createBoostAnimal(): void {
     this.state[`user${this.state.farm}`].takenHerdBoost += 1;
   }
 
-  console.log(this.state.user.diamonds, 'после')
- 
   if (this.state.herdBoostAnimals.length === 0) return;
   
   this.state.herdBoostAnimals.forEach(type => {
