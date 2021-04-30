@@ -110,8 +110,12 @@ function updateHerdBoostBtn(): void {
         }
 
         const plusTextGeom: Phaser.Geom.Rectangle = this.herdBoostNative.plusText.getBounds();
-        this.herdBoostNative.bg.setPosition(textGeom.right - plusTextGeom.width / 2 + 5, textGeom.centerY)
-          .setDisplaySize(textGeom.width + plusTextGeom.width + 60, textGeom.height + 20);
+        this.herdBoostNative.bg.setPosition(plusTextGeom.right + 5, textGeom.centerY)
+          .setDisplaySize(textGeom.width + plusTextGeom.width + 60, textGeom.height + 20).setOrigin(1, 0.5);
+        
+        const bgGeom: Phaser.Geom.Rectangle = this.herdBoostNative.bg.getBounds();
+        this.herdBoostNative.setX(bgGeom.left + 27).setOrigin(0, 0.5);
+        this.herdBoostNative.plusText.setX(bgGeom.right - 27).setOrigin(1, 0.5);
       }
     } 
     if (this.state.user.boosts[this.state.farm.toLowerCase()].herd > 0 && !this.herdBoostBtn.data.values.updated) {
@@ -124,10 +128,9 @@ function updateHerdBoostBtn(): void {
       this.herdBoostNative.setY(this.herdBoostNative.y + 25); 
 
       const textGeom: Phaser.Geom.Rectangle = this.herdBoostNative.getBounds();
-      const width: number = textGeom.width + 5 < 40 ? 40 : textGeom.width + 5;
-      
+      const width: number = textGeom.width + 30 < 60 ? 60 : textGeom.width + 30;
       this.herdBoostNative.bg.setPosition(textGeom.centerX, textGeom.centerY)
-        .setDisplaySize(width + 20, textGeom.height + 20);
+        .setDisplaySize(width, textGeom.height + 20);
     }
   }
 }
@@ -477,16 +480,21 @@ function herdBoost(): void {
 
     this.herdBoostNative.bg = this.add.sprite(0, 0, 'native-bg').setDepth(1);
     if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0) {
-      this.herdBoostNative.setX(xBtn + 80);
-      const textGeom: Phaser.Geom.Rectangle = this.herdBoostNative.getBounds();
-      this.herdBoostNative.plusText = this.add.text(textGeom.right, textGeom.centerY, '+1', {
+      this.herdBoostNative.plusText = this.add.text(0, 0, '+1', {
         font: '28px Shadow',
         color: '#00ff00'
-      }).setOrigin(0, 0.5).setDepth(4).setShadow(3, 5, '#724719', 5);
+      })
+        .setOrigin(0, 0.5)
+        .setDepth(4)
+        .setShadow(3, 5, '#724719', 5);
+
+      this.herdBoostNative.setX(xBtn + 80);
+      const textGeom: Phaser.Geom.Rectangle = this.herdBoostNative.getBounds();
       const plusTextGeom: Phaser.Geom.Rectangle = this.herdBoostNative.plusText.getBounds();
+      const width: number = textGeom.width + plusTextGeom.width;
 
       this.herdBoostNative.bg.setPosition(textGeom.right - plusTextGeom.width / 2, textGeom.centerY)
-        .setDisplaySize(textGeom.width + plusTextGeom.width + 20, textGeom.height + 20);
+        .setDisplaySize(width + 20, textGeom.height + 20);
         
     } else {
       const textGeom: Phaser.Geom.Rectangle = this.herdBoostNative.getBounds();
@@ -719,7 +727,7 @@ function updateFeedBoostBtn(): void {
       this.feedBoostNative.setVisible(true);
       this.feedBoostNative.bg.setVisible(true);
       const textGeom: Phaser.Geom.Rectangle = this.feedBoostNative.getBounds();
-      const width: number = textGeom.width + 30 < 40 ? 40 : textGeom.width + 30;
+      const width: number = textGeom.width + 30 < 60 ? 60 : textGeom.width + 30;
 
       this.feedBoostNative.bg.setDisplaySize(width, textGeom.height + 20);
       this.feedBoostBtnRightText.setVisible(false);
