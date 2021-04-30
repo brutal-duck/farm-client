@@ -560,7 +560,12 @@ export default class Fortune extends Phaser.Scene {
         break;
       case 8:
         // билеты
-        this.getFreeTickets();
+        this.time.addEvent({
+          delay: 150,
+          callback: (): void => {
+            this.getFreeTickets();
+          }
+        });
         break;
       default: 
         break;
@@ -708,7 +713,7 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private getFreeTickets(): void {
-    const random: number = Phaser.Math.Between(1, 100)
+    const random: number = Phaser.Math.Between(1, 150)
     const count: number = random >= 1 && random < 10 ? 3 :
     random >= 10 && random < 30 ? 2 : 1;
     this.state.user.boosts.fortune += count;
