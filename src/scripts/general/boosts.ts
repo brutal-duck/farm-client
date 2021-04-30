@@ -100,7 +100,7 @@ function updateHerdBoostBtn(): void {
           this.herdBoostNative.plusText = this.add.text(textGeom.right, textGeom.centerY, '+1', {
             font: '28px Shadow',
             color: '#69f225'
-          }).setOrigin(0, 0.5).setDepth(4).setShadow(3, 5, '#724719', 5);
+          }).setOrigin(0, 0.5).setDepth(4).setShadow(2, 3, '#724719', 5);
         } else {
           this.herdBoostNative.plusText.setY(textGeom.centerY);
           this.herdBoostNative.plusText.setX(textGeom.right);
@@ -371,6 +371,18 @@ function collectorBoost(): void {
   if (this.state[`${this.state.farm.toLowerCase()}Settings`].unlockCollector4 <= this.state[`user${this.state.farm}`].part) {
 
     let hours4 = this.boostButton(350, 220 + this.height, '4', this.state.lang.shortHours, String(this.state[`${this.state.farm.toLowerCase()}Settings`].collectorPrice4), 'diamond');
+    if (this.state.user.boosts[this.state.farm.toLowerCase()].collector4 > 0) {
+      hours4.icon.setVisible(false);
+      hours4.right.setText(this.state.lang.take);
+      const buttonGeom: Phaser.Geom.Rectangle =  hours4.btn.getBounds();
+      const text: Phaser.GameObjects.Text = this.add.text(buttonGeom.left - 2, buttonGeom.top + 5, this.state.user.boosts[this.state.farm.toLowerCase()].collector4, {
+        font: '28px Shadow',
+        color: '#FFFFFF'
+      }).setOrigin(0.5).setDepth(2).setShadow(2, 3, '#724719', 5);
+      const textGeom: Phaser.Geom.Rectangle = text.getBounds();
+      const width: number = textGeom.width + 30 < 60 ? 60 : textGeom.width + 30;
+      this.add.sprite(text.x, text.y, 'native-bg').setDisplaySize(width, textGeom.height + 25).setDepth(1);
+    }
     this.clickBoostBtn(hours4, (): void => {
       this.game.scene.keys[this.state.farm].buyCollector(3);
       this.game.scene.keys[this.state.farm].autosave();
@@ -386,6 +398,18 @@ function collectorBoost(): void {
   if (this.state[`${this.state.farm.toLowerCase()}Settings`].unlockCollector12 <= this.state[`user${this.state.farm}`].part) {
 
     let hours12 = this.boostButton(350, 280 + this.height, '12', this.state.lang.shortHours, String(this.state[`${this.state.farm.toLowerCase()}Settings`].collectorPrice12), 'diamond');
+    if (this.state.user.boosts[this.state.farm.toLowerCase()].collector12 > 0) {
+      hours12.icon.setVisible(false);
+      hours12.right.setText(this.state.lang.take);
+      const buttonGeom: Phaser.Geom.Rectangle =  hours12.btn.getBounds();
+      const text: Phaser.GameObjects.Text = this.add.text(buttonGeom.left - 2, buttonGeom.top + 5, this.state.user.boosts[this.state.farm.toLowerCase()].collector12, {
+        font: '28px Shadow',
+        color: '#FFFFFF'
+      }).setOrigin(0.5).setDepth(2).setShadow(2, 3, '#724719', 5);
+      const textGeom: Phaser.Geom.Rectangle = text.getBounds();
+      const width: number = textGeom.width + 30 < 60 ? 60 : textGeom.width + 30;
+      this.add.sprite(text.x, text.y, 'native-bg').setDisplaySize(width, textGeom.height + 25).setDepth(1);
+    }
     this.clickBoostBtn(hours12, (): void => {
       this.game.scene.keys[this.state.farm].buyCollector(4);
       this.game.scene.keys[this.state.farm].autosave();
@@ -473,7 +497,7 @@ function herdBoost(): void {
       color: '#FFFFFF'
     }).setDepth(2)
       .setOrigin(0.5)
-      .setShadow(3, 5, '#724719', 5);
+      .setShadow(2, 3, '#724719', 5);
 
     this.herdBoostNative.bg = this.add.sprite(0, 0, 'native-bg').setDepth(1);
     if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0) {
@@ -483,7 +507,7 @@ function herdBoost(): void {
       })
         .setOrigin(0, 0.5)
         .setDepth(4)
-        .setShadow(3, 5, '#724719', 5);
+        .setShadow(2, 3, '#724719', 5);
 
       this.herdBoostNative.setX(xBtn + 80);
       const textGeom: Phaser.Geom.Rectangle = this.herdBoostNative.getBounds();
@@ -583,7 +607,7 @@ function feedBoost(): void {
   }).setDepth(1)
     .setOrigin(0.5)
     .setVisible(false)
-    .setShadow(3, 5, '#724719', 5);
+    .setShadow(2, 3, '#724719', 5);
 
     this.feedBoostNative.bg = this.add.sprite(this.feedBoostNative.x, this.feedBoostNative.y, 'native-bg');
   
@@ -904,8 +928,19 @@ function buyCollector(type: number): void {
   this.scene.stop('Modal');
 
   if (settings['unlockCollector' + hours] <= user.part) {
-    
-    if (this.state.user.diamonds >= settings['collectorPrice' + hours]) {
+    if (this.state.user.boosts[this.state.farm.toLowerCase()][`collector${hours}`] > 0) {
+      this.state.user.boosts[this.state.farm.toLowerCase()][`collector${hours}`] -= 1;
+      user.collector += hours * 60 * 60;
+      user.collectorTakenTime = user.collector;
+      this.game.scene.keys[this.state.farm + 'Bars'].collector.update();
+      this.tryTask(3, 0, hours * 60);
+
+      this.state.amplitude.getInstance().logEvent('collector', {
+        type: hours + ' hours',
+        price: 'hard',
+        farm_id: this.state.farm
+      });
+    } else if (this.state.user.diamonds >= settings['collectorPrice' + hours]) {
 
       this.state.user.diamonds -= settings['collectorPrice' + hours];
       user.collector += hours * 60 * 60;
