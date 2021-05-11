@@ -199,13 +199,13 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
     const task: Itasks = tasks[0];
 
     if (
-      this.taskStatus === task.done && 
-      this.currentTaskProgress === task.progress && 
-      this.taskId === task.id && 
-      this.gotAward === task.got_awarded ||
+      this.taskStatus === task?.done && 
+      this.currentTaskProgress === task?.progress && 
+      this.taskId === task?.id && 
+      this.gotAward === task?.got_awarded ||
       this.isMoving) return;
     else {
-      if (this.taskId !== task.id) {
+      if (this.taskId !== task?.id) {
         setter = true;
       }
       this.currentTaskProgress = task.progress;

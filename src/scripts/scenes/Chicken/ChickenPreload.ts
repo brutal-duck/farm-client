@@ -2,6 +2,7 @@ import axios from 'axios';
 import tasks from '../../tasks';
 import Socket from '../../Socket';
 import loadChicken from '../../local/loadChicken';
+import basicTerritory from '../../local/chickenTerritories';
 import { loadingScreen } from '../../general/basic';
 import { checkStorage } from '../../general/basic';
 
@@ -526,7 +527,7 @@ class ChickenPreload extends Phaser.Scene {
   
   public loadUser(): void {
 
-    axios.post(process.env.API + '/chicken/loadData', {
+    axios.post(process.env.API + '/loadData', {
       hash: this.state.user.hash
     }).then((response) => {
 
@@ -542,40 +543,41 @@ class ChickenPreload extends Phaser.Scene {
       // if (response.data.user.chickenSaveCounter >= localSaveCounter) {
 
         // общие настройки
-        this.state.autoSaveSpeed = response.data.autoSaveSpeed;
-        this.state.maxMerginTime = response.data.maxMerginTime;
-        this.state.packages = response.data.packages;
-        this.state.herdBoostSpeedAnimal = response.data.herdBoostSpeedAnimal;
-        this.state.herdBoostTime = response.data.herdBoostTime;
-        this.state.herdBoostPrice = response.data.herdBoostPrice;
-        this.state.herdBoostDelay = response.data.herdBoostDelay;
+        this.state.autoSaveSpeed = response.data.settings.general.autoSaveSpeed;
+        this.state.maxMerginTime = response.data.settings.general.maxMerginTime;
+        this.state.herdBoostSpeedAnimal = response.data.settings.general.herdBoostSpeedAnimal;
+        this.state.herdBoostTime = response.data.settings.general.herdBoostTime;
+        this.state.herdBoostPrice = response.data.settings.general.herdBoostPrice;
+        this.state.herdBoostDelay = response.data.settings.general.herdBoostDelay;
+        this.state.packages = response.data.settings.packages;
         
         // массив с настройками для куриной фермы
+
         const chickenSettings: IchickenSettings = {
-          chickenBadPercent: response.data.chickenBadPercent,
-          chickenPrice: response.data.chickenPrice,
-          territoriesChickenSettings: response.data.territoriesChickenSettings,
-          chickenSettings: response.data.chickenSettings,
-          territoriesChickenPrice: response.data.territoriesChickenPrice,
-          chickenFairLevels: response.data.chickenFairLevels,
-          chickenParts: response.data.chickenParts,
-          buyBetterBreedChicken: response.data.buyBetterBreedChicken,
-          doubledСollectorPrice: response.data.doubledСollectorPrice,
-          collectorPrice4: response.data.collectorPrice4,
-          collectorPrice12: response.data.collectorPrice12,
-          unlockCollector4: response.data.unlockCollector4,
-          unlockCollector12: response.data.unlockCollector12,
-          chickenDiamondsTime: response.data.chickenDiamondsTime,
-          feedBoostPrice: response.data.feedBoostPrice,
-        }
+          chickenBadPercent: response.data.settings.chicken.badPercent,
+          chickenPrice: response.data.settings.chicken.price,
+          territoriesChickenSettings: response.data.settings.chicken.territoriesSettings,
+          chickenSettings: response.data.settings.chicken.chickenSettings,
+          territoriesChickenPrice: response.data.settings.chicken.territoriesPrice,
+          chickenFairLevels: response.data.settings.chicken.fairs,
+          chickenParts: response.data.settings.chicken.parts,
+          buyBetterBreedChicken: response.data.settings.chicken.buyBetterBreed,
+          doubledСollectorPrice: response.data.settings.chicken.doubledСollectorPrice,
+          collectorPrice4: response.data.settings.chicken.collectorPrice4,
+          collectorPrice12: response.data.settings.chicken.collectorPrice12,
+          unlockCollector4: response.data.settings.chicken.unlockCollector4,
+          unlockCollector12: response.data.settings.chicken.unlockCollector12,
+          chickenDiamondsTime: response.data.settings.chicken.diamondAnimalTime,
+          feedBoostPrice: response.data.settings.chicken.feedBoostPrice,
+        };
 
         this.state.chickenSettings = chickenSettings;
 
         const chicken: Ichicken[] = [];
 
-        for (let i in response.data.chicken) {
+        for (let i in response.data.user.chicken) {
           
-          let chick = response.data.chicken[i];
+          let chick = response.data.user.chicken[i];
           chicken.push({
             _id: chick._id,
             type: chick.type,
@@ -591,9 +593,9 @@ class ChickenPreload extends Phaser.Scene {
         
         const chickenTerritories: Iterritories[] = [];
         
-        for (let i in response.data.territories) {
+        for (let i in response.data.user.chicken_territories) {
 
-          let territory = response.data.territories[i];
+          let territory = response.data.user.chicken_territories[i];
 
           chickenTerritories.push({
             _id: territory._id,
@@ -607,11 +609,30 @@ class ChickenPreload extends Phaser.Scene {
 
         }
 
+        if (chickenTerritories.length === 0) {
+          for (let i in basicTerritory) {
+
+            let territory = basicTerritory[i];
+  
+            if (territory.block === 0 && territory.position === 1) territory.type = 7;
+            if (territory.block === 0 && territory.position === 2) territory.type = 6;
+            
+            chickenTerritories.push({
+              _id: territory._id,
+              block: territory.block,
+              position: territory.position,
+              type: territory.type,
+              volume: territory.volume,
+              improve: territory.improve,
+              money: territory.money
+            });
+          }
+        }
         const chickenEggs: IchickenEgg[] = [];
 
-        for (let i in response.data.eggs) {
+        for (let i in response.data.user.chicken_eggs) {
 
-          let egg = response.data.eggs[i];
+          let egg = response.data.user.chicken_eggs[i];
 
           chickenEggs.push({
             _id: egg._id,
@@ -639,6 +660,8 @@ class ChickenPreload extends Phaser.Scene {
           boosts: response.data.user.boosts,
 
         }
+        
+        if (response.data.user.chicken_part === 0) response.data.user.chicken_part = 1;
 
         const userChicken: IuserChicken = {
           money: response.data.user.chicken_money,
@@ -661,12 +684,11 @@ class ChickenPreload extends Phaser.Scene {
         Amplitude.getInstance().identify(identify);
 
         const chickenTasks: Itasks[] = [];
-
         for (let i in tasks) if (tasks[i].farm === 2) chickenTasks.push(tasks[i]);
-        for (let i in response.data.tasks) {
+        for (let i in response.data.user.chicken_tasks) {
 
-          let usersTask = response.data.tasks[i];
-          let task = tasks.find((task: Itasks) => task.id === usersTask.task_id);
+          const usersTask = response.data.user.chicken_tasks[i];
+          const task = tasks.find((task: Itasks) => task.id === usersTask.task_id);
 
           if (task) {
             task.done = usersTask.done;
@@ -676,13 +698,53 @@ class ChickenPreload extends Phaser.Scene {
 
         }
         
-        this.state.timeToNewDay = response.data.timeToNewDay;
-        this.state.chickenCollectorSettings = response.data.collectorSettings;
-        this.state.dailyAwards = response.data.dailyAwards;
-        this.state.newbieTime = response.data.newbieTime;
-        this.state.daily = response.data.daily;
-        this.state.offlineTime = response.data.offlineTime;
+        this.state.chickenCollectorSettings = response.data.settings.chicken.collectorSettings;
+        this.state.dailyAwards = response.data.user.dailyAwards;
+        this.state.newbieTime = response.data.progress.newbieTime;
+        this.state.daily = response.data.progress.daily;
+        this.state.offlineTime = response.data.progress.sheepOfflineTime;
+        this.state.timeToNewDay = response.data.progress.timeToNewDay;
         this.state.progress = response.data.progress;
+        const progress: Iprogress = {
+          sheep: {
+            part: response.data.user.sheep_part,
+            max: response.data.settings.sheep.parts.length,
+            open: true,
+            price: response.data.settings.farms[0].price,
+            unlock: response.data.settings.farms[0].open,
+            donate: response.data.settings.farms[0].donate,
+            collector: response.data.user.shaver_time,
+            offlineTime: response.data.progress.sheepOfflineTime,
+          },
+          chicken: {
+            part: response.data.user.chicken_part,
+            max: response.data.settings.chicken.parts.length,
+            open: response.data.user.chicken_part > 0,
+            price: response.data.settings.farms[1].price,
+            unlock: response.data.settings.farms[1].open,
+            donate: response.data.settings.farms[1].donate,
+            collector: response.data.user.chicken_collector,
+            offlineTime: response.data.progress.chickenOfflineTime,
+          },
+          cow: {
+            part: response.data.user.cow_part,
+            max: response.data.settings.cow.parts.length,
+            open: response.data.user.cow_part > 0,
+            price: response.data.settings.farms[2].price,
+            unlock: response.data.settings.farms[2].open,
+            donate: response.data.settings.farms[2].donate,
+            collector: response.data.user.cow_collector,
+            offlineTime: response.data.progress.cowOfflineTime,
+          },
+          event: {
+            eventPoints: response.data.user.eventPoints,
+            startTime: response.data.progress.startTime,
+            endTime: response.data.progress.endTime,
+            open: response.data.settings.event.open,
+            type: response.data.settings.event.type,
+          }
+        }
+        this.state.progress = progress;
         this.state.chickenTerritories = chickenTerritories;
         this.state.chicken = chicken;
         this.state.chickenEggs = chickenEggs;
