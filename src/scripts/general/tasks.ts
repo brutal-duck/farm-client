@@ -457,7 +457,7 @@ function clickTaskBoard(task: Itasks): void {
     let storage: any = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => el.type === 5);
     this.state.territory = undefined;
     if (storage) openTerritoryWindow(storage); 
-    else SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_6, 3);
+    else SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_20, 3);
   }
   
   const findUnlockTerritoryForBuy = (): any => {
@@ -546,6 +546,9 @@ function clickTaskBoard(task: Itasks): void {
       break;
     case 19: 
       SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang[`taskHelp${this.state.farm}_19`], 3);
+      break;
+    case 20: 
+      openStorageOrSpeechBuble();
       break;
     case 21: 
       openShopBoosters();
