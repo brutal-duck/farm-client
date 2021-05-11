@@ -629,16 +629,12 @@ function collectWool(sheep: any, manualСollect: boolean = false): void {
       sheep.shaveStatus.destroy();
       sheep.destroy();
       
-      this.state.amplitude.getInstance().logEvent('diamonds_get', {
+      this.logAmplitudeEvent('diamonds_get', {
         type: 'diamond_animal',
         count: 5,
-        farm_id: this.state.farm,
-        chapter: this.state[`user${this.state.farm}`].part,
       });
     }
-
   }
-
 }
 
 // продать шерсть из хранилища

@@ -362,12 +362,9 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
       y: cow.y - 50
     }
 
-    // this.state.amplitude.getInstance().logEvent('diamonds_get', {
+    // this.logAmplitudeEvent('diamonds_get', {
     //   type: 'diamond_animal',
     //   count: 1,
-    //   farm_id: this.state.farm,
-    //  chapter: this.state[`user${this.state.farm}`].part,
-
     // });
 
     cow.milk = 0;
@@ -391,12 +388,10 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
       Firework.create(this, cow, 1);
       cow.destroy();
       
-      // this.state.amplitude.getInstance().logEvent('diamonds_get', {
-      //   type: 'diamond_animal',
-      //   count: 5,
-      //   farm_id: this.state.farm,
-      //   chapter: this.state[`user${this.state.farm}`].part,
-      // });
+      this.logAmplitudeEvent('diamonds_get', {
+        type: 'diamond_animal',
+        count: 5,
+      });
     }
   }
 }

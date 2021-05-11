@@ -382,13 +382,10 @@ function exchange(ad: boolean = false): void {
     MoneyAnimation.create(this.game.scene.keys[`${this.state.farm}Bars`]);
     if (!ad) {
 
-      this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+      this.logAmplitudeEvent('diamonds_spent', {
         type: 'convertor',
         count: this.state.convertor.diamonds,
-        farm_id: this.state.farm,
-        chapter: this.state[`user${this.state.farm}`].part,
       });
-
       this.tryTask(15, 0, this.state.convertor.diamonds);
     }
 
@@ -842,11 +839,8 @@ function takeDonate(): void {
           'chapter': chapter,
           'stock': this.state.stock,
         };
-        let revenue: amplitude.Revenue = new amplitude.Revenue()
-          .setProductId('Product #' + res.data.package)
-          .setPrice(pack.price)
-          .setEventProperties(eventPorerties);
-        this.state.amplitude.logRevenueV2(revenue);
+        this.logAmplitudeRevenue('Product #' + res.data.package, pack.price, '', eventPorerties);
+
         MoneyAnimation.create(this.game.scene.keys[this.state.farm + 'Bars'], 'diamond');
         this.autosave();
 
@@ -1437,7 +1431,7 @@ function logAmplitudeEvent(eventName: string, data: IamplitudeData): void {
 }
 
 
-function logAmplitudeRevenue(productId: string, price: number, type: string,  data: IamplitudeData): void {
+function logAmplitudeRevenue(productId: string, price: number, type: string = '',  data: IamplitudeData): void {
   let revenueData: IamplitudeData;
 
   if (this.state.farm !== 'Unicorn' && data.farm_id !== 'Unicorn') {

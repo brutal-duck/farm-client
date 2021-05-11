@@ -1,5 +1,4 @@
 import { FAPI } from '../libs/Fapi';
-import * as amplitude from 'amplitude-js';
 import { randomString } from './basic';
 import * as platform from 'platform';
 import axios from 'axios';
@@ -107,8 +106,7 @@ function adReward(): void {
 
       this.tryTask(18, 0);
 
-      this.state.amplitude.getInstance().logEvent('take_diamond_animal', {
-        farm_id: this.state.farm,
+      this.logAmplitudeEvent('take_diamond_animal', {
         price: 'ad'
       });
       break;
@@ -142,10 +140,9 @@ function adReward(): void {
       this.autosave();
       this.tryTask(3, 0, time);
 
-      this.state.amplitude.getInstance().logEvent('collector', {
+      this.logAmplitudeEvent('collector', {
         type: 'free',
         price: 'ad',
-        farm_id: this.state.farm
       });
       break;
     
@@ -176,17 +173,16 @@ function adReward(): void {
       this.getAnimal(id, breed, position.x, position.y);
       Firework.create(this, { x: position.x, y: position.y }, 1);
 
-      this.state.amplitude.getInstance().logEvent('take_event_animal', {
-        farm_id: this.state.farm,
+      this.logAmplitudeEvent('take_event_animal', {
         price: 'ad'
       });
+
       type = 'take_event_animal';
       break;
     case 5:
       this.state.userUnicorn.money = BigInteger.add(this.state.userUnicorn.money, this.state.modal.eventParams.offlineProgress);
       MoneyAnimation.create(this.game.scene.keys[this.state.farm + 'Bars']);
-      this.state.amplitude.getInstance().logEvent('take_double_profit_event', {
-        farm_id: this.state.farm,
+      this.logAmplitudeEvent('take_double_profit_event', {
         price: 'ad'
       });
       type = 'take_double_profit_event';
@@ -197,16 +193,11 @@ function adReward(): void {
 
   }
 
-  let properties = {
+  const properties = {
     screen: type
   }
-  let revenue: amplitude.Revenue = new amplitude.Revenue()
-    .setProductId(type)
-    .setPrice(0)
-    .setRevenueType('rewarded')
-    .setEventProperties(properties);
-  this.state.amplitude.logRevenueV2(revenue);
 
+  this.logAmplitudeRevenue(type, 0, 'rewarded', properties);
 }
 
 

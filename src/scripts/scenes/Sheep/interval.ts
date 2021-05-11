@@ -28,17 +28,15 @@ function interval(): void {
 
       }
 
-      // this.state.amplitude.getInstance().logEvent('resources', {
-      //   status: 'problem started',
-      //   farm_id: this.state.farm
-      // });
+      this.logAmplitudeEvent('resources', {
+        status: 'problem started',
+      });
 
     } else if (statusBalance && !balance.alarm) {
 
-      // this.state.amplitude.getInstance().logEvent('resources', {
-      //   status: 'problem is over',
-      //   farm_id: this.state.farm
-      // });
+      this.logAmplitudeEvent('resources', {
+        status: 'problem is over',
+      });
 
     }
 

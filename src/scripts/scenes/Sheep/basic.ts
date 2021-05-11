@@ -151,9 +151,7 @@ function takeDiamondSheep(): void {
 
     if (this.state.userSheep.diamondAnimalTime === 0) {
 
-      this.state.amplitude.getInstance().logEvent('take_diamond_animal', {
-        farm_id: this.state.farm
-      });
+      this.logAmplitudeEvent('take_diamond_animal', {});
 
       this.tryTask(18, 0);
       this.state.userSheep.diamondAnimalTime = this.state.sheepSettings.sheepDiamondsTime;
