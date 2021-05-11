@@ -3,6 +3,7 @@ import tasks from '../../tasks';
 import Socket from '../../Socket';
 import loadCow from '../../local/loadCow';
 import { loadingScreen } from '../../general/basic';
+import basicTerritories from '../../local/cowTerritories';
 import { checkStorage } from '../../general/basic';
 
 const pixel: string = require("./../../../assets/images/pixel.png");
@@ -510,7 +511,7 @@ class CowPreload extends Phaser.Scene {
 
   public loadUser(): void {
 
-    axios.post(process.env.API + '/cow/loadData', {
+    axios.post(process.env.API + '/loadData', {
       hash: this.state.user.hash
     }).then((response) => {
       // console.log(response.data)
@@ -527,13 +528,13 @@ class CowPreload extends Phaser.Scene {
     //   // if (response.data.user.cowSaveCounter >= localSaveCounter) {
 
         // общие настройки
-        this.state.autoSaveSpeed = response.data.autoSaveSpeed;
-        this.state.maxMerginTime = response.data.maxMerginTime;
-        this.state.packages = response.data.packages;
-        this.state.herdBoostSpeedAnimal = response.data.herdBoostSpeedAnimal;
-        this.state.herdBoostTime = response.data.herdBoostTime;
-        this.state.herdBoostPrice = response.data.herdBoostPrice;
-        this.state.herdBoostDelay = response.data.herdBoostDelay;
+        this.state.autoSaveSpeed = response.data.settings.general.autoSaveSpeed;
+        this.state.maxMerginTime = response.data.settings.general.maxMerginTime;
+        this.state.herdBoostSpeedAnimal = response.data.settings.general.herdBoostSpeedAnimal;
+        this.state.herdBoostTime = response.data.settings.general.herdBoostTime;
+        this.state.herdBoostPrice = response.data.settings.general.herdBoostPrice;
+        this.state.herdBoostDelay = response.data.settings.general.herdBoostDelay;
+        this.state.packages = response.data.settings.packages;
         
         const factoryCowSettings: IfactorySettings[] = [
           { 
@@ -799,23 +800,23 @@ class CowPreload extends Phaser.Scene {
         ]
         // массив с настройками для коровьей фермы
         const cowSettings: IcowSettings = {
-          cowBadPercent: response.data.cowBadPercent,
-          cowPrice: response.data.cowPrice,
-          territoriesCowSettings: response.data.territoriesCowSettings,
-          cowSettings: response.data.cowSettings,
-          territoriesCowPrice: response.data.territoriesCowPrice,
-          cowFairLevels: response.data.cowFairLevels,
-          cowParts: response.data.cowParts,
-          buyBetterBreedCow: response.data.buyBetterBreedCow,
-          doubledСollectorPrice: response.data.doubledСollectorPrice,
-          collectorPrice4: response.data.collectorPrice4,
-          collectorPrice12: response.data.collectorPrice12,
-          unlockCollector4: response.data.unlockCollector4,
-          unlockCollector12: response.data.unlockCollector12,
-          cowDiamondsTime: response.data.cowDiamondsTime,
-          feedBoostPrice: response.data.feedBoostPrice,
+          cowBadPercent: response.data.settings.cow.badPercent,
+          cowPrice: response.data.settings.cow.price,
+          territoriesCowSettings: response.data.settings.cow.territoriesSettings,
+          cowSettings: response.data.settings.cow.cowSettings,
+          territoriesCowPrice: response.data.settings.cow.territoriesPrice,
+          cowFairLevels: response.data.settings.cow.fairs,
+          cowParts: response.data.settings.cow.parts,
+          buyBetterBreedCow: response.data.settings.cow.buyBetterBreed,
+          doubledСollectorPrice: response.data.settings.cow.doubledСollectorPrice,
+          collectorPrice4: response.data.settings.cow.collectorPrice4,
+          collectorPrice12: response.data.settings.cow.collectorPrice12,
+          unlockCollector4: response.data.settings.cow.unlockCollector4,
+          unlockCollector12: response.data.settings.cow.unlockCollector12,
+          cowDiamondsTime: response.data.settings.cow.diamondAnimalTime,
+          feedBoostPrice: response.data.settings.cow.feedBoostPrice,
           cowFactorySettings: factoryCowSettings,
-        }
+        };
 
         let territoriesCowSettings: IterritoriesCowSettings[] = [
           { 
@@ -1020,19 +1021,15 @@ class CowPreload extends Phaser.Scene {
           },
         ]
 
-        
-
         cowSettings.territoriesCowSettings = territoriesCowSettings;
-        console.log(cowSettings.territoriesCowSettings)
         
         this.state.cowSettings = cowSettings;
-        console.log(this.state.cowSettings)
 
         const cow: Icow[] = [];
 
-        for (let i in response.data.cow) {
+        for (let i in response.data.user.cow) {
           
-          let cw = response.data.cow[i];
+          let cw = response.data.user.cow[i];
           cow.push({
             _id: cw._id,
             type: cw.type,
@@ -1048,9 +1045,9 @@ class CowPreload extends Phaser.Scene {
         
         const cowTerritories: Iterritories[] = [];
         
-        for (let i in response.data.territories) {
+        for (let i in response.data.user.cow_territories) {
 
-          let territory = response.data.territories[i];
+          let territory = response.data.user.cow_territories[i];
 
           cowTerritories.push({
             _id: territory._id,
@@ -1063,7 +1060,25 @@ class CowPreload extends Phaser.Scene {
           });
 
         }
+        if (cowTerritories.length === 0) {
+          for (let i in basicTerritories) {
 
+            let territory = basicTerritories[i];
+  
+            if (territory.block === 0 && territory.position === 1) territory.type = 7;
+            if (territory.block === 0 && territory.position === 2) territory.type = 6;
+            
+            cowTerritories.push({
+              _id: territory._id,
+              block: territory.block,
+              position: territory.position,
+              type: territory.type,
+              volume: territory.volume,
+              improve: territory.improve,
+              money: territory.money
+            });
+          }
+        }
         const user: Iuser = {
           diamonds: response.data.user.diamonds,
           id: response.data.user._id,
@@ -1106,9 +1121,9 @@ class CowPreload extends Phaser.Scene {
         const cowTasks: Itasks[] = [];
 
         for (let i in tasks) if (tasks[i].farm === 2) cowTasks.push(tasks[i]);
-        for (let i in response.data.tasks) {
+        for (let i in response.data.user.cow_tasks) {
 
-          let usersTask = response.data.tasks[i];
+          let usersTask = response.data.user.cow_tasks[i];
           let task = tasks.find((task: Itasks) => task.id === usersTask.task_id);
 
           if (task) {
@@ -1119,13 +1134,52 @@ class CowPreload extends Phaser.Scene {
 
         }
         
-        this.state.timeToNewDay = response.data.timeToNewDay;
-        this.state.cowCollectorSettings = response.data.collectorSettings;
-        this.state.dailyAwards = response.data.dailyAwards;
-        this.state.newbieTime = response.data.newbieTime;
-        this.state.daily = response.data.daily;
-        this.state.offlineTime = response.data.offlineTime;
-        this.state.progress = response.data.progress;
+        this.state.cowCollectorSettings = response.data.settings.cow.collectorSettings;
+        this.state.dailyAwards = response.data.user.dailyAwards;
+        this.state.newbieTime = response.data.progress.newbieTime;
+        this.state.daily = response.data.progress.daily;
+        this.state.offlineTime = response.data.progress.cowOfflineTime;
+        this.state.timeToNewDay = response.data.progress.timeToNewDay;
+        const progress: Iprogress = {
+          sheep: {
+            part: response.data.user.sheep_part,
+            max: response.data.settings.sheep.parts.length,
+            open: true,
+            price: response.data.settings.farms[0].price,
+            unlock: response.data.settings.farms[0].open,
+            donate: response.data.settings.farms[0].donate,
+            collector: response.data.user.shaver_time,
+            offlineTime: response.data.progress.sheepOfflineTime,
+          },
+          chicken: {
+            part: response.data.user.chicken_part,
+            max: response.data.settings.chicken.parts.length,
+            open: response.data.user.chicken_part > 0,
+            price: response.data.settings.farms[1].price,
+            unlock: response.data.settings.farms[1].open,
+            donate: response.data.settings.farms[1].donate,
+            collector: response.data.user.chicken_collector,
+            offlineTime: response.data.progress.chickenOfflineTime,
+          },
+          cow: {
+            part: response.data.user.cow_part,
+            max: response.data.settings.cow.parts.length,
+            open: response.data.user.cow_part > 0,
+            price: response.data.settings.farms[2].price,
+            unlock: response.data.settings.farms[2].open,
+            donate: response.data.settings.farms[2].donate,
+            collector: response.data.user.cow_collector,
+            offlineTime: response.data.progress.cowOfflineTime,
+          },
+          event: {
+            eventPoints: response.data.user.eventPoints,
+            startTime: response.data.progress.startTime,
+            endTime: response.data.progress.endTime,
+            open: response.data.settings.event.open,
+            type: response.data.settings.event.type,
+          }
+        }
+        this.state.progress = progress;
         this.state.cowTerritories = cowTerritories;
         this.state.cow = cow;
         this.state.user = user;
