@@ -10,6 +10,7 @@ function createBoostAnimal(): void {
     this.state[`user${this.state.farm}`].takenHerdBoost += 1;
   } else if (this.state.user.boosts[this.state.farm.toLowerCase()].herd > 0) {
     this.state.user.boosts[this.state.farm.toLowerCase()].herd -= 1;
+    this.logAmplitudeEvent('herd_boost_spent', {});
   } else if (this.state.user.boosts[this.state.farm.toLowerCase()].herd < 0) {
     this.state.user.diamonds -= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost;
     this.tryTask(15, 0, this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost);
@@ -647,6 +648,7 @@ function feedBoost(): void {
         this.scene.launch('Modal', this.state);
       } else {
         this.state.user.boosts[this.state.farm.toLowerCase()].feed -= 1;
+        this.game.scene.keys[this.state.farm].logAmplitudeEvent('feed_boost_spent', {});
         this.state.boughtFeedBoost = true;
         if (this.state[`user${this.state.farm}`].feedBoostTime <= 0) {
           this.state[`user${this.state.farm}`].feedBoostTime += ONE_HOUR; // прибавить час
