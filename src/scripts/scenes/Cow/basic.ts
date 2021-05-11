@@ -138,8 +138,7 @@ function takeDiamondCow(): void {
   if (this.state.userCow.part >= 3) {
 
     if (this.state.userCow.diamondAnimalTime === 0) {
-      this.state.amplitude.getInstance().logEvent('take_diamond_animal', {
-        farm_id: this.state.farm,
+      this.logAmplitudeEvent('take_diamond_animal', {
         price: 'hard'
       });
 

@@ -388,11 +388,9 @@ function daily(): void {
     if (awards[day].type === 1) {
       this.state.user.diamonds += awards[day].count;
 
-      this.state.amplitude.getInstance().logEvent('diamonds_get', {
+      this.game.scene.keys[this.state.farm].logAmplitudeEvent('diamonds_get', {
         type: 'daily_award',
         count: awards[day].count,
-        farm_id: this.state.farm,
-        chapter: this.state[`user${this.state.farm}`].part,
       });
 
       this.game.scene.keys[`${this.state.farm}Bars`].getCurrency({ x: this.cameras.main.centerX, y: this.cameras.main.centerY }, awards[day].count, 'diamond');

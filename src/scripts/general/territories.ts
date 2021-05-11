@@ -197,20 +197,15 @@ function fairLevelUp(): void {
 
         }, callbackScope: this, loop: false });
 
-        this.state.amplitude.getInstance().logEvent('fair_up', {
+        this.logAmplitudeEvent('fair_up', {
           level: user.fair,
-          farm_id: this.state.farm
         });
-
         if (nextFair.price_d > 0) {
 
-          this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+          this.logAmplitudeEvent('diamonds_spent', {
             type: 'fair',
-            count: nextFair.price_d,
-            farm_id: this.state.farm,
-            chapter: this.state[`user${this.state.farm}`].part,
+            count: nextFair.price_d
           });
-          
         }
 
       } else {
@@ -250,15 +245,10 @@ function fairLevelUp(): void {
           }
           this.state.modal = modal;
           this.scene.launch('Modal', this.state);
-
         }
-
       }
-
     }
-
   }
-  
 }
 
 
@@ -321,12 +311,11 @@ function improveTerritory(): void {
         else if (this.state.territory.type === 3) territory = 'water';
         else if (this.state.territory.type === 5) territory = 'repository';
   
-        this.state.amplitude.getInstance().logEvent('improve_territory', {
+        this.logAmplitudeEvent('improve_territory', {
           block: this.state.territory.block,
           position: this.state.territory.position,
-          farm_id: this.state.farm,
           level: improve,
-          type: territory
+          type: territory,
         });
 
         this.state.territory.improve = improve;
@@ -377,13 +366,9 @@ function improveTerritory(): void {
         }
         this.state.modal = modal;
         this.scene.launch('Modal', this.state);
-
       }
-
     }
-    
   }
-
 }
 
 
@@ -452,10 +437,9 @@ function exchangeTerritory(): void {
           else if (this.state.exchangeTerritory === 3) to = 'water';
           else if (this.state.exchangeTerritory === 5) to = 'repository';
     
-          this.state.amplitude.getInstance().logEvent('exchange_territory', {
+          this.logAmplitudeEvent('exchange_territory', {
             block: this.state.territory.block,
             position: this.state.territory.position,
-            farm_id: this.state.farm,
             from: from,
             to: to
           });
@@ -513,11 +497,9 @@ function exchangeTerritory(): void {
         if (this.state.exchangeTerritory === 2) to = 'grass';
         else if (this.state.exchangeTerritory === 3) to = 'water';
         else if (this.state.exchangeTerritory === 5) to = 'repository';
-  
-        this.state.amplitude.getInstance().logEvent('exchange_territory', {
+        this.logAmplitudeEvent('exchange_territory', {
           block: this.state.territory.block,
           position: this.state.territory.position,
-          farm_id: this.state.farm,
           from: from,
           to: to
         });
@@ -560,11 +542,8 @@ function exchangeTerritory(): void {
         this.scene.launch('Modal', this.state);
   
       }
-
     }
-
   }
-
 }
 
 
@@ -765,10 +744,9 @@ function buyTerritory(): void {
 
     if (user.money >= price) {
 
-      this.state.amplitude.getInstance().logEvent('buy_territory', {
+      this.logAmplitudeEvent('buy_territory', {
         block: this.state.territory.block,
         position: this.state.territory.position,
-        farm_id: this.state.farm
       });
 
       this.state.territory.type = 1;

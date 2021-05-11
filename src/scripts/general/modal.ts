@@ -891,7 +891,6 @@ function support(): void {
             if (res.data.error) window.location.reload();
             else {
 
-              this.state.amplitude.getInstance().logEvent('support_send', {});
               this.game.scene.keys[this.state.farm].messageIsSent();
               this.game.scene.keys[this.state.farm].scrolling.wheel = true;
               this.enterKey.destroy()
@@ -1196,8 +1195,6 @@ function registration(): void {
             reg = false;
 
             if (res.data.success) {
-
-              this.state.amplitude.getInstance().logEvent('reg_done', {});
 
               let tasks: Itasks[] = this.game.scene.keys[this.state.farm].partTasks();
               let task: Itasks = tasks.find((data: Itasks) => data.type === 10);

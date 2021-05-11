@@ -4,11 +4,9 @@ import bridge from '@vkontakte/vk-bridge';
 import * as amplitude from 'amplitude-js';
 import Hint from '../components/animations/Hint';
 import Firework from '../components/animations/Firework';
-import Stars from '../components/animations/Stars';
 import BigInteger from '../libs/BigInteger';
 import MoneyAnimation from './../components/animations/MoneyAnimation';
 import SpeechBubble from './../components/animations/SpeechBuble';
-import daily from './../scenes/Modal/daily';
 
 // рандомное число
 function random(min: number, max: number): number {
@@ -383,6 +381,7 @@ function exchange(ad: boolean = false): void {
 
     MoneyAnimation.create(this.game.scene.keys[`${this.state.farm}Bars`]);
     if (!ad) {
+
       this.state.amplitude.getInstance().logEvent('diamonds_spent', {
         type: 'convertor',
         count: this.state.convertor.diamonds,
@@ -434,24 +433,20 @@ function donePart(): void {
 
   this.state.user.diamonds += award;
 
-  this.state.amplitude.getInstance().logEvent('diamonds_get', {
+  this.logAmplitudeEvent('diamonds_get', {
     type: 'part_award',
-    farm_id: this.state.farm,
     count: award,
-    chapter: this.state[`user${this.state.farm}`].part,
   });
-  
+
   user.part++;
   this.state.progress[this.state.farm.toLowerCase()].part = user.part;
   
   this.deleteTerritoriesLocks();
   this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
 
-  this.state.amplitude.getInstance().logEvent('chapter_done', {
-    farm_id: this.state.farm,
+  this.logAmplitudeEvent('chapter_done', {
     chapter: user.part - 1
   });
-
   this.autosave();
   
   this.time.addEvent({ delay: 200, callback: (): void => {
@@ -650,7 +645,7 @@ function buyNextFarm(): void {
     if (progress.donate) this.state.user.diamonds -= progress.price;
     else user.money -= progress.price;
 
-    this.state.amplitude.getInstance().logEvent('get_new_farm', {
+    this.logAmplitudeEvent('get_new_farm', {
       type: 'buy',
       farm_id: farm
     });
@@ -738,9 +733,9 @@ function getNewbieAward(): void {
       this.scene.stop('SheepBars');
       this.scene.start('ChickenPreload', this.state);
 
-      this.state.amplitude.getInstance().logEvent('get_new_farm', {
+      this.logAmplitudeEvent('get_new_farm', {
         type: 'daily',
-        farm_id: 'Chicken'
+        farm_id: 'Chicken',
       });
       break;
 

@@ -17,9 +17,7 @@ function tasks(): void {
 
 function tasksWindow(): void {
 
-  this.state.amplitude.getInstance().logEvent('show_tasks_window', {
-    farm_id: this.state.farm
-  });
+  this.logAmplitudeEvent('show_tasks_window', {});
 
   let tasks = [];
   let textsHeight = [];

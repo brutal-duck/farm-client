@@ -12,7 +12,15 @@ function createBoostAnimal(): void {
     this.state.user.boosts[this.state.farm.toLowerCase()].herd -= 1;
   } else if (this.state.user.boosts[this.state.farm.toLowerCase()].herd < 0) {
     this.state.user.diamonds -= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost;
+    this.tryTask(15, 0, this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost);
+    this.logAmplitudeEvent('diamonds_spent', {
+      type: 'herd',
+      count: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
+    });
     this.state[`user${this.state.farm}`].takenHerdBoost += 1;
+    this.logAmplitudeEvent('booster_merge', {
+      count: this.state[`user${this.state.farm}`].takenHerdBoost,
+    });
   }
 
   if (this.state.herdBoostAnimals.length === 0) return;
@@ -38,9 +46,7 @@ function createBoostAnimal(): void {
     this.tryTask(2, type);
     this.tryTask(4, type);
   });
-
   this.state.herdBoostAnimals = [];
-
 }
 
 function updateNativeShop(): void {
@@ -182,13 +188,11 @@ function improveCollector(): void {
         this.tryTask(15, 0, nextLevel.price);
         this.tryTask(23, nextLevel.level);
   
-        this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+        this.logAmplitudeEvent('diamonds_spent', {
           type: 'improve_collector',
           count: nextLevel.price,
-          farm_id: this.state.farm,
-          chapter: this.state[`user${this.state.farm}`].part,
         });
-  
+
         this.state.user.diamonds -= nextLevel.price;
         user.collectorLevel++;
         this.setCollector();
@@ -541,10 +545,6 @@ function herdBoost(): void {
     } else {
       if (this.state.user.diamonds >= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost) {
         this.game.scene.keys[this.state.farm].startHerdBoost();
-        this.state.amplitude.getInstance().logEvent('booster_merge', {
-          count: this.state[`user${this.state.farm}`].takenHerdBoost,
-          farm_id: this.state.farm
-        });
       } else {
         // вызывем конвертор
         this.state.convertor = {
@@ -650,18 +650,16 @@ function feedBoost(): void {
         this.state.boughtFeedBoost = true;
         if (this.state[`user${this.state.farm}`].feedBoostTime <= 0) {
           this.state[`user${this.state.farm}`].feedBoostTime += ONE_HOUR; // прибавить час
-          this.state.amplitude.getInstance().logEvent('booster_feed_x2', {
+          this.game.scene.keys[this.state.farm].logAmplitudeEvent('booster_feed_x2', {
             price: 0,
             time: 1,
-            farm_id: this.state.farm
           });
           this.game.scene.keys[this.state.farm].tryTask(21, 0, 1);
         } else {
           const time: number = Math.ceil(this.state[`user${this.state.farm}`].feedBoostTime / ONE_HOUR / 2) + 1;
-          this.state.amplitude.getInstance().logEvent('booster_feed_x2', {
+          this.game.scene.keys[this.state.farm].logAmplitudeEvent('booster_feed_x2', {
             price: 0,
             time: time,
-            farm_id: this.state.farm
           });
           this.state[`user${this.state.farm}`].feedBoostTime += 2 * ONE_HOUR; // прибавить 2часа
           this.game.scene.keys[this.state.farm].tryTask(21, 0, 2);
@@ -686,11 +684,9 @@ function feedBoost(): void {
           
         } else {
   
-          this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+          this.game.scene.keys[this.state.farm].logAmplitudeEvent('diamonds_spent', {
             type: 'booster_feed_x2',
             count: this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice,
-            farm_id: this.state.farm,
-            chapter: this.state[`user${this.state.farm}`].part,
           });
   
           this.state.user.diamonds -= this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice;
@@ -701,18 +697,16 @@ function feedBoost(): void {
           if (this.state[`user${this.state.farm}`].feedBoostTime <= 0) {
             this.state[`user${this.state.farm}`].feedBoostTime += ONE_HOUR; // прибавить час
   
-            this.state.amplitude.getInstance().logEvent('booster_feed_x2', {
+            this.game.scene.keys[this.state.farm].logAmplitudeEvent('booster_feed_x2', {
               price: this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice,
               time: 1,
-              farm_id: this.state.farm
             });
             this.game.scene.keys[this.state.farm].tryTask(21, 0, 1);
           } else {
             const time: number = Math.ceil(this.state[`user${this.state.farm}`].feedBoostTime / ONE_HOUR / 2) + 1;
-            this.state.amplitude.getInstance().logEvent('booster_feed_x2', {
+            this.game.scene.keys[this.state.farm].logAmplitudeEvent('booster_feed_x2', {
               price: this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice,
               time: time,
-              farm_id: this.state.farm
             });
             this.state[`user${this.state.farm}`].feedBoostTime += 2 * ONE_HOUR; // прибавить 2часа
             this.game.scene.keys[this.state.farm].tryTask(21, 0, 2);
@@ -837,11 +831,9 @@ function freeCollector(type: number = 1): void {
         this.doneTutor_90();
       }
   
-      this.state.amplitude.getInstance().logEvent('collector', {
+      this.game.scene.keys[this.state.farm].logAmplitudeEvent('collector', {
         type: 'free',
-        farm_id: this.state.farm
       });
-
     } else {
       
       minutes *= 2;
@@ -855,18 +847,15 @@ function freeCollector(type: number = 1): void {
         this.game.scene.keys[this.state.farm + 'Bars'].collector.update();
         this.tryTask(3, 0, minutes);
         this.tryTask(15, 0, doubleTimePrice);
-  
-        this.state.amplitude.getInstance().logEvent('collector', {
+
+        this.game.scene.keys[this.state.farm].logAmplitudeEvent('collector', {
           type: minutes + ' minutes',
           price: 'hard',
-          farm_id: this.state.farm
         });
-  
-        this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+
+        this.game.scene.keys[this.state.farm].logAmplitudeEvent('diamonds_spent', {
           type: 'collector',
           count: doubleTimePrice,
-          farm_id: this.state.farm,
-          chapter: this.state[`user${this.state.farm}`].part,
         });
 
       } else {
@@ -935,11 +924,11 @@ function buyCollector(type: number): void {
       this.game.scene.keys[this.state.farm + 'Bars'].collector.update();
       this.tryTask(3, 0, hours * 60);
 
-      this.state.amplitude.getInstance().logEvent('collector', {
+      this.game.scene.keys[this.state.farm].logAmplitudeEvent('collector', {
         type: hours + ' hours',
         price: 'hard',
-        farm_id: this.state.farm
       });
+
     } else if (this.state.user.diamonds >= settings['collectorPrice' + hours]) {
 
       this.state.user.diamonds -= settings['collectorPrice' + hours];
@@ -949,17 +938,14 @@ function buyCollector(type: number): void {
       this.tryTask(3, 0, hours * 60);
       this.tryTask(15, 0, settings['collectorPrice' + hours]);
 
-      this.state.amplitude.getInstance().logEvent('collector', {
+      this.game.scene.keys[this.state.farm].logAmplitudeEvent('collector', {
         type: hours + ' hours',
         price: 'hard',
-        farm_id: this.state.farm
       });
 
-      this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+      this.game.scene.keys[this.state.farm].logAmplitudeEvent('diamonds_spent', {
         type: 'collector',
         count: settings['collectorPrice' + hours],
-        farm_id: this.state.farm,
-        chapter: this.state[`user${this.state.farm}`].part,
       });
 
     } else {

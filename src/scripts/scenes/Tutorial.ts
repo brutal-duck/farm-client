@@ -136,7 +136,6 @@ class Tutorial extends Phaser.Scene {
 
       if (this.state.tutorial.additional === 'balance') {
 
-        // this.state.amplitude.getInstance().logEvent('tutorial_balance', {});
         this.game.scene.keys[this.state.farm].logAmplitudeEvent('tutorial_balance', {});
         this.tutorText = this.state.lang.addTutorialBalance;
         this.showContinue = true;
@@ -207,9 +206,6 @@ class Tutorial extends Phaser.Scene {
 
       } else if (this.state.tutorial.additional === 'cave1') {
 
-        // this.state.amplitude.getInstance().logEvent('tutorial_cave', {
-        //   step: 1
-        // });
         this.game.scene.keys[this.state.farm].logAmplitudeEvent('tutorial_cave', {
           step: 1
         });
@@ -229,10 +225,6 @@ class Tutorial extends Phaser.Scene {
         this.pointerTutorial();
         
       } else if (this.state.tutorial.additional === 'cave2') {
-
-        // this.state.amplitude.getInstance().logEvent('tutorial_cave', {
-        //   step: 2
-        // });
 
         this.game.scene.keys[this.state.farm].logAmplitudeEvent('tutorial_cave', {
           step: 2
@@ -260,10 +252,6 @@ class Tutorial extends Phaser.Scene {
         this.pointerTutorial();
 
       } else if (this.state.tutorial.additional === 'cave3') {
-
-        // this.state.amplitude.getInstance().logEvent('tutorial_cave', {
-        //   step: 3
-        // });
 
         this.game.scene.keys[this.state.farm].logAmplitudeEvent('tutorial_cave', {
           step: 3
@@ -491,7 +479,6 @@ class Tutorial extends Phaser.Scene {
         // первый шаг
         if (this.state.tutorial.step === 0) {
 
-          // this.state.amplitude.getInstance().logEvent('tutor_after_load', {});
           this.game.scene.keys[this.state.farm].logAmplitudeEvent('tutor_after_load', {});
           this.tutorText = this.state.lang.sheepTutorial_0;
           this.generalClick = (): void => this.game.scene.keys[this.state.farm].doneTutor_0();

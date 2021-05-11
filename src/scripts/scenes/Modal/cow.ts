@@ -1269,11 +1269,9 @@ function factoryBoostWindow(): void {
 
         this.state.boughtFactoryBoost = true;
 
-        this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+        this.game.scene.keys[this.state.farm].logAmplitudeEvent('diamonds_spent', {
           type: 'booster_factory',
           count: price,
-          farm_id: this.state.farm,
-          chapter: this.state[`user${this.state.farm}`].part,
         });
 
         button.title.setText(this.state.lang.buyCocoaBeans.replace('$1', 2));
@@ -1296,11 +1294,9 @@ function factoryBoostWindow(): void {
           this.state.boughtFactoryBoost = true;
           this.state.user.diamonds -= price;
           this.state.userCow.factoryBoostTime += 2 * ONE_HOUR;
-          this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+          this.game.scene.keys[this.state.farm].logAmplitudeEvent('diamonds_spent', {
             type: 'booster_factory',
             count: price,
-            farm_id: this.state.farm,
-            chapter: this.state[`user${this.state.farm}`].part,
           });
         }
       }

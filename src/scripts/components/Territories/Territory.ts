@@ -279,10 +279,9 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       const price = Math.round((settings.price / 100) * 70);
 
       if (user.money >= price) {
-        this.scene.state.amplitude.getInstance().logEvent('buy_territory', {
+        this.scene.logAmplitudeEvent('buy_territory', {
           block: this.block,
           position: this.position,
-          farm_id: this.scene.state.farm
         });
 
         this.territoryType = 1;
@@ -369,10 +368,9 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
             
             const to: string = 'repository';
 
-            this.scene.state.amplitude.getInstance().logEvent('exchange_territory', {
+            this.scene.logAmplitudeEvent('exchange_territory', {
               block: this.block,
               position: this.position,
-              farm_id: this.scene.state.farm,
               from: from,
               to: to
             });
@@ -417,10 +415,9 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
           else if (this.scene.state.exchangeTerritory === 3) to = 'water';
           else if (this.scene.state.exchangeTerritory === 5) to = 'repository';
     
-          this.scene.state.amplitude.getInstance().logEvent('exchange_territory', {
+          this.scene.logAmplitudeEvent('exchange_territory', {
             block: this.block,
             position: this.position,
-            farm_id: this.scene.state.farm,
             from: from,
             to: to
           });
@@ -586,20 +583,15 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
           }, callbackScope: this, loop: false });
 
-          this.scene.state.amplitude.getInstance().logEvent('fair_up', {
+          this.scene.logAmplitudeEvent('fair_up', {
             level: user.fair,
-            farm_id: this.scene.state.farm
           });
 
           if (nextFair.price_d > 0) {
-
-            this.scene.state.amplitude.getInstance().logEvent('diamonds_spent', {
+            this.scene.logAmplitudeEvent('diamonds_spent', {
               type: 'fair',
               count: nextFair.price_d,
-              farm_id: this.scene.state.farm,
-              chapter: this.scene.state[`user${this.scene.state.farm}`].part,
             });
-
           }
 
         } else {
@@ -673,10 +665,9 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       else if (this.territoryType === 3) territory = 'water';
       else if (this.territoryType === 5) territory = 'repository';
 
-      this.scene.state.amplitude.getInstance().logEvent('improve_territory', {
+      this.scene.logAmplitudeEvent('improve_territory', {
         block: this.block,
         position: this.position,
-        farm_id: this.scene.state.farm,
         level: improve,
         type: territory
       });
@@ -728,10 +719,9 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       else if (this.territoryType === 3) territory = 'water';
       else if (this.territoryType === 5) territory = 'repository';
 
-      this.scene.state.amplitude.getInstance().logEvent('improve_territory', {
+      this.scene.logAmplitudeEvent('improve_territory', {
         block: this.block,
         position: this.position,
-        farm_id: this.scene.state.farm,
         level: improve,
         type: territory
       });
@@ -811,17 +801,14 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
           }, callbackScope: this, loop: false });
 
-          this.scene.state.amplitude.getInstance().logEvent('factory_up', {
+          this.scene.logAmplitudeEvent('factory_up', {
             level: user.fair,
-            farm_id: this.scene.state.farm
           });
 
           if (nextImprove.improveDiamondPrice > 0) {
-            this.scene.state.amplitude.getInstance().logEvent('diamonds_spent', {
+            this.scene.logAmplitudeEvent('diamonds_spent', {
               type: 'factory',
               count: nextImprove.improveDiamondPrice,
-              farm_id: this.scene.state.farm,
-              chapter: this.scene.state[`user${this.scene.state.farm}`].part,
             });
             this.scene.tryTask(15, 0, nextImprove.improveDiamondPrice);
           }

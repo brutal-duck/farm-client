@@ -20,11 +20,6 @@ function showTutorial(additional: boolean | string = false): void {
 // завершение первого шага (приветствие)
 function doneTutor_0(): void {
 
-  // this.state.amplitude.getInstance().logEvent('tutorial', {
-  //   step: 0,
-  //   farm_id: this.state.farm
-  // });
-
   this.logAmplitudeEvent('tutorial', {
     step: 0
   });
@@ -42,11 +37,6 @@ function doneTutor_0(): void {
 // завершение второго шага (покупка овцы)
 function doneTutor_10(): void {
 
-  // this.state.amplitude.getInstance().logEvent('tutorial', {
-  //   step: 10,
-  //   farm_id: this.state.farm
-  // });
-  
   this.logAmplitudeEvent('tutorial', {
     step: 10,
   });
@@ -69,11 +59,6 @@ function doneTutor_10(): void {
 
 // завершение третьего шага (установка пастбища)
 function doneTutor_20(): void {
-  
-  // this.state.amplitude.getInstance().logEvent('tutorial', {
-  //   step: 20,
-  //   farm_id: this.state.farm
-  // });
 
   this.logAmplitudeEvent('tutorial', {
     step: 20
@@ -116,11 +101,6 @@ function doneTutor_20(): void {
 // завершение четвертого шага (установка поилки)
 function doneTutor_30(): void {
   
-  // this.state.amplitude.getInstance().logEvent('tutorial', {
-  //   step: 30,
-  //   farm_id: this.state.farm
-  // });
-
   this.logAmplitudeEvent('tutorial', {
     step: 30
   });
@@ -151,11 +131,6 @@ function doneTutor_30(): void {
 
 // завершение пятого шага (стрижка)
 function doneTutor_40(): void {
-
-  // this.state.amplitude.getInstance().logEvent('tutorial', {
-  //   step: 40,
-  //   farm_id: this.state.farm
-  // });
   
   this.logAmplitudeEvent('tutorial', {
     step: 40
@@ -172,11 +147,6 @@ function doneTutor_40(): void {
 
 // завершение шестого шага (покупка второй овцы)
 function doneTutor_50(): void {
-
-  // this.state.amplitude.getInstance().logEvent('tutorial', {
-  //   step: 50,
-  //   farm_id: this.state.farm
-  // });
   
   this.logAmplitudeEvent('tutorial', {
     step: 50
@@ -201,11 +171,6 @@ function doneTutor_50(): void {
 // завершение седьмого шага (награда за задание)
 function doneTutor_60(): void {
 
-  // this.state.amplitude.getInstance().logEvent('tutorial', {
-  //   step: 60,
-  //   farm_id: this.state.farm
-  // });
-  
   this.logAmplitudeEvent('tutorial', {
     step: 60
   });
@@ -231,11 +196,7 @@ function doneTutor_70(): void {
   this.logAmplitudeEvent('tutorial', {
     step: 70
   });
-  // this.state.amplitude.getInstance().logEvent('tutorial', {
-  //   step: 70,
-  //   farm_id: this.state.farm
-  // });
-  
+
   this.state.userSheep.tutorial = 75;
 
   this.time.addEvent({ delay: 1000, callback: (): void => {
@@ -247,11 +208,6 @@ function doneTutor_70(): void {
 
 // завершение шага овцы второй породы
 function doneTutor_75(): void {
-
-  // this.state.amplitude.getInstance().logEvent('tutorial', {
-  //   step: 75,
-  //   farm_id: this.state.farm
-  // });
   
   this.logAmplitudeEvent('tutorial', {
     step: 75
@@ -286,11 +242,6 @@ function doneTutor_75(): void {
 // завершение девятого шага (установка хранилища)
 function doneTutor_80(): void {
 
-  // this.state.amplitude.getInstance().logEvent('tutorial', {
-  //   step: 80,
-  //   farm_id: this.state.farm
-  // });
-  
   this.logAmplitudeEvent('tutorial', {
     step: 80
   });
@@ -306,11 +257,6 @@ function doneTutor_80(): void {
 
 // завершение десятого шага (подстригатель)
 function doneTutor_90(): void {
-
-  // this.state.amplitude.getInstance().logEvent('tutorial', {
-  //   step: 90,
-  //   farm_id: this.state.farm
-  // });
 
   this.logAmplitudeEvent('tutorial', {
     step: 90
@@ -335,11 +281,6 @@ function doneTutor_90(): void {
 
 // закрытие последнего шага туториала
 function doneTutor_100(): void {
-
-  // this.state.amplitude.getInstance().logEvent('tutorial', {
-  //   step: 100,
-  //   farm_id: this.state.farm
-  // });
 
   this.logAmplitudeEvent('tutorial', {
     step: 100
@@ -491,10 +432,6 @@ function doneTutorCave2(): void {
 // отмена всего обучения
 function skipTutorial(): void {
 
-  // this.state.amplitude.getInstance().logEvent('skip_tutorial', {
-  //   farm_id: this.state.farm
-  // });
-
   this.logAmplitudeEvent('skip_tutorial', {});
 
   this.scene.stop('Tutorial');
@@ -529,7 +466,6 @@ function skipTutorial(): void {
 function collectorTutorial(): void {
 
   this.game.scene.keys['SheepBars'].collectorBtn.setVisible(true);
-  // this.state.amplitude.getInstance().logEvent('tutorial_collector', {});
   this.logAmplitudeEvent('tutorial_collector', {});
   this.scene.stop('Tutorial');
 

@@ -505,20 +505,6 @@ function eventHerdBoost(): void {
     if (this.state.user.diamonds >= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost) {
       this.state.user.diamonds -= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost;
       this.game.scene.keys[this.state.farm].startHerdBoost();
-
-      if (this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost > 0) {
-
-        this.state.amplitude.getInstance().logEvent('diamonds_spent', {
-          type: 'herd',
-          count: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
-          farm_id: this.state.farm
-        });
-      }
-
-      this.state.amplitude.getInstance().logEvent('booster_merge', {
-        count: this.state[`user${this.state.farm}`].takenHerdBoost,
-        farm_id: this.state.farm
-      });
     } else {
       // вызывем конвертор
       this.state.convertor = {
@@ -597,11 +583,9 @@ function eventFeedBoost(): void {
     if (this.state.user.diamonds >= this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice) {
 
       this.state.user.diamonds -= this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice;
-
-      this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+      this.game.scene.keys[this.state.farm].logAmplitudeEvent('diamonds_spent', {
         type: 'booster_feed_x2',
         count: this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice,
-        farm_id: this.state.farm
       });
 
       if (this.state[`user${this.state.farm}`].feedBoostTime + 7200 > this.game.scene.keys[this.state.farm].feedBoostStack * 3600) {
@@ -626,26 +610,21 @@ function eventFeedBoost(): void {
         if (this.state[`user${this.state.farm}`].feedBoostTime <= 0) {
           this.state[`user${this.state.farm}`].feedBoostTime += 3600; // прибавить час
 
-          this.state.amplitude.getInstance().logEvent('booster_feed_x2', {
+          this.game.scene.keys[this.state.farm].logAmplitudeEvent('booster_feed_x2', {
             price: this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice,
             time: 1,
-            farm_id: this.state.farm
           });
 
         } else {
           
           let time: number = Math.ceil(this.state[`user${this.state.farm}`].feedBoostTime / 3600 / 2) + 1;
-         
-          this.state.amplitude.getInstance().logEvent('booster_feed_x2', {
+          this.game.scene.keys[this.state.farm].logAmplitudeEvent('booster_feed_x2', {
             price: this.state[`${this.state.farm.toLowerCase()}Settings`].feedBoostPrice,
             time: time,
-            farm_id: this.state.farm
           });
-
           this.state[`user${this.state.farm}`].feedBoostTime += 7200; // прибавить 2часа
         }
       }
-      
     } else {
       // вызывем конвертор
       this.state.convertor = {
@@ -661,7 +640,6 @@ function eventFeedBoost(): void {
       this.scene.stop('ShopBars');
       this.scene.stop('Modal');
     }
-    
   });
 }
 

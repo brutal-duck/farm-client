@@ -190,13 +190,6 @@ function freeCollector(type: number = 1): void {
       user.collectorTakenTime = user.collector;
       this.game.scene.keys[this.state.farm + 'Bars'].collector.update();
 
-
-  
-      // this.state.amplitude.getInstance().logEvent('collector', {
-      //   type: 'free',
-      //   farm_id: this.state.farm
-      // });
-
     } else {
       
       minutes *= 2;
@@ -209,18 +202,6 @@ function freeCollector(type: number = 1): void {
         user.collectorTakenTime = user.collector;
         this.game.scene.keys[this.state.farm + 'Bars'].collector.update();
   
-        // this.state.amplitude.getInstance().logEvent('collector', {
-        //   type: minutes + ' minutes',
-        //   price: 'hard',
-        //   farm_id: this.state.farm
-        // });
-  
-        // this.state.amplitude.getInstance().logEvent('diamonds_spent', {
-        //   type: 'collector',
-        //   count: doubleTimePrice,
-        //   farm_id: this.state.farm,
-        // });
-
       } else {
 
         let count: number = doubleTimePrice - this.state.user.diamonds;
@@ -238,11 +219,8 @@ function freeCollector(type: number = 1): void {
         this.scene.launch('Modal', this.state);
 
       }
-
     }
-
   }
-
 }
 
 // покупка собирателя
@@ -269,19 +247,6 @@ function buyCollector(type: number): void {
       user.collector += hours * 60 * 60;
       user.collectorTakenTime = user.collector;
       this.game.scene.keys[this.state.farm + 'Bars'].collector.update();
-
-      // this.state.amplitude.getInstance().logEvent('collector', {
-      //   type: hours + ' hours',
-      //   price: 'hard',
-      //   farm_id: this.state.farm
-      // });
-
-      // this.state.amplitude.getInstance().logEvent('diamonds_spent', {
-      //   type: 'collector',
-      //   count: settings['collectorPrice' + hours],
-      //   farm_id: this.state.farm,
-      // });
-
     } else {
 
       let count: number = settings['collectorPrice' + hours] - this.state.user.diamonds;
@@ -299,9 +264,7 @@ function buyCollector(type: number): void {
       this.scene.launch('Modal', this.state);
 
     }
-    
   }
-  
 }
 
 function convertDiamonds(diamonds: number): string {
@@ -362,12 +325,6 @@ function improveCollector(): void {
   if (nextLevel?.diamonds) {
 
     if (this.state.user.diamonds >= nextLevel.price) {
-
-      // this.state.amplitude.getInstance().logEvent('diamonds_spent', {
-      //   type: 'improve_collector',
-      //   count: nextLevel.price,
-      //   farm_id: this.state.farm,
-      // });
 
       this.state.user.diamonds -= nextLevel.price;
       user.collectorLevel++;
@@ -469,12 +426,10 @@ function exchange(ad: boolean = false): void {
     MoneyAnimation.create(this.game.scene.keys[`${this.state.farm}Bars`]);
     if (!ad) {
 
-      // this.state.amplitude.getInstance().logEvent('diamonds_spent', {
-      //   type: 'convertor',
-      //   count: this.state.convertor.diamonds,
-      //   farm_id: this.state.farm
-      // });
-
+      this.logAmplitudeEvent('diamonds_spent', {
+        type: 'convertor',
+        count: this.state.convertor.diamonds,
+      });
     }
 
     if (this.state.convertor.fun === 1) {
@@ -515,7 +470,6 @@ function createBoostAnimal(positions): void {
 
     }
   });
-
 }
 
 function tryTask(): void {
@@ -616,11 +570,11 @@ function buyNextFarm(): void {
         if (res.data.success) {
           user.money -= progress.price;
 
-          this.state.amplitude.getInstance().logEvent('get_new_farm', {
+          this.logAmplitudeEvent('get_new_farm', {
             type: 'buy',
             farm_id: farm
           });
-      
+    
           this.scene.stop(this.state.farm);
           this.scene.stop(this.state.farm + 'Bars');
           this.scene.start(farm + 'Preload', this.state);

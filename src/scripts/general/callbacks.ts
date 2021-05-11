@@ -1,5 +1,3 @@
-import * as amplitude from 'amplitude-js';
-
 // коллбэк одноклассников
 function okCallback(): void {
 

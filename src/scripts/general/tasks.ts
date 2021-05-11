@@ -90,10 +90,9 @@ function tryTask(type: number, state: number, count: number = 1): void {
 
     if (task.progress >= task.count) {
       task.done = 1;
-      this.state.amplitude.getInstance().logEvent('task_done', {
+      this.logAmplitudeEvent('task_done', {
         task_id: task.id,
         part: part,
-        farm_id: this.state.farm
       });
     }
     this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
@@ -101,10 +100,9 @@ function tryTask(type: number, state: number, count: number = 1): void {
 
   if (task?.progress >= task?.count && (task?.type === 21 || task?.type === 22)) {
     task.done = 1;
-    this.state.amplitude.getInstance().logEvent('task_done', {
+    this.logAmplitudeEvent('task_done', {
       task_id: task.id,
       part: part,
-      farm_id: this.state.farm
     });
     this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
   }

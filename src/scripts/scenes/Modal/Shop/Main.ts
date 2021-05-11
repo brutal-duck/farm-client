@@ -333,9 +333,7 @@ class Shop extends Phaser.Scene {
   // окно покупки кристаллов
   public shopDiamonds(): void {
 
-    this.state.amplitude.getInstance().logEvent('bank_page_viewed', {
-      farm_id: this.state.farm
-    });
+    this.game.scene.keys[this.state.farm].logAmplitudeEvent('bank_page_viewed', {});
     
     let rows: number = Math.ceil(this.state.packages.length / 2);
     let height: number = rows * 270 + 40;
@@ -418,7 +416,7 @@ class Shop extends Phaser.Scene {
       let pack: Phaser.GameObjects.Sprite = this.add.sprite(0, y + this.height, 'bank-package').setOrigin(0, 0);
       this.click(pack, (): void => {
 
-        this.state.amplitude.getInstance().logEvent('bank_pack_selected', {
+        this.game.scene.keys[this.state.farm].logAmplitudeEvent('bank_pack_selected', {
           package_id: left.id
         });
         
@@ -513,10 +511,9 @@ class Shop extends Phaser.Scene {
         let pack: Phaser.GameObjects.Sprite = this.add.sprite(240, y + this.height, 'bank-package').setOrigin(0, 0);
         this.click(pack, (): void => {
           
-          this.state.amplitude.getInstance().logEvent('bank_pack_selected', {
+          this.game.scene.keys[this.state.farm].logAmplitudeEvent('bank_pack_selected', {
             package_id: right.id
           });
-
           this.game.scene.keys[this.state.farm].scrolling.wheel = true;
           this.scene.stop();
           this.scene.stop('ShopBars');

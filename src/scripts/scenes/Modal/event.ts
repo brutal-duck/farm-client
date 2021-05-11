@@ -601,8 +601,14 @@ function stopBoostScene(): void {
     this.state[`user${this.state.farm}`].takenHerdBoost++;
     this.scene.stop();
     this.game.scene.keys['Unicorn'].startCreateHerdBoostAnimal = true;
-    console.log(this.state.herdBoostAnimals);
-    
+    this.game.scene.keys[this.state.farm].logAmplitudeEvent('diamonds_spent', {
+      type: 'herd',
+      count: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
+    });
+  
+    this.game.scene.keys[this.state.farm].logAmplitudeEvent('booster_merge', {
+      count: this.state[`user${this.state.farm}`].takenHerdBoost,
+    });
   });
 }
 
@@ -946,11 +952,12 @@ function eventProgress(): void {
     } else if (this.state.user.diamonds - doubleProfitPrice >= 0) {
       
       this.state.user.diamonds -= doubleProfitPrice;
-      this.state.amplitude.getInstance().logEvent('diamonds_spent', {
+
+      this.game.scene.keys[this.state.farm].logAmplitudeEvent('diamonds_spent', {
         type: 'event_double_salary',
         count: doubleProfitPrice,
-        farm_id: this.state.farm
       });
+
       this.state.userUnicorn.money = BigInteger.add(this.state.userUnicorn.money, this.state.modal.eventParams.offlineProgress);
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
       this.scene.stop();
@@ -1467,7 +1474,7 @@ function endEventModal(): void {
     .setScale(0.15);
   
   this.clickModalBtn({ btn, title, img1: coin }, (): void => {
-    this.state.amplitude.getInstance().logEvent('event_finished', {
+    this.game.scene.keys[this.state.farm].logAmplitudeEvent('event_finished', {
       farm_id: 'Unicorn'
     });
     if (this.state.progress.event.userEventRaiting.place <= 3) {
@@ -1489,7 +1496,7 @@ function endEventModal(): void {
     this.state.user.additionalTutorial.eventTutorial = 0;
 
     this.state.user.diamonds += diamonds;
-    this.state.amplitude.getInstance().logEvent('diamonds_get', {
+    this.game.scene.keys[this.state.farm].logAmplitudeEvent('diamonds_get', {
       type: 'other',
       farm_id: 'Unicorn',
       count: diamonds,

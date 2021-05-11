@@ -19,10 +19,9 @@ function installTerritory(): void {
       else if (this.state.exchangeTerritory === 3) territory = 'water';
       else if (this.state.exchangeTerritory === 5) territory = 'repository';
 
-      this.state.amplitude.getInstance().logEvent('install_territory', {
+      this.logAmplitudeEvent('install_territory', {
         block: this.state.territory.block,
         position: this.state.territory.position,
-        farm_id: this.state.farm,
         type: territory
       });
 

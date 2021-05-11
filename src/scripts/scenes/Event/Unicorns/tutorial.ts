@@ -163,11 +163,7 @@ function doneEventTutor_60(): void {
 // завершение восьмого шага (заключение часть 2)
 function doneEventTutor_70(): void {
 
-  // this.state.amplitude.getInstance().logEvent('event_tutor_complete', {
-  //   farm_id: this.state.farm,
-  //   step: 70,
-  // });
-  
+
   this.logAmplitudeEvent('tutorial', {
     step: 70,
   });

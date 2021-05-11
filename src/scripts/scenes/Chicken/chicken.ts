@@ -505,15 +505,14 @@ function collectEgg(egg: Egg, manualСollect: boolean = false): void {
       } // else console.log('have not space for eggs');
     }
   } else {
-    let position: Iposition = {
+    const position: Iposition = {
       x: egg.x,
       y: egg.y
-    }
-    this.state.amplitude.getInstance().logEvent('diamonds_get', {
+    };
+
+    this.logAmplitudeEvent('diamonds_get', {
       type: 'diamond_animal',
       count: 1,
-      farm_id: this.state.farm,
-      chapter: this.state[`user${this.state.farm}`].part,
     });
 
     this.game.scene.keys['ChickenBars'].getCurrency(position, 1, 'diamond');

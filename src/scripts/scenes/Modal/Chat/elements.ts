@@ -115,9 +115,8 @@ function createChatBars(height: number = 0): void {
       if (this.state.platform !== 'web') login = this.state.name;
       else login = this.state.user.login;
       
-      this.state.amplitude.getInstance().logEvent('chat_send', {
-        farm_id: this.state.farm
-      });
+
+      this.game.scene.keys[this.state.farm].logAmplitudeEvent('chat_send', {});
       
       this.state.socket.io.emit('send', {
         id: this.state.user.id,
