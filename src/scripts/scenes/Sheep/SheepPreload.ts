@@ -3,7 +3,7 @@ import tasks from '../../tasks';
 import Socket from '../../Socket';
 import loadSheep from '../../local/loadSheep';
 import { loadingScreen } from '../../general/basic';
-import basicTerritory from '../../local/sheepTerritories';
+import basicTerritories from '../../local/sheepTerritories';
 import { checkStorage } from '../../general/basic';
 
 const pixel: string = require("./../../../assets/images/pixel.png");
@@ -823,9 +823,9 @@ class SheepPreload extends Phaser.Scene {
         }
 
         if (sheepTerritories.length === 0) {
-          for (let i in basicTerritory) {
+          for (let i in basicTerritories) {
 
-            let territory = basicTerritory[i];
+            let territory = basicTerritories[i];
   
             if (territory.block === 0 && territory.position === 1) territory.type = 7;
             if (territory.block === 0 && territory.position === 2) territory.type = 6;

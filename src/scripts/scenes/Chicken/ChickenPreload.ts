@@ -2,7 +2,7 @@ import axios from 'axios';
 import tasks from '../../tasks';
 import Socket from '../../Socket';
 import loadChicken from '../../local/loadChicken';
-import basicTerritory from '../../local/chickenTerritories';
+import basicTerritories from '../../local/chickenTerritories';
 import { loadingScreen } from '../../general/basic';
 import { checkStorage } from '../../general/basic';
 
@@ -610,9 +610,9 @@ class ChickenPreload extends Phaser.Scene {
         }
 
         if (chickenTerritories.length === 0) {
-          for (let i in basicTerritory) {
+          for (let i in basicTerritories) {
 
-            let territory = basicTerritory[i];
+            let territory = basicTerritories[i];
   
             if (territory.block === 0 && territory.position === 1) territory.type = 7;
             if (territory.block === 0 && territory.position === 2) territory.type = 6;
@@ -660,7 +660,7 @@ class ChickenPreload extends Phaser.Scene {
           boosts: response.data.user.boosts,
 
         }
-        
+
         if (response.data.user.chicken_part === 0) response.data.user.chicken_part = 1;
 
         const userChicken: IuserChicken = {
