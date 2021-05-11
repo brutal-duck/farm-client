@@ -17,7 +17,7 @@ function tasks(): void {
 
 function tasksWindow(): void {
 
-  this.logAmplitudeEvent('show_tasks_window', {});
+  this.game.scene.keys[this.state.farm].logAmplitudeEvent('show_tasks_window', {});
 
   let tasks = [];
   let textsHeight = [];
