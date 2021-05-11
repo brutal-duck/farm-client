@@ -528,15 +528,17 @@ interface IpartProgress {
   price: number;
   unlock: number;
   donate: boolean;
+  collector?: number;
+  offlineTime?: number;
 }
 interface IeventProgress {
   eventPoints: number;
   startTime: number;
   endTime: number;
   open: boolean;
-  eventRaitings: IeventRaiting[];
-  userEventRaiting: IeventRaiting;
-  updateRaitings: boolean;
+  eventRaitings?: IeventRaiting[];
+  userEventRaiting?: IeventRaiting;
+  updateRaitings?: boolean;
   type: number;
 }
 interface Iprogress {

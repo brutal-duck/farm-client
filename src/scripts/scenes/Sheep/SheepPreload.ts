@@ -3,6 +3,7 @@ import tasks from '../../tasks';
 import Socket from '../../Socket';
 import loadSheep from '../../local/loadSheep';
 import { loadingScreen } from '../../general/basic';
+import basicTerritory from '../../local/sheepTerritories';
 import { checkStorage } from '../../general/basic';
 
 const pixel: string = require("./../../../assets/images/pixel.png");
@@ -738,7 +739,7 @@ class SheepPreload extends Phaser.Scene {
   
   public loadUser(): void {
 
-    axios.post(process.env.API + '/sheep/loadData', {
+    axios.post(process.env.API + '/loadData', {
       hash: this.state.user.hash
     }).then((response) => {
 
@@ -754,40 +755,40 @@ class SheepPreload extends Phaser.Scene {
       // if (response.data.user.sheepSaveCounter >= localSaveCounter) {
 
         // общие настройки
-        this.state.autoSaveSpeed = response.data.autoSaveSpeed;
-        this.state.maxMerginTime = response.data.maxMerginTime;
-        this.state.packages = response.data.packages;
-        this.state.herdBoostSpeedAnimal = response.data.herdBoostSpeedAnimal;
-        this.state.herdBoostTime = response.data.herdBoostTime;
-        this.state.herdBoostPrice = response.data.herdBoostPrice;
-        this.state.herdBoostDelay = response.data.herdBoostDelay;
+        this.state.autoSaveSpeed = response.data.settings.general.autoSaveSpeed;
+        this.state.maxMerginTime = response.data.settings.general.maxMerginTime;
+        this.state.herdBoostSpeedAnimal = response.data.settings.general.herdBoostSpeedAnimal;
+        this.state.herdBoostTime = response.data.settings.general.herdBoostTime;
+        this.state.herdBoostPrice = response.data.settings.general.herdBoostPrice;
+        this.state.herdBoostDelay = response.data.settings.general.herdBoostDelay;
+        this.state.packages = response.data.settings.packages;
           
         // массив с настройками для овечей фермы
-        const sheepSettings: IsheepSettings = {
-          sheepBadPercent: response.data.sheepBadPercent,
-          sheepPrice: response.data.sheepPrice,
-          territoriesSheepSettings: response.data.territoriesSheepSettings,
-          sheepSettings: response.data.sheepSettings,
-          territoriesSheepPrice: response.data.territoriesSheepPrice,
-          sheepFairLevels: response.data.sheepFairLevels,
-          sheepParts: response.data.sheepParts,
-          buyBetterBreedSheep: response.data.buyBetterBreedSheep,
-          doubledСollectorPrice: response.data.doubledСollectorPrice,
-          collectorPrice4: response.data.collectorPrice4,
-          collectorPrice12: response.data.collectorPrice12,
-          unlockCollector4: response.data.unlockCollector4,
-          unlockCollector12: response.data.unlockCollector12,
-          sheepDiamondsTime: response.data.sheepDiamondsTime,
-          feedBoostPrice: response.data.feedBoostPrice,
-        }
 
+        const sheepSettings: IsheepSettings = {
+          sheepBadPercent: response.data.settings.sheep.badPercent,
+          sheepPrice: response.data.settings.sheep.price,
+          territoriesSheepSettings: response.data.settings.sheep.territoriesSettings,
+          sheepSettings: response.data.settings.sheep.sheepSettings,
+          territoriesSheepPrice: response.data.settings.sheep.territoriesPrice,
+          sheepFairLevels: response.data.settings.sheep.fairs,
+          sheepParts: response.data.settings.sheep.parts,
+          buyBetterBreedSheep: response.data.settings.sheep.buyBetterBreed,
+          doubledСollectorPrice: response.data.settings.sheep.doubledСollectorPrice,
+          collectorPrice4: response.data.settings.sheep.collectorPrice4,
+          collectorPrice12: response.data.settings.sheep.collectorPrice12,
+          unlockCollector4: response.data.settings.sheep.unlockCollector4,
+          unlockCollector12: response.data.settings.sheep.unlockCollector12,
+          sheepDiamondsTime: response.data.settings.sheep.diamondAnimalTime,
+          feedBoostPrice: response.data.settings.sheep.feedBoostPrice,
+        }
         this.state.sheepSettings = sheepSettings;
 
         const sheep: Isheep[] = [];
 
-        for (let i in response.data.sheep) {
+        for (let i in response.data.user.sheep) {
           
-          let lamb = response.data.sheep[i];
+          const lamb = response.data.user.sheep[i];
           sheep.push({
             _id: lamb._id,
             type: lamb.type,
@@ -802,15 +803,13 @@ class SheepPreload extends Phaser.Scene {
         }
       
         const sheepTerritories: Iterritories[] = [];
+        
+        for (let i in response.data.user.sheep_territories) {
 
-        for (let i in response.data.territories) {
-
-          let territory = response.data.territories[i];
+          let territory = response.data.user.sheep_territories[i];
 
           if (territory.block === 0 && territory.position === 1) territory.type = 7;
           if (territory.block === 0 && territory.position === 2) territory.type = 6;
-          if (territory.type === 1 && territory.time > 0) territory.type = 0;
-          // territory.time - теперь метка от старого движка. В новом, тип территории остается как в базе
           
           sheepTerritories.push({
             _id: territory._id,
@@ -821,7 +820,26 @@ class SheepPreload extends Phaser.Scene {
             improve: territory.improve,
             money: territory.money
           });
+        }
 
+        if (sheepTerritories.length === 0) {
+          for (let i in basicTerritory) {
+
+            let territory = basicTerritory[i];
+  
+            if (territory.block === 0 && territory.position === 1) territory.type = 7;
+            if (territory.block === 0 && territory.position === 2) territory.type = 6;
+            
+            sheepTerritories.push({
+              _id: territory._id,
+              block: territory.block,
+              position: territory.position,
+              type: territory.type,
+              volume: territory.volume,
+              improve: territory.improve,
+              money: territory.money
+            });
+          }
         }
         
         const user: Iuser = {
@@ -868,11 +886,10 @@ class SheepPreload extends Phaser.Scene {
         const sheepTasks: Itasks[] = [];
 
         for (let i in tasks) if (tasks[i].farm === 1) sheepTasks.push(tasks[i]);
-        for (let i in response.data.tasks) {
+        for (let i in response.data.user.sheep_tasks) {
 
-          let usersTask = response.data.tasks[i];
+          let usersTask = response.data.user.sheep_tasks[i];
           let task = tasks.find((task: Itasks) => task.id === usersTask.task_id);
-
           if (task) {
             task.done = usersTask.done;
             task.got_awarded = usersTask.got_awarded;
@@ -880,14 +897,54 @@ class SheepPreload extends Phaser.Scene {
           }
 
         }
-        
-        this.state.timeToNewDay = response.data.timeToNewDay;
-        this.state.sheepCollectorSettings = response.data.collectorSettings;
-        this.state.dailyAwards = response.data.dailyAwards;
-        this.state.newbieTime = response.data.newbieTime;
-        this.state.daily = response.data.daily;
-        this.state.offlineTime = response.data.offlineTime;
+        this.state.sheepCollectorSettings = response.data.settings.sheep.collectorSettings;
+        this.state.dailyAwards = response.data.user.dailyAwards;
+        this.state.newbieTime = response.data.progress.newbieTime;
+        this.state.daily = response.data.progress.daily;
+        this.state.offlineTime = response.data.progress.sheepOfflineTime;
+        this.state.timeToNewDay = response.data.progress.timeToNewDay;
         this.state.progress = response.data.progress;
+        const progress: Iprogress = {
+          sheep: {
+            part: response.data.user.sheep_part,
+            max: response.data.settings.sheep.parts.length,
+            open: true,
+            price: response.data.settings.farms[0].price,
+            unlock: response.data.settings.farms[0].open,
+            donate: response.data.settings.farms[0].donate,
+            collector: response.data.user.shaver_time,
+            offlineTime: response.data.progress.sheepOfflineTime,
+          },
+          chicken: {
+            part: response.data.user.chicken_part,
+            max: response.data.settings.chicken.parts.length,
+            open: response.data.user.chicken_part > 0,
+            price: response.data.settings.farms[1].price,
+            unlock: response.data.settings.farms[1].open,
+            donate: response.data.settings.farms[1].donate,
+            collector: response.data.user.chicken_collector,
+            offlineTime: response.data.progress.chickenOfflineTime,
+          },
+          cow: {
+            part: response.data.user.cow_part,
+            max: response.data.settings.cow.parts.length,
+            open: response.data.user.cow_part > 0,
+            price: response.data.settings.farms[2].price,
+            unlock: response.data.settings.farms[2].open,
+            donate: response.data.settings.farms[2].donate,
+            collector: response.data.user.cow_collector,
+            offlineTime: response.data.progress.cowOfflineTime,
+          },
+          event: {
+            eventPoints: response.data.user.eventPoints,
+            startTime: response.data.progress.startTime,
+            endTime: response.data.progress.endTime,
+            open: response.data.settings.event.open,
+            type: response.data.settings.event.type,
+          }
+        }
+        this.state.progress = progress;
+        
         this.state.sheepTerritories = sheepTerritories;
         this.state.sheep = sheep;
         this.state.user = user;
