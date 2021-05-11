@@ -636,8 +636,8 @@ class ChickenPreload extends Phaser.Scene {
 
           chickenEggs.push({
             _id: egg._id,
-            x: egg.x,
-            y: egg.y,
+            x: egg.x > 0 && egg.x < 720 ? egg.x : Phaser.Math.Between(500, 700),
+            y: egg.y > 480 && egg.y < 2160 ? egg.y : Phaser.Math.Between(500, 700),
             type: egg.type
           });
 
@@ -702,9 +702,8 @@ class ChickenPreload extends Phaser.Scene {
         this.state.dailyAwards = response.data.user.dailyAwards;
         this.state.newbieTime = response.data.progress.newbieTime;
         this.state.daily = response.data.progress.daily;
-        this.state.offlineTime = response.data.progress.sheepOfflineTime;
+        this.state.offlineTime = response.data.progress.chickenOfflineTime;
         this.state.timeToNewDay = response.data.progress.timeToNewDay;
-        this.state.progress = response.data.progress;
         const progress: Iprogress = {
           sheep: {
             part: response.data.user.sheep_part,
