@@ -2203,18 +2203,18 @@ class EventPreload extends Phaser.Scene {
   
   public loadUser(): void {
   
-    axios.post(process.env.API + '/unicorn/loadData', {
+    axios.post(process.env.API + '/loadData', {
       hash: this.state.user.hash
     }).then((response) => {
 
         // общие настройки
-        this.state.autoSaveSpeed = response.data.autoSaveSpeed;
-        this.state.maxMerginTime = response.data.maxMerginTime;
-        this.state.packages = response.data.packages;
-        this.state.herdBoostSpeedAnimal = response.data.herdBoostSpeedAnimal;
-        this.state.herdBoostTime = response.data.herdBoostTime;
-        this.state.herdBoostPrice = response.data.herdBoostPrice;
-        this.state.herdBoostDelay = response.data.herdBoostDelay;
+        this.state.autoSaveSpeed = response.data.settings.general.autoSaveSpeed;
+        this.state.maxMerginTime = response.data.settings.general.maxMerginTime;
+        this.state.herdBoostSpeedAnimal = response.data.settings.general.herdBoostSpeedAnimal;
+        this.state.herdBoostTime = response.data.settings.general.herdBoostTime;
+        this.state.herdBoostPrice = response.data.settings.general.herdBoostPrice;
+        this.state.herdBoostDelay = response.data.settings.general.herdBoostDelay;
+        this.state.packages = response.data.settings.packages;
         
       //   // массив с настройками для евентовой фермы
       //   const eventSettings: IeventSettings = {  // IeventSettings Нужно делать интерфейс
@@ -2320,10 +2320,48 @@ class EventPreload extends Phaser.Scene {
         }
         
       //   // переписываем стейт
-        this.state.timeToNewDay = response.data.timeToNewDay;
-        // this.state.eventCollectorSettings = response.data.collectorSettings;
-        this.state.offlineTime = response.data.offlineTime;
-        this.state.progress = response.data.progress;
+        this.state.timeToNewDay = response.data.progress.timeToNewDay;
+        this.state.offlineTime = response.data.progress.eventOfflineTime;
+        const progress: Iprogress = {
+          sheep: {
+            part: response.data.user.sheep_part,
+            max: response.data.settings.sheep.parts.length,
+            open: true,
+            price: response.data.settings.farms[0].price,
+            unlock: response.data.settings.farms[0].open,
+            donate: response.data.settings.farms[0].donate,
+            collector: response.data.user.shaver_time,
+            offlineTime: response.data.progress.sheepOfflineTime,
+          },
+          chicken: {
+            part: response.data.user.chicken_part,
+            max: response.data.settings.chicken.parts.length,
+            open: response.data.user.chicken_part > 0,
+            price: response.data.settings.farms[1].price,
+            unlock: response.data.settings.farms[1].open,
+            donate: response.data.settings.farms[1].donate,
+            collector: response.data.user.chicken_collector,
+            offlineTime: response.data.progress.chickenOfflineTime,
+          },
+          cow: {
+            part: response.data.user.cow_part,
+            max: response.data.settings.cow.parts.length,
+            open: response.data.user.cow_part > 0,
+            price: response.data.settings.farms[2].price,
+            unlock: response.data.settings.farms[2].open,
+            donate: response.data.settings.farms[2].donate,
+            collector: response.data.user.cow_collector,
+            offlineTime: response.data.progress.cowOfflineTime,
+          },
+          event: {
+            eventPoints: response.data.user.eventPoints,
+            startTime: response.data.progress.event.startTime,
+            endTime: response.data.progress.event.endTime,
+            open: response.data.settings.event.open,
+            type: response.data.settings.event.type,
+          }
+        }
+        this.state.progress = progress;
         this.state.eventTerritories = eventTerritories;
         this.state.eventAnimals = eventAnimals;
         this.state.eventResources = eventResources; 

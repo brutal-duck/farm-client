@@ -903,7 +903,6 @@ class SheepPreload extends Phaser.Scene {
         this.state.daily = response.data.progress.daily;
         this.state.offlineTime = response.data.progress.sheepOfflineTime;
         this.state.timeToNewDay = response.data.progress.timeToNewDay;
-        this.state.progress = response.data.progress;
         const progress: Iprogress = {
           sheep: {
             part: response.data.user.sheep_part,
@@ -937,14 +936,13 @@ class SheepPreload extends Phaser.Scene {
           },
           event: {
             eventPoints: response.data.user.eventPoints,
-            startTime: response.data.progress.startTime,
-            endTime: response.data.progress.endTime,
+            startTime: response.data.progress.event.startTime,
+            endTime: response.data.progress.event.endTime,
             open: response.data.settings.event.open,
             type: response.data.settings.event.type,
           }
         }
         this.state.progress = progress;
-        
         this.state.sheepTerritories = sheepTerritories;
         this.state.sheep = sheep;
         this.state.user = user;

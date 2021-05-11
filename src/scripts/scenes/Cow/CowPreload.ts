@@ -1173,8 +1173,8 @@ class CowPreload extends Phaser.Scene {
           },
           event: {
             eventPoints: response.data.user.eventPoints,
-            startTime: response.data.progress.startTime,
-            endTime: response.data.progress.endTime,
+            startTime: response.data.progress.event.startTime,
+            endTime: response.data.progress.event.endTime,
             open: response.data.settings.event.open,
             type: response.data.settings.event.type,
           }
