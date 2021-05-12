@@ -12,7 +12,8 @@ import basicSheepTerritories from '../local/sheepTerritories';
 import basicChickenTerritories from '../local/chickenTerritories';
 import basicCowTerritories from '../local/cowTerritories';
 import basicUnicornCollector from '../local/unicornCollector';
-import { unicornSettings } from '../local/settings';
+import { unicornSettings, sheepSettings, chickenSettings, cowSettings } from '../local/settings';
+
 
 // рандомное число
 function random(min: number, max: number): number {
@@ -1503,7 +1504,7 @@ function loadData(response): void {
   this.state.daily = response.data.progress.daily;
   this.state.timeToNewDay = response.data.progress.timeToNewDay;
 
-  const sheepSettings: IsheepSettings = {
+  const resSheepSettings: IsheepSettings = {
     sheepBadPercent: response.data.settings.sheep.badPercent,
     sheepPrice: response.data.settings.sheep.price,
     territoriesSheepSettings: response.data.settings.sheep.territoriesSettings,
@@ -1521,7 +1522,8 @@ function loadData(response): void {
     feedBoostPrice: response.data.settings.sheep.feedBoostPrice,
   }
 
-  const chickenSettings: IchickenSettings = {
+
+  const resChickenSettings: IchickenSettings = {
     chickenBadPercent: response.data.settings.chicken.badPercent,
     chickenPrice: response.data.settings.chicken.price,
     territoriesChickenSettings: response.data.settings.chicken.territoriesSettings,
@@ -1802,7 +1804,7 @@ function loadData(response): void {
     },
   ];
 
-  const cowSettings: IcowSettings = {
+  const resCowSettings: IcowSettings = {
     cowBadPercent: response.data.settings.cow.badPercent,
     cowPrice: response.data.settings.cow.price,
     territoriesCowSettings: response.data.settings.cow.territoriesSettings,
@@ -2026,10 +2028,22 @@ function loadData(response): void {
 
   cowSettings.territoriesCowSettings = territoriesCowSettings;
   
-  this.state.sheepSettings = sheepSettings;
-  this.state.chickenSettings = chickenSettings;
-  this.state.cowSettings = cowSettings;
-        
+  for (const key in resSheepSettings) {
+    if (resSheepSettings[key] === undefined) resSheepSettings[key] = sheepSettings[key];
+  }
+
+  for (const key in resChickenSettings) {
+    if (resSheepSettings[key] === undefined) resChickenSettings[key] = chickenSettings[key];
+  }
+
+  for (const key in resCowSettings) {
+    if (resSheepSettings[key] === undefined) resCowSettings[key] = cowSettings[key];
+  }
+
+  this.state.sheepSettings = resSheepSettings;
+  this.state.chickenSettings = resChickenSettings;
+  this.state.cowSettings = resCowSettings;
+  // животные
   const sheep: Isheep[] = [];
   for (let i in response.data.user.sheep) {    
     const lamb = response.data.user.sheep[i];
@@ -2079,8 +2093,8 @@ function loadData(response): void {
   this.state.chicken = chicken;
   this.state.cow = cow;
 
-  const sheepTerritories: Iterritories[] = [];
-        
+  //территории для обычных ферм
+  const sheepTerritories: Iterritories[] = []; 
   for (let i in response.data.user.sheep_territories) {
     const territory = response.data.user.sheep_territories[i];
     sheepTerritories.push({
@@ -2092,21 +2106,6 @@ function loadData(response): void {
       improve: territory.improve,
       money: territory.money
     });
-  }
-
-  if (sheepTerritories.length === 0) {
-    for (let i in basicSheepTerritories) {
-      const territory = basicSheepTerritories[i];
-      sheepTerritories.push({
-        _id: territory._id,
-        block: territory.block,
-        position: territory.position,
-        type: territory.type,
-        volume: territory.volume,
-        improve: territory.improve,
-        money: territory.money
-      });
-    }
   }
 
   const chickenTerritories: Iterritories[] = [];
@@ -2121,6 +2120,36 @@ function loadData(response): void {
       improve: territory.improve,
       money: territory.money
     });
+  }
+
+  const cowTerritories: Iterritories[] = [];
+  for (let i in response.data.user.cow_territories) {
+    const territory = response.data.user.cow_territories[i];
+    cowTerritories.push({
+      _id: territory._id,
+      block: territory.block,
+      position: territory.position,
+      type: territory.type,
+      volume: territory.volume,
+      improve: territory.improve,
+      money: territory.money
+    });
+  }
+
+  // проверка наличия территорий
+  if (sheepTerritories.length === 0) {
+    for (let i in basicSheepTerritories) {
+      const territory = basicSheepTerritories[i];
+      sheepTerritories.push({
+        _id: territory._id,
+        block: territory.block,
+        position: territory.position,
+        type: territory.type,
+        volume: territory.volume,
+        improve: territory.improve,
+        money: territory.money
+      });
+    }
   }
 
   if (chickenTerritories.length === 0) {
@@ -2138,19 +2167,6 @@ function loadData(response): void {
     }
   }
 
-  const cowTerritories: Iterritories[] = [];
-  for (let i in response.data.user.cow_territories) {
-    const territory = response.data.user.cow_territories[i];
-    cowTerritories.push({
-      _id: territory._id,
-      block: territory.block,
-      position: territory.position,
-      type: territory.type,
-      volume: territory.volume,
-      improve: territory.improve,
-      money: territory.money
-    });
-  }
   if (cowTerritories.length === 0) {
     for (let i in basicCowTerritories) {
       const territory = basicCowTerritories[i];
@@ -2170,8 +2186,8 @@ function loadData(response): void {
   this.state.chickenTerritories = chickenTerritories;
   this.state.cowTerritories = cowTerritories;
 
+  // яйца
   const chickenEggs: IchickenEgg[] = [];
-
   for (let i in response.data.user.chicken_eggs) {
     const egg = response.data.user.chicken_eggs[i];
     chickenEggs.push({
@@ -2200,6 +2216,9 @@ function loadData(response): void {
     boosts: response.data.user.boosts,          
   };
   this.state.user = user;
+  
+  if (response.data.user.chicken_part === 0 && this.state.farm === 'Chicken') response.data.user.chicken_part = 1;
+  if (response.data.user.cow_part === 0 && this.state.farm === 'Cow') response.data.user.cow_part = 1;
 
   const userSheep: IuserSheep = {
     money: response.data.user.money,
@@ -2217,7 +2236,6 @@ function loadData(response): void {
     feedBoostTime: response.data.user.feedBoostTimeSheep,
   }
 
-  if (response.data.user.chicken_part === 0) response.data.user.chicken_part = 1;
   const userChicken: IuserChicken = {
     money: response.data.user.chicken_money,
     fair: response.data.user.chicken_fair,

@@ -751,10 +751,9 @@ class SheepPreload extends Phaser.Scene {
       // }
 
       // if (response.data.user.sheepSaveCounter >= localSaveCounter) {
-        this.loadData(response);
-        
-        this.state.offlineTime = response.data.progress.sheepOfflineTime;
         this.state.farm = 'Sheep';
+        this.loadData(response);
+        this.state.offlineTime = response.data.progress.sheepOfflineTime;
         this.state.nativeCounter = [0, 0, 0, 0];
         this.userReady = true;
         

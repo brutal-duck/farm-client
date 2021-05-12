@@ -524,10 +524,10 @@ class CowPreload extends Phaser.Scene {
     //   // }
 
     //   // if (response.data.user.cowSaveCounter >= localSaveCounter) {
-        this.loadData(response);
-        
-        this.state.offlineTime = response.data.progress.cowOfflineTime;
         this.state.farm = 'Cow';
+
+        this.loadData(response);
+        this.state.offlineTime = response.data.progress.cowOfflineTime;
         this.userReady = true;
         this.state.nativeCounter = [0, 0, 0, 0];
 
