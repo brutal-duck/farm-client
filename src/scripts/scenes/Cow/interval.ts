@@ -3,13 +3,17 @@ import Arrow from '../../components/animations/Arrow';
 import Hearts from '../../components/animations/Hearts';
 import CowSprite from './../../components/Animal/CowSprite';
 import Territory from './../../components/Territories/Territory';
+import Cow from './Main';
+let checkCollector: number = 0;
+let sheepCollectorVolume: number = 0;
+let chickenCollectorVolume: number = 0;
+
 function interval(): void {
 
   let statusBalance: boolean = false;
   let checkRaiting: boolean = false;
   let arrowOnMap: Phaser.GameObjects.Sprite;
   const milkDelay: number = 60;
-  
   this.time.addEvent({ delay: 1000, callback: (): void => {
     
     // проверка подключения к интернету
@@ -265,7 +269,176 @@ function interval(): void {
 
     const factoryTerritory: Territory = this.territories.children.entries.find((data: Territory) => data.territoryType === 8);
     factoryTerritory.productionOfProducts();
+
+    arrayInterval.bind(this)();
   }, callbackScope: this, loop: true });
+}
+
+function arrayInterval(): void {
+  const Scene: Cow = this;
+  const INDENT: number = 20;
+  const chickenBalance: Ibalance = Scene.farmBalance('Chicken');
+  const sheepBalance: Ibalance = Scene.farmBalance('Sheep');
+  const chickenSettings: IchickenSettings = Scene.state.chickenSettings;
+  const sheepSettings: IsheepSettings = Scene.state.sheepSettings;
+
+  for (let i in Scene.state.chicken) {
+    const chicken: Ichicken = Scene.state.chicken[i];
+    let breed: number;
+    if (chicken.type === 0) breed = 1;
+    else breed = chicken.type;
+    const points: IchickenPoints = chickenSettings.chickenSettings.find((item: IchickenPoints) => item.breed === breed);
+    // зарождение яйца
+    if (chicken.egg < 1000) {
+      let egg: number = points.egg;
+      if (chickenBalance.alarm) {
+        egg = Math.round(egg / 100 * chickenSettings.chickenBadPercent);
+        if (egg < 1) egg = 1;
+      }
+      chicken.egg += egg;
+      if (chicken.egg > 1000) chicken.egg = 1000;
+    }
+    if (chicken.egg === 1000) {
+      const block: number = Math.ceil((chicken.x - 240) / this.height);
+      const position: number = Math.ceil(chicken.y / this.height);
+      const territory = this.state.chickenTerritories.find((data: Iterritories) => data.block === block && data.position === position);
+      
+      if (territory) {
+        const countEggs: number = chickenSettings.territoriesChickenSettings.find((item: IterritoriesChickenSettings) => item.improve === territory.improve).countEggs;
+        let eggs: number = 0;
+        for (let i in Scene.state.chickenEggs) {
+          const egg = Scene.state.chickenEggs[i];
+          const block: number = Math.ceil((egg.x - 240) / this.height);
+          const position: number = Math.ceil(egg.y / this.height);
+          const ter = this.state.chickenTerritories.find((data: Iterritories) => data.block === block && data.position === position);
+          if (ter?.block === territory.block && ter?.position === territory.position) eggs++;
+        }
+
+        if (eggs < countEggs && (territory.type === 2 || territory.type === 3)) {
+          chicken.egg = 0;
+          // рандом разброса яиц
+          let minX: number = chicken.x - INDENT;
+          let maxX: number = chicken.x + INDENT;
+          let minY: number = chicken.y + 40 - INDENT;
+          let maxY: number = chicken.y + 40 + INDENT;
+          let left: number = (territory.position - 1) * 240 + INDENT;
+          let right: number = territory.position * 240 - INDENT;
+          let top: number = (territory.block) * 240 + INDENT;
+          let bottom: number = (territory.block + 1) * 240 - INDENT;
+          if (left > minX) minX = left;
+          if (maxX > right) maxX = right;
+          if (top > minY) minY = top;
+          if (maxY > bottom) {
+            maxY = bottom;
+            if (maxY < minY) minY -= 40;
+          }
+
+          const egg: IchickenEgg = {
+            type: chicken.type,
+            x: Phaser.Math.Between(minX, maxX),
+            y: Phaser.Math.Between(minY, maxY),
+            _id: 'local_' + this.randomString(18),
+          }
+          Scene.state.chickenEggs.push(egg);
+          if (chicken.type === 0) chicken.diamond++;
+          if (chicken.diamond >= 5 && chicken.type === 0) {
+            Scene.state.chicken = Scene.state.chicken.filter((el: Ichicken)=> el._id !== chicken._id);
+          }
+        }
+      }
+    }
+  }
+
+  for (let i in Scene.state.sheep) {
+    const sheep: Isheep = Scene.state.sheep[i];
+    let breed: number;
+    if (sheep.type === 0) breed = 1;
+    else breed = sheep.type;
+    let points: IsheepPoints = sheepSettings.sheepSettings.find((item: IsheepPoints) => item.breed === breed);
+    // рост шерсти
+    if (sheep.wool < 1000 && sheepBalance.waterRecovery > 0 && sheepBalance.grassRecovery > 0) {
+      let wool: number = points.wool_growth;
+      if (sheepBalance.alarm) {
+        wool = Math.round(wool / 100 * sheepSettings.sheepBadPercent);
+        if (wool < 1) wool = 1;
+      }
+      sheep.wool += wool;
+      if (sheep.wool > 1000) sheep.wool = 1000;
+    }
+  }
+
+  if (checkCollector < 2) {
+    checkCollector += 1;
+  } else {
+    checkCollector = 0;
+    if (Scene.state.progress.chicken.collector > 0) {
+      const speed: number = Scene.state.chickenCollectorSettings.find((data: IcollectorSettings) => data.level === Scene.state.userChicken.collectorLevel).speed;
+      const SEC: number = 1000;
+      chickenCollectorVolume += 2 * SEC;
+      const collectedEggs: number = Math.floor(chickenCollectorVolume / speed / SEC);
+      if (collectedEggs > 0) {
+        chickenCollectorVolume -= collectedEggs * speed * SEC;
+        for (let i in Scene.state.chickenTerritories) {
+          const territory: Iterritories = Scene.state.chickenTerritories[i];
+          if (territory.type === 5) {
+            const max: number = Scene.state.chickenSettings.territoriesChickenSettings.find((data: IterritoriesChickenSettings) => data.improve === territory.improve).eggStorage;
+            if (max > territory.volume) {
+              const eggArray: IchickenEgg[] = Scene.state.chickenEggs.filter((el: IchickenEgg) => el.type !== 0);
+              if (eggArray.length > 0) {
+                for (let i: number = 0; i < collectedEggs; i += 1) {
+                  const egg: IchickenEgg = eggArray.shift();
+                  if (egg) {
+                    let price: number = Scene.state.chickenSettings.chickenSettings.find((data: IchickenPoints) => data.breed === egg.type).eggPrice;
+                    if (Scene.state.userChicken.feedBoostTime > 0) price *= this.feedBoostMultiplier;
+                    territory.volume += 1;
+                    territory.money += price;
+                  } else break;
+                }
+                Scene.state.chickenEggs = Scene.state.chickenEggs.filter((item: IchickenEgg) => eggArray.find(el => el._id === item._id) || item.type === 0);
+              }
+            }
+          }
+        }
+      } else {
+        chickenCollectorVolume = 0;
+      }
+    }
+
+    if (Scene.state.progress.sheep.collector > 0) {
+      const speed: number = Scene.state.sheepCollectorSettings.find((data: IcollectorSettings) => data.level === Scene.state.userSheep.collectorLevel).speed;
+      const SEC: number = 1000;
+      sheepCollectorVolume += 2 * SEC;
+      let collectedWool: number = Math.floor(sheepCollectorVolume / speed / SEC);
+      if (collectedWool > 0) {
+        sheepCollectorVolume -= collectedWool * speed * SEC;
+        for (let i in Scene.state.chickenTerritories) {
+          const territory: Iterritories = Scene.state.chickenTerritories[i];
+          if (territory.type === 5) {
+            const max: number = Scene.state.sheepSettings.territoriesSheepSettings.find((data: IterritoriesSheepSettings) => data.improve === territory.improve).woolStorage;
+            for (let i: number = 0; i < collectedWool; i += 1) {
+              for (let i in Scene.state.sheep) {
+                const sheep: Isheep = Scene.state.sheep[i];
+                if (sheep.type !== 0 && sheep.wool >= 1000) {
+                  const sheepPoints: IsheepPoints = Scene.state.sheepSettings.sheepSettings.find((data: IsheepPoints) => data.breed === sheep.type);
+                  if (max > territory.volume) {
+                    let price: number = sheepPoints.long_wool;
+                    if (Scene.state.userSheep.feedBoostTime > 0) price *= this.feedBoostMultiplier;
+                    territory.volume += 1;
+                    territory.money += price;
+                    sheep.wool = 0;
+                    collectedWool -= 1;
+                    break;
+                  }
+                }
+              }
+            }
+          }
+        }
+      } else {
+        sheepCollectorVolume = 0;
+      }
+    }
+  }
 }
 
 export default interval;

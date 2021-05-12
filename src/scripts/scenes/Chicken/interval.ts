@@ -3,6 +3,11 @@ import Arrow from '../../components/animations/Arrow';
 import Firework from '../../components/animations/Firework';
 import Hearts from '../../components/animations/Hearts';
 import Egg from '../../components/Resource/Egg';
+import Chicken from './Main';
+let checkCollector: number = 0;
+let sheepCollectorVolume: number = 0;
+let cowCollectorVolume: number = 0;
+
 function interval(): void {
 
   // значение отступа для яиц, чтоб не прилегали к краям территории
@@ -377,6 +382,132 @@ function interval(): void {
 
   }, callbackScope: this, loop: true });
 
+}
+
+function arrayInterval(): void {
+  const Scene: Chicken = this;
+  const MILK_DELAY: number = 60;
+  const cowBalance: Ibalance = Scene.farmBalance('Cow');
+  const sheepBalance: Ibalance = Scene.farmBalance('Sheep');
+  const cowSettings: IcowSettings = Scene.state.cowSettings;
+  const sheepSettings: IsheepSettings = Scene.state.sheepSettings;
+
+  
+
+  for (let i in Scene.state.sheep) {
+    const sheep: Isheep = Scene.state.sheep[i];
+    let breed: number;
+    if (sheep.type === 0) breed = 1;
+    else breed = sheep.type;
+    let points: IsheepPoints = sheepSettings.sheepSettings.find((item: IsheepPoints) => item.breed === breed);
+    // рост шерсти
+    if (sheep.wool < 1000 && sheepBalance.waterRecovery > 0 && sheepBalance.grassRecovery > 0) {
+      let wool: number = points.wool_growth;
+      if (sheepBalance.alarm) {
+        wool = Math.round(wool / 100 * sheepSettings.sheepBadPercent);
+        if (wool < 1) wool = 1;
+      }
+      sheep.wool += wool;
+      if (sheep.wool > 1000) sheep.wool = 1000;
+    }
+  }
+
+  for (let i in Scene.state.cow) {
+    const cow: Icow = Scene.state.cow[i];
+    let breed: number;
+    if (cow.type === 0) breed = 1;
+    else breed = cow.type;
+    const cowPoints: IcowPoints = cowSettings.cowSettings.find((item: IcowPoints) => item.breed === breed);
+    if (cow.milk < cowPoints.maxMilkVolume) {
+      let milk: number = cowPoints.maxMilkVolume / MILK_DELAY;
+      if (cow.type === 0) milk = cowPoints.maxMilkVolume / 10;
+
+      if (cowBalance.alarm) {
+        milk = Math.round(milk / 100 * Scene.state.cowSettings.cowBadPercent);
+        if (milk < 1) milk = 1;
+      }
+      cow.milk += milk;
+      if (cow.milk > cowPoints.maxMilkVolume) {
+        cow.milk = cowPoints.maxMilkVolume;
+      }
+    }
+  }
+
+  if (checkCollector < 2) {
+    checkCollector += 1;
+  } else {
+    checkCollector = 0;
+
+    if (Scene.state.progress.cow.collector > 0) {
+      const speed: number = Scene.state.cowCollectorSettings.find((data: IcollectorSettings) => data.level === Scene.state.userCow.collectorLevel).speed;
+      const SEC: number = 1000;
+      cowCollectorVolume += 2 * SEC;
+      let collectedMilk: number = Math.floor(cowCollectorVolume / speed / SEC);
+      if (collectedMilk > 0) {
+        cowCollectorVolume -= collectedMilk * speed * SEC;
+        for (let i in Scene.state.cowTerritories) {
+          const territory: Iterritories = Scene.state.cowTerritories[i];
+          if (territory.type === 5) {
+            const max: number = Scene.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === territory.improve).storage;
+            for (let i: number = 0; i < collectedMilk; i += 1) {
+              for (let i in Scene.state.cow) {
+                const cow: Icow = Scene.state.cow[i];
+                if (cow.type !== 0 && cow.milk >= 1000) {
+                  const cowPoints: IcowPoints = Scene.state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === cow.type);
+                  if (max > territory.volume + cowPoints.maxMilkVolume) {
+                    let price: number = 0;
+                    if (Scene.state.userCow.feedBoostTime > 0) price *= this.feedBoostMultiplier;
+                    territory.volume += cow.milk;
+                    territory.money += price;
+                    cow.milk = 0;
+                    collectedMilk -= 1;
+                    break;
+                  }
+                }
+              }
+            }
+          }
+        }
+      } else {
+        cowCollectorVolume = 0;
+      }
+    }
+
+    if (Scene.state.progress.sheep.collector > 0) {
+      const speed: number = Scene.state.sheepCollectorSettings.find((data: IcollectorSettings) => data.level === Scene.state.userSheep.collectorLevel).speed;
+      const SEC: number = 1000;
+      sheepCollectorVolume += 2 * SEC;
+      let collectedWool: number = Math.floor(sheepCollectorVolume / speed / SEC);
+      if (collectedWool > 0) {
+        sheepCollectorVolume -= collectedWool * speed * SEC;
+        for (let i in Scene.state.chickenTerritories) {
+          const territory: Iterritories = Scene.state.chickenTerritories[i];
+          if (territory.type === 5) {
+            const max: number = Scene.state.sheepSettings.territoriesSheepSettings.find((data: IterritoriesSheepSettings) => data.improve === territory.improve).woolStorage;
+            for (let i: number = 0; i < collectedWool; i += 1) {
+              for (let i in Scene.state.sheep) {
+                const sheep: Isheep = Scene.state.sheep[i];
+                if (sheep.type !== 0 && sheep.wool >= 1000) {
+                  const sheepPoints: IsheepPoints = Scene.state.sheepSettings.sheepSettings.find((data: IsheepPoints) => data.breed === sheep.type);
+                  if (max > territory.volume) {
+                    let price: number = sheepPoints.long_wool;
+                    if (Scene.state.userSheep.feedBoostTime > 0) price *= this.feedBoostMultiplier;
+                    territory.volume += 1;
+                    territory.money += price;
+                    sheep.wool = 0;
+                    collectedWool -= 1;
+                    break;
+                  }
+                }
+              }
+            }
+          }
+        }
+      } else {
+        sheepCollectorVolume = 0;
+      }
+    }
+  }
 }
 
 export default interval;

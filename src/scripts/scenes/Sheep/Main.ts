@@ -41,6 +41,7 @@ import {
   logAmplitudeEvent,
   logAmplitudeRevenue,
   farmBalance,
+  randomString,
 } from '../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -176,7 +177,7 @@ class Sheep extends Phaser.Scene {
   public feedBoostStack: number = 11; // максимальный стек часов
   public dailyStartCheck: boolean = true; // запущено ли открытие окна daily
   public remaindSellTimer: number = 0;
-
+  
   public readonly moneyTasks: { id: number, money: number }[] = [
     {
       id: 127,
@@ -300,7 +301,8 @@ class Sheep extends Phaser.Scene {
   public logAmplitudeEvent = logAmplitudeEvent.bind(this);
   public logAmplitudeRevenue = logAmplitudeRevenue.bind(this);  
   public farmBalance = farmBalance.bind(this);
-
+  public randomString = randomString.bind(this);
+  
   public init(state: Istate): void {
 
     this.autoprogressTimer = Math.round(new Date().getTime() / 1000);

@@ -2026,7 +2026,7 @@ function loadData(response): void {
     },
   ];
 
-  cowSettings.territoriesCowSettings = territoriesCowSettings;
+  resCowSettings.territoriesCowSettings = territoriesCowSettings;
   
   for (const key in resSheepSettings) {
     if (resSheepSettings[key] === undefined || resSheepSettings[key] === null) resSheepSettings[key] = sheepSettings[key];
@@ -2080,7 +2080,7 @@ function loadData(response): void {
     cow.push({
       _id: cw._id,
       type: cw.type,
-      milk: cw.milk,
+      milk: isNaN(cw.milk) || !cw.milk ? 0 : cw.milk,
       x: cw.x,
       y: cw.y,
       counter: cw.counter,
@@ -2088,7 +2088,7 @@ function loadData(response): void {
       vector: cw.vector
     });
   };
-
+  
   this.state.sheep = sheep;
   this.state.chicken = chicken;
   this.state.cow = cow;
