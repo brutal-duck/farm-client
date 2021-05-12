@@ -2431,6 +2431,94 @@ function loadData(response): void {
   }
 }
 
+function farmBalance(farm: string): Ibalance {
+
+  let waterConsumption: number = 0;
+  let grassConsumption: number = 0;
+  let waterRecovery: number = 0;
+  let grassRecovery: number = 0;
+  let waterPercent: number = 0;
+  let grassPercent: number = 0;
+  let alarm: boolean = false;
+  let notEnoughGrass: boolean = false;
+  let notEnoughWater: boolean = false;
+
+  const animals = this.state[farm.toLocaleLowerCase()];
+  const settings = this.state[`${farm.toLocaleLowerCase()}Settings`][`${farm.toLocaleLowerCase()}Settings`];
+  for (let i in animals) {
+    const animal = animals[i];
+    let breed: number;
+    if (animal.type === 0) breed = 1;
+    else breed = animal.type;
+    const points: IsheepPoints | IchickenPoints | IcowPoints = settings.find((item) => item.breed === breed);
+    grassConsumption += points.eating;
+    waterConsumption += points.drinking;
+  }
+
+  grassConsumption = Math.round(grassConsumption / 2);
+  waterConsumption = Math.round(waterConsumption / 2);
+  const territories: any[] = this.state[`${farm}Territories`];
+  const territoriesSettings = this.state[`territories${farm}Settings`];
+  for (let i in territories) {
+    const territory = territories[i];
+    if (territory.type === 2 || territory.type === 3) {
+      let reg: number = territoriesSettings.find(item => item.improve === territory.improve).regeneration;
+      if (territory.type === 2) {
+        grassRecovery += reg;
+      } else {
+        waterRecovery += reg;
+      }
+    }
+  }
+
+  if (waterRecovery > 0) {
+    waterPercent = Math.round((waterRecovery - waterConsumption) / (waterRecovery / 100));
+  } else waterPercent = -100;
+  
+  if (grassRecovery > 0) {
+    grassPercent = Math.round((grassRecovery - grassConsumption) / (grassRecovery / 100));
+  } else grassPercent = -100;
+  
+  if (grassRecovery < grassConsumption || waterRecovery < waterConsumption) {
+
+    if (grassRecovery < grassConsumption) {
+      notEnoughGrass = true;
+      if (grassConsumption / 2 > grassRecovery) {
+        grassPercent = 100;
+      } else {
+        grassPercent = Math.round((grassConsumption - grassRecovery) / (grassRecovery / 100));
+      }
+    }
+
+    if (waterRecovery < waterConsumption) {
+      notEnoughWater = true;
+      if (waterConsumption / 2 > waterRecovery) {
+        waterPercent = 100;
+      } else {
+        waterPercent = Math.round((waterConsumption - waterRecovery) / (waterRecovery / 100));
+      }
+    }
+    alarm = true;
+  }
+
+  if (waterPercent > 100) waterPercent = 100;
+  if (waterPercent < 0) waterPercent = 0;
+  if (grassPercent > 100) grassPercent = 100;
+  if (grassPercent < 0) grassPercent = 0;
+
+  return {
+    alarm: alarm,
+    waterPercent: waterPercent,
+    grassPercent: grassPercent,
+    grassConsumption: grassConsumption,
+    waterConsumption: waterConsumption,
+    grassRecovery: grassRecovery,
+    waterRecovery: waterRecovery,    
+    notEnoughGrass: notEnoughGrass,
+    notEnoughWater: notEnoughWater
+  }
+}
+
 export {
   random,
   getRandomBool,
@@ -2467,5 +2555,6 @@ export {
   createTaskZone,
   logAmplitudeEvent,
   logAmplitudeRevenue,
-  loadData
+  loadData,
+  farmBalance
 }

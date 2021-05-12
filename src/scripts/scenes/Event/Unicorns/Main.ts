@@ -14,7 +14,9 @@ import {
   nextDayTimer,
   intervalPorgressCollectorTime,
   autoporgressCollectorTime,
-  logAmplitudeEvent
+  logAmplitudeEvent,
+  logAmplitudeRevenue,
+  farmBalance,
 } from '../../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -204,6 +206,8 @@ class Unicorn extends Phaser.Scene {
   public intervalPorgressCollectorTime = intervalPorgressCollectorTime.bind(this);
   public autoporgressCollectorTime = autoporgressCollectorTime.bind(this);
   public logAmplitudeEvent = logAmplitudeEvent.bind(this);
+  public logAmplitudeRevenue = logAmplitudeRevenue.bind(this);  
+  public farmBalance = farmBalance.bind(this);
   
   public init(state: Istate): void {
     this.state = state;

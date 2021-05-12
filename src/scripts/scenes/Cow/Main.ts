@@ -27,6 +27,8 @@ import {
   getEventRaiting,
   nextDayTimer,
   logAmplitudeEvent,
+  logAmplitudeRevenue,
+  farmBalance,
 } from '../../general/basic';
 import {
   improveCollector,
@@ -212,7 +214,9 @@ class Cow extends Phaser.Scene {
   public showImproveFactory = showImproveFactory.bind(this);
   public showFactoryBoost = showFactoryBoost.bind(this);
   public logAmplitudeEvent = logAmplitudeEvent.bind(this);
-
+  public logAmplitudeRevenue = logAmplitudeRevenue.bind(this);  
+  public farmBalance = farmBalance.bind(this);
+  
   public init(state: Istate): void {
 
     this.autoprogressTimer = Math.round(new Date().getTime() / 1000);

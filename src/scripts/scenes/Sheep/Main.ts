@@ -38,7 +38,9 @@ import {
   intervalPorgressCollectorTime,
   autoporgressCollectorTime,
   remainderSellResource,
-  logAmplitudeEvent
+  logAmplitudeEvent,
+  logAmplitudeRevenue,
+  farmBalance,
 } from '../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -129,6 +131,7 @@ import {
 } from '../../general/ads';
 import setCollector from './collector';
 import { showEventTutorial, doneEventTutor_0 } from './../Event/Unicorns/tutorial';
+import axios from 'axios';
 
 class Sheep extends Phaser.Scene {
   constructor() {
@@ -295,6 +298,8 @@ class Sheep extends Phaser.Scene {
   public remainderSellResource = remainderSellResource.bind(this);
   public findFreeTerritory = findFreeTerritory.bind(this);
   public logAmplitudeEvent = logAmplitudeEvent.bind(this);
+  public logAmplitudeRevenue = logAmplitudeRevenue.bind(this);  
+  public farmBalance = farmBalance.bind(this);
 
   public init(state: Istate): void {
 
@@ -333,15 +338,19 @@ class Sheep extends Phaser.Scene {
     // cursors.space.on('down', (): void => {
     // //   // this.state.daily = 2;
     // //   // this.state.user.takenReward = false;
-    // //   // this.state.user.diamonds = 10000000;
-    // //   // let tasks = this.partTasks();
-    // //   // for (let i in tasks) {
-    // //   //   tasks[i].done = 1;
-    // //   //   tasks[i].got_awarded = 1;
-    // //   // }
+    // // let tasks = this.partTasks();
+    // // for (let i in tasks) {
+    //   //   tasks[i].done = 1;
+    //   //   tasks[i].got_awarded = 1;
+    //   // }
     //   // this.scene.launch('Fortune', this.state);
+    //   // this.state.user.diamonds = 15
+    //   // this.state.user.additionalTutorial.eventTutorial = 0;
+    //   // this.state.progress.event.eventPoints = -1 
+    //   // this.state.user.diamonds = 100;
+    //   // this.state.user.boosts.sheep.collector4 = 1
+    //   // this.state.user.boosts.sheep.collector12 = 1
     // });
-
   }
 
 
