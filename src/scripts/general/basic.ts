@@ -1503,7 +1503,6 @@ function loadData(response): void {
   this.state.daily = response.data.progress.daily;
   this.state.timeToNewDay = response.data.progress.timeToNewDay;
 
-  // массив с настройками для овечей фермы
   const sheepSettings: IsheepSettings = {
     sheepBadPercent: response.data.settings.sheep.badPercent,
     sheepPrice: response.data.settings.sheep.price,
@@ -1521,7 +1520,7 @@ function loadData(response): void {
     sheepDiamondsTime: response.data.settings.sheep.diamondAnimalTime,
     feedBoostPrice: response.data.settings.sheep.feedBoostPrice,
   }
-  // массив с настройками для куриной фермы
+
   const chickenSettings: IchickenSettings = {
     chickenBadPercent: response.data.settings.chicken.badPercent,
     chickenPrice: response.data.settings.chicken.price,
@@ -1802,7 +1801,7 @@ function loadData(response): void {
       efficiency: 130,
     },
   ];
-  // массив с настройками для коровьей фермы
+
   const cowSettings: IcowSettings = {
     cowBadPercent: response.data.settings.cow.badPercent,
     cowPrice: response.data.settings.cow.price,
@@ -2076,18 +2075,6 @@ function loadData(response): void {
     });
   };
 
-  const eventAnimals: IeventAnimal[] = []; // IeventAnimal
-  for (let i in response.data.event.animals) {
-    let animal = response.data.event.animals[i];
-    eventAnimals.push({
-      _id: animal._id,
-      type: animal.type,
-      activeAnimal: animal.activeAnimal,
-      x: animal.x,
-      y: animal.y,
-    });
-  };
-
   this.state.sheep = sheep;
   this.state.chicken = chicken;
   this.state.cow = cow;
@@ -2293,7 +2280,6 @@ function loadData(response): void {
   }
 
   const cowTasks: Itasks[] = [];
-
   for (let i in tasks) if (tasks[i].farm === 2) cowTasks.push(tasks[i]);
   for (let i in response.data.user.cow_tasks) {
     const usersTask = response.data.user.cow_tasks[i];
@@ -2307,6 +2293,7 @@ function loadData(response): void {
 
   this.state.sheepTasks = sheepTasks;
   this.state.chickenTasks = chickenTasks;
+  this.state.cowTasks = cowTasks;
 
   this.state.sheepCollectorSettings = response.data.settings.sheep.collectorSettings;
   this.state.chickenCollectorSettings = response.data.settings.chicken.collectorSettings;
