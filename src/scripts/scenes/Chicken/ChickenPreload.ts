@@ -3,8 +3,7 @@ import tasks from '../../tasks';
 import Socket from '../../Socket';
 import loadChicken from '../../local/loadChicken';
 import basicTerritories from '../../local/chickenTerritories';
-import { loadingScreen } from '../../general/basic';
-import { checkStorage } from '../../general/basic';
+import { checkStorage, loadingScreen, loadData } from '../../general/basic';
 
 const pixel: string = require("./../../../assets/images/pixel.png");
 const bg: string = require("./../../../assets/images/scroll-bg.png");
@@ -230,6 +229,7 @@ class ChickenPreload extends Phaser.Scene {
 
   public loadChicken = loadChicken.bind(this);
   public loadingScreen = loadingScreen.bind(this);
+  public loadData = loadData.bind(this);
 
   constructor() {
     super('ChickenPreload');
@@ -541,218 +541,14 @@ class ChickenPreload extends Phaser.Scene {
       // }
 
       // if (response.data.user.chickenSaveCounter >= localSaveCounter) {
-
-        // общие настройки
-        this.state.autoSaveSpeed = response.data.settings.general.autoSaveSpeed;
-        this.state.maxMerginTime = response.data.settings.general.maxMerginTime;
-        this.state.herdBoostSpeedAnimal = response.data.settings.general.herdBoostSpeedAnimal;
-        this.state.herdBoostTime = response.data.settings.general.herdBoostTime;
-        this.state.herdBoostPrice = response.data.settings.general.herdBoostPrice;
-        this.state.herdBoostDelay = response.data.settings.general.herdBoostDelay;
-        this.state.packages = response.data.settings.packages;
-        
-        // массив с настройками для куриной фермы
-
-        const chickenSettings: IchickenSettings = {
-          chickenBadPercent: response.data.settings.chicken.badPercent,
-          chickenPrice: response.data.settings.chicken.price,
-          territoriesChickenSettings: response.data.settings.chicken.territoriesSettings,
-          chickenSettings: response.data.settings.chicken.chickenSettings,
-          territoriesChickenPrice: response.data.settings.chicken.territoriesPrice,
-          chickenFairLevels: response.data.settings.chicken.fairs,
-          chickenParts: response.data.settings.chicken.parts,
-          buyBetterBreedChicken: response.data.settings.chicken.buyBetterBreed,
-          doubledСollectorPrice: response.data.settings.chicken.doubledСollectorPrice,
-          collectorPrice4: response.data.settings.chicken.collectorPrice4,
-          collectorPrice12: response.data.settings.chicken.collectorPrice12,
-          unlockCollector4: response.data.settings.chicken.unlockCollector4,
-          unlockCollector12: response.data.settings.chicken.unlockCollector12,
-          chickenDiamondsTime: response.data.settings.chicken.diamondAnimalTime,
-          feedBoostPrice: response.data.settings.chicken.feedBoostPrice,
-        };
-
-        this.state.chickenSettings = chickenSettings;
-
-        const chicken: Ichicken[] = [];
-
-        for (let i in response.data.user.chicken) {
-          
-          let chick = response.data.user.chicken[i];
-          chicken.push({
-            _id: chick._id,
-            type: chick.type,
-            egg: chick.egg,
-            x: chick.x,
-            y: chick.y,
-            counter: chick.counter,
-            diamond: chick.diamond,
-            vector: chick.vector
-          });
-
-        }
-        
-        const chickenTerritories: Iterritories[] = [];
-        
-        for (let i in response.data.user.chicken_territories) {
-
-          let territory = response.data.user.chicken_territories[i];
-
-          chickenTerritories.push({
-            _id: territory._id,
-            block: territory.block,
-            position: territory.position,
-            type: territory.type,
-            volume: territory.volume,
-            improve: territory.improve,
-            money: territory.money
-          });
-
-        }
-
-        if (chickenTerritories.length === 0) {
-          for (let i in basicTerritories) {
-
-            let territory = basicTerritories[i];
-  
-            if (territory.block === 0 && territory.position === 1) territory.type = 7;
-            if (territory.block === 0 && territory.position === 2) territory.type = 6;
-            
-            chickenTerritories.push({
-              _id: territory._id,
-              block: territory.block,
-              position: territory.position,
-              type: territory.type,
-              volume: territory.volume,
-              improve: territory.improve,
-              money: territory.money
-            });
-          }
-        }
-        const chickenEggs: IchickenEgg[] = [];
-
-        for (let i in response.data.user.chicken_eggs) {
-
-          let egg = response.data.user.chicken_eggs[i];
-
-          chickenEggs.push({
-            _id: egg._id,
-            x: egg.x > 0 && egg.x < 720 ? egg.x : Phaser.Math.Between(500, 700),
-            y: egg.y > 480 && egg.y < 2160 ? egg.y : Phaser.Math.Between(500, 700),
-            type: egg.type
-          });
-
-        }
-
-        const user: Iuser = {
-          diamonds: response.data.user.diamonds,
-          id: response.data.user._id,
-          xp: response.data.user.xp,
-          hash: response.data.user.hash,
-          login: response.data.user.login,
-          counter: response.data.user.counter,
-          mail: response.data.user.mail,
-          level: response.data.user.level,
-          additionalTutorial: response.data.user.additional_tutorial,
-          takenReward: response.data.user.taken_reward,
-          status: response.data.user.status,
-          statuses: response.data.user.statuses,
-          starterpack: response.data.user.starterpack,
-          boosts: response.data.user.boosts,
-
-        }
-
-        if (response.data.user.chicken_part === 0) response.data.user.chicken_part = 1;
-
-        const userChicken: IuserChicken = {
-          money: response.data.user.chicken_money,
-          fair: response.data.user.chicken_fair,
-          part: response.data.user.chicken_part,
-          countChicken: response.data.user.count_chicken,
-          collector: response.data.user.chicken_collector,
-          collectorLevel: response.data.user.chickenCollectorLevel,
-          collectorTakenTime: response.data.user.chicken_collector,
-          diamondAnimalTime: response.data.user.diamonds_chicken_time,
-          tutorial: response.data.user.chicken_tutor,
-          autosaveCounter: response.data.user.chickenSaveCounter,
-          diamondAnimalAd: response.data.user.diamonds_chicken_ad,
-          takenHerdBoost: response.data.user.takenHerdBoostChicken,
-          feedBoostTime: response.data.user.feedBoostTimeChicken,
-        }
-        
-        const Amplitude = this.state.amplitude;
-        const identify = new Amplitude.Identify().set('CatcherSheep', userChicken.collectorLevel);
-        Amplitude.getInstance().identify(identify);
-
-        const chickenTasks: Itasks[] = [];
-        for (let i in tasks) if (tasks[i].farm === 2) chickenTasks.push(tasks[i]);
-        for (let i in response.data.user.chicken_tasks) {
-
-          const usersTask = response.data.user.chicken_tasks[i];
-          const task = tasks.find((task: Itasks) => task.id === usersTask.task_id);
-
-          if (task) {
-            task.done = usersTask.done;
-            task.got_awarded = usersTask.got_awarded;
-            task.progress = usersTask.progress;
-          }
-
-        }
-        
-        this.state.chickenCollectorSettings = response.data.settings.chicken.collectorSettings;
-        this.state.dailyAwards = response.data.user.dailyAwards;
-        this.state.newbieTime = response.data.progress.newbieTime;
-        this.state.daily = response.data.progress.daily;
+        this.loadData(response);
         this.state.offlineTime = response.data.progress.chickenOfflineTime;
-        this.state.timeToNewDay = response.data.progress.timeToNewDay;
-        const progress: Iprogress = {
-          sheep: {
-            part: response.data.user.sheep_part,
-            max: response.data.settings.sheep.parts.length,
-            open: true,
-            price: response.data.settings.farms[0].price,
-            unlock: response.data.settings.farms[0].open,
-            donate: response.data.settings.farms[0].donate,
-            collector: response.data.user.shaver_time,
-            offlineTime: response.data.progress.sheepOfflineTime,
-          },
-          chicken: {
-            part: response.data.user.chicken_part,
-            max: response.data.settings.chicken.parts.length,
-            open: response.data.user.chicken_part > 0,
-            price: response.data.settings.farms[1].price,
-            unlock: response.data.settings.farms[1].open,
-            donate: response.data.settings.farms[1].donate,
-            collector: response.data.user.chicken_collector,
-            offlineTime: response.data.progress.chickenOfflineTime,
-          },
-          cow: {
-            part: response.data.user.cow_part,
-            max: response.data.settings.cow.parts.length,
-            open: response.data.user.cow_part > 0,
-            price: response.data.settings.farms[2].price,
-            unlock: response.data.settings.farms[2].open,
-            donate: response.data.settings.farms[2].donate,
-            collector: response.data.user.cow_collector,
-            offlineTime: response.data.progress.cowOfflineTime,
-          },
-          event: {
-            eventPoints: response.data.user.eventPoints,
-            startTime: response.data.progress.event.startTime,
-            endTime: response.data.progress.event.endTime,
-            open: response.data.settings.event.open,
-            type: response.data.settings.event.type,
-          }
-        }
-        this.state.progress = progress;
-        this.state.chickenTerritories = chickenTerritories;
-        this.state.chicken = chicken;
-        this.state.chickenEggs = chickenEggs;
-        this.state.user = user;
-        this.state.userChicken = userChicken;
-        this.state.chickenTasks = chickenTasks;
         this.state.farm = 'Chicken';
         this.userReady = true;
         this.state.nativeCounter = [0, 0, 0, 0];
+        const Amplitude = this.state.amplitude;
+        const identify = new Amplitude.Identify().set('CatcherSheep', this.state.userChicken.collectorLevel);
+        Amplitude.getInstance().identify(identify);
       // } else {
       //   this.loadChicken(response.data.user.counter);
       // }

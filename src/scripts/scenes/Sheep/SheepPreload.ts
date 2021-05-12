@@ -1,10 +1,7 @@
 import axios from 'axios';
-import tasks from '../../tasks';
 import Socket from '../../Socket';
 import loadSheep from '../../local/loadSheep';
-import { loadingScreen } from '../../general/basic';
-import basicTerritories from '../../local/sheepTerritories';
-import { checkStorage } from '../../general/basic';
+import { checkStorage, loadData, loadingScreen } from '../../general/basic';
 
 const pixel: string = require("./../../../assets/images/pixel.png");
 const bg: string = require("./../../../assets/images/scroll-bg.png");
@@ -337,6 +334,7 @@ class SheepPreload extends Phaser.Scene {
 
   public loadSheep = loadSheep.bind(this);
   public loadingScreen = loadingScreen.bind(this);
+  public loadData = loadData.bind(this);
 
   constructor() {
     super('SheepPreload');
@@ -753,204 +751,17 @@ class SheepPreload extends Phaser.Scene {
       // }
 
       // if (response.data.user.sheepSaveCounter >= localSaveCounter) {
-
-        // общие настройки
-        this.state.autoSaveSpeed = response.data.settings.general.autoSaveSpeed;
-        this.state.maxMerginTime = response.data.settings.general.maxMerginTime;
-        this.state.herdBoostSpeedAnimal = response.data.settings.general.herdBoostSpeedAnimal;
-        this.state.herdBoostTime = response.data.settings.general.herdBoostTime;
-        this.state.herdBoostPrice = response.data.settings.general.herdBoostPrice;
-        this.state.herdBoostDelay = response.data.settings.general.herdBoostDelay;
-        this.state.packages = response.data.settings.packages;
-          
-        // массив с настройками для овечей фермы
-
-        const sheepSettings: IsheepSettings = {
-          sheepBadPercent: response.data.settings.sheep.badPercent,
-          sheepPrice: response.data.settings.sheep.price,
-          territoriesSheepSettings: response.data.settings.sheep.territoriesSettings,
-          sheepSettings: response.data.settings.sheep.sheepSettings,
-          territoriesSheepPrice: response.data.settings.sheep.territoriesPrice,
-          sheepFairLevels: response.data.settings.sheep.fairs,
-          sheepParts: response.data.settings.sheep.parts,
-          buyBetterBreedSheep: response.data.settings.sheep.buyBetterBreed,
-          doubledСollectorPrice: response.data.settings.sheep.doubledСollectorPrice,
-          collectorPrice4: response.data.settings.sheep.collectorPrice4,
-          collectorPrice12: response.data.settings.sheep.collectorPrice12,
-          unlockCollector4: response.data.settings.sheep.unlockCollector4,
-          unlockCollector12: response.data.settings.sheep.unlockCollector12,
-          sheepDiamondsTime: response.data.settings.sheep.diamondAnimalTime,
-          feedBoostPrice: response.data.settings.sheep.feedBoostPrice,
-        }
-        this.state.sheepSettings = sheepSettings;
-
-        const sheep: Isheep[] = [];
-
-        for (let i in response.data.user.sheep) {
-          
-          const lamb = response.data.user.sheep[i];
-          sheep.push({
-            _id: lamb._id,
-            type: lamb.type,
-            wool: lamb.wool,
-            x: lamb.x,
-            y: lamb.y,
-            counter: lamb.counter,
-            diamond: lamb.diamond,
-            vector: lamb.vector
-          });
-
-        }
-      
-        const sheepTerritories: Iterritories[] = [];
+        this.loadData(response);
         
-        for (let i in response.data.user.sheep_territories) {
-
-          let territory = response.data.user.sheep_territories[i];
-
-          if (territory.block === 0 && territory.position === 1) territory.type = 7;
-          if (territory.block === 0 && territory.position === 2) territory.type = 6;
-          
-          sheepTerritories.push({
-            _id: territory._id,
-            block: territory.block + 1,
-            position: territory.position,
-            type: territory.type,
-            volume: territory.volume,
-            improve: territory.improve,
-            money: territory.money
-          });
-        }
-
-        if (sheepTerritories.length === 0) {
-          for (let i in basicTerritories) {
-
-            let territory = basicTerritories[i];
-  
-            if (territory.block === 0 && territory.position === 1) territory.type = 7;
-            if (territory.block === 0 && territory.position === 2) territory.type = 6;
-            
-            sheepTerritories.push({
-              _id: territory._id,
-              block: territory.block,
-              position: territory.position,
-              type: territory.type,
-              volume: territory.volume,
-              improve: territory.improve,
-              money: territory.money
-            });
-          }
-        }
-        
-        const user: Iuser = {
-          diamonds: response.data.user.diamonds,
-          id: response.data.user._id,
-          xp: response.data.user.xp,
-          hash: response.data.user.hash,
-          login: response.data.user.login,
-          counter: response.data.user.counter,
-          mail: response.data.user.mail,
-          level: response.data.user.level,
-          additionalTutorial: response.data.user.additional_tutorial,
-          takenReward: response.data.user.taken_reward,
-          status: response.data.user.status,
-          statuses: response.data.user.statuses,
-          starterpack: response.data.user.starterpack,
-          boosts: response.data.user.boosts,          
-        }
-
-        const userSheep: IuserSheep = {
-          money: response.data.user.money,
-          fair: response.data.user.sheep_fair,
-          part: response.data.user.sheep_part,
-          countSheep: response.data.user.count_sheep,
-          collector: response.data.user.shaver_time,
-          collectorLevel: response.data.user.sheepCollectorLevel,
-          collectorTakenTime: response.data.user.shaver_time,
-          diamondAnimalTime: response.data.user.diamonds_sheep_time,
-          tutorial: response.data.user.tutor,
-          autosaveCounter: response.data.user.sheepSaveCounter,
-          diamondAnimalAd: response.data.user.diamonds_sheep_ad,
-          takenHerdBoost: response.data.user.takenHerdBoostSheep,
-          feedBoostTime: response.data.user.feedBoostTimeSheep,
-        }
-
-        const Amplitude = this.state.amplitude;
-        const identify = new Amplitude.Identify().set('CatcherSheep', userSheep.collectorLevel);
-        Amplitude.getInstance().identify(identify);
-
-        if (response.data.user.tutor === 0) {
-          this.state.amplitude.getInstance().logEvent('tutor_before_load', {});
-        }
-
-        const sheepTasks: Itasks[] = [];
-
-        for (let i in tasks) if (tasks[i].farm === 1) sheepTasks.push(tasks[i]);
-        for (let i in response.data.user.sheep_tasks) {
-
-          let usersTask = response.data.user.sheep_tasks[i];
-          let task = tasks.find((task: Itasks) => task.id === usersTask.task_id);
-          if (task) {
-            task.done = usersTask.done;
-            task.got_awarded = usersTask.got_awarded;
-            task.progress = usersTask.progress;
-          }
-
-        }
-        this.state.sheepCollectorSettings = response.data.settings.sheep.collectorSettings;
-        this.state.dailyAwards = response.data.user.dailyAwards;
-        this.state.newbieTime = response.data.progress.newbieTime;
-        this.state.daily = response.data.progress.daily;
         this.state.offlineTime = response.data.progress.sheepOfflineTime;
-        this.state.timeToNewDay = response.data.progress.timeToNewDay;
-        const progress: Iprogress = {
-          sheep: {
-            part: response.data.user.sheep_part,
-            max: response.data.settings.sheep.parts.length,
-            open: true,
-            price: response.data.settings.farms[0].price,
-            unlock: response.data.settings.farms[0].open,
-            donate: response.data.settings.farms[0].donate,
-            collector: response.data.user.shaver_time,
-            offlineTime: response.data.progress.sheepOfflineTime,
-          },
-          chicken: {
-            part: response.data.user.chicken_part,
-            max: response.data.settings.chicken.parts.length,
-            open: response.data.user.chicken_part > 0,
-            price: response.data.settings.farms[1].price,
-            unlock: response.data.settings.farms[1].open,
-            donate: response.data.settings.farms[1].donate,
-            collector: response.data.user.chicken_collector,
-            offlineTime: response.data.progress.chickenOfflineTime,
-          },
-          cow: {
-            part: response.data.user.cow_part,
-            max: response.data.settings.cow.parts.length,
-            open: response.data.user.cow_part > 0,
-            price: response.data.settings.farms[2].price,
-            unlock: response.data.settings.farms[2].open,
-            donate: response.data.settings.farms[2].donate,
-            collector: response.data.user.cow_collector,
-            offlineTime: response.data.progress.cowOfflineTime,
-          },
-          event: {
-            eventPoints: response.data.user.eventPoints,
-            startTime: response.data.progress.event.startTime,
-            endTime: response.data.progress.event.endTime,
-            open: response.data.settings.event.open,
-            type: response.data.settings.event.type,
-          }
-        }
-        this.state.progress = progress;
-        this.state.sheepTerritories = sheepTerritories;
-        this.state.sheep = sheep;
-        this.state.user = user;
-        this.state.userSheep = userSheep;
-        this.state.sheepTasks = sheepTasks;
         this.state.farm = 'Sheep';
         this.state.nativeCounter = [0, 0, 0, 0];
         this.userReady = true;
+        
+        const Amplitude = this.state.amplitude;
+        const identify = new Amplitude.Identify().set('CatcherSheep', this.state.userSheep.collectorLevel);
+        Amplitude.getInstance().identify(identify);
+        if (response.data.user.tutor === 0) this.state.amplitude.getInstance().logEvent('tutor_before_load', {});
       // } else {
       //   this.loadSheep(response.data.user.counter);
       // }
