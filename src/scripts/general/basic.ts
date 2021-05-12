@@ -1823,7 +1823,7 @@ function loadData(response): void {
     cowFactorySettings: factoryCowSettings,
   };
 
-  let territoriesCowSettings: IterritoriesCowSettings[] = [
+  const territoriesCowSettings: IterritoriesCowSettings[] = [
     { 
       improve: 1, 
       regeneration: 11, 
@@ -2029,15 +2029,15 @@ function loadData(response): void {
   cowSettings.territoriesCowSettings = territoriesCowSettings;
   
   for (const key in resSheepSettings) {
-    if (resSheepSettings[key] === undefined) resSheepSettings[key] = sheepSettings[key];
+    if (resSheepSettings[key] === undefined || resSheepSettings[key] === null) resSheepSettings[key] = sheepSettings[key];
   }
 
   for (const key in resChickenSettings) {
-    if (resSheepSettings[key] === undefined) resChickenSettings[key] = chickenSettings[key];
+    if (resChickenSettings[key] === undefined || resChickenSettings[key] === null) resChickenSettings[key] = chickenSettings[key];
   }
 
   for (const key in resCowSettings) {
-    if (resSheepSettings[key] === undefined) resCowSettings[key] = cowSettings[key];
+    if (resCowSettings[key] === undefined || resCowSettings[key] === null) resCowSettings[key] = cowSettings[key];
   }
 
   this.state.sheepSettings = resSheepSettings;
@@ -2216,7 +2216,7 @@ function loadData(response): void {
     boosts: response.data.user.boosts,          
   };
   this.state.user = user;
-  
+
   if (response.data.user.chicken_part === 0 && this.state.farm === 'Chicken') response.data.user.chicken_part = 1;
   if (response.data.user.cow_part === 0 && this.state.farm === 'Cow') response.data.user.cow_part = 1;
 
