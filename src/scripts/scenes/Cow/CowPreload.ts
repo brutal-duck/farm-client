@@ -1,7 +1,8 @@
 import axios from 'axios';
 import Socket from '../../Socket';
 import loadCow from '../../local/loadCow';
-import { loadingScreen, checkStorage, loadData } from '../../general/basic';
+import loadData from '../../general/loadData';
+import { loadingScreen, checkStorage } from '../../general/basic';
 
 const pixel: string = require("./../../../assets/images/pixel.png");
 const bg: string = require("./../../../assets/images/scroll-bg.png");
