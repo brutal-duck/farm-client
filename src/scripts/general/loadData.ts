@@ -617,7 +617,7 @@ export default function loadData(response: any): void {
     const territory = response.data.user.sheep_territories[i];
     sheepTerritories.push({
       _id: territory._id,
-      block: territory.block + 1,
+      block: this.state.farm === 'Sheep' ? territory.block + 1 : territory.block,
       position: territory.position,
       type: territory.type,
       volume: territory.volume,
@@ -703,7 +703,6 @@ export default function loadData(response: any): void {
   this.state.sheepTerritories = sheepTerritories;
   this.state.chickenTerritories = chickenTerritories;
   this.state.cowTerritories = cowTerritories;
-
   // яйца
   const chickenEggs: IchickenEgg[] = [];
   for (let i in response.data.user.chicken_eggs) {
