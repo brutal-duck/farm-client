@@ -242,7 +242,7 @@ export default function autoprogress(load: boolean = false): void {
                 y: Phaser.Math.Between(minY, maxY),
                 _id: 'local_' + randomString(18)
               }
-              Egg.create(this, egg);
+              state.chickenEggs.push(egg);
             }
           }
         }
