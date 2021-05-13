@@ -1,5 +1,4 @@
 import Scrolling from '../../../libs/Scrolling';
-
 import {
   click,
   clickTerritory,
@@ -76,7 +75,7 @@ import {
   buildConfetti
 } from './territories';
 import setCollector from './collector';
-import autosave from './autosave';
+import autosave from '../../../general/autosave';
 import { 
   flyAnimal, 
   teleportation, 

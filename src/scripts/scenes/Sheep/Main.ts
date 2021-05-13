@@ -5,7 +5,7 @@ import drag from './drag';
 import sheepBrain from './sheepBrain';
 import interval from './interval';
 import autoprogress from '../../general/autoprogress';
-import autosave from './autosave';
+import autosave from '../../general/autosave';
 import {  
   improveCollector, 
   createBoostAnimal,   

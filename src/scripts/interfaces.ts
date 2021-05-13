@@ -69,7 +69,6 @@ interface IchickenUserAutoSave {
   eventPoints: number;
   status: string;
   boosts: Iboosts;
-
 }
 interface IcowUserAutoSave {
   diamonds: number;
@@ -91,8 +90,6 @@ interface IcowUserAutoSave {
   eventPoints: number;
   status: string;
   boosts: Iboosts;
-
-
 }
 interface IeventUserAutoSave {
   diamonds: number;
@@ -110,7 +107,39 @@ interface IeventUserAutoSave {
   additionalTutorial: IadditionalTutorial;
   status: string;
   boosts: Iboosts;
-  
+}
+interface IuserAutoSave {
+  diamonds: number;
+  xp: number;
+  eventPoints: number;
+  status: string;
+  boosts: Iboosts;
+  additionalTutorial: IadditionalTutorial;
+  takenReward: boolean;
+  userSheep: IuserSheep;
+  userChicken: IuserChicken;
+  userCow: IuserCow;
+  userUnicorn?: IuserEvent;
+}
+interface IdataAutoSave {
+  id: string;
+  hash: string;
+  counter: number,
+  dailyAwards: boolean[];
+  user: IuserAutoSave;
+  sheepTasks: Itasks[];
+  sheepTerritories: Iterritories[];
+  sheep: Isheep[];
+  chickenTasks: Itasks[];
+  chickenTerritories: Iterritories[];
+  chicken: Ichicken[];
+  chickenEggs: IchickenEgg[];
+  cow: Icow[];
+  cowTasks: Itasks[];
+  cowTerritories: Iterritories[];
+  unicorn: IeventAnimal[];
+  unicornTerritories: IeventTerritories[];
+  unicornResource: IeventResource[];
 }
 // for state
 interface IadditionalTutorial {

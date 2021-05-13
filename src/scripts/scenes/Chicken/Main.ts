@@ -5,7 +5,7 @@ import drag from './drag';
 import chickenBrain from './chickenBrain';
 import interval from './interval';
 import autoprogress from '../../general/autoprogress';
-import autosave from './autosave';
+import autosave from '../../general/autosave';
 import {  
   click,
   clickTerritory,
