@@ -127,7 +127,6 @@ export default function autoprogress(load: boolean = false): void {
       state.userChicken.diamondAnimalTime = 0;
       state.userChicken.diamondAnimalAd = true;
     }
-    this.autoporgressCollectorTime();
      // время буста комбикорм
      let wasFeedBoost: number = 0;
   
@@ -358,7 +357,6 @@ export default function autoprogress(load: boolean = false): void {
     this.state.userSheep.diamondAnimalTime = 0;
     this.state.userSheep.diamondAnimalAd = true;
   }
-  this.autoporgressCollectorTime();
   // время буста комбикорм
   let wasFeedBoost: number = 0;
 
@@ -512,7 +510,6 @@ export default function autoprogress(load: boolean = false): void {
       this.state.userChicken.diamondAnimalTime = 0;
       this.state.userChicken.diamondAnimalAd = true;
     }
-    this.autoporgressCollectorTime();
      // время буста комбикорм
     let wasFeedBoost: number = 0;
 
@@ -777,7 +774,6 @@ export default function autoprogress(load: boolean = false): void {
   }
 
   const unicornAutoprogress = (): void => {
-    this.autoporgressCollectorTime();
    // время буста комбикорм
     let wasFeedBoost: number = 0;
 
@@ -1004,4 +1000,5 @@ export default function autoprogress(load: boolean = false): void {
       cowOfflineProgress(state.offlineTime);
     }
   }
+  this.autoporgressCollectorTime();
 }
