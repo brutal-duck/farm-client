@@ -4,7 +4,7 @@ import world from './world';
 import drag from './drag';
 import sheepBrain from './sheepBrain';
 import interval from './interval';
-import autoprogress from './autoprogress';
+// import autoprogress from './autoprogress';
 import autosave from './autosave';
 import {  
   improveCollector, 
@@ -42,6 +42,7 @@ import {
   logAmplitudeRevenue,
   farmBalance,
   randomString,
+  autoprogress
 } from '../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -132,7 +133,6 @@ import {
 } from '../../general/ads';
 import setCollector from './collector';
 import { showEventTutorial, doneEventTutor_0 } from './../Event/Unicorns/tutorial';
-import axios from 'axios';
 
 class Sheep extends Phaser.Scene {
   constructor() {

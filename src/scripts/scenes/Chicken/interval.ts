@@ -379,6 +379,7 @@ function interval(): void {
     }
 
     this.intervalPorgressCollectorTime();
+    arrayInterval.bind(this)();
 
   }, callbackScope: this, loop: true });
 
