@@ -11,9 +11,12 @@ export default function autosave(): void {
   let unicornTerritories = undefined;
   let unicornResource = undefined;
   let userUnicorn = undefined;
+  let sheepTasks: Itasks[] = state.sheepTasks;
+  let chickenTasks: Itasks[] = state.chickenTasks;
+  let cowTasks: Itasks[] = state.cowTasks;
 
   if (state.farm === 'Sheep') {
-    const tasks: Itasks[] = this.partTasks();
+    sheepTasks = this.partTasks();
     const territories: Iterritories[] = [];
     const sheep: Isheep[] = [];
 
@@ -49,9 +52,8 @@ export default function autosave(): void {
 
     state.sheep = sheep;
     state.sheepTerritories = territories;
-    state.sheepTasks = tasks;
   } else if (state.farm === 'Chicken') {
-    const tasks: Itasks[] = this.partTasks();
+    chickenTasks = this.partTasks();
     const territories: Iterritories[] = [];
     const chicken: Ichicken[] = [];
     const eggs: IchickenEgg[] = [];
@@ -101,9 +103,8 @@ export default function autosave(): void {
     state.chicken = chicken;
     state.chickenTerritories = territories;
     state.chickenEggs = eggs;
-    state.chickenTasks = tasks;
   } else if (state.farm === 'Cow') {
-    const tasks: Itasks[] = this.partTasks();
+    cowTasks = this.partTasks();
     const territories: Iterritories[] = [];
     const cow: Icow[] = [];
 
@@ -139,7 +140,6 @@ export default function autosave(): void {
 
     state.cow = cow;
     state.cowTerritories = territories;
-    state.cowTasks = tasks;
   } else if (state.farm === 'Unicorn') {
     userUnicorn = state.userUnicorn;
     this.getEventRaiting();
@@ -216,15 +216,15 @@ export default function autosave(): void {
 
     sheep: state.sheep,
     sheepTerritories: state.sheepTerritories,
-    sheepTasks: state.sheepTasks,
+    sheepTasks: sheepTasks,
 
     chicken: state.chicken,
     chickenEggs: state.chickenEggs,
     chickenTerritories: state.chickenTerritories,
-    chickenTasks: state.chickenTasks,
+    chickenTasks: chickenTasks,
 
     cow: state.cow,
-    cowTasks: state.cowTasks,
+    cowTasks: cowTasks,
     cowTerritories: state.cowTerritories,
 
     unicorn: unicorn,
