@@ -78,10 +78,6 @@ function world(): void {
   // if (this.state.userCow.tutorial === 0) {
   //   this.showTutorial();
   // }
-
-  // расчет оффлайн прогресса
-  // this.autoprogress(true);
-  
 }
 
 function getTerritoryType(data: Iterritories): string {

@@ -240,7 +240,7 @@ class Chicken extends Phaser.Scene {
     this.settings = state.chickenSettings;
     this.caveIconsTimer = 0;
     console.log('Chicken');
-    
+    this.autoprogress(true);
   }
 
 

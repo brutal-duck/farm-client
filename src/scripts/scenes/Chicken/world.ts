@@ -330,11 +330,7 @@ function world(): void {
   // туториал, если нужен
   if (this.state.userChicken.tutorial === 0) {
     this.showTutorial();
-  }
-
-  // расчет оффлайн прогресса
-  this.autoprogress(true);
-  
+  } 
 }
 
 export default world;

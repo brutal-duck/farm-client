@@ -23,6 +23,7 @@ function world(): void {
     this.scrolling.wheel = true;
   });
 
+
   // строим территории
   this.territories = this.physics.add.group(); // группа территорий
   let forest: number = 1;
@@ -302,11 +303,10 @@ function world(): void {
         }
       }
     });
-
   });
 
   this.buildBorders();
-
+  
   // группа овец
   this.sheep = this.physics.add.group({
     collideWorldBounds: true
@@ -324,10 +324,6 @@ function world(): void {
   if (this.state.userSheep.tutorial < 100) {
     this.showTutorial();
   }
-
-  // расчет оффлайн прогресса
-  this.autoprogress(true);
-
 }
 
 export default world;

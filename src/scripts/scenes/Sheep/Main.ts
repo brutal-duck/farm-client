@@ -315,7 +315,7 @@ class Sheep extends Phaser.Scene {
     this.collectorTimer = null;
     this.counterWithoutCollector = 0;
     console.log('Sheep');
-    
+    this.autoprogress(true);
   }
 
 

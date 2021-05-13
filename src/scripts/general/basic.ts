@@ -2443,8 +2443,8 @@ function farmBalance(farm: string): Ibalance {
   let notEnoughGrass: boolean = false;
   let notEnoughWater: boolean = false;
 
-  const animals = this.state[farm.toLocaleLowerCase()];
-  const settings = this.state[`${farm.toLocaleLowerCase()}Settings`][`${farm.toLocaleLowerCase()}Settings`];
+  const animals = this.state[farm.toLowerCase()];
+  const settings = this.state[`${farm.toLowerCase()}Settings`][`${farm.toLowerCase()}Settings`];
   for (let i in animals) {
     const animal = animals[i];
     let breed: number;
@@ -2457,8 +2457,8 @@ function farmBalance(farm: string): Ibalance {
 
   grassConsumption = Math.round(grassConsumption / 2);
   waterConsumption = Math.round(waterConsumption / 2);
-  const territories: any[] = this.state[`${farm}Territories`];
-  const territoriesSettings = this.state[`territories${farm}Settings`];
+  const territories: Iterritories[] = this.state[`${farm.toLowerCase()}Territories`];
+  const territoriesSettings = this.state[`${farm.toLowerCase()}Settings`][`territories${farm}Settings`];
   for (let i in territories) {
     const territory = territories[i];
     if (territory.type === 2 || territory.type === 3) {
@@ -2560,35 +2560,32 @@ function autoprogress(load: boolean = false): void {
     // считаем сколько раз подстригли овец
     let balance: Ibalance = this.farmBalance('Sheep');
     let sheepWoolcuts: { id: string, type: number, count: number }[] = [];
-  
-    if (balance.waterRecovery > 0 && balance.grassRecovery > 0) {
-  
-      for (let i in state.sheep) {
-        let sheep = state.sheep[i];
-        let breed: number;
-        if (sheep.type === 0) breed = 1;
-        else breed = sheep.type;
-        let points: IsheepPoints = state.sheepSettings.sheepSettings.find((item: IsheepPoints) => item.breed === breed);
-        let wool: number = points.wool_growth;
-        if (balance.alarm) {
-          wool = Math.round(wool / 100 * state.sheepSettings.sheepBadPercent);
-          if (wool < 1) wool = 1;
-        }
-        let woolcuts: number = Math.floor((wool * wasCollector) / 1000);
-        if (woolcuts === 0) {
-          if (sheep.wool + (wool * wasCollector) > 1000) sheep.wool = 1000;
-          else sheep.wool += (wool * wasCollector);
-        }
-        if (state.userSheep.collector === 0) {
-          sheep.wool = 1000;
-        }
-        if (sheep.type !== 0) {
-          sheepWoolcuts.push({
-            id: sheep._id,
-            type: sheep.type,
-            count: woolcuts
-          });
-        }
+
+    for (let i in state.sheep) {
+      let sheep: Isheep = state.sheep[i];
+      let breed: number;
+      if (sheep.type === 0) breed = 1;
+      else breed = sheep.type;
+      let points: IsheepPoints = state.sheepSettings.sheepSettings.find((item: IsheepPoints) => item.breed === breed);
+      let wool: number = points.wool_growth;
+      if (balance.alarm) {
+        wool = Math.round(wool / 100 * state.sheepSettings.sheepBadPercent);
+        if (wool < 1) wool = 1;
+      }
+      let woolcuts: number = Math.floor((wool * wasCollector) / 1000);
+      if (woolcuts === 0) {
+        if (sheep.wool + (wool * wasCollector) > 1000) sheep.wool = 1000;
+        else sheep.wool += (wool * wasCollector);
+      }
+      if (state.userSheep.collector === 0) {
+        sheep.wool = 1000;
+      }
+      if (sheep.type !== 0) {
+        sheepWoolcuts.push({
+          id: sheep._id,
+          type: sheep.type,
+          count: woolcuts
+        });
       }
     }
   
@@ -2604,7 +2601,6 @@ function autoprogress(load: boolean = false): void {
         }
       }
     }
-  
     // заполняем хранилища
     let wool: number[] = [];
     for (let i in sheepWoolcuts) {
@@ -2617,7 +2613,7 @@ function autoprogress(load: boolean = false): void {
       let price: number = state.sheepSettings.sheepSettings.find((data: IsheepPoints) => data.breed === wool[i]).long_wool;
       price *= (1 + feedPercent); // коэфф
       for (let j in state.sheepTerritories) {
-        if (state.sheepTerritories.entries[j].type === 5) {
+        if (state.sheepTerritories[j].type === 5) {
           let territory = state.sheepTerritories[j];
           let max: number = state.sheepSettings.territoriesSheepSettings.find((item: IterritoriesSheepSettings) => item.improve === territory.improve).woolStorage;
           if (territory.volume < max) {
@@ -2678,7 +2674,7 @@ function autoprogress(load: boolean = false): void {
     if (feedPercent >= 1 ) feedPercent = 1;
     
     // считаем сколько снесла курица яйцо
-    let balance: Ibalance = this.balance();
+    let balance: Ibalance = this.farmBalance('Chicken');
     let newEggs: { egg: boolean, id: string, type: number, count: number }[] = [];
   
     for (let i in state.chicken) {
@@ -2741,7 +2737,7 @@ function autoprogress(load: boolean = false): void {
         if (chicken) {
           const block: number = Math.ceil((chicken.x - 240) / this.height);
           const position: number = Math.ceil(chicken.y / this.height);
-          const territory = this.state.chickenTerritories.find((data: Iterritories) => data.block === block && data.position === position);
+          const territory = state.chickenTerritories.find((data: Iterritories) => data.block === block && data.position === position);
 
           if (territory) {
             let count: number = 0;
