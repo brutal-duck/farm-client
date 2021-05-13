@@ -2,7 +2,7 @@ import Scrolling from '../../libs/Scrolling';
 import world from './world';
 import drag from './drag';
 import interval from './interval';
-// import autoprogress from './autoprogress';
+import autoprogress from '../../general/autoprogress';
 import autosave from './autosave';
 import {  
   click,
@@ -29,7 +29,6 @@ import {
   logAmplitudeEvent,
   logAmplitudeRevenue,
   farmBalance,
-  autoprogress
 } from '../../general/basic';
 import {
   improveCollector,

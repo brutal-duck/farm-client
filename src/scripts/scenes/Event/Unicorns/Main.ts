@@ -83,7 +83,7 @@ import {
   updateTeleportation,
   dragEventAnimal, 
 } from './animations';
-import autoprogress from './autoprogress';
+import autoprogress from '../../../general/autoprogress';
 import { 
   showEventTutorial, 
   doneEventTutor_10, 
