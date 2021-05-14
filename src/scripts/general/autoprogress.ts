@@ -776,7 +776,7 @@ export default function autoprogress(load: boolean = false): void {
   const unicornAutoprogress = (): void => {
    // время буста комбикорм
     let wasFeedBoost: number = 0;
-
+    
     if (this.state.userUnicorn.feedBoostTime >= this.state.offlineTime) {
       this.state.userUnicorn.feedBoostTime -= this.state.offlineTime;
       wasFeedBoost = this.state.offlineTime;
@@ -980,6 +980,7 @@ export default function autoprogress(load: boolean = false): void {
     sheepOfflineProgress();
     chickenOfflineProgress();
     cowOfflineProgress();
+    if (state.farm === 'Unicorn') unicornAutoprogress();
   } else {
     if (state.farm === 'Sheep') {
       sheepAutoprogress();

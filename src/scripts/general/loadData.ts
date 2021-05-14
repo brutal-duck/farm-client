@@ -6,7 +6,10 @@ import basicUnicornCollector from '../local/unicornCollector';
 import { unicornSettings, sheepSettings, chickenSettings, cowSettings } from '../local/settings';
 
 export default function loadData(response: any): void {
-
+  if (this.state.farm === 'Sheep') this.state.offline = response.data.progress.sheepOfflineTime;
+  else if (this.state.farm === 'Chicken') this.state.offline = response.data.progress.chickenOfflineTime;
+  else if (this.state.farm === 'Cow') this.state.offline = response.data.progress.cowOfflineTime;
+  else if (this.state.farm === 'Unicorn') this.state.offline = response.data.progress.eventOfflineTime;
   // общие настройки
   this.state.autoSaveSpeed = response.data.settings.general.autoSaveSpeed;
   this.state.maxMerginTime = response.data.settings.general.maxMerginTime;

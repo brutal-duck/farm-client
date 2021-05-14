@@ -638,11 +638,11 @@ class EventPreload extends Phaser.Scene {
     axios.post(process.env.API + '/loadData', {
       hash: this.state.user.hash
     }).then((response) => {
-        this.loadData(response);
-        this.state.offlineTime = response.data.progress.eventOfflineTime;
-        this.state.farm = 'Unicorn';
-        this.userReady = true;
-        this.state.nativeCounter = [0, 0, 0, 0];
+      this.state.farm = 'Unicorn';
+      this.loadData(response);
+      this.state.offlineTime = response.data.progress.eventOfflineTime;
+      this.userReady = true;
+      this.state.nativeCounter = [0, 0, 0, 0];
     })
   }
 }
