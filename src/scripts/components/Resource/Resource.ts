@@ -11,15 +11,14 @@ export default abstract class Resource extends Phaser.GameObjects.Sprite {
   }
 
   public flyToPoint(target: Iposition): void {
-    this.scene.tweens.add({
+    this.setDepth(10000);
+    const anim: Phaser.Tweens.Tween = this.scene.tweens.add({
       targets: this,
       duration: 350,
       x: target.x,
       y: target.y,
-      onStart: (): void => {
-        this?.setDepth(this?.y);
-      },
-      onComplete: ():void => {
+      onComplete: (): void => {
+        anim?.stop();
         this?.destroy();
       }
     });
