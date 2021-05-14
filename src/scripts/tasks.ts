@@ -950,7 +950,7 @@ export default [
     got_awarded: 0,
     progress: 0,
     part: 16,
-    sort: 2,
+    sort: 4,
     type: 4,
     state: 12,
     count: 12,
