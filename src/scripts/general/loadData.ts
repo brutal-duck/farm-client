@@ -876,9 +876,10 @@ export default function loadData(response: any): void {
   if (
     this.state.progress.event.type === 1 
     && this.state.progress.event.startTime < 0 
-    && this.state.progress.endTime > 0 
+    && this.state.progress.event.endTime > 0 
     && this.state.progress.event.open
   ) {
+    console.log('tut')
 
     this.state.unicornSettings = unicornSettings;
 
