@@ -37,6 +37,7 @@ const tent: string = require("./../../../assets/images/cow/territories/tent.png"
 const house: string = require("./../../../assets/images/cow/territories/house.png");
 const ground: string = require("./../../../assets/images/cow/territories/ground.png");
 const repository: string = require("./../../../assets/images/cow/territories/repository.png");
+const factory: string = require("./../../../assets/images/cow/territories/factory.png");
 const repository11: string = require("./../../../assets/images/cow/territories/repository-1-1.png");
 const repository21: string = require("./../../../assets/images/cow/territories/repository-2-1.png");
 const repository31: string = require("./../../../assets/images/cow/territories/repository-3-1.png");
@@ -280,6 +281,7 @@ class CowPreload extends Phaser.Scene {
     this.load.image('cow-house', house);
     this.load.image('cow-ground', ground);
     this.load.image('cow-repository', repository);
+    this.load.image('cow-factory', factory);
     this.load.image('cow-repository-1-1', repository11);
     this.load.image('cow-repository-2-1', repository21);
     this.load.image('cow-repository-3-1', repository31);

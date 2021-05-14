@@ -238,14 +238,12 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   }
 
   private createFactorySprite(): void {
-    this.factory = this.scene.add.sprite(this.x + 120, this.y + 120, 'cow-repository-1-1')
+    this.factory = this.scene.add.sprite(this.x + 120, this.y + 85, 'cow-factory')
       .setDepth(this.y + 1);
-    this.scene.add.text(this.x + 120, this.y + 120, 'FACTORY', {
-      color: '#ffffff',
-      fontSize: '30px',
-      fontFamily: 'Shadow'
-    }).setStroke('#000000', 3).setOrigin(0.5).setDepth(this.y + 2);
     this.factorySettings = this.scene.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === this.improve);
+    this.improveText.setPosition(this.x + 187, this.y + 97);
+    this.improveText.setStyle({ fontSize: '32px' });
+
   }
 
   private setListeners(): void {
