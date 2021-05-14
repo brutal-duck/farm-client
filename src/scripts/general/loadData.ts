@@ -879,8 +879,6 @@ export default function loadData(response: any): void {
     && this.state.progress.event.endTime > 0 
     && this.state.progress.event.open
   ) {
-    console.log('tut')
-
     this.state.unicornSettings = unicornSettings;
 
     const eventAnimals: IeventAnimal[] = []; // IeventAnimal
