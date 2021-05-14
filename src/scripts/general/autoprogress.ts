@@ -1,6 +1,7 @@
 import BigInteger from '../libs/BigInteger';
 import Egg from './../components/Resource/Egg';
 import { randomString } from './basic';
+import CowSprite from './../components/Animal/CowSprite';
 
 export default function autoprogress(load: boolean = false): void {
   const state: Istate = this.state;
@@ -250,7 +251,7 @@ export default function autoprogress(load: boolean = false): void {
   
     // скорость сборки
     let percent: number = 100;
-    let speed: number = state.chickenCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userChicken.collectorLevel).speed;
+    let speed: number = state.chickenCollectorSettings.find((data: IcollectorSettings) => data.level === state.userChicken.collectorLevel).speed;
   
     if (state.chicken.length > speed * 10) {
       let excess: number = 100 / (speed * 10) * state.chicken.length;
@@ -347,36 +348,145 @@ export default function autoprogress(load: boolean = false): void {
   } 
 
   const cowOfflineProgress = (offlineTime: number = state.progress.cow.offlineTime): void => {
+    const MILK_DELAY = 60;
+    if (state.userCow.diamondAnimalTime >= offlineTime) state.userCow.diamondAnimalTime -= offlineTime;
+    else {
+      state.userCow.diamondAnimalTime = 0;
+      state.userCow.diamondAnimalAd = true;
+    }
+  
+    // время буста комбикорм
+    let wasFeedBoost: number = 0;
+  
+    if (state.userCow.feedBoostTime >= offlineTime) {
+      state.userCow.feedBoostTime -= offlineTime;
+      wasFeedBoost = offlineTime;
+    } else {
+      wasFeedBoost = state.userCow.feedBoostTime;
+      state.userCow.feedBoostTime = 0;
+    }
+  
+    // время собирателя
+    let wasCollector: number = 0;
+  
+    if (state.userCow.collector >= offlineTime) {
+      state.userCow.collector -= offlineTime;
+      wasCollector = offlineTime;
+    } else {
+      wasCollector = state.userCow.collector;
+      state.userCow.collector = 0;
+    }
     
+    // процент шерсти под бустом
+    let feedPercent: number = Number((wasFeedBoost / wasCollector).toFixed(2));
+    if (feedPercent >= 1 ) feedPercent = 1;
+  
+    // считаем сколько раз подстригли овец
+    let balance: Ibalance = this.farmBalance('Cow');
+    let milkCollected: { id: string, type: number, count: number }[] = [];
+
+    for (const cow of state.cow) {
+      const cowPoints: IcowPoints = state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === cow.type);
+      // зарождение яйца
+      if (cow.milk < cowPoints.maxMilkVolume) {
+        let milk: number = cowPoints.maxMilkVolume / MILK_DELAY;
+        if (cow.type === 0) milk = cowPoints.maxMilkVolume / 10;
+  
+        if (balance.alarm) {
+          milk = Math.round(milk / 100 * state.cowSettings.cowBadPercent);
+          if (milk < 1) milk = 1;
+        }
+
+        const milkCollect: number = Math.floor((milk * wasCollector) / 1000);
+        if (milkCollect === 0) {
+          if (cow.milk + (milk * wasCollector) > 1000) cow.milk = cowPoints.maxMilkVolume;
+          else cow.milk += (milk * wasCollector);
+        }
+        if (cow.type !== 0) {
+          milkCollected.push({
+            id: cow._id,
+            type: cow.type,
+            count: milkCollect,
+          })
+        }
+      }
+    }
+
+    // скорость сборки
+    const speed: number = state.cowCollectorSettings.find((data: IcollectorSettings) => data.level === state.userCow.collectorLevel).speed;
+  
+    if (state.cow.length > speed * 10) {
+      const excess: number = 100 / (speed * 10) * state.cow.length;
+      const percent: number = 100 / (excess / 100);
+      for (const milk of milkCollected) {
+        if (milk.count > 0) {
+          milk.count = Math.round(milk.count / 100 * percent);
+        }
+      }
+    }
+    // заполняем хранилища
+    const milkStorage: number[] = [];
+    for (const milk of milkCollected) {
+      for (let j: number = 0; j < milk.count; j++) {
+        milkStorage.push(milk.type);
+      }
+    }
+  
+    for (const milk of milkStorage) {
+      let count: number = state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === milk).maxMilkVolume;
+      // count *= (1 + feedPercent); // коэфф
+      for (const territory of state.sheepTerritories) {
+
+        if (territory.type === 5) {
+          const max: number = state.cowSettings.territoriesCowSettings.find((item: IterritoriesCowSettings) => item.improve === territory.improve).storage;
+          if (territory.volume + count < max) {
+            const milkCollect = milkCollected.find(data => data.type === milk && data.count > 0);
+            if (milkCollect) milkCollect.count--;
+            territory.money += count;
+            territory.volume++;
+            break;
+          }
+        }
+      }
+    }
+    
+    // если есть остаток, то овцы пушистые
+    for (let i in milkCollected) {
+      if (milkCollected[i].count > 0) {
+        const cow = state.cow.find((data: any) => data._id === milkCollected[i].id);
+        const cowPoints: number = state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === cow.type).maxMilkVolume;
+        cow.milk = cowPoints;
+      }
+    }
   }
 
   const sheepAutoprogress = (): void => {
      // время кристаллической овцы
-  if (this.state.userSheep.diamondAnimalTime >= this.state.offlineTime) this.state.userSheep.diamondAnimalTime -= this.state.offlineTime;
+  if (state.userSheep.diamondAnimalTime >= state.offlineTime) state.userSheep.diamondAnimalTime -= state.offlineTime;
   else {
-    this.state.userSheep.diamondAnimalTime = 0;
-    this.state.userSheep.diamondAnimalAd = true;
+    state.userSheep.diamondAnimalTime = 0;
+    state.userSheep.diamondAnimalAd = true;
   }
   // время буста комбикорм
   let wasFeedBoost: number = 0;
 
-  if (this.state.userSheep.feedBoostTime >= this.state.offlineTime) {
-    this.state.userSheep.feedBoostTime -= this.state.offlineTime;
-    wasFeedBoost = this.state.offlineTime;
+  if (state.userSheep.feedBoostTime >= state.offlineTime) {
+    state.userSheep.feedBoostTime -= state.offlineTime;
+    wasFeedBoost = state.offlineTime;
   } else {
-    wasFeedBoost = this.state.userSheep.feedBoostTime;
-    this.state.userSheep.feedBoostTime = 0;
+    wasFeedBoost = state.userSheep.feedBoostTime;
+    state.userSheep.feedBoostTime = 0;
   }
 
   // время собирателя
   let wasCollector: number = 0;
 
-  if (this.state.userSheep.collector >= this.state.offlineTime) {
-    this.state.userSheep.collector -= this.state.offlineTime;
-    wasCollector = this.state.offlineTime;
+  if (state.userSheep.collector >= state.offlineTime) {
+    state.userSheep.collector -= state.offlineTime;
+    wasCollector = state.offlineTime;
   } else {
-    wasCollector = this.state.userSheep.collector;
-    this.state.userSheep.collector = 0;
+    wasCollector = state.userSheep.collector;
+    state.userSheep.collector = 0;
   }
   
   // процент шерсти под бустом
@@ -385,7 +495,7 @@ export default function autoprogress(load: boolean = false): void {
 
   
   if (!load) this.game.scene.keys['SheepBars'].collector.update();
-  if (!load) this.state.timeToNewDay -= this.state.offlineTime;
+  if (!load) state.timeToNewDay -= state.offlineTime;
 
   // считаем сколько раз подстригли овец
   let balance: Ibalance = this.balance();
@@ -417,7 +527,7 @@ export default function autoprogress(load: boolean = false): void {
         else sheep.wool += (wool * wasCollector);
       }
       
-      if (this.state.userSheep.collector === 0) {
+      if (state.userSheep.collector === 0) {
         sheep.wool = 1000;
       }
 
@@ -436,7 +546,7 @@ export default function autoprogress(load: boolean = false): void {
   }
 
   // скорость сборки
-  let speed: number = this.state.sheepCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userSheep.collectorLevel).speed;
+  let speed: number = state.sheepCollectorSettings.find((data: IcollectorSettings) => data.level === state.userSheep.collectorLevel).speed;
 
   if (this.sheep.children.entries.length > speed * 10) {
 
@@ -462,11 +572,10 @@ export default function autoprogress(load: boolean = false): void {
 
   for (let i in wool) {
     
-    let price: number = this.state.sheepSettings.sheepSettings.find((data: IsheepPoints) => data.breed === wool[i]).long_wool;
+    let price: number = state.sheepSettings.sheepSettings.find((data: IsheepPoints) => data.breed === wool[i]).long_wool;
     price *= (1 + feedPercent); // коэфф
     
     for (let j in this.territories.children.entries) {
-
       if (this.territories.children.entries[j].type === 5) {
         
         let territory = this.territories.children.entries[j];
@@ -480,24 +589,18 @@ export default function autoprogress(load: boolean = false): void {
           territory.money += price;
           territory.volume++;
           break;
-
         }
-        
       }
-      
     }
-
   }
   
   // если есть остаток, то овцы пушистые
-  for (let i in sheepWoolcuts) {
-
-    if (sheepWoolcuts[i].count > 0) {
-      let sheep = this.sheep.children.entries.find((data: any) => data._id === sheepWoolcuts[i].id);
-      sheep.wool = 1000;
+    for (let i in sheepWoolcuts) {
+      if (sheepWoolcuts[i].count > 0) {
+        let sheep = this.sheep.children.entries.find((data: any) => data._id === sheepWoolcuts[i].id);
+        sheep.wool = 1000;
+      }
     }
-
-  }
   }
 
   const chickenAutoprogress = (): void => {
@@ -505,31 +608,31 @@ export default function autoprogress(load: boolean = false): void {
     let indent: number = 20;
 
     // время кристаллической курочки
-    if (this.state.userChicken.diamondAnimalTime >= this.state.offlineTime) this.state.userChicken.diamondAnimalTime -= this.state.offlineTime;
+    if (state.userChicken.diamondAnimalTime >= state.offlineTime) state.userChicken.diamondAnimalTime -= state.offlineTime;
     else {
-      this.state.userChicken.diamondAnimalTime = 0;
-      this.state.userChicken.diamondAnimalAd = true;
+      state.userChicken.diamondAnimalTime = 0;
+      state.userChicken.diamondAnimalAd = true;
     }
      // время буста комбикорм
     let wasFeedBoost: number = 0;
 
-    if (this.state.userChicken.feedBoostTime >= this.state.offlineTime) {
-      this.state.userChicken.feedBoostTime -= this.state.offlineTime;
-      wasFeedBoost = this.state.offlineTime;
+    if (state.userChicken.feedBoostTime >= state.offlineTime) {
+      state.userChicken.feedBoostTime -= state.offlineTime;
+      wasFeedBoost = state.offlineTime;
     } else {
-      wasFeedBoost = this.state.userChicken.feedBoostTime;
-      this.state.userChicken.feedBoostTime = 0;
+      wasFeedBoost = state.userChicken.feedBoostTime;
+      state.userChicken.feedBoostTime = 0;
     }
 
     // время собирателя
     let wasCollector: number = 0;
 
-    if (this.state.userChicken.collector >= this.state.offlineTime) {
-      this.state.userChicken.collector -= this.state.offlineTime;
-      wasCollector = this.state.offlineTime;
+    if (state.userChicken.collector >= state.offlineTime) {
+      state.userChicken.collector -= state.offlineTime;
+      wasCollector = state.offlineTime;
     } else {
-      wasCollector = this.state.userChicken.collector;
-      this.state.userChicken.collector = 0;
+      wasCollector = state.userChicken.collector;
+      state.userChicken.collector = 0;
     }
 
     // процент шерсти под бустом
@@ -537,7 +640,7 @@ export default function autoprogress(load: boolean = false): void {
     if (feedPercent >= 1 ) feedPercent = 1;
 
     if (!load) this.game.scene.keys['ChickenBars'].collector.update();
-    if (!load) this.state.timeToNewDay -= this.state.offlineTime;
+    if (!load) state.timeToNewDay -= state.offlineTime;
 
     // считаем сколько снесла курица яйцо
     let balance: Ibalance = this.balance();
@@ -567,7 +670,7 @@ export default function autoprogress(load: boolean = false): void {
         else chicken.egg += (eggs * wasCollector);
       }
 
-      if (this.state.userChicken.collector === 0) {
+      if (state.userChicken.collector === 0) {
         chicken.egg = Phaser.Math.Between(0, 1000);
       }
 
@@ -644,7 +747,7 @@ export default function autoprogress(load: boolean = false): void {
 
     // скорость сборки
     let percent: number = 100;
-    let speed: number = this.state.chickenCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userChicken.collectorLevel).speed;
+    let speed: number = state.chickenCollectorSettings.find((data: IcollectorSettings) => data.level === state.userChicken.collectorLevel).speed;
 
     if (this.chicken.children.entries.length > speed * 10) {
       let excess: number = 100 / (speed * 10) * this.chicken.children.entries.length;
@@ -669,7 +772,7 @@ export default function autoprogress(load: boolean = false): void {
 
     for (let i: number = 0; i < length; i++) {
 
-      let price: number = this.state.chickenSettings.chickenSettings.find((data: IchickenPoints) => String(data.breed) === eggsArr[i].type).eggPrice;
+      let price: number = state.chickenSettings.chickenSettings.find((data: IchickenPoints) => String(data.breed) === eggsArr[i].type).eggPrice;
       price *= (1 + feedPercent); // коэфф
 
       for (let j in this.territories.children.entries) {
@@ -690,11 +793,8 @@ export default function autoprogress(load: boolean = false): void {
             break;
 
           }
-
         }
-
       }
-
     }
 
     // убираем яйца, которые собрали с поля
@@ -770,30 +870,140 @@ export default function autoprogress(load: boolean = false): void {
   }
 
   const cowAutoprogress = (): void => {
+    const MILK_DELAY = 60;
+    if (state.userCow.diamondAnimalTime >= state.offlineTime) state.userCow.diamondAnimalTime -= state.offlineTime;
+    else {
+      state.userCow.diamondAnimalTime = 0;
+      state.userCow.diamondAnimalAd = true;
+    }
+  
+    // время буста комбикорм
+    let wasFeedBoost: number = 0;
+  
+    if (state.userCow.feedBoostTime >= state.offlineTime) {
+      state.userCow.feedBoostTime -= state.offlineTime;
+      wasFeedBoost = state.offlineTime;
+    } else {
+      wasFeedBoost = state.userCow.feedBoostTime;
+      state.userCow.feedBoostTime = 0;
+    }
+  
+    // время собирателя
+    let wasCollector: number = 0;
+  
+    if (state.userCow.collector >= state.offlineTime) {
+      state.userCow.collector -= state.offlineTime;
+      wasCollector = state.offlineTime;
+    } else {
+      wasCollector = state.userCow.collector;
+      state.userCow.collector = 0;
+    }
+    if (!load) this.game.scene.keys['CowBars'].collector.update();
+    if (!load) state.timeToNewDay -= state.offlineTime;
+    // процент шерсти под бустом
+    let feedPercent: number = Number((wasFeedBoost / wasCollector).toFixed(2));
+    if (feedPercent >= 1 ) feedPercent = 1;
+  
+    // считаем сколько раз подстригли овец
+    let balance: Ibalance = this.farmBalance('Cow');
+    let milkCollected: { id: string, type: number, count: number }[] = [];
+    const cowGroup: CowSprite[] = this.animalGroup.children.entries;
+    for (const cow of cowGroup) {
+      const cowPoints: IcowPoints = state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === cow.breed);
+      // зарождение яйца
+      if (cow.milk < cowPoints.maxMilkVolume) {
+        let milk: number = cowPoints.maxMilkVolume / MILK_DELAY;
+        if (cow.breed === 0) milk = cowPoints.maxMilkVolume / 10;
+  
+        if (balance.alarm) {
+          milk = Math.round(milk / 100 * state.cowSettings.cowBadPercent);
+          if (milk < 1) milk = 1;
+        }
 
+        const milkCollect: number = Math.floor((milk * wasCollector) / 1000);
+        if (milkCollect === 0) {
+          if (cow.milk + (milk * wasCollector) > 1000) cow.milk = cowPoints.maxMilkVolume;
+          else cow.milk += (milk * wasCollector);
+        }
+        if (cow.breed !== 0) {
+          milkCollected.push({
+            id: cow._id,
+            type: cow.breed,
+            count: milkCollect,
+          })
+        }
+      }
+    }
+
+    // скорость сборки
+    const speed: number = state.cowCollectorSettings.find((data: IcollectorSettings) => data.level === state.userCow.collectorLevel).speed;
+  
+    if (cowGroup.length > speed * 10) {
+      const excess: number = 100 / (speed * 10) * cowGroup.length;
+      const percent: number = 100 / (excess / 100);
+      for (const milk of milkCollected) {
+        if (milk.count > 0) {
+          milk.count = Math.round(milk.count / 100 * percent);
+        }
+      }
+    }
+    // заполняем хранилища
+    const milkStorage: number[] = [];
+    for (const milk of milkCollected) {
+      for (let j: number = 0; j < milk.count; j++) {
+        milkStorage.push(milk.type);
+      }
+    }
+  
+    for (const milk of milkStorage) {
+      let count: number = state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === milk).maxMilkVolume;
+      // count *= (1 + feedPercent); // коэфф
+      for (const territory of state.sheepTerritories) {
+
+        if (territory.type === 5) {
+          const max: number = state.cowSettings.territoriesCowSettings.find((item: IterritoriesCowSettings) => item.improve === territory.improve).storage;
+          if (territory.volume + count < max) {
+            const milkCollect = milkCollected.find(data => data.type === milk && data.count > 0);
+            if (milkCollect) milkCollect.count--;
+            territory.money += count;
+            territory.volume++;
+            break;
+          }
+        }
+      }
+    }
+    
+    // если есть остаток, то овцы пушистые
+    for (let i in milkCollected) {
+      if (milkCollected[i].count > 0) {
+        const cow = cowGroup.find((data: any) => data._id === milkCollected[i].id);
+        const cowPoints: number = state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === cow.breed).maxMilkVolume;
+        cow.milk = cowPoints;
+      }
+    }
   }
 
   const unicornAutoprogress = (): void => {
    // время буста комбикорм
     let wasFeedBoost: number = 0;
     
-    if (this.state.userUnicorn.feedBoostTime >= this.state.offlineTime) {
-      this.state.userUnicorn.feedBoostTime -= this.state.offlineTime;
-      wasFeedBoost = this.state.offlineTime;
+    if (state.userUnicorn.feedBoostTime >= state.offlineTime) {
+      state.userUnicorn.feedBoostTime -= state.offlineTime;
+      wasFeedBoost = state.offlineTime;
     } else {
-      wasFeedBoost = this.state.userUnicorn.feedBoostTime;
-      this.state.userUnicorn.feedBoostTime = 0;
+      wasFeedBoost = state.userUnicorn.feedBoostTime;
+      state.userUnicorn.feedBoostTime = 0;
     }
 
     // время собирателя
     let wasCollector: number = 0;
 
-    if (this.state.userUnicorn.collector >= this.state.offlineTime) {
-      this.state.userUnicorn.collector -= this.state.offlineTime;
-      wasCollector = this.state.offlineTime;
+    if (state.userUnicorn.collector >= state.offlineTime) {
+      state.userUnicorn.collector -= state.offlineTime;
+      wasCollector = state.offlineTime;
     } else {
-      wasCollector = this.state.userUnicorn.collector;
-      this.state.userUnicorn.collector = 0;
+      wasCollector = state.userUnicorn.collector;
+      state.userUnicorn.collector = 0;
     }
 
     // процент ресурсов под бустом
@@ -807,7 +1017,7 @@ export default function autoprogress(load: boolean = false): void {
 
 
     if (!load) this.game.scene.keys['UnicornBars'].collector.update();
-    if (!load) this.state.timeToNewDay -= this.state.offlineTime;
+    if (!load) state.timeToNewDay -= state.offlineTime;
 
     // считаем сколько появилось ресурсов
     let newResources: { resource: boolean, id: string, type: number, count: number }[] = [];
@@ -817,7 +1027,7 @@ export default function autoprogress(load: boolean = false): void {
       let animal = this.animals.children.entries[i];
       let breed: number = animal.data.values.type;
 
-      let points: IeventPoints = this.state.unicornSettings.unicornSettings.find((item: IeventPoints) => item.breed === breed);
+      let points: IeventPoints = state.unicornSettings.unicornSettings.find((item: IeventPoints) => item.breed === breed);
 
       let resource: number = points.resource;
 
@@ -828,7 +1038,7 @@ export default function autoprogress(load: boolean = false): void {
         else animal.data.values.active.data.values.resource += (resources * wasCollector);
       }
 
-      if (this.state.userUnicorn.collector === 0) {
+      if (state.userUnicorn.collector === 0) {
         animal.data.values.resource = Phaser.Math.Between(0, 1000);
       }
 
@@ -858,7 +1068,7 @@ export default function autoprogress(load: boolean = false): void {
 
     // скорость сборки
     let percent: number = 100;
-    let speed: number = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userUnicorn.collectorLevel).speed;
+    let speed: number = state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === state.userUnicorn.collectorLevel).speed;
 
     if (this.animals.children.entries.length > speed * 10) {
 
@@ -887,7 +1097,7 @@ export default function autoprogress(load: boolean = false): void {
 
     for (let i: number = 0; i < length; i++) {
 
-      let price: string = this.state.unicornSettings.unicornSettings.find((data: IeventPoints) => data.breed === resourceArr[i].type).resourcePrice;
+      let price: string = state.unicornSettings.unicornSettings.find((data: IeventPoints) => data.breed === resourceArr[i].type).resourcePrice;
       price = BigInteger.divide(BigInteger.multiply(price, feedPercent), String(100)); // коэфф
 
 
@@ -901,11 +1111,11 @@ export default function autoprogress(load: boolean = false): void {
 
       }
     }
-    if (this.state.offlineTime > 900 && BigInteger.greaterThan(income, '0')) {
+    if (state.offlineTime > 900 && BigInteger.greaterThan(income, '0')) {
       let modal: Imodal = {
         type: 10,
         eventParams: {
-          offlineTime: this.state.offlineTime,
+          offlineTime: state.offlineTime,
           offlineProgress: income,
           collectorTime: wasCollector,
         }
@@ -913,10 +1123,10 @@ export default function autoprogress(load: boolean = false): void {
       this.scene.stop('Modal');
       this.scene.stop('Shop');
       this.scene.stop('ShopBars');
-      this.state.modal = modal;
+      state.modal = modal;
       this.scene.launch('Modal', this.state);
     } else {
-      this.state.userUnicorn.money = BigInteger.add(this.state.userUnicorn.money, income);
+      state.userUnicorn.money = BigInteger.add(state.userUnicorn.money, income);
     }
 
 

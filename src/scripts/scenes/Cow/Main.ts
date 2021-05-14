@@ -230,7 +230,7 @@ class Cow extends Phaser.Scene {
     this.caveIconsTimer = 0;
     console.log('Cow');
     
-    this.autoprogress();
+    this.autoprogress(true);
   }
 
 
