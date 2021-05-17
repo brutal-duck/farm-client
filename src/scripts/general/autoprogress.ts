@@ -507,7 +507,7 @@ export default function autoprogress(load: boolean = false): void {
       const factorySettings: IfactorySettings = state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === factoryTerritory.improve);
   
       if (state.offlineTime > factorySettings.processingTime - factory.productionTimer) {
-        const countLaunchedProductions: number = Math.floor(state.offlineTime + factorySettings.processingTime - factory.productionTimer / factorySettings.processingTime);
+        const countLaunchedProductions: number = Math.floor((state.offlineTime + factorySettings.processingTime - factory.productionTimer) / factorySettings.processingTime);
         const needMilk: number = countLaunchedProductions * factorySettings.lotSize;
         
         let haveMilk: number = 0;
@@ -518,15 +518,14 @@ export default function autoprogress(load: boolean = false): void {
         }
         // сколько фактически производств было
         let count: number = 0;
-        
+
         if (needMilk < haveMilk) {
           haveMilk -= needMilk;
           count = countLaunchedProductions;
         } else {
           count = Math.floor(haveMilk / factorySettings.lotSize);
         }
-  
-  
+
         let boostedCount: number = 0;
         if (count > 1 && wasFactoryBoost > factorySettings.processingTime * count) {
           boostedCount = Math.floor(count / 2);
@@ -554,7 +553,7 @@ export default function autoprogress(load: boolean = false): void {
               factory.money += factorySettings.lotSize * factory[`${type}Multiply`];
             }
           }
-      
+
           const remainingTime: number = state.offlineTime + factorySettings.processingTime - factory.productionTimer - factorySettings.processingTime * count;
           factory.productionTimer = remainingTime;
       
@@ -566,7 +565,7 @@ export default function autoprogress(load: boolean = false): void {
             productId === 4 ? 'chocolate' : '';
             factory.currentProduction = type;
           }
-        }
+        } 
         
         // раскладываем остатки молока
         for (const territory of territories) {
@@ -586,7 +585,7 @@ export default function autoprogress(load: boolean = false): void {
         }
       } else {
         if (factory.currentProduction) factory.productionTimer -= state.offlineTime;
-        if (factory.productionTimer < 0) factory.productionTimer = 0;
+        if (factory.productionTimer < 0 || factory.productionTimer > factorySettings.processingTime) factory.productionTimer = factorySettings.processingTime;
       }
     }
     // если есть остаток, то овцы пушистые
@@ -1127,9 +1126,8 @@ export default function autoprogress(load: boolean = false): void {
     if (factoryTerritory) {
       const factory: Factory = factoryTerritory.factory;
       const factorySettings: IfactorySettings = factory.settings;
-  
       if (state.offlineTime > factorySettings.processingTime - factory.productionTimer) {
-        const countLaunchedProductions: number = Math.floor(state.offlineTime + factorySettings.processingTime - factory.productionTimer / factorySettings.processingTime);
+        const countLaunchedProductions: number = Math.floor((state.offlineTime + factorySettings.processingTime - factory.productionTimer) / factorySettings.processingTime);
         const needMilk: number = countLaunchedProductions * factorySettings.lotSize;
         
         let haveMilk: number = 0;
@@ -1140,14 +1138,13 @@ export default function autoprogress(load: boolean = false): void {
         }
         // сколько фактически производств было
         let count: number = 0;
-        
         if (needMilk < haveMilk) {
           haveMilk -= needMilk;
           count = countLaunchedProductions;
         } else {
           count = Math.floor(haveMilk / factorySettings.lotSize);
         }
-  
+
         let boostedCount: number = 0;
         if (count > 1 && wasFactoryBoost > factorySettings.processingTime * count) {
           boostedCount = Math.floor(count / 2);
@@ -1172,10 +1169,10 @@ export default function autoprogress(load: boolean = false): void {
               factory.money += factorySettings.lotSize * this[`${type}Multiply`];
             }
           }
-      
+
           const remainingTime: number = state.offlineTime + factorySettings.processingTime - factory.productionTimer - factorySettings.processingTime * count;
           factory.productionTimer = remainingTime;
-      
+
           if (remainingTime > 0) {
             const productId: number = getRandomProductId(factorySettings, boostedCount > 0);
             const type: string = productId === 1 ? 'clabber' :
@@ -1204,7 +1201,7 @@ export default function autoprogress(load: boolean = false): void {
         }
       } else {
         if (factory.currentProduction) factory.productionTimer -= state.offlineTime;
-        if (factory.productionTimer < 0) factory.productionTimer = 0;
+        if (factory.productionTimer < 0 || factory.productionTimer > factorySettings.processingTime) factory.productionTimer = factorySettings.processingTime;
       }
     }
 
