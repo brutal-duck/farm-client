@@ -539,8 +539,8 @@ export default function autoprogress(load: boolean = false): void {
         if (count > 0) {
           for (let i: number = 0; i < count; i += 1) {
             if (currentProduction && i === 0) {
-              factory[`${currentProduction}Money`] += factorySettings.lotSize * this[`${currentProduction}Multiply`];
-              factory.money += factorySettings.lotSize * this[`${currentProduction}Multiply`];
+              factory[`${currentProduction}Money`] += factorySettings.lotSize * factory[`${currentProduction}Multiply`];
+              factory.money += factorySettings.lotSize * factory[`${currentProduction}Multiply`];
             } else {
               if (boostedCount > 0) {
                 boostedCount -= 1;
@@ -550,8 +550,8 @@ export default function autoprogress(load: boolean = false): void {
               productId === 2 ? 'pasteurizedMilk' : 
               productId === 3 ? 'cheese' : 
               productId === 4 ? 'chocolate' : '';
-              factory[`${type}Money`] += factorySettings.lotSize * this[`${type}Multiply`];
-              factory.money += factorySettings.lotSize * this[`${type}Multiply`];
+              factory[`${type}Money`] += factorySettings.lotSize * factory[`${type}Multiply`];
+              factory.money += factorySettings.lotSize * factory[`${type}Multiply`];
             }
           }
       
