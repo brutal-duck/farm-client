@@ -275,8 +275,7 @@ export default function autosave(): void {
     userCow: state.userCow,   
     userUnicorn: userUnicorn, 
   }
-  console.log(chickenTasks, 'autosave chicken')
-  console.log(cowTasks, 'autosave cow')
+
   const data: IdataAutoSave = { 
     id: state.user.id,
     hash: state.user.hash,
