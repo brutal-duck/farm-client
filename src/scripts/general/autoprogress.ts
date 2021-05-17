@@ -1,12 +1,50 @@
 import BigInteger from '../libs/BigInteger';
 import Egg from './../components/Resource/Egg';
-import { farmBalance, randomString } from './basic';
+import { randomString } from './basic';
 import CowSprite from './../components/Animal/CowSprite';
 import Territory from './../components/Territories/Territory';
 import Factory from './../components/Territories/Factory';
 
 export default function autoprogress(load: boolean = false): void {
   const state: Istate = this.state;
+  
+  const getRandomProductId = (settings: IfactorySettings, boost: boolean): number => {
+    const pull: number[] = [ settings.clabberPercent, settings.pasteurizedMilkPercent, settings.cheesePercent ];
+    if (boost) pull.push(settings.chocolatePercent);
+
+    const totalCounter: number = pull.reduce((prev, current) => prev += current);
+    const arrRange: {
+      id: number,
+      bottom: number,
+      top: number
+    }[] = [];
+
+    let current: number = 0;
+    let previos: number = 0;
+    for (let i: number = 0; i < pull.length; i += 1) {
+      if (pull[i] !== 0) {
+        current = pull[i] + previos;
+        arrRange.push({
+          id: i + 1, 
+          bottom: previos, 
+          top: current 
+        })
+        previos = current;
+      }
+    }
+
+    const randomIndex: number = Phaser.Math.Between(1, totalCounter);
+    let productId: number;
+
+    for (let i: number = 0; i < arrRange.length; i += 1) {
+      if (arrRange[i].bottom < randomIndex && arrRange[i].top >= randomIndex) {
+        productId = arrRange[i].id;
+      }
+    }
+    console.log(arrRange)
+    return productId;
+  }
+
   // овцы
   const sheepOfflineProgress = (offlineTime: number = state.progress.sheep.offlineTime): void => {
     if (state.userSheep.diamondAnimalTime >= offlineTime) state.userSheep.diamondAnimalTime -= offlineTime;
@@ -379,6 +417,16 @@ export default function autoprogress(load: boolean = false): void {
       state.userCow.collector = 0;
     }
     
+    let wasFactoryBoost: number = 0;
+
+    if (state.userCow.factory.boostTime >= offlineTime) {
+      state.userCow.factory.boostTime >= offlineTime;
+      wasFactoryBoost = offlineTime;
+    } else {
+      wasFactoryBoost = state.userCow.factory.boostTime;
+      state.userCow.factory.boostTime = 0;
+    }
+
     // процент шерсти под бустом
     let feedPercent: number = Number((wasFeedBoost / wasCollector).toFixed(2));
     if (feedPercent >= 1 ) feedPercent = 1;
@@ -436,7 +484,7 @@ export default function autoprogress(load: boolean = false): void {
   
     for (const milk of milkStorage) {
       let count: number = state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === milk).maxMilkVolume;
-      // count *= (1 + feedPercent); // коэфф
+      count *= (1 + feedPercent); // коэфф
       for (const territory of state.sheepTerritories) {
 
         if (territory.type === 5) {
@@ -444,14 +492,100 @@ export default function autoprogress(load: boolean = false): void {
           if (territory.volume + count < max) {
             const milkCollect = milkCollected.find(data => data.type === milk && data.count > 0);
             if (milkCollect) milkCollect.count--;
-            territory.money += count;
-            territory.volume++;
+            territory.money += 0;
+            territory.volume += count;
             break;
           }
         }
       }
     }
     
+    const territories: Iterritories[] = state.cowTerritories;
+    const factoryTerritory: Iterritories = territories.find((data: Iterritories) => data.type === 8);
+    const factory: Ifactory = state.userCow.factory;
+    const factorySettings: IfactorySettings = state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === factoryTerritory.improve);
+
+    if (state.offlineTime > factorySettings.processingTime - factory.productionTimer) {
+      const countLaunchedProductions: number = Math.floor(state.offlineTime + factory.productionTimer / factorySettings.processingTime);
+      const needMilk: number = countLaunchedProductions * factorySettings.lotSize;
+      
+      let haveMilk: number = 0;
+      for (const territory of territories) {
+        if (territory.type === 5) {
+          haveMilk += territory.volume;
+        }
+      }
+      // сколько фактически производств было
+      let count: number = 0;
+      
+      if (needMilk < haveMilk) {
+        haveMilk -= needMilk;
+        count = countLaunchedProductions;
+      } else {
+        count = Math.floor(haveMilk / factorySettings.lotSize);
+      }
+
+
+      let boostedCount: number = 0;
+      if (count > 1 && wasFactoryBoost > factorySettings.processingTime * count) {
+        boostedCount = Math.floor(count / 2);
+      } else if (count > 1 && wasFactoryBoost > 0){
+        boostedCount = Math.floor((wasFactoryBoost / factorySettings.processingTime * count) / 2);
+        if (wasFactoryBoost > factorySettings.processingTime && boostedCount === 0) boostedCount = 1;
+      }
+
+      const currentProduction: string = factory.currentProduction;
+      if (count > 0) {
+        for (let i: number = 0; i < count; i += 1) {
+          if (currentProduction && i === 0) {
+            factory[`${currentProduction}Money`] += factorySettings.lotSize * this[`${currentProduction}Multiply`];
+            factory.money += factorySettings.lotSize * this[`${currentProduction}Multiply`];
+          } else {
+            if (boostedCount > 0) {
+              boostedCount -= 1;
+            }
+            const productId: number = getRandomProductId(factorySettings, boostedCount > 0);
+            const type: string = productId === 1 ? 'clabber' :
+            productId === 2 ? 'pasteurizedMilk' : 
+            productId === 3 ? 'cheese' : 
+            productId === 4 ? 'chocolate' : '';
+            factory[`${type}Money`] += factorySettings.lotSize * this[`${type}Multiply`];
+            factory.money += factorySettings.lotSize * this[`${type}Multiply`];
+          }
+        }
+    
+        const remainingTime: number = state.offlineTime + factory.productionTimer - factorySettings.processingTime * count;
+        factory.productionTimer = remainingTime;
+    
+        if (remainingTime > 0) {
+          const productId: number = getRandomProductId(factorySettings, state.userCow.factory.boostTime > 0);
+          const type: string = productId === 1 ? 'clabber' :
+          productId === 2 ? 'pasteurizedMilk' : 
+          productId === 3 ? 'cheese' : 
+          productId === 4 ? 'chocolate' : '';
+          factory.currentProduction = type;
+        }
+      }
+      
+      // раскладываем остатки молока
+      for (const territory of territories) {
+        if (haveMilk > 0) {
+          if (territory.type === 5) {
+            const terSettings: IterritoriesCowSettings = state.cowSettings.territoriesCowSettings
+              .find((data: IterritoriesCowSettings) => territory.improve === data.improve);
+            if (haveMilk > terSettings.storage) {
+              territory.volume = terSettings.storage;
+              haveMilk -= terSettings.storage;
+            } else {
+              territory.volume = haveMilk;
+              haveMilk = 0;
+            }
+          }
+        }
+      }
+    } else {
+      factory.productionTimer += state.offlineTime;
+    }
     // если есть остаток, то овцы пушистые
     for (let i in milkCollected) {
       if (milkCollected[i].count > 0) {
@@ -900,6 +1034,17 @@ export default function autoprogress(load: boolean = false): void {
       wasCollector = state.userCow.collector;
       state.userCow.collector = 0;
     }
+
+    let wasFactoryBoost: number = 0;
+
+    if (state.userCow.factory.boostTime >= state.offlineTime) {
+      state.userCow.factory.boostTime >= state.offlineTime;
+      wasFactoryBoost = state.offlineTime;
+    } else {
+      wasFactoryBoost = state.userCow.factory.boostTime;
+      state.userCow.factory.boostTime = 0;
+    }
+
     if (!load) this.game.scene.keys['CowBars'].collector.update();
     if (!load) state.timeToNewDay -= state.offlineTime;
     // процент шерсти под бустом
@@ -979,72 +1124,84 @@ export default function autoprogress(load: boolean = false): void {
     const factory: Factory = factoryTerritory.factory;
     const factorySettings: IfactorySettings = factory.settings;
 
-    
-    const countLaunchedProductions: number = Math.floor(state.offlineTime + factory.productionTimer / factorySettings.processingTime);
-    const needMilk: number = countLaunchedProductions * factorySettings.lotSize;
-    
-    let haveMilk: number = 0;
-    for (const territory of territories) {
-      if (territory.territoryType === 5) {
-        haveMilk += territory.volume;
+    if (state.offlineTime > factorySettings.processingTime - factory.productionTimer) {
+      const countLaunchedProductions: number = Math.floor(state.offlineTime + factory.productionTimer / factorySettings.processingTime);
+      const needMilk: number = countLaunchedProductions * factorySettings.lotSize;
+      
+      let haveMilk: number = 0;
+      for (const territory of territories) {
+        if (territory.territoryType === 5) {
+          haveMilk += territory.volume;
+        }
       }
-    }
-    // сколько фактически производств было
-    let count: number = 0;
-    
-    if (needMilk < haveMilk) {
-      haveMilk -= needMilk;
-      count = countLaunchedProductions;
-    } else {
-      count = Math.floor(haveMilk / factorySettings.lotSize);
-    }
-    const currentProduction: string = factory.currentProduction;
+      // сколько фактически производств было
+      let count: number = 0;
+      
+      if (needMilk < haveMilk) {
+        haveMilk -= needMilk;
+        count = countLaunchedProductions;
+      } else {
+        count = Math.floor(haveMilk / factorySettings.lotSize);
+      }
 
-    if (count > 0) {
-      for (let i: number = 0; i < count; i += 1) {
-        if (currentProduction && i === 0) {
-          factoryTerritory[`${currentProduction}Money`] += factorySettings.lotSize * this[`${currentProduction}Multiply`];
-          factoryTerritory.money += factorySettings.lotSize * this[`${currentProduction}Multiply`];
-        } else {
-          const productId: number = factoryTerritory.getRandomProductId();
+      let boostedCount: number = 0;
+      if (count > 1 && wasFactoryBoost > factorySettings.processingTime * count) {
+        boostedCount = Math.floor(count / 2);
+      } else if (count > 1 && wasFactoryBoost > 0){
+        boostedCount = Math.floor((wasFactoryBoost / factorySettings.processingTime * count) / 2);
+        if (wasFactoryBoost > factorySettings.processingTime && boostedCount === 0) boostedCount = 1;
+      }
+
+      const currentProduction: string = factory.currentProduction;
+      if (count > 0) {
+        for (let i: number = 0; i < count; i += 1) {
+          if (currentProduction && i === 0) {
+            factory[`${currentProduction}Money`] += factorySettings.lotSize * this[`${currentProduction}Multiply`];
+            factory.money += factorySettings.lotSize * this[`${currentProduction}Multiply`];
+          } else {
+            const productId: number = getRandomProductId(factorySettings, boostedCount > 0);
+            const type: string = productId === 1 ? 'clabber' :
+            productId === 2 ? 'pasteurizedMilk' : 
+            productId === 3 ? 'cheese' : 
+            productId === 4 ? 'chocolate' : '';
+            factory[`${type}Money`] += factorySettings.lotSize * this[`${type}Multiply`];
+            factory.money += factorySettings.lotSize * this[`${type}Multiply`];
+          }
+        }
+    
+        const remainingTime: number = state.offlineTime + factory.productionTimer - factorySettings.processingTime * count;
+        factory.productionTimer = remainingTime;
+    
+        if (remainingTime > 0) {
+          const productId: number = getRandomProductId(factorySettings, boostedCount > 0);
           const type: string = productId === 1 ? 'clabber' :
           productId === 2 ? 'pasteurizedMilk' : 
           productId === 3 ? 'cheese' : 
           productId === 4 ? 'chocolate' : '';
-          factoryTerritory[`${type}Money`] += factorySettings.lotSize * this[`${type}Multiply`];
-          factoryTerritory.money += factorySettings.lotSize * this[`${type}Multiply`];
+          factory.currentProduction = type;
         }
       }
-  
-      const remainingTime: number = state.offlineTime + factory.productionTimer - factorySettings.processingTime * count;
-      factory.productionTimer = remainingTime;
-  
-      if (remainingTime > 0) {
-        const productId: number = factoryTerritory.getRandomProductId();
-        const type: string = productId === 1 ? 'clabber' :
-        productId === 2 ? 'pasteurizedMilk' : 
-        productId === 3 ? 'cheese' : 
-        productId === 4 ? 'chocolate' : '';
-        factory.currentProduction = type;
-      }
-    }
-    
-    // раскладываем остатки молока
-    for (const territory of territories) {
-      if (haveMilk > 0) {
-        if (territory.territoryType === 5) {
-          const terSettings: IterritoriesCowSettings = state.cowSettings.territoriesCowSettings
-            .find((data: IterritoriesCowSettings) => territory.improve === data.improve);
-          if (haveMilk > terSettings.storage) {
-            territory.volume = terSettings.storage;
-            haveMilk -= terSettings.storage;
-          } else {
-            territory.volume = haveMilk;
-            haveMilk = 0;
+      
+      // раскладываем остатки молока
+      for (const territory of territories) {
+        if (haveMilk > 0) {
+          if (territory.territoryType === 5) {
+            const terSettings: IterritoriesCowSettings = state.cowSettings.territoriesCowSettings
+              .find((data: IterritoriesCowSettings) => territory.improve === data.improve);
+            if (haveMilk > terSettings.storage) {
+              territory.volume = terSettings.storage;
+              haveMilk -= terSettings.storage;
+            } else {
+              territory.volume = haveMilk;
+              haveMilk = 0;
+            }
           }
         }
       }
+    } else {
+      factory.productionTimer += state.offlineTime;
     }
+
 
     // если есть остаток, то овцы пушистые
     for (let i in milkCollected) {
