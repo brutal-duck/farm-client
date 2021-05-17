@@ -428,6 +428,42 @@ function interval(): void {
   
 
 }
+const getRandomProductId = (settings: IfactorySettings, boost: boolean): number => {
+  const pull: number[] = [ settings.clabberPercent, settings.pasteurizedMilkPercent, settings.cheesePercent ];
+  if (boost) pull.push(settings.chocolatePercent);
+
+  const totalCounter: number = pull.reduce((prev, current) => prev += current);
+  const arrRange: {
+    id: number,
+    bottom: number,
+    top: number
+  }[] = [];
+
+  let current: number = 0;
+  let previos: number = 0;
+  for (let i: number = 0; i < pull.length; i += 1) {
+    if (pull[i] !== 0) {
+      current = pull[i] + previos;
+      arrRange.push({
+        id: i + 1, 
+        bottom: previos, 
+        top: current 
+      })
+      previos = current;
+    }
+  }
+
+  const randomIndex: number = Phaser.Math.Between(1, totalCounter);
+  let productId: number;
+
+  for (let i: number = 0; i < arrRange.length; i += 1) {
+    if (arrRange[i].bottom < randomIndex && arrRange[i].top >= randomIndex) {
+      productId = arrRange[i].id;
+    }
+  }
+  console.log(arrRange)
+  return productId;
+}
 
 function arrayInterval(): void {
   const Scene: Sheep = this;
@@ -528,6 +564,8 @@ function arrayInterval(): void {
     }
   }
 
+
+
   if (checkCollector < 2) {
     checkCollector += 1;
   } else {
@@ -598,6 +636,64 @@ function arrayInterval(): void {
       } else {
         cowCollectorVolume = 0;
       }
+    }
+  }
+  
+  if (Scene.state.progress.cow.part > 0) {
+    const factory: Ifactory = Scene.state.userCow.factory;
+    const factoryTerr: Iterritories = Scene.state.cowTerritories.find((data: Iterritories) => data.type === 8);
+    if (!factoryTerr) return;
+    const factorySettings: IfactorySettings = Scene.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === factoryTerr.improve);
+  
+    if (factory.boostTime > 0) {
+      factory.boostTime -= 1;
+    }
+    let resourceAmount: number = 0;
+  
+    if (factory.productionTimer <= 0) {
+      if (factory.currentProduction) {
+        factory[`${factory.currentProduction}Money`] += factorySettings.lotSize * factory[`${factory.currentProduction}Multiply`];
+        factory.money += factorySettings.lotSize * factory[`${factory.currentProduction}Multiply`];
+        factory.currentProduction = '';
+        console.log(factory.clabberMoney, 'простокваша');
+        console.log(factory.pasteurizedMilkMoney, 'пастеризованное молоко');
+        console.log(factory.cheeseMoney, 'сыр');
+        console.log(factory.chocolateMoney, 'шоколад');
+        console.log(factory.money, 'общие деньги');
+      }
+      const storages: Iterritories[] = Scene.state.cowTerritories.filter((data: Iterritories) => data.type === 5);
+      
+      storages.forEach((storage: Iterritories) => {
+        resourceAmount += storage.volume;
+      });
+  
+      if (resourceAmount >= factorySettings.lotSize) {
+        factory.productionTimer = factorySettings.processingTime;
+        let lot: number = factorySettings.lotSize;
+        for (const storage of storages) {
+          if (storage.volume > lot) {
+            storage.volume -= lot;
+            lot = 0;
+          } else {
+            lot -= storage.volume;
+            storage.volume = 0;
+          }
+        }
+        const productId = getRandomProductId(factorySettings, factory.boostTime > 0);
+        if (productId) {
+          factory.currentProduction = productId === 1 ? 'clabber' :
+            productId === 2 ? 'pasteurizedMilk' : 
+            productId === 3 ? 'cheese' : 
+            productId === 4 ? 'chocolate' : '';
+        } 
+      } else {
+        console.log('Недостаточно молока для производства');
+      }
+    } else {
+      factory.productionTimer -= 1;
+    }
+    if (factory.productionTimer > 0) {
+      console.log('время до конца производства', factory.productionTimer);
     }
   }
 }

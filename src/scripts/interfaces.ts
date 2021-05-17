@@ -205,6 +205,11 @@ interface Ifactory {
   cheeseMoney: number;
   chocolateMoney: number;
   boostTime: number;
+  milkMultiply?: number;
+  clabberMultiply?: number;
+  pasteurizedMilkMultiply?: number;
+  cheeseMultiply?: number;
+  chocolateMultiply?: number;
 }
 interface IuserCow {
   money: number;

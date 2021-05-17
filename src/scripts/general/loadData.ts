@@ -800,6 +800,11 @@ export default function loadData(response: any): void {
       pasteurizedMilkMoney: cowFactory.pasteurizedMilkMoney,
       chocolateMoney: cowFactory.chocolateMoney,
       boostTime: cowFactory.boostTime,
+      milkMultiply: 0.2,
+      clabberMultiply: 0.5,
+      pasteurizedMilkMultiply: 1,
+      cheeseMultiply: 1.5,
+      chocolateMultiply: 2.5,
     }
   }
 

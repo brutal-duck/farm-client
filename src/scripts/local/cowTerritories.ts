@@ -5,7 +5,7 @@ export default [
   { _id: 'local_21', block: 2, position: 1, type: 1, volume: 1000, improve: 1, money: 0 },
   { _id: 'local_22', block: 2, position: 2, type: 3, volume: 1000, improve: 1, money: 0 },
   { _id: 'local_23', block: 2, position: 3, type: 2, volume: 1000, improve: 1, money: 0 },
-  { _id: 'local_31', block: 3, position: 1, type: 0, volume: 1000, improve: 1, money: 0 },
+  { _id: 'local_31', block: 3, position: 1, type: 8, volume: 1000, improve: 1, money: 0 },
   { _id: 'local_32', block: 3, position: 2, type: 0, volume: 1000, improve: 1, money: 0 },
   { _id: 'local_33', block: 3, position: 3, type: 0, volume: 1000, improve: 1, money: 0 },
   { _id: 'local_41', block: 4, position: 1, type: 0, volume: 1000, improve: 1, money: 0 },
