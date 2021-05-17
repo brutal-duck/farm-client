@@ -2,6 +2,7 @@ import axios from 'axios';
 import Egg from '../components/Resource/Egg';
 import Territory from './../components/Territories/Territory';
 import CowSprite from './../components/Animal/CowSprite';
+import Factory from './../components/Territories/Factory';
 
 export default function autosave(): void {
   const state: Istate = this.state;
@@ -140,7 +141,19 @@ export default function autosave(): void {
 
     state.cow = cow;
     state.cowTerritories = territories;
-    state.userCow.factory = this.territories.children.entries.find((data: Territory) => data.territoryType === 8).factory;
+    const factoryTer: Factory = this.territories.children.entries.find((data: Territory) => data.territoryType === 8).factory;
+    const factory: Ifactory = {
+      currentProduction: factoryTer.currentProduction,
+      productionTimer: factoryTer.productionTimer,
+      money: factoryTer.money,
+      clabberMoney: factoryTer.clabberMoney,
+      pasteurizedMilkMoney: factoryTer.pasteurizedMilkMoney,
+      cheeseMoney: factoryTer.cheeseMoney,
+      chocolateMoney: factoryTer.chocolateMoney,
+      boostTime: state.userCow.factory.boostTime,
+    }
+    
+    state.userCow.factory = factory;
   } else if (state.farm === 'Unicorn') {
     userUnicorn = state.userUnicorn;
     this.getEventRaiting();
