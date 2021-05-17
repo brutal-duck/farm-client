@@ -196,6 +196,16 @@ interface IuserChicken {
   takenHerdBoost: number;
   feedBoostTime: number;
 }
+interface Ifactory {
+  currentProduction: string;
+  productionTimer: number;
+  money: number;
+  clabberMoney: number;
+  pasteurizedMilkMoney: number;
+  cheeseMoney: number;
+  chocolateMoney: number;
+  boostTime: number;
+}
 interface IuserCow {
   money: number;
   fair: number;
@@ -210,7 +220,7 @@ interface IuserCow {
   diamondAnimalAd: boolean;
   takenHerdBoost: number;
   feedBoostTime: number;
-  factoryBoostTime: number;
+  factory: Ifactory;
 }
 interface IuserEvent {
   money: string;

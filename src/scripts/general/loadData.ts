@@ -4,6 +4,8 @@ import basicChickenTerritories from '../local/chickenTerritories';
 import basicCowTerritories from '../local/cowTerritories';
 import basicUnicornCollector from '../local/unicornCollector';
 import { unicornSettings, sheepSettings, chickenSettings, cowSettings } from '../local/settings';
+import { userCow } from '../local/usersData';
+const basicUserCow = userCow;
 
 export default function loadData(response: any): void {
   if (this.state.farm === 'Sheep') this.state.offline = response.data.progress.sheepOfflineTime;
@@ -772,6 +774,9 @@ export default function loadData(response: any): void {
     feedBoostTime: response.data.user.feedBoostTimeChicken,
   }
 
+  let cowFactory: Ifactory = response.data.user.cowFactory;
+  if (!response.data.user.cowFactory) cowFactory = basicUserCow.factory;
+
   const userCow: IuserCow = {
     money: response.data.user.cow_money,
     fair: response.data.user.cow_fair,
@@ -786,7 +791,16 @@ export default function loadData(response: any): void {
     diamondAnimalAd: response.data.user.diamonds_cow_ad,
     takenHerdBoost: response.data.user.takenHerdBoostCow,
     feedBoostTime: response.data.user.feedBoostTimeCow,
-    factoryBoostTime: 0,
+    factory: {
+      currentProduction: cowFactory.currentProduction,
+      productionTimer: cowFactory.productionTimer,
+      money: cowFactory.money,
+      clabberMoney: cowFactory.clabberMoney,
+      cheeseMoney: cowFactory.cheeseMoney,
+      pasteurizedMilkMoney: cowFactory.pasteurizedMilkMoney,
+      chocolateMoney: cowFactory.chocolateMoney,
+      boostTime: cowFactory.boostTime,
+    }
   }
 
   this.state.userSheep = userSheep;

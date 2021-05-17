@@ -140,6 +140,7 @@ export default function autosave(): void {
 
     state.cow = cow;
     state.cowTerritories = territories;
+    state.userCow.factory = this.territories.children.entries.find((data: Territory) => data.territoryType === 8).factory;
   } else if (state.farm === 'Unicorn') {
     userUnicorn = state.userUnicorn;
     this.getEventRaiting();

@@ -1,6 +1,7 @@
 import { shortNum, romanize, timer, shortTime } from "../../general/basic";
 import Hint from '../../components/animations/Hint';
 import Territory from './../../components/Territories/Territory';
+import Factory from './../../components/Territories/Factory';
 
 // ярмарка
 function cowFair(): void {
@@ -889,13 +890,13 @@ function cowFactory(): void {
   const factory: string = this.state.lang.factory.replace('$1', this.state.territory.improve);
   this.textHeader.setText(factory);
 
-  let improve: number = this.state.territory.improve + 1;
+  let improve: number = this.state.territory.factory.improve + 1;
   if (improve > this.state.cowSettings.cowFactorySettings.length) {
     improve = this.state.cowSettings.cowFactorySettings.length;
   }
   const milkMoney = {
     icon: 'cowCoin',
-    text: shortNum(this.state.territory.money)
+    text: shortNum(this.state.territory.factory.money)
   }
 
   const nextImproveSettings: IfactorySettings = this.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === improve);
@@ -914,7 +915,7 @@ function cowFactory(): void {
           text: shortNum(nextImproveSettings.improveDiamondPrice)
         };
       }
-      const improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.improve + 1);
+      const improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.factory.improve + 1);
       const button = this.bigButton('orange', 'left', -70, improveText, improve);
       this.clickModalBtn(button, (): void => {
         this.scene.stop();
@@ -927,11 +928,11 @@ function cowFactory(): void {
         icon: 'lock',
         text: this.state.lang.shortPart + ' ' + nextImproveSettings.unlock_improve
       }
-      let improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.improve + 1);
+      let improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.factory.improve + 1);
       this.bigButton('grey', 'left', -70, improveText, improve);
     }
     
-    const product: string = this.state.territory.currentProduction ? this.state.lang[this.state.territory.currentProduction] : '';
+    const product: string = this.state.territory.factory.currentProduction ? this.state.lang[this.state.territory.factory.currentProduction] : '';
 
     this.factoryProductText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 220, `${this.state.lang.produced}: ${product}`, {
       font: '26px Bip',
@@ -942,32 +943,32 @@ function cowFactory(): void {
     this.factoryProgressBar = this.add.tileSprite(136, this.cameras.main.centerY - 180, 0, 16, 'green-progress')
       .setOrigin(0, 0.5);
 
-    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 140, `${this.state.lang.efficiency}: ${this.state.territory.factorySettings.efficiency}%`, {
+    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 140, `${this.state.lang.efficiency}: ${this.state.territory.factory.settings.efficiency}%`, {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0.5);
     const clabberSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX - 150, this.cameras.main.centerY + 30, 'clabber');
     const clabberGeom: Phaser.Geom.Rectangle = clabberSprite.getBounds();
-    this.clabberMoneyText = this.add.text(clabberGeom.centerX, clabberGeom.bottom, shortNum(this.state.territory.clabberMoney), {
+    this.clabberMoneyText = this.add.text(clabberGeom.centerX, clabberGeom.bottom, shortNum(this.state.territory.factory.clabberMoney), {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0);
     const pasteurizedMilkSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX - 50, this.cameras.main.centerY + 30, 'pasteurized-milk');
     const pasteurizedMilkGeom: Phaser.Geom.Rectangle = pasteurizedMilkSprite.getBounds();
-    this.pasteurizedMilkMoneyText = this.add.text(pasteurizedMilkGeom.centerX, pasteurizedMilkGeom.bottom, shortNum(this.state.territory.pasteurizedMilkMoney), {
+    this.pasteurizedMilkMoneyText = this.add.text(pasteurizedMilkGeom.centerX, pasteurizedMilkGeom.bottom, shortNum(this.state.territory.factory.pasteurizedMilkMoney), {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0);
     const cheeseSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX + 50, this.cameras.main.centerY + 30, 'pasteurized-milk');
     const cheeseGeom: Phaser.Geom.Rectangle = cheeseSprite.getBounds();
-    this.cheeseMoneyText = this.add.text(cheeseGeom.centerX, cheeseGeom.bottom, shortNum(this.state.territory.cheeseMoney), {
+    this.cheeseMoneyText = this.add.text(cheeseGeom.centerX, cheeseGeom.bottom, shortNum(this.state.territory.factory.cheeseMoney), {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0);
 
     this.chocolateSprite = this.add.sprite(this.cameras.main.centerX + 150, this.cameras.main.centerY + 30, 'pasteurized-milk');
     const chocolateGeom: Phaser.Geom.Rectangle = this.chocolateSprite.getBounds();
-    this.chocolateMoneyText = this.add.text(chocolateGeom.centerX, chocolateGeom.bottom, shortNum(this.state.territory.chocolateMoney), {
+    this.chocolateMoneyText = this.add.text(chocolateGeom.centerX, chocolateGeom.bottom, shortNum(this.state.territory.factory.chocolateMoney), {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0);
@@ -989,7 +990,7 @@ function cowFactory(): void {
 
     this.factorySellButton = this.repositoryBtn(220, this.state.lang.sellProduct, milkMoney);
     this.clickModalBtn(this.factorySellButton, (): void => {
-      if (this.state.territory.money > 0) {
+      if (this.state.territory.factory.money > 0) {
         this.scene.stop();
         this.game.scene.keys[this.state.farm].scrolling.wheel = true;
         this.state.territory.sellProducts();
@@ -1000,7 +1001,7 @@ function cowFactory(): void {
 
   } else {
 
-    const product: string = this.state.territory.currentProduction ? this.state.lang[this.state.territory.currentProduction] : '';
+    const product: string = this.state.territory.factory.currentProduction ? this.state.lang[this.state.territory.factory.currentProduction] : '';
 
     this.factoryProductText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 170, `${this.state.lang.produced}: ${product}`, {
       font: '26px Bip',
@@ -1011,32 +1012,32 @@ function cowFactory(): void {
     this.factoryProgressBar = this.add.tileSprite(136, this.cameras.main.centerY - 130, 0, 16, 'green-progress')
       .setOrigin(0, 0.5);
 
-    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 90, `${this.state.lang.efficiency}: ${this.state.territory.factorySettings.efficiency}%`, {
+    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 90, `${this.state.lang.efficiency}: ${this.state.territory.factory.settings.efficiency}%`, {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0.5);
     const clabberSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX - 150, this.cameras.main.centerY, 'clabber');
     const clabberGeom: Phaser.Geom.Rectangle = clabberSprite.getBounds();
-    this.clabberMoneyText = this.add.text(clabberGeom.centerX, clabberGeom.bottom, shortNum(this.state.territory.clabberMoney), {
+    this.clabberMoneyText = this.add.text(clabberGeom.centerX, clabberGeom.bottom, shortNum(this.state.territory.factory.clabberMoney), {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0);
     const pasteurizedMilkSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX - 50, this.cameras.main.centerY, 'pasteurized-milk');
     const pasteurizedMilkGeom: Phaser.Geom.Rectangle = pasteurizedMilkSprite.getBounds();
-    this.pasteurizedMilkMoneyText = this.add.text(pasteurizedMilkGeom.centerX, pasteurizedMilkGeom.bottom, shortNum(this.state.territory.pasteurizedMilkMoney), {
+    this.pasteurizedMilkMoneyText = this.add.text(pasteurizedMilkGeom.centerX, pasteurizedMilkGeom.bottom, shortNum(this.state.territory.factory.pasteurizedMilkMoney), {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0);
     const cheeseSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX + 50, this.cameras.main.centerY, 'pasteurized-milk');
     const cheeseGeom: Phaser.Geom.Rectangle = cheeseSprite.getBounds();
-    this.cheeseMoneyText = this.add.text(cheeseGeom.centerX, cheeseGeom.bottom, shortNum(this.state.territory.cheeseMoney), {
+    this.cheeseMoneyText = this.add.text(cheeseGeom.centerX, cheeseGeom.bottom, shortNum(this.state.territory.factory.cheeseMoney), {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0);
 
     const chocolateSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX + 150, this.cameras.main.centerY, 'pasteurized-milk');
     const chocolateGeom: Phaser.Geom.Rectangle = chocolateSprite.getBounds();
-    this.chocolateMoneyText = this.add.text(chocolateGeom.centerX, chocolateGeom.bottom, shortNum(this.state.territory.chocolateMoney), {
+    this.chocolateMoneyText = this.add.text(chocolateGeom.centerX, chocolateGeom.bottom, shortNum(this.state.territory.factory.chocolateMoney), {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0);
@@ -1044,7 +1045,7 @@ function cowFactory(): void {
     if (this.state.userCow.factoryBoostTime <= 0) {
       chocolateSprite.setAlpha(0.5);
     } else {
-      this.factoryBoostTimer = this.add.text(chocolateGeom.centerX, chocolateGeom.top, shortTime(this.state.userCow.factoryBoostTime, this.state.lang), {
+      this.factoryBoostTimer = this.add.text(chocolateGeom.centerX, chocolateGeom.top, shortTime(this.state.userCow.factory.boostTime, this.state.lang), {
         font: '26px Bip',
         color: '#925C28'
       }).setOrigin(0.5);
@@ -1052,7 +1053,7 @@ function cowFactory(): void {
 
     this.factorySellButton = this.repositoryBtn(170, this.state.lang.sellProduct, milkMoney);
     this.clickModalBtn(this.factorySellButton, (): void => {
-      if (this.state.territory.money > 0) {
+      if (this.state.territory.factory.money > 0) {
         this.scene.stop();
         this.game.scene.keys[this.state.farm].scrolling.wheel = true;
         this.state.territory.sellProducts();
@@ -1068,10 +1069,10 @@ function updateFactoryModal(): void {
     let percent: number = 0;
   
     const factoryTerritory: Territory = this.state.territory;
+    const factory: Factory = factoryTerritory.factory;
   
-  
-    if (factoryTerritory.productionTimer > 0) {
-      percent = 100 - factoryTerritory.productionTimer / (factoryTerritory.factorySettings.processingTime / 100);
+    if (factory.productionTimer > 0) {
+      percent = 100 - factory.productionTimer / (factory.settings.processingTime / 100);
     }
     
     const width: number = Math.round(444 / 100 * percent);
@@ -1079,25 +1080,25 @@ function updateFactoryModal(): void {
     if (this.factoryProgressBar.displayWidth !== width) {
       this.factoryProgressBar.setDisplaySize(width, 16);
     }
-    const product: string = this.state.territory.currentProduction ? this.state.lang[this.state.territory.currentProduction] : '';
+    const product: string = factory.currentProduction ? this.state.lang[factory.currentProduction] : '';
     
     const volume: string = `${this.state.lang.produced}: ${product}`;
     if (this.factoryProductText.text !== volume) {
       this.factoryProductText.setText(volume);
     }
   
-    if (this.factorySellButton.text1.text !== shortNum(this.state.territory.money)) {
-      this.factorySellButton.text1.setText(shortNum(this.state.territory.money));
-      this.clabberMoneyText.setText(shortNum(this.state.territory.clabberMoney));
-      this.pasteurizedMilkMoneyText.setText(shortNum(this.state.territory.pasteurizedMilkMoney));
-      this.cheeseMoneyText.setText(shortNum(this.state.territory.cheeseMoney));
-      this.chocolateMoneyText.setText(shortNum(this.state.territory.chocolateMoney));
+    if (this.factorySellButton.text1.text !== shortNum(factory.money)) {
+      this.factorySellButton.text1.setText(shortNum(factory.money));
+      this.clabberMoneyText.setText(shortNum(factory.clabberMoney));
+      this.pasteurizedMilkMoneyText.setText(shortNum(factory.pasteurizedMilkMoney));
+      this.cheeseMoneyText.setText(shortNum(factory.cheeseMoney));
+      this.chocolateMoneyText.setText(shortNum(factory.chocolateMoney));
       this.factorySellButton.img1.setX(this.factorySellButton.text1.getBounds().left - 10);
     }
   
     if (this.state.userCow.factoryBoostTime > 0) {
-      if (this.factoryBoostTimer.text !== shortTime(this.state.userCow.factoryBoostTime, this.state.lang)) {
-        this.factoryBoostTimer.setText(shortTime(this.state.userCow.factoryBoostTime, this.state.lang));
+      if (this.factoryBoostTimer.text !== shortTime(this.state.userCow.factory.boostTime, this.state.lang)) {
+        this.factoryBoostTimer.setText(shortTime(this.state.userCow.factory.boostTime, this.state.lang));
       }
     } else {
       if (this.factoryBoostTimer?.visible) {
@@ -1108,8 +1109,8 @@ function updateFactoryModal(): void {
   }
   if (this.state.modal?.sysType === 17 && this.state.farm === 'Cow') {
     if (this.state.userCow.factoryBoostTime > 0) {
-      if (this.factoryBoostTimer.text !== shortTime(this.state.userCow.factoryBoostTime, this.state.lang)) {
-        this.factoryBoostTimer.setText(shortTime(this.state.userCow.factoryBoostTime, this.state.lang));
+      if (this.factoryBoostTimer.text !== shortTime(this.state.userCow.factory.boostTime, this.state.lang)) {
+        this.factoryBoostTimer.setText(shortTime(this.state.userCow.factory.boostTime, this.state.lang));
       }
     } else {
       if (this.factoryBoostTimer?.visible) {
@@ -1121,11 +1122,11 @@ function updateFactoryModal(): void {
 }
 
 function improveFactoryWindow(): void {
-  const factory: string = this.state.lang.factory.replace('$1', this.state.territory.improve);
+  const factory: string = this.state.lang.factory.replace('$1', this.state.territory.factory.improve);
   this.textHeader.setText(factory);
   
-  const thisLevel: IfactorySettings = this.state.territory.factorySettings;
-  const nextLevel: IfactorySettings = this.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === this.state.territory.improve + 1);
+  const thisLevel: IfactorySettings = this.state.territory.factory.settings;
+  const nextLevel: IfactorySettings = this.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === this.state.territory.factory.improve + 1);
   
   const lotSize: string = `${this.state.lang.lotSize}: ${shortNum(thisLevel.lotSize)} ${this.state.lang.litres}`;
   const lot: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY - 100, lotSize, {

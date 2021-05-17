@@ -88,7 +88,16 @@ let userCow: IuserCow = {
   diamondAnimalAd: true,
   takenHerdBoost: 0,
   feedBoostTime: 0,
-  factoryBoostTime: 0,
+  factory: {
+    currentProduction: '',
+    productionTimer: 0,
+    money: 0,
+    clabberMoney: 0,
+    pasteurizedMilkMoney: 0,
+    cheeseMoney: 0,
+    chocolateMoney: 0,
+    boostTime: 0,
+  }
 }
 
 export {

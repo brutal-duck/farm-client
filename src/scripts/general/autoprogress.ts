@@ -1,7 +1,9 @@
 import BigInteger from '../libs/BigInteger';
 import Egg from './../components/Resource/Egg';
-import { randomString } from './basic';
+import { farmBalance, randomString } from './basic';
 import CowSprite from './../components/Animal/CowSprite';
+import Territory from './../components/Territories/Territory';
+import Factory from './../components/Territories/Factory';
 
 export default function autoprogress(load: boolean = false): void {
   const state: Istate = this.state;
@@ -954,13 +956,13 @@ export default function autoprogress(load: boolean = false): void {
         milkStorage.push(milk.type);
       }
     }
-  
+    const territories: Territory[] = this.territories.children.entries;
     for (const milk of milkStorage) {
       let count: number = state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === milk).maxMilkVolume;
       // count *= (1 + feedPercent); // коэфф
-      for (const territory of state.sheepTerritories) {
+      for (const territory of territories) {
 
-        if (territory.type === 5) {
+        if (territory.territoryType === 5) {
           const max: number = state.cowSettings.territoriesCowSettings.find((item: IterritoriesCowSettings) => item.improve === territory.improve).storage;
           if (territory.volume + count < max) {
             const milkCollect = milkCollected.find(data => data.type === milk && data.count > 0);
@@ -972,7 +974,78 @@ export default function autoprogress(load: boolean = false): void {
         }
       }
     }
+
+    const factoryTerritory: Territory = territories.find((data: Territory) => data.territoryType === 8);
+    const factory: Factory = factoryTerritory.factory;
+    const factorySettings: IfactorySettings = factory.settings;
+
     
+    const countLaunchedProductions: number = Math.floor(state.offlineTime + factory.productionTimer / factorySettings.processingTime);
+    const needMilk: number = countLaunchedProductions * factorySettings.lotSize;
+    
+    let haveMilk: number = 0;
+    for (const territory of territories) {
+      if (territory.territoryType === 5) {
+        haveMilk += territory.volume;
+      }
+    }
+    // сколько фактически производств было
+    let count: number = 0;
+    
+    if (needMilk < haveMilk) {
+      haveMilk -= needMilk;
+      count = countLaunchedProductions;
+    } else {
+      count = Math.floor(haveMilk / factorySettings.lotSize);
+    }
+    const currentProduction: string = factory.currentProduction;
+
+    if (count > 0) {
+      for (let i: number = 0; i < count; i += 1) {
+        if (currentProduction && i === 0) {
+          factoryTerritory[`${currentProduction}Money`] += factorySettings.lotSize * this[`${currentProduction}Multiply`];
+          factoryTerritory.money += factorySettings.lotSize * this[`${currentProduction}Multiply`];
+        } else {
+          const productId: number = factoryTerritory.getRandomProductId();
+          const type: string = productId === 1 ? 'clabber' :
+          productId === 2 ? 'pasteurizedMilk' : 
+          productId === 3 ? 'cheese' : 
+          productId === 4 ? 'chocolate' : '';
+          factoryTerritory[`${type}Money`] += factorySettings.lotSize * this[`${type}Multiply`];
+          factoryTerritory.money += factorySettings.lotSize * this[`${type}Multiply`];
+        }
+      }
+  
+      const remainingTime: number = state.offlineTime + factory.productionTimer - factorySettings.processingTime * count;
+      factory.productionTimer = remainingTime;
+  
+      if (remainingTime > 0) {
+        const productId: number = factoryTerritory.getRandomProductId();
+        const type: string = productId === 1 ? 'clabber' :
+        productId === 2 ? 'pasteurizedMilk' : 
+        productId === 3 ? 'cheese' : 
+        productId === 4 ? 'chocolate' : '';
+        factory.currentProduction = type;
+      }
+    }
+    
+    // раскладываем остатки молока
+    for (const territory of territories) {
+      if (haveMilk > 0) {
+        if (territory.territoryType === 5) {
+          const terSettings: IterritoriesCowSettings = state.cowSettings.territoriesCowSettings
+            .find((data: IterritoriesCowSettings) => territory.improve === data.improve);
+          if (haveMilk > terSettings.storage) {
+            territory.volume = terSettings.storage;
+            haveMilk -= terSettings.storage;
+          } else {
+            territory.volume = haveMilk;
+            haveMilk = 0;
+          }
+        }
+      }
+    }
+
     // если есть остаток, то овцы пушистые
     for (let i in milkCollected) {
       if (milkCollected[i].count > 0) {
