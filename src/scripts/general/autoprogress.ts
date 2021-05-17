@@ -565,7 +565,8 @@ export default function autoprogress(load: boolean = false): void {
             factory.currentProduction = type;
           }
         } 
-        
+        if (factory.currentProduction) factory.productionTimer -= state.offlineTime;
+        if (factory.productionTimer < 0 || factory.productionTimer > factorySettings.processingTime) factory.productionTimer = factorySettings.processingTime;
         // раскладываем остатки молока
         for (const territory of territories) {
           if (haveMilk > 0) {
@@ -1172,7 +1173,7 @@ export default function autoprogress(load: boolean = false): void {
           const remainingTime: number = state.offlineTime + factorySettings.processingTime - factory.productionTimer - factorySettings.processingTime * count;
           factory.productionTimer = remainingTime;
 
-          if (remainingTime > 0) {
+          if (factory.productionTimer  > 0) {
             const productId: number = getRandomProductId(factorySettings, boostedCount > 0);
             const type: string = productId === 1 ? 'clabber' :
             productId === 2 ? 'pasteurizedMilk' : 
@@ -1181,7 +1182,8 @@ export default function autoprogress(load: boolean = false): void {
             factory.currentProduction = type;
           }
         }
-        
+        if (factory.currentProduction) factory.productionTimer -= state.offlineTime;
+        if (factory.productionTimer < 0 || factory.productionTimer > factorySettings.processingTime) factory.productionTimer = factorySettings.processingTime;
         // раскладываем остатки молока
         for (const territory of territories) {
           if (haveMilk > 0) {
