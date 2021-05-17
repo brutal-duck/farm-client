@@ -12,9 +12,64 @@ export default function autosave(): void {
   let unicornTerritories = undefined;
   let unicornResource = undefined;
   let userUnicorn = undefined;
-  let sheepTasks: Itasks[] = state.sheepTasks;
-  let chickenTasks: Itasks[] = state.chickenTasks;
-  let cowTasks: Itasks[] = state.cowTasks;
+  let sheepTasks: Itasks[] = [];
+  let chickenTasks: Itasks[] = [];
+  let cowTasks: Itasks[] = [];
+
+  for (let i: number = 0; i < state.sheepTasks.length; i++) {
+    if (state.sheepTasks[i].part === state.userSheep.part) {
+      if (state.sheepTasks[i].type === 10) {
+        if ((this.state.platform === 'web' &&
+          this.state.user.login === '') || 
+          this.takeRewardRegistration) {
+            sheepTasks.push(state.sheepTasks[i]);
+        }
+      } else if (state.sheepTasks[i].type === 16) {
+        if (this.state.platform === 'web') {
+          sheepTasks.push(state.sheepTasks[i]);
+        }
+      } else {
+        sheepTasks.push(state.sheepTasks[i]);
+      }
+    }
+  }
+
+  for (let i: number = 0; i < state.chickenTasks.length; i++) {
+    if (state.chickenTasks[i].part === state.userChicken.part) {
+      if (state.chickenTasks[i].type === 10) {
+        if ((this.state.platform === 'web' &&
+          this.state.user.login === '') || 
+          this.takeRewardRegistration) {
+            chickenTasks.push(state.chickenTasks[i]);
+        }
+      } else if (state.chickenTasks[i].type === 16) {
+        if (this.state.platform === 'web') {
+          chickenTasks.push(state.chickenTasks[i]);
+        }
+      } else {
+        chickenTasks.push(state.chickenTasks[i]);
+      }
+    }
+  }
+
+  for (let i: number = 0; i < state.cowTasks.length; i++) {
+    if (state.cowTasks[i].part === state.userCow.part) {
+      if (state.cowTasks[i].type === 10) {
+        if ((this.state.platform === 'web' &&
+          this.state.user.login === '') || 
+          this.takeRewardRegistration) {
+            cowTasks.push(state.cowTasks[i]);
+        }
+      } else if (state.sheepTasks[i].type === 16) {
+        if (this.state.platform === 'web') {
+          cowTasks.push(state.cowTasks[i]);
+        }
+      } else {
+        cowTasks.push(state.cowTasks[i]);
+      }
+    }
+  }
+  
 
   if (state.farm === 'Sheep') {
     sheepTasks = this.partTasks();
@@ -220,7 +275,8 @@ export default function autosave(): void {
     userCow: state.userCow,   
     userUnicorn: userUnicorn, 
   }
-
+  console.log(chickenTasks, 'autosave chicken')
+  console.log(cowTasks, 'autosave cow')
   const data: IdataAutoSave = { 
     id: state.user.id,
     hash: state.user.hash,
