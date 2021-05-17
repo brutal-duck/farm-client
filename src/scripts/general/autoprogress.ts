@@ -214,11 +214,11 @@ export default function autoprogress(load: boolean = false): void {
         if (egg < 1) egg = 1;
       }
   
-      let eggs: number = Math.floor((egg * wasCollector) / 1000);
+      let eggsCollect: number = Math.floor((egg * wasCollector) / 1000);
   
-      if (eggs === 0) {
-        if (chicken.egg + (eggs * wasCollector) > 1000) chicken.egg = 1000;
-        else chicken.egg += (eggs * wasCollector);
+      if (eggsCollect === 0) {
+        if (chicken.egg + (eggsCollect * wasCollector) > 1000) chicken.egg = 1000;
+        else chicken.egg += (eggsCollect * wasCollector);
       }
       
       if (state.userChicken.collector === 0) {
@@ -228,12 +228,12 @@ export default function autoprogress(load: boolean = false): void {
       newEggs.push({
         id: chicken._id,
         type: chicken.type,
-        count: eggs,
+        count: eggsCollect,
         egg: false
       });
   
     }
-  
+    
     // добавляем в массив яйца, которые могут лежать на поле
     for (let i in state.chickenEggs) {
       let egg = state.chickenEggs[i];
@@ -271,7 +271,7 @@ export default function autoprogress(load: boolean = false): void {
               count = newEggs[i].count;
             } else {
               count = 5 - chicken.diamond;
-              state.chicken.filter((el: Ichicken) => el._id !== chicken._id);
+              state.chicken = state.chicken.filter((el: Ichicken) => el._id !== chicken._id);
             }
             for (let j: number = 0; j < count; j++) {
     
@@ -371,7 +371,7 @@ export default function autoprogress(load: boolean = false): void {
     
     // ставим оставшиеся яйца на поле
     let index: number = 0;
-    state.chickenEggs = [];
+    state.chickenEggs = state.chickenEggs.filter((data: IchickenEgg) => data.type === 0);
     for (let i in freeSpace) {
       if (typeof remainingEggs[index] === 'number') {
         let egg: IchickenEgg = {

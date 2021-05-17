@@ -314,7 +314,7 @@ function arrayInterval(): void {
           if (ter?.block === territory.block && ter?.position === territory.position) eggs++;
         }
 
-        if (eggs < countEggs && (territory.type === 2 || territory.type === 3)) {
+        if ((eggs < countEggs || chicken.type === 0) && (territory.type === 2 || territory.type === 3)) {
           chicken.egg = 0;
           // рандом разброса яиц
           let minX: number = chicken.x - INDENT;
