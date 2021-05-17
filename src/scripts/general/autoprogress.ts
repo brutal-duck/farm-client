@@ -585,7 +585,8 @@ export default function autoprogress(load: boolean = false): void {
           }
         }
       } else {
-        if (factory.currentProduction) factory.productionTimer += state.offlineTime;
+        if (factory.currentProduction) factory.productionTimer -= state.offlineTime;
+        if (factory.productionTimer < 0) factory.productionTimer = 0;
       }
     }
     // если есть остаток, то овцы пушистые
@@ -1202,7 +1203,8 @@ export default function autoprogress(load: boolean = false): void {
           }
         }
       } else {
-        if (factory.currentProduction) factory.productionTimer += state.offlineTime;
+        if (factory.currentProduction) factory.productionTimer -= state.offlineTime;
+        if (factory.productionTimer < 0) factory.productionTimer = 0;
       }
     }
 
