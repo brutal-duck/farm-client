@@ -363,7 +363,40 @@ function arrayInterval(): void {
         chickenCollectorVolume = 0;
       }
     }
-
+    if (Scene.state.progress.sheep.collector > 0) {
+      const speed: number = Scene.state.sheepCollectorSettings.find((data: IcollectorSettings) => data.level === Scene.state.userSheep.collectorLevel).speed;
+      const SEC: number = 1000;
+      sheepCollectorVolume += 2 * SEC;
+      let collectedWool: number = Math.floor(sheepCollectorVolume / speed / SEC);
+      if (collectedWool > 0) {
+        sheepCollectorVolume -= collectedWool * speed * SEC;
+        for (let i in Scene.state.chickenTerritories) {
+          const territory: Iterritories = Scene.state.chickenTerritories[i];
+          if (territory.type === 5) {
+            const max: number = Scene.state.sheepSettings.territoriesSheepSettings.find((data: IterritoriesSheepSettings) => data.improve === territory.improve).woolStorage;
+            for (let i: number = 0; i < collectedWool; i += 1) {
+              for (let i in Scene.state.sheep) {
+                const sheep: Isheep = Scene.state.sheep[i];
+                if (sheep.type !== 0 && sheep.wool >= 1000) {
+                  const sheepPoints: IsheepPoints = Scene.state.sheepSettings.sheepSettings.find((data: IsheepPoints) => data.breed === sheep.type);
+                  if (max > territory.volume) {
+                    let price: number = sheepPoints.long_wool;
+                    if (Scene.state.userSheep.feedBoostTime > 0) price *= this.feedBoostMultiplier;
+                    territory.volume += 1;
+                    territory.money += price;
+                    sheep.wool = 0;
+                    collectedWool -= 1;
+                    break;
+                  }
+                }
+              }
+            }
+          }
+        }
+      } else {
+        sheepCollectorVolume = 0;
+      }
+    }
     if (Scene.state.progress.cow.collector > 0) {
       const speed: number = Scene.state.cowCollectorSettings.find((data: IcollectorSettings) => data.level === Scene.state.userCow.collectorLevel).speed;
       const SEC: number = 1000;
@@ -374,11 +407,12 @@ function arrayInterval(): void {
         for (let i in Scene.state.cowTerritories) {
           const territory: Iterritories = Scene.state.cowTerritories[i];
           if (territory.type === 5) {
+            console.log(territory.volume)
             const max: number = Scene.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === territory.improve).storage;
             for (let i: number = 0; i < collectedMilk; i += 1) {
-              for (let i in Scene.state.cow) {
-                const cow: Icow = Scene.state.cow[i];
-                if (cow.type !== 0 && cow.milk >= 1000) {
+              for (const cow of Scene.state.cow) {
+                const cowPoints: IcowPoints = Scene.state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === cow.type);
+                if (cow.type !== 0 && cow.milk >= cowPoints.maxMilkVolume) {
                   const cowPoints: IcowPoints = Scene.state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === cow.type);
                   if (max > territory.volume + cowPoints.maxMilkVolume) {
                     let price: number = 0;
@@ -396,41 +430,6 @@ function arrayInterval(): void {
         }
       } else {
         cowCollectorVolume = 0;
-      }
-
-      if (Scene.state.progress.sheep.collector > 0) {
-        const speed: number = Scene.state.sheepCollectorSettings.find((data: IcollectorSettings) => data.level === Scene.state.userSheep.collectorLevel).speed;
-        const SEC: number = 1000;
-        sheepCollectorVolume += 2 * SEC;
-        let collectedWool: number = Math.floor(sheepCollectorVolume / speed / SEC);
-        if (collectedWool > 0) {
-          sheepCollectorVolume -= collectedWool * speed * SEC;
-          for (let i in Scene.state.chickenTerritories) {
-            const territory: Iterritories = Scene.state.chickenTerritories[i];
-            if (territory.type === 5) {
-              const max: number = Scene.state.sheepSettings.territoriesSheepSettings.find((data: IterritoriesSheepSettings) => data.improve === territory.improve).woolStorage;
-              for (let i: number = 0; i < collectedWool; i += 1) {
-                for (let i in Scene.state.sheep) {
-                  const sheep: Isheep = Scene.state.sheep[i];
-                  if (sheep.type !== 0 && sheep.wool >= 1000) {
-                    const sheepPoints: IsheepPoints = Scene.state.sheepSettings.sheepSettings.find((data: IsheepPoints) => data.breed === sheep.type);
-                    if (max > territory.volume) {
-                      let price: number = sheepPoints.long_wool;
-                      if (Scene.state.userSheep.feedBoostTime > 0) price *= this.feedBoostMultiplier;
-                      territory.volume += 1;
-                      territory.money += price;
-                      sheep.wool = 0;
-                      collectedWool -= 1;
-                      break;
-                    }
-                  }
-                }
-              }
-            }
-          }
-        } else {
-          sheepCollectorVolume = 0;
-        }
       }
     }
   }

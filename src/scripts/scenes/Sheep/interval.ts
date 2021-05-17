@@ -563,9 +563,7 @@ function arrayInterval(): void {
       }
     }
   }
-
-
-
+  
   if (checkCollector < 2) {
     checkCollector += 1;
   } else {
@@ -613,11 +611,12 @@ function arrayInterval(): void {
         for (let i in Scene.state.cowTerritories) {
           const territory: Iterritories = Scene.state.cowTerritories[i];
           if (territory.type === 5) {
+            console.log(territory.volume)
             const max: number = Scene.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === territory.improve).storage;
             for (let i: number = 0; i < collectedMilk; i += 1) {
-              for (let i in Scene.state.cow) {
-                const cow: Icow = Scene.state.cow[i];
-                if (cow.type !== 0 && cow.milk >= 1000) {
+              for (const cow of Scene.state.cow) {
+                const cowPoints: IcowPoints = Scene.state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === cow.type);
+                if (cow.type !== 0 && cow.milk >= cowPoints.maxMilkVolume) {
                   const cowPoints: IcowPoints = Scene.state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === cow.type);
                   if (max > territory.volume + cowPoints.maxMilkVolume) {
                     let price: number = 0;
