@@ -187,8 +187,8 @@ function interval(): void {
       this.state.userCow.feedBoostTime--;
     }
 
-    if (this.state.userCow.factoryBoostTime > 0) {
-      this.state.userCow.factoryBoostTime--;
+    if (this.state.userCow.factory.boostTime > 0) {
+      this.state.userCow.factory.boostTime--;
     }
 
     // Проверяем и запускаем распростанение овец по полю

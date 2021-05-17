@@ -41,7 +41,6 @@ export default function autoprogress(load: boolean = false): void {
         productId = arrRange[i].id;
       }
     }
-    console.log(arrRange)
     return productId;
   }
 
