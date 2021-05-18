@@ -7,6 +7,37 @@ import { unicornSettings, sheepSettings, chickenSettings, cowSettings } from '..
 import { userCow } from '../local/usersData';
 const basicUserCow = userCow;
 
+function validateTerritories(territories: Iterritories[], basicTerritories: Iterritories[]): void {
+  const maxTerritoryType: number = 8;
+  for (let i: number = 0; i < territories.length; i += 1) {
+    const territory: Iterritories = basicTerritories.find((data: Iterritories) => territories[i].position === data.position && territories[i].block === data.block);
+    if (territory) {
+      if (!(territory.type >= 0 && territory.type <= maxTerritoryType
+        && territory.money >= 0
+        && territory.volume >= 0
+        && territory.improve > 0)) {
+        territories[i] = basicTerritories[i];  
+      }
+    } else {
+      territories[i] = basicTerritories[i];
+    }
+  }
+
+  if (territories.length === 0) {
+    for (const territory of basicTerritories) {
+      territories.push({
+        _id: territory._id,
+        block: territory.block,
+        position: territory.position,
+        type: territory.type,
+        volume: territory.volume,
+        improve: territory.improve,
+        money: territory.money
+      });
+    }
+  }
+}
+
 export default function loadData(response: any): void {
   if (this.state.farm === 'Sheep') this.state.offline = response.data.progress.sheepOfflineTime;
   else if (this.state.farm === 'Chicken') this.state.offline = response.data.progress.chickenOfflineTime;
@@ -622,7 +653,7 @@ export default function loadData(response: any): void {
     const territory = response.data.user.sheep_territories[i];
     sheepTerritories.push({
       _id: territory._id,
-      block: this.state.farm === 'Sheep' ? territory.block + 1 : territory.block,
+      block: response.data.user.sheep_territories[0].block === 0 ? territory.block + 1 : territory.block,
       position: territory.position,
       type: territory.type,
       volume: territory.volume,
@@ -659,51 +690,9 @@ export default function loadData(response: any): void {
     });
   }
 
-  // проверка наличия территорий
-  if (sheepTerritories.length === 0) {
-    for (let i in basicSheepTerritories) {
-      const territory = basicSheepTerritories[i];
-      sheepTerritories.push({
-        _id: territory._id,
-        block: territory.block,
-        position: territory.position,
-        type: territory.type,
-        volume: territory.volume,
-        improve: territory.improve,
-        money: territory.money
-      });
-    }
-  }
-
-  if (chickenTerritories.length === 0) {
-    for (let i in basicChickenTerritories) {
-      let territory = basicChickenTerritories[i];
-      chickenTerritories.push({
-        _id: territory._id,
-        block: territory.block,
-        position: territory.position,
-        type: territory.type,
-        volume: territory.volume,
-        improve: territory.improve,
-        money: territory.money
-      });
-    }
-  }
-
-  if (cowTerritories.length === 0) {
-    for (let i in basicCowTerritories) {
-      const territory = basicCowTerritories[i];
-      cowTerritories.push({
-        _id: territory._id,
-        block: territory.block,
-        position: territory.position,
-        type: territory.type,
-        volume: territory.volume,
-        improve: territory.improve,
-        money: territory.money
-      });
-    }
-  }
+  validateTerritories(sheepTerritories, basicSheepTerritories);
+  validateTerritories(chickenTerritories, basicChickenTerritories);
+  validateTerritories(cowTerritories, basicCowTerritories);
 
   this.state.sheepTerritories = sheepTerritories;
   this.state.chickenTerritories = chickenTerritories;

@@ -83,7 +83,7 @@ export default function autosave(): void {
       const territory = this.territories.children.entries[i];
       territories.push({
         _id: territory._id,
-        block: territory.block - 1,
+        block: territory.block,
         position: territory.position,
         type: territory.type,
         volume: territory.volume,
