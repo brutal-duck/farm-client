@@ -435,7 +435,8 @@ export default function autoprogress(load: boolean = false): void {
     let milkCollected: { id: string, type: number, count: number }[] = [];
 
     for (const cow of state.cow) {
-      const cowPoints: IcowPoints = state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === cow.type);
+      const breed: number = cow.type === 0 ? 1 : cow.type;
+      const cowPoints: IcowPoints = state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === breed);
       // зарождение яйца
       if (cow.milk < cowPoints.maxMilkVolume) {
         let milk: number = cowPoints.maxMilkVolume / MILK_DELAY;
@@ -592,7 +593,8 @@ export default function autoprogress(load: boolean = false): void {
     for (let i in milkCollected) {
       if (milkCollected[i].count > 0) {
         const cow = state.cow.find((data: any) => data._id === milkCollected[i].id);
-        const cowPoints: number = state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === cow.type).maxMilkVolume;
+        const breed: number = cow.type === 0 ? 1 : cow.type;
+        const cowPoints: number = state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === breed).maxMilkVolume;
         cow.milk = cowPoints;
       }
     }
@@ -1058,7 +1060,8 @@ export default function autoprogress(load: boolean = false): void {
     let milkCollected: { id: string, type: number, count: number }[] = [];
     const cowGroup: CowSprite[] = this.animalGroup.children.entries;
     for (const cow of cowGroup) {
-      const cowPoints: IcowPoints = state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === cow.breed);
+      const breed: number = cow.breed === 0 ? 1 : cow.breed;
+      const cowPoints: IcowPoints = state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === breed);
       // зарождение яйца
       if (cow.milk < cowPoints.maxMilkVolume) {
         let milk: number = cowPoints.maxMilkVolume / MILK_DELAY;
@@ -1211,7 +1214,8 @@ export default function autoprogress(load: boolean = false): void {
     for (let i in milkCollected) {
       if (milkCollected[i].count > 0) {
         const cow = cowGroup.find((data: any) => data._id === milkCollected[i].id);
-        const cowPoints: number = state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === cow.breed).maxMilkVolume;
+        const breed: number = cow.breed === 0 ? 1 : cow.breed;
+        const cowPoints: number = state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === breed).maxMilkVolume;
         cow.milk = cowPoints;
       }
     }

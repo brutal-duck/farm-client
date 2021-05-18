@@ -260,15 +260,16 @@ class Chicken extends Phaser.Scene {
     this.interval();
     this.setCollector();
 
-    // let cursors = this.input.keyboard.createCursorKeys();
-    // cursors.space.on('down', (): void => {
-    //   // this.state.user.diamonds = 10000000;
-    //   // let tasks = this.partTasks();
-    //   // for (let i in tasks) {
-    //   //   tasks[i].done = 1;
-    //   //   tasks[i].got_awarded = 1;
-    //   // }
-    // });
+    let cursors = this.input.keyboard.createCursorKeys();
+    cursors.space.on('down', (): void => {
+      // this.state.user.diamonds = 10000000;
+      // let tasks = this.partTasks();
+      // for (let i in tasks) {
+      //   tasks[i].done = 1;
+      //   tasks[i].got_awarded = 1;
+      // }
+      this.state.userChicken.diamondAnimalTime = 0;
+    });
 
   }
 
