@@ -528,9 +528,9 @@ export default function autoprogress(load: boolean = false): void {
 
         let boostedCount: number = 0;
         if (count > 1 && wasFactoryBoost > factorySettings.processingTime * count) {
-          boostedCount = Math.floor(count / 2);
-        } else if (count > 1 && wasFactoryBoost > 0){
-          boostedCount = Math.floor((wasFactoryBoost / factorySettings.processingTime * count) / 2);
+          boostedCount = Math.floor(count);
+        } else if (count > 1 && wasFactoryBoost > 0) {
+          boostedCount = Math.floor(wasFactoryBoost / factorySettings.processingTime * count);
           if (wasFactoryBoost > factorySettings.processingTime && boostedCount === 0) boostedCount = 1;
         }
   
@@ -1150,9 +1150,9 @@ export default function autoprogress(load: boolean = false): void {
 
         let boostedCount: number = 0;
         if (count > 1 && wasFactoryBoost > factorySettings.processingTime * count) {
-          boostedCount = Math.floor(count / 2);
-        } else if (count > 1 && wasFactoryBoost > 0){
-          boostedCount = Math.floor((wasFactoryBoost / factorySettings.processingTime * count) / 2);
+          boostedCount = Math.floor(count);
+        } else if (count > 1 && wasFactoryBoost > 0) {
+          boostedCount = Math.floor(wasFactoryBoost / factorySettings.processingTime * count);
           if (wasFactoryBoost > factorySettings.processingTime && boostedCount === 0) boostedCount = 1;
         }
   
