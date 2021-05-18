@@ -896,7 +896,7 @@ function cowFactory(): void {
   }
   const milkMoney = {
     icon: 'cowCoin',
-    text: shortNum(this.state.territory.factory.money)
+    text: ''
   }
 
   const nextImproveSettings: IfactorySettings = this.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === improve);
@@ -949,26 +949,26 @@ function cowFactory(): void {
     }).setOrigin(0.5, 0.5);
     const clabberSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX - 150, this.cameras.main.centerY + 30, 'clabber');
     const clabberGeom: Phaser.Geom.Rectangle = clabberSprite.getBounds();
-    this.clabberMoneyText = this.add.text(clabberGeom.centerX, clabberGeom.bottom, shortNum(this.state.territory.factory.production1Money), {
+    this.clabberMoneyText = this.add.text(clabberGeom.centerX, clabberGeom.bottom, '', {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0);
     const pasteurizedMilkSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX - 50, this.cameras.main.centerY + 30, 'pasteurized-milk');
     const pasteurizedMilkGeom: Phaser.Geom.Rectangle = pasteurizedMilkSprite.getBounds();
-    this.pasteurizedMilkMoneyText = this.add.text(pasteurizedMilkGeom.centerX, pasteurizedMilkGeom.bottom, shortNum(this.state.territory.factory.production2Money), {
+    this.pasteurizedMilkMoneyText = this.add.text(pasteurizedMilkGeom.centerX, pasteurizedMilkGeom.bottom, '', {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0);
     const cheeseSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX + 50, this.cameras.main.centerY + 30, 'pasteurized-milk');
     const cheeseGeom: Phaser.Geom.Rectangle = cheeseSprite.getBounds();
-    this.cheeseMoneyText = this.add.text(cheeseGeom.centerX, cheeseGeom.bottom, shortNum(this.state.territory.factory.production3Money), {
+    this.cheeseMoneyText = this.add.text(cheeseGeom.centerX, cheeseGeom.bottom, '', {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0);
 
     this.chocolateSprite = this.add.sprite(this.cameras.main.centerX + 150, this.cameras.main.centerY + 30, 'pasteurized-milk');
     const chocolateGeom: Phaser.Geom.Rectangle = this.chocolateSprite.getBounds();
-    this.chocolateMoneyText = this.add.text(chocolateGeom.centerX, chocolateGeom.bottom, shortNum(this.state.territory.factory.production4Money), {
+    this.chocolateMoneyText = this.add.text(chocolateGeom.centerX, chocolateGeom.bottom, '', {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0);
@@ -1018,26 +1018,26 @@ function cowFactory(): void {
     }).setOrigin(0.5, 0.5);
     const clabberSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX - 150, this.cameras.main.centerY, 'clabber');
     const clabberGeom: Phaser.Geom.Rectangle = clabberSprite.getBounds();
-    this.clabberMoneyText = this.add.text(clabberGeom.centerX, clabberGeom.bottom, shortNum(this.state.territory.factory.production1Money), {
+    this.clabberMoneyText = this.add.text(clabberGeom.centerX, clabberGeom.bottom, '', {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0);
     const pasteurizedMilkSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX - 50, this.cameras.main.centerY, 'pasteurized-milk');
     const pasteurizedMilkGeom: Phaser.Geom.Rectangle = pasteurizedMilkSprite.getBounds();
-    this.pasteurizedMilkMoneyText = this.add.text(pasteurizedMilkGeom.centerX, pasteurizedMilkGeom.bottom, shortNum(this.state.territory.factory.production2Money), {
+    this.pasteurizedMilkMoneyText = this.add.text(pasteurizedMilkGeom.centerX, pasteurizedMilkGeom.bottom, '', {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0);
     const cheeseSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX + 50, this.cameras.main.centerY, 'pasteurized-milk');
     const cheeseGeom: Phaser.Geom.Rectangle = cheeseSprite.getBounds();
-    this.cheeseMoneyText = this.add.text(cheeseGeom.centerX, cheeseGeom.bottom, shortNum(this.state.territory.factory.production3Money), {
+    this.cheeseMoneyText = this.add.text(cheeseGeom.centerX, cheeseGeom.bottom, '', {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0);
 
     const chocolateSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX + 150, this.cameras.main.centerY, 'pasteurized-milk');
     const chocolateGeom: Phaser.Geom.Rectangle = chocolateSprite.getBounds();
-    this.chocolateMoneyText = this.add.text(chocolateGeom.centerX, chocolateGeom.bottom, shortNum(this.state.territory.factory.production4Money), {
+    this.chocolateMoneyText = this.add.text(chocolateGeom.centerX, chocolateGeom.bottom, '', {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0);

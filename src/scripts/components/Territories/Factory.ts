@@ -20,8 +20,8 @@ export default class Factory extends Phaser.GameObjects.Sprite {
 
   private init(): void {
     this.scene.add.existing(this);
-    this.productionTimer = this.scene.state.userCow.factory.productionTimer;
     this.currentProduction = this.scene.state.userCow.factory.currentProduction;
+    this.productionTimer = this.scene.state.userCow.factory.productionTimer;
     this.production1Money = this.scene.state.userCow.factory.production1Money;
     this.production2Money = this.scene.state.userCow.factory.production2Money;
     this.production3Money = this.scene.state.userCow.factory.production3Money;

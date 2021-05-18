@@ -766,13 +766,12 @@ export default function loadData(response: any): void {
   let cowFactory: Ifactory = response.data.user.cowFactory;
   console.log(response.data.user.cowFactory)
   if (!response.data.user.cowFactory) cowFactory = basicUserCow.factory;
-  if (!cowFactory.production1Money || !cowFactory.money) {
-    cowFactory.money = 0;
-    cowFactory.production1Money = 0;
-    cowFactory.production2Money = 0;
-    cowFactory.production3Money = 0;
-    cowFactory.production4Money = 0;
-  }
+
+  if (!cowFactory.money) cowFactory.money = 0;
+  if (!cowFactory.production1Money) cowFactory.production1Money = 0;
+  if (!cowFactory.production2Money) cowFactory.production2Money = 0;
+  if (!cowFactory.production3Money) cowFactory.production3Money = 0;
+  if (!cowFactory.production4Money) cowFactory.production4Money = 0;
 
   const userCow: IuserCow = {
     money: response.data.user.cow_money,

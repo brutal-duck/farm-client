@@ -538,8 +538,8 @@ export default function autoprogress(load: boolean = false): void {
         if (count > 0) {
           for (let i: number = 0; i < count; i += 1) {
             if (currentProduction && i === 0) {
-              factory[`${currentProduction}Money`] += factorySettings.lotSize * factory[`${currentProduction}Multiply`];
-              factory.money += factorySettings.lotSize * factory[`${currentProduction}Multiply`];
+              factory[`production${currentProduction}Money`] += factorySettings.lotSize * factory[`production${currentProduction}Multiply`];
+              factory.money += factorySettings.lotSize * factory[`production${currentProduction}Multiply`];
             } else {
               if (boostedCount > 0) {
                 boostedCount -= 1;
@@ -1152,12 +1152,12 @@ export default function autoprogress(load: boolean = false): void {
         if (count > 0) {
           for (let i: number = 0; i < count; i += 1) {
             if (currentProduction && i === 0) {
-              factory[`production${currentProduction}Money`] += factorySettings.lotSize * this[`production${currentProduction}Multiply`];
-              factory.money += factorySettings.lotSize * this[`production${currentProduction}Multiply`];
+              factory[`production${currentProduction}Money`] += factorySettings.lotSize * state.userCow.factory[`production${currentProduction}Multiply`];
+              factory.money += factorySettings.lotSize * state.userCow.factory[`production${currentProduction}Multiply`];
             } else {
               const type: number = getRandomProductId(factorySettings, boostedCount > 0);
-              factory[`${type}Money`] += factorySettings.lotSize * this[`${type}Multiply`];
-              factory.money += factorySettings.lotSize * this[`${type}Multiply`];
+              factory[`production${type}Money`] += factorySettings.lotSize * state.userCow.factory[`production${type}Multiply`];
+              factory.money += factorySettings.lotSize * state.userCow.factory[`production${type}Multiply`];
             }
           }
 

@@ -876,7 +876,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   }
 
   private endProduction(): void {
-    console.log('tut')
     if (this.factory.currentProduction) {
       const multiply: number = this.scene.state.userCow.factory[`production${this.factory.currentProduction}Multiply`];
       this.factory[`production${this.factory.currentProduction}Money`] += this.factory.settings.lotSize * multiply;
@@ -918,7 +917,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         productId = arrRange[i].id;
       }
     }
-    console.log(arrRange)
     return productId;
   }
 
