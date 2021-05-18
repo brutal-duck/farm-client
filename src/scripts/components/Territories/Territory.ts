@@ -4,6 +4,7 @@ import Cave from './../gameObjects/Cave';
 import Firework from './../animations/Firework';
 import Stars from './../animations/Stars';
 import Factory from './Factory';
+import SpeechBubble from './../animations/SpeechBuble';
 
 export default class Territory extends Phaser.Physics.Arcade.Sprite {
   public scene: Cow;
@@ -253,6 +254,8 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       } else if (this.territoryType === 6) {
         if (this.scene.state[`user${this.scene.state.farm}`].collectorLevel < this.scene.state[`${this.scene.state.farm.toLowerCase()}CollectorSettings`].length) {
           this.scene.showImproveCollector();
+        } else {
+          SpeechBubble.create(this.scene.game.scene.keys[`${this.scene.state.farm}Bars`], this.scene.state.lang.maxCollectorLevel, 3);
         }
       } else if (this.territoryType === 7) {
         this.scene.takeDiamondCow();

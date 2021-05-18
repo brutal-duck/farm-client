@@ -795,6 +795,7 @@ export default {
     now: 'Сейчас',
     jackpotCongratulations: 'Поздравляем! вы выйграли',
     fortuneWelcome: 'Испытай колесо фортуны! Попробуй выйграть главный приз!',
+    maxCollectorLevel: 'Достигнут максимальный уровень собирателя',
   },
 
   en: {
@@ -1593,5 +1594,6 @@ export default {
     now: 'Сейчас',
     jackpotCongratulations: 'Поздравляем! вы выйграли',
     fortuneWelcome: 'Испытай колесо фортуны! Попробуй выйграть главный приз!',
+    maxCollectorLevel: 'Достигнут максимальный уровень собирателя',
   }
 }

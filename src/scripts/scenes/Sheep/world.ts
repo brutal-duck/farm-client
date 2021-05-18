@@ -1,5 +1,6 @@
 import Scrolling from '../../libs/Scrolling';
 import Cave from '../../components/gameObjects/Cave';
+import SpeechBubble from './../../components/animations/SpeechBuble';
 
 function world(): void {
 
@@ -297,6 +298,8 @@ function world(): void {
         } else if (territory.type === 6) {
           if (this.state[`user${this.state.farm}`].collectorLevel < this.state[`${this.state.farm.toLowerCase()}CollectorSettings`].length) {
             this.showImproveCollector();
+          } else {
+            SpeechBubble.create(this.game.scene.keys[`${this.state.farm}Bars`], this.state.lang.maxCollectorLevel, 3);
           }
         } else if (territory.type === 7) {
           this.takeDiamondSheep();
