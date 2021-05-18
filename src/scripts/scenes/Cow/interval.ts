@@ -270,6 +270,8 @@ function interval(): void {
     const factoryTerritory: Territory = this.territories.children.entries.find((data: Territory) => data.territoryType === 8);
     factoryTerritory.productionOfProducts();
 
+    this.intervalPorgressCollectorTime();
+
     arrayInterval.bind(this)();
   }, callbackScope: this, loop: true });
 }

@@ -29,7 +29,8 @@ import {
   logAmplitudeEvent,
   logAmplitudeRevenue,
   farmBalance,
-  autoporgressCollectorTime
+  autoporgressCollectorTime,
+  intervalPorgressCollectorTime
 } from '../../general/basic';
 import {
   improveCollector,
@@ -218,6 +219,7 @@ class Cow extends Phaser.Scene {
   public logAmplitudeRevenue = logAmplitudeRevenue.bind(this);  
   public farmBalance = farmBalance.bind(this);
   public autoporgressCollectorTime = autoporgressCollectorTime.bind(this);
+  public intervalPorgressCollectorTime = intervalPorgressCollectorTime.bind(this);
 
   public init(state: Istate): void {
 

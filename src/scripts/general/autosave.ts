@@ -75,7 +75,10 @@ export default function autosave(): void {
     sheepTasks = this.partTasks();
     const territories: Iterritories[] = [];
     const sheep: Isheep[] = [];
-
+    
+    state.userChicken.collector = state.progress.chicken.collector;
+    state.userCow.collector = state.progress.cow.collector;
+  
     if (typeof this.state.userSheep.autosaveCounter === 'number') this.state.userSheep.autosaveCounter++;
     else this.state.userSheep.autosaveCounter = 0;
 
@@ -114,6 +117,9 @@ export default function autosave(): void {
     const chicken: Ichicken[] = [];
     const eggs: IchickenEgg[] = [];
 
+    state.userSheep.collector = state.progress.sheep.collector;
+    state.userCow.collector = state.progress.cow.collector;
+  
     if (typeof state.userChicken.autosaveCounter === 'number') state.userChicken.autosaveCounter++;
     else state.userChicken.autosaveCounter = 0;
 
@@ -163,7 +169,9 @@ export default function autosave(): void {
     cowTasks = this.partTasks();
     const territories: Iterritories[] = [];
     const cow: Icow[] = [];
-
+    state.userSheep.collector = state.progress.sheep.collector;
+    state.userChicken.collector = state.progress.chicken.collector;
+  
     if (typeof this.state.userCow.autosaveCounter === 'number') this.state.userCow.autosaveCounter++;
     else this.state.userCow.autosaveCounter = 0;
 
@@ -261,7 +269,7 @@ export default function autosave(): void {
     unicornTerritories = territories;
     unicornResource = resources;
   }
-
+  
   const user: IuserAutoSave = {
     diamonds: state.user.diamonds,
     xp: state.user.xp,
@@ -300,6 +308,7 @@ export default function autosave(): void {
     unicornResource: unicornResource,
     unicornTerritories : unicornTerritories,
   }
+
   axios.post(process.env.API + "/autoSave", data)
     .then((res) => {
       if (this.scene.isActive('Sheep') || this.scene.isActive('Chicken') || this.scene.isActive('Cow')) {
