@@ -519,8 +519,8 @@ function arrayInterval(): void {
       let collectedWool: number = Math.floor(sheepCollectorVolume / speed / SEC);
       if (collectedWool > 0) {
         sheepCollectorVolume -= collectedWool * speed * SEC;
-        for (let i in Scene.state.chickenTerritories) {
-          const territory: Iterritories = Scene.state.chickenTerritories[i];
+        for (let i in Scene.state.sheepTerritories) {
+          const territory: Iterritories = Scene.state.sheepTerritories[i];
           if (territory.type === 5) {
             const max: number = Scene.state.sheepSettings.territoriesSheepSettings.find((data: IterritoriesSheepSettings) => data.improve === territory.improve).woolStorage;
             for (let i: number = 0; i < collectedWool; i += 1) {
