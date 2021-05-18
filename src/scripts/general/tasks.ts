@@ -530,7 +530,7 @@ function clickTaskBoard(task: Itasks): void {
     case 13: 
       break;
     case 14: 
-      SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang[`taskHelp${this.state.farm}_14`], 3);
+      openShopAnimal();
       break;
     case 15: 
       openShopBoosters();
