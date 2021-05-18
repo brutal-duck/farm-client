@@ -1260,6 +1260,7 @@ function registration(): void {
   this.clickModalBtn(logoutBtn, (): void => {
 
     document.cookie = "farmHASH=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    localStorage.farm = '';
     window.location.reload();
 
   });
@@ -1343,12 +1344,12 @@ function profileWindow(): void {
     }).setOrigin(0, 0.5).setDepth(2);
   }
   
-
   if (this.state.platform === 'web') {
   
     exit = this.bigButton('orange', 'center', 80, this.state.lang.profileExit);
     this.clickModalBtn(exit, (): void => {
       document.cookie = "farmHASH=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      localStorage.farm = '';
       window.location.reload();
     });
     let nameHeight: number = name.getBounds().height;
