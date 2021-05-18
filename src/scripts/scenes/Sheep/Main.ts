@@ -132,6 +132,7 @@ import {
 } from '../../general/ads';
 import setCollector from './collector';
 import { showEventTutorial, doneEventTutor_0 } from './../Event/Unicorns/tutorial';
+import { chickenIntervalProgress, chickenCollectorProgress, cowCollectorProgress, cowFactoryProgress, cowIntervalProgress } from '../../general/interval';
 
 class Sheep extends Phaser.Scene {
   constructor() {
@@ -301,7 +302,12 @@ class Sheep extends Phaser.Scene {
   public logAmplitudeRevenue = logAmplitudeRevenue.bind(this);  
   public farmBalance = farmBalance.bind(this);
   public randomString = randomString.bind(this);
-  
+  public chickenIntervalProgress = chickenIntervalProgress.bind(this);
+  public chickenCollectorProgress = chickenCollectorProgress.bind(this);
+  public cowCollectorProgress = cowCollectorProgress.bind(this);
+  public cowFactoryProgress = cowFactoryProgress.bind(this);
+  public cowIntervalProgress = cowIntervalProgress.bind(this);
+
   public init(state: Istate): void {
 
     this.autoprogressTimer = Math.round(new Date().getTime() / 1000);

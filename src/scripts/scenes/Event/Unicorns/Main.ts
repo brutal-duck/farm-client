@@ -95,6 +95,16 @@ import {
   progressEventTutor_40,
   progressEventTutor_50
 } from './tutorial';
+
+import {
+  sheepIntervalProgress,
+  sheepCollectorProgress,
+  chickenIntervalProgress,
+  chickenCollectorProgress,
+  cowIntervalProgress,
+  cowCollectorProgress,
+  cowFactoryProgress,
+} from '../../../general/interval';
 class Unicorn extends Phaser.Scene {
   constructor() {
     super('Unicorn');
@@ -207,6 +217,13 @@ class Unicorn extends Phaser.Scene {
   public logAmplitudeEvent = logAmplitudeEvent.bind(this);
   public logAmplitudeRevenue = logAmplitudeRevenue.bind(this);  
   public farmBalance = farmBalance.bind(this);
+  public sheepIntervalProgress = sheepIntervalProgress.bind(this);
+  public sheepCollectorProgress = sheepCollectorProgress.bind(this);
+  public chickenIntervalProgress = chickenIntervalProgress.bind(this);
+  public chickenCollectorProgress = chickenCollectorProgress.bind(this);
+  public cowIntervalProgress = cowIntervalProgress.bind(this);
+  public cowCollectorProgress = cowCollectorProgress.bind(this);
+  public cowFactoryProgress = cowFactoryProgress.bind(this);
   
   public init(state: Istate): void {
     this.state = state;

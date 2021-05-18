@@ -9,8 +9,8 @@ export default function autoprogress(load: boolean = false): void {
   const state: Istate = this.state;
   
   const getRandomProductId = (settings: IfactorySettings, boost: boolean): number => {
-    const pull: number[] = [ settings.clabberPercent, settings.pasteurizedMilkPercent, settings.cheesePercent ];
-    if (boost) pull.push(settings.chocolatePercent);
+    const pull: number[] = [ settings.production1Percent, settings.production2Percent, settings.production3Percent ];
+    if (boost) pull.push(settings.production4Percent);
 
     const totalCounter: number = pull.reduce((prev, current) => prev += current);
     const arrRange: {
@@ -534,7 +534,7 @@ export default function autoprogress(load: boolean = false): void {
           if (wasFactoryBoost > factorySettings.processingTime && boostedCount === 0) boostedCount = 1;
         }
   
-        const currentProduction: string = factory.currentProduction;
+        const currentProduction: number = factory.currentProduction;
         if (count > 0) {
           for (let i: number = 0; i < count; i += 1) {
             if (currentProduction && i === 0) {
@@ -545,12 +545,9 @@ export default function autoprogress(load: boolean = false): void {
                 boostedCount -= 1;
               }
               const productId: number = getRandomProductId(factorySettings, boostedCount > 0);
-              const type: string = productId === 1 ? 'clabber' :
-              productId === 2 ? 'pasteurizedMilk' : 
-              productId === 3 ? 'cheese' : 
-              productId === 4 ? 'chocolate' : '';
-              factory[`${type}Money`] += factorySettings.lotSize * factory[`${type}Multiply`];
-              factory.money += factorySettings.lotSize * factory[`${type}Multiply`];
+              const type: number = productId
+              factory[`production${type}Money`] += factorySettings.lotSize * factory[`production${type}Multiply`];
+              factory.money += factorySettings.lotSize * factory[`production${type}Multiply`];
             }
           }
 
@@ -558,12 +555,7 @@ export default function autoprogress(load: boolean = false): void {
           factory.productionTimer = remainingTime;
       
           if (remainingTime > 0) {
-            const productId: number = getRandomProductId(factorySettings, state.userCow.factory.boostTime > 0);
-            const type: string = productId === 1 ? 'clabber' :
-            productId === 2 ? 'pasteurizedMilk' : 
-            productId === 3 ? 'cheese' : 
-            productId === 4 ? 'chocolate' : '';
-            factory.currentProduction = type;
+            factory.currentProduction = getRandomProductId(factorySettings, state.userCow.factory.boostTime > 0);
           }
         } 
         if (factory.currentProduction) factory.productionTimer -= state.offlineTime;
@@ -1156,18 +1148,14 @@ export default function autoprogress(load: boolean = false): void {
           if (wasFactoryBoost > factorySettings.processingTime && boostedCount === 0) boostedCount = 1;
         }
   
-        const currentProduction: string = factory.currentProduction;
+        const currentProduction: number = factory.currentProduction;
         if (count > 0) {
           for (let i: number = 0; i < count; i += 1) {
             if (currentProduction && i === 0) {
-              factory[`${currentProduction}Money`] += factorySettings.lotSize * this[`${currentProduction}Multiply`];
-              factory.money += factorySettings.lotSize * this[`${currentProduction}Multiply`];
+              factory[`production${currentProduction}Money`] += factorySettings.lotSize * this[`production${currentProduction}Multiply`];
+              factory.money += factorySettings.lotSize * this[`production${currentProduction}Multiply`];
             } else {
-              const productId: number = getRandomProductId(factorySettings, boostedCount > 0);
-              const type: string = productId === 1 ? 'clabber' :
-              productId === 2 ? 'pasteurizedMilk' : 
-              productId === 3 ? 'cheese' : 
-              productId === 4 ? 'chocolate' : '';
+              const type: number = getRandomProductId(factorySettings, boostedCount > 0);
               factory[`${type}Money`] += factorySettings.lotSize * this[`${type}Multiply`];
               factory.money += factorySettings.lotSize * this[`${type}Multiply`];
             }
@@ -1177,12 +1165,7 @@ export default function autoprogress(load: boolean = false): void {
           factory.productionTimer = remainingTime;
 
           if (factory.productionTimer  > 0) {
-            const productId: number = getRandomProductId(factorySettings, boostedCount > 0);
-            const type: string = productId === 1 ? 'clabber' :
-            productId === 2 ? 'pasteurizedMilk' : 
-            productId === 3 ? 'cheese' : 
-            productId === 4 ? 'chocolate' : '';
-            factory.currentProduction = type;
+            factory.currentProduction = getRandomProductId(factorySettings, boostedCount > 0);
           }
         }
         if (factory.currentProduction) factory.productionTimer -= state.offlineTime;

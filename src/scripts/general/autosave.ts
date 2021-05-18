@@ -209,10 +209,10 @@ export default function autosave(): void {
       currentProduction: factoryTer.currentProduction,
       productionTimer: factoryTer.productionTimer,
       money: factoryTer.money,
-      clabberMoney: factoryTer.clabberMoney,
-      pasteurizedMilkMoney: factoryTer.pasteurizedMilkMoney,
-      cheeseMoney: factoryTer.cheeseMoney,
-      chocolateMoney: factoryTer.chocolateMoney,
+      production1Money: factoryTer.production1Money,
+      production2Money: factoryTer.production2Money,
+      production3Money: factoryTer.production3Money,
+      production4Money: factoryTer.production4Money,
       boostTime: state.userCow.factory.boostTime,
     }
     

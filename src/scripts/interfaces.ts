@@ -197,19 +197,19 @@ interface IuserChicken {
   feedBoostTime: number;
 }
 interface Ifactory {
-  currentProduction: string;
+  currentProduction: number;
   productionTimer: number;
   money: number;
-  clabberMoney: number;
-  pasteurizedMilkMoney: number;
-  cheeseMoney: number;
-  chocolateMoney: number;
+  production1Money: number;
+  production2Money: number;
+  production3Money: number;
+  production4Money: number;
   boostTime: number;
   milkMultiply?: number;
-  clabberMultiply?: number;
-  pasteurizedMilkMultiply?: number;
-  cheeseMultiply?: number;
-  chocolateMultiply?: number;
+  production1Multiply?: number;
+  production2Multiply?: number;
+  production3Multiply?: number;
+  production4Multiply?: number;
 }
 interface IuserCow {
   money: number;
@@ -383,10 +383,10 @@ interface IfactorySettings {
   improveDiamondPrice: number;
   processingTime: number;
   lotSize: number;
-  clabberPercent: number;
-  pasteurizedMilkPercent: number;
-  cheesePercent: number;
-  chocolatePercent: number;
+  production1Percent: number;
+  production2Percent: number;
+  production3Percent: number;
+  production4Percent: number;
   efficiency: number;
   id?: any;
 }

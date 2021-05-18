@@ -949,26 +949,26 @@ function cowFactory(): void {
     }).setOrigin(0.5, 0.5);
     const clabberSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX - 150, this.cameras.main.centerY + 30, 'clabber');
     const clabberGeom: Phaser.Geom.Rectangle = clabberSprite.getBounds();
-    this.clabberMoneyText = this.add.text(clabberGeom.centerX, clabberGeom.bottom, shortNum(this.state.territory.factory.clabberMoney), {
+    this.clabberMoneyText = this.add.text(clabberGeom.centerX, clabberGeom.bottom, shortNum(this.state.territory.factory.production1Money), {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0);
     const pasteurizedMilkSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX - 50, this.cameras.main.centerY + 30, 'pasteurized-milk');
     const pasteurizedMilkGeom: Phaser.Geom.Rectangle = pasteurizedMilkSprite.getBounds();
-    this.pasteurizedMilkMoneyText = this.add.text(pasteurizedMilkGeom.centerX, pasteurizedMilkGeom.bottom, shortNum(this.state.territory.factory.pasteurizedMilkMoney), {
+    this.pasteurizedMilkMoneyText = this.add.text(pasteurizedMilkGeom.centerX, pasteurizedMilkGeom.bottom, shortNum(this.state.territory.factory.production2Money), {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0);
     const cheeseSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX + 50, this.cameras.main.centerY + 30, 'pasteurized-milk');
     const cheeseGeom: Phaser.Geom.Rectangle = cheeseSprite.getBounds();
-    this.cheeseMoneyText = this.add.text(cheeseGeom.centerX, cheeseGeom.bottom, shortNum(this.state.territory.factory.cheeseMoney), {
+    this.cheeseMoneyText = this.add.text(cheeseGeom.centerX, cheeseGeom.bottom, shortNum(this.state.territory.factory.production3Money), {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0);
 
     this.chocolateSprite = this.add.sprite(this.cameras.main.centerX + 150, this.cameras.main.centerY + 30, 'pasteurized-milk');
     const chocolateGeom: Phaser.Geom.Rectangle = this.chocolateSprite.getBounds();
-    this.chocolateMoneyText = this.add.text(chocolateGeom.centerX, chocolateGeom.bottom, shortNum(this.state.territory.factory.chocolateMoney), {
+    this.chocolateMoneyText = this.add.text(chocolateGeom.centerX, chocolateGeom.bottom, shortNum(this.state.territory.factory.production4Money), {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0);
@@ -1001,7 +1001,7 @@ function cowFactory(): void {
 
   } else {
 
-    const product: string = this.state.territory.factory.currentProduction ? this.state.lang[this.state.territory.factory.currentProduction] : '';
+    const product: string = this.state.territory.factory.currentProduction ? this.state.lang[`production${this.state.territory.factory.currentProduction}`] : '';
 
     this.factoryProductText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 170, `${this.state.lang.produced}: ${product}`, {
       font: '26px Bip',
@@ -1018,26 +1018,26 @@ function cowFactory(): void {
     }).setOrigin(0.5, 0.5);
     const clabberSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX - 150, this.cameras.main.centerY, 'clabber');
     const clabberGeom: Phaser.Geom.Rectangle = clabberSprite.getBounds();
-    this.clabberMoneyText = this.add.text(clabberGeom.centerX, clabberGeom.bottom, shortNum(this.state.territory.factory.clabberMoney), {
+    this.clabberMoneyText = this.add.text(clabberGeom.centerX, clabberGeom.bottom, shortNum(this.state.territory.factory.production1Money), {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0);
     const pasteurizedMilkSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX - 50, this.cameras.main.centerY, 'pasteurized-milk');
     const pasteurizedMilkGeom: Phaser.Geom.Rectangle = pasteurizedMilkSprite.getBounds();
-    this.pasteurizedMilkMoneyText = this.add.text(pasteurizedMilkGeom.centerX, pasteurizedMilkGeom.bottom, shortNum(this.state.territory.factory.pasteurizedMilkMoney), {
+    this.pasteurizedMilkMoneyText = this.add.text(pasteurizedMilkGeom.centerX, pasteurizedMilkGeom.bottom, shortNum(this.state.territory.factory.production2Money), {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0);
     const cheeseSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX + 50, this.cameras.main.centerY, 'pasteurized-milk');
     const cheeseGeom: Phaser.Geom.Rectangle = cheeseSprite.getBounds();
-    this.cheeseMoneyText = this.add.text(cheeseGeom.centerX, cheeseGeom.bottom, shortNum(this.state.territory.factory.cheeseMoney), {
+    this.cheeseMoneyText = this.add.text(cheeseGeom.centerX, cheeseGeom.bottom, shortNum(this.state.territory.factory.production3Money), {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0);
 
     const chocolateSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX + 150, this.cameras.main.centerY, 'pasteurized-milk');
     const chocolateGeom: Phaser.Geom.Rectangle = chocolateSprite.getBounds();
-    this.chocolateMoneyText = this.add.text(chocolateGeom.centerX, chocolateGeom.bottom, shortNum(this.state.territory.factory.chocolateMoney), {
+    this.chocolateMoneyText = this.add.text(chocolateGeom.centerX, chocolateGeom.bottom, shortNum(this.state.territory.factory.production4Money), {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0);
@@ -1080,8 +1080,7 @@ function updateFactoryModal(): void {
     if (this.factoryProgressBar.displayWidth !== width) {
       this.factoryProgressBar.setDisplaySize(width, 16);
     }
-    const product: string = factory.currentProduction ? this.state.lang[factory.currentProduction] : '';
-    
+    const product: string = factory.currentProduction ? this.state.lang[`production${factory.currentProduction}`] : '';
     const volume: string = `${this.state.lang.produced}: ${product}`;
     if (this.factoryProductText.text !== volume) {
       this.factoryProductText.setText(volume);
@@ -1089,10 +1088,10 @@ function updateFactoryModal(): void {
   
     if (this.factorySellButton.text1.text !== shortNum(factory.money)) {
       this.factorySellButton.text1.setText(shortNum(factory.money));
-      this.clabberMoneyText.setText(shortNum(factory.clabberMoney));
-      this.pasteurizedMilkMoneyText.setText(shortNum(factory.pasteurizedMilkMoney));
-      this.cheeseMoneyText.setText(shortNum(factory.cheeseMoney));
-      this.chocolateMoneyText.setText(shortNum(factory.chocolateMoney));
+      this.clabberMoneyText.setText(shortNum(factory.production1Money));
+      this.pasteurizedMilkMoneyText.setText(shortNum(factory.production2Money));
+      this.cheeseMoneyText.setText(shortNum(factory.production3Money));
+      this.chocolateMoneyText.setText(shortNum(factory.production4Money));
       this.factorySellButton.img1.setX(this.factorySellButton.text1.getBounds().left - 10);
     }
   
@@ -1270,7 +1269,7 @@ function factoryBoostWindow(): void {
 
         this.state.boughtFactoryBoost = true;
 
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('diamonds_spent', {
+        this.game.scene.keys[this.state.farm].productionMoneytudeEvent('diamonds_spent', {
           type: 'booster_factory',
           count: price,
         });

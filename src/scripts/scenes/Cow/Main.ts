@@ -101,6 +101,7 @@ import {
 import setCollector from './collector';
 import { showEventTutorial, doneEventTutor_0 } from '../Event/Unicorns/tutorial';
 import CowGroup from '../../components/AnimalGroup/CowGroup';
+import {sheepIntervalProgress, sheepCollectorProgress, chickenCollectorProgress, chickenIntervalProgress } from '../../general/interval';
 
 class Cow extends Phaser.Scene {
   constructor() {
@@ -220,7 +221,11 @@ class Cow extends Phaser.Scene {
   public farmBalance = farmBalance.bind(this);
   public autoporgressCollectorTime = autoporgressCollectorTime.bind(this);
   public intervalPorgressCollectorTime = intervalPorgressCollectorTime.bind(this);
-
+  public sheepIntervalProgress = sheepIntervalProgress.bind(this);
+  public sheepCollectorProgress = sheepCollectorProgress.bind(this);
+  public chickenCollectorProgress = chickenCollectorProgress.bind(this);
+  public chickenIntervalProgress = chickenIntervalProgress.bind(this);
+  
   public init(state: Istate): void {
 
     this.autoprogressTimer = Math.round(new Date().getTime() / 1000);

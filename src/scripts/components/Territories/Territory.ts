@@ -834,7 +834,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
   public productionOfProducts(): void {
     let resourceAmount: number = 0;
-
     if (this.territoryType === 8) {
       if (this.factory.productionTimer <= 0) {
         this.endProduction();
@@ -870,32 +869,25 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   private startProduction(): void {
     const productId = this.getRandomProductId();
     if (productId) {
-      this.factory.currentProduction = productId === 1 ? 'clabber' :
-        productId === 2 ? 'pasteurizedMilk' : 
-        productId === 3 ? 'cheese' : 
-        productId === 4 ? 'chocolate' : '';
+      this.factory.currentProduction = productId;
     } else {
       this.startProduction();
     }
   }
 
   private endProduction(): void {
+    console.log('tut')
     if (this.factory.currentProduction) {
-      this.factory[`${this.factory.currentProduction}Money`] += this.factory.settings.lotSize * this.scene[`${this.factory.currentProduction}Multiply`];
-      this.factory.money += this.factory.settings.lotSize * this.scene[`${this.factory.currentProduction}Multiply`];
-      this.factory.currentProduction = '';
-      console.log(this.factory.clabberMoney, 'простокваша')
-      console.log(this.factory.pasteurizedMilkMoney, 'пастеризованное молоко')
-      console.log(this.factory.cheeseMoney, 'сыр')
-      console.log(this.factory.chocolateMoney, 'шоколад')
-  
-      console.log(this.factory.money, 'общие деньги')
+      const multiply: number = this.scene.state.userCow.factory[`production${this.factory.currentProduction}Multiply`];
+      this.factory[`production${this.factory.currentProduction}Money`] += this.factory.settings.lotSize * multiply;
+      this.factory.money += this.factory.settings.lotSize * multiply;
+      this.factory.currentProduction = undefined;
     }
   }
 
   public getRandomProductId(): number {
-    const pull: number[] = [ this.factory.settings.clabberPercent, this.factory.settings.pasteurizedMilkPercent, this.factory.settings.cheesePercent ];
-    if (this.scene.state.userCow.factory.boostTime > 0) pull.push(this.factory.settings.chocolatePercent);
+    const pull: number[] = [ this.factory.settings.production1Percent, this.factory.settings.production2Percent, this.factory.settings.production3Percent ];
+    if (this.scene.state.userCow.factory.boostTime > 0) pull.push(this.factory.settings.production4Percent);
 
     const totalCounter: number = pull.reduce((prev, current) => prev += current);
     const arrRange: {
@@ -935,10 +927,10 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
       this.scene.state.userCow.money += this.factory.money;
       this.factory.money = 0;
-      this.factory.clabberMoney = 0;
-      this.factory.pasteurizedMilkMoney = 0;
-      this.factory.cheeseMoney = 0;
-      this.factory.chocolateMoney = 0;
+      this.factory.production1Money = 0;
+      this.factory.production2Money = 0;
+      this.factory.production3Money = 0;
+      this.factory.production4Money = 0;
       
       this.scene.game.scene.keys['CowBars'].plusMoneyAnimation({
         x: this.x + 120,
