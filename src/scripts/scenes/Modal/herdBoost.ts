@@ -159,21 +159,21 @@ function createWorld(): any[] {
   if (farm === 'sheep') { 
     yTent = y - 24;
     yTextLevel = y + 65;
-  } else if (farm === 'chicken') {
+  } else if (farm === 'chicken' || farm === 'unicorn') {
     yTent = y - 17;
     yTextLevel = y + 82;
-  } else if (farm === 'unicorn') {
-    yTent = y - 17;
-    yTextLevel = y + 82;
-  }
-  
+  } else if (farm === 'cow') {
+    yTent = y - 19;
+    yTextLevel = y + 75;
+  } 
+
   this.mergingArray = []; // массив животных для слияния
   
   this.state.herdBoostAnimals = []; // Обнуляем массив животных для буста
 
   let tent: Phaser.Physics.Arcade.Sprite = this.add.image(x, yTent, `${farm}-tent`).setDepth(y + 1).setAlpha(0);
-
-  let textLevel: Phaser.GameObjects.Text = this.add.text(x + 80, yTextLevel, this.state[`user${this.state.farm}`].fair, {
+  const xTextLevel: number = farm === 'cow' ? x - 75 : x + 80;
+  let textLevel: Phaser.GameObjects.Text = this.add.text(xTextLevel, yTextLevel, this.state[`user${this.state.farm}`].fair, {
     font: '36px Shadow',
     color: '#b5315a'
   }).setOrigin(0.5, 0.5).setDepth(y * 2).setAlpha(0);
@@ -234,20 +234,18 @@ function createAnimals(timerText, allItems, boostCounterWindow): void {
 
   } else if (this.state.farm === 'Cow') {
     // дроп зоны 
-    let leftZone: Phaser.GameObjects.Zone = this.add.zone(x - 75, y - 30, 145, 300).setDropZone(undefined, () => {});
-    leftZone.type = 'left';
-    
-    let rightZone: Phaser.GameObjects.Zone = this.add.zone(x + 70, y - 30, 145, 300).setDropZone(undefined, () => {});
-    rightZone.type = 'right';
+    let topZone: Phaser.GameObjects.Zone = this.add.zone(x, y - 75, 300, 145).setDropZone(undefined, () => {});
+    topZone.type = 'top';
+    let bottomZone: Phaser.GameObjects.Zone = this.add.zone(x, y + 70, 300, 145).setDropZone(undefined, () => {});
+    bottomZone.type = 'bottom';
 
-    // для проверки дроп зон
-    // let graphics1 = this.add.graphics().setDepth(leftZone.y * 5);
-    // graphics1.lineStyle(2, 0xffff00);
-    // graphics1.strokeRect(leftZone.x - leftZone.input.hitArea.width / 2, leftZone.y - leftZone.input.hitArea.height / 2, leftZone.input.hitArea.width, leftZone.input.hitArea.height);
-
-    // let graphics2 = this.add.graphics().setDepth(rightZone.y * 5);
+    // Для проверки дроп зон
+    // let graphics2 = this.add.graphics().setDepth(bottomZone.y * 5);
     // graphics2.lineStyle(2, 0x00ff00);
-    // graphics2.strokeRect(rightZone.x - rightZone.input.hitArea.width / 2, rightZone.y - rightZone.input.hitArea.height / 2, rightZone.input.hitArea.width, rightZone.input.hitArea.height);
+    // graphics2.strokeRect(bottomZone.x - bottomZone.input.hitArea.width / 2, bottomZone.y - bottomZone.input.hitArea.height / 2, bottomZone.input.hitArea.width, bottomZone.input.hitArea.height);
+    // let graphics1 = this.add.graphics().setDepth(topZone.y * 5);
+    // graphics1.lineStyle(2, 0xffff00);
+    // graphics1.strokeRect(topZone.x - topZone.input.hitArea.width / 2, topZone.y - topZone.input.hitArea.height / 2, topZone.input.hitArea.width, topZone.input.hitArea.height);
 
   } else if (this.state.farm === 'unicorn') {
     // дроп зоны 
@@ -476,8 +474,7 @@ function drag(animal: Phaser.Physics.Arcade.Sprite): void {
     animal.y = dragY;
     animal.setDepth(dragY + Math.round((animal.height / 2) + 100));
     if (animal.data.values.woolSprite) {
-      animal.data.values.woolSprite.x = dragX;
-      animal.data.values.woolSprite.y = dragY;
+      animal.data.values.woolSprite.setPosition(dragX, dragY);
       animal.data.values.woolSprite.setDepth(dragY + Math.round((animal.height / 2) + 101));
     }
   });
@@ -561,56 +558,41 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): v
       if (position === 'top') {
   
         if (animal.data.values.side === 'left') {
-  
           animal.data.values.side = 'right';
-          animal.data.values.woolSprite.setTexture(this.state.farm.toLowerCase()+ '-' + animal.data.values.side + '-' + animal.data.values.type + '-' + animal.data.values.stage);
-        
+          animal.data.values.woolSprite?.setTexture(this.state.farm.toLowerCase()+ '-' + animal.data.values.side + '-' + animal.data.values.type + '-' + animal.data.values.stage);
         }
   
         animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
-        animal.y = y - 100;
-        animal.x = x - 25;
-        animal.data.values.woolSprite.x = animal.x;
-        animal.data.values.woolSprite.y = animal.y;
-    
+
+        animal.setPosition(x - 25, y - 100);
+        animal.data.values.woolSprite?.setPosition(animal.x, animal.y);
+        if (this.state.farm === 'Cow') animal.setPosition(x + 45, y - 100);
       } else if (position === 'bottom') {
   
         if (animal.data.values.side === 'left') {
   
           animal.data.values.side = 'right';
-          animal.data.values.woolSprite.setTexture(this.state.farm.toLowerCase()+ '-' + animal.data.values.side + '-' + animal.data.values.type + '-' + animal.data.values.stage);
-        
+          animal.data.values.woolSprite?.setTexture(this.state.farm.toLowerCase()+ '-' + animal.data.values.side + '-' + animal.data.values.type + '-' + animal.data.values.stage);
         }
-  
         animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
-        animal.y = y + 20;
-        animal.x = x - 25;
-        animal.data.values.woolSprite.x = animal.x;
-        animal.data.values.woolSprite.y = animal.y;
+        animal.setPosition(x - 25, y + 20);
+        animal.data.values.woolSprite?.setPosition(animal.x, animal.y);
+        if (this.state.farm === 'Cow') animal.setPosition(x + 45, y + 20);
       }
   
       // проверка позиции для кур
       if (position === 'left') {
         if (animal.data.values.side === 'left') {
-  
           animal.data.values.side = 'right';
-  
         }
-  
         animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
-        animal.y = y;
-        animal.x = x - 50;
-  
+        animal.setPosition(x - 50, y);
       } else if (position === 'right') {
-  
         if (animal.data.values.side === 'left') {
           animal.data.values.side = 'right';
-  
         }
-  
         animal.anims.play(this.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
-        animal.y = y;
-        animal.x = x + 50;
+        animal.setPosition(x + 50, y);
       }
     }
     
