@@ -274,7 +274,7 @@ function showImproveCollector(): void {
   }
   this.state.modal = modal;
   this.scene.launch('Modal', this.state);
-
+  
 }
 
 function startHerdBoost(): void {

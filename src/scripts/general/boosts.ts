@@ -47,6 +47,7 @@ function createBoostAnimal(): void {
     this.tryTask(2, type);
     this.tryTask(4, type);
   });
+  this.tryTask(25, 0, this.state.herdBoostAnimals.length);
   this.state.herdBoostAnimals = [];
 }
 

@@ -816,7 +816,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
           this.scene.state.modal = modal;
           this.scene.state.territory = this;
           this.scene.scene.launch('Modal', this.scene.state);
-
+          this.scene.tryTask(24, this.factory.improve);
         } else {
           if (this.scene.state.user.diamonds < nextImprove.improveDiamondPrice) {
             const count: number = nextImprove.improveDiamondPrice - this.scene.state.user.diamonds;

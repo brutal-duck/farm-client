@@ -833,7 +833,7 @@ export default function loadData(response: any): void {
   }
 
   const cowTasks: Itasks[] = [];
-  for (let i in tasks) if (tasks[i].farm === 2) cowTasks.push(tasks[i]);
+  for (let i in tasks) if (tasks[i].farm === 3) cowTasks.push(tasks[i]);
   for (let i in response.data.user.cow_tasks) {
     const usersTask = response.data.user.cow_tasks[i];
     const task = tasks.find((task: Itasks) => task.id === usersTask.task_id);
