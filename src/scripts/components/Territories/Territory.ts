@@ -922,6 +922,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
   public sellProducts(): void {
     if (this.territoryType === 8 && this.factory.money > 0) {
+      this.scene.tryTask(20, 0);
 
       this.scene.state.userCow.money += this.factory.money;
       this.factory.money = 0;

@@ -402,8 +402,6 @@ function sellMilk(): void {
   if (this.state.territory) {
     if (this.state.territory.territoryType === 5 && this.state.territory.volume > 0) {
 
-      this.tryTask(20, 0);
-
       this.state.userCow.money += this.state.territory.volume * this.milkMultiply;
       this.state.territory.money = 0;
       this.state.territory.volume = 0;
