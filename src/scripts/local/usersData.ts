@@ -89,13 +89,13 @@ let userCow: IuserCow = {
   takenHerdBoost: 0,
   feedBoostTime: 0,
   factory: {
-    currentProduction: '',
+    currentProduction: 0,
     productionTimer: 0,
     money: 0,
-    clabberMoney: 0,
-    pasteurizedMilkMoney: 0,
-    cheeseMoney: 0,
-    chocolateMoney: 0,
+    production1Money: 0,
+    production2Money: 0,
+    production3Money: 0,
+    production4Money: 0,
     boostTime: 0,
   }
 }
