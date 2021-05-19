@@ -133,9 +133,8 @@ export default function autoprogress(load: boolean = false): void {
     for (let i in wool) {
       let price: number = state.sheepSettings.sheepSettings.find((data: IsheepPoints) => data.breed === wool[i]).long_wool;
       price *= (1 + feedPercent); // коэфф
-      for (let j in state.sheepTerritories) {
-        if (state.sheepTerritories[j].type === 5) {
-          let territory = state.sheepTerritories[j];
+      for (const territory of state.sheepTerritories) {
+        if (territory.type === 5) {
           let max: number = state.sheepSettings.territoriesSheepSettings.find((item: IterritoriesSheepSettings) => item.improve === territory.improve).woolStorage;
           if (territory.volume < max) {
             let sheep = sheepWoolcuts.find(data => data.type === wool[i] && data.count > 0);
@@ -143,6 +142,8 @@ export default function autoprogress(load: boolean = false): void {
             territory.money += price;
             territory.volume++;
             break;
+          } else {
+            territory.volume = max; 
           }
         }
       }

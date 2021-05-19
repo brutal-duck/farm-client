@@ -214,6 +214,11 @@ export default function autosave(): void {
       production3Money: factoryTer.production3Money,
       production4Money: factoryTer.production4Money,
       boostTime: state.userCow.factory.boostTime,
+      milkMultiply: 0.2,
+      production1Multiply: 0.5,
+      production2Multiply: 1,
+      production3Multiply: 1.5,
+      production4Multiply: 2.5,
     }
     
     state.userCow.factory = factory;
