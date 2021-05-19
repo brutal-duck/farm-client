@@ -17,7 +17,7 @@ import {
   plusMoneyAnimation,
   getCurrency
 } from '../../general/animations';
-import { clickTaskBoard } from './basic';
+import { clickTaskBoard } from '../../general/tasks';
 import TaskBoard from '../../components/gameObjects/TaskBoard';
 import Collector from '../../components/gameObjects/Collector';
 import BarsMenu from '../../components/gameObjects/BarsMenu';
