@@ -36,6 +36,15 @@ class Profile extends Phaser.Scene {
   public avatar: Phaser.GameObjects.Sprite;
   public diamondsText: Phaser.GameObjects.Text;
   public eventIsland: Phaser.GameObjects.Sprite;
+  public sheepNativeCount: number[] = [ 0, 0 ];
+  public chickenNativeCount: number[] = [ 0, 0 ];
+  public cowNativeCount: number[] = [ 0, 0 ];
+  public sheepNativeText: Phaser.GameObjects.Text;
+  public chickenNativeText: Phaser.GameObjects.Text;
+  public cowNativeText: Phaser.GameObjects.Text;
+  public sheepNativeBg: Phaser.GameObjects.Graphics;
+  public chickenNativeBg: Phaser.GameObjects.Graphics;
+  public cowNativeBg: Phaser.GameObjects.Graphics;
   public currentEndTime: string = ' ';
   
   public click = click.bind(this);
@@ -93,7 +102,7 @@ class Profile extends Phaser.Scene {
     this.creaetePointer();
   }
 
-private createProfileInfo(): void {
+  private createProfileInfo(): void {
     const farmer: Phaser.GameObjects.Sprite = this.add.sprite(80, 75, 'farmer').setScale(0.45).setVisible(true);
     let avatar: Phaser.GameObjects.Sprite;
     if (this.state.platform === 'web') {
@@ -137,8 +146,8 @@ private createProfileInfo(): void {
   private createFarms(): void {
     this.createChickenFarm();
     this.createSheepFarm();
-    this.createLockedCowFarm();
-    // this.createCowFarm();
+    // this.createLockedCowFarm();
+    this.createCowFarm();
     if (this.state.progress.event.type === 1) {
       this.createUnicornFarm();
     } else if (this.state.progress.event.type === 2) {
@@ -153,6 +162,11 @@ private createProfileInfo(): void {
       font: '28px Shadow',
       color: '#ffe5d7'
     }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
+    this.sheepNativeText = this.add.text(farmPosition.x + 110, farmPosition.y - 125, '', {
+      font: '30px Bip',
+      color: '#ffffff',
+    }).setOrigin(0.5).setDepth(1).setVisible(false);
+    this.sheepNativeBg = this.add.graphics().fillStyle(0xFF2400, 1).fillCircle(this.sheepNativeText.x, this.sheepNativeText.y, 20).setVisible(false);
     this.click(farmSprite, (): void => {
       if (this.state.farm !== 'Sheep') {
         this.game.scene.keys[this.state.farm].autosave();
@@ -177,7 +191,11 @@ private createProfileInfo(): void {
         font: '28px Shadow',
         color: '#ffe5d7'
       }).setOrigin(0.5, 0.5).setStroke('#522007', 5).setDepth(1);
-
+      this.chickenNativeText = this.add.text(farmPosition.x - 160, farmPosition.y - 125, '', {
+        font: '30px Bip',
+        color: '#ffffff',
+      }).setOrigin(0.5).setDepth(2).setVisible(false);
+      this.chickenNativeBg = this.add.graphics().fillStyle(0xFF2400, 1).fillCircle(this.chickenNativeText.x, this.chickenNativeText.y, 20).setDepth(1).setVisible(false);
       this.click(farmSprite, (): void => {
         if (this.state.farm !== 'Chicken') {
           this.game.scene.keys[this.state.farm].autosave();
@@ -227,6 +245,12 @@ private createProfileInfo(): void {
         color: '#ffe5d7'
       }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
 
+      this.cowNativeText = this.add.text(farmPosition.x + 280, farmPosition.y - 100, '', {
+        font: '30px Bip',
+        color: '#ffffff',
+      }).setOrigin(0.5).setDepth(1).setVisible(false);
+      this.cowNativeBg = this.add.graphics().fillStyle(0xFF2400, 1).fillCircle(this.cowNativeText.x, this.cowNativeText.y, 20).setVisible(false);
+
       this.click(farmSprite, (): void => {
         if (this.state.farm !== 'Cow') {
           this.game.scene.keys[this.state.farm].autosave();
@@ -241,7 +265,7 @@ private createProfileInfo(): void {
           this.scene.stop();
         }
       }, 8);
-    } else if (this.state.progress.chicken.part >= this.state.progress.cow.unlock){
+    } else if (this.state.progress.chicken.part >= this.state.progress.cow.unlock) {
       this.add.graphics({ x: farmPosition.x, y: farmPosition.y })
       .fillStyle(0x2b3d11, 0.5)
       .fillRoundedRect(-100, 0, 200, 70, 8);
@@ -654,6 +678,7 @@ private createProfileInfo(): void {
       }
     }
   }
+
 }
 
 export default Profile;

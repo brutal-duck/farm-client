@@ -106,7 +106,14 @@ import {
 } from '../../general/ads';
 import setCollector from './collector';
 import { showEventTutorial, doneEventTutor_0 } from '../Event/Unicorns/tutorial';
-import { sheepIntervalProgress, sheepCollectorProgress, cowIntervalProgress, cowCollectorProgress, cowFactoryProgress } from '../../general/interval';
+import {
+  sheepIntervalProgress,
+  sheepCollectorProgress,
+  cowIntervalProgress,
+  cowCollectorProgress,
+  cowFactoryProgress,
+  updateProfileNative,
+} from '../../general/interval';
 
 class Chicken extends Phaser.Scene {
   constructor() {
@@ -234,6 +241,7 @@ class Chicken extends Phaser.Scene {
   public cowIntervalProgress = cowIntervalProgress.bind(this);
   public cowCollectorProgress = cowCollectorProgress.bind(this);
   public cowFactoryProgress = cowFactoryProgress.bind(this);
+  public updateProfileNative = updateProfileNative.bind(this);
 
   public init(state: Istate): void {
 

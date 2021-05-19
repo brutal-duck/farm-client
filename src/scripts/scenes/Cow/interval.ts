@@ -282,6 +282,7 @@ function interval(): void {
       this.chickenCollectorProgress(chickenCollectorVolume);
     }
     
+    this.updateProfileNative();
   }, callbackScope: this, loop: true });
 }
 

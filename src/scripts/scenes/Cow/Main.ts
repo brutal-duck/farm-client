@@ -101,7 +101,13 @@ import {
 import setCollector from './collector';
 import { showEventTutorial, doneEventTutor_0 } from '../Event/Unicorns/tutorial';
 import CowGroup from '../../components/AnimalGroup/CowGroup';
-import {sheepIntervalProgress, sheepCollectorProgress, chickenCollectorProgress, chickenIntervalProgress } from '../../general/interval';
+import {
+  sheepIntervalProgress,
+  sheepCollectorProgress,
+  chickenCollectorProgress,
+  chickenIntervalProgress,
+  updateProfileNative,
+} from '../../general/interval';
 
 class Cow extends Phaser.Scene {
   constructor() {
@@ -225,6 +231,7 @@ class Cow extends Phaser.Scene {
   public sheepCollectorProgress = sheepCollectorProgress.bind(this);
   public chickenCollectorProgress = chickenCollectorProgress.bind(this);
   public chickenIntervalProgress = chickenIntervalProgress.bind(this);
+  public updateProfileNative = updateProfileNative.bind(this);
   
   public init(state: Istate): void {
 

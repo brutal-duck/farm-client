@@ -2,6 +2,7 @@ import Sheep from './../scenes/Sheep/Main';
 import Chicken from './../scenes/Chicken/Main';
 import Unicorn from './../scenes/Event/Unicorns/Main';
 import Cow from './../scenes/Cow/Main';
+import Profile from './../scenes/Profile';
 
 const getRandomProductId = (settings: IfactorySettings, boost: boolean): number => {
   const pull: number[] = [ settings.production1Percent, settings.production2Percent, settings.production3Percent ];
@@ -327,6 +328,134 @@ function cowFactoryProgress(): void {
   }
 }
 
+function updateProfileNative(): void {
+  if (!this.scene.isActive('Profile')) return;
+
+  const Profile: Profile = this.game.scene.keys['Profile'];
+  if (Profile.sheepNativeText) {
+    const count: number = Profile.sheepNativeCount.reduce((prev, cur) => prev += cur);
+    if (Profile.sheepNativeText.text !== String(count)) {
+      Profile.sheepNativeText.setText(String(count));
+    }
+    if (count <= 0 && Profile.sheepNativeText.visible) {
+      Profile.sheepNativeText.setVisible(false);
+      Profile.sheepNativeBg.setVisible(false);
+    } else if (count > 0 && !Profile.sheepNativeText.visible) {
+      Profile.sheepNativeText.setVisible(true);
+      Profile.sheepNativeBg.setVisible(true);
+    }
+
+    if (Profile.state.progress.sheep.collector <= 0 && Profile.sheepNativeCount[0] !== 1) Profile.sheepNativeCount[0] = 1;
+    else if (Profile.state.progress.sheep.collector > 0 && Profile.sheepNativeCount[0] !== 0) Profile.sheepNativeCount[0] = 0;
+
+    const check: boolean = checkStorageSheep.bind(this)();
+    if (check && Profile.sheepNativeCount[1] !== 1) Profile.sheepNativeCount[1] = 1;
+    else if (!check && Profile.sheepNativeCount[1] !== 0) Profile.sheepNativeCount[1] = 0;
+  }
+
+  if (Profile.chickenNativeText) {
+    const count: number = Profile.chickenNativeCount.reduce((prev, cur) => prev += cur);
+    if (Profile.chickenNativeText.text !== String(count)) {
+      Profile.chickenNativeText.setText(String(count));
+    }
+    if (count <= 0 && Profile.chickenNativeText.visible) {
+      Profile.chickenNativeText.setVisible(false);
+      Profile.chickenNativeBg.setVisible(false);
+    } else if (count > 0 && !Profile.chickenNativeText.visible) {
+      Profile.chickenNativeText.setVisible(true);
+      Profile.chickenNativeBg.setVisible(true);
+    }
+
+    if (Profile.state.progress.chicken.collector <= 0 && Profile.chickenNativeCount[0] !== 1) Profile.chickenNativeCount[0] = 1;
+    else if (Profile.state.progress.chicken.collector > 0 && Profile.chickenNativeCount[0] !== 0) Profile.chickenNativeCount[0] = 0;
+
+    const check: boolean = checkStorageChicken.bind(this)();
+    if (check && Profile.chickenNativeCount[1] !== 1) Profile.chickenNativeCount[1] = 1;
+    else if (!check && Profile.chickenNativeCount[1] !== 0) Profile.chickenNativeCount[1] = 0;
+  }
+  
+  if (Profile.cowNativeText) {
+    const count: number = Profile.cowNativeCount.reduce((prev, cur) => prev += cur);
+    if (Profile.cowNativeText.text !== String(count)) {
+      Profile.cowNativeText.setText(String(count));
+    }
+    if (count <= 0 && Profile.cowNativeText.visible) {
+      Profile.cowNativeText.setVisible(false);
+      Profile.cowNativeBg.setVisible(false);
+    } else if (count > 0 && !Profile.cowNativeText.visible) {
+      Profile.cowNativeText.setVisible(true);
+      Profile.cowNativeBg.setVisible(true);
+    }
+
+    if (Profile.state.progress.cow.collector <= 0 && Profile.cowNativeCount[0] !== 1) Profile.cowNativeCount[0] = 1;
+    else if (Profile.state.progress.cow.collector > 0 && Profile.cowNativeCount[0] !== 0) Profile.cowNativeCount[0] = 0;
+
+    const check: boolean = checkStorageCow.bind(this)();
+    if (check && Profile.cowNativeCount[1] !== 1) Profile.cowNativeCount[1] = 1;
+    else if (!check && Profile.cowNativeCount[1] !== 0) Profile.cowNativeCount[1] = 0;
+  }
+}
+
+function checkStorageSheep(): boolean {
+  const check: boolean[] = [];
+  if (this.state.farm === 'Sheep') {
+    for (const territory of this.territories.children.entries) {
+      if (territory.type === 5) {
+        const max: number = this.state.sheepSettings.territoriesSheepSettings.find(el => el.improve === territory.improve).woolStorage;
+        check.push(territory.volume >= max); 
+      }
+    }
+  } else {
+    for (const territory of this.state.sheepTerritories) {
+      if (territory.type === 5) {
+        const max: number = this.state.sheepSettings.territoriesSheepSettings.find(el => el.improve === territory.improve).woolStorage;
+        check.push(territory.volume >= max); 
+      }
+    }
+  }
+  return check.every(el => el);
+}
+
+function checkStorageChicken(): boolean {
+  const check: boolean[] = [];
+  if (this.state.farm === 'Chicken') {
+    for (const territory of this.territories.children.entries) {
+      if (territory.type === 5) {
+        const max: number = this.state.chickenSettings.territoriesChickenSettings.find(el => el.improve === territory.improve).eggStorage;
+        check.push(territory.volume >= max); 
+      }
+    }
+  } else {
+    for (const territory of this.state.chickenTerritories) {
+      if (territory.type === 5) {
+        const max: number = this.state.chickenSettings.territoriesChickenSettings.find(el => el.improve === territory.improve).eggStorage;
+        check.push(territory.volume >= max); 
+      }
+    }
+  }
+  return check.every(el => el);
+}
+
+function checkStorageCow(): boolean {
+  const check: boolean[] = [];
+  if (this.state.farm === 'Chicken') {
+    for (const territory of this.territories.children.entries) {
+      if (territory.type === 5) {
+        const max: number = this.state.cowSettings.territoriesCowSettings.find(el => el.improve === territory.improve).eggStorage;
+        check.push(territory.volume >= max); 
+      }
+    }
+  } else {
+    for (const territory of this.state.cowTerritories) {
+      if (territory.type === 5) {
+        const max: number = this.state.cowSettings.territoriesCowSettings.find(el => el.improve === territory.improve).eggStorage;
+        check.push(territory.volume >= max); 
+      }
+    }
+  }
+  return check.every(el => el);
+}
+
 export {
   sheepIntervalProgress,
   chickenIntervalProgress,
@@ -334,5 +463,6 @@ export {
   sheepCollectorProgress,
   chickenCollectorProgress,
   cowCollectorProgress,
-  cowFactoryProgress
+  cowFactoryProgress,
+  updateProfileNative,
 }

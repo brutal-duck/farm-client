@@ -437,6 +437,7 @@ function interval(): void {
     
     this.cowFactoryProgress();
 
+    this.updateProfileNative();
   }, callbackScope: this, loop: true });
   
 
