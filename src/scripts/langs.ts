@@ -863,6 +863,7 @@ export default {
     probabilityOfProduction: 'Вероятность производства',
     milkInStorage: 'Молока в хралищах',
     slotSize: 'Размер партии производства',
+    haveNotMilk: 'Не хватает молока для старта',
   },
 
   en: {
@@ -1728,5 +1729,6 @@ export default {
     probabilityOfProduction: 'Вероятность производства',
     milkInStorage: 'Молока в хралищах',
     slotSize: 'Размер партии производства',
+    haveNotMilk: 'Не хватает молока для старта',
   }
 }

@@ -6,6 +6,10 @@ import Modal from './../../scenes/Modal/Modal';
 const ACTIVE_COLOR: string = '#773a05';
 const LOCKED_COLOR: string =  '#595959';
 const BOOST_COLOR: string = '#ffe7ce';
+const MILK_IN_STORAGE_COLOR: string = '#fffcdc';
+const WHITE_COLOR: string = '#ffffff';
+const RED_COLOR: string = '#ff0000';
+const PRODUCTION_COLOR: string = '#cd7f20';
 
 export default class FactoryWindow extends Phaser.GameObjects.Sprite {
   public scene: Modal;
@@ -20,6 +24,7 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
   private boostTimer: Phaser.GameObjects.Text;
   private sellButton: any;
   private milkInStorageText: Phaser.GameObjects.Text;
+  private emptyAnimation: Phaser.Tweens.Tween;
 
 
   constructor(scene: Modal){
@@ -203,7 +208,7 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
     }
     const product: string = factory.currentProduction ? this.scene.state.lang[`production${factory.currentProduction}`] : '';
     const volume: string = `${this.scene.state.lang.produced}: ${product}`;
-    if (this.currentProductionText.text !== volume) {
+    if (this.currentProductionText.text !== volume && !this.emptyAnimation) {
       this.currentProductionText.setText(volume);
     }
   
@@ -237,5 +242,37 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
     if (this.milkInStorageText.text !== shortNum(storageVolume)) {
       this.milkInStorageText.setText(shortNum(storageVolume));
     }
+
+    if (storageVolume < factory.settings.lotSize && factory.productionTimer <= 0 && !this.emptyAnimation) {
+      this.setEmptyAnimation();
+    } else if (storageVolume > factory.settings.lotSize && this.emptyAnimation) {
+      this.removeEmptyAnimation()
+    }
+  }
+
+  private setEmptyAnimation(): void {
+    this.currentProductionText.setText(this.scene.state.lang.haveNotMilk);
+    this.emptyAnimation = this.scene.tweens.add({
+      targets: [],
+      loopDelay: 300, 
+      loop: -1,
+      onLoop: (): void => {
+        if (this.currentProductionText.style.color !== WHITE_COLOR) {
+          this.currentProductionText.setColor(WHITE_COLOR);
+          this.milkInStorageText.setColor(WHITE_COLOR);
+        } else {
+          this.currentProductionText.setColor(RED_COLOR);
+          this.milkInStorageText.setColor(RED_COLOR);
+        }
+      }
+    });
+  }
+
+
+  private removeEmptyAnimation(): void {
+    this.emptyAnimation.remove();
+    this.emptyAnimation = undefined;
+    this.currentProductionText.setColor(PRODUCTION_COLOR);
+    this.milkInStorageText.setColor(MILK_IN_STORAGE_COLOR)
   }
 }
