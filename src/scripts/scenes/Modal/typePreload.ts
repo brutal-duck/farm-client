@@ -63,10 +63,24 @@ const tile1: string = require("./../../../assets/images/chat-tile-1.png");
 const tile2: string = require("./../../../assets/images/chat-tile-2.png");
 const corner1: string = require("./../../../assets/images/chat-corner-1.png");
 const corner2: string = require("./../../../assets/images/chat-corner-2.png");
+
+const factoryWindow: string = require('./../../../assets/images/cow/modal/factory-window.png');
+const factoryProduction1: string = require('./../../../assets/images/cow/modal/factory-resource-1.png');
+const factoryProduction2: string = require('./../../../assets/images/cow/modal/factory-resource-2.png');
+const factoryProduction3: string = require('./../../../assets/images/cow/modal/factory-resource-3.png');
+const factoryProduction4: string = require('./../../../assets/images/cow/modal/factory-resource-4.png');
+const factoryProductionSlot2: string = require('./../../../assets/images/cow/modal/factory-resource-slot-2.png');
+const factoryProductionSlotDisable2: string = require('./../../../assets/images/cow/modal/factory-resource-slot-disable-2.png');
+const factoryProductionSlot3: string = require('./../../../assets/images/cow/modal/factory-resource-slot-3.png');
+const factoryProductionSlotDisable3: string = require('./../../../assets/images/cow/modal/factory-resource-slot-disable-3.png');
+const factoryProductionSlot4: string = require('./../../../assets/images/cow/modal/factory-resource-slot-4.png');
+const factoryProductionSlotDisable4: string = require('./../../../assets/images/cow/modal/factory-resource-slot-disable-4.png');
+
 const clabber: string = require("./../../../assets/images/modal/clabber.png");
 const pasteurizedMilk: string = require("./../../../assets/images/modal/pasteurized-milk.png");
 const cheese: string = require("./../../../assets/images/modal/cheese.png");
 const chocolate: string = require("./../../../assets/images/modal/chocolate.png");
+
 
 
 export default function typePreload(): void {
@@ -185,6 +199,19 @@ export default function typePreload(): void {
         this.load.image('rating-price-btn', ratingPriseBtn);
         this.load.image('unicorn-status', unicornStatus);
 
+        break;
+      case 13:
+        this.load.image('factory-window', factoryWindow);
+        this.load.image('factory-production-1', factoryProduction1)
+        this.load.image('factory-production-2', factoryProduction2)
+        this.load.image('factory-production-3', factoryProduction3)
+        this.load.image('factory-production-4', factoryProduction4)
+        this.load.image('factory-production-slot-2', factoryProductionSlot2)
+        this.load.image('factory-production-slot-disable-2', factoryProductionSlotDisable2)
+        this.load.image('factory-production-slot-3', factoryProductionSlot3)
+        this.load.image('factory-production-slot-disable-3', factoryProductionSlotDisable3)
+        this.load.image('factory-production-slot-4', factoryProductionSlot4)
+        this.load.image('factory-production-slot-disable-4', factoryProductionSlotDisable4)
         break;
       default:
         break;
