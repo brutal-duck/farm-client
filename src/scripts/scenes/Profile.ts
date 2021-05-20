@@ -15,6 +15,7 @@ const eventIsland: string = require('./../../assets/images/profile/event-island.
 const btn: string = require('./../../assets/images/profile/btn.png');
 const pointer: string = require('./../../assets/images/profile/pointer.png');
 const fortune: string = require('./../../assets/images/profile/event-fortune.png');
+const nativeBg: string = require('./../../assets/images/native.png');
 
 class Profile extends Phaser.Scene {
   constructor() {
@@ -42,9 +43,12 @@ class Profile extends Phaser.Scene {
   public sheepNativeText: Phaser.GameObjects.Text;
   public chickenNativeText: Phaser.GameObjects.Text;
   public cowNativeText: Phaser.GameObjects.Text;
-  public sheepNativeBg: Phaser.GameObjects.Graphics;
-  public chickenNativeBg: Phaser.GameObjects.Graphics;
-  public cowNativeBg: Phaser.GameObjects.Graphics;
+  public sheepNativeBg: Phaser.GameObjects.Sprite;
+  public chickenNativeBg: Phaser.GameObjects.Sprite;
+  public cowNativeBg: Phaser.GameObjects.Sprite;
+  public animSheepSprite: Phaser.GameObjects.Sprite;
+  public animChickenSprite: Phaser.GameObjects.Sprite;
+  public animCowSprite: Phaser.GameObjects.Sprite;
   public currentEndTime: string = ' ';
   
   public click = click.bind(this);
@@ -75,6 +79,7 @@ class Profile extends Phaser.Scene {
     this.load.image('profile-btn', btn);
     this.load.image('profile-pointer', pointer);
     this.load.image('profile-fortune', fortune);
+    this.load.image('profile-native-bg', nativeBg)
   }
 
 
@@ -84,18 +89,19 @@ class Profile extends Phaser.Scene {
     this.bg = this.add.sprite(0, 0, 'profile-bg')
       .setInteractive()
       .setOrigin(0, 0);
-
+    
     this.createElements();
     this.setListeners();
+
   }
 
   public update(): void {
     this.updateEvent();
+    this.setNativeAnim();
   }
 
   private createElements(): void {
     this.backBtn = this.add.sprite(630, 80, 'profile-back-button');
-
     this.createProfileInfo();
     this.createFarms();
     this.createShop();
@@ -162,11 +168,12 @@ class Profile extends Phaser.Scene {
       font: '28px Shadow',
       color: '#ffe5d7'
     }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
+    
     this.sheepNativeText = this.add.text(farmPosition.x + 110, farmPosition.y - 125, '', {
       font: '30px Bip',
       color: '#ffffff',
     }).setOrigin(0.5).setDepth(1).setVisible(false);
-    this.sheepNativeBg = this.add.graphics().fillStyle(0xFF2400, 1).fillCircle(this.sheepNativeText.x, this.sheepNativeText.y, 20).setVisible(false);
+    this.sheepNativeBg = this.add.sprite(this.sheepNativeText.x, this.sheepNativeText.y, 'profile-native-bg').setVisible(false);
     this.click(farmSprite, (): void => {
       if (this.state.farm !== 'Sheep') {
         this.game.scene.keys[this.state.farm].autosave();
@@ -194,8 +201,8 @@ class Profile extends Phaser.Scene {
       this.chickenNativeText = this.add.text(farmPosition.x - 160, farmPosition.y - 125, '', {
         font: '30px Bip',
         color: '#ffffff',
-      }).setOrigin(0.5).setDepth(2).setVisible(false);
-      this.chickenNativeBg = this.add.graphics().fillStyle(0xFF2400, 1).fillCircle(this.chickenNativeText.x, this.chickenNativeText.y, 20).setDepth(1).setVisible(false);
+      }).setOrigin(0.5).setDepth(3).setVisible(false);
+      this.chickenNativeBg = this.add.sprite(this.chickenNativeText.x, this.chickenNativeText.y, 'profile-native-bg').setDepth(1).setVisible(false);
       this.click(farmSprite, (): void => {
         if (this.state.farm !== 'Chicken') {
           this.game.scene.keys[this.state.farm].autosave();
@@ -249,7 +256,7 @@ class Profile extends Phaser.Scene {
         font: '30px Bip',
         color: '#ffffff',
       }).setOrigin(0.5).setDepth(1).setVisible(false);
-      this.cowNativeBg = this.add.graphics().fillStyle(0xFF2400, 1).fillCircle(this.cowNativeText.x, this.cowNativeText.y, 20).setVisible(false);
+      this.cowNativeBg = this.add.sprite(this.cowNativeText.x, this.cowNativeText.y, 'profile-native-bg').setVisible(false);
 
       this.click(farmSprite, (): void => {
         if (this.state.farm !== 'Cow') {
@@ -676,6 +683,42 @@ class Profile extends Phaser.Scene {
         const text: string = `${this.state.lang.lastTime} ${this.currentEndTime}`;
         this.eventEndTime.setText(text);
       }
+    }
+  }
+  
+  private setNativeAnim(): void {
+    if (this.sheepNativeBg && this.sheepNativeBg.visible && !this.animSheepSprite) {
+      this.animSheepSprite = this.add.sprite(this.sheepNativeBg.x, this.sheepNativeBg.y, 'profile-native-bg');
+      this.tweens.add({
+        targets: [ this.animSheepSprite ],
+        scale: { from: 1.05, to: 2 },
+        alpha: { from: 0.5, to: 0 },
+        duration: 500,
+        repeat: -1,
+        repeatDelay: 1150,
+      });
+    }
+    if (this.chickenNativeBg && this.chickenNativeBg.visible && !this.animChickenSprite) {
+      this.animChickenSprite = this.add.sprite(this.chickenNativeBg.x, this.chickenNativeBg.y, 'profile-native-bg').setDepth(2);
+      this.tweens.add({
+        targets: [ this.animChickenSprite ],
+        scale: { from: 1.05, to: 2 },
+        alpha: { from: 0.5, to: 0 },
+        duration: 500,
+        repeat: -1,
+        repeatDelay: 1150,
+      });
+    } 
+    if (this.cowNativeBg && this.cowNativeBg.visible && !this.animCowSprite) {
+      this.animCowSprite = this.add.sprite(this.cowNativeBg.x, this.cowNativeBg.y, 'profile-native-bg').setDepth(2);
+      this.tweens.add({
+        targets: [ this.animCowSprite ],
+        scale: { from: 1.05, to: 2 },
+        alpha: { from: 0.5, to: 0 },
+        duration: 500,
+        repeat: -1,
+        repeatDelay: 1150,
+      });
     }
   }
 
