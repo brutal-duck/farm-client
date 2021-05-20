@@ -44,8 +44,7 @@ function systemWindow(): void {
     }
     if (this.state.modal.sysType === 16 || this.state.modal.sysType === 17) {
       const modal: Imodal = {
-        type: 1,
-        sysType: 2
+        type: 13,
       }
       this.state.modal = modal;
       this.scene.restart(this.state);

@@ -860,6 +860,9 @@ export default {
     jackpotCongratulations: 'Поздравляем! вы выйграли',
     fortuneWelcome: 'Испытай колесо фортуны! Попробуй выйграть главный приз!',
     maxCollectorLevel: 'Достигнут максимальный уровень собирателя',
+    probabilityOfProduction: 'Вероятность производства',
+    milkInStorage: 'Молока в хралищах',
+    slotSize: 'Размер партии производства',
   },
 
   en: {
@@ -1722,5 +1725,8 @@ export default {
     jackpotCongratulations: 'Поздравляем! вы выйграли',
     fortuneWelcome: 'Испытай колесо фортуны! Попробуй выйграть главный приз!',
     maxCollectorLevel: 'Достигнут максимальный уровень собирателя',
+    probabilityOfProduction: 'Вероятность производства',
+    milkInStorage: 'Молока в хралищах',
+    slotSize: 'Размер партии производства',
   }
 }

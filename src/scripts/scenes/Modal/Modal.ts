@@ -46,7 +46,6 @@ import {
   confirmExpelCow,
   diamondCowAd,
   cowMilkRepositoryExchange,
-  cowFactory,
   updateFactoryModal,
   improveFactoryWindow,
   factoryBoostWindow
@@ -102,7 +101,7 @@ import { createChatBars } from './Chat/elements';
 import { improveCollectorAnim, openModal } from '../../general/animations';
 import { clickTaskBoard } from '../../general/tasks';
 import typePreload from './typePreload';
-import Territory from './../../components/Territories/Territory';
+import FactoryWindow from './../../components/modal/FactoryWindow';
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -137,12 +136,13 @@ class Modal extends Phaser.Scene {
   public factoryProductText: Phaser.GameObjects.Text;
   public factoryProgressBar: Phaser.GameObjects.TileSprite;
   public factorySellButton: any;
-  public clabberMoneyText: Phaser.GameObjects.Text;
-  public pasteurizedMilkMoneyText: Phaser.GameObjects.Text;
-  public cheeseMoneyText: Phaser.GameObjects.Text;
-  public chocolateMoneyText: Phaser.GameObjects.Text;
+  public product1Percent: Phaser.GameObjects.Text;
+  public product2Percent: Phaser.GameObjects.Text;
+  public product3Percent: Phaser.GameObjects.Text;
+  public product4Percent: Phaser.GameObjects.Text;
+  public product4Sprite: Phaser.GameObjects.Sprite;
+  public factoryStorageText: Phaser.GameObjects.Text;
   public factoryBoostTimer: Phaser.GameObjects.Text;
-  public chocolateSprite: Phaser.GameObjects.Sprite;
   public feedBoostNative: Phaser.GameObjects.Text;
   public herdBoostNative: Phaser.GameObjects.Text;
 
@@ -233,7 +233,6 @@ class Modal extends Phaser.Scene {
   public clickTaskBoard = clickTaskBoard.bind(this);
   public openModal = openModal.bind(this);
   public loadingModal = loadingModal.bind(this);
-  public cowFactory = cowFactory.bind(this);
   public updateFactoryModal = updateFactoryModal.bind(this);
   public improveFactoryWindow = improveFactoryWindow.bind(this);
   public factoryBoostWindow = factoryBoostWindow.bind(this);
@@ -298,6 +297,9 @@ class Modal extends Phaser.Scene {
         break;
       case 12: // окно выдачи наград ивентовой фермы
         this.endEventModal();
+        break;
+      case 13: 
+        new FactoryWindow(this);
         break;
       default:
         this.scene.stop();

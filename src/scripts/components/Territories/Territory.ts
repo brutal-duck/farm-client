@@ -243,7 +243,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
   private setListeners(): void {
     this.scene.clickTerritory(this, (): void => {
-      if (this.territoryType !== 6 && this.territoryType !== 7) {
+      if (this.territoryType !== 6 && this.territoryType !== 7 && this.territoryType !== 8) {
         const modal: Imodal = {
           type: 1,
           sysType: 2
@@ -259,6 +259,13 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         }
       } else if (this.territoryType === 7) {
         this.scene.takeDiamondCow();
+      } else if (this.territoryType === 8) {
+        const modal: Imodal = {
+          type: 13,
+        }
+        this.scene.state.modal = modal;
+        this.scene.state.territory = this;
+        this.scene.scene.launch('Modal', this.scene.state);
       }
     });
   }
@@ -919,6 +926,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     }
     return productId;
   }
+
 
   public sellProducts(): void {
     if (this.territoryType === 8 && this.factory.money > 0) {
