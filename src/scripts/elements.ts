@@ -91,7 +91,7 @@ function repositoryBtn(
   let title: Phaser.GameObjects.Text = this.add.text(150, this.cameras.main.centerY - 10 + height, text, {
     font: '26px Shadow',
     fill: '#FFFFFF'
-  }).setDepth(1).setOrigin(0, 0.5);
+  }).setDepth(1).setStroke('#b16513', 4).setOrigin(0, 0.5);
 
   let money: Phaser.GameObjects.Text;
   let coin: Phaser.GameObjects.Sprite;
@@ -99,7 +99,7 @@ function repositoryBtn(
   money = this.add.text(565, this.cameras.main.centerY - 10 + height, rightBlock.text, {
     font: '28px Shadow',
     fill: '#FFFFFF'
-  }).setDepth(1).setOrigin(1, 0.5);
+  }).setDepth(1).setStroke('#b16513', 4).setOrigin(1, 0.5);
 
   coin = this.add.sprite(555 - money.displayWidth, this.cameras.main.centerY - 10 + height, rightBlock.icon)
     .setOrigin(1, 0.5)
