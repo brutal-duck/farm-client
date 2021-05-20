@@ -39,7 +39,7 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
   
     const windowGeom: Phaser.Geom.Rectangle = this.getBounds();
   
-    this.scene.add.text(windowGeom.centerX - 20, windowGeom.centerY - 400, factoryLevel, {
+    this.scene.add.text(windowGeom.centerX - 30, windowGeom.centerY - 405, factoryLevel, {
       font: '40px Shadow',
       color: '#fffcdc'
     }).setOrigin(0.5);
@@ -50,37 +50,38 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
       this.scene.scene.stop();
     });
   
-    this.scene.add.text(windowGeom.left + 70, windowGeom.top + 130, this.scene.state.lang.milkInStorage, {
-      font: '22px Shadow',
+    this.scene.add.text(windowGeom.left + 60, windowGeom.top + 130, this.scene.state.lang.milkInStorage, {
+      font: '20px Shadow',
       color: '#fffcdc', 
-    }).setOrigin(0, 0.5);
+    }).setOrigin(0, 0.5).setShadow(2, 2, '#08080888', 2);
 
-    this.scene.add.text(windowGeom.left + 70, windowGeom.top + 155, this.scene.state.lang.slotSize, {
-      font: '22px Shadow',
+    this.scene.add.text(windowGeom.left + 60, windowGeom.top + 155, this.scene.state.lang.slotSize, {
+      font: '20px Shadow',
       color: '#fffcdc', 
-    }).setOrigin(0, 0.5);
+    }).setOrigin(0, 0.5).setShadow(2, 2, '#08080888', 2);
 
-    let sorageVolume: number = 0;
+    let storageVolume: number = 0;
 
     const territories: Territory[] = this.scene.game.scene.keys['Cow'].territories.children.entries;
 
     for (const territory of territories) {
-      if (territory.territoryType === 5) sorageVolume += territory.volume;
+      if (territory.territoryType === 5) storageVolume += territory.volume;
     }
 
-    this.milkInStorageText = this.scene.add.text(windowGeom.right - 120, windowGeom.top + 130, shortNum(sorageVolume), {
-      font: '22px Shadow',
+    this.milkInStorageText = this.scene.add.text(windowGeom.right - 140, windowGeom.top + 130, shortNum(storageVolume), {
+      font: '20px Shadow',
       color: '#fffcdc', 
-    }).setOrigin(0, 0.5);
-    this.scene.add.text(windowGeom.right - 120, windowGeom.top + 155, shortNum(factory.settings.lotSize), {
-      font: '22px Shadow',
+    }).setOrigin(0, 0.5).setShadow(2, 2, '#08080888', 2);
+
+    this.scene.add.text(windowGeom.right - 140, windowGeom.top + 155, shortNum(factory.settings.lotSize), {
+      font: '20px Shadow',
       color: '#fffcdc', 
-    }).setOrigin(0, 0.5);
+    }).setOrigin(0, 0.5).setShadow(2, 2, '#08080888', 2);
 
     const product: string = factory.currentProduction ? this.scene.state.lang[factory.currentProduction] : '';
   
     this.currentProductionText = this.scene.add.text(windowGeom.centerX, windowGeom.centerY - 135, `${this.scene.state.lang.produced}: ${product}`, {
-      font: '22px Shadow',
+      font: '20px Shadow',
       color: '#cd7f20'
     }).setOrigin(0.5, 0.5);
   
@@ -162,10 +163,13 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
         color: BOOST_COLOR, 
       }).setOrigin(0.5);
     }
-    // this.click(this.chocolateSprite, (): void => {
-    //   this.scene.stop();
-    //   this.game.scene.keys[this.scene.state.farm].showFactoryBoost();
-    // });
+
+    const zone: Phaser.GameObjects.Zone = this.scene.add.zone(windowGeom.centerX - 5, windowGeom.centerY + 175, 470, 230).setDropZone(undefined, () => {});
+
+    this.scene.click(zone, (): void => {
+      this.scene.scene.stop();
+      this.scene.game.scene.keys[this.scene.state.farm].showFactoryBoost();
+    });
   
     const milkMoney = {
       icon: 'cowCoin',
@@ -221,6 +225,17 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
         this.product3PercentText.setText(`${this.scene.state.territory.factory.getPercent(3)}%`);
         this.product4PercentText.setText(`${this.scene.state.territory.factory.getPercent(4)}%`);
       }
+    }
+
+    let storageVolume: number = 0;
+    const territories: Territory[] = this.scene.game.scene.keys['Cow'].territories.children.entries;
+
+    for (const territory of territories) {
+      if (territory.territoryType === 5) storageVolume += territory.volume;
+    }
+
+    if (this.milkInStorageText.text !== shortNum(storageVolume)) {
+      this.milkInStorageText.setText(shortNum(storageVolume));
     }
   }
 }

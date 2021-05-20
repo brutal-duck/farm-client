@@ -464,9 +464,15 @@ function clickTaskBoard(task: Itasks): void {
   }
   
   const openFactory = (): void => {
-    let storage: any = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => (el.type === 8 || el.territoryType === 8));
-    this.state.territory = undefined;
-    if (storage) openTerritoryWindow(storage); 
+    let factory: any = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => (el.type === 8 || el.territoryType === 8));
+    this.state.territory = factory;
+    if (factory) {
+      const modal: Imodal = {
+        type: 13,
+      }
+      this.state.modal = modal;
+      this.scene.launch('Modal', this.state);
+    }; 
   }
   
   const findUnlockTerritoryForBuy = (): any => {

@@ -1049,7 +1049,7 @@ function factoryBoostWindow(): void {
 
         this.state.boughtFactoryBoost = true;
 
-        this.game.scene.keys[this.state.farm].productionMoneytudeEvent('diamonds_spent', {
+        this.game.scene.keys[this.state.farm].ampletudeEvent('diamonds_spent', {
           type: 'booster_factory',
           count: price,
         });

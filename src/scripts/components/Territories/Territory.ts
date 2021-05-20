@@ -817,8 +817,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
           }
           
           const modal: Imodal = {
-            type: 1,
-            sysType: 2
+            type: 13,
           }
           this.scene.state.modal = modal;
           this.scene.state.territory = this;
