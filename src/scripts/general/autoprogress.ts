@@ -564,7 +564,7 @@ export default function autoprogress(load: boolean = false): void {
           if (factory.productionTimer <= 0) factory.currentProduction = undefined;
         }
 
-        if (factory.productionTimer < 0 || factory.productionTimer > factorySettings.processingTime) factory.productionTimer = factorySettings.processingTime;
+        if ((factory.productionTimer <= 0 || factory.productionTimer > factorySettings.processingTime) && factory.currentProduction) factory.productionTimer = factorySettings.processingTime;
         // раскладываем остатки молока
         for (const territory of territories) {
           if (haveMilk > 0) {
@@ -583,7 +583,7 @@ export default function autoprogress(load: boolean = false): void {
         }
       } else {
         if (factory.currentProduction) factory.productionTimer -= state.offlineTime;
-        if (factory.productionTimer < 0 || factory.productionTimer > factorySettings.processingTime) factory.productionTimer = factorySettings.processingTime;
+        if ((factory.productionTimer <= 0 || factory.productionTimer > factorySettings.processingTime) && factory.currentProduction) factory.productionTimer = factorySettings.processingTime;
       }
     }
     // если есть остаток, то овцы пушистые
@@ -1179,7 +1179,7 @@ export default function autoprogress(load: boolean = false): void {
           if (factory.productionTimer <= 0) factory.currentProduction = undefined;
         }
 
-        if (factory.productionTimer < 0 || factory.productionTimer > factorySettings.processingTime) factory.productionTimer = factorySettings.processingTime;
+        if ((factory.productionTimer <= 0 || factory.productionTimer > factorySettings.processingTime) && factory.currentProduction) factory.productionTimer = factorySettings.processingTime;
         // раскладываем остатки молока
         for (const territory of territories) {
           if (haveMilk > 0) {
@@ -1198,7 +1198,7 @@ export default function autoprogress(load: boolean = false): void {
         }
       } else {
         if (factory.currentProduction) factory.productionTimer -= state.offlineTime;
-        if (factory.productionTimer < 0 || factory.productionTimer > factorySettings.processingTime) factory.productionTimer = factorySettings.processingTime;
+        if ((factory.productionTimer <= 0 || factory.productionTimer > factorySettings.processingTime) && factory.currentProduction) factory.productionTimer = factorySettings.processingTime;
       }
     }
 
