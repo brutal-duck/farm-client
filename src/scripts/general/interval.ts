@@ -252,7 +252,6 @@ function cowCollectorProgress(cowCollectorVolume: number): void {
       for (let i in Scene.state.cowTerritories) {
         const territory: Iterritories = Scene.state.cowTerritories[i];
         if (territory.type === 5) {
-          console.log(territory.volume)
           const max: number = Scene.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === territory.improve).storage;
           for (let i: number = 0; i < collectedMilk; i += 1) {
             for (const cow of Scene.state.cow) {
@@ -333,6 +332,16 @@ function updateProfileNative(): void {
 
   const Profile: Profile = this.game.scene.keys['Profile'];
   if (Profile.sheepNativeText) {
+    if (Profile.state.progress.sheep.collector <= 0 && Profile.sheepNativeCount[0] !== 1) Profile.sheepNativeCount[0] = 1;
+    else if (Profile.state.progress.sheep.collector > 0 && Profile.sheepNativeCount[0] !== 0) Profile.sheepNativeCount[0] = 0;
+
+    const check: boolean = checkStorageSheep.bind(this)();
+    if (check && Profile.sheepNativeCount[1] !== 1) Profile.sheepNativeCount[1] = 1;
+    else if (!check && Profile.sheepNativeCount[1] !== 0) Profile.sheepNativeCount[1] = 0;
+
+    if (Profile.state.userSheep.part >= 3 && Profile.state.userSheep.diamondAnimalTime <= 0 && Profile.sheepNativeCount[2] !== 1) Profile.sheepNativeCount[2] = 1;
+    else if ((Profile.state.userSheep.part < 3 || Profile.state.userSheep.diamondAnimalTime > 0) && Profile.sheepNativeCount[2] !== 0) Profile.sheepNativeCount[2] = 0;
+
     const count: number = Profile.sheepNativeCount.reduce((prev, cur) => prev += cur);
     if (Profile.sheepNativeText.text !== String(count)) {
       Profile.sheepNativeText.setText(String(count));
@@ -344,19 +353,19 @@ function updateProfileNative(): void {
       Profile.sheepNativeText.setVisible(true);
       Profile.sheepNativeBg.setVisible(true);
     }
-
-    if (Profile.state.progress.sheep.collector <= 0 && Profile.sheepNativeCount[0] !== 1) Profile.sheepNativeCount[0] = 1;
-    else if (Profile.state.progress.sheep.collector > 0 && Profile.sheepNativeCount[0] !== 0) Profile.sheepNativeCount[0] = 0;
-
-    const check: boolean = checkStorageSheep.bind(this)();
-    if (check && Profile.sheepNativeCount[1] !== 1) Profile.sheepNativeCount[1] = 1;
-    else if (!check && Profile.sheepNativeCount[1] !== 0) Profile.sheepNativeCount[1] = 0;
-
-    if (Profile.state.userSheep.part >= 3 && Profile.state.userSheep.diamondAnimalTime <= 0 && Profile.sheepNativeCount[2] !== 1) Profile.sheepNativeCount[2] = 1;
-    else if ((Profile.state.userSheep.part < 3 || Profile.state.userSheep.diamondAnimalTime > 0) && Profile.sheepNativeCount[2] !== 0) Profile.sheepNativeCount[2] = 0;
   }
 
   if (Profile.chickenNativeText) {
+    if (Profile.state.progress.chicken.collector <= 0 && Profile.chickenNativeCount[0] !== 1) Profile.chickenNativeCount[0] = 1;
+    else if (Profile.state.progress.chicken.collector > 0 && Profile.chickenNativeCount[0] !== 0) Profile.chickenNativeCount[0] = 0;
+
+    const check: boolean = checkStorageChicken.bind(this)();
+    if (check && Profile.chickenNativeCount[1] !== 1) Profile.chickenNativeCount[1] = 1;
+    else if (!check && Profile.chickenNativeCount[1] !== 0) Profile.chickenNativeCount[1] = 0;
+
+    if (Profile.state.userChicken.part >= 3 && Profile.state.userChicken.diamondAnimalTime <= 0 && Profile.chickenNativeCount[2] !== 1) Profile.chickenNativeCount[2] = 1;
+    else if ((Profile.state.userChicken.part < 3 || Profile.state.userChicken.diamondAnimalTime > 0) && Profile.chickenNativeCount[2] !== 0) Profile.chickenNativeCount[2] = 0;
+
     const count: number = Profile.chickenNativeCount.reduce((prev, cur) => prev += cur);
     if (Profile.chickenNativeText.text !== String(count)) {
       Profile.chickenNativeText.setText(String(count));
@@ -368,19 +377,19 @@ function updateProfileNative(): void {
       Profile.chickenNativeText.setVisible(true);
       Profile.chickenNativeBg.setVisible(true);
     }
-
-    if (Profile.state.progress.chicken.collector <= 0 && Profile.chickenNativeCount[0] !== 1) Profile.chickenNativeCount[0] = 1;
-    else if (Profile.state.progress.chicken.collector > 0 && Profile.chickenNativeCount[0] !== 0) Profile.chickenNativeCount[0] = 0;
-
-    const check: boolean = checkStorageChicken.bind(this)();
-    if (check && Profile.chickenNativeCount[1] !== 1) Profile.chickenNativeCount[1] = 1;
-    else if (!check && Profile.chickenNativeCount[1] !== 0) Profile.chickenNativeCount[1] = 0;
-
-    if (Profile.state.userChicken.part >= 3 && Profile.state.userChicken.diamondAnimalTime <= 0 && Profile.chickenNativeCount[2] !== 1) Profile.chickenNativeCount[2] = 1;
-    else if ((Profile.state.userChicken.part < 3 || Profile.state.userChicken.diamondAnimalTime > 0) && Profile.chickenNativeCount[2] !== 0) Profile.chickenNativeCount[2] = 0;
   }
   
   if (Profile.cowNativeText) {
+    if (Profile.state.progress.cow.collector <= 0 && Profile.cowNativeCount[0] !== 1) Profile.cowNativeCount[0] = 1;
+    else if (Profile.state.progress.cow.collector > 0 && Profile.cowNativeCount[0] !== 0) Profile.cowNativeCount[0] = 0;
+    
+    const check: boolean = checkStorageCow.bind(this)();
+    if (check && Profile.cowNativeCount[1] !== 1) Profile.cowNativeCount[1] = 1;
+    else if (!check && Profile.cowNativeCount[1] !== 0) Profile.cowNativeCount[1] = 0;
+    
+    if (Profile.state.userCow.part >= 3 && Profile.state.userCow.diamondAnimalTime <= 0 && Profile.cowNativeCount[2] !== 1) Profile.cowNativeCount[2] = 1;
+    else if ((Profile.state.userCow.part < 3 || Profile.state.userCow.diamondAnimalTime > 0) && Profile.cowNativeCount[2] !== 0) Profile.cowNativeCount[2] = 0;
+
     const count: number = Profile.cowNativeCount.reduce((prev, cur) => prev += cur);
     if (Profile.cowNativeText.text !== String(count)) {
       Profile.cowNativeText.setText(String(count));
@@ -392,16 +401,6 @@ function updateProfileNative(): void {
       Profile.cowNativeText.setVisible(true);
       Profile.cowNativeBg.setVisible(true);
     }
-
-    if (Profile.state.progress.cow.collector <= 0 && Profile.cowNativeCount[0] !== 1) Profile.cowNativeCount[0] = 1;
-    else if (Profile.state.progress.cow.collector > 0 && Profile.cowNativeCount[0] !== 0) Profile.cowNativeCount[0] = 0;
-
-    const check: boolean = checkStorageCow.bind(this)();
-    if (check && Profile.cowNativeCount[1] !== 1) Profile.cowNativeCount[1] = 1;
-    else if (!check && Profile.cowNativeCount[1] !== 0) Profile.cowNativeCount[1] = 0;
-
-    if (Profile.state.userCow.part >= 3 && Profile.state.userCow.diamondAnimalTime <= 0 && Profile.cowNativeCount[2] !== 1) Profile.cowNativeCount[2] = 1;
-    else if ((Profile.state.userCow.part < 3 || Profile.state.userCow.diamondAnimalTime > 0) && Profile.cowNativeCount[2] !== 0) Profile.cowNativeCount[2] = 0;
   }
 }
 
