@@ -54,7 +54,7 @@ export default [
     type: 20,
     state: 0,
     count: 1,
-    diamonds: 2,
+    diamonds: 0,
     xp: 0,
     id: 127,
     necessary: 1
@@ -99,7 +99,7 @@ export default [
     type: 4,
     state: 2,
     count: 1,
-    diamonds: 2,
+    diamonds: 0,
     xp: 0,
     id: 4,
     necessary: 1

@@ -482,6 +482,11 @@ function pickUpTaskReward(id: number): void {
       else this.state.user.diamonds += task.diamonds;
     } else this.state.user.diamonds += task.diamonds;
 
+    this.logAmplitudeEvent('diamonds_get', {
+      type: 'task_award',
+      count: task.diamonds,
+    });
+
     this.state.user.xp += task.xp;
     task.got_awarded = 1;
 
