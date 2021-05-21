@@ -638,6 +638,7 @@ interface IfarmBosts {
   collector12: number;
   herd: number;
   feed: number;
+  factory?: number;
 }
 interface IamplitudeData {
   farm_id?: string;

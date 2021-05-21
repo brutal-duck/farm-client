@@ -24,19 +24,20 @@ let userData: Iuser = {
       collector4: 0,
       collector12: 0,
       herd: 0,
-      feed: 0
+      feed: 0,
     },
     chicken: {
       collector4: 0,
       collector12: 0,
       herd: 0,
-      feed: 0
+      feed: 0,
     },
     cow: {
       collector4: 0,
       collector12: 0,
       herd: 0,
-      feed: 0
+      feed: 0,
+      factory: 0,
     },
     fortune: 0,
   },

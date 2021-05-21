@@ -4,7 +4,7 @@ import basicChickenTerritories from '../local/chickenTerritories';
 import basicCowTerritories from '../local/cowTerritories';
 import basicUnicornCollector from '../local/unicornCollector';
 import { unicornSettings, sheepSettings, chickenSettings, cowSettings } from '../local/settings';
-import { userCow } from '../local/usersData';
+import { userCow, userData } from '../local/usersData';
 const basicUserCow = userCow;
 
 function validateTerritories(territories: Iterritories[], basicTerritories: Iterritories[]): void {
@@ -36,6 +36,25 @@ function validateTerritories(territories: Iterritories[], basicTerritories: Iter
       });
     }
   }
+}
+
+function validateBoosts(boosts: Iboosts): Iboosts {
+  const sheepBoostsBasic: IfarmBosts = userData.boosts.sheep;
+  const chickenBoostsBasic: IfarmBosts = userData.boosts.chicken;
+  const cowBoostsBasic: IfarmBosts = userData.boosts.cow;
+  const fortuneBoostsBasic: number = userData.boosts.fortune;
+
+  for (const key in sheepBoostsBasic) {
+    if (!boosts.sheep[key]) boosts.sheep[key] = sheepBoostsBasic[key];
+  }
+  for (const key in chickenBoostsBasic) {
+    if (!boosts.chicken[key]) boosts.chicken[key] = chickenBoostsBasic[key];
+  }
+  for (const key in cowBoostsBasic) {
+    if (!boosts.cow[key]) boosts.cow[key] = cowBoostsBasic[key];
+  }
+  if (!boosts.fortune) boosts.fortune = fortuneBoostsBasic;
+  return boosts;
 }
 
 export default function loadData(response: any): void {
@@ -709,7 +728,7 @@ export default function loadData(response: any): void {
     });
   }
   this.state.chickenEggs = chickenEggs;
-
+  const boosts: Iboosts = validateBoosts(response.data.user.boosts);
   const user: Iuser = {
     diamonds: response.data.user.diamonds,
     id: response.data.user._id,
@@ -724,10 +743,9 @@ export default function loadData(response: any): void {
     status: response.data.user.status,
     statuses: response.data.user.statuses,
     starterpack: response.data.user.starterpack,
-    boosts: response.data.user.boosts,          
+    boosts: boosts,          
   };
   this.state.user = user;
-
   if (response.data.user.chicken_part === 0 && this.state.farm === 'Chicken') response.data.user.chicken_part = 1;
   if (response.data.user.cow_part === 0 && this.state.farm === 'Cow') response.data.user.cow_part = 1;
 
