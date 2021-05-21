@@ -129,7 +129,7 @@ function chickenIntervalProgress(): void {
           }
           Scene.state.chickenEggs.push(egg);
           if (chicken.type === 0) chicken.diamond++;
-          if (chicken.diamond >= 5 && chicken.type === 0) {
+          if (chicken.diamond >= 3 && chicken.type === 0) {
             Scene.state.chicken = Scene.state.chicken.filter((el: Ichicken)=> el._id !== chicken._id);
           }
         }

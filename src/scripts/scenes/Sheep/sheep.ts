@@ -613,7 +613,7 @@ function collectWool(sheep: any, manualСollect: boolean = false): void {
     this.state.user.diamonds++;
     this.tryTask(19, 0);
 
-    if (sheep.diamond >= 5) {
+    if (sheep.diamond >= 3) {
 
       if (this.caveTutor) {
         
@@ -631,7 +631,7 @@ function collectWool(sheep: any, manualСollect: boolean = false): void {
       
       this.logAmplitudeEvent('diamonds_get', {
         type: 'diamond_animal',
-        count: 5,
+        count: 3,
       });
     }
   }

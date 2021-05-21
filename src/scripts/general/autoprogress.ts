@@ -271,7 +271,7 @@ export default function autoprogress(load: boolean = false): void {
               chicken.diamond -= newEggs[i].count;
               count = newEggs[i].count;
             } else {
-              count = 5 - chicken.diamond;
+              count = 3 - chicken.diamond;
               state.chicken = state.chicken.filter((el: Ichicken) => el._id !== chicken._id);
             }
             for (let j: number = 0; j < count; j++) {
@@ -864,7 +864,7 @@ export default function autoprogress(load: boolean = false): void {
               chicken.diamond -= newEggs[i].count;
               count = newEggs[i].count;
             } else {
-              count = 5 - chicken.diamond;
+              count = 3 - chicken.diamond;
               chicken.destroy();
             }
             for (let j: number = 0; j < count; j++) {

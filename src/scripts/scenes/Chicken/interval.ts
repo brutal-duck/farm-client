@@ -133,7 +133,7 @@ function interval(): void {
             Egg.create(this, egg);
 
             if (chicken.type === 0) chicken.diamond++;
-            if (chicken.diamond >= 5 && chicken.type === 0) {
+            if (chicken.diamond >= 3 && chicken.type === 0) {
               Firework.create(this, chicken, 1)
               chicken.destroy();
             }

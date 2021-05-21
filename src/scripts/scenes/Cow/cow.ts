@@ -374,7 +374,7 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
     this.tryTask(19, 0);
 
 
-    if (cow.diamond >= 5) {
+    if (cow.diamond >= 3) {
 
       // if (this.caveTutor) {
         
@@ -390,7 +390,7 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
       
       this.logAmplitudeEvent('diamonds_get', {
         type: 'diamond_animal',
-        count: 5,
+        count: 3,
       });
     }
   }

@@ -684,7 +684,7 @@ function getNewbieAward(): void {
         let x: number = random(270, 690);
         let y: number = random(510, 690);
         let id: string = 'local_' + randomString(18);
-        this.getSheep(id, 0, x, y, 0, 500, -5);
+        this.getSheep(id, 0, x, y, 0, 500);
         this.tryTask(18, 0);
         if (counter >= 5) timeout.remove(false);
 
@@ -798,7 +798,7 @@ function getNewbieAward(): void {
         let x: number = random(270, 690);
         let y: number = random(510, 690);
         let id: string = 'local_' + randomString(18);
-        this.getSheep(id, 0, x, y, 0, 500, -5);
+        this.getSheep(id, 0, x, y, 0, 500);
         this.tryTask(18, 0);
         if (counter >= 10) timeout.remove(false);
 
