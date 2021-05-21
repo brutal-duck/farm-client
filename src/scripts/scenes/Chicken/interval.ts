@@ -3,7 +3,6 @@ import Arrow from '../../components/animations/Arrow';
 import Firework from '../../components/animations/Firework';
 import Hearts from '../../components/animations/Hearts';
 import Egg from '../../components/Resource/Egg';
-import Chicken from './Main';
 let checkCollector: number = 0;
 let sheepCollectorVolume: number = 0;
 let cowCollectorVolume: number = 0;
@@ -255,11 +254,6 @@ function interval(): void {
 
     // поиск рекламы
     this.findAd();
-
-    // отнимание времени до кристалического животного
-    if (this.state[`user${this.state.farm}`].diamondAnimalTime > 0) {
-      this.state[`user${this.state.farm}`].diamondAnimalTime--;
-    }
 
     this.debug();
 

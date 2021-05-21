@@ -30,7 +30,6 @@ import {
   logAmplitudeRevenue,
   farmBalance,
   autoporgressCollectorTime,
-  intervalPorgressCollectorTime
 } from '../../general/basic';
 import {
   improveCollector,
@@ -107,6 +106,7 @@ import {
   chickenCollectorProgress,
   chickenIntervalProgress,
   updateProfileNative,
+  intervalPorgressCollectorTime,
 } from '../../general/interval';
 
 class Cow extends Phaser.Scene {

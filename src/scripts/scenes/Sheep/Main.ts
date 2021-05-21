@@ -35,7 +35,6 @@ import {
   spreadAnimals, 
   getEventRaiting,
   nextDayTimer,
-  intervalPorgressCollectorTime,
   autoporgressCollectorTime,
   remainderSellResource,
   logAmplitudeEvent,
@@ -139,6 +138,7 @@ import {
   cowFactoryProgress,
   cowIntervalProgress,
   updateProfileNative,
+  intervalPorgressCollectorTime,
 } from '../../general/interval';
 
 class Sheep extends Phaser.Scene {

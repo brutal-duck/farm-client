@@ -1303,36 +1303,6 @@ function nextDayTimer(): void {
   }
 }
 
-function intervalPorgressCollectorTime(): void {
-
-  if (this.state.farm === 'Sheep') {
-    this.state.progress.sheep.collector = this.state.userSheep.collector;
-    if (this.state.progress.chicken.collector > 0) this.state.progress.chicken.collector--;
-    if (this.state.progress.cow.collector > 0) this.state.progress.cow.collector--;
-    this.state.userChicken.collector = this.state.progress.chicken.collector;
-    this.state.userCow.collector = this.state.progress.cow.collector;
-  } else if (this.state.farm === 'Chicken') {
-    this.state.progress.chicken.collector = this.state.userChicken.collector;
-    if (this.state.progress.sheep.collector > 0) this.state.progress.sheep.collector--;
-    if (this.state.progress.cow.collector > 0) this.state.progress.cow.collector--;
-    this.state.userSheep.collector = this.state.progress.sheep.collector;
-    this.state.userCow.collector = this.state.progress.cow.collector;
-  } else if (this.state.farm === 'Cow') {
-    this.state.progress.cow.collector = this.state.userCow.collector;
-    if (this.state.progress.sheep.collector > 0) this.state.progress.sheep.collector--;
-    if (this.state.progress.chicken.collector > 0) this.state.progress.chicken.collector--;
-    this.state.userSheep.collector = this.state.progress.sheep.collector;
-    this.state.userChicken.collector = this.state.progress.chicken.collector;
-  } else if (this.state.farm === 'Unicorn') {
-    if (this.state.progress.chicken.collector > 0) this.state.progress.chicken.collector--;
-    if (this.state.progress.sheep.collector > 0) this.state.progress.sheep.collector--;
-    if (this.state.progress.cow.collector > 0) this.state.progress.cow.collector--;
-    this.state.userSheep.collector = this.state.progress.sheep.collector;
-    this.state.userChicken.collector = this.state.progress.chicken.collector;
-    this.state.userCow.collector = this.state.progress.cow.collector;
-  }
-}
-
 function autoporgressCollectorTime(): void {
   if (this.state.progress.sheep.collector >= this.state.progress.sheep.offlineTime) {
     this.state.progress.sheep.collector -= this.state.progress.sheep.offlineTime;
@@ -1606,7 +1576,6 @@ export {
   getEventRaiting,
   getStatusSettings,
   nextDayTimer,
-  intervalPorgressCollectorTime,
   autoporgressCollectorTime,
   loadingModal,
   remainderSellResource,

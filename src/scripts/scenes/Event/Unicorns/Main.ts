@@ -11,7 +11,6 @@ import {
   debug, 
   getEventRaiting,
   nextDayTimer,
-  intervalPorgressCollectorTime,
   autoporgressCollectorTime,
   logAmplitudeEvent,
   logAmplitudeRevenue,
@@ -104,6 +103,7 @@ import {
   cowIntervalProgress,
   cowCollectorProgress,
   cowFactoryProgress,
+  intervalPorgressCollectorTime
 } from '../../../general/interval';
 class Unicorn extends Phaser.Scene {
   constructor() {

@@ -1,11 +1,8 @@
 import { shortTime } from '../../general/basic';
 import Arrow from '../../components/animations/Arrow';
 import Hearts from '../../components/animations/Hearts';
-import Sheep from './Main';
 
 let checkCollector: number = 0;
-let chickenCollectorVolume: number = 0;
-let cowCollectorVolume: number = 0;
 
 function interval(): void {
   
@@ -167,11 +164,6 @@ function interval(): void {
 
     // задание на овец на поле
     this.checkAnimalTask();
-
-    // отнимание времени до кристалического животного
-    if (this.state[`user${this.state.farm}`].diamondAnimalTime > 0) {
-      this.state[`user${this.state.farm}`].diamondAnimalTime--;
-    }
 
     // баланс-бары
     this.game.scene.keys['SheepBars'].setBalanceBars(balance);

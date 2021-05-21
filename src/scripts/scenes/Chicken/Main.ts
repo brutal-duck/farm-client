@@ -28,7 +28,6 @@ import {
   spreadAnimals,
   getEventRaiting,
   nextDayTimer,
-  intervalPorgressCollectorTime,
   autoporgressCollectorTime,
   logAmplitudeEvent,
   logAmplitudeRevenue,
@@ -113,6 +112,7 @@ import {
   cowCollectorProgress,
   cowFactoryProgress,
   updateProfileNative,
+  intervalPorgressCollectorTime,
 } from '../../general/interval';
 
 class Chicken extends Phaser.Scene {

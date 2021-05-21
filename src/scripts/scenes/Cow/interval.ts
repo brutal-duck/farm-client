@@ -147,10 +147,6 @@ function interval(): void {
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Profile')) this.getNewbieAward();
       
-    // отнимание времени до кристалического животного
-    if (this.state[`user${this.state.farm}`].diamondAnimalTime > 0) {
-      this.state[`user${this.state.farm}`].diamondAnimalTime--;
-    }
     // поиск рекламы
     this.findAd();
 
