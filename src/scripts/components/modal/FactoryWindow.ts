@@ -23,9 +23,12 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
   private progressBar: Phaser.GameObjects.TileSprite;
   private boostTimer: Phaser.GameObjects.Text;
   private sellButton: any;
-  private milkInStorageText: Phaser.GameObjects.Text;
+  private milkInStorageText1: Phaser.GameObjects.Text;
+  private milkInStorageText2: Phaser.GameObjects.Text;
   private emptyAnimation: Phaser.Tweens.Tween;
-
+  private productionAnimation: Phaser.Tweens.Tween;
+  private product: Phaser.GameObjects.Sprite;
+  private productMask: Phaser.Display.Masks.BitmapMask;
 
   constructor(scene: Modal){
     super(scene, scene.cameras.main.centerX, scene.cameras.main.centerY, 'factory-window');
@@ -34,6 +37,7 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
 
   private create(): void {
     this.scene.add.existing(this);
+    this.createBitMask();
     this.createElements();
   };
 
@@ -55,7 +59,7 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
       this.scene.scene.stop();
     });
   
-    this.scene.add.text(windowGeom.left + 60, windowGeom.top + 130, this.scene.state.lang.milkInStorage, {
+    this.milkInStorageText1 = this.scene.add.text(windowGeom.left + 60, windowGeom.top + 130, this.scene.state.lang.milkInStorage, {
       font: '20px Shadow',
       color: '#fffcdc', 
     }).setOrigin(0, 0.5).setShadow(2, 2, '#08080888', 2);
@@ -73,7 +77,7 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
       if (territory.territoryType === 5) storageVolume += territory.volume;
     }
 
-    this.milkInStorageText = this.scene.add.text(windowGeom.right - 140, windowGeom.top + 130, shortNum(storageVolume), {
+    this.milkInStorageText2 = this.scene.add.text(windowGeom.right - 140, windowGeom.top + 130, shortNum(storageVolume), {
       font: '20px Shadow',
       color: '#fffcdc', 
     }).setOrigin(0, 0.5).setShadow(2, 2, '#08080888', 2);
@@ -82,6 +86,10 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
       font: '20px Shadow',
       color: '#fffcdc', 
     }).setOrigin(0, 0.5).setShadow(2, 2, '#08080888', 2);
+
+    this.scene.add.sprite(windowGeom.centerX, windowGeom.centerY - 159, 'factory-wheel').setDepth(1).setMask(this.productMask);
+    this.scene.add.sprite(windowGeom.centerX + 239, windowGeom.centerY - 159, 'factory-wheel').setDepth(1).setMask(this.productMask);
+
 
     const product: string = factory.currentProduction ? this.scene.state.lang[factory.currentProduction] : '';
   
@@ -201,6 +209,10 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
       percent = 100 - factory.productionTimer / (factory.settings.processingTime / 100);
     }
     
+    if (factory.productionTimer > 0 && !this.product) {
+      this.setProductionAnimation();
+    }
+    
     const width: number = Math.round(444 / 100 * percent);
   
     if (this.progressBar.displayWidth !== width) {
@@ -239,8 +251,8 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
       if (territory.territoryType === 5) storageVolume += territory.volume;
     }
 
-    if (this.milkInStorageText.text !== shortNum(storageVolume)) {
-      this.milkInStorageText.setText(shortNum(storageVolume));
+    if (this.milkInStorageText2.text !== shortNum(storageVolume)) {
+      this.milkInStorageText2.setText(shortNum(storageVolume));
     }
 
     if (storageVolume < factory.settings.lotSize && factory.productionTimer <= 0 && !this.emptyAnimation) {
@@ -248,6 +260,8 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
     } else if (storageVolume > factory.settings.lotSize && this.emptyAnimation) {
       this.removeEmptyAnimation()
     }
+
+
   }
 
   private setEmptyAnimation(): void {
@@ -259,20 +273,58 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
       onLoop: (): void => {
         if (this.currentProductionText.style.color !== WHITE_COLOR) {
           this.currentProductionText.setColor(WHITE_COLOR);
-          this.milkInStorageText.setColor(WHITE_COLOR);
+          this.milkInStorageText1.setColor(WHITE_COLOR);
+          this.milkInStorageText2.setColor(WHITE_COLOR);
         } else {
           this.currentProductionText.setColor(RED_COLOR);
-          this.milkInStorageText.setColor(RED_COLOR);
+          this.milkInStorageText1.setColor(RED_COLOR);
+          this.milkInStorageText2.setColor(RED_COLOR);
         }
       }
     });
   }
 
-
   private removeEmptyAnimation(): void {
     this.emptyAnimation.remove();
     this.emptyAnimation = undefined;
     this.currentProductionText.setColor(PRODUCTION_COLOR);
-    this.milkInStorageText.setColor(MILK_IN_STORAGE_COLOR)
+    this.milkInStorageText1.setColor(MILK_IN_STORAGE_COLOR);
+    this.milkInStorageText2.setColor(MILK_IN_STORAGE_COLOR);
+  }
+
+  private setProductionAnimation(): void {
+    const x: number = this.scene.cameras.main.centerX - 190;
+    const targetX: number = this.scene.cameras.main.centerX + 350;
+    const y: number = this.scene.cameras.main.centerY - 175;
+    this.product = this.scene.add.sprite(x, y, `factory-production-${this.scene.state.territory.factory.currentProduction}`).setAlpha(0.2).setOrigin(0.5, 1);
+    this.product.setMask(this.productMask);
+    this.productionAnimation = this.scene.tweens.add({
+      targets: this.product,
+      props: {
+        alpha: { from: 0.2, to: 1, duration: 500 },
+        x: { from: x, to: targetX, duration: 3000 },
+      }, 
+      loop: -1,
+      onLoop: (): void => {
+        if (this.product && this.product.texture.key !== `factory-production-${this.scene.state.territory.currentProduction}`) {
+          this.removeProductionAnimation();
+        }
+      }
+    });
+  }
+
+  private createBitMask(): void {
+    const x: number = this.scene.cameras.main.centerX - 246;
+    const y: number = this.scene.cameras.main.centerY - 280;
+    const width: number = 487;
+    const height: number = 118;
+    const mask: Phaser.GameObjects.Graphics = this.scene.add.graphics().fillRoundedRect(x, y, width, height, 12).setVisible(false);
+    this.productMask = new Phaser.Display.Masks.BitmapMask(this.scene, mask);
+  }
+  private removeProductionAnimation(): void {
+    this.product.destroy();
+    this.product = undefined;
+    this.productionAnimation.remove();
+    this.productionAnimation = undefined;
   }
 }

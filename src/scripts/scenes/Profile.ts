@@ -109,7 +109,7 @@ class Profile extends Phaser.Scene {
   }
 
   private createProfileInfo(): void {
-    const farmer: Phaser.GameObjects.Sprite = this.add.sprite(80, 75, 'farmer').setScale(0.45).setVisible(true);
+    const farmer: Phaser.GameObjects.Sprite = this.add.sprite(80, 75, 'farmer').setScale(0.45).setVisible(false);
     let avatar: Phaser.GameObjects.Sprite;
     if (this.state.platform === 'web') {
       avatar = farmer;

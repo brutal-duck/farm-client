@@ -65,6 +65,7 @@ const corner1: string = require("./../../../assets/images/chat-corner-1.png");
 const corner2: string = require("./../../../assets/images/chat-corner-2.png");
 
 const factoryWindow: string = require('./../../../assets/images/cow/modal/factory-window.png');
+const factoryWheel: string = require('./../../../assets/images/cow/modal/factory-wheel.png');
 const factoryProduction1: string = require('./../../../assets/images/cow/modal/factory-resource-1.png');
 const factoryProduction2: string = require('./../../../assets/images/cow/modal/factory-resource-2.png');
 const factoryProduction3: string = require('./../../../assets/images/cow/modal/factory-resource-3.png');
@@ -75,13 +76,6 @@ const factoryProductionSlot3: string = require('./../../../assets/images/cow/mod
 const factoryProductionSlotDisable3: string = require('./../../../assets/images/cow/modal/factory-resource-slot-disable-3.png');
 const factoryProductionSlot4: string = require('./../../../assets/images/cow/modal/factory-resource-slot-4.png');
 const factoryProductionSlotDisable4: string = require('./../../../assets/images/cow/modal/factory-resource-slot-disable-4.png');
-
-const clabber: string = require("./../../../assets/images/modal/clabber.png");
-const pasteurizedMilk: string = require("./../../../assets/images/modal/pasteurized-milk.png");
-const cheese: string = require("./../../../assets/images/modal/cheese.png");
-const chocolate: string = require("./../../../assets/images/modal/chocolate.png");
-
-
 
 export default function typePreload(): void {
     switch (this.state.modal.type) {
@@ -102,12 +96,6 @@ export default function typePreload(): void {
         this.load.image('green-progress', greenProgress);
         this.load.image('middle-button', middleButton);
 
-        if (this.state.farm === 'Cow') {
-          this.load.image('clabber', clabber);
-          this.load.image('pasteurized-milk', pasteurizedMilk);
-          this.load.image('cheese', cheese);
-          this.load.image('chocolate', chocolate);
-        }
         break;
       case 2: // магазин
         // this.load.image('shop-window', shopWindow);
@@ -202,6 +190,7 @@ export default function typePreload(): void {
         break;
       case 13:
         this.load.image('factory-window', factoryWindow);
+        this.load.image('factory-wheel', factoryWheel);
         this.load.image('factory-production-1', factoryProduction1)
         this.load.image('factory-production-2', factoryProduction2)
         this.load.image('factory-production-3', factoryProduction3)
