@@ -134,13 +134,13 @@ function checkMerging(territory: Territory, cow: CowSprite, position: string) {
         }
         MergingCloud.create(this, position);
         const type: number = cow1.breed + 1;
-        cow1.destroy();
-        cow2.destroy();
         const id: string = 'local_' + randomString(18);
         const x: number = territory.x + 120;
         const y: number = territory.y + 240;
         
-        const cow: CowSprite = this.animalGroup.generate({ x, y }, type, id, 0, 0, 7, false);
+        const cow: CowSprite = this.animalGroup.generate({ x, y }, type, id, 0, cow1.milk + cow2.milk, 7, false);
+        cow1.destroy();
+        cow2.destroy();
         const aimX: number = Phaser.Math.Between(territory.x + 40, territory.x + 200);
         const aimY: number = Phaser.Math.Between(territory.y + 280, territory.y + 440);
         cow.setAim(aimX, aimY);
