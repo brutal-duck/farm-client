@@ -152,8 +152,8 @@ class Profile extends Phaser.Scene {
   private createFarms(): void {
     this.createChickenFarm();
     this.createSheepFarm();
-    // this.createLockedCowFarm();
-    this.createCowFarm();
+    this.createLockedCowFarm();
+    // this.createCowFarm();
     if (this.state.progress.event.type === 1) {
       this.createUnicornFarm();
     } else if (this.state.progress.event.type === 2) {
