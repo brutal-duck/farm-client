@@ -507,7 +507,7 @@ export default function autoprogress(load: boolean = false): void {
       const factory: Ifactory = state.userCow.factory;
       const factorySettings: IfactorySettings = state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === factoryTerritory.improve);
   
-      if (state.offlineTime > factorySettings.processingTime - factory.productionTimer) {
+      if (state.offlineTime > factory.productionTimer) {
         const countLaunchedProductions: number = Math.floor((state.offlineTime + factorySettings.processingTime - factory.productionTimer) / factorySettings.processingTime);
         const needMilk: number = countLaunchedProductions * factorySettings.lotSize;
         
@@ -552,14 +552,18 @@ export default function autoprogress(load: boolean = false): void {
             }
           }
 
-          const remainingTime: number = state.offlineTime + factorySettings.processingTime - factory.productionTimer - factorySettings.processingTime * count;
+          const remainingTime: number = state.offlineTime - factory.productionTimer - factorySettings.processingTime * count;
           factory.productionTimer = remainingTime;
       
           if (remainingTime > 0) {
             factory.currentProduction = getRandomProductId(factorySettings, state.userCow.factory.boostTime > 0);
           }
-        } 
-        if (factory.currentProduction) factory.productionTimer -= state.offlineTime;
+        } else {
+          const remainingTime: number = factory.productionTimer - state.offlineTime;
+          factory.productionTimer = remainingTime > 0 ? remainingTime : 0;
+          if (factory.productionTimer <= 0) factory.currentProduction = undefined;
+        }
+
         if (factory.productionTimer < 0 || factory.productionTimer > factorySettings.processingTime) factory.productionTimer = factorySettings.processingTime;
         // раскладываем остатки молока
         for (const territory of territories) {
@@ -1122,7 +1126,7 @@ export default function autoprogress(load: boolean = false): void {
     if (factoryTerritory) {
       const factory: Factory = factoryTerritory.factory;
       const factorySettings: IfactorySettings = factory.settings;
-      if (state.offlineTime > factorySettings.processingTime - factory.productionTimer) {
+      if (state.offlineTime > factory.productionTimer) {
         const countLaunchedProductions: number = Math.floor((state.offlineTime + factorySettings.processingTime - factory.productionTimer) / factorySettings.processingTime);
         const needMilk: number = countLaunchedProductions * factorySettings.lotSize;
         
@@ -1162,14 +1166,19 @@ export default function autoprogress(load: boolean = false): void {
             }
           }
 
-          const remainingTime: number = state.offlineTime + factorySettings.processingTime - factory.productionTimer - factorySettings.processingTime * count;
+          const remainingTime: number = state.offlineTime - factory.productionTimer - factorySettings.processingTime * count;
+
           factory.productionTimer = remainingTime;
 
           if (factory.productionTimer  > 0) {
             factory.currentProduction = getRandomProductId(factorySettings, boostedCount > 0);
           }
+        } else {
+          const remainingTime: number = factory.productionTimer - state.offlineTime;
+          factory.productionTimer = remainingTime > 0 ? remainingTime : 0;
+          if (factory.productionTimer <= 0) factory.currentProduction = undefined;
         }
-        if (factory.currentProduction) factory.productionTimer -= state.offlineTime;
+
         if (factory.productionTimer < 0 || factory.productionTimer > factorySettings.processingTime) factory.productionTimer = factorySettings.processingTime;
         // раскладываем остатки молока
         for (const territory of territories) {
