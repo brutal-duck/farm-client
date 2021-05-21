@@ -351,6 +351,9 @@ function updateProfileNative(): void {
     const check: boolean = checkStorageSheep.bind(this)();
     if (check && Profile.sheepNativeCount[1] !== 1) Profile.sheepNativeCount[1] = 1;
     else if (!check && Profile.sheepNativeCount[1] !== 0) Profile.sheepNativeCount[1] = 0;
+
+    if (Profile.state.userSheep.part >= 3 && Profile.state.userSheep.diamondAnimalTime <= 0 && Profile.sheepNativeCount[2] !== 1) Profile.sheepNativeCount[2] = 1;
+    else if ((Profile.state.userSheep.part < 3 || Profile.state.userSheep.diamondAnimalTime > 0) && Profile.sheepNativeCount[2] !== 0) Profile.sheepNativeCount[2] = 0;
   }
 
   if (Profile.chickenNativeText) {
@@ -372,6 +375,9 @@ function updateProfileNative(): void {
     const check: boolean = checkStorageChicken.bind(this)();
     if (check && Profile.chickenNativeCount[1] !== 1) Profile.chickenNativeCount[1] = 1;
     else if (!check && Profile.chickenNativeCount[1] !== 0) Profile.chickenNativeCount[1] = 0;
+
+    if (Profile.state.userChicken.part >= 3 && Profile.state.userChicken.diamondAnimalTime <= 0 && Profile.chickenNativeCount[2] !== 1) Profile.chickenNativeCount[2] = 1;
+    else if ((Profile.state.userChicken.part < 3 || Profile.state.userChicken.diamondAnimalTime > 0) && Profile.chickenNativeCount[2] !== 0) Profile.chickenNativeCount[2] = 0;
   }
   
   if (Profile.cowNativeText) {
@@ -393,6 +399,9 @@ function updateProfileNative(): void {
     const check: boolean = checkStorageCow.bind(this)();
     if (check && Profile.cowNativeCount[1] !== 1) Profile.cowNativeCount[1] = 1;
     else if (!check && Profile.cowNativeCount[1] !== 0) Profile.cowNativeCount[1] = 0;
+
+    if (Profile.state.userCow.part >= 3 && Profile.state.userCow.diamondAnimalTime <= 0 && Profile.cowNativeCount[2] !== 1) Profile.cowNativeCount[2] = 1;
+    else if ((Profile.state.userCow.part < 3 || Profile.state.userCow.diamondAnimalTime > 0) && Profile.cowNativeCount[2] !== 0) Profile.cowNativeCount[2] = 0;
   }
 }
 
