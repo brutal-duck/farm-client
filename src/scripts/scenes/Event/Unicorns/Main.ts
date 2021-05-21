@@ -15,6 +15,7 @@ import {
   logAmplitudeEvent,
   logAmplitudeRevenue,
   farmBalance,
+  randomString,
 } from '../../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -224,6 +225,7 @@ class Unicorn extends Phaser.Scene {
   public cowIntervalProgress = cowIntervalProgress.bind(this);
   public cowCollectorProgress = cowCollectorProgress.bind(this);
   public cowFactoryProgress = cowFactoryProgress.bind(this);
+  public randomString = randomString.bind(this);
   
   public init(state: Istate): void {
     this.state = state;
