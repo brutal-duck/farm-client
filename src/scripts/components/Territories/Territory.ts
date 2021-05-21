@@ -800,12 +800,12 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
           this.factory.settings = nextImprove;
           this.scene.time.addEvent({ delay: 200, callback: (): void => {
             this.improveText?.setText(String(this.improve));
-            Stars.create(this.scene, { x: this.x + 120, y: this.y + 120 });
+            Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 5);
 
           }, callbackScope: this, loop: false });
 
           this.scene.logAmplitudeEvent('factory_up', {
-            level: user.fair,
+            level: this.factory.improve,
           });
 
           if (nextImprove.improveDiamondPrice > 0) {
@@ -815,13 +815,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
             });
             this.scene.tryTask(15, 0, nextImprove.improveDiamondPrice);
           }
-          
-          const modal: Imodal = {
-            type: 13,
-          }
-          this.scene.state.modal = modal;
-          this.scene.state.territory = this;
-          this.scene.scene.launch('Modal', this.scene.state);
+          this.scene.game.scene.keys['Modal'].scene.stop();
           this.scene.tryTask(24, this.factory.improve);
         } else {
           if (this.scene.state.user.diamonds < nextImprove.improveDiamondPrice) {
