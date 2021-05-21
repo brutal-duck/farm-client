@@ -179,7 +179,7 @@ export default [
     level: 23,
     chapter: 3,
     time: 21,
-    speed: 1200,
+    speed: 1.2,
     price: 15000,
     diamonds: false
   },
