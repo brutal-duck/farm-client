@@ -120,6 +120,7 @@ interface IuserAutoSave {
   userChicken: IuserChicken;
   userCow: IuserCow;
   userUnicorn?: IuserEvent;
+  test: string;
 }
 interface IdataAutoSave {
   id: string;
@@ -165,6 +166,7 @@ interface Iuser {
   statuses: string[];
   starterpack: boolean;
   boosts: Iboosts;
+  test: string;
 }
 interface IuserSheep {
   money: number;

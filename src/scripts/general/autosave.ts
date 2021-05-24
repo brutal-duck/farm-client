@@ -283,6 +283,7 @@ export default function autosave(): void {
     eventPoints: state.progress.event.eventPoints,
     status: state.user.status,
     boosts: state.user.boosts,
+    test: state.user.test,
     userSheep: state.userSheep,    
     userChicken: state.userChicken,    
     userCow: state.userCow,   

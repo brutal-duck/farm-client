@@ -729,6 +729,7 @@ export default function loadData(response: any): void {
   }
   this.state.chickenEggs = chickenEggs;
   const boosts: Iboosts = validateBoosts(response.data.user.boosts);
+  const test: string = response.data.user.test ? response.data.user.test : 'A';
   const user: Iuser = {
     diamonds: response.data.user.diamonds,
     id: response.data.user._id,
@@ -743,7 +744,8 @@ export default function loadData(response: any): void {
     status: response.data.user.status,
     statuses: response.data.user.statuses,
     starterpack: response.data.user.starterpack,
-    boosts: boosts,          
+    boosts: boosts,
+    test: test,
   };
   this.state.user = user;
   if (response.data.user.chicken_part === 0 && this.state.farm === 'Chicken') response.data.user.chicken_part = 1;
