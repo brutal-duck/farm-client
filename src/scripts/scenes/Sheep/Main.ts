@@ -139,6 +139,7 @@ import {
   cowIntervalProgress,
   updateProfileNative,
   intervalPorgressCollectorTime,
+  intervalCollectorTutorial,
 } from '../../general/interval';
 
 class Sheep extends Phaser.Scene {
@@ -315,6 +316,7 @@ class Sheep extends Phaser.Scene {
   public cowFactoryProgress = cowFactoryProgress.bind(this);
   public cowIntervalProgress = cowIntervalProgress.bind(this);
   public updateProfileNative = updateProfileNative.bind(this);
+  public intervalCollectorTutorial = intervalCollectorTutorial.bind(this);
 
   public init(state: Istate): void {
 

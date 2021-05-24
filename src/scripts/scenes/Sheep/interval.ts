@@ -231,51 +231,7 @@ function interval(): void {
 
     }
 
-    // тутор про невключенного подстригателя
-    if (this.state.user.additionalTutorial.collector) {
-
-      if (this.state.userSheep.collector === 0 &&
-        !arrowOnCollector &&
-        !this.scene.isActive('Modal') &&
-        !this.scene.isActive('Tutorial') &&
-        !this.scene.isActive('Profile') &&
-        !this.scene.isActive('Fortune')) {
-
-        this.counterWithoutCollector++;
-
-        if (this.counterWithoutCollector >= 10) {
-          this.counterWithoutCollector = 0;
-          arrowOnCollector = Arrow.generate(this.game.scene.keys['SheepBars'], 18);
-        }
-
-      }
-
-    } else {
-
-      if (this.state.userSheep.tutorial >= 100 && this.state.userSheep.collector === 0 && !this.scene.isActive('Tutorial')) {
-
-        this.counterWithoutCollector++;
-
-        if (this.counterWithoutCollector >= 10 &&
-          this.state.userSheep.part >= 2 &&
-          !this.scene.isActive('Modal') &&
-          !this.scene.isActive('Tutorial') &&
-          !this.scene.isActive('Profile') &&
-          !this.scene.isActive('Fortune')) {
-
-          this.counterWithoutCollector = 0;
-          this.state.user.additionalTutorial.collector = true;
-          this.showTutorial('collector');
-
-        }
-
-      }
-
-    }
-
-    if (arrowOnCollector && this.state.userSheep.collector > 0) {
-      this.counterWithoutCollector = 0;
-    }
+    this.intervalCollectorTutorial(arrowOnCollector);
 
     if (this.state.newbieTime > 0) this.state.newbieTime--;
 

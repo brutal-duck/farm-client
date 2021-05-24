@@ -3,10 +3,11 @@ import Arrow from '../../components/animations/Arrow';
 import Hearts from '../../components/animations/Hearts';
 import CowSprite from './../../components/Animal/CowSprite';
 import Territory from './../../components/Territories/Territory';
-import Cow from './Main';
+
 let checkCollector: number = 0;
 let sheepCollectorVolume: number = 0;
 let chickenCollectorVolume: number = 0;
+let arrowOnColletor: Phaser.GameObjects.Sprite;
 
 function interval(): void {
 
@@ -114,6 +115,7 @@ function interval(): void {
       this.state.userCow.collector--;
     } 
 
+    this.intervalCollectorTutorial(arrowOnColletor);
     // задание на накопление денег
     this.tryTask(6, this.state.userCow.money);
 

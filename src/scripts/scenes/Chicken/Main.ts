@@ -113,6 +113,7 @@ import {
   cowFactoryProgress,
   updateProfileNative,
   intervalPorgressCollectorTime,
+  intervalCollectorTutorial,
 } from '../../general/interval';
 
 class Chicken extends Phaser.Scene {
@@ -146,6 +147,7 @@ class Chicken extends Phaser.Scene {
   public feedBoostLvl: number = 6; // уровень старта буста комбикорм
   public feedBoostStack: number = 11; // максимальный стек часов
   public dailyStartCheck: boolean = true; // запущено ли открытие окна daily
+  public counterWithoutCollector: number = 0;
 
   public world = world.bind(this);
   public drag = drag.bind(this);
@@ -242,6 +244,7 @@ class Chicken extends Phaser.Scene {
   public cowCollectorProgress = cowCollectorProgress.bind(this);
   public cowFactoryProgress = cowFactoryProgress.bind(this);
   public updateProfileNative = updateProfileNative.bind(this);
+  public intervalCollectorTutorial = intervalCollectorTutorial.bind(this);
 
   public init(state: Istate): void {
 
@@ -251,6 +254,7 @@ class Chicken extends Phaser.Scene {
     this.alarm = false;
     this.collectorTimer = null;
     this.settings = state.chickenSettings;
+    this.counterWithoutCollector = 0;
     this.caveIconsTimer = 0;
     console.log('Chicken');
     this.autoprogress(true);

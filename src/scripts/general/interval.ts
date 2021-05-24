@@ -3,6 +3,7 @@ import Chicken from './../scenes/Chicken/Main';
 import Unicorn from './../scenes/Event/Unicorns/Main';
 import Cow from './../scenes/Cow/Main';
 import Profile from './../scenes/Profile';
+import Arrow from './../components/animations/Arrow';
 
 const getRandomProductId = (settings: IfactorySettings, boost: boolean): number => {
   const pull: number[] = [ settings.production1Percent, settings.production2Percent, settings.production3Percent ];
@@ -499,6 +500,43 @@ function intervalPorgressCollectorTime(): void {
 
 }
 
+function intervalCollectorTutorial(arrowOnCollector: Phaser.GameObjects.Sprite): void {
+  const DELAY: number = 10;
+
+  if (this.state.user.additionalTutorial.collector) {
+
+    if (this.state[`user${this.state.farm}`].collector === 0 &&
+      !arrowOnCollector &&
+      !this.scene.isActive('Modal') &&
+      !this.scene.isActive('Tutorial') &&
+      !this.scene.isActive('Profile') &&
+      !this.scene.isActive('Fortune')) {
+
+      this.counterWithoutCollector++;
+      if (this.counterWithoutCollector >= DELAY) {
+        this.counterWithoutCollector = 0;
+        arrowOnCollector = Arrow.generate(this.game.scene.keys[`${this.state.farm}Bars`], 18);
+      }
+    }
+  } else {
+    if ((this.state.userSheep.tutorial >= 100 || this.state.farm !== 'Sheep') && this.state[`user${this.state.farm}`].collector === 0 && !this.scene.isActive('Tutorial')) {
+      this.counterWithoutCollector++;
+      if (this.counterWithoutCollector >= DELAY &&
+        this.state[`user${this.state.farm}`].part >= 2 &&
+        !this.scene.isActive('Modal') &&
+        !this.scene.isActive('Tutorial') &&
+        !this.scene.isActive('Profile') &&
+        !this.scene.isActive('Fortune')) {
+
+        this.counterWithoutCollector = 0;
+        this.state.user.additionalTutorial.collector = true;
+        this.showTutorial('collector');
+      }
+    }
+  }
+  if (arrowOnCollector && this.state[`user${this.state.farm}`].collector > 0) this.counterWithoutCollector = 0;
+}
+
 export {
   sheepIntervalProgress,
   chickenIntervalProgress,
@@ -509,4 +547,5 @@ export {
   cowFactoryProgress,
   updateProfileNative,
   intervalPorgressCollectorTime,
+  intervalCollectorTutorial,
 }

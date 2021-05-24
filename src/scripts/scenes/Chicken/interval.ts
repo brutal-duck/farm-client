@@ -6,6 +6,7 @@ import Egg from '../../components/Resource/Egg';
 let checkCollector: number = 0;
 let sheepCollectorVolume: number = 0;
 let cowCollectorVolume: number = 0;
+let arrowOnCollector: Phaser.GameObjects.Sprite;
 
 function interval(): void {
 
@@ -219,6 +220,7 @@ function interval(): void {
       this.state.userChicken.collector--;
     } 
 
+    this.intervalCollectorTutorial(arrowOnCollector);
     // задание на накопление денег
     this.tryTask(6, this.state.userChicken.money);
 
