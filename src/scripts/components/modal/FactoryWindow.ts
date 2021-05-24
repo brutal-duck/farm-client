@@ -57,6 +57,7 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
     
     this.scene.clickButton(this.closeBtn, () => {
       this.scene.scene.stop();
+      this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
     });
   
     this.milkInStorageText1 = this.scene.add.text(windowGeom.left + 60, windowGeom.top + 130, this.scene.state.lang.milkInStorage, {
