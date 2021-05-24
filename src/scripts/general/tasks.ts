@@ -563,7 +563,8 @@ function clickTaskBoard(task: Itasks): void {
       SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang[`taskHelp${this.state.farm}_19`], 3);
       break;
     case 20: 
-      openStorageOrSpeechBuble();
+      if (this.state.farm !== 'Cow') openStorageOrSpeechBuble();
+      else openFactory();
       break;
     case 21: 
       openShopBoosters();
