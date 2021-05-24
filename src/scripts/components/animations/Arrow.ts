@@ -256,7 +256,7 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
         result = this.scene.state.user.additionalTutorial.eventTutorial > 0;
       break;
       case 18: 
-        result = this.scene.state.userSheep.collector > 0;
+        result = this.scene.state[`user${this.scene.state.farm}`].collector > 0;
       break;
     }
     return result;

@@ -519,7 +519,7 @@ function intervalCollectorTutorial(arrowOnCollector: Phaser.GameObjects.Sprite):
       }
     }
   } else {
-    if ((this.state.userSheep.tutorial >= 100 || this.state.farm !== 'Sheep') && this.state[`user${this.state.farm}`].collector === 0 && !this.scene.isActive('Tutorial')) {
+    if ((this.state.userSheep.tutorial >= 100 && this.state.farm === 'Sheep') && this.state[`user${this.state.farm}`].collector === 0 && !this.scene.isActive('Tutorial')) {
       this.counterWithoutCollector++;
       if (this.counterWithoutCollector >= DELAY &&
         this.state[`user${this.state.farm}`].part >= 2 &&
