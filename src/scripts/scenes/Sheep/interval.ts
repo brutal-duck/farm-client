@@ -386,6 +386,7 @@ function interval(): void {
     this.cowFactoryProgress();
 
     this.updateProfileNative();
+    this.showFeedBoostSpeechBubble();
   }, callbackScope: this, loop: true });
   
 

@@ -140,6 +140,7 @@ import {
   updateProfileNative,
   intervalPorgressCollectorTime,
   intervalCollectorTutorial,
+  showFeedBoostSpeechBubble,
 } from '../../general/interval';
 
 class Sheep extends Phaser.Scene {
@@ -185,7 +186,8 @@ class Sheep extends Phaser.Scene {
   public feedBoostStack: number = 11; // максимальный стек часов
   public dailyStartCheck: boolean = true; // запущено ли открытие окна daily
   public remaindSellTimer: number = 0;
-  
+  public feedBoostRemaindTimer: number = 0;
+
   public readonly moneyTasks: { id: number, money: number }[] = [
     {
       id: 127,
@@ -317,6 +319,7 @@ class Sheep extends Phaser.Scene {
   public cowIntervalProgress = cowIntervalProgress.bind(this);
   public updateProfileNative = updateProfileNative.bind(this);
   public intervalCollectorTutorial = intervalCollectorTutorial.bind(this);
+  public showFeedBoostSpeechBubble = showFeedBoostSpeechBubble.bind(this);
 
   public init(state: Istate): void {
 

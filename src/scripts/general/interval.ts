@@ -4,6 +4,7 @@ import Unicorn from './../scenes/Event/Unicorns/Main';
 import Cow from './../scenes/Cow/Main';
 import Profile from './../scenes/Profile';
 import Arrow from './../components/animations/Arrow';
+import SpeechBubble from './../components/animations/SpeechBuble';
 
 const getRandomProductId = (settings: IfactorySettings, boost: boolean): number => {
   const pull: number[] = [ settings.production1Percent, settings.production2Percent, settings.production3Percent ];
@@ -537,6 +538,19 @@ function intervalCollectorTutorial(arrowOnCollector: Phaser.GameObjects.Sprite):
   if (arrowOnCollector && this.state[`user${this.state.farm}`].collector > 0) this.counterWithoutCollector = 0;
 }
 
+function showFeedBoostSpeechBubble(): void {
+  const DELAY: number = 10;
+
+  if (this.feedBoostRemaindTimer < DELAY && 
+    this.state[`user${this.state.farm}`].feedBoostTime <= 0 && 
+    this.state.user.additionalTutorial.feedBoost && 
+    this.state[`user${this.state.farm}`].part > 5) this.feedBoostRemaindTimer++;
+  else if (this.feedBoostRemaindTimer >= DELAY){
+    this.feedBoostRemaindTimer = 0;
+    SpeechBubble.create(this.game.scene.keys[`${this.state.farm}Bars`], this.state.lang[`feedBoostSpeechBuble${this.state.farm}`], 3);
+  }
+}
+
 export {
   sheepIntervalProgress,
   chickenIntervalProgress,
@@ -548,4 +562,5 @@ export {
   updateProfileNative,
   intervalPorgressCollectorTime,
   intervalCollectorTutorial,
+  showFeedBoostSpeechBubble,
 }
