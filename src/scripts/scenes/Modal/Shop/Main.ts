@@ -91,6 +91,7 @@ const feedBoostChickenIcon: string = require("./../../../../assets/images/icons/
 const feedBoostCowIcon: string = require("./../../../../assets/images/icons/cow-feed-boost.png");
 const feedBoostEventIcon: string = require("./../../../../assets/images/icons/event-feed-boost.png");
 const nativeBg: string = require("./../../../../assets/images/modal/native-bg.png");
+const freeDiamondsBg: string = require("./../../../../assets/images/modal/free-diamonds-bg.png");
 
 class Shop extends Phaser.Scene {
   constructor() {
@@ -198,6 +199,7 @@ class Shop extends Phaser.Scene {
     this.load.image('starterpack-bg', starterpackBg);
     this.load.image('starterpack-shadow', starterpackShadow);
     this.load.image('native-bg', nativeBg);
+    this.load.image('free-diamonds-bg', freeDiamondsBg);
     if (this.state.farm === 'Sheep') this.load.image('sheep-herd-boost-icon', herdBoostSheepIcon);
     if (this.state.farm === 'Chicken') this.load.image('chicken-herd-boost-icon', herdBoostChickenIcon);
     if (this.state.farm === 'Cow') this.load.image('cow-herd-boost-icon', herdBoostCowIcon);
@@ -333,23 +335,24 @@ class Shop extends Phaser.Scene {
   // окно покупки кристаллов
   public shopDiamonds(): void {
 
+
     this.game.scene.keys[this.state.farm].logAmplitudeEvent('bank_page_viewed', {});
     
     let rows: number = Math.ceil(this.state.packages.length / 2);
     let height: number = rows * 270 + 40;
-    this.scrolling.bottom = this.height - this.heightWindow + height;
-    
+    this.scrolling.bottom = this.height - this.heightWindow + height ;
     if (!this.state.user.starterpack && 
       (this.state.userSheep?.part > 4 ||
         this.state.userChicken?.part >= 1 ||
         this.state.userUnicorn?.maxLevelAnimal >= 1 ||
         this.state.userCow?.part >= 1
       )) {
-
-      let starterpackBg: Phaser.GameObjects.Image = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY - 210, 'starterpack-bg');
-      let starterpackIconShadow: Phaser.GameObjects.Image = this.add.image(this.cameras.main.centerX - 135, this.cameras.main.centerY - 145, 'starterpack-shadow');
-      let starterpackIcon: Phaser.GameObjects.Image = this.add.image(this.cameras.main.centerX - 140, this.cameras.main.centerY - 210, 'starterpack-icon');
-      let text1: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 40, this.cameras.main.centerY - 260, this.state.lang.buyFrom, {
+      this.scrolling.bottom += 350;
+      const y: number = this.height + 140;
+      let starterpackBg: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX - 130, y, 'starterpack-bg');
+      let starterpackIconShadow: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX - 265, y + 70, 'starterpack-shadow');
+      let starterpackIcon: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX - 270, y, 'starterpack-icon');
+      let text1: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX - 90, y - 40, this.state.lang.buyFrom, {
         font: '26px Shadow',
         color: '#FBCB64'
       }).setOrigin(0.5, 0.5);
@@ -361,12 +364,12 @@ class Shop extends Phaser.Scene {
   
       let diamond1: Phaser.GameObjects.Image = this.add.image(text2.getBounds().right + 5, text1.y, 'diamond').setScale(0.10).setOrigin(0, 0.5);
   
-      let text3: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 80, text1.getBounds().bottom + 5, this.state.lang.getGift,  {
+      let text3: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX - 50, text1.getBounds().bottom + 5, this.state.lang.getGift,  {
         font: '26px Shadow',
         color: '#FBCB64'
       }).setOrigin(0.5, 0);
   
-      let text4: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 40, text3.getBounds().bottom + 5, this.state.lang.more, {
+      let text4: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX - 90, text3.getBounds().bottom + 5, this.state.lang.more, {
         font: '26px Shadow',
         color: '#FBCB64'
       }).setOrigin(0.5, 0);
@@ -378,7 +381,7 @@ class Shop extends Phaser.Scene {
   
       let diamond2: Phaser.GameObjects.Image = this.add.image(text5.getBounds().right + 5, text5.y, 'diamond').setScale(0.10).setOrigin(0);
   
-      let text6: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX + 80, text4.getBounds().bottom + 5, this.state.lang.dontMissChanse, {
+      let text6: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX - 50, text4.getBounds().bottom + 5, this.state.lang.dontMissChanse, {
         font: '26px Shadow',
         color: '#FFFFFF'
       }).setOrigin(0.5, 0);
@@ -407,7 +410,7 @@ class Shop extends Phaser.Scene {
           this.state.userChicken?.part >= 1 ||
           this.state.userUnicorn?.maxLevelAnimal >= 1 ||
           this.state.userCow?.part >= 1
-        )) y += 248;
+        )) y += 238;
       
       let left: Ipackage = this.state.packages[i * 2];
       let right: Ipackage = this.state.packages[i * 2 + 1];
@@ -600,12 +603,40 @@ class Shop extends Phaser.Scene {
         }
 
       }
-
     }
 
+    if (!this.state.user.takenFreeDiamonds) {
+      const FREE_DIAMONDS: number = 1;
+      let y: number = (rows + 1) * 270 + 50 + this.height - 238;
+      if (!this.state.user.starterpack && 
+        (this.state.userSheep?.part > 4 ||
+          this.state.userChicken?.part >= 1 ||
+          this.state.userUnicorn?.maxLevelAnimal >= 1 ||
+          this.state.userCow?.part >= 1
+        )) y += 238;
+      console.log(y);
+      this.add.sprite(this.cameras.main.centerX - 130, y, 'free-diamonds-bg');
+      const diamondCount: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX - 300, y, `+${FREE_DIAMONDS}`, {
+        font: '34px Shadow',
+        color: '#FFFFFF'
+      }).setOrigin(0.5);
+      this.add.sprite(diamondCount.getBounds().right + 5, y, 'diamond').setScale(0.23).setOrigin(0, 0.5);
+      const takeBtn: any = this.shopButton(this.cameras.main.centerX - 30, y, '0 ' + this.state.lang.ruble);
+      this.clickShopBtn(takeBtn, () => {
+        this.state.user.takenFreeDiamonds = true;
+        this.state.user.diamonds += FREE_DIAMONDS;
+        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+        this.scene.stop();
+        this.scene.stop('ShopBars');
+        this.scene.stop('Modal');
+        this.game.scene.keys[`${this.state.farm}Bars`].getCurrency({ x: this.game.scene.keys[`${this.state.farm}Bars`].cameras.main.centerX, y: this.game.scene.keys[`${this.state.farm}Bars`].cameras.main.centerY }, FREE_DIAMONDS, 'diamond');
+        this.game.scene.keys[this.state.farm].logAmplitudeEvent('diamonds_get', {
+          type: 'bank_page',
+          count: FREE_DIAMONDS,
+        });
+      })
+    }
   }
-  
-
 }
 
 export default Shop;

@@ -121,6 +121,7 @@ interface IuserAutoSave {
   userCow: IuserCow;
   userUnicorn?: IuserEvent;
   test: string;
+  takenFreeDiamonds: boolean;
 }
 interface IdataAutoSave {
   id: string;
