@@ -1385,6 +1385,7 @@ function logAmplitudeEvent(eventName: string, data: IamplitudeData): void {
     if (!countAnimal) countAnimal = 0;
     if (this.state.farm === 'Cow') countAnimal = this.animalGroup?.children.entries.length;
     eventData = {
+      test: this.state.user.test,
       farm_id: this.state.farm,
       chapter: this.state[`user${this.state.farm}`].part,
       diamonds: this.state.user.diamonds,
@@ -1400,6 +1401,7 @@ function logAmplitudeEvent(eventName: string, data: IamplitudeData): void {
     if (!countAnimal) countAnimal = 0;
 
     eventData = {
+      test: this.state.user.test,
       farm_id: this.state.farm,
       chapter: this.state[`user${this.state.farm}`].maxLevelAnimal,
       diamonds: this.state.user.diamonds,
@@ -1427,6 +1429,7 @@ function logAmplitudeRevenue(productId: string, price: number, type: string = ''
     if (!countAnimal) countAnimal = 0;
 
     revenueData = {
+      test: this.state.user.test,
       farm_id: this.state.farm,
       chapter: this.state[`user${this.state.farm}`].part,
       diamonds: this.state.user.diamonds,
@@ -1442,6 +1445,7 @@ function logAmplitudeRevenue(productId: string, price: number, type: string = ''
     if (!countAnimal) countAnimal = 0;
 
     revenueData = {
+      test: this.state.user.test,
       farm_id: this.state.farm,
       chapter: this.state[`user${this.state.farm}`].maxLevelAnimal,
       diamonds: this.state.user.diamonds,

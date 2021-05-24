@@ -659,6 +659,7 @@ interface IamplitudeData {
   position?: number;
   step?: number;
   stock?: boolean;
+  test?: string;
 }
 interface IfortuneUser {
   name: string;
