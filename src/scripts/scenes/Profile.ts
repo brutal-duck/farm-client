@@ -535,7 +535,7 @@ class Profile extends Phaser.Scene {
     this.click(zone, (): void => {
       const modal: Imodal = {
         type: 2,
-        shopType: this.state.modal?.shopType || 1
+        shopType: 1,
       }
       this.state.modal = modal;
       this.scene.stop();
@@ -563,7 +563,15 @@ class Profile extends Phaser.Scene {
         this.state.modal = modal;
         this.scene.stop();
         this.scene.launch('Modal', this.state);
-      })
+      });
+    }
+
+    if (!this.state.user.takenFreeDiamonds  && (this.state.progress.sheep.part > 4 || this.state.progress.chicken.part >= 1)) {
+      this.add.sprite(shopPosition.x - 50, shopPosition.y - 70, 'profile-native-bg');
+      this.add.text(shopPosition.x - 50, shopPosition.y - 70, '1', {
+        font: '30px Bip',
+        color: '#ffffff',
+      }).setOrigin(0.5);
     }
   }
 
