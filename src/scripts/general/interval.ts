@@ -204,6 +204,7 @@ function sheepCollectorProgress(sheepCollectorVolume: number): void {
       sheepCollectorVolume = 0;
     }
   }
+  console.log(sheepCollectorVolume, 'sheepCollectorVolume')
 }
 
 function chickenCollectorProgress(chickenCollectorVolume: number): void {
@@ -299,29 +300,30 @@ function cowFactoryProgress(): void {
         factory[`production${factory.currentProduction}Money`] += factorySettings.lotSize * multiply;
         factory.money += factorySettings.lotSize * multiply;
         factory.currentProduction = undefined;
-      }
-      const storages: Iterritories[] = Scene.state.cowTerritories.filter((data: Iterritories) => data.type === 5);
-      
-      storages.forEach((storage: Iterritories) => {
-        resourceAmount += storage.volume;
-      });
-  
-      if (resourceAmount >= factorySettings.lotSize) {
-        factory.productionTimer = factorySettings.processingTime;
-        let lot: number = factorySettings.lotSize;
-        for (const storage of storages) {
-          if (storage.volume > lot) {
-            storage.volume -= lot;
-            lot = 0;
-          } else {
-            lot -= storage.volume;
-            storage.volume = 0;
+      } else {
+        const storages: Iterritories[] = Scene.state.cowTerritories.filter((data: Iterritories) => data.type === 5);
+        
+        storages.forEach((storage: Iterritories) => {
+          resourceAmount += storage.volume;
+        });
+    
+        if (resourceAmount >= factorySettings.lotSize) {
+          factory.productionTimer = factorySettings.processingTime;
+          let lot: number = factorySettings.lotSize;
+          for (const storage of storages) {
+            if (storage.volume > lot) {
+              storage.volume -= lot;
+              lot = 0;
+            } else {
+              lot -= storage.volume;
+              storage.volume = 0;
+            }
           }
+          const productId = getRandomProductId(factorySettings, factory.boostTime > 0);
+          if (productId) {
+            factory.currentProduction = productId;
+          } 
         }
-        const productId = getRandomProductId(factorySettings, factory.boostTime > 0);
-        if (productId) {
-          factory.currentProduction = productId;
-        } 
       }
     } else {
       factory.productionTimer -= 1;

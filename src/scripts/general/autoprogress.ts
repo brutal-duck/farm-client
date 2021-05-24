@@ -156,6 +156,15 @@ export default function autoprogress(load: boolean = false): void {
         sheep.wool = 1000;
       }
     }
+
+    for (const territory of state.sheepTerritories) {
+      if (territory.type === 5) {
+        let max: number = state.sheepSettings.territoriesSheepSettings.find((item: IterritoriesSheepSettings) => item.improve === territory.improve).woolStorage;
+        if (territory.volume > max) {
+          territory.volume = max
+        }
+      }
+    }
   }
 
   const chickenOfflineProgress = (offlineTime: number = state.progress.chicken.offlineTime): void => {
@@ -536,6 +545,7 @@ export default function autoprogress(load: boolean = false): void {
         }
   
         const currentProduction: number = factory.currentProduction;
+        if (currentProduction) count += 1;
         if (count > 0) {
           for (let i: number = 0; i < count; i += 1) {
             if (currentProduction && i === 0) {
@@ -1154,6 +1164,7 @@ export default function autoprogress(load: boolean = false): void {
         }
   
         const currentProduction: number = factory.currentProduction;
+        if (currentProduction) count += 1;
         if (count > 0) {
           for (let i: number = 0; i < count; i += 1) {
             if (currentProduction && i === 0) {
