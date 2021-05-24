@@ -187,6 +187,7 @@ class Boot extends Phaser.Scene {
         },
         fortune: 0,
       },
+      test: '',
     }
     this.state.platform = this.platform;
     this.state.name = this.name;

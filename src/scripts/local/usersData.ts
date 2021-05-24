@@ -41,6 +41,7 @@ let userData: Iuser = {
     },
     fortune: 0,
   },
+  test: 'A',
 }
 
 let userSheep: IuserSheep = {
