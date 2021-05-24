@@ -490,10 +490,10 @@ class CowPreload extends Phaser.Scene {
           .set('user_id', this.state.user.id)
           .set('browser', navigator.userAgent);
         Amplitude.getInstance().identify(identify);
+        console.log(`Test - ${this.state.user.test}`);
         // Amplitude.getInstance().logEvent('load_time', {
         //   seconds: loadTime
         // });
-
       }
 
       this.userReady = false;

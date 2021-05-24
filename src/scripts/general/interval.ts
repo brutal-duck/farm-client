@@ -204,7 +204,6 @@ function sheepCollectorProgress(sheepCollectorVolume: number): void {
       sheepCollectorVolume = 0;
     }
   }
-  console.log(sheepCollectorVolume, 'sheepCollectorVolume')
 }
 
 function chickenCollectorProgress(chickenCollectorVolume: number): void {

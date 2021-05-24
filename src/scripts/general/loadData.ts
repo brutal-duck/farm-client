@@ -784,7 +784,6 @@ export default function loadData(response: any): void {
   }
 
   let cowFactory: Ifactory = response.data.user.cowFactory;
-  console.log(response.data.user.cowFactory)
   if (!response.data.user.cowFactory) cowFactory = basicUserCow.factory;
 
   if (!cowFactory.money) cowFactory.money = 0;
