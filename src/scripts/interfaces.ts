@@ -424,7 +424,6 @@ interface IfairLevel {
 interface Ipart {
   sort: number;
   award: number;
-  collector: number;
   improve_territory_2: number;
   improve_territory_3: number;
   improve_territory_4: number;
