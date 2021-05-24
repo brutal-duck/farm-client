@@ -746,6 +746,7 @@ export default function loadData(response: any): void {
     starterpack: response.data.user.starterpack,
     boosts: boosts,
     test: test,
+    takenFreeDiamonds: response.data.user.takenFreeDiamonds,
   };
   this.state.user = user;
   if (response.data.user.chicken_part === 0 && this.state.farm === 'Chicken') response.data.user.chicken_part = 1;

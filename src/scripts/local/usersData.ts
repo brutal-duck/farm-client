@@ -42,6 +42,7 @@ let userData: Iuser = {
     fortune: 0,
   },
   test: 'A',
+  takenFreeDiamonds: false,
 }
 
 let userSheep: IuserSheep = {

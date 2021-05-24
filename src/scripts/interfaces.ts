@@ -167,6 +167,7 @@ interface Iuser {
   starterpack: boolean;
   boosts: Iboosts;
   test: string;
+  takenFreeDiamonds: boolean;
 }
 interface IuserSheep {
   money: number;
