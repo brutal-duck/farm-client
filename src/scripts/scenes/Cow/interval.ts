@@ -281,6 +281,7 @@ function interval(): void {
     }
     
     this.updateProfileNative();
+    this.showFeedBoostSpeechBubble();
   }, callbackScope: this, loop: true });
 }
 

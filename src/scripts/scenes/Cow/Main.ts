@@ -108,6 +108,7 @@ import {
   updateProfileNative,
   intervalPorgressCollectorTime,
   intervalCollectorTutorial,
+  showFeedBoostSpeechBubble,
 } from '../../general/interval';
 
 class Cow extends Phaser.Scene {
@@ -235,7 +236,8 @@ class Cow extends Phaser.Scene {
   public chickenIntervalProgress = chickenIntervalProgress.bind(this);
   public updateProfileNative = updateProfileNative.bind(this);
   public intervalCollectorTutorial = intervalCollectorTutorial.bind(this);
-  
+  public showFeedBoostSpeechBubble = showFeedBoostSpeechBubble.bind(this);
+
   public init(state: Istate): void {
 
     this.autoprogressTimer = Math.round(new Date().getTime() / 1000);
