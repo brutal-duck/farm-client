@@ -20,7 +20,8 @@ function autosave(): void {
       type: territory.territoryType,
       volume: territory.volume,
       improve: territory.improve,
-      money: territory.money
+      money: territory.money,
+      cooldown: territory.cooldown,
     });
   }
 

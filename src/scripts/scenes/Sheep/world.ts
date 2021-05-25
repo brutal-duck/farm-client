@@ -134,6 +134,7 @@ function world(): void {
     territory.volume = data.volume;
     territory.improve = data.improve;
     territory.money = data.money;
+    territory.cooldown = data.cooldown;
 
     // заборы
     let topBorder: number = 1;

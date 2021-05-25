@@ -91,7 +91,8 @@ export default function autosave(): void {
         type: territory.type,
         volume: territory.volume,
         improve: territory.improve,
-        money: territory.money
+        money: territory.money,
+        cooldown: territory.cooldown,
       });
     }
   
@@ -132,7 +133,8 @@ export default function autosave(): void {
         type: territory.type,
         volume: territory.volume,
         improve: territory.improve,
-        money: territory.money
+        money: territory.money,
+        cooldown: territory.cooldown,
       });
   
     }
@@ -184,7 +186,8 @@ export default function autosave(): void {
         type: territory.territoryType,
         volume: territory.volume,
         improve: territory.improve,
-        money: territory.money
+        money: territory.money,
+        cooldown: territory.cooldown,
       });
     }
   

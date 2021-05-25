@@ -15,6 +15,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   public volume: number;
   public improve: number;
   public money: number;
+  public cooldown: number;
   public borderTop: Phaser.GameObjects.Sprite;
   public borderBottom: Phaser.GameObjects.Sprite;
   public borderLeft: Phaser.GameObjects.Sprite;
@@ -60,6 +61,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     this.volume = data.volume;
     this.improve = data.improve;
     this.money = data.money;
+    this.cooldown = data.cooldown;
     this.createElements();
     this.setListeners();
   }

@@ -253,6 +253,7 @@ interface Iterritories {
   type: number;
   volume: number;
   money: number;
+  cooldown: number,
   _id?: any;
 }
 interface IeventTerritories {

@@ -32,7 +32,8 @@ function validateTerritories(territories: Iterritories[], basicTerritories: Iter
         type: territory.type,
         volume: territory.volume,
         improve: territory.improve,
-        money: territory.money
+        money: territory.money, 
+        cooldown: territory.cooldown,
       });
     }
   }
@@ -677,7 +678,8 @@ export default function loadData(response: any): void {
       type: territory.type,
       volume: territory.volume,
       improve: territory.improve,
-      money: territory.money
+      money: territory.money,
+      cooldown: territory.cooldown,
     });
   }
 
@@ -691,7 +693,8 @@ export default function loadData(response: any): void {
       type: territory.type,
       volume: territory.volume,
       improve: territory.improve,
-      money: territory.money
+      money: territory.money,
+      cooldown: territory.cooldown,
     });
   }
 
@@ -705,7 +708,8 @@ export default function loadData(response: any): void {
       type: territory.type,
       volume: territory.volume,
       improve: territory.improve,
-      money: territory.money
+      money: territory.money,
+      cooldown: territory.cooldown,
     });
   }
 
