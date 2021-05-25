@@ -5,6 +5,15 @@ import CowSprite from './../components/Animal/CowSprite';
 import Territory from './../components/Territories/Territory';
 import Factory from './../components/Territories/Factory';
 
+const progressTerritoryCooldown = (territories: any, time: number): void => {
+  for (const territory of territories) {
+    if (territory.cooldown > 0) {
+      territory.cooldown -= time;
+      if (territory.cooldown <= 0) territory.cooldown = 0;
+    }
+  }
+}
+
 export default function autoprogress(load: boolean = false): void {
   const state: Istate = this.state;
   
@@ -46,6 +55,7 @@ export default function autoprogress(load: boolean = false): void {
 
   // овцы
   const sheepOfflineProgress = (offlineTime: number = state.progress.sheep.offlineTime): void => {
+    progressTerritoryCooldown(state.sheepTerritories, offlineTime);
     if (state.userSheep.diamondAnimalTime >= offlineTime) state.userSheep.diamondAnimalTime -= offlineTime;
     else {
       state.userSheep.diamondAnimalTime = 0;
@@ -169,6 +179,8 @@ export default function autoprogress(load: boolean = false): void {
 
   const chickenOfflineProgress = (offlineTime: number = state.progress.chicken.offlineTime): void => {
     // значение отступа для яиц, чтоб не прилегали к краям территории
+    progressTerritoryCooldown(state.chickenTerritories, offlineTime);
+
     let indent: number = 20;
   
     // время кристаллической курочки
@@ -397,6 +409,8 @@ export default function autoprogress(load: boolean = false): void {
   } 
 
   const cowOfflineProgress = (offlineTime: number = state.progress.cow.offlineTime): void => {
+    progressTerritoryCooldown(state.cowTerritories, offlineTime);
+
     const MILK_DELAY = 60;
     if (state.userCow.diamondAnimalTime >= offlineTime) state.userCow.diamondAnimalTime -= offlineTime;
     else {
@@ -609,139 +623,141 @@ export default function autoprogress(load: boolean = false): void {
 
   const sheepAutoprogress = (): void => {
      // время кристаллической овцы
-  if (state.userSheep.diamondAnimalTime >= state.offlineTime) state.userSheep.diamondAnimalTime -= state.offlineTime;
-  else {
-    state.userSheep.diamondAnimalTime = 0;
-    state.userSheep.diamondAnimalAd = true;
-  }
-  // время буста комбикорм
-  let wasFeedBoost: number = 0;
+    progressTerritoryCooldown(this.territories.children.entries, state.offlineTime);
 
-  if (state.userSheep.feedBoostTime >= state.offlineTime) {
-    state.userSheep.feedBoostTime -= state.offlineTime;
-    wasFeedBoost = state.offlineTime;
-  } else {
-    wasFeedBoost = state.userSheep.feedBoostTime;
-    state.userSheep.feedBoostTime = 0;
-  }
+    if (state.userSheep.diamondAnimalTime >= state.offlineTime) state.userSheep.diamondAnimalTime -= state.offlineTime;
+    else {
+      state.userSheep.diamondAnimalTime = 0;
+      state.userSheep.diamondAnimalAd = true;
+    }
+    // время буста комбикорм
+    let wasFeedBoost: number = 0;
 
-  // время собирателя
-  let wasCollector: number = 0;
+    if (state.userSheep.feedBoostTime >= state.offlineTime) {
+      state.userSheep.feedBoostTime -= state.offlineTime;
+      wasFeedBoost = state.offlineTime;
+    } else {
+      wasFeedBoost = state.userSheep.feedBoostTime;
+      state.userSheep.feedBoostTime = 0;
+    }
 
-  if (state.userSheep.collector >= state.offlineTime) {
-    state.userSheep.collector -= state.offlineTime;
-    wasCollector = state.offlineTime;
-  } else {
-    wasCollector = state.userSheep.collector;
-    state.userSheep.collector = 0;
-  }
-  
-  // процент шерсти под бустом
-  let feedPercent: number = Number((wasFeedBoost / wasCollector).toFixed(2));
-  if (feedPercent >= 1 ) feedPercent = 1;
+    // время собирателя
+    let wasCollector: number = 0;
 
-  
-  if (!load) this.game.scene.keys['SheepBars'].collector.update();
-  if (!load) state.timeToNewDay -= state.offlineTime;
+    if (state.userSheep.collector >= state.offlineTime) {
+      state.userSheep.collector -= state.offlineTime;
+      wasCollector = state.offlineTime;
+    } else {
+      wasCollector = state.userSheep.collector;
+      state.userSheep.collector = 0;
+    }
 
-  // считаем сколько раз подстригли овец
-  let balance: Ibalance = this.balance();
-  let sheepWoolcuts: { id: string, type: number, count: number }[] = [];
+    // процент шерсти под бустом
+    let feedPercent: number = Number((wasFeedBoost / wasCollector).toFixed(2));
+    if (feedPercent >= 1 ) feedPercent = 1;
 
-  if (balance.waterRecovery > 0 && balance.grassRecovery > 0) {
 
-    for (let i in this.sheep.children.entries) {
+    if (!load) this.game.scene.keys['SheepBars'].collector.update();
+    if (!load) state.timeToNewDay -= state.offlineTime;
 
-      let sheep = this.sheep.children.entries[i];
-      let breed: number;
+    // считаем сколько раз подстригли овец
+    let balance: Ibalance = this.balance();
+    let sheepWoolcuts: { id: string, type: number, count: number }[] = [];
 
-      if (sheep.type === 0) breed = 1;
-      else breed = sheep.type;
+    if (balance.waterRecovery > 0 && balance.grassRecovery > 0) {
 
-      let points: IsheepPoints = this.settings.sheepSettings.find((item: IsheepPoints) => item.breed === breed);
+      for (let i in this.sheep.children.entries) {
 
-      let wool: number = points.wool_growth;
+        let sheep = this.sheep.children.entries[i];
+        let breed: number;
 
-      if (balance.alarm) {
-        wool = Math.round(wool / 100 * this.settings.sheepBadPercent);
-        if (wool < 1) wool = 1;
-      }
+        if (sheep.type === 0) breed = 1;
+        else breed = sheep.type;
 
-      let woolcuts: number = Math.floor((wool * wasCollector) / 1000);
+        let points: IsheepPoints = this.settings.sheepSettings.find((item: IsheepPoints) => item.breed === breed);
 
-      if (woolcuts === 0) {
-        if (sheep.wool + (wool * wasCollector) > 1000) sheep.wool = 1000;
-        else sheep.wool += (wool * wasCollector);
-      }
-      
-      if (state.userSheep.collector === 0) {
-        sheep.wool = 1000;
-      }
+        let wool: number = points.wool_growth;
 
-      if (sheep.type !== 0) {
+        if (balance.alarm) {
+          wool = Math.round(wool / 100 * this.settings.sheepBadPercent);
+          if (wool < 1) wool = 1;
+        }
 
-        sheepWoolcuts.push({
-          id: sheep._id,
-          type: sheep.type,
-          count: woolcuts
-        });
+        let woolcuts: number = Math.floor((wool * wasCollector) / 1000);
+
+        if (woolcuts === 0) {
+          if (sheep.wool + (wool * wasCollector) > 1000) sheep.wool = 1000;
+          else sheep.wool += (wool * wasCollector);
+        }
+
+        if (state.userSheep.collector === 0) {
+          sheep.wool = 1000;
+        }
+
+        if (sheep.type !== 0) {
+
+          sheepWoolcuts.push({
+            id: sheep._id,
+            type: sheep.type,
+            count: woolcuts
+          });
+
+        }
 
       }
 
     }
 
-  }
+    // скорость сборки
+    let speed: number = state.sheepCollectorSettings.find((data: IcollectorSettings) => data.level === state.userSheep.collectorLevel).speed;
 
-  // скорость сборки
-  let speed: number = state.sheepCollectorSettings.find((data: IcollectorSettings) => data.level === state.userSheep.collectorLevel).speed;
+    if (this.sheep.children.entries.length > speed * 10) {
 
-  if (this.sheep.children.entries.length > speed * 10) {
+      let excess: number = 100 / (speed * 10) * this.sheep.children.entries.length;
+      let percent: number = 100 / (excess / 100);
 
-    let excess: number = 100 / (speed * 10) * this.sheep.children.entries.length;
-    let percent: number = 100 / (excess / 100);
+      for (let i in sheepWoolcuts) {
+        if (sheepWoolcuts[i].count > 0) {
+          sheepWoolcuts[i].count = Math.round(sheepWoolcuts[i].count / 100 * percent);
+        }
+      }
+
+    }
+
+    // заполняем хранилища
+    let wool: number[] = [];
 
     for (let i in sheepWoolcuts) {
-      if (sheepWoolcuts[i].count > 0) {
-        sheepWoolcuts[i].count = Math.round(sheepWoolcuts[i].count / 100 * percent);
+      for (let j: number = 0; j < sheepWoolcuts[i].count; j++) {
+        wool.push(sheepWoolcuts[i].type);
       }
     }
 
-  }
+    for (let i in wool) {
 
-  // заполняем хранилища
-  let wool: number[] = [];
+      let price: number = state.sheepSettings.sheepSettings.find((data: IsheepPoints) => data.breed === wool[i]).long_wool;
+      price *= (1 + feedPercent); // коэфф
 
-  for (let i in sheepWoolcuts) {
-    for (let j: number = 0; j < sheepWoolcuts[i].count; j++) {
-      wool.push(sheepWoolcuts[i].type);
-    }
-  }
+      for (let j in this.territories.children.entries) {
+        if (this.territories.children.entries[j].type === 5) {
 
-  for (let i in wool) {
-    
-    let price: number = state.sheepSettings.sheepSettings.find((data: IsheepPoints) => data.breed === wool[i]).long_wool;
-    price *= (1 + feedPercent); // коэфф
-    
-    for (let j in this.territories.children.entries) {
-      if (this.territories.children.entries[j].type === 5) {
-        
-        let territory = this.territories.children.entries[j];
-        let max: number = this.settings.territoriesSheepSettings.find((item: IterritoriesSheepSettings) => item.improve === territory.improve).woolStorage;
+          let territory = this.territories.children.entries[j];
+          let max: number = this.settings.territoriesSheepSettings.find((item: IterritoriesSheepSettings) => item.improve === territory.improve).woolStorage;
 
-        if (territory.volume < max) {
+          if (territory.volume < max) {
 
-          let sheep = sheepWoolcuts.find(data => data.type === wool[i] && data.count > 0);
-          if (sheep?.count > 0) sheep.count--;
+            let sheep = sheepWoolcuts.find(data => data.type === wool[i] && data.count > 0);
+            if (sheep?.count > 0) sheep.count--;
 
-          territory.money += price;
-          territory.volume++;
-          break;
+            territory.money += price;
+            territory.volume++;
+            break;
+          }
         }
       }
     }
-  }
-  
-  // если есть остаток, то овцы пушистые
+
+    // если есть остаток, то овцы пушистые
     for (let i in sheepWoolcuts) {
       if (sheepWoolcuts[i].count > 0) {
         let sheep = this.sheep.children.entries.find((data: any) => data._id === sheepWoolcuts[i].id);
@@ -752,6 +768,8 @@ export default function autoprogress(load: boolean = false): void {
 
   const chickenAutoprogress = (): void => {
       // значение отступа для яиц, чтоб не прилегали к краям территории
+    progressTerritoryCooldown(this.territories.children.entries, state.offlineTime);
+
     let indent: number = 20;
 
     // время кристаллической курочки
@@ -1017,6 +1035,8 @@ export default function autoprogress(load: boolean = false): void {
   }
 
   const cowAutoprogress = (): void => {
+    progressTerritoryCooldown(this.territories.children.entries, state.offlineTime);
+
     const MILK_DELAY = 60;
     if (state.userCow.diamondAnimalTime >= state.offlineTime) state.userCow.diamondAnimalTime -= state.offlineTime;
     else {

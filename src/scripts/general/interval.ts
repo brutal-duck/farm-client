@@ -6,6 +6,15 @@ import Profile from './../scenes/Profile';
 import Arrow from './../components/animations/Arrow';
 import SpeechBubble from './../components/animations/SpeechBuble';
 
+const progressTerritoryCooldown = (territories: any, time: number): void => {
+  for (const territory of territories) {
+    if (territory.cooldown > 0) {
+      territory.cooldown -= time;
+      if (territory.cooldown <= 0) territory.cooldown = 0;
+    }
+  }
+}
+
 const getRandomProductId = (settings: IfactorySettings, boost: boolean): number => {
   const pull: number[] = [ settings.production1Percent, settings.production2Percent, settings.production3Percent ];
   if (boost) pull.push(settings.production4Percent);
@@ -46,7 +55,7 @@ function sheepIntervalProgress(): void {
   const Scene: Chicken | Cow | Unicorn = this;
   const sheepBalance: Ibalance = Scene.farmBalance('Sheep');
   const sheepSettings: IsheepSettings = Scene.state.sheepSettings;
-
+  progressTerritoryCooldown(Scene.state.sheepTerritories, 1);
   for (let i in Scene.state.sheep) {
     const sheep: Isheep = Scene.state.sheep[i];
     let breed: number;
@@ -71,6 +80,8 @@ function chickenIntervalProgress(): void {
   const INDENT: number = 20;
   const chickenBalance: Ibalance = Scene.farmBalance('Chicken');
   const chickenSettings: IchickenSettings = Scene.state.chickenSettings;
+
+  progressTerritoryCooldown(Scene.state.chickenTerritories, 1);
 
   if (Scene.state.userChicken.part > 0) {
     for (let i in Scene.state.chicken) {
@@ -147,6 +158,8 @@ function cowIntervalProgress(): void {
   const MILK_DELAY: number = 60;
   const cowBalance: Ibalance = Scene.farmBalance('Cow');
   const cowSettings: IcowSettings = Scene.state.cowSettings;
+
+  progressTerritoryCooldown(Scene.state.cowTerritories, 1);
 
   if (Scene.state.userCow.part > 0) {
     for (let i in Scene.state.cow) {
