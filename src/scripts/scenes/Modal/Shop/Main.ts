@@ -614,7 +614,6 @@ class Shop extends Phaser.Scene {
           this.state.userUnicorn?.maxLevelAnimal >= 1 ||
           this.state.userCow?.part >= 1
         )) y += 238;
-      console.log(y);
       this.add.sprite(this.cameras.main.centerX - 130, y, 'free-diamonds-bg');
       const diamondCount: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX - 300, y, `+${FREE_DIAMONDS}`, {
         font: '34px Shadow',

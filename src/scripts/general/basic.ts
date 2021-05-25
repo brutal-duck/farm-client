@@ -665,6 +665,8 @@ function buyNextFarm(): void {
 function getNewbieAward(): void {
 
   const testA = (): void => {
+    console.log('a')
+
     for (let i: number = 0; i < this.state.dailyAwards.length; i++) {
 
       if (i === 0 && this.state.dailyAwards[i] && this.state.farm === 'Sheep') {
@@ -817,6 +819,7 @@ function getNewbieAward(): void {
   }
 
   const testB = (): void => {
+    console.log('b')
     for (let i: number = 0; i < this.state.dailyAwards.length; i++) {
 
       if (i === 0 && this.state.dailyAwards[i]) {
