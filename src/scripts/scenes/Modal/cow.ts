@@ -916,8 +916,6 @@ function improveFactoryWindow(): void {
 
   let nextLevelProductId: number = 0;
   for (let i = 2; i < 4; i++) {
-    console.log(thisLevel[`production${i}Percent`])
-    console.log(nextLevel[`production${i}Percent`])
     if (thisLevel[`production${i}Percent`] <= 0 && nextLevel[`production${i}Percent`] > 0) {
       nextLevelProductId = i;
       break;
@@ -1030,26 +1028,19 @@ function factoryBoostWindow(): void {
   const ONE_HOUR: number = 3600;
 
   this.textHeader.setText(this.state.lang.showCase);
-  const sprite: Phaser.GameObjects.Sprite = this.add.sprite(140, this.cameras.main.centerY, 'chocolate');
+  const sprite: Phaser.GameObjects.Sprite = this.add.sprite(140, this.cameras.main.centerY - 20, 'chocolate');
   const spriteGeom: Phaser.Geom.Rectangle = sprite.getBounds();
-  const text1: Phaser.GameObjects.Text = this.add.text(spriteGeom.right + 30, this.cameras.main.centerY - 125, this.state.lang.showCaseText1, {
+  this.add.text(spriteGeom.right + 10, spriteGeom.centerY, this.state.lang.showCaseText2, {
     font: '26px Bip',
     color: '#925C28',
     wordWrap: { width: 400 },
     align: 'left',
-  }).setOrigin(0, 0);
-  const text1Geom: Phaser.Geom.Rectangle = text1.getBounds()
-  this.add.text(text1Geom.centerX, text1Geom.bottom + 10, this.state.lang.showCaseText2, {
-    font: '26px Bip',
-    color: '#925C28',
-    wordWrap: { width: 400 },
-    align: 'left',
-  }).setOrigin(0.5, 0);
+  }).setOrigin(0, 0.5);
   const text = this.state.lang.buyCocoaBeans.replace('$1', multiplyTime);
   const right1 = {
     text: price,
     icon: 'diamond'}
-  const button = this.bigButton('green', 'left', 135, text, right1);
+  const button = this.bigButton('green', 'left', 90, text, right1);
 
   this.factoryBoostTimer = this.add.text(spriteGeom.centerX, spriteGeom.top, shortTime(this.state.userCow.factory.boostTime, this.state.lang), {
     font: '26px Bip',
@@ -1066,7 +1057,7 @@ function factoryBoostWindow(): void {
 
         this.state.boughtFactoryBoost = true;
 
-        this.game.scene.keys[this.state.farm].logAmpletudeEvent('diamonds_spent', {
+        this.game.scene.keys[this.state.farm].logAmplitudeEvent('diamonds_spent', {
           type: 'booster_factory',
           count: price,
         });
@@ -1113,7 +1104,7 @@ function factoryBoostWindow(): void {
       this.scene.restart(this.state);
     }
   });
-  this.resizeWindow(280);
+  this.resizeWindow(180);
 }
 
 export {
