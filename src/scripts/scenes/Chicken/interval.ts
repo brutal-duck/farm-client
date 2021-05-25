@@ -3,6 +3,7 @@ import Arrow from '../../components/animations/Arrow';
 import Firework from '../../components/animations/Firework';
 import Hearts from '../../components/animations/Hearts';
 import Egg from '../../components/Resource/Egg';
+import { progressTerritoryCooldown } from '../../general/interval';
 let checkCollector: number = 0;
 let sheepCollectorVolume: number = 0;
 let cowCollectorVolume: number = 0;
@@ -389,6 +390,7 @@ function interval(): void {
     this.cowFactoryProgress();
     this.updateProfileNative();
     this.showFeedBoostSpeechBubble();
+    progressTerritoryCooldown(this.territories.children.entries, 1);
   }, callbackScope: this, loop: true });
 
 }

@@ -1,6 +1,7 @@
 import { shortTime } from '../../general/basic';
 import Arrow from '../../components/animations/Arrow';
 import Hearts from '../../components/animations/Hearts';
+import { progressTerritoryCooldown } from '../../general/interval';
 
 let checkCollector: number = 0;
 
@@ -387,6 +388,7 @@ function interval(): void {
 
     this.updateProfileNative();
     this.showFeedBoostSpeechBubble();
+    progressTerritoryCooldown(this.territories.children.entries, 1);
   }, callbackScope: this, loop: true });
   
 

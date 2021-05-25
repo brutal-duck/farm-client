@@ -581,4 +581,5 @@ export {
   intervalPorgressCollectorTime,
   intervalCollectorTutorial,
   showFeedBoostSpeechBubble,
+  progressTerritoryCooldown,
 }
