@@ -88,10 +88,11 @@ function updateHerdBoostBtn(): void {
 
     this.herdBoostTimerText.setText(this.state.lang.stillForBoost + ' ' + shortTime(this.state.timeToNewDay, this.state.lang));
     if (this.state.timeToNewDay <= 0 && this.herdBoostBtn.data.values.updated) this.herdBoostBtn.data.values.updated = false;
+
     if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0 && !this.herdBoostBtn.data.values.updated) { 
       this.herdBoostBtn.data.values.updated = true;
       // если не взят буст
-      this.herdBoostBtnLeftText.setText(this.state.lang.pickUp); 
+      this.herdBoostBtnLeftText.setText(this.state.lang.free); 
       this.herdBoostDiamondBtn.setVisible(false);
       this.herdBoostBtn.setY(yBtn - 23);
       this.herdBoostBtnLeftText.setY(yBtn - 25);
@@ -101,29 +102,12 @@ function updateHerdBoostBtn(): void {
       this.herdBoostTimerText.setVisible(false);
       
       if (this.state.user.boosts[this.state.farm.toLowerCase()].herd > 0) {
-        this.herdBoostNative.setX(this.herdBoostBtn.getBounds().right - this.herdBoostNative.getBounds().width);
-        this.herdBoostNative.setY(this.herdBoostBtn.getBounds().top);
-        const textGeom: Phaser.Geom.Rectangle = this.herdBoostNative.getBounds();
-        if (!this.herdBoostNative.plusText) {
-          this.herdBoostNative.plusText = this.add.text(textGeom.right, textGeom.centerY, '+1', {
-            font: '28px Shadow',
-            color: '#69f225'
-          }).setOrigin(0, 0.5).setDepth(4).setShadow(2, 3, '#724719', 5);
-        } else {
-          this.herdBoostNative.plusText.setY(textGeom.centerY);
-          this.herdBoostNative.plusText.setX(textGeom.right);
-        }
-
-        const plusTextGeom: Phaser.Geom.Rectangle = this.herdBoostNative.plusText.getBounds();
-        this.herdBoostNative.bg.setPosition(plusTextGeom.right + 5, textGeom.centerY)
-          .setDisplaySize(textGeom.width + plusTextGeom.width + 60, textGeom.height + 20).setOrigin(1, 0.5);
-        
-        const bgGeom: Phaser.Geom.Rectangle = this.herdBoostNative.bg.getBounds();
-        this.herdBoostNative.setX(bgGeom.left + 27).setOrigin(0, 0.5);
-        this.herdBoostNative.plusText.setX(bgGeom.right - 27).setOrigin(1, 0.5);
+        this.herdBoostNative.setX(this.herdBoostBtn.getBounds().right - 20);
+        this.herdBoostNative.setY(this.herdBoostBtn.getBounds().top - 3);
+        this.herdBoostNative.bg.setPosition(this.herdBoostNative.x, this.herdBoostNative.y);
       }
     } 
-    if (this.state.user.boosts[this.state.farm.toLowerCase()].herd > 0 && !this.herdBoostBtn.data.values.updated) {
+    if (this.state.user.boosts[this.state.farm.toLowerCase()].herd > 0 && this.state[`user${this.state.farm}`].takenHerdBoost > 0 && !this.herdBoostBtn.data.values.updated) {
       this.herdBoostBtn.data.values.updated = true;
       this.herdBoostBtnLeftText.setText(this.state.lang.pickUp); 
       this.herdBoostDiamondBtn.setVisible(false);
@@ -139,7 +123,6 @@ function updateHerdBoostBtn(): void {
     }
   }
 }
-
 
 // улучшение собирателей
 function improveCollector(): void {
@@ -506,28 +489,10 @@ function herdBoost(): void {
       .setShadow(2, 3, '#724719', 5);
 
     this.herdBoostNative.bg = this.add.sprite(0, 0, 'native-bg').setDepth(1);
-    if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0) {
-      this.herdBoostNative.plusText = this.add.text(0, 0, '+1', {
-        font: '28px Shadow',
-        color: '#00ff00'
-      })
-        .setOrigin(0, 0.5)
-        .setDepth(4)
-        .setShadow(2, 3, '#724719', 5);
-
-      this.herdBoostNative.setX(xBtn + 80);
-      const textGeom: Phaser.Geom.Rectangle = this.herdBoostNative.getBounds();
-      const plusTextGeom: Phaser.Geom.Rectangle = this.herdBoostNative.plusText.getBounds();
-      const width: number = textGeom.width + plusTextGeom.width;
-
-      this.herdBoostNative.bg.setPosition(textGeom.right - plusTextGeom.width / 2, textGeom.centerY)
-        .setDisplaySize(width + 20, textGeom.height + 20);
-        
-    } else {
-      const textGeom: Phaser.Geom.Rectangle = this.herdBoostNative.getBounds();
-      this.herdBoostNative.bg.setPosition(textGeom.centerX, textGeom.centerY)
-        .setDisplaySize(textGeom.width + 10, textGeom.height + 10);
-    }
+    const textGeom: Phaser.Geom.Rectangle = this.herdBoostNative.getBounds();
+    const width: number = textGeom.width + 30 < 60 ? 60 : textGeom.width + 30;
+    this.herdBoostNative.bg.setPosition(textGeom.centerX, textGeom.centerY)
+    .setDisplaySize(width, textGeom.height + 20);
   }
   
   this.herdBoostDiamondBtn.setX(this.herdBoostBtn.x + this.herdBoostBtnLeftText.width - 25 - this.herdBoostBtnRightText.width);
