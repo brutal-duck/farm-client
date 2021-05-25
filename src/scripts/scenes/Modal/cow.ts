@@ -86,7 +86,6 @@ function cowFair(): void {
 
 }
 
-
 // окно курицы
 function cow(): void {
 
@@ -186,7 +185,6 @@ function cow(): void {
 
 }
 
-
 // окно пастбища
 function cowPasture(): void {
   const pasture: string = this.state.lang.pasture.replace('$1', this.state.territory.improve);
@@ -267,7 +265,6 @@ function cowPasture(): void {
   }
 }
 
-
 // окно поилки
 function cowWater(): void {
 
@@ -347,7 +344,6 @@ function cowWater(): void {
   }
 }
 
-
 // купленная земля
 function boughtCowLand(): void {
   
@@ -391,7 +387,6 @@ function boughtCowLand(): void {
 
 }
 
-
 // земля для покупки
 function buyCowTerritory(): void {
   this.textHeader.setText(this.state.lang.buyTerritory);
@@ -423,7 +418,6 @@ function buyCowTerritory(): void {
   }
   this.resizeWindow(130);
 }
-
 
 // окно конвертора куриной фермы
 function cowConvertor(): void {
@@ -564,7 +558,6 @@ function cowConvertor(): void {
 
 }
 
-
 // окно подтверждения смены типа территории
 function confirmCowExchangeTerritory(): void {
 
@@ -620,7 +613,6 @@ function confirmCowExchangeTerritory(): void {
   }
 
 }
-
 
 // хранилище яиц
 function cowMilkRepository(): void {
@@ -757,7 +749,6 @@ function cowMilkRepository(): void {
   }
 
 }
-
 
 function cowMilkRepositoryExchange(): void {
   const repository: string = this.state.lang.repository.replace('$1', this.state.territory.improve);
@@ -903,30 +894,58 @@ function updateFactoryModal(): void {
 function improveFactoryWindow(): void {
   const factory: string = this.state.lang.factory.replace('$1', this.state.territory.factory.improve);
   this.textHeader.setText(factory);
-  
+  const headerStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+    fontSize: '26px',
+    fontFamily: 'Bip',
+    color: '#925C28',
+    fontStyle: 'bold'
+  };
+  const basicStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+    fontSize: '24px',
+    fontFamily: 'Bip',
+    color: '#925C28'
+  };
+  const improveStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+    fontSize: '24px',
+    fontFamily: 'Bip',
+    color: '#57A90E'
+  };
+
   const thisLevel: IfactorySettings = this.state.territory.factory.settings;
   const nextLevel: IfactorySettings = this.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === this.state.territory.factory.improve + 1);
+
+  let nextLevelProductId: number = 0;
+  for (let i = 2; i < 4; i++) {
+    console.log(thisLevel[`production${i}Percent`])
+    console.log(nextLevel[`production${i}Percent`])
+    if (thisLevel[`production${i}Percent`] <= 0 && nextLevel[`production${i}Percent`] > 0) {
+      nextLevelProductId = i;
+      break;
+    }
+  }
+
+  if (nextLevelProductId > 0) {
+    const text: string = `${this.state.lang[`production${nextLevelProductId}`]}`;
+    const productText: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY + 40, `${this.state.lang.newProduct}:`, basicStyle);
+    this.add.text(productText.getBounds().right + 10, this.cameras.main.centerY + 40, text, improveStyle);
+  }
+
+  const dY: number = nextLevelProductId > 0 ? 0 : 20
   
+  const nextLevelHeader: string = `${this.state.lang.nextFactory.replace('$1', nextLevel.improve)}`;
+  const header: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 120, nextLevelHeader, headerStyle).setOrigin(0.5);
+
   const lotSize: string = `${this.state.lang.lotSize}: ${shortNum(thisLevel.lotSize)} ${this.state.lang.litres}`;
-  const lot: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY - 100, lotSize, {
-    font: '30px Bip',
-    color: '#925C28'
-  });
+  const lot: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY - 80 + dY, lotSize, basicStyle);
   
   const time: string = thisLevel.processingTime / 60 < 1 ? `${thisLevel.processingTime} ${this.state.lang.seconds}`: 
   `${shortNum(thisLevel.processingTime / 60)} ${this.state.lang.minutes}`;
 
   const durationText: string = `${this.state.lang.processingTime}: ${time}`;
-  const duration: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY - 50, durationText, {
-    font: '30px Bip',
-    color: '#925C28'
-  });
+  const duration: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY - 40 + dY, durationText, basicStyle);
 
   const efficiencyText: string = `${this.state.lang.efficiency}: ${thisLevel.efficiency}%`;
-  const efficiency: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY, efficiencyText, {
-    font: '30px Bip',
-    color: '#925C28'
-  });
+  const efficiency: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY + dY, efficiencyText, basicStyle);
 
   let icon: string;
   let text: string;
@@ -941,11 +960,8 @@ function improveFactoryWindow(): void {
     `${(nextLevel.processingTime - thisLevel.processingTime)} ${this.state.lang.seconds}`: 
     `${shortNum(nextLevel.processingTime - thisLevel.processingTime)} ${this.state.lang.minutes}`;
 
-    const text: string = `(+${time}`;
-    this.add.text(position.x, position.y, text, {
-      font: '30px Bip',
-      color: '#57A90E'
-    });
+    const text: string = `(+${time})`;
+    this.add.text(position.x, position.y, text, improveStyle);
     
   } 
   
@@ -956,10 +972,7 @@ function improveFactoryWindow(): void {
       y: lot.y
     }
     const text: string = `(+${shortNum(nextLevel.lotSize - thisLevel.lotSize)} ${this.state.lang.litres})`;
-    this.add.text(position.x, position.y, text, {
-      font: '30px Bip',
-      color: '#57A90E'
-    });
+    this.add.text(position.x, position.y, text, improveStyle);
 
   }
 
@@ -970,12 +983,11 @@ function improveFactoryWindow(): void {
       y: efficiency.y
     }
     const text: string = `(+${shortNum(nextLevel.efficiency - thisLevel.efficiency)}%)`;
-    this.add.text(position.x, position.y, text, {
-      font: '30px Bip',
-      color: '#57A90E'
-    });
+    this.add.text(position.x, position.y, text, improveStyle);
 
   }
+
+  const btnY: number = nextLevelProductId > 0 ? 130 : 110;
 
   if (this.state[`user${this.state.farm}`].part >= nextLevel.unlock_improve) {
     if (nextLevel.improveDiamondPrice) {
@@ -990,7 +1002,7 @@ function improveFactoryWindow(): void {
       icon: icon,
       text: shortNum(text)
     }
-    const improve = this.bigButton('green', 'left', 90, this.state.lang.improve, right);
+    const improve = this.bigButton('green', 'left', btnY, this.state.lang.improve, right);
     this.clickModalBtn(improve, (): void => {
       this.state.territory.improveFactory();
     });
@@ -1001,9 +1013,14 @@ function improveFactoryWindow(): void {
       icon: 'lock',
       text: `${this.state.lang.shortPart} ${nextLevel.unlock_improve}`,
     }
-    this.bigButton('grey', 'left', 90, this.state.lang.improve, improve);
+    this.bigButton('grey', 'left', btnY, this.state.lang.improve, improve);
   }
-  this.resizeWindow(250);
+  if (nextLevelProductId > 0) {
+    this.resizeWindow(300);
+  } else {
+    header.setY(header.y += 20);
+    this.resizeWindow(250);
+  }
 }
 
 function factoryBoostWindow(): void {

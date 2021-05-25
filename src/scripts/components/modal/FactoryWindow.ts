@@ -103,29 +103,35 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
     this.progressBar = this.scene.add.tileSprite(136, windowGeom.centerY - 100, 0, 16, 'green-progress')
       .setOrigin(0, 0.5);
   
-    let improveBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(windowGeom.centerX + 130, windowGeom.centerY - 37, 'improve-collector');
-    let improveText: Phaser.GameObjects.Text = this.scene.add.text(windowGeom.centerX + 130, windowGeom.centerY - 40, this.scene.state.lang.improve, {
-      font: '26px Shadow',
-      color: '#FFFFFF'
-    }).setOrigin(0.5, 0.5).setStroke('#3B5367', 4);
-    
-    this.scene.clickShopBtn({ btn: improveBtn, title: improveText }, (): void => {
-      this.scene.game.scene.keys[this.scene.state.farm].showImproveFactory();
-    });
-    
-    this.scene.add.text(windowGeom.left + 50, windowGeom.centerY - 40, `${this.scene.state.lang.efficiency}`, {
+    const efficiencyText1: Phaser.GameObjects.Text = this.scene.add.text(windowGeom.left + 50, windowGeom.centerY - 40, `${this.scene.state.lang.efficiency}`, {
       font: '18px Shadow',
       color: '#773a05', 
       align: 'left',
       wordWrap: { width: 200 },
     }).setOrigin(0, 0.5);
   
-    this.scene.add.text(windowGeom.centerX - 20, windowGeom.centerY - 40, `${factory.settings.efficiency}%`, {
+    const efficiencyText2: Phaser.GameObjects.Text = this.scene.add.text(windowGeom.centerX - 20, windowGeom.centerY - 40, `${factory.settings.efficiency}%`, {
       font: '42px Shadow',
       color: '#773a05', 
       align: 'center',
     }).setOrigin(0.5);
-  
+
+    const nextImprove: IfactorySettings = this.scene.state.cowSettings.cowFactorySettings.find(el => el.improve === factory.improve + 1);
+    if (nextImprove) {
+      let improveBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(windowGeom.centerX + 130, windowGeom.centerY - 37, 'improve-collector');
+      let improveText: Phaser.GameObjects.Text = this.scene.add.text(windowGeom.centerX + 130, windowGeom.centerY - 40, this.scene.state.lang.improve, {
+        font: '26px Shadow',
+        color: '#FFFFFF'
+      }).setOrigin(0.5, 0.5).setStroke('#3B5367', 4);
+      
+      this.scene.clickShopBtn({ btn: improveBtn, title: improveText }, (): void => {
+        this.scene.game.scene.keys[this.scene.state.farm].showImproveFactory();
+      });
+
+    } else {
+      efficiencyText1.setPosition(windowGeom.centerX - 140, windowGeom.centerY - 40);
+      efficiencyText2.setPosition(windowGeom.centerX + 90, windowGeom.centerY - 42);
+    }
 
     this.scene.add.text(windowGeom.centerX, windowGeom.centerY + 45, this.scene.state.lang.probabilityOfProduction, {
       font: '18px Shadow',
