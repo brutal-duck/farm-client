@@ -5,14 +5,7 @@ import CowSprite from './../components/Animal/CowSprite';
 import Territory from './../components/Territories/Territory';
 import Factory from './../components/Territories/Factory';
 
-const progressTerritoryCooldown = (territories: any, time: number): void => {
-  for (const territory of territories) {
-    if (territory.cooldown > 0) {
-      territory.cooldown -= time;
-      if (territory.cooldown <= 0) territory.cooldown = 0;
-    }
-  }
-}
+import { progressTerritoryCooldown } from './interval';
 
 export default function autoprogress(load: boolean = false): void {
   const state: Istate = this.state;
