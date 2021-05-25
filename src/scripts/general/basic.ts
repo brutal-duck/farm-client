@@ -664,157 +664,323 @@ function buyNextFarm(): void {
 // получение награды для новичка
 function getNewbieAward(): void {
 
-  for (let i: number = 0; i < this.state.dailyAwards.length; i++) {
+  const testA = (): void => {
+    for (let i: number = 0; i < this.state.dailyAwards.length; i++) {
 
-    if (i === 0 && this.state.dailyAwards[i] && this.state.farm === 'Sheep') {
-
-      this.state.dailyAwards[i] = false;
-      this.state.userSheep.money += this.convertDiamonds(10);
-      MoneyAnimation.create(this.game.scene.keys['SheepBars']);
-      const text: string = this.state.lang.dailyNewbieHint0.replace('$1', String(this.convertDiamonds(10))); 
-      Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
-      break;
-    }
-
-    if (i === 1 && this.state.dailyAwards[i] && this.state.farm === 'Sheep') {
-
-      this.state.dailyAwards[i] = false;
-      let counter: number = 0;
-      const text: string = this.state.lang.dailyNewbieHint1; 
-      Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
-
-      let timeout: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
+      if (i === 0 && this.state.dailyAwards[i] && this.state.farm === 'Sheep') {
+  
+        this.state.dailyAwards[i] = false;
+        this.state.userSheep.money += this.convertDiamonds(10);
+        MoneyAnimation.create(this.game.scene.keys['SheepBars']);
+        const text: string = this.state.lang.dailyNewbieHint0.replace('$1', String(this.convertDiamonds(10))); 
+        Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
+        break;
+      }
+  
+      if (i === 1 && this.state.dailyAwards[i] && this.state.farm === 'Sheep') {
+  
+        this.state.dailyAwards[i] = false;
+        let counter: number = 0;
+        const text: string = this.state.lang.dailyNewbieHint1; 
+        Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
+  
+        let timeout: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
+          
+          counter++;
+          let x: number = random(270, 690);
+          let y: number = random(510, 690);
+          let id: string = 'local_' + randomString(18);
+          this.getSheep(id, 0, x, y, 0, 500);
+          this.tryTask(18, 0);
+          if (counter >= 5) timeout.remove(false);
+  
+        }, callbackScope: this, loop: true });
+        break;
+  
+      }
+  
+      if (i === 2 && this.state.dailyAwards[i] && this.state.farm === 'Sheep') {
+  
+        this.state.dailyAwards[i] = false;
+        let type: number = this.state.userSheep.fair + 1;
+        let counter: number = 0;
+        const text: string = this.state.lang.dailyNewbieHint2.replace('$1', String(type)); 
+        Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
+        let timeout: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
+          
+          counter++;
+          let x: number = random(270, 690);
+          let y: number = random(510, 690);
+          let id: string = 'local_' + randomString(18);
+          this.getSheep(id, type, x, y, 0, 500);
+          Firework.create(this, {x, y}, 1);
+          this.tryTask(2, 0);
+          this.tryTask(2, type);
+          this.tryTask(4, type);
+          if (counter >= 3) timeout.remove(false);
+  
+        }, callbackScope: this, loop: true });
+        break;
+  
+      }
+  
+      if (i === 3 && this.state.dailyAwards[i] && this.state.farm === 'Sheep') {
+  
+        this.state.dailyAwards[i] = false;
+        if (this.scene.isActive('Modal')) this.scene.stop('Modal');
+        if (this.scene.isActive('Tutorial')) this.scene.stop('Tutorial');
+        if (this.scene.isActive('Shop')) this.scene.stop('Shop');
+        if (this.scene.isActive('ShopBars')) this.scene.stop('ShopBars');
+        if (this.scene.isActive('Profile')) this.scene.stop('Profile');
+        this.scene.stop('Sheep');
+        this.scene.stop('SheepBars');
+        this.scene.start('ChickenPreload', this.state);
+  
+        this.logAmplitudeEvent('get_new_farm', {
+          type: 'daily',
+          farm_id: 'Chicken',
+        });
+        break;
+  
+      }
+  
+      if (i === 4 && this.state.dailyAwards[i] && this.state.farm === 'Sheep') {
+        const text: string = this.state.lang.dailyNewbieHint4; 
+        this.game.scene.keys[`${this.state.farm}Bars`].hint = (this.game.scene.keys['SheepBars'], -250, text, 2);
+        this.state.dailyAwards[i] = false;
+        this.state.userSheep.collector += 3 * 60 * 60;
+        this.state.userSheep.collectorTakenTime = this.state.userSheep.collector;
+        this.game.scene.keys[`${this.state.farm}Bars`].collector.update();
+        this.tryTask(3, 0, 3 * 60 * 60);
+        break;
         
-        counter++;
-        let x: number = random(270, 690);
-        let y: number = random(510, 690);
-        let id: string = 'local_' + randomString(18);
-        this.getSheep(id, 0, x, y, 0, 500);
-        this.tryTask(18, 0);
-        if (counter >= 5) timeout.remove(false);
-
-      }, callbackScope: this, loop: true });
-      break;
-
-    }
-
-    if (i === 2 && this.state.dailyAwards[i] && this.state.farm === 'Sheep') {
-
-      this.state.dailyAwards[i] = false;
-      let type: number = this.state.userSheep.fair + 1;
-      let counter: number = 0;
-      const text: string = this.state.lang.dailyNewbieHint2.replace('$1', String(type)); 
-      Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
-      let timeout: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
+      }
+  
+      if (i === 5 && this.state.dailyAwards[i] && this.state.farm === 'Chicken') {
+  
+        let type: number = this.state.userChicken.fair + 1;
+        let counter: number = 0;
+        const text: string = this.state.lang.dailyNewbieHint5.replace('$1', String(type)); 
+        Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
+  
+        let timeout: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
+          
+          counter++;
+          let x: number = random(270, 690);
+          let y: number = random(510, 690);
+          let id: string = 'local_' + randomString(18);
+          this.getChicken(id, type, x, y, 0, 500);
+          Firework.create(this, {x, y}, 1);
+          this.tryTask(2, 0);
+          this.tryTask(2, type);
+          this.tryTask(4, type);
+          if (counter >= 3) timeout.remove(false);
+  
+        }, callbackScope: this, loop: true });
+        this.state.dailyAwards[i] = false;
+        break;
+  
+      }
+  
+      if (i === 6 && this.state.dailyAwards[i] && this.state.farm === 'Chicken') {
+        const text: string = this.state.lang.dailyNewbieHint6; 
+        Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
+        this.state.dailyAwards[i] = false;
+        this.state.userChicken.collector += 3 * 60 * 60;
+        this.state.userChicken.collectorTakenTime = this.state.userChicken.collector;
+        this.game.scene.keys[this.state.farm + 'Bars'].collector.update();
+        this.tryTask(3, 0, 3 * 60 * 60);
+        break;
+  
+      }
+  
+      if (i === 7 && this.state.dailyAwards[i] && this.state.farm === 'Sheep') {
+        const text: string = this.state.lang.dailyNewbieHint7; 
+        Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
+        let counter: number = 0;
+        let timeout: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
+          
+          counter++;
+          let x: number = random(270, 690);
+          let y: number = random(510, 690);
+          let id: string = 'local_' + randomString(18);
+          this.getSheep(id, 0, x, y, 0, 500);
+          this.tryTask(18, 0);
+          if (counter >= 10) timeout.remove(false);
+  
+        }, callbackScope: this, loop: true });
+        this.state.dailyAwards[i] = false;
+        break;
         
-        counter++;
-        let x: number = random(270, 690);
-        let y: number = random(510, 690);
-        let id: string = 'local_' + randomString(18);
-        this.getSheep(id, type, x, y, 0, 500);
-        Firework.create(this, {x, y}, 1);
-        this.tryTask(2, 0);
-        this.tryTask(2, type);
-        this.tryTask(4, type);
-        if (counter >= 3) timeout.remove(false);
-
-      }, callbackScope: this, loop: true });
-      break;
-
+      }
     }
-
-    if (i === 3 && this.state.dailyAwards[i] && this.state.farm === 'Sheep') {
-
-      this.state.dailyAwards[i] = false;
-      if (this.scene.isActive('Modal')) this.scene.stop('Modal');
-      if (this.scene.isActive('Tutorial')) this.scene.stop('Tutorial');
-      if (this.scene.isActive('Shop')) this.scene.stop('Shop');
-      if (this.scene.isActive('ShopBars')) this.scene.stop('ShopBars');
-      if (this.scene.isActive('Profile')) this.scene.stop('Profile');
-      this.scene.stop('Sheep');
-      this.scene.stop('SheepBars');
-      this.scene.start('ChickenPreload', this.state);
-
-      this.logAmplitudeEvent('get_new_farm', {
-        type: 'daily',
-        farm_id: 'Chicken',
-      });
-      break;
-
-    }
-
-    if (i === 4 && this.state.dailyAwards[i] && this.state.farm === 'Sheep') {
-      const text: string = this.state.lang.dailyNewbieHint4; 
-      this.game.scene.keys[`${this.state.farm}Bars`].hint = (this.game.scene.keys['SheepBars'], -250, text, 2);
-      this.state.dailyAwards[i] = false;
-      this.state.userSheep.collector += 3 * 60 * 60;
-      this.state.userSheep.collectorTakenTime = this.state.userSheep.collector;
-      this.game.scene.keys[`${this.state.farm}Bars`].collector.update();
-      this.tryTask(3, 0, 3 * 60 * 60);
-      break;
-      
-    }
-
-    if (i === 5 && this.state.dailyAwards[i] && this.state.farm === 'Chicken') {
-
-      let type: number = this.state.userChicken.fair + 1;
-      let counter: number = 0;
-      const text: string = this.state.lang.dailyNewbieHint5.replace('$1', String(type)); 
-      Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
-
-      let timeout: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
-        
-        counter++;
-        let x: number = random(270, 690);
-        let y: number = random(510, 690);
-        let id: string = 'local_' + randomString(18);
-        this.getChicken(id, type, x, y, 0, 500);
-        Firework.create(this, {x, y}, 1);
-        this.tryTask(2, 0);
-        this.tryTask(2, type);
-        this.tryTask(4, type);
-        if (counter >= 3) timeout.remove(false);
-
-      }, callbackScope: this, loop: true });
-      this.state.dailyAwards[i] = false;
-      break;
-
-    }
-
-    if (i === 6 && this.state.dailyAwards[i] && this.state.farm === 'Chicken') {
-      const text: string = this.state.lang.dailyNewbieHint6; 
-      Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
-      this.state.dailyAwards[i] = false;
-      this.state.userChicken.collector += 3 * 60 * 60;
-      this.state.userChicken.collectorTakenTime = this.state.userChicken.collector;
-      this.game.scene.keys[this.state.farm + 'Bars'].collector.update();
-      this.tryTask(3, 0, 3 * 60 * 60);
-      break;
-
-    }
-
-    if (i === 7 && this.state.dailyAwards[i] && this.state.farm === 'Sheep') {
-      const text: string = this.state.lang.dailyNewbieHint7; 
-      Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
-      let counter: number = 0;
-      let timeout: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
-        
-        counter++;
-        let x: number = random(270, 690);
-        let y: number = random(510, 690);
-        let id: string = 'local_' + randomString(18);
-        this.getSheep(id, 0, x, y, 0, 500);
-        this.tryTask(18, 0);
-        if (counter >= 10) timeout.remove(false);
-
-      }, callbackScope: this, loop: true });
-      this.state.dailyAwards[i] = false;
-      break;
-      
-    }
-
   }
 
+  const testB = (): void => {
+    for (let i: number = 0; i < this.state.dailyAwards.length; i++) {
+
+      if (i === 0 && this.state.dailyAwards[i]) {
+  
+        this.state.dailyAwards[i] = false;
+        this.state.userSheep.money += this.convertDiamonds(10);
+        MoneyAnimation.create(this.game.scene.keys['SheepBars']);
+        const text: string = this.state.lang.dailyNewbieHint0testB.replace('$1', String(this.convertDiamonds(10))); 
+        Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
+        break;
+      }
+  
+      if (i === 1 && this.state.dailyAwards[i]) {
+        const COUNT_AWARD: number = 3;
+        this.state.dailyAwards[i] = false;
+        let counter: number = 0;
+        const text: string = this.state.lang.dailyNewbieHint1testB; 
+        Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
+  
+        let timeout: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
+          
+          counter++;
+          let x: number = random(270, 690);
+          let y: number = random(510, 690);
+          let id: string = 'local_' + randomString(18);
+          this.getSheep(id, 0, x, y, 0, 500);
+          this.tryTask(18, 0);
+          if (counter >= COUNT_AWARD) timeout.remove(false);
+  
+        }, callbackScope: this, loop: true });
+        break;
+  
+      }
+  
+      if (i === 2 && this.state.dailyAwards[i]) {
+        const COUNT_AWARD: number = 3;
+        this.state.dailyAwards[i] = false;
+        let type: number = this.state.userSheep.fair + 1;
+        let counter: number = 0;
+        const text: string = this.state.lang.dailyNewbieHint2testB.replace('$1', String(type)); 
+        Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
+        let timeout: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
+          
+          counter++;
+          let x: number = random(270, 690);
+          let y: number = random(510, 690);
+          let id: string = 'local_' + randomString(18);
+          this.getSheep(id, type, x, y, 0, 500);
+          Firework.create(this, {x, y}, 1);
+          this.tryTask(2, 0);
+          this.tryTask(2, type);
+          this.tryTask(4, type);
+          if (counter >= COUNT_AWARD) timeout.remove(false);
+  
+        }, callbackScope: this, loop: true });
+        break;
+  
+      }
+  
+      if (i === 3 && this.state.dailyAwards[i]) {
+  
+        const COUNT_AWARD: number = 5;
+        this.state.dailyAwards[i] = false;
+        let counter: number = 0;
+        const text: string = this.state.lang.dailyNewbieHint3testB; 
+        Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
+  
+        let timeout: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
+          
+          counter++;
+          let x: number = random(270, 690);
+          let y: number = random(510, 690);
+          let id: string = 'local_' + randomString(18);
+          this.getSheep(id, 0, x, y, 0, 500);
+          this.tryTask(18, 0);
+          if (counter >= COUNT_AWARD) timeout.remove(false);
+  
+        }, callbackScope: this, loop: true });
+        break;
+  
+      }
+  
+      if (i === 4 && this.state.dailyAwards[i]) {
+        const COUNT_AWARD: number = 3;
+
+        const text: string = this.state.lang.dailyNewbieHint4testB; 
+        this.game.scene.keys[`${this.state.farm}Bars`].hint = (this.game.scene.keys['SheepBars'], -250, text, 2);
+        this.state.dailyAwards[i] = false;
+        this.state.userSheep.collector += COUNT_AWARD * 60 * 60;
+        this.state.userSheep.collectorTakenTime = this.state.userSheep.collector;
+        this.game.scene.keys[`${this.state.farm}Bars`].collector.update();
+        this.tryTask(3, 0, COUNT_AWARD * 60 * 60);
+        break;
+        
+      }
+  
+      if (i === 5 && this.state.dailyAwards[i]) {
+        const COUNT_AWARD: number = 5;
+        this.state.dailyAwards[i] = false;
+        let type: number = this.state.userSheep.fair + 1;
+        let counter: number = 0;
+        const text: string = this.state.lang.dailyNewbieHint5testB.replace('$1', String(type)); 
+        Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
+        let timeout: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
+          
+          counter++;
+          let x: number = random(270, 690);
+          let y: number = random(510, 690);
+          let id: string = 'local_' + randomString(18);
+          this.getSheep(id, type, x, y, 0, 500);
+          Firework.create(this, {x, y}, 1);
+          this.tryTask(2, 0);
+          this.tryTask(2, type);
+          this.tryTask(4, type);
+          if (counter >= COUNT_AWARD) timeout.remove(false);
+  
+        }, callbackScope: this, loop: true });
+        break;
+  
+      }
+  
+      if (i === 6 && this.state.dailyAwards[i]) {
+        const COUNT_AWARD: number = 5;
+
+        const text: string = this.state.lang.dailyNewbieHint4testB; 
+        this.game.scene.keys[`${this.state.farm}Bars`].hint = (this.game.scene.keys['SheepBars'], -250, text, 2);
+        this.state.dailyAwards[i] = false;
+        this.state.userSheep.collector += COUNT_AWARD * 60 * 60;
+        this.state.userSheep.collectorTakenTime = this.state.userSheep.collector;
+        this.game.scene.keys[`${this.state.farm}Bars`].collector.update();
+        this.tryTask(3, 0, COUNT_AWARD * 60 * 60);
+        break;
+  
+      }
+  
+      if (i === 7 && this.state.dailyAwards[i]) {
+        const COUNT_AWARD: number = 5;
+
+        const text: string = this.state.lang.dailyNewbieHint7testB; 
+        Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, text, 2);
+        let counter: number = 0;
+        let timeout: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
+          
+          counter++;
+          let x: number = random(270, 690);
+          let y: number = random(510, 690);
+          let id: string = 'local_' + randomString(18);
+          this.getSheep(id, 0, x, y, 0, 500);
+          this.tryTask(18, 0);
+          if (counter >= COUNT_AWARD) timeout.remove(false);
+  
+        }, callbackScope: this, loop: true });
+        this.state.dailyAwards[i] = false;
+        break;
+        
+      }
+    }
+  }
+
+  if (this.state.user.test === 'B') {
+    testB();
+  } else {
+    testA();
+  }
 }
 
 

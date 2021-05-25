@@ -102,6 +102,7 @@ import { improveCollectorAnim, openModal } from '../../general/animations';
 import { clickTaskBoard } from '../../general/tasks';
 import typePreload from './typePreload';
 import FactoryWindow from './../../components/modal/FactoryWindow';
+import DailyNewbie from './../../components/modal/DailyNewbie';
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -132,7 +133,6 @@ class Modal extends Phaser.Scene {
   public eventRatingsNames: Phaser.GameObjects.Text[];
   public eventRatingsScores: Phaser.GameObjects.Text[];
   public eventLeftTime: Phaser.GameObjects.Text;
-  public timerNewbieAward: Phaser.GameObjects.Text;
   public factoryProductText: Phaser.GameObjects.Text;
   public factoryProgressBar: Phaser.GameObjects.TileSprite;
   public factorySellButton: any;
@@ -145,7 +145,6 @@ class Modal extends Phaser.Scene {
   public factoryBoostTimer: Phaser.GameObjects.Text;
   public feedBoostNative: Phaser.GameObjects.Text;
   public herdBoostNative: Phaser.GameObjects.Text;
-
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -197,7 +196,6 @@ class Modal extends Phaser.Scene {
   public registration = registration.bind(this);
   public daily = daily.bind(this);
   public nextChapter = nextChapter.bind(this);
-  public dailyNewbie = dailyNewbie.bind(this);
   public diamondSheepAd = diamondSheepAd.bind(this);
   public diamondChickenAd = diamondChickenAd.bind(this);
   public diamondCowAd = diamondCowAd.bind(this);
@@ -271,7 +269,7 @@ class Modal extends Phaser.Scene {
         this.nextChapter();
         break;
       case 6: // ежедневные награды новичков
-        this.dailyNewbie();
+        new DailyNewbie(this);
         break;
       case 7: // окно выдачи донатных кристаллов
         this.donate();
@@ -484,11 +482,7 @@ class Modal extends Phaser.Scene {
       this.state.progress.event.updateRaitings = false
 
     }
-  
-    if (this.state.modal.type === 6) this.timerNewbieAward.setText(shortTime(this.state.timeToNewDay, this.state.lang));
-
     this.updateFactoryModal();
-    
   }
 }
 
