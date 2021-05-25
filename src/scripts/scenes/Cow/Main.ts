@@ -84,7 +84,8 @@ import {
   buildBorders,
   collisions,
   showImproveFactory,
-  showFactoryBoost
+  showFactoryBoost,
+  showConfirmSellMilk,
 } from './basic';
 import { 
   showTutorial,
@@ -237,6 +238,7 @@ class Cow extends Phaser.Scene {
   public updateProfileNative = updateProfileNative.bind(this);
   public intervalCollectorTutorial = intervalCollectorTutorial.bind(this);
   public showFeedBoostSpeechBubble = showFeedBoostSpeechBubble.bind(this);
+  public showConfirmSellMilk = showConfirmSellMilk.bind(this);
 
   public init(state: Istate): void {
 

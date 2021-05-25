@@ -220,6 +220,10 @@ function systemWindow(): void {
     case 17: // Окно ветрины фабрики
       this.factoryBoostWindow();
       break;
+    
+    case 18: 
+      this.confirmSellMilk();
+      break;
 
     default:      
       this.scene.stop();

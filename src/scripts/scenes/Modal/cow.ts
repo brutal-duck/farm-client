@@ -677,8 +677,7 @@ function cowMilkRepository(): void {
 
       if (this.state.territory.volume > 0) {
         this.scene.stop();
-        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-        this.game.scene.keys[this.state.farm].sellMilk();
+        this.game.scene.keys[this.state.farm].showConfirmSellMilk();
       }
 
     });
@@ -1107,6 +1106,38 @@ function factoryBoostWindow(): void {
   this.resizeWindow(180);
 }
 
+function confirmSellMilk(): void {
+  const factory: string = this.state.lang.repository.replace('$1', this.state.territory.improve);
+  this.textHeader.setText(factory);
+
+  this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 70, this.state.lang.confirmSellMilk, {
+    font: '26px Bip',
+    color: '#925C28',
+    wordWrap: { width: 450 },
+    align: 'center',
+  }).setOrigin(0.5);
+
+  const redBtn = this.bigButton('red', 'center', 20, this.state.lang.sellMilk);
+  const greenBtn = this.bigButton('green', 'center', 110, this.state.lang.dontSellMilk);
+
+  this.clickModalBtn(redBtn, (): void => {
+    this.scene.stop();
+    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+    this.game.scene.keys[this.state.farm].sellMilk();
+  });
+
+  this.clickModalBtn(greenBtn, (): void => {
+    const modal: Imodal = {
+      type: 1, 
+      sysType: 2,
+    };
+    this.state.modal = modal;
+    this.scene.restart(this.state);
+
+  });
+  this.resizeWindow(250);
+}
+
 export {
   cowFair,
   cow,
@@ -1122,5 +1153,6 @@ export {
   cowMilkRepositoryExchange,
   updateFactoryModal,
   improveFactoryWindow,
-  factoryBoostWindow
+  factoryBoostWindow,
+  confirmSellMilk,
 }

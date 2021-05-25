@@ -309,7 +309,6 @@ function collisions(): void {
   }, null, this);
 }
 
-// окно улучшения собирателя
 function showImproveFactory(): void {
 
   const modal: Imodal = {
@@ -332,6 +331,17 @@ function showFactoryBoost(): void {
 
 }
 
+function showConfirmSellMilk(): void {
+
+  const modal: Imodal = {
+    type: 1,
+    sysType: 18
+  }
+  this.state.modal = modal;
+  this.scene.launch('Modal', this.state);
+
+}
+
 export {
   balance,
   cowPrice,
@@ -340,5 +350,6 @@ export {
   buildBorders,
   collisions,
   showImproveFactory,
-  showFactoryBoost
+  showFactoryBoost,
+  showConfirmSellMilk
 }
