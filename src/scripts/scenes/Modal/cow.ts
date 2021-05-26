@@ -874,20 +874,7 @@ function diamondCowAd(): void {
 
 }
 
-function updateFactoryModal(): void {
-  if (this.state.modal?.sysType === 17 && this.state.farm === 'Cow') {
-    if (this.state.userCow.factory.boostTime > 0) {
-      if (this.factoryBoostTimer.text !== shortTime(this.state.userCow.factory.boostTime, this.state.lang)) {
-        this.factoryBoostTimer.setText(shortTime(this.state.userCow.factory.boostTime, this.state.lang));
-      }
-    } else {
-      if (this.factoryBoostTimer?.visible) {
 
-        this.factoryBoostTimer.setVisible(false);
-      }
-    }
-  }
-}
 
 function improveFactoryWindow(): void {
   const factory: string = this.state.lang.factory.replace('$1', this.state.territory.factory.improve);
@@ -1019,92 +1006,6 @@ function improveFactoryWindow(): void {
   }
 }
 
-function factoryBoostWindow(): void {
-  const price: number = 25;
-  let multiplyTime: number = 1;
-  if (this.state.userCow.factory.boostTime > 0) multiplyTime = 2;
-  const ONE_HOUR: number = 3600;
-
-  this.textHeader.setText(this.state.lang.showCase);
-  const sprite: Phaser.GameObjects.Sprite = this.add.sprite(140, this.cameras.main.centerY - 20, 'chocolate');
-  const spriteGeom: Phaser.Geom.Rectangle = sprite.getBounds();
-  this.add.text(spriteGeom.right + 10, spriteGeom.centerY, this.state.lang.showCaseText2, {
-    font: '26px Bip',
-    color: '#925C28',
-    wordWrap: { width: 400 },
-    align: 'left',
-  }).setOrigin(0, 0.5);
-  const text = this.state.lang.buyCocoaBeans.replace('$1', multiplyTime);
-  const right1 = {
-    text: price,
-    icon: 'diamond'}
-  const button = this.bigButton('green', 'left', 90, text, right1);
-
-  this.factoryBoostTimer = this.add.text(spriteGeom.centerX, spriteGeom.top, shortTime(this.state.userCow.factory.boostTime, this.state.lang), {
-    font: '26px Bip',
-    color: '#925C28'
-  }).setOrigin(0.5);
-
-  this.clickModalBtn(button, (): void => {
-    
-    if (this.state.user.diamonds >= price) {
-      
-      if (this.state.userCow.factory.boostTime <= 0) {
-        this.state.user.diamonds -= price;
-        this.state.userCow.factory.boostTime += ONE_HOUR;
-
-        this.state.boughtFactoryBoost = true;
-
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('diamonds_spent', {
-          type: 'booster_factory',
-          count: price,
-        });
-
-        button.title.setText(this.state.lang.buyCocoaBeans.replace('$1', 2));
-
-        this.factoryBoostTimer = this.add.text(spriteGeom.centerX, spriteGeom.top, shortTime(this.state.userCow.factory.boostTime, this.state.lang), {
-          font: '26px Bip',
-          color: '#925C28'
-        }).setOrigin(0.5);
-      } else {
-        if (this.state.userCow.factory.boostTime / ONE_HOUR + 2 > this.game.scene.keys['Cow'].factoryBoostStack) {
-          const modal: Imodal = {
-            type: 1,
-            sysType: 3,
-            height: 150,
-            message: this.state.lang.factoryBoostMaxTime
-          }
-          this.state.modal = modal;
-          this.scene.restart(this.state);
-        } else {
-          this.state.boughtFactoryBoost = true;
-          this.state.user.diamonds -= price;
-          this.state.userCow.factory.boostTime += 2 * ONE_HOUR;
-          this.game.scene.keys[this.state.farm].logAmplitudeEvent('diamonds_spent', {
-            type: 'booster_factory',
-            count: price,
-          });
-        }
-      }
-    } else {
-      const countResources = price - this.state.user.diamonds;
-      this.state.convertor = {
-        fun: 2,
-        count: countResources,
-        diamonds: countResources,
-        type: 2
-      }
-      const modal: Imodal = {
-        type: 1,
-        sysType: 4
-      }
-      this.state.modal = modal;
-      this.scene.restart(this.state);
-    }
-  });
-  this.resizeWindow(180);
-}
-
 function confirmSellMilk(): void {
   const factory: string = this.state.lang.repository.replace('$1', this.state.territory.improve);
   this.textHeader.setText(factory);
@@ -1154,8 +1055,6 @@ export {
   confirmExpelCow,
   diamondCowAd,
   cowMilkRepositoryExchange,
-  updateFactoryModal,
   improveFactoryWindow,
-  factoryBoostWindow,
   confirmSellMilk,
 }

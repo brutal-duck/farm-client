@@ -1,6 +1,8 @@
 // системное окно
 import { shortTime } from '../../general/basic';
 import Hint from '../../components/animations/Hint';
+import ShowCaseWindow from './../../components/modal/ShowCaseWindow';
+
 function systemWindow(): void {
   let height:number = 0;
 
@@ -218,7 +220,7 @@ function systemWindow(): void {
       break;
 
     case 17: // Окно ветрины фабрики
-      this.factoryBoostWindow();
+      new ShowCaseWindow(this);
       break;
     
     case 18: 

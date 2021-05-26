@@ -46,9 +46,7 @@ import {
   confirmExpelCow,
   diamondCowAd,
   cowMilkRepositoryExchange,
-  updateFactoryModal,
   improveFactoryWindow,
-  factoryBoostWindow,
   confirmSellMilk
 } from './cow';
 import {
@@ -231,9 +229,7 @@ class Modal extends Phaser.Scene {
   public clickTaskBoard = clickTaskBoard.bind(this);
   public openModal = openModal.bind(this);
   public loadingModal = loadingModal.bind(this);
-  public updateFactoryModal = updateFactoryModal.bind(this);
   public improveFactoryWindow = improveFactoryWindow.bind(this);
-  public factoryBoostWindow = factoryBoostWindow.bind(this);
   public confirmSellMilk = confirmSellMilk.bind(this);
 
   public init(state: Istate): void {
@@ -483,7 +479,6 @@ class Modal extends Phaser.Scene {
       this.state.progress.event.updateRaitings = false
 
     }
-    this.updateFactoryModal();
   }
 }
 
