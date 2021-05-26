@@ -1769,8 +1769,8 @@ export default {
     accessChickenFarmDone: 'Доступно после завершения куриной фермы',
     notEnoughCoins: 'Не хватает куриных монет для покупки коровьей фермы.\nЗаработайте их, либо купите за кристаллы.',
     openChickenFarm: 'Доступно после открытия куриной фермы',
-    chickenFarmPurchaseAvailable: 'Доступна покупка куриной фермы!',
-    cowFarmPurchaseAvailable: 'Доступна покупка коровьей фермы!',
+    chickenFarmPurchaseAvailable: '\nДоступна покупка куриной фермы!',
+    cowFarmPurchaseAvailable: '\nДоступна покупка коровьей фермы!',
 
   }
 }
