@@ -490,6 +490,7 @@ class CowPreload extends Phaser.Scene {
           .set('diamond_balance', this.state.user.diamonds)
           .set('partner', this.state.platform)
           .set('user_id', this.state.user.id)
+          .set('test', this.state.user.test)
           .set('browser', navigator.userAgent);
         Amplitude.getInstance().identify(identify);
         console.log(`Test - ${this.state.user.test}`);

@@ -499,7 +499,9 @@ class ChickenPreload extends Phaser.Scene {
           .set('diamond_balance', this.state.user.diamonds)
           .set('partner', this.state.platform)
           .set('user_id', this.state.user.id)
-          .set('browser', navigator.userAgent);
+          .set('browser', navigator.userAgent)
+          .set('test', this.state.user.test);
+          
         Amplitude.getInstance().identify(identify);
         console.log(`Test - ${this.state.user.test}`);
         // Amplitude.getInstance().logEvent('load_time', {

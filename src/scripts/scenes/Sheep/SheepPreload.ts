@@ -713,6 +713,7 @@ class SheepPreload extends Phaser.Scene {
         const identify = new Amplitude.Identify()
           .set('diamond_balance', this.state.user.diamonds)
           .set('user_id', this.state.user.id)
+          .set('test', this.state.user.test);
         Amplitude.getInstance().identify(identify);
         console.log(`Test - ${this.state.user.test}`);
         // Amplitude.getInstance().logEvent('load_time', {
