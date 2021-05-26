@@ -146,9 +146,22 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       .setDepth(1)
       .setOrigin(0.5, 0.5)
       .setVisible(false);
-    this.lastPart = this.scene.add.text(0, 0, this.scene.state.lang[this.scene.state.farm.toLowerCase() + 'CompanyDone'], {
+    
+    let lastPartText: string = this.scene.state.lang[this.scene.state.farm.toLowerCase() + 'CompanyDone'];
+
+    if ( this.scene.state.user.test === 'B') {
+      if (this.scene.state.farm === 'Sheep' && this.scene.state.userChicken.part <= 0) {
+        lastPartText += this.scene.state.lang.chickenFarmPurchaseAvailable;
+      } else if (this.scene.state.farm === 'Chicken' && this.scene.state.userCow.part <= 0) {
+        lastPartText += this.scene.state.lang.cowFarmPurchaseAvailable;
+      }
+    }
+
+    this.lastPart = this.scene.add.text(0, 0, lastPartText, {
       font: '26px Bip',
-      color: '#713D1E'
+      color: '#713D1E',
+      align: 'center',
+      wordWrap: { width: 500 },
     }).setDepth(1).setOrigin(0.5, 0.5).setVisible(false);
 
     this.taskProgress = this.scene.add.graphics().setVisible(false);

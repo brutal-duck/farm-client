@@ -434,7 +434,8 @@ class Profile extends Phaser.Scene {
         });
     } else {
       this.add.sprite(farmPosition.x, farmPosition.y, 'profile-cow-farm-lock').setOrigin(0, 0.5);
-      const text: Phaser.GameObjects.Text = this.add.text(farmPosition.x + 150, farmPosition.y, this.state.lang.accessChickenFarmDone, {
+      const string: string = this.state.progress.chicken.part > 0 ? this.state.lang.accessChickenFarmDone : this.state.lang.accessSecondFarmDone
+      const text: Phaser.GameObjects.Text = this.add.text(farmPosition.x + 150, farmPosition.y, string, {
         font: '20px Shadow',
         color: '#fbd0b9',
         wordWrap: { width: 250 },
