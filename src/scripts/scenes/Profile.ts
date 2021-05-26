@@ -261,7 +261,7 @@ class Profile extends Phaser.Scene {
       this.cowNativeText = this.add.text(farmPosition.x + 280, farmPosition.y - 100, '', {
         font: '30px Bip',
         color: '#ffffff',
-      }).setOrigin(0.5).setDepth(1).setVisible(false);
+      }).setOrigin(0.5).setDepth(3).setVisible(false);
       this.cowNativeBg = this.add.sprite(this.cowNativeText.x, this.cowNativeText.y, 'profile-native-bg').setVisible(false);
 
       this.click(farmSprite, (): void => {
