@@ -58,6 +58,7 @@ class Profile extends Phaser.Scene {
   public loadingModal = loadingModal.bind(this);
   public clickButton = clickButton.bind(this);
   public getStatusSettings = getStatusSettings.bind(this);
+
   public init(state: Istate): void {
     this.state = state;
   }
@@ -92,7 +93,7 @@ class Profile extends Phaser.Scene {
     
     this.createElements();
     this.setListeners();
-
+    this.game.scene.keys[this.state.farm].updateProfileNative(true);
   }
 
   public update(): void {
@@ -150,10 +151,15 @@ class Profile extends Phaser.Scene {
   }
 
   private createFarms(): void {
-    this.createChickenFarm();
     this.createSheepFarm();
-    this.createLockedCowFarm();
-    // this.createCowFarm();
+    if (this.state.user.test === 'B') {
+      this.createChickenFarmTestB();
+      this.createCowFarmTestB();
+    } else {
+      this.createChickenFarmTestA();
+      this.createCowFarmTestA();
+    }
+    // this.createLockedCowFarm();
     if (this.state.progress.event.type === 1) {
       this.createUnicornFarm();
     } else if (this.state.progress.event.type === 2) {
@@ -190,7 +196,7 @@ class Profile extends Phaser.Scene {
     }, 8);
   }
   
-  private createChickenFarm(): void {
+  private createChickenFarmTestA(): void {
     const farmPosition: Iposition = { x: 720, y: 1025 };
     if (this.state.progress.chicken.open) {
       const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-chicken-farm').setOrigin(1, 0.5).setDepth(1);
@@ -241,7 +247,7 @@ class Profile extends Phaser.Scene {
     }
   }
 
-  private createCowFarm(): void {
+  private createCowFarmTestA(): void {
     const farmPosition: Iposition = { x: 0, y: 1050 };
 
     if (this.state.progress.cow.open) {
@@ -272,37 +278,174 @@ class Profile extends Phaser.Scene {
           this.scene.stop();
         }
       }, 8);
-    } else if (this.state.progress.chicken.part >= this.state.progress.cow.unlock) {
-      this.add.graphics({ x: farmPosition.x, y: farmPosition.y })
-      .fillStyle(0x2b3d11, 0.5)
-      .fillRoundedRect(-100, 0, 200, 70, 8);
-      const btn: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y + 35, 'profile-btn');
+    } else if (this.state.progress.chicken.part > 0) {
+      this.add.sprite(farmPosition.x, farmPosition.y, 'profile-cow-farm').setOrigin(0, 0.5);
+      this.add.sprite(farmPosition.x + 30, farmPosition.y, 'profile-sticker').setOrigin(0, 0.5).setDepth(1)
+      const btn: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x + 145, farmPosition.y, 'profile-btn').setDepth(1);
       const title: Phaser.GameObjects.Text = this.add.text(btn.x + 15, btn.y - 5, shortNum(this.state.progress.cow.price), {
         font: '22px Shadow',
         color: '#FBD0B9',
         wordWrap: { width: 165 }
-      }).setOrigin(0.5, 0.5).setStroke('#1F530A', 5);
+      }).setOrigin(0.5, 0.5).setStroke('#1F530A', 5).setDepth(1);
 
       const left: number = title.getBounds().left - 17;
-      const img: Phaser.GameObjects.Sprite = this.add.sprite(left, title.y, 'chickenCoin').setScale(0.12);
+      const img: Phaser.GameObjects.Sprite = this.add.sprite(left, title.y, 'chickenCoin').setScale(0.12).setDepth(1);
 
       this.clickShopBtn({ btn: btn, title: title, img: img }, (): void => {
-        console.log('Купил коровью ферму')
-        // this.game.scene.keys[this.state.farm].buyNextFarm();
-        // this.game.scene.keys[this.state.farm].scrolling.downHandler();
-        // this.game.scene.keys[this.state.farm].scrolling.enabled = true;
-        // this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-        // this.scene.stop();
+        this.game.scene.keys[this.state.farm].buyNextFarm();
+        this.game.scene.keys[this.state.farm].scrolling.downHandler();
+        this.game.scene.keys[this.state.farm].scrolling.enabled = true;
+        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+        this.scene.stop();
       });
     } else {
       this.add.sprite(farmPosition.x, farmPosition.y, 'profile-cow-farm-lock').setOrigin(0, 0.5);
-      this.add.sprite(farmPosition.x + 150, farmPosition.y - 25, 'profile-lock-icon');
-      this.add.text(farmPosition.x + 150, farmPosition.y + 30, `Уровень открытия ${this.state.progress.cow.unlock}`, {
+      const text: Phaser.GameObjects.Text = this.add.text(farmPosition.x + 150, farmPosition.y, this.state.lang.openChickenFarm, {
+        font: '20px Shadow',
+        color: '#fbd0b9',
+        wordWrap: { width: 250 },
+        align: 'center',
+      }).setOrigin(0.5).setDepth(2);
+
+      const textBounds: Phaser.Geom.Rectangle = text.getBounds();
+
+      this.add.graphics({ x: textBounds.left - 20, y: textBounds.top - 20 })
+        .fillStyle(0x2b3d11, 0.5)
+        .fillRoundedRect(0, 0, textBounds.width + 40, textBounds.height + 40).setDepth(1);
+    }
+  }
+
+  private createChickenFarmTestB(): void {
+    const farmPosition: Iposition = { x: 720, y: 1025 };
+    if (this.state.progress.chicken.open) {
+      const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-chicken-farm').setOrigin(1, 0.5).setDepth(1);
+      this.add.text(farmPosition.x - 215, farmPosition.y - 25, `${this.state.progress.chicken.part}/${this.state.progress.chicken.max}`, {
+        font: '28px Shadow',
+        color: '#ffe5d7'
+      }).setOrigin(0.5, 0.5).setStroke('#522007', 5).setDepth(1);
+      this.chickenNativeText = this.add.text(farmPosition.x - 160, farmPosition.y - 125, '', {
+        font: '30px Bip',
+        color: '#ffffff',
+      }).setOrigin(0.5).setDepth(3).setVisible(false);
+      this.chickenNativeBg = this.add.sprite(this.chickenNativeText.x, this.chickenNativeText.y, 'profile-native-bg').setDepth(1).setVisible(false);
+      this.click(farmSprite, (): void => {
+        if (this.state.farm !== 'Chicken') {
+          this.game.scene.keys[this.state.farm].autosave();
+          this.scene.stop();
+          this.scene.stop(this.state.farm);
+          this.scene.stop(this.state.farm + 'Bars');
+          this.scene.start('Chicken' + 'Preload', this.state);
+        } else {
+          this.game.scene.keys[this.state.farm].scrolling.downHandler();
+          this.game.scene.keys[this.state.farm].scrolling.enabled = true;
+          this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+          this.scene.stop();
+        }
+      }, 8);
+
+    } else if (this.state.userSheep.part >= this.state.sheepSettings.sheepParts.length 
+      && this.state.sheepTasks.filter(el => el.part === this.state.sheepSettings.sheepParts.length).every(el => el.done === 1)) {
+      this.add.sprite(farmPosition.x, farmPosition.y, 'profile-chicken-farm').setOrigin(1, 0.5).setDepth(1);
+      this.add.sprite(farmPosition.x, farmPosition.y, 'profile-sticker').setOrigin(1, 0.5).setDepth(1)
+      const btn: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x - 125, farmPosition.y, 'profile-btn').setDepth(1);
+      const title: Phaser.GameObjects.Text = this.add.text(btn.x + 15, btn.y - 5, shortNum(this.state.progress.chicken.price), {
         font: '22px Shadow',
-        color: '#FFFFFF',
-        wordWrap: { width: 165 },
-        align: 'center'
-      }).setOrigin(0.5);
+        color: '#FBD0B9',
+        wordWrap: { width: 165 }
+      }).setOrigin(0.5, 0.5).setStroke('#1F530A', 5).setDepth(1);
+
+      const left: number = title.getBounds().left - 17;
+      const img: Phaser.GameObjects.Sprite = this.add.sprite(left, title.y, 'sheepCoin').setScale(0.12).setDepth(1);
+
+      this.clickShopBtn({ btn: btn, title: title, img: img }, (): void => {
+        this.game.scene.keys[this.state.farm].buyNextFarm();
+        this.game.scene.keys[this.state.farm].scrolling.downHandler();
+        this.game.scene.keys[this.state.farm].scrolling.enabled = true;
+        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+        this.scene.stop();
+      });
+    } else {
+      this.add.sprite(farmPosition.x, farmPosition.y, 'profile-cow-farm-lock').setOrigin(1, 0.5);
+      const text: Phaser.GameObjects.Text = this.add.text(farmPosition.x - 150, farmPosition.y, this.state.lang.accessSheepFarmDone, {
+        font: '20px Shadow',
+        color: '#fbd0b9',
+        wordWrap: { width: 250 },
+        align: 'center',
+      }).setOrigin(0.5).setDepth(2);
+      const textBounds: Phaser.Geom.Rectangle = text.getBounds();
+
+      this.add.graphics({ x: textBounds.left - 20, y: textBounds.top - 20 })
+        .fillStyle(0x2b3d11, 0.5)
+        .fillRoundedRect(0, 0, textBounds.width + 40, textBounds.height + 40).setDepth(1);
+    }
+  }
+
+  private createCowFarmTestB(): void {
+    const farmPosition: Iposition = { x: 0, y: 1050 };
+
+    if (this.state.progress.cow.open) {
+      const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-cow-farm').setOrigin(0, 0.5);
+
+      this.add.text(farmPosition.x + 290, farmPosition.y + 5, `${this.state.progress.cow.part}/${this.state.progress.cow.max}`, {
+        font: '28px Shadow',
+        color: '#ffe5d7'
+      }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
+
+      this.cowNativeText = this.add.text(farmPosition.x + 280, farmPosition.y - 100, '', {
+        font: '30px Bip',
+        color: '#ffffff',
+      }).setOrigin(0.5).setDepth(3).setVisible(false);
+      this.cowNativeBg = this.add.sprite(this.cowNativeText.x, this.cowNativeText.y, 'profile-native-bg').setVisible(false);
+
+      this.click(farmSprite, (): void => {
+        if (this.state.farm !== 'Cow') {
+          this.game.scene.keys[this.state.farm].autosave();
+          this.scene.stop();
+          this.scene.stop(this.state.farm);
+          this.scene.stop(this.state.farm + 'Bars');
+          this.scene.start('Cow' + 'Preload', this.state);
+        } else {
+          this.game.scene.keys[this.state.farm].scrolling.downHandler();
+          this.game.scene.keys[this.state.farm].scrolling.enabled = true;
+          this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+          this.scene.stop();
+        }
+      }, 8);
+    } else if (this.state.userChicken.part >= this.state.chickenSettings.chickenParts.length 
+      && this.state.chickenTasks.filter(el => el.part === this.state.chickenSettings.chickenParts.length).every(el => el.done === 1)) {
+        this.add.sprite(farmPosition.x, farmPosition.y, 'profile-cow-farm').setOrigin(0, 0.5);
+        this.add.sprite(farmPosition.x + 30, farmPosition.y, 'profile-sticker').setOrigin(0, 0.5).setDepth(1)
+        const btn: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x + 145, farmPosition.y, 'profile-btn').setDepth(1);
+        const title: Phaser.GameObjects.Text = this.add.text(btn.x + 15, btn.y - 5, shortNum(this.state.progress.cow.price), {
+          font: '22px Shadow',
+          color: '#FBD0B9',
+          wordWrap: { width: 165 }
+        }).setOrigin(0.5, 0.5).setStroke('#1F530A', 5).setDepth(1);
+  
+        const left: number = title.getBounds().left - 17;
+        const img: Phaser.GameObjects.Sprite = this.add.sprite(left, title.y, 'chickenCoin').setScale(0.12).setDepth(1);
+  
+        this.clickShopBtn({ btn: btn, title: title, img: img }, (): void => {
+          this.game.scene.keys[this.state.farm].buyNextFarm();
+          this.game.scene.keys[this.state.farm].scrolling.downHandler();
+          this.game.scene.keys[this.state.farm].scrolling.enabled = true;
+          this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+          this.scene.stop();
+        });
+    } else {
+      this.add.sprite(farmPosition.x, farmPosition.y, 'profile-cow-farm-lock').setOrigin(0, 0.5);
+      const text: Phaser.GameObjects.Text = this.add.text(farmPosition.x + 150, farmPosition.y, this.state.lang.accessChickenFarmDone, {
+        font: '20px Shadow',
+        color: '#fbd0b9',
+        wordWrap: { width: 250 },
+        align: 'center',
+      }).setOrigin(0.5).setDepth(2);
+
+      const textBounds: Phaser.Geom.Rectangle = text.getBounds();
+
+      this.add.graphics({ x: textBounds.left - 20, y: textBounds.top - 20 })
+        .fillStyle(0x2b3d11, 0.5)
+        .fillRoundedRect(0, 0, textBounds.width + 40, textBounds.height + 40).setDepth(1);
     }
   }
 
