@@ -32,10 +32,21 @@ export default class Factory extends Phaser.GameObjects.Sprite {
   }
 
   
-  public getPercent(product: number): number {
+  public getPercent(): number[] {
     const pull: number[] = [ this.settings.production1Percent, this.settings.production2Percent, this.settings.production3Percent ];
     if (this.scene.state.userCow.factory.boostTime > 0) pull.push(this.settings.production4Percent);
-    return Math.round(this.settings[`production${product}Percent`] / pull.reduce((prev, cur) => prev += cur) * 100);
+
+    const mainPull: number = pull.reduce((prev, cur) => prev += cur);
+    const result: number[] = [];
+
+    for (let i: number = 0; i < pull.length; i += 1) {
+      result.push(Math.round(this.settings[`production${i + 1}Percent`] /  mainPull * 100));
+    }
+
+    if (result.reduce((prev, cur) => prev += cur) > 100) {
+      result[0] -= 1;
+    }
+    return result;
   }
 
   public preUpdate(time: number, delta: number): void {

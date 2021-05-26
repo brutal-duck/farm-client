@@ -137,14 +137,16 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
       font: '18px Shadow',
       color: '#feb55f', 
     }).setOrigin(0.5);
-    const product1Percent: number = factory.getPercent(1);
+    const productPercents: number[] = factory.getPercent();
+
+    const product1Percent: number = productPercents[0];
     this.product1PercentText = this.scene.add.text(windowGeom.left + 115, windowGeom.centerY + 95, `${product1Percent}%`, {
       font: '32px Shadow',
       color: product1Percent > 0 ? ACTIVE_COLOR : LOCKED_COLOR, 
       align: 'center',
     }).setOrigin(0.5);
   
-    const product2Percent: number = factory.getPercent(2);
+    const product2Percent: number = productPercents[1];
     const product2SlotTexture: string = product2Percent > 0 ? 'factory-production-slot-2' : 'factory-production-slot-disable-2';
   
     const product2slotSprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(windowGeom.centerX - 62, windowGeom.centerY + 177, product2SlotTexture);
@@ -155,7 +157,7 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
     }).setOrigin(0.5);
   
   
-    const product3Percent: number = factory.getPercent(3);
+    const product3Percent: number = productPercents[2];
     const product3SlotTexture: string = product3Percent > 0 ? 'factory-production-slot-3' : 'factory-production-slot-disable-3';
   
     const product3slotSprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(windowGeom.centerX + 55, windowGeom.centerY + 177, product3SlotTexture);
@@ -166,7 +168,7 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
     }).setOrigin(0.5);
   
   
-    const product4Percent: number = this.scene.state.userCow.factory.boostTime > 0 ? factory.getPercent(4) : 0;
+    const product4Percent: number = this.scene.state.userCow.factory.boostTime > 0 ? productPercents[3] : 0;
     const product4SlotTexture: string = product4Percent > 0 ? 'factory-production-slot-4' : 'factory-production-slot-disable-4';
   
     this.product4Sprite = this.scene.add.sprite(windowGeom.centerX + 171, windowGeom.centerY + 177, product4SlotTexture);
