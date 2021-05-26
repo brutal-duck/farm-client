@@ -573,23 +573,17 @@ function buyNextFarm(): void {
   let farm: string;
   let check: boolean = false;
 
-  if (this.state.farm === 'Sheep') {
+  if (this.state.farm === 'Sheep' && this.state.userChicken.part <= 0) {
 
     user = this.state.userSheep;
     progress = this.state.progress.chicken;
     farm = 'Chicken';
 
-  } else if (this.state.farm === 'Chicken') {
+  } else if (this.state.farm === 'Chicken' || this.state.farm === 'Sheep' && this.state.userChicken.part > 0) {
 
     user = this.state.userChicken;
-    // progress = this.state.progress.chicken;
-    // farm = 'Chicken';
-
-  } else if (this.state.farm === 'Cow') {
-
-    user = this.state.userCow;
-    // progress = this.state.progress.cow;
-    // farm = 'Cow';
+    progress = this.state.progress.cow;
+    farm = 'Cow';
 
   } 
 
@@ -620,25 +614,34 @@ function buyNextFarm(): void {
 
     if (user.money >= progress.price) check = true;
     else {
-      
-      let count: number = progress.price - user.money;
-      let diamonds: number = this.convertMoney(count);
-      this.state.convertor = {
-        fun: 7,
-        count: count,
-        diamonds: diamonds,
-        type: 1
-      }
-
-      let modal: Imodal = {
-        type: 1,
-        sysType: 4
-      }
-      this.state.modal = modal;
-      this.scene.launch('Modal', this.state);
-      
-    }
+      if (this.state.farm === 'Sheep' && farm === 'Cow') {
+        let modal: Imodal = {
+          type: 1,
+          sysType: 3,
+          height: 150,
+          message: this.state.lang.notEnoughCoins
+        }
+        this.state.modal = modal;
+        this.scene.launch('Modal', this.state);
+      } else {
+        let count: number = progress.price - user.money;
+        let diamonds: number = this.convertMoney(count);
+        this.state.convertor = {
+          fun: 7,
+          count: count,
+          diamonds: diamonds,
+          type: 1
+        }
+  
+        let modal: Imodal = {
+          type: 1,
+          sysType: 4
+        }
     
+        this.state.modal = modal;
+        this.scene.launch('Modal', this.state);
+      }
+    }
   }
 
 
