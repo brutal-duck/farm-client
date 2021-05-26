@@ -362,6 +362,10 @@ function updateProfileNative(load: boolean = false): void {
     if (Profile.state.userSheep.part >= 3 && Profile.state.userSheep.diamondAnimalTime <= 0 && Profile.sheepNativeCount[2] !== 1) Profile.sheepNativeCount[2] = 1;
     else if ((Profile.state.userSheep.part < 3 || Profile.state.userSheep.diamondAnimalTime > 0) && Profile.sheepNativeCount[2] !== 0) Profile.sheepNativeCount[2] = 0;
 
+    if (Profile.state.userSheep.takenHerdBoost <= 0 && Profile.state.userSheep.part >= 5 && Profile.sheepNativeCount[3] !== 1) Profile.sheepNativeCount[3] = 1;
+    else if (Profile.state.userSheep.takenHerdBoost > 0 && Profile.state.userSheep.part >= 5 && Profile.sheepNativeCount[3] !== 0) Profile.sheepNativeCount[3] = 1;
+
+
     const count: number = Profile.sheepNativeCount.reduce((prev, cur) => prev += cur);
     if (Profile.sheepNativeText.text !== String(count)) {
       Profile.sheepNativeText.setText(String(count));
@@ -386,6 +390,9 @@ function updateProfileNative(load: boolean = false): void {
     if (Profile.state.userChicken.part >= 3 && Profile.state.userChicken.diamondAnimalTime <= 0 && Profile.chickenNativeCount[2] !== 1) Profile.chickenNativeCount[2] = 1;
     else if ((Profile.state.userChicken.part < 3 || Profile.state.userChicken.diamondAnimalTime > 0) && Profile.chickenNativeCount[2] !== 0) Profile.chickenNativeCount[2] = 0;
 
+    if (Profile.state.userChicken.takenHerdBoost <= 0 && Profile.state.userChicken.part >= 5 && Profile.chickenNativeCount[3] !== 1) Profile.chickenNativeCount[3] = 1;
+    else if (Profile.state.userChicken.takenHerdBoost > 0 && Profile.state.userChicken.part >= 5 && Profile.chickenNativeCount[3] !== 0) Profile.chickenNativeCount[3] = 1;
+
     const count: number = Profile.chickenNativeCount.reduce((prev, cur) => prev += cur);
     if (Profile.chickenNativeText.text !== String(count)) {
       Profile.chickenNativeText.setText(String(count));
@@ -409,6 +416,9 @@ function updateProfileNative(load: boolean = false): void {
     
     if (Profile.state.userCow.part >= 3 && Profile.state.userCow.diamondAnimalTime <= 0 && Profile.cowNativeCount[2] !== 1) Profile.cowNativeCount[2] = 1;
     else if ((Profile.state.userCow.part < 3 || Profile.state.userCow.diamondAnimalTime > 0) && Profile.cowNativeCount[2] !== 0) Profile.cowNativeCount[2] = 0;
+
+    if (Profile.state.userCow.takenHerdBoost <= 0 && Profile.state.userCow.part >= 5 && Profile.cowNativeCount[3] !== 1) Profile.cowNativeCount[3] = 1;
+    else if (Profile.state.userCow.takenHerdBoost > 0 && Profile.state.userCow.part >= 5 && Profile.cowNativeCount[3] !== 0) Profile.cowNativeCount[3] = 1;
 
     const count: number = Profile.cowNativeCount.reduce((prev, cur) => prev += cur);
     if (Profile.cowNativeText.text !== String(count)) {

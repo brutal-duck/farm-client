@@ -37,9 +37,9 @@ class Profile extends Phaser.Scene {
   public avatar: Phaser.GameObjects.Sprite;
   public diamondsText: Phaser.GameObjects.Text;
   public eventIsland: Phaser.GameObjects.Sprite;
-  public sheepNativeCount: number[] = [ 0, 0, 0 ];
-  public chickenNativeCount: number[] = [ 0, 0, 0 ];
-  public cowNativeCount: number[] = [ 0, 0, 0 ];
+  public sheepNativeCount: number[] = [ 0, 0, 0, 0 ];
+  public chickenNativeCount: number[] = [ 0, 0, 0, 0 ];
+  public cowNativeCount: number[] = [ 0, 0, 0, 0 ];
   public sheepNativeText: Phaser.GameObjects.Text;
   public chickenNativeText: Phaser.GameObjects.Text;
   public cowNativeText: Phaser.GameObjects.Text;
@@ -253,7 +253,7 @@ class Profile extends Phaser.Scene {
     if (this.state.progress.cow.open) {
       const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-cow-farm').setOrigin(0, 0.5);
 
-      this.add.text(farmPosition.x + 290, farmPosition.y + 5, `${this.state.progress.cow.part}/${this.state.progress.cow.max}`, {
+      this.add.text(farmPosition.x + 290, farmPosition.y + 10, `${this.state.progress.cow.part}/${this.state.progress.cow.max}`, {
         font: '28px Shadow',
         color: '#ffe5d7'
       }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
@@ -386,7 +386,7 @@ class Profile extends Phaser.Scene {
     if (this.state.progress.cow.open) {
       const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-cow-farm').setOrigin(0, 0.5);
 
-      this.add.text(farmPosition.x + 290, farmPosition.y + 5, `${this.state.progress.cow.part}/${this.state.progress.cow.max}`, {
+      this.add.text(farmPosition.x + 290, farmPosition.y + 10, `${this.state.progress.cow.part}/${this.state.progress.cow.max}`, {
         font: '28px Shadow',
         color: '#ffe5d7'
       }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
