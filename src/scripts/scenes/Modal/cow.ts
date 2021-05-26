@@ -646,7 +646,7 @@ function cowMilkRepository(): void {
         }
       }
       let improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.improve + 1);
-      let button = this.bigButton('orange', 'left', 110, improveText, improve);
+      let button = this.bigButton('orange', 'left', 90, improveText, improve);
       this.clickModalBtn(button, (): void => {
         this.scene.stop();
         this.game.scene.keys[this.state.farm].scrolling.wheel = true;
@@ -660,19 +660,19 @@ function cowMilkRepository(): void {
         text: this.state.lang.shortPart + ' ' + settings.unlock_improve
       }
       let improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.improve + 1);
-      this.bigButton('grey', 'left', 110, improveText, improve);
+      this.bigButton('grey', 'left', 90, improveText, improve);
 
     }
 
-    this.progressText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 160, '', {
+    this.progressText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 140, '', {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0.5);
 
-    this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 120, 'pb-chapter-modal');
-    this.progressBar = this.add.tileSprite(136, this.cameras.main.centerY - 120, 0, 16, 'green-progress')
+    this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 100, 'pb-chapter-modal');
+    this.progressBar = this.add.tileSprite(136, this.cameras.main.centerY - 100, 0, 16, 'green-progress')
       .setOrigin(0, 0.5);
-    this.progressButton = this.repositoryBtn(10, this.state.lang.sellMilk, milkMoney);
+    this.progressButton = this.bigButton('yellow', 'left', 10, this.state.lang.sellMilk , milkMoney);
     this.clickModalBtn(this.progressButton, (): void => {
 
       if (this.state.territory.volume > 0) {
@@ -682,12 +682,12 @@ function cowMilkRepository(): void {
 
     });
 
-    this.feedBoostText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 80, ' ', {
+    this.feedBoostText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 60, ' ', {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0.5);
 
-    let button1 = this.bigButton('red', 'center', 200, this.state.lang.exchangeRepositoryBtn);
+    let button1 = this.bigButton('red', 'center', 170, this.state.lang.exchangeRepositoryBtn);
     this.clickModalBtn(button1, (): void => {
    
       this.scene.stop();
@@ -700,38 +700,37 @@ function cowMilkRepository(): void {
       this.scene.start('Modal', this.state);
     });
 
-    this.resizeWindow(430);
+    this.resizeWindow(350);
 
   } else {
 
-    this.progressText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 120, '', {
+    this.progressText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 100, '', {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0.5);
 
-    this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 70, 'pb-chapter-modal');
-    this.progressBar = this.add.tileSprite(136, this.cameras.main.centerY - 70, 0, 16, 'green-progress')
+    this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 60, 'pb-chapter-modal');
+    this.progressBar = this.add.tileSprite(136, this.cameras.main.centerY - 60, 0, 16, 'green-progress')
       .setOrigin(0, 0.5);
 
-    this.progressButton = this.repositoryBtn(60, this.state.lang.sellMilk, milkMoney);
+    this.progressButton = this.bigButton('yellow', 'left', 50, this.state.lang.sellMilk , milkMoney);
     this.clickModalBtn(this.progressButton, (): void => {
 
       if (this.state.territory.volume > 0) {
         this.scene.stop();
-        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-        this.game.scene.keys[this.state.farm].sellMilk();
+        this.game.scene.keys[this.state.farm].showConfirmSellMilk();
       }
 
     });
     
     if (this.state.userCow.feedBoostTime > 0) {
-      this.feedBoostText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 30, ' ', {
+      this.feedBoostText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 20, ' ', {
         font: '26px Bip',
         color: '#925C28'
       }).setOrigin(0.5, 0.5).setVisible(false);
     }
 
-    let button1 = this.bigButton('red', 'center', 170, this.state.lang.exchangeRepositoryBtn);
+    let button1 = this.bigButton('red', 'center', 130, this.state.lang.exchangeRepositoryBtn);
     this.clickModalBtn(button1, (): void => {
       this.scene.stop();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
@@ -743,7 +742,7 @@ function cowMilkRepository(): void {
       this.scene.start('Modal', this.state);
     });
 
-    this.resizeWindow(330);
+    this.resizeWindow(280);
 
   }
 
