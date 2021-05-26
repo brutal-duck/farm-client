@@ -1116,11 +1116,15 @@ function confirmSellMilk(): void {
     wordWrap: { width: 450 },
     align: 'center',
   }).setOrigin(0.5);
+  const milkMoney = {
+    icon: 'cowCoin',
+    text: shortNum(this.state.territory.volume * this.game.scene.keys[this.state.farm].milkMultiply)
+  }
 
-  const redBtn = this.bigButton('red', 'center', 20, this.state.lang.sellMilk);
-  const greenBtn = this.bigButton('green', 'center', 110, this.state.lang.dontSellMilk);
+  this.progressButton = this.bigButton('red', 'left', 50, this.state.lang.sellMilk , milkMoney);
+  const greenBtn = this.bigButton('green', 'center', 140, this.state.lang.dontSellMilk);
 
-  this.clickModalBtn(redBtn, (): void => {
+  this.clickModalBtn(this.progressButton, (): void => {
     this.scene.stop();
     this.game.scene.keys[this.state.farm].scrolling.wheel = true;
     this.game.scene.keys[this.state.farm].sellMilk();
@@ -1135,7 +1139,7 @@ function confirmSellMilk(): void {
     this.scene.restart(this.state);
 
   });
-  this.resizeWindow(250);
+  this.resizeWindow(300);
 }
 
 export {
