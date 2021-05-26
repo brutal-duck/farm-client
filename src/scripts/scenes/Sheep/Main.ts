@@ -354,23 +354,25 @@ class Sheep extends Phaser.Scene {
     this.interval();
     this.setCollector();
 
-    // let cursors = this.input.keyboard.createCursorKeys();
-    // cursors.space.on('down', (): void => {
-    // //   // this.state.daily = 2;
-    // //   // this.state.user.takenReward = false;
-    // // let tasks = this.partTasks();
-    // // for (let i in tasks) {
-    //   //   tasks[i].done = 1;
-    //   //   tasks[i].got_awarded = 1;
-    //   // }
-    //   // this.scene.launch('Fortune', this.state);
-    //   // this.state.user.diamonds = 15
-    //   // this.state.user.additionalTutorial.eventTutorial = 0;
-    //   // this.state.progress.event.eventPoints = -1 
-    //   // this.state.user.diamonds = 100;
-    //   // this.state.user.boosts.sheep.collector4 = 1
-    //   // this.state.user.boosts.sheep.collector12 = 1
-    // });
+    let cursors = this.input.keyboard.createCursorKeys();
+    cursors.space.on('down', (): void => {
+    //   // this.state.daily = 2;
+    //   // this.state.user.takenReward = false;
+      this.state.userSheep.part = 16;
+      let tasks = this.partTasks();
+      for (let i in tasks) {
+          tasks[i].done = 1;
+          tasks[i].got_awarded = 1;
+      }
+      this.state.user.diamonds = 1000000;
+      // this.scene.launch('Fortune', this.state);
+      // this.state.user.diamonds = 15
+      // this.state.user.additionalTutorial.eventTutorial = 0;
+      // this.state.progress.event.eventPoints = -1 
+      // this.state.user.diamonds = 100;
+      // this.state.user.boosts.sheep.collector4 = 1
+      // this.state.user.boosts.sheep.collector12 = 1
+    });
   }
 
 
