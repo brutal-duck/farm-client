@@ -441,7 +441,7 @@ function checkStorageSheep(): boolean {
       }
     }
   }
-  return check.every(el => el);
+  return check.length > 0 ? check.every(el => el) : false;
 }
 
 function checkStorageChicken(): boolean {
@@ -461,27 +461,27 @@ function checkStorageChicken(): boolean {
       }
     }
   }
-  return check.every(el => el);
+  return check.length > 0 ? check.every(el => el) : false;
 }
 
 function checkStorageCow(): boolean {
   const check: boolean[] = [];
-  if (this.state.farm === 'Chicken') {
+  if (this.state.farm === 'Cow') {
     for (const territory of this.territories.children.entries) {
       if (territory.type === 5) {
-        const max: number = this.state.cowSettings.territoriesCowSettings.find(el => el.improve === territory.improve).eggStorage;
+        const max: number = this.state.cowSettings.territoriesCowSettings.find(el => el.improve === territory.improve).storage;
         check.push(territory.volume >= max); 
       }
     }
   } else {
     for (const territory of this.state.cowTerritories) {
       if (territory.type === 5) {
-        const max: number = this.state.cowSettings.territoriesCowSettings.find(el => el.improve === territory.improve).eggStorage;
+        const max: number = this.state.cowSettings.territoriesCowSettings.find(el => el.improve === territory.improve).storage;
         check.push(territory.volume >= max); 
       }
     }
   }
-  return check.every(el => el);
+  return check.length > 0 ? check.every(el => el) : false;
 }
 
 function intervalPorgressCollectorTime(): void {
