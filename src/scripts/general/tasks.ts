@@ -431,7 +431,7 @@ function clickTaskBoard(task: Itasks): void {
     this.state.territory = undefined;
     let territory: any;
     for (let i = 1; i < 20; i++) {
-      territory = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => el.type === 3 && el.improve === task.state - i);
+      territory = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => (el.type === 3 || el.territoryType === 3) && el.improve === task.state - i);
       if (territory) break;
     }
     if (territory) openTerritoryWindow(territory);
@@ -505,7 +505,7 @@ function clickTaskBoard(task: Itasks): void {
       }
     }
   }
-
+  console.log(task.type)
   switch (task.type) {
     case 1: 
       openShopAnimal();
