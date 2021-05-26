@@ -347,8 +347,8 @@ function cowFactoryProgress(): void {
   }
 }
 
-function updateProfileNative(): void {
-  if (!this.scene.isActive('Profile')) return;
+function updateProfileNative(load: boolean = false): void {
+  if (!this.scene.isActive('Profile') && !load) return;
 
   const Profile: Profile = this.game.scene.keys['Profile'];
   if (Profile.sheepNativeText) {
