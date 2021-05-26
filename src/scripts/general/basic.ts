@@ -977,7 +977,7 @@ function getNewbieAward(): void {
   }
 
   if (this.state.user.test === 'B') {
-    testB();
+    if (this.state.farm === 'Sheep') testB();
   } else {
     testA();
   }
