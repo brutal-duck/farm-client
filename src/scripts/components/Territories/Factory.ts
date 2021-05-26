@@ -11,6 +11,7 @@ export default class Factory extends Phaser.GameObjects.Sprite {
   public production4Money: number = 0;
   public money: number = 0;
   public improve: number;
+  public workAnimation: Phaser.GameObjects.Particles.ParticleEmitter;
 
   constructor(scene, x, y, improve) {
     super(scene, x, y, 'cow-factory');
@@ -35,5 +36,33 @@ export default class Factory extends Phaser.GameObjects.Sprite {
     const pull: number[] = [ this.settings.production1Percent, this.settings.production2Percent, this.settings.production3Percent ];
     if (this.scene.state.userCow.factory.boostTime > 0) pull.push(this.settings.production4Percent);
     return Math.round(this.settings[`production${product}Percent`] / pull.reduce((prev, cur) => prev += cur) * 100);
+  }
+
+  public preUpdate(time: number, delta: number): void {
+    super.preUpdate(time, delta);
+    if (!this.workAnimation && this.currentProduction !== 0 && this.currentProduction) {
+      this.setWorkAnimation();
+    } else if (this.workAnimation && (this.currentProduction === 0 || !this.currentProduction)){
+      this.removeAnimation();
+    }
+  }
+  public setWorkAnimation(): void {
+    this.workAnimation = this.scene.add.particles('factory-smoke').setDepth(this.depth + 10000).createEmitter({
+      x: this.x - 25,
+      y: this.y - 115,
+      angle: { min: 250, max: 300 },
+      speed: { min: 50, max: 200 },
+      gravityY: -50,
+      lifespan: 600,
+      quantity: 1,
+      frequency: 50,
+      scale: { start: 0.1, end: 0.5 },
+      alpha: { start: 0.1, end: 0.6 },
+    });
+  }
+
+  private removeAnimation(): void {
+    this.workAnimation.remove();
+    this.workAnimation = undefined;
   }
 }
