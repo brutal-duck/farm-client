@@ -8,14 +8,24 @@ export default class ShowCaseWindow {
   private factoryBoostTimer: Phaser.GameObjects.Text;
   private startY: number;
   private factory: Factory;
-  private probability1: Phaser.GameObjects.Text;
-  private probability2: Phaser.GameObjects.Text;
-  private probability3: Phaser.GameObjects.Text;
-  private probability4: Phaser.GameObjects.Text;
-  private price1: Phaser.GameObjects.Text;
-  private price2: Phaser.GameObjects.Text;
-  private price3: Phaser.GameObjects.Text;
-  private price4: Phaser.GameObjects.Text;
+  private probability1text: Phaser.GameObjects.Text;
+  private probability1count: Phaser.GameObjects.Text;
+  private probability2text: Phaser.GameObjects.Text;
+  private probability2count: Phaser.GameObjects.Text;
+  private probability3text: Phaser.GameObjects.Text;
+  private probability3count: Phaser.GameObjects.Text;
+  private probability4text: Phaser.GameObjects.Text;
+  private probability4count: Phaser.GameObjects.Text;
+  private price1text: Phaser.GameObjects.Text;
+  private price1count: Phaser.GameObjects.Text;
+  private price2text: Phaser.GameObjects.Text;
+  private price2count: Phaser.GameObjects.Text;
+  private price3text: Phaser.GameObjects.Text;
+  private price3count: Phaser.GameObjects.Text;
+  private price4text: Phaser.GameObjects.Text;
+  private price4count: Phaser.GameObjects.Text;
+  private coin4: Phaser.GameObjects.Sprite;
+  private boostText: Phaser.GameObjects.Text;
   private sprite1: Phaser.GameObjects.Sprite;
   private sprite2: Phaser.GameObjects.Sprite;
   private sprite3: Phaser.GameObjects.Sprite;
@@ -23,11 +33,13 @@ export default class ShowCaseWindow {
   private buyBoostBtn: any;
   private multiplyTime: number;
   private price: number;
+  private progressBar: Phaser.GameObjects.TileSprite;
+  private progressBarBg: Phaser.GameObjects.Sprite;
 
   constructor(scene: Modal){
     this.scene = scene;
     this.state = scene.state;
-    this.startY = this.scene.cameras.main.centerY - 270;
+    this.startY = this.scene.cameras.main.centerY - 280;
     this.factory = this.state.territory.factory;
     this.multiplyTime = 1;
     if (this.state.userCow.factory.boostTime > 0) this.multiplyTime = 2;
@@ -40,92 +52,261 @@ export default class ShowCaseWindow {
 
     this.scene.textHeader.setText(this.state.lang.showCase);
 
-  
-    this.createProduction(1);
-    this.createProduction(2);
-    this.createProduction(3);
+    this.create1Production();
+    this.create2Production();
+    this.create3Production();
+
     this.createBoost();
   
 
-    this.scene.resizeWindow(600);
+    this.scene.resizeWindow(720);
   }
 
-  private createProduction(number: number): void {
-    const productPercent: number = this.factory.getPercent()[number - 1];
-    const padding: number = (number - 1) * 120;
-    this.scene.add.text(this.scene.cameras.main.centerX, this.startY + padding, this.state.lang[`production${number}`], {
+  private create1Production(): void {
+
+    const productPercents: number[] = this.factory.getPercent();
+    const product1Percent: number = productPercents[0];
+
+    this.sprite1 = this.scene.add.sprite(160, this.startY + 50, `factory-production-1`);
+    const spriteGeom: Phaser.Geom.Rectangle = this.sprite1.getBounds();
+
+    this.scene.add.text(this.scene.cameras.main.centerX, spriteGeom.top, this.state.lang.production1, {
+      font: '28px Bip',
+      color: '#925C28',
+      wordWrap: { width: 300 },
+      align: 'center',
+    }).setOrigin(0.5, 1);
+
+    this.probability1text = this.scene.add.text(spriteGeom.right + 30, spriteGeom.centerY - 15, `${this.state.lang.probabilityOfProduction}:`, {
+      font: '20px Bip',
+      color: '#925C28',
+      wordWrap: { width: 400 },
+      align: 'left',
+    }).setOrigin(0, 0.5);
+
+    const probability1textGeom: Phaser.Geom.Rectangle = this.probability1text.getBounds();
+
+    this.probability1count = this.scene.add.text(probability1textGeom.right + 5, this.probability1text.y, `${product1Percent}%`, {
+      font: '20px Bip',
+      color: '#57A90E',
+      wordWrap: { width: 400 },
+      align: 'left',
+    }).setOrigin(0, 0.5);
+
+    this.price1text = this.scene.add.text(spriteGeom.right + 30, spriteGeom.centerY + 15, `${this.state.lang.price}`, {
+      font: '20px Bip',
+      color: '#925C28',
+      wordWrap: { width: 400 },
+      align: 'left',
+    }).setOrigin(0, 0.5);
+
+    const priceGeom: Phaser.Geom.Rectangle = this.price1text.getBounds();
+    const coin: Phaser.GameObjects.Sprite = this.scene.add.sprite(priceGeom.right, priceGeom.centerY, 'cowCoin').setScale(0.11).setOrigin(0, 0.5);
+
+
+    this.price1count = this.scene.add.text(priceGeom.right + 35, priceGeom.centerY, `${shortNum(this.state.userCow.factory.production1Multiply * this.factory.settings.lotSize)}`, {
+      font: '20px Bip',
+      color: '#57A90E',
+      wordWrap: { width: 400 },
+      align: 'left',
+    }).setOrigin(0, 0.5);
+  }
+
+  private create2Production(): void {
+
+    const productPercents: number[] = this.factory.getPercent();
+    const productPercent: number = productPercents[1];
+    
+    this.scene.add.text(this.scene.cameras.main.centerX, this.startY + 120, this.state.lang.production2, {
       font: '28px Bip',
       color: '#925C28',
       wordWrap: { width: 400 },
       align: 'center',
     }).setOrigin(0.5);
-    const sprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(160, this.startY + 50 + padding, `factory-production-${number}`);
-    this[`sprite${number}`] = sprite;
-    const spriteGeom: Phaser.Geom.Rectangle = sprite.getBounds();
-    this[`probability${number}`] = this.scene.add.text(spriteGeom.right + 30, spriteGeom.centerY - 15, `${this.state.lang.probabilityOfProduction}: ${productPercent}%`, {
-      font: '20px Bip',
+    this.sprite2 = this.scene.add.sprite(160, this.startY + 50 + 120, `factory-production-2`);
+
+    const spriteGeom: Phaser.Geom.Rectangle = this.sprite2.getBounds();
+
+    const level: number = this.state.cowSettings.cowFactorySettings.find(el => el.production2Percent > 0).improve;
+
+    if (this.factory.improve >= level) {
+      this.probability2text = this.scene.add.text(spriteGeom.right + 30, spriteGeom.centerY - 15, `${this.state.lang.probabilityOfProduction}:`, {
+        font: '20px Bip',
+        color: '#925C28',
+        wordWrap: { width: 400 },
+        align: 'left',
+      }).setOrigin(0, 0.5);
+  
+      this.probability2count = this.scene.add.text(this.probability2text.getBounds().right + 5, this.probability2text.y, `${productPercent}%`, {
+        font: '20px Bip',
+        color: '#57A90E',
+        wordWrap: { width: 400 },
+        align: 'left',
+      }).setOrigin(0, 0.5);
+  
+      this.price2text = this.scene.add.text(spriteGeom.right + 30, spriteGeom.centerY + 15, `${this.state.lang.price}`, {
+        font: '20px Bip',
+        color: '#925C28',
+        wordWrap: { width: 400 },
+        align: 'left',
+      }).setOrigin(0, 0.5);
+  
+      const priceGeom: Phaser.Geom.Rectangle = this.price2text.getBounds();
+      const coin: Phaser.GameObjects.Sprite = this.scene.add.sprite(priceGeom.right, priceGeom.centerY, 'cowCoin').setScale(0.11).setOrigin(0, 0.5);
+  
+      this.price2count = this.scene.add.text(priceGeom.right + 35, priceGeom.centerY, `${shortNum(this.state.userCow.factory.production2Multiply * this.factory.settings.lotSize)}`, {
+        font: '20px Bip',
+        color: '#57A90E',
+        wordWrap: { width: 400 },
+        align: 'left',
+      }).setOrigin(0, 0.5);
+    } else {
+      this.sprite2.setTint(0x777777);
+      const text: string = this.state.lang.openProductionOnLevel.replace('$1', String(level));
+      this.scene.add.text(spriteGeom.right + 30, spriteGeom.centerY, text, {
+        font: '20px Bip',
+        color: '#595959',
+        wordWrap: { width: 300 },
+        align: 'left',
+      }).setOrigin(0, 0.5);
+    }
+
+
+  }
+
+  private create3Production(): void {
+
+    const productPercents: number[] = this.factory.getPercent();
+    const productPercent: number = productPercents[2];
+    
+    this.sprite3 = this.scene.add.sprite(160, this.startY + 50 + 240, `factory-production-3`);
+    const spriteGeom: Phaser.Geom.Rectangle = this.sprite3.getBounds();
+
+    this.scene.add.text(this.scene.cameras.main.centerX, spriteGeom.centerY - 50, this.state.lang.production3, {
+      font: '28px Bip',
       color: '#925C28',
       wordWrap: { width: 400 },
-      align: 'left',
-    }).setOrigin(0, 0.5);
-    this[`price${number}`] = this.scene.add.text(spriteGeom.right + 30, spriteGeom.centerY + 15, `${this.state.lang.price}${shortNum(this.state.userCow.factory[`production${number}Multiply`] * this.factory.settings.lotSize)}`, {
-      font: '20px Bip',
-      color: '#925C28',
-      wordWrap: { width: 400 },
-      align: 'left',
-    }).setOrigin(0, 0.5);
+      align: 'center',
+    }).setOrigin(0.5);
+
+    const level: number = this.state.cowSettings.cowFactorySettings.find(el => el.production3Percent > 0).improve;
+
+    if (this.factory.improve >= level) {
+      this.probability3text = this.scene.add.text(spriteGeom.right + 30, spriteGeom.centerY - 15, `${this.state.lang.probabilityOfProduction}:`, {
+        font: '20px Bip',
+        color: '#925C28',
+        wordWrap: { width: 400 },
+        align: 'left',
+      }).setOrigin(0, 0.5);
+  
+      this.probability3count = this.scene.add.text(this.probability2text.getBounds().right + 5, this.probability3text.y, `${productPercent}%`, {
+        font: '20px Bip',
+        color: '#57A90E',
+        wordWrap: { width: 400 },
+        align: 'left',
+      }).setOrigin(0, 0.5);
+  
+      this.price3text = this.scene.add.text(spriteGeom.right + 30, spriteGeom.centerY + 15, `${this.state.lang.price}`, {
+        font: '20px Bip',
+        color: '#925C28',
+        wordWrap: { width: 400 },
+        align: 'left',
+      }).setOrigin(0, 0.5);
+  
+      const priceGeom: Phaser.Geom.Rectangle = this.price3text.getBounds();
+      const coin: Phaser.GameObjects.Sprite = this.scene.add.sprite(priceGeom.right, priceGeom.centerY, 'cowCoin').setScale(0.11).setOrigin(0, 0.5);
+  
+      this.price3count = this.scene.add.text(priceGeom.right + 35, this.price3text.y, `${shortNum(this.state.userCow.factory.production3Multiply * this.factory.settings.lotSize)}`, {
+        font: '20px Bip',
+        color: '#57A90E',
+        wordWrap: { width: 400 },
+        align: 'left',
+      }).setOrigin(0, 0.5);
+    } else {
+      const text: string = this.state.lang.openProductionOnLevel.replace('$1', String(level));
+      this.sprite3.setTint(0x777777);
+      this.scene.add.text(spriteGeom.right + 30, spriteGeom.centerY, text, {
+        font: '20px Bip',
+        color: '#595959',
+        wordWrap: { width: 300 },
+        align: 'left',
+      }).setOrigin(0, 0.5);
+    }
+
+
   }
 
   private createBoost(): void {
     const productPercents: number[] = this.factory.getPercent();
     const product4Percent: number = productPercents[3] ? productPercents[3] : 0;
 
-    this.scene.add.tileSprite(this.scene.cameras.main.centerX, this.startY + 350, 400, 5, 'white-pixel').setTint(0x925C28);
-    this.scene.add.text(this.scene.cameras.main.centerX, this.startY + 390, this.state.lang.production4, {
+    const tile: Phaser.GameObjects.TileSprite = this.scene.add.tileSprite(this.scene.cameras.main.centerX, this.startY + 360, 400, 5, 'white-pixel').setTint(0x925C28);
+
+    this.scene.add.text(this.scene.cameras.main.centerX, tile.y + 20, this.state.lang.production4, {
       font: '28px Bip',
       color: '#925C28',
       wordWrap: { width: 400 },
       align: 'center',
-    }).setOrigin(0.5);
+    }).setOrigin(0.5, 0);
 
-    if (this.state.userCow.factory.boostTime > 0) {
-      this.sprite4 = this.scene.add.sprite(170, this.startY + 450, 'factory-production-4');
-      const spriteGeom: Phaser.Geom.Rectangle = this.sprite4.getBounds();
-      this.probability4 = this.scene.add.text(spriteGeom.right + 20, spriteGeom.centerY - 30, `${this.state.lang.probabilityOfProduction}: ${product4Percent}%`, {
-        font: '20px Bip',
-        color: '#925C28',
-        wordWrap: { width: 400 },
-        align: 'left',
-      }).setOrigin(0, 0.5);
-      this.price4 = this.scene.add.text(spriteGeom.right + 17, spriteGeom.centerY, `${this.state.lang.price}${shortNum(this.state.userCow.factory.production4Multiply * this.factory.settings.lotSize)}`, {
-        font: '20px Bip',
-        color: '#925C28',
-        wordWrap: { width: 400 },
-        align: 'left',
-      }).setOrigin(0, 0.5);
-      const text: string = this.state.lang.factoryBoostCounterText + shortTime(this.state.userCow.factory.boostTime, this.state.lang);
-      this.factoryBoostTimer = this.scene.add.text(spriteGeom.right + 17, spriteGeom.centerY + 30, text, {
-        font: '20px Bip',
-        color: '#925C28'
-      }).setOrigin(0, 0.5);
-    } else {
-      this.sprite4 = this.scene.add.sprite(170, this.startY + 450, 'factory-production-1');
-      const spriteGeom: Phaser.Geom.Rectangle = this.sprite4.getBounds();
-      this.probability1 = this.scene.add.text(spriteGeom.right + 10, spriteGeom.centerY, this.state.lang.showCaseText2, {
-        font: '26px Bip',
-        color: '#925C28',
-        wordWrap: { width: 400 },
-        align: 'left',
-      }).setOrigin(0, 0.5);
-    }
+    this.progressBarBg = this.scene.add.sprite(this.scene.cameras.main.centerX, this.startY + 550, 'pb-chapter-modal').setVisible(true);
+    this.progressBar = this.scene.add.tileSprite(this.scene.cameras.main.centerX - this.progressBarBg.width / 2 + 18, this.progressBarBg.y, 442, 16, 'green-progress').setOrigin(0, 0.5).setVisible(true);
 
-    const text = this.state.lang.buyCocoaBeans.replace('$1', String(this.multiplyTime));
+    this.sprite4 = this.scene.add.sprite(170, this.startY + 470, 'factory-production-4');
+
+    const spriteGeom: Phaser.Geom.Rectangle = this.sprite4.getBounds();
+    this.probability4text = this.scene.add.text(spriteGeom.right + 20, spriteGeom.centerY - 30, `${this.state.lang.probabilityOfProduction}:`, {
+      font: '20px Bip',
+      color: '#925C28',
+      wordWrap: { width: 400 },
+      align: 'left',
+    }).setOrigin(0, 0.5).setVisible(false);
+
+    this.probability4count = this.scene.add.text(this.probability4text.getBounds().right + 5, this.probability4text.y, `${product4Percent}%`, {
+      font: '20px Bip',
+      color: '#57A90E',
+      wordWrap: { width: 400 },
+      align: 'left',
+    }).setOrigin(0, 0.5).setVisible(false);
+
+    this.price4text = this.scene.add.text(spriteGeom.right + 17, spriteGeom.centerY, `${this.state.lang.price}`, {
+      font: '20px Bip',
+      color: '#925C28',
+      wordWrap: { width: 400 },
+      align: 'left',
+    }).setOrigin(0, 0.5).setVisible(true);
+
+    const priceGeom: Phaser.Geom.Rectangle = this.price4text.getBounds();
+    this.coin4 = this.scene.add.sprite(priceGeom.right, priceGeom.centerY, 'cowCoin').setScale(0.11).setOrigin(0, 0.5).setVisible(true);
+
+    this.price4count = this.scene.add.text(priceGeom.right + 35, priceGeom.centerY, `${shortNum(this.state.userCow.factory.production4Multiply * this.factory.settings.lotSize)}`, {
+      font: '20px Bip',
+      color: '#57A90E',
+      wordWrap: { width: 400 },
+      align: 'left',
+    }).setOrigin(0, 0.5).setVisible(true);
+
+    const text: string = this.state.lang.factoryBoostCounterText + shortTime(this.state.userCow.factory.boostTime, this.state.lang);
+    this.factoryBoostTimer = this.scene.add.text(spriteGeom.right + 17, spriteGeom.centerY + 30, text, {
+      font: '20px Bip',
+      color: '#925C28'
+    }).setOrigin(0, 0.5).setVisible(false);
+
+    this.boostText = this.scene.add.text(spriteGeom.right + 17, spriteGeom.centerY - 20, this.state.lang.showCaseText, {
+      font: '20px Bip',
+      color: '#925C28',
+      wordWrap: { width: 370 },
+      align: 'left',
+    }).setOrigin(0, 0.5).setVisible(false);
+
+    const textMultiply = this.state.lang.buyCocoaBeans.replace('$1', String(this.multiplyTime));
     const right1 = {
       text: this.price,
       icon: 'diamond'}
-    this.buyBoostBtn = this.scene.bigButton('green', 'left', 280, text, right1);
+    this.buyBoostBtn = this.scene.bigButton('green', 'left', 350, textMultiply, right1);
   
   }
+
   private setListeners(): void {
 
     const ONE_HOUR: number = 3600;
@@ -187,13 +368,74 @@ export default class ShowCaseWindow {
 
   private update(): void {
     if (this.state.modal.type === 1 && this.state.modal.sysType === 17 && this.scene.scene.isActive('Modal')) {
+      const MAX_WIDTH: number = 442;
+      const ONE_HOUR: number = 3600;
+      const productPercents: number[] = this.factory.getPercent();
+      const product1Percent: number = productPercents[0];
+      const product2Percent: number = productPercents[1];
+      const product3Percent: number = productPercents[2];
+      const product4Percent: number = productPercents[3] ? productPercents[3] : 0;
+
       if (this.state.userCow.factory.boostTime > 0) {
-        if (this.factoryBoostTimer.text !== shortTime(this.state.userCow.factory.boostTime, this.state.lang)) {
-          this.factoryBoostTimer.setText(shortTime(this.state.userCow.factory.boostTime,this.state.lang));
+        const text1: string = this.state.lang.factoryBoostCounterText + shortTime(this.state.userCow.factory.boostTime, this.state.lang);
+        if (this.factoryBoostTimer?.active) {
+          if (this.factoryBoostTimer.text !== text1) {
+            this.factoryBoostTimer.setText(text1);
+          }
+          if (!this.factoryBoostTimer?.visible || this.sprite4.texture.key !== 'factory-production-4') {
+            const sprite4Geom: Phaser.Geom.Rectangle = this.sprite4.getBounds();
+            this.sprite4.setTexture('factory-production-4');
+            this.factoryBoostTimer.setVisible(true);
+            this.boostText.setVisible(false);
+            this.progressBar.setVisible(true);
+            this.probability4count.setVisible(true);
+            this.probability4text.setVisible(true);
+            this.price4text.setY(sprite4Geom.centerY);
+            this.price4count.setY(sprite4Geom.centerY);
+            this.coin4.setY(sprite4Geom.centerY);
+            this.probability4count.setText(`${product4Percent}%`);
+          }
+          const progress: number = (this.state.userCow.factory.boostTime / (ONE_HOUR * this.scene.game.scene.keys[this.state.farm].feedBoostStack)) * MAX_WIDTH;
+          if (this.progressBar.displayWidth !== progress) {
+            this.progressBar.setDisplaySize(progress, 16);
+          }
+
+        } else {
+          this.factoryBoostTimer = this.scene.add.text(this.sprite4.getBounds().right + 17, this.sprite4.getBounds().centerY + 30, text1, {
+            font: '20px Bip',
+            color: '#925C28'
+          }).setOrigin(0, 0.5);
         }
-      } else {
-        if (this.factoryBoostTimer?.visible) {
+      } else if (this.factoryBoostTimer?.active) {
+        if (this.factoryBoostTimer?.visible || this.sprite4.texture.key !== 'factory-cacao') {
+          const sprite4Geom: Phaser.Geom.Rectangle = this.sprite4.getBounds();
+          this.sprite4.setTexture('factory-cacao');
+          this.progressBar.setVisible(false);
           this.factoryBoostTimer.setVisible(false);
+          this.boostText.setVisible(true);
+          this.probability4count.setVisible(false);
+          this.probability4text.setVisible(false);
+          this.price4text.setY(sprite4Geom.centerY + 25);
+          this.price4count.setY(sprite4Geom.centerY + 25);
+          this.coin4.setY(sprite4Geom.centerY + 25);
+        }
+      }
+
+      if (product1Percent > 0) {
+        if (this.probability1count?.active && this.probability1count?.text !== `${product1Percent}%`) {
+          this.probability1count?.setText(`${product1Percent}%`);
+        }
+      }
+      
+      if (product2Percent > 0) {
+        if (this.probability2count?.active && this.probability2count?.text !== `${product2Percent}%`) {
+          this.probability2count?.setText(`${product2Percent}%`);
+        }
+      }
+
+      if (product3Percent > 0) {
+        if (this.probability3count?.active && this.probability3count?.text !== `${product3Percent}%`) {
+          this.probability3count?.setText(`${product3Percent}%`);
         }
       }
     }

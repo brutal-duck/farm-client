@@ -846,8 +846,7 @@ export default {
     production4: 'Шоколад',
     sellProduct: 'Продать товар',
     showCase: 'Витрина',
-    showCaseText1: 'Чем выше уровень завода, тем более дорогие товары он производит.',
-    showCaseText2: 'Ты можешь купить какао-бобы, чтобы временно производить шоколад.',
+    showCaseText: 'Ты можешь купить какао-бобы, чтобы временно производить шоколад.',
     buyCocoaBeans: 'Купить какао на $1 ч.',
     fortuneHint_1: 'Вы выйграли джекпот!',
     fortuneHint_2: 'Получено кристаллов: $1!',
@@ -888,6 +887,7 @@ export default {
     openChickenFarm: 'Доступно после открытия куриной фермы',
     chickenFarmPurchaseAvailable: '\nДоступна покупка куриной фермы!',
     cowFarmPurchaseAvailable: '\nДоступна покупка коровьей фермы!',
+    openProductionOnLevel: 'Продукт станет доступен на $1 уровне фабрики',
   },
 
   en: {
@@ -1736,8 +1736,7 @@ export default {
     litres: 'л.',
     processingTime: 'Время переработки',
     showCase: 'Витрина',
-    showCaseText1: 'Чем выше уровень завода, тем более дорогие товары он производит.',
-    showCaseText2: 'Ты можешь купить какао-бобы, чтобы временно производить шоколад.',
+    showCaseText: 'Ты можешь купить какао-бобы, чтобы временно производить шоколад.',
     buyCocoaBeans: 'Купить какао на $1 ч.',
     fortuneHint_1: 'Вы выйграли джекпот!',
     fortuneHint_2: 'Получено кристаллов: $1!',
@@ -1775,6 +1774,8 @@ export default {
     openChickenFarm: 'Доступно после открытия куриной фермы',
     chickenFarmPurchaseAvailable: '\nДоступна покупка куриной фермы!',
     cowFarmPurchaseAvailable: '\nДоступна покупка коровьей фермы!',
+    openProductionOnLevel: 'Продукт станет доступен на $1 уровне фабрики',
+
 
   }
 }
