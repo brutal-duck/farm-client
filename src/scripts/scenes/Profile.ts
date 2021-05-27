@@ -10,6 +10,7 @@ const cowFarm: string = require('./../../assets/images/profile/cow-farm.png');
 const eventFarm: string = require('./../../assets/images/profile/event-farm.png');
 const sticker: string = require('./../../assets/images/profile/sticker.png');
 const cowFarmLock: string = require('./../../assets/images/profile/cow-farm-lock.png');
+const chickenFarmLock: string = require('./../../assets/images/profile/chicken-farm-lock.png');
 const profileLockIcon: string = require('./../../assets/images/icons/profile-lock-icon.png');
 const eventIsland: string = require('./../../assets/images/profile/event-island.png');
 const btn: string = require('./../../assets/images/profile/btn.png');
@@ -75,6 +76,7 @@ class Profile extends Phaser.Scene {
     this.load.image('profile-event-farm', eventFarm);
     this.load.image('profile-sticker', sticker);
     this.load.image('profile-cow-farm-lock', cowFarmLock);
+    this.load.image('profile-chicken-farm-lock', chickenFarmLock);
     this.load.image('profile-lock-icon', profileLockIcon);
     this.load.image('profile-event-island', eventIsland);
     this.load.image('profile-btn', btn);
@@ -365,8 +367,8 @@ class Profile extends Phaser.Scene {
         this.scene.stop();
       });
     } else {
-      this.add.sprite(farmPosition.x, farmPosition.y, 'profile-cow-farm-lock').setOrigin(1, 0.5);
-      const text: Phaser.GameObjects.Text = this.add.text(farmPosition.x - 150, farmPosition.y, this.state.lang.accessSheepFarmDone, {
+      this.add.sprite(farmPosition.x, farmPosition.y - 6, 'profile-chicken-farm-lock').setOrigin(1, 0.5);
+      const text: Phaser.GameObjects.Text = this.add.text(farmPosition.x - 150, farmPosition.y - 20, this.state.lang.accessSheepFarmDone, {
         font: '20px Shadow',
         color: '#fbd0b9',
         wordWrap: { width: 250 },
