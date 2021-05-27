@@ -103,7 +103,7 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
     this.progressBar = this.scene.add.tileSprite(136, windowGeom.centerY - 100, 0, 16, 'green-progress')
       .setOrigin(0, 0.5);
   
-    const efficiencyText1: Phaser.GameObjects.Text = this.scene.add.text(windowGeom.left + 50, windowGeom.centerY - 40, `${this.scene.state.lang.efficiency}`, {
+    const efficiencyText1: Phaser.GameObjects.Text = this.scene.add.text(windowGeom.left + 50, windowGeom.centerY - 40, `${this.scene.state.lang.efficiencyProduction}`, {
       font: '18px Shadow',
       color: '#773a05', 
       align: 'left',
