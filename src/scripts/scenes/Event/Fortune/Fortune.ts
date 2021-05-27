@@ -9,10 +9,21 @@ import Currency from './../../../components/animations/Currency';
 const modal: string = require('../../../../assets/images/event/fortune/modal.png');
 const btn: string = require('../../../../assets/images/event/fortune/btn.png');
 const wheel: string = require('../../../../assets/images/event/fortune/wheel.png');
+const wheel1: string = require('../../../../assets/images/event/fortune/wheel-1.png');
 const pointer: string = require('../../../../assets/images/event/fortune/pointer.png');
 const ticket: string = require('../../../../assets/images/event/fortune/ticket.png');
 const jackpotBg: string = require('../../../../assets/images/event/fortune/jackpot-bg.png');
 const doneChapterButton: string = require("../../../../assets/images/modal/done-chapter-button.png");
+
+const JACKPOT: number = 22;
+const DIAMOND: number = 50;
+const MONEY_1: number = 1354;
+const MONEY_2: number = 1354;
+const MONEY_3: number = 1354;
+const HERD_BOOST: number = 1354;
+const FEED_BOOST: number = 1354;
+const TICKET: number = 1354;
+const COLLECTOR: number = 1354;
 
 export default class Fortune extends Phaser.Scene {
   constructor() {
@@ -59,6 +70,7 @@ export default class Fortune extends Phaser.Scene {
     this.load.image('fortune-modal', modal);
     this.load.image('fortune-btn', btn);
     this.load.image('fortune-wheel', wheel);
+    this.load.image('fortune-new-wheel', wheel1);
     this.load.image('fortune-pointer', pointer);
     this.load.image('fortune-ticket', ticket);
     this.load.image('fortune-jackpot-bg', jackpotBg);
@@ -125,7 +137,7 @@ export default class Fortune extends Phaser.Scene {
       color: '#ffffff'
     }).setOrigin(0.5);
 
-    this.wheel = this.add.sprite(modalGeom.centerX - 142, modalGeom.centerY - 180, 'fortune-wheel');
+    this.wheel = this.add.sprite(modalGeom.centerX - 142, modalGeom.centerY - 180, 'fortune-new-wheel');
     this.pointer = this.add.sprite(modalGeom.centerX - 138, modalGeom.centerY - 185, 'fortune-pointer');
     this.closeBtn = this.add.sprite(modalGeom.right - 70, modalGeom.top + 40,'tasks-close')
     
@@ -345,14 +357,17 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private startScrollWheel(): void {
-    const endAngle: number = this.prizeId === 1 ? -330 :
-    this.prizeId === 2 ? -150 :
-    this.prizeId === 3 || this.prizeId === 4 || this.prizeId === 5 ? -30 :
-    this.prizeId === 6 ? -210 :
-    this.prizeId === 7 ? -90 :
-    this.prizeId === 8 ? -270 : 0;
+    const endAngle: number = this.prizeId === 1 ? -340 :
+    this.prizeId === 2 ? -140 :
+    this.prizeId === 3 ? -20 :
+    this.prizeId === 4 ? -180: 
+    this.prizeId === 5 ? -100 :
+    this.prizeId === 6 ? -220 :
+    this.prizeId === 7 ? -60 :
+    this.prizeId === 8 ? -300 : 
+    this.prizeId === 9 ? -260 : 0;
 
-    const dAngle: number = Phaser.Math.Between(1, 22) * Phaser.Math.RND.pick(Phaser.Math.RND.signs);
+    const dAngle: number = Phaser.Math.Between(1, 15) * Phaser.Math.RND.pick(Phaser.Math.RND.signs);
     // const dAngle: number = -25;
 
     if (dAngle > 10 && (this.prizeId === 3 || this.prizeId === 4 || this.prizeId === 5)) {
@@ -566,6 +581,9 @@ export default class Fortune extends Phaser.Scene {
           }
         });
         break;
+      case 9:
+        this.getFreeCollector();
+        break;
       default: 
         break;
     }
@@ -721,8 +739,30 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private getFreeFeedBoost(): void {
-    if (this.state.progress.chicken.open) {
-      if (Phaser.Math.Between(1, 2) === 1) {
+    if (this.state.progress.chicken.open && this.state.progress.cow.open) {
+      const randomIndex: number = Phaser.Math.Between(1, 3);
+      if (randomIndex === 1) {
+        this.state.user.boosts.sheep.feed += 1;
+        Hint.create(this, -250, this.state.lang.fortuneHint_4_Sheep, 3);
+        this.game.scene.keys[this.state.farm].logAmplitudeEvent('feed_boost_get', {
+          type: 'Sheep'
+        });
+      } else if (randomIndex === 1) {
+        this.state.user.boosts.chicken.feed += 1;
+        Hint.create(this, -250, this.state.lang.fortuneHint_4_Chicken, 3);
+        this.game.scene.keys[this.state.farm].logAmplitudeEvent('feed_boost_get', {
+          type: 'Chicken'
+        });
+      } else {
+        this.state.user.boosts.cow.feed += 1;
+        Hint.create(this, -250, this.state.lang.fortuneHint_4_Cow, 3);
+        this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
+          type: 'Cow'
+        });
+      }
+    } else if (this.state.progress.chicken.open) {
+      const randomIndex: number = Phaser.Math.Between(1, 2);
+      if (randomIndex === 1) {
         this.state.user.boosts.sheep.feed += 1;
         Hint.create(this, -250, this.state.lang.fortuneHint_4_Sheep, 3);
         this.game.scene.keys[this.state.farm].logAmplitudeEvent('feed_boost_get', {
@@ -734,7 +774,7 @@ export default class Fortune extends Phaser.Scene {
         this.game.scene.keys[this.state.farm].logAmplitudeEvent('feed_boost_get', {
           type: 'Chicken'
         });
-      }
+      } 
     } else {
       this.state.user.boosts.sheep.feed += 1;
       Hint.create(this, -250, this.state.lang.fortuneHint_4_Sheep, 3);
@@ -745,14 +785,36 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private getFreeHerdBoost(): void {
-    if (this.state.progress.chicken.open) {
-      if (Phaser.Math.Between(1, 2) === 1) {
+    if (this.state.progress.chicken.open && this.state.progress.cow.open) {
+      const randomIndex: number = Phaser.Math.Between(1, 3);
+      if (randomIndex === 1) {
         this.state.user.boosts.sheep.herd += 1;
         Hint.create(this, -250, this.state.lang.fortuneHint_5_Sheep, 3);
         this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
           type: 'Sheep'
         });
+      } else if (randomIndex === 2) {
+        this.state.user.boosts.chicken.herd += 1;
+        Hint.create(this, -250, this.state.lang.fortuneHint_5_Chicken, 3);
+        this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
+          type: 'Chicken'
+        });
       } else {
+        this.state.user.boosts.cow.herd += 1;
+        Hint.create(this, -250, this.state.lang.fortuneHint_5_Cow, 3);
+        this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
+          type: 'Cow'
+        });
+      }
+    } else if (this.state.progress.chicken.open) {
+      const randomIndex: number = Phaser.Math.Between(1, 2);
+      if (randomIndex === 1) {
+        this.state.user.boosts.sheep.herd += 1;
+        Hint.create(this, -250, this.state.lang.fortuneHint_5_Sheep, 3);
+        this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
+          type: 'Sheep'
+        });
+      } {
         this.state.user.boosts.chicken.herd += 1;
         Hint.create(this, -250, this.state.lang.fortuneHint_5_Chicken, 3);
         this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
@@ -762,6 +824,52 @@ export default class Fortune extends Phaser.Scene {
     } else {
       this.state.user.boosts.sheep.herd += 1;
       Hint.create(this, -250, this.state.lang.fortuneHint_5_Sheep, 3);
+      this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
+        type: 'Sheep'
+      });
+    }
+  }
+
+  private getFreeCollector(): void {
+    if (this.state.progress.chicken.open && this.state.progress.cow.open) {
+      const randomIndex: number = Phaser.Math.Between(1, 3);
+      if (randomIndex === 1) {
+        this.state.user.boosts.sheep.collector4 += 1;
+        Hint.create(this, -250, this.state.lang.fortuneHint_7_Sheep, 3);
+        this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
+          type: 'Sheep'
+        });
+      } else if (randomIndex === 2) {
+        this.state.user.boosts.chicken.collector4 += 1;
+        Hint.create(this, -250, this.state.lang.fortuneHint_7_Chicken, 3);
+        this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
+          type: 'Chicken'
+        });
+      } else {
+        this.state.user.boosts.cow.collector4 += 1;
+        Hint.create(this, -250, this.state.lang.fortuneHint_7_Cow, 3);
+        this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
+          type: 'Cow'
+        });
+      }
+    } else if (this.state.progress.chicken.open) {
+      const randomIndex: number = Phaser.Math.Between(1, 2);
+      if (randomIndex === 1) {
+        this.state.user.boosts.sheep.collector4 += 1;
+        Hint.create(this, -250, this.state.lang.fortuneHint_7_Sheep, 3);
+        this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
+          type: 'Sheep'
+        });
+      } else {
+        this.state.user.boosts.chicken.collector4 += 1;
+        Hint.create(this, -250, this.state.lang.fortuneHint_7_Chicken, 3);
+        this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
+          type: 'Chicken'
+        });
+      }
+    } else {
+      this.state.user.boosts.sheep.collector4 += 1;
+      Hint.create(this, -250, this.state.lang.fortuneHint_7_Sheep, 3);
       this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
         type: 'Sheep'
       });
@@ -807,9 +915,7 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private getRandomIndexPrize(): void {
-    // const pull: number[] = [ 26, 500, 3445, 2584, 1723, 861, 861, 500 ];
-    // const pull: number[] = [ 26, 300, 1579, 1579, 1579, 1579, 1579, 1579 ];
-    const pull: number[] = [ 15, 250, 1579, 1579, 1579, 1579, 1579, 1579 ];
+    const pull: number[] = [ JACKPOT, DIAMOND, MONEY_1, MONEY_2, MONEY_3, HERD_BOOST, FEED_BOOST, TICKET, COLLECTOR ];
 
     const totalCounter: number = pull.reduce((prev, current) => prev += current);
     const arrRange: {
