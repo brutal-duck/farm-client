@@ -378,46 +378,41 @@ export default class ShowCaseWindow {
 
       if (this.state.userCow.factory.boostTime > 0) {
         const text1: string = this.state.lang.factoryBoostCounterText + shortTime(this.state.userCow.factory.boostTime, this.state.lang);
-        if (this.factoryBoostTimer?.active) {
+        if (this.factoryBoostTimer?.active && this.sprite4?.active) {
           if (this.factoryBoostTimer.text !== text1) {
             this.factoryBoostTimer.setText(text1);
           }
-          if (!this.factoryBoostTimer?.visible || this.sprite4.texture.key !== 'factory-production-4') {
-            const sprite4Geom: Phaser.Geom.Rectangle = this.sprite4.getBounds();
-            this.sprite4.setTexture('factory-production-4');
-            this.factoryBoostTimer.setVisible(true);
-            this.boostText.setVisible(false);
-            this.progressBar.setVisible(true);
-            this.probability4count.setVisible(true);
-            this.probability4text.setVisible(true);
-            this.price4text.setY(sprite4Geom.centerY);
-            this.price4count.setY(sprite4Geom.centerY);
-            this.coin4.setY(sprite4Geom.centerY);
-            this.probability4count.setText(`${product4Percent}%`);
+          if (!this.factoryBoostTimer?.visible || this.sprite4.texture?.key !== 'factory-production-4') {
+            const sprite4Geom: Phaser.Geom.Rectangle = this.sprite4?.getBounds();
+            this.sprite4?.setTexture('factory-production-4');
+            this.factoryBoostTimer?.setVisible(true);
+            this.boostText?.setVisible(false);
+            this.progressBar?.setVisible(true);
+            this.probability4count?.setVisible(true);
+            this.probability4text?.setVisible(true);
+            this.price4text?.setY(sprite4Geom.centerY);
+            this.price4count?.setY(sprite4Geom.centerY);
+            this.coin4?.setY(sprite4Geom.centerY);
+            this.probability4count?.setText(`${product4Percent}%`);
           }
           const progress: number = (this.state.userCow.factory.boostTime / (ONE_HOUR * this.scene.game.scene.keys[this.state.farm].feedBoostStack)) * MAX_WIDTH;
           if (this.progressBar.displayWidth !== progress) {
             this.progressBar.setDisplaySize(progress, 16);
           }
 
-        } else {
-          this.factoryBoostTimer = this.scene.add.text(this.sprite4.getBounds().right + 17, this.sprite4.getBounds().centerY + 30, text1, {
-            font: '20px Bip',
-            color: '#925C28'
-          }).setOrigin(0, 0.5);
-        }
-      } else if (this.factoryBoostTimer?.active) {
-        if (this.factoryBoostTimer?.visible || this.sprite4.texture.key !== 'factory-cacao') {
-          const sprite4Geom: Phaser.Geom.Rectangle = this.sprite4.getBounds();
-          this.sprite4.setTexture('factory-cacao');
-          this.progressBar.setVisible(false);
-          this.factoryBoostTimer.setVisible(false);
-          this.boostText.setVisible(true);
-          this.probability4count.setVisible(false);
-          this.probability4text.setVisible(false);
-          this.price4text.setY(sprite4Geom.centerY + 25);
-          this.price4count.setY(sprite4Geom.centerY + 25);
-          this.coin4.setY(sprite4Geom.centerY + 25);
+        } 
+      } else if (this.factoryBoostTimer?.active && this.sprite4?.active) {
+        if (this.factoryBoostTimer?.visible || this.sprite4?.texture.key !== 'factory-cacao') {
+          const sprite4Geom: Phaser.Geom.Rectangle = this.sprite4?.getBounds();
+          this.sprite4?.setTexture('factory-cacao');
+          this.progressBar?.setVisible(false);
+          this.factoryBoostTimer?.setVisible(false);
+          this.boostText?.setVisible(true);
+          this.probability4count?.setVisible(false);
+          this.probability4text?.setVisible(false);
+          this.price4text?.setY(sprite4Geom.centerY + 25);
+          this.price4count?.setY(sprite4Geom.centerY + 25);
+          this.coin4?.setY(sprite4Geom.centerY + 25);
         }
       }
 
