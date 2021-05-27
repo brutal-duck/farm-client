@@ -244,12 +244,13 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
       }
     } else {
       if (this.boostTimer?.visible) {
+        const percents: number[] = this.scene.state.territory.factory.getPercent();
         this.boostTimer.setVisible(false);
         this.product4Sprite.setTexture('factory-production-slot-disable-4');
-        this.product1PercentText.setText(`${this.scene.state.territory.factory.getPercent(1)}%`);
-        this.product2PercentText.setText(`${this.scene.state.territory.factory.getPercent(2)}%`);
-        this.product3PercentText.setText(`${this.scene.state.territory.factory.getPercent(3)}%`);
-        this.product4PercentText.setText(`${this.scene.state.territory.factory.getPercent(4)}%`);
+        this.product1PercentText.setText(`${percents[0]}%`);
+        this.product2PercentText.setText(`${percents[1]}%`);
+        this.product3PercentText.setText(`${percents[2]}%`);
+        this.product4PercentText.setText(`0%`);
       }
     }
 
