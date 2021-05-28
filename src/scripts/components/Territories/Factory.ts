@@ -62,13 +62,14 @@ export default class Factory extends Phaser.GameObjects.Sprite {
       x: this.x - 25,
       y: this.y - 115,
       angle: { min: 250, max: 300 },
-      speed: { min: 50, max: 200 },
+      speed: { min: 20, max: 100 },
       gravityY: -50,
-      lifespan: 600,
+      lifespan: 1500,
       quantity: 1,
-      frequency: 50,
-      scale: { start: 0.1, end: 0.5 },
-      alpha: { start: 0.1, end: 0.6 },
+      frequency: 10,
+      scale: { start: 0.15, end: 0.7 },
+      alpha: { start: 0.6, end: 0 },
+      
     });
   }
 
