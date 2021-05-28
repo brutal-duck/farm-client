@@ -153,6 +153,7 @@ function getTaskData(task: Itasks): ItaskData {
     case 23: num = 34; break;
     case 24: num = 35; break;
     case 25: num = 33; break;
+    case 26: num = 36; break;
     default: num = 21; break;
   }
 

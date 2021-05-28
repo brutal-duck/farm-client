@@ -284,6 +284,10 @@ function interval(): void {
     this.updateProfileNative();
     this.showFeedBoostSpeechBubble();
     progressTerritoryCooldown(this.territories.children.entries, 1);
+
+    const volume = this.territories.find(el => el.territoryType === 5).volume;
+    this.tryTask(26, volume);
+
   }, callbackScope: this, loop: true });
 }
 
