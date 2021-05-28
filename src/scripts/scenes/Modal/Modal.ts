@@ -80,7 +80,7 @@ import {
   tasksWindow,
   resizeTasksWindow
 } from './tasks';
-import daily from './daily';
+import Daily from './../../components/modal/Daily';
 import nextChapter from './nextChapter';
 import donate from './donate';
 import { bigButton, repositoryBtn, shopButton } from '../../elements';
@@ -192,7 +192,6 @@ class Modal extends Phaser.Scene {
   public profileWindow = profileWindow.bind(this);
   public support = support.bind(this);
   public registration = registration.bind(this);
-  public daily = daily.bind(this);
   public nextChapter = nextChapter.bind(this);
   public diamondSheepAd = diamondSheepAd.bind(this);
   public diamondChickenAd = diamondChickenAd.bind(this);
@@ -260,7 +259,7 @@ class Modal extends Phaser.Scene {
         this.tasks();
         break;
       case 4: // ежедневные награды
-        this.daily();
+        new Daily(this);
         break;
       case 5: // следующая глава
         this.nextChapter();
