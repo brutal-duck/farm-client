@@ -13,17 +13,17 @@ function installTerritory(): void {
 
     if (this.state.userChicken.money >= price) {
 
-      let territory: string;
+      // let territory: string;
 
-      if (this.state.exchangeTerritory === 2) territory = 'grass';
-      else if (this.state.exchangeTerritory === 3) territory = 'water';
-      else if (this.state.exchangeTerritory === 5) territory = 'repository';
+      // if (this.state.exchangeTerritory === 2) territory = 'grass';
+      // else if (this.state.exchangeTerritory === 3) territory = 'water';
+      // else if (this.state.exchangeTerritory === 5) territory = 'repository';
 
-      this.logAmplitudeEvent('install_territory', {
-        block: this.state.territory.block,
-        position: this.state.territory.position,
-        type: territory
-      });
+      // this.logAmplitudeEvent('install_territory', {
+      //   block: this.state.territory.block,
+      //   position: this.state.territory.position,
+      //   type: territory
+      // });
 
       this.state.territory.improve = 1;
       this.state.territory.type = this.state.exchangeTerritory;

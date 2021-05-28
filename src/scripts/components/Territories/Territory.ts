@@ -201,8 +201,8 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
   private setPositionImproveRepository(): void {
     const position: Iposition = {
-      x: this.improveText.x,
-      y: this.improveText.y,
+      x: this.improveText?.x,
+      y: this.improveText?.y,
     };
 
     if (this.improve < 5) {
