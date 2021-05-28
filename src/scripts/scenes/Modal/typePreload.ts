@@ -19,6 +19,9 @@ const middleButton: string = require("./../../../assets/images/modal/middle-butt
 const awardBg: string = require("./../../../assets/images/icons/award-bg.png");
 const achievementDaily: string = require("./../../../assets/images/modal/achievement-daily.png");
 const flashDaily: string = require("./../../../assets/images/modal/flash-daily.png");
+const award3: string = require("./../../../assets/images/icons/award-3.png");
+const award4: string = require("./../../../assets/images/icons/award-4.png");
+const award5: string = require("./../../../assets/images/icons/award-5.png");
 const doneChapter: string = require("./../../../assets/images/modal/done-chapter.png");
 const pbChapterAnimal: string = require("./../../../assets/images/modal/pb-chapter-modal.png");
 const greenProgress: string = require("./../../../assets/images/modal/green-progress.png");
@@ -63,7 +66,6 @@ const tile1: string = require("./../../../assets/images/chat-tile-1.png");
 const tile2: string = require("./../../../assets/images/chat-tile-2.png");
 const corner1: string = require("./../../../assets/images/chat-corner-1.png");
 const corner2: string = require("./../../../assets/images/chat-corner-2.png");
-
 const factoryWindow: string = require('./../../../assets/images/cow/modal/factory-window.png');
 const factoryWheel: string = require('./../../../assets/images/cow/modal/factory-wheel.png');
 const factoryProduction1: string = require('./../../../assets/images/cow/modal/factory-resource-1.png');
@@ -122,6 +124,9 @@ export default function typePreload(): void {
         this.load.image('achievement-daily', achievementDaily);
         this.load.image('flash-daily', flashDaily);
         this.load.image('middle-button', middleButton);
+        this.load.image('award-3', award3);
+        this.load.image('award-4', award4);
+        this.load.image('award-5', award5);
         break;
       case 5: // следующая глава +
         this.load.image('done-chapter', doneChapter);
