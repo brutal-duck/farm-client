@@ -9,6 +9,7 @@ let checkCollector: number = 0;
 let sheepCollectorVolume: number = 0;
 let chickenCollectorVolume: number = 0;
 let arrowOnColletor: Phaser.GameObjects.Sprite;
+let arrowOnTerrirory: Phaser.GameObjects.Sprite;
 
 function interval(): void {
 
@@ -109,6 +110,32 @@ function interval(): void {
           this.cancelMerging(territory, cow1, cow2);
         }
       }
+    }
+
+
+
+    if (this.state.userCow.part <= 2) {
+      
+      let tasks: Itasks[] = this.partTasks();
+      tasks.sort((x1: Itasks, x2: Itasks) => {
+        if (x1.got_awarded < x2.got_awarded) return -1;
+        if (x1.got_awarded > x2.got_awarded) return 1;
+        if (x1.done < x2.done) return 1;
+        if (x1.done > x2.done) return -1;
+        if (x1.sort < x2.sort) return -1;
+        if (x1.sort > x2.sort) return 1;
+        return 0;
+      });
+
+      let task: Itasks = tasks[0];
+      // задание на покупку территории и установку пастбища
+      console.log(task)
+      if (task?.done === 0 && task?.id === 137 && !arrowOnTerrirory) {
+        
+        let territory: any = this.territories.children.entries.find((data: any) => data.block === 3 && data.position === 1);
+        arrowOnTerrirory = Arrow.generate(this, 10, { x: territory.x + 120, y: territory.y + 180 });
+      }
+
     }
 
     // бар собирателя
@@ -286,7 +313,6 @@ function interval(): void {
     progressTerritoryCooldown(this.territories.children.entries, 1);
 
     const volume = this.territories.children.entries.find(el => el.territoryType === 5)?.volume;
-    console.log(volume)
     this.tryTask(26, volume);
 
   }, callbackScope: this, loop: true });
