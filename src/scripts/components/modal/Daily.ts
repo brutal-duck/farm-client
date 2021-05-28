@@ -102,6 +102,11 @@ export default class Daily extends Phaser.GameObjects.Sprite {
     this.scene.clickModalBtn({ btn: this.takeBtn, title: this.takeText }, (): void => {
 
       if (this.day > 6) this.day = 0;
+      
+      if (!AWARDS[this.day]) {
+        this.scene.scene.stop();
+        return;
+      }
 
       if (AWARDS[this.day].type === 1) {
         this.scene.state.user.diamonds += AWARDS[this.day].count;
