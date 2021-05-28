@@ -126,16 +126,12 @@ function interval(): void {
         if (x1.sort > x2.sort) return 1;
         return 0;
       });
-
       let task: Itasks = tasks[0];
       // задание на покупку территории и установку пастбища
-      console.log(task)
       if (task?.done === 0 && task?.id === 137 && !arrowOnTerrirory) {
-        
         let territory: any = this.territories.children.entries.find((data: any) => data.block === 3 && data.position === 1);
         arrowOnTerrirory = Arrow.generate(this, 10, { x: territory.x + 120, y: territory.y + 180 });
       }
-
     }
 
     // бар собирателя

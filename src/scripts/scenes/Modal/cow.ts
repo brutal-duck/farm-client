@@ -359,32 +359,41 @@ function boughtCowLand(): void {
     text: shortNum(price)
   }
   
-  let button1 = this.bigButton('green', 'left', -60, this.state.lang.sowPasture, right);
-  this.clickModalBtn(button1, (): void => {
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-    this.state.exchangeTerritory = 2;
-    this.game.scene.keys[this.state.farm].installTerritory();
-  });
-
-  let button2 = this.bigButton('blue', 'left', 30, this.state.lang.installWater, right);
-  this.clickModalBtn(button2, (): void => {
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-    this.state.exchangeTerritory = 3;
-    this.game.scene.keys[this.state.farm].installTerritory();
-  });
+  if (this.state.territory.block === 3 && this.state.territory.position === 1 && this.state.territory.territoryType === 1) {
+    let button = this.bigButton('orange', 'left', 30, this.state.lang.buildFactory, right);
+    this.clickModalBtn(button, (): void => {
+      this.scene.stop();
+      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+      this.state.exchangeTerritory = 8;
+      this.game.scene.keys[this.state.farm].installTerritory();
+    });
+    this.resizeWindow(80);
+  } else {
+    let button1 = this.bigButton('green', 'left', -60, this.state.lang.sowPasture, right);
+    this.clickModalBtn(button1, (): void => {
+      this.scene.stop();
+      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+      this.state.exchangeTerritory = 2;
+      this.game.scene.keys[this.state.farm].installTerritory();
+    });
   
-  let button3 = this.bigButton('orange', 'left', 120, this.state.lang.buildRepository, right);
-  this.clickModalBtn(button3, (): void => {
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-    this.state.exchangeTerritory = 5;
-    this.game.scene.keys[this.state.farm].installTerritory();
-  });
-  
-  this.resizeWindow(270);
-
+    let button2 = this.bigButton('blue', 'left', 30, this.state.lang.installWater, right);
+    this.clickModalBtn(button2, (): void => {
+      this.scene.stop();
+      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+      this.state.exchangeTerritory = 3;
+      this.game.scene.keys[this.state.farm].installTerritory();
+    });
+    
+    let button3 = this.bigButton('orange', 'left', 120, this.state.lang.buildRepository, right);
+    this.clickModalBtn(button3, (): void => {
+      this.scene.stop();
+      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+      this.state.exchangeTerritory = 5;
+      this.game.scene.keys[this.state.farm].installTerritory();
+    });
+    this.resizeWindow(270);
+  }
 }
 
 // земля для покупки
