@@ -525,7 +525,7 @@ let cowSettings: IcowSettings = {
     { block: 3, position: 3, price: 2000, unlock: 1 },
     { block: 4, position: 1, price: 407000, unlock: 7 },
     { block: 4, position: 2, price: 132000, unlock: 6 },
-    { block: 4, position: 3, price: 132000, unlock: 4 },
+    { block: 4, position: 3, price: 132000, unlock: 5 },
     { block: 5, position: 1, price: 3092000, unlock: 10 },
     { block: 5, position: 2, price: 1150000, unlock: 9 },
     { block: 5, position: 3, price: 1150000, unlock: 8 },
