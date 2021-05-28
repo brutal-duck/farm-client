@@ -903,6 +903,8 @@ export default {
     chickenFarmPurchaseAvailable: '\nДоступна покупка куриной фермы!',
     cowFarmPurchaseAvailable: '\nДоступна покупка коровьей фермы!',
     openProductionOnLevel: 'Продукт станет доступен на $1 уровне фабрики',
+    doneNextTask: 'Сначала выполние следующее задание...',
+
   },
 
   en: {
@@ -1809,7 +1811,7 @@ export default {
     chickenFarmPurchaseAvailable: '\nДоступна покупка куриной фермы!',
     cowFarmPurchaseAvailable: '\nДоступна покупка коровьей фермы!',
     openProductionOnLevel: 'Продукт станет доступен на $1 уровне фабрики',
-
+    doneNextTask: 'Сначала выполние следующее задание...'
 
   }
 }
