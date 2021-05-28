@@ -494,7 +494,7 @@ function clickTaskBoard(task: Itasks): void {
       const territory = findUnlockTerritoryForBuy();
       openTerritoryWindow(territory);
     }
-    if (task.state === 2 || task.state === 5) {
+    if (task.state === 2 || task.state === 5 || task.state === 8) {
       let territory: any;
       territory = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => el.type === 1 || el.territoryType === 1);
       if (territory) openTerritoryWindow(territory);
@@ -506,7 +506,6 @@ function clickTaskBoard(task: Itasks): void {
       }
     }
   }
-  console.log(task.type)
   switch (task.type) {
     case 1: 
       openShopAnimal();
@@ -581,6 +580,9 @@ function clickTaskBoard(task: Itasks): void {
       break;
     case 25: 
       openShopBoosters();
+      break;
+    case 26: 
+      SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_26, 3);
       break;
     default: 
       break;
