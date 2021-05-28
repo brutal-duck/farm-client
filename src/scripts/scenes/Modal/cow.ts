@@ -1,7 +1,6 @@
 import { shortNum, romanize, timer, shortTime } from "../../general/basic";
 import Hint from '../../components/animations/Hint';
-import Territory from './../../components/Territories/Territory';
-import Factory from './../../components/Territories/Factory';
+import SpeechBubble from './../../components/animations/SpeechBuble';
 
 // ярмарка
 function cowFair(): void {
@@ -623,7 +622,7 @@ function confirmCowExchangeTerritory(): void {
 
 }
 
-// хранилище яиц
+// хранилище молока
 function cowMilkRepository(): void {
   
   let repository: string = this.state.lang.repository.replace('$1', this.state.territory.improve);
@@ -681,15 +680,28 @@ function cowMilkRepository(): void {
     this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 100, 'pb-chapter-modal');
     this.progressBar = this.add.tileSprite(136, this.cameras.main.centerY - 100, 0, 16, 'green-progress')
       .setOrigin(0, 0.5);
-    this.progressButton = this.bigButton('yellow', 'left', 10, this.state.lang.sellMilk , milkMoney);
-    this.clickModalBtn(this.progressButton, (): void => {
 
-      if (this.state.territory.volume > 0) {
-        this.scene.stop();
-        this.game.scene.keys[this.state.farm].showConfirmSellMilk();
-      }
-
-    });
+    if (this.state.userCow.part === 2 && this.state.userCow.tutorial < 40) {
+      this.progressButton = this.bigButton('grey', 'left', 10, this.state.lang.sellMilk , milkMoney);
+      this.clickModalBtn(this.progressButton, (): void => {
+        if (this.state.territory.volume > 0) {
+          this.scene.stop();
+          SpeechBubble.create(this.game.scene.keys[`${this.state.farm}Bars`], this.state.lang.doneNextTask, 3);
+        }
+      });
+    } else {
+      this.progressButton = this.bigButton('yellow', 'left', 10, this.state.lang.sellMilk , milkMoney);
+      this.clickModalBtn(this.progressButton, (): void => {
+        if (this.state.territory.volume > 0) {
+          this.scene.stop();
+          if (this.state.userCow.tutorial < 40) {
+            this.game.scene.keys[this.state.farm].sellMilk();
+          } else {
+            this.game.scene.keys[this.state.farm].showConfirmSellMilk();
+          }
+        }
+      });
+    }
 
     this.feedBoostText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 60, ' ', {
       font: '26px Bip',
@@ -722,15 +734,28 @@ function cowMilkRepository(): void {
     this.progressBar = this.add.tileSprite(136, this.cameras.main.centerY - 60, 0, 16, 'green-progress')
       .setOrigin(0, 0.5);
 
-    this.progressButton = this.bigButton('yellow', 'left', 50, this.state.lang.sellMilk , milkMoney);
-    this.clickModalBtn(this.progressButton, (): void => {
 
-      if (this.state.territory.volume > 0) {
-        this.scene.stop();
-        this.game.scene.keys[this.state.farm].showConfirmSellMilk();
-      }
-
-    });
+    if (this.state.userCow.part === 2 && this.state.userCow.tutorial < 40) {
+      this.progressButton = this.bigButton('grey', 'left', 50, this.state.lang.sellMilk , milkMoney);
+      this.clickModalBtn(this.progressButton, (): void => {
+        if (this.state.territory.volume > 0) {
+          this.scene.stop();
+          SpeechBubble.create(this.game.scene.keys[`${this.state.farm}Bars`], this.state.lang.doneNextTask, 3);
+        }
+      });
+    } else {
+      this.progressButton = this.bigButton('yellow', 'left', 50, this.state.lang.sellMilk , milkMoney);
+      this.clickModalBtn(this.progressButton, (): void => {
+        if (this.state.territory.volume > 0) {
+          this.scene.stop();
+          if (this.state.userCow.tutorial < 40) {
+            this.game.scene.keys[this.state.farm].sellMilk();
+          } else {
+            this.game.scene.keys[this.state.farm].showConfirmSellMilk();
+          }
+        }
+      });
+    }
     
     if (this.state.userCow.feedBoostTime > 0) {
       this.feedBoostText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 20, ' ', {
