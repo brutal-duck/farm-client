@@ -338,7 +338,7 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
     }
 
     if (length) {
-      Milk.create(this, { x: cow.x, y: cow.y - 50}, 0, path);
+      Milk.create(this, { x: cow.x, y: cow.y - 50}, path);
       let price: number = 0;
       if (this.state.userCow.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
       repository.volume += milk;
