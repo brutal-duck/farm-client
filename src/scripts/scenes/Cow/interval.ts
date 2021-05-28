@@ -290,7 +290,9 @@ function interval(): void {
 
 
     const factoryTerritory: Territory = this.territories.children.entries.find((data: Territory) => data.territoryType === 8);
-    factoryTerritory?.productionOfProducts();
+    if (factoryTerritory && this.state.userCow.tutorial >= 40) {
+      factoryTerritory?.productionOfProducts();
+    }
 
     this.intervalPorgressCollectorTime();
 
