@@ -86,7 +86,7 @@ function tryTask(type: number, state: number, count: number = 1): void {
   if (task?.done === 0 &&
     task?.progress < task?.count &&
     (task?.state === state || task?.state === 0 || 
-      ((task?.type === 6 || task?.type === 23 || task?.type === 24 || task?.type === 8 || task?.type === 9 || task?.type === 17) && task?.state <= state))) {
+      ((task?.type === 6 || task?.type === 26 || task?.type === 23 || task?.type === 24 || task?.type === 8 || task?.type === 9 || task?.type === 17) && task?.state <= state))) {
     task.progress += count;
 
     if (task.progress >= task.count) {

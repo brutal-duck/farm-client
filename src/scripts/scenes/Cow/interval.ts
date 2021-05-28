@@ -267,7 +267,7 @@ function interval(): void {
 
 
     const factoryTerritory: Territory = this.territories.children.entries.find((data: Territory) => data.territoryType === 8);
-    factoryTerritory.productionOfProducts();
+    factoryTerritory?.productionOfProducts();
 
     this.intervalPorgressCollectorTime();
 
@@ -285,7 +285,8 @@ function interval(): void {
     this.showFeedBoostSpeechBubble();
     progressTerritoryCooldown(this.territories.children.entries, 1);
 
-    const volume = this.territories.children.entries.find(el => el.territoryType === 5).volume;
+    const volume = this.territories.children.entries.find(el => el.territoryType === 5)?.volume;
+    console.log(volume)
     this.tryTask(26, volume);
 
   }, callbackScope: this, loop: true });

@@ -178,6 +178,7 @@ const taskIcon32: string = require('./../../../assets/images/cow/tasks/task-icon
 const taskIcon33: string = require('./../../../assets/images/cow/tasks/task-icon-33.png');
 const taskIcon34: string = require('./../../../assets/images/cow/tasks/task-icon-34.png');
 const taskIcon35: string = require('./../../../assets/images/cow/tasks/task-icon-35.png');
+const taskIcon36: string = require('./../../../assets/images/cow/tasks/task-icon-36.png');
 const plus: string = require('./../../../assets/images/icons/plus.png');
 const cowLeaves: string = require('./../../../assets/images/cow/cow-leaves.png');
 const greenBalanceBg: string = require('./../../../assets/images/balance/green-balance-bg.png');
@@ -425,6 +426,7 @@ class CowPreload extends Phaser.Scene {
     this.load.image('cow-task-icon-33', taskIcon33);
     this.load.image('cow-task-icon-34', taskIcon34);
     this.load.image('cow-task-icon-35', taskIcon35);
+    this.load.image('cow-task-icon-36', taskIcon36);
     this.load.image('plus', plus);
     this.load.image('cow-leaves', cowLeaves);
     this.load.image('green-balance-bg', greenBalanceBg);
