@@ -367,7 +367,7 @@ export default class DailyNewbie extends Phaser.GameObjects.Sprite {
     });
 
     this.scene.click(this, () => {
-      if (!this.scene.state.user.takenReward || this.scene.state.daily === 4) {
+      if (!this.scene.state.user.takenReward || this.scene.state.daily === 4 && this.scene.state.user.test === 'A' || this.scene.state.user.test === 'B') {
         this.scene.scene.stop();
         this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
         this.scene.game.scene.keys[this.scene.state.farm].takeNewbieAward();
