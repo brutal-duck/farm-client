@@ -300,6 +300,11 @@ class Chicken extends Phaser.Scene {
     // анимация полных хранилищ
     this.repositoryAnimation();
   }
+
+  private ofllineTestProgress(): void {
+    this.state.offlineTime = 60 * 30;
+    this.autoprogress();
+  }
 }
 
 export default Chicken;
