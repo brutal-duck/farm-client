@@ -138,7 +138,7 @@ function checkMerging(territory: Territory, cow: CowSprite, position: string) {
         const x: number = territory.x + 120;
         const y: number = territory.y + 240;
         
-        const newMilk: number = cow1.milk + cow2.milk
+        const newMilk: number = cow1.milk + cow2.milk;
         const cow: CowSprite = this.animalGroup.generate({ x, y }, type, id, 0, newMilk, 0, 7, false);
         cow1.destroy();
         cow2.destroy();
