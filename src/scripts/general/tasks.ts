@@ -133,6 +133,7 @@ function getTaskData(task: Itasks): ItaskData {
       if (task.state === 2) num = 25;
       else if (task.state === 3) num = 26;
       else if (task.state === 5) num = 27;
+      else if (task.state === 8) num = 37;
       else num = 29;
       break;
     case 6: num = 15; break;
