@@ -408,6 +408,7 @@ interface IterritoriesPrice {
   position: number;
   price: number;
   unlock: number;
+  unlockCooldown: number;
   id?: any;
 }
 
