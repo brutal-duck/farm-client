@@ -2018,7 +2018,7 @@ export default [
     sort: 1,
     type: 26,
     count: 1,
-    state: 100,
+    state: 1000,
     necessary: 1,
     diamonds: 2,
     done: 0,
