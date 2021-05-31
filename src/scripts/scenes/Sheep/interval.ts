@@ -254,7 +254,7 @@ function interval(): void {
       this.state.nativeCounter[3] = 1;
     } else this.state.nativeCounter[3] = 0;
 
-    if (!this.state.user.takenFreeDiamonds && this.state.userSheep.part > 4) this.state.nativeCounter[0] = 1;
+    if (!this.state.user.takenFreeDiamonds && this.state.userSheep.tutorial >= 100) this.state.nativeCounter[0] = 1;
     else this.state.nativeCounter[0] = 0;
 
     let nativeCount = 0;

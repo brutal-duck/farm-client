@@ -720,7 +720,7 @@ class Profile extends Phaser.Scene {
       });
     }
 
-    if (!this.state.user.takenFreeDiamonds  && (this.state.progress.sheep.part > 4 || this.state.progress.chicken.part >= 1)) {
+    if (!this.state.user.takenFreeDiamonds  && (this.state.userSheep.tutorial >= 100 || this.state.progress.chicken.part >= 1 || this.state.progress.cow.part >= 1)) {
       this.add.sprite(shopPosition.x - 50, shopPosition.y - 70, 'profile-native-bg');
       this.add.text(shopPosition.x - 50, shopPosition.y - 70, '1', {
         font: '30px Bip',

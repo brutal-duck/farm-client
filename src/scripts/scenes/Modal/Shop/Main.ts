@@ -584,7 +584,7 @@ class Shop extends Phaser.Scene {
       }
     }
 
-    if (!this.state.user.takenFreeDiamonds) {
+    if (!this.state.user.takenFreeDiamonds && (this.state.userSheep.tutorial >= 100 || this.state.progress.chicken.part >= 1 || this.state.progress.cow.part >= 1)) {
       const FREE_DIAMONDS: number = 1;
       let y: number = (rows + 1) * 270 + 50 + this.height - 238;
       if (!this.state.user.starterpack && 
