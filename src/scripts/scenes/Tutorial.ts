@@ -945,40 +945,11 @@ class Tutorial extends Phaser.Scene {
         }
       } else if (this.state.tutorial.farm === 5) { 
         if (this.state.tutorial.step === 0) {
-          const camera: Phaser.Cameras.Scene2D.BaseCamera = this.cameras.main;
-
-          this.add.text(camera.centerX - 172, camera.centerY + 95, `100%`, {
-            font: '32px Shadow',
-            color: '#773a05', 
-            align: 'center',
-          }).setOrigin(0.5);
-        
-          const product2slotSprite: Phaser.GameObjects.Sprite = this.add.sprite(camera.centerX - 62, camera.centerY + 177, 'factory-production-slot-disable-2');
-          this.add.text(product2slotSprite.x + 5 , product2slotSprite.y - 82, `0%`, {
-            font: '32px Shadow',
-            color: '#595959',
-            align: 'center',
-          }).setOrigin(0.5);
-
-          const product3slotSprite: Phaser.GameObjects.Sprite = this.add.sprite(camera.centerX + 55, camera.centerY + 177, 'factory-production-slot-disable-3');
-          this.add.text(product3slotSprite.x + 5 , product3slotSprite.y - 82, `0%`, {
-            font: '32px Shadow',
-            color: '#595959', 
-            align: 'center',
-          }).setOrigin(0.5);
-        
-        
-          const product4slotSprite = this.add.sprite(camera.centerX + 171, camera.centerY + 177, 'factory-production-slot-disable-4');
-          this.add.text(product4slotSprite.x + 5 , product4slotSprite.y - 82, `0%`, {
-            font: '32px Shadow',
-            color: '#595959', 
-            align: 'center',
-          }).setOrigin(0.5);
-          this.add.sprite(product4slotSprite.x + 30, product4slotSprite.y - 20, 'plus').setScale(0.8);
-                    
+          this.add.sprite(this.cameras.main.centerX - 5, this.cameras.main.centerY + 157, 'tutorial-showcase');
+                
           this.topPosition = false;
-          this.indent = this.height - 600;
-          this.tailX = 200;
+          this.indent = this.height - 550;
+          this.tailX = 230;
           this.tailFlipX = true;
           this.tailFlipY = false;
           this.showContinue = true;
