@@ -240,6 +240,7 @@ class ChickenPreload extends Phaser.Scene {
     this.state  = state;
     this.userReady = false;
     this.loadingReady = false;
+    this.socket = false;
     this.loadUser();
     this.startTime = Math.round(new Date().getTime() / 1000);
 

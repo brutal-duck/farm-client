@@ -211,6 +211,9 @@ const farmer: string = require('./../../../assets/images/farmer.png');
 const whitePixel: string = require('./../../../assets/images/white-pixel.jpg');
 const scrollArrow: string = require('./../../../assets/images/scroll-arrow.png');
 const factorySmoke: string = require('./../../../assets/images/cow/factory-smoke.png');
+const factoryProductionSlotDisable2: string = require('./../../../assets/images/cow/modal/factory-resource-slot-disable-2.png');
+const factoryProductionSlotDisable3: string = require('./../../../assets/images/cow/modal/factory-resource-slot-disable-3.png');
+const factoryProductionSlotDisable4: string = require('./../../../assets/images/cow/modal/factory-resource-slot-disable-4.png');
 
 
 class CowPreload extends Phaser.Scene {
@@ -237,6 +240,7 @@ class CowPreload extends Phaser.Scene {
     this.userReady = false;
     this.loadingReady = false;
     this.loadUser();
+    this.socket = false;
     this.startTime = Math.round(new Date().getTime() / 1000);
 
     if (!this.state.socket) {
@@ -460,6 +464,9 @@ class CowPreload extends Phaser.Scene {
     this.load.image('white-pixel', whitePixel);
     this.load.image('scroll-arrow', scrollArrow);
     this.load.image('factory-smoke', factorySmoke);
+    this.load.image('factory-production-slot-disable-2', factoryProductionSlotDisable2);
+    this.load.image('factory-production-slot-disable-3', factoryProductionSlotDisable3);
+    this.load.image('factory-production-slot-disable-4', factoryProductionSlotDisable4);
 
   }
 
