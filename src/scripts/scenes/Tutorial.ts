@@ -945,8 +945,31 @@ class Tutorial extends Phaser.Scene {
         }
       } else if (this.state.tutorial.farm === 5) { 
         if (this.state.tutorial.step === 0) {
-          this.add.sprite(this.cameras.main.centerX - 5, this.cameras.main.centerY + 157, 'tutorial-showcase');
-                
+          this.add.sprite(this.cameras.main.centerX - 4, this.cameras.main.centerY + 158, 'tutorial-showcase');
+          this.add.text(this.cameras.main.centerX - 175, this.cameras.main.centerY + 92, `100%`, {
+            font: '33px Shadow',
+            color: '#773a05', 
+            align: 'center',
+          }).setOrigin(0.5);
+          this.add.text(this.cameras.main.centerX - 57, this.cameras.main.centerY + 92, `0%`, {
+            font: '33px Shadow',
+            color: '#595959', 
+            align: 'center',
+          }).setOrigin(0.5);
+          this.add.text(this.cameras.main.centerX + 60, this.cameras.main.centerY + 92, `0%`, {
+            font: '33px Shadow',
+            color: '#595959', 
+            align: 'center',
+          }).setOrigin(0.5);
+          this.add.text(this.cameras.main.centerX + 175, this.cameras.main.centerY + 92, `0%`, {
+            font: '33px Shadow',
+            color: '#595959', 
+            align: 'center',
+          }).setOrigin(0.5);
+          this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 47, this.state.lang.probabilityOfProduction, {
+            font: '19px Shadow',
+            color: '#feb55f', 
+          }).setOrigin(0.5);
           this.topPosition = false;
           this.indent = this.height - 550;
           this.tailX = 230;
@@ -960,12 +983,12 @@ class Tutorial extends Phaser.Scene {
           const camera: Phaser.Cameras.Scene2D.BaseCamera = this.cameras.main;
           this.add.tileSprite(camera.centerX - 5, camera.centerY - 295, 500, 30, 'white-pixel').setTint(0xFF9E28);
       
-          this.add.text(camera.centerX - 225, camera.centerY - 295, this.state.lang.slotSize, {
+          this.add.text(camera.centerX - 227, camera.centerY - 297, this.state.lang.slotSize, {
             font: '20px Shadow',
             color: '#fffcdc', 
           }).setOrigin(0, 0.5).setShadow(2, 2, '#08080888', 2);
       
-          this.add.text(camera.centerX + 150, camera.centerY - 295, shortNum(100), {
+          this.add.text(camera.centerX + 148, camera.centerY - 297, shortNum(100), {
             font: '20px Shadow',
             color: '#fffcdc', 
           }).setOrigin(0, 0.5).setShadow(2, 2, '#08080888', 2);
@@ -982,12 +1005,12 @@ class Tutorial extends Phaser.Scene {
         } else if (this.state.tutorial.step === 20) {
           const camera: Phaser.Cameras.Scene2D.BaseCamera = this.cameras.main;
           this.add.tileSprite(camera.centerX - 5, camera.centerY - 310, 500, 50, 'white-pixel').setTint(0xFF9E28);
-          this.add.text(camera.centerX - 225, camera.centerY - 320, this.state.lang.milkInStorage, {
+          this.add.text(camera.centerX - 227, camera.centerY - 322, this.state.lang.milkInStorage, {
             font: '20px Shadow',
             color: '#fffcdc', 
           }).setOrigin(0, 0.5).setShadow(2, 2, '#08080888', 2);
       
-          this.add.text(camera.centerX - 225, camera.centerY - 295, this.state.lang.slotSize, {
+          this.add.text(camera.centerX - 227, camera.centerY - 297, this.state.lang.slotSize, {
             font: '20px Shadow',
             color: '#fffcdc', 
           }).setOrigin(0, 0.5).setShadow(2, 2, '#08080888', 2);
@@ -1000,12 +1023,12 @@ class Tutorial extends Phaser.Scene {
             if (territory.territoryType === 5) storageVolume += territory.volume;
           }
       
-          this.add.text(camera.centerX + 150, camera.centerY - 320, shortNum(storageVolume), {
+          this.add.text(camera.centerX + 148, camera.centerY - 322, shortNum(storageVolume), {
             font: '20px Shadow',
             color: '#fffcdc', 
           }).setOrigin(0, 0.5).setShadow(2, 2, '#08080888', 2);
       
-          this.add.text(camera.centerX + 150, camera.centerY - 295, shortNum(100), {
+          this.add.text(camera.centerX + 148, camera.centerY - 297, shortNum(100), {
             font: '20px Shadow',
             color: '#fffcdc', 
           }).setOrigin(0, 0.5).setShadow(2, 2, '#08080888', 2);

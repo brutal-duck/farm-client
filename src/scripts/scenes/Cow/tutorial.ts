@@ -16,13 +16,24 @@ function showTutorial(additional: boolean | string = false): void {
     this.scene.launch('Modal', this.state);
   }; 
 
-  let tutorial: Itutorial = {
-    farm: 5,
-    step: this.state.userCow.tutorial,
-    additional: additional
-  }
-  this.state.tutorial = tutorial;
-  this.scene.launch('Tutorial', this.state);
+  const interval: Phaser.Time.TimerEvent = this.time.addEvent({
+    delay: 300,
+    loop: true,
+    callback: (): void => {
+      if (this.scene.isActive('Modal') && this.state.modal.type === 13) {
+        let tutorial: Itutorial = {
+          farm: 5,
+          step: this.state.userCow.tutorial,
+          additional: additional
+        }
+        this.state.tutorial = tutorial;
+        this.scene.launch('Tutorial', this.state);
+        interval.destroy();
+      }
+    },
+    callbackScope: this,
+  });
+
 
 }
 
@@ -36,7 +47,7 @@ function doneTutor_0(): void {
   this.state.userCow.tutorial = 10;
   this.scene.stop('Tutorial');
 
-  this.time.addEvent({ delay: 1000, callback: (): void => {
+  this.time.addEvent({ delay: 500, callback: (): void => {
     this.showTutorial();
   }, callbackScope: this, loop: false });
   
@@ -51,7 +62,7 @@ function doneTutor_10(): void {
   this.state.userCow.tutorial = 20;
   this.scene.stop('Tutorial');
 
-  this.time.addEvent({ delay: 1000, callback: (): void => {
+  this.time.addEvent({ delay: 500, callback: (): void => {
     this.showTutorial();
   }, callbackScope: this, loop: false });
   
@@ -66,7 +77,7 @@ function doneTutor_20(): void {
   this.state.userCow.tutorial = 30;
   this.scene.stop('Tutorial');
 
-  this.time.addEvent({ delay: 1000, callback: (): void => {
+  this.time.addEvent({ delay: 500, callback: (): void => {
     this.showTutorial();
   }, callbackScope: this, loop: false });
   
