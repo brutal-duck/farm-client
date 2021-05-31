@@ -1209,8 +1209,6 @@ export default function autoprogress(load: boolean = false): void {
 
         if ((factory.productionTimer <= 0 || factory.productionTimer > factorySettings.processingTime) && factory.currentProduction) factory.productionTimer = factorySettings.processingTime;
         // раскладываем остатки молока
-        console.log(haveMilk)
-
         for (const territory of territories) {
           if (haveMilk > 0) {
             if (territory.territoryType === 5) {
