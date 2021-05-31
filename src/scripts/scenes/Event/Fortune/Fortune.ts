@@ -366,9 +366,9 @@ export default class Fortune extends Phaser.Scene {
     this.prizeId === 9 ? -260 : 0;
 
     const dAngle: number = Phaser.Math.Between(1, 15) * Phaser.Math.RND.pick(Phaser.Math.RND.signs);
-    // const dAngle: number = -25;
+    // const dAngle: number = -11;
 
-    if (dAngle > 10 && (this.prizeId === 3 || this.prizeId === 4 || this.prizeId === 5)) {
+    if (dAngle > 12 && this.prizeId === 3) {
       let anim = this.tweens.add({
         targets: this.wheel,
         onUpdate: (): void => {
@@ -406,7 +406,7 @@ export default class Fortune extends Phaser.Scene {
         },
         onUpdateScope: this,
         duration: 3500,
-        angle: { from: 0, to: -2093 },
+        angle: { from: 0, to: -2105 + dAngle },
         ease: 'Power3',
         onComplete: () => {
           this.setAngle(dAngle);
