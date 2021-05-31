@@ -13,7 +13,7 @@ export default class Factory extends Phaser.GameObjects.Sprite {
   public improve: number;
   public workAnimation: Phaser.GameObjects.Particles.ParticleEmitter;
 
-  constructor(scene, x, y, improve) {
+  constructor(scene: Cow, x: number, y: number, improve: number) {
     super(scene, x, y, 'cow-factory');
     this.improve = improve;
     this.init();
