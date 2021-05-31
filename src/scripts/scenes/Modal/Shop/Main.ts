@@ -289,46 +289,25 @@ class Shop extends Phaser.Scene {
     this.scrolling.bottom = this.height - this.heightWindow;
     if (this.state.farm === 'Sheep') {
       this.collectorBoost();
-
       if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
-      this.state.user.additionalTutorial.herdBoost) this.herdBoost(); // проверяем главу и создаем окно только если глава выше 6
-      
+      this.state.user.additionalTutorial.herdBoost) this.herdBoost();
       if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].feedBoostLvl &&
-      this.state.user.additionalTutorial.feedBoost) {
-        this.feedBoost();
-      }
+      this.state.user.additionalTutorial.feedBoost) this.feedBoost();
       
     } else if (this.state.farm === 'Chicken') {
       this.collectorBoost();
-
-      if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
-      this.state.user.additionalTutorial.herdBoost) this.herdBoost(); // проверяем главу и создаем окно только если глава выше 6
-
-      if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].feedBoostLvl &&
-      this.state.user.additionalTutorial.feedBoost) {
-        this.feedBoost();
-      }
+      if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl) this.herdBoost(); 
+      if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].feedBoostLvl) this.feedBoost();
 
     } else if (this.state.farm === 'Cow') {
       this.collectorBoost();
-
-      if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
-      this.state.user.additionalTutorial.herdBoost) this.herdBoost(); // проверяем главу и создаем окно только если глава выше 6
-
-      if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].feedBoostLvl &&
-      this.state.user.additionalTutorial.feedBoost) {
-        this.feedBoost();
-      }
+      if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl) this.herdBoost(); 
+      if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].feedBoostLvl) this.feedBoost();
 
     } else if (this.state.farm === 'Unicorn') {
       this.eventCollectorBoost();
-
-      if (this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].herdBoostLvl && 
-      this.state.user.additionalTutorial.herdBoost) this.eventHerdBoost();
-
-      if (this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].feedBoostLvl &&
-      this.state.user.additionalTutorial.feedBoost) this.eventFeedBoost();
-      
+      if (this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].herdBoostLvl) this.eventHerdBoost();
+      if (this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].feedBoostLvl) this.eventFeedBoost();
     }
   }
 

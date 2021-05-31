@@ -56,24 +56,20 @@ function updateNativeShop(): void {
   for (let i = 0; i < this.state.nativeCounter.length; i++) {
     counter += this.state.nativeCounter[i];
   }
-  
+
   if ((this.scene.isActive('Modal') ||
   this.scene.isActive('Tutorial')) &&
   this.game.scene.keys[`${this.state.farm}Bars`].nativeShop.visible ||
   counter <= 0) {
-
     this.game.scene.keys[`${this.state.farm}Bars`].nativeShop.setVisible(false);
     this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setVisible(false);
-
   } else if (!this.scene.isActive('Modal') &&
   !this.scene.isActive('Tutorial') &&
   !this.game.scene.keys[`${this.state.farm}Bars`].nativeShop.visible &&
   counter > 0 &&
-  this.state.user.additionalTutorial.herdBoost) {
-
+  (this.state.user.additionalTutorial.herdBoost || this.state.farm !== 'Sheep')) {
     this.game.scene.keys[`${this.state.farm}Bars`].nativeShop.setVisible(true);
     this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setVisible(true);
-
   }
 }
 
