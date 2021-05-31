@@ -138,7 +138,8 @@ function checkMerging(territory: Territory, cow: CowSprite, position: string) {
         const x: number = territory.x + 120;
         const y: number = territory.y + 240;
         
-        const cow: CowSprite = this.animalGroup.generate({ x, y }, type, id, 0, cow1.milk + cow2.milk, 7, false);
+        const newMilk: number = cow1.milk + cow2.milk
+        const cow: CowSprite = this.animalGroup.generate({ x, y }, type, id, 0, newMilk, 0, 7, false);
         cow1.destroy();
         cow2.destroy();
         const aimX: number = Phaser.Math.Between(territory.x + 40, territory.x + 200);
@@ -230,7 +231,7 @@ function buyCow(breed: number, shop: boolean = false): boolean {
       }
 
       let id: string = 'local_' + randomString(18);
-      this.animalGroup.generate({ x, y }, breed, id, 0, 0, 7, true);
+      this.animalGroup.generate({ x, y }, breed, id, 0, 0, 0, 7, true);
       this.state.userCow.money -= cowPrice.price;
       this.state.userCow.countCow = cowPrice.countCow;
       this.game.scene.keys['CowBars'].updateCowPrice();
@@ -456,10 +457,11 @@ function dragCowMerging(cow: CowSprite): void {
     }
     MergingCloud.create(this, position);
     const type: number = cow.breed + 1;
+    const newMilk: number = findCow.milk + cow.milk;
     findCow.destroy();
     cow.destroy();
     const id: string = 'local_' + randomString(18);
-    this.animalGroup.generate(position, type, id, 0, 0, 7, false);
+    this.animalGroup.generate(position, type, id, 0, newMilk, 0, 7, false);
     this.tryTask(2, type);
     this.tryTask(4, type);
     this.checkAnimalTask();
