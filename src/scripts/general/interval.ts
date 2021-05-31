@@ -373,9 +373,11 @@ function updateProfileNative(load: boolean = false): void {
     if (count <= 0 && Profile.sheepNativeText.visible) {
       Profile.sheepNativeText.setVisible(false);
       Profile.sheepNativeBg.setVisible(false);
+      Profile.animSheepSprite.setVisible(false);
     } else if (count > 0 && !Profile.sheepNativeText.visible) {
       Profile.sheepNativeText.setVisible(true);
       Profile.sheepNativeBg.setVisible(true);
+      Profile.animSheepSprite.setVisible(true);
     }
   }
 
@@ -400,9 +402,11 @@ function updateProfileNative(load: boolean = false): void {
     if (count <= 0 && Profile.chickenNativeText.visible) {
       Profile.chickenNativeText.setVisible(false);
       Profile.chickenNativeBg.setVisible(false);
+      Profile.animChickenSprite.setVisible(false);
     } else if (count > 0 && !Profile.chickenNativeText.visible) {
       Profile.chickenNativeText.setVisible(true);
       Profile.chickenNativeBg.setVisible(true);
+      Profile.animChickenSprite.setVisible(true);
     }
   }
   
@@ -427,9 +431,11 @@ function updateProfileNative(load: boolean = false): void {
     if (count <= 0 && Profile.cowNativeText.visible) {
       Profile.cowNativeText.setVisible(false);
       Profile.cowNativeBg.setVisible(false);
+      Profile.animCowSprite.setVisible(false);
     } else if (count > 0 && !Profile.cowNativeText.visible) {
       Profile.cowNativeText.setVisible(true);
       Profile.cowNativeBg.setVisible(true);
+      Profile.animCowSprite.setVisible(true);
     }
   }
 }

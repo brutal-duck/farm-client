@@ -95,12 +95,13 @@ class Profile extends Phaser.Scene {
     
     this.createElements();
     this.setListeners();
+    this.setNativeAnim();
+
     this.game.scene.keys[this.state.farm].updateProfileNative(true);
   }
 
   public update(): void {
     this.updateEvent();
-    this.setNativeAnim();
   }
 
   private createElements(): void {
@@ -182,6 +183,7 @@ class Profile extends Phaser.Scene {
       color: '#ffffff',
     }).setOrigin(0.5).setDepth(1).setVisible(false);
     this.sheepNativeBg = this.add.sprite(this.sheepNativeText.x, this.sheepNativeText.y, 'profile-native-bg').setVisible(false);
+    this.animSheepSprite = this.add.sprite(this.sheepNativeBg.x, this.sheepNativeBg.y, 'profile-native-bg').setVisible(false);
     this.click(farmSprite, (): void => {
       if (this.state.farm !== 'Sheep') {
         this.game.scene.keys[this.state.farm].autosave();
@@ -211,6 +213,8 @@ class Profile extends Phaser.Scene {
         color: '#ffffff',
       }).setOrigin(0.5).setDepth(3).setVisible(false);
       this.chickenNativeBg = this.add.sprite(this.chickenNativeText.x, this.chickenNativeText.y, 'profile-native-bg').setDepth(1).setVisible(false);
+      this.animChickenSprite = this.add.sprite(this.chickenNativeBg.x, this.chickenNativeBg.y, 'profile-native-bg').setDepth(2).setVisible(false);
+
       this.click(farmSprite, (): void => {
         if (this.state.farm !== 'Chicken') {
           this.game.scene.keys[this.state.farm].autosave();
@@ -265,6 +269,7 @@ class Profile extends Phaser.Scene {
         color: '#ffffff',
       }).setOrigin(0.5).setDepth(3).setVisible(false);
       this.cowNativeBg = this.add.sprite(this.cowNativeText.x, this.cowNativeText.y, 'profile-native-bg').setVisible(false);
+      this.animCowSprite = this.add.sprite(this.cowNativeBg.x, this.cowNativeBg.y, 'profile-native-bg').setDepth(2).setVisible(false);
 
       this.click(farmSprite, (): void => {
         if (this.state.farm !== 'Cow') {
@@ -330,6 +335,8 @@ class Profile extends Phaser.Scene {
         color: '#ffffff',
       }).setOrigin(0.5).setDepth(3).setVisible(false);
       this.chickenNativeBg = this.add.sprite(this.chickenNativeText.x, this.chickenNativeText.y, 'profile-native-bg').setDepth(1).setVisible(false);
+      this.animChickenSprite = this.add.sprite(this.chickenNativeBg.x, this.chickenNativeBg.y, 'profile-native-bg').setDepth(2).setVisible(false);
+
       this.click(farmSprite, (): void => {
         if (this.state.farm !== 'Chicken') {
           this.game.scene.keys[this.state.farm].autosave();
@@ -398,6 +405,7 @@ class Profile extends Phaser.Scene {
         color: '#ffffff',
       }).setOrigin(0.5).setDepth(3).setVisible(false);
       this.cowNativeBg = this.add.sprite(this.cowNativeText.x, this.cowNativeText.y, 'profile-native-bg').setVisible(false);
+      this.animCowSprite = this.add.sprite(this.cowNativeBg.x, this.cowNativeBg.y, 'profile-native-bg').setDepth(2).setVisible(false);
 
       this.click(farmSprite, (): void => {
         if (this.state.farm !== 'Cow') {
@@ -841,8 +849,7 @@ class Profile extends Phaser.Scene {
   }
   
   private setNativeAnim(): void {
-    if (this.sheepNativeBg && this.sheepNativeBg.visible && !this.animSheepSprite) {
-      this.animSheepSprite = this.add.sprite(this.sheepNativeBg.x, this.sheepNativeBg.y, 'profile-native-bg');
+    if (this.sheepNativeBg) {
       this.tweens.add({
         targets: [ this.animSheepSprite ],
         scale: { from: 1.05, to: 2 },
@@ -852,8 +859,7 @@ class Profile extends Phaser.Scene {
         repeatDelay: 1150,
       });
     }
-    if (this.chickenNativeBg && this.chickenNativeBg.visible && !this.animChickenSprite) {
-      this.animChickenSprite = this.add.sprite(this.chickenNativeBg.x, this.chickenNativeBg.y, 'profile-native-bg').setDepth(2);
+    if (this.chickenNativeBg) {
       this.tweens.add({
         targets: [ this.animChickenSprite ],
         scale: { from: 1.05, to: 2 },
@@ -863,8 +869,7 @@ class Profile extends Phaser.Scene {
         repeatDelay: 1150,
       });
     } 
-    if (this.cowNativeBg && this.cowNativeBg.visible && !this.animCowSprite) {
-      this.animCowSprite = this.add.sprite(this.cowNativeBg.x, this.cowNativeBg.y, 'profile-native-bg').setDepth(2);
+    if (this.cowNativeBg) {
       this.tweens.add({
         targets: [ this.animCowSprite ],
         scale: { from: 1.05, to: 2 },
