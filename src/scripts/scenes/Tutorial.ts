@@ -1051,7 +1051,7 @@ class Tutorial extends Phaser.Scene {
     let textHeight: number = this.text.getBounds().height;
     if (textHeight > 160) bubbleHeight = textHeight + 40;
 
-    if (this.showContinue) bubbleHeight += 30;
+    if (this.showContinue) bubbleHeight += 50;
 
     if (this.topPosition) {
 

@@ -454,7 +454,7 @@ function donePart(): void {
     if (!((user.part === 3 && this.state.user.additionalTutorial.cave) || 
       (user.part === 5 && this.state.user.additionalTutorial.herdBoost) ||
       (user.part === 6 && this.state.user.additionalTutorial.feedBoost) || 
-      user.part === 4)) {
+      user.part === 4 || user.part === 2 && this.state.farm === 'Cow')) {
       if (!this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Profile')) this.showTasks();
