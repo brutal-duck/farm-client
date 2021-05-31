@@ -11,7 +11,7 @@ function createBoostAnimal(): void {
   } else if (this.state.user.boosts[this.state.farm.toLowerCase()].herd > 0) {
     this.state.user.boosts[this.state.farm.toLowerCase()].herd -= 1;
     this.logAmplitudeEvent('herd_boost_spent', {});
-  } else if (this.state.user.boosts[this.state.farm.toLowerCase()].herd < 0) {
+  } else if (this.state.user.boosts[this.state.farm.toLowerCase()].herd <= 0) {
     this.state.user.diamonds -= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost;
     this.tryTask(15, 0, this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost);
     this.logAmplitudeEvent('diamonds_spent', {
