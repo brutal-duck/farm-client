@@ -915,9 +915,10 @@ function improveFactoryWindow(): void {
   this.textHeader.setText(factory);
   const headerStyle: Phaser.Types.GameObjects.Text.TextStyle = {
     fontSize: '26px',
-    fontFamily: 'Bip',
+    fontFamily: 'Shadow',
     color: '#925C28',
-    fontStyle: 'bold'
+    wordWrap: { width: 350 },
+    align: 'center',
   };
   const basicStyle: Phaser.Types.GameObjects.Text.TextStyle = {
     fontSize: '24px',
@@ -943,26 +944,26 @@ function improveFactoryWindow(): void {
 
   if (nextLevelProductId > 0) {
     const text: string = `${this.state.lang[`production${nextLevelProductId}`]}`;
-    const productText: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY + 40, `${this.state.lang.newProduct}:`, basicStyle);
-    this.add.text(productText.getBounds().right + 10, this.cameras.main.centerY + 40, text, improveStyle);
+    const productText: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY + 60, `${this.state.lang.newProduct}:`, basicStyle);
+    this.add.text(productText.getBounds().right + 10, this.cameras.main.centerY + 60, text, improveStyle);
   }
 
   const dY: number = nextLevelProductId > 0 ? 0 : 20
   
   const nextLevelHeader: string = `${this.state.lang.nextFactory.replace('$1', nextLevel.improve)}`;
-  const header: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 120, nextLevelHeader, headerStyle).setOrigin(0.5);
+  const header: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 110, nextLevelHeader, headerStyle).setOrigin(0.5);
 
   const lotSize: string = `${this.state.lang.lotSize}: ${shortNum(thisLevel.lotSize)} ${this.state.lang.litres}`;
-  const lot: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY - 80 + dY, lotSize, basicStyle);
+  const lot: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY - 60 + dY, lotSize, basicStyle);
   
   const time: string = thisLevel.processingTime / 60 < 1 ? `${thisLevel.processingTime} ${this.state.lang.seconds}`: 
   `${shortNum(thisLevel.processingTime / 60)} ${this.state.lang.minutes}`;
 
   const durationText: string = `${this.state.lang.processingTime}: ${time}`;
-  const duration: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY - 40 + dY, durationText, basicStyle);
+  const duration: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY - 20 + dY, durationText, basicStyle);
 
   const efficiencyText: string = `${this.state.lang.efficiency}: ${thisLevel.efficiency}%`;
-  const efficiency: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY + dY, efficiencyText, basicStyle);
+  const efficiency: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY + 20 + dY, efficiencyText, basicStyle);
 
   let icon: string;
   let text: string;
@@ -1004,7 +1005,7 @@ function improveFactoryWindow(): void {
 
   }
 
-  const btnY: number = nextLevelProductId > 0 ? 130 : 110;
+  const btnY: number = nextLevelProductId > 0 ? 150 : 130;
 
   if (this.state[`user${this.state.farm}`].part >= nextLevel.unlock_improve) {
     if (nextLevel.improveDiamondPrice) {
@@ -1033,10 +1034,10 @@ function improveFactoryWindow(): void {
     this.bigButton('grey', 'left', btnY, this.state.lang.improve, improve);
   }
   if (nextLevelProductId > 0) {
-    this.resizeWindow(300);
+    this.resizeWindow(320);
   } else {
     header.setY(header.y += 20);
-    this.resizeWindow(250);
+    this.resizeWindow(280);
   }
 }
 
