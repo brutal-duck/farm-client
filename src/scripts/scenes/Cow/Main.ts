@@ -89,7 +89,10 @@ import {
 } from './basic';
 import { 
   showTutorial,
-  doneTutor_0
+  doneTutor_0,
+  doneTutor_10,
+  doneTutor_20,
+  doneTutor_30,
 } from './tutorial';
 import {
   findAd,
@@ -192,6 +195,9 @@ class Cow extends Phaser.Scene {
   public buildBorders = buildBorders.bind(this);
   public showTutorial = showTutorial.bind(this);
   public doneTutor_0 = doneTutor_0.bind(this);
+  public doneTutor_10 = doneTutor_10.bind(this);
+  public doneTutor_20 = doneTutor_20.bind(this);
+  public doneTutor_30 = doneTutor_30.bind(this);
   public autoprogress = autoprogress.bind(this);
   public dailyAward = dailyAward.bind(this);
   public logout = logout.bind(this);
@@ -274,19 +280,21 @@ class Cow extends Phaser.Scene {
 
     // let cursors = this.input.keyboard.createCursorKeys();
     // cursors.space.on('down', (): void => {
+    //   //@ts-ignore
+    //   // this.territories.children.entries.find((el) => el.territoryType === 8).improve = 0
+    //   // this.state.userCow.factory.boostTime = 0;
     //   // this.state.userCow.diamondAnimalTime = 0
     //   // this.state.newbieTime = 0
     //   // this.state.daily = Number(this.state.daily) + 1
     //   // this.state.user.takenReward = false;
     //   // this.state.dailyAwards = [false, false, false, false, false, false, false, false]
-
+      
     //   // let modal: Imodal = {
-    //   //   type: 9,
+    //   //   type: 4,
     //   // }
 
     //   // this.state.modal = modal;
     //   // this.scene.launch('Modal', this.state);
-
     //   // this.state.userSheep.feedBoostTimer = 10
     //   // this.scene.launch('Modal', this.state);
     //   // let tasks = this.partTasks();
