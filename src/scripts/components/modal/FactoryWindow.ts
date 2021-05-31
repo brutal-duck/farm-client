@@ -133,15 +133,15 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
       efficiencyText2.setPosition(windowGeom.centerX + 90, windowGeom.centerY - 42);
     }
 
-    this.scene.add.text(windowGeom.centerX, windowGeom.centerY + 45, this.scene.state.lang.probabilityOfProduction, {
-      font: '18px Shadow',
+    this.scene.add.text(windowGeom.centerX, windowGeom.centerY + 47, this.scene.state.lang.probabilityOfProduction, {
+      font: '19px Shadow',
       color: '#feb55f', 
     }).setOrigin(0.5);
     const productPercents: number[] = factory.getPercent();
 
     const product1Percent: number = productPercents[0];
-    this.product1PercentText = this.scene.add.text(windowGeom.left + 115, windowGeom.centerY + 95, `${product1Percent}%`, {
-      font: '32px Shadow',
+    this.product1PercentText = this.scene.add.text(windowGeom.left + 113, windowGeom.centerY + 92, `${product1Percent}%`, {
+      font: '33px Shadow',
       color: product1Percent > 0 ? ACTIVE_COLOR : LOCKED_COLOR, 
       align: 'center',
     }).setOrigin(0.5);
@@ -150,8 +150,8 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
     const product2SlotTexture: string = product2Percent > 0 ? 'factory-production-slot-2' : 'factory-production-slot-disable-2';
   
     const product2slotSprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(windowGeom.centerX - 62, windowGeom.centerY + 177, product2SlotTexture);
-    this.product2PercentText = this.scene.add.text(product2slotSprite.x + 5 , product2slotSprite.y - 82, `${product2Percent}%`, {
-      font: '32px Shadow',
+    this.product2PercentText = this.scene.add.text(product2slotSprite.x + 5 , product2slotSprite.y - 85, `${product2Percent}%`, {
+      font: '33px Shadow',
       color: product2Percent > 0 ? ACTIVE_COLOR : LOCKED_COLOR, 
       align: 'center',
     }).setOrigin(0.5);
@@ -161,8 +161,8 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
     const product3SlotTexture: string = product3Percent > 0 ? 'factory-production-slot-3' : 'factory-production-slot-disable-3';
   
     const product3slotSprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(windowGeom.centerX + 55, windowGeom.centerY + 177, product3SlotTexture);
-    this.product3PercentText = this.scene.add.text(product3slotSprite.x + 5 , product3slotSprite.y - 82, `${product3Percent}%`, {
-      font: '32px Shadow',
+    this.product3PercentText = this.scene.add.text(product3slotSprite.x + 5 , product3slotSprite.y - 85, `${product3Percent}%`, {
+      font: '33px Shadow',
       color: product3Percent > 0 ? ACTIVE_COLOR : LOCKED_COLOR, 
       align: 'center',
     }).setOrigin(0.5);
@@ -172,12 +172,12 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
     const product4SlotTexture: string = product4Percent > 0 ? 'factory-production-slot-4' : 'factory-production-slot-disable-4';
   
     this.product4Sprite = this.scene.add.sprite(windowGeom.centerX + 171, windowGeom.centerY + 177, product4SlotTexture);
-    this.product4PercentText = this.scene.add.text(this.product4Sprite.x + 5 , this.product4Sprite.y - 82, `${product4Percent}%`, {
-      font: '32px Shadow',
+    this.product4PercentText = this.scene.add.text(this.product4Sprite.x + 5 , this.product4Sprite.y - 85, `${product4Percent}%`, {
+      font: '33px Shadow',
       color: product4Percent > 0 ? BOOST_COLOR : LOCKED_COLOR, 
       align: 'center',
     }).setOrigin(0.5);
-    this.scene.add.sprite(this.product4Sprite.x + 30, this.product4Sprite.y - 20, 'plus').setScale(0.8);
+    this.scene.add.sprite(this.product4Sprite.x + 28, this.product4Sprite.y - 25, 'plus').setScale(0.84);
   
     if (product4Percent > 0) {
       this.boostTimer = this.scene.add.text(this.product4Sprite.x, this.product4Sprite.y + 82, shortTime(this.scene.state.userCow.factory.boostTime, this.scene.state.lang), {
