@@ -519,7 +519,7 @@ export default function autoprogress(load: boolean = false): void {
     
     const territories: Iterritories[] = state.cowTerritories;
     const factoryTerritory: Iterritories = territories.find((data: Iterritories) => data.type === 8);
-    if (factoryTerritory) {
+    if (factoryTerritory && state.userCow.tutorial >= 40) {
       const factory: Ifactory = state.userCow.factory;
       const factorySettings: IfactorySettings = state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === factoryTerritory.improve);
   
@@ -1146,7 +1146,7 @@ export default function autoprogress(load: boolean = false): void {
     }
 
     const factoryTerritory: Territory = territories.find((data: Territory) => data.territoryType === 8);
-    if (factoryTerritory) {
+    if (factoryTerritory && state.userCow.tutorial >= 40) {
       const factory: Factory = factoryTerritory.factory;
       const factorySettings: IfactorySettings = factory.settings;
       if (state.offlineTime > factory.productionTimer) {

@@ -302,7 +302,7 @@ function cowFactoryProgress(): void {
   if (Scene.state.progress.cow.part > 0) {
     const factory: Ifactory = Scene.state.userCow.factory;
     const factoryTerr: Iterritories = Scene.state.cowTerritories.find((data: Iterritories) => data.type === 8);
-    if (!factoryTerr) return;
+    if (!factoryTerr && this.state.userCow.tutorial < 40) return;
     const factorySettings: IfactorySettings = Scene.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === factoryTerr.improve);
   
     if (factory.boostTime > 0) {
