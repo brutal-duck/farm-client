@@ -541,6 +541,8 @@ export default function autoprogress(load: boolean = false): void {
           count = countLaunchedProductions;
         } else {
           count = Math.floor(haveMilk / factorySettings.lotSize);
+          haveMilk -= count*factorySettings.lotSize;
+          if (haveMilk < 0) haveMilk = 0;
         }
 
         let boostedCount: number = 0;
@@ -1166,6 +1168,8 @@ export default function autoprogress(load: boolean = false): void {
           count = countLaunchedProductions;
         } else {
           count = Math.floor(haveMilk / factorySettings.lotSize);
+          haveMilk -= count*factorySettings.lotSize;
+          if (haveMilk < 0) haveMilk = 0;
         }
 
         let boostedCount: number = 0;
@@ -1205,6 +1209,8 @@ export default function autoprogress(load: boolean = false): void {
 
         if ((factory.productionTimer <= 0 || factory.productionTimer > factorySettings.processingTime) && factory.currentProduction) factory.productionTimer = factorySettings.processingTime;
         // раскладываем остатки молока
+        console.log(haveMilk)
+
         for (const territory of territories) {
           if (haveMilk > 0) {
             if (territory.territoryType === 5) {
@@ -1220,6 +1226,7 @@ export default function autoprogress(load: boolean = false): void {
             }
           }
         }
+
       } else {
         if (factory.currentProduction) factory.productionTimer -= state.offlineTime;
         if ((factory.productionTimer <= 0 || factory.productionTimer > factorySettings.processingTime) && factory.currentProduction) factory.productionTimer = factorySettings.processingTime;
