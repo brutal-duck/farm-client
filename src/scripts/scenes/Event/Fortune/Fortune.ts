@@ -9,7 +9,6 @@ import Currency from './../../../components/animations/Currency';
 const modal: string = require('../../../../assets/images/event/fortune/modal.png');
 const btn: string = require('../../../../assets/images/event/fortune/btn.png');
 const wheel: string = require('../../../../assets/images/event/fortune/wheel.png');
-const wheel1: string = require('../../../../assets/images/event/fortune/wheel-1.png');
 const pointer: string = require('../../../../assets/images/event/fortune/pointer.png');
 const ticket: string = require('../../../../assets/images/event/fortune/ticket.png');
 const jackpotBg: string = require('../../../../assets/images/event/fortune/jackpot-bg.png');
@@ -70,7 +69,6 @@ export default class Fortune extends Phaser.Scene {
     this.load.image('fortune-modal', modal);
     this.load.image('fortune-btn', btn);
     this.load.image('fortune-wheel', wheel);
-    this.load.image('fortune-new-wheel', wheel1);
     this.load.image('fortune-pointer', pointer);
     this.load.image('fortune-ticket', ticket);
     this.load.image('fortune-jackpot-bg', jackpotBg);
@@ -137,8 +135,8 @@ export default class Fortune extends Phaser.Scene {
       color: '#ffffff'
     }).setOrigin(0.5);
 
-    this.wheel = this.add.sprite(modalGeom.centerX - 142, modalGeom.centerY - 180, 'fortune-new-wheel');
-    this.pointer = this.add.sprite(modalGeom.centerX - 138, modalGeom.centerY - 185, 'fortune-pointer');
+    this.wheel = this.add.sprite(modalGeom.centerX - 142, modalGeom.centerY - 180, 'fortune-wheel');
+    this.pointer = this.add.sprite(modalGeom.centerX - 140, modalGeom.centerY - 185, 'fortune-pointer');
     this.closeBtn = this.add.sprite(modalGeom.right - 70, modalGeom.top + 40,'tasks-close')
     
     this.add.text(modalGeom.centerX + 50, modalGeom.centerY + 45, this.state.lang.latestWinners, {

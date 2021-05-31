@@ -734,8 +734,9 @@ class Profile extends Phaser.Scene {
       this.state.progress.event.startTime > 0 && 
       this.state.progress.event.open && 
       this.state.user.additionalTutorial.eventTutorial === 0 && 
-      (this.state.progress.sheep.part > 4 || 
-      this.state.progress.chicken.part >= 1) && 
+      (this.state.progress.sheep.part > 4 ||
+      this.state.progress.chicken.part >= 1 ||
+      this.state.progress.cow.part >= 1) && 
       (this.state.user.login || this.state.name) &&
       !this.eventStartText?.visible
     ) {
@@ -757,7 +758,8 @@ class Profile extends Phaser.Scene {
       this.state.user.additionalTutorial.eventTutorial > 0 &&
       this.state.progress.event.endTime > 0 && 
       (this.state.progress.sheep.part > 4 || 
-      this.state.progress.chicken.part >= 1) && 
+      this.state.progress.chicken.part >= 1 || 
+      this.state.progress.cow.part >= 1) && 
       (this.state.user.login || this.state.name) &&
       !this.eventMapFarm?.visible
     ) {
@@ -776,7 +778,8 @@ class Profile extends Phaser.Scene {
       this.state.user.additionalTutorial.eventTutorial === 0 && 
       (this.state.user.login || this.state.name) && 
       (this.state.progress.sheep.part > 4 || 
-      this.state.progress.chicken.part >= 1) && 
+      this.state.progress.chicken.part >= 1 || 
+      this.state.progress.cow.part >= 1) && 
       this.state.progress.event.endTime > 0 &&
       this.eventZone.active
     ) {
@@ -784,11 +787,12 @@ class Profile extends Phaser.Scene {
       this.eventZone?.destroy();
 
     } else if (
-      this.state.progress.event.endTime <= 0 && 
-      this.state.progress.event.open && 
-      (this.state.user.login || this.state.name) && 
-      (this.state.progress.sheep.part > 4 || 
-      this.state.progress.chicken.part >= 1) 
+      this.state.progress.event.endTime <= 0 &&
+      this.state.progress.event.open &&
+      (this.state.user.login || this.state.name) &&
+      (this.state.progress.sheep.part > 4 ||
+      this.state.progress.chicken.part >= 1 ||
+      this.state.progress.cow.part >= 1) 
       && !this.eventStartText.visible
     ) {
       this.eventIsland?.setVisible(false);
@@ -808,7 +812,8 @@ class Profile extends Phaser.Scene {
       ((!this.state.user.login && 
       !this.state.name || 
       this.state.progress.sheep.part <= 4 && 
-      this.state.progress.chicken.part < 1) || 
+      this.state.progress.chicken.part < 1 && 
+      this.state.progress.cow.part < 1) || 
       !this.state.progress.event.open) && 
       this.eventZone.active 
     ) {
