@@ -278,31 +278,32 @@ class Cow extends Phaser.Scene {
 
     this.animations();
 
-    // let cursors = this.input.keyboard.createCursorKeys();
-    // cursors.space.on('down', (): void => {
-    //   //@ts-ignore
-    //   // this.territories.children.entries.find((el) => el.territoryType === 8).improve = 0
-    //   // this.state.userCow.factory.boostTime = 0;
-    //   // this.state.userCow.diamondAnimalTime = 0
-    //   // this.state.newbieTime = 0
-    //   // this.state.daily = Number(this.state.daily) + 1
-    //   // this.state.dailyAwards = [false, false, false, false, false, false, false, false]
+    let cursors = this.input.keyboard.createCursorKeys();
+    cursors.space.on('down', (): void => {
+      //@ts-ignore
+      // this.territories.children.entries.find((el) => el.territoryType === 8).improve = 0
+      // this.state.userCow.factory.boostTime = 0;
+      // this.state.userCow.diamondAnimalTime = 0
+      // this.state.newbieTime = 0
+      // this.state.daily = Number(this.state.daily) + 1
+      // this.state.dailyAwards = [false, false, false, false, false, false, false, false]
       
-    //   // let modal: Imodal = {
-    //   //   type: 4,
-    //   // }
-    //   // this.state.userCow.part = 3
-    //   // this.state.modal = modal;
-    //   // this.scene.launch('Modal', this.state);
-    //   // this.state.userSheep.feedBoostTimer = 10
-    //   // this.scene.launch('Modal', this.state);
-    //   // let tasks = this.partTasks();
-    //   // for (let i in tasks) {
-    //   //   tasks[i].done = 1;
-    //   //   tasks[i].got_awarded = 1;
-    //   // }
+      // let modal: Imodal = {
+      //   type: 4,
+      // }
+      // this.state.userCow.part = 3
+      // this.state.modal = modal;
+      // this.scene.launch('Modal', this.state);
+      // this.state.userSheep.feedBoostTimer = 10
+      // this.scene.launch('Modal', this.state);
+      // let tasks = this.partTasks();
+      // for (let i in tasks) {
+      //   tasks[i].done = 1;
+      //   tasks[i].got_awarded = 1;
+      // }
+      this.offlineTestProgress();
 
-    // });
+    });
     
   }
 
@@ -314,7 +315,7 @@ class Cow extends Phaser.Scene {
   }
 
   
-  private ofllineTestProgress(): void {
+  private offlineTestProgress(): void {
     this.state.offlineTime = 60 * 30;
     this.autoprogress();
   }

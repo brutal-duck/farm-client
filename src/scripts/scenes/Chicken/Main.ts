@@ -280,16 +280,18 @@ class Chicken extends Phaser.Scene {
     this.interval();
     this.setCollector();
 
-    // let cursors = this.input.keyboard.createCursorKeys();
-    // cursors.space.on('down', (): void => {
-    //   this.state.userChicken.part = 16;
-    //   let tasks = this.partTasks();
-    //   for (let i in tasks) {
-    //       tasks[i].done = 1;
-    //       tasks[i].got_awarded = 1;
-    //   }
-    //   // this.state.userChicken.diamondAnimalTime = 0;
-    // });
+    let cursors = this.input.keyboard.createCursorKeys();
+    cursors.space.on('down', (): void => {
+      // this.state.userChicken.part = 16;
+      // let tasks = this.partTasks();
+      // for (let i in tasks) {
+      //     tasks[i].done = 1;
+      //     tasks[i].got_awarded = 1;
+      // }
+      // this.state.userChicken.diamondAnimalTime = 0;
+      this.offlineTestProgress();
+
+    });
 
   }
 
@@ -301,7 +303,7 @@ class Chicken extends Phaser.Scene {
     this.repositoryAnimation();
   }
 
-  private ofllineTestProgress(): void {
+  private offlineTestProgress(): void {
     this.state.offlineTime = 60 * 30;
     this.autoprogress();
   }
