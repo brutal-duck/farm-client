@@ -129,8 +129,19 @@ function interval(): void {
       let task: Itasks = tasks[0];
       // задание на покупку территории и установку пастбища
       if (task?.done === 0 && task?.id === 137 && !arrowOnTerrirory) {
-        let territory: any = this.territories.children.entries.find((data: any) => data.block === 3 && data.position === 1);
+        let territory: any = this.territories.children.entries.find((data: Territory) => data.block === 3 && data.position === 1);
         arrowOnTerrirory = Arrow.generate(this, 10, { x: territory.x + 120, y: territory.y + 180 });
+      }
+
+
+      const checkTasks: Itasks[] = tasks.filter(el => el.id === 137 && el.done === 1 || el.id === 138 && el.done === 1);
+      if (checkTasks.length >= 2 
+        && !this.scene.isActive('Tutorial')
+        && !this.scene.isActive('Modal')
+        && !this.scene.isActive('Profile')
+        && !this.scene.isActive('Fortune') 
+        && this.state.userCow.tutorial < 40) {
+        this.showTutorial();
       }
     }
 
@@ -293,6 +304,7 @@ function interval(): void {
     if (factoryTerritory && this.state.userCow.tutorial >= 40) {
       factoryTerritory?.productionOfProducts();
     }
+
 
     this.intervalPorgressCollectorTime();
 

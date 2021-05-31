@@ -3,7 +3,7 @@ import {
   clickButton,
   clickShopBtn, 
 } from '../general/clicks';
-import { shortTime } from '../general/basic';
+import { shortNum, shortTime } from '../general/basic';
 import { dragSheep, showSheepSprite } from '../general/animations';
 import { dragEventAnimal } from './Event/Unicorns/animations';
 import Arrow from '../components/animations/Arrow';
@@ -942,6 +942,116 @@ class Tutorial extends Phaser.Scene {
               };
             }
           });
+        }
+      } else if (this.state.tutorial.farm === 5) { 
+        if (this.state.tutorial.step === 0) {
+          const camera: Phaser.Cameras.Scene2D.BaseCamera = this.cameras.main;
+
+          this.add.text(camera.centerX - 172, camera.centerY + 95, `100%`, {
+            font: '32px Shadow',
+            color: '#773a05', 
+            align: 'center',
+          }).setOrigin(0.5);
+        
+          const product2slotSprite: Phaser.GameObjects.Sprite = this.add.sprite(camera.centerX - 62, camera.centerY + 177, 'factory-production-slot-disable-2');
+          this.add.text(product2slotSprite.x + 5 , product2slotSprite.y - 82, `0%`, {
+            font: '32px Shadow',
+            color: '#595959',
+            align: 'center',
+          }).setOrigin(0.5);
+
+          const product3slotSprite: Phaser.GameObjects.Sprite = this.add.sprite(camera.centerX + 55, camera.centerY + 177, 'factory-production-slot-disable-3');
+          this.add.text(product3slotSprite.x + 5 , product3slotSprite.y - 82, `0%`, {
+            font: '32px Shadow',
+            color: '#595959', 
+            align: 'center',
+          }).setOrigin(0.5);
+        
+        
+          const product4slotSprite = this.add.sprite(camera.centerX + 171, camera.centerY + 177, 'factory-production-slot-disable-4');
+          this.add.text(product4slotSprite.x + 5 , product4slotSprite.y - 82, `0%`, {
+            font: '32px Shadow',
+            color: '#595959', 
+            align: 'center',
+          }).setOrigin(0.5);
+          this.add.sprite(product4slotSprite.x + 30, product4slotSprite.y - 20, 'plus').setScale(0.8);
+                    
+          this.topPosition = false;
+          this.indent = this.height - 600;
+          this.tailX = 200;
+          this.tailFlipX = true;
+          this.tailFlipY = false;
+          this.showContinue = true;
+          this.tutorText = this.state.lang.cowTutorial_0;
+          this.generalClick = (): void => this.game.scene.keys[this.state.farm].doneTutor_0();
+          this.pointerTutorial();
+        } else if (this.state.tutorial.step === 10) {
+          const camera: Phaser.Cameras.Scene2D.BaseCamera = this.cameras.main;
+          this.add.tileSprite(camera.centerX - 5, camera.centerY - 295, 500, 30, 'white-pixel').setTint(0xFF9E28);
+      
+          this.add.text(camera.centerX - 225, camera.centerY - 295, this.state.lang.slotSize, {
+            font: '20px Shadow',
+            color: '#fffcdc', 
+          }).setOrigin(0, 0.5).setShadow(2, 2, '#08080888', 2);
+      
+          this.add.text(camera.centerX + 150, camera.centerY - 295, shortNum(100), {
+            font: '20px Shadow',
+            color: '#fffcdc', 
+          }).setOrigin(0, 0.5).setShadow(2, 2, '#08080888', 2);
+
+          this.topPosition = true;
+          this.indent = this.height - 800;
+          this.tailX = 430;
+          this.tailFlipX = true;
+          this.tailFlipY = true;
+          this.showContinue = true;
+          this.tutorText = this.state.lang.cowTutorial_10;
+          this.generalClick = (): void => this.game.scene.keys[this.state.farm].doneTutor_10();
+          this.pointerTutorial();
+        } else if (this.state.tutorial.step === 20) {
+          const camera: Phaser.Cameras.Scene2D.BaseCamera = this.cameras.main;
+          this.add.tileSprite(camera.centerX - 5, camera.centerY - 310, 500, 50, 'white-pixel').setTint(0xFF9E28);
+          this.add.text(camera.centerX - 225, camera.centerY - 320, this.state.lang.milkInStorage, {
+            font: '20px Shadow',
+            color: '#fffcdc', 
+          }).setOrigin(0, 0.5).setShadow(2, 2, '#08080888', 2);
+      
+          this.add.text(camera.centerX - 225, camera.centerY - 295, this.state.lang.slotSize, {
+            font: '20px Shadow',
+            color: '#fffcdc', 
+          }).setOrigin(0, 0.5).setShadow(2, 2, '#08080888', 2);
+      
+          let storageVolume: number = 0;
+      
+          const territories = this.game.scene.keys['Cow'].territories.children.entries;
+      
+          for (const territory of territories) {
+            if (territory.territoryType === 5) storageVolume += territory.volume;
+          }
+      
+          this.add.text(camera.centerX + 150, camera.centerY - 320, shortNum(storageVolume), {
+            font: '20px Shadow',
+            color: '#fffcdc', 
+          }).setOrigin(0, 0.5).setShadow(2, 2, '#08080888', 2);
+      
+          this.add.text(camera.centerX + 150, camera.centerY - 295, shortNum(100), {
+            font: '20px Shadow',
+            color: '#fffcdc', 
+          }).setOrigin(0, 0.5).setShadow(2, 2, '#08080888', 2);
+
+          this.topPosition = true;
+          this.indent = this.height - 800;
+          this.tailX = 430;
+          this.tailFlipX = true;
+          this.tailFlipY = true;
+          this.showContinue = true;
+          this.tutorText = this.state.lang.cowTutorial_20;
+          this.generalClick = (): void => this.game.scene.keys[this.state.farm].doneTutor_20();
+          this.pointerTutorial();
+        } else if (this.state.tutorial.step === 30) {
+          this.tutorText = this.state.lang.cowTutorial_30;
+          this.generalClick = (): void => this.game.scene.keys[this.state.farm].doneTutor_30();
+          this.simpleTutorial();
         }
       } else {
         this.fail();

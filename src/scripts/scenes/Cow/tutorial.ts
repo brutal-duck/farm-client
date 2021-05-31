@@ -1,13 +1,23 @@
 // включение туториала
 function showTutorial(additional: boolean | string = false): void {
   
-  if (this.scene.isActive('Modal')) this.scene.stop('Modal');
+  if (this.scene.isActive('Modal') && this.state.modal.type !== 13) this.scene.stop('Modal');
   if (this.scene.isActive('Tutorial')) this.scene.stop('Tutorial');
   if (this.scene.isActive('MapBars')) this.scene.stop('MapBars');
   if (this.scene.isActive('Profile')) this.scene.stop('Profile');
 
+  let factory: any = this.territories.children.entries.find(el => (el.territoryType === 8));
+  this.state.territory = factory;
+  if (factory && !this.scene.isActive('Modal')) {
+    const modal: Imodal = {
+      type: 13,
+    }
+    this.state.modal = modal;
+    this.scene.launch('Modal', this.state);
+  }; 
+
   let tutorial: Itutorial = {
-    farm: 4,
+    farm: 5,
     step: this.state.userCow.tutorial,
     additional: additional
   }
