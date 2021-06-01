@@ -5,7 +5,9 @@ function showTutorial(additional: boolean | string = false): void {
   if (this.scene.isActive('Tutorial')) this.scene.stop('Tutorial');
   if (this.scene.isActive('MapBars')) this.scene.stop('MapBars');
   if (this.scene.isActive('Profile')) this.scene.stop('Profile');
-
+  if (this.scene.isActive('Shop')) this.scene.stop('Shop');
+  if (this.scene.isActive('ShopBars')) this.scene.stop('ShopBars');
+  
   let tutorial: Itutorial = {
     farm: 2,
     step: this.state.userChicken.tutorial,
