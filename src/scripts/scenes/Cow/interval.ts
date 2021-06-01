@@ -10,6 +10,7 @@ let sheepCollectorVolume: number = 0;
 let chickenCollectorVolume: number = 0;
 let arrowOnColletor: Phaser.GameObjects.Sprite;
 let arrowOnTerrirory: Phaser.GameObjects.Sprite;
+let arrowOnFactory: Phaser.GameObjects.Sprite;
 
 function interval(): void {
 
@@ -308,6 +309,9 @@ function interval(): void {
       factoryTerritory?.productionOfProducts();
     }
 
+    if (factoryTerritory.factory.money > 0 && !arrowOnFactory?.active) {
+        arrowOnFactory = Arrow.generate(this, 19, { x: factoryTerritory.x + 120, y: factoryTerritory.y + 180 });
+    }
 
     this.intervalPorgressCollectorTime();
 
@@ -328,6 +332,7 @@ function interval(): void {
     const volume = this.territories.children.entries.find(el => el.territoryType === 5)?.volume;
     this.tryTask(26, volume);
 
+    
   }, callbackScope: this, loop: true });
 }
 

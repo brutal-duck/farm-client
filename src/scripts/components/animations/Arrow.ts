@@ -2,6 +2,7 @@ import Sheep from '../../scenes/Sheep/Main';
 import SheepBars from '../../scenes/Sheep/SheepBars';
 import Tutorial from '../../scenes/Tutorial';
 import Shop from '../../scenes/Modal/Shop/Main';
+import Territory from './../Territories/Territory';
 /**
   *  Конструктор принимает:
   ** Объект сцены, состояние(номер типа) и необязательный параметр позиции.
@@ -24,6 +25,7 @@ import Shop from '../../scenes/Modal/Shop/Main';
   *16	Туториал ивента на покупку единорога  
   *17	Тутор стрелка на кнопку карты в барах для начала ивента  
   *18	Стрелка на подстригателя  
+  *19 Стрелка на фабрику
 */
 
 export default class Arrow extends Phaser.GameObjects.Sprite {
@@ -174,6 +176,12 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
         this.setAngle(90);
         this.verticalAnim();
         break;
+      case 19:
+        this.x = this.position.x;
+        this.y = this.position.y - 180 - this.height / 2;
+        this.setAngle(90);
+        this.verticalAnim();
+      break;
     }
 
     this.setDepth(this.y * 2);
@@ -227,6 +235,11 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
       case 18:
         if (this.checkModalOpen() && this.visible) this.setVisible(false);
         else if (!this.checkModalOpen() && !this.visible) this.setVisible(true);
+      break;
+      case 19:
+        if ((this.checkModalOpen() || this.checkTutorialOpen()) && this.visible) this.setVisible(false);
+        else if (!this.checkModalOpen() && !this.checkTutorialOpen() && !this.visible) this.setVisible(true);
+      break;
     }
   }
 
@@ -261,6 +274,10 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
       break;
       case 18: 
         result = this.scene.state[`user${this.scene.state.farm}`].collector > 0;
+      break;
+      case 19: 
+        const factoryTerritory: Territory = this.scene.territories.children.entries.find((data: Territory) => data.territoryType === 8);
+        result = factoryTerritory.factory.money <= 0;
       break;
     }
     return result;
