@@ -5,6 +5,7 @@ import Cow from './../scenes/Cow/Main';
 import Profile from './../scenes/Profile';
 import Arrow from './../components/animations/Arrow';
 import SpeechBubble from './../components/animations/SpeechBuble';
+import Factory from './../components/Territories/Factory';
 
 const progressTerritoryCooldown = (territories: any, time: number): void => {
   for (const territory of territories) {
@@ -415,6 +416,8 @@ function updateProfileNative(load: boolean = false): void {
     else if (Profile.state.progress.cow.collector > 0 && Profile.cowNativeCount[0] !== 0) Profile.cowNativeCount[0] = 0;
     
     const check: boolean = checkStorageCow.bind(this)();
+    const checkFactory: boolean = Profile.state.userCow.tutorial >= 50 ? checkFactoryCow.bind(this)() : false;
+
     if (check && Profile.cowNativeCount[1] !== 1) Profile.cowNativeCount[1] = 1;
     else if (!check && Profile.cowNativeCount[1] !== 0) Profile.cowNativeCount[1] = 0;
     
@@ -423,6 +426,9 @@ function updateProfileNative(load: boolean = false): void {
 
     if (Profile.state.userCow.takenHerdBoost <= 0 && Profile.state.userCow.part >= 5 && Profile.cowNativeCount[3] !== 1) Profile.cowNativeCount[3] = 1;
     else if (Profile.state.userCow.takenHerdBoost > 0 && Profile.state.userCow.part >= 5 && Profile.cowNativeCount[3] !== 0) Profile.cowNativeCount[3] = 1;
+
+    if (checkFactory && Profile.cowNativeCount[4] !== 1) Profile.cowNativeCount[4] = 1;
+    else if (!checkFactory && Profile.cowNativeCount[4] !== 0) Profile.cowNativeCount[4] = 0;
 
     const count: number = Profile.cowNativeCount.reduce((prev, cur) => prev += cur);
     if (Profile.cowNativeText.text !== String(count)) {
@@ -484,7 +490,7 @@ function checkStorageCow(): boolean {
   const check: boolean[] = [];
   if (this.state.farm === 'Cow') {
     for (const territory of this.territories.children.entries) {
-      if (territory.type === 5) {
+      if (territory.territoryType === 5) {
         const max: number = this.state.cowSettings.territoriesCowSettings.find(el => el.improve === territory.improve).storage;
         check.push(territory.volume >= max); 
       }
@@ -498,6 +504,15 @@ function checkStorageCow(): boolean {
     }
   }
   return check.length > 0 ? check.every(el => el) : false;
+}
+
+function checkFactoryCow(): boolean {
+  if (this.state.farm === 'Cow') {
+    const factory: Factory = this.territories.children.entries.find(el => el.territoryType === 8)?.factory;
+    return factory.money > 0;
+  } 
+
+  return this.state.userCow.factory.money > 0;
 }
 
 function intervalPorgressCollectorTime(): void {

@@ -40,7 +40,7 @@ class Profile extends Phaser.Scene {
   public eventIsland: Phaser.GameObjects.Sprite;
   public sheepNativeCount: number[] = [ 0, 0, 0, 0 ];
   public chickenNativeCount: number[] = [ 0, 0, 0, 0 ];
-  public cowNativeCount: number[] = [ 0, 0, 0, 0 ];
+  public cowNativeCount: number[] = [ 0, 0, 0, 0, 0 ];
   public sheepNativeText: Phaser.GameObjects.Text;
   public chickenNativeText: Phaser.GameObjects.Text;
   public cowNativeText: Phaser.GameObjects.Text;
