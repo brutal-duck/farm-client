@@ -9,6 +9,9 @@ export default class CowSprite extends Animal {
   public scene: Cow;
   public hornsSprite: Phaser.GameObjects.Sprite;
   public settings: IcowPoints;
+  public barBg: Phaser.GameObjects.Graphics;
+  public barLineBg: Phaser.GameObjects.Graphics;
+  public barProgress: Phaser.GameObjects.Graphics;
   constructor(scene: Cow, 
     position: Iposition, 
     breed: number,   
@@ -99,7 +102,13 @@ export default class CowSprite extends Animal {
     super.setBrain();
     this.setMilkStatusPosition();
     this.setMilkStatusVisibility();
+    this.setFullnessBarVisibility();
     this.setDiamondStage();
+    if (this.scene.state.userCow.part === 1) {
+      this.setFullnessBar();
+    } else if (this.barBg || this.barLineBg || this.barProgress) {
+      this.removeFullnessBar();
+    }
   }
 
   private setDiamondStage(): void {
@@ -132,19 +141,67 @@ export default class CowSprite extends Animal {
       } 
 
     this.milkStatus.setDepth(this.depth + 1);
-    this.milkStatus.setPosition(this.x + statusPosition, this.y - 60)
+    this.milkStatus.setPosition(this.x + statusPosition, this.y - 60);
     }
   }
 
   private setMilkStatusVisibility(): void {
     const milkLevel: number =(this.settings.maxMilkVolume - 2 * (this.settings.maxMilkVolume / 60));
-    if (this.milk >=  milkLevel && !this.milkStatus.visible) this.milkStatus.setVisible(true);
-    if ((this.milk < milkLevel || this.drag) && this.milkStatus.visible) this.milkStatus.setVisible(false);
+    if (this.milk >=  milkLevel && !this.milkStatus.visible) {
+      this.milkStatus?.setVisible(true);
+    }
+    if ((this.milk < milkLevel || this.drag) && this.milkStatus.visible) {
+      this.milkStatus?.setVisible(false);
+    }
   }
 
   public destroy(): void {
     super.destroy();
     this.hornsSprite?.destroy();
     this.milkStatus?.destroy();
+    this.removeFullnessBar();
+  }
+
+  private setFullnessBar(): void {
+    let x: number = this.x - 55;
+    let y: number = this.y - 90;
+    let progress: number = Math.round(94 * (this.milk / this.settings.maxMilkVolume))
+
+    if (!this.barBg) this.barBg = this.scene.add.graphics({ x: x, y: y });
+    if (!this.barLineBg) this.barLineBg = this.scene.add.graphics({ x: x + 3, y: y + 3 }).setDepth(y);
+    if (!this.barProgress) this.barProgress = this.scene.add.graphics({ x: x + 3, y: y + 3 }).setDepth(y);
+    this.barBg?.clear().setPosition(x, y).setDepth(this.depth);
+    this.barLineBg?.clear().setPosition(x + 3, y + 3).setDepth(this.depth);
+    this.barProgress?.clear().setPosition(x + 3, y + 3).setDepth(this.depth);
+
+    this.barBg?.fillStyle(0xFFFEDE, 1);
+    this.barBg?.fillRoundedRect(0, 0, 100, 22, 5);
+    this.barLineBg?.fillStyle(0xFFE398, 1);
+    this.barLineBg?.fillRoundedRect(0, 0, 94, 16, 3);
+    this.barProgress?.fillStyle(0xFF8C3B, 1);
+    this.barProgress?.fillRoundedRect(0, 0, progress, 16, 3);
+  }
+
+  private removeFullnessBar(): void {
+    this.barBg?.destroy();
+    this.barLineBg?.destroy();
+    this.barProgress?.destroy();
+    this.barBg = undefined;
+    this.barLineBg = undefined;
+    this.barProgress = undefined;
+  }
+
+  private setFullnessBarVisibility(): void {
+    if (this.scene.state.userCow.part === 1) {
+      if (this.milkStatus.visible || this.drag) {
+        this.barBg?.setVisible(false);
+        this.barLineBg?.setVisible(false);
+        this.barProgress?.setVisible(false);
+      } else if (!this.milkStatus.visible && !this.drag) {
+        this.barBg?.setVisible(true);
+        this.barLineBg?.setVisible(true);
+        this.barProgress?.setVisible(true);    
+      };
+    }
   }
 }

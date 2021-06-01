@@ -436,7 +436,7 @@ export default function autoprogress(load: boolean = false): void {
     let wasFactoryBoost: number = 0;
 
     if (state.userCow.factory.boostTime >= offlineTime) {
-      state.userCow.factory.boostTime >= offlineTime;
+      state.userCow.factory.boostTime -= state.offlineTime;
       wasFactoryBoost = offlineTime;
     } else {
       wasFactoryBoost = state.userCow.factory.boostTime;
@@ -1076,7 +1076,7 @@ export default function autoprogress(load: boolean = false): void {
     let wasFactoryBoost: number = 0;
 
     if (state.userCow.factory.boostTime >= state.offlineTime) {
-      state.userCow.factory.boostTime >= state.offlineTime;
+      state.userCow.factory.boostTime -= state.offlineTime;
       wasFactoryBoost = state.offlineTime;
     } else {
       wasFactoryBoost = state.userCow.factory.boostTime;
