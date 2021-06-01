@@ -469,6 +469,15 @@ export default function autoprogress(load: boolean = false): void {
           if (cow.milk + (milk * wasCollector) > 1000) cow.milk = cowPoints.maxMilkVolume;
           else cow.milk += (milk * wasCollector);
         }
+
+        if (state.userCow.collector === 0) {
+          cow.milk += milk * offlineTime;
+
+          if (cow.milk > cowPoints.maxMilkVolume) {
+            cow.milk = cowPoints.maxMilkVolume;
+          }
+        }
+
         if (cow.type !== 0) {
           milkCollected.push({
             id: cow._id,
@@ -1096,19 +1105,28 @@ export default function autoprogress(load: boolean = false): void {
           milk = Math.round(milk / 100 * state.cowSettings.cowBadPercent);
           if (milk < 1) milk = 1;
         }
-
         const milkCollect: number = Math.floor((milk * wasCollector) / 1000);
         if (milkCollect === 0) {
           if (cow.milk + (milk * wasCollector) > 1000) cow.milk = cowPoints.maxMilkVolume;
           else cow.milk += (milk * wasCollector);
         }
+
+        if (state.userCow.collector === 0) {
+          cow.milk += milk * state.offlineTime;
+
+          if (cow.milk > cowPoints.maxMilkVolume) {
+            cow.milk = cowPoints.maxMilkVolume;
+          }
+        }
+
         if (cow.breed !== 0) {
           milkCollected.push({
             id: cow._id,
             type: cow.breed,
             count: milkCollect,
-          })
+          });
         }
+
       }
     }
 
