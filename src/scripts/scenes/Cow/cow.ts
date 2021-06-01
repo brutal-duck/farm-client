@@ -229,7 +229,6 @@ function buyCow(breed: number, shop: boolean = false): boolean {
           y = Phaser.Math.Between(position.y - 10, position.y + 10);
         }
       }
-
       let id: string = 'local_' + randomString(18);
       this.animalGroup.generate({ x, y }, breed, id, 0, 0, 0, 7, true);
       this.state.userCow.money -= cowPrice.price;
