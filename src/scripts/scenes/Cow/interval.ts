@@ -114,7 +114,7 @@ function interval(): void {
 
 
 
-    if (this.state.userCow.part <= 3) {
+    if (this.state.userCow.part <= 2) {
       
       let tasks: Itasks[] = this.partTasks();
       tasks.sort((x1: Itasks, x2: Itasks) => {
@@ -133,8 +133,10 @@ function interval(): void {
         arrowOnTerrirory = Arrow.generate(this, 10, { x: territory.x + 120, y: territory.y + 180 });
       }
 
-      const checkTasks: Itasks[] = tasks.filter(el => el.id === 137 && el.done === 1 || el.id === 138 && el.done === 1);
-      if (checkTasks.length >= 2 
+      const factory: Territory = this.territories.children.entries.find((el: Territory) => el.territoryType === 8)
+      const milkTask: Itasks = tasks.find(el => el.id === 138);
+      const factoryTask: Itasks = tasks.find(el => el.id === 137);
+      if (milkTask?.done === 1 && (factoryTask?.done === 1 || factory)
         && !this.scene.isActive('Tutorial')
         && !this.scene.isActive('Modal')
         && !this.scene.isActive('Profile')
@@ -145,6 +147,7 @@ function interval(): void {
       }
     }
     
+    if (this.state.userCow.tutorial === 0 && this.state.userCow.part >= 3) this.state.userCow.tutorial = 50;
     // бар собирателя
     if (this.state.userCow.collector > 0) {
       this.state.userCow.collector--;
