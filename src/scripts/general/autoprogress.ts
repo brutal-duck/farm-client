@@ -574,8 +574,11 @@ export default function autoprogress(load: boolean = false): void {
           const remainingTime: number = state.offlineTime - factory.productionTimer - factorySettings.processingTime * count;
           factory.productionTimer = remainingTime;
       
-          if (remainingTime > 0) {
+          if (remainingTime > 0 && haveMilk > factorySettings.lotSize) {
             factory.currentProduction = getRandomProductId(factorySettings, state.userCow.factory.boostTime > 0);
+          } else if (haveMilk < factorySettings.lotSize) {
+            factory.currentProduction = undefined;
+            factory.productionTimer = 0
           }
         } else {
           const remainingTime: number = factory.productionTimer - state.offlineTime;
@@ -1179,7 +1182,6 @@ export default function autoprogress(load: boolean = false): void {
           boostedCount = Math.floor(wasFactoryBoost / factorySettings.processingTime * count);
           if (wasFactoryBoost > factorySettings.processingTime && boostedCount === 0) boostedCount = 1;
         }
-  
         const currentProduction: number = factory.currentProduction;
         if (currentProduction) count += 1;
         if (count > 0) {
@@ -1197,9 +1199,11 @@ export default function autoprogress(load: boolean = false): void {
           const remainingTime: number = state.offlineTime - factory.productionTimer - factorySettings.processingTime * count;
 
           factory.productionTimer = remainingTime;
-
-          if (factory.productionTimer  > 0) {
+          if (factory.productionTimer  > 0 && haveMilk > factorySettings.lotSize) {
             factory.currentProduction = getRandomProductId(factorySettings, boostedCount > 0);
+          } else if (haveMilk < factorySettings.lotSize) {
+            factory.currentProduction = undefined;
+            factory.productionTimer = 0
           }
         } else {
           const remainingTime: number = factory.productionTimer - state.offlineTime;

@@ -218,7 +218,7 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
       percent = 100 - factory.productionTimer / (factory.settings.processingTime / 100);
     }
     
-    if (factory.productionTimer > 0 && !this.product) {
+    if (factory.productionTimer > 0 && !this.product && this.scene.state.territory.factory.currentProduction) {
       this.setProductionAnimation();
     }
     
@@ -316,7 +316,7 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
       }, 
       loop: -1,
       onLoop: (): void => {
-        if (this.product && this.product.texture.key !== `factory-production-${this.scene.state.territory.currentProduction}`) {
+        if (this.product && this.product.texture.key !== `factory-production-${this.scene.state.territory.currentProduction}` || !this.scene.state.territory.factory.currentProduction) {
           this.removeProductionAnimation();
         }
       }
