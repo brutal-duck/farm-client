@@ -473,6 +473,14 @@ function clickTaskBoard(task: Itasks): void {
       this.scene.launch('Modal', this.state);
     }; 
   }
+
+  const openImproveFactory = (): void => {
+    let factory: any = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => (el.type === 8 || el.territoryType === 8));
+    this.state.territory = factory;
+    if (factory) {
+      this.game.scene.keys[this.state.farm].showImproveFactory();
+    };
+  }
   
   const findUnlockTerritoryForBuy = (): any => {
     let farmTerritories: any = this.game.scene.keys[this.state.farm].territories.children.entries;
@@ -574,7 +582,7 @@ function clickTaskBoard(task: Itasks): void {
       this.game.scene.keys[this.state.farm].showImproveCollector();
       break;
     case 24:
-      openFactory(); 
+      openImproveFactory(); 
       break;
     case 25: 
       openShopBoosters();
