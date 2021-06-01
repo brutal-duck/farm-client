@@ -2855,7 +2855,7 @@ export default [
     id: 194,
     farm: 3,
     part: 16,
-    sort: 2,
+    sort: 4,
     type: 4,
     count: 12,
     state: 12,
