@@ -153,6 +153,7 @@ class Cow extends Phaser.Scene {
   public chocolateMultiply: number = 2.5;
   public factoryBoostStack: number = 11;
   public counterWithoutCollector: number = 0;
+  public spaceCount: number = 0;
 
   public world = world.bind(this);
   public drag = drag.bind(this);
@@ -318,7 +319,10 @@ class Cow extends Phaser.Scene {
 
   
   private offlineTestProgress(): void {
-    this.state.offlineTime = 60 * 30;
+    if (this.spaceCount > 10) console.clear();
+    this.spaceCount += 1;
+    console.log(this.spaceCount);
+    this.state.offlineTime = 60 * 60;
     this.autoprogress();
   }
 
