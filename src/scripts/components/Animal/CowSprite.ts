@@ -39,7 +39,8 @@ export default class CowSprite extends Animal {
   public init(): void {
     super.init();
     this.basicVelocity = 30;
-    this.milkStatus = this.scene.add.sprite(this.x, this.y, 'milk-status').setVisible(false);
+    const milkStatusTexture: string = this.breed !== 0 ? 'milk-status' : 'diamond-status';
+    this.milkStatus = this.scene.add.sprite(this.x, this.y, milkStatusTexture).setVisible(false);
     if (this.breed === 0) this.createDiamondHorns();
     this.setListeners();
     if (this.breed !== 0) {

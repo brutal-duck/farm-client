@@ -304,6 +304,7 @@ const horizontalBorder3: string = require("./../../../assets/images/sheep/territ
 const tutorMerging: string = require("./../../../assets/images/sheep/tutor-merging.png");
 const gift: string = require("./../../../assets/images/icons/gift.png");
 const shaveStatus: string = require("./../../../assets/images/sheep/icons/shave-status.png");
+const diamondStatus: string = require('./../../../assets/images/icons/diamond-status.png');
 const offline: string = require("./../../../assets/images/icons/offline.png");
 const arrow: string = require("./../../../assets/images/arrow.png");
 const tutorBtn: string = require("./../../../assets/images/modal/tutor-btn.png");
@@ -666,6 +667,7 @@ class SheepPreload extends Phaser.Scene {
     this.load.image('tutor-merging', tutorMerging);
     this.load.image('gift', gift);
     this.load.image('shave-status', shaveStatus);
+    this.load.image('diamond-status', diamondStatus);
     this.load.image('offline', offline);
     this.load.image('arrow', arrow);
     this.load.image('tutor-btn', tutorBtn);

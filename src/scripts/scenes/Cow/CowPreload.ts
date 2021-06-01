@@ -108,6 +108,7 @@ const cow10: string = require('./../../../assets/images/cow/cow/cow10.png');
 const cow11: string = require('./../../../assets/images/cow/cow/cow11.png');
 const cow12: string = require('./../../../assets/images/cow/cow/cow12.png');
 const milkStatus: string = require('./../../../assets/images/cow/icons/milk-status.png');
+const diamondStatus: string = require('./../../../assets/images/icons/diamond-status.png');
 const milk: string = require('./../../../assets/images/cow/milk.png');
 const mergingAnimation: string = require('./../../../assets/images/merging-animation.png');
 const coin: string = require('./../../../assets/images/cow/icons/money.png');
@@ -360,6 +361,7 @@ class CowPreload extends Phaser.Scene {
     this.load.spritesheet('cow11', cow11, { frameWidth: 152.7, frameHeight: 153 });
     this.load.spritesheet('cow12', cow12, { frameWidth: 143.8, frameHeight: 156 });
     this.load.image('milk-status', milkStatus);
+    this.load.image('diamond-status', diamondStatus);
     this.load.image('cow-milk', milk);
     this.load.image('merging-animation', mergingAnimation);
     this.load.image('cowCoin', coin);

@@ -221,7 +221,8 @@ function getSheep(
 
   if (vector === 2 || vector === 3 || vector === 7 || vector === 8) side = 'left';
   sheep.woolSprite = this.add.sprite(x, y, 'sheep-' + side + '-' + sheep.type + '-' + stage);
-  sheep.shaveStatus = this.add.sprite(x, y, 'shave-status').setVisible(false);
+  const statusTexture: string = sheep.type !== 0 ? 'shave-status' : 'diamond-status';
+  sheep.shaveStatus = this.add.sprite(x, y, statusTexture).setVisible(false);
   sheep.anims.play('sheep-stay-' + side + sheep.type, true);
   if (anim) Firework.create(this, { x, y }, 1);
   
