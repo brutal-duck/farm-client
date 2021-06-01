@@ -308,9 +308,10 @@ function interval(): void {
     if (factoryTerritory && this.state.userCow.tutorial >= 50) {
       factoryTerritory?.productionOfProducts();
     }
-
-    if (factoryTerritory.factory.money > 0 && !arrowOnFactory?.active && !factoryTerritory.factory.currentProduction) {
-        arrowOnFactory = Arrow.generate(this, 19, { x: factoryTerritory.x + 120, y: factoryTerritory.y + 180 });
+    if (factoryTerritory) {
+      if (factoryTerritory.factory.money > 0 && !arrowOnFactory?.active && !factoryTerritory.factory.currentProduction) {
+          arrowOnFactory = Arrow.generate(this, 19, { x: factoryTerritory.x + 120, y: factoryTerritory.y + 180 });
+      }
     }
 
     this.intervalPorgressCollectorTime();
