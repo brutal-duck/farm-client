@@ -77,7 +77,7 @@ function updateHerdBoostBtn(): void {
   if (
     this.state.modal.shopType === 4 && 
     this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
-    this.state.user.additionalTutorial.herdBoost
+    (this.state.user.additionalTutorial.herdBoost || this.state.farm !== 'Sheep')
   ) {
     let xBtn: number =  330;
     let yBtn: number = 500 + this.height;
@@ -698,7 +698,7 @@ function updateFeedBoostBtn(): void {
   if (
     this.state.modal.shopType === 4 && 
     this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].feedBoostLvl &&
-    this.state.user.additionalTutorial.feedBoost
+    (this.state.user.additionalTutorial.feedBoost || this.state.farm !== 'Sheep')
   ) {
     if (this.state.user.boosts[this.state.farm.toLowerCase()].feed > 0) {
       this.feedBoostNative.setText(this.state.user.boosts[this.state.farm.toLowerCase()].feed);
