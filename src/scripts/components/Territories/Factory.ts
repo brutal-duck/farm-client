@@ -1,5 +1,7 @@
 import Cow from './../../scenes/Cow/Main';
 
+const WHITE_COLOR: number = 0xffffff;
+const RED_COLOR: number = 0xff0000;
 export default class Factory extends Phaser.GameObjects.Sprite {
   public scene: Cow;
   public settings: IfactorySettings;
@@ -12,6 +14,8 @@ export default class Factory extends Phaser.GameObjects.Sprite {
   public money: number = 0;
   public improve: number;
   public workAnimation: Phaser.GameObjects.Particles.ParticleEmitter;
+  public flash: Phaser.GameObjects.Sprite;
+  public idleAnimation: Phaser.Tweens.Tween;
 
   constructor(scene: Cow, x: number, y: number, improve: number) {
     super(scene, x, y, 'cow-factory');
@@ -29,6 +33,8 @@ export default class Factory extends Phaser.GameObjects.Sprite {
     this.production4Money = this.scene.state.userCow.factory.production4Money;
     this.money = this.scene.state.userCow.factory.money;
     this.settings = this.scene.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === this.improve);
+    this.flash = this.scene.add.sprite(this.x + 12, this.y + 4, 'factory-flash').setDepth(this.depth + 1000).setVisible(false);
+    this.setIdleAnimation();
   }
 
   
@@ -53,8 +59,10 @@ export default class Factory extends Phaser.GameObjects.Sprite {
     super.preUpdate(time, delta);
     if (!this.workAnimation && this.currentProduction !== 0 && this.currentProduction) {
       this.setWorkAnimation();
+      this.removeIdleAnimation()
     } else if (this.workAnimation && (this.currentProduction === 0 || !this.currentProduction)){
-      this.removeAnimation();
+      this.removeWorkAnimation();
+      this.setIdleAnimation();
     }
   }
   public setWorkAnimation(): void {
@@ -73,8 +81,30 @@ export default class Factory extends Phaser.GameObjects.Sprite {
     });
   }
 
-  private removeAnimation(): void {
+  private removeWorkAnimation(): void {
     this.workAnimation.remove();
     this.workAnimation = undefined;
+  }
+
+  private setIdleAnimation(): void {
+    this.flash.setVisible(true);
+    this.idleAnimation = this.scene.add.tween({
+      targets: [],
+      loopDelay: 300, 
+      loop: -1,
+      onLoop: (): void => {
+        if (this.flash.tintTopLeft !== WHITE_COLOR) {
+          this.flash.setTint(WHITE_COLOR);
+        } else {
+          this.flash.setTint(RED_COLOR);
+        }
+      }
+    })
+  }
+
+  private removeIdleAnimation(): void {
+    this.flash.setVisible(false);
+    this.idleAnimation.remove();
+    this.idleAnimation = undefined;
   }
 }

@@ -277,7 +277,7 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
       break;
       case 19: 
         const factoryTerritory: Territory = this.scene.territories.children.entries.find((data: Territory) => data.territoryType === 8);
-        result = factoryTerritory.factory.money <= 0;
+        result = factoryTerritory.factory.money <= 0 || factoryTerritory.factory.currentProduction !== undefined;
       break;
     }
     return result;
