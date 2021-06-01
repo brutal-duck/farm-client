@@ -214,6 +214,7 @@ const farmer: string = require('./../../../assets/images/farmer.png');
 const whitePixel: string = require('./../../../assets/images/white-pixel.jpg');
 const scrollArrow: string = require('./../../../assets/images/scroll-arrow.png');
 const factorySmoke: string = require('./../../../assets/images/cow/factory-smoke.png');
+const factoryFlash: string = require('./../../../assets/images/cow/factory-flash.png');
 const tutorialShowcase: string = require('./../../../assets/images/cow/tutorial-showcase.png');
 
 
@@ -469,6 +470,7 @@ class CowPreload extends Phaser.Scene {
     this.load.image('white-pixel', whitePixel);
     this.load.image('scroll-arrow', scrollArrow);
     this.load.image('factory-smoke', factorySmoke);
+    this.load.image('factory-flash', factoryFlash);
     this.load.image('tutorial-showcase', tutorialShowcase);
   }
 
