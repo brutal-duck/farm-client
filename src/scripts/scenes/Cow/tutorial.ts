@@ -6,33 +6,43 @@ function showTutorial(additional: boolean | string = false): void {
   if (this.scene.isActive('MapBars')) this.scene.stop('MapBars');
   if (this.scene.isActive('Profile')) this.scene.stop('Profile');
 
-  let factory: any = this.territories.children.entries.find(el => (el.territoryType === 8));
-  this.state.territory = factory;
-  if (factory && !this.scene.isActive('Modal')) {
-    const modal: Imodal = {
-      type: 13,
-    }
-    this.state.modal = modal;
-    this.scene.launch('Modal', this.state);
-  }; 
-
-  const interval: Phaser.Time.TimerEvent = this.time.addEvent({
-    delay: 300,
-    loop: true,
-    callback: (): void => {
-      if (this.scene.isActive('Modal') && this.state.modal.type === 13) {
-        let tutorial: Itutorial = {
-          farm: 5,
-          step: this.state.userCow.tutorial,
-          additional: additional
-        }
-        this.state.tutorial = tutorial;
-        this.scene.launch('Tutorial', this.state);
-        interval.destroy();
+  if (this.state.userCow.tutorial >= 10) {
+    let factory: any = this.territories.children.entries.find(el => (el.territoryType === 8));
+    this.state.territory = factory;
+    if (factory && !this.scene.isActive('Modal')) {
+      const modal: Imodal = {
+        type: 13,
       }
-    },
-    callbackScope: this,
-  });
+      this.state.modal = modal;
+      this.scene.launch('Modal', this.state);
+    }; 
+  
+    const interval: Phaser.Time.TimerEvent = this.time.addEvent({
+      delay: 300,
+      loop: true,
+      callback: (): void => {
+        if (this.scene.isActive('Modal') && this.state.modal.type === 13) {
+          let tutorial: Itutorial = {
+            farm: 5,
+            step: this.state.userCow.tutorial,
+            additional: additional
+          }
+          this.state.tutorial = tutorial;
+          this.scene.launch('Tutorial', this.state);
+          interval.destroy();
+        }
+      },
+      callbackScope: this,
+    });
+  } else {
+    let tutorial: Itutorial = {
+      farm: 5,
+      step: this.state.userCow.tutorial,
+      additional: additional
+    }
+    this.state.tutorial = tutorial;
+    this.scene.launch('Tutorial', this.state);
+  }
 
 
 }
@@ -46,11 +56,6 @@ function doneTutor_0(): void {
   
   this.state.userCow.tutorial = 10;
   this.scene.stop('Tutorial');
-
-  this.time.addEvent({ delay: 500, callback: (): void => {
-    this.showTutorial();
-  }, callbackScope: this, loop: false });
-  
 }
 
 function doneTutor_10(): void {
@@ -91,6 +96,21 @@ function doneTutor_30(): void {
   
   this.state.userCow.tutorial = 40;
   this.scene.stop('Tutorial');
+
+  this.time.addEvent({ delay: 500, callback: (): void => {
+    this.showTutorial();
+  }, callbackScope: this, loop: false });
+  
+}
+
+function doneTutor_40(): void {
+
+  this.logAmplitudeEvent('tutorial', {
+    step: 40
+  });
+  
+  this.state.userCow.tutorial = 50;
+  this.scene.stop('Tutorial');
 }
 
 
@@ -100,4 +120,5 @@ export {
   doneTutor_10,
   doneTutor_20,
   doneTutor_30,
+  doneTutor_40,
 }

@@ -75,9 +75,9 @@ function world(): void {
   });
 
   // туториал, если нужен
-  // if (this.state.userCow.tutorial === 0) {
-  //   this.showTutorial();
-  // }
+  if (this.state.userCow.tutorial === 0) {
+    this.showTutorial();
+  }
 }
 
 function getTerritoryType(data: Iterritories): string {

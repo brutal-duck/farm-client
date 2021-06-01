@@ -943,8 +943,14 @@ class Tutorial extends Phaser.Scene {
             }
           });
         }
-      } else if (this.state.tutorial.farm === 5) { 
+      } else if (this.state.tutorial.farm === 5) {
         if (this.state.tutorial.step === 0) {
+
+          this.tutorText = this.state.lang.cowTutorial_0;
+          this.generalClick = (): void => this.game.scene.keys[this.state.farm].doneTutor_0();
+          this.simpleTutorial();
+
+        } else if (this.state.tutorial.step === 10) {
           this.add.sprite(this.cameras.main.centerX - 4, this.cameras.main.centerY + 158, 'tutorial-showcase');
           this.add.text(this.cameras.main.centerX - 175, this.cameras.main.centerY + 92, `100%`, {
             font: '33px Shadow',
@@ -976,10 +982,10 @@ class Tutorial extends Phaser.Scene {
           this.tailFlipX = true;
           this.tailFlipY = false;
           this.showContinue = true;
-          this.tutorText = this.state.lang.cowTutorial_0;
-          this.generalClick = (): void => this.game.scene.keys[this.state.farm].doneTutor_0();
+          this.tutorText = this.state.lang.cowTutorial_10;
+          this.generalClick = (): void => this.game.scene.keys[this.state.farm].doneTutor_10();
           this.pointerTutorial();
-        } else if (this.state.tutorial.step === 10) {
+        } else if (this.state.tutorial.step === 20) {
           const camera: Phaser.Cameras.Scene2D.BaseCamera = this.cameras.main;
           this.add.tileSprite(camera.centerX - 5, camera.centerY - 295, 500, 30, 'white-pixel').setTint(0xFF9E28);
       
@@ -999,10 +1005,10 @@ class Tutorial extends Phaser.Scene {
           this.tailFlipX = true;
           this.tailFlipY = true;
           this.showContinue = true;
-          this.tutorText = this.state.lang.cowTutorial_10;
-          this.generalClick = (): void => this.game.scene.keys[this.state.farm].doneTutor_10();
+          this.tutorText = this.state.lang.cowTutorial_20;
+          this.generalClick = (): void => this.game.scene.keys[this.state.farm].doneTutor_20();
           this.pointerTutorial();
-        } else if (this.state.tutorial.step === 20) {
+        } else if (this.state.tutorial.step === 30) {
           const camera: Phaser.Cameras.Scene2D.BaseCamera = this.cameras.main;
           this.add.tileSprite(camera.centerX - 5, camera.centerY - 310, 500, 50, 'white-pixel').setTint(0xFF9E28);
           this.add.text(camera.centerX - 227, camera.centerY - 322, this.state.lang.milkInStorage, {
@@ -1039,13 +1045,15 @@ class Tutorial extends Phaser.Scene {
           this.tailFlipX = true;
           this.tailFlipY = true;
           this.showContinue = true;
-          this.tutorText = this.state.lang.cowTutorial_20;
-          this.generalClick = (): void => this.game.scene.keys[this.state.farm].doneTutor_20();
-          this.pointerTutorial();
-        } else if (this.state.tutorial.step === 30) {
           this.tutorText = this.state.lang.cowTutorial_30;
           this.generalClick = (): void => this.game.scene.keys[this.state.farm].doneTutor_30();
+          this.pointerTutorial();
+        } else if (this.state.tutorial.step === 40) {
+          this.tutorText = this.state.lang.cowTutorial_40;
+          this.generalClick = (): void => this.game.scene.keys[this.state.farm].doneTutor_40();
           this.simpleTutorial();
+        } else {
+          this.fail();
         }
       } else {
         this.fail();

@@ -93,6 +93,7 @@ import {
   doneTutor_10,
   doneTutor_20,
   doneTutor_30,
+  doneTutor_40,
 } from './tutorial';
 import {
   findAd,
@@ -198,6 +199,7 @@ class Cow extends Phaser.Scene {
   public doneTutor_10 = doneTutor_10.bind(this);
   public doneTutor_20 = doneTutor_20.bind(this);
   public doneTutor_30 = doneTutor_30.bind(this);
+  public doneTutor_40 = doneTutor_40.bind(this);
   public autoprogress = autoprogress.bind(this);
   public dailyAward = dailyAward.bind(this);
   public logout = logout.bind(this);
