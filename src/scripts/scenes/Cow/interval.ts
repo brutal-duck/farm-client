@@ -309,7 +309,7 @@ function interval(): void {
       factoryTerritory?.productionOfProducts();
     }
 
-    if (factoryTerritory.factory.money > 0 && !arrowOnFactory?.active) {
+    if (factoryTerritory.factory.money > 0 && !arrowOnFactory?.active && !factoryTerritory.factory.currentProduction) {
         arrowOnFactory = Arrow.generate(this, 19, { x: factoryTerritory.x + 120, y: factoryTerritory.y + 180 });
     }
 

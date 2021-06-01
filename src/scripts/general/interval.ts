@@ -509,10 +509,10 @@ function checkStorageCow(): boolean {
 function checkFactoryCow(): boolean {
   if (this.state.farm === 'Cow') {
     const factory: Factory = this.territories.children.entries.find(el => el.territoryType === 8)?.factory;
-    return factory.money > 0;
+    return factory.money > 0 && !factory.currentProduction;
   } 
 
-  return this.state.userCow.factory.money > 0;
+  return this.state.userCow.factory.money > 0 && !this.state.userCow.factory.currentProduction;
 }
 
 function intervalPorgressCollectorTime(): void {
