@@ -195,33 +195,47 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       .setDepth(this.y + 1)
       .setOrigin(0.5, 1);
     
-    this.setPositionImproveRepository();
+    this.setPositionImproveText();
 
   }
 
-  private setPositionImproveRepository(): void {
-    const position: Iposition = {
-      x: this.improveText?.x,
-      y: this.improveText?.y,
-    };
-
-    if (this.improve < 5) {
-      position.x = this.x + 127;
-      position.y = this.y + 125;
-    } else if (this.improve < 10) {
-      position.x = this.x + 87;
-      position.y = this.y + 140;
-    } else if (this.improve < 15) {
-      position.x = this.x + 168;
-      position.y = this.y + 138;
-    } else {
-      position.x = this.x + 130;
-      position.y = this.y + 140;
-    }
-    if (this.improveText.x !== position.x || this.improveText.y !== position.y) {
-      this.improveText.setPosition(position.x, position.y);
-      this.improveText.setStyle({ fontSize: '32px' });
-      this.improveText.setDepth(this.repository.depth + 1);
+  private setPositionImproveText(): void {
+    if (this.territoryType === 5) {
+      const position: Iposition = {
+        x: this.improveText?.x,
+        y: this.improveText?.y,
+      };
+  
+      if (this.improve < 5) {
+        position.x = this.x + 127;
+        position.y = this.y + 125;
+      } else if (this.improve < 10) {
+        position.x = this.x + 87;
+        position.y = this.y + 140;
+      } else if (this.improve < 15) {
+        position.x = this.x + 168;
+        position.y = this.y + 138;
+      } else {
+        position.x = this.x + 130;
+        position.y = this.y + 140;
+      }
+      if (this.improveText.x !== position.x || this.improveText.y !== position.y) {
+        this.improveText.setPosition(position.x, position.y);
+        this.improveText.setStyle({ fontSize: '32px' });
+        this.improveText.setDepth(this.repository.depth + 1);
+      }
+    } else if (this.territoryType === 2 || this.territoryType === 3){
+      const position: Iposition = {
+        x: this.x + 38,
+        y: this.y + 24,
+      };
+  
+      if (this.improveText.x !== position.x || this.improveText.y !== position.y) {
+        this.improveText
+          .setPosition(position.x, position.y)
+          .setStyle({ fontSize: '26px' })
+          .setDepth(this.depth + 2);
+      }
     }
   }
 
@@ -464,6 +478,8 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       this.createImproveText();
     }
 
+    this.setPositionImproveText();
+
     if (this.improveText?.text !== String(this.improve)) {
       this.improveText?.setText(String(this.improve));
     }
@@ -494,7 +510,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       } else if (this.volume >= 800) {
         sprite += 5;
       }
-  
     }
   
     if (this.territoryType === 3) {
@@ -509,7 +524,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       } else if (this.volume >= 750) {
         sprite += 4;
       }
-  
     }
   
     if (this.territoryType === 5) {
@@ -539,12 +553,12 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       if (this.repository.texture.key !== sprite) {
         this.repository.setTexture(sprite);
       }
-      this.setPositionImproveRepository();
     }
-
+    
     if (this.texture.key !== sprite && this.territoryType !== 5) {
       this.setTexture(sprite);
     } 
+
     
   }
 
