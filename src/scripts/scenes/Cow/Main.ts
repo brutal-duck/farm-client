@@ -305,7 +305,6 @@ class Cow extends Phaser.Scene {
       //   tasks[i].got_awarded = 1;
       // }
       this.offlineTestProgress();
-
     });
     
   }

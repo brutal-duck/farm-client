@@ -306,6 +306,7 @@ const gift: string = require("./../../../assets/images/icons/gift.png");
 const shaveStatus: string = require("./../../../assets/images/sheep/icons/shave-status.png");
 const diamondStatus: string = require('./../../../assets/images/icons/diamond-status.png');
 const offline: string = require("./../../../assets/images/icons/offline.png");
+const hatchet: string = require("./../../../assets/images/icons/hatchet.png");
 const arrow: string = require("./../../../assets/images/arrow.png");
 const tutorBtn: string = require("./../../../assets/images/modal/tutor-btn.png");
 const сurrencyBg: string = require("./../../../assets/images/сurrency-bg.png");
@@ -323,6 +324,7 @@ const loadingSpinner: string = require('./../../../assets/images/animations/load
 const farmer: string = require("./../../../assets/images/farmer.png");
 const whitePixel: string = require("./../../../assets/images/white-pixel.jpg");
 const scrollArrow: string = require("./../../../assets/images/scroll-arrow.png");
+const improveCollector: string = require("./../../../assets/images/modal/improve-collector.png");
 
 class SheepPreload extends Phaser.Scene {
 
@@ -669,6 +671,7 @@ class SheepPreload extends Phaser.Scene {
     this.load.image('shave-status', shaveStatus);
     this.load.image('diamond-status', diamondStatus);
     this.load.image('offline', offline);
+    this.load.image('hatchet', hatchet);
     this.load.image('arrow', arrow);
     this.load.image('tutor-btn', tutorBtn);
     this.load.image('сurrency-bg', сurrencyBg);
@@ -686,6 +689,7 @@ class SheepPreload extends Phaser.Scene {
     this.load.image('farmer', farmer);
     this.load.image('white-pixel', whitePixel);
     this.load.image('scroll-arrow', scrollArrow);
+    this.load.image('improve-collector', improveCollector);
   }
   
   

@@ -1,6 +1,7 @@
 import Scrolling from '../../libs/Scrolling';
 import Cave from '../../components/gameObjects/Cave';
 import SpeechBubble from './../../components/animations/SpeechBuble';
+import CooldownSprite from './../../components/Territories/CooldownSprite';
 
 function world(): void {
 
@@ -282,6 +283,8 @@ function world(): void {
       Cave.create(this, { x, y });
     }
 
+    new CooldownSprite(this, territory.x + 120, territory.y + 120)
+    
     this.clickTerritory(territory, (): void => {
       
       if (this.state.userSheep.tutorial >= 100) {

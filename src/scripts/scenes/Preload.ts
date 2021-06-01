@@ -38,7 +38,6 @@ const boostBtnDisable: string = require("./../../assets/images/modal/boost-btn-d
 const boostBtnAd: string = require("./../../assets/images/modal/boost-btn-ad.png");
 const levelBg: string = require("./../../assets/images/modal/level-bg.png");
 const boostBg: string = require("./../../assets/images/modal/boost-bg.png");
-const improveCollector: string = require("./../../assets/images/modal/improve-collector.png");
 
 // другие окна
 const newbieBg: string = require("./../../assets/images/daily/newbie-bg.png");
@@ -210,7 +209,6 @@ class Preload extends Phaser.Scene {
     this.load.image('boost-btn-ad', boostBtnAd);
     this.load.image('level-bg', levelBg);
     this.load.image('boost-bg', boostBg);
-    this.load.image('improve-collector', improveCollector);
 
     // другие окна
     if (this.state.newbieTime > 0) {
