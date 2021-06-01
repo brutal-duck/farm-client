@@ -162,12 +162,32 @@ class Profile extends Phaser.Scene {
       this.createChickenFarmTestA();
       this.createCowFarmTestA();
     }
-    // this.createLockedCowFarm();
     if (this.state.progress.event.type === 1) {
       this.createUnicornFarm();
     } else if (this.state.progress.event.type === 2) {
       this.createFortuneWheel();
     }
+
+    const zone: Phaser.GameObjects.Zone = this.add.zone(150, 1000, 300, 300).setDropZone(undefined, () => {}).setDepth(6);
+      
+    const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
+    graphics.lineStyle(5, 0xFF0000);
+    graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+
+    this.click(zone, (): void => {
+      if (this.state.farm !== 'Cow') {
+        this.game.scene.keys[this.state.farm].autosave();
+        this.scene.stop();
+        this.scene.stop(this.state.farm);
+        this.scene.stop(this.state.farm + 'Bars');
+        this.scene.start('Cow' + 'Preload', this.state);
+      } else {
+        this.game.scene.keys[this.state.farm].scrolling.downHandler();
+        this.game.scene.keys[this.state.farm].scrolling.enabled = true;
+        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+        this.scene.stop();
+      }
+    });
   }
 
   private createSheepFarm(): void {
