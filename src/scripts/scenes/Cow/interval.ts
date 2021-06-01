@@ -8,7 +8,7 @@ import { progressTerritoryCooldown } from '../../general/interval';
 let checkCollector: number = 0;
 let sheepCollectorVolume: number = 0;
 let chickenCollectorVolume: number = 0;
-let arrowOnColletor: Phaser.GameObjects.Sprite;
+let arrowOnCollector: Phaser.GameObjects.Sprite;
 let arrowOnTerrirory: Phaser.GameObjects.Sprite;
 let arrowOnFactory: Phaser.GameObjects.Sprite;
 
@@ -154,7 +154,7 @@ function interval(): void {
       this.state.userCow.collector--;
     } 
 
-    this.intervalCollectorTutorial(arrowOnColletor);
+    this.intervalCollectorTutorial(arrowOnCollector);
     // задание на накопление денег
     this.tryTask(6, this.state.userCow.money);
 

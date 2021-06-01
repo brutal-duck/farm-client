@@ -552,8 +552,7 @@ function intervalPorgressCollectorTime(): void {
 
 function intervalCollectorTutorial(arrowOnCollector: Phaser.GameObjects.Sprite): void {
   const DELAY: number = 10;
-
-  if (this.state.user.additionalTutorial.collector) {
+  if (this.state.user.additionalTutorial.collector || this.state.farm !== 'Sheep') {
 
     if (this.state[`user${this.state.farm}`].collector === 0 &&
       !arrowOnCollector &&
