@@ -27,7 +27,7 @@ export default class CooldownSprite extends Phaser.GameObjects.Sprite {
     this.scene.add.existing(this);
     this.setOrigin(0.2, 0.8);
     this.setScale(1.1)
-    this.setDepth(100000)
+    this.setDepth(this.territory.depth + 5)
 
     this.timer = this.scene.add.text(this.territory.x + 120, this.territory.y + 130, shortTime(this.territory.cooldown, this.scene.state.lang), {
       fontSize: '28px',
