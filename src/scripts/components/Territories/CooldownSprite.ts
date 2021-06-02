@@ -13,7 +13,6 @@ export default class CooldownSprite extends Phaser.GameObjects.Sprite {
   private btn: Phaser.GameObjects.Sprite;
   private anim: Phaser.Tweens.Tween;
   private price: number;
-  private bought: boolean;
 
   constructor(territory: any) {
     super(territory.scene, territory.x + 80, territory.y + 80, 'hatchet');
@@ -118,24 +117,13 @@ export default class CooldownSprite extends Phaser.GameObjects.Sprite {
 
   private setListeners(): void {
     this.scene.clickModalBtn({ btn: this.btn, title: this.btnPrice, img1: this.btnDiamond }, (): void => {
-      if (this.scene.state.user.diamonds >= this.price) {
-        this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('diamonds_spent', {
-          type: 'cooldown',
-          count: this.price,
-        });
-        this.scene.state.user.diamonds -= this.price;
-        this.territory.cooldown = 0;
-      } else {
-        // вызывем конвертор
-        this.scene.state.convertor = {
-          fun: 0,
-          count: this.price,
-          diamonds: this.price,
-          type: 1
-        }
-        this.scene.game.scene.keys[this.scene.state.farm].exchange();
-        this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
+      let modal: Imodal = {
+        type: 1,
+        sysType: 19,
       }
+      this.scene.state.territory = this.territory;
+      this.scene.state.modal = modal;
+      this.scene.scene.launch('Modal', this.scene.state);
     });
   }
 

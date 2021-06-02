@@ -226,7 +226,11 @@ function systemWindow(): void {
     case 18: 
       this.confirmSellMilk();
       break;
-
+    
+    case 19: 
+      this.confirmBuyCooldown();
+      break;
+      
     default:      
       this.scene.stop();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;

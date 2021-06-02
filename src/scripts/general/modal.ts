@@ -1275,9 +1275,57 @@ function registration(): void {
 
 
   this.resizeWindow(360);
-
+  
 }
 
+
+function confirmBuyCooldown(): void {
+  this.textHeader.setText(this.state.lang.buyTerritory);
+  const price: number = this.state.territory.cooldownSprite.price;
+
+  this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 70, this.state.lang.confirmBuyCooldown, {
+    font: '26px Bip',
+    color: '#925C28',
+    wordWrap: { width: 450 },
+    align: 'center',
+  }).setOrigin(0.5);
+  const img = {
+    icon: 'diamond',
+    text: shortNum(price),
+  };
+
+  this.progressButton = this.bigButton('green', 'left', 20, this.state.lang.speedUpFor, img);
+  const redBtn = this.bigButton('red', 'center', 110, this.state.lang.cancel);
+
+  this.clickModalBtn(this.progressButton, (): void => {
+    this.scene.stop();
+    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+    if (this.state.user.diamonds >= price) {
+      this.game.scene.keys[this.state.farm].logAmplitudeEvent('diamonds_spent', {
+        type: 'cooldown',
+        count: price,
+      });
+      this.state.user.diamonds -= price;
+      this.state.territory.cooldown = 0;
+    } else {
+      // вызывем конвертор
+      this.state.convertor = {
+        fun: 0,
+        count: price,
+        diamonds: price,
+        type: 1
+      }
+      this.game.scene.keys[this.state.farm].exchange();
+      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+    }
+  });
+
+  this.clickModalBtn(redBtn, (): void => {
+    this.scene.stop();
+    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+  });
+  this.resizeWindow(250);
+}
 
 // окно профиля
 function profileWindow(): void {
@@ -1667,5 +1715,6 @@ export {
   profileWindow,
   improveCollector,
   updateImproveCollector,
-  openEmailWindow
+  openEmailWindow,
+  confirmBuyCooldown
 }

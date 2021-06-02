@@ -783,7 +783,7 @@ function setTerritoryUnlockCooldown(): void {
   
   territory.cooldown = settings.unlockCooldown;
   territory.bought = true;
-  new CooldownSprite(territory);
+  territory.cooldownSprite = new CooldownSprite(territory);
 
 }
 

@@ -44,6 +44,8 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   // тип территории 8
   public factory: Factory;
 
+  public cooldownSprite: CooldownSprite;
+
 
   constructor(scene: Cow, x: number, y: number, type: string, data: Iterritories) {
     super(scene, x, y, type);
@@ -261,7 +263,16 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
   private setListeners(): void {
     this.scene.clickTerritory(this, (): void => {
-      if (this.cooldown > 0) return;
+      if (this.cooldown > 0) {
+        let modal: Imodal = {
+          type: 1,
+          sysType: 19,
+        }
+        this.scene.state.territory = this;
+        this.scene.state.modal = modal;
+        this.scene.scene.launch('Modal', this.scene.state);
+        return;
+      };
 
       if (this.territoryType !== 6 && this.territoryType !== 7 && this.territoryType !== 8) {
         const modal: Imodal = {
@@ -323,7 +334,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     
     this.cooldown = settings.unlockCooldown;
     this.bought = true;
-    new CooldownSprite(this);
+    this.cooldownSprite = new CooldownSprite(this);
   }
   
   public unlockTerritory(): void {

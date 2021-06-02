@@ -284,7 +284,7 @@ function world(): void {
     }
 
     if (territory.type === 0 && territory.cooldown > 0) {
-      new CooldownSprite(territory);
+      territory.cooldownSprite = new CooldownSprite(territory);
     }
 
     territory.bought = data.bought;
@@ -294,7 +294,16 @@ function world(): void {
     }
 
     this.clickTerritory(territory, (): void => {
-      if (territory.cooldown > 0) return;
+      if (territory.coodown > 0) {
+        let modal: Imodal = {
+          type: 1,
+          sysType: 19,
+        }
+        this.state.territory = territory;
+        this.state.modal = modal;
+        this.scene.launch('Modal', this.state);
+        return;
+      }
       if (this.state.userSheep.tutorial >= 100) {
         
         if (territory.type !== 6 && territory.type !== 7) {

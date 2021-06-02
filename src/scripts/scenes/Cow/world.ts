@@ -62,7 +62,7 @@ function world(): void {
     }
 
     if (territory.territoryType === 0 && territory.cooldown > 0) {
-      new CooldownSprite(territory);
+      territory.cooldownSprite = new CooldownSprite(territory);
     }
 
     territory.bought = data.bought;

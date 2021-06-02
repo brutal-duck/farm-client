@@ -91,7 +91,8 @@ import {
   registration,
   profileWindow,
   improveCollector,
-  updateImproveCollector
+  updateImproveCollector,
+  confirmBuyCooldown
 } from '../../general/modal';
   // буст "Стадо"
 import { herdBoostWindow, getRandomAnimal, getRandomStartPosition } from './herdBoost';
@@ -230,6 +231,7 @@ class Modal extends Phaser.Scene {
   public loadingModal = loadingModal.bind(this);
   public improveFactoryWindow = improveFactoryWindow.bind(this);
   public confirmSellMilk = confirmSellMilk.bind(this);
+  public confirmBuyCooldown = confirmBuyCooldown.bind(this);
 
   public init(state: Istate): void {
     this.state = state;
