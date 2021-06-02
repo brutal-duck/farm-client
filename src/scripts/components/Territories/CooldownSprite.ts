@@ -41,18 +41,18 @@ export default class CooldownSprite extends Phaser.GameObjects.Sprite {
       .setDepth(this.depth - 1);
 
     this.btn = this.scene.add.sprite(textGeom.centerX, textGeom.bottom + 30, 'improve-collector')
-      .setDepth(this.depth)
+      .setDepth(this.depth + 240)
       .setScale(0.6, 0.7);
 
     this.btnDiamond = this.scene.add.sprite(textGeom.centerX - 15, textGeom.bottom + 28, 'diamond')
-      .setDepth(this.depth)
+      .setDepth(this.depth + 240)
       .setScale(0.10).setOrigin(0, 0.5);
 
     this.btnPrice = this.scene.add.text(textGeom.centerX + 15, textGeom.bottom + 28, '1000', {
       fontSize: '26px',
       fontFamily: 'Shadow',
       color: '#E4DADD'
-    }).setDepth(this.depth).setOrigin(1, 0.5);
+    }).setDepth(this.depth + 240).setOrigin(1, 0.5);
 
     this.setBtnTextPosition();
   }
