@@ -1,6 +1,7 @@
 // территория на которой находится объект
 import Firework from '../components/animations/Firework';
 import Stars from '../components/animations/Stars';
+import CooldownSprite from '../components/Territories/CooldownSprite';
 function currentTerritory(x: number, y: number): object {
 
   let block: number = Math.ceil((y - this.topIndent) / this.height);
@@ -749,20 +750,10 @@ function buyTerritory(): void {
         position: this.state.territory.position,
       });
 
-      this.state.territory.type = 1;
       user.money -= price;
       this.tryTask(5, 1);
-
-      const territory = this.state.territory;
-
-      this.time.addEvent({ delay: 500, callback: (): void => {
-
-        territory.forest.destroy();
-        territory.setTexture(this.state.farm.toLowerCase() + '-bought');
-        Firework.create(this, { x: territory.x + 120, y: territory.y + 120 }, 3);
-        this.buildBorders();
-
-      }, callbackScope: this, loop: false });
+      
+      this.setTerritoryUnlockCooldown();
 
     } else {
 
@@ -788,6 +779,29 @@ function buyTerritory(): void {
 
 }
 
+function setTerritoryUnlockCooldown(): void {
+  const territory: any = this.state.territory;
+  const settings: IterritoriesPrice = this.state.cowSettings.territoriesCowPrice
+    .find((el: IterritoriesPrice) => el.block === territory.block && el.position === territory.position);
+  
+  territory.cooldown = settings.unlockCooldown;
+  territory.bought = true;
+  new CooldownSprite(territory);
+
+}
+
+function unlockTerritory(terr: any): void {
+  if (terr.bought && terr.cooldown <= 0 && terr.type === 0) {
+    terr.type = 1;
+    this.time.addEvent({ delay: 500, callback: (): void => {
+      terr.forest.destroy();
+      terr.setTexture(this.state.farm.toLowerCase() + '-bought');
+      Firework.create(this, { x: terr.x + 120, y: terr.y + 120 }, 3);
+      this.buildBorders();
+    }, callbackScope: this, loop: false });
+  }
+}
+
 function findFreeTerritory (x: number, y: number): Iposition {
   const territory: any = this.currentTerritory(x, y);
   if (territory) {
@@ -808,5 +822,7 @@ export {
   buildBorders,
   checkExchangeRepository,
   buyTerritory,
-  findFreeTerritory
+  findFreeTerritory,
+  setTerritoryUnlockCooldown,
+  unlockTerritory,
 }

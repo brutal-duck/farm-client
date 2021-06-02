@@ -283,10 +283,18 @@ function world(): void {
       Cave.create(this, { x, y });
     }
 
-    new CooldownSprite(this, territory.x + 120, territory.y + 120)
-    
+    if (territory.type === 0 && territory.cooldown > 0) {
+      new CooldownSprite(territory);
+    }
+
+    territory.bought = data.bought;
+
+    if (territory.bought && territory.cooldown === 0) {
+      this.unlockTerritory(territory);
+    }
+
     this.clickTerritory(territory, (): void => {
-      
+      if (territory.cooldown > 0) return;
       if (this.state.userSheep.tutorial >= 100) {
         
         if (territory.type !== 6 && territory.type !== 7) {
@@ -311,7 +319,6 @@ function world(): void {
       }
     });
   });
-
   this.buildBorders();
   
   // группа овец

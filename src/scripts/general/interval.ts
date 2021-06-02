@@ -10,8 +10,11 @@ import Factory from './../components/Territories/Factory';
 const progressTerritoryCooldown = (territories: any, time: number): void => {
   for (const territory of territories) {
     if (territory.cooldown > 0) {
+      territory.bought = true;
       territory.cooldown -= time;
-      if (territory.cooldown <= 0) territory.cooldown = 0;
+      if (territory.cooldown <= 0) {
+        territory.cooldown = 0;
+      }
     }
   }
 }

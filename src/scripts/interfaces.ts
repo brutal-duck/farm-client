@@ -254,6 +254,7 @@ interface Iterritories {
   volume: number;
   money: number;
   cooldown: number,
+  bought?: boolean;
   _id?: any;
 }
 interface IeventTerritories {

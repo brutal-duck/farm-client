@@ -9,6 +9,7 @@ import autosave from '../../general/autosave';
 import {  
   click,
   clickTerritory,
+  clickModalBtn,
 } from '../../general/clicks';
 import {
   logout,
@@ -68,7 +69,9 @@ import {
   buildBorders,
   checkExchangeRepository,
   buyTerritory,
-  findFreeTerritory
+  findFreeTerritory,
+  setTerritoryUnlockCooldown,
+  unlockTerritory,
 } from '../../general/territories';
 import { animations, repositoryAnimation } from './animations';
 import {
@@ -157,6 +160,7 @@ class Chicken extends Phaser.Scene {
   public interval = interval.bind(this);
   public click = click.bind(this);
   public clickTerritory = clickTerritory.bind(this);
+  public clickModalBtn = clickModalBtn.bind(this);
   public animations = animations.bind(this);
   public teleportation = teleportation.bind(this);
   public reverse = reverse.bind(this);
@@ -247,6 +251,8 @@ class Chicken extends Phaser.Scene {
   public updateProfileNative = updateProfileNative.bind(this);
   public intervalCollectorTutorial = intervalCollectorTutorial.bind(this);
   public showFeedBoostSpeechBubble = showFeedBoostSpeechBubble.bind(this);
+  public setTerritoryUnlockCooldown = setTerritoryUnlockCooldown.bind(this);
+  public unlockTerritory = unlockTerritory.bind(this);
 
   public init(state: Istate): void {
 

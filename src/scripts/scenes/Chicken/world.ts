@@ -2,6 +2,7 @@ import Scrolling from '../../libs/Scrolling';
 import Cave from '../../components/gameObjects/Cave';
 import Egg from '../../components/Resource/Egg';
 import SpeechBubble from './../../components/animations/SpeechBuble';
+import CooldownSprite from './../../components/Territories/CooldownSprite';
 
 function world(): void {
 
@@ -282,8 +283,20 @@ function world(): void {
       let y: number = territory.y + 240;
       Cave.create(this, { x, y });
     }
+    
+    if (territory.type === 0 && territory.cooldown > 0) {
+      new CooldownSprite(territory);
+    }
+
+    territory.bought = data.bought;
+
+    if (territory.bought && territory.cooldown === 0) {
+      this.unlockTerritory(territory);
+    }
 
     this.clickTerritory(territory, (): void => {
+      
+      if (territory.coodown > 0) return;
       
       if (territory.type !== 6 && territory.type !== 7) {
 
