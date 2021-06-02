@@ -136,6 +136,7 @@ function world(): void {
     territory.volume = data.volume;
     territory.improve = data.improve;
     territory.money = data.money;
+    territory.cooldown = data.cooldown;
 
     // заборы
     let topBorder: number = 1;
@@ -296,7 +297,7 @@ function world(): void {
 
     this.clickTerritory(territory, (): void => {
       
-      if (territory.coodown > 0) {
+      if (territory.cooldown > 0) {
         let modal: Imodal = {
           type: 1,
           sysType: 19,

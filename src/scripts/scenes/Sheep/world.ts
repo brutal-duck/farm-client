@@ -292,9 +292,9 @@ function world(): void {
     if (territory.bought && territory.cooldown === 0) {
       this.unlockTerritory(territory);
     }
-
+    
     this.clickTerritory(territory, (): void => {
-      if (territory.coodown > 0) {
+      if (territory.cooldown > 0) {
         let modal: Imodal = {
           type: 1,
           sysType: 19,
