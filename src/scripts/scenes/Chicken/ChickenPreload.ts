@@ -216,6 +216,8 @@ const farmer: string = require("./../../../assets/images/farmer.png");
 const whitePixel: string = require("./../../../assets/images/white-pixel.jpg");
 const scrollArrow: string = require("./../../../assets/images/scroll-arrow.png");
 const hatchet: string = require("./../../../assets/images/icons/hatchet.png");
+const improveCollector: string = require("./../../../assets/images/modal/improve-collector.png");
+
 
 class ChickenPreload extends Phaser.Scene {
 
@@ -470,8 +472,7 @@ class ChickenPreload extends Phaser.Scene {
     this.load.image('white-pixel', whitePixel);
     this.load.image('scroll-arrow', scrollArrow);
     this.load.image('hatchet', hatchet);
-
-    
+    this.load.image('improve-collector', improveCollector);    
   }
 
   

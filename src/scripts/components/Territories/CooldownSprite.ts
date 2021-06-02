@@ -62,7 +62,11 @@ export default class CooldownSprite extends Phaser.GameObjects.Sprite {
     super.preUpdate(time, delta);
     if (this.checkDestroy()) {
       if (this.active) {
-        this.scene.unlockTerritory(this.territory);
+        if (this.scene.state.farm !== 'Cow') {
+          this.scene.unlockTerritory(this.territory);
+        } else {
+          this.territory.unlockTerritory();
+        }
         this.destroy();
       };
     } else if (this.territory.cooldown > 0) {
@@ -87,7 +91,7 @@ export default class CooldownSprite extends Phaser.GameObjects.Sprite {
     return (this.territory.type === 0 || this.territory.territoryType === 0) 
       && this.territory.cooldown <= 0
       || this.territory.type !== 0 && this.scene.state.farm !== 'Cow'
-      || this.territory.territoryType === 0 && this.scene.state.farm === 'Cow';
+      || this.territory.territoryType !== 0 && this.scene.state.farm === 'Cow';
   }
 
   private setHatchAnimation(): void {

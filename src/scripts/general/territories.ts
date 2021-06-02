@@ -750,11 +750,8 @@ function buyTerritory(): void {
         position: this.state.territory.position,
       });
 
-      user.money -= price;
-      this.tryTask(5, 1);
-      
+      user.money -= price;      
       this.setTerritoryUnlockCooldown();
-
     } else {
 
       let count: number = price - user.money;
@@ -793,6 +790,7 @@ function setTerritoryUnlockCooldown(): void {
 function unlockTerritory(terr: any): void {
   if (terr.bought && terr.cooldown <= 0 && terr.type === 0) {
     terr.type = 1;
+    this.tryTask(5, 1);
     this.time.addEvent({ delay: 500, callback: (): void => {
       terr.forest.destroy();
       terr.setTexture(this.state.farm.toLowerCase() + '-bought');

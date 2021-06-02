@@ -7,6 +7,7 @@ import autosave from '../../general/autosave';
 import {  
   click,
   clickTerritory,
+  clickModalBtn,
 } from '../../general/clicks';
 import {
   logout,
@@ -161,6 +162,7 @@ class Cow extends Phaser.Scene {
   public interval = interval.bind(this);
   public click = click.bind(this);
   public clickTerritory = clickTerritory.bind(this);
+  public clickModalBtn = clickModalBtn.bind(this);
   public teleportation = teleportation.bind(this);
   public currentTerritory = currentTerritory.bind(this);
   public confirmExchangeTerritory = confirmExchangeTerritory.bind(this);
@@ -304,7 +306,7 @@ class Cow extends Phaser.Scene {
     //   //   tasks[i].done = 1;
     //   //   tasks[i].got_awarded = 1;
     //   // }
-    //   this.offlineTestProgress();
+    //   // this.offlineTestProgress();
     // });
     
   }

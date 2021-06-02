@@ -216,7 +216,8 @@ const scrollArrow: string = require('./../../../assets/images/scroll-arrow.png')
 const factorySmoke: string = require('./../../../assets/images/cow/factory-smoke.png');
 const factoryFlash: string = require('./../../../assets/images/cow/factory-flash.png');
 const tutorialShowcase: string = require('./../../../assets/images/cow/tutorial-showcase.png');
-
+const hatchet: string = require("./../../../assets/images/icons/hatchet.png");
+const improveCollector: string = require("./../../../assets/images/modal/improve-collector.png");
 
 
 class CowPreload extends Phaser.Scene {
@@ -472,6 +473,8 @@ class CowPreload extends Phaser.Scene {
     this.load.image('factory-smoke', factorySmoke);
     this.load.image('factory-flash', factoryFlash);
     this.load.image('tutorial-showcase', tutorialShowcase);
+    this.load.image('hatchet', hatchet);
+    this.load.image('improve-collector', improveCollector);    
   }
 
   

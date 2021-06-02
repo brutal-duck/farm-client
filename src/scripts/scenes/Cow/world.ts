@@ -3,6 +3,7 @@ import Cave from '../../components/gameObjects/Cave';
 import CowSprite from '../../components/Animal/CowSprite';
 import CowGroup from '../../components/AnimalGroup/CowGroup';
 import Territory from './../../components/Territories/Territory';
+import CooldownSprite from './../../components/Territories/CooldownSprite';
 
 function world(): void {
 
@@ -58,6 +59,16 @@ function world(): void {
     } else if (territory.position === 3) {
       topBorder = 3;
       bottomBorder = 2;
+    }
+
+    if (territory.territoryType === 0 && territory.cooldown > 0) {
+      new CooldownSprite(territory);
+    }
+
+    territory.bought = data.bought;
+
+    if (territory.bought && territory.cooldown === 0) {
+      territory.unlockTerritory();
     }
 
     territory.createBorders(topBorder, bottomBorder)

@@ -5,6 +5,7 @@ import Firework from './../animations/Firework';
 import Stars from './../animations/Stars';
 import Factory from './Factory';
 import SpeechBubble from './../animations/SpeechBuble';
+import CooldownSprite from './CooldownSprite';
 
 export default class Territory extends Phaser.Physics.Arcade.Sprite {
   public scene: Cow;
@@ -16,6 +17,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   public improve: number;
   public money: number;
   public cooldown: number;
+  public bought: boolean;
   public borderTop: Phaser.GameObjects.Sprite;
   public borderBottom: Phaser.GameObjects.Sprite;
   public borderLeft: Phaser.GameObjects.Sprite;
@@ -259,6 +261,8 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
   private setListeners(): void {
     this.scene.clickTerritory(this, (): void => {
+      if (this.cooldown > 0) return;
+
       if (this.territoryType !== 6 && this.territoryType !== 7 && this.territoryType !== 8) {
         const modal: Imodal = {
           type: 1,
@@ -302,21 +306,36 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
           position: this.position,
         });
 
-        this.territoryType = 1;
         user.money -= price;
-        this.scene.tryTask(5, 1);
-
-        this.scene.time.addEvent({ delay: 500, callback: (): void => {
-          this.forest?.destroy();
-          this.setTexture(`${farm}-bought`);
-          Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
-          this.scene.buildBorders();
-        }, callbackScope: this, loop: false });
+        this.setTerritoryUnlockCooldown();
       } else {
         const count: number = price - user.money;
         const diamonds: number = this.scene.convertMoney(count);
         this.openConvertor(count, diamonds, 6, 1);
       }
+    }
+  }
+
+
+  private setTerritoryUnlockCooldown(): void {
+    const settings: IterritoriesPrice = this.scene.state.cowSettings.territoriesCowPrice
+      .find((el: IterritoriesPrice) => el.block === this.block && el.position === this.position);
+    
+    this.cooldown = settings.unlockCooldown;
+    this.bought = true;
+    new CooldownSprite(this);
+  }
+  
+  public unlockTerritory(): void {
+    if (this.bought && this.cooldown <= 0 && this.territoryType === 0) {
+      this.territoryType = 1;
+      this.scene.tryTask(5, 1);
+      this.scene.time.addEvent({ delay: 500, callback: (): void => {
+        this.forest.destroy();
+        this.setTexture(this.scene.state.farm.toLowerCase() + '-bought');
+        Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
+        this.scene.buildBorders();
+      }, callbackScope: this, loop: false });
     }
   }
 
