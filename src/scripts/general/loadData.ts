@@ -5,6 +5,9 @@ import basicCowTerritories from '../local/cowTerritories';
 import basicUnicornCollector from '../local/unicornCollector';
 import { unicornSettings, sheepSettings, chickenSettings, cowSettings } from '../local/settings';
 import { userCow, userData } from '../local/usersData';
+import sheepCollectorSettings from '../local/sheepCollector';
+import chickenCollectorSettings from '../local/chickenCollector';
+import cowCollectorSettings from '../local/cowCollector';
 const basicUserCow = userCow;
 
 function validateTerritories(territories: Iterritories[], basicTerritories: Iterritories[]): void {
@@ -404,9 +407,9 @@ export default function loadData(response: any): void {
   this.state.chickenTasks = chickenTasks;
   this.state.cowTasks = cowTasks;
 
-  this.state.sheepCollectorSettings = response.data.settings.sheep.collectorSettings;
-  this.state.chickenCollectorSettings = response.data.settings.chicken.collectorSettings;
-  this.state.cowCollectorSettings = response.data.settings.cow.collectorSettings;
+  this.state.sheepCollectorSettings = sheepCollectorSettings;
+  this.state.chickenCollectorSettings = chickenCollectorSettings;
+  this.state.cowCollectorSettings = cowCollectorSettings;
   const progress: Iprogress = {
     sheep: {
       part: response.data.user.sheep_part,
