@@ -461,7 +461,7 @@ export default function autoprogress(load: boolean = false): void {
         if (milk < 1) milk = 1;
       }
 
-      const milkCollect: number = Math.floor((milk * wasCollector) / 1000);
+      const milkCollect: number = Math.floor((milk * wasCollector));
       if (milkCollect === 0) {
         if (cow.milk + (milk * wasCollector) > 1000) cow.milk = cowPoints.maxMilkVolume;
         else cow.milk += (milk * wasCollector);
@@ -486,8 +486,8 @@ export default function autoprogress(load: boolean = false): void {
     // скорость сборки
     const speed: number = state.cowCollectorSettings.find((data: IcollectorSettings) => data.level === state.userCow.collectorLevel).speed;
   
-    if (state.cow.length > speed * 10) {
-      const excess: number = 100 / (speed * 10) * state.cow.length;
+    if (state.cow.length > speed * 60) {
+      const excess: number = 100 / (speed * MILK_DELAY) * state.cow.length;
       const percent: number = 100 / (excess / 100);
       for (const milk of milkCollected) {
         if (milk.count > 0) {
@@ -495,33 +495,19 @@ export default function autoprogress(load: boolean = false): void {
         }
       }
     }
-    // заполняем хранилища
-    const milkStorage: number[] = [];
-    for (const milk of milkCollected) {
-      for (let j: number = 0; j < milk.count; j++) {
-        milkStorage.push(milk.type);
-      }
-    }
-  
-    for (const milk of milkStorage) {
-      let count: number = state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === milk).maxMilkVolume;
-      count *= (1 + feedPercent); // коэфф
-      for (const territory of state.sheepTerritories) {
 
+    const territories: Iterritories[] = state.cowTerritories;
+    for (const milk of milkCollected) {
+      milk.count *= (1 + feedPercent); // коэфф
+      for (const territory of territories) {
         if (territory.type === 5) {
-          const max: number = state.cowSettings.territoriesCowSettings.find((item: IterritoriesCowSettings) => item.improve === territory.improve).storage;
-          if (territory.volume + count < max) {
-            const milkCollect = milkCollected.find(data => data.type === milk && data.count > 0);
-            if (milkCollect) milkCollect.count--;
-            territory.money += 0;
-            territory.volume += count;
-            break;
-          }
+          territory.money += 0;
+          territory.volume += milk.count;
+          break;
         }
       }
     }
-    
-    const territories: Iterritories[] = state.cowTerritories;
+
     const factoryTerritory: Iterritories = territories.find((data: Iterritories) => data.type === 8);
     if (factoryTerritory && state.userCow.tutorial >= 50) {
       const factory: Ifactory = state.userCow.factory;
@@ -545,7 +531,7 @@ export default function autoprogress(load: boolean = false): void {
           count = countLaunchedProductions;
         } else {
           count = Math.floor(haveMilk / factorySettings.lotSize);
-          haveMilk -= count*factorySettings.lotSize;
+          haveMilk -= count * factorySettings.lotSize;
           if (haveMilk < 0) haveMilk = 0;
         }
 
@@ -597,7 +583,7 @@ export default function autoprogress(load: boolean = false): void {
             if (territory.type === 5) {
               const terSettings: IterritoriesCowSettings = state.cowSettings.territoriesCowSettings
                 .find((data: IterritoriesCowSettings) => territory.improve === data.improve);
-              if (haveMilk > terSettings.storage) {
+              if (haveMilk >= terSettings.storage) {
                 territory.volume = terSettings.storage;
                 haveMilk -= terSettings.storage;
               } else {
@@ -605,6 +591,8 @@ export default function autoprogress(load: boolean = false): void {
                 haveMilk = 0;
               }
             }
+          } else {
+            territory.volume = 0;
           }
         }
       } else {
@@ -1081,7 +1069,10 @@ export default function autoprogress(load: boolean = false): void {
     if (!load) this.game.scene.keys['CowBars'].collector.update();
     if (!load) state.timeToNewDay -= state.offlineTime;
     // процент шерсти под бустом
-    let feedPercent: number = Number((wasFeedBoost / wasCollector).toFixed(2));
+    let feedPercent: number = 0;
+    if (feedPercent > 0) {
+      feedPercent = Number((wasFeedBoost / wasCollector).toFixed(2));
+    } 
     if (feedPercent >= 1 ) feedPercent = 1;
   
     // считаем сколько раз подстригли овец
@@ -1101,7 +1092,7 @@ export default function autoprogress(load: boolean = false): void {
         if (milk < 1) milk = 1;
       }
 
-      const milkCollect: number = Math.floor((milk * wasCollector) / 1000);
+      const milkCollect: number = Math.floor(milk * wasCollector);
       if (milkCollect === 0) {
         if (cow.milk + (milk * wasCollector) > 1000) cow.milk = cowPoints.maxMilkVolume;
         else cow.milk += (milk * wasCollector);
@@ -1122,12 +1113,11 @@ export default function autoprogress(load: boolean = false): void {
         });
       }
     }
-
     // скорость сборки
     const speed: number = state.cowCollectorSettings.find((data: IcollectorSettings) => data.level === state.userCow.collectorLevel).speed;
   
-    if (cowGroup.length > speed * 10) {
-      const excess: number = 100 / (speed * 10) * cowGroup.length;
+    if (cowGroup.length > speed * 60) {
+      const excess: number = 100 / (speed * 60) * cowGroup.length;
       const percent: number = 100 / (excess / 100);
       for (const milk of milkCollected) {
         if (milk.count > 0) {
@@ -1135,28 +1125,15 @@ export default function autoprogress(load: boolean = false): void {
         }
       }
     }
-    // заполняем хранилища
-    const milkStorage: number[] = [];
-    for (const milk of milkCollected) {
-      for (let j: number = 0; j < milk.count; j++) {
-        milkStorage.push(milk.type);
-      }
-    }
-    const territories: Territory[] = this.territories.children.entries;
-    for (const milk of milkStorage) {
-      let count: number = state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === milk).maxMilkVolume;
-      count *= (1 + feedPercent); // коэфф
-      for (const territory of territories) {
 
+    const territories: Territory[] = this.territories.children.entries;
+    for (const milk of milkCollected) {
+      milk.count *= (1 + feedPercent); // коэфф
+      for (const territory of territories) {
         if (territory.territoryType === 5) {
-          const max: number = state.cowSettings.territoriesCowSettings.find((item: IterritoriesCowSettings) => item.improve === territory.improve).storage;
-          if (territory.volume + count < max) {
-            const milkCollect = milkCollected.find(data => data.type === milk && data.count > 0);
-            if (milkCollect) milkCollect.count--;
-            territory.money += 0;
-            territory.volume += count;
-            break;
-          }
+          territory.money += 0;
+          territory.volume += milk.count;
+          break;
         }
       }
     }
@@ -1182,7 +1159,7 @@ export default function autoprogress(load: boolean = false): void {
           count = countLaunchedProductions;
         } else {
           count = Math.floor(haveMilk / factorySettings.lotSize);
-          haveMilk -= count*factorySettings.lotSize;
+          haveMilk -= count * factorySettings.lotSize;
           if (haveMilk < 0) haveMilk = 0;
         }
 
@@ -1229,7 +1206,7 @@ export default function autoprogress(load: boolean = false): void {
             if (territory.territoryType === 5) {
               const terSettings: IterritoriesCowSettings = state.cowSettings.territoriesCowSettings
                 .find((data: IterritoriesCowSettings) => territory.improve === data.improve);
-              if (haveMilk > terSettings.storage) {
+              if (haveMilk >= terSettings.storage) {
                 territory.volume = terSettings.storage;
                 haveMilk -= terSettings.storage;
               } else {
@@ -1237,6 +1214,8 @@ export default function autoprogress(load: boolean = false): void {
                 haveMilk = 0;
               }
             }
+          } else {
+            territory.volume = 0;
           }
         }
 
