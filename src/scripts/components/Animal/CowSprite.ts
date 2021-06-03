@@ -106,7 +106,7 @@ export default class CowSprite extends Animal {
     this.setDiamondStage();
     if (this.scene.state.userCow.part <= 2) {
       const tasks: Itasks[] = this.scene.partTasks();
-      const milkTask: Itasks = tasks.find(el => el.id === 138 && el.done === 1)
+      const milkTask: Itasks = tasks.find(el => el.id === 138 && el.done === 1);
       if (!milkTask) {
         this.setFullnessBar();
       } else if (this.barBg || this.barLineBg || this.barProgress) {
@@ -196,7 +196,7 @@ export default class CowSprite extends Animal {
   }
 
   private setFullnessBarVisibility(): void {
-    if (this.scene.state.userCow.part === 1) {
+    if (this.scene.state.userCow.part <= 2) {
       if (this.milkStatus.visible || this.drag) {
         this.barBg?.setVisible(false);
         this.barLineBg?.setVisible(false);

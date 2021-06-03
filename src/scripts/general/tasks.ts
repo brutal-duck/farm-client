@@ -488,7 +488,7 @@ function clickTaskBoard(task: Itasks): void {
     let unlockTerritories: IterritoriesPrice[] = settings.filter(el => el.unlock <= this.state[`user${this.state.farm}`].part);
     let terr: any;
     unlockTerritories.forEach((territory: IterritoriesPrice) => {
-      let findTerr = farmTerritories.find(el => (el.type === 0 || el.territoryType === 0) && el.block === territory.block && el.position === territory.position);
+      let findTerr = farmTerritories.find(el => (el.type === 0 || el.territoryType === 0) && el.block === territory.block && el.position === territory.position && el.cooldown <= 0);
       if (findTerr) terr = findTerr;
     });
     return terr;
