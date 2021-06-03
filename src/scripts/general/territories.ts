@@ -778,7 +778,7 @@ function buyTerritory(): void {
 
 function setTerritoryUnlockCooldown(): void {
   const territory: any = this.state.territory;
-  const settings: IterritoriesPrice = this.state.cowSettings.territoriesCowPrice
+  const settings: IterritoriesPrice = this.state[`${this.state.farm.toLowerCase()}Settings`][`territories${this.state.farm}Price`]
     .find((el: IterritoriesPrice) => el.block === territory.block && el.position === territory.position);
   
   territory.cooldown = settings.unlockCooldown;
