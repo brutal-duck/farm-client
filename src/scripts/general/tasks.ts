@@ -498,7 +498,8 @@ function clickTaskBoard(task: Itasks): void {
   
     if (task.state === 1 || task.state === 0) {
       const territory = findUnlockTerritoryForBuy();
-      openTerritoryWindow(territory);
+      if (territory) openTerritoryWindow(territory);
+      else SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_5, 3)
     }
     if (task.state === 2 || task.state === 5 || task.state === 8) {
       let territory: any;

@@ -792,7 +792,7 @@ function unlockTerritory(terr: any): void {
     terr.type = 1;
     this.tryTask(5, 1);
     this.time.addEvent({ delay: 500, callback: (): void => {
-      terr.forest.destroy();
+      terr.forest?.destroy();
       terr.setTexture(this.state.farm.toLowerCase() + '-bought');
       Firework.create(this, { x: terr.x + 120, y: terr.y + 120 }, 3);
       this.buildBorders();

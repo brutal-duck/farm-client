@@ -342,7 +342,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       this.territoryType = 1;
       this.scene.tryTask(5, 1);
       this.scene.time.addEvent({ delay: 500, callback: (): void => {
-        this.forest.destroy();
+        this.forest?.destroy();
         this.setTexture(this.scene.state.farm.toLowerCase() + '-bought');
         Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
         this.scene.buildBorders();
