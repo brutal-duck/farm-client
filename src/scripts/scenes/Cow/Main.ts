@@ -17,7 +17,6 @@ import {
   donePart,
   pickUpTaskReward,
   onlineStatus,
-  buyNextFarm,
   getNewbieAward,
   takeDonate,
   debug, 
@@ -87,6 +86,7 @@ import {
   showImproveFactory,
   showFactoryBoost,
   showConfirmSellMilk,
+  buyNextFarm,
 } from './basic';
 import { 
   showTutorial,

@@ -342,6 +342,70 @@ function showConfirmSellMilk(): void {
 
 }
 
+function buyNextFarm(): void {
+
+  const user: IuserCow = this.state.userSheep;
+  const progress: IpartProgress = this.state.progress.chicken;
+  const farm: string = 'Chicken';
+  let check: boolean = false;
+
+  if (progress.donate) {
+    
+    if (this.state.user.diamonds >= progress.price) check = true;
+    else {
+
+      let count: number = progress.price - this.state.user.diamonds;
+          
+      this.state.convertor = {
+        fun: 7,
+        count: count,
+        diamonds: count,
+        type: 2
+      }
+
+      let modal: Imodal = {
+        type: 1,
+        sysType: 4
+      }
+      this.state.modal = modal;
+      this.scene.launch('Modal', this.state);
+
+    }
+
+  } else {
+
+    if (user.money >= progress.price) check = true;
+    else {
+      let modal: Imodal = {
+        type: 1,
+        sysType: 3,
+        height: 150,
+        message: this.state.lang.notEnoughSheepCoins
+      }
+      this.state.modal = modal;
+      this.scene.launch('Modal', this.state);
+    }
+  }
+
+
+  if (check) {
+
+    if (progress.donate) this.state.user.diamonds -= progress.price;
+    else user.money -= progress.price;
+
+    this.logAmplitudeEvent('get_new_farm', {
+      type: 'buy',
+      farm_id: farm
+    });
+
+    this.scene.stop(this.state.farm);
+    this.scene.stop(this.state.farm + 'Bars');
+    this.scene.start(farm + 'Preload', this.state);
+
+  }
+
+}
+
 export {
   balance,
   cowPrice,
@@ -351,5 +415,6 @@ export {
   collisions,
   showImproveFactory,
   showFactoryBoost,
-  showConfirmSellMilk
+  showConfirmSellMilk,
+  buyNextFarm,
 }
