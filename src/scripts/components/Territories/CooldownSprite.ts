@@ -66,6 +66,9 @@ export default class CooldownSprite extends Phaser.GameObjects.Sprite {
         } else {
           this.territory.unlockTerritory();
         }
+        if (this.scene.scene.isActive('Modal') && this.scene.state.modal?.type === 1 && this.scene.state.modal?.sysType === 19) {
+          this.scene.scene.stop('Modal');
+        }
         this.destroy();
       };
     } else if (this.territory.cooldown > 0) {

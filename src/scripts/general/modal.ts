@@ -1291,7 +1291,7 @@ function confirmBuyCooldown(): void {
   }).setOrigin(0.5);
   const img = {
     icon: 'diamond',
-    text: shortNum(price),
+    text: shortNum(price), // Обработать обновление текста кнопки
   };
 
   this.progressButton = this.bigButton('green', 'left', 20, this.state.lang.speedUpFor, img);
