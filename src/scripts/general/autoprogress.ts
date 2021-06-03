@@ -453,36 +453,33 @@ export default function autoprogress(load: boolean = false): void {
       const breed: number = cow.type === 0 ? 1 : cow.type;
       const cowPoints: IcowPoints = state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === breed);
       // зарождение яйца
-      if (cow.milk < cowPoints.maxMilkVolume) {
-        let milk: number = cowPoints.maxMilkVolume / MILK_DELAY;
-        if (cow.type === 0) milk = cowPoints.maxMilkVolume / 10;
-  
-        if (balance.alarm) {
-          milk = Math.round(milk / 100 * state.cowSettings.cowBadPercent);
-          if (milk < 1) milk = 1;
-        }
+      let milk: number = cowPoints.maxMilkVolume / MILK_DELAY;
+      if (cow.type === 0) milk = cowPoints.maxMilkVolume / 10;
 
-        const milkCollect: number = Math.floor((milk * wasCollector) / 1000);
-        if (milkCollect === 0) {
-          if (cow.milk + (milk * wasCollector) > 1000) cow.milk = cowPoints.maxMilkVolume;
-          else cow.milk += (milk * wasCollector);
-        }
+      if (balance.alarm) {
+        milk = Math.round(milk / 100 * state.cowSettings.cowBadPercent);
+        if (milk < 1) milk = 1;
+      }
 
-        if (state.userCow.collector === 0) {
-          cow.milk += milk * offlineTime;
+      const milkCollect: number = Math.floor((milk * wasCollector) / 1000);
+      if (milkCollect === 0) {
+        if (cow.milk + (milk * wasCollector) > 1000) cow.milk = cowPoints.maxMilkVolume;
+        else cow.milk += (milk * wasCollector);
+      }
 
-          if (cow.milk > cowPoints.maxMilkVolume) {
-            cow.milk = cowPoints.maxMilkVolume;
-          }
+      if (state.userCow.collector === 0) {
+        cow.milk += milk * offlineTime;
+        if (cow.milk > cowPoints.maxMilkVolume) {
+          cow.milk = cowPoints.maxMilkVolume;
         }
-
-        if (cow.type !== 0) {
-          milkCollected.push({
-            id: cow._id,
-            type: cow.type,
-            count: milkCollect,
-          })
-        }
+      }
+      
+      if (cow.type !== 0) {
+        milkCollected.push({
+          id: cow._id,
+          type: cow.type,
+          count: milkCollect,
+        })
       }
     }
 
@@ -1091,40 +1088,38 @@ export default function autoprogress(load: boolean = false): void {
     let balance: Ibalance = this.farmBalance('Cow');
     let milkCollected: { id: string, type: number, count: number }[] = [];
     const cowGroup: CowSprite[] = this.animalGroup.children.entries;
+
     for (const cow of cowGroup) {
       const breed: number = cow.breed === 0 ? 1 : cow.breed;
       const cowPoints: IcowPoints = state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === breed);
       // зарождение яйца
-      if (cow.milk < cowPoints.maxMilkVolume) {
-        let milk: number = cowPoints.maxMilkVolume / MILK_DELAY;
-        if (cow.breed === 0) milk = cowPoints.maxMilkVolume / 10;
-  
-        if (balance.alarm) {
-          milk = Math.round(milk / 100 * state.cowSettings.cowBadPercent);
-          if (milk < 1) milk = 1;
-        }
-        const milkCollect: number = Math.floor((milk * wasCollector) / 1000);
-        if (milkCollect === 0) {
-          if (cow.milk + (milk * wasCollector) > 1000) cow.milk = cowPoints.maxMilkVolume;
-          else cow.milk += (milk * wasCollector);
-        }
+      let milk: number = cowPoints.maxMilkVolume / MILK_DELAY;
+      if (cow.breed === 0) milk = cowPoints.maxMilkVolume / 10;
 
-        if (state.userCow.collector === 0) {
-          cow.milk += milk * state.offlineTime;
+      if (balance.alarm) {
+        milk = Math.round(milk / 100 * state.cowSettings.cowBadPercent);
+        if (milk < 1) milk = 1;
+      }
 
-          if (cow.milk > cowPoints.maxMilkVolume) {
-            cow.milk = cowPoints.maxMilkVolume;
-          }
+      const milkCollect: number = Math.floor((milk * wasCollector) / 1000);
+      if (milkCollect === 0) {
+        if (cow.milk + (milk * wasCollector) > 1000) cow.milk = cowPoints.maxMilkVolume;
+        else cow.milk += (milk * wasCollector);
+      }
+
+      if (state.userCow.collector === 0) {
+        cow.milk += milk * state.offlineTime;
+        if (cow.milk > cowPoints.maxMilkVolume) {
+          cow.milk = cowPoints.maxMilkVolume;
         }
+      }
 
-        if (cow.breed !== 0) {
-          milkCollected.push({
-            id: cow._id,
-            type: cow.breed,
-            count: milkCollect,
-          });
-        }
-
+      if (cow.breed !== 0) {
+        milkCollected.push({
+          id: cow._id,
+          type: cow.breed,
+          count: milkCollect,
+        });
       }
     }
 
