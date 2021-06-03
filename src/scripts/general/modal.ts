@@ -1534,7 +1534,7 @@ function improveCollector(): void {
   const nextLevel: IcollectorSettings = this.state[`${farm}CollectorSettings`].find((data: IcollectorSettings) => data.level === this.state[`user${this.state.farm}`].collectorLevel + 1);
   
   let speedText: string = `${this.state.lang.power}: ${thisLevel.speed} ${this.state.lang[`unit${this.state.farm}`]}/${this.state.lang.seconds}`;
-  if (this.state.farm === 'Cow') speedText = `${this.state.lang.power}: ${thisLevel.speed * 60} ${this.state.lang[`unit${this.state.farm}`]}/${this.state.lang.minutes}`
+  if (this.state.farm === 'Cow') speedText = `${this.state.lang.power}: ${(thisLevel.speed * 60).toFixed(1)} ${this.state.lang[`unit${this.state.farm}`]}/${this.state.lang.minutes}`;
   const speed: Phaser.GameObjects.Text = this.add.text(125, this.cameras.main.centerY - 80, speedText, {
     font: '30px Bip',
     color: '#925C28'
@@ -1568,7 +1568,7 @@ function improveCollector(): void {
       y: speed.y
     }
     let text: string = `(+${(nextLevel.speed - thisLevel.speed).toFixed(1)})`;
-    if (this.state.farm === 'Cow') text = `(+${((nextLevel.speed - thisLevel.speed) * 60).toFixed(1)})`
+    if (this.state.farm === 'Cow') text = `(+${((nextLevel.speed - thisLevel.speed) * 60).toFixed(1)})`;
     nextLevelText = this.add.text(position.x, position.y, text, {
       font: '30px Bip',
       color: '#57A90E'
@@ -1629,7 +1629,9 @@ function updateImproveCollector(
   const nextLevel: IcollectorSettings = this.state[`${farm}CollectorSettings`]
     .find((data: IcollectorSettings) => data.level === this.state[`user${this.state.farm}`].collectorLevel + 1);
 
-  const speedText: string = `${this.state.lang.power}: ${thisLevel.speed} ${this.state.lang[`unit${this.state.farm}`]}/${this.state.lang.seconds}`;
+  let speedText: string = `${this.state.lang.power}: ${thisLevel.speed} ${this.state.lang[`unit${this.state.farm}`]}/${this.state.lang.seconds}`;
+  if (this.state.farm === 'Cow') speedText = `${this.state.lang.power}: ${(thisLevel.speed * 60).toFixed(1)} ${this.state.lang[`unit${this.state.farm}`]}/${this.state.lang.minutes}`;
+
   speed.setText(speedText);
 
   const durationText: string = `${this.state.lang.duration}: ${thisLevel.time} ${this.state.lang.minutes}`;
@@ -1655,6 +1657,7 @@ function updateImproveCollector(
       y: speed.y
     }
     text =  `(+${(nextLevel.speed - thisLevel.speed).toFixed(1)} ${this.state.lang.seconds})`;
+    if (this.state.farm === 'Cow') text = `(+${((nextLevel.speed - thisLevel.speed) * 60).toFixed(1)})`;
   }
   nextLevelText.setPosition(position.x, position.y);
   nextLevelText.setText(text);
