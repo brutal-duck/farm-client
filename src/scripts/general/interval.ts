@@ -105,17 +105,18 @@ function chickenIntervalProgress(): void {
         if (chicken.egg > 1000) chicken.egg = 1000;
       }
       if (chicken.egg === 1000) {
-        const block: number = Math.ceil((chicken.x - 240) / this.height);
-        const position: number = Math.ceil(chicken.y / this.height);
+        const indent: number =  240;
+        const height: number = 240;
+        const block: number = Math.ceil((chicken.y - indent) / height);
+        const position: number = Math.ceil(chicken.x / height);
         const territory = this.state.chickenTerritories.find((data: Iterritories) => data.block === block && data.position === position);
-        
         if (territory) {
           const countEggs: number = chickenSettings.territoriesChickenSettings.find((item: IterritoriesChickenSettings) => item.improve === territory.improve).countEggs;
           let eggs: number = 0;
           for (let i in Scene.state.chickenEggs) {
             const egg = Scene.state.chickenEggs[i];
-            const block: number = Math.ceil((egg.x - 240) / this.height);
-            const position: number = Math.ceil(egg.y / this.height);
+            const block: number = Math.ceil((egg.y - indent) / height);
+            const position: number = Math.ceil(egg.x / height);
             const ter = this.state.chickenTerritories.find((data: Iterritories) => data.block === block && data.position === position);
             if (ter?.block === territory.block && ter?.position === territory.position) eggs++;
           }

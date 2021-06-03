@@ -173,7 +173,6 @@ export default function autoprogress(load: boolean = false): void {
   const chickenOfflineProgress = (offlineTime: number = state.progress.chicken.offlineTime): void => {
     // значение отступа для яиц, чтоб не прилегали к краям территории
     progressTerritoryCooldown(state.chickenTerritories, offlineTime);
-
     let indent: number = 20;
   
     // время кристаллической курочки
@@ -257,7 +256,7 @@ export default function autoprogress(load: boolean = false): void {
           id: egg._id,
           type: egg.type,
           count: 1,
-          egg: true
+          egg: true,
         });
       }
     }
@@ -270,8 +269,8 @@ export default function autoprogress(load: boolean = false): void {
       } else {
         let chicken = state.chicken.find((data: any) => data._id === newEggs[i].id);
         if (chicken) {
-          const block: number = Math.ceil((chicken.x - 240) / this.height);
-          const position: number = Math.ceil(chicken.y / this.height);
+          const block: number = Math.ceil((chicken.y - 240) / this.height);
+          const position: number = Math.ceil(chicken.x / this.height);
           const territory = state.chickenTerritories.find((data: Iterritories) => data.block === block && data.position === position);
 
           if (territory) {
@@ -347,10 +346,10 @@ export default function autoprogress(load: boolean = false): void {
     // убираем яйца, которые собрали с поля
     for (let i in eggs) {
       if (eggs[i].egg && eggs[i].count === 0) {
-        state.chickenEggs.filter((data: IchickenEgg) => data._id !== eggs[i].id);
+        state.chickenEggs = state.chickenEggs.filter((data: IchickenEgg) => data._id !== eggs[i].id);
       }
     }
-  
+    
     // ложим остатки яиц на поле
     let remainingEggs: number[] = [];
     for (let i in eggs) {
@@ -360,7 +359,6 @@ export default function autoprogress(load: boolean = false): void {
         }
       }
     }
-  
     // формируем свободные места на клетках
     let freeSpace: Iposition[] = [];
     for (let i in state.chickenTerritories) {
@@ -1470,27 +1468,29 @@ export default function autoprogress(load: boolean = false): void {
 
   if (load) {
     sheepOfflineProgress();
-    if (state.progress.chicken.part > 0) chickenOfflineProgress();
-    if (state.progress.cow.part > 0) cowOfflineProgress();
+    if (state.userChicken.part > 0) chickenOfflineProgress();
+    if (state.userCow.part > 0) cowOfflineProgress();
     if (state.farm === 'Unicorn') unicornAutoprogress();
   } else {
     if (state.farm === 'Sheep') {
       sheepAutoprogress();
-      if (state.progress.chicken.part > 0) chickenOfflineProgress(state.offlineTime);
-      if (state.progress.cow.part > 0) cowOfflineProgress(state.offlineTime);
+      if (state.userChicken.part > 0) chickenOfflineProgress(state.offlineTime);
+      if (state.userCow.part > 0) cowOfflineProgress(state.offlineTime);
     } else if (state.farm === 'Chicken') {
       chickenAutoprogress();
       sheepOfflineProgress(state.offlineTime);
-      if (state.progress.cow.part > 0) cowOfflineProgress(state.offlineTime);
+      if (state.userCow.part > 0) cowOfflineProgress(state.offlineTime);
     } else if (state.farm === 'Cow') {
       cowAutoprogress();
       sheepOfflineProgress(state.offlineTime);
-      if (state.progress.chicken.part > 0) chickenOfflineProgress(state.offlineTime);
+      if (state.userChicken.part > 0) {
+        chickenOfflineProgress(state.offlineTime);
+      };
     } else {
       unicornAutoprogress();
       sheepOfflineProgress(state.offlineTime);
-      if (state.progress.chicken.part > 0) chickenOfflineProgress(state.offlineTime);
-      if (state.progress.cow.part > 0) cowOfflineProgress(state.offlineTime);
+      if (state.userChicken.part > 0) chickenOfflineProgress(state.offlineTime);
+      if (state.userCow.part > 0) cowOfflineProgress(state.offlineTime);
     }
   }
   this.autoporgressCollectorTime();
