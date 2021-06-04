@@ -486,12 +486,10 @@ function clickTaskBoard(task: Itasks): void {
     let farmTerritories: any = this.game.scene.keys[this.state.farm].territories.children.entries;
     let settings: IterritoriesPrice[] = this.state[`${this.state.farm.toLowerCase()}Settings`][`territories${this.state.farm}Price`];
     let unlockTerritories: IterritoriesPrice[] = settings.filter(el => el.unlock <= this.state[`user${this.state.farm}`].part);
-    let terr: any;
-    unlockTerritories.forEach((territory: IterritoriesPrice) => {
-      let findTerr = farmTerritories.find(el => (el.type === 0 || el.territoryType === 0) && el.block === territory.block && el.position === territory.position && el.cooldown <= 0);
-      if (findTerr) terr = findTerr;
-    });
-    return terr;
+    for (const territoryPrice of unlockTerritories) {
+      let findTerr = farmTerritories.find(el => (el.type === 0 || el.territoryType === 0) && el.block === territoryPrice.block && el.position === territoryPrice.position && el.cooldown <= 0);
+      if (findTerr) return findTerr;
+    }
   }
 
   const openBuyTerritoryWindowForTask = (): void => {
