@@ -976,7 +976,7 @@ function improveFactoryWindow(): void {
     }
     const time: string = (nextLevel.processingTime - thisLevel.processingTime) / 60 < 1 ? 
     `${(nextLevel.processingTime - thisLevel.processingTime)} ${this.state.lang.seconds}`: 
-    `${shortNum(nextLevel.processingTime - thisLevel.processingTime)} ${this.state.lang.minutes}`;
+    `${shortNum(Math.ceil((nextLevel.processingTime - thisLevel.processingTime) / 60)) } ${this.state.lang.minutes}`;
 
     const text: string = `(+${time})`;
     this.add.text(position.x, position.y, text, improveStyle);
