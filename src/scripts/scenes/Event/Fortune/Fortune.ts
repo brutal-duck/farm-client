@@ -12,7 +12,7 @@ const wheel: string = require('../../../../assets/images/event/fortune/wheel.png
 const pointer: string = require('../../../../assets/images/event/fortune/pointer.png');
 const ticket: string = require('../../../../assets/images/event/fortune/ticket.png');
 const jackpotBg: string = require('../../../../assets/images/event/fortune/jackpot-bg.png');
-const doneChapterButton: string = require("../../../../assets/images/modal/done-chapter-button.png");
+const doneChapterButton: string = require('../../../../assets/images/modal/done-chapter-button.png');
 
 const JACKPOT: number = 22;
 const DIAMOND: number = 50;
@@ -136,7 +136,7 @@ export default class Fortune extends Phaser.Scene {
     }).setOrigin(0.5);
 
     this.wheel = this.add.sprite(modalGeom.centerX - 142, modalGeom.centerY - 180, 'fortune-wheel');
-    this.pointer = this.add.sprite(modalGeom.centerX - 140, modalGeom.centerY - 185, 'fortune-pointer');
+    this.pointer = this.add.sprite(modalGeom.centerX - 138, modalGeom.centerY - 185, 'fortune-pointer');
     this.closeBtn = this.add.sprite(modalGeom.right - 70, modalGeom.top + 40,'tasks-close')
     
     this.add.text(modalGeom.centerX + 50, modalGeom.centerY + 45, this.state.lang.latestWinners, {
