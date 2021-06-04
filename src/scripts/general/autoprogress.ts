@@ -577,21 +577,20 @@ export default function autoprogress(load: boolean = false): void {
         if ((factory.productionTimer <= 0 || factory.productionTimer > factorySettings.processingTime) && factory.currentProduction) factory.productionTimer = factorySettings.processingTime;
         // раскладываем остатки молока
         for (const territory of territories) {
-          if (haveMilk > 0) {
-            if (territory.type === 5) {
-              const terSettings: IterritoriesCowSettings = state.cowSettings.territoriesCowSettings
-                .find((data: IterritoriesCowSettings) => territory.improve === data.improve);
-              if (haveMilk >= terSettings.storage) {
-                territory.volume = terSettings.storage;
-                haveMilk -= terSettings.storage;
-              } else {
-                territory.volume = haveMilk;
-                haveMilk = 0;
-              }
+          if (territory.type === 5) {
+            const terSettings: IterritoriesCowSettings = state.cowSettings.territoriesCowSettings
+              .find((data: IterritoriesCowSettings) => territory.improve === data.improve);
+            if (haveMilk > 0) {
+            if (haveMilk >= terSettings.storage) {
+              territory.volume = terSettings.storage;
+              haveMilk -= terSettings.storage;
+            } else {
+              territory.volume = haveMilk;
+              haveMilk = 0;
             }
-          } else {
-            territory.volume = 0;
-          }
+            } else territory.volume = 0;
+            if (isNaN(territory.volume)) territory.volume = terSettings.storage; 
+          } 
         }
       } else {
         if (factory.currentProduction) factory.productionTimer -= state.offlineTime;
@@ -1200,21 +1199,20 @@ export default function autoprogress(load: boolean = false): void {
         if ((factory.productionTimer <= 0 || factory.productionTimer > factorySettings.processingTime) && factory.currentProduction) factory.productionTimer = factorySettings.processingTime;
         // раскладываем остатки молока
         for (const territory of territories) {
-          if (haveMilk > 0) {
-            if (territory.territoryType === 5) {
-              const terSettings: IterritoriesCowSettings = state.cowSettings.territoriesCowSettings
-                .find((data: IterritoriesCowSettings) => territory.improve === data.improve);
-              if (haveMilk >= terSettings.storage) {
-                territory.volume = terSettings.storage;
-                haveMilk -= terSettings.storage;
-              } else {
-                territory.volume = haveMilk;
-                haveMilk = 0;
-              }
+          if (territory.territoryType === 5) {
+            const terSettings: IterritoriesCowSettings = state.cowSettings.territoriesCowSettings
+              .find((data: IterritoriesCowSettings) => territory.improve === data.improve);
+            if (haveMilk > 0) {
+            if (haveMilk >= terSettings.storage) {
+              territory.volume = terSettings.storage;
+              haveMilk -= terSettings.storage;
+            } else {
+              territory.volume = haveMilk;
+              haveMilk = 0;
             }
-          } else {
-            territory.volume = 0;
-          }
+            } else territory.volume = 0;
+            if (isNaN(territory.volume)) territory.volume = terSettings.storage; 
+          } 
         }
 
       } else {
