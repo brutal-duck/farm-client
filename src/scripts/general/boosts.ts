@@ -180,6 +180,21 @@ function improveCollector(): void {
   
         this.game.scene.keys['Modal'].improveCollectorAnim({x: this.cameras.main.centerX, y: this.cameras.main.centerY + 10});
         this.game.scene.keys[this.state.farm].tryTask(23, user.collectorLevel);
+        
+        if (!secondNextLevel) {
+          this.scene.stop('Modal');
+          this.scene.stop('Shop');
+          this.scene.stop('ShopBars');
+      
+          let modal: Imodal = {
+            type: 1,
+            sysType: 3,
+            message: this.state.lang.maxLevelCollector,
+            height: 150
+          }
+          this.state.modal = modal;
+          this.scene.launch('Modal', this.state);
+        }
       } else {
   
         this.state.convertor = {
@@ -208,7 +223,20 @@ function improveCollector(): void {
   
         this.game.scene.keys['Modal'].improveCollectorAnim({x: this.cameras.main.centerX, y: this.cameras.main.centerY + 10});
         this.game.scene.keys[this.state.farm].tryTask(23, user.collectorLevel);
-  
+        if (!secondNextLevel) {
+          this.scene.stop('Modal');
+          this.scene.stop('Shop');
+          this.scene.stop('ShopBars');
+      
+          let modal: Imodal = {
+            type: 1,
+            sysType: 3,
+            message: this.state.lang.maxLevelCollector,
+            height: 150
+          }
+          this.state.modal = modal;
+          this.scene.launch('Modal', this.state);
+        }
       } else {
   
         let count: number = nextLevel.price - user.money;
@@ -232,20 +260,6 @@ function improveCollector(): void {
     
   }
   
-  if (!secondNextLevel) {
-    this.scene.stop('Modal');
-    this.scene.stop('Shop');
-    this.scene.stop('ShopBars');
-
-    let modal: Imodal = {
-      type: 1,
-      sysType: 3,
-      message: this.state.lang.maxLevelCollector,
-      height: 150
-    }
-    this.state.modal = modal;
-    this.scene.launch('Modal', this.state);
-  }
 }
 
 function collectorBoost(): void {
