@@ -1699,7 +1699,7 @@ export default [
   {
     id: 114,
     part: 13,
-    count: 30,
+    count: 49,
     diamonds: 2,
     done: 0,
     got_awarded: 0,
@@ -1707,7 +1707,7 @@ export default [
     progress: 0,
     sort: 2,
     state: 0,
-    type: 2,
+    type: 23,
     xp: 0,
     farm: 2
   },
