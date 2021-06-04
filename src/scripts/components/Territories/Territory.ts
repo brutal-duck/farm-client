@@ -904,7 +904,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
           }
           this.startProduction();
         } else {
-          console.log('Недостаточно молока для производства');
+          console.log('Not enough milk for production');
         }
       } else {
         this.factory.productionTimer -= 1;

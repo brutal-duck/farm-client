@@ -611,14 +611,13 @@ function intervalCollectorTutorial(arrowOnCollector: Phaser.GameObjects.Sprite):
 
 function showFeedBoostSpeechBubble(): void {
   const DELAY: number = 300;
-
   if (this.feedBoostRemaindTimer < DELAY && 
     this.state[`user${this.state.farm}`].feedBoostTime <= 0 && 
     this.state.user.additionalTutorial.feedBoost && 
     this.state[`user${this.state.farm}`].part > 5) this.feedBoostRemaindTimer++;
-  else if (this.feedBoostRemaindTimer >= DELAY){
+  else if (this.feedBoostRemaindTimer >= DELAY) {
     this.feedBoostRemaindTimer = 0;
-    SpeechBubble.create(this.game.scene.keys[`${this.state.farm}Bars`], this.state.lang[`feedBoostSpeechBuble${this.state.farm}`], 3);
+    SpeechBubble.create(this.game.scene.keys[`${this.state.farm}Bars`], this.state.lang[`feedBoostSpeechBubble${this.state.farm}`], 3);
   }
 }
 
