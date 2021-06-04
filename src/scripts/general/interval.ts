@@ -12,14 +12,24 @@ function progressTerritoryCooldown (territories: any, time: number, farm: string
     if (territory.cooldown > 0) {
       territory.bought = true;
       territory.cooldown -= time;
-      if (offline) {
+      if (offline && territory.cooldown <= 0) {
         territory.type = 1;
-        const sheepTask: Itasks = this.state.sheepTasks.find(el => el.part === this.state.userSheep.part && el.type === 5 && el.state === 1);
-        const chickenTask: Itasks = this.state.chickenTasks.find(el => el.part === this.state.userChicken.part && el.type === 5 && el.state === 1);
-        const cowTask: Itasks = this.state.cowTasks.find(el => el.part === this.state.userCow.part && el.type === 5 && el.state === 1);
-        if (sheepTask && farm === 'Sheep') sheepTask.done = 1;
-        if (chickenTask && farm === 'Chicken') chickenTask.done = 1;
-        if (cowTask && farm === 'Cow') cowTask.done = 1;
+        const sheepTask: Itasks = this.state.sheepTasks.find(el => el.part === this.state.userSheep.part && el.type === 5 && (el.state === 1 || el.state === 0));
+        const chickenTask: Itasks = this.state.chickenTasks.find(el => el.part === this.state.userChicken.part && el.type === 5 && (el.state === 1 || el.state === 0));
+        const cowTask: Itasks = this.state.cowTasks.find(el => el.part === this.state.userCow.part && el.type === 5 && (el.state === 1 || el.state === 0));
+        if (sheepTask && farm === 'Sheep') {
+          sheepTask.progress += 1;
+          console.log(sheepTask.progress)
+          if (sheepTask.count <= sheepTask.progress) sheepTask.done = 1;
+        }
+        if (chickenTask && farm === 'Chicken') {
+          chickenTask.progress += 1;
+          if (chickenTask.count <= chickenTask.progress) chickenTask.done = 1;
+        }
+        if (cowTask && farm === 'Cow') {
+          cowTask.progress += 1;
+          if (cowTask.count <= cowTask.progress) cowTask.done = 1;
+        }
       };
       if (territory.cooldown <= 0) {
         territory.cooldown = 0;
