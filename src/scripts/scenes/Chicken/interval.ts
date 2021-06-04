@@ -376,6 +376,7 @@ function interval(): void {
     }
 
     this.intervalPorgressCollectorTime();
+    this.progressTerritoryCooldown(this.territories.children.entries, 1, 'Chicken');
     this.sheepIntervalProgress();
     this.cowIntervalProgress();
   
@@ -390,7 +391,6 @@ function interval(): void {
     this.cowFactoryProgress();
     this.updateProfileNative();
     this.showFeedBoostSpeechBubble();
-    progressTerritoryCooldown(this.territories.children.entries, 1);
   }, callbackScope: this, loop: true });
 
 }

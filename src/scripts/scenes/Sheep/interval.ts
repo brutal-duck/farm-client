@@ -375,6 +375,7 @@ function interval(): void {
 
     this.chickenIntervalProgress();
     this.cowIntervalProgress();
+    this.progressTerritoryCooldown(this.territories.children.entries, 1, 'Sheep');
     
     if (checkCollector < 2) {
       checkCollector += 1;
@@ -388,7 +389,6 @@ function interval(): void {
 
     this.updateProfileNative();
     this.showFeedBoostSpeechBubble();
-    progressTerritoryCooldown(this.territories.children.entries, 1);
   }, callbackScope: this, loop: true });
   
 

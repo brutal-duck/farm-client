@@ -115,6 +115,7 @@ import {
   intervalPorgressCollectorTime,
   intervalCollectorTutorial,
   showFeedBoostSpeechBubble,
+  progressTerritoryCooldown,
 } from '../../general/interval';
 
 class Cow extends Phaser.Scene {
@@ -250,6 +251,7 @@ class Cow extends Phaser.Scene {
   public intervalCollectorTutorial = intervalCollectorTutorial.bind(this);
   public showFeedBoostSpeechBubble = showFeedBoostSpeechBubble.bind(this);
   public showConfirmSellMilk = showConfirmSellMilk.bind(this);
+  public progressTerritoryCooldown = progressTerritoryCooldown.bind(this);
 
   public init(state: Istate): void {
 
@@ -292,7 +294,7 @@ class Cow extends Phaser.Scene {
     //   // this.state.newbieTime = 0
     //   // this.state.daily = Number(this.state.daily) + 1
     //   // this.state.dailyAwards = [false, false, false, false, false, false, false, false]
-      
+    //   // this.state.user.diamonds = 10000;
     //   // let modal: Imodal = {
     //   //   type: 4,
     //   // }

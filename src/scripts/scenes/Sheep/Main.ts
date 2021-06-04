@@ -144,6 +144,7 @@ import {
   intervalPorgressCollectorTime,
   intervalCollectorTutorial,
   showFeedBoostSpeechBubble,
+  progressTerritoryCooldown,
 } from '../../general/interval';
 
 class Sheep extends Phaser.Scene {
@@ -326,6 +327,7 @@ class Sheep extends Phaser.Scene {
   public showFeedBoostSpeechBubble = showFeedBoostSpeechBubble.bind(this);
   public setTerritoryUnlockCooldown = setTerritoryUnlockCooldown.bind(this);
   public unlockTerritory = unlockTerritory.bind(this);
+  public progressTerritoryCooldown = progressTerritoryCooldown.bind(this);
 
   public init(state: Istate): void {
 

@@ -5,8 +5,6 @@ import CowSprite from './../components/Animal/CowSprite';
 import Territory from './../components/Territories/Territory';
 import Factory from './../components/Territories/Factory';
 
-import { progressTerritoryCooldown } from './interval';
-
 export default function autoprogress(load: boolean = false): void {
   const state: Istate = this.state;
   
@@ -48,7 +46,7 @@ export default function autoprogress(load: boolean = false): void {
 
   // овцы
   const sheepOfflineProgress = (offlineTime: number = state.progress.sheep.offlineTime): void => {
-    progressTerritoryCooldown(state.sheepTerritories, offlineTime);
+    this.progressTerritoryCooldown(state.sheepTerritories, offlineTime, 'Sheep', true);
     if (state.userSheep.diamondAnimalTime >= offlineTime) state.userSheep.diamondAnimalTime -= offlineTime;
     else {
       state.userSheep.diamondAnimalTime = 0;
@@ -172,7 +170,7 @@ export default function autoprogress(load: boolean = false): void {
 
   const chickenOfflineProgress = (offlineTime: number = state.progress.chicken.offlineTime): void => {
     // значение отступа для яиц, чтоб не прилегали к краям территории
-    progressTerritoryCooldown(state.chickenTerritories, offlineTime);
+    this.progressTerritoryCooldown(state.chickenTerritories, offlineTime, 'Chicken',true);
     let indent: number = 20;
   
     // время кристаллической курочки
@@ -400,7 +398,7 @@ export default function autoprogress(load: boolean = false): void {
   } 
 
   const cowOfflineProgress = (offlineTime: number = state.progress.cow.offlineTime): void => {
-    progressTerritoryCooldown(state.cowTerritories, offlineTime);
+    this.progressTerritoryCooldown(state.cowTerritories, offlineTime, 'Cow', true);
 
     const MILK_DELAY = 60;
     if (state.userCow.diamondAnimalTime >= offlineTime) state.userCow.diamondAnimalTime -= offlineTime;
@@ -613,7 +611,7 @@ export default function autoprogress(load: boolean = false): void {
 
   const sheepAutoprogress = (): void => {
      // время кристаллической овцы
-    progressTerritoryCooldown(this.territories.children.entries, state.offlineTime);
+    this.progressTerritoryCooldown(this.territories.children.entries, state.offlineTime, 'Sheep');
 
     if (state.userSheep.diamondAnimalTime >= state.offlineTime) state.userSheep.diamondAnimalTime -= state.offlineTime;
     else {
@@ -758,7 +756,7 @@ export default function autoprogress(load: boolean = false): void {
 
   const chickenAutoprogress = (): void => {
       // значение отступа для яиц, чтоб не прилегали к краям территории
-    progressTerritoryCooldown(this.territories.children.entries, state.offlineTime);
+    this.progressTerritoryCooldown(this.territories.children.entries, state.offlineTime, 'Chicken');
 
     let indent: number = 20;
 
@@ -1025,7 +1023,7 @@ export default function autoprogress(load: boolean = false): void {
   }
 
   const cowAutoprogress = (): void => {
-    progressTerritoryCooldown(this.territories.children.entries, state.offlineTime);
+    this.progressTerritoryCooldown(this.territories.children.entries, state.offlineTime, 'Cow');
 
     const MILK_DELAY = 60;
     if (state.userCow.diamondAnimalTime >= state.offlineTime) state.userCow.diamondAnimalTime -= state.offlineTime;

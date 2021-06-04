@@ -7,11 +7,20 @@ import Arrow from './../components/animations/Arrow';
 import SpeechBubble from './../components/animations/SpeechBuble';
 import Factory from './../components/Territories/Factory';
 
-const progressTerritoryCooldown = (territories: any, time: number): void => {
+function progressTerritoryCooldown (territories: any, time: number, farm: string, offline: boolean = false): void {
   for (const territory of territories) {
     if (territory.cooldown > 0) {
       territory.bought = true;
       territory.cooldown -= time;
+      if (offline) {
+        territory.type = 1;
+        const sheepTask: Itasks = this.state.sheepTasks.find(el => el.part === this.state.userSheep.part && el.type === 5 && el.state === 1);
+        const chickenTask: Itasks = this.state.chickenTasks.find(el => el.part === this.state.userChicken.part && el.type === 5 && el.state === 1);
+        const cowTask: Itasks = this.state.cowTasks.find(el => el.part === this.state.userCow.part && el.type === 5 && el.state === 1);
+        if (sheepTask && farm === 'Sheep') sheepTask.done = 1;
+        if (chickenTask && farm === 'Chicken') chickenTask.done = 1;
+        if (cowTask && farm === 'Cow') cowTask.done = 1;
+      };
       if (territory.cooldown <= 0) {
         territory.cooldown = 0;
       }
@@ -59,7 +68,7 @@ function sheepIntervalProgress(): void {
   const Scene: Chicken | Cow | Unicorn = this;
   const sheepBalance: Ibalance = Scene.farmBalance('Sheep');
   const sheepSettings: IsheepSettings = Scene.state.sheepSettings;
-  progressTerritoryCooldown(Scene.state.sheepTerritories, 1);
+  this.progressTerritoryCooldown(Scene.state.sheepTerritories, 1, 'Sheep', true);
   for (let i in Scene.state.sheep) {
     const sheep: Isheep = Scene.state.sheep[i];
     let breed: number;
@@ -85,7 +94,7 @@ function chickenIntervalProgress(): void {
   const chickenBalance: Ibalance = Scene.farmBalance('Chicken');
   const chickenSettings: IchickenSettings = Scene.state.chickenSettings;
 
-  progressTerritoryCooldown(Scene.state.chickenTerritories, 1);
+  this.progressTerritoryCooldown(Scene.state.chickenTerritories, 1, 'Chicken', true);
 
   if (Scene.state.userChicken.part > 0) {
     for (let i in Scene.state.chicken) {
@@ -164,7 +173,7 @@ function cowIntervalProgress(): void {
   const cowBalance: Ibalance = Scene.farmBalance('Cow');
   const cowSettings: IcowSettings = Scene.state.cowSettings;
 
-  progressTerritoryCooldown(Scene.state.cowTerritories, 1);
+  this.progressTerritoryCooldown(Scene.state.cowTerritories, 1, 'Cow', true);
 
   if (Scene.state.userCow.part > 0) {
     for (let i in Scene.state.cow) {

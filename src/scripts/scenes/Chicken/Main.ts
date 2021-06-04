@@ -118,6 +118,7 @@ import {
   intervalPorgressCollectorTime,
   intervalCollectorTutorial,
   showFeedBoostSpeechBubble,
+  progressTerritoryCooldown,
 } from '../../general/interval';
 
 class Chicken extends Phaser.Scene {
@@ -253,6 +254,7 @@ class Chicken extends Phaser.Scene {
   public showFeedBoostSpeechBubble = showFeedBoostSpeechBubble.bind(this);
   public setTerritoryUnlockCooldown = setTerritoryUnlockCooldown.bind(this);
   public unlockTerritory = unlockTerritory.bind(this);
+  public progressTerritoryCooldown = progressTerritoryCooldown.bind(this);
 
   public init(state: Istate): void {
 
