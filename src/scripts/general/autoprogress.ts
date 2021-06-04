@@ -76,7 +76,10 @@ export default function autoprogress(load: boolean = false): void {
     }
     
     // процент шерсти под бустом
-    let feedPercent: number = Number((wasFeedBoost / wasCollector).toFixed(2));
+    let feedPercent: number = 0;
+    if (wasFeedBoost > 0) {
+      feedPercent = Number((wasFeedBoost / wasCollector).toFixed(2));
+    } 
     if (feedPercent >= 1 ) feedPercent = 1;
   
     // считаем сколько раз подстригли овец
@@ -202,7 +205,10 @@ export default function autoprogress(load: boolean = false): void {
     }
   
     // процент шерсти под бустом
-    let feedPercent: number = Number((wasFeedBoost / wasCollector).toFixed(2));
+    let feedPercent: number = 0;
+    if (wasFeedBoost > 0) {
+      feedPercent = Number((wasFeedBoost / wasCollector).toFixed(2));
+    } 
     if (feedPercent >= 1 ) feedPercent = 1;
     
     // считаем сколько снесла курица яйцо
@@ -440,7 +446,10 @@ export default function autoprogress(load: boolean = false): void {
     }
 
     // процент шерсти под бустом
-    let feedPercent: number = Number((wasFeedBoost / wasCollector).toFixed(2));
+    let feedPercent: number = 0;
+    if (wasFeedBoost > 0) {
+      feedPercent = Number((wasFeedBoost / wasCollector).toFixed(2));
+    } 
     if (feedPercent >= 1 ) feedPercent = 1;
   
     // считаем сколько раз подстригли овец
@@ -640,7 +649,10 @@ export default function autoprogress(load: boolean = false): void {
     }
 
     // процент шерсти под бустом
-    let feedPercent: number = Number((wasFeedBoost / wasCollector).toFixed(2));
+    let feedPercent: number = 0;
+    if (wasFeedBoost > 0) {
+      feedPercent = Number((wasFeedBoost / wasCollector).toFixed(2));
+    } 
     if (feedPercent >= 1 ) feedPercent = 1;
 
 
@@ -788,7 +800,10 @@ export default function autoprogress(load: boolean = false): void {
     }
 
     // процент шерсти под бустом
-    let feedPercent: number = Number((wasFeedBoost / wasCollector).toFixed(2));
+    let feedPercent: number = 0;
+    if (wasFeedBoost > 0) {
+      feedPercent = Number((wasFeedBoost / wasCollector).toFixed(2));
+    } 
     if (feedPercent >= 1 ) feedPercent = 1;
 
     if (!load) this.game.scene.keys['ChickenBars'].collector.update();
@@ -1067,7 +1082,7 @@ export default function autoprogress(load: boolean = false): void {
     if (!load) state.timeToNewDay -= state.offlineTime;
     // процент шерсти под бустом
     let feedPercent: number = 0;
-    if (feedPercent > 0) {
+    if (wasFeedBoost > 0) {
       feedPercent = Number((wasFeedBoost / wasCollector).toFixed(2));
     } 
     if (feedPercent >= 1 ) feedPercent = 1;
