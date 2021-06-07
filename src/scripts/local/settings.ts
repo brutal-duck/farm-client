@@ -230,7 +230,7 @@ let cowSettings: IcowSettings = {
       production2Percent: 30,
       production3Percent: 0,
       production4Percent: 100,
-      efficiency: 50,
+      efficiency: 35,
     },
     { 
       improve: 3,
@@ -243,7 +243,7 @@ let cowSettings: IcowSettings = {
       production2Percent: 40,
       production3Percent: 0,
       production4Percent: 100,
-      efficiency: 55,
+      efficiency: 40,
     },
     { 
       improve: 4,
@@ -256,7 +256,7 @@ let cowSettings: IcowSettings = {
       production2Percent: 45,
       production3Percent: 0,
       production4Percent: 100,
-      efficiency: 60,
+      efficiency: 45,
     },
     { 
       improve: 5,
@@ -269,7 +269,7 @@ let cowSettings: IcowSettings = {
       production2Percent: 45,
       production3Percent: 20,
       production4Percent: 100,
-      efficiency: 93,
+      efficiency: 60,
     },
     { 
       improve: 6,
@@ -282,7 +282,7 @@ let cowSettings: IcowSettings = {
       production2Percent: 45,
       production3Percent: 20,
       production4Percent: 100,
-      efficiency: 93,
+      efficiency: 62,
     },
     { 
       improve: 7,
@@ -295,7 +295,7 @@ let cowSettings: IcowSettings = {
       production2Percent: 43,
       production3Percent: 32,
       production4Percent: 100,
-      efficiency: 104,
+      efficiency: 65,
     },
     { 
       improve: 8,
@@ -308,7 +308,7 @@ let cowSettings: IcowSettings = {
       production2Percent: 43,
       production3Percent: 32,
       production4Percent: 100,
-      efficiency: 104,
+      efficiency: 67,
     },
     { 
       improve: 9,
@@ -321,7 +321,7 @@ let cowSettings: IcowSettings = {
       production2Percent: 43,
       production3Percent: 32,
       production4Percent: 100,
-      efficiency: 104,
+      efficiency: 69,
     },
     { 
       improve: 10,
@@ -334,7 +334,7 @@ let cowSettings: IcowSettings = {
       production2Percent: 43,
       production3Percent: 32,
       production4Percent: 100,
-      efficiency: 104,
+      efficiency: 72,
     },
     { 
       improve: 11,
@@ -347,7 +347,7 @@ let cowSettings: IcowSettings = {
       production2Percent: 45,
       production3Percent: 35,
       production4Percent: 100,
-      efficiency: 108,
+      efficiency: 75,
     },
     { 
       improve: 12,
@@ -360,7 +360,7 @@ let cowSettings: IcowSettings = {
       production2Percent: 50,
       production3Percent: 30,
       production4Percent: 100,
-      efficiency: 105,
+      efficiency: 78,
     },
     { 
       improve: 13,
@@ -373,7 +373,7 @@ let cowSettings: IcowSettings = {
       production2Percent: 50,
       production3Percent: 30,
       production4Percent: 100,
-      efficiency: 105,
+      efficiency: 80,
     },
     { 
       improve: 14,
@@ -386,7 +386,7 @@ let cowSettings: IcowSettings = {
       production2Percent: 50,
       production3Percent: 30,
       production4Percent: 100,
-      efficiency: 105,
+      efficiency: 82,
     },
     { 
       improve: 15,
@@ -399,7 +399,7 @@ let cowSettings: IcowSettings = {
       production2Percent: 35,
       production3Percent: 45,
       production4Percent: 100,
-      efficiency: 113,
+      efficiency: 85,
     },
     { 
       improve: 16,
@@ -412,7 +412,7 @@ let cowSettings: IcowSettings = {
       production2Percent: 35,
       production3Percent: 45,
       production4Percent: 100,
-      efficiency: 113,
+      efficiency: 88,
     },
     { 
       improve: 17,
@@ -425,7 +425,7 @@ let cowSettings: IcowSettings = {
       production2Percent: 35,
       production3Percent: 45,
       production4Percent: 100,
-      efficiency: 113,
+      efficiency: 90,
     },
     { 
       improve: 18,
@@ -438,7 +438,7 @@ let cowSettings: IcowSettings = {
       production2Percent: 30,
       production3Percent: 65,
       production4Percent: 100,
-      efficiency: 130,
+      efficiency: 94,
     },
     { 
       improve: 19,
@@ -451,7 +451,7 @@ let cowSettings: IcowSettings = {
       production2Percent: 30,
       production3Percent: 65,
       production4Percent: 100,
-      efficiency: 130,
+      efficiency: 97,
     },
     { 
       improve: 20,
@@ -464,7 +464,7 @@ let cowSettings: IcowSettings = {
       production2Percent: 30,
       production3Percent: 65,
       production4Percent: 100,
-      efficiency: 130,
+      efficiency: 100,
     },
   ],
   cowFairLevels: [
@@ -501,17 +501,17 @@ let cowSettings: IcowSettings = {
   ],
   cowSettings: [
     { breed: 1, drinking: 2, eating: 10, maxMilkVolume: 100 },
-    { breed: 2, drinking: 2, eating: 11, maxMilkVolume: 100 },
-    { breed: 3, drinking: 3, eating: 12, maxMilkVolume: 100 },
-    { breed: 4, drinking: 3, eating: 13, maxMilkVolume: 100 },
-    { breed: 5, drinking: 3, eating: 14, maxMilkVolume: 100 },
-    { breed: 6, drinking: 3, eating: 15, maxMilkVolume: 100 },
-    { breed: 7, drinking: 4, eating: 17, maxMilkVolume: 100 },
-    { breed: 8, drinking: 4, eating: 19, maxMilkVolume: 100 },
-    { breed: 9, drinking: 5, eating: 21, maxMilkVolume: 100 },
-    { breed: 10, drinking: 5, eating: 23, maxMilkVolume: 100 },
-    { breed: 11, drinking: 6, eating: 25, maxMilkVolume: 100 },
-    { breed: 12, drinking: 7, eating: 28, maxMilkVolume: 100 }
+    { breed: 2, drinking: 2, eating: 11, maxMilkVolume: 200 },
+    { breed: 3, drinking: 3, eating: 12, maxMilkVolume: 400 },
+    { breed: 4, drinking: 3, eating: 13, maxMilkVolume: 800 },
+    { breed: 5, drinking: 3, eating: 14, maxMilkVolume: 1600 },
+    { breed: 6, drinking: 3, eating: 15, maxMilkVolume: 3200 },
+    { breed: 7, drinking: 4, eating: 17, maxMilkVolume: 6400 },
+    { breed: 8, drinking: 4, eating: 19, maxMilkVolume: 12800 },
+    { breed: 9, drinking: 5, eating: 21, maxMilkVolume: 25600 },
+    { breed: 10, drinking: 5, eating: 23, maxMilkVolume: 51200 },
+    { breed: 11, drinking: 6, eating: 25, maxMilkVolume: 102400 },
+    { breed: 12, drinking: 7, eating: 28, maxMilkVolume: 204800 }
   ],
   territoriesCowPrice: [
     { block: 1, position: 1, unlockCooldown: 0, price: 0, unlock: 1 },
