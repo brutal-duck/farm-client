@@ -16,7 +16,7 @@ function setCollector(): void {
           if (storage.volume < max) {
             for (let i in this.animalGroup.children.entries) {
               const cow: CowSprite = this.animalGroup.children.entries[i];
-              if (storage.volume + cow.milk < max && cow.milk >= cow.settings.maxMilkVolume && cow.breed !== 0) {
+              if (cow.milk >= cow.settings.maxMilkVolume && cow.breed !== 0) {
                 this.collectMilk(cow);
                 break;
               }
