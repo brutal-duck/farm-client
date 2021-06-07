@@ -26,9 +26,9 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
   private milkInStorageText1: Phaser.GameObjects.Text;
   private milkInStorageText2: Phaser.GameObjects.Text;
   private emptyAnimation: Phaser.Tweens.Tween;
-  private productionAnimation: Phaser.Tweens.Tween;
-  private product: Phaser.GameObjects.Sprite;
+  private productTexture: string;
   private productMask: Phaser.Display.Masks.BitmapMask;
+  private animTimer: Phaser.Time.TimerEvent;
 
   constructor(scene: Modal){
     super(scene, scene.cameras.main.centerX, scene.cameras.main.centerY, 'factory-window');
@@ -218,7 +218,7 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
       percent = 100 - factory.productionTimer / (factory.settings.processingTime / 100);
     }
     
-    if (factory.productionTimer > 0 && !this.product && this.scene.state.territory.factory.currentProduction) {
+    if (factory.productionTimer > 0 && this.scene.state.territory.factory.currentProduction && !this.animTimer) {
       this.setProductionAnimation();
     }
     
@@ -302,27 +302,6 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
     this.milkInStorageText2.setColor(MILK_IN_STORAGE_COLOR);
   }
 
-  private setProductionAnimation(): void {
-    const x: number = this.scene.cameras.main.centerX - 190;
-    const targetX: number = this.scene.cameras.main.centerX + 350;
-    const y: number = this.scene.cameras.main.centerY - 175;
-    this.product = this.scene.add.sprite(x, y, `factory-production-${this.scene.state.territory.factory.currentProduction}`).setAlpha(0.2).setOrigin(0.5, 1);
-    this.product.setMask(this.productMask);
-    this.productionAnimation = this.scene.tweens.add({
-      targets: this.product,
-      props: {
-        alpha: { from: 0.2, to: 1, duration: 500 },
-        x: { from: x, to: targetX, duration: 3000 },
-      }, 
-      loop: -1,
-      onLoop: (): void => {
-        if (this.product && this.product.texture.key !== `factory-production-${this.scene.state.territory.currentProduction}` || !this.scene.state.territory.factory.currentProduction) {
-          this.removeProductionAnimation();
-        }
-      }
-    });
-  }
-
   private createBitMask(): void {
     const x: number = this.scene.cameras.main.centerX - 246;
     const y: number = this.scene.cameras.main.centerY - 280;
@@ -331,10 +310,37 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
     const mask: Phaser.GameObjects.Graphics = this.scene.add.graphics().fillRoundedRect(x, y, width, height, 12).setVisible(false);
     this.productMask = new Phaser.Display.Masks.BitmapMask(this.scene, mask);
   }
+
+  private setProductionAnimation(): void {
+    this.productTexture = `factory-production-${this.scene.state.territory.factory.currentProduction}`;
+    const x: number = this.scene.cameras.main.centerX - 190;
+    const targetX: number = this.scene.cameras.main.centerX + 350;
+    const y: number = this.scene.cameras.main.centerY - 175;
+    this.animTimer = this.scene.time.addEvent({
+      delay: 750,
+      callback: (): void => {
+        if (this.productTexture !== `factory-production-${this.scene.state.territory.factory.currentProduction}`) {
+          this.removeProductionAnimation();
+        } else {
+          const sprite = this.scene.add.sprite(x, y, `factory-production-${this.scene.state.territory.factory.currentProduction}`).setAlpha(0.2).setOrigin(0.5, 1);
+          sprite.setMask(this.productMask);
+          this.scene.tweens.add({
+            targets: sprite,
+            props: {
+              alpha: { from: 0.2, to: 1, duration: 500 },
+              x: { from: x, to: targetX, duration: 3000 },
+            },
+            onComplete: (): void => sprite.destroy(), 
+          });
+        }
+      },
+      callbackScope: this,
+      loop: true,
+    });
+  }
+
   private removeProductionAnimation(): void {
-    this.product.destroy();
-    this.product = undefined;
-    this.productionAnimation.remove();
-    this.productionAnimation = undefined;
+    this.animTimer.remove();
+    this.animTimer = undefined;
   }
 }
