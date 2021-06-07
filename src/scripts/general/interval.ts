@@ -178,7 +178,7 @@ function chickenIntervalProgress(): void {
 
 function cowIntervalProgress(): void {
   const Scene: Sheep | Chicken | Unicorn = this;
-  const MILK_DELAY: number = 60;
+  const MILK_DELAY: number = 10;
   const cowBalance: Ibalance = Scene.farmBalance('Cow');
   const cowSettings: IcowSettings = Scene.state.cowSettings;
 

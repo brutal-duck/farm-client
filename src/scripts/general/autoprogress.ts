@@ -406,7 +406,7 @@ export default function autoprogress(load: boolean = false): void {
   const cowOfflineProgress = (offlineTime: number = state.progress.cow.offlineTime): void => {
     this.progressTerritoryCooldown(state.cowTerritories, offlineTime, 'Cow', true);
 
-    const MILK_DELAY = 60;
+    const MILK_DELAY = 10;
     if (state.userCow.diamondAnimalTime >= offlineTime) state.userCow.diamondAnimalTime -= offlineTime;
     else {
       state.userCow.diamondAnimalTime = 0;
@@ -467,12 +467,12 @@ export default function autoprogress(load: boolean = false): void {
         milk = Math.round(milk / 100 * state.cowSettings.cowBadPercent);
         if (milk < 1) milk = 1;
       }
-      
+
       const check: boolean = cow.milk + milk > cowPoints.maxMilkVolume;
 
       const milkCollect: number = Math.floor((milk * wasCollector));
       if (milkCollect === 0) {
-        if (cow.milk + (milk * wasCollector) > 1000) cow.milk = cowPoints.maxMilkVolume;
+        if (cow.milk + (milk * wasCollector) > cowPoints.maxMilkVolume) cow.milk = cowPoints.maxMilkVolume;
         else cow.milk += (milk * wasCollector);
       }
 
@@ -502,7 +502,7 @@ export default function autoprogress(load: boolean = false): void {
     // скорость сборки
     const speed: number = state.cowCollectorSettings.find((data: IcollectorSettings) => data.level === state.userCow.collectorLevel).speed;
   
-    if (state.cow.length > speed * 60) {
+    if (state.cow.length > speed * MILK_DELAY) {
       const excess: number = 100 / (speed * MILK_DELAY) * state.cow.length;
       const percent: number = 100 / (excess / 100);
       for (const milk of milkCollected) {
@@ -1138,8 +1138,8 @@ export default function autoprogress(load: boolean = false): void {
     // скорость сборки
     const speed: number = state.cowCollectorSettings.find((data: IcollectorSettings) => data.level === state.userCow.collectorLevel).speed;
   
-    if (cowGroup.length > speed * 60) {
-      const excess: number = 100 / (speed * 60) * cowGroup.length;
+    if (cowGroup.length > speed * MILK_DELAY) {
+      const excess: number = 100 / (speed * MILK_DELAY) * cowGroup.length;
       const percent: number = 100 / (excess / 100);
       for (const milk of milkCollected) {
         if (milk.count > 0) {
