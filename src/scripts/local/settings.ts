@@ -222,7 +222,7 @@ let cowSettings: IcowSettings = {
     },
     { 
       improve: 2,
-      unlock_improve: 2,
+      unlock_improve: 3,
       improveMoneyPrice: 400,
       improveDiamondPrice: 0,
       processingTime: 30,
@@ -235,7 +235,7 @@ let cowSettings: IcowSettings = {
     },
     { 
       improve: 3,
-      unlock_improve: 2,
+      unlock_improve: 4,
       improveMoneyPrice: 1600,
       improveDiamondPrice: 0,
       processingTime: 30,
@@ -248,7 +248,7 @@ let cowSettings: IcowSettings = {
     },
     { 
       improve: 4,
-      unlock_improve: 2,
+      unlock_improve: 5,
       improveMoneyPrice: 6000,
       improveDiamondPrice: 0,
       processingTime: 30,
@@ -261,7 +261,7 @@ let cowSettings: IcowSettings = {
     },
     { 
       improve: 5,
-      unlock_improve: 2,
+      unlock_improve: 6,
       improveMoneyPrice: 0,
       improveDiamondPrice: 60,
       processingTime: 60,
@@ -274,7 +274,7 @@ let cowSettings: IcowSettings = {
     },
     { 
       improve: 6,
-      unlock_improve: 3,
+      unlock_improve: 7,
       improveMoneyPrice: 40000,
       improveDiamondPrice: 0,
       processingTime: 60,
@@ -287,7 +287,7 @@ let cowSettings: IcowSettings = {
     },
     { 
       improve: 7,
-      unlock_improve: 3,
+      unlock_improve: 9,
       improveMoneyPrice: 92000,
       improveDiamondPrice: 0,
       processingTime: 60,
@@ -300,7 +300,7 @@ let cowSettings: IcowSettings = {
     },
     { 
       improve: 8,
-      unlock_improve: 4,
+      unlock_improve: 9,
       improveMoneyPrice: 200000,
       improveDiamondPrice: 0,
       processingTime: 60,
@@ -313,7 +313,7 @@ let cowSettings: IcowSettings = {
     },
     { 
       improve: 9,
-      unlock_improve: 4,
+      unlock_improve: 10,
       improveMoneyPrice: 280000,
       improveDiamondPrice: 0,
       processingTime: 60,
@@ -326,7 +326,7 @@ let cowSettings: IcowSettings = {
     },
     { 
       improve: 10,
-      unlock_improve: 5,
+      unlock_improve: 11,
       improveMoneyPrice: 0,
       improveDiamondPrice: 240,
       processingTime: 120,
@@ -339,7 +339,7 @@ let cowSettings: IcowSettings = {
     },
     { 
       improve: 11,
-      unlock_improve: 6,
+      unlock_improve: 11,
       improveMoneyPrice: 1608000,
       improveDiamondPrice: 0,
       processingTime: 120,
@@ -352,7 +352,7 @@ let cowSettings: IcowSettings = {
     },
     { 
       improve: 12,
-      unlock_improve: 6,
+      unlock_improve: 12,
       improveMoneyPrice: 4920000,
       improveDiamondPrice: 0,
       processingTime: 120,
@@ -365,7 +365,7 @@ let cowSettings: IcowSettings = {
     },
     { 
       improve: 13,
-      unlock_improve: 7,
+      unlock_improve: 12,
       improveMoneyPrice: 5600000,
       improveDiamondPrice: 0,
       processingTime: 120,
@@ -378,7 +378,7 @@ let cowSettings: IcowSettings = {
     },
     { 
       improve: 14,
-      unlock_improve: 7,
+      unlock_improve: 13,
       improveMoneyPrice: 6400000,
       improveDiamondPrice: 0,
       processingTime: 120,
@@ -391,7 +391,7 @@ let cowSettings: IcowSettings = {
     },
     { 
       improve: 15,
-      unlock_improve: 8,
+      unlock_improve: 13,
       improveMoneyPrice: 0,
       improveDiamondPrice: 540,
       processingTime: 180,
@@ -404,7 +404,7 @@ let cowSettings: IcowSettings = {
     },
     { 
       improve: 16,
-      unlock_improve: 9,
+      unlock_improve: 14,
       improveMoneyPrice: 14400000,
       improveDiamondPrice: 0,
       processingTime: 180,
@@ -417,7 +417,7 @@ let cowSettings: IcowSettings = {
     },
     { 
       improve: 17,
-      unlock_improve: 10,
+      unlock_improve: 14,
       improveMoneyPrice: 28800000,
       improveDiamondPrice: 0,
       processingTime: 180,
@@ -430,7 +430,7 @@ let cowSettings: IcowSettings = {
     },
     { 
       improve: 18,
-      unlock_improve: 11,
+      unlock_improve: 14,
       improveMoneyPrice: 0,
       improveDiamondPrice: 840,
       processingTime: 300,
@@ -443,7 +443,7 @@ let cowSettings: IcowSettings = {
     },
     { 
       improve: 19,
-      unlock_improve: 12,
+      unlock_improve: 15,
       improveMoneyPrice: 0,
       improveDiamondPrice: 1080,
       processingTime: 300,
@@ -456,7 +456,7 @@ let cowSettings: IcowSettings = {
     },
     { 
       improve: 20,
-      unlock_improve: 13,
+      unlock_improve: 16,
       improveMoneyPrice: 0,
       improveDiamondPrice: 1800,
       processingTime: 300,
