@@ -39,6 +39,7 @@ function createBoostAnimal(): void {
         } else {
           this.animalGroup.generate({x, y}, type, id, 0, 0, 0, 7, true);
         }
+        if (type === 0) this.tryTask(18, 0);
       }, 
       callbackScope: this, 
       loop: false 
