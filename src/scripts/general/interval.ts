@@ -483,7 +483,6 @@ function updateMapNative(): void {
 
   const text: Phaser.GameObjects.Text = this.game.scene.keys[`${this.state.farm}Bars`].mapNativeText;
   const bg: Phaser.GameObjects.Graphics = this.game.scene.keys[`${this.state.farm}Bars`].mapNativeBg;
-  console.log('count', count)
   if (text?.text !== String(count)) text?.setText(String(count));
 
   if (count <= 0 && text?.visible) {
