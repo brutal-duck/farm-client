@@ -331,7 +331,7 @@ function interval(): void {
     this.showFeedBoostSpeechBubble();
 
     const volume = this.territories.children.entries.find(el => el.territoryType === 5)?.volume;
-    this.tryTask(26, volume);
+    this.tryTask(26, 0, volume);
 
     
   }, callbackScope: this, loop: true });

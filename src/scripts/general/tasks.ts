@@ -81,11 +81,23 @@ function tryTask(type: number, state: number, count: number = 1): void {
 
   let tasks: Itasks[] = this.partTasks();
   let task: Itasks = tasks.find((data: Itasks) => data.type === type);
-  if (task?.done === 0 &&
+  if (task?.type !== 26 && task?.done === 0 &&
     task?.progress < task?.count &&
     (task?.state === state || task?.state === 0 || 
-      ((task?.type === 6 || task?.type === 26 || task?.type === 23 || task?.type === 24 || task?.type === 8 || task?.type === 9 || task?.type === 17) && task?.state <= state))) {
+      ((task?.type === 6 || task?.type === 23 || task?.type === 24 || task?.type === 8 || task?.type === 9 || task?.type === 17) && task?.state <= state))) {
     task.progress += count;
+    if (task.progress >= task.count) {
+      task.done = 1;
+      this.logAmplitudeEvent('task_done', {
+        task_id: task.id,
+        part: part,
+      });
+    }
+    this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
+  }
+
+  if ((task?.done === 0 && task?.progress < task?.count && task?.type === 26)) {
+    task.progress = count;
     if (task.progress >= task.count) {
       task.done = 1;
       this.logAmplitudeEvent('task_done', {
