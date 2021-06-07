@@ -384,7 +384,7 @@ function updateNativeState(): void {
   else if ((this.state.userSheep.part < 3 || this.state.userSheep.diamondAnimalTime > 0) && this.state.sheepNativeCount[2] !== 0) this.state.sheepNativeCount[2] = 0;
 
   if (this.state.userSheep.takenHerdBoost <= 0 && this.state.userSheep.part >= 5 && this.state.sheepNativeCount[3] !== 1) this.state.sheepNativeCount[3] = 1;
-  else if (this.state.userSheep.takenHerdBoost > 0 && this.state.userSheep.part >= 5 && this.state.sheepNativeCount[3] !== 0) this.state.sheepNativeCount[3] = 1;
+  else if (this.state.userSheep.takenHerdBoost > 0 && this.state.userSheep.part >= 5 && this.state.sheepNativeCount[3] !== 0) this.state.sheepNativeCount[3] = 0;
 
   if (this.state.userChicken.part > 0) {
     if (this.state.progress.chicken.collector <= 0 && this.state.chickenNativeCount[0] !== 1) this.state.chickenNativeCount[0] = 1;
@@ -397,7 +397,7 @@ function updateNativeState(): void {
     if (this.state.userChicken.part >= 3 && this.state.userChicken.diamondAnimalTime <= 0 && this.state.chickenNativeCount[2] !== 1) this.state.chickenNativeCount[2] = 1;
     else if ((this.state.userChicken.part < 3 || this.state.userChicken.diamondAnimalTime > 0) && this.state.chickenNativeCount[2] !== 0) this.state.chickenNativeCount[2] = 0;
     if (this.state.userChicken.takenHerdBoost <= 0 && this.state.userChicken.part >= 5 && this.state.chickenNativeCount[3] !== 1) this.state.chickenNativeCount[3] = 1;
-    else if (this.state.userChicken.takenHerdBoost > 0 && this.state.userChicken.part >= 5 && this.state.chickenNativeCount[3] !== 0) this.state.chickenNativeCount[3] = 1;
+    else if (this.state.userChicken.takenHerdBoost > 0 && this.state.userChicken.part >= 5 && this.state.chickenNativeCount[3] !== 0) this.state.chickenNativeCount[3] = 0;
   }
 
   if (this.state.userCow.part > 0) {
@@ -414,7 +414,7 @@ function updateNativeState(): void {
     else if ((this.state.userCow.part < 3 || this.state.userCow.diamondAnimalTime > 0) && this.state.cowNativeCount[2] !== 0) this.state.cowNativeCount[2] = 0;
 
     if (this.state.userCow.takenHerdBoost <= 0 && this.state.userCow.part >= 5 && this.state.cowNativeCount[3] !== 1) this.state.cowNativeCount[3] = 1;
-    else if (this.state.userCow.takenHerdBoost > 0 && this.state.userCow.part >= 5 && this.state.cowNativeCount[3] !== 0) this.state.cowNativeCount[3] = 1;
+    else if (this.state.userCow.takenHerdBoost > 0 && this.state.userCow.part >= 5 && this.state.cowNativeCount[3] !== 0) this.state.cowNativeCount[3] = 0;
 
     if (checkFactory && this.state.cowNativeCount[4] !== 1) this.state.cowNativeCount[4] = 1;
     else if (!checkFactory && this.state.cowNativeCount[4] !== 0) this.state.cowNativeCount[4] = 0;
@@ -547,7 +547,7 @@ function checkStorageCow(): boolean {
   } else {
     for (const territory of this.state.cowTerritories) {
       if (territory.type === 5) {
-        const max: number = this.state.cowSettings.cowFactorySettings.find(el => el.improve === territory.improve).lotSize* this.state.storageMultiply;
+        const max: number = this.state.cowSettings.cowFactorySettings.find(el => el.improve === territory.improve).lotSize * this.state.storageMultiply;
         check.push(territory.volume >= max); 
       }
     }
