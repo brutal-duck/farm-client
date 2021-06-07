@@ -156,6 +156,7 @@ class Cow extends Phaser.Scene {
   public factoryBoostStack: number = 11;
   public counterWithoutCollector: number = 0;
   public spaceCount: number = 0;
+  public feedBoostRemaindTimer: number = 0;
 
   public world = world.bind(this);
   public drag = drag.bind(this);
@@ -294,11 +295,11 @@ class Cow extends Phaser.Scene {
     //   // this.state.newbieTime = 0
     //   // this.state.daily = Number(this.state.daily) + 1
     //   // this.state.dailyAwards = [false, false, false, false, false, false, false, false]
-    //   // this.state.user.diamonds = 10000;
+    //   this.state.user.diamonds = 10000;
     //   // let modal: Imodal = {
     //   //   type: 4,
     //   // }
-    //   // this.state.userCow.part = 3
+    //   this.state.userCow.part = 6
     //   // this.state.modal = modal;
     //   // this.scene.launch('Modal', this.state);
     //   // this.state.userSheep.feedBoostTimer = 10
@@ -308,7 +309,7 @@ class Cow extends Phaser.Scene {
     //   //   tasks[i].done = 1;
     //   //   tasks[i].got_awarded = 1;
     //   // }
-    //   // this.offlineTestProgress();
+    //   this.offlineTestProgress();
     // });
     
   }
