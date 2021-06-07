@@ -70,6 +70,9 @@ let chat: Ichat[] = [];
 let starterpack: boolean = false;
 let stock: string = '';
 let fortuneData: IfortuneData;
+let sheepNativeCount: number[] = [ 0, 0, 0, 0 ];
+let chickenNativeCount: number[] = [ 0, 0, 0, 0 ];
+let cowNativeCount: number[] = [ 0, 0, 0, 0, 0 ];
 
 let state: Istate = {
   // записываемые в localStorage
@@ -147,6 +150,9 @@ let state: Istate = {
   stock, // тип акции, собтия для revenue
   boughtFactoryBoost, // куплен ли шоколад
   fortuneData,
+  sheepNativeCount,
+  chickenNativeCount,
+  cowNativeCount,
 }
 
 export default state;

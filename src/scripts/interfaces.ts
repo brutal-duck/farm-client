@@ -749,4 +749,7 @@ interface Istate {
   stock: string;
   starterpack: boolean;
   fortuneData: IfortuneData;
+  sheepNativeCount: number[];
+  chickenNativeCount: number[];
+  cowNativeCount: number[];
 }

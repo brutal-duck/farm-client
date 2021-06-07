@@ -370,29 +370,67 @@ function cowFactoryProgress(): void {
   }
 }
 
+function updateNativeState(): void {
+
+  if (this.state.progress.sheep.collector <= 0 && this.state.sheepNativeCount[0] !== 1) this.state.sheepNativeCount[0] = 1;
+  else if (this.state.progress.sheep.collector > 0 && this.state.sheepNativeCount[0] !== 0) this.state.sheepNativeCount[0] = 0;
+
+  const check: boolean = checkStorageSheep.bind(this)();
+  if (check && this.state.sheepNativeCount[1] !== 1) this.state.sheepNativeCount[1] = 1;
+  else if (!check && this.state.sheepNativeCount[1] !== 0) this.state.sheepNativeCount[1] = 0;
+
+  if (this.state.userSheep.part >= 3 && this.state.userSheep.diamondAnimalTime <= 0 && this.state.sheepNativeCount[2] !== 1) this.state.sheepNativeCount[2] = 1;
+  else if ((this.state.userSheep.part < 3 || this.state.userSheep.diamondAnimalTime > 0) && this.state.sheepNativeCount[2] !== 0) this.state.sheepNativeCount[2] = 0;
+
+  if (this.state.userSheep.takenHerdBoost <= 0 && this.state.userSheep.part >= 5 && this.state.sheepNativeCount[3] !== 1) this.state.sheepNativeCount[3] = 1;
+  else if (this.state.userSheep.takenHerdBoost > 0 && this.state.userSheep.part >= 5 && this.state.sheepNativeCount[3] !== 0) this.state.sheepNativeCount[3] = 1;
+
+  if (this.state.userChicken.part > 0) {
+    if (this.state.progress.chicken.collector <= 0 && this.state.chickenNativeCount[0] !== 1) this.state.chickenNativeCount[0] = 1;
+    else if (this.state.progress.chicken.collector > 0 && this.state.chickenNativeCount[0] !== 0) this.state.chickenNativeCount[0] = 0;
+  
+    const check: boolean = checkStorageChicken.bind(this)();
+  
+    if (check && this.state.chickenNativeCount[1] !== 1) this.state.chickenNativeCount[1] = 1;
+    else if (!check && this.state.chickenNativeCount[1] !== 0) this.state.chickenNativeCount[1] = 0;
+    if (this.state.userChicken.part >= 3 && this.state.userChicken.diamondAnimalTime <= 0 && this.state.chickenNativeCount[2] !== 1) this.state.chickenNativeCount[2] = 1;
+    else if ((this.state.userChicken.part < 3 || this.state.userChicken.diamondAnimalTime > 0) && this.state.chickenNativeCount[2] !== 0) this.state.chickenNativeCount[2] = 0;
+    if (this.state.userChicken.takenHerdBoost <= 0 && this.state.userChicken.part >= 5 && this.state.chickenNativeCount[3] !== 1) this.state.chickenNativeCount[3] = 1;
+    else if (this.state.userChicken.takenHerdBoost > 0 && this.state.userChicken.part >= 5 && this.state.chickenNativeCount[3] !== 0) this.state.chickenNativeCount[3] = 1;
+  }
+
+  if (this.state.userCow.part > 0) {
+    if (this.state.progress.cow.collector <= 0 && this.state.cowNativeCount[0] !== 1) this.state.cowNativeCount[0] = 1;
+    else if (this.state.progress.cow.collector > 0 && this.state.cowNativeCount[0] !== 0) this.state.cowNativeCount[0] = 0;
+    
+    const check: boolean = checkStorageCow.bind(this)();
+    const checkFactory: boolean = this.state.userCow.tutorial >= 50 ? checkFactoryCow.bind(this)() : false;
+
+    if (check && this.state.cowNativeCount[1] !== 1) this.state.cowNativeCount[1] = 1;
+    else if (!check && this.state.cowNativeCount[1] !== 0) this.state.cowNativeCount[1] = 0;
+    
+    if (this.state.userCow.part >= 3 && this.state.userCow.diamondAnimalTime <= 0 && this.state.cowNativeCount[2] !== 1) this.state.cowNativeCount[2] = 1;
+    else if ((this.state.userCow.part < 3 || this.state.userCow.diamondAnimalTime > 0) && this.state.cowNativeCount[2] !== 0) this.state.cowNativeCount[2] = 0;
+
+    if (this.state.userCow.takenHerdBoost <= 0 && this.state.userCow.part >= 5 && this.state.cowNativeCount[3] !== 1) this.state.cowNativeCount[3] = 1;
+    else if (this.state.userCow.takenHerdBoost > 0 && this.state.userCow.part >= 5 && this.state.cowNativeCount[3] !== 0) this.state.cowNativeCount[3] = 1;
+
+    if (checkFactory && this.state.cowNativeCount[4] !== 1) this.state.cowNativeCount[4] = 1;
+    else if (!checkFactory && this.state.cowNativeCount[4] !== 0) this.state.cowNativeCount[4] = 0;
+  }
+
+}
+
 function updateProfileNative(load: boolean = false): void {
+  updateNativeState.bind(this)();
+  updateMapNative.bind(this)();
   if (!this.scene.isActive('Profile') && !load) return;
 
   const Profile: Profile = this.game.scene.keys['Profile'];
   if (Profile.sheepNativeText) {
-    if (Profile.state.progress.sheep.collector <= 0 && Profile.sheepNativeCount[0] !== 1) Profile.sheepNativeCount[0] = 1;
-    else if (Profile.state.progress.sheep.collector > 0 && Profile.sheepNativeCount[0] !== 0) Profile.sheepNativeCount[0] = 0;
-
-    const check: boolean = checkStorageSheep.bind(this)();
-    if (check && Profile.sheepNativeCount[1] !== 1) Profile.sheepNativeCount[1] = 1;
-    else if (!check && Profile.sheepNativeCount[1] !== 0) Profile.sheepNativeCount[1] = 0;
-
-    if (Profile.state.userSheep.part >= 3 && Profile.state.userSheep.diamondAnimalTime <= 0 && Profile.sheepNativeCount[2] !== 1) Profile.sheepNativeCount[2] = 1;
-    else if ((Profile.state.userSheep.part < 3 || Profile.state.userSheep.diamondAnimalTime > 0) && Profile.sheepNativeCount[2] !== 0) Profile.sheepNativeCount[2] = 0;
-
-    if (Profile.state.userSheep.takenHerdBoost <= 0 && Profile.state.userSheep.part >= 5 && Profile.sheepNativeCount[3] !== 1) Profile.sheepNativeCount[3] = 1;
-    else if (Profile.state.userSheep.takenHerdBoost > 0 && Profile.state.userSheep.part >= 5 && Profile.sheepNativeCount[3] !== 0) Profile.sheepNativeCount[3] = 1;
-
-
-    const count: number = Profile.sheepNativeCount.reduce((prev, cur) => prev += cur);
-    if (Profile.sheepNativeText.text !== String(count)) {
-      Profile.sheepNativeText.setText(String(count));
-    }
+    const count: number = this.state.sheepNativeCount.reduce((prev, cur) => prev += cur);
+    if (Profile.sheepNativeText.text !== String(count)) Profile.sheepNativeText.setText(String(count));
+    
     if (count <= 0 && Profile.sheepNativeText.visible) {
       Profile.sheepNativeText.setVisible(false);
       Profile.sheepNativeBg.setVisible(false);
@@ -405,23 +443,9 @@ function updateProfileNative(load: boolean = false): void {
   }
 
   if (Profile.chickenNativeText) {
-    if (Profile.state.progress.chicken.collector <= 0 && Profile.chickenNativeCount[0] !== 1) Profile.chickenNativeCount[0] = 1;
-    else if (Profile.state.progress.chicken.collector > 0 && Profile.chickenNativeCount[0] !== 0) Profile.chickenNativeCount[0] = 0;
+    const count: number = this.state.chickenNativeCount.reduce((prev, cur) => prev += cur);
+    if (Profile.chickenNativeText.text !== String(count)) Profile.chickenNativeText.setText(String(count));
 
-    const check: boolean = checkStorageChicken.bind(this)();
-    if (check && Profile.chickenNativeCount[1] !== 1) Profile.chickenNativeCount[1] = 1;
-    else if (!check && Profile.chickenNativeCount[1] !== 0) Profile.chickenNativeCount[1] = 0;
-
-    if (Profile.state.userChicken.part >= 3 && Profile.state.userChicken.diamondAnimalTime <= 0 && Profile.chickenNativeCount[2] !== 1) Profile.chickenNativeCount[2] = 1;
-    else if ((Profile.state.userChicken.part < 3 || Profile.state.userChicken.diamondAnimalTime > 0) && Profile.chickenNativeCount[2] !== 0) Profile.chickenNativeCount[2] = 0;
-
-    if (Profile.state.userChicken.takenHerdBoost <= 0 && Profile.state.userChicken.part >= 5 && Profile.chickenNativeCount[3] !== 1) Profile.chickenNativeCount[3] = 1;
-    else if (Profile.state.userChicken.takenHerdBoost > 0 && Profile.state.userChicken.part >= 5 && Profile.chickenNativeCount[3] !== 0) Profile.chickenNativeCount[3] = 1;
-
-    const count: number = Profile.chickenNativeCount.reduce((prev, cur) => prev += cur);
-    if (Profile.chickenNativeText.text !== String(count)) {
-      Profile.chickenNativeText.setText(String(count));
-    }
     if (count <= 0 && Profile.chickenNativeText.visible) {
       Profile.chickenNativeText.setVisible(false);
       Profile.chickenNativeBg.setVisible(false);
@@ -434,28 +458,9 @@ function updateProfileNative(load: boolean = false): void {
   }
   
   if (Profile.cowNativeText) {
-    if (Profile.state.progress.cow.collector <= 0 && Profile.cowNativeCount[0] !== 1) Profile.cowNativeCount[0] = 1;
-    else if (Profile.state.progress.cow.collector > 0 && Profile.cowNativeCount[0] !== 0) Profile.cowNativeCount[0] = 0;
+    const count: number = this.state.cowNativeCount.reduce((prev, cur) => prev += cur);
+    if (Profile.cowNativeText.text !== String(count)) Profile.cowNativeText.setText(String(count));
     
-    const check: boolean = checkStorageCow.bind(this)();
-    const checkFactory: boolean = Profile.state.userCow.tutorial >= 50 ? checkFactoryCow.bind(this)() : false;
-
-    if (check && Profile.cowNativeCount[1] !== 1) Profile.cowNativeCount[1] = 1;
-    else if (!check && Profile.cowNativeCount[1] !== 0) Profile.cowNativeCount[1] = 0;
-    
-    if (Profile.state.userCow.part >= 3 && Profile.state.userCow.diamondAnimalTime <= 0 && Profile.cowNativeCount[2] !== 1) Profile.cowNativeCount[2] = 1;
-    else if ((Profile.state.userCow.part < 3 || Profile.state.userCow.diamondAnimalTime > 0) && Profile.cowNativeCount[2] !== 0) Profile.cowNativeCount[2] = 0;
-
-    if (Profile.state.userCow.takenHerdBoost <= 0 && Profile.state.userCow.part >= 5 && Profile.cowNativeCount[3] !== 1) Profile.cowNativeCount[3] = 1;
-    else if (Profile.state.userCow.takenHerdBoost > 0 && Profile.state.userCow.part >= 5 && Profile.cowNativeCount[3] !== 0) Profile.cowNativeCount[3] = 1;
-
-    if (checkFactory && Profile.cowNativeCount[4] !== 1) Profile.cowNativeCount[4] = 1;
-    else if (!checkFactory && Profile.cowNativeCount[4] !== 0) Profile.cowNativeCount[4] = 0;
-
-    const count: number = Profile.cowNativeCount.reduce((prev, cur) => prev += cur);
-    if (Profile.cowNativeText.text !== String(count)) {
-      Profile.cowNativeText.setText(String(count));
-    }
     if (count <= 0 && Profile.cowNativeText.visible) {
       Profile.cowNativeText.setVisible(false);
       Profile.cowNativeBg.setVisible(false);
@@ -465,6 +470,28 @@ function updateProfileNative(load: boolean = false): void {
       Profile.cowNativeBg.setVisible(true);
       Profile.animCowSprite.setVisible(true);
     }
+  }
+}
+
+function updateMapNative(): void {
+  const sheepCount: number = this.state.sheepNativeCount.reduce((prev, cur) => prev += cur);
+  const chickenCount: number = this.state.chickenNativeCount.reduce((prev, cur) => prev += cur);
+  const cowCount: number = this.state.cowNativeCount.reduce((prev, cur) => prev += cur);
+  const count: number = this.state.farm === 'Sheep' ? chickenCount + cowCount : 
+  this.state.farm === 'Chicken' ? sheepCount + cowCount : 
+  this.state.farm === 'Cow' ? sheepCount + chickenCount : 0;
+
+  const text: Phaser.GameObjects.Text = this.game.scene.keys[`${this.state.farm}Bars`].mapNativeText;
+  const bg: Phaser.GameObjects.Graphics = this.game.scene.keys[`${this.state.farm}Bars`].mapNativeBg;
+  console.log('count', count)
+  if (text?.text !== String(count)) text?.setText(String(count));
+
+  if (count <= 0 && text?.visible) {
+    text?.setVisible(false);
+    bg?.setVisible(false);
+  } else if (count > 0 && !text?.visible) {
+    text?.setVisible(true);
+    bg?.setVisible(true);
   }
 }
 

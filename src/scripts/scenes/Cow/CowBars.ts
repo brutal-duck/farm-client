@@ -57,6 +57,8 @@ class CowBars extends Phaser.Scene {
   public calendar: any;
   public nativeShop: Phaser.GameObjects.Graphics;
   public nativeShopCounter: Phaser.GameObjects.Text;
+  public mapNativeText: Phaser.GameObjects.Text;
+  public mapNativeBg: Phaser.GameObjects.Graphics;
   public starterpackIcon: Phaser.GameObjects.Image;
   public hints: Phaser.GameObjects.Group;
   public taskZone: Phaser.GameObjects.Zone;
@@ -102,12 +104,25 @@ class CowBars extends Phaser.Scene {
     let shop: Phaser.GameObjects.Image = this.add.image(370, this.height - 90, 'shop');
     let map: Phaser.GameObjects.Image = this.add.image(510, this.height - 90, 'map-icon');
 
+    // Нативка бустов
     this.nativeShop = this.add.graphics()
       .fillStyle(0xFF2400, 1)
-      .fillCircle(405, this.height - 140, 20)
+      .fillCircle(shop.x + 35, shop.y - 50, 20)
       .setDepth(2)
       .setVisible(false);
-    this.nativeShopCounter = this.add.text(405, this.height - 140, '!', {
+    this.nativeShopCounter = this.add.text(shop.x + 35, shop.y - 50, '!', {
+      font: '32px Shadow',
+      color: '#f3eae6'
+    }).setDepth(3)
+      .setOrigin(0.5, 0.5)
+      .setVisible(false);
+
+    this.mapNativeBg = this.add.graphics()
+      .fillStyle(0xFF2400, 1)
+      .fillCircle(map.x + 35, map.y - 50, 20)
+      .setDepth(2)
+      .setVisible(false);
+    this.mapNativeText = this.add.text(map.x + 35, map.y - 50, '!', {
       font: '32px Shadow',
       color: '#f3eae6'
     }).setDepth(3)
