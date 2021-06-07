@@ -367,6 +367,15 @@ function boughtCowLand(): void {
       this.game.scene.keys[this.state.farm].installTerritory();
     });
     this.resizeWindow(100);
+  } else if (this.state.territory.block === 2 && this.state.territory.position === 1 && this.state.territory.territoryType === 1) {
+    let button = this.bigButton('orange', 'left', 30, this.state.lang.buildRepository, right);
+    this.clickModalBtn(button, (): void => {
+      this.scene.stop();
+      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
+      this.state.exchangeTerritory = 5;
+      this.game.scene.keys[this.state.farm].installTerritory();
+    });
+    this.resizeWindow(100);
   } else {
     let button1 = this.bigButton('green', 'left', -60, this.state.lang.sowPasture, right);
     this.clickModalBtn(button1, (): void => {
