@@ -366,7 +366,7 @@ function boughtCowLand(): void {
       this.state.exchangeTerritory = 8;
       this.game.scene.keys[this.state.farm].installTerritory();
     });
-    this.resizeWindow(80);
+    this.resizeWindow(100);
   } else {
     let button1 = this.bigButton('green', 'left', -60, this.state.lang.sowPasture, right);
     this.clickModalBtn(button1, (): void => {

@@ -917,7 +917,8 @@ export default {
     chickenFarmPurchaseAvailable: '\nДоступна покупка куриной фермы!',
     cowFarmPurchaseAvailable: '\nДоступна покупка коровьей фермы!',
     openProductionOnLevel: 'Продукт станет доступен на $1 уровне фабрики',
-    doneNextTask: 'Сначала выполние следующее задание...',
+    doneNextTask: 'Сначала выполни следующее задание...',
+    doneFirstTask: 'Сначала выполни первое задание...',
 
   },
 
@@ -1839,7 +1840,8 @@ export default {
     chickenFarmPurchaseAvailable: '\nДоступна покупка куриной фермы!',
     cowFarmPurchaseAvailable: '\nДоступна покупка коровьей фермы!',
     openProductionOnLevel: 'Продукт станет доступен на $1 уровне фабрики',
-    doneNextTask: 'Сначала выполние следующее задание...'
+    doneNextTask: 'Сначала выполни следующее задание...',
+    doneFirstTask: 'Сначала выполни первое задание...',
 
   }
 }
