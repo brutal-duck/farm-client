@@ -9,7 +9,7 @@ let general: { autoSaveSpeed: number, maxMerginTime: number, boostSpeedAnimal: n
     { bonus: 150, diamonds: 600, id: 2, price: 200, voices: 29, stock: 20, top: false },
     { bonus: 500, diamonds: 1500, id: 3, price: 500, voices: 72, stock: 25, top: true },
     { bonus: 2600, diamonds: 4900, id: 4, price: 1500, voices: 215, stock: 40, top: false }
-  ]
+  ],
 }
 
 let sheepSettings: IsheepSettings = {
@@ -205,6 +205,7 @@ let cowSettings: IcowSettings = {
   collectorPrice12: 220,
   unlockCollector4: 5,
   unlockCollector12: 8,
+  storageMultiply: 2,
   cowFactorySettings: [
     { 
       improve: 1,

@@ -304,7 +304,7 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
     for (let i in this.territories.children.entries) {
       const territory: Territory = this.territories.children.entries[i];
       if (territory.territoryType === 5) {
-        const max: number = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === territory.improve).storage;
+        const max: number = this.state.cowSettings.cowFactorySettings.find((data: IterritoriesCowSettings) => data.improve === territory.improve).lotSize * this.state.storageMultiply;
         if (max > territory.volume + cow.milk) {
           milk = cow.milk;
           cow.milk = 0;

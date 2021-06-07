@@ -1,5 +1,4 @@
 import Cow from './../../scenes/Cow/Main';
-import CowSprite from './../Animal/CowSprite';
 import Cave from './../gameObjects/Cave';
 import Firework from './../animations/Firework';
 import Stars from './../animations/Stars';
@@ -179,7 +178,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     }
       
     let percent: number = 0;
-    let max: number = this.scene.state.cowSettings.territoriesCowSettings[this.improve - 1].storage;
+    let max: number = this.scene.state.cowSettings.cowFactorySettings[this.improve - 1].lotSize * this.scene.state.storageMultiply;
     let type: string = `${farm}-repository-${stage}-`;
 
     if (this.volume > 0) {
@@ -579,7 +578,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       } else if (this.scene.state.farm === 'Chicken') {
         max = this.scene.state.chickenSettings.territoriesChickenSettings[this.improve - 1].eggStorage;
       } else if (this.scene.state.farm === 'Cow') {
-        max = this.scene.state.cowSettings.territoriesCowSettings[this.improve - 1].storage;
+        max = this.scene.state.cowSettings.cowFactorySettings[this.improve - 1].lotSize * this.scene.state.storageMultiply;
       }
       
       const percent: number = this.volume > 0 ? this.volume / (max / 100) : 0;
@@ -828,8 +827,11 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
   private checkAndSetRepositoryAnim(): void {
     if (this.territoryType === 5) {
-      const max: number = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`territories${this.scene.state.farm}Settings`]
+      let max: number = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`territories${this.scene.state.farm}Settings`]
         .find(data => data.improve === this.improve).storage * 0.9;
+      if (this.scene.state.farm === 'Cow') {
+        max = this.scene.state.cowSettings.cowFactorySettings.find(data => data.improve === this.improve).lotSize * this.scene.state.storageMultiply * 0.9;
+      }
       if (this.volume >= max && !this.repositoryAnim) {
         this.createFullStorageAnim();
       } else if (this.volume < max && this.repositoryAnim) {

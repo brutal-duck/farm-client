@@ -596,18 +596,20 @@ export default function autoprogress(load: boolean = false): void {
         // раскладываем остатки молока
         for (const territory of territories) {
           if (territory.type === 5) {
-            const terSettings: IterritoriesCowSettings = state.cowSettings.territoriesCowSettings
-              .find((data: IterritoriesCowSettings) => territory.improve === data.improve);
+            const factSettings: IfactorySettings = state.cowSettings.cowFactorySettings
+              .find((data: IfactorySettings) => territory.improve === data.improve);
+              
+            const storage: number = factSettings.lotSize * this.state.storageMultiply;
             if (haveMilk > 0) {
-            if (haveMilk >= terSettings.storage) {
-              territory.volume = terSettings.storage;
-              haveMilk -= terSettings.storage;
+            if (haveMilk >= storage) {
+              territory.volume = storage;
+              haveMilk -= storage;
             } else {
               territory.volume = haveMilk;
               haveMilk = 0;
             }
             } else territory.volume = 0;
-            if (isNaN(territory.volume)) territory.volume = terSettings.storage; 
+            if (isNaN(territory.volume)) territory.volume = storage; 
           } 
         }
       } else {
@@ -1225,18 +1227,20 @@ export default function autoprogress(load: boolean = false): void {
         // раскладываем остатки молока
         for (const territory of territories) {
           if (territory.territoryType === 5) {
-            const terSettings: IterritoriesCowSettings = state.cowSettings.territoriesCowSettings
-              .find((data: IterritoriesCowSettings) => territory.improve === data.improve);
+            const factSettings: IfactorySettings = state.cowSettings.cowFactorySettings
+              .find((data: IfactorySettings) => territory.improve === data.improve);
+              
+            const storage: number = factSettings.lotSize * this.state.storageMultiply;
             if (haveMilk > 0) {
-            if (haveMilk >= terSettings.storage) {
-              territory.volume = terSettings.storage;
-              haveMilk -= terSettings.storage;
+            if (haveMilk >= storage) {
+              territory.volume = storage;
+              haveMilk -= storage;
             } else {
               territory.volume = haveMilk;
               haveMilk = 0;
             }
             } else territory.volume = 0;
-            if (isNaN(territory.volume)) territory.volume = terSettings.storage; 
+            if (isNaN(territory.volume)) territory.volume = storage; 
           } 
         }
 

@@ -12,7 +12,7 @@ function setCollector(): void {
         const storages: Territory[] = this.territories.children.entries.filter((el: Territory) => el.territoryType === 5);
         for (let i in storages) {
           const storage: Territory = storages[i];
-          const max: number = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === storage.improve).storage;
+          const max: number = this.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === storage.improve).lotSize * this.state.storageMultiply;
           if (storage.volume < max) {
             for (let i in this.animalGroup.children.entries) {
               const cow: CowSprite = this.animalGroup.children.entries[i];

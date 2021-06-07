@@ -294,7 +294,8 @@ function cowCollectorProgress(cowCollectorVolume: number): void {
       for (let i in Scene.state.cowTerritories) {
         const territory: Iterritories = Scene.state.cowTerritories[i];
         if (territory.type === 5) {
-          const max: number = Scene.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === territory.improve).storage;
+          const max: number = Scene.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === territory.improve).lotSize * this.state.storageMultiply;
+          
           for (let i: number = 0; i < collectedMilk; i += 1) {
             for (const cow of Scene.state.cow) {
               const cowPoints: IcowPoints = Scene.state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === cow.type);
@@ -539,14 +540,14 @@ function checkStorageCow(): boolean {
   if (this.state.farm === 'Cow') {
     for (const territory of this.territories.children.entries) {
       if (territory.territoryType === 5) {
-        const max: number = this.state.cowSettings.territoriesCowSettings.find(el => el.improve === territory.improve).storage;
+        const max: number = this.state.cowSettings.cowFactorySettings.find(el => el.improve === territory.improve).lotSize * this.state.storageMultiply * 0.9;
         check.push(territory.volume >= max); 
       }
     }
   } else {
     for (const territory of this.state.cowTerritories) {
       if (territory.type === 5) {
-        const max: number = this.state.cowSettings.territoriesCowSettings.find(el => el.improve === territory.improve).storage;
+        const max: number = this.state.cowSettings.cowFactorySettings.find(el => el.improve === territory.improve).lotSize* this.state.storageMultiply * 0.9;
         check.push(territory.volume >= max); 
       }
     }

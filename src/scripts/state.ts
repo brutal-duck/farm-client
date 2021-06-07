@@ -73,6 +73,7 @@ let fortuneData: IfortuneData;
 let sheepNativeCount: number[] = [ 0, 0, 0, 0 ];
 let chickenNativeCount: number[] = [ 0, 0, 0, 0 ];
 let cowNativeCount: number[] = [ 0, 0, 0, 0, 0 ];
+let storageMultiply: number = 2;
 
 let state: Istate = {
   // записываемые в localStorage
@@ -149,10 +150,11 @@ let state: Istate = {
   starterpack, // забрал ли юзер стартерпак
   stock, // тип акции, собтия для revenue
   boughtFactoryBoost, // куплен ли шоколад
-  fortuneData,
-  sheepNativeCount,
-  chickenNativeCount,
-  cowNativeCount,
+  fortuneData, // объект данных колеса
+  sheepNativeCount, // натификаторы для профиля
+  chickenNativeCount, // натификаторы для профиля
+  cowNativeCount, // натификаторы для профиля
+  storageMultiply, // множитель для коров
 }
 
 export default state;

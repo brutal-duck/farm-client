@@ -401,7 +401,7 @@ function repositoryAnimation(): void {
 
     if (territory.type === 5 && territory.repository) {
 
-      let max: number = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === territory.improve).storage;
+      const max: number = this.state.cowSettings.cowFactorySettings.find((data: IterritoriesCowSettings) => data.improve === territory.improve).lotSize * this.state.storageMultiply;
       
       if (max === territory.volume) {
 

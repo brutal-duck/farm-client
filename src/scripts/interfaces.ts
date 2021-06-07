@@ -487,6 +487,7 @@ interface IcowSettings {
   unlockCollector12: number;
   cowDiamondsTime: number;
   feedBoostPrice: number;
+  storageMultiply?: number;
 }
 interface IeventSettings {
   unicornSettings: IeventPoints[]; // нужно попарвить
@@ -752,4 +753,5 @@ interface Istate {
   sheepNativeCount: number[];
   chickenNativeCount: number[];
   cowNativeCount: number[];
+  storageMultiply: number;
 }
