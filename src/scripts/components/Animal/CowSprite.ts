@@ -73,7 +73,7 @@ export default class CowSprite extends Animal {
       // this.state.modal = modal;
       // this.state.animal = cow;
       // this.scene.launch('Modal', this.state);
-      const milkLevel: number =(this.settings.maxMilkVolume - 2 * (this.settings.maxMilkVolume / 60));
+      const milkLevel: number =(this.settings.maxMilkVolume - this.settings.maxMilkVolume / 10);
       if (this.milk >= milkLevel) {
         this.scene.collectMilk(this, true);
       }
@@ -150,7 +150,7 @@ export default class CowSprite extends Animal {
   }
 
   private setMilkStatusVisibility(): void {
-    const milkLevel: number =(this.settings.maxMilkVolume - 2 * (this.settings.maxMilkVolume / 60));
+    const milkLevel: number =(this.settings.maxMilkVolume - this.settings.maxMilkVolume / 10);
     if (this.milk >=  milkLevel && !this.milkStatus.visible) {
       this.milkStatus?.setVisible(true);
     }

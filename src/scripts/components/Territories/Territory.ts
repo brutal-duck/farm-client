@@ -828,9 +828,9 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   private checkAndSetRepositoryAnim(): void {
     if (this.territoryType === 5) {
       let max: number = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`territories${this.scene.state.farm}Settings`]
-        .find(data => data.improve === this.improve).storage * 0.9;
+        .find(data => data.improve === this.improve).storage;
       if (this.scene.state.farm === 'Cow') {
-        max = this.scene.state.cowSettings.cowFactorySettings.find(data => data.improve === this.improve).lotSize * this.scene.state.storageMultiply * 0.9;
+        max = this.scene.state.cowSettings.cowFactorySettings.find(data => data.improve === this.improve).lotSize * this.scene.state.storageMultiply;
       }
       if (this.volume >= max && !this.repositoryAnim) {
         this.createFullStorageAnim();

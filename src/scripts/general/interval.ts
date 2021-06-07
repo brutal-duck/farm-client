@@ -540,14 +540,14 @@ function checkStorageCow(): boolean {
   if (this.state.farm === 'Cow') {
     for (const territory of this.territories.children.entries) {
       if (territory.territoryType === 5) {
-        const max: number = this.state.cowSettings.cowFactorySettings.find(el => el.improve === territory.improve).lotSize * this.state.storageMultiply * 0.9;
+        const max: number = this.state.cowSettings.cowFactorySettings.find(el => el.improve === territory.improve).lotSize * this.state.storageMultiply;
         check.push(territory.volume >= max); 
       }
     }
   } else {
     for (const territory of this.state.cowTerritories) {
       if (territory.type === 5) {
-        const max: number = this.state.cowSettings.cowFactorySettings.find(el => el.improve === territory.improve).lotSize* this.state.storageMultiply * 0.9;
+        const max: number = this.state.cowSettings.cowFactorySettings.find(el => el.improve === territory.improve).lotSize* this.state.storageMultiply;
         check.push(territory.volume >= max); 
       }
     }
