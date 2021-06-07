@@ -419,7 +419,7 @@ function doneTutorCave2(): void {
   sheep.woolSprite.setVisible(true);
   sheep.shaveStatus.setVisible(true);
   sheep.wool = 1000;
-  sheep.diamond = 3;
+  sheep.diamond = 1;
   sheep.x = 600;
   sheep.y = 600;
   sheep.woolSprite.x = 600;
