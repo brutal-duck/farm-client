@@ -601,13 +601,13 @@ export default function autoprogress(load: boolean = false): void {
               
             const storage: number = factSettings.lotSize * this.state.storageMultiply;
             if (haveMilk > 0) {
-            if (haveMilk >= storage) {
-              territory.volume = storage;
-              haveMilk -= storage;
-            } else {
-              territory.volume = haveMilk;
-              haveMilk = 0;
-            }
+              if (haveMilk >= storage) {
+                territory.volume = storage;
+                haveMilk -= storage;
+              } else {
+                territory.volume = haveMilk;
+                haveMilk = 0;
+              }
             } else territory.volume = 0;
             if (isNaN(territory.volume)) territory.volume = storage; 
           } 
@@ -615,6 +615,16 @@ export default function autoprogress(load: boolean = false): void {
       } else {
         if (factory.currentProduction) factory.productionTimer -= state.offlineTime;
         if ((factory.productionTimer <= 0 || factory.productionTimer > factorySettings.processingTime) && factory.currentProduction) factory.productionTimer = factorySettings.processingTime;
+      }
+    } else {
+      for (const territory of territories) {
+        if (territory.type === 5) {
+          const factSettings: IfactorySettings = state.cowSettings.cowFactorySettings
+            .find((data: IfactorySettings) => territory.improve === data.improve);
+            
+          const storage: number = factSettings.lotSize * this.state.storageMultiply;
+          if (territory.volume > storage) territory.volume = storage;
+        } 
       }
     }
   }
@@ -1232,13 +1242,13 @@ export default function autoprogress(load: boolean = false): void {
               
             const storage: number = factSettings.lotSize * this.state.storageMultiply;
             if (haveMilk > 0) {
-            if (haveMilk >= storage) {
-              territory.volume = storage;
-              haveMilk -= storage;
-            } else {
-              territory.volume = haveMilk;
-              haveMilk = 0;
-            }
+              if (haveMilk >= storage) {
+                territory.volume = storage;
+                haveMilk -= storage;
+              } else {
+                territory.volume = haveMilk;
+                haveMilk = 0;
+              }
             } else territory.volume = 0;
             if (isNaN(territory.volume)) territory.volume = storage; 
           } 
@@ -1248,18 +1258,17 @@ export default function autoprogress(load: boolean = false): void {
         if (factory.currentProduction) factory.productionTimer -= state.offlineTime;
         if ((factory.productionTimer <= 0 || factory.productionTimer > factorySettings.processingTime) && factory.currentProduction) factory.productionTimer = factorySettings.processingTime;
       }
+    } else {
+      for (const territory of territories) {
+        if (territory.territoryType === 5) {
+          const factSettings: IfactorySettings = state.cowSettings.cowFactorySettings
+            .find((data: IfactorySettings) => territory.improve === data.improve);
+            
+          const storage: number = factSettings.lotSize * this.state.storageMultiply;
+          if (territory.volume > storage) territory.volume = storage;
+        } 
+      }
     }
-
-
-    // // если есть остаток, то овцы пушистые
-    // for (let i in milkCollected) {
-    //   if (milkCollected[i].count > 0) {
-    //     const cow = cowGroup.find((data: any) => data._id === milkCollected[i].id);
-    //     const breed: number = cow.breed === 0 ? 1 : cow.breed;
-    //     const cowPoints: number = state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === breed).maxMilkVolume;
-    //     cow.milk = cowPoints;
-    //   }
-    // }
   }
 
   const unicornAutoprogress = (): void => {
