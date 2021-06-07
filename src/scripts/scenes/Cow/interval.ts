@@ -17,7 +17,7 @@ function interval(): void {
   let statusBalance: boolean = false;
   let checkRaiting: boolean = false;
   let arrowOnMap: Phaser.GameObjects.Sprite;
-  const milkDelay: number = 60;
+  const MILK_DELAY: number = 10;
   this.time.addEvent({ delay: 1000, callback: (): void => {
     
     // проверка подключения к интернету
@@ -55,7 +55,7 @@ function interval(): void {
       const cow: CowSprite = this.animalGroup.children.entries[i];
       // зарождение яйца
       if (cow.milk < cow.settings.maxMilkVolume) {
-        let milk: number = cow.settings.maxMilkVolume / milkDelay;
+        let milk: number = cow.settings.maxMilkVolume / MILK_DELAY;
         if (cow.breed === 0) milk = cow.settings.maxMilkVolume / 10;
   
         if (balance.alarm) {

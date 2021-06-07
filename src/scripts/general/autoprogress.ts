@@ -1039,7 +1039,7 @@ export default function autoprogress(load: boolean = false): void {
   const cowAutoprogress = (): void => {
     this.progressTerritoryCooldown(this.territories.children.entries, state.offlineTime, 'Cow');
 
-    const MILK_DELAY = 60;
+    const MILK_DELAY = 10;
     if (state.userCow.diamondAnimalTime >= state.offlineTime) state.userCow.diamondAnimalTime -= state.offlineTime;
     else {
       state.userCow.diamondAnimalTime = 0;
