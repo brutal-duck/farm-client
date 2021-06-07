@@ -694,10 +694,10 @@ function cowMilkRepository(): void {
       this.clickModalBtn(this.progressButton, (): void => {
         if (this.state.territory.volume > 0) {
           this.scene.stop();
-          if (this.state.userCow.tutorial < 40) {
-            this.game.scene.keys[this.state.farm].sellMilk();
-          } else {
+          if (this.state.userCow.tutorial >= 40 || this.state.userCow.part >= 3) {
             this.game.scene.keys[this.state.farm].showConfirmSellMilk();
+          } else {
+            this.game.scene.keys[this.state.farm].sellMilk();
           }
         }
       });
