@@ -19,7 +19,6 @@ function progressTerritoryCooldown (territories: any, time: number, farm: string
         const cowTask: Itasks = this.state.cowTasks.find(el => el.part === this.state.userCow.part && el.type === 5 && (el.state === 1 || el.state === 0));
         if (sheepTask && farm === 'Sheep') {
           sheepTask.progress += 1;
-          console.log(sheepTask.progress)
           if (sheepTask.count <= sheepTask.progress) sheepTask.done = 1;
         }
         if (chickenTask && farm === 'Chicken') {

@@ -467,6 +467,8 @@ export default function autoprogress(load: boolean = false): void {
         milk = Math.round(milk / 100 * state.cowSettings.cowBadPercent);
         if (milk < 1) milk = 1;
       }
+      
+      const check: boolean = cow.milk + milk > cowPoints.maxMilkVolume;
 
       const milkCollect: number = Math.floor((milk * wasCollector));
       if (milkCollect === 0) {
@@ -481,12 +483,19 @@ export default function autoprogress(load: boolean = false): void {
         }
       }
       
-      if (cow.type !== 0) {
-        milkCollected.push({
-          id: cow._id,
-          type: cow.type,
-          count: milkCollect,
-        })
+      if (milkCollect > cowPoints.maxMilkVolume || check && milkCollect > 0) {
+        const count: number = Math.floor(milkCollect / (state.offlineTime / MILK_DELAY));
+        cow.milk -= count;
+        if (cow.milk < 0) cow.milk = 0;
+        const collectedMilk: number = check && state.offlineTime < MILK_DELAY ? cowPoints.maxMilkVolume : milkCollect;
+  
+        if (cow.type !== 0) {
+          milkCollected.push({
+            id: cow._id,
+            type: cow.type,
+            count: collectedMilk,
+          });
+        }
       }
     }
 
@@ -604,15 +613,6 @@ export default function autoprogress(load: boolean = false): void {
       } else {
         if (factory.currentProduction) factory.productionTimer -= state.offlineTime;
         if ((factory.productionTimer <= 0 || factory.productionTimer > factorySettings.processingTime) && factory.currentProduction) factory.productionTimer = factorySettings.processingTime;
-      }
-    }
-    // если есть остаток, то овцы пушистые
-    for (let i in milkCollected) {
-      if (milkCollected[i].count > 0) {
-        const cow = state.cow.find((data: any) => data._id === milkCollected[i].id);
-        const breed: number = cow.type === 0 ? 1 : cow.type;
-        const cowPoints: number = state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === breed).maxMilkVolume;
-        cow.milk = cowPoints;
       }
     }
   }
@@ -1104,12 +1104,15 @@ export default function autoprogress(load: boolean = false): void {
         if (milk < 1) milk = 1;
       }
 
+      const check: boolean = cow.milk + milk > cowPoints.maxMilkVolume;
+
+
       const milkCollect: number = Math.floor(milk * wasCollector);
-      if (milkCollect === 0) {
-        if (cow.milk + (milk * wasCollector) > 1000) cow.milk = cowPoints.maxMilkVolume;
+      if (milkCollect === 0 || !check) {
+        if (cow.milk + (milk * wasCollector) > cowPoints.maxMilkVolume) cow.milk = cowPoints.maxMilkVolume;
         else cow.milk += (milk * wasCollector);
       }
-
+      
       if (state.userCow.collector === 0) {
         cow.milk += milk * state.offlineTime;
         if (cow.milk > cowPoints.maxMilkVolume) {
@@ -1117,12 +1120,19 @@ export default function autoprogress(load: boolean = false): void {
         }
       }
 
-      if (cow.breed !== 0) {
-        milkCollected.push({
-          id: cow._id,
-          type: cow.breed,
-          count: milkCollect,
-        });
+      if (milkCollect > cowPoints.maxMilkVolume || check && milkCollect > 0) {
+        const count: number = Math.floor(milkCollect / (state.offlineTime / MILK_DELAY));
+        cow.milk -= count;
+        if (cow.milk < 0) cow.milk = 0;
+        const collectedMilk: number = check && state.offlineTime < MILK_DELAY ? cowPoints.maxMilkVolume : milkCollect;
+
+        if (cow.breed !== 0) {
+          milkCollected.push({
+            id: cow._id,
+            type: cow.breed,
+            count: collectedMilk,
+          });
+        }
       }
     }
     // скорость сборки
@@ -1237,15 +1247,15 @@ export default function autoprogress(load: boolean = false): void {
     }
 
 
-    // если есть остаток, то овцы пушистые
-    for (let i in milkCollected) {
-      if (milkCollected[i].count > 0) {
-        const cow = cowGroup.find((data: any) => data._id === milkCollected[i].id);
-        const breed: number = cow.breed === 0 ? 1 : cow.breed;
-        const cowPoints: number = state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === breed).maxMilkVolume;
-        cow.milk = cowPoints;
-      }
-    }
+    // // если есть остаток, то овцы пушистые
+    // for (let i in milkCollected) {
+    //   if (milkCollected[i].count > 0) {
+    //     const cow = cowGroup.find((data: any) => data._id === milkCollected[i].id);
+    //     const breed: number = cow.breed === 0 ? 1 : cow.breed;
+    //     const cowPoints: number = state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === breed).maxMilkVolume;
+    //     cow.milk = cowPoints;
+    //   }
+    // }
   }
 
   const unicornAutoprogress = (): void => {
