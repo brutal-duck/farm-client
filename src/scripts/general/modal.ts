@@ -1307,6 +1307,7 @@ function confirmBuyCooldown(): void {
       });
       this.state.user.diamonds -= price;
       this.state.territory.cooldown = 0;
+      this.tryTask(15, 0, price);
     } else {
       // вызывем конвертор
       this.state.convertor = {
