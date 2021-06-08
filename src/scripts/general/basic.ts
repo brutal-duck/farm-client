@@ -1740,24 +1740,31 @@ function sendSocialEvent(state: Istate, type: number, value: number): void {
   if (state.platform === 'vk') {
     axios.post(process.env.API + "/appEventVk", data).then((res) => {console.log(res.data)});
     if (type !== 1) {
+      const attach: string = type === 2 ? process.env.VK_CHICKEN_BANNER :
+      type === 3 ? process.env.VK_COW_BANNER : '';
       bridge.send("VKWebAppShowWallPostBox", {
           "message": state.lang[`socialEvents${type}`],
-          "attachments": 'https://vk.com/app7690692_23755036'
+          "attachments": `${attach},${process.env.VK_APP_LINK}`
       }).then(() => {});
     }
   };
   if (state.platform === 'ok') {
     if (type !== 1) {
+      const img: string = type === 2 ? process.env.OK_CHICKEN_BANNER :
+      type === 3 ? process.env.OK_COW_BANNER : '';
       FAPI.UI.postMediatopic({
         "media":[
           {
-            "type": "text",
-            "text": state.lang[`socialEvents${type}`]
-          },
-          {
-            "type": "link",
-            "url": 'https://ok.ru/game/prostoferma'
-          },
+            "type": "app",
+            "text": state.lang[`socialEvents${type}`],
+            "images": [
+              {
+                "url": img,
+                "mark": "prize_2",
+                "title": state.lang[`socialEvents${type}`]
+              }
+            ],
+          }
         ]
       }, false);
     }
