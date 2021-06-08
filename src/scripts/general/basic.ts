@@ -1741,7 +1741,7 @@ function sendSocialEvent(state: Istate, type: number, value: number): void {
     axios.post(process.env.API + "/appEventVk", data).then((res) => {console.log(res.data)});
     if (type !== 1) {
       bridge.send("VKWebAppShowWallPostBox", {
-          "message": this.state.lang[`socialEvents${type}`],
+          "message": state.lang[`socialEvents${type}`],
           "attachments": 'https://vk.com/photo-201017618_457239159'
       }).then(() => {});
     }
@@ -1749,12 +1749,12 @@ function sendSocialEvent(state: Istate, type: number, value: number): void {
   if (state.platform === 'ok') {
     if (type !== 1) {
       FAPI.UI.postMediatopic({
-          "media":[
-              {
-                "type": "text",
-                "text": this.state.lang[`socialEvents${type}`]
-              },
-          ]
+        "media":[
+          {
+            "type": "text",
+            "text": state.lang[`socialEvents${type}`]
+          },
+        ]
       }, false);
     }
   }
