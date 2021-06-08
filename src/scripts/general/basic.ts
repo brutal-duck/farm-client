@@ -1742,8 +1742,8 @@ function sendSocialEvent(state: Istate, type: number, value: number): void {
     if (type !== 1) {
       bridge.send("VKWebAppShowWallPostBox", {
           "message": state.lang[`socialEvents${type}`],
-          "attachments": 'https://vk.com/photo201017618_457239159'
-      }).then((res) => {console.log(res)});
+          "attachments": 'https://vk.com/app7690692_23755036'
+      }).then(() => {});
     }
   };
   if (state.platform === 'ok') {
@@ -1754,8 +1754,12 @@ function sendSocialEvent(state: Istate, type: number, value: number): void {
             "type": "text",
             "text": state.lang[`socialEvents${type}`]
           },
+          {
+            "type": "link",
+            "url": 'https://ok.ru/game/prostoferma'
+          },
         ]
-      }, false).then((res) => {console.log(res)});
+      }, false);
     }
   }
 }
