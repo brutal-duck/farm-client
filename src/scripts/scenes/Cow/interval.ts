@@ -4,6 +4,7 @@ import Hearts from '../../components/animations/Hearts';
 import CowSprite from './../../components/Animal/CowSprite';
 import Territory from './../../components/Territories/Territory';
 import { progressTerritoryCooldown } from '../../general/interval';
+import SpeechBubble from '../../components/animations/SpeechBuble';
 
 let checkCollector: number = 0;
 let sheepCollectorVolume: number = 0;
@@ -11,6 +12,9 @@ let chickenCollectorVolume: number = 0;
 let arrowOnCollector: Phaser.GameObjects.Sprite;
 let arrowOnTerrirory: Phaser.GameObjects.Sprite;
 let arrowOnFactory: Phaser.GameObjects.Sprite;
+const BALANCE_HINT_COUNTDOWN = 20;
+let balanceCounter: number = 0;
+let balanceCounterMultiplier = 1;
 
 function interval(): void {
 
@@ -24,6 +28,34 @@ function interval(): void {
     this.onlineStatus();
 
     let balance: Ibalance = this.balance();
+
+    
+
+    // Подсказка при отрицательном балансе
+    if (balance.notEnoughGrass || balance.notEnoughWater) {
+      balanceCounter++;
+
+      if (balanceCounter >= BALANCE_HINT_COUNTDOWN * balanceCounterMultiplier) {
+        SpeechBubble.create(this.game.scene.keys['CowBars'], this.state.lang.remainderBalance, 4);
+        balanceCounter = 0;
+        balanceCounterMultiplier++;
+      }
+
+      if (Phaser.Math.Between(0, 7) >= 5) {
+        let randomIndex: number = Phaser.Math.Between(0, this.animalGroup.children.entries.length - 1);
+        let textures: string[] = ['not-enought-water', 'not-enought-grass'];
+        let texture: string = textures[Phaser.Math.Between(0, 1)];
+
+        if (balance.notEnoughGrass && !balance.notEnoughWater) texture = 'not-enought-grass';
+        else if (balance.notEnoughWater && !balance.notEnoughGrass) texture = 'not-enought-water';
+        
+        Hearts.create(this, this.animalGroup.children.entries[randomIndex], texture);
+      }
+
+    } else if (balanceCounter !== 0 && balanceCounterMultiplier !== 1) {
+      balanceCounter = 0;
+      balanceCounterMultiplier = 1;
+    }
 
     if (!statusBalance && balance.alarm) {
       this.logAmplitudeEvent('resources', {

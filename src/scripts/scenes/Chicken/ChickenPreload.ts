@@ -201,6 +201,8 @@ const gift: string = require("./../../../assets/images/icons/gift.png");
 const offline: string = require("./../../../assets/images/icons/offline.png");
 const tutorBtn: string = require("./../../../assets/images/modal/tutor-btn.png");
 const heart: string = require("./../../../assets/images/icons/heart.png");
+const notEnoughtWater: string = require("./../../../assets/images/icons/not-enought-water.png");
+const notEnoughtGrass: string = require("./../../../assets/images/icons/not-enought-grass.png");
 const calendar: string = require("./../../../assets/images/calendar.png");
 const adIcon: string = require("./../../../assets/images/icons/ad-icon.png");
 const bgAd: string = require("./../../../assets/images/icons/bg-ad.png");
@@ -457,6 +459,8 @@ class ChickenPreload extends Phaser.Scene {
     this.load.image('offline', offline);
     this.load.image('tutor-btn', tutorBtn);
     this.load.image('heart', heart);
+    this.load.image('not-enought-water', notEnoughtWater);
+    this.load.image('not-enought-grass', notEnoughtGrass);
     this.load.image('calendar', calendar);
     this.load.image('ad-icon', adIcon);
     this.load.image('bg-ad', bgAd);
