@@ -1742,8 +1742,8 @@ function sendSocialEvent(state: Istate, type: number, value: number): void {
     if (type !== 1) {
       bridge.send("VKWebAppShowWallPostBox", {
           "message": state.lang[`socialEvents${type}`],
-          "attachments": 'https://vk.com/photo-201017618_457239159'
-      }).then(() => {});
+          "attachments": 'https://vk.com/photo201017618_457239159'
+      }).then((res) => {console.log(res)});
     }
   };
   if (state.platform === 'ok') {
@@ -1755,7 +1755,7 @@ function sendSocialEvent(state: Istate, type: number, value: number): void {
             "text": state.lang[`socialEvents${type}`]
           },
         ]
-      }, false);
+      }, false).then((res) => {console.log(res)});
     }
   }
 }
