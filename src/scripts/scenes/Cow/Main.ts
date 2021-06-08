@@ -30,6 +30,7 @@ import {
   logAmplitudeRevenue,
   farmBalance,
   autoporgressCollectorTime,
+  missionComplete,
 } from '../../general/basic';
 import {
   improveCollector,
@@ -285,6 +286,12 @@ class Cow extends Phaser.Scene {
     this.setCollector();
 
     this.animations();
+
+    // Веральность
+    if (!localStorage?.openCow) {
+      localStorage?.setItem('openCow', 'true')
+      missionComplete(this.state, 3, 100)
+    }
 
     // let cursors = this.input.keyboard.createCursorKeys();
     // cursors.space.on('down', (): void => {

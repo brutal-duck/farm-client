@@ -42,6 +42,7 @@ import {
   logAmplitudeRevenue,
   farmBalance,
   randomString,
+  missionComplete,
 } from '../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -361,6 +362,7 @@ class Sheep extends Phaser.Scene {
     // интервальные функция
     this.interval();
     this.setCollector();
+    console.log(this.state);
 
     // let cursors = this.input.keyboard.createCursorKeys();
     // cursors.space.on('down', (): void => {
