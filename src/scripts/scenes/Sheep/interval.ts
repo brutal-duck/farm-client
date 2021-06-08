@@ -2,8 +2,12 @@ import { shortTime } from '../../general/basic';
 import Arrow from '../../components/animations/Arrow';
 import Hearts from '../../components/animations/Hearts';
 import { progressTerritoryCooldown } from '../../general/interval';
+import SpeechBubble from '../../components/animations/SpeechBuble';
 
 let checkCollector: number = 0;
+const BALANCE_HINT_COUNTDOWN = 20;
+let balanceCounter: number = 0;
+let balanceCounterMultiplier = 1;
 
 function interval(): void {
   
@@ -20,6 +24,32 @@ function interval(): void {
     this.onlineStatus();
 
     let balance: Ibalance = this.balance();
+
+    // Подсказка при отрицательном балансе
+    if (balance.notEnoughGrass || balance.notEnoughWater) {
+      balanceCounter++;
+
+      if (balanceCounter >= BALANCE_HINT_COUNTDOWN * balanceCounterMultiplier) {
+        SpeechBubble.create(this.game.scene.keys['SheepBars'], this.state.lang.remainderBalance, 4);
+        balanceCounter = 0;
+        balanceCounterMultiplier++;
+      }
+
+      if (Phaser.Math.Between(0, 7) >= 5) {
+        let randomIndex: number = Phaser.Math.Between(0, this.sheep.children.entries.length - 1);
+        let textures: string[] = ['not-enought-water', 'not-enought-grass'];
+        let texture: string = textures[Phaser.Math.Between(0, 1)];
+
+        if (balance.notEnoughGrass && !balance.notEnoughWater) texture = 'not-enought-grass';
+        else if (balance.notEnoughWater && !balance.notEnoughGrass) texture = 'not-enought-water';
+        
+        Hearts.create(this, this.sheep.children.entries[randomIndex], texture);
+      }
+
+    } else if (balanceCounter !== 0 && balanceCounterMultiplier !== 1) {
+      balanceCounter = 0;
+      balanceCounterMultiplier = 1;
+    }
 
     if (!statusBalance && balance.alarm) {
 

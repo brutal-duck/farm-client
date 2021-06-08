@@ -10,17 +10,19 @@ export default class Hearts {
   public scene: Phaser.Scene;
   public position: Phaser.GameObjects.Sprite | Iposition | Phaser.Physics.Arcade.Sprite;
   private hearts: Phaser.GameObjects.Group;
-  constructor(scene: Phaser.Scene, position: Phaser.GameObjects.Sprite | Iposition | Phaser.Physics.Arcade.Sprite) {
+  public texture: string;
+  constructor(scene: Phaser.Scene, position: Phaser.GameObjects.Sprite | Iposition | Phaser.Physics.Arcade.Sprite, texture: string = 'heart') {
     this.scene = scene;
     this.position = position;
+    this.texture = texture;
     this.init();
   }
   
-  static create(scene: Phaser.Scene, position: Iposition): Hearts {
-    return new Hearts(scene, position);
+  static create(scene: Phaser.Scene, position: Iposition, texture: string = 'heart'): Hearts {
+    return new Hearts(scene, position, texture);
   }
 
-  private init(): void {   
+  private init(): void {
     this.hearts = this.scene.add.group();
     this.scene.time.addEvent({
       delay: 150,
@@ -48,8 +50,8 @@ export default class Hearts {
   }
 
   private get heart(): Phaser.GameObjects.Sprite {
-    const heart = this.scene.add.sprite(this.position.x + Phaser.Math.Between(20, 30) * Phaser.Math.Between(-1, 1), this.position.y, 'heart').setDepth(this.position.y * 100);
+    const heart = this.scene.add.sprite(this.position.x + Phaser.Math.Between(20, 30) * Phaser.Math.Between(-1, 1), this.position.y, this.texture).setDepth(this.position.y * 100);
     this.hearts.add(heart);
     return heart;
-  } 
+  }
 } 
