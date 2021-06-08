@@ -446,13 +446,7 @@ function donePart(): void {
   });
   this.autosave();
 
-  if (this.state.platform === 'vk') {
-    let player: string = this.state.vkId
-    let level: number = this.state.userSheep.part + this.state.userChicken.part + this.state.userCow.part
-    let activity_id: number = 1
-    let data = { player, level, activity_id }
-    axios.post(process.env.API + "/appEventVk", data).then(() => {})
-  }
+  missionComplete(this.state, 1, this.state.userSheep.part + this.state.userChicken.part + this.state.userCow.part)
   
   this.time.addEvent({ delay: 200, callback: (): void => {
     this.checkDoneTasks();
@@ -1733,6 +1727,27 @@ function farmBalance(farm: string): Ibalance {
   }
 }
 
+
+function missionComplete(state: Istate, type: number, value: number): void {
+  // switch (type) {
+    // case 1: {
+      let data = {
+        id: state.user.id,
+        hash: state.user.hash,
+        counter: state.user.counter,
+        activityId: type,
+        value,
+      }
+      if (state.platform === 'vk') axios.post(process.env.API + "/appEventVk", data).then(() => {})
+      else if (state.platform === 'ok') axios.post(process.env.API + "/appEventOk", data).then(() => {})
+      // break
+    // }
+
+
+  //   default: break
+  // }
+}
+
 export {
   random,
   getRandomBool,
@@ -1769,4 +1784,5 @@ export {
   logAmplitudeEvent,
   logAmplitudeRevenue,
   farmBalance,
+  missionComplete,
 }

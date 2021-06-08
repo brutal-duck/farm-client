@@ -33,6 +33,7 @@ import {
   logAmplitudeEvent,
   logAmplitudeRevenue,
   farmBalance,
+  missionComplete,
 } from '../../general/basic';
 import {
   improveCollector,
@@ -287,6 +288,12 @@ class Chicken extends Phaser.Scene {
     // интервальные функции
     this.interval();
     this.setCollector();
+
+    // Веральность
+    if (!localStorage?.openChicken) {
+      localStorage?.setItem('openChicken', 'true')
+      missionComplete(this.state, 3, 100)
+    }
 
     // let cursors = this.input.keyboard.createCursorKeys();
     // cursors.space.on('down', (): void => {
