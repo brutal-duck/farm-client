@@ -357,7 +357,7 @@ function buyNextFarm(): void {
       let count: number = progress.price - this.state.user.diamonds;
           
       this.state.convertor = {
-        fun: 7,
+        fun: 0,
         count: count,
         diamonds: count,
         type: 2

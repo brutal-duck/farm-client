@@ -338,7 +338,7 @@ export default class Fortune extends Phaser.Scene {
         this.startScrollWheel();
       } else {
         this.state.convertor = {
-          fun: 8,
+          fun: 0,
           count: this.price - this.state.user.diamonds,
           diamonds: this.price - this.state.user.diamonds,
           type: 2

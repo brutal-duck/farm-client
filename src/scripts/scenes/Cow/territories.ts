@@ -55,7 +55,7 @@ function installTerritory(): void {
       let count: number = price - this.state.userCow.money;
       let diamonds: number = this.convertMoney(count);
       this.state.convertor = {
-        fun: 5,
+        fun: 0,
         count: count,
         diamonds: diamonds,
         type: 1

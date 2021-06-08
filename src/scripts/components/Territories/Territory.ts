@@ -335,7 +335,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       } else {
         const count: number = price - user.money;
         const diamonds: number = this.scene.convertMoney(count);
-        this.openConvertor(count, diamonds, 6, 1);
+        this.openConvertor(count, diamonds, 1);
       }
     }
   }
@@ -363,10 +363,10 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  private openConvertor(count: number, diamonds: number, fun: number, type: number): void {
+  private openConvertor(count: number, diamonds: number, type: number): void {
     
     this.scene.state.convertor = {
-      fun: fun,
+      fun: 0,
       count: count,
       diamonds: diamonds,
       type: type
@@ -455,7 +455,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
           } else {
             let count: number = settings.improvePastureMoneyPrice - user.money;
             let diamonds: number = this.scene.convertMoney(count);
-            this.openConvertor(count, diamonds, 6, 1);
+            this.openConvertor(count, diamonds, 1);
           }
   
         }
@@ -503,7 +503,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         } else {
           const count: number = settings.improvePastureMoneyPrice - user.money;
           const diamonds: number = this.scene.convertMoney(count);
-          this.openConvertor(count, diamonds, 6, 1);
+          this.openConvertor(count, diamonds, 1);
         }
       }
     }
@@ -658,11 +658,11 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         } else {
           if (this.scene.state.user.diamonds < nextFair.price_d) {
             const count: number = nextFair.price_d - this.scene.state.user.diamonds;
-            this.openConvertor(count, count, 2, 2);
+            this.openConvertor(count, count, 2);
           } else {
             const count: number = nextFair.price_m - user.money;
             const diamonds: number = this.scene.convertMoney(count);
-            this.openConvertor(count, diamonds, 2, 1);
+            this.openConvertor(count, diamonds, 1);
           }
         }
       }
@@ -766,7 +766,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
       let count: number = price - user.money;
       let diamonds: number = this.scene.convertMoney(count);
-      this.openConvertor(count, diamonds, 3, 1);
+      this.openConvertor(count, diamonds, 1);
     }
   };
   
@@ -811,7 +811,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     } else {
       let count: number = price - this.scene.state.user.diamonds;
       let diamonds: number = this.scene.convertDiamonds(count);
-      this.openConvertor(count, diamonds, 3, 1);
+      this.openConvertor(count, diamonds, 1);
     }
   };
 
@@ -882,11 +882,11 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         } else {
           if (this.scene.state.user.diamonds < nextImprove.improveDiamondPrice) {
             const count: number = nextImprove.improveDiamondPrice - this.scene.state.user.diamonds;
-            this.openConvertor(count, count, 2, 2);
+            this.openConvertor(count, count, 2);
           } else {
             const count: number = nextImprove.improveMoneyPrice - user.money;
             const diamonds: number = this.scene.convertMoney(count);
-            this.openConvertor(count, diamonds, 2, 1);
+            this.openConvertor(count, diamonds, 1);
           }
         }
       }

@@ -249,7 +249,7 @@ function buyCow(breed: number, shop: boolean = false): boolean {
       let count: number = cowPrice.price - this.state.userCow.money;
       let diamonds: number = this.convertMoney(count);
       this.state.convertor = {
-        fun: 1,
+        fun: 0,
         count: count,
         diamonds: diamonds,
         type: 1,

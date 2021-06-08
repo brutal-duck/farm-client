@@ -351,7 +351,7 @@ export default class ShowCaseWindow {
       } else {
         const countResources = this.price - this.state.user.diamonds;
         this.state.convertor = {
-          fun: 2,
+          fun: 0,
           count: countResources,
           diamonds: countResources,
           type: 2
