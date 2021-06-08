@@ -445,6 +445,14 @@ function donePart(): void {
     chapter: user.part - 1
   });
   this.autosave();
+
+  if (this.state.platform === 'vk') {
+    let player: string = this.state.vkId
+    let level: number = this.state.userSheep.part + this.state.userChicken.part + this.state.userCow.part
+    let activity_id: number = 1
+    let data = { player, level, activity_id }
+    axios.post(process.env.API + "/appEventVk", data).then(() => {})
+  }
   
   this.time.addEvent({ delay: 200, callback: (): void => {
     this.checkDoneTasks();
