@@ -67,8 +67,7 @@ function updateNativeShop(): void {
   } else if (!this.scene.isActive('Modal') &&
   !this.scene.isActive('Tutorial') &&
   !this.game.scene.keys[`${this.state.farm}Bars`].nativeShop.visible &&
-  counter > 0 &&
-  (this.state.user.additionalTutorial.herdBoost || this.state.farm !== 'Sheep')) {
+  counter > 0) {
     this.game.scene.keys[`${this.state.farm}Bars`].nativeShop.setVisible(true);
     this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setVisible(true);
   }
