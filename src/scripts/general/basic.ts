@@ -1738,8 +1738,8 @@ function missionComplete(state: Istate, type: number, value: number): void {
         activityId: type,
         value,
       }
-      if (state.platform === 'vk') axios.post(process.env.API + "/appEventVk", data).then(() => {})
-      else if (state.platform === 'ok') axios.post(process.env.API + "/appEventOk", data).then(() => {})
+      if (state.platform === 'vk') axios.post(process.env.API + "/appEventVk", data).then((res) => {console.log(res.data)});
+      else if (state.platform === 'ok') axios.post(process.env.API + "/appEventOk", data).then((res) => {console.log(res.data)});
       // break
     // }
 
