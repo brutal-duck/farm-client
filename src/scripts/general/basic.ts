@@ -446,7 +446,7 @@ function donePart(): void {
   });
   this.autosave();
 
-  missionComplete(this.state, 1, this.state.userSheep.part + this.state.userChicken.part + this.state.userCow.part)
+  sendSocialEvent(this.state, 1, this.state.userSheep.part + this.state.userChicken.part + this.state.userCow.part)
   
   this.time.addEvent({ delay: 200, callback: (): void => {
     this.checkDoneTasks();
@@ -1728,24 +1728,36 @@ function farmBalance(farm: string): Ibalance {
 }
 
 
-function missionComplete(state: Istate, type: number, value: number): void {
-  // switch (type) {
-    // case 1: {
-      let data = {
-        id: state.user.id,
-        hash: state.user.hash,
-        counter: state.user.counter,
-        activityId: type,
-        value,
-      }
-      if (state.platform === 'vk') axios.post(process.env.API + "/appEventVk", data).then((res) => {console.log(res.data)});
-      else if (state.platform === 'ok') axios.post(process.env.API + "/appEventOk", data).then((res) => {console.log(res.data)});
-      // break
-    // }
+function sendSocialEvent(state: Istate, type: number, value: number): void {
+  const data = {
+    id: state.user.id,
+    hash: state.user.hash,
+    counter: state.user.counter,
+    activityId: type,
+    value,
+  };
 
-
-  //   default: break
-  // }
+  if (state.platform === 'vk') {
+    axios.post(process.env.API + "/appEventVk", data).then((res) => {console.log(res.data)});
+    if (type !== 1) {
+      bridge.send("VKWebAppShowWallPostBox", {
+          "message": this.state.lang[`socialEvents${type}`],
+          "attachments": 'https://vk.com/photo-201017618_457239159'
+      }).then(() => {});
+    }
+  };
+  if (state.platform === 'ok') {
+    if (type !== 1) {
+      FAPI.UI.postMediatopic({
+          "media":[
+              {
+                "type": "text",
+                "text": this.state.lang[`socialEvents${type}`]
+              },
+          ]
+      }, false);
+    }
+  }
 }
 
 export {
@@ -1784,5 +1796,5 @@ export {
   logAmplitudeEvent,
   logAmplitudeRevenue,
   farmBalance,
-  missionComplete,
+  sendSocialEvent,
 }

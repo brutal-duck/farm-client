@@ -42,7 +42,6 @@ import {
   logAmplitudeRevenue,
   farmBalance,
   randomString,
-  missionComplete,
 } from '../../general/basic';
 import {
   confirmExchangeTerritory,
