@@ -132,6 +132,20 @@ const profileLockIcon: string = require('./../../assets/images/icons/profile-loc
 const profileEventIsland: string = require('./../../assets/images/profile/event-island.png');
 const profileBtn: string = require('./../../assets/images/profile/btn.png');
 const profilePointer: string = require('./../../assets/images/profile/pointer.png');
+
+const factoryWindow: string = require('./../../assets/images/cow/modal/factory-window.png');
+const factoryWheel: string = require('./../../assets/images/cow/modal/factory-wheel.png');
+const factoryProduction1: string = require('./../../assets/images/cow/modal/factory-resource-1.png');
+const factoryProduction2: string = require('./../../assets/images/cow/modal/factory-resource-2.png');
+const factoryProduction3: string = require('./../../assets/images/cow/modal/factory-resource-3.png');
+const factoryProduction4: string = require('./../../assets/images/cow/modal/factory-resource-4.png');
+const factoryCacao: string = require('./../../assets/images/cow/modal/factory-cacao.png');
+const factoryProductionSlot2: string = require('./../../assets/images/cow/modal/factory-resource-slot-2.png');
+const factoryProductionSlotDisable2: string = require('./../../assets/images/cow/modal/factory-resource-slot-disable-2.png');
+const factoryProductionSlot3: string = require('./../../assets/images/cow/modal/factory-resource-slot-3.png');
+const factoryProductionSlotDisable3: string = require('./../../assets/images/cow/modal/factory-resource-slot-disable-3.png');
+const factoryProductionSlot4: string = require('./../../assets/images/cow/modal/factory-resource-slot-4.png');
+const factoryProductionSlotDisable4: string = require('./../../assets/images/cow/modal/factory-resource-slot-disable-4.png');
 class Preload extends Phaser.Scene {
   constructor() {
     super('Preload');
@@ -296,6 +310,20 @@ class Preload extends Phaser.Scene {
     this.load.image('corner1', corner1);
     this.load.image('corner2', corner2);
     this.load.image('fortune-plate', fortunePlate);
+
+    this.load.image('factory-window', factoryWindow);
+    this.load.image('factory-wheel', factoryWheel);
+    this.load.image('factory-production-1', factoryProduction1);
+    this.load.image('factory-production-2', factoryProduction2);
+    this.load.image('factory-production-3', factoryProduction3);
+    this.load.image('factory-production-4', factoryProduction4);
+    this.load.image('factory-cacao', factoryCacao);
+    this.load.image('factory-production-slot-2', factoryProductionSlot2);
+    this.load.image('factory-production-slot-disable-2', factoryProductionSlotDisable2);
+    this.load.image('factory-production-slot-3', factoryProductionSlot3);
+    this.load.image('factory-production-slot-disable-3', factoryProductionSlotDisable3);
+    this.load.image('factory-production-slot-4', factoryProductionSlot4);
+    this.load.image('factory-production-slot-disable-4', factoryProductionSlotDisable4);
   }
 
 }
