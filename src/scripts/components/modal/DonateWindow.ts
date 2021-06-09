@@ -1,11 +1,12 @@
 import Modal from "../../scenes/Modal/Modal";
 
-export default class Donate {
-  public scene: Modal
+export default class DonateWindow {
+  public scene: Modal;
 
   constructor(scene: Modal) {
-    this.scene = scene
-    this.create()
+    this.scene = scene;
+    this.create();
+    this.scene.openModal(this.scene.cameras.main);
   }
 
   private create(): void {
@@ -34,15 +35,9 @@ export default class Donate {
     }).setOrigin(0.5, 0.5).setStroke('#2C5D0C', 5);
   
     this.scene.clickModalBtn({ btn, title }, (): void => {
-  
       this.scene.scene.stop();
       this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
       this.scene.game.scene.keys[this.scene.state.farm].takeDonate();
-  
     });
-  
-    this.scene.openModal(this.scene.cameras.main);
-
   }
-
 }

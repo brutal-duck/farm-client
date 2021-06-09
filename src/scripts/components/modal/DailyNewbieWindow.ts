@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { shortNum, shortTime } from '../../general/basic';
-import Modal from './../../scenes/Modal/Modal';
+import Modal from '../../scenes/Modal/Modal';
 
 
 
-export default class DailyNewbie extends Phaser.GameObjects.Sprite {
+export default class DailyNewbieWindow extends Phaser.GameObjects.Sprite {
   public scene: Modal;
   private closeBtn: Phaser.GameObjects.Sprite;
   private timerNewbieAward: Phaser.GameObjects.Text;

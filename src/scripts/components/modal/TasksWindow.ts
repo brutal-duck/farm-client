@@ -1,15 +1,15 @@
 import Modal from "../../scenes/Modal/Modal";
 
 export default class TasksWindow {
-  public scene: Modal
-  private top: Phaser.GameObjects.Sprite
-  private middle: Phaser.GameObjects.TileSprite
-  private bottom: Phaser.GameObjects.Sprite
-  private close: Phaser.GameObjects.Sprite
+  public scene: Modal;
+  private top: Phaser.GameObjects.Sprite;
+  private middle: Phaser.GameObjects.TileSprite;
+  private bottom: Phaser.GameObjects.Sprite;
+  private close: Phaser.GameObjects.Sprite;
 
   constructor(scene: Modal) {
-    this.scene = scene
-    this.create()
+    this.scene = scene;
+    this.create();
   }
 
   private create(): void {

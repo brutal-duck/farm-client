@@ -1,11 +1,11 @@
 import Modal from "../../scenes/Modal/Modal";
 
 export default class NextChapterWindow {
-  public scene: Modal
+  public scene: Modal;
 
   constructor(scene: Modal) {
-    this.scene = scene
-    this.create()
+    this.scene = scene;
+    this.create();
   }
 
   private create(): void {
@@ -44,5 +44,4 @@ export default class NextChapterWindow {
     this.scene.openModal(this.scene.cameras.main);
 
   }
-
 }

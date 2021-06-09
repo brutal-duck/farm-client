@@ -1,5 +1,5 @@
-import Modal from './../../scenes/Modal/Modal';
-import Hint from './../animations/Hint';
+import Modal from '../../scenes/Modal/Modal';
+import Hint from '../animations/Hint';
 interface Iaward {
   type: number;
   count: number;
@@ -15,7 +15,7 @@ const AWARDS: { type: number, count: number }[] = [
   { type: 2, count: 20 }
 ];
 
-export default class Daily extends Phaser.GameObjects.Sprite {
+export default class DailyAwardWindow extends Phaser.GameObjects.Sprite {
   public scene: Modal;
   private day: number;
   private geom: Phaser.Geom.Rectangle;
