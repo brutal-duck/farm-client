@@ -253,7 +253,7 @@ function interval(): void {
 
     this.intervalCollectorTutorial(arrowOnCollector);
     // задание на накопление денег
-    this.tryTask(6, this.state.userChicken.money);
+    this.tryTask(6, 0, 0, this.state.userChicken.money);
 
     // задание на кур на поле
     this.checkAnimalTask();

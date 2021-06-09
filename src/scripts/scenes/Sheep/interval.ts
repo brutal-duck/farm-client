@@ -191,7 +191,7 @@ function interval(): void {
     } 
 
     // задание на накопление денег
-    this.tryTask(6, this.state.userSheep.money);
+    this.tryTask(6, 0, 0, this.state.userSheep.money);
 
     // задание на овец на поле
     this.checkAnimalTask();

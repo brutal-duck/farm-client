@@ -72,7 +72,7 @@ function partTasks(): Itasks[] {
 
 
 // попытка выполнения задания
-function tryTask(type: number, state: number, count: number = 1): void {
+function tryTask(type: number, state: number, count: number = 1, currentProgress?: number): void {
 
   let part: number;
   if (this.state.farm === 'Sheep') part = this.state.userSheep.part;
@@ -81,10 +81,12 @@ function tryTask(type: number, state: number, count: number = 1): void {
 
   let tasks: Itasks[] = this.partTasks();
   let task: Itasks = tasks.find((data: Itasks) => data.type === type);
-  if (task?.type !== 26 && task?.done === 0 &&
+  
+  if (!currentProgress && task?.done === 0 &&
     task?.progress < task?.count &&
     (task?.state === state || task?.state === 0 || 
-      ((task?.type === 6 || task?.type === 23 || task?.type === 24 || task?.type === 8 || task?.type === 9 || task?.type === 17) && task?.state <= state))) {
+    ((task?.type === 24 || task?.type === 8 || task?.type === 9 || task?.type === 17) 
+    && task?.state <= state))) {
     task.progress += count;
     if (task.progress >= task.count) {
       task.done = 1;
@@ -96,8 +98,8 @@ function tryTask(type: number, state: number, count: number = 1): void {
     this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
   }
 
-  if ((task?.done === 0 && task?.progress < task?.count && task?.type === 26)) {
-    task.progress = count;
+  if ((task?.done === 0 && currentProgress)) {
+    task.progress = currentProgress;
     if (task.progress >= task.count) {
       task.done = 1;
       this.logAmplitudeEvent('task_done', {
@@ -108,7 +110,7 @@ function tryTask(type: number, state: number, count: number = 1): void {
     this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
   }
 
-  if (task?.progress >= task?.count && (task?.type === 21 || task?.type === 22 || task?.type === 23)) {
+  if (task?.progress >= task?.count && (task?.type === 21 || task?.type === 22)) {
     task.done = 1;
     this.logAmplitudeEvent('task_done', {
       task_id: task.id,
@@ -362,11 +364,11 @@ function checkDoneTasks(): void {
       }
     }
     
-    if (tasks[i].type === 23) {
-      if (this.state[`user${this.state.farm}`].collectorLevel >= tasks[i].state) {
-        tasks[i].progress += 1;
+    if (tasks[i]?.type === 23) {
+      tasks[i].progress = this.state[`user${this.state.farm}`].collectorLevel;
+      if (this.state[`user${this.state.farm}`].collectorLevel >= tasks[i].count) {
         tasks[i].done = 1;
-      }
+      } else {}
     }
   }
   this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();

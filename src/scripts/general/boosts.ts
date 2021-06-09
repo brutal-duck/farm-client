@@ -166,8 +166,7 @@ function improveCollector(): void {
   
       if (this.state.user.diamonds >= nextLevel.price) {
   
-        this.tryTask(15, 0, nextLevel.price);
-        this.tryTask(23, nextLevel.level);
+        this.game.scene.keys[this.state.farm].tryTask(15, 0, nextLevel.price);
   
         this.logAmplitudeEvent('diamonds_spent', {
           type: 'improve_collector',
@@ -179,7 +178,7 @@ function improveCollector(): void {
         this.setCollector();
   
         this.game.scene.keys['Modal'].improveCollectorAnim({x: this.cameras.main.centerX, y: this.cameras.main.centerY + 10});
-        this.game.scene.keys[this.state.farm].tryTask(23, user.collectorLevel);
+        this.game.scene.keys[this.state.farm].tryTask(23, 0, 0, user.collectorLevel);
         
         if (!secondNextLevel) {
           this.scene.stop('Modal');
@@ -216,13 +215,12 @@ function improveCollector(): void {
   
       if (user.money >= nextLevel.price) {
   
-        this.tryTask(23, nextLevel.level);
         user.money -= nextLevel.price;
         user.collectorLevel++;
         this.setCollector();
   
         this.game.scene.keys['Modal'].improveCollectorAnim({x: this.cameras.main.centerX, y: this.cameras.main.centerY + 10});
-        this.game.scene.keys[this.state.farm].tryTask(23, user.collectorLevel);
+        this.game.scene.keys[this.state.farm].tryTask(23, 0, 0, user.collectorLevel);
         if (!secondNextLevel) {
           this.scene.stop('Modal');
           this.scene.stop('Shop');

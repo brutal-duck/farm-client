@@ -188,7 +188,7 @@ function interval(): void {
 
     this.intervalCollectorTutorial(arrowOnCollector);
     // задание на накопление денег
-    this.tryTask(6, this.state.userCow.money);
+    this.tryTask(6, 0, 0, this.state.userCow.money);
 
     // задание на коровы на поле
     this.checkAnimalTask();
@@ -363,7 +363,7 @@ function interval(): void {
     this.showFeedBoostSpeechBubble();
 
     const volume = this.territories.children.entries.find(el => el.territoryType === 5)?.volume;
-    this.tryTask(26, 0, volume);
+    this.tryTask(26, 0, 0, volume);
 
     
   }, callbackScope: this, loop: true });
