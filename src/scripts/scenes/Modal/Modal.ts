@@ -76,7 +76,6 @@ import {
   sheepWoolRepositoryExchange,
 } from './sheep';
 import Daily from './../../components/modal/Daily';
-import donate from './donate';
 import { bigButton, repositoryBtn, shopButton } from '../../elements';
 import { 
   changeNickname,
@@ -98,6 +97,7 @@ import FactoryWindow from './../../components/modal/FactoryWindow';
 import DailyNewbie from './../../components/modal/DailyNewbie';
 import TasksWindow from '../../components/modal/TasksWindow';
 import NextChapterWindow from '../../components/modal/NextChapterWindow';
+import Donate from '../../components/modal/Donate';
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -189,7 +189,6 @@ class Modal extends Phaser.Scene {
   public diamondSheepAd = diamondSheepAd.bind(this);
   public diamondChickenAd = diamondChickenAd.bind(this);
   public diamondCowAd = diamondCowAd.bind(this);
-  public donate = donate.bind(this);
   public improveCollector = improveCollector.bind(this);
   public updateImproveCollector = updateImproveCollector.bind(this);
   public herdBoostWindow = herdBoostWindow.bind(this);
@@ -262,7 +261,7 @@ class Modal extends Phaser.Scene {
         new DailyNewbie(this);
         break;
       case 7: // окно выдачи донатных кристаллов
-        this.donate();
+        new Donate(this)
         break;
       case 8: // окно стадного буста
         if (this.state.farm !== 'Unicorn') {
