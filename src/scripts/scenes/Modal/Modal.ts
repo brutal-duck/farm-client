@@ -75,7 +75,7 @@ import {
   diamondSheepAd,
   sheepWoolRepositoryExchange,
 } from './sheep';
-import Daily from './../../components/modal/Daily';
+import DailyAwardWindow from '../../components/modal/DailyAwardWindow';
 import { bigButton, repositoryBtn, shopButton } from '../../elements';
 import { 
   changeNickname,
@@ -94,10 +94,10 @@ import { improveCollectorAnim, openModal } from '../../general/animations';
 import { clickTaskBoard } from '../../general/tasks';
 import typePreload from './typePreload';
 import FactoryWindow from './../../components/modal/FactoryWindow';
-import DailyNewbie from './../../components/modal/DailyNewbie';
+import DailyNewbieWindow from '../../components/modal/DailyNewbieWindow';
 import TasksWindow from '../../components/modal/TasksWindow';
 import NextChapterWindow from '../../components/modal/NextChapterWindow';
-import Donate from '../../components/modal/Donate';
+import DonateWindow from '../../components/modal/DonateWindow';
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -252,16 +252,16 @@ class Modal extends Phaser.Scene {
         new TasksWindow(this)
         break;
       case 4: // ежедневные награды
-        new Daily(this);
+        new DailyAwardWindow(this);
         break;
       case 5: // следующая глава
         new NextChapterWindow(this)
         break;
       case 6: // ежедневные награды новичков
-        new DailyNewbie(this);
+        new DailyNewbieWindow(this);
         break;
       case 7: // окно выдачи донатных кристаллов
-        new Donate(this)
+        new DonateWindow(this)
         break;
       case 8: // окно стадного буста
         if (this.state.farm !== 'Unicorn') {
