@@ -79,6 +79,13 @@ class Boot extends Phaser.Scene {
 
     let search: string = window.location.search;
     let params: URLSearchParams = new URLSearchParams(search);
+    console.log(params)
+    
+    location.search.substr(1).split('&').forEach(function (item) {
+      // queryDict[item.split('=')[0]] = item.split('=')[1]
+      console.log(item);
+    })
+
     let vk: string = params.get('api_url');
     let ok: string = params.get('api_server');
 
@@ -257,6 +264,8 @@ class Boot extends Phaser.Scene {
       this.state.vkId = bridgeData.id;
       this.name = bridgeData.first_name + ' ' + bridgeData.last_name;
       this.avatar = bridgeData.photo_200;
+      //@ts-ignore
+      bridge.send("VKWebAppCheckAllowedScopes", {scopes: "menu"}).then(res => console.log(res.data)).catch(err => console.log(err))
 
     } else if (this.platform === 'ok') {
 
