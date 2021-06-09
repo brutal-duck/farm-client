@@ -446,7 +446,11 @@ function donePart(): void {
   });
   this.autosave();
 
-  sendSocialEvent(this.state, 1, this.state.userSheep.part + this.state.userChicken.part + this.state.userCow.part)
+  sendSocialEvent(this.state, 1, this.state.userSheep.part + this.state.userChicken.part + this.state.userCow.part);
+  if (((user.part / 4) ^ 0) === user.part / 4) {
+    sendSocialEvent(this.state, 5, user.part - 1);
+  }
+  sendSocialEvent(this.state, 1, this.state.userSheep.part + this.state.userChicken.part + this.state.userCow.part);
   
   this.time.addEvent({ delay: 200, callback: (): void => {
     this.checkDoneTasks();
@@ -1730,9 +1734,9 @@ function farmBalance(farm: string): Ibalance {
 
 function sendSocialEvent(state: Istate, type: number, value: number): void {
   const langs: { [key: string]: string } = {
-    sheep1: `'У меня завершено уже ${value - 1} главы на овечьей ферме! Присоединяйся к игре!'`,
-    chicken1: `'У меня завершено уже ${value - 1} главы на куриной ферме! Присоединяйся к игре!'`,
-    cow1: `'У меня завершено уже ${value - 1} главы на коровьей ферме! Присоединяйся к игре!'`,
+    sheep5: `У меня завершено уже ${value} главы на овечьей ферме! Присоединяйся к игре!`,
+    chicken5: `У меня завершено уже ${value} главы на куриной ферме! Присоединяйся к игре!`,
+    cow5: `У меня завершено уже ${value} главы на коровьей ферме! Присоединяйся к игре!`,
     chicken2: 'Я уже на куриной ферме! Что же будет дальше?',
     cow3: 'Я уже на коровьей ферме! Что же будет дальше?',
     sheep4: `Мной было захвачено ${value} овечек на овечьем переполохе! Сможешь больше?`,
@@ -1759,14 +1763,7 @@ function sendSocialEvent(state: Istate, type: number, value: number): void {
           "message": langs[farm + type],
           "attachments": `${attach},${process.env.VK_APP_LINK}`
       }).then(() => {});
-    } else {
-      if (((value / 4) ^ 0) === value / 4) {
-        bridge.send("VKWebAppShowWallPostBox", {
-          "message": langs[farm + type],
-          "attachments": `${process.env.VK_COW_BANNER},${process.env.VK_APP_LINK}`
-        }).then(() => {});
-      }
-    }
+    } 
   };
   if (state.platform === 'ok') {
     if (type !== 1) {
@@ -1786,24 +1783,7 @@ function sendSocialEvent(state: Istate, type: number, value: number): void {
           },
         ]
       }, false);
-    } else {
-      if (((value / 4) ^ 0) === value / 4) {
-        FAPI.UI.postMediatopic( {
-          "media": [
-            {
-              "type": "text", 
-              "text": langs[farm + type],
-            },
-            {
-              "type": "link", 
-              "noImage": true, 
-              "imageUrl": process.env.OK_CHICKEN_BANNER,
-              "url": process.env.OK_APP_LINK
-            },
-          ]
-        }, false);
-      }
-    }
+    } 
   }
 }
 
