@@ -39,7 +39,7 @@ class Boot extends Phaser.Scene {
 
   public init(): void {
     
-    let build: string = '3.6.6';
+    let build: string = '3.7';
     console.log('Build ' + build);
 
     // автосохранение при уходе с игры
