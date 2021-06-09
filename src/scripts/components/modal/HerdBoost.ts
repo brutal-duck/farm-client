@@ -11,6 +11,10 @@ export default class HerdBoost {
   private xRoad: number
   private yRoad: number
 
+  private boostCounterWindow: Phaser.GameObjects.Sprite
+  private elements: (Phaser.GameObjects.Text | Phaser.GameObjects.Sprite)[]
+  private animal: string
+
 
   constructor(scene: Modal) {
     this.scene = scene
@@ -23,10 +27,11 @@ export default class HerdBoost {
     this.create()
   }
 
+
   private create(): void {
 
     let startCount: number = 5;
-    let boostCounterWindow: Phaser.GameObjects.Sprite = this.scene.physics.add.sprite(360, 400, 'boost-window-bg').setDepth(1);
+    this.boostCounterWindow = this.scene.physics.add.sprite(360, 400, 'boost-window-bg').setDepth(1);
   
     let text1: Phaser.GameObjects.Text = this.scene.add.text(360, 360, this.scene.state.lang[`herdBoostStartTimout${this.scene.state.farm}_1`], {
       font: '19px Shadow',
@@ -43,15 +48,12 @@ export default class HerdBoost {
     }).setOrigin(0.5, 0.5).setDepth(this.y * 2);
   
     let countdown: Phaser.GameObjects.Sprite = this.scene.add.sprite(360, 500, 'boost-countdown').setDepth(2);
-  
     let leaves1: Phaser.GameObjects.Sprite = this.scene.add.sprite(440, 510, 'boost-leaves').setDepth(0).setFlip(true, true);
     let leaves2: Phaser.GameObjects.Sprite = this.scene.add.sprite(280, 510, 'boost-leaves').setDepth(0).setFlip(false, true);
-  
-    let timerText: Phaser.GameObjects.Text = this.scene.add.text(362, 492, String(startCount), {
-      font: '64px Shadow',
-      color: '#f3eae6'
-    }).setOrigin(0.5, 0.5).setDepth(3);
-  
+    let timerText: Phaser.GameObjects.Text = this.scene.add.text(362, 492, String(startCount), { font: '64px Shadow', color: '#f3eae6' }).setOrigin(0.5, 0.5).setDepth(3);
+
+    this.elements = [timerText, leaves1, leaves2, countdown, text1, text2]
+
     let timer: Phaser.Time.TimerEvent = this.scene.time.addEvent({
       delay: 1000,
       loop: true,
@@ -59,7 +61,12 @@ export default class HerdBoost {
         --startCount;
         timerText.setText(String(startCount));
         if (startCount < 1) {
-          this.hideItems([timerText, leaves1, leaves2, countdown, text1, text2], boostCounterWindow); // скрываем элементы
+          this.scene.tweens.add({
+            targets: this.elements,
+            alpha: 0,
+            duration: 400,
+            onComplete: (): void => { this.moveItems() }
+          })
           timer.remove();
         }
       },
@@ -69,55 +76,39 @@ export default class HerdBoost {
   }
 
 
-  private hideItems([...args], boostCounterWindow): void {
-    this.scene.tweens.add({
-      targets: args,
-      alpha: 0,
-      duration: 400,
-      onComplete: (): void => { this.moveItems([...args], boostCounterWindow) }
-    })
-
-  }
-
-
-  private moveItems([...args], boostCounterWindow): void {
-    let [timerText, leaves1, leaves2, countdown, text1, text2] = [...args];
+  private moveItems(): void {
+    let [timerText, leaves1, leaves2, countdown, text1, text2]: any = this.elements
     
     // установка новых позиций
-    timerText.setText(this.scene.state.herdBoostTime).setPosition(430, 355);  
+    timerText.setText(this.scene.state.herdBoostTime).setPosition(430, 355)
     countdown.setPosition(430, 360)
     leaves1.setAngle(90).setPosition(455, 420)
     leaves2.setAngle(90).setPosition(455, 290)
     text1.style.wordWrapWidth = 280;
     text1.setText(this.scene.state.lang[`herdBoostTimer${this.scene.state.farm}_1`] + this.scene.state.herdBoostTime + ' ' + this.scene.state.lang.seconds).setFontSize('26px').setY(1050);
     text2.setText(this.scene.state.lang[`herdBoostTimer${this.scene.state.farm}_2`]).setY(1100);
-    // this.y = 1080
 
     this.scene.tweens.add({
-      targets: boostCounterWindow,
+      targets: this.boostCounterWindow,
       y: 1080,
       duration: 1000,
-      onComplete: (): void => { this.showItems([...args], boostCounterWindow) }
+      onComplete: (): void => {
+
+        const worldItems: any[] = this.createWorld();  // Создаем мир и записываем элементы в массив, чтобы потом скрыть
+        this.elements = this.elements.concat(worldItems);
+      
+        this.scene.tweens.add({
+          targets: this.elements,
+          alpha: 1,
+          duration: 600,
+          onComplete: (): void => { this.createAnimals(); }
+        })
+
+      }
     })
 
   }
   
-
-  private showItems([...args], boostCounterWindow): void {
-
-    let [timerText] = [...args];
-    const worldItems: any[] = this.createWorld();  // Создаем мир и записываем элементы в массив, чтобы потом скрыть
-    let allItems: any[] = args.concat(worldItems);
-  
-    this.scene.tweens.add({
-      targets: allItems,
-      alpha: 1,
-      duration: 1000,
-      onComplete: (): void => { this.createAnimals(timerText, allItems, boostCounterWindow); }
-    })
-  
-  }
-
 
   private createWorld(): any[] {
     let farm: string = this.scene.state.farm.toLowerCase();
@@ -160,8 +151,8 @@ export default class HerdBoost {
   }
 
 
-  private createAnimals(timerText, allItems, boostCounterWindow): void {
-    let animal: string = this.scene.state.farm.toLowerCase();
+  private createAnimals(): void {
+    this.animal = this.scene.state.farm.toLowerCase();
   
     if (this.scene.state.farm === 'Sheep') {
       // дроп зоны 
@@ -237,9 +228,7 @@ export default class HerdBoost {
     let timerCreate: Phaser.Time.TimerEvent = this.scene.time.addEvent({
       delay: this.scene.state.herdBoostDelay,
       loop: true,
-      callback: () => {
-        this.getRandomAnimal(animal); 
-      },
+      callback: () => { this.getRandomAnimal(); },
       callbackScope: this
     });
     
@@ -249,34 +238,37 @@ export default class HerdBoost {
       loop: true,
       callback: () => {
         if (this.scene.state.farm === 'Unicorn') return;
-        this.getRandomAnimal(animal, true);
+        this.getRandomAnimal(true);
       },
       callbackScope: this
     });
   
+    let [timerText]: any = this.elements
+
     // таймер переключающий время
     let timerTickText: Phaser.Time.TimerEvent = this.scene.time.addEvent({
       delay: 1000,
       loop: true,
       callback: () => {
+
         --currentTime;
         timerText.setText(currentTime);
+
         if (currentTime <= 0) {
-          this.scene.animalForBoost.children.entries.forEach((sheep) => {
-            sheep.data.values.woolSprite?.destroy();
-          });
+          this.scene.animalForBoost.children.entries.forEach((sheep) => { sheep.data.values.woolSprite?.destroy(); });
           this.scene.animalForBoost.destroy(true);
           timerCreate.remove();
           timerTickText.remove();
           timerCreateCrystalAnimal.remove();
 
           this.scene.tweens.add({
-            targets: allItems,
+            targets: this.elements,
             alpha: 0,
             duration: 800,
             onComplete: (): void => {
+
               this.scene.tweens.add({
-                targets: boostCounterWindow,
+                targets: this.boostCounterWindow,
                 y: 400,
                 duration: 800,
                 onComplete: (): void => {
@@ -284,10 +276,11 @@ export default class HerdBoost {
                   this.stopBoostScene()
                 }
               })
+
             }
           })
-
         }
+
       },
       callbackScope: this
     });
@@ -318,7 +311,7 @@ export default class HerdBoost {
   }
 
 
-  private getRandomAnimal(type: string, crystal: boolean = false): void {
+  private getRandomAnimal(crystal: boolean = false): void {
     let {x, y, side, _id} = this.getRandomStartPosition(); 
   
     // Изменение рандома
@@ -326,13 +319,10 @@ export default class HerdBoost {
     let max: number = this.scene.state[`user${this.scene.state.farm}`].fair;
     if (this.scene.state.farm === 'Unicorn') max = this.scene.state[`user${this.scene.state.farm}`].maxLevelAnimal;
   
-    for (let i: number = 0; i < max; i++) {
-      randomArray.push(i ** 2 * 100);
-    }
+    for (let i: number = 0; i < max; i++) { randomArray.push(i ** 2 * 100); }
   
     let randomIndex: number = Phaser.Math.Between(0, max ** 2 * 100);
     let randomType: number;
-  
     
     for (let i = randomArray.length - 1; i >= 0; i--) {
       if (randomIndex >= randomArray[i]) {
@@ -344,7 +334,7 @@ export default class HerdBoost {
     // кристалическое животное?
     if (crystal) randomType = 0;
   
-    let animal: Phaser.Physics.Arcade.Sprite = this.scene.animalForBoost.create(x, y, type + randomType).setDepth(y).setInteractive().setDataEnabled();
+    let animal: Phaser.Physics.Arcade.Sprite = this.scene.animalForBoost.create(x, y, this.animal + randomType).setDepth(y).setInteractive().setDataEnabled();
     animal.data.values.velocity = -this.scene.state.herdBoostSpeedAnimal;
   
     if (side === 'right') animal.data.values.velocity = this.scene.state.herdBoostSpeedAnimal
@@ -357,16 +347,16 @@ export default class HerdBoost {
     animal.data.values.drag = false;
     animal.data.values.merging = false; // метка животного в мерджинге
     animal.setDepth(animal.y);
-  
     animal.setVelocityX(animal.data.values.velocity);
+
     // случайная шерсть если овца
-    if (type === 'sheep') {
+    if (this.animal === 'sheep') {
       let stage: number = Phaser.Math.Between(2, 4); 
       animal.data.values.stage = stage;
-      animal.data.values.woolSprite = this.scene.physics.add.sprite(x, y, type + '-' + animal.data.values.side + '-' + animal.data.values.type + '-' + animal.data.values.stage).setVelocityX(animal.data.values.velocity).setDepth(animal.y);
+      animal.data.values.woolSprite = this.scene.physics.add.sprite(x, y, this.animal + '-' + animal.data.values.side + '-' + animal.data.values.type + '-' + animal.data.values.stage).setVelocityX(animal.data.values.velocity).setDepth(animal.y);
     }
   
-    animal.play(type + '-move-' + animal.data.values.side + animal.data.values.type);
+    animal.play(this.animal + '-move-' + animal.data.values.side + animal.data.values.type);
   }
   
 
@@ -422,10 +412,10 @@ export default class HerdBoost {
         } else if (position === 'bottom') {
     
           if (animal.data.values.side === 'left') {
-    
             animal.data.values.side = 'right';
             animal.data.values.woolSprite?.setTexture(this.scene.state.farm.toLowerCase()+ '-' + animal.data.values.side + '-' + animal.data.values.type + '-' + animal.data.values.stage);
           }
+
           animal.anims.play(this.scene.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
           animal.setPosition(this.x - 25, this.y + 20);
           animal.data.values.woolSprite?.setPosition(animal.x, animal.y);
@@ -434,15 +424,11 @@ export default class HerdBoost {
     
         // проверка позиции для кур
         if (position === 'left') {
-          if (animal.data.values.side === 'left') {
-            animal.data.values.side = 'right';
-          }
+          if (animal.data.values.side === 'left') animal.data.values.side = 'right';
           animal.anims.play(this.scene.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
           animal.setPosition(this.x - 50, this.y);
         } else if (position === 'right') {
-          if (animal.data.values.side === 'left') {
-            animal.data.values.side = 'right';
-          }
+          if (animal.data.values.side === 'left') animal.data.values.side = 'right'
           animal.anims.play(this.scene.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
           animal.setPosition(this.x + 50, this.y);
         }
@@ -524,7 +510,7 @@ export default class HerdBoost {
       if (animal.data) { // существует ли еще dataManager животного
   
         if (animal.data.values.drag === false) return;
-  
+
         animal.data.values.drag = false;
       
         if ((animal.y < 480 && animal.x < 480) || animal.y > 900 || animal.y < 200) {
