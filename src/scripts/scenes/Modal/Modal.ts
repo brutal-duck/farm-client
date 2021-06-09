@@ -76,7 +76,6 @@ import {
   sheepWoolRepositoryExchange,
 } from './sheep';
 import Daily from './../../components/modal/Daily';
-import nextChapter from './nextChapter';
 import donate from './donate';
 import { bigButton, repositoryBtn, shopButton } from '../../elements';
 import { 
@@ -98,6 +97,7 @@ import typePreload from './typePreload';
 import FactoryWindow from './../../components/modal/FactoryWindow';
 import DailyNewbie from './../../components/modal/DailyNewbie';
 import TasksWindow from '../../components/modal/TasksWindow';
+import NextChapterWindow from '../../components/modal/NextChapterWindow';
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -186,7 +186,6 @@ class Modal extends Phaser.Scene {
   public profileWindow = profileWindow.bind(this);
   public support = support.bind(this);
   public registration = registration.bind(this);
-  public nextChapter = nextChapter.bind(this);
   public diamondSheepAd = diamondSheepAd.bind(this);
   public diamondChickenAd = diamondChickenAd.bind(this);
   public diamondCowAd = diamondCowAd.bind(this);
@@ -257,7 +256,7 @@ class Modal extends Phaser.Scene {
         new Daily(this);
         break;
       case 5: // следующая глава
-        this.nextChapter();
+        new NextChapterWindow(this)
         break;
       case 6: // ежедневные награды новичков
         new DailyNewbie(this);

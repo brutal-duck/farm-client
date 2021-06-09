@@ -1,4 +1,3 @@
-import { openModal } from "../../general/animations";
 import Modal from "../../scenes/Modal/Modal";
 
 export default class TasksWindow {
