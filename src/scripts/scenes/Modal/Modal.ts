@@ -75,11 +75,6 @@ import {
   diamondSheepAd,
   sheepWoolRepositoryExchange,
 } from './sheep';
-import {
-  tasks,
-  tasksWindow,
-  resizeTasksWindow
-} from './tasks';
 import Daily from './../../components/modal/Daily';
 import nextChapter from './nextChapter';
 import donate from './donate';
@@ -102,6 +97,7 @@ import { clickTaskBoard } from '../../general/tasks';
 import typePreload from './typePreload';
 import FactoryWindow from './../../components/modal/FactoryWindow';
 import DailyNewbie from './../../components/modal/DailyNewbie';
+import TasksWindow from '../../components/modal/TasksWindow';
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -187,9 +183,6 @@ class Modal extends Phaser.Scene {
   public confirmSheepExchangeTerritory = confirmSheepExchangeTerritory.bind(this);
   public sheepWoolRepository = sheepWoolRepository.bind(this);
   public confirmExpelSheep = confirmExpelSheep.bind(this);
-  public tasks = tasks.bind(this);
-  public tasksWindow = tasksWindow.bind(this);
-  public resizeTasksWindow = resizeTasksWindow.bind(this);
   public profileWindow = profileWindow.bind(this);
   public support = support.bind(this);
   public registration = registration.bind(this);
@@ -258,7 +251,7 @@ class Modal extends Phaser.Scene {
         this.scene.launch('Shop', this.state);
         break;
       case 3: // окно с заданиями
-        this.tasks();
+        new TasksWindow(this)
         break;
       case 4: // ежедневные награды
         new Daily(this);
