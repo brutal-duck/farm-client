@@ -134,6 +134,7 @@ import {
 } from '../../general/ads';
 import setCollector from './collector';
 import { showEventTutorial, doneEventTutor_0 } from './../Event/Unicorns/tutorial';
+import bridge from '@vkontakte/vk-bridge';
 import {
   chickenIntervalProgress,
   chickenCollectorProgress,
@@ -362,25 +363,27 @@ class Sheep extends Phaser.Scene {
     this.interval();
     this.setCollector();
 
-    // let cursors = this.input.keyboard.createCursorKeys();
-    // cursors.space.on('down', (): void => {
-    // //   // this.state.daily = 2;
-    // // this.state.user.test = 'B';
-    // // let tasks = this.partTasks();
-    // // for (let i in tasks) {
-    //   //     tasks[i].done = 1;
-    //   //     tasks[i].got_awarded = 1;
-    //   // }
-    //   // this.state.daily = Number(this.state.daily) + 1;
-    //   // this.state.user.takenReward = false;
-    //   // this.scene.launch('Fortune', this.state);
-    //   // this.state.user.diamonds = 15
-    //   // this.state.user.additionalTutorial.eventTutorial = 0;
-    //   // this.state.progress.event.eventPoints = -1 
-    //   // this.state.user.diamonds = 100;
-    //   // this.state.user.boosts.sheep.collector4 = 1
-    //   // this.state.user.boosts.sheep.collector12 = 1
-    // });
+    let cursors = this.input.keyboard.createCursorKeys();
+    cursors.space.on('down', (): void => {
+      //@ts-ignore
+      bridge.send("showSettingsBox", 256).then(res => console.log(res)).catch(err => console.log(err))
+    //   // this.state.daily = 2;
+    // this.state.user.test = 'B';
+    // let tasks = this.partTasks();
+    // for (let i in tasks) {
+      //     tasks[i].done = 1;
+      //     tasks[i].got_awarded = 1;
+      // }
+      // this.state.daily = Number(this.state.daily) + 1;
+      // this.state.user.takenReward = false;
+      // this.scene.launch('Fortune', this.state);
+      // this.state.user.diamonds = 15
+      // this.state.user.additionalTutorial.eventTutorial = 0;
+      // this.state.progress.event.eventPoints = -1 
+      // this.state.user.diamonds = 100;
+      // this.state.user.boosts.sheep.collector4 = 1
+      // this.state.user.boosts.sheep.collector12 = 1
+    });
   }
 
 
