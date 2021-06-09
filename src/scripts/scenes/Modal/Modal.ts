@@ -75,14 +75,7 @@ import {
   diamondSheepAd,
   sheepWoolRepositoryExchange,
 } from './sheep';
-import {
-  tasks,
-  tasksWindow,
-  resizeTasksWindow
-} from './tasks';
 import Daily from './../../components/modal/Daily';
-import nextChapter from './nextChapter';
-import donate from './donate';
 import { bigButton, repositoryBtn, shopButton } from '../../elements';
 import { 
   changeNickname,
@@ -102,6 +95,9 @@ import { clickTaskBoard } from '../../general/tasks';
 import typePreload from './typePreload';
 import FactoryWindow from './../../components/modal/FactoryWindow';
 import DailyNewbie from './../../components/modal/DailyNewbie';
+import TasksWindow from '../../components/modal/TasksWindow';
+import NextChapterWindow from '../../components/modal/NextChapterWindow';
+import Donate from '../../components/modal/Donate';
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -187,17 +183,12 @@ class Modal extends Phaser.Scene {
   public confirmSheepExchangeTerritory = confirmSheepExchangeTerritory.bind(this);
   public sheepWoolRepository = sheepWoolRepository.bind(this);
   public confirmExpelSheep = confirmExpelSheep.bind(this);
-  public tasks = tasks.bind(this);
-  public tasksWindow = tasksWindow.bind(this);
-  public resizeTasksWindow = resizeTasksWindow.bind(this);
   public profileWindow = profileWindow.bind(this);
   public support = support.bind(this);
   public registration = registration.bind(this);
-  public nextChapter = nextChapter.bind(this);
   public diamondSheepAd = diamondSheepAd.bind(this);
   public diamondChickenAd = diamondChickenAd.bind(this);
   public diamondCowAd = diamondCowAd.bind(this);
-  public donate = donate.bind(this);
   public improveCollector = improveCollector.bind(this);
   public updateImproveCollector = updateImproveCollector.bind(this);
   public herdBoostWindow = herdBoostWindow.bind(this);
@@ -258,19 +249,19 @@ class Modal extends Phaser.Scene {
         this.scene.launch('Shop', this.state);
         break;
       case 3: // окно с заданиями
-        this.tasks();
+        new TasksWindow(this)
         break;
       case 4: // ежедневные награды
         new Daily(this);
         break;
       case 5: // следующая глава
-        this.nextChapter();
+        new NextChapterWindow(this)
         break;
       case 6: // ежедневные награды новичков
         new DailyNewbie(this);
         break;
       case 7: // окно выдачи донатных кристаллов
-        this.donate();
+        new Donate(this)
         break;
       case 8: // окно стадного буста
         if (this.state.farm !== 'Unicorn') {
