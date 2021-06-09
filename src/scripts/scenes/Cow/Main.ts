@@ -287,7 +287,7 @@ class Cow extends Phaser.Scene {
 
     this.animations();
 
-    // Веральность
+    // Заменить на нормальное открытие
     if (!localStorage?.openCow) {
       localStorage?.setItem('openCow', 'true')
       sendSocialEvent(this.state, 3, 100)

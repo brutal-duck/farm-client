@@ -289,7 +289,7 @@ class Chicken extends Phaser.Scene {
     this.interval();
     this.setCollector();
 
-    // Веральность
+    // Заменить на нормальное открытие
     if (!localStorage?.openChicken) {
       localStorage?.setItem('openChicken', 'true')
       sendSocialEvent(this.state, 2, 100)
