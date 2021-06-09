@@ -1755,16 +1755,17 @@ function sendSocialEvent(state: Istate, type: number, value: number): void {
       FAPI.UI.postMediatopic({
         "media":[
           {
-            "type": "app",
-            "text": state.lang[`socialEvents${type}`],
-            "images": [
-              {
-                "url": img,
-                "mark": "prize_2",
-                "title": state.lang[`socialEvents${type}`]
-              }
-            ],
-          }
+            "type": "text",
+            "text": state.lang[`socialEvents${type}`],             
+          },
+          {
+            "type": "link",
+            "url": process.env.OK_APP_LINK
+          },
+          {
+            "type": "photo",
+            "list": [{ "photoId": img }]
+          },
         ]
       }, false);
     }
