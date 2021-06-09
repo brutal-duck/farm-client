@@ -1729,6 +1729,19 @@ function farmBalance(farm: string): Ibalance {
 
 
 function sendSocialEvent(state: Istate, type: number, value: number): void {
+  const langs: { [key: string]: string } = {
+    sheep1: `'У меня завершено уже ${value - 1} главы на овечьей ферме! Присоединяйся к игре!'`,
+    chicken1: `'У меня завершено уже ${value - 1} главы на куриной ферме! Присоединяйся к игре!'`,
+    cow1: `'У меня завершено уже ${value - 1} главы на коровьей ферме! Присоединяйся к игре!'`,
+    chicken2: 'Я уже на куриной ферме! Что же будет дальше?',
+    cow3: 'Я уже на коровьей ферме! Что же будет дальше?',
+    sheep4: `Мной было захвачено ${value} овечек на овечьем переполохе! Сможешь больше?`,
+    chicken4: `Мной было захвачено ${value} курочек на курином переполохе! Сможешь больше?`,
+    cow4: `Мной было захвачено ${value} коровок на коровьем переполохе! Сможешь больше?`,
+    basic: 'Присоединяйтесь ко мне в игре “Просто ферма”'
+  }
+  const farm: string = state.farm.toLowerCase();
+
   const data = {
     id: state.user.id,
     hash: state.user.hash,
@@ -1736,27 +1749,34 @@ function sendSocialEvent(state: Istate, type: number, value: number): void {
     activityId: type,
     value,
   };
-
+  
   if (state.platform === 'vk') {
     axios.post(process.env.API + "/appEventVk", data).then((res) => {console.log(res.data)});
     if (type !== 1) {
       const attach: string = type === 2 ? process.env.VK_CHICKEN_BANNER :
-      type === 3 ? process.env.VK_COW_BANNER : '';
+      type === 3 ? process.env.VK_COW_BANNER : process.env.VK_CHICKEN_BANNER;
       bridge.send("VKWebAppShowWallPostBox", {
-          "message": state.lang[`socialEvents${type}`],
+          "message": langs[farm + type],
           "attachments": `${attach},${process.env.VK_APP_LINK}`
       }).then(() => {});
+    } else {
+      if (((value / 4) ^ 0) === value / 4) {
+        bridge.send("VKWebAppShowWallPostBox", {
+          "message": langs[farm + type],
+          "attachments": `${process.env.VK_COW_BANNER},${process.env.VK_APP_LINK}`
+        }).then(() => {});
+      }
     }
   };
   if (state.platform === 'ok') {
     if (type !== 1) {
       const img: string = type === 2 ? process.env.OK_CHICKEN_BANNER :
-      type === 3 ? process.env.OK_COW_BANNER : '';
+      type === 3 ? process.env.OK_COW_BANNER : process.env.OK_CHICKEN_BANNER;
       FAPI.UI.postMediatopic( {
         "media": [
           {
             "type": "text", 
-            "text": state.lang[`socialEvents${type}`],
+            "text": langs[farm + type],
           },
           {
             "type": "link", 
@@ -1766,6 +1786,23 @@ function sendSocialEvent(state: Istate, type: number, value: number): void {
           },
         ]
       }, false);
+    } else {
+      if (((value / 4) ^ 0) === value / 4) {
+        FAPI.UI.postMediatopic( {
+          "media": [
+            {
+              "type": "text", 
+              "text": langs[farm + type],
+            },
+            {
+              "type": "link", 
+              "noImage": true, 
+              "imageUrl": process.env.OK_CHICKEN_BANNER,
+              "url": process.env.OK_APP_LINK
+            },
+          ]
+        }, false);
+      }
     }
   }
 }

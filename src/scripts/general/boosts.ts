@@ -1,4 +1,4 @@
-import { shortTime, randomString, shortNum } from "./basic";
+import { shortTime, randomString, shortNum, sendSocialEvent } from "./basic";
 import Arrow from '../components/animations/Arrow';
 import Firework from '../components/animations/Firework';
 
@@ -49,6 +49,10 @@ function createBoostAnimal(): void {
     this.tryTask(4, type);
   });
   this.tryTask(25, 0, this.state.herdBoostAnimals.length);
+  const COUNT: number = 12;
+  if (this.state.herdBoostAnimals.length >= COUNT) {
+    sendSocialEvent(this.state, 4, this.state.herdBoostAnimals.length);
+  }
   this.state.herdBoostAnimals = [];
 }
 
