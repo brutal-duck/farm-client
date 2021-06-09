@@ -1752,22 +1752,11 @@ function sendSocialEvent(state: Istate, type: number, value: number): void {
     if (type !== 1) {
       const img: string = type === 2 ? process.env.OK_CHICKEN_BANNER :
       type === 3 ? process.env.OK_COW_BANNER : '';
-      FAPI.UI.postMediatopic({
-        "media":[
-          {
-            "type": "text",
-            "text": state.lang[`socialEvents${type}`],             
-          },
-          {
-            "type": "link",
-            "url": process.env.OK_APP_LINK
-          },
-          {
-            "type": "photo",
-            "list": [{ "photoId": img }]
-          },
-        ]
-      }, false);
+      FAPI.UI.postMediatopic( {"media": 
+      [{"type": "link", "noImage": true, 
+      "imageUrl": "https://i.mycdn.me/i?r=AyH4iRPQ2q0otWIFepML2LxR6Nw2XBA2mmyX3xr1Ba4dyA",
+      "url": "https://ok.ru"}]
+    }, false);
     }
   }
 }
