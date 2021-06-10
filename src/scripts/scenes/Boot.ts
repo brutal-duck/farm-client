@@ -264,7 +264,6 @@ class Boot extends Phaser.Scene {
       this.state.vkId = bridgeData.id;
       this.name = bridgeData.first_name + ' ' + bridgeData.last_name;
       this.avatar = bridgeData.photo_200;
-      //@ts-ignore
       bridge.send("VKWebAppCheckAllowedScopes", {scopes: "menu, notify"}).then(res => console.log(res)).catch(err => console.log(err))
 
     } else if (this.platform === 'ok') {
