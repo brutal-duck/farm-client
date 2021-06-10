@@ -74,6 +74,7 @@ let sheepNativeCount: number[] = [ 0, 0, 0, 0 ];
 let chickenNativeCount: number[] = [ 0, 0, 0, 0 ];
 let cowNativeCount: number[] = [ 0, 0, 0, 0, 0 ];
 let storageMultiply: number = 2;
+let vkTask: IsociaTasks = {};
 
 let state: Istate = {
   // записываемые в localStorage
@@ -155,6 +156,7 @@ let state: Istate = {
   chickenNativeCount, // натификаторы для профиля
   cowNativeCount, // натификаторы для профиля
   storageMultiply, // множитель для коров
+  vkTask,
 }
 
 export default state;

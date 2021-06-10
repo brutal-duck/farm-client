@@ -677,6 +677,12 @@ interface IfortuneData {
   recentWinners: IfortuneUser[];
   lastWinner: IfortuneUser;
 }
+interface IsociaTasks {
+  joinGroup?: boolean;
+  addFavorites?: boolean;
+  subGroup?: boolean;
+  subNative?: boolean;
+}
 interface Istate {
   platform: string;
   autoSaveSpeed: number;
@@ -754,4 +760,5 @@ interface Istate {
   chickenNativeCount: number[];
   cowNativeCount: number[];
   storageMultiply: number;
+  vkTask: IsociaTasks;
 }

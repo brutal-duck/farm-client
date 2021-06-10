@@ -154,6 +154,31 @@ class Boot extends Phaser.Scene {
 
   }
 
+  private checkVkTask(): void {
+    this.state.vkTask = {
+      joinGroup: false,
+      subGroup: false,
+      subNative: false,
+      addFavorites: false
+    }
+    const data = {
+      id: state.user.id,
+      hash: state.user.hash,
+      counter: state.user.counter,
+    };
+    axios.post(process.env.API + '/checkVKtask', data).then(res => {
+      this.state.vkTask.joinGroup = res.data.joinGroup;
+      this.state.vkTask.subGroup = res.data.subGroup;
+    }).catch(err => console.log(err));
+
+    bridge.send("VKWebAppCheckAllowedScopes", {scopes: "menu, notify"}).then(res => {
+      res.result.forEach(data => {
+        if (data.scope === 'notify') this.state.vkTask.subNative = data.allowed;
+        if (data.scope === 'menu') this.state.vkTask.addFavorites = data.allowed;
+      })
+    }).catch(err => console.log(err));
+
+  }
 
   // подрубаем штифты за пускаем первую сцену 
   public start(): void {
@@ -264,8 +289,8 @@ class Boot extends Phaser.Scene {
       this.state.vkId = bridgeData.id;
       this.name = bridgeData.first_name + ' ' + bridgeData.last_name;
       this.avatar = bridgeData.photo_200;
-      bridge.send("VKWebAppCheckAllowedScopes", {scopes: "menu, notify"}).then(res => console.log(res)).catch(err => console.log(err))
 
+      this.checkVkTask();
     } else if (this.platform === 'ok') {
 
       let FAPIData = FAPI.Util.getRequestParameters();
