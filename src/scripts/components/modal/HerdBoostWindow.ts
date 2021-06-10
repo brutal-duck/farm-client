@@ -14,6 +14,8 @@ export default class HerdBoostWindow {
   private boostCounterWindow: Phaser.GameObjects.Sprite
   private elements: (Phaser.GameObjects.Text | Phaser.GameObjects.Sprite)[]
   private animal: string
+  private mergingArray: any[]
+  private animalForBoost: Phaser.Physics.Arcade.Group
 
 
   constructor(scene: Modal) {
@@ -94,8 +96,7 @@ export default class HerdBoostWindow {
       duration: 1000,
       onComplete: (): void => {
 
-        const worldItems: any[] = this.createWorld();  // Создаем мир и записываем элементы в массив, чтобы потом скрыть
-        this.elements = this.elements.concat(worldItems);
+        this.createWorld();  // Создаем мир и записываем элементы в массив, чтобы потом скрыть
       
         this.scene.tweens.add({
           targets: this.elements,
@@ -110,7 +111,7 @@ export default class HerdBoostWindow {
   }
   
 
-  private createWorld(): any[] {
+  private createWorld(): void {
     let farm: string = this.scene.state.farm.toLowerCase();
     // ярмарка и тент
     let fairy: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.x, this.y, `${farm}-merging`).setDepth(this.y).setAlpha(0);
@@ -126,15 +127,12 @@ export default class HerdBoostWindow {
       this.yTextLevel = this.y + 75;
     } 
   
-    this.scene.mergingArray = []; // массив животных для слияния
+    this.mergingArray = []; // массив животных для слияния
     this.scene.state.herdBoostAnimals = []; // Обнуляем массив животных для буста
   
     let tent: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.x, this.yTent, `${farm}-tent`).setDepth(this.y + 1).setAlpha(0);
     const xTextLevel: number = farm === 'cow' ? this.x - 75 : this.x + 80;
-    let textLevel: Phaser.GameObjects.Text = this.scene.add.text(xTextLevel, this.yTextLevel, this.scene.state[`user${this.scene.state.farm}`].fair, {
-      font: '36px Shadow',
-      color: '#b5315a'
-    }).setOrigin(0.5, 0.5).setDepth(this.y * 2).setAlpha(0);
+    let textLevel: Phaser.GameObjects.Text = this.scene.add.text(xTextLevel, this.yTextLevel, this.scene.state[`user${this.scene.state.farm}`].fair, { font: '36px Shadow', color: '#b5315a' }).setOrigin(0.5, 0.5).setDepth(this.y * 2).setAlpha(0);
     
     if (farm === 'unicorn') textLevel.setText(String(this.scene.state.userUnicorn.maxLevelAnimal));
     // дорога
@@ -147,7 +145,7 @@ export default class HerdBoostWindow {
     let border4: Phaser.GameObjects.Sprite = this.scene.add.sprite(0 + 240, this.yRoad + road.height  + 15, `${farm}-horizontal-border-2`).setOrigin(0, 1).setDepth(this.yRoad + 1).setAlpha(0);
     let border5: Phaser.GameObjects.Sprite = this.scene.add.sprite(0 + 480, this.yRoad + road.height  + 15, `${farm}-horizontal-border-3`).setOrigin(0, 1).setDepth(this.yRoad + 1).setAlpha(0);
   
-    return [fairy, tent, textLevel, road, border1, border2, border3, border4, border5];
+    this.elements.push(fairy, tent, textLevel, road, border1, border2, border3, border4, border5)
   }
 
 
@@ -222,7 +220,7 @@ export default class HerdBoostWindow {
     }
   
     // создаю группу для животных
-    this.scene.animalForBoost = this.scene.physics.add.group();
+    this.animalForBoost = this.scene.physics.add.group();
     let currentTime: number = this.scene.state.herdBoostTime;
 
     let timerCreate: Phaser.Time.TimerEvent = this.scene.time.addEvent({
@@ -255,8 +253,8 @@ export default class HerdBoostWindow {
         timerText.setText(currentTime);
 
         if (currentTime <= 0) {
-          this.scene.animalForBoost.children.entries.forEach((sheep) => { sheep.data.values.woolSprite?.destroy(); });
-          this.scene.animalForBoost.destroy(true);
+          this.animalForBoost.children.entries.forEach((sheep) => { sheep.data.values.woolSprite?.destroy(); });
+          this.animalForBoost.destroy(true);
           timerCreate.remove();
           timerTickText.remove();
           timerCreateCrystalAnimal.remove();
@@ -334,7 +332,7 @@ export default class HerdBoostWindow {
     // кристалическое животное?
     if (crystal) randomType = 0;
   
-    let animal: Phaser.Physics.Arcade.Sprite = this.scene.animalForBoost.create(x, y, this.animal + randomType).setDepth(y).setInteractive().setDataEnabled();
+    let animal: Phaser.Physics.Arcade.Sprite = this.animalForBoost.create(x, y, this.animal + randomType).setDepth(y).setInteractive().setDataEnabled();
     animal.data.values.velocity = -this.scene.state.herdBoostSpeedAnimal;
   
     if (side === 'right') animal.data.values.velocity = this.scene.state.herdBoostSpeedAnimal
@@ -380,17 +378,17 @@ export default class HerdBoostWindow {
   
       animal.data.values.merging = true;
       
-      let check = this.scene.mergingArray.find((data: any) => data._id === animal.data.values._id);
+      let check = this.mergingArray.find((data: any) => data._id === animal.data.values._id);
       
       if (check === undefined) {
-        if (this.scene.mergingArray.length === 1 && this.scene.mergingArray[0].position === position) {
+        if (this.mergingArray.length === 1 && this.mergingArray[0].position === position) {
           if (position === 'top') position = 'bottom';
           else if (position === 'bottom') position = 'top';
           if (position === 'left') position = 'right';
           else if (position === 'right') position = 'left';
         };
     
-        this.scene.mergingArray.push({
+        this.mergingArray.push({
           _id: animal.data.values._id,
           type: animal.data.values.type,
           position: position
@@ -435,12 +433,10 @@ export default class HerdBoostWindow {
       }
       
       // проверяем совпадение
-      if (this.scene.mergingArray.length === 2) {
+      if (this.mergingArray.length === 2) {
     
-        // @ts-ignore
-        let animal1: Phaser.GameObjects.Sprite = this.scene.animalForBoost.children.entries.find((data: any) => data.data.values._id === this.scene.mergingArray[0]._id);
-        // @ts-ignore
-        let animal2: Phaser.GameObjects.Sprite = this.scene.animalForBoost.children.entries.find((data: any) => data.data.values._id === this.scene.mergingArray[1]._id);
+        let animal1: Phaser.Physics.Arcade.Sprite = this.animalForBoost.children.entries.find((data: any) => data.data.values._id === this.mergingArray[0]._id) as Phaser.Physics.Arcade.Sprite;
+        let animal2: Phaser.GameObjects.Sprite = this.animalForBoost.children.entries.find((data: any) => data.data.values._id === this.mergingArray[1]._id) as Phaser.Physics.Arcade.Sprite;
         
         if (animal1 && animal2) {
           if (animal1?.data.values.type === animal2?.data.values.type) {
@@ -466,7 +462,7 @@ export default class HerdBoostWindow {
               animal2?.destroy();
             }, callbackScope: this, loop: false });
           }
-          this.scene.mergingArray = [];
+          this.mergingArray = [];
         }
       }
     }
@@ -479,7 +475,7 @@ export default class HerdBoostWindow {
       if (animal.body === null) return;
       animal.data.values.drag = true;
 
-      if (animal.data.values.merging) this.scene.mergingArray = []; // если животное из мерджа то очистить массив
+      if (animal.data.values.merging) this.mergingArray = []; // если животное из мерджа то очистить массив
       animal.data.values.merging = false; // снимаем метку с животных после попытки мерджа
       animal.setVelocity(0, 0); // отменяем передвижение
       animal.data.values.woolSprite?.setVelocity(0, 0);

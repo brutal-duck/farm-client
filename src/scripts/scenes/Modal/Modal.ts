@@ -115,8 +115,6 @@ class Modal extends Phaser.Scene {
   public progressButton: any;
   public feedBoostText: Phaser.GameObjects.Text;
   public caveTimer: Phaser.GameObjects.Text;
-  public animalForBoost: Phaser.Physics.Arcade.Group;
-  public mergingArray: any[];
   public mainInput: HTMLInputElement;
   public secondInput: HTMLInputElement;
   public enterKey: Phaser.Input.Keyboard.Key;
