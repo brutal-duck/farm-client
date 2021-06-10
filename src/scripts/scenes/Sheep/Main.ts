@@ -134,7 +134,6 @@ import {
 } from '../../general/ads';
 import setCollector from './collector';
 import { showEventTutorial, doneEventTutor_0 } from './../Event/Unicorns/tutorial';
-import bridge from '@vkontakte/vk-bridge';
 import {
   chickenIntervalProgress,
   chickenCollectorProgress,
