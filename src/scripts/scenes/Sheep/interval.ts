@@ -35,7 +35,7 @@ function interval(): void {
         balanceCounterMultiplier++;
       }
 
-      if (Phaser.Math.Between(0, 7) >= 5 && this.state.userCow.tutorial >= 100) {
+      if (Phaser.Math.Between(0, 7) >= 5 && this.state.userSheep.tutorial >= 100) {
         let randomIndex: number = Phaser.Math.Between(0, this.sheep.children.entries.length - 1);
         let textures: string[] = ['not-enought-water', 'not-enought-grass'];
         let texture: string = textures[Phaser.Math.Between(0, 1)];
