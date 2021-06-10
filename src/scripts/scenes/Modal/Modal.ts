@@ -88,7 +88,6 @@ import {
   confirmBuyCooldown
 } from '../../general/modal';
   // буст "Стадо"
-import { herdBoostWindow, getRandomAnimal, getRandomStartPosition } from './herdBoost';
 import { createChatBars } from './Chat/elements';
 import { improveCollectorAnim, openModal } from '../../general/animations';
 import { clickTaskBoard } from '../../general/tasks';
@@ -98,6 +97,7 @@ import DailyNewbieWindow from '../../components/modal/DailyNewbieWindow';
 import TasksWindow from '../../components/modal/TasksWindow';
 import NextChapterWindow from '../../components/modal/NextChapterWindow';
 import DonateWindow from '../../components/modal/DonateWindow';
+import HerdBoostWindow from '../../components/modal/HerdBoostWindow';
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -191,9 +191,6 @@ class Modal extends Phaser.Scene {
   public diamondCowAd = diamondCowAd.bind(this);
   public improveCollector = improveCollector.bind(this);
   public updateImproveCollector = updateImproveCollector.bind(this);
-  public herdBoostWindow = herdBoostWindow.bind(this);
-  public getRandomAnimal = getRandomAnimal.bind(this);
-  public getRandomStartPosition = getRandomStartPosition.bind(this);
   public shopButton = shopButton.bind(this);
   public shortTime = shortTime.bind(this);
   public sheepWoolRepositoryExchange = sheepWoolRepositoryExchange.bind(this);
@@ -264,9 +261,8 @@ class Modal extends Phaser.Scene {
         new DonateWindow(this)
         break;
       case 8: // окно стадного буста
-        if (this.state.farm !== 'Unicorn') {
-          this.herdBoostWindow();
-        } else {
+        if (this.state.farm !== 'Unicorn') new HerdBoostWindow(this)
+        else {
           this.eventDrag();
           this.herdBoostEventWindow();
         }
