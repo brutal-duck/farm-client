@@ -166,18 +166,58 @@ class Boot extends Phaser.Scene {
       hash: state.user.hash,
       counter: state.user.counter,
     };
+
+    const version: string = '3.131';
     axios.post(process.env.API + '/checkVKtask', data).then(res => {
       this.state.vkTask.joinGroup = res.data.joinGroup;
       this.state.vkTask.subGroup = res.data.subGroup;
     }).catch(err => console.log(err));
 
-    bridge.send("VKWebAppCheckAllowedScopes", {scopes: "menu, notify"}).then(res => {
+    bridge.send("VKWebAppGetAuthToken", {"app_id": Number(process.env.VK_APP_ID), "scope": "messages"}).then(res => {
+      const { access_token } = res;
+      bridge.send("VKWebAppCallAPIMethod", {
+        method: 'groups.isMember',
+        params: {
+          v: version,
+          access_token: access_token,
+          group_id: process.env.VK_GROUP_ID,
+          user_id: this.state.vkId,
+        }
+      }).then(res => {
+        if (res.response === 1) this.state.vkTask.joinGroup = true;
+      });
+      bridge.send("VKWebAppCallAPIMethod", {
+        method: 'messages.isMessagesFromGroupAllowed',
+        params: {
+          v: version,
+          access_token: access_token,
+          group_id: process.env.VK_GROUP_ID,
+          user_id: this.state.vkId,
+        }
+      }).then(res => {
+        if (res.response.is_allowed === 1) this.state.vkTask.subGroup = true;
+      });
+    });
+
+    bridge.send("VKWebAppCheckAllowedScopes", { scopes: "menu, notify" }).then(res => {
       res.result.forEach(data => {
         if (data.scope === 'notify') this.state.vkTask.subNative = data.allowed;
         if (data.scope === 'menu') this.state.vkTask.addFavorites = data.allowed;
       })
     }).catch(err => console.log(err));
 
+  }
+
+  private checkOkTask(): void {
+    const callBack = (status: string, data: object, error: object) => {
+      console.log(status)
+      console.log(data)
+      console.log(error)
+    }
+
+    FAPI.Client.call({  method: 'group.getMembers', format: 'json'}, callBack);
+    FAPI.Client.call({  method: 'group.isMessagesAllowed', format: 'json', gid: process.env.OK_GROUP_ID}, callBack);
+    FAPI.Client.call({  method: 'bookmark.add', format: 'json', gid: process.env.OK_GROUP_ID}, callBack);
   }
 
   // подрубаем штифты за пускаем первую сцену 
