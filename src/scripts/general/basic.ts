@@ -1745,7 +1745,7 @@ function sendSocialEvent(state: Istate, type: number, value: number): void {
     basic: 'Присоединяйтесь ко мне в игре “Просто ферма”'
   }
   const farm: string = state.farm.toLowerCase();
-
+  const FARM: string = state.farm.toUpperCase();
   const data = {
     id: state.user.id,
     hash: state.user.hash,
@@ -1757,8 +1757,7 @@ function sendSocialEvent(state: Istate, type: number, value: number): void {
   if (state.platform === 'vk') {
     axios.post(process.env.API + "/appEventVk", data).then((res) => {console.log(res.data)});
     if (type !== 1) {
-      const attach: string = type === 2 ? process.env.VK_CHICKEN_BANNER :
-      type === 3 ? process.env.VK_COW_BANNER : process.env.VK_CHICKEN_BANNER;
+      const attach: string = process.env[`VK_${FARM}_BANNER_${type}`];
       bridge.send("VKWebAppShowWallPostBox", {
           "message": langs[farm + type],
           "attachments": `${attach},${process.env.VK_APP_LINK}`
@@ -1767,8 +1766,8 @@ function sendSocialEvent(state: Istate, type: number, value: number): void {
   };
   if (state.platform === 'ok') {
     if (type !== 1) {
-      const img: string = type === 2 ? process.env.OK_CHICKEN_BANNER :
-      type === 3 ? process.env.OK_COW_BANNER : process.env.OK_CHICKEN_BANNER;
+      const attach: string = process.env[`OK_${FARM}_BANNER_${type}`];
+
       FAPI.UI.postMediatopic( {
         "media": [
           {
@@ -1778,7 +1777,7 @@ function sendSocialEvent(state: Istate, type: number, value: number): void {
           {
             "type": "link", 
             "noImage": true, 
-            "imageUrl": img,
+            "imageUrl": attach,
             "url": process.env.OK_APP_LINK
           },
         ]
