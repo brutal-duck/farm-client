@@ -98,6 +98,7 @@ import TasksWindow from '../../components/modal/TasksWindow';
 import NextChapterWindow from '../../components/modal/NextChapterWindow';
 import DonateWindow from '../../components/modal/DonateWindow';
 import HerdBoostWindow from '../../components/modal/HerdBoostWindow';
+import SocialTasksWindow from './../../components/modal/SocialTasksWindow';
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -281,6 +282,9 @@ class Modal extends Phaser.Scene {
         break;
       case 13: 
         new FactoryWindow(this);
+        break;
+      case 14: 
+        new SocialTasksWindow(this);
         break;
       default:
         this.scene.stop();

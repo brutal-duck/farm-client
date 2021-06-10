@@ -34,6 +34,10 @@ const tasksUncomplete: string = require("./../../../assets/images/modal/tasks-un
 const tasksReward: string = require("./../../../assets/images/modal/tasks-reward.png");
 const tasksBar: string = require("./../../../assets/images/modal/tasks-bar.png");
 const tasksClose: string = require("./../../../assets/images/modal/tasks-close.png");
+const socialTaskBg: string = require("./../../../assets/images/modal/social-task-bg.png");
+const socialTaskTop: string = require("./../../../assets/images/modal/social-task-top.png");
+const socialTaskBottom: string = require("./../../../assets/images/modal/social-task-bottom.png");
+const socialTaskMiddle: string = require("./../../../assets/images/modal/social-task-middle.png");
 const bigButtonGrey: string = require("./../../../assets/images/modal/btn_l_lock.png");
 const bigButtonBlue: string = require("./../../../assets/images/modal/btn_lb.png");
 const bigButtonOrange: string = require("./../../../assets/images/modal/btn_lo.png");
@@ -208,6 +212,12 @@ export default function typePreload(): void {
         this.load.image('factory-production-slot-disable-3', factoryProductionSlotDisable3);
         this.load.image('factory-production-slot-4', factoryProductionSlot4);
         this.load.image('factory-production-slot-disable-4', factoryProductionSlotDisable4);
+        break;
+      case 14: 
+        this.load.image('social-task-bg', socialTaskBg);
+        this.load.image('social-task-top', socialTaskTop);
+        this.load.image('social-task-bottom', socialTaskBottom);
+        this.load.image('social-task-middle', socialTaskMiddle);
         break;
       default:
         break;

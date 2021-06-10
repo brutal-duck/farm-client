@@ -210,9 +210,8 @@ class Boot extends Phaser.Scene {
 
   private checkOkTask(): void {
     const callBack = (status: string, data: object, error: object) => {
-      console.log(status)
-      console.log(data)
-      console.log(error)
+      if (status ===  'ok') {
+      }
     }
 
     FAPI.Client.call({  method: 'group.getMembers', format: 'json'}, callBack);
