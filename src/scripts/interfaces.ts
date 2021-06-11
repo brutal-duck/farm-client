@@ -759,6 +759,7 @@ interface Istate {
   sheepNativeCount: number[];
   chickenNativeCount: number[];
   cowNativeCount: number[];
+  unicornNativeCount: number[];
   storageMultiply: number;
   vkTask: IsociaTasks;
 }

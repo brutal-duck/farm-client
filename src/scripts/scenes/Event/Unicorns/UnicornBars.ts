@@ -62,6 +62,8 @@ class UnicornBars extends Phaser.Scene {
   public collectorBtn: Phaser.GameObjects.Image;
   public starterpackIcon: Phaser.GameObjects.Image;
   public hints: Phaser.GameObjects.Group;
+  public mapNativeText: Phaser.GameObjects.Text;
+  public mapNativeBg: Phaser.GameObjects.Graphics;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -135,6 +137,18 @@ class UnicornBars extends Phaser.Scene {
       this.updateAnimalPrice();
     });
     
+    this.mapNativeBg = this.add.graphics()
+      .fillStyle(0xFF2400, 1)
+      .fillCircle(this.map.x + 35, this.map.y - 50, 20)
+      .setDepth(2)
+      .setVisible(false);
+    this.mapNativeText = this.add.text(this.map.x + 35, this.map.y - 50, '!', {
+      font: '32px Shadow',
+      color: '#f3eae6'
+    }).setDepth(3)
+      .setOrigin(0.5, 0.5)
+      .setVisible(false);
+
     // кнопка собирателя 
     this.clickButton(this.collectorBtn, (): void => {
 

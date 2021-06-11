@@ -44,12 +44,15 @@ class Profile extends Phaser.Scene {
   public sheepNativeText: Phaser.GameObjects.Text;
   public chickenNativeText: Phaser.GameObjects.Text;
   public cowNativeText: Phaser.GameObjects.Text;
+  public unicornNativeText: Phaser.GameObjects.Text;
   public sheepNativeBg: Phaser.GameObjects.Sprite;
   public chickenNativeBg: Phaser.GameObjects.Sprite;
   public cowNativeBg: Phaser.GameObjects.Sprite;
+  public unicornNativeBg: Phaser.GameObjects.Sprite;
   public animSheepSprite: Phaser.GameObjects.Sprite;
   public animChickenSprite: Phaser.GameObjects.Sprite;
   public animCowSprite: Phaser.GameObjects.Sprite;
+  public animUnicornSprite: Phaser.GameObjects.Sprite;
   public currentEndTime: string = ' ';
   
   public click = click.bind(this);
@@ -552,6 +555,10 @@ class Profile extends Phaser.Scene {
       },
     }).fillRoundedRect(this.eventStartText.getBounds().left - 25, this.eventStartText.getBounds().top - 20, this.eventStartText.width + 50, 60).setVisible(false);
 
+    this.unicornNativeText = this.add.text(farmPosition.x - 210, farmPosition.y - 80, '', { font: '30px Bip', color: '#ffffff' }).setOrigin(0.5).setDepth(3).setVisible(false);
+    this.unicornNativeBg = this.add.sprite(this.unicornNativeText.x, this.unicornNativeText.y, 'profile-native-bg').setVisible(false);
+    this.animUnicornSprite = this.add.sprite(this.unicornNativeBg.x, this.unicornNativeBg.y, 'profile-native-bg').setDepth(2).setVisible(false);
+
     this.click(this.eventZone, (): void => {
       if (this.state.farm !== 'Unicorn') {
   
@@ -876,6 +883,16 @@ class Profile extends Phaser.Scene {
     if (this.cowNativeBg) {
       this.tweens.add({
         targets: [ this.animCowSprite ],
+        scale: { from: 1.05, to: 2 },
+        alpha: { from: 0.5, to: 0 },
+        duration: 500,
+        repeat: -1,
+        repeatDelay: 1150,
+      });
+    }
+    if (this.unicornNativeBg) {
+      this.tweens.add({
+        targets: [ this.animUnicornSprite ],
         scale: { from: 1.05, to: 2 },
         alpha: { from: 0.5, to: 0 },
         duration: 500,
