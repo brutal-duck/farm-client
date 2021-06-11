@@ -122,6 +122,7 @@ interface IuserAutoSave {
   userUnicorn?: IuserEvent;
   test: string;
   takenFreeDiamonds: boolean;
+  takenSocialAward: boolean;
 }
 interface IdataAutoSave {
   id: string;
@@ -169,6 +170,7 @@ interface Iuser {
   boosts: Iboosts;
   test: string;
   takenFreeDiamonds: boolean;
+  takenSocialAward: boolean;
 }
 interface IuserSheep {
   money: number;

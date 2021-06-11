@@ -294,6 +294,7 @@ export default function autosave(): void {
     userCow: state.userCow,   
     userUnicorn: userUnicorn, 
     takenFreeDiamonds: state.user.takenFreeDiamonds,
+    takenSocialAward: state.user.takenSocialAward,
   }
 
   const data: IdataAutoSave = { 
