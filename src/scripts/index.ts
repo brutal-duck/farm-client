@@ -1,6 +1,7 @@
 import './interfaces';
 import '../css/style.css';
 import * as Phaser from 'phaser';
+import * as NineSlicePlugin from 'phaser3-nineslice'
 
 import Boot from './scenes/Boot';
 import Preload from './scenes/Preload';
@@ -97,6 +98,9 @@ window.onload = (): void => {
         Tutorial,
       ],
       loader: { maxParallelDownloads: 128 },
+      plugins: {
+        global: [ NineSlicePlugin.Plugin.DefaultCfg ]
+      }
     }
     
     const game: Phaser.Game = new Phaser.Game(config);

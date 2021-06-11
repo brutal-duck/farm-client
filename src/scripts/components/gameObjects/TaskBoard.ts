@@ -25,7 +25,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
   public done: Phaser.GameObjects.Sprite;
   public takeText: Phaser.GameObjects.Text;
   public award: Phaser.GameObjects.Text;
-  public awardBg: Phaser.GameObjects.Graphics;
+  public awardBg: Phaser.GameObjects.RenderTexture;
   public diamond: Phaser.GameObjects.Sprite;
   public doneButton: Phaser.GameObjects.Sprite;
   public doneButtonText: Phaser.GameObjects.Text;
@@ -125,7 +125,9 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       .setOrigin(0, 0.5)
       .setVisible(false);
       
-    this.awardBg = this.scene.add.graphics()
+    this.awardBg = this.scene.add.nineslice(0, 0, 60, 40, 'tasks-uncomplete-rend', 16)
+      .setOrigin(0, 0.1)
+      .setTint(0x6B000A)
       .setDepth(this.scene.height - 1)
       .setVisible(false);
 
@@ -243,7 +245,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
     }
   
     if (!this.isUpdated) {
-      this.awardBg?.clear();
+      // this.awardBg?.clear();
       this.taskProgress?.clear();
 
       if (this.status === 1 && task) {
@@ -340,10 +342,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
 
         const bounds = this.award.getBounds();
 
-        this.awardBg
-          .setPosition(bounds.left - 40, bounds.top - 3)
-          .fillStyle(0x713D1E, 1)
-          .fillRoundedRect(0, 0, bounds.width + 50, bounds.height + 6, 5);
+        this.awardBg.setPosition(bounds.left - 40, bounds.top - 3)
       
         let height: number = 70 + taskTextBounds.height;
         if (height < 110) height = 110;

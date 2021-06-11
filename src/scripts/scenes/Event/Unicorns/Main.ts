@@ -104,7 +104,8 @@ import {
   cowIntervalProgress,
   cowCollectorProgress,
   cowFactoryProgress,
-  intervalPorgressCollectorTime
+  intervalPorgressCollectorTime,
+  progressTerritoryCooldown
 } from '../../../general/interval';
 class Unicorn extends Phaser.Scene {
   constructor() {
@@ -226,7 +227,8 @@ class Unicorn extends Phaser.Scene {
   public cowCollectorProgress = cowCollectorProgress.bind(this);
   public cowFactoryProgress = cowFactoryProgress.bind(this);
   public randomString = randomString.bind(this);
-  
+  public progressTerritoryCooldown = progressTerritoryCooldown.bind(this);
+
   public init(state: Istate): void {
     this.state = state;
     console.log('Unicorn');
