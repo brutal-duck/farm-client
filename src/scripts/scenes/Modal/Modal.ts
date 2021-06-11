@@ -56,9 +56,6 @@ import {
   improveCollectorEvent,
   herdBoostEventWindow,
   eventDrag,
-  eventProgress,
-  eventRatings,
-  endEventModal,
   updateImproveCollectorEvent
 } from './event';
 import {
@@ -98,6 +95,9 @@ import TasksWindow from '../../components/modal/TasksWindow';
 import NextChapterWindow from '../../components/modal/NextChapterWindow';
 import DonateWindow from '../../components/modal/DonateWindow';
 import HerdBoostWindow from '../../components/modal/HerdBoostWindow';
+import EventProgressWindow from '../../components/modal/EventProgressWindow';
+import EventEndWindow from '../../components/modal/EventEndWindow';
+import EventRatingsWindow from '../../components/modal/EventRatingsWindow';
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -120,11 +120,6 @@ class Modal extends Phaser.Scene {
   public enterKey: Phaser.Input.Keyboard.Key;
   public chatHeight: number = 0;
   public chatBG: Phaser.GameObjects.Sprite;
-  public line: Phaser.GameObjects.Text;
-  public playerPlaceAndName: Phaser.GameObjects.Text;
-  public playerScore: Phaser.GameObjects.Text;
-  public eventRatingsNames: Phaser.GameObjects.Text[];
-  public eventRatingsScores: Phaser.GameObjects.Text[];
   public eventLeftTime: Phaser.GameObjects.Text;
   public factoryProductText: Phaser.GameObjects.Text;
   public factoryProgressBar: Phaser.GameObjects.TileSprite;
@@ -205,10 +200,7 @@ class Modal extends Phaser.Scene {
   public updateImproveCollectorEvent = updateImproveCollectorEvent.bind(this);
   public herdBoostEventWindow = herdBoostEventWindow.bind(this);
   public eventDrag = eventDrag.bind(this);
-  public eventProgress = eventProgress.bind(this);
   public createChatBars = createChatBars.bind(this);
-  public eventRatings = eventRatings.bind(this);
-  public endEventModal = endEventModal.bind(this);
   public improveCollectorAnim = improveCollectorAnim.bind(this);
   public getStatusSettings = getStatusSettings.bind(this);
   public typePreload = typePreload.bind(this);
@@ -271,13 +263,13 @@ class Modal extends Phaser.Scene {
         this.createChatBars(this.chatHeight)
         break;
       case 10: // окно автопрогресса ивентовой фермы
-        this.eventProgress();
+        new EventProgressWindow(this)
         break;
       case 11: // окно рейтингов ивентовой фермы
-        this.eventRatings();
+        new EventRatingsWindow(this)
         break;
       case 12: // окно выдачи наград ивентовой фермы
-        this.endEventModal();
+        new EventEndWindow(this)
         break;
       case 13: 
         new FactoryWindow(this);
@@ -438,33 +430,6 @@ class Modal extends Phaser.Scene {
       
     }
 
-    // Обновление таблицы рейтингов евента
-    if (this.state.progress.event.updateRaitings && this.state.modal.type === 11) {
-
-      for (let i: number = 0; i < 10; i++) {
-        if (this.state.progress.event.eventRaitings[i].score !== null) {
-          this.eventRatingsNames[i].setText(this.state.progress.event.eventRaitings[i].place + '. ' + this.state.progress.event.eventRaitings[i].name).setCrop(0, 0, 260, 100)
-          this.eventRatingsScores[i].setText(String(this.state.progress.event.eventRaitings[i].score))
-        }
-      }
-      
-      if (this.state.progress.event.userEventRaiting.place <= 10) {
-        
-        this.line.setVisible(false)
-        this.playerPlaceAndName.setVisible(false)
-        this.playerScore.setVisible(false)
-    
-      } else if (this.state.progress.event.userEventRaiting.place > 10) {
-        
-        this.line.setVisible(true)
-        this.playerPlaceAndName.setVisible(true).setCrop(0, 0, 280, 100)
-        this.playerScore.setVisible(true)
-        
-      }
-
-      this.state.progress.event.updateRaitings = false
-
-    }
   }
 }
 

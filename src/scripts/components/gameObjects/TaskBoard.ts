@@ -127,7 +127,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       
     this.awardBg = this.scene.add.nineslice(0, 0, 60, 40, 'tasks-uncomplete-rend', 16)
       .setOrigin(0, 0.1)
-      .setTint(0x961D10)
+      .setTint(0x6B000A)
       .setDepth(this.scene.height - 1)
       .setVisible(false);
 
