@@ -478,6 +478,20 @@ function updateMapNative(): void {
   const sheepCount: number = this.state.sheepNativeCount.reduce((prev, cur) => prev += cur);
   const chickenCount: number = this.state.chickenNativeCount.reduce((prev, cur) => prev += cur);
   const cowCount: number = this.state.cowNativeCount.reduce((prev, cur) => prev += cur);
+
+  const checkSocial: boolean[] = [];
+  const socialTask: IsociaTasks = this.state.platform === 'vk' ? this.state.vkTask : 
+  {
+    joinGroup: true,
+    subGroup: true,
+    subNative: true,
+    addFavorites: false,
+  };
+  for (const key in socialTask) {
+    checkSocial.push(socialTask[key]);
+  }
+  const socialCount: number = checkSocial.length - checkSocial.filter(el => el).length;
+
   const count: number = this.state.farm === 'Sheep' ? chickenCount + cowCount : 
   this.state.farm === 'Chicken' ? sheepCount + cowCount : 
   this.state.farm === 'Cow' ? sheepCount + chickenCount : 0;

@@ -261,13 +261,13 @@ export default class TasksWindow {
     // Остальной текст
     this.scene.add.text(this.scene.cameras.main.centerX, centerY - Math.floor(height / 2 + 200), this.scene.state.modal.tasksParams.part, {
       font: '72px Shadow',
-      fill: '#FFFFFF'
-    }).setOrigin(0.5, 0.5).setShadow(2, 2, 'rgba(0, 0, 0, 0.5)', 5);
+      fill: '#166c00'
+    }).setOrigin(0.5, 0.5);
 
     this.scene.add.text(this.scene.cameras.main.centerX, centerY - Math.floor(height / 2 + 150), this.scene.state.lang.part, {
       font: '34px Shadow',
-      fill: '#FFFFFF'
-    }).setOrigin(0.5, 0.5).setShadow(2, 2, 'rgba(0, 0, 0, 0.5)', 5);
+      fill: '#166c00'
+    }).setOrigin(0.5, 0.5);
 
     this.scene.add.text(this.scene.cameras.main.centerX, centerY - Math.floor(height / 2 + 78), this.scene.state.modal.tasksParams.name, {
       font: '32px Shadow',
