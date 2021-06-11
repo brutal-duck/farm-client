@@ -1,3 +1,4 @@
+
 let userData: Iuser = {
   diamonds: 3,
   id: 'local',
