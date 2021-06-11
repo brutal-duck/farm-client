@@ -43,6 +43,7 @@ let userData: Iuser = {
   },
   test: 'A',
   takenFreeDiamonds: false,
+  takenSocialAward: false,
 }
 
 let userSheep: IuserSheep = {

@@ -923,22 +923,24 @@ class Profile extends Phaser.Scene {
 
   private createSocialTaskBtn(): void {
     const position: Iposition = { x: 150, y: 200 };
-    this.socialTaskBtn = this.add.sprite(position.x, position.y, 'improve-collector');
-    this.socialTaskText = this.add.text(position.x, position.y - 3, this.state.lang.prizes, {
-      font: '24px Shadow',
-      color: '#ffffff'
-    }).setStroke('#3B5367', 4).setOrigin(0.5);
-    this.socialTaskNativeText = this.add.text(position.x + this.socialTaskBtn.width / 2 - 10, position.y - this.socialTaskBtn.height / 2, '1', {
-      font: '30px Bip',
-      color: '#ffffff',
-    }).setOrigin(0.5).setDepth(1);
-    this.socialTaskNative = this.add.sprite(this.socialTaskNativeText.x, this.socialTaskNativeText.y, 'profile-native-bg');
-    this.clickShopBtn({ btn: this.socialTaskBtn, title: this.socialTaskText }, (): void => {
-      let modal: Imodal = { type: 14 };
-      this.state.modal = modal;
-      this.scene.launch('Modal', this.state);
-    });
-    this.updateSocialTaskNative();
+    if (this.state.userSheep.tutorial >= 100) {
+      this.socialTaskBtn = this.add.sprite(position.x, position.y, 'improve-collector');
+      this.socialTaskText = this.add.text(position.x, position.y - 3, this.state.lang.prizes, {
+        font: '24px Shadow',
+        color: '#ffffff'
+      }).setStroke('#3B5367', 4).setOrigin(0.5);
+      this.socialTaskNativeText = this.add.text(position.x + this.socialTaskBtn.width / 2 - 10, position.y - this.socialTaskBtn.height / 2, '1', {
+        font: '30px Bip',
+        color: '#ffffff',
+      }).setOrigin(0.5).setDepth(1);
+      this.socialTaskNative = this.add.sprite(this.socialTaskNativeText.x, this.socialTaskNativeText.y, 'profile-native-bg');
+      this.clickShopBtn({ btn: this.socialTaskBtn, title: this.socialTaskText }, (): void => {
+        let modal: Imodal = { type: 14 };
+        this.state.modal = modal;
+        this.scene.launch('Modal', this.state);
+      });
+      this.updateSocialTaskNative();
+    }
   }
 
   private updateSocialTaskNative(): void {

@@ -516,16 +516,19 @@ function updateMapNative(): void {
     joinGroup: true,
     subGroup: true,
     subNative: true,
-    addFavorites: false,
+    addFavorites: true,
   };
   for (const key in socialTask) {
     checkSocial.push(socialTask[key]);
   }
-  const socialCount: number = checkSocial.length - checkSocial.filter(el => el).length;
-  const count: number = this.state.farm === 'Sheep' ? chickenCount + cowCount + unicornCount :
-  this.state.farm === 'Chicken' ? sheepCount + cowCount + unicornCount :
-  this.state.farm === 'Cow' ? sheepCount + chickenCount + unicornCount :
-  this.state.farm === 'Unicorn' ? sheepCount + chickenCount + cowCount : 0
+  let socialCount: number = checkSocial.length - checkSocial.filter(el => el).length;
+  if (socialCount <= 0 && !this.state.user.takenSocialAward) socialCount = 1;
+  if (this.state.userSheep.tutorial < 100) socialCount = 0;
+
+  const count: number = this.state.farm === 'Sheep' ? chickenCount + cowCount + unicornCount + socialCount :
+  this.state.farm === 'Chicken' ? sheepCount + cowCount + unicornCount + socialCount :
+  this.state.farm === 'Cow' ? sheepCount + chickenCount + unicornCount + socialCount :
+  this.state.farm === 'Unicorn' ? sheepCount + chickenCount + cowCount + socialCount : 0
 
   const text: Phaser.GameObjects.Text = this.game.scene.keys[`${this.state.farm}Bars`].mapNativeText;
   const bg: Phaser.GameObjects.Graphics = this.game.scene.keys[`${this.state.farm}Bars`].mapNativeBg;
