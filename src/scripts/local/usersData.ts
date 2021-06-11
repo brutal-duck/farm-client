@@ -1,3 +1,4 @@
+
 let userData: Iuser = {
   diamonds: 3,
   id: 'local',
@@ -43,6 +44,7 @@ let userData: Iuser = {
   },
   test: 'A',
   takenFreeDiamonds: false,
+  takenSocialAward: false,
 }
 
 let userSheep: IuserSheep = {

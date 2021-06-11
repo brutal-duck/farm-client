@@ -323,14 +323,6 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
         
         let icon: string = 'diamond';
         let award: number = task.diamonds;
-            
-        if (this.scene.state.farm === 'Sheep') {     
-          let moneyTask: any = this.scene.game.scene.keys['Sheep'].moneyTasks.find(el => el.id === task.id);
-          if (moneyTask) {
-            award = moneyTask.money;
-            icon = 'sheepCoin';
-          }
-        }
         
         this.award
           .setText(String(award))
@@ -339,6 +331,16 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
         this.diamond
           .setTexture(icon)
           .setPosition(160, this.positionY - 220);
+
+        if (this.scene.state.farm === 'Sheep') {     
+          let moneyTask: any = this.scene.game.scene.keys['Sheep'].moneyTasks.find(el => el.id === task.id);
+          if (moneyTask) {
+            award = moneyTask.money;
+            this.award.setText(String(award))
+            this.diamond.setTexture('sheepCoin');
+            this.awardBg.setSize(this.diamond.getBounds().width + this.award.getBounds().width + 26, this.awardBg.height)
+          } else this.awardBg.setSize(60, 40)
+        }
 
         const bounds = this.award.getBounds();
 
