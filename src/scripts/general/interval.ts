@@ -638,7 +638,7 @@ function intervalPorgressCollectorTime(): void {
     this.state.userCow.collector = this.state.progress.cow.collector;
   }
 
-  if (this.state.userUnicorn.collector > 0 && this.state.farm !== 'Unicorn') this.state.userUnicorn.collector--
+  if (this.state.userUnicorn?.collector > 0 && this.state.farm !== 'Unicorn') this.state.userUnicorn.collector--
 
   if (this.state.userSheep.diamondAnimalTime > 0) this.state.userSheep.diamondAnimalTime--;
   if (this.state.userChicken.diamondAnimalTime > 0) this.state.userChicken.diamondAnimalTime--;
