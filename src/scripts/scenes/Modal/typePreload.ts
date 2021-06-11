@@ -59,6 +59,8 @@ const chatEmojiBtn: string = require("./../../../assets/images/modal/chat-emoji-
 const autoprogressBG: string = require("./../../../assets/images/event/modal/autoprogress-bg.png");
 const purpleBtn: string = require("./../../../assets/images/event/modal/purple-btn.png");
 const ratingBG: string = require("./../../../assets/images/event/modal/rating-bg.png");
+const shopBtn: string = require("./../../../assets/images/modal/shop-btn.png");
+const shopBtnDisable: string = require("./../../../assets/images/modal/shop-btn-disable.png");
 const ratingRulesBtn: string = require("./../../../assets/images/event/modal/rating-rules-btn.png");
 const ratingPriseBtn: string = require("./../../../assets/images/event/modal/rating-price-btn.png");
 const ratingPrisePlaces: string = require("./../../../assets/images/event/modal/rating-places.png");
@@ -218,6 +220,9 @@ export default function typePreload(): void {
         this.load.image('social-task-top', socialTaskTop);
         this.load.image('social-task-bottom', socialTaskBottom);
         this.load.image('social-task-middle', socialTaskMiddle);
+        this.load.image('shop-btn', shopBtn);
+        this.load.image('shop-btn-disable', shopBtnDisable);
+        
         break;
       default:
         break;
