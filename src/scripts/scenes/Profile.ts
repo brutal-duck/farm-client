@@ -50,6 +50,11 @@ class Profile extends Phaser.Scene {
   public animSheepSprite: Phaser.GameObjects.Sprite;
   public animChickenSprite: Phaser.GameObjects.Sprite;
   public animCowSprite: Phaser.GameObjects.Sprite;
+  public socialTaskBtn: Phaser.GameObjects.Sprite;
+  public socialTaskText: Phaser.GameObjects.Text;
+  public socialTaskNative: Phaser.GameObjects.Sprite;
+  public socialTaskNativeText: Phaser.GameObjects.Text;
+  public socialTasks: IsociaTasks;
   public currentEndTime: string = ' ';
   
   public click = click.bind(this);
@@ -62,6 +67,18 @@ class Profile extends Phaser.Scene {
 
   public init(state: Istate): void {
     this.state = state;
+    if (this.state.platform === 'vk') {
+      this.socialTasks = this.state.vkTask;
+    } else if (this.state.platform === 'ok') {
+      // this.socialTasks = t
+    } else if (this.state.platform === 'web') {
+      this.socialTasks = {
+        joinGroup: true,
+        subGroup: true,
+        subNative: true,
+        addFavorites: true
+      }
+    }
   }
 
 
@@ -110,6 +127,7 @@ class Profile extends Phaser.Scene {
     this.createFarms();
     this.createShop();
     this.creaetePointer();
+    this.createSocialTaskBtn();
   }
 
   private createProfileInfo(): void {
@@ -885,6 +903,48 @@ class Profile extends Phaser.Scene {
     }
   }
 
+
+  private createSocialTaskBtn(): void {
+    const position: Iposition = { x: 150, y: 200 };
+    this.socialTaskBtn = this.add.sprite(position.x, position.y, 'improve-collector');
+    this.socialTaskText = this.add.text(position.x, position.y - 3, this.state.lang.prizes, {
+      font: '24px Shadow',
+      color: '#ffffff'
+    }).setStroke('#3B5367', 4).setOrigin(0.5);
+    this.socialTaskNativeText = this.add.text(position.x + this.socialTaskBtn.width / 2 - 10, position.y - this.socialTaskBtn.height / 2, '1', {
+      font: '30px Bip',
+      color: '#ffffff',
+    }).setOrigin(0.5).setDepth(1);
+    this.socialTaskNative = this.add.sprite(this.socialTaskNativeText.x, this.socialTaskNativeText.y, 'profile-native-bg');
+    this.clickShopBtn({ btn: this.socialTaskBtn, title: this.socialTaskText }, (): void => {
+      let modal: Imodal = { type: 14 };
+      this.state.modal = modal;
+      this.scene.launch('Modal', this.state);
+    });
+    this.updateSocialTaskNative();
+  }
+
+  private updateSocialTaskNative(): void {
+    const check: boolean[] = [];
+    for (const key in this.socialTasks) {
+      check.push(this.socialTasks[key]);
+    }
+    const count: number = check.length - check.filter(el => el).length;
+    if (this.state.user.takenSocialAward) {
+      this.socialTaskNativeText.setVisible(false);
+      this.socialTaskNative.setVisible(false);
+    } else {
+      if (count <= 0) {
+        this.socialTaskNativeText.setVisible(true);
+        this.socialTaskNative.setVisible(true);
+        this.socialTaskNativeText.setText('1');
+      } else if (count > 0) {
+        this.socialTaskNative.setVisible(true);
+        this.socialTaskNativeText.setVisible(true);
+        this.socialTaskNativeText.setText(String(count));
+      }
+    }
+  }
 }
 
 export default Profile;

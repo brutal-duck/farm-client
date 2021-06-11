@@ -43,7 +43,7 @@ export default class SocialTasksWindow {
         joinGroup: true,
         subGroup: true,
         subNative: true,
-        addFavorites: false
+        addFavorites: true
       }
     }
 
@@ -80,17 +80,8 @@ export default class SocialTasksWindow {
       color: '#ffffff'
     }).setOrigin(0.5).setDepth(2);
 
-    if (this.checkTask()) {
-      this.takeBtn = this.scene.add.sprite(0, 0, 'shop-btn');
-      this.takeBtnText.setStroke('#0A600A', 4);
-      this.scene.clickShopBtn({ btn: this.takeBtn, title: this.takeBtnText }, (): void => {
-        this.onBtnPickUpHandler();
-      });
-    } else {
-      this.takeBtn = this.scene.add.sprite(0, 0, 'shop-btn-disable');
-      this.takeBtnText.setStroke('#888888', 4);
-    }
 
+    this.setTakeBtnState();
     this.createElements();
     this.setBgPosition();
   }
@@ -101,6 +92,23 @@ export default class SocialTasksWindow {
       check.push(this.socialTasks[key]);
     }
     return check.every(el => el);
+  }
+
+  private setTakeBtnState(): void {
+    const check: boolean = this.checkTask();
+    if (this.checkTask() && !this.scene.state.user.takenSocialAward) {
+      this.takeBtn = this.scene.add.sprite(0, 0, 'shop-btn');
+      this.takeBtnText.setStroke('#0A600A', 4).setColor('#ffffff');
+      this.scene.clickShopBtn({ btn: this.takeBtn, title: this.takeBtnText }, (): void => {
+        this.onBtnPickUpHandler();
+      });
+    } else if (!this.scene.state.user.takenSocialAward) {
+      this.takeBtn = this.scene.add.sprite(0, 0, 'shop-btn-disable');
+      this.takeBtnText.setStroke('#888888', 4).setColor('#3B3B3B');
+    } else if (this.scene.state.user.takenSocialAward) {
+      this.takeBtn = this.scene.add.sprite(0, 0, 'shop-btn-disable');
+      this.takeBtnText.setStroke('#888888', 4).setColor('#3B3B3B');
+    }
   }
 
   private createElements(): void {
@@ -171,6 +179,10 @@ export default class SocialTasksWindow {
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
     this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].getCurrency({ x: this.takeBtn.x, y: this.takeBtn.y }, this.award, 'diamond');
     this.scene.state.user.diamonds += this.award;
+    this.scene.state.user.takenSocialAward = true;
+    if (this.scene.scene.isActive('Profile')) {
+      this.scene.game.scene.keys['Profile'].updateSocialTaskNative();
+    }
     this.scene.scene.stop();
 
   }
