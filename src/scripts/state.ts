@@ -73,6 +73,7 @@ let fortuneData: IfortuneData;
 let sheepNativeCount: number[] = [ 0, 0, 0, 0 ];
 let chickenNativeCount: number[] = [ 0, 0, 0, 0 ];
 let cowNativeCount: number[] = [ 0, 0, 0, 0, 0 ];
+let unicornNativeCount: number[] = [ 0 ];
 let storageMultiply: number = 2;
 let vkTask: IsociaTasks = {};
 
@@ -155,6 +156,7 @@ let state: Istate = {
   sheepNativeCount, // натификаторы для профиля
   chickenNativeCount, // натификаторы для профиля
   cowNativeCount, // натификаторы для профиля
+  unicornNativeCount, // натификаторы для профиля
   storageMultiply, // множитель для коров
   vkTask,
 }

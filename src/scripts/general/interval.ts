@@ -420,6 +420,21 @@ function updateNativeState(): void {
     else if (!checkFactory && this.state.cowNativeCount[4] !== 0) this.state.cowNativeCount[4] = 0;
   }
 
+  if (
+    this.state.progress.event.type === 1 &&
+    this.state.progress.event.startTime < 0 && 
+    this.state.progress.event.endTime > 0 &&
+    this.state.progress.event.open && 
+    this.state.user.additionalTutorial.eventTutorial > 0 &&
+    (this.state.user.login || this.state.name) &&
+    (this.state.progress.sheep.part > 4 ||
+    this.state.progress.chicken.part >= 1 ||
+    this.state.progress.cow.part >= 1)
+  ) {
+    if (this.state.userUnicorn.collector <= 0 && this.state.unicornNativeCount[0] !== 1) this.state.unicornNativeCount[0] = 1;
+    else if (this.state.userUnicorn.collector > 0 && this.state.unicornNativeCount[0] !== 0) this.state.unicornNativeCount[0] = 0;
+  }
+
 }
 
 function updateProfileNative(load: boolean = false): void {
@@ -472,12 +487,28 @@ function updateProfileNative(load: boolean = false): void {
       Profile.animCowSprite.setVisible(true);
     }
   }
+
+  if (Profile.unicornNativeText) {
+    const count: number = this.state.unicornNativeCount.reduce((prev, cur) => prev += cur);
+    if (Profile.unicornNativeText.text !== String(count)) Profile.unicornNativeText.setText(String(count));
+    
+    if (count <= 0 && Profile.unicornNativeText.visible) {
+      Profile.unicornNativeText.setVisible(false);
+      Profile.unicornNativeBg.setVisible(false);
+      Profile.animUnicornSprite.setVisible(false);
+    } else if (count > 0 && !Profile.unicornNativeText.visible) {
+      Profile.unicornNativeText.setVisible(true);
+      Profile.unicornNativeBg.setVisible(true);
+      Profile.animUnicornSprite.setVisible(true);
+    }
+  }
 }
 
 function updateMapNative(): void {
   const sheepCount: number = this.state.sheepNativeCount.reduce((prev, cur) => prev += cur);
   const chickenCount: number = this.state.chickenNativeCount.reduce((prev, cur) => prev += cur);
   const cowCount: number = this.state.cowNativeCount.reduce((prev, cur) => prev += cur);
+  const unicornCount: number = this.state.unicornNativeCount.reduce((prev, cur) => prev += cur);
 
   const checkSocial: boolean[] = [];
   const socialTask: IsociaTasks = this.state.platform === 'vk' ? this.state.vkTask : 
@@ -491,10 +522,10 @@ function updateMapNative(): void {
     checkSocial.push(socialTask[key]);
   }
   const socialCount: number = checkSocial.length - checkSocial.filter(el => el).length;
-
-  const count: number = this.state.farm === 'Sheep' ? chickenCount + cowCount : 
-  this.state.farm === 'Chicken' ? sheepCount + cowCount : 
-  this.state.farm === 'Cow' ? sheepCount + chickenCount : 0;
+  const count: number = this.state.farm === 'Sheep' ? chickenCount + cowCount + unicornCount :
+  this.state.farm === 'Chicken' ? sheepCount + cowCount + unicornCount :
+  this.state.farm === 'Cow' ? sheepCount + chickenCount + unicornCount :
+  this.state.farm === 'Unicorn' ? sheepCount + chickenCount + cowCount : 0
 
   const text: Phaser.GameObjects.Text = this.game.scene.keys[`${this.state.farm}Bars`].mapNativeText;
   const bg: Phaser.GameObjects.Graphics = this.game.scene.keys[`${this.state.farm}Bars`].mapNativeBg;
@@ -606,6 +637,8 @@ function intervalPorgressCollectorTime(): void {
     this.state.userChicken.collector = this.state.progress.chicken.collector;
     this.state.userCow.collector = this.state.progress.cow.collector;
   }
+
+  if (this.state.userUnicorn.collector > 0 && this.state.farm !== 'Unicorn') this.state.userUnicorn.collector--
 
   if (this.state.userSheep.diamondAnimalTime > 0) this.state.userSheep.diamondAnimalTime--;
   if (this.state.userChicken.diamondAnimalTime > 0) this.state.userChicken.diamondAnimalTime--;
