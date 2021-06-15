@@ -165,15 +165,21 @@ class Boot extends Phaser.Scene {
   }
 
   private checkOkTask(): void {
-    const callBack = (status: string, data: object, error: object) => {
+    const callBackGroup = (status: string, data: object, error: object) => {
+      console.log('group')
       console.log(status, 'status')
       console.log(data, 'data')
       console.log(error, 'error')
     }
 
-    FAPI.Client.call({ method: 'group.getMembers', format: 'json', uid: process.env.OK_GROUP_ID }, callBack);
-    FAPI.Client.call({ method: 'group.isMessagesAllowed', format: 'json', gid: process.env.OK_GROUP_ID }, callBack);
-    FAPI.Client.call({ method: 'bookmark.add', format: 'json', gid: process.env.OK_GROUP_ID }, callBack);
+    const callBackBookmark = (status: string, data: object, error: object) => {
+      console.log('bookmark')
+      console.log(status, 'status')
+      console.log(data, 'data')
+      console.log(error, 'error')
+    }
+    FAPI.Client.call({ method: 'group.getMembers', format: 'json', uid: process.env.OK_GROUP_ID }, callBackGroup);
+    FAPI.Client.call({ method: 'bookmark.add', format: 'json', ref_id: process.env.OK_GROUP_ID, bookmark_type: 'group' }, callBackBookmark);
   }
 
   // подрубаем штифты за пускаем первую сцену 
