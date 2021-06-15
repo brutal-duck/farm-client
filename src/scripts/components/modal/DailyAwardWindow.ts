@@ -108,7 +108,7 @@ export default class DailyAwardWindow extends Phaser.GameObjects.Sprite {
         return;
       }
 
-      if (AWARDS[this.day].type === 1) {
+      if (AWARDS[this.day].type === 1 || AWARDS[this.day].type === 2) {
         this.scene.state.user.diamonds += AWARDS[this.day].count;
 
         this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('diamonds_get', {
@@ -120,13 +120,6 @@ export default class DailyAwardWindow extends Phaser.GameObjects.Sprite {
 
         const text: string = this.scene.state.lang.dailyHint_1.replace('$1', String(AWARDS[this.day].count)); 
         Hint.create(this.scene.game.scene.keys[`${this.scene.state.farm}Bars`], -250, text, 2);
-        this.scene.state.user.diamonds += AWARDS[this.day].count;
-        this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('diamonds_get', {
-          type: 'daily_award',
-          count: AWARDS[this.day].count,
-        });
-
-        this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].getCurrency({ x: this.scene.cameras.main.centerX, y: this.scene.cameras.main.centerY }, AWARDS[this.day].count, 'diamond');
       } else if (AWARDS[this.day].type === 3) {
         this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].feed += AWARDS[this.day].count;
         const text: string = this.scene.state.lang[`dailyHint_3_${this.scene.state.farm}`]; 
@@ -139,7 +132,7 @@ export default class DailyAwardWindow extends Phaser.GameObjects.Sprite {
         this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].collector4 += AWARDS[this.day].count;
         const text: string = this.scene.state.lang[`dailyHint_5_${this.scene.state.farm}`]; 
         Hint.create(this.scene.game.scene.keys[`${this.scene.state.farm}Bars`], -250, text, 2);
-      }
+      } 
       this.scene.state.daily = false;
       this.scene.state.user.takenReward = true;
       this.scene.scene.stop();
@@ -185,12 +178,13 @@ class Award implements Iaward {
     if (this.type === 1) {
       this.award = this.scene.add.sprite(this.position.x, this.position.y, 'diamond').setTint(0x999999).setScale(0.27).setDepth(3);
     } else if (this.type === 2) {
-      this.award = this.scene.add.sprite(this.position.x, this.position.y - 15, 'gift').setTint(0x999999).setDepth(3);
+      if (this.state !== 'active') this.award = this.scene.add.sprite(this.position.x, this.position.y - 15, 'gift').setTint(0x999999).setDepth(3);
+      else this.award = this.scene.add.sprite(this.position.x, this.position.y, 'diamond').setTint(0x999999).setScale(0.27).setDepth(3);
     } else {
       this.award = this.scene.add.sprite(this.position.x, this.position.y, `award-${this.type}`).setTint(0x999999).setDepth(3);
     }
 
-    if (this.count > 1 && this.type !== 2) {
+    if (this.count > 1 && (this.type !== 2 || this.type === 2 && this.state === 'active')) {
       this.countText = this.scene.add.text(this.position.x, this.position.y + 15, String(this.count), {
         font: '22px Shadow',
         color: '#CCCCCC'
