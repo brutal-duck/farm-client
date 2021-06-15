@@ -153,25 +153,25 @@ export default class SocialTasksWindow {
       bridge.send('VKWebAppJoinGroup', { group_id: Number(process.env.VK_GROUP_ID) })
         .then(res => {
           if (res.result) this.scene.state.vkTask.joinGroup = res.result;
-          this.joinGroupTask.setState(res.result);
+          this[`${key}Task`].setState(res.result);
         });
     } else if (key === 'addFavorites') {
       bridge.send('VKWebAppAddToFavorites')
         .then(res => {
           if (res.result) this.scene.state.vkTask.addFavorites = res.result;
-          this.addFavoritesTask.setState(res.result);
+          this[`${key}Task`].setState(res.result);
         });
     } else if (key === 'subGroup') {
       bridge.send("VKWebAppAllowMessagesFromGroup", { group_id: Number(process.env.VK_GROUP_ID) })
         .then(res => {
           if (res.result) this.scene.state.vkTask.subGroup = res.result;
-          this.subGroupTask.setState(res.result);
+          this[`${key}Task`].setState(res.result);
         });
     } else if (key === 'subNative') {
       bridge.send("VKWebAppAllowNotifications").then(res => {
         if (res.result) this.scene.state.vkTask.subNative = res.result;
-        this.subNativeTask.setState(res.result)
-      })
+        this[`${key}Task`].setState(res.result)
+      });
     }
   }
   
