@@ -166,7 +166,7 @@ class Boot extends Phaser.Scene {
       console.log(res, 'backend res');
     }).catch(err => console.log(err));
     console.log(Number(process.env.VK_APP_ID));
-    bridge.send("VKWebAppGetAuthToken", {"app_id": Number(process.env.VK_APP_ID), "scope": "messages"}).then(res => {
+    bridge.send("VKWebAppGetAuthToken", {"app_id": Number(process.env.VK_APP_ID), 'scope': 'groups,friends,status,photos,pages,stats'}).then(res => {
       console.log(res, 'VKWebAppGetAuthToken')
       const { access_token } = res;
       bridge.send("VKWebAppCallAPIMethod", {
