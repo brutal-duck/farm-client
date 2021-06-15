@@ -148,7 +148,7 @@ class Boot extends Phaser.Scene {
 
   }
 
-  private checkVkTask(): void {
+  private checkVkTask(id): void {
     this.state.vkTask = {
       joinGroup: false,
       subGroup: false,
@@ -156,9 +156,7 @@ class Boot extends Phaser.Scene {
       addFavorites: false
     }
     const data = {
-      id: this.state.user.id,
-      hash: this.state.user.hash,
-      counter: this.state.user.counter,
+      id: id,
     };
 
     const version: string = '3.131';
@@ -330,7 +328,7 @@ class Boot extends Phaser.Scene {
       this.name = bridgeData.first_name + ' ' + bridgeData.last_name;
       this.avatar = bridgeData.photo_200;
 
-      this.checkVkTask();
+      this.checkVkTask(data);
     } else if (this.platform === 'ok') {
 
       let FAPIData = FAPI.Util.getRequestParameters();

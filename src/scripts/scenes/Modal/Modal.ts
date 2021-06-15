@@ -122,16 +122,6 @@ class Modal extends Phaser.Scene {
   public chatHeight: number = 0;
   public chatBG: Phaser.GameObjects.Sprite;
   public eventLeftTime: Phaser.GameObjects.Text;
-  public factoryProductText: Phaser.GameObjects.Text;
-  public factoryProgressBar: Phaser.GameObjects.TileSprite;
-  public factorySellButton: any;
-  public product1Percent: Phaser.GameObjects.Text;
-  public product2Percent: Phaser.GameObjects.Text;
-  public product3Percent: Phaser.GameObjects.Text;
-  public product4Percent: Phaser.GameObjects.Text;
-  public product4Sprite: Phaser.GameObjects.Sprite;
-  public factoryStorageText: Phaser.GameObjects.Text;
-  public factoryBoostTimer: Phaser.GameObjects.Text;
   public feedBoostNative: Phaser.GameObjects.Text;
   public herdBoostNative: Phaser.GameObjects.Text;
 
