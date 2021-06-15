@@ -1755,6 +1755,8 @@ function sendSocialEvent(state: Istate, type: number, value: number): void {
   };
   
   if (state.platform === 'vk') {
+    if (type === 2) data.activityId = 3;
+    else if (type === 3) data.activityId = 4;
     axios.post(process.env.API + "/appEventVk", data).then((res) => {console.log(res.data)});
     if (type !== 1) {
       const attach: string = process.env[`VK_${FARM}_BANNER_${type}`];
