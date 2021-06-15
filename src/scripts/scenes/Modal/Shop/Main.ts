@@ -51,6 +51,7 @@ import {
   getDiamondPrice
 } from './event';
 import { openModal } from '../../../general/animations';
+import DiamondsWindow from '../../../components/modal/shop/DiamondsWindow';
 
 const shopHead: string = require("./../../../../assets/images/modal/shop-head.png");
 const shopClose: string = require("./../../../../assets/images/modal/shop-close.png");
@@ -94,6 +95,7 @@ const nativeBg: string = require("./../../../../assets/images/modal/native-bg.pn
 const freeDiamondsBg: string = require("./../../../../assets/images/modal/free-diamonds-bg.png");
 
 class Shop extends Phaser.Scene {
+  [x: string]: any;
   constructor() {
     super('Shop');
   }
@@ -239,11 +241,8 @@ class Shop extends Phaser.Scene {
       this.scrolling.wheel = true;
     });
 
-    if (this.state.modal.shopType === 1) {
-
-      this.shopDiamonds();
-
-    } else if (this.state.modal.shopType === 2) {
+    if (this.state.modal.shopType === 1) new DiamondsWindow(this)
+    else if (this.state.modal.shopType === 2) {
 
       if (this.state.farm === 'Sheep') this.sheepMoney();
       else if (this.state.farm === 'Chicken') this.chickenMoney();
@@ -257,9 +256,7 @@ class Shop extends Phaser.Scene {
       else if (this.state.farm === 'Cow') this.cow();
       else if (this.state.farm === 'Unicorn') this.animals();
 
-    } else if (this.state.modal.shopType === 4) {   
-      this.boosts();
-    }
+    } else if (this.state.modal.shopType === 4) this.boosts();
     
   }
 
@@ -311,310 +308,6 @@ class Shop extends Phaser.Scene {
     }
   }
 
-  // окно покупки кристаллов
-  public shopDiamonds(): void {
-
-
-    this.game.scene.keys[this.state.farm].logAmplitudeEvent('bank_page_viewed', {});
-    
-    let rows: number = Math.ceil(this.state.packages.length / 2);
-    let height: number = rows * 270 + 40;
-    this.scrolling.bottom = this.height - this.heightWindow + height ;
-    if (!this.state.user.starterpack && 
-      (this.state.userSheep?.part > 4 ||
-        this.state.userChicken?.part >= 1 ||
-        this.state.userUnicorn?.maxLevelAnimal >= 1 ||
-        this.state.userCow?.part >= 1
-      )) {
-      this.scrolling.bottom += 350;
-      const y: number = this.height + 140;
-      let starterpackBg: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX - 130, y, 'starterpack-bg');
-      let starterpackIconShadow: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX - 265, y + 70, 'starterpack-shadow');
-      let starterpackIcon: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX - 270, y, 'starterpack-icon');
-      let text1: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX - 90, y - 40, this.state.lang.buyFrom, {
-        font: '26px Shadow',
-        color: '#FBCB64'
-      }).setOrigin(0.5, 0.5);
-  
-      let text2: Phaser.GameObjects.Text = this.add.text(text1.getBounds().right + 10, text1.y, '750', {
-        font: '26px Shadow',
-        color: '#ffffff'
-      }).setOrigin(0, 0.5);
-  
-      let diamond1: Phaser.GameObjects.Image = this.add.image(text2.getBounds().right + 5, text1.y, 'diamond').setScale(0.10).setOrigin(0, 0.5);
-  
-      let text3: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX - 50, text1.getBounds().bottom + 5, this.state.lang.getGift,  {
-        font: '26px Shadow',
-        color: '#FBCB64'
-      }).setOrigin(0.5, 0);
-  
-      let text4: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX - 90, text3.getBounds().bottom + 5, this.state.lang.more, {
-        font: '26px Shadow',
-        color: '#FBCB64'
-      }).setOrigin(0.5, 0);
-      
-      let text5: Phaser.GameObjects.Text = this.add.text(text4.getBounds().right + 5, text3.getBounds().bottom + 5, '+750', {
-        font: '26px Shadow',
-        color: '#FFFFFF'
-      }).setOrigin(0, 0);
-  
-      let diamond2: Phaser.GameObjects.Image = this.add.image(text5.getBounds().right + 5, text5.y, 'diamond').setScale(0.10).setOrigin(0);
-  
-      let text6: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX - 50, text4.getBounds().bottom + 5, this.state.lang.dontMissChanse, {
-        font: '26px Shadow',
-        color: '#FFFFFF'
-      }).setOrigin(0.5, 0);
-
-      this.tweens.add({
-        targets: starterpackIcon,
-        delay: 2000,
-        props: {
-          rotation: { duration: 1200, yoyo: false, ease: 'Power2', value: 2 * Math.PI },
-          y: { value: '-=40', ease: 'Power1', duration: 250, repeat: 2, yoyo: true },
-        },
-        loop: -1,
-        loopDelay: 1000,
-      });
-
-      this.tweens.add({ targets: starterpackIconShadow, delay: 2000, duration: 250,  repeat: 2, yoyo: true, scale: 0.3, ease: 'Power1', loop: -1, loopDelay: 1000 });
-
-    }
-
-
-    for (let i: number = 0; i < rows; i++) {
-      let y: number = i * 270 + 40;
-
-      if (!this.state.user.starterpack && 
-        (this.state.userSheep?.part > 4 ||
-          this.state.userChicken?.part >= 1 ||
-          this.state.userUnicorn?.maxLevelAnimal >= 1 ||
-          this.state.userCow?.part >= 1
-        )) y += 238;
-      
-      let left: Ipackage = this.state.packages[i * 2];
-      let right: Ipackage = this.state.packages[i * 2 + 1];
-      
-      // левая
-      let pack: Phaser.GameObjects.Sprite = this.add.sprite(0, y + this.height, 'bank-package').setOrigin(0, 0);
-      this.click(pack, (): void => {
-
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('bank_pack_selected', {
-          package_id: left.id
-        });
-        
-        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-        this.scene.stop();
-        this.scene.stop('ShopBars');
-        this.scene.stop('Modal');
-
-        if (this.state.platform === 'ok') {
-          this.payOdnoklassniki(left.id);
-        } else if (this.state.platform === 'vk') {
-          this.payVK(left.id);
-        } else {
-          payRobokassa(left.id, this.state);
-        }
-
-      });
-
-      this.add.text(110, y + 145 + this.height, String(left.diamonds + left.bonus), {
-        font: '40px Shadow',
-        color: '#FFFFFF'
-      }).setOrigin(0.5, 0.5);
-
-      if (left.bonus > 0) {
-
-        this.add.text(110, y + 180 + this.height, this.state.lang.benefit + ' ' + '+' + left.bonus, {
-          font: '20px Shadow',
-          color: '#FFFFFF'
-        }).setOrigin(0.5, 0.5);
-
-      }
-
-      if (left.diamonds + left.bonus >= 750 && 
-        !this.state.user.starterpack && 
-        (this.state.userSheep?.part > 4 ||
-          this.state.userChicken?.part >= 1 ||
-          this.state.userUnicorn?.maxLevelAnimal >= 1 ||
-          this.state.userCow?.part >= 1
-        )) {
-        let starterpackIcon: Phaser.GameObjects.Image = this.add.image(30, y + this.height + 20, 'starterpack-icon').setScale(0.4);
-        this.tweens.add({
-          targets: starterpackIcon,
-          delay: 2000,
-          angle: -21,
-          duration: 100,
-          yoyo: true,
-          repeat: 1,
-          loop: -1
-        });
-      }
-
-      let text: string;
-
-      if (this.state.platform === 'ok') {
-        text = left.price + ' ' + 'ОК';
-      } else if (this.state.platform === 'vk') {
-        text = left.voices + ' ' + this.state.lang.voices;
-      } else {
-        text = left.price + ' ' + this.state.lang.ruble;
-      }
-
-      let btn = this.shopButton(110, y + 223 + this.height, text);
-      this.clickShopBtn(btn, (): void => {
-        
-        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-        this.scene.stop();
-        this.scene.stop('ShopBars');
-        this.scene.stop('Modal');
-
-        if (this.state.platform === 'ok') {
-          this.payOdnoklassniki(left.id);
-        } else if (this.state.platform === 'vk') {
-          this.payVK(left.id);
-        } else {
-          payRobokassa(left.id, this.state);
-        }
-
-      });
-
-      if (left.stock > 0) {
-
-        this.add.sprite(0, y + this.height, 'stock-tape').setOrigin(0, 0);
-        this.add.text(162, y + 42 + this.height, '+' + left.stock + '%', {
-          font: '34px Shadow',
-          color: '#FFFFFF'
-        }).setOrigin(0.5, 0.5).setRotation(0.55);
-      } 
-      
-      // правая
-      if (right) {
-        
-        let pack: Phaser.GameObjects.Sprite = this.add.sprite(240, y + this.height, 'bank-package').setOrigin(0, 0);
-        this.click(pack, (): void => {
-          
-          this.game.scene.keys[this.state.farm].logAmplitudeEvent('bank_pack_selected', {
-            package_id: right.id
-          });
-          this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-          this.scene.stop();
-          this.scene.stop('ShopBars');
-          this.scene.stop('Modal');
-          
-          if (this.state.platform === 'ok') {
-            this.payOdnoklassniki(right.id);
-          } else if (this.state.platform === 'vk') {
-            this.payVK(right.id);
-          } else {
-            payRobokassa(right.id, this.state);
-          }
-
-        });
-
-        this.add.text(350, y + 145 + this.height, String(right.diamonds + right.bonus), {
-          font: '40px Shadow',
-          color: '#FFFFFF'
-        }).setOrigin(0.5, 0.5);
-        
-        if (right.diamonds + right.bonus >= 750 && 
-          !this.state.user.starterpack && 
-          (this.state.userSheep?.part > 4 ||
-          this.state.userChicken?.part >= 1 ||
-          this.state.userUnicorn?.maxLevelAnimal >= 1 ||
-          this.state.userCow?.part >= 1
-        )) {
-          let starterpackIcon: Phaser.GameObjects.Image = this.add.image(270, y + this.height + 20, 'starterpack-icon').setScale(0.4).setDepth(3);
-          this.tweens.add({
-            targets: starterpackIcon,
-            delay: 2000,
-            angle: -21,
-            duration: 100,
-            yoyo: true,
-            repeat: 1,
-            loop: -1
-          });
-        }
-
-        if (right.bonus > 0) {
-
-          this.add.text(350, y + 180 + this.height, this.state.lang.benefit + ' ' + '+' + right.bonus , {
-            font: '20px Shadow',
-            color: '#FFFFFF'
-          }).setOrigin(0.5, 0.5);
-
-        }
-        let text: string;
-
-        if (this.state.platform === 'ok') {
-          text = right.price + ' ' + 'ОК';
-        } else if (this.state.platform === 'vk') {
-          text = right.voices + ' ' + this.state.lang.voices;
-        } else {
-          text = right.price + ' ' + this.state.lang.ruble;
-        }
-
-        let btn = this.shopButton(350, y + 223 + this.height, text);
-        this.clickShopBtn(btn, (): void => {
-          
-          this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-          this.scene.stop();
-          this.scene.stop('ShopBars');
-          this.scene.stop('Modal');
-
-          if (this.state.platform === 'ok') {
-            this.payOdnoklassniki(right.id);
-          } else if (this.state.platform === 'vk') {
-            this.payVK(right.id);
-          } else {
-            payRobokassa(right.id, this.state);
-          }
-
-        });
-
-        if (right.stock > 0) {
-
-          this.add.sprite(240, y + this.height, 'stock-tape').setOrigin(0, 0);
-          this.add.text(402, y + 42 + this.height, '+' + right.stock + '%', {
-            font: '34px Shadow',
-            color: '#FFFFFF'
-          }).setOrigin(0.5, 0.5).setRotation(0.55);
-
-        }
-
-      }
-    }
-
-    if (!this.state.user.takenFreeDiamonds && (this.state.userSheep.tutorial >= 100 || this.state.progress.chicken.part >= 1 || this.state.progress.cow.part >= 1)) {
-      const FREE_DIAMONDS: number = 1;
-      let y: number = (rows + 1) * 270 + 50 + this.height - 238;
-      if (!this.state.user.starterpack && 
-        (this.state.userSheep?.part > 4 ||
-          this.state.userChicken?.part >= 1 ||
-          this.state.userUnicorn?.maxLevelAnimal >= 1 ||
-          this.state.userCow?.part >= 1
-        )) y += 238;
-      this.add.sprite(this.cameras.main.centerX - 130, y, 'free-diamonds-bg');
-      const diamondCount: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX - 300, y, `+${FREE_DIAMONDS}`, {
-        font: '34px Shadow',
-        color: '#FFFFFF'
-      }).setOrigin(0.5);
-      this.add.sprite(diamondCount.getBounds().right + 5, y, 'diamond').setScale(0.23).setOrigin(0, 0.5);
-      const takeBtn: any = this.shopButton(this.cameras.main.centerX - 30, y, '0 ' + this.state.lang.ruble);
-      this.clickShopBtn(takeBtn, () => {
-        this.state.user.takenFreeDiamonds = true;
-        this.state.user.diamonds += FREE_DIAMONDS;
-        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-        this.scene.stop();
-        this.scene.stop('ShopBars');
-        this.scene.stop('Modal');
-        this.game.scene.keys[`${this.state.farm}Bars`].getCurrency({ x: this.game.scene.keys[`${this.state.farm}Bars`].cameras.main.centerX, y: this.game.scene.keys[`${this.state.farm}Bars`].cameras.main.centerY }, FREE_DIAMONDS, 'diamond');
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('diamonds_get', {
-          type: 'bank_page',
-          count: FREE_DIAMONDS,
-        });
-      })
-    }
-  }
 }
 
 export default Shop;
