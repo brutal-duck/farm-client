@@ -1,3 +1,4 @@
+import { payOdnoklassniki, payRobokassa, payVK } from "../../../general/basic";
 import Shop from "../../../scenes/Modal/Shop/Main";
 
 export default class DiamondsWindow {
@@ -6,7 +7,6 @@ export default class DiamondsWindow {
   constructor(scene: Shop) {
     this.scene = scene;
     this.create();
-    this.scene.openModal(this.scene.cameras.main);
   }
 
   private create(): void {
@@ -15,7 +15,7 @@ export default class DiamondsWindow {
     
     let rows: number = Math.ceil(this.scene.state.packages.length / 2);
     let height: number = rows * 270 + 40;
-    this.scene.scrolling.bottom = this.scene.height - this.scene.heightWindow + height ;
+    this.scene.scrolling.bottom = this.scene.height - this.scene.heightWindow + height;
     if (!this.scene.state.user.starterpack && 
       (this.scene.state.userSheep?.part > 4 ||
         this.scene.state.userChicken?.part >= 1 ||
@@ -94,22 +94,15 @@ export default class DiamondsWindow {
       let pack: Phaser.GameObjects.Sprite = this.scene.add.sprite(0, y + this.scene.height, 'bank-package').setOrigin(0, 0);
       this.scene.click(pack, (): void => {
 
-        this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('bank_pack_selected', {
-          package_id: left.id
-        });
-        
+        this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('bank_pack_selected', { package_id: left.id });
         this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
         this.scene.scene.stop();
         this.scene.scene.stop('ShopBars');
         this.scene.scene.stop('Modal');
 
-        if (this.scene.state.platform === 'ok') {
-          this.scene.payOdnoklassniki(left.id);
-        } else if (this.scene.state.platform === 'vk') {
-          this.scene.payVK(left.id);
-        } else {
-          this.scene.payRobokassa(left.id, this.scene.state);
-        }
+        if (this.scene.state.platform === 'ok') payOdnoklassniki(left.id);
+        else if (this.scene.state.platform === 'vk') payVK(left.id);
+        else payRobokassa(left.id, this.scene.state);
 
       });
 
@@ -148,13 +141,9 @@ export default class DiamondsWindow {
 
       let text: string;
 
-      if (this.scene.state.platform === 'ok') {
-        text = left.price + ' ' + 'ОК';
-      } else if (this.scene.state.platform === 'vk') {
-        text = left.voices + ' ' + this.scene.state.lang.voices;
-      } else {
-        text = left.price + ' ' + this.scene.state.lang.ruble;
-      }
+      if (this.scene.state.platform === 'ok') text = left.price + ' ' + 'ОК';
+      else if (this.scene.state.platform === 'vk') text = left.voices + ' ' + this.scene.state.lang.voices;
+      else text = left.price + ' ' + this.scene.state.lang.ruble;
 
       let btn = this.scene.shopButton(110, y + 223 + this.scene.height, text);
       this.scene.clickShopBtn(btn, (): void => {
@@ -164,9 +153,9 @@ export default class DiamondsWindow {
         this.scene.scene.stop('ShopBars');
         this.scene.scene.stop('Modal');
 
-        if (this.scene.state.platform === 'ok') this.scene.payOdnoklassniki(left.id);
-        else if (this.scene.state.platform === 'vk') this.scene.payVK(left.id);
-        else this.scene.payRobokassa(left.id, this.scene.state);
+        if (this.scene.state.platform === 'ok') payOdnoklassniki(left.id);
+        else if (this.scene.state.platform === 'vk') payVK(left.id);
+        else payRobokassa(left.id, this.scene.state);
 
       });
 
@@ -194,11 +183,11 @@ export default class DiamondsWindow {
           this.scene.scene.stop('Modal');
           
           if (this.scene.state.platform === 'ok') {
-            this.scene.payOdnoklassniki(right.id);
+            payOdnoklassniki(right.id);
           } else if (this.scene.state.platform === 'vk') {
-            this.scene.payVK(right.id);
+            payVK(right.id);
           } else {
-            this.scene.payRobokassa(right.id, this.scene.state);
+            payRobokassa(right.id, this.scene.state);
           }
 
         });
@@ -237,13 +226,9 @@ export default class DiamondsWindow {
         }
         let text: string;
 
-        if (this.scene.state.platform === 'ok') {
-          text = right.price + ' ' + 'ОК';
-        } else if (this.scene.state.platform === 'vk') {
-          text = right.voices + ' ' + this.scene.state.lang.voices;
-        } else {
-          text = right.price + ' ' + this.scene.state.lang.ruble;
-        }
+        if (this.scene.state.platform === 'ok') text = right.price + ' ' + 'ОК';
+        else if (this.scene.state.platform === 'vk') text = right.voices + ' ' + this.scene.state.lang.voices;
+        else text = right.price + ' ' + this.scene.state.lang.ruble;
 
         let btn = this.scene.shopButton(350, y + 223 + this.scene.height, text);
         this.scene.clickShopBtn(btn, (): void => {
@@ -253,13 +238,9 @@ export default class DiamondsWindow {
           this.scene.scene.stop('ShopBars');
           this.scene.scene.stop('Modal');
 
-          if (this.scene.state.platform === 'ok') {
-            this.scene.payOdnoklassniki(right.id);
-          } else if (this.scene.state.platform === 'vk') {
-            this.scene.payVK(right.id);
-          } else {
-            this.scene.payRobokassa(right.id, this.scene.state);
-          }
+          if (this.scene.state.platform === 'ok') payOdnoklassniki(right.id);
+          else if (this.scene.state.platform === 'vk') payVK(right.id);
+          else payRobokassa(right.id, this.scene.state);
 
         });
 
@@ -307,7 +288,7 @@ export default class DiamondsWindow {
       })
     }
 
-    // this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
+    // this.scene.events.on(Phaser.Scenes.Events.POST_UPDATE, this.update, this);
 
   }
 

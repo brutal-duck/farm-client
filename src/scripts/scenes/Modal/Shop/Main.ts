@@ -17,13 +17,6 @@ import {
   shortTime,
   loadingModal,
 } from '../../../general/basic';
-import {  
-  updateHerdBoostBtn,
-  herdBoost,
-  feedBoost,
-  collectorBoost,
-  updateFeedBoostBtn,
-} from '../../../general/boosts';
 import {
   sheepMoney,
   sheep,
@@ -43,15 +36,11 @@ import {
   animalMoney,
   animals,
   updateAnimalPrices,
-  eventCollectorBoost,
-  updateEventFeedBoostBtn,
-  updateEventHerdBoostBtn,
-  eventFeedBoost,
-  eventHerdBoost,
   getDiamondPrice
 } from './event';
 import { openModal } from '../../../general/animations';
 import DiamondsWindow from '../../../components/modal/shop/DiamondsWindow';
+import BoostsWindow from '../../../components/modal/shop/BoostsWindow';
 
 const shopHead: string = require("./../../../../assets/images/modal/shop-head.png");
 const shopClose: string = require("./../../../../assets/images/modal/shop-close.png");
@@ -106,21 +95,7 @@ class Shop extends Phaser.Scene {
   public heightWindow: number = 835;
   public buttons: IshopButtons[];
   public collectorTimer: Phaser.GameObjects.Text;
-  public herdBoostTimerText: Phaser.GameObjects.Text;
   public freeCollector: any;
-
-  // буст
-  public herdBoostBtnRightText: Phaser.GameObjects.Text;
-  public herdBoostBtnLeftText: Phaser.GameObjects.Text;
-  public herdBoostDiamondBtn: Phaser.GameObjects.Sprite;
-  public herdBoostBtn: any;
-  public feedProgressBar: Phaser.GameObjects.TileSprite;
-  public feedProgressText: Phaser.GameObjects.Text;
-  public feedProgressBarBg: Phaser.GameObjects.Sprite;
-  public feedBoostBtnRightText: Phaser.GameObjects.Text;
-  public feedBoostBtnLeftText: Phaser.GameObjects.Text;
-  public feedBoostDiamondBtn: Phaser.GameObjects.Sprite;
-  public feedBoostBtn: any;
 
   public click = click.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
@@ -142,21 +117,11 @@ class Shop extends Phaser.Scene {
   public updateSheepPrices = updateSheepPrices.bind(this);
   public payOdnoklassniki = payOdnoklassniki.bind(this);
   public payVK = payVK.bind(this);
-  public updateHerdBoostBtn = updateHerdBoostBtn.bind(this);
-  public herdBoost = herdBoost.bind(this);
-  public feedBoost = feedBoost.bind(this);
-  public collectorBoost = collectorBoost.bind(this);
-  public updateFeedBoostBtn = updateFeedBoostBtn.bind(this);
   public shortTime = shortTime.bind(this);
   public animals = animals.bind(this);
   public animalPrice = animalPrice.bind(this);
   public animalMoney = animalMoney.bind(this);
   public updateAnimalPrices = updateAnimalPrices.bind(this);
-  public eventCollectorBoost = eventCollectorBoost.bind(this);
-  public updateEventFeedBoostBtn = updateEventFeedBoostBtn.bind(this);
-  public updateEventHerdBoostBtn = updateEventHerdBoostBtn.bind(this);
-  public eventFeedBoost = eventFeedBoost.bind(this);
-  public eventHerdBoost = eventHerdBoost.bind(this);
   public getDiamondPrice = getDiamondPrice.bind(this);
   public openModal = openModal.bind(this);
   public loadingModal = loadingModal.bind(this);
@@ -256,57 +221,20 @@ class Shop extends Phaser.Scene {
       else if (this.state.farm === 'Cow') this.cow();
       else if (this.state.farm === 'Unicorn') this.animals();
 
-    } else if (this.state.modal.shopType === 4) this.boosts();
+    } else if (this.state.modal.shopType === 4) new BoostsWindow(this)
     
   }
 
 
   
   public update(): void {
-    // укзывающие стрелки
     
-    // обновляем время бустера
-    this.updateHerdBoostBtn();
-
-    this.updateFeedBoostBtn();
-
-    if (this.state.farm === 'Unicorn') {
-      this.updateEventHerdBoostBtn();
-      this.updateEventFeedBoostBtn();
-    }
-
     if (this.state.farm === 'Unicorn' && this.state.modal.shopType === 3) {
       this.game.scene.keys['Unicorn'].scrollPoint = this.scrolling.scrollY;
     }
     
   }
 
-
-  public boosts(): void {
-    this.scrolling.bottom = this.height - this.heightWindow;
-    if (this.state.farm === 'Sheep') {
-      this.collectorBoost();
-      if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
-      this.state.user.additionalTutorial.herdBoost) this.herdBoost();
-      if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].feedBoostLvl &&
-      this.state.user.additionalTutorial.feedBoost) this.feedBoost();
-      
-    } else if (this.state.farm === 'Chicken') {
-      this.collectorBoost();
-      if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl) this.herdBoost(); 
-      if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].feedBoostLvl) this.feedBoost();
-
-    } else if (this.state.farm === 'Cow') {
-      this.collectorBoost();
-      if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl) this.herdBoost(); 
-      if (this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].feedBoostLvl) this.feedBoost();
-
-    } else if (this.state.farm === 'Unicorn') {
-      this.eventCollectorBoost();
-      if (this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].herdBoostLvl) this.eventHerdBoost();
-      if (this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].feedBoostLvl) this.eventFeedBoost();
-    }
-  }
 
 }
 

@@ -122,8 +122,6 @@ class Modal extends Phaser.Scene {
   public chatHeight: number = 0;
   public chatBG: Phaser.GameObjects.Sprite;
   public eventLeftTime: Phaser.GameObjects.Text;
-  public feedBoostNative: Phaser.GameObjects.Text;
-  public herdBoostNative: Phaser.GameObjects.Text;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
