@@ -1,6 +1,7 @@
 import { click, clickShopBtn, clickButton } from '../general/clicks';
 import { shortNum, getEventRaiting, shortTime, loadingModal, getStatusSettings } from '../general/basic';
 import { scoreEnding } from './Event/Unicorns/basic';
+import { getCurrency } from '../general/animations';
 
 const background: string = require('./../../assets/images/profile/background.jpg');
 const backButton: string = require('./../../assets/images/profile/back-button.png');
@@ -67,7 +68,8 @@ class Profile extends Phaser.Scene {
   public loadingModal = loadingModal.bind(this);
   public clickButton = clickButton.bind(this);
   public getStatusSettings = getStatusSettings.bind(this);
-
+  public getCurrency = getCurrency.bind(this);
+  
   public init(state: Istate): void {
     this.state = state;
     if (this.state.platform === 'vk') {

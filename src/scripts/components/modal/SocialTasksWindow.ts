@@ -166,6 +166,7 @@ export default class SocialTasksWindow {
     // установить метку
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
     this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].getCurrency({ x: this.takeBtn.x, y: this.takeBtn.y }, this.award, 'diamond');
+    if (this.scene.scene.isActive('Profile'))this.scene.game.scene.keys['Profile'].getCurrency({ x: this.takeBtn.x, y: this.takeBtn.y }, this.award, 'diamond');
     this.scene.state.user.diamonds += this.award;
     this.scene.state.user.takenSocialAward = true;
     if (this.scene.scene.isActive('Profile')) {
