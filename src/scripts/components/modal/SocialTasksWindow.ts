@@ -91,6 +91,7 @@ export default class SocialTasksWindow {
 
     if (!this.scene.state.user.takenSocialAward && !this.checkTask()) {
       this.scene.state.shownSocialTaskWindow = true;
+      if (this.scene.scene.isActive('Profile')) this.scene.game.scene.keys['Profile'].updateSocialTaskNative();
     }
     this.setTakeBtnState();
     this.createElements();
@@ -228,6 +229,7 @@ class Task {
             this.window.socialTasks.joinGroup = res.result;
           }
           this.setState(res.result);
+          this.window.setTakeBtnState();
         }).catch(err => console.log(err));
     } else if (this.key === 'addFavorites') {
       bridge.send('VKWebAppAddToFavorites')
@@ -237,6 +239,7 @@ class Task {
             this.window.socialTasks.addFavorites = res.result;
           }
           this.setState(res.result);
+          this.window.setTakeBtnState();
         }).catch(err => console.log(err));
     } else if (this.key === 'subGroup') {
       bridge.send("VKWebAppAllowMessagesFromGroup", { group_id: Number(process.env.VK_GROUP_ID) })
@@ -246,6 +249,7 @@ class Task {
             this.window.socialTasks.subGroup = res.result;
           }
           this.setState(res.result);
+          this.window.setTakeBtnState();
         }).catch(err => console.log(err));
     } else if (this.key === 'subNative') {
       bridge.send("VKWebAppAllowNotifications").then(res => {
@@ -253,10 +257,10 @@ class Task {
           this.scene.state.vkTask.subNative = res.result;
           this.window.socialTasks.subNative = res.result;
         }
-        this.setState(res.result)
+        this.setState(res.result);
+        this.window.setTakeBtnState();
       }).catch(err => console.log(err));
     }
-    this.window.setTakeBtnState();
   }
 
   public setState(complete: boolean): void {
