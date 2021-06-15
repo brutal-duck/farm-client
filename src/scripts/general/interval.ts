@@ -514,8 +514,8 @@ function updateMapNative(): void {
   const socialTask: IsociaTasks = this.state.platform === 'vk' ? this.state.vkTask : 
   {
     joinGroup: true,
-    subGroup: true,
-    subNative: true,
+    subGroup: false,
+    subNative: false,
     addFavorites: true,
   };
   for (const key in socialTask) {
@@ -526,7 +526,7 @@ function updateMapNative(): void {
     socialCount = 1;
     this.state.shownSocialTaskWindow = false;
   }
-  if (this.state.userSheep.tutorial < 100) socialCount = 0;
+  if (this.state.userSheep.tutorial < 100 || this.state.shownSocialTaskWindow) socialCount = 0;
 
   const count: number = this.state.farm === 'Sheep' ? chickenCount + cowCount + unicornCount + socialCount :
   this.state.farm === 'Chicken' ? sheepCount + cowCount + unicornCount + socialCount :
