@@ -25,13 +25,13 @@ export default class SocialTasksWindow {
   private diamond: Phaser.GameObjects.Sprite;
   private takeBtn: Phaser.GameObjects.Sprite;
   private takeBtnText: Phaser.GameObjects.Text;
-  private award: number = 10;
+  private readonly award: number = 5;
   private joinGroupTask: Task;
   private subGroupTask: Task;
   private subNativeTask: Task;
   private addFavoritesTask: Task;
   
-  constructor(scene: Modal){
+  constructor(scene: Modal) {
     this.scene = scene;
     this.init();
     this.create();
