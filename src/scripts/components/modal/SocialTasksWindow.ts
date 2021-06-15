@@ -6,6 +6,8 @@ const LANGS: { [key: string]: string } = {
   addFavorites: 'Добавь в избранное',
   subGroup: 'Подпишись на ЛС от группы',
   subNative: 'Подпишись на уведомления',
+  title: 'Социальные задания',
+  subtitle: 'Получай ежедневную награду'
 }
 
 export default class SocialTasksWindow {
@@ -16,6 +18,7 @@ export default class SocialTasksWindow {
   private bottomBg: Phaser.GameObjects.Sprite;
   private middleBg: Phaser.GameObjects.TileSprite;
   private header: Phaser.GameObjects.Text;
+  private subHeader: Phaser.GameObjects.Text;
   private close: Phaser.GameObjects.Sprite;
   private takeText1: Phaser.GameObjects.Text;
   private takeText2: Phaser.GameObjects.Text;
@@ -57,9 +60,13 @@ export default class SocialTasksWindow {
     this.topBg = this.scene.add.sprite(centerX, centerY - Math.floor(height / 2), 'social-task-top').setOrigin(0.5, 1);
     this.middleBg = this.scene.add.tileSprite(centerX - 1, centerY, 526, height, 'social-task-middle');
     this.bottomBg = this.scene.add.sprite(centerX, centerY +  Math.floor(height / 2), 'social-task-bottom').setOrigin(0.5, 0);
-    this.header = this.scene.add.text(centerX, centerY, 'Подарки', {
+    this.header = this.scene.add.text(centerX - 25, centerY, LANGS.title, {
       color: '#F6DDFD',
-      font: '45px Shadow',
+      font: '35px Shadow',
+    }).setOrigin(0.5);
+    this.subHeader = this.scene.add.text(centerX - 25, centerY, LANGS.subtitle, {
+      color: '#942109',
+      font: '22px Shadow',
     }).setOrigin(0.5);
     this.close = this.scene.add.sprite(centerX, centerY, 'tasks-close').setDepth(2);
     this.scene.clickButton(this.close, () => {
@@ -80,6 +87,7 @@ export default class SocialTasksWindow {
       font: '25px Shadow',
       color: '#ffffff'
     }).setOrigin(0.5).setDepth(2);
+    this.takeBtn = this.scene.add.sprite(0, 0, 'shop-btn');
 
 
     this.setTakeBtnState();
@@ -95,21 +103,17 @@ export default class SocialTasksWindow {
     return check.every(el => el);
   }
 
-  private setTakeBtnState(): void {
-    const check: boolean = this.checkTask();
+  public setTakeBtnState(): void {
     if (this.checkTask() && !this.scene.state.user.takenSocialAward) {
-      this.takeBtn = this.scene.add.sprite(0, 0, 'shop-btn');
+      this.takeBtn.setTexture('shop-btn');
       this.takeBtnText.setStroke('#0A600A', 4).setColor('#ffffff');
       this.scene.clickShopBtn({ btn: this.takeBtn, title: this.takeBtnText }, (): void => {
         this.onBtnPickUpHandler();
       });
-    } else if (!this.scene.state.user.takenSocialAward) {
-      this.takeBtn = this.scene.add.sprite(0, 0, 'shop-btn-disable');
+    } else {
+      this.takeBtn.setTexture('shop-btn-disable');
       this.takeBtnText.setStroke('#888888', 4).setColor('#3B3B3B');
-    } else if (this.scene.state.user.takenSocialAward) {
-      this.takeBtn = this.scene.add.sprite(0, 0, 'shop-btn-disable');
-      this.takeBtnText.setStroke('#888888', 4).setColor('#3B3B3B');
-    }
+    } 
   }
 
   private createElements(): void {
@@ -124,16 +128,16 @@ export default class SocialTasksWindow {
       const y: number = startY + count * 100;
       count += 1;
       if (key === 'joinGroup') {
-        this.joinGroupTask = new Task(this.scene, key, { x: centerX, y: y });
+        this.joinGroupTask = new Task(this, key, { x: centerX, y: y });
         this.joinGroupTask.setState(this.socialTasks[key]);
       } else if (key === 'subGroup') {
-        this.subGroupTask = new Task(this.scene, key, { x: centerX, y: y });
+        this.subGroupTask = new Task(this, key, { x: centerX, y: y });
         this.subGroupTask.setState(this.socialTasks[key]);
       } else if (key === 'subNative') {
-        this.subNativeTask = new Task(this.scene, key, { x: centerX, y: y });
+        this.subNativeTask = new Task(this, key, { x: centerX, y: y });
         this.subNativeTask.setState(this.socialTasks[key]);
       } else if (key === 'addFavorites') {
-        this.addFavoritesTask = new Task(this.scene, key, { x: centerX, y: y });
+        this.addFavoritesTask = new Task(this, key, { x: centerX, y: y });
         this.addFavoritesTask.setState(this.socialTasks[key]);
       }
     }
@@ -149,7 +153,8 @@ export default class SocialTasksWindow {
     const topGeom: Phaser.Geom.Rectangle = this.topBg.getBounds();
     const bottomGeom: Phaser.Geom.Rectangle = this.bottomBg.getBounds();
     
-    this.header.setY(topGeom.centerY - 25);
+    this.header.setY(topGeom.centerY - 35);
+    this.subHeader.setY(topGeom.centerY);
     this.close.setPosition(topGeom.right - 35, topGeom.top + 35);
     this.takeText1.setY(bottomGeom.centerY);
     this.diamond.setPosition(this.takeText1.getBounds().right + 8,  bottomGeom.centerY);
@@ -172,6 +177,7 @@ export default class SocialTasksWindow {
 }
 
 class Task {
+  private window: SocialTasksWindow;
   private scene: Modal;
   private key: string;
   private position: Iposition;
@@ -181,8 +187,9 @@ class Task {
   private buttonText: Phaser.GameObjects.Text;
   private complete: Phaser.GameObjects.Sprite;
 
-  constructor(scene: Modal, key: string, position: Iposition) {
-    this.scene = scene;
+  constructor(window: SocialTasksWindow, key: string, position: Iposition) {
+    this.window = window;
+    this.scene = window.scene;
     this.key = key;
     this.position = position;
     this.create();
@@ -233,7 +240,9 @@ class Task {
         this.setState(res.result)
       });
     }
+    this.window.setTakeBtnState();
   }
+
   public setState(complete: boolean): void {
     if (complete) {
       this.bg.setTint(0xc0c0c0);
