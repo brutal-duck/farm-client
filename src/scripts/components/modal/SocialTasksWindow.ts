@@ -35,6 +35,7 @@ export default class SocialTasksWindow {
   }
 
   private init(): void {
+    this.scene.state.shownSocialTaskWindow = true;
     this.height = 0;
     if (this.scene.state.platform === 'vk') {
       this.socialTasks = this.scene.state.vkTask;
@@ -123,7 +124,7 @@ export default class SocialTasksWindow {
       const y: number = startY + count * 100;
       count += 1;
       this[`${key}Task`] = new Task(this.scene, key, { x: centerX, y: y }, this.onBtnHandler);
-      this[`${key}Task`].setState(this.socialTasks[key])
+      this[`${key}Task`].setState(this.socialTasks[key]);
       
     }
     this.height = count * 100;

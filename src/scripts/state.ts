@@ -76,6 +76,7 @@ let cowNativeCount: number[] = [ 0, 0, 0, 0, 0 ];
 let unicornNativeCount: number[] = [ 0 ];
 let storageMultiply: number = 2;
 let vkTask: IsociaTasks = {};
+let shownSocialTaskWindow: boolean = false;
 
 let state: Istate = {
   // записываемые в localStorage
@@ -159,6 +160,7 @@ let state: Istate = {
   unicornNativeCount, // натификаторы для профиля
   storageMultiply, // множитель для коров
   vkTask,
+  shownSocialTaskWindow,
 }
 
 export default state;

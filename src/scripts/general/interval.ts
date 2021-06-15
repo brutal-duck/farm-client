@@ -522,7 +522,10 @@ function updateMapNative(): void {
     checkSocial.push(socialTask[key]);
   }
   let socialCount: number = checkSocial.length - checkSocial.filter(el => el).length;
-  if (socialCount <= 0 && !this.state.user.takenSocialAward) socialCount = 1;
+  if (socialCount <= 0 && !this.state.user.takenSocialAward) {
+    socialCount = 1;
+    this.state.shownSocialTaskWindow = false;
+  }
   if (this.state.userSheep.tutorial < 100) socialCount = 0;
 
   const count: number = this.state.farm === 'Sheep' ? chickenCount + cowCount + unicornCount + socialCount :
