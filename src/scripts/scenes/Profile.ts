@@ -1,7 +1,7 @@
 import { click, clickShopBtn, clickButton } from '../general/clicks';
 import { shortNum, getEventRaiting, shortTime, loadingModal, getStatusSettings } from '../general/basic';
 import { scoreEnding } from './Event/Unicorns/basic';
-import { getCurrency } from '../general/animations';
+import Currency from '../components/animations/Currency';
 
 const background: string = require('./../../assets/images/profile/background.jpg');
 const backButton: string = require('./../../assets/images/profile/back-button.png');
@@ -68,8 +68,7 @@ class Profile extends Phaser.Scene {
   public loadingModal = loadingModal.bind(this);
   public clickButton = clickButton.bind(this);
   public getStatusSettings = getStatusSettings.bind(this);
-  public getCurrency = getCurrency.bind(this);
-  
+
   public init(state: Istate): void {
     this.state = state;
     if (this.state.platform === 'vk') {
@@ -108,6 +107,24 @@ class Profile extends Phaser.Scene {
   }
 
 
+  public  getCurrency(position: Iposition, counter: number = 1, texture: string): void {
+    if (counter > 5) counter = 5;
+  
+    let time: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
+      counter--;
+      const pos: Iposition = {
+        x: Phaser.Math.Between(position.x - 30, position.x + 30),
+        y: Phaser.Math.Between(position.y - this.game.scene.keys[this.state.farm].scrolling.scrollY - 30, position.y - this.game.scene.keys[this.state.farm].scrolling.scrollY + 30),
+      }
+      let target = { x: 495, y: 30 };
+      if (texture !== 'diamond') {
+        target = { x: 495, y: 120}
+      }
+      Currency.create(this, pos, target, texture, 400);
+      if (counter <= 0) time.remove(false);
+    }, callbackScope: this, loop: true });
+  
+  }
   public create(): void {
     if (this.state.progress.event.eventPoints >= 0 && this.state.progress.event.open && this.state.progress.event.type === 1) this.getEventRaiting(); // получаем новые рейтинги
     
@@ -945,20 +962,23 @@ class Profile extends Phaser.Scene {
     }
   }
 
-  private updateSocialTaskNative(): void {
+  public updateSocialTaskNative(): void {
     const check: boolean[] = [];
     for (const key in this.socialTasks) {
       check.push(this.socialTasks[key]);
     }
-    const count: number = check.length - check.filter(el => el).length;
+    let count: number = check.length - check.filter(el => el).length;
+    if (count <= 0 && !this.state.user.takenSocialAward) {
+      count = 1;
+    }
+    if (this.state.userSheep.tutorial < 100 || this.state.shownSocialTaskWindow) count = 0;
     if (this.state.user.takenSocialAward) {
       this.socialTaskNativeText.setVisible(false);
       this.socialTaskNative.setVisible(false);
     } else {
       if (count <= 0) {
-        this.socialTaskNativeText.setVisible(true);
-        this.socialTaskNative.setVisible(true);
-        this.socialTaskNativeText.setText('1');
+        this.socialTaskNativeText.setVisible(false);
+        this.socialTaskNative.setVisible(false);
       } else if (count > 0) {
         this.socialTaskNative.setVisible(true);
         this.socialTaskNativeText.setVisible(true);

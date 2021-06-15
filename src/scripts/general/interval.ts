@@ -527,11 +527,10 @@ function updateMapNative(): void {
     this.state.shownSocialTaskWindow = false;
   }
   if (this.state.userSheep.tutorial < 100 || this.state.shownSocialTaskWindow) socialCount = 0;
-
   const count: number = this.state.farm === 'Sheep' ? chickenCount + cowCount + unicornCount + socialCount :
   this.state.farm === 'Chicken' ? sheepCount + cowCount + unicornCount + socialCount :
   this.state.farm === 'Cow' ? sheepCount + chickenCount + unicornCount + socialCount :
-  this.state.farm === 'Unicorn' ? sheepCount + chickenCount + cowCount + socialCount : 0
+  this.state.farm === 'Unicorn' ? sheepCount + chickenCount + cowCount + socialCount : 0;
 
   const text: Phaser.GameObjects.Text = this.game.scene.keys[`${this.state.farm}Bars`].mapNativeText;
   const bg: Phaser.GameObjects.Graphics = this.game.scene.keys[`${this.state.farm}Bars`].mapNativeBg;

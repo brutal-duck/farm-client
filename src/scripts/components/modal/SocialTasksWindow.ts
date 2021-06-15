@@ -39,15 +39,16 @@ export default class SocialTasksWindow {
 
   private init(): void {
     this.scene.state.shownSocialTaskWindow = true;
+    if (this.scene.scene.isActive('Profile')) this.scene.game.scene.keys['Profile'].updateSocialTaskNative();
     this.height = 0;
     if (this.scene.state.platform === 'vk') {
       this.socialTasks = this.scene.state.vkTask;
     } else if (this.scene.state.platform === 'web') {
       this.socialTasks = {
-        joinGroup: false,
-        subGroup: false,
+        joinGroup: true,
+        subGroup: true,
         subNative: false,
-        addFavorites: false
+        addFavorites: true
       }
     }
 
@@ -166,12 +167,10 @@ export default class SocialTasksWindow {
     // установить метку
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
     this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].getCurrency({ x: this.takeBtn.x, y: this.takeBtn.y }, this.award, 'diamond');
-    if (this.scene.scene.isActive('Profile'))this.scene.game.scene.keys['Profile'].getCurrency({ x: this.takeBtn.x, y: this.takeBtn.y }, this.award, 'diamond');
+    if (this.scene.scene.isActive('Profile')) this.scene.game.scene.keys['Profile'].getCurrency({ x: this.takeBtn.x, y: this.takeBtn.y }, this.award, 'diamond');
     this.scene.state.user.diamonds += this.award;
     this.scene.state.user.takenSocialAward = true;
-    if (this.scene.scene.isActive('Profile')) {
-      this.scene.game.scene.keys['Profile'].updateSocialTaskNative();
-    }
+    if (this.scene.scene.isActive('Profile')) this.scene.game.scene.keys['Profile'].updateSocialTaskNative();
     this.scene.scene.stop();
 
   }
