@@ -364,11 +364,7 @@ class Sheep extends Phaser.Scene {
 
     let cursors = this.input.keyboard.createCursorKeys();
     cursors.space.on('down', (): void => {
-      // let modal: Imodal = {
-      //   type: 14,
-      // }
-      // this.state.modal = modal;
-      // this.scene.launch('Modal', this.state);
+      this.state.user.takenSocialAward = false;
     //   // this.state.daily = 2;
     // this.state.user.test = 'B';
     // let tasks = this.partTasks();

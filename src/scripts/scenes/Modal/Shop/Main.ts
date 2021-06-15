@@ -241,7 +241,7 @@ class Shop extends Phaser.Scene {
       this.scrolling.wheel = true;
     });
 
-    if (this.state.modal.shopType === 1) new DiamondsWindow(this)
+    if (this.state.modal.shopType === 1) new DiamondsWindow(this);
     else if (this.state.modal.shopType === 2) {
 
       if (this.state.farm === 'Sheep') this.sheepMoney();
