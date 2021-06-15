@@ -79,12 +79,6 @@ class Boot extends Phaser.Scene {
 
     let search: string = window.location.search;
     let params: URLSearchParams = new URLSearchParams(search);
-    console.log(params)
-    
-    location.search.substr(1).split('&').forEach(function (item) {
-      // queryDict[item.split('=')[0]] = item.split('=')[1]
-      console.log(item);
-    })
 
     let vk: string = params.get('api_url');
     let ok: string = params.get('api_server');
@@ -162,9 +156,9 @@ class Boot extends Phaser.Scene {
       addFavorites: false
     }
     const data = {
-      id: state.user.id,
-      hash: state.user.hash,
-      counter: state.user.counter,
+      id: this.state.user.id,
+      hash: this.state.user.hash,
+      counter: this.state.user.counter,
     };
 
     const version: string = '3.131';
@@ -342,12 +336,12 @@ class Boot extends Phaser.Scene {
       let FAPIData = FAPI.Util.getRequestParameters();
       FAPI.init(FAPIData.api_server, FAPIData.apiconnection, (): void => {
         this.okCallback(); // коллбэк одноклассников
+        this.checkOkTask();
       });
       
       data = Number(FAPIData.logged_user_id);
       this.name = FAPIData.user_name;
       this.avatar = FAPIData.user_image;
-      this.checkOkTask();
     } else if (this.platform === 'web') {
       data = this.getCookieHash();
     }
