@@ -43,22 +43,25 @@ function validateTerritories(territories: Iterritories[], basicTerritories: Iter
 }
 
 function validateBoosts(boosts: Iboosts): Iboosts {
-  const sheepBoostsBasic: IfarmBosts = userData.boosts.sheep;
-  const chickenBoostsBasic: IfarmBosts = userData.boosts.chicken;
-  const cowBoostsBasic: IfarmBosts = userData.boosts.cow;
-  const fortuneBoostsBasic: number = userData.boosts.fortune;
-
-  for (const key in sheepBoostsBasic) {
-    if (!boosts.sheep[key]) boosts.sheep[key] = sheepBoostsBasic[key];
+  if (boosts) {
+    const sheepBoostsBasic: IfarmBosts = userData.boosts.sheep;
+    const chickenBoostsBasic: IfarmBosts = userData.boosts.chicken;
+    const cowBoostsBasic: IfarmBosts = userData.boosts.cow;
+    const fortuneBoostsBasic: number = userData.boosts.fortune;
+  
+    for (const key in sheepBoostsBasic) {
+      if (!boosts.sheep[key]) boosts.sheep[key] = sheepBoostsBasic[key];
+    }
+    for (const key in chickenBoostsBasic) {
+      if (!boosts.chicken[key]) boosts.chicken[key] = chickenBoostsBasic[key];
+    }
+    for (const key in cowBoostsBasic) {
+      if (!boosts.cow[key]) boosts.cow[key] = cowBoostsBasic[key];
+    }
+    if (!boosts.fortune) boosts.fortune = fortuneBoostsBasic;
+    return boosts;
   }
-  for (const key in chickenBoostsBasic) {
-    if (!boosts.chicken[key]) boosts.chicken[key] = chickenBoostsBasic[key];
-  }
-  for (const key in cowBoostsBasic) {
-    if (!boosts.cow[key]) boosts.cow[key] = cowBoostsBasic[key];
-  }
-  if (!boosts.fortune) boosts.fortune = fortuneBoostsBasic;
-  return boosts;
+  return userData.boosts;
 }
 
 export default function loadData(response: any): void {
