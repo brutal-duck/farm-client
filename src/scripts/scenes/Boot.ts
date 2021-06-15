@@ -171,9 +171,11 @@ class Boot extends Phaser.Scene {
     axios.post(process.env.API + '/checkVKtask', data).then(res => {
       this.state.vkTask.joinGroup = res.data.joinGroup;
       this.state.vkTask.subGroup = res.data.subGroup;
+      console.log(res, 'backend res');
     }).catch(err => console.log(err));
 
     bridge.send("VKWebAppGetAuthToken", {"app_id": Number(process.env.VK_APP_ID), "scope": "messages"}).then(res => {
+      console.log(res, 'VKWebAppGetAuthToken')
       const { access_token } = res;
       bridge.send("VKWebAppCallAPIMethod", {
         method: 'groups.isMember',
@@ -184,6 +186,7 @@ class Boot extends Phaser.Scene {
           user_id: this.state.vkId,
         }
       }).then(res => {
+        console.log(res, 'groups.isMember')
         if (res.response === 1) this.state.vkTask.joinGroup = true;
       });
       bridge.send("VKWebAppCallAPIMethod", {
@@ -195,11 +198,13 @@ class Boot extends Phaser.Scene {
           user_id: this.state.vkId,
         }
       }).then(res => {
+        console.log(res, 'messages.isMessagesFromGroupAllowed')
         if (res.response.is_allowed === 1) this.state.vkTask.subGroup = true;
       });
     });
 
     bridge.send("VKWebAppCheckAllowedScopes", { scopes: "menu, notify" }).then(res => {
+      console.log(res, 'VKWebAppCheckAllowedScopes');
       res.result.forEach(data => {
         if (data.scope === 'notify') this.state.vkTask.subNative = data.allowed;
         if (data.scope === 'menu') this.state.vkTask.addFavorites = data.allowed;
@@ -210,8 +215,9 @@ class Boot extends Phaser.Scene {
 
   private checkOkTask(): void {
     const callBack = (status: string, data: object, error: object) => {
-      if (status ===  'ok') {
-      }
+      console.log(status, 'status')
+      console.log(data, 'data')
+      console.log(error, 'error')
     }
 
     FAPI.Client.call({  method: 'group.getMembers', format: 'json'}, callBack);
@@ -341,7 +347,7 @@ class Boot extends Phaser.Scene {
       data = Number(FAPIData.logged_user_id);
       this.name = FAPIData.user_name;
       this.avatar = FAPIData.user_image;
-      
+      this.checkOkTask();
     } else if (this.platform === 'web') {
       data = this.getCookieHash();
     }
