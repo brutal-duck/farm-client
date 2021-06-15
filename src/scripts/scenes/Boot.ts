@@ -171,9 +171,9 @@ class Boot extends Phaser.Scene {
       console.log(error, 'error')
     }
 
-    FAPI.Client.call({  method: 'group.getMembers', format: 'json'}, callBack);
-    FAPI.Client.call({  method: 'group.isMessagesAllowed', format: 'json', gid: process.env.OK_GROUP_ID}, callBack);
-    FAPI.Client.call({  method: 'bookmark.add', format: 'json', gid: process.env.OK_GROUP_ID}, callBack);
+    FAPI.Client.call({ method: 'group.getMembers', format: 'json', uid: process.env.OK_GROUP_ID }, callBack);
+    FAPI.Client.call({ method: 'group.isMessagesAllowed', format: 'json', gid: process.env.OK_GROUP_ID }, callBack);
+    FAPI.Client.call({ method: 'bookmark.add', format: 'json', gid: process.env.OK_GROUP_ID }, callBack);
   }
 
   // подрубаем штифты за пускаем первую сцену 

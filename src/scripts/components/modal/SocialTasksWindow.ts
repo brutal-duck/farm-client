@@ -41,10 +41,10 @@ export default class SocialTasksWindow {
       this.socialTasks = this.scene.state.vkTask;
     } else if (this.scene.state.platform === 'web') {
       this.socialTasks = {
-        joinGroup: true,
-        subGroup: true,
-        subNative: true,
-        addFavorites: true
+        joinGroup: false,
+        subGroup: false,
+        subNative: false,
+        addFavorites: false
       }
     }
 
@@ -123,9 +123,19 @@ export default class SocialTasksWindow {
     for (const key in this.socialTasks) {
       const y: number = startY + count * 100;
       count += 1;
-      this[`${key}Task`] = new Task(this.scene, key, { x: centerX, y: y }, this.onBtnHandler);
-      this[`${key}Task`].setState(this.socialTasks[key]);
-      
+      if (key === 'joinGroup') {
+        this.joinGroupTask = new Task(this.scene, key, { x: centerX, y: y });
+        this.joinGroupTask.setState(this.socialTasks[key]);
+      } else if (key === 'subGroup') {
+        this.subGroupTask = new Task(this.scene, key, { x: centerX, y: y });
+        this.subGroupTask.setState(this.socialTasks[key]);
+      } else if (key === 'subNative') {
+        this.subNativeTask = new Task(this.scene, key, { x: centerX, y: y });
+        this.subNativeTask.setState(this.socialTasks[key]);
+      } else if (key === 'addFavorites') {
+        this.addFavoritesTask = new Task(this.scene, key, { x: centerX, y: y });
+        this.addFavoritesTask.setState(this.socialTasks[key]);
+      }
     }
     this.height = count * 100;
   }
@@ -146,35 +156,7 @@ export default class SocialTasksWindow {
     this.takeText2.setPosition(this.diamond.getBounds().right + 8,  bottomGeom.centerY);
     this.takeBtn.setPosition(bottomGeom.right - this.takeBtn.displayWidth / 2 - 60, bottomGeom.centerY);
     this.takeBtnText.setPosition(this.takeBtn.x, this.takeBtn.y - 3);
-  }
-
-  private onBtnHandler(key: string) {
-    if (key === 'joinGroup') {
-      bridge.send('VKWebAppJoinGroup', { group_id: Number(process.env.VK_GROUP_ID) })
-        .then(res => {
-          if (res.result) this.scene.state.vkTask.joinGroup = res.result;
-          this[`${key}Task`].setState(res.result);
-        });
-    } else if (key === 'addFavorites') {
-      bridge.send('VKWebAppAddToFavorites')
-        .then(res => {
-          if (res.result) this.scene.state.vkTask.addFavorites = res.result;
-          this[`${key}Task`].setState(res.result);
-        });
-    } else if (key === 'subGroup') {
-      bridge.send("VKWebAppAllowMessagesFromGroup", { group_id: Number(process.env.VK_GROUP_ID) })
-        .then(res => {
-          if (res.result) this.scene.state.vkTask.subGroup = res.result;
-          this[`${key}Task`].setState(res.result);
-        });
-    } else if (key === 'subNative') {
-      bridge.send("VKWebAppAllowNotifications").then(res => {
-        if (res.result) this.scene.state.vkTask.subNative = res.result;
-        this[`${key}Task`].setState(res.result)
-      });
-    }
-  }
-  
+  }  
   private onBtnPickUpHandler(): void {
     // установить метку
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
@@ -198,13 +180,11 @@ class Task {
   private button: Phaser.GameObjects.Sprite;
   private buttonText: Phaser.GameObjects.Text;
   private complete: Phaser.GameObjects.Sprite;
-  private onBtnHandler: (key: string) => void;
 
-  constructor(scene, key, position, onBtnHandler) {
+  constructor(scene: Modal, key: string, position: Iposition) {
     this.scene = scene;
     this.key = key;
     this.position = position;
-    this.onBtnHandler = onBtnHandler.bind(this);
     this.create();
   }
 
@@ -224,10 +204,36 @@ class Task {
     }).setOrigin(0.5, 0.5).setStroke('#3B5367', 4).setVisible(false);
     
     this.scene.clickShopBtn({ btn: this.button, title: this.buttonText }, (): void => {
-      this.onBtnHandler(this.key);
+      this.onBtnHandler();
     });
   }
 
+  private onBtnHandler() {
+    if (this.key === 'joinGroup') {
+      bridge.send('VKWebAppJoinGroup', { group_id: Number(process.env.VK_GROUP_ID) })
+        .then(res => {
+          if (res.result) this.scene.state.vkTask.joinGroup = res.result;
+          this.setState(res.result);
+        });
+    } else if (this.key === 'addFavorites') {
+      bridge.send('VKWebAppAddToFavorites')
+        .then(res => {
+          if (res.result) this.scene.state.vkTask.addFavorites = res.result;
+          this.setState(res.result);
+        });
+    } else if (this.key === 'subGroup') {
+      bridge.send("VKWebAppAllowMessagesFromGroup", { group_id: Number(process.env.VK_GROUP_ID) })
+        .then(res => {
+          if (res.result) this.scene.state.vkTask.subGroup = res.result;
+          this.setState(res.result);
+        });
+    } else if (this.key === 'subNative') {
+      bridge.send("VKWebAppAllowNotifications").then(res => {
+        if (res.result) this.scene.state.vkTask.subNative = res.result;
+        this.setState(res.result)
+      });
+    }
+  }
   public setState(complete: boolean): void {
     if (complete) {
       this.bg.setTint(0xc0c0c0);
