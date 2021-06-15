@@ -159,7 +159,7 @@ class Boot extends Phaser.Scene {
       id: id,
     };
 
-    const version: string = '3.131';
+    const version: string = '5.131';
     axios.post(process.env.API + '/checkVKtask', data).then(res => {
       this.state.vkTask.joinGroup = res.data.joinGroup;
       this.state.vkTask.subGroup = res.data.subGroup;
@@ -193,7 +193,7 @@ class Boot extends Phaser.Scene {
         console.log(res, 'messages.isMessagesFromGroupAllowed')
         if (res.response.is_allowed === 1) this.state.vkTask.subGroup = true;
       });
-    });
+    }).catch(err => console.log(err));
 
     bridge.send("VKWebAppCheckAllowedScopes", { scopes: "menu, notify" }).then(res => {
       console.log(res, 'VKWebAppCheckAllowedScopes');
