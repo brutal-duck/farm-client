@@ -148,7 +148,7 @@ class Boot extends Phaser.Scene {
 
   }
 
-  private checkVkTask(id): void {
+  private checkVkTask(): void {
     this.state.vkTask = {
       joinGroup: false,
       subGroup: false,
@@ -156,7 +156,7 @@ class Boot extends Phaser.Scene {
       addFavorites: false
     }
     const data = {
-      id: id,
+      id: this.state.vkId,
     };
 
     const version: string = '5.131';
@@ -165,7 +165,7 @@ class Boot extends Phaser.Scene {
       this.state.vkTask.subGroup = res.data.subGroup;
       console.log(res, 'backend res');
     }).catch(err => console.log(err));
-
+    console.log(Number(process.env.VK_APP_ID));
     bridge.send("VKWebAppGetAuthToken", {"app_id": Number(process.env.VK_APP_ID), "scope": "messages"}).then(res => {
       console.log(res, 'VKWebAppGetAuthToken')
       const { access_token } = res;
@@ -180,7 +180,7 @@ class Boot extends Phaser.Scene {
       }).then(res => {
         console.log(res, 'groups.isMember')
         if (res.response === 1) this.state.vkTask.joinGroup = true;
-      });
+      }).catch(err => console.log(err, 'member'));
       bridge.send("VKWebAppCallAPIMethod", {
         method: 'messages.isMessagesFromGroupAllowed',
         params: {
@@ -192,8 +192,8 @@ class Boot extends Phaser.Scene {
       }).then(res => {
         console.log(res, 'messages.isMessagesFromGroupAllowed')
         if (res.response.is_allowed === 1) this.state.vkTask.subGroup = true;
-      });
-    }).catch(err => console.log(err));
+      }).catch(err => console.log(err, 'massage'));
+    }).catch(err => console.log(err, 'auth'));
 
     bridge.send("VKWebAppCheckAllowedScopes", { scopes: "menu, notify" }).then(res => {
       console.log(res, 'VKWebAppCheckAllowedScopes');
@@ -328,7 +328,7 @@ class Boot extends Phaser.Scene {
       this.name = bridgeData.first_name + ' ' + bridgeData.last_name;
       this.avatar = bridgeData.photo_200;
 
-      this.checkVkTask(data);
+      this.checkVkTask();
     } else if (this.platform === 'ok') {
 
       let FAPIData = FAPI.Util.getRequestParameters();
