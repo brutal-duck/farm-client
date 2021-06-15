@@ -794,7 +794,10 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         this.scene.tryTask(17, improve);
         this.changeSprite();
         Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
-
+        this.scene.logAmplitudeEvent('diamonds_spent', {
+          type: 'storage',
+          count: price,
+        });
       } else {
         if (this.territoryType === 2) {
           this.scene.tryTask(8, improve);
