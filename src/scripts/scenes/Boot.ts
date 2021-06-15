@@ -38,20 +38,17 @@ class Boot extends Phaser.Scene {
 
 
   public init(): void {
-    
-    let build: string = '3.7';
+    let build: string = '3.7.1';
     console.log('Build ' + build);
 
     // автосохранение при уходе с игры
     window.addEventListener('beforeunload', (): void => {
-
       if ((this.state.farm === 'Sheep' && this.scene.isActive('Sheep')) ||
         (this.state.farm === 'Chicken' && this.scene.isActive('Chicken')) ||
         (this.state.farm === 'Cow' && this.scene.isActive('Cow')) ||
         (this.state.farm === 'Unicorn' && this.scene.isActive('Unicorn'))) {
         this.game.scene.keys[this.state.farm].autosave();
       }
-
     }, false);
 
     this.state = state;
@@ -115,14 +112,11 @@ class Boot extends Phaser.Scene {
         scene.fontsReady = true;
       }
     });
-    
     this.checkUser();
-    
   }
 
 
   public preload(): void {
-
     this.load.image('header-syst', headerSyst);
     this.load.image('mid-syst', midSyst);
     this.load.image('bottom-syst', bottomSyst);
@@ -132,20 +126,15 @@ class Boot extends Phaser.Scene {
     this.load.image('pb-full-mid', pbFullMid);
     this.load.image('modal', modal);
     this.load.image('header-close', close);
-    
   }
 
 
   public update(): void {
-    
     if (this.userReady && this.fontsReady) {
-
       this.userReady = false;
       this.fontsReady = false;
       this.start();
-
     }
-
   }
 
   private checkVkTask(): void {
@@ -159,42 +148,12 @@ class Boot extends Phaser.Scene {
       id: this.state.vkId,
     };
 
-    const version: string = '5.131';
     axios.post(process.env.API + '/checkVKtask', data).then(res => {
-      this.state.vkTask.joinGroup = res.data.joinGroup;
-      this.state.vkTask.subGroup = res.data.subGroup;
+      this.state.vkTask.joinGroup = res.data.data.joinGroup;
+      this.state.vkTask.subGroup = res.data.data.subGroup;
       console.log(res, 'backend res');
     }).catch(err => console.log(err));
-    console.log(Number(process.env.VK_APP_ID));
-    bridge.send("VKWebAppGetAuthToken", {"app_id": Number(process.env.VK_APP_ID), 'scope': 'groups,friends,status,photos,pages,stats'}).then(res => {
-      console.log(res, 'VKWebAppGetAuthToken')
-      const { access_token } = res;
-      bridge.send("VKWebAppCallAPIMethod", {
-        method: 'groups.isMember',
-        params: {
-          v: version,
-          access_token: access_token,
-          group_id: process.env.VK_GROUP_ID,
-          user_id: this.state.vkId,
-        }
-      }).then(res => {
-        console.log(res, 'groups.isMember')
-        if (res.response === 1) this.state.vkTask.joinGroup = true;
-      }).catch(err => console.log(err, 'member'));
-      bridge.send("VKWebAppCallAPIMethod", {
-        method: 'messages.isMessagesFromGroupAllowed',
-        params: {
-          v: version,
-          access_token: access_token,
-          group_id: process.env.VK_GROUP_ID,
-          user_id: this.state.vkId,
-        }
-      }).then(res => {
-        console.log(res, 'messages.isMessagesFromGroupAllowed')
-        if (res.response.is_allowed === 1) this.state.vkTask.subGroup = true;
-      }).catch(err => console.log(err, 'massage'));
-    }).catch(err => console.log(err, 'auth'));
-
+   
     bridge.send("VKWebAppCheckAllowedScopes", { scopes: "menu, notify" }).then(res => {
       console.log(res, 'VKWebAppCheckAllowedScopes');
       res.result.forEach(data => {
