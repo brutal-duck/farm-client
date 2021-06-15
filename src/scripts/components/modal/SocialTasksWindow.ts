@@ -13,7 +13,7 @@ const LANGS: { [key: string]: string } = {
 export default class SocialTasksWindow {
   public scene: Modal;
   private height: number;
-  private socialTasks: IsociaTasks;
+  public socialTasks: IsociaTasks;
   private topBg: Phaser.GameObjects.Sprite;
   private bottomBg: Phaser.GameObjects.Sprite;
   private middleBg: Phaser.GameObjects.TileSprite;
@@ -38,7 +38,6 @@ export default class SocialTasksWindow {
   }
 
   private init(): void {
-    this.scene.state.shownSocialTaskWindow = true;
     if (this.scene.scene.isActive('Profile')) this.scene.game.scene.keys['Profile'].updateSocialTaskNative();
     this.height = 0;
     if (this.scene.state.platform === 'vk') {
@@ -90,7 +89,9 @@ export default class SocialTasksWindow {
     }).setOrigin(0.5).setDepth(2);
     this.takeBtn = this.scene.add.sprite(0, 0, 'shop-btn');
 
-
+    if (!this.scene.state.user.takenSocialAward && !this.checkTask()) {
+      this.scene.state.shownSocialTaskWindow = true;
+    }
     this.setTakeBtnState();
     this.createElements();
     this.setBgPosition();
@@ -219,26 +220,38 @@ class Task {
     if (this.key === 'joinGroup') {
       bridge.send('VKWebAppJoinGroup', { group_id: Number(process.env.VK_GROUP_ID) })
         .then(res => {
-          if (res.result) this.scene.state.vkTask.joinGroup = res.result;
+          if (res.result) {
+            this.scene.state.vkTask.joinGroup = res.result;
+            this.window.socialTasks.joinGroup = res.result;
+          }
           this.setState(res.result);
-        });
+        }).catch(err => console.log(err));
     } else if (this.key === 'addFavorites') {
       bridge.send('VKWebAppAddToFavorites')
         .then(res => {
-          if (res.result) this.scene.state.vkTask.addFavorites = res.result;
+          if (res.result) {
+            this.scene.state.vkTask.addFavorites = res.result;
+            this.window.socialTasks.addFavorites = res.result;
+          }
           this.setState(res.result);
-        });
+        }).catch(err => console.log(err));
     } else if (this.key === 'subGroup') {
       bridge.send("VKWebAppAllowMessagesFromGroup", { group_id: Number(process.env.VK_GROUP_ID) })
         .then(res => {
-          if (res.result) this.scene.state.vkTask.subGroup = res.result;
+          if (res.result) {
+            this.scene.state.vkTask.subGroup = res.result;
+            this.window.socialTasks.subGroup = res.result;
+          }
           this.setState(res.result);
-        });
+        }).catch(err => console.log(err));
     } else if (this.key === 'subNative') {
       bridge.send("VKWebAppAllowNotifications").then(res => {
-        if (res.result) this.scene.state.vkTask.subNative = res.result;
+        if (res.result) {
+          this.scene.state.vkTask.subNative = res.result;
+          this.window.socialTasks.subNative = res.result;
+        }
         this.setState(res.result)
-      });
+      }).catch(err => console.log(err));
     }
     this.window.setTakeBtnState();
   }
