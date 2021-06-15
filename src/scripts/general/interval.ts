@@ -109,7 +109,7 @@ function chickenIntervalProgress(): void {
     for (let i in Scene.state.chicken) {
       const chicken: Ichicken = Scene.state.chicken[i];
       let breed: number;
-      if (chicken.type === 0) breed = 1;
+      if (chicken?.type === 0) breed = 1;
       else breed = chicken.type;
       const points: IchickenPoints = chickenSettings.chickenSettings.find((item: IchickenPoints) => item.breed === breed);
       // зарождение яйца
@@ -139,7 +139,7 @@ function chickenIntervalProgress(): void {
             if (ter?.block === territory.block && ter?.position === territory.position) eggs++;
           }
   
-          if ((eggs < countEggs || chicken.type === 0) && (territory.type === 2 || territory.type === 3)) {
+          if ((eggs < countEggs || chicken.type === 0) && (territory?.type === 2 || territory?.type === 3)) {
             chicken.egg = 0;
             // рандом разброса яиц
             let minX: number = chicken.x - INDENT;
@@ -165,8 +165,8 @@ function chickenIntervalProgress(): void {
               _id: 'local_' + this.randomString(18),
             }
             Scene.state.chickenEggs.push(egg);
-            if (chicken.type === 0) chicken.diamond++;
-            if (chicken.diamond >= 3 && chicken.type === 0) {
+            if (chicken?.type === 0) chicken.diamond++;
+            if (chicken.diamond >= 3 && chicken?.type === 0) {
               Scene.state.chicken = Scene.state.chicken.filter((el: Ichicken)=> el._id !== chicken._id);
             }
           }
