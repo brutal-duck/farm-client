@@ -18,6 +18,7 @@ import {
 import {
   increaseDiamonds,
   newbieAwardAnimation,
+  getCurrency,
 } from '../../../general/animations';
 import Collector from '../../../components/gameObjects/Collector';
 import BarsMenu from '../../../components/gameObjects/BarsMenu';
@@ -71,6 +72,7 @@ class UnicornBars extends Phaser.Scene {
   public clickModalBtn = clickModalBtn.bind(this);
   public increaseDiamonds = increaseDiamonds.bind(this);
   public newbieAwardAnimation = newbieAwardAnimation.bind(this);
+  public getCurrency = getCurrency.bind(this);
   public updateNativeShop = updateNativeShop.bind(this);
   public updateRaitingsBar = updateRaitingsBar.bind(this);
   public scoreEnding = scoreEnding.bind(this);
