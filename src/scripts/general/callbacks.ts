@@ -35,6 +35,12 @@ function okCallback(): void {
       
     }
 
+    if (method === 'showPermissions') {
+      console.log(method)
+      console.log(result)
+      console.log(data)
+    }
+
   }
 
 }

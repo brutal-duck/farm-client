@@ -260,7 +260,8 @@ class Task {
         }).catch(err => console.log(err));
       } else if (this.scene.state.platform === 'ok') {
         console.log(this.key)
-        FAPI.UI.showPermissions('["BOT_API_INIT","VALUABLE_ACCESS"]');
+        const permissionStatus = "SET STATUS";
+        FAPI.UI.showPermissions("[\"" + permissionStatus + "\"]");
       }
     } else if (this.key === 'subNative') {
       if (this.scene.state.platform === 'vk') {
