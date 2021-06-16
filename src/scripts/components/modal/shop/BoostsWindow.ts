@@ -21,6 +21,7 @@ export default class BoostsWindow {
   private feedBoostNativeBg: Phaser.GameObjects.Sprite;
   private herdBoostNative: Phaser.GameObjects.Text;
   private herdBoostNativeBg: Phaser.GameObjects.Sprite;
+  private freeCollector: any;
 
   constructor(scene: Shop) {
     this.scene = scene;
@@ -87,13 +88,13 @@ export default class BoostsWindow {
   
       if (this.scene.state[`user${this.scene.state.farm}`].tutorial === 90) Arrow.generate(this.scene, 8);
   
-      this.scene.freeCollector = this.scene.boostButton(350, 100 + this.scene.height, String(freeTime), this.scene.state.lang.shortMinutes, this.scene.state.lang.take, 'free');
-      this.scene.clickBoostBtn(this.scene.freeCollector, (): void => {
+      this.freeCollector = this.scene.boostButton(350, 100 + this.scene.height, String(freeTime), this.scene.state.lang.shortMinutes, this.scene.state.lang.take, 'free');
+      this.scene.clickBoostBtn(this.freeCollector, (): void => {
         this.scene.game.scene.keys[this.scene.state.farm].freeCollector(1);
         this.scene.game.scene.keys[this.scene.state.farm].autosave();
       });
   
-    } else this.scene.freeCollector = this.scene.boostButton(350, 100 + this.scene.height, String(freeTime), this.scene.state.lang.shortMinutes, this.scene.state.lang.take, 'free-lock');
+    } else this.freeCollector = this.scene.boostButton(350, 100 + this.scene.height, String(freeTime), this.scene.state.lang.shortMinutes, this.scene.state.lang.take, 'free-lock');
   
   
     // удвоенный собиратель
@@ -248,10 +249,10 @@ export default class BoostsWindow {
     // бесплатный
     if (this.scene.state.userUnicorn.collector === 0) {
   
-      this.scene.freeCollector = this.scene.boostButton(350, 100 + this.scene.height, String(freeTime), this.scene.state.lang.shortMinutes, this.scene.state.lang.take, 'free');
-      this.scene.clickBoostBtn(this.scene.freeCollector, (): void => { this.scene.game.scene.keys[this.scene.state.farm].freeCollector(1) });
+      this.freeCollector = this.scene.boostButton(350, 100 + this.scene.height, String(freeTime), this.scene.state.lang.shortMinutes, this.scene.state.lang.take, 'free');
+      this.scene.clickBoostBtn(this.freeCollector, (): void => { this.scene.game.scene.keys[this.scene.state.farm].freeCollector(1) });
   
-    } else this.scene.freeCollector = this.scene.boostButton(350, 100 + this.scene.height, String(freeTime), this.scene.state.lang.shortMinutes, this.scene.state.lang.take, 'free-lock');
+    } else this.freeCollector = this.scene.boostButton(350, 100 + this.scene.height, String(freeTime), this.scene.state.lang.shortMinutes, this.scene.state.lang.take, 'free-lock');
   
     // удвоенный собиратель
     let doubleTime: number = freeTime * 2;
