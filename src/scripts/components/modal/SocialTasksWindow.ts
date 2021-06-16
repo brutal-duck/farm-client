@@ -233,7 +233,7 @@ class Task {
             this.window.setTakeBtnState();
           }).catch(err => console.log(err));
       } else if (this.scene.state.platform === 'ok') {
-        console.log(this.key)
+        window.open(`https://ok.ru/group/${process.env.OK_GROUP_ID}`);
       }
     } else if (this.key === 'addFavorites') {
       if (this.scene.state.platform === 'vk') {
@@ -259,10 +259,7 @@ class Task {
           this.window.setTakeBtnState();
         }).catch(err => console.log(err));
       } else if (this.scene.state.platform === 'ok') {
-        FAPI.UI.showPermissions(
-          JSON.stringify(
-              ["BOT_API_INIT"]
-          ));
+        window.open(`https://ok.ru/group/${process.env.OK_GROUP_ID}`);
       }
     } else if (this.key === 'subNative') {
       if (this.scene.state.platform === 'vk') {
