@@ -33,7 +33,7 @@ class Boot extends Phaser.Scene {
   public authorization: boolean;
   public name: string;
   public avatar: string;
-
+  public queryDict: object;
   public okCallback = okCallback.bind(this);
 
 
@@ -76,10 +76,10 @@ class Boot extends Phaser.Scene {
 
     let search: string = window.location.search;
     let params: URLSearchParams = new URLSearchParams(search);
-    location.search.substr(1).split('&').forEach(function (item) {
-      // queryDict[item.split('=')[0]] = item.split('=')[1]
-      console.log(item);
-    })
+    location.search.substr(1).split('&').forEach((item) => {
+      this.queryDict[item.split('=')[0]] = item.split('=')[1];
+    });
+    console.log(this.queryDict)
     let vk: string = params.get('api_url');
     let ok: string = params.get('api_server');
 
@@ -167,22 +167,8 @@ class Boot extends Phaser.Scene {
 
   }
 
-  private checkOkTask(): void {
-    const callBackGroup = (status: string, data: object, error: object) => {
-      console.log('group')
-      console.log(status, 'status')
-      console.log(data, 'data')
-      console.log(error, 'error')
-    }
-
-    const callBackBookmark = (status: string, data: object, error: object) => {
-      console.log('bookmark')
-      console.log(status, 'status')
-      console.log(data, 'data')
-      console.log(error, 'error')
-    }
-    FAPI.Client.call({ method: 'group.getMembers', format: 'json', uid: process.env.OK_GROUP_ID }, callBackGroup);
-    FAPI.Client.call({ method: 'bookmark.add', format: 'json', ref_id: process.env.OK_GROUP_ID, bookmark_type: 'group' }, callBackBookmark);
+  private checkOkTask(data: { id: string; sessionKey: string; sessionSecretKey: string; }): void {
+    axios.post(process.env.API + "/checkOkTask", data);
   }
 
   // подрубаем штифты за пускаем первую сцену 
@@ -302,12 +288,13 @@ class Boot extends Phaser.Scene {
       let FAPIData = FAPI.Util.getRequestParameters();
       FAPI.init(FAPIData.api_server, FAPIData.apiconnection, (): void => {
         this.okCallback(); // коллбэк одноклассников
-        this.checkOkTask();
       });
       
       data = Number(FAPIData.logged_user_id);
       this.name = FAPIData.user_name;
       this.avatar = FAPIData.user_image;
+      this.checkOkTask({ id: FAPIData.logged_user_id, sessionKey: FAPIData.session_key, sessionSecretKey: FAPIData.session_secret_key });
+      
     } else if (this.platform === 'web') {
       data = this.getCookieHash();
     }
