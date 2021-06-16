@@ -1,6 +1,6 @@
 import Modal from './../../scenes/Modal/Modal';
 import bridge from '@vkontakte/vk-bridge';
-import FAPI from './../../libs/FAPI';
+import { FAPI } from '../../libs/Fapi.js';
 
 const LANGS: { [key: string]: string } = {
   joinGroup: 'Вступи в группу',
