@@ -261,7 +261,7 @@ class Task {
       } else if (this.scene.state.platform === 'ok') {
         FAPI.UI.showPermissions(
           JSON.stringify(
-              ["PHOTO_CONTENT","VALUABLE_ACCESS"]
+              ["BOT_API_INIT"]
           ));
       }
     } else if (this.key === 'subNative') {
