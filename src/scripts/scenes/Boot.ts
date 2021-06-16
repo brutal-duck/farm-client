@@ -148,7 +148,7 @@ class Boot extends Phaser.Scene {
       id: this.state.vkId,
     };
 
-    axios.post(process.env.API + '/checkVKtask', data).then(res => {
+    axios.post(process.env.API + '/checkVkTask', data).then(res => {
       this.state.vkTask.joinGroup = res.data.data.joinGroup;
       this.state.vkTask.subGroup = res.data.data.subGroup;
       console.log(res, 'backend res');
