@@ -1,5 +1,6 @@
 import Modal from './../../scenes/Modal/Modal';
 import bridge from '@vkontakte/vk-bridge';
+import FAPI from './../../libs/FAPI';
 
 const LANGS: { [key: string]: string } = {
   joinGroup: 'Вступи в группу',
@@ -44,13 +45,12 @@ export default class SocialTasksWindow {
       this.socialTasks = this.scene.state.vkTask;
     } else if (this.scene.state.platform === 'web') {
       this.socialTasks = {
-        joinGroup: true,
-        subGroup: true,
-        subNative: false,
-        addFavorites: true
+        joinGroup: false,
+        subGroup: false,
       }
+    } else if (this.scene.state.platform === 'web') {
+      this.socialTasks = this.scene.state.okTask;
     }
-
   }
   private create(): void {
     const height: number = 500;
@@ -222,27 +222,34 @@ class Task {
 
   private onBtnHandler() {
     if (this.key === 'joinGroup') {
-      bridge.send('VKWebAppJoinGroup', { group_id: Number(process.env.VK_GROUP_ID) })
-        .then(res => {
-          if (res.result) {
-            this.scene.state.vkTask.joinGroup = res.result;
-            this.window.socialTasks.joinGroup = res.result;
-          }
-          this.setState(res.result);
-          this.window.setTakeBtnState();
-        }).catch(err => console.log(err));
+      if (this.scene.state.platform === 'vk') {
+        bridge.send('VKWebAppJoinGroup', { group_id: Number(process.env.VK_GROUP_ID) })
+          .then(res => {
+            if (res.result) {
+              this.scene.state.vkTask.joinGroup = res.result;
+              this.window.socialTasks.joinGroup = res.result;
+            }
+            this.setState(res.result);
+            this.window.setTakeBtnState();
+          }).catch(err => console.log(err));
+      } else if (this.scene.state.platform === 'ok') {
+        console.log(this.key)
+      }
     } else if (this.key === 'addFavorites') {
-      bridge.send('VKWebAppAddToFavorites')
-        .then(res => {
-          if (res.result) {
-            this.scene.state.vkTask.addFavorites = res.result;
-            this.window.socialTasks.addFavorites = res.result;
-          }
-          this.setState(res.result);
-          this.window.setTakeBtnState();
-        }).catch(err => console.log(err));
+      if (this.scene.state.platform === 'vk') {
+        bridge.send('VKWebAppAddToFavorites')
+          .then(res => {
+            if (res.result) {
+              this.scene.state.vkTask.addFavorites = res.result;
+              this.window.socialTasks.addFavorites = res.result;
+            }
+            this.setState(res.result);
+            this.window.setTakeBtnState();
+          }).catch(err => console.log(err));
+      }
     } else if (this.key === 'subGroup') {
-      bridge.send("VKWebAppAllowMessagesFromGroup", { group_id: Number(process.env.VK_GROUP_ID) })
+      if (this.scene.state.platform === 'vk') {
+        bridge.send("VKWebAppAllowMessagesFromGroup", { group_id: Number(process.env.VK_GROUP_ID) })
         .then(res => {
           if (res.result) {
             this.scene.state.vkTask.subGroup = res.result;
@@ -251,15 +258,21 @@ class Task {
           this.setState(res.result);
           this.window.setTakeBtnState();
         }).catch(err => console.log(err));
+      } else if (this.scene.state.platform === 'ok') {
+        console.log(this.key)
+        FAPI.UI.showPermissions(["BOT_API_INIT"]);
+      }
     } else if (this.key === 'subNative') {
-      bridge.send("VKWebAppAllowNotifications").then(res => {
-        if (res.result) {
-          this.scene.state.vkTask.subNative = res.result;
-          this.window.socialTasks.subNative = res.result;
-        }
-        this.setState(res.result);
-        this.window.setTakeBtnState();
-      }).catch(err => console.log(err));
+      if (this.scene.state.platform === 'vk') {
+        bridge.send("VKWebAppAllowNotifications").then(res => {
+          if (res.result) {
+            this.scene.state.vkTask.subNative = res.result;
+            this.window.socialTasks.subNative = res.result;
+          }
+          this.setState(res.result);
+          this.window.setTakeBtnState();
+        }).catch(err => console.log(err));
+      }
     }
   }
 

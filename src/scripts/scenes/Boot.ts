@@ -154,11 +154,9 @@ class Boot extends Phaser.Scene {
     axios.post(process.env.API + '/checkVkTask', data).then(res => {
       this.state.vkTask.joinGroup = res.data.data.joinGroup;
       this.state.vkTask.subGroup = res.data.data.subGroup;
-      console.log(res, 'backend res');
     }).catch(err => console.log(err));
    
     bridge.send("VKWebAppCheckAllowedScopes", { scopes: "menu, notify" }).then(res => {
-      console.log(res, 'VKWebAppCheckAllowedScopes');
       res.result.forEach(data => {
         if (data.scope === 'notify') this.state.vkTask.subNative = data.allowed;
         if (data.scope === 'menu') this.state.vkTask.addFavorites = data.allowed;
@@ -168,8 +166,14 @@ class Boot extends Phaser.Scene {
   }
 
   private checkOkTask(data: { id: string; sessionKey: string; sessionSecretKey: string; }): void {
-    console.log(data);
-    axios.post(process.env.API + "/checkOkTask", data);
+    this.state.okTask = {
+      joinGroup: false,
+      subGroup: false,
+    };
+    axios.post(process.env.API + "/checkOkTask", data).then(res => {
+      this.state.okTask.joinGroup = res.data.data.joinGroup;
+      this.state.okTask.subGroup = res.data.data.subGroup;
+    });
   }
 
   // подрубаем штифты за пускаем первую сцену 

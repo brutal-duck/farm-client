@@ -764,5 +764,6 @@ interface Istate {
   unicornNativeCount: number[];
   storageMultiply: number;
   vkTask: IsociaTasks;
+  okTask: IsociaTasks;
   shownSocialTaskWindow: boolean;
 }

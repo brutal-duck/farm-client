@@ -76,6 +76,7 @@ let cowNativeCount: number[] = [ 0, 0, 0, 0, 0 ];
 let unicornNativeCount: number[] = [ 0 ];
 let storageMultiply: number = 2;
 let vkTask: IsociaTasks = {};
+let okTask: IsociaTasks = {};
 let shownSocialTaskWindow: boolean = false;
 
 let state: Istate = {
@@ -160,6 +161,7 @@ let state: Istate = {
   unicornNativeCount, // натификаторы для профиля
   storageMultiply, // множитель для коров
   vkTask,
+  okTask,
   shownSocialTaskWindow,
 }
 
