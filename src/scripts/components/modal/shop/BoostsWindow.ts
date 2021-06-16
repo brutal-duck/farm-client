@@ -755,9 +755,9 @@ export default class BoostsWindow {
         let yBtn: number = 500 + this.scene.height;
     
         if (this.herdBoostTimerText?.active) this.herdBoostTimerText?.setText(this.scene.state.lang.stillForBoost + ' ' + shortTime(this.scene.state.timeToNewDay, this.scene.state.lang));
-        if (this.scene.state.timeToNewDay <= 0 && this.herdBoostBtn.data && this.herdBoostBtn.data.values.updated) this.herdBoostBtn.data.values.updated = false;
+        if (this.scene.state.timeToNewDay <= 0 && this.herdBoostBtn?.active && this.herdBoostBtn?.data && this.herdBoostBtn?.data.values.updated) this.herdBoostBtn.data.values.updated = false;
     
-        if (this.scene.state[`user${this.scene.state.farm}`].takenHerdBoost <= 0 && this.herdBoostBtn.data && !this.herdBoostBtn.data.values.updated) {
+        if (this.scene.state[`user${this.scene.state.farm}`].takenHerdBoost <= 0 && this.herdBoostBtn?.active && this.herdBoostBtn.data && !this.herdBoostBtn.data.values.updated) {
           this.herdBoostBtn.data.values.updated = true;
           // если не взят буст
           this.herdBoostBtnLeftText?.setText(this.scene.state.lang.free).setY(yBtn - 25).setX(xBtn).setOrigin(0.5, 0.5); 
@@ -775,7 +775,7 @@ export default class BoostsWindow {
             this.herdBoostNativeBg?.setInteractive(false)
           }
         } 
-        if (this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].herd > 0 && this.scene.state[`user${this.scene.state.farm}`].takenHerdBoost > 0 && this.herdBoostBtn.data && !this.herdBoostBtn?.data.values.updated) {
+        if (this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].herd > 0 && this.scene.state[`user${this.scene.state.farm}`].takenHerdBoost > 0 && this.herdBoostBtn?.active && this.herdBoostBtn.data && !this.herdBoostBtn?.data.values.updated) {
           this.herdBoostBtn.data.values.updated = true;
           this.herdBoostBtnLeftText?.setText(this.scene.state.lang.pickUp).setX(xBtn).setOrigin(0.5, 0.5);
           this.herdBoostBtnRightText?.setVisible(false);
@@ -896,14 +896,13 @@ export default class BoostsWindow {
         if (this.feedBoostBtnRightText?.active) this.feedBoostBtnRightText?.setX(this.feedBoostDiamondBtn?.getBounds().right + 1);
         
       } else {
-        this.feedProgressBar?.setVisible(false);
-        this.feedProgressText?.setVisible(false);
-        this.feedProgressBarBg?.setVisible(false);
-        this.feedBoostBtnLeftText?.setText('+1 ' + this.scene.state.lang.hour);
-        this.feedBoostDiamondBtn?.setX(this.feedBoostBtn?.x + this.feedBoostBtnLeftText.width - 25 - this.feedBoostBtnRightText.width);
-        this.feedBoostBtnLeftText?.setX(this.feedBoostDiamondBtn?.getBounds().left - 2);
-        this.feedBoostBtnRightText?.setX(this.feedBoostDiamondBtn?.getBounds().right + 1);
-     
+        if (this.feedProgressBar?.active) this.feedProgressBar?.setVisible(false);
+        if (this.feedProgressText?.active) this.feedProgressText?.setVisible(false);
+        if (this.feedProgressBarBg?.active) this.feedProgressBarBg?.setVisible(false);
+        if (this.feedBoostBtnLeftText?.active) this.feedBoostBtnLeftText?.setText('+1 ' + this.scene.state.lang.hour);
+        if (this.feedBoostDiamondBtn?.active) this.feedBoostDiamondBtn?.setX(this.feedBoostBtn?.x + this.feedBoostBtnLeftText.width - 25 - this.feedBoostBtnRightText.width);
+        if (this.feedBoostBtnLeftText?.active) this.feedBoostBtnLeftText?.setX(this.feedBoostDiamondBtn?.getBounds().left - 2);
+        if (this.feedBoostBtnRightText?.active) this.feedBoostBtnRightText?.setX(this.feedBoostDiamondBtn?.getBounds().right + 1);
       }
     }
   }

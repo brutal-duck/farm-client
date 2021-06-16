@@ -17,30 +17,11 @@ import {
   shortTime,
   loadingModal,
 } from '../../../general/basic';
-import {
-  sheepMoney,
-  sheep,
-  updateSheepPrices
-} from './sheep';
-import {
-  chickenMoney,
-  chicken,
-  updateChickenPrices
-} from './chicken';
-import {
-  cowMoney,
-  cow,
-  updateCowPrices
-} from './cow';
-import {
-  animalMoney,
-  animals,
-  updateAnimalPrices,
-  getDiamondPrice
-} from './event';
-import { openModal } from '../../../general/animations';
 import DiamondsWindow from '../../../components/modal/shop/DiamondsWindow';
 import BoostsWindow from '../../../components/modal/shop/BoostsWindow';
+import MoneyWindow from '../../../components/modal/shop/MoneyWindow';
+import AnimalWindow from '../../../components/modal/shop/AnimalWindow';
+import AnimalUnicornWindow from '../../../components/modal/shop/AnimalUnicornWindow';
 
 const shopHead: string = require("./../../../../assets/images/modal/shop-head.png");
 const shopClose: string = require("./../../../../assets/images/modal/shop-close.png");
@@ -93,7 +74,6 @@ class Shop extends Phaser.Scene {
   public scrolling: Scrolling;
   public height: number;
   public heightWindow: number = 835;
-  public buttons: IshopButtons[];
   public collectorTimer: Phaser.GameObjects.Text;
   public freeCollector: any;
 
@@ -106,31 +86,17 @@ class Shop extends Phaser.Scene {
   public sheepPrice = sheepPrice.bind(this);
   public boostButton = boostButton.bind(this);
   public clickBoostBtn = clickBoostBtn.bind(this);
-  public chickenMoney = chickenMoney.bind(this);
-  public chicken = chicken.bind(this);
-  public updateChickenPrices = updateChickenPrices.bind(this);
-  public cowMoney = cowMoney.bind(this);
-  public cow = cow.bind(this);
-  public updateCowPrices = updateCowPrices.bind(this);
-  public sheepMoney = sheepMoney.bind(this);
-  public sheep = sheep.bind(this);
-  public updateSheepPrices = updateSheepPrices.bind(this);
   public payOdnoklassniki = payOdnoklassniki.bind(this);
   public payVK = payVK.bind(this);
   public shortTime = shortTime.bind(this);
-  public animals = animals.bind(this);
   public animalPrice = animalPrice.bind(this);
-  public animalMoney = animalMoney.bind(this);
-  public updateAnimalPrices = updateAnimalPrices.bind(this);
-  public getDiamondPrice = getDiamondPrice.bind(this);
-  public openModal = openModal.bind(this);
   public loadingModal = loadingModal.bind(this);
 
 
   public init(state: Istate): void {
-    
+  
     this.state = state;
-    this.buttons = [];
+
   }
 
   public preload(): void {
@@ -182,9 +148,7 @@ class Shop extends Phaser.Scene {
   public create(): void {
 
     this.scene.launch('ShopBars', this.state);
-    
     this.game.scene.keys['Modal'].add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + 70, 'shop-window');
-    
     this.height = Number(this.game.config.height);
 
     let cameraOptions = {
@@ -207,19 +171,11 @@ class Shop extends Phaser.Scene {
     });
 
     if (this.state.modal.shopType === 1) new DiamondsWindow(this)
-    else if (this.state.modal.shopType === 2) {
+    else if (this.state.modal.shopType === 2) new MoneyWindow(this)
+    else if (this.state.modal.shopType === 3) {
 
-      if (this.state.farm === 'Sheep') this.sheepMoney();
-      else if (this.state.farm === 'Chicken') this.chickenMoney();
-      else if (this.state.farm === 'Cow') this.cowMoney();
-      else if (this.state.farm === 'Unicorn') this.animalMoney();
-
-    } else if (this.state.modal.shopType === 3) {
-
-      if (this.state.farm === 'Sheep') this.sheep();
-      else if (this.state.farm === 'Chicken') this.chicken();
-      else if (this.state.farm === 'Cow') this.cow();
-      else if (this.state.farm === 'Unicorn') this.animals();
+      if (this.state.farm === 'Unicorn') new AnimalUnicornWindow(this)
+      else new AnimalWindow(this)
 
     } else if (this.state.modal.shopType === 4) new BoostsWindow(this)
     
