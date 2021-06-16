@@ -76,7 +76,10 @@ class Boot extends Phaser.Scene {
 
     let search: string = window.location.search;
     let params: URLSearchParams = new URLSearchParams(search);
-
+    location.search.substr(1).split('&').forEach(function (item) {
+      // queryDict[item.split('=')[0]] = item.split('=')[1]
+      console.log(item);
+    })
     let vk: string = params.get('api_url');
     let ok: string = params.get('api_server');
 
