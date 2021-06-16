@@ -259,9 +259,10 @@ class Task {
           this.window.setTakeBtnState();
         }).catch(err => console.log(err));
       } else if (this.scene.state.platform === 'ok') {
-        console.log(this.key)
-        const permissionStatus = "SET STATUS";
-        FAPI.UI.showPermissions("[\"" + permissionStatus + "\"]");
+        FAPI.UI.showPermissions(
+          JSON.stringify(
+              ["PHOTO_CONTENT","VALUABLE_ACCESS"]
+          ));
       }
     } else if (this.key === 'subNative') {
       if (this.scene.state.platform === 'vk') {
