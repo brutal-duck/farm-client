@@ -74,7 +74,6 @@ class Shop extends Phaser.Scene {
   public scrolling: Scrolling;
   public height: number;
   public heightWindow: number = 835;
-  public collectorTimer: Phaser.GameObjects.Text;
 
   public click = click.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);

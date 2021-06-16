@@ -114,15 +114,6 @@ export default class Collector extends Phaser.GameObjects.Text {
         this.bubble.fillRoundedRect(0, 0, bounds.width + 30, bounds.height, 8);
       }
   
-      if (this.scene.scene.isActive('Shop') && this.scene.state.modal?.shopType === 4) {
-  
-        if (this.farmData.collector === 0) {
-          this.scene.scene.stop('Shop');
-          this.scene.scene.launch('Shop', this.scene.state);
-        } else if (this.scene.game.scene.keys['Shop'].collectorTimer?.active) {
-          this.scene.game.scene.keys['Shop'].collectorTimer.setText(this.scene.state.lang.still + ' ' + time);
-        }
-      }
     }
     this.setPulseAnimation();
   }
