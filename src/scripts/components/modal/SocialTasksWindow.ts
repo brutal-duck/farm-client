@@ -48,7 +48,7 @@ export default class SocialTasksWindow {
         joinGroup: false,
         subGroup: false,
       }
-    } else if (this.scene.state.platform === 'web') {
+    } else if (this.scene.state.platform === 'ok') {
       this.socialTasks = this.scene.state.okTask;
     }
   }
