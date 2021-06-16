@@ -4,6 +4,7 @@ import Arrow from "../../animations/Arrow";
 
 export default class BoostsWindow {
   private scene: Shop;
+  private farm: string
 
   private herdBoostTimerText: Phaser.GameObjects.Text;
   private herdBoostBtnRightText: Phaser.GameObjects.Text;
@@ -31,6 +32,8 @@ export default class BoostsWindow {
 
   constructor(scene: Shop) {
     this.scene = scene;
+    this.farm = this.scene.state.farm
+    if (this.farm === 'Unicorn') this.farm = 'Event'
     if (this.scene.state[`user${this.scene.state.farm}`].collector !== 0) this.collectorIsOn = true
     else this.collectorIsOn = false
     this.create();
@@ -183,17 +186,17 @@ export default class BoostsWindow {
     if (this.doubleCollector) for (let el of this.doubleCollector) el?.destroy()
     if (this.adBtn) for (let el of this.adBtn) el?.destroy()
 
-    let freeTime: number = this.scene.state[`${this.scene.state.farm.toLowerCase()}CollectorSettings`].find((data: IcollectorSettings) => data.level === this.scene.state[`user${this.scene.state.farm}`].collectorLevel).time;
+    let freeTime: number = this.scene.state[`${this.farm.toLowerCase()}CollectorSettings`].find((data: IcollectorSettings) => data.level === this.scene.state[`user${this.farm}`].collectorLevel).time;
 
     // бесплатный
-    if (this.scene.state[`user${this.scene.state.farm}`].collector === 0) {
+    if (this.scene.state[`user${this.farm}`].collector === 0) {
   
-      if (this.scene.state[`user${this.scene.state.farm}`].tutorial === 90) Arrow.generate(this.scene, 8);
+      if (this.scene.state[`user${this.farm}`].tutorial === 90) Arrow.generate(this.scene, 8);
   
       this.freeCollector = this.scene.boostButton(350, 100 + this.scene.height, String(freeTime), this.scene.state.lang.shortMinutes, this.scene.state.lang.take, 'free');
       this.scene.clickBoostBtn(this.freeCollector, (): void => {
-        this.scene.game.scene.keys[this.scene.state.farm].freeCollector(1);
-        this.scene.game.scene.keys[this.scene.state.farm].autosave();
+        this.scene.game.scene.keys[this.farm].freeCollector(1);
+        this.scene.game.scene.keys[this.farm].autosave();
       });
       
     } else this.freeCollector = this.scene.boostButton(350, 100 + this.scene.height, String(freeTime), this.scene.state.lang.shortMinutes, this.scene.state.lang.take, 'free-lock');  
@@ -201,7 +204,7 @@ export default class BoostsWindow {
     // удвоенный собиратель
     let doubleTime: number = freeTime * 2;
   
-    let doubleTimePrice: number = Math.floor(doubleTime / 60 * this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].doubledСollectorPrice);
+    let doubleTimePrice: number = Math.floor(doubleTime / 60 * this.scene.state[`${this.farm.toLowerCase()}Settings`].doubledСollectorPrice);
     
     // проверки для двойного собирателя разные
     let checkDouble: boolean = true;

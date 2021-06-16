@@ -36,9 +36,9 @@ export default class MoneyWindow {
         }
         this.scene.game.scene.keys[this.scene.state.farm].exchange();
         this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-        this.scene.stop();
-        this.scene.stop('ShopBars');
-        this.scene.stop('Modal');
+        this.scene.scene.stop();
+        this.scene.scene.stop('ShopBars');
+        this.scene.scene.stop('Modal');
       });
       
       let count: string = String(shortNum(this.scene.game.scene.keys[this.scene.state.farm].convertDiamonds(left)));
@@ -56,9 +56,9 @@ export default class MoneyWindow {
         }
         this.scene.game.scene.keys[this.scene.state.farm].exchange();
         this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-        this.scene.stop();
-        this.scene.stop('ShopBars');
-        this.scene.stop('Modal');
+        this.scene.scene.stop();
+        this.scene.scene.stop('ShopBars');
+        this.scene.scene.stop('Modal');
       });
   
       if (right) {
@@ -74,9 +74,9 @@ export default class MoneyWindow {
           }
           this.scene.game.scene.keys[this.scene.state.farm].exchange();
           this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-          this.scene.stop();
-          this.scene.stop('ShopBars');
-          this.scene.stop('Modal');
+          this.scene.scene.stop();
+          this.scene.scene.stop('ShopBars');
+          this.scene.scene.stop('Modal');
         });
   
         let count: string = String(shortNum(this.scene.game.scene.keys[this.scene.state.farm].convertDiamonds(right)));
@@ -97,9 +97,9 @@ export default class MoneyWindow {
           }
           this.scene.game.scene.keys[this.scene.state.farm].exchange();
           this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-          this.scene.stop();
-          this.scene.stop('ShopBars');
-          this.scene.stop('Modal');
+          this.scene.scene.stop();
+          this.scene.scene.stop('ShopBars');
+          this.scene.scene.stop('Modal');
         });
       }
     }
