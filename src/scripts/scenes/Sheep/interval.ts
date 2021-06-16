@@ -361,7 +361,6 @@ function interval(): void {
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Profile') && 
       this.state.progress.event.type === 1) { 
-      console.log('open', this.state.progress.event.open)
       if (!checkRaiting) {
         this.getEventRaiting();
         checkRaiting = true;
