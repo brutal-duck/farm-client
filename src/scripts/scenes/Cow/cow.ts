@@ -427,10 +427,10 @@ function confirmExpelCow(): void {
 }
 
 
-// продажа коровы
-function expelCow(): void {
-  this.state.animal.destroy();
-}
+// // продажа коровы
+// function expelCow(): void {
+//   this.state.animal.destroy();
+// }
 
 
 // мерджинг на поле
@@ -476,6 +476,5 @@ export {
   collectMilk,
   sellMilk,
   confirmExpelCow,
-  expelCow,
   dragCowMerging
 }

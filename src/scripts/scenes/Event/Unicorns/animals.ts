@@ -313,15 +313,6 @@ function confirmExpelAnimal(): void {
 }
 
 
-// продажа курочки
-function expelAnimal(): void {
-  this.currentTerritory(this.state.animal.x, this.state.animal.y).data.values.merging = [];
-  this.state.animal.data.values.active?.data.values.cloud.destroy();
-  this.state.animal.data.values.active?.destroy();
-  this.state.animal.destroy();
-
-}
-
 
 // мерджинг на в клетках
 function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
@@ -481,7 +472,6 @@ export {
   getResource,
   buyAnimal,
   confirmExpelAnimal,
-  expelAnimal,
   checkMerging,
   collectResource,
   getActiveAnimal,

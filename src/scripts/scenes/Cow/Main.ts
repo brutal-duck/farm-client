@@ -70,7 +70,6 @@ import {
   collectMilk,
   sellMilk,
   confirmExpelCow,
-  expelCow,
   dragCowMerging
 } from './cow';
 import { 
@@ -183,7 +182,6 @@ class Cow extends Phaser.Scene {
   public collectMilk = collectMilk.bind(this);
   public sellMilk = sellMilk.bind(this);
   public confirmExpelCow = confirmExpelCow.bind(this);
-  public expelCow = expelCow.bind(this);
   public showBank = showBank.bind(this);
   public freeCollector = freeCollector.bind(this);
   public buyCollector = buyCollector.bind(this);

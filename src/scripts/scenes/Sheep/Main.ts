@@ -90,7 +90,6 @@ import {
   collectWool,
   sellWool,
   confirmExpelSheep,
-  expelSheep,
   woolSprite,
   dragSheepMerging
 } from './sheep';
@@ -239,7 +238,6 @@ class Sheep extends Phaser.Scene {
   public collectWool = collectWool.bind(this);
   public sellWool = sellWool.bind(this);
   public confirmExpelSheep = confirmExpelSheep.bind(this);
-  public expelSheep = expelSheep.bind(this);
   public woolSprite = woolSprite.bind(this);
   public showBank = showBank.bind(this);
   public freeCollector = freeCollector.bind(this);

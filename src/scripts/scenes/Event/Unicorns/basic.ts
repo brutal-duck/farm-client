@@ -158,7 +158,7 @@ function maxBreedForBuy(): number {
 }
 
 // территория на которой находится объект
-function currentTerritory(x: number, y: number): object {
+function currentTerritory(x: number, y: number): Phaser.Physics.Arcade.Sprite {
 
   let block: number = Math.ceil((y - this.topIndent) / this.height);
   let position: number = Math.ceil(x / this.height);

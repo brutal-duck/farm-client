@@ -559,13 +559,6 @@ function confirmExpelChicken(): void {
 }
 
 
-// продажа курочки
-function expelChicken(): void {
-
-  this.state.animal.destroy();
-
-}
-
 
 // мерджинг на поле
 function dragChickenMerging(chicken: any): void {
@@ -625,6 +618,5 @@ export {
   collectEgg,
   sellEggs,
   confirmExpelChicken,
-  expelChicken,
   dragChickenMerging
 }

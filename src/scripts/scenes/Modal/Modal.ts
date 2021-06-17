@@ -27,10 +27,7 @@ import {
   boughtChickenLand,
   buyChickenTerritory,
   chickenConvertor,
-  confirmChickenExchangeTerritory,
   chickenEggsRepository,
-  confirmExpelChicken,
-  diamondChickenAd,
   chickenEggRepositoryExchange,
 } from './chicken';
 import {
@@ -41,16 +38,12 @@ import {
   boughtCowLand,
   buyCowTerritory,
   cowConvertor,
-  confirmCowExchangeTerritory,
   cowMilkRepository,
-  confirmExpelCow,
-  diamondCowAd,
   cowMilkRepositoryExchange,
   improveFactoryWindow,
   confirmSellMilk
 } from './cow';
 import {
-  confirmExpelAnimal,
   eventConvertor,
   buyEventTerritory,
   improveCollectorEvent,
@@ -66,10 +59,7 @@ import {
   boughtSheepLand,
   buySheepTerritory,
   sheepConvertor,
-  confirmSheepExchangeTerritory,
   sheepWoolRepository,
-  confirmExpelSheep,
-  diamondSheepAd,
   sheepWoolRepositoryExchange,
 } from './sheep';
 import DailyAwardWindow from '../../components/modal/DailyAwardWindow';
@@ -79,7 +69,6 @@ import {
   addEmail,
   support,
   registration,
-  profileWindow,
   improveCollector,
   updateImproveCollector,
   confirmBuyCooldown
@@ -115,7 +104,6 @@ class Modal extends Phaser.Scene {
   public progressText: Phaser.GameObjects.Text;
   public progressButton: any;
   public feedBoostText: Phaser.GameObjects.Text;
-  public caveTimer: Phaser.GameObjects.Text;
   public mainInput: HTMLInputElement;
   public secondInput: HTMLInputElement;
   public enterKey: Phaser.Input.Keyboard.Key;
@@ -148,13 +136,9 @@ class Modal extends Phaser.Scene {
   public boughtCowLand = boughtCowLand.bind(this);
   public buyCowTerritory = buyCowTerritory.bind(this);
   public chickenConvertor = chickenConvertor.bind(this);
-  public confirmChickenExchangeTerritory = confirmChickenExchangeTerritory.bind(this);
   public chickenEggsRepository = chickenEggsRepository.bind(this);
-  public confirmExpelChicken = confirmExpelChicken.bind(this);
   public cowConvertor = cowConvertor.bind(this);
-  public confirmCowExchangeTerritory = confirmCowExchangeTerritory.bind(this);
   public cowMilkRepository = cowMilkRepository.bind(this);
-  public confirmExpelCow = confirmExpelCow.bind(this);
   public sheepFair = sheepFair.bind(this);
   public sheep = sheep.bind(this);
   public sheepPasture = sheepPasture.bind(this);
@@ -162,15 +146,9 @@ class Modal extends Phaser.Scene {
   public boughtSheepLand = boughtSheepLand.bind(this);
   public buySheepTerritory = buySheepTerritory.bind(this);
   public sheepConvertor = sheepConvertor.bind(this);
-  public confirmSheepExchangeTerritory = confirmSheepExchangeTerritory.bind(this);
   public sheepWoolRepository = sheepWoolRepository.bind(this);
-  public confirmExpelSheep = confirmExpelSheep.bind(this);
-  public profileWindow = profileWindow.bind(this);
   public support = support.bind(this);
   public registration = registration.bind(this);
-  public diamondSheepAd = diamondSheepAd.bind(this);
-  public diamondChickenAd = diamondChickenAd.bind(this);
-  public diamondCowAd = diamondCowAd.bind(this);
   public improveCollector = improveCollector.bind(this);
   public updateImproveCollector = updateImproveCollector.bind(this);
   public shopButton = shopButton.bind(this);
@@ -180,7 +158,6 @@ class Modal extends Phaser.Scene {
   public cowMilkRepositoryExchange = cowMilkRepositoryExchange.bind(this);
   public changeNickname = changeNickname.bind(this);
   public addEmail = addEmail.bind(this);
-  public confirmExpelAnimal = confirmExpelAnimal.bind(this);
   public shortNum = shortNum.bind(this);
   public eventConvertor = eventConvertor.bind(this);
   public eventTerritory = eventTerritory.bind(this);
