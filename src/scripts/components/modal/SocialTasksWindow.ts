@@ -166,10 +166,12 @@ export default class SocialTasksWindow {
     this.takeBtnText.setPosition(this.takeBtn.x, this.takeBtn.y - 3);
   }  
   private onBtnPickUpHandler(): void {
-    // установить метку
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-    this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].getCurrency({ x: this.scene.cameras.main.centerX, y: this.scene.cameras.main.centerY }, this.award, 'diamond');
-    if (this.scene.scene.isActive('Profile')) this.scene.game.scene.keys['Profile'].getCurrency({ x: this.scene.cameras.main.centerX, y: this.scene.cameras.main.centerY }, this.award, 'diamond');
+    
+    const centerPosition: Iposition = { x: this.scene.cameras.main.centerX, y: this.scene.cameras.main.centerY };
+    if (this.scene.scene.isActive('Profile')) this.scene.game.scene.keys['Profile'].getCurrency(centerPosition, this.award, 'diamond');
+    else this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].getCurrency(centerPosition, this.award, 'diamond');
+    
     this.scene.state.user.diamonds += this.award;
     this.scene.state.user.takenSocialAward = true;
     if (this.scene.scene.isActive('Profile')) this.scene.game.scene.keys['Profile'].updateSocialTaskNative();
@@ -221,57 +223,76 @@ class Task {
   }
 
   private onBtnHandler() {
-    if (this.key === 'joinGroup') {
-      if (this.scene.state.platform === 'vk') {
-        bridge.send('VKWebAppJoinGroup', { group_id: Number(process.env.VK_GROUP_ID) })
-          .then(res => {
-            if (res.result) {
-              this.scene.state.vkTask.joinGroup = res.result;
-              this.window.socialTasks.joinGroup = res.result;
-            }
-            this.setState(res.result);
-            this.window.setTakeBtnState();
-          }).catch(err => console.log(err));
-      } else if (this.scene.state.platform === 'ok') {
-        window.open(`https://ok.ru/group/${process.env.OK_GROUP_ID}`);
-      }
-    } else if (this.key === 'addFavorites') {
-      if (this.scene.state.platform === 'vk') {
-        bridge.send('VKWebAppAddToFavorites')
-          .then(res => {
-            if (res.result) {
-              this.scene.state.vkTask.addFavorites = res.result;
-              this.window.socialTasks.addFavorites = res.result;
-            }
-            this.setState(res.result);
-            this.window.setTakeBtnState();
-          }).catch(err => console.log(err));
-      }
-    } else if (this.key === 'subGroup') {
-      if (this.scene.state.platform === 'vk') {
-        bridge.send("VKWebAppAllowMessagesFromGroup", { group_id: Number(process.env.VK_GROUP_ID) })
+    switch (this.key) {
+      case 'joinGroup':
+        this.joinGroupCallback();
+      break;
+      case 'addFavorites':
+        this.addFavoritesCallback();
+      break;
+      case 'subGroup':
+        this.subGroupCallback();
+      break;
+      case 'subNative':
+        this.subNativeCallback();
+      break;
+      default: 
+        console.log('Wrong key');
+      break;
+    }
+  }
+
+  private joinGroupCallback(): void {
+    if (this.scene.state.platform === 'vk') {
+      bridge.send('VKWebAppJoinGroup', { group_id: Number(process.env.VK_GROUP_ID) })
         .then(res => {
           if (res.result) {
-            this.scene.state.vkTask.subGroup = res.result;
-            this.window.socialTasks.subGroup = res.result;
+            this.window.socialTasks.joinGroup = res.result;
           }
           this.setState(res.result);
           this.window.setTakeBtnState();
         }).catch(err => console.log(err));
-      } else if (this.scene.state.platform === 'ok') {
-        window.open(`https://ok.ru/group/${process.env.OK_GROUP_ID}`);
-      }
-    } else if (this.key === 'subNative') {
-      if (this.scene.state.platform === 'vk') {
-        bridge.send("VKWebAppAllowNotifications").then(res => {
-          if (res.result) {
-            this.scene.state.vkTask.subNative = res.result;
-            this.window.socialTasks.subNative = res.result;
-          }
-          this.setState(res.result);
-          this.window.setTakeBtnState();
-        }).catch(err => console.log(err));
-      }
+    } else if (this.scene.state.platform === 'ok') {
+      window.open(`https://ok.ru/group/${process.env.OK_GROUP_ID}`);
+    }
+  }
+
+  private addFavoritesCallback(): void {
+    if (this.scene.state.platform === 'vk') {
+      bridge.send('VKWebAppAddToFavorites').then(res => {
+        if (res.result) {
+          this.window.socialTasks.addFavorites = res.result;
+        }
+        this.setState(res.result);
+        this.window.setTakeBtnState();
+      }).catch(err => console.log(err));
+    }
+  }
+
+  private subGroupCallback(): void {
+    if (this.scene.state.platform === 'vk') {
+      bridge.send("VKWebAppAllowMessagesFromGroup", { group_id: Number(process.env.VK_GROUP_ID) })
+      .then(res => {
+        if (res.result) {
+          this.window.socialTasks.subGroup = res.result;
+        }
+        this.setState(res.result);
+        this.window.setTakeBtnState();
+      }).catch(err => console.log(err));
+    } else if (this.scene.state.platform === 'ok') {
+      window.open(`https://ok.ru/group/${process.env.OK_GROUP_ID}`);
+    }
+  }
+
+  private subNativeCallback(): void {
+    if (this.scene.state.platform === 'vk') {
+      bridge.send("VKWebAppAllowNotifications").then(res => {
+        if (res.result) {
+          this.window.socialTasks.subNative = res.result;
+        }
+        this.setState(res.result);
+        this.window.setTakeBtnState();
+      }).catch(err => console.log(err));
     }
   }
 

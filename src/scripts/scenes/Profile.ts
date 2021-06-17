@@ -17,6 +17,8 @@ const eventIsland: string = require('./../../assets/images/profile/event-island.
 const btn: string = require('./../../assets/images/profile/btn.png');
 const pointer: string = require('./../../assets/images/profile/pointer.png');
 const fortune: string = require('./../../assets/images/profile/event-fortune.png');
+const socialBtnVk: string = require('./../../assets/images/profile/social-btn-vk.png');
+const socialBtnOk: string = require('./../../assets/images/profile/social-btn-ok.png');
 const nativeBg: string = require('./../../assets/images/native.png');
 
 class Profile extends Phaser.Scene {
@@ -54,7 +56,6 @@ class Profile extends Phaser.Scene {
   public animChickenSprite: Phaser.GameObjects.Sprite;
   public animCowSprite: Phaser.GameObjects.Sprite;
   public socialTaskBtn: Phaser.GameObjects.Sprite;
-  public socialTaskText: Phaser.GameObjects.Text;
   public socialTaskNative: Phaser.GameObjects.Sprite;
   public socialTaskNativeText: Phaser.GameObjects.Text;
   public socialTasks: IsociaTasks;
@@ -74,7 +75,7 @@ class Profile extends Phaser.Scene {
     if (this.state.platform === 'vk') {
       this.socialTasks = this.state.vkTask;
     } else if (this.state.platform === 'ok') {
-      // this.socialTasks = t
+      this.socialTasks = this.state.okTask;
     } else if (this.state.platform === 'web') {
       this.socialTasks = {
         joinGroup: true,
@@ -104,6 +105,8 @@ class Profile extends Phaser.Scene {
     this.load.image('profile-pointer', pointer);
     this.load.image('profile-fortune', fortune);
     this.load.image('profile-native-bg', nativeBg)
+    this.load.image('profile-social-btn-vk', socialBtnVk);
+    this.load.image('profile-social-btn-ok', socialBtnOk);
   }
 
 
@@ -126,7 +129,13 @@ class Profile extends Phaser.Scene {
   
   }
   public create(): void {
-    if (this.state.progress.event.eventPoints >= 0 && this.state.progress.event.open && this.state.progress.event.type === 1 && this.state.progress.event.startTime < 0 && this.state.progress.event.endTime > 0) this.getEventRaiting(); // получаем новые рейтинги
+    if (
+      this.state.progress.event.eventPoints >= 0 && 
+      this.state.progress.event.open && 
+      this.state.progress.event.type === 1 && 
+      this.state.progress.event.startTime < 0 && 
+      this.state.progress.event.endTime > 0
+    ) this.getEventRaiting(); // получаем новые рейтинги
     
     this.bg = this.add.sprite(0, 0, 'profile-bg')
       .setInteractive()
@@ -135,7 +144,6 @@ class Profile extends Phaser.Scene {
     this.createElements();
     this.setListeners();
     this.setNativeAnim();
-
     this.game.scene.keys[this.state.farm].updateProfileNative(true);
   }
 
@@ -149,6 +157,7 @@ class Profile extends Phaser.Scene {
     this.createFarms();
     this.createShop();
     this.creaetePointer();
+    // if (this.state.platform === 'vk' || this.state.platform === 'ok') 
     this.createSocialTaskBtn();
   }
 
@@ -941,19 +950,15 @@ class Profile extends Phaser.Scene {
 
 
   private createSocialTaskBtn(): void {
-    const position: Iposition = { x: 150, y: 200 };
+    const position: Iposition = { x: 70, y: 230 };
     if (this.state.userSheep.tutorial >= 100) {
-      this.socialTaskBtn = this.add.sprite(position.x, position.y, 'improve-collector');
-      this.socialTaskText = this.add.text(position.x, position.y - 3, this.state.lang.prizes, {
-        font: '24px Shadow',
-        color: '#ffffff'
-      }).setStroke('#3B5367', 4).setOrigin(0.5);
-      this.socialTaskNativeText = this.add.text(position.x + this.socialTaskBtn.width / 2 - 10, position.y - this.socialTaskBtn.height / 2, '1', {
+      this.socialTaskBtn = this.add.sprite(position.x, position.y, `profile-social-btn-vk`);
+      this.socialTaskNativeText = this.add.text(position.x + this.socialTaskBtn.displayWidth / 2 - 10, position.y - this.socialTaskBtn.displayHeight / 2 + 5, '1', {
         font: '30px Bip',
         color: '#ffffff',
       }).setOrigin(0.5).setDepth(1);
       this.socialTaskNative = this.add.sprite(this.socialTaskNativeText.x, this.socialTaskNativeText.y, 'profile-native-bg');
-      this.clickShopBtn({ btn: this.socialTaskBtn, title: this.socialTaskText }, (): void => {
+      this.clickButton(this.socialTaskBtn, (): void => {
         let modal: Imodal = { type: 14 };
         this.state.modal = modal;
         this.scene.launch('Modal', this.state);

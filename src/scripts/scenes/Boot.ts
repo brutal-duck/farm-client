@@ -33,7 +33,6 @@ class Boot extends Phaser.Scene {
   public authorization: boolean;
   public name: string;
   public avatar: string;
-  public queryDict: object;
   public okCallback = okCallback.bind(this);
 
 
@@ -76,10 +75,6 @@ class Boot extends Phaser.Scene {
 
     let search: string = window.location.search;
     let params: URLSearchParams = new URLSearchParams(search);
-    // location.search.substr(1).split('&').forEach((item) => {
-    //   this.queryDict[item.split('=')[0]] = item.split('=')[1];
-    // });
-    console.log(this.queryDict)
     let vk: string = params.get('api_url');
     let ok: string = params.get('api_server');
 
