@@ -10,34 +10,33 @@ export default class DonateWindow {
   }
 
   private create(): void {
-
-    this.scene.add.sprite(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY, 'donate');
-
-    this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY + 10, this.scene.state.lang.crystalsCredited, {
-      font: '30px Shadow',
-      color: '#763701',
+    const x: number = this.scene.cameras.main.centerX;
+    const y: number = this.scene.cameras.main.centerY;
+    const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '30px',
       align: 'center',
-      wordWrap: { width: 350 }
-    }).setOrigin(0.5, 0.5);
-  
-    this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY + 70, this.scene.state.lang.enjoy, {
-      font: '30px Shadow',
       color: '#763701',
-      align: 'center',
       wordWrap: { width: 350 }
-    }).setOrigin(0.5, 0.5);
+    }
+
+    this.scene.add.sprite(x, y, 'donate');
+    this.scene.add.text(x, y + 10, this.scene.state.lang.crystalsCredited, textStyle).setOrigin(0.5);
+    this.scene.add.text(x, y + 70, this.scene.state.lang.enjoy, textStyle).setOrigin(0.5);
   
-    let btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX - 7, this.scene.cameras.main.centerY + 166, 'done-chapter-button');
-    let title: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 7, this.scene.cameras.main.centerY + 158, this.scene.state.lang.excellent, {
+    const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(x - 7, y + 166, 'done-chapter-button');
+    const title: Phaser.GameObjects.Text = this.scene.add.text(x - 7, y + 158, this.scene.state.lang.excellent, {
       font: '32px Shadow',
       fill: '#FFD2D2',
       align: 'center'
-    }).setOrigin(0.5, 0.5).setStroke('#2C5D0C', 5);
+    }).setOrigin(0.5).setStroke('#2C5D0C', 5);
   
-    this.scene.clickModalBtn({ btn, title }, (): void => {
-      this.scene.scene.stop();
-      this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-      this.scene.game.scene.keys[this.scene.state.farm].takeDonate();
-    });
+    this.scene.clickModalBtn({ btn, title }, (): void => { this.btnHandler(); });
+  }
+
+  private btnHandler(): void {
+    this.scene.scene.stop();
+    this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
+    this.scene.game.scene.keys[this.scene.state.farm].takeDonate();
   }
 }
