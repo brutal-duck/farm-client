@@ -370,7 +370,9 @@ class Sheep extends Phaser.Scene {
         console.log(error)
       }
       FAPI.Client.call({"method":"storage.getKeys"}, callback);
-      FAPI.Client.call({"method":"storage.set", "key": "kluch", "value": "otvorot"}, callback);
+      FAPI.Client.call({"method":"storage.get", "keys": "addFavourites" }, callback);
+      FAPI.Client.call({"method":"storage.set", "key": "addFavourites", "value": "true"}, callback);
+      
       // this.state.user.takenSocialAward = false;
     //   // this.state.daily = 2;
     // this.state.user.test = 'B';

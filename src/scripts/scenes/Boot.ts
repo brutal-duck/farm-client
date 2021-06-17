@@ -164,11 +164,18 @@ class Boot extends Phaser.Scene {
     this.state.okTask = {
       joinGroup: false,
       subGroup: false,
+      addFavorites: false,
     };
     axios.post(process.env.API + "/checkOkTask", data).then(res => {
       this.state.okTask.joinGroup = res.data.data.joinGroup;
       this.state.okTask.subGroup = res.data.data.subGroup;
     });
+    const callback = (status, data, error) => {
+      console.log(status)
+      console.log(data)
+      console.log(error)
+    }
+    FAPI.Client.call({ "method":"storage.get", "keys": "addFavourites" }, callback)
   }
 
   // подрубаем штифты за пускаем первую сцену 
