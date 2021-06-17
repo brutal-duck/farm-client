@@ -295,6 +295,7 @@ class Task {
         this.window.setTakeBtnState();
       }).catch(err => console.log(err));
     } else if (this.scene.state.platform === 'ok') {
+      // FAPI.UI.showPermissions(["BOT_API_INIT"]);
       window.open(`https://ok.ru/group/${process.env.OK_GROUP_ID}`);
       this.window.socialTasks.subGroup = true;
       this.setState(true);
