@@ -1400,7 +1400,7 @@ export default function autoprogress(load: boolean = false): void {
       }
     }
     if (state.offlineTime > 900 && BigInteger.greaterThan(income, '0')) {
-      let modal: Imodal = {
+      const modal: Imodal = {
         type: 10,
         eventParams: {
           offlineTime: state.offlineTime,
