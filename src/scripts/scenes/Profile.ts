@@ -157,8 +157,7 @@ class Profile extends Phaser.Scene {
     this.createFarms();
     this.createShop();
     this.creaetePointer();
-    // if (this.state.platform === 'vk' || this.state.platform === 'ok') 
-    this.createSocialTaskBtn();
+    if (this.state.platform === 'vk' || this.state.platform === 'ok') this.createSocialTaskBtn();
   }
 
   private createProfileInfo(): void {
@@ -952,7 +951,7 @@ class Profile extends Phaser.Scene {
   private createSocialTaskBtn(): void {
     const position: Iposition = { x: 70, y: 230 };
     if (this.state.userSheep.tutorial >= 100) {
-      this.socialTaskBtn = this.add.sprite(position.x, position.y, `profile-social-btn-vk`);
+      this.socialTaskBtn = this.add.sprite(position.x, position.y, `profile-social-btn-${this.state.platform}`);
       this.socialTaskNativeText = this.add.text(position.x + this.socialTaskBtn.displayWidth / 2 - 10, position.y - this.socialTaskBtn.displayHeight / 2 + 5, '1', {
         font: '30px Bip',
         color: '#ffffff',
