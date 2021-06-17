@@ -362,26 +362,14 @@ class Sheep extends Phaser.Scene {
     // интервальные функция
     this.interval();
     this.setCollector();
-    // let cursors = this.input.keyboard.createCursorKeys();
-    // cursors.space.on('down', (): void => {
-    //   // this.state.user.takenSocialAward = false;
-    // //   // this.state.daily = 2;
-    // // this.state.user.test = 'B';
-    // // let tasks = this.partTasks();
-    // // for (let i in tasks) {
-    //   //     tasks[i].done = 1;
-    //   //     tasks[i].got_awarded = 1;
-    //   // }
-    //   // this.state.daily = Number(this.state.daily) + 1;
-    //   // this.state.user.takenReward = false;
-    //   // this.scene.launch('Fortune', this.state);
-    //   // this.state.user.diamonds = 15
-    //   // this.state.user.additionalTutorial.eventTutorial = 0;
-    //   // this.state.progress.event.eventPoints = -1 
-    //   // this.state.user.diamonds = 100;
-    //   // this.state.user.boosts.sheep.collector4 = 1
-    //   // this.state.user.boosts.sheep.collector12 = 1
-    // });
+    let cursors = this.input.keyboard.createCursorKeys();
+    cursors.space.on('down', (): void => {
+      let tasks = this.partTasks();
+      for (let i in tasks) {
+            tasks[i].done = 1;
+            // tasks[i].got_awarded = 1;
+      }
+    });
   }
 
 
