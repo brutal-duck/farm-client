@@ -511,13 +511,9 @@ function updateMapNative(): void {
   const unicornCount: number = this.state.unicornNativeCount.reduce((prev, cur) => prev += cur);
 
   const checkSocial: boolean[] = [];
-  const socialTask: IsociaTasks = this.state.platform === 'vk' ? this.state.vkTask : 
-  {
-    joinGroup: true,
-    subGroup: false,
-    subNative: false,
-    addFavorites: true,
-  };
+  const socialTask: IsociaTasks = this.state.platform === 'vk' ? this.state.vkTask :
+  this.state.platform === 'ok' ? this.state.okTask : {}; 
+
   for (const key in socialTask) {
     checkSocial.push(socialTask[key]);
   }
