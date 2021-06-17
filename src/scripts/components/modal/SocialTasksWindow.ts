@@ -3,10 +3,13 @@ import bridge from '@vkontakte/vk-bridge';
 import { FAPI } from '../../libs/Fapi.js';
 
 const LANGS: { [key: string]: string } = {
-  joinGroup: 'Вступи в группу',
-  addFavorites: 'Добавь в избранное',
-  subGroup: 'Подпишись на ЛС от группы',
-  subNative: 'Подпишись на уведомления',
+  joinGroupVK: 'Вступи в группу',
+  joinGroupOK: 'Вступи в группу',
+  addFavoritesVK: 'Добавь в избранное',
+  addFavoritesOK: 'Добавь группу в закладки',
+  subGroupVK: 'Подпишись на ЛС от группы',
+  subGroupOK: 'Подпишись на ЛС от группы',
+  subNativeVK: 'Подпишись на уведомления',
   title: 'Социальные задания',
   subtitle: 'Получай ежедневную награду'
 }
@@ -205,7 +208,7 @@ class Task {
   private create(): void {
     const textWidth: number = 200;
     this.bg = this.scene.add.sprite(this.position.x,  this.position.y, 'social-task-bg');
-    this.text = this.scene.add.text(this.position.x - 180 , this.position.y, LANGS[this.key],  {
+    this.text = this.scene.add.text(this.position.x - 180 , this.position.y, LANGS[`${this.key}${this.scene.state.platform.toUpperCase()}`],  {
       font: '20px Bip',
       color: '#944000',
       wordWrap: { width: textWidth },
@@ -255,6 +258,8 @@ class Task {
     } else if (this.scene.state.platform === 'ok') {
       window.open(`https://ok.ru/group/${process.env.OK_GROUP_ID}`);
       this.window.socialTasks.joinGroup = true;
+      this.setState(true);
+      this.window.setTakeBtnState();
     }
   }
 
@@ -269,13 +274,11 @@ class Task {
       }).catch(err => console.log(err));
     } else if (this.scene.state.platform === 'ok') {
       FAPI.Client.call({ 'method':'bookmark.add', 'ref_id': String(process.env.OK_GROUP_ID), 'bookmark_type': 'group' }, (status, data, error) => {
-        console.log(status, data, error);
-        console.log(data);
-        console.log(error);
         if (data) {
           this.window.socialTasks.addFavorites = data.success;
           FAPI.Client.call({ 'method':'storage.set', 'key': 'addFavourites', 'value': JSON.stringify(data.success) });
-          this.window.socialTasks.addFavorites = true;
+          this.setState(data.success);
+          this.window.setTakeBtnState();
         }
       });
     }
@@ -293,6 +296,9 @@ class Task {
       }).catch(err => console.log(err));
     } else if (this.scene.state.platform === 'ok') {
       window.open(`https://ok.ru/group/${process.env.OK_GROUP_ID}`);
+      this.window.socialTasks.subGroup = true;
+      this.setState(true);
+      this.window.setTakeBtnState();
     }
   }
 
