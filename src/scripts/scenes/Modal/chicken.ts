@@ -1,4 +1,4 @@
-import { shortNum, romanize, timer, shortTime } from "../../general/basic";
+import { shortNum, timer, shortTime } from "../../general/basic";
 import Hint from '../../components/animations/Hint';
 
 // ярмарка

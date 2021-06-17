@@ -1,5 +1,4 @@
-import { shortNum, romanize, timer, shortTime } from "../../general/basic";
-import { FAPI } from '../../libs/Fapi.js';
+import { shortNum, timer, shortTime } from "../../general/basic";
 import Hint from '../../components/animations/Hint';
 
 // ярмарка
