@@ -280,7 +280,15 @@ export default class DiamondsWindow {
         this.scene.scene.stop();
         this.scene.scene.stop('ShopBars');
         this.scene.scene.stop('Modal');
-        this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].getCurrency({ x: this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].cameras.main.centerX, y: this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].cameras.main.centerY }, FREE_DIAMONDS, 'diamond');
+        if (this.scene.scene.isActive('Profile')) this.scene.game.scene.keys['Profile'].getCurrency({
+          x: this.scene.game.scene.keys['Profile'].cameras.main.centerX,
+          y: this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].cameras.main.centerY,
+        }, FREE_DIAMONDS, 'diamond');
+        else this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].getCurrency({
+          x: this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].cameras.main.centerX,
+          y: this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].cameras.main.centerY,
+        }, FREE_DIAMONDS, 'diamond');
+        
         this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('diamonds_get', {
           type: 'bank_page',
           count: FREE_DIAMONDS,
