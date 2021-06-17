@@ -268,13 +268,15 @@ class Task {
         this.window.setTakeBtnState();
       }).catch(err => console.log(err));
     } else if (this.scene.state.platform === 'ok') {
-      FAPI.Client.call({ 'method':'bookmark.add', 'ref_id': String(process.env.OK_APP_ID), 'bookmark_type': 'game' }, (status, data, error) => {
+      FAPI.Client.call({ 'method':'bookmark.add', 'ref_id': String(process.env.OK_GROUP_ID), 'bookmark_type': 'group' }, (status, data, error) => {
         console.log(status, data, error);
         console.log(data);
         console.log(error);
-        // this.window.socialTasks.addFavorites = data.success;
-        FAPI.Client.call({ 'method':'storage.set', 'key': 'addFavourites', 'value': 'true' });
-        this.window.socialTasks.addFavorites = true;
+        if (data) {
+          this.window.socialTasks.addFavorites = data.success;
+          FAPI.Client.call({ 'method':'storage.set', 'key': 'addFavourites', 'value': JSON.stringify(data.success) });
+          this.window.socialTasks.addFavorites = true;
+        }
       });
     }
   }
