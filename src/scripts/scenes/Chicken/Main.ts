@@ -34,6 +34,7 @@ import {
   logAmplitudeRevenue,
   farmBalance,
   sendSocialEvent,
+  sendAppEventVk,
 } from '../../general/basic';
 import {
   improveCollector,
@@ -291,8 +292,9 @@ class Chicken extends Phaser.Scene {
 
     // Заменить на нормальное открытие
     if (!localStorage?.openChicken) {
-      localStorage?.setItem('openChicken', 'true')
-      sendSocialEvent(this.state, 2, 100)
+      localStorage?.setItem('openChicken', 'true');
+      sendSocialEvent(this.state, 2, 100);
+      sendAppEventVk(this.state, 3, 100);
     }
 
     // let cursors = this.input.keyboard.createCursorKeys();

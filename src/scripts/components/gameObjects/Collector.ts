@@ -95,13 +95,11 @@ export default class Collector extends Phaser.GameObjects.Text {
       }
   
       this.endAngle = percent * this.percent + this.startAngle;
-  
       this.collector.clear();
       this.collector.lineStyle(this.weight, this.color, 1);
       this.collector.beginPath();
       this.collector.arc(this.graphicX, this.graphicY, this.radius, this.startAngle, this.endAngle);
       this.collector.strokePath();
-      
       const time: string = shortTime(this.farmData.collector, this.scene.state.lang);
       this.setText(time);
       this.setColor('#925C28');
@@ -113,7 +111,6 @@ export default class Collector extends Phaser.GameObjects.Text {
         this.bubble.fillStyle(0xffffff, 1);
         this.bubble.fillRoundedRect(0, 0, bounds.width + 30, bounds.height, 8);
       }
-  
     }
     this.setPulseAnimation();
   }

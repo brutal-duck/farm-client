@@ -31,6 +31,7 @@ import {
   farmBalance,
   autoporgressCollectorTime,
   sendSocialEvent,
+  sendAppEventVk,
 } from '../../general/basic';
 import {
   improveCollector,
@@ -289,8 +290,9 @@ class Cow extends Phaser.Scene {
 
     // Заменить на нормальное открытие
     if (!localStorage?.openCow) {
-      localStorage?.setItem('openCow', 'true')
-      sendSocialEvent(this.state, 3, 100)
+      localStorage?.setItem('openCow', 'true');
+      sendSocialEvent(this.state, 3, 100);
+      sendAppEventVk(this.state, 4, 100);
     }
 
     // let cursors = this.input.keyboard.createCursorKeys();

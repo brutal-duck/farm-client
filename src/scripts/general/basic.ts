@@ -414,7 +414,6 @@ function donePart(): void {
 
   let user: IuserSheep | IuserChicken | IuserCow;
   let parts: Ipart[];
-
   if (this.state.farm === 'Sheep') {
     user = this.state.userSheep;
     parts = this.state.sheepSettings.sheepParts;
@@ -425,11 +424,9 @@ function donePart(): void {
     user = this.state.userCow;
     parts = this.state.cowSettings.cowParts;
   }
-
+  
   const award: number = parts.find((data: Ipart) => data.sort === user.part).award;
-
   this.state.user.diamonds += award;
-
   this.logAmplitudeEvent('diamonds_get', {
     type: 'part_award',
     count: award,
@@ -445,12 +442,11 @@ function donePart(): void {
     chapter: user.part - 1
   });
   this.autosave();
-
-  sendSocialEvent(this.state, 1, this.state.userSheep.part + this.state.userChicken.part + this.state.userCow.part);
+  
   if (((user.part / 4) ^ 0) === user.part / 4) {
     sendSocialEvent(this.state, 5, user.part - 1);
   }
-  sendSocialEvent(this.state, 1, this.state.userSheep.part + this.state.userChicken.part + this.state.userCow.part);
+  sendAppEventVk(this.state, 1, this.state.userSheep.part + this.state.userChicken.part + this.state.userCow.part);
   
   this.time.addEvent({ delay: 200, callback: (): void => {
     this.checkDoneTasks();
@@ -1747,18 +1743,9 @@ function sendSocialEvent(state: Istate, type: number, value: number): void {
   }
   const farm: string = state.farm.toLowerCase();
   const FARM: string = state.farm.toUpperCase();
-  const data = {
-    id: state.user.id,
-    hash: state.user.hash,
-    counter: state.user.counter,
-    activityId: type,
-    value,
-  };
+
   
   if (state.platform === 'vk') {
-    if (type === 2) data.activityId = 3;
-    else if (type === 3) data.activityId = 4;
-    axios.post(process.env.API + "/appEventVk", data).then((res) => {console.log(res.data)});
     if (type !== 1) {
       const attach: string = process.env[`VK_${FARM}_BANNER_${type}`];
       bridge.send("VKWebAppShowWallPostBox", {
@@ -1789,6 +1776,18 @@ function sendSocialEvent(state: Istate, type: number, value: number): void {
   }
 }
 
+function sendAppEventVk(state: Istate, type: number, value: number): void {
+  if (state.platform === 'vk') {
+    const data = {
+      id: state.user.id,
+      hash: state.user.hash,
+      counter: state.user.counter,
+      activityId: type,
+      value,
+    };
+    axios.post(process.env.API + "/appEventVk", data).then((res) => {console.log(res.data)});
+  }
+}
 export {
   random,
   getRandomBool,
@@ -1826,4 +1825,5 @@ export {
   logAmplitudeRevenue,
   farmBalance,
   sendSocialEvent,
+  sendAppEventVk,
 }

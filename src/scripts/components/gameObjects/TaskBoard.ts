@@ -1,6 +1,7 @@
 import SheepBars from '../../scenes/Sheep/SheepBars';
 import ChickenBars from '../../scenes/Chicken/ChickenBars';
 import CowBars from '../../scenes/Cow/CowBars';
+import { sendAppEventVk } from '../../general/basic';
 
 /**
   *  Планка заданий в барах сцен    
@@ -406,13 +407,21 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       if (this.status === 4 && task) {
 
         this
-          .setPosition( 30, this.scene.height - 300)
+          .setPosition(30, this.scene.height - 300)
           .removeAllListeners()
           .setDisplaySize(660, 110)
           .setTint(0xFFEBC5);
       
         this.lastPart.setPosition(this.scene.cameras.main.centerX, this.scene.height - 245);
         this.taskProgress?.clear();
+
+        const farm: string = this.scene.state.farm;
+        if (this.scene.state.platform === 'vk' && localStorage && !localStorage[`done${farm}`]) {
+          const mission: number = farm === 'Sheep' ? 5 :
+          farm === 'Chicken' ? 6 : farm === 'Cow' ? 7 : 0;
+          localStorage?.setItem(`done${farm}`, 'true');
+          sendAppEventVk(this.scene.state, mission, 100);
+        }
       }
 
       let checkSheepTutor: boolean = true;
