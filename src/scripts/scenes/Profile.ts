@@ -61,6 +61,8 @@ class Profile extends Phaser.Scene {
   public socialTasks: IsociaTasks;
   public animUnicornSprite: Phaser.GameObjects.Sprite;
   public currentEndTime: string = ' ';
+  private currentDiamonds: number;
+  private animDiamondsCount: number = 0;
   
   public click = click.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
@@ -76,14 +78,8 @@ class Profile extends Phaser.Scene {
       this.socialTasks = this.state.vkTask;
     } else if (this.state.platform === 'ok') {
       this.socialTasks = this.state.okTask;
-    } else if (this.state.platform === 'web') {
-      this.socialTasks = {
-        joinGroup: true,
-        subGroup: true,
-        subNative: true,
-        addFavorites: true
-      }
-    }
+    } 
+    this.currentDiamonds = this.state.user.diamonds;
   }
 
 
@@ -149,6 +145,7 @@ class Profile extends Phaser.Scene {
 
   public update(): void {
     this.updateEvent();
+    this.updateUserDiamonds();
   }
 
   private createElements(): void {
@@ -743,7 +740,7 @@ class Profile extends Phaser.Scene {
         shopType: 1,
       }
       this.state.modal = modal;
-      this.scene.stop();
+      // this.scene.stop();
       this.scene.launch('Modal', this.state);
     });
 
@@ -990,6 +987,29 @@ class Profile extends Phaser.Scene {
       }
     }
   }
+
+  private updateUserDiamonds(): void {
+    if (this.currentDiamonds < this.state.user.diamonds) {
+      if (this.animDiamondsCount === 0) {
+        const count: number = this.state.user.diamonds - this.currentDiamonds;
+        this.animDiamondsCount = count >= 3 ? 2 : count == 2 ? 1 : 0;
+        this.tweens.add({
+          duration: 100,
+          loop: this.animDiamondsCount,
+          scale: { from: 1, to: 1.5 },
+          yoyo: true,
+          targets: this.diamondsText,
+          onComplete: (): void => { this.animDiamondsCount = 0 },
+        });
+        this.diamondsText.setText(shortNum(this.state.user.diamonds));
+        this.currentDiamonds = this.state.user.diamonds;
+      }
+    } else if (this.currentDiamonds > this.state.user.diamonds){
+      this.currentDiamonds = this.state.user.diamonds;
+      this.diamondsText.setText(shortNum(this.state.user.diamonds));
+    }
+  }
 }
+
 
 export default Profile;
