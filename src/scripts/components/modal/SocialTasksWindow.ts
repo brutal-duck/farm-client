@@ -167,7 +167,7 @@ export default class SocialTasksWindow {
   }  
   private onBtnPickUpHandler(): void {
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-    
+
     const centerPosition: Iposition = { x: this.scene.cameras.main.centerX, y: this.scene.cameras.main.centerY };
     if (this.scene.scene.isActive('Profile')) this.scene.game.scene.keys['Profile'].getCurrency(centerPosition, this.award, 'diamond');
     else this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].getCurrency(centerPosition, this.award, 'diamond');
@@ -254,6 +254,7 @@ class Task {
         }).catch(err => console.log(err));
     } else if (this.scene.state.platform === 'ok') {
       window.open(`https://ok.ru/group/${process.env.OK_GROUP_ID}`);
+      this.window.socialTasks.joinGroup = true;
     }
   }
 
@@ -266,12 +267,17 @@ class Task {
         this.setState(res.result);
         this.window.setTakeBtnState();
       }).catch(err => console.log(err));
+    } else if (this.scene.state.platform === 'ok') {
+      FAPI.Client.call({ 'method':'bookmark.add', 'ref_id': String(process.env.OK_APP_ID), 'bookmark_type': 'game' }, (status, data, error) => {
+        this.window.socialTasks.addFavorites = data.success;
+        FAPI.Client.call({ 'method':'storage.set', 'key': 'addFavourites', 'value': String(data.success) });
+      });
     }
   }
 
   private subGroupCallback(): void {
     if (this.scene.state.platform === 'vk') {
-      bridge.send("VKWebAppAllowMessagesFromGroup", { group_id: Number(process.env.VK_GROUP_ID) })
+      bridge.send('VKWebAppAllowMessagesFromGroup', { group_id: Number(process.env.VK_GROUP_ID) })
       .then(res => {
         if (res.result) {
           this.window.socialTasks.subGroup = res.result;
@@ -286,7 +292,7 @@ class Task {
 
   private subNativeCallback(): void {
     if (this.scene.state.platform === 'vk') {
-      bridge.send("VKWebAppAllowNotifications").then(res => {
+      bridge.send('VKWebAppAllowNotifications').then(res => {
         if (res.result) {
           this.window.socialTasks.subNative = res.result;
         }
