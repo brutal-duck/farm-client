@@ -766,4 +766,5 @@ interface Istate {
   vkTask: IsociaTasks;
   okTask: IsociaTasks;
   shownSocialTaskWindow: boolean;
+  ysdk?: any;
 }
