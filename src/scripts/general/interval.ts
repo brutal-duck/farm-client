@@ -518,7 +518,7 @@ function updateMapNative(): void {
     checkSocial.push(socialTask[key]);
   }
   let socialCount: number = checkSocial.length - checkSocial.filter(el => el).length;
-  if (socialCount <= 0 && !this.state.user.takenSocialAward) {
+  if (socialCount <= 0 && !this.state.user.takenSocialAward && (this.state.platform === 'vk' || this.state.platform === 'ok')) {
     socialCount = 1;
     this.state.shownSocialTaskWindow = false;
   }
@@ -526,7 +526,7 @@ function updateMapNative(): void {
   const count: number = this.state.farm === 'Sheep' ? chickenCount + cowCount + unicornCount + socialCount :
   this.state.farm === 'Chicken' ? sheepCount + cowCount + unicornCount + socialCount :
   this.state.farm === 'Cow' ? sheepCount + chickenCount + unicornCount + socialCount :
-  this.state.farm === 'Unicorn' ? sheepCount + chickenCount + cowCount + socialCount : 0;
+  this.state.farm === 'Unicorn' && this.state.user.additionalTutorial.eventTutorial >= 80 ? sheepCount + chickenCount + cowCount + socialCount : 0;
 
   const text: Phaser.GameObjects.Text = this.game.scene.keys[`${this.state.farm}Bars`].mapNativeText;
   const bg: Phaser.GameObjects.Graphics = this.game.scene.keys[`${this.state.farm}Bars`].mapNativeBg;

@@ -17,6 +17,7 @@ export default class DiamondsWindow {
     this.rows = Math.ceil(this.scene.state.packages.length / 2);
     this.setScrolling();
   }
+  
   private create(): void {
     this.createAllPackages();
     if (this.checkStarterpack()) this.createStarterpack();
