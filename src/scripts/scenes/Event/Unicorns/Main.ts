@@ -61,7 +61,6 @@ import {
   aim, 
   getResource, 
   collectResource, 
-  expelAnimal, 
   getActiveAnimal,
 } from './animals';
 import drag  from './drag';
@@ -188,7 +187,6 @@ class Unicorn extends Phaser.Scene {
   public collectResource = collectResource.bind(this);
   public deleteTerritoriesLocks = deleteTerritoriesLocks.bind(this);
   public buyTerritory = buyTerritory.bind(this);
-  public expelAnimal = expelAnimal.bind(this);
   public setCollector = setCollector.bind(this);
   public convertMoney = convertMoney.bind(this);
   public buyNextFarm = buyNextFarm.bind(this);

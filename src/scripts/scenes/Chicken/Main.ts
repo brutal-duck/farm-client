@@ -87,7 +87,6 @@ import {
   collectEgg,
   sellEggs,
   confirmExpelChicken,
-  expelChicken,
   dragChickenMerging
 } from './chicken';
 import { installTerritory } from './territories';
@@ -191,7 +190,6 @@ class Chicken extends Phaser.Scene {
   public collectEgg = collectEgg.bind(this);
   public sellEggs = sellEggs.bind(this);
   public confirmExpelChicken = confirmExpelChicken.bind(this);
-  public expelChicken = expelChicken.bind(this);
   public showBank = showBank.bind(this);
   public freeCollector = freeCollector.bind(this);
   public buyCollector = buyCollector.bind(this);

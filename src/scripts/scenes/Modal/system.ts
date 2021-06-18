@@ -2,6 +2,11 @@
 import { shortTime } from '../../general/basic';
 import Hint from '../../components/animations/Hint';
 import ShowCaseWindow from './../../components/modal/ShowCaseWindow';
+import ExchangeTerritoryWindow from '../../components/modal/system/ExchangeTerritoryWindow';
+import ExpelAnimalWindow from '../../components/modal/system/ExpelAnimalWindow';
+import ProfileWindow from '../../components/modal/system/ProfileWindow';
+import LogoutWindow from '../../components/modal/system/LogoutWindow';
+import DiamondAnimalAd from '../../components/modal/system/DiamondAnimalAd';
 
 function systemWindow(): void {
   let height:number = 0;
@@ -93,7 +98,6 @@ function systemWindow(): void {
       } else if (this.state.farm === 'Unicorn') {
         this.eventTerritory();
       }
-      
       break;
 
     case 3: // окно с сообщением
@@ -123,60 +127,27 @@ function systemWindow(): void {
       
     case 5: // окно подтверждения обмена территории
 
-      if (this.state.farm === 'Sheep') {
-        this.confirmSheepExchangeTerritory();
-      } else if (this.state.farm === 'Chicken') {
-        this.confirmChickenExchangeTerritory();
-      } else if (this.state.farm === 'Cow') {
-        this.confirmCowExchangeTerritory();
-      }
-
+      if (this.state.farm === 'Sheep' || this.state.farm === 'Chicken' || this.state.farm === 'Cow') new ExchangeTerritoryWindow(this)
       break;
 
-      case 6: // окно подтверждения продажи животного
+    case 6: // окно подтверждения продажи животного
 
-      if (this.state.farm === 'Sheep') {
-        this.confirmExpelSheep();
-      } else if (this.state.farm === 'Chicken') {
-        this.confirmExpelChicken();
-      } else if (this.state.farm === 'Cow') {
-        this.confirmExpelCow();
-      } else if (this.state.farm === 'Unicorn') {
-        this.confirmExpelAnimal();
-      }
-      
+      new ExpelAnimalWindow(this)
       break;
 
     case 7: // окно профиля
 
-      this.profileWindow();
+      new ProfileWindow(this)
       break;
 
     case 8: // окно завершения сессии
       
-      this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0)');
-      this.close.setVisible(false);
-      this.textHeader.setText(this.state.lang.message);
-      this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 20, this.state.lang.stopSession, {
-        font: '26px Bip',
-        color: '#925C28',
-        align: 'center',
-        wordWrap: { width: 400 }
-      }).setOrigin(0.5, 0.5);
-      this.resizeWindow(120);
-      
+      new LogoutWindow(this)
       break;
 
     case 9: // окно завершения сессии
       
-      if (this.state.farm === 'Sheep') {
-        this.diamondSheepAd();
-      } else if (this.state.farm === 'Chicken') {
-        this.diamondChickenAd();
-      } else if (this.state.farm === 'Cow') {
-        this.diamondCowAd();
-      }
-      
+      new DiamondAnimalAd(this)
       break;
 
     case 10: // окно улучшения собирателя

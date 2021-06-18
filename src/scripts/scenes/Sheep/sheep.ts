@@ -675,15 +675,6 @@ function confirmExpelSheep(): void {
 }
 
 
-// изгнание овцы
-function expelSheep(): void {
-
-  this.state.animal.woolSprite.destroy();
-  this.state.animal.shaveStatus.destroy();
-  this.state.animal.destroy();
-
-}
-
 
 // актуальный спрайт шерсти
 function woolSprite(sheep: any): void {
@@ -837,7 +828,6 @@ export {
   collectWool,
   sellWool,
   confirmExpelSheep,
-  expelSheep,
   woolSprite,
   dragSheepMerging
 }

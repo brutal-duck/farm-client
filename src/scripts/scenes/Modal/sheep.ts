@@ -1,5 +1,6 @@
 import { shortNum, timer, shortTime } from "../../general/basic";
 import Hint from '../../components/animations/Hint';
+import ExpelAnimalWindow from "../../components/modal/system/ExpelAnimalWindow";
 
 // ярмарка
 function sheepFair(): void {
@@ -164,7 +165,7 @@ function sheep(): void {
     this.clickModalBtn(button, (): void => {
       this.scene.stop();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].confirmExpelSheep();
+      new ExpelAnimalWindow(this.scene)
     });
 
     this.resizeWindow(540);
@@ -682,63 +683,6 @@ function sheepConvertor(): void {
 }
 
 
-// окно подтверждения смены типа территории
-function confirmSheepExchangeTerritory(): void {
-
-  this.textHeader.setText(this.state.lang.exchangeTerritory);
-  this.resizeWindow(250);
-
-  let repository: string = '';
-
-  if (this.state.territory.type === 5) {
-    repository = ' ' + this.state.lang.woolWillBeSold;
-  }
-
-  this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 60, this.state.lang.sureExchange + repository, {
-    font: '26px Bip',
-    color: '#925C28',
-    align: 'center',
-    wordWrap: { width: 440 }
-  }).setOrigin(0.5, 0.5);
-
-  let cancel = this.bigButton('yellow', 'center', 120, this.state.lang.cancel);
-  this.clickModalBtn(cancel, (): void => {
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-  });
-
-  if (this.state.exchangeTerritory === 2) {
-
-    let confirm = this.bigButton('green', 'center', 40, this.state.lang.exchangeGrass);
-    this.clickModalBtn(confirm, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].exchangeTerritory();
-    });
-
-  } else if (this.state.exchangeTerritory === 3) {
-
-    let confirm = this.bigButton('blue', 'center', 40, this.state.lang.exchangeWater);
-    this.clickModalBtn(confirm, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].exchangeTerritory();
-    });
-
-  } else if (this.state.exchangeTerritory === 5) {
-
-    let confirm = this.bigButton('orange', 'center', 40, this.state.lang.exchangeRepository);
-    this.clickModalBtn(confirm, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].exchangeTerritory();
-    });
-
-  }
-
-}
-
-
 // хранилище шерсти
 function sheepWoolRepository(): void {
   
@@ -934,83 +878,6 @@ function sheepWoolRepositoryExchange(): void {
 
 }
 
-// окно подтверждения изгнания
-function confirmExpelSheep(): void {
-
-  this.textHeader.setText(this.state.lang.expelSheep);
-
-  this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 60, this.state.lang.confirmExpelSheep, {
-    font: '26px Bip',
-    color: '#925C28',
-    align: 'center',
-    wordWrap: { width: 400 }
-  }).setOrigin(0.5, 0.5);
-
-  let button = this.bigButton('red', 'center', 40, this.state.lang.expel);
-  this.clickModalBtn(button, (): void => {
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-    this.game.scene.keys[this.state.farm].expelSheep();
-  });
-
-  let cancel = this.bigButton('yellow', 'center', 120, this.state.lang.cancel);
-  this.clickModalBtn(cancel, (): void => {
-    this.state.animal.expel = false;
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-  });
-
-  this.resizeWindow(250);
-
-}
-
-// призыва кристаллической овечки за рекламу
-function diamondSheepAd(): void {
-
-  this.textHeader.setText(this.state.lang.summonSheep);
-
-  let sprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 145, 'sheep0');
-  sprite.anims.play('sheep-stay-right0', true);
-  this.add.sprite(sprite.x, sprite.y, 'sheep-right-0-4');
-
-  let time: string = timer(this.state.userSheep.diamondAnimalTime);
-  this.caveTimer = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 55, this.state.lang.summonTime + time, {
-    font: '26px Bip',
-    color: '#57A90E',
-    align: 'center',
-    wordWrap: { width: 420 }
-  }).setOrigin(0.5, 0);
-
-  this.add.text(this.cameras.main.centerX - length, this.cameras.main.centerY + 15, this.state.lang.wantAdSummon, {
-    font: '26px Bip',
-    color: '#925C28',
-    align: 'center',
-    wordWrap: { width: 420 }
-  }).setOrigin(0.5, 0);
-
-  let right = {
-    icon: 'ad-icon',
-    text: ''
-  }
-  let ad = this.bigButton('green', 'left', 135, this.state.lang.summon, right);
-  this.clickModalBtn(ad, (): void => {
-
-    this.state.userSheep.diamondAnimalAd = false;
-    this.game.scene.keys[this.state.farm].watchAd(2);
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-    
-  });
-
-  let cancel = this.bigButton('yellow', 'center', 225, this.state.lang.cancel);
-  this.clickModalBtn(cancel, (): void => {
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-  });
-
-  this.resizeWindow(450);
-
-}
 
 
 export {
@@ -1021,9 +888,6 @@ export {
   boughtSheepLand,
   buySheepTerritory,
   sheepConvertor,
-  confirmSheepExchangeTerritory,
   sheepWoolRepository,
-  confirmExpelSheep,
-  diamondSheepAd,
   sheepWoolRepositoryExchange,
 }

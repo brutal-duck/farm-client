@@ -1,5 +1,6 @@
 import { shortNum, timer, shortTime } from "../../general/basic";
 import Hint from '../../components/animations/Hint';
+import ExpelAnimalWindow from "../../components/modal/system/ExpelAnimalWindow";
 
 // ярмарка
 function chickenFair(): void {
@@ -143,7 +144,7 @@ function chicken(): void {
     this.clickModalBtn(button, (): void => {
       this.scene.stop();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].confirmExpelChicken();
+      new ExpelAnimalWindow(this.scene)
     });
 
     this.resizeWindow(460);
@@ -600,63 +601,6 @@ function chickenConvertor(): void {
 }
 
 
-// окно подтверждения смены типа территории
-function confirmChickenExchangeTerritory(): void {
-
-  this.textHeader.setText(this.state.lang.exchangeTerritory);
-  this.resizeWindow(250);
-
-  let repository: string = '';
-
-  if (this.state.territory.type === 5) {
-    repository = ' ' + this.state.lang.eggsWillBeSold;
-  }
-
-  this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 60, this.state.lang.sureExchange + repository, {
-    font: '26px Bip',
-    color: '#925C28',
-    align: 'center',
-    wordWrap: { width: 440 }
-  }).setOrigin(0.5, 0.5);
-
-  let cancel = this.bigButton('yellow', 'center', 120, this.state.lang.cancel);
-  this.clickModalBtn(cancel, (): void => {
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-  });
-
-  if (this.state.exchangeTerritory === 2) {
-
-    let confirm = this.bigButton('green', 'center', 40, this.state.lang.exchangeGrass);
-    this.clickModalBtn(confirm, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].exchangeTerritory();
-    });
-
-  } else if (this.state.exchangeTerritory === 3) {
-
-    let confirm = this.bigButton('blue', 'center', 40, this.state.lang.exchangeWater);
-    this.clickModalBtn(confirm, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].exchangeTerritory();
-    });
-
-  } else if (this.state.exchangeTerritory === 5) {
-
-    let confirm = this.bigButton('orange', 'center', 40, this.state.lang.exchangeRepository);
-    this.clickModalBtn(confirm, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].exchangeTerritory();
-    });
-
-  }
-
-}
-
-
 // хранилище яиц
 function chickenEggsRepository(): void {
   
@@ -800,6 +744,7 @@ function chickenEggsRepository(): void {
 
 }
 
+
 function chickenEggRepositoryExchange(): void {
   let repository: string = this.state.lang.repository.replace('$1', this.state.territory.improve);
   this.textHeader.setText(repository);
@@ -848,82 +793,6 @@ function chickenEggRepositoryExchange(): void {
   this.resizeWindow(310);
 }
 
-// окно подтверждения изгнания
-function confirmExpelChicken(): void {
-
-  this.textHeader.setText(this.state.lang.expelChicken);
-
-  this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 60, this.state.lang.confirmExpelChicken, {
-    font: '26px Bip',
-    color: '#925C28',
-    align: 'center',
-    wordWrap: { width: 400 }
-  }).setOrigin(0.5, 0.5);
-
-  let button = this.bigButton('red', 'center', 40, this.state.lang.expel);
-  this.clickModalBtn(button, (): void => {
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-    this.game.scene.keys[this.state.farm].expelChicken();
-  });
-
-  let cancel = this.bigButton('yellow', 'center', 120, this.state.lang.cancel);
-  this.clickModalBtn(cancel, (): void => {
-    this.state.animal.expel = false;
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-  });
-
-  this.resizeWindow(250);
-
-}
-
-// призыва кристаллической курочки за рекламу
-function diamondChickenAd(): void {
-
-  this.textHeader.setText(this.state.lang.summonChicken);
-
-  let sprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 145, 'chicken0');
-  sprite.anims.play('chicken-drag0', true);
-
-  let time: string = timer(this.state.userChicken.diamondAnimalTime);
-  this.caveTimer = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 55, this.state.lang.summonTime + time, {
-    font: '26px Bip',
-    color: '#57A90E',
-    align: 'center',
-    wordWrap: { width: 420 }
-  }).setOrigin(0.5, 0);
-
-  this.add.text(this.cameras.main.centerX - length, this.cameras.main.centerY + 15, this.state.lang.wantAdSummon, {
-    font: '26px Bip',
-    color: '#925C28',
-    align: 'center',
-    wordWrap: { width: 420 }
-  }).setOrigin(0.5, 0);
-
-  let right = {
-    icon: 'ad-icon',
-    text: ''
-  }
-  let ad = this.bigButton('green', 'left', 135, this.state.lang.summon, right);
-  this.clickModalBtn(ad, (): void => {
-
-    this.state.userChicken.diamondAnimalAd = false;
-    this.game.scene.keys[this.state.farm].watchAd(2);
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-    
-  });
-
-  let cancel = this.bigButton('yellow', 'center', 225, this.state.lang.cancel);
-  this.clickModalBtn(cancel, (): void => {
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-  });
-
-  this.resizeWindow(450);
-
-}
 
 export {
   chickenFair,
@@ -933,9 +802,6 @@ export {
   boughtChickenLand,
   buyChickenTerritory,
   chickenConvertor,
-  confirmChickenExchangeTerritory,
   chickenEggsRepository,
-  confirmExpelChicken,
-  diamondChickenAd,
   chickenEggRepositoryExchange,
 }

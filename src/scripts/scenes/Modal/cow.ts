@@ -1,6 +1,7 @@
 import { shortNum, romanize, timer, shortTime } from "../../general/basic";
 import Hint from '../../components/animations/Hint';
 import SpeechBubble from './../../components/animations/SpeechBuble';
+import ExpelAnimalWindow from "../../components/modal/system/ExpelAnimalWindow";
 
 // ярмарка
 function cowFair(): void {
@@ -141,7 +142,7 @@ function cow(): void {
     this.clickModalBtn(button, (): void => {
       this.scene.stop();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].confirmExpelCow();
+      new ExpelAnimalWindow(this.scene)
     });
 
     this.resizeWindow(460);
@@ -575,61 +576,6 @@ function cowConvertor(): void {
 
 }
 
-// окно подтверждения смены типа территории
-function confirmCowExchangeTerritory(): void {
-
-  this.textHeader.setText(this.state.lang.exchangeTerritory);
-  this.resizeWindow(250);
-
-  let repository: string = '';
-
-  if (this.state.territory.territoryType === 5) {
-    repository = ' ' + this.state.lang.milkWillBeSold;
-  }
-
-  this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 60, this.state.lang.sureExchange + repository, {
-    font: '26px Bip',
-    color: '#925C28',
-    align: 'center',
-    wordWrap: { width: 440 }
-  }).setOrigin(0.5, 0.5);
-
-  let cancel = this.bigButton('yellow', 'center', 120, this.state.lang.cancel);
-  this.clickModalBtn(cancel, (): void => {
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-  });
-
-  if (this.state.exchangeTerritory === 2) {
-
-    let confirm = this.bigButton('green', 'center', 40, this.state.lang.exchangeGrass);
-    this.clickModalBtn(confirm, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.state.territory.exchangeTerritory();
-    });
-
-  } else if (this.state.exchangeTerritory === 3) {
-
-    let confirm = this.bigButton('blue', 'center', 40, this.state.lang.exchangeWater);
-    this.clickModalBtn(confirm, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.state.territory.exchangeTerritory();
-    });
-
-  } else if (this.state.exchangeTerritory === 5) {
-
-    let confirm = this.bigButton('orange', 'center', 40, this.state.lang.exchangeRepository);
-    this.clickModalBtn(confirm, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.state.territory.exchangeTerritory();
-    });
-
-  }
-
-}
 
 // хранилище молока
 function cowMilkRepository(): void {
@@ -840,84 +786,6 @@ function cowMilkRepositoryExchange(): void {
   this.resizeWindow(310);
 }
 
-// окно подтверждения изгнания
-function confirmExpelCow(): void {
-
-  this.textHeader.setText(this.state.lang.expelCow);
-
-  this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 60, this.state.lang.confirmExpelCow, {
-    font: '26px Bip',
-    color: '#925C28',
-    align: 'center',
-    wordWrap: { width: 400 }
-  }).setOrigin(0.5, 0.5);
-
-  let button = this.bigButton('red', 'center', 40, this.state.lang.expel);
-  this.clickModalBtn(button, (): void => {
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-    this.game.scene.keys[this.state.farm].expelCow();
-  });
-
-  let cancel = this.bigButton('yellow', 'center', 120, this.state.lang.cancel);
-  this.clickModalBtn(cancel, (): void => {
-    this.state.animal.expel = false;
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-  });
-
-  this.resizeWindow(250);
-
-}
-
-// призыва кристаллической курочки за рекламу
-function diamondCowAd(): void {
-
-  this.textHeader.setText(this.state.lang.summonCow);
-
-  let sprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - 145, 'cow0');
-  sprite.play('cow-stay-right0', true);
-
-  let time: string = timer(this.state.userCow.diamondAnimalTime);
-  this.caveTimer = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 55, this.state.lang.summonTime + time, {
-    font: '26px Bip',
-    color: '#57A90E',
-    align: 'center',
-    wordWrap: { width: 420 }
-  }).setOrigin(0.5, 0);
-
-  this.add.text(this.cameras.main.centerX - length, this.cameras.main.centerY + 15, this.state.lang.wantAdSummon, {
-    font: '26px Bip',
-    color: '#925C28',
-    align: 'center',
-    wordWrap: { width: 420 }
-  }).setOrigin(0.5, 0);
-
-  let right = {
-    icon: 'ad-icon',
-    text: ''
-  }
-  let ad = this.bigButton('green', 'left', 135, this.state.lang.summon, right);
-  this.clickModalBtn(ad, (): void => {
-
-    this.state.userCow.diamondAnimalAd = false;
-    this.game.scene.keys[this.state.farm].watchAd(2);
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-    
-  });
-
-  let cancel = this.bigButton('yellow', 'center', 225, this.state.lang.cancel);
-  this.clickModalBtn(cancel, (): void => {
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-  });
-
-  this.resizeWindow(450);
-
-}
-
-
 
 function improveFactoryWindow(): void {
   const factory: string = this.state.lang.factory.replace('$1', this.state.territory.factory.improve);
@@ -1094,10 +962,7 @@ export {
   boughtCowLand,
   buyCowTerritory,
   cowConvertor,
-  confirmCowExchangeTerritory,
   cowMilkRepository,
-  confirmExpelCow,
-  diamondCowAd,
   cowMilkRepositoryExchange,
   improveFactoryWindow,
   confirmSellMilk,
