@@ -9,12 +9,16 @@ export default class AnimalWindow {
 
   constructor(scene: Shop) {
     this.scene = scene;
+    this.init();
+    this.create();
+  }
+
+  private init(): void {
     this.animal = this.scene.state.farm
     this.buttons = [];
     if (this.animal === 'Sheep') this.resource = 'wool'
     else if (this.animal === 'Chicken') this.resource = 'egg'
     else if (this.animal === 'Cow') this.resource = 'milk'
-    this.create();
   }
 
   private create(): void {

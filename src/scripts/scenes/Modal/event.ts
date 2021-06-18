@@ -17,7 +17,7 @@ function eventConvertor(): void {
     let count: number | string = this.shortNum(this.state.convertor.count);
     let length: number = String(count).length * 10 + 15;
 
-    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 140, this.state.lang.rememberSellEggs, {
+    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 140, this.state.lang.rememberSellRainbow, {
       font: '26px Bip',
       color: '#57A90E',
       align: 'center',

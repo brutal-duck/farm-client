@@ -108,9 +108,7 @@ export default class DiamondsWindow {
     }).setOrigin(0.5);
     this.scene.add.sprite(diamondCount.getBounds().right + 5, y, 'diamond').setScale(0.23).setOrigin(0, 0.5);
     const takeBtn: any = this.scene.shopButton(this.scene.cameras.main.centerX - 30, y, '0 ' + this.scene.state.lang.ruble);
-    this.scene.clickShopBtn(takeBtn, () => {
-      this.freeDiamondsBtnHandler();
-    });
+    this.scene.clickShopBtn(takeBtn, () => { this.freeDiamondsBtnHandler(); });
   }
 
   private createStarterpack(): void {

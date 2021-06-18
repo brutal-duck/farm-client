@@ -23,7 +23,7 @@ export default class DiamondAnimalAd {
     else sprite.anims.play(`${this.farm.toLowerCase()}-stay-right0`, true);
     if (this.farm === 'Sheep') this.scene.add.sprite(sprite.x, sprite.y, 'sheep-right-0-4');
 
-    let time: string = timer(this.scene.state[`user${this.farm}`].diamondAnimalTime);
+    const time: string = timer(this.scene.state[`user${this.farm}`].diamondAnimalTime);
     this.caveTimer = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 55, this.scene.state.lang.summonTime + time, {
       font: '26px Bip',
       color: '#57A90E',
@@ -38,27 +38,30 @@ export default class DiamondAnimalAd {
       wordWrap: { width: 420 }
     }).setOrigin(0.5, 0);
 
-    let right = {
+    const right = {
       icon: 'ad-icon',
       text: ''
     }
-    let ad = this.scene.bigButton('green', 'left', 135, this.scene.state.lang.summon, right);
+
+    const ad = this.scene.bigButton('green', 'left', 135, this.scene.state.lang.summon, right);
     this.scene.clickModalBtn(ad, (): void => {
 
       this.scene.state[`user${this.farm}`].diamondAnimalAd = false;
-      this.scene.game.scene.keys[this.scene.state.farm].watchAd(2);
-      this.scene.scene.stop();
-      this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
+      this.scene.game.scene.keys[this.farm].watchAd(2);
+      this.closeWindow()
       
     });
 
-    let cancel = this.scene.bigButton('yellow', 'center', 225, this.scene.state.lang.cancel);
-    this.scene.clickModalBtn(cancel, (): void => {
-      this.scene.scene.stop();
-      this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-    });
+    const cancel = this.scene.bigButton('yellow', 'center', 225, this.scene.state.lang.cancel);
+    this.scene.clickModalBtn(cancel, (): void => { this.closeWindow() });
 
     this.scene.resizeWindow(450);
 
   }
+
+  private closeWindow(): void {
+    this.scene.scene.stop();
+    this.scene.game.scene.keys[this.farm].scrolling.wheel = true;
+  }
+
 }
