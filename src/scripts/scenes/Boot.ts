@@ -49,7 +49,7 @@ class Boot extends Phaser.Scene {
     this.authorization = false;
     this.name = '';
     this.avatar = '';
-    
+
     this.setAutosaveListener();
     this.checkAbBlock();
     this.setLangs();
@@ -92,7 +92,7 @@ class Boot extends Phaser.Scene {
 
   private setPlatform(): void {
     this.platform = 'web';
-    this.platform = 'ya';
+    // this.platform = 'ya';
     this.hash = '';
 
     const search: string = window.location.search;
