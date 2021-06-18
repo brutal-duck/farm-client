@@ -15,27 +15,25 @@ export default class ExpelAnimalWindow {
 
   private create(): void {
 
-    this.scene.textHeader.setText(this.scene.state.lang.expelSheep);
+    this.scene.textHeader.setText(this.scene.state.lang[`expel${this.farm}`]);
 
-    this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 60, this.scene.state.lang.confirmExpelSheep, {
+    this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 60, this.scene.state.lang[`confirmExpel${this.farm}`], {
       font: '26px Bip',
       color: '#925C28',
       align: 'center',
       wordWrap: { width: 400 }
     }).setOrigin(0.5, 0.5);
   
-    let button = this.scene.bigButton('red', 'center', 40, this.scene.state.lang.expel);
+    const button = this.scene.bigButton('red', 'center', 40, this.scene.state.lang.expel);
     this.scene.clickModalBtn(button, (): void => {
-      this.scene.scene.stop();
-      this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
+      this.closeWindow()
       this.expelAnimal();
     });
   
-    let cancel = this.scene.bigButton('yellow', 'center', 120, this.scene.state.lang.cancel);
+    const cancel = this.scene.bigButton('yellow', 'center', 120, this.scene.state.lang.cancel);
     this.scene.clickModalBtn(cancel, (): void => {
       this.scene.state.animal.expel = false;
-      this.scene.scene.stop();
-      this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
+      this.closeWindow()
     });
   
     this.scene.resizeWindow(250);
@@ -56,6 +54,12 @@ export default class ExpelAnimalWindow {
   
     this.scene.state.animal.destroy();
   
+  }
+
+
+  private closeWindow(): void {
+    this.scene.scene.stop();
+    this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
   }
 
 }

@@ -20,6 +20,7 @@ export default class LogoutWindow {
       align: 'center',
       wordWrap: { width: 400 }
     }).setOrigin(0.5, 0.5);
+    
     this.scene.resizeWindow(120);
   
   }
