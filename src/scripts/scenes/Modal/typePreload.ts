@@ -190,7 +190,7 @@ export default function typePreload(): void {
         this.load.image('rating-price-btn', ratingPriseBtn);
         this.load.image('rating-places', ratingPrisePlaces);
         this.load.image('unicorn-status', unicornStatus);
-
+        this.load.image('tasks-close', tasksClose);
         break;
       case 12: // окно выдачи наград ивентовой фермы +
         this.load.image('raiting-bg-after',ratingBGAfter);
@@ -198,6 +198,7 @@ export default function typePreload(): void {
         this.load.image('rating-rules-btn', ratingRulesBtn);
         this.load.image('rating-price-btn', ratingPriseBtn);
         this.load.image('unicorn-status', unicornStatus);
+        this.load.image('tasks-close', tasksClose);
 
         break;
       case 13:
@@ -214,6 +215,7 @@ export default function typePreload(): void {
         this.load.image('factory-production-slot-disable-3', factoryProductionSlotDisable3);
         this.load.image('factory-production-slot-4', factoryProductionSlot4);
         this.load.image('factory-production-slot-disable-4', factoryProductionSlotDisable4);
+        this.load.image('tasks-close', tasksClose);
         break;
       case 14: 
         this.load.image('social-task-bg', socialTaskBg);
@@ -222,7 +224,7 @@ export default function typePreload(): void {
         this.load.image('social-task-middle', socialTaskMiddle);
         this.load.image('shop-btn', shopBtn);
         this.load.image('shop-btn-disable', shopBtnDisable);
-        
+        this.load.image('tasks-close', tasksClose);
         break;
       default:
         break;
