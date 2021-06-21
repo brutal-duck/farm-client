@@ -200,6 +200,7 @@ export default class DiamondsWindow {
       type: 'bank_page',
       count: FREE_DIAMONDS,
     });
+    this.scene.game.scene.keys[this.scene.state.farm].autosave();
   }
 
   private checkStarterpack(): boolean {
