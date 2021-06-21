@@ -174,6 +174,7 @@ export default class SocialTasksWindow {
     this.scene.state.user.takenSocialAward = true;
     if (this.scene.scene.isActive('Profile')) this.scene.game.scene.keys['Profile'].updateSocialTaskNative();
     this.scene.scene.stop();
+    this.scene.game.scene.keys[this.scene.state.farm].autosave();
     this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('diamonds_get', {
       type: 'virality',
       count: this.award,

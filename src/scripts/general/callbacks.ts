@@ -32,7 +32,6 @@ function okCallback(): void {
       console.log(result)
       if (result === 'ok') {
         this.state.okTask.subGroup = true;
-        console.log(this.game.scene.keys['Modal'])
         if (this.scene.isActive('Modal') && this.state.modal.type === 14) {
           this.game.scene.keys['Modal'].socialTakskWindow.socialTasks.subGroup = true;
           this.game.scene.keys['Modal'].socialTakskWindow.subGroupTask.setState(true);
