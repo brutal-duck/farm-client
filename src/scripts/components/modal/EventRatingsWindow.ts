@@ -172,8 +172,8 @@ export default class EventRatingsWindow {
     this.price.setTint(0xC0C0C0);
 
     // Для тестов
-    this.scene.state.progress.event.eventRaitings = [{ score: 5, place: 2, name: 'wrgw egrg' },{ score: 2, place: 3, name: '+wrgw egrg' }]
-    this.scene.state.progress.event.userEventRaiting = { score: 20, place: 1, name: 'wrgtrgw egrg' }
+    // this.scene.state.progress.event.eventRaitings = [{ score: 5, place: 2, name: 'wrgw egrg' },{ score: 2, place: 3, name: '+wrgw egrg' }]
+    // this.scene.state.progress.event.userEventRaiting = { score: 20, place: 1, name: 'wrgtrgw egrg' }
 
     // Таблица
     let length: number = this.scene.state.progress.event.eventRaitings.length
