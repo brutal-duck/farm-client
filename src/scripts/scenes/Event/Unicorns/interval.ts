@@ -145,9 +145,7 @@ function interval(): void {
     
 
     // Обновление иконки feed буста
-    if (this.state.userUnicorn.maxLevelAnimal >= this.game.scene.keys['Unicorn'].feedBoostLvl &&
-    this.state.user.additionalTutorial.feedBoost) {
-      
+    if (this.state.userUnicorn.maxLevelAnimal >= this.game.scene.keys['Unicorn'].feedBoostLvl) {
       if (this.state.userUnicorn.feedBoostTime > 0 && !this.game.scene.keys['UnicornBars'].feedBoostTime.visible) {
         this.game.scene.keys['UnicornBars'].proceedsText.y = 80;
         this.game.scene.keys['UnicornBars'].proceedsText.setColor('#cbff40');
