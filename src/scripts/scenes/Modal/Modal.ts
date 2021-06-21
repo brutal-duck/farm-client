@@ -110,6 +110,7 @@ class Modal extends Phaser.Scene {
   public chatHeight: number = 0;
   public chatBG: Phaser.GameObjects.Sprite;
   public eventLeftTime: Phaser.GameObjects.Text;
+  public socialTakskWindow: SocialTasksWindow;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -241,7 +242,7 @@ class Modal extends Phaser.Scene {
         new FactoryWindow(this);
         break;
       case 14: 
-        new SocialTasksWindow(this);
+        this.socialTakskWindow = new SocialTasksWindow(this);
         break;
       default:
         this.scene.stop();

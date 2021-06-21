@@ -147,7 +147,6 @@ class Boot extends Phaser.Scene {
     }
   }
 
-  // подрубаем штифты за пускаем первую сцену 
   private setStartState(): void {
     this.state.user = {
       diamonds: 0,
@@ -204,7 +203,6 @@ class Boot extends Phaser.Scene {
     }
   }
 
-  // берем hash для web платформы
   private getCookieHash(): string {
     let cookie = document.cookie;
     let result = cookie.split(';');
@@ -221,14 +219,12 @@ class Boot extends Phaser.Scene {
     return hash;
   }
 
-  // установка cookie
   private setCookieHash(hash: string, expires: string): void {
     this.hash = hash;
     document.cookie = 'farmHASH=' + hash + '; expires=' + expires + '; path=/;';
     this.userReady = true;
   }
 
-  // проверка на юзера
   private checkUser(): void {
     if (this.platform === 'vk') {
       this.checkVkUser();
