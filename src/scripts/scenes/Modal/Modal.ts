@@ -227,22 +227,24 @@ class Modal extends Phaser.Scene {
       case 9: // Чат
         this.chatBG = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + this.chatHeight, 'chat-bg');
         this.scene.launch('Chat', this.state);
-        this.createChatBars(this.chatHeight)
+        this.createChatBars(this.chatHeight);
         break;
       case 10: // окно автопрогресса ивентовой фермы
-        new EventProgressWindow(this)
+        new EventProgressWindow(this);
         break;
       case 11: // окно рейтингов ивентовой фермы
-        new EventRatingsWindow(this)
+        new EventRatingsWindow(this);
         break;
       case 12: // окно выдачи наград ивентовой фермы
-        new EventEndWindow(this)
+        new EventEndWindow(this);
         break;
       case 13: 
         new FactoryWindow(this);
+        this.openModal(this.cameras.main);
         break;
       case 14: 
         this.socialTakskWindow = new SocialTasksWindow(this);
+        this.openModal(this.cameras.main);
         break;
       default:
         this.scene.stop();
