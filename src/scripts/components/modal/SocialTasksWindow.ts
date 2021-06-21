@@ -29,7 +29,7 @@ export default class SocialTasksWindow {
   private diamond: Phaser.GameObjects.Sprite;
   private takeBtn: Phaser.GameObjects.Sprite;
   private takeBtnText: Phaser.GameObjects.Text;
-  private readonly award: number = 5;
+  private readonly award: number = 3;
   private joinGroupTask: Task;
   private subGroupTask: Task;
   private subNativeTask: Task;
@@ -46,11 +46,6 @@ export default class SocialTasksWindow {
     this.height = 0;
     if (this.scene.state.platform === 'vk') {
       this.socialTasks = this.scene.state.vkTask;
-    } else if (this.scene.state.platform === 'web') {
-      this.socialTasks = {
-        joinGroup: false,
-        subGroup: false,
-      }
     } else if (this.scene.state.platform === 'ok') {
       this.socialTasks = this.scene.state.okTask;
     }
