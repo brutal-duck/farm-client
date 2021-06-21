@@ -38,9 +38,9 @@ class Boot extends Phaser.Scene {
   private params: URLSearchParams;
 
   public init(): void {
-    this.build = '3.7';
+    this.build = '3.7.1';
     console.log('Build ' + this.build);
-
+    // console.log('y1')
     this.state = state;
     this.fontsReady = false;
     this.userReady = false;
@@ -290,10 +290,10 @@ class Boot extends Phaser.Scene {
       }
   }
 
-  private initYandexUser() {
+  private initYandexUser(): Promise<void> {
     return this.state.ysdk.getPlayer().then(player => {
         this.name = player.getName();
-        this.avatar = player.getPhoto('medium');
+        this.avatar = player.getPhoto('large');
         if (this.name === '') {
           this.name = 'Anonymous';
         }

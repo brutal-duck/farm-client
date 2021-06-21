@@ -8,32 +8,24 @@ import MoneyAnimation from './../components/animations/MoneyAnimation';
 
 // поиск рекламы
 function findAd(): void {
-  
   if (!this.state.readyAd && !this.state.adBlock) {
-
     if (this.state.platform === 'ok' && !this.state.adTimeout) {
-
       this.state.adTimeout = true;
       FAPI.UI.loadAd();
-
     } else if (this.state.platform === 'vk' && !this.state.adTimeout) {
-
       this.state.adTimeout = true;
-
       let win: any = window;
       let mobile: boolean = false; 
-  
       if (platform.os.family === 'Android' || platform.os.family === 'iOS') mobile = true;
-  
       win.admanInit({
         user_id: this.state.vkId,
         app_id: process.env.VK_APP_ID,
         mobile: mobile,
         type: 'rewarded'
       }, this.VKOnAdsReady, this.VKNoAds);
-
+    } else if (this.state.platform === 'ya') {
+      this.state.readyAd = true;
     }
-    
   }
 }
 
@@ -45,9 +37,7 @@ function watchAd(type: number): void {
   this.state.readyAd = false;
 
   if (this.state.platform === 'ok') {
-
     FAPI.UI.showLoadedAd();
-
   } else if (this.state.platform === 'vk') {
     this.state.adTimeout = false;
     
@@ -63,9 +53,22 @@ function watchAd(type: number): void {
     this.state.adman.onSkipped((): void => {});      
     this.state.adman.onClicked((): void => {}); 
     this.state.adman.start('preroll');
+  } else if (this.state.platform === 'ya') {
+    this.state.ysdk.adv.showRewardedVideo({
+      callbacks: {
+        onRewarded: (): void => {
+          console.log('onRewarded');
+          this.adReward();
+        },
+        onError: (): void => {
+          console.log('onError');
+        },
+        onClose: (): void => {
+          console.log('onClose');
+        },
+      }
+    });
   }
-
-  
 }
 
 
