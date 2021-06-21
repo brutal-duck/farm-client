@@ -47,7 +47,7 @@ export default class ExpelAnimalWindow {
       this.scene.state.animal.woolSprite.destroy();
       this.scene.state.animal.shaveStatus.destroy();
     } else if (this.farm === 'Unicorn') {
-      currentTerritory(this.scene.state.animal.x, this.scene.state.animal.y).data.values.merging = [];
+      this.scene.game.scene.keys[this.scene.state.farm].currentTerritory(this.scene.state.animal.x, this.scene.state.animal.y).data.values.merging = [];
       this.scene.state.animal.data.values.active?.data.values.cloud.destroy();
       this.scene.state.animal.data.values.active?.destroy();
     }
