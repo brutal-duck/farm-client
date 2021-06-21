@@ -40,7 +40,6 @@ class Boot extends Phaser.Scene {
   public init(): void {
     this.build = '3.7';
     console.log('Build ' + this.build);
-    console.log('ya 3')
 
     this.state = state;
     this.fontsReady = false;
