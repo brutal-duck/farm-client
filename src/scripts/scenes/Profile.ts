@@ -63,6 +63,8 @@ class Profile extends Phaser.Scene {
   public currentEndTime: string = ' ';
   private currentDiamonds: number;
   private animDiamondsCount: number = 0;
+  private shopNativeText: Phaser.GameObjects.Text;
+  private shopNativeBg: Phaser.GameObjects.Sprite; 
   
   public click = click.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
@@ -146,6 +148,7 @@ class Profile extends Phaser.Scene {
   public update(): void {
     this.updateEvent();
     this.updateUserDiamonds();
+    this.updateShopNative();
   }
 
   private createElements(): void {
@@ -767,14 +770,11 @@ class Profile extends Phaser.Scene {
         this.scene.launch('Modal', this.state);
       });
     }
-
-    if (!this.state.user.takenFreeDiamonds  && (this.state.userSheep.tutorial >= 100 || this.state.progress.chicken.part >= 1 || this.state.progress.cow.part >= 1)) {
-      this.add.sprite(shopPosition.x - 50, shopPosition.y - 70, 'profile-native-bg');
-      this.add.text(shopPosition.x - 50, shopPosition.y - 70, '1', {
-        font: '30px Bip',
-        color: '#ffffff',
-      }).setOrigin(0.5);
-    }
+    this.shopNativeBg = this.add.sprite(shopPosition.x - 50, shopPosition.y - 70, 'profile-native-bg').setVisible(false);
+    this.shopNativeText = this.add.text(shopPosition.x - 50, shopPosition.y - 70, '1', {
+      font: '30px Bip',
+      color: '#ffffff',
+    }).setOrigin(0.5).setVisible(false);
   }
 
   private updateEvent(): void {
@@ -944,7 +944,6 @@ class Profile extends Phaser.Scene {
     }
   }
 
-
   private createSocialTaskBtn(): void {
     const position: Iposition = { x: 70, y: 230 };
     if (this.state.userSheep.tutorial >= 100) {
@@ -1008,6 +1007,23 @@ class Profile extends Phaser.Scene {
       this.currentDiamonds = this.state.user.diamonds;
       this.diamondsText.setText(shortNum(this.state.user.diamonds));
     }
+  }
+
+  private updateShopNative(): void {
+    if (!this.checkFreeDiamondsNative() && this.shopNativeBg.visible) {
+      this.shopNativeBg.setVisible(false);
+      this.shopNativeText.setVisible(false);
+    } else if (this.checkFreeDiamondsNative() && !this.shopNativeBg.visible){
+      this.shopNativeBg.setVisible(true);
+      this.shopNativeText.setVisible(true);
+    }
+  }
+
+  private checkFreeDiamondsNative(): boolean {
+    return !this.state.user.takenFreeDiamonds && 
+    (this.state.userSheep.tutorial >= 100 || 
+    this.state.progress.chicken.part >= 1 || 
+    this.state.progress.cow.part >= 1);
   }
 }
 
