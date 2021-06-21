@@ -46,10 +46,8 @@ import {
 import {
   eventConvertor,
   buyEventTerritory,
-  improveCollectorEvent,
   herdBoostEventWindow,
   eventDrag,
-  updateImproveCollectorEvent
 } from './event';
 import {
   sheepFair,
@@ -69,8 +67,6 @@ import {
   addEmail,
   support,
   registration,
-  improveCollector,
-  updateImproveCollector,
   confirmBuyCooldown
 } from '../../general/modal';
   // буст "Стадо"
@@ -150,8 +146,6 @@ class Modal extends Phaser.Scene {
   public sheepWoolRepository = sheepWoolRepository.bind(this);
   public support = support.bind(this);
   public registration = registration.bind(this);
-  public improveCollector = improveCollector.bind(this);
-  public updateImproveCollector = updateImproveCollector.bind(this);
   public shopButton = shopButton.bind(this);
   public shortTime = shortTime.bind(this);
   public sheepWoolRepositoryExchange = sheepWoolRepositoryExchange.bind(this);
@@ -163,8 +157,6 @@ class Modal extends Phaser.Scene {
   public eventConvertor = eventConvertor.bind(this);
   public eventTerritory = eventTerritory.bind(this);
   public buyEventTerritory = buyEventTerritory.bind(this);
-  public improveCollectorEvent = improveCollectorEvent.bind(this);
-  public updateImproveCollectorEvent = updateImproveCollectorEvent.bind(this);
   public herdBoostEventWindow = herdBoostEventWindow.bind(this);
   public eventDrag = eventDrag.bind(this);
   public createChatBars = createChatBars.bind(this);

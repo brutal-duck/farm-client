@@ -3,34 +3,45 @@ import Modal from "../../scenes/Modal/Modal";
 
 export default class EventRatingsWindow {
   public scene: Modal;
-  public line: Phaser.GameObjects.Text;
-  public playerPlaceAndName: Phaser.GameObjects.Text;
-  public playerScore: Phaser.GameObjects.Text;
-  public eventRatingsNames: Phaser.GameObjects.Text[];
-  public eventRatingsScores: Phaser.GameObjects.Text[];
-
+  private line: Phaser.GameObjects.Text;
+  private playerPlaceAndName: Phaser.GameObjects.Text;
+  private playerScore: Phaser.GameObjects.Text;
+  private eventRatingsNames: Phaser.GameObjects.Text[];
+  private eventRatingsScores: Phaser.GameObjects.Text[];
+  private priceBtn: Phaser.GameObjects.Sprite
+  private price: Phaser.GameObjects.Text
+  private rulesBtn: Phaser.GameObjects.Sprite
+  private rules: Phaser.GameObjects.Text
+  private rulesText: Phaser.GameObjects.Text
+  private rulesText2: Phaser.GameObjects.Text
+  private eventLeftText: Phaser.GameObjects.Text
+  private priceElements: modalElementType[]
 
   constructor(scene: Modal) {
     this.scene = scene;
+    this.init();
     this.create();
     this.scene.openModal(this.scene.cameras.main);
   }
 
-  private create(): void {
-
+  private init(): void {
     this.eventRatingsNames = [];
     this.eventRatingsScores = [];
-    let priceElements: modalElementType[] = [];
+    this.priceElements = [];
+  }
+
+  private create(): void {
+
     let placeAndName: Phaser.GameObjects.Text;
     let score: Phaser.GameObjects.Text;
-    let placeAndNameX: number = this.scene.cameras.main.centerX - 206;
-    let placeAndNameY: number = this.scene.cameras.main.centerY + 130;
-    let padding: number = 24;
+    const placeAndNameX: number = this.scene.cameras.main.centerX - 206;
+    const placeAndNameY: number = this.scene.cameras.main.centerY + 130;
+    const padding: number = 24;
 
     // Спрайты
     this.scene.add.sprite(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY, 'rating-bg');
-    let rulesBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX - 130, this.scene.cameras.main.centerY - 264, 'rating-rules-btn').setInteractive();
-    let priceBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX + 126, this.scene.cameras.main.centerY - 264, 'rating-price-btn').setInteractive();
+    this.rulesBtn = this.scene.add.sprite(this.scene.cameras.main.centerX - 130, this.scene.cameras.main.centerY - 264, 'rating-rules-btn').setInteractive();
+    this.priceBtn = this.scene.add.sprite(this.scene.cameras.main.centerX + 126, this.scene.cameras.main.centerY - 264, 'rating-price-btn').setInteractive();
     let closeBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX + 268, this.scene.cameras.main.centerY - 452, 'tasks-close').setOrigin(0.5, 0.5).setScale(1.15);
 
     // Заголовок
@@ -42,25 +53,25 @@ export default class EventRatingsWindow {
     }).setOrigin(0.5, 0.5).setDepth(2).setShadow(1, 4, 'rgba(0, 0, 0, 0.5)', 2);
 
     // 'Условия'
-    let rules: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 86, this.scene.cameras.main.centerY - 283, this.scene.state.lang.eventRules, {
+    this.rules = this.scene.add.text(this.scene.cameras.main.centerX - 86, this.scene.cameras.main.centerY - 283, this.scene.state.lang.eventRules, {
       font: '32px Bip',
       color: '#FFF7E6',
     }).setOrigin(0.5, 0.5).setDepth(2).setShadow(1, 3, 'rgba(0, 0, 0, 0.5)', 2);
 
     // 'Призы'
-    let price: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX + 164, this.scene.cameras.main.centerY - 283, this.scene.state.lang.eventPrice, {
+    this.price = this.scene.add.text(this.scene.cameras.main.centerX + 164, this.scene.cameras.main.centerY - 283, this.scene.state.lang.eventPrice, {
       font: '32px Bip',
       color: '#FFF7E6',
     }).setOrigin(0.5, 0.5).setDepth(2).setShadow(1, 3, 'rgba(0, 0, 0, 0.5)', 2);
 
     // Текст условия
-    let rulesText: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 186, this.scene.state.lang.eventRulesTеxt, {
+    this.rulesText = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 186, this.scene.state.lang.eventRulesTеxt, {
       font: '23px Bip',
       color: '#793D0A',
       align: 'center',
       wordWrap: { width: 380 }
     }).setOrigin(0.5, 0.5).setDepth(2).setLineSpacing(0.2);
-    let rulesText2: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 97, this.scene.state.lang.eventRulesTеxt2, {
+    this.rulesText2 = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 97, this.scene.state.lang.eventRulesTеxt2, {
       font: '23px Bip',
       color: '#793D0A',
       align: 'center',
@@ -68,7 +79,7 @@ export default class EventRatingsWindow {
     }).setOrigin(0.5, 0.5).setDepth(2).setLineSpacing(0.2);
 
     // Времени осталось
-    let eventLeftText: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX + 100, this.scene.cameras.main.centerY - 25, this.scene.state.lang.eventRulesLeft, {
+    this.eventLeftText = this.scene.add.text(this.scene.cameras.main.centerX + 100, this.scene.cameras.main.centerY - 25, this.scene.state.lang.eventRulesLeft, {
       font: '24px Bip',
       color: '#793D0A',
     }).setOrigin(1, 0.5).setDepth(2);
@@ -108,18 +119,46 @@ export default class EventRatingsWindow {
     }).setOrigin(0, 0).setVisible(false);
 
     // Кучки кристалов
-    let diamond1: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX + 188, this.scene.cameras.main.centerY - 196, 'diamond').setScale(0.1).setAngle(45).setVisible(false);
-    let diamond2: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX + 175, this.scene.cameras.main.centerY - 200, 'diamond').setScale(0.13).setVisible(false);
-    let diamond3: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX + 165, this.scene.cameras.main.centerY - 191, 'diamond').setScale(0.09).setAngle(-30).setVisible(false);
+    let firstPlaceDiamonds: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 175, this.scene.cameras.main.centerY - 200, [
+      this.scene.add.sprite(13, 4, 'diamond').setScale(0.11).setAngle(45).setTint(0x000000),
+      this.scene.add.sprite(13, 4, 'diamond').setScale(0.1).setAngle(45),
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.14).setTint(0x000000),
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.13),
+      this.scene.add.sprite(-10, 9, 'diamond').setScale(0.1).setAngle(-30).setTint(0x000000),
+      this.scene.add.sprite(-10, 9, 'diamond').setScale(0.09).setAngle(-30),
+    ]).setVisible(false)
 
-    let diamond4: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX + 168, this.scene.cameras.main.centerY - 164, 'diamond').setScale(0.10).setAngle(-12).setVisible(false);
-    let diamond5: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX + 180, this.scene.cameras.main.centerY - 169, 'diamond').setScale(0.12).setAngle(19).setVisible(false);
+    let secondPlaceDiamonds: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 180, this.scene.cameras.main.centerY - 169, [
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.13).setAngle(19).setTint(0x000000),
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.12).setAngle(19),
+      this.scene.add.sprite(-12, 5, 'diamond').setScale(0.11).setAngle(-12).setTint(0x000000),
+      this.scene.add.sprite(-12, 5, 'diamond').setScale(0.1).setAngle(-12),
+    ]).setVisible(false)
 
-    let diamond6: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX + 178, this.scene.cameras.main.centerY - 139, 'diamond').setScale(0.12).setAngle(-19).setVisible(false);
-    let diamond7: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 109, 'diamond').setScale(0.10).setVisible(false);
-    let diamond8: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 81, 'diamond').setScale(0.09).setVisible(false);
-    let diamond9: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 55, 'diamond').setScale(0.08).setVisible(false);
-    let diamond10: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 27, 'diamond').setScale(0.08).setVisible(false);
+    let thirdPlaceDiamond: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 178, this.scene.cameras.main.centerY - 139, [
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.13).setAngle(-19).setTint(0x000000),
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.12).setAngle(-19),
+    ]).setVisible(false)
+
+    let fourthPlaceDiamond: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 109, [
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.11).setTint(0x000000),
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.1),
+    ]).setVisible(false)
+
+    let fifthPlaceDiamond: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 81, [
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.1).setTint(0x000000),
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.09),
+    ]).setVisible(false)
+
+    let sixthPlaceDiamond: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 55, [
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.09).setTint(0x000000),
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.08),
+    ]).setVisible(false)
+
+    let seventhPlaceDiamond: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 27, [
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.08).setTint(0x000000),
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.07),
+    ]).setVisible(false)
 
 
     // 'Рейтинг'
@@ -129,12 +168,12 @@ export default class EventRatingsWindow {
     }).setOrigin(0.5, 0.5).setDepth(2).setShadow(1, 3, 'rgba(0, 0, 0, 0.5)', 2);
 
     // Затемняем 2ю кнопку
-    priceBtn.setTint(0xC0C0C0).setCrop(0, 0, 300, 90);
-    price.setTint(0xC0C0C0);
+    this.priceBtn.setTint(0xC0C0C0).setCrop(0, 0, 300, 90);
+    this.price.setTint(0xC0C0C0);
 
     // Для тестов
-    // this.scene.state.progress.event.eventRaitings = [{ score: 5, place: 2, name: 'wrgw egrg' },{ score: 2, place: 3, name: '+wrgw egrg' }]
-    // this.scene.state.progress.event.userEventRaiting = { score: 20, place: 1, name: 'wrgtrgw egrg' }
+    this.scene.state.progress.event.eventRaitings = [{ score: 5, place: 2, name: 'wrgw egrg' },{ score: 2, place: 3, name: '+wrgw egrg' }]
+    this.scene.state.progress.event.userEventRaiting = { score: 20, place: 1, name: 'wrgtrgw egrg' }
 
     // Таблица
     let length: number = this.scene.state.progress.event.eventRaitings.length
@@ -152,7 +191,6 @@ export default class EventRatingsWindow {
         color: '#793D0A',
       });
 
-      
       if (this.scene.state.progress.event.eventRaitings && this.scene.state.progress.event.eventRaitings[i].score !== null) {
         placeAndName.setText(this.scene.state.progress.event.eventRaitings[i].place + '. ' + this.scene.state.progress.event.eventRaitings[i].name).setCrop(0, 0, 260, 100);
         score.setText(String(this.scene.state.progress.event.eventRaitings[i].score));
@@ -182,72 +220,37 @@ export default class EventRatingsWindow {
     })
 
     if (this.scene.state.progress.event.userEventRaiting.place <= 10) {
-
       this.line.setVisible(false);
       this.playerPlaceAndName.setVisible(false);
       this.playerScore.setVisible(false);
-
     }
 
-    priceElements.push(
+    this.priceElements.push(
       topPlaces,
       priceTopPlaces,
       pricePlaces,
       priceTopPlacesDiamonds,
       pricePlacesDiamonds,
-      diamond1,
-      diamond2,
-      diamond3,
-      diamond4,
-      diamond5,
-      diamond6,
-      diamond7,
-      diamond8,
-      diamond9,
-      diamond10
+      firstPlaceDiamonds,
+      secondPlaceDiamonds,
+      thirdPlaceDiamond,
+      fourthPlaceDiamond,
+      fifthPlaceDiamond,
+      sixthPlaceDiamond,
+      seventhPlaceDiamond
     );
 
     // Нажатие на 'Условия'
-    rulesBtn.on('pointerdown', (): void => {
-
-      priceBtn.setTint(0xC0C0C0).setCrop(0, 0, 400, 90);
-      price.setTint(0xC0C0C0);
-      rulesBtn.setTint(0xffffff).setCrop(0, 0, 400, 150);
-      rules.setTint(0xffffff);
-
-      rulesText.setVisible(true);
-      rulesText2.setVisible(true);
-      eventLeftText.setVisible(true);
-      this.scene.eventLeftTime.setVisible(true);
-
-      priceElements.forEach(el => el.setVisible(false));
-
-    });
+    this.rulesBtn.on('pointerdown', (): void => { this.toogleBtn(true) });
 
     // Нажатие на 'Призы'
-    priceBtn.on('pointerdown', (): void => {
-
-      rulesBtn.setTint(0xC0C0C0).setCrop(0, 0, 400, 90);
-      rules.setTint(0xC0C0C0);
-      priceBtn.setTint(0xffffff).setCrop(0, 0, 400, 150);
-      price.setTint(0xffffff);
-
-      rulesText.setVisible(false);
-      rulesText2.setVisible(false);
-      eventLeftText.setVisible(false);
-      this.scene.eventLeftTime.setVisible(false);
-
-      priceElements.forEach(el => el.setVisible(true));
-
-    });
+    this.priceBtn.on('pointerdown', (): void => { this.toogleBtn(false) });
 
 
     // Закрытие окна
     this.scene.clickButton(closeBtn, (): void => {
-      
       this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
       this.scene.scene.stop('Modal');
-      
     });
 
     this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
@@ -287,4 +290,29 @@ export default class EventRatingsWindow {
     }
     
   }
+
+
+  private toogleBtn(showRules: boolean): void {
+
+    if (showRules) {
+      this.priceBtn.setTint(0xC0C0C0).setCrop(0, 0, 400, 90);
+      this.price.setTint(0xC0C0C0);
+      this.rulesBtn.setTint(0xffffff).setCrop(0, 0, 400, 150);
+      this.rules.setTint(0xffffff);
+    } else {
+      this.rulesBtn.setTint(0xC0C0C0).setCrop(0, 0, 400, 90);
+      this.rules.setTint(0xC0C0C0);
+      this.priceBtn.setTint(0xffffff).setCrop(0, 0, 400, 150);
+      this.price.setTint(0xffffff);
+    }
+
+    this.rulesText.setVisible(showRules);
+    this.rulesText2.setVisible(showRules);
+    this.eventLeftText.setVisible(showRules);
+    this.scene.eventLeftTime.setVisible(showRules);
+
+    this.priceElements.forEach(el => el.setVisible(!showRules));
+
+  }
+
 }
