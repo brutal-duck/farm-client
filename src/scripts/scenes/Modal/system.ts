@@ -7,6 +7,8 @@ import ExpelAnimalWindow from '../../components/modal/system/ExpelAnimalWindow';
 import ProfileWindow from '../../components/modal/system/ProfileWindow';
 import LogoutWindow from '../../components/modal/system/LogoutWindow';
 import DiamondAnimalAd from '../../components/modal/system/DiamondAnimalAd';
+import ImproveCollectorWindow from '../../components/modal/system/ImproveCollectorWindow';
+import ImproveCollectorEventWindow from '../../components/modal/system/ImproveCollectorEventWindow';
 
 function systemWindow(): void {
   let height:number = 0;
@@ -152,12 +154,8 @@ function systemWindow(): void {
 
     case 10: // окно улучшения собирателя
       
-      if (this.state.farm !== 'Unicorn') {
-        this.improveCollector();
-      } else {
-        this.improveCollectorEvent();
-      }
-      
+      if (this.state.farm !== 'Unicorn') new ImproveCollectorWindow(this);
+      else new ImproveCollectorEventWindow(this)
       break;
     
     case 11: //окно смены территории

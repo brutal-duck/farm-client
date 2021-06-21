@@ -18,7 +18,7 @@ export default class EventEndWindow {
   private rulesText: Phaser.GameObjects.Text
   private rulesTextStatus: Phaser.GameObjects.Text
   private statusIcon: Phaser.GameObjects.Sprite
-  private priceElements: any[]
+  private priceElements: modalElementType[]
 
   constructor(scene: Modal) {
     this.scene = scene;
@@ -125,25 +125,53 @@ export default class EventEndWindow {
     }).setOrigin(0, 0).setVisible(false);
 
     // Кучки кристалов
-    let diamond1: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX + 188, this.scene.cameras.main.centerY - 196 - 20, 'diamond').setScale(0.1).setAngle(45).setVisible(false);
-    let diamond2: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX + 175, this.scene.cameras.main.centerY - 200 - 20, 'diamond').setScale(0.13).setVisible(false);
-    let diamond3: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX + 165, this.scene.cameras.main.centerY - 191 - 20, 'diamond').setScale(0.09).setAngle(-30).setVisible(false);
+    let firstPlaceDiamonds: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 175, this.scene.cameras.main.centerY - 220, [
+      this.scene.add.sprite(13, 4, 'diamond').setScale(0.11).setAngle(45).setTint(0x000000),
+      this.scene.add.sprite(13, 4, 'diamond').setScale(0.1).setAngle(45),
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.14).setTint(0x000000),
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.13),
+      this.scene.add.sprite(-10, 9, 'diamond').setScale(0.1).setAngle(-30).setTint(0x000000),
+      this.scene.add.sprite(-10, 9, 'diamond').setScale(0.09).setAngle(-30),
+    ]).setVisible(false)
 
-    let diamond4: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX + 168, this.scene.cameras.main.centerY - 164 - 20, 'diamond').setScale(0.10).setAngle(-12).setVisible(false);
-    let diamond5: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX + 180, this.scene.cameras.main.centerY - 169 - 20, 'diamond').setScale(0.12).setAngle(19).setVisible(false);
+    let secondPlaceDiamonds: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 180, this.scene.cameras.main.centerY - 189, [
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.13).setAngle(19).setTint(0x000000),
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.12).setAngle(19),
+      this.scene.add.sprite(-12, 5, 'diamond').setScale(0.11).setAngle(-12).setTint(0x000000),
+      this.scene.add.sprite(-12, 5, 'diamond').setScale(0.1).setAngle(-12),
+    ]).setVisible(false)
 
-    let diamond6: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX + 178, this.scene.cameras.main.centerY - 139 - 20, 'diamond').setScale(0.12).setAngle(-19).setVisible(false);
-    let diamond7: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 109 - 20, 'diamond').setScale(0.10).setVisible(false);
-    let diamond8: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 81 - 20, 'diamond').setScale(0.09).setVisible(false);
-    let diamond9: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 55 - 20, 'diamond').setScale(0.08).setVisible(false);
-    let diamond10: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 27 - 20, 'diamond').setScale(0.08).setVisible(false);
+    let thirdPlaceDiamond: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 178, this.scene.cameras.main.centerY - 159, [
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.13).setAngle(-19).setTint(0x000000),
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.12).setAngle(-19),
+    ]).setVisible(false)
+
+    let fourthPlaceDiamond: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 129, [
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.11).setTint(0x000000),
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.1),
+    ]).setVisible(false)
+
+    let fifthPlaceDiamond: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 101, [
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.1).setTint(0x000000),
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.09),
+    ]).setVisible(false)
+
+    let sixthPlaceDiamond: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 75, [
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.09).setTint(0x000000),
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.08),
+    ]).setVisible(false)
+
+    let seventhPlaceDiamond: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 47, [
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.08).setTint(0x000000),
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.07),
+    ]).setVisible(false)
 
     // Затемняем 2ю кнопку
     this.priceBtn.setTint(0xC0C0C0).setCrop(0, 0, 300, 90);
     this.price.setTint(0xC0C0C0);
     
-    this.scene.state.progress.event.eventRaitings = [{ score: 5, place: 2, name: 'wrgw egrg' },{ score: 2, place: 3, name: '+wrgw egrg' }]
-    this.scene.state.progress.event.userEventRaiting = { score: 20, place: 1, name: 'wrgtrgw egrg' }
+    // this.scene.state.progress.event.eventRaitings = [{ score: 5, place: 2, name: 'wrgw egrg' },{ score: 2, place: 3, name: '+wrgw egrg' }]
+    // this.scene.state.progress.event.userEventRaiting = { score: 20, place: 1, name: 'wrgtrgw egrg' }
 
 
     // Таблица
@@ -165,9 +193,7 @@ export default class EventEndWindow {
       if (this.scene.state.progress.event.eventRaitings[i].score !== null) {
         placeAndName.setText(this.scene.state.progress.event.eventRaitings[i].place + '. ' + this.scene.state.progress.event.eventRaitings[i].name).setCrop(0, 0, 260, 100);
         score.setText(String(this.scene.state.progress.event.eventRaitings[i].score));
-        if (i < 3) {
-          this.scene.add.sprite(placeAndNameX + 280 + 35, placeAndNameY + padding * Number(i), 'unicorn-status').setOrigin(0, 0).setScale(0.65);
-        }
+        if (i < 3) this.scene.add.sprite(placeAndNameX + 280 + 35, placeAndNameY + padding * Number(i), 'unicorn-status').setOrigin(0, 0).setScale(0.65);
       }
       
       this.eventRatingsNames.push(placeAndName);
@@ -204,52 +230,20 @@ export default class EventEndWindow {
       pricePlaces,
       priceTopPlacesDiamonds,
       pricePlacesDiamonds,
-      diamond1,
-      diamond2,
-      diamond3,
-      diamond4,
-      diamond5,
-      diamond6,
-      diamond7,
-      diamond8,
-      diamond9,
-      diamond10
+      firstPlaceDiamonds,
+      secondPlaceDiamonds,
+      thirdPlaceDiamond,
+      fourthPlaceDiamond,
+      fifthPlaceDiamond,
+      sixthPlaceDiamond,
+      seventhPlaceDiamond,
     );
 
     // Нажатие на 'Условия'
-    this.rulesBtn.on('pointerdown', (): void => {
-
-      // this.priceBtn.setTint(0xC0C0C0).setCrop(0, 0, 400, 90);
-      // this.price.setTint(0xC0C0C0);
-      // this.rulesBtn.setTint(0xffffff).setCrop(0, 0, 400, 150);
-      // this.rules.setTint(0xffffff);
-
-      // rulesText.setVisible(true);
-      // rulesTextStatus.setVisible(true);
-      // statusIcon.setVisible(true);
-      // status.setVisible(true);
-
-      // priceElements.forEach(el => el.setVisible(false));
-      this.toogleBtn(true)
-
-    });
+    this.rulesBtn.on('pointerdown', (): void => { this.toogleBtn(true) });
 
     // Нажатие на 'Призы'
-    this.priceBtn.on('pointerdown', (): void => {
-
-      // this.rulesBtn.setTint(0xC0C0C0).setCrop(0, 0, 400, 90);
-      // this.rules.setTint(0xC0C0C0);
-      // this.priceBtn.setTint(0xffffff).setCrop(0, 0, 400, 150);
-      // this.price.setTint(0xffffff);
-
-      // rulesText.setVisible(false);
-      // rulesTextStatus.setVisible(false);
-      // statusIcon.setVisible(false);
-      // status.setVisible(false);
-
-      // priceElements.forEach(el => el.setVisible(true));
-      this.toogleBtn(false)
-    });
+    this.priceBtn.on('pointerdown', (): void => { this.toogleBtn(false) });
 
     let diamonds: number;
     if (this.scene.state.progress.event.userEventRaiting.place === 1) diamonds = 1000;
