@@ -42,8 +42,8 @@ export default class ProfileWindow {
 
     if (this.scene.state.platform !== 'web') login = this.scene.state.name;
 
-    if (this.scene.state.platform === 'vk') avatar = this.scene.add.sprite(200, 0, 'avatar').setScale(0.7).setDepth(1);
-    else if (this.scene.state.platform === 'ok') avatar = this.scene.add.sprite(200, 0, 'avatar').setDepth(1);
+    if (this.scene.state.platform === 'vk') avatar = this.scene.add.sprite(200, 0, 'avatar').setScale(0.85).setDepth(1);
+    else if (this.scene.state.platform === 'ok') avatar = this.scene.add.sprite(200, 0, 'avatar').setScale(1.2).setDepth(1);
     else if (this.scene.state.platform === 'ya') avatar = this.scene.add.sprite(200, 0, 'avatar').setDepth(1);
     else avatar = this.scene.add.sprite(200, 0, 'farmer').setScale(0.6).setDepth(1);
         

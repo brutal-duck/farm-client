@@ -169,7 +169,6 @@ export default class BoostsWindow {
         font: '26px Shadow',
         color: '#FFFFFF'
       }).setOrigin(0.5, 0.5).setStroke('#3B5367', 4);
-      console.log('collectorBoost ~ this.improve', this.improve)
   
       this.scene.clickShopBtn({ btn: this.improve, title: this.improveText }, (): void => { this.scene.game.scene.keys[this.scene.state.farm].showImproveCollector() });
   
@@ -267,7 +266,6 @@ export default class BoostsWindow {
     if (this.doubleCollector) for (let el of this.doubleCollector) el?.destroy()
     if (this.adBtn) for (let el of this.adBtn) el?.destroy()
 
-    console.log('!!');
     
     let freeTime: number = this.scene.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userUnicorn.collectorLevel).time;
 

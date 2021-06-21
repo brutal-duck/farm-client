@@ -257,28 +257,30 @@ export default class EventRatingsWindow {
   private update(): void {
 
     // Обновление таблицы рейтингов евента
-    if (this.scene.state.progress.event.updateRaitings && this.scene.state.modal.type === 11) {
+    if (this.scene.state.progress.event.updateRaitings && this.scene.state.modal.type === 11 && this.eventRatingsNames) {
 
       for (let i: number = 0; i < 10; i++) {
-        if (this.scene.state.progress.event.eventRaitings[i].score !== null) {
-          this.eventRatingsNames[i]?.setText(this.scene.state.progress.event.eventRaitings[i].place + '. ' + this.scene.state.progress.event.eventRaitings[i].name).setCrop(0, 0, 260, 100)
-          this.eventRatingsScores[i]?.setText(String(this.scene.state.progress.event.eventRaitings[i].score))
+        if (this.scene.state.progress.event.eventRaitings[i].score && this.eventRatingsNames[i].active && this.eventRatingsScores[i].active) {
+          this.eventRatingsNames[i]?.setText(this.scene.state.progress.event.eventRaitings[i].place + '. ' + this.scene.state.progress.event.eventRaitings[i].name).setCrop(0, 0, 260, 100);
+          this.eventRatingsScores[i]?.setText(String(this.scene.state.progress.event.eventRaitings[i].score));
         }
       }
       
-      if (this.scene.state.progress.event.userEventRaiting.place <= 10) {
+      if (this.line && this.playerPlaceAndName && this.playerScore) {
+          if (this.scene.state.progress.event.userEventRaiting.place <= 10) {
+            
+            this.line?.setVisible(false);
+            this.playerPlaceAndName?.setVisible(false);
+            this.playerScore?.setVisible(false);
         
-        this.line?.setVisible(false)
-        this.playerPlaceAndName?.setVisible(false)
-        this.playerScore?.setVisible(false)
-    
-      } else if (this.scene.state.progress.event.userEventRaiting.place > 10) {
-        
-        this.line?.setVisible(true)
-        this.playerPlaceAndName?.setVisible(true).setCrop(0, 0, 280, 100)
-        this.playerScore?.setVisible(true)
-        
-      }
+          } else if (this.scene.state.progress.event.userEventRaiting.place > 10) {
+            
+            this.line?.setVisible(true);
+            this.playerPlaceAndName?.setVisible(true).setCrop(0, 0, 280, 100);
+            this.playerScore?.setVisible(true);
+            
+          }
+        }
 
       this.scene.state.progress.event.updateRaitings = false
 
