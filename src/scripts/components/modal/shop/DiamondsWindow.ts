@@ -29,8 +29,8 @@ export default class DiamondsWindow {
       let y: number = i * 270 + 40;
       if (this.checkStarterpack()) y += 238;
       
-      let left: Ipackage = this.scene.state.packages[i * 2];
-      let right: Ipackage = this.scene.state.packages[i * 2 + 1];
+      const left: Ipackage = this.scene.state.packages[i * 2];
+      const right: Ipackage = this.scene.state.packages[i * 2 + 1];
       
       this.createPack(left, {x: 0, y: y});
       if (right) this.createPack(right, {x: 240, y: y});
@@ -38,7 +38,7 @@ export default class DiamondsWindow {
   }
 
   private setScrolling(): void {
-    let height: number = this.rows * 270 + 40;
+    const height: number = this.rows * 270 + 40;
     this.scene.scrolling.bottom = this.scene.height - this.scene.heightWindow + height;
   }
 
@@ -65,8 +65,7 @@ export default class DiamondsWindow {
       this.scene.add.text(x + 162, y + 42, '+' + packData.stock + '%', {
         font: '34px Shadow',
         color: '#FFFFFF'
-      }).setOrigin(0.5, 0.5)
-        .setRotation(0.55);
+      }).setOrigin(0.5, 0.5).setRotation(0.55);
     }
 
     if ((packData.diamonds + packData.bonus) >= 750 && this.checkStarterpack()) {
@@ -114,39 +113,39 @@ export default class DiamondsWindow {
   private createStarterpack(): void {
     this.scene.scrolling.bottom += 350;
     const y: number = this.scene.height + 140;
-    let starterpackBg: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX - 130, y, 'starterpack-bg');
-    let starterpackIconShadow: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX - 265, y + 70, 'starterpack-shadow');
-    let starterpackIcon: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX - 270, y, 'starterpack-icon');
-    let text1: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 90, y - 40, this.scene.state.lang.buyFrom, {
+    const starterpackBg: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX - 130, y, 'starterpack-bg');
+    const starterpackIconShadow: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX - 265, y + 70, 'starterpack-shadow');
+    const starterpackIcon: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX - 270, y, 'starterpack-icon');
+    const text1: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 90, y - 40, this.scene.state.lang.buyFrom, {
       font: '26px Shadow',
       color: '#FBCB64'
     }).setOrigin(0.5, 0.5);
 
-    let text2: Phaser.GameObjects.Text = this.scene.add.text(text1.getBounds().right + 10, text1.y, '750', {
+    const text2: Phaser.GameObjects.Text = this.scene.add.text(text1.getBounds().right + 10, text1.y, '750', {
       font: '26px Shadow',
       color: '#ffffff'
     }).setOrigin(0, 0.5);
 
-    let diamond1: Phaser.GameObjects.Image = this.scene.add.image(text2.getBounds().right + 5, text1.y, 'diamond').setScale(0.10).setOrigin(0, 0.5);
+    const diamond1: Phaser.GameObjects.Image = this.scene.add.image(text2.getBounds().right + 5, text1.y, 'diamond').setScale(0.1).setOrigin(0, 0.5);
 
-    let text3: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 50, text1.getBounds().bottom + 5, this.scene.state.lang.getGift,  {
+    const text3: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 50, text1.getBounds().bottom + 5, this.scene.state.lang.getGift,  {
       font: '26px Shadow',
       color: '#FBCB64'
     }).setOrigin(0.5, 0);
 
-    let text4: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 90, text3.getBounds().bottom + 5, this.scene.state.lang.more, {
+    const text4: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 90, text3.getBounds().bottom + 5, this.scene.state.lang.more, {
       font: '26px Shadow',
       color: '#FBCB64'
     }).setOrigin(0.5, 0);
     
-    let text5: Phaser.GameObjects.Text = this.scene.add.text(text4.getBounds().right + 5, text3.getBounds().bottom + 5, '+750', {
+    const text5: Phaser.GameObjects.Text = this.scene.add.text(text4.getBounds().right + 5, text3.getBounds().bottom + 5, '+750', {
       font: '26px Shadow',
       color: '#FFFFFF'
     }).setOrigin(0, 0);
 
-    let diamond2: Phaser.GameObjects.Image = this.scene.add.image(text5.getBounds().right + 5, text5.y, 'diamond').setScale(0.10).setOrigin(0);
+    const diamond2: Phaser.GameObjects.Image = this.scene.add.image(text5.getBounds().right + 5, text5.y, 'diamond').setScale(0.10).setOrigin(0);
 
-    let text6: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 50, text4.getBounds().bottom + 5, this.scene.state.lang.dontMissChanse, {
+    const text6: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 50, text4.getBounds().bottom + 5, this.scene.state.lang.dontMissChanse, {
       font: '26px Shadow',
       color: '#FFFFFF'
     }).setOrigin(0.5, 0);
@@ -162,14 +161,22 @@ export default class DiamondsWindow {
       loopDelay: 1000,
     });
 
-    this.scene.tweens.add({ targets: starterpackIconShadow, delay: 2000, duration: 250,  repeat: 2, yoyo: true, scale: 0.3, ease: 'Power1', loop: -1, loopDelay: 1000 });
+    this.scene.tweens.add({
+      targets: starterpackIconShadow,
+      delay: 2000,
+      duration: 250,
+      repeat: 2,
+      yoyo: true,
+      scale: 0.3,
+      ease: 'Power1',
+      loop: -1,
+      loopDelay: 1000
+    });
   }
 
   private packHandler(pack: Ipackage): void {
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-    this.scene.scene.stop();
-    this.scene.scene.stop('ShopBars');
-    this.scene.scene.stop('Modal');
+    this.closeWindow();
 
     if (this.scene.state.platform === 'ok') payOdnoklassniki(pack.id);
     else if (this.scene.state.platform === 'vk') payVK(pack.id);
@@ -180,9 +187,7 @@ export default class DiamondsWindow {
     this.scene.state.user.takenFreeDiamonds = true;
     this.scene.state.user.diamonds += FREE_DIAMONDS;
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-    this.scene.scene.stop();
-    this.scene.scene.stop('ShopBars');
-    this.scene.scene.stop('Modal');
+    this.closeWindow();
     if (this.scene.scene.isActive('Profile')) this.scene.game.scene.keys['Profile'].getCurrency({
       x: this.scene.game.scene.keys['Profile'].cameras.main.centerX,
       y: this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].cameras.main.centerY,
@@ -208,7 +213,13 @@ export default class DiamondsWindow {
   private checkFreeDiamonds(): boolean {
     return !this.scene.state.user.takenFreeDiamonds && 
     (this.scene.state.userSheep.tutorial >= 100 || 
-      this.scene.state.progress.chicken.part >= 1 || 
-      this.scene.state.progress.cow.part >= 1);
+    this.scene.state.progress.chicken.part >= 1 || 
+    this.scene.state.progress.cow.part >= 1);
+  }
+
+  private closeWindow(): void {
+    this.scene.scene.stop();
+    this.scene.scene.stop('ShopBars');
+    this.scene.scene.stop('Modal');
   }
 }

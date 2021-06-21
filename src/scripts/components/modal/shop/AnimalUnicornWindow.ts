@@ -7,8 +7,6 @@ export default class AnimalUnicornWindow {
 
   private buttons: IshopButtons[];
   private heightBtn: number;
-  private callback: Function;
-
 
   constructor(scene: Shop) {
     this.scene = scene;
@@ -91,15 +89,10 @@ export default class AnimalUnicornWindow {
           callback = (): void => {
             if (this.scene.game.scene.keys[this.scene.state.farm].getFreeBoostPositions().length > 0) {
               this.scene.game.scene.keys[this.scene.state.farm].watchAd(4);
-              this.scene.stop('Shop');
-              this.scene.stop('ShopBars');
-              this.scene.stop('Modal');
+              this.closeWindow();
               this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
             } else {
-              this.scene.stop('Shop');
-              this.scene.stop('ShopBars');
-              this.scene.stop('Modal');
-    
+              this.closeWindow();
               let modal: Imodal = {
                 type: 1,
                 sysType: 3,
@@ -175,6 +168,13 @@ export default class AnimalUnicornWindow {
       diamondPrice += inc * multiply;
     }
     return Math.round(diamondPrice / devisor);
+  }
+
+
+  private closeWindow(): void {
+    this.scene.stop('Shop');
+    this.scene.stop('ShopBars');
+    this.scene.stop('Modal');
   }
 
 }

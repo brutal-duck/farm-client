@@ -34,7 +34,7 @@ export default class ProfileWindow {
 
     let avatar: Phaser.GameObjects.Sprite;
     let login: string = this.scene.state.user.login;
-    let farm: string = this.scene.state.farm.toLowerCase();
+    const farm: string = this.scene.state.farm.toLowerCase();
     
     const userFarmPart: number = this.scene.state.farm !== 'Unicorn' ? 
     this.scene.state[`user${this.scene.state.farm}`].part : 

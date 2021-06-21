@@ -106,8 +106,9 @@ export default class BoostsWindow {
       let time: string = shortTime(this.scene.state[`user${this.scene.state.farm}`].collector, this.scene.state.lang);
       this.collectorTimer = this.scene.add.text(120, 235 + this.scene.height, this.scene.state.lang.still + ' ' + time, { font: '20px Shadow', color: '#FFFFFF' }).setOrigin(0.5, 0.5);
     }
-  
-    this.freeCollectorBtns();
+    
+    if (this.scene.state.farm === 'Unicorn') this.freeEventCollectorBtns()
+    else this.freeCollectorBtns();
   
     // 4 часа собирателя
     if (this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].unlockCollector4 <= this.scene.state[`user${this.scene.state.farm}`].part) {
@@ -168,6 +169,7 @@ export default class BoostsWindow {
         font: '26px Shadow',
         color: '#FFFFFF'
       }).setOrigin(0.5, 0.5).setStroke('#3B5367', 4);
+      console.log('collectorBoost ~ this.improve', this.improve)
   
       this.scene.clickShopBtn({ btn: this.improve, title: this.improveText }, (): void => { this.scene.game.scene.keys[this.scene.state.farm].showImproveCollector() });
   
@@ -257,6 +259,72 @@ export default class BoostsWindow {
   
     }
   }
+
+
+  private freeEventCollectorBtns(): void {
+
+    if (this.freeCollector) for (let el of this.freeCollector) el?.destroy()
+    if (this.doubleCollector) for (let el of this.doubleCollector) el?.destroy()
+    if (this.adBtn) for (let el of this.adBtn) el?.destroy()
+
+    console.log('!!');
+    
+    let freeTime: number = this.scene.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userUnicorn.collectorLevel).time;
+
+    // бесплатный
+    if (this.scene.state.userUnicorn.collector === 0) {
+  
+      if (this.scene.state.userUnicorn.tutorial === 90) Arrow.generate(this.scene, 8);
+  
+      this.freeCollector = this.scene.boostButton(350, 100 + this.scene.height, String(freeTime), this.scene.state.lang.shortMinutes, this.scene.state.lang.take, 'free');
+      this.scene.clickBoostBtn(this.freeCollector, (): void => {
+        this.scene.game.scene.keys['Unicorn'].freeCollector(1);
+        this.scene.game.scene.keys['Unicorn'].autosave();
+      });
+      
+    } else this.freeCollector = this.scene.boostButton(350, 100 + this.scene.height, String(freeTime), this.scene.state.lang.shortMinutes, this.scene.state.lang.take, 'free-lock');  
+  
+    // удвоенный собиратель
+    let doubleTime: number = freeTime * 2;
+  
+    let doubleTimePrice: number = Math.floor(doubleTime / 60 * this.scene.state.unicornSettings.doubledСollectorPrice);
+    
+    // проверки для двойного собирателя разные
+    let checkDouble: boolean = true;
+    
+    if (checkDouble) {
+  
+      if (this.scene.state.readyAd) {
+  
+        this.doubleCollector = this.scene.boostButton(350, 160 + this.scene.height, String(doubleTime), this.scene.state.lang.shortMinutes, '', 'ad');
+        this.scene.clickBoostBtn(this.doubleCollector, (): void => {
+  
+          this.scene.game.scene.keys['Unicorn'].watchAd(3);
+          this.scene.scene.stop('Shop');
+          this.scene.scene.stop('ShopBars');
+          this.scene.scene.stop('Modal');
+          this.scene.game.scene.keys['Unicorn'].scrolling.wheel = true;
+  
+        });
+  
+      } else {
+        
+        this.doubleCollector = this.scene.boostButton(350, 160 + this.scene.height, String(doubleTime), this.scene.state.lang.shortMinutes, String(doubleTimePrice), 'ad-diamond');
+        this.scene.clickBoostBtn(this.doubleCollector, (): void => {
+          this.scene.game.scene.keys['Unicorn'].freeCollector(2);
+          this.scene.game.scene.keys['Unicorn'].autosave();
+        });
+  
+      }
+  
+    } else {
+      
+      if (this.scene.state.readyAd) this.adBtn = this.scene.boostButton(350, 160 + this.scene.height, String(doubleTime), this.scene.state.lang.shortMinutes, '', 'lock-ad');
+      else this.adBtn = this.scene.boostButton(350, 160 + this.scene.height, String(doubleTime), this.scene.state.lang.shortMinutes, String(doubleTimePrice), 'lock-ad-diamond');
+  
+    }
+  }
+
   
   private eventCollectorBoost(): void {
     // собиратель шерсти
@@ -341,14 +409,14 @@ export default class BoostsWindow {
     // кнопка улучшения
     if (this.scene.state.userUnicorn.collectorLevel < this.scene.state.eventCollectorSettings.length) {
       
-      let improve: Phaser.GameObjects.Sprite = this.scene.add.sprite(120, 285 + this.scene.height, 'improve-collector');
-      let improveText: Phaser.GameObjects.Text = this.scene.add.text(120, 281 + this.scene.height, this.scene.state.lang.improve, { font: '26px Shadow', color: '#FFFFFF' }).setOrigin(0.5, 0.5).setStroke('#3B5367', 4);
+      this.improve = this.scene.add.sprite(120, 285 + this.scene.height, 'improve-collector');
+      this.improveText = this.scene.add.text(120, 281 + this.scene.height, this.scene.state.lang.improve, { font: '26px Shadow', color: '#FFFFFF' }).setOrigin(0.5, 0.5).setStroke('#3B5367', 4);
   
-      this.scene.clickShopBtn({ btn: improve, title: improveText }, (): void => { this.scene.game.scene.keys[this.scene.state.farm].showImproveCollector() });
+      this.scene.clickShopBtn({ btn: this.improve, title: this.improveText }, (): void => { this.scene.game.scene.keys[this.scene.state.farm].showImproveCollector() });
   
       if (this.scene.state.userUnicorn.collector === 0) {
-        improve.y -= 15;
-        improveText.y -= 15;
+        this.improve.y -= 15;
+        this.improveText.y -= 15;
       }
   
     } else {
@@ -921,8 +989,9 @@ export default class BoostsWindow {
     const time = this.scene.state.lang.still + ' ' + shortTime(this.scene.state[`user${this.scene.state.farm}`].collector, this.scene.state.lang);
     if (this.scene.state[`user${this.scene.state.farm}`].collector === 0 && this.scene.state.modal?.shopType === 4) {
       this.collectorIsOn = false;
-      this.freeCollectorBtns();
       this.collectorTimer.setVisible(false);
+      if (this.scene.state.farm === 'Unicorn') this.freeEventCollectorBtns()
+      else this.freeCollectorBtns();
       this.improve.y -= 15;
       this.improveText.y -= 15;
     } else if (this.collectorTimer?.active && this.collectorTimer.text !== time) this.collectorTimer.setText(time);

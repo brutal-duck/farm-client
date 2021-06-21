@@ -116,14 +116,10 @@ export default class AnimalWindow {
 
 
   private updatePrices(): void {
-
     for (let i in this.buttons) {
-      
       this.buttons[i].text.setText(String(shortNum(this.scene[`${this.animal.toLowerCase()}Price`](this.buttons[i].breed).price)));
       this.buttons[i].img.x = this.buttons[i].text.getBounds().left - 25;
-  
     }
-  
   }
 
 }

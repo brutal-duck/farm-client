@@ -9,9 +9,13 @@ export default class DiamondAnimalAd {
 
   constructor(scene: Modal) {
     this.scene = scene;
-    this.farm = this.scene.state.farm
+    this.init();
     this.create();
     this.scene.openModal(this.scene.cameras.main);
+  }
+
+  private init(): void {
+    this.farm = this.scene.state.farm
   }
 
   private create(): void {
@@ -38,18 +42,13 @@ export default class DiamondAnimalAd {
       wordWrap: { width: 420 }
     }).setOrigin(0.5, 0);
 
-    const right = {
-      icon: 'ad-icon',
-      text: ''
-    }
+    const right = { icon: 'ad-icon', text: '' }
 
     const ad = this.scene.bigButton('green', 'left', 135, this.scene.state.lang.summon, right);
     this.scene.clickModalBtn(ad, (): void => {
-
       this.scene.state[`user${this.farm}`].diamondAnimalAd = false;
       this.scene.game.scene.keys[this.farm].watchAd(2);
-      this.closeWindow()
-      
+      this.closeWindow();
     });
 
     const cancel = this.scene.bigButton('yellow', 'center', 225, this.scene.state.lang.cancel);

@@ -4,17 +4,31 @@ import MoneyAnimation from "../animations/MoneyAnimation";
 
 export default class EventEndWindow {
   public scene: Modal;
-  public line: Phaser.GameObjects.Text;
-  public playerPlaceAndName: Phaser.GameObjects.Text;
-  public playerScore: Phaser.GameObjects.Text;
-  public eventRatingsNames: Phaser.GameObjects.Text[];
-  public eventRatingsScores: Phaser.GameObjects.Text[];
 
+  private line: Phaser.GameObjects.Text;
+  private playerPlaceAndName: Phaser.GameObjects.Text;
+  private playerScore: Phaser.GameObjects.Text;
+  private eventRatingsNames: Phaser.GameObjects.Text[];
+  private eventRatingsScores: Phaser.GameObjects.Text[];
+  private priceBtn: Phaser.GameObjects.Sprite
+  private price: Phaser.GameObjects.Text
+  private rulesBtn: Phaser.GameObjects.Sprite
+  private rules: Phaser.GameObjects.Text
+  private status: Phaser.GameObjects.Text
+  private rulesText: Phaser.GameObjects.Text
+  private rulesTextStatus: Phaser.GameObjects.Text
+  private statusIcon: Phaser.GameObjects.Sprite
+  private priceElements: any[]
 
   constructor(scene: Modal) {
     this.scene = scene;
+    this.init();
     this.create();
     this.scene.openModal(this.scene.cameras.main);
+  }
+
+  private init(): void {
+    this.priceElements = []
   }
 
   private create(): void {
@@ -33,8 +47,8 @@ export default class EventEndWindow {
 
     // Спрайты
     this.scene.add.sprite(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY, 'raiting-bg-after');
-    let rulesBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX - 130, this.scene.cameras.main.centerY - 292, 'rating-rules-btn').setInteractive();
-    let priceBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX + 126, this.scene.cameras.main.centerY - 292, 'rating-price-btn').setInteractive();
+    this.rulesBtn = this.scene.add.sprite(this.scene.cameras.main.centerX - 130, this.scene.cameras.main.centerY - 292, 'rating-rules-btn').setInteractive();
+    this.priceBtn = this.scene.add.sprite(this.scene.cameras.main.centerX + 126, this.scene.cameras.main.centerY - 292, 'rating-price-btn').setInteractive();
 
     // Заголовок
     this.scene.add.text(this.scene.cameras.main.centerX + 52, this.scene.cameras.main.centerY - 440, this.scene.state.lang.unicornField, {
@@ -44,52 +58,40 @@ export default class EventEndWindow {
     }).setOrigin(0.5, 0.5).setDepth(2).setShadow(1, 4, 'rgba(0, 0, 0, 0.5)', 2);
 
     // 'Условия'
-    let rules: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 86, this.scene.cameras.main.centerY - 307, this.scene.state.lang.eventRules, {
+    this.rules = this.scene.add.text(this.scene.cameras.main.centerX - 86, this.scene.cameras.main.centerY - 307, this.scene.state.lang.eventRules, {
       font: '32px Bip',
       color: '#FFF7E6',
     }).setOrigin(0.5, 0.5).setDepth(2).setShadow(1, 3, 'rgba(0, 0, 0, 0.5)', 2);
 
     // 'Призы'
-    let price: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX + 164, this.scene.cameras.main.centerY - 307, this.scene.state.lang.eventPrice, {
+    this.price = this.scene.add.text(this.scene.cameras.main.centerX + 164, this.scene.cameras.main.centerY - 307, this.scene.state.lang.eventPrice, {
       font: '32px Bip',
       color: '#FFF7E6',
     }).setOrigin(0.5, 0.5).setDepth(2).setShadow(1, 3, 'rgba(0, 0, 0, 0.5)', 2);
 
     // Текст условия
-    let rulesText: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 170, this.scene.state.lang.eventRulesAfter, {
+    this.rulesText = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 170, this.scene.state.lang.eventRulesAfter, {
       font: '23px Bip',
       color: '#793D0A',
       align: 'center',
       wordWrap: { width: 380 }
     }).setOrigin(0.5, 0.5).setDepth(2).setLineSpacing(0.2);
 
-    let rulesTextStatus: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX, rulesText.getBounds().bottom + 15, this.scene.state.lang.eventRulesAfterStatus, {
+    this.rulesTextStatus = this.scene.add.text(this.scene.cameras.main.centerX, this.rulesText.getBounds().bottom + 15, this.scene.state.lang.eventRulesAfterStatus, {
       font: '23px Bip',
       color: '#793D0A',
       align: 'center',
       wordWrap: { width: 380 },
     }).setOrigin(0.5, 0.5).setDepth(2);
 
-    let status: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX, rulesTextStatus.getBounds().bottom + 17, this.scene.state.lang.eventProfileName , {
+    this.status = this.scene.add.text(this.scene.cameras.main.centerX, this.rulesTextStatus.getBounds().bottom + 17, this.scene.state.lang.eventProfileName , {
       font: '24px Bip',
       color: '#459D1A',
       align: 'left',
       wordWrap: { width: 310 }
     }).setOrigin(0.5, 0.5).setDepth(2);
     
-    let statusIcon: Phaser.GameObjects.Sprite = this.scene.add.sprite(status.getBounds().left - 10, status.y, 'unicorn-status').setDepth(2).setOrigin(1, 0.5).setDepth(2);
-
-    // // Времени осталось
-    // let eventLeftText: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX + 100, this.scene.cameras.main.centerY - 40, this.scene.state.lang.eventRulesLeft, {
-    //   font: '24px Bip',
-    //   color: '#793D0A',
-    // }).setOrigin(1, 0.5).setDepth(2);
-    
-    // // Время
-    // let eventLeftTime: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX + 114, this.scene.cameras.main.centerY - 40, this.shortTime(this.scene.state.progress.event.endTime, this.scene.state.lang), {
-    //   font: '24px Bip',
-    //   color: '#459D1A',
-    // }).setOrigin(0, 0.5).setDepth(2);
+    this.statusIcon = this.scene.add.sprite(this.status.getBounds().left - 10, this.status.y, 'unicorn-status').setDepth(2).setOrigin(1, 0.5).setDepth(2);
 
     // Призы
     let topPlaces: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX - 140, this.scene.cameras.main.centerY - 190, 'rating-places').setScale(0.9).setVisible(false);
@@ -137,8 +139,8 @@ export default class EventEndWindow {
     let diamond10: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 27 - 20, 'diamond').setScale(0.08).setVisible(false);
 
     // Затемняем 2ю кнопку
-    priceBtn.setTint(0xC0C0C0).setCrop(0, 0, 300, 90);
-    price.setTint(0xC0C0C0);
+    this.priceBtn.setTint(0xC0C0C0).setCrop(0, 0, 300, 90);
+    this.price.setTint(0xC0C0C0);
     
     this.scene.state.progress.event.eventRaitings = [{ score: 5, place: 2, name: 'wrgw egrg' },{ score: 2, place: 3, name: '+wrgw egrg' }]
     this.scene.state.progress.event.userEventRaiting = { score: 20, place: 1, name: 'wrgtrgw egrg' }
@@ -196,7 +198,7 @@ export default class EventEndWindow {
 
     }
 
-    priceElements.push(
+    this.priceElements.push(
       topPlaces,
       priceTopPlaces,
       pricePlaces,
@@ -215,37 +217,38 @@ export default class EventEndWindow {
     );
 
     // Нажатие на 'Условия'
-    rulesBtn.on('pointerdown', (): void => {
+    this.rulesBtn.on('pointerdown', (): void => {
 
-      priceBtn.setTint(0xC0C0C0).setCrop(0, 0, 400, 90);
-      price.setTint(0xC0C0C0);
-      rulesBtn.setTint(0xffffff).setCrop(0, 0, 400, 150);
-      rules.setTint(0xffffff);
+      // this.priceBtn.setTint(0xC0C0C0).setCrop(0, 0, 400, 90);
+      // this.price.setTint(0xC0C0C0);
+      // this.rulesBtn.setTint(0xffffff).setCrop(0, 0, 400, 150);
+      // this.rules.setTint(0xffffff);
 
-      rulesText.setVisible(true);
-      rulesTextStatus.setVisible(true);
-      statusIcon.setVisible(true);
-      status.setVisible(true);
+      // rulesText.setVisible(true);
+      // rulesTextStatus.setVisible(true);
+      // statusIcon.setVisible(true);
+      // status.setVisible(true);
 
-      priceElements.forEach(el => el.setVisible(false));
+      // priceElements.forEach(el => el.setVisible(false));
+      this.toogleBtn(true)
 
     });
 
     // Нажатие на 'Призы'
-    priceBtn.on('pointerdown', (): void => {
+    this.priceBtn.on('pointerdown', (): void => {
 
-      rulesBtn.setTint(0xC0C0C0).setCrop(0, 0, 400, 90);
-      rules.setTint(0xC0C0C0);
-      priceBtn.setTint(0xffffff).setCrop(0, 0, 400, 150);
-      price.setTint(0xffffff);
+      // this.rulesBtn.setTint(0xC0C0C0).setCrop(0, 0, 400, 90);
+      // this.rules.setTint(0xC0C0C0);
+      // this.priceBtn.setTint(0xffffff).setCrop(0, 0, 400, 150);
+      // this.price.setTint(0xffffff);
 
-      rulesText.setVisible(false);
-      rulesTextStatus.setVisible(false);
-      statusIcon.setVisible(false);
-      status.setVisible(false);
+      // rulesText.setVisible(false);
+      // rulesTextStatus.setVisible(false);
+      // statusIcon.setVisible(false);
+      // status.setVisible(false);
 
-      priceElements.forEach(el => el.setVisible(true));
-
+      // priceElements.forEach(el => el.setVisible(true));
+      this.toogleBtn(false)
     });
 
     let diamonds: number;
@@ -264,9 +267,7 @@ export default class EventEndWindow {
     }).setDepth(1).setOrigin(0.5, 0.5);
     title.setShadow(1, 1, '#013220', 0.5);
     
-    let coin: Phaser.GameObjects.Sprite = this.scene.add.sprite(title.getBounds().centerX + title.width / 2 + 25, this.scene.cameras.main.centerY - 10 + height, 'diamond')
-      .setOrigin(0.5, 0.5)
-      .setScale(0.15);
+    let coin: Phaser.GameObjects.Sprite = this.scene.add.sprite(title.getBounds().centerX + title.width / 2 + 25, this.scene.cameras.main.centerY - 10 + height, 'diamond').setOrigin(0.5, 0.5).setScale(0.15);
     
     this.scene.clickModalBtn({ btn, title, img1: coin }, (): void => {
       this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('event_finished', {
@@ -304,4 +305,26 @@ export default class EventEndWindow {
     });
     
   }
+
+  private toogleBtn(showRules: boolean): void {
+    if (showRules) {
+      this.priceBtn.setTint(0xC0C0C0).setCrop(0, 0, 400, 90);
+      this.price.setTint(0xC0C0C0);
+      this.rulesBtn.setTint(0xffffff).setCrop(0, 0, 400, 150);
+      this.rules.setTint(0xffffff);
+    } else {
+      this.rulesBtn.setTint(0xC0C0C0).setCrop(0, 0, 400, 90);
+      this.rules.setTint(0xC0C0C0);
+      this.priceBtn.setTint(0xffffff).setCrop(0, 0, 400, 150);
+      this.price.setTint(0xffffff);
+    }
+
+    this.rulesText.setVisible(showRules);
+    this.rulesTextStatus.setVisible(showRules);
+    this.statusIcon.setVisible(showRules);
+    this.status.setVisible(showRules);
+
+    this.priceElements.forEach(el => el.setVisible(!showRules));
+  }
+
 }
