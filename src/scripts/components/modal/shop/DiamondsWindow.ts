@@ -178,8 +178,8 @@ export default class DiamondsWindow {
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
     this.closeWindow();
 
-    if (this.scene.state.platform === 'ok') payOdnoklassniki(pack.id);
-    else if (this.scene.state.platform === 'vk') payVK(pack.id);
+    if (this.scene.state.platform === 'ok') this.scene.payOdnoklassniki(pack.id);
+    else if (this.scene.state.platform === 'vk') this.scene.payVK(pack.id);
     else payRobokassa(pack.id, this.scene.state);
   }
 
