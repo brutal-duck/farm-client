@@ -307,7 +307,6 @@ class Boot extends Phaser.Scene {
       platform: this.platform,
       data: id
     }).then((response) => {
-      console.log(response)
       if (response.data.error === false) {
         if (this.platform === 'web' && response.data.status === 'new') {
           this.createLanding();
