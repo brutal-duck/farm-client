@@ -814,7 +814,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     } else {
       let count: number = price - this.scene.state.user.diamonds;
       let diamonds: number = this.scene.convertDiamonds(count);
-      this.openConvertor(count, diamonds, 1);
+      this.openConvertor(count, diamonds, 2);
     }
   };
 
