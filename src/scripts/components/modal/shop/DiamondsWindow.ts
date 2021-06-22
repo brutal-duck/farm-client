@@ -180,6 +180,7 @@ export default class DiamondsWindow {
 
     if (this.scene.state.platform === 'ok') this.scene.payOdnoklassniki(pack.id);
     else if (this.scene.state.platform === 'vk') this.scene.payVK(pack.id);
+    else if (this.scene.state.platform === 'ya') this.scene.payYandex(pack.id);
     else payRobokassa(pack.id, this.scene.state);
   }
 

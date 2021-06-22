@@ -212,33 +212,24 @@ function timer(num: number): string {
 
 // оплата пакета робокассой
 function payRobokassa(id: number, state: Istate): void {
-
   const data = {
     id: state.user.id,
     packageId: id
   }
   axios.post(process.env.API + "/addOrder", data)
   .then((response) => {
-
     if (response.data.error === true) window.location.reload();
     else {
-
       for (let prop in response.data) {
-
         if (prop !== 'error') {
           let element: any = document.querySelector('input[name="' + prop + '"]');
           element.value = response.data[prop];
         }
-
       }
-
       let form: any = document.querySelector('#robokassa');
       form.submit();
-
     }
-
   });
-
 }
 
 
@@ -251,18 +242,13 @@ function payOdnoklassniki(id: number): void {
 
   axios.post(process.env.API + "/addOrderOk", data)
     .then((res) => {
-      
       if (res.data.error === false) {
-
         let pack = this.state.packages.find((data: any) => data.id === id);
-  
         if (pack) {
-      
           this.state.payDiamonds = pack.diamonds + pack.bonus;
           this.state.payId = res.data.orderId;
           this.state.payPrice = pack.price;
           FAPI.UI.showPayment(this.state.payDiamonds + ' ' + this.state.lang.diamonds, this.state.lang.okPayDescr, res.data.orderId, pack.price, null, null, 'ok', 'true');
-      
         }
       }
     });
@@ -271,15 +257,22 @@ function payOdnoklassniki(id: number): void {
 
 // оплата пакета голосами в ВК
 function payVK(id: number): void {
-
   let pack = this.state.packages.find((data: any) => data.id === id);
-
   if (pack) {
-    
     bridge.send("VKWebAppShowOrderBox", { type: 'item', item: String(id) });
-
   }
+}
 
+function payYandex(id: number): void {
+  const pack: Ipackage = this.state.packages.find((data: any) => data.id === id);
+  if (pack) {
+    this.state.ysdk.getPayments({ signed: true }).then(payments => {
+      payments.purchase({ id }).then(purchase => {
+        console.log(purchase);
+          this.state.user.diamonds += pack.diamonds;
+      });
+    }).catch(err => { console.log(err); });
+  }
 }
 
 // римское число
@@ -1799,6 +1792,7 @@ export {
   payRobokassa,
   payOdnoklassniki,
   payVK,
+  payYandex,
   romanize,
   logout,
   convertDiamonds,
