@@ -67,10 +67,10 @@ export default class EventProgressWindow {
     } 
 
     const modalBtn: any = {
-      btn: btn,
-      title: title,
-      text1: text1,
-      img1: img1
+      btn,
+      title,
+      text1,
+      img1
     }
     this.scene.clickModalBtn(modalBtn, (): void => { this.doubleProfitBtnHandler(); });
   
