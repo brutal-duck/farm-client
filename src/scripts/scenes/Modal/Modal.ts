@@ -60,7 +60,6 @@ import {
 import DailyAwardWindow from '../../components/modal/DailyAwardWindow';
 import { bigButton, repositoryBtn, shopButton } from '../../elements';
 import { 
-  addEmail,
   support,
   registration,
   confirmBuyCooldown
@@ -144,7 +143,6 @@ class Modal extends Phaser.Scene {
   public registration = registration.bind(this);
   public shopButton = shopButton.bind(this);
   public shortTime = shortTime.bind(this);
-  public addEmail = addEmail.bind(this);
   public shortNum = shortNum.bind(this);
   public eventConvertor = eventConvertor.bind(this);
   public eventTerritory = eventTerritory.bind(this);
