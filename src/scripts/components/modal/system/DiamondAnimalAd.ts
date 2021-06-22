@@ -15,7 +15,7 @@ export default class DiamondAnimalAd {
   }
 
   private init(): void {
-    this.farm = this.scene.state.farm
+    this.farm = this.scene.state.farm;
   }
 
   private create(): void {
@@ -45,17 +45,14 @@ export default class DiamondAnimalAd {
     const right = { icon: 'ad-icon', text: '' }
 
     const ad = this.scene.bigButton('green', 'left', 135, this.scene.state.lang.summon, right);
-    this.scene.clickModalBtn(ad, (): void => {
-      this.scene.state[`user${this.farm}`].diamondAnimalAd = false;
-      this.scene.game.scene.keys[this.farm].watchAd(2);
-      this.closeWindow();
-    });
+    this.scene.clickModalBtn(ad, (): void => { this.adButtonHandler(); });
 
     const cancel = this.scene.bigButton('yellow', 'center', 225, this.scene.state.lang.cancel);
-    this.scene.clickModalBtn(cancel, (): void => { this.closeWindow() });
+    this.scene.clickModalBtn(cancel, (): void => { this.closeWindow(); });
 
     this.scene.resizeWindow(450);
 
+    this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
   }
 
   private closeWindow(): void {
@@ -63,4 +60,17 @@ export default class DiamondAnimalAd {
     this.scene.game.scene.keys[this.farm].scrolling.wheel = true;
   }
 
+  private adButtonHandler(): void {
+    this.scene.state[`user${this.farm}`].diamondAnimalAd = false;
+    this.scene.game.scene.keys[this.farm].watchAd(2);
+    this.closeWindow();
+  }
+
+  private update(): void {
+    const time: string = timer(this.scene.state[`user${this.farm}`].diamondAnimalTime);
+    const text: string = this.scene.state.lang.summonTime + time;
+    if (this.caveTimer.active && this.caveTimer.text !== text) {
+      this.caveTimer.setText(text);
+    }
+  }
 }
