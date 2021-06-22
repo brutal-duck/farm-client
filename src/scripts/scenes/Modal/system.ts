@@ -11,6 +11,7 @@ import ImproveCollectorWindow from '../../components/modal/system/ImproveCollect
 import ImproveCollectorEventWindow from '../../components/modal/system/ImproveCollectorEventWindow';
 import RepositoryExchangeWindow from '../../components/modal/system/RepositoryExchangeWindow';
 import ChangeNicknameWindow from '../../components/modal/system/ChangeNicknameWindow';
+import AddEmailWindow from '../../components/modal/system/AddEmailWindow';
 
 function systemWindow(): void {
   let height:number = 0;
@@ -170,7 +171,7 @@ function systemWindow(): void {
       break;
 
     case 13: // Окно ввода почты
-      this.addEmail();
+      new AddEmailWindow(this)
       break;
 
     case 14: // Окно тех поддержки
