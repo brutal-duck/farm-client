@@ -1,7 +1,7 @@
 import { shortTime } from "../../general/basic";
 import Modal from "../../scenes/Modal/Modal";
 
-export default class EventRatingsWindow {
+export default class EventRatingsWindow extends Phaser.GameObjects.Sprite {
   public scene: Modal;
 
   private line: Phaser.GameObjects.Text;
@@ -9,16 +9,17 @@ export default class EventRatingsWindow {
   private playerScore: Phaser.GameObjects.Text;
   private eventRatingsNames: Phaser.GameObjects.Text[];
   private eventRatingsScores: Phaser.GameObjects.Text[];
-  private priceBtn: Phaser.GameObjects.Sprite
-  private price: Phaser.GameObjects.Text
-  private rulesBtn: Phaser.GameObjects.Sprite
-  private rules: Phaser.GameObjects.Text
-  private rulesText: Phaser.GameObjects.Text
-  private rulesText2: Phaser.GameObjects.Text
-  private eventLeftText: Phaser.GameObjects.Text
-  private priceElements: modalElementType[]
+  private priceBtn: Phaser.GameObjects.Sprite;
+  private price: Phaser.GameObjects.Text;
+  private rulesBtn: Phaser.GameObjects.Sprite;
+  private rules: Phaser.GameObjects.Text;
+  private rulesText: Phaser.GameObjects.Text;
+  private rulesText2: Phaser.GameObjects.Text;
+  private eventLeftText: Phaser.GameObjects.Text;
+  private priceElements: modalElementType[];
 
   constructor(scene: Modal) {
+    super(scene, 0, 0, 'pixel');
     this.scene = scene;
     this.init();
     this.create();
@@ -26,6 +27,7 @@ export default class EventRatingsWindow {
   }
 
   private init(): void {
+    this.scene.add.existing(this);
     this.eventRatingsNames = [];
     this.eventRatingsScores = [];
     this.priceElements = [];
@@ -173,10 +175,10 @@ export default class EventRatingsWindow {
     this.price.setTint(0xC0C0C0);
 
     // Для тестов
-    // if (!this.scene.state.progress.event.eventRaitings) {
-    //   this.scene.state.progress.event.eventRaitings = [{ score: 5, place: 2, name: 'wrgw egrg' },{ score: 2, place: 3, name: '+wrgw egrg' }]
-    //   this.scene.state.progress.event.userEventRaiting = { score: 20, place: 1, name: 'wrgtrgw egrg' }
-    // }
+    if (!this.scene.state.progress.event.eventRaitings) {
+      this.scene.state.progress.event.eventRaitings = [{ score: 5, place: 2, name: 'wrgw egrg' },{ score: 2, place: 3, name: '+wrgw egrg' }]
+      this.scene.state.progress.event.userEventRaiting = { score: 20, place: 1, name: 'wrgtrgw egrg' }
+    }
 
     // Таблица
     let length: number = this.scene.state.progress.event.eventRaitings.length
@@ -253,18 +255,15 @@ export default class EventRatingsWindow {
       this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
       this.scene.scene.stop('Modal');
     });
-
-    this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
-   
   }
 
-  private update(): void {
+  public preUpdate(): void {
 
     // Обновление таблицы рейтингов евента
     if (this.scene.state.progress.event.updateRaitings && this.scene.state.modal.type === 11 && this.eventRatingsNames) {
-
+      console.log(this.scene.state.progress.event.eventRaitings)
       for (let i: number = 0; i < 10; i++) {
-        if (this.scene.state.progress.event.eventRaitings[i].score && this.eventRatingsNames[i].active && this.eventRatingsScores[i].active) {
+        if (this.scene.state.progress.event.eventRaitings[i]?.score) {
           this.eventRatingsNames[i]?.setText(this.scene.state.progress.event.eventRaitings[i].place + '. ' + this.scene.state.progress.event.eventRaitings[i].name).setCrop(0, 0, 260, 100);
           this.eventRatingsScores[i]?.setText(String(this.scene.state.progress.event.eventRaitings[i].score));
         }
