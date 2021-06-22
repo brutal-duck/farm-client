@@ -398,7 +398,8 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   
     if (this.scene.state.exchangeTerritory === 2 ||
       this.scene.state.exchangeTerritory === 3 ||
-      this.scene.state.exchangeTerritory === 5) {
+      this.scene.state.exchangeTerritory === 5
+    ) {
       
       const settings: IterritoriesCowSettings = territoriesSettings.find(data => data.improve === 2);
   

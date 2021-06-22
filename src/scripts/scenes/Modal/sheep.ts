@@ -828,56 +828,6 @@ function sheepWoolRepository(): void {
 
 }
 
-function sheepWoolRepositoryExchange(): void {
-  let repository: string = this.state.lang.repository.replace('$1', this.state.territory.improve);
-  this.textHeader.setText(repository);
-
-  let part: Ipart = this.state.sheepSettings.sheepParts.find((data: Ipart) => data.sort === this.state.userSheep.part);
-
-  let exchange = {
-    icon: 'sheepCoin',
-    text: shortNum(part.improve_territory_2)
-  }
-  let textTitle: string = this.state.lang.exchangeRepositoryTitle.replace('$1', this.state.territory.improve);
-
-  let title: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 100, textTitle, {
-    font: '26px Bip',
-    color: '#925C28',
-    align: 'center',
-    wordWrap: {width: 450},
-  });
-  title.setOrigin(0.5, 0.5);
-  let button1 = this.bigButton('green', 'left', 0, this.state.lang.exchangeGrass, exchange);
-  this.clickModalBtn(button1, (): void => {
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-    this.game.scene.keys[this.state.farm].confirmExchangeTerritory(2);
-  });
-
-  let button2 = this.bigButton('blue', 'left', 80, this.state.lang.exchangeWater, exchange);
-  this.clickModalBtn(button2, (): void => {
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-    this.game.scene.keys[this.state.farm].confirmExchangeTerritory(3);
-  });
-
-  let button3 = this.bigButton('red', 'center', 160, this.state.lang.cancel);
-  this.clickModalBtn(button3, (): void => {
-    this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      let modal: Imodal = {
-        type: 1,
-        sysType: 2
-      }
-      this.state.modal = modal;
-      this.scene.start('Modal', this.state);
-  });
-
-  this.resizeWindow(310);
-  
-
-}
-
 
 
 export {
@@ -889,5 +839,4 @@ export {
   buySheepTerritory,
   sheepConvertor,
   sheepWoolRepository,
-  sheepWoolRepositoryExchange,
 }

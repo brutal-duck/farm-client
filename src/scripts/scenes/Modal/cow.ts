@@ -737,55 +737,6 @@ function cowMilkRepository(): void {
 
 }
 
-function cowMilkRepositoryExchange(): void {
-  const repository: string = this.state.lang.repository.replace('$1', this.state.territory.improve);
-  this.textHeader.setText(repository);
-
-  const settings: IterritoriesCowSettings = this.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === 2);
-  
-  const exchange = {
-    icon: 'cowCoin',
-    text: shortNum(settings.improvePastureMoneyPrice)
-  }
-
-  const textTitle: string = this.state.lang.exchangeRepositoryTitle.replace('$1', this.state.territory.improve);
-
-  const title: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 100, textTitle, {
-    font: '26px Bip',
-    color: '#925C28',
-    align: 'center',
-    wordWrap: {width: 450},
-  });
-  title.setOrigin(0.5, 0.5);
-  const button1 = this.bigButton('green', 'left', 0, this.state.lang.exchangeGrass, exchange);
-  this.clickModalBtn(button1, (): void => {
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-    this.game.scene.keys[this.state.farm].confirmExchangeTerritory(2);
-  });
-
-  const button2 = this.bigButton('blue', 'left', 80, this.state.lang.exchangeWater, exchange);
-  this.clickModalBtn(button2, (): void => {
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-    this.game.scene.keys[this.state.farm].confirmExchangeTerritory(3);
-  });
-
-  const button3 = this.bigButton('red', 'center', 160, this.state.lang.cancel);
-  this.clickModalBtn(button3, (): void => {
-    this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      let modal: Imodal = {
-        type: 1,
-        sysType: 2
-      }
-      this.state.modal = modal;
-      this.scene.start('Modal', this.state);
-  });
-
-  this.resizeWindow(310);
-}
-
 
 function improveFactoryWindow(): void {
   const factory: string = this.state.lang.factory.replace('$1', this.state.territory.factory.improve);
@@ -963,7 +914,6 @@ export {
   buyCowTerritory,
   cowConvertor,
   cowMilkRepository,
-  cowMilkRepositoryExchange,
   improveFactoryWindow,
   confirmSellMilk,
 }

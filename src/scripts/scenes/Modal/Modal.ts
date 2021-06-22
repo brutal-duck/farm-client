@@ -28,7 +28,6 @@ import {
   buyChickenTerritory,
   chickenConvertor,
   chickenEggsRepository,
-  chickenEggRepositoryExchange,
 } from './chicken';
 import {
   cowFair,
@@ -39,7 +38,6 @@ import {
   buyCowTerritory,
   cowConvertor,
   cowMilkRepository,
-  cowMilkRepositoryExchange,
   improveFactoryWindow,
   confirmSellMilk
 } from './cow';
@@ -58,12 +56,10 @@ import {
   buySheepTerritory,
   sheepConvertor,
   sheepWoolRepository,
-  sheepWoolRepositoryExchange,
 } from './sheep';
 import DailyAwardWindow from '../../components/modal/DailyAwardWindow';
 import { bigButton, repositoryBtn, shopButton } from '../../elements';
 import { 
-  changeNickname,
   addEmail,
   support,
   registration,
@@ -148,10 +144,6 @@ class Modal extends Phaser.Scene {
   public registration = registration.bind(this);
   public shopButton = shopButton.bind(this);
   public shortTime = shortTime.bind(this);
-  public sheepWoolRepositoryExchange = sheepWoolRepositoryExchange.bind(this);
-  public chickenEggRepositoryExchange = chickenEggRepositoryExchange.bind(this);
-  public cowMilkRepositoryExchange = cowMilkRepositoryExchange.bind(this);
-  public changeNickname = changeNickname.bind(this);
   public addEmail = addEmail.bind(this);
   public shortNum = shortNum.bind(this);
   public eventConvertor = eventConvertor.bind(this);
@@ -172,6 +164,7 @@ class Modal extends Phaser.Scene {
 
   public init(state: Istate): void {
     this.state = state;
+    console.log('init ~ this.state', this.state)
   }
 
   public preload(): void {
