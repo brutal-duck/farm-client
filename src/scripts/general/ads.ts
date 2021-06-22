@@ -140,7 +140,6 @@ function adReward(): void {
         time = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userUnicorn.collectorLevel).time * 2;
         this.state.userUnicorn.collector = time * 60;
       }
-      this.autosave();
       this.tryTask(3, 0, time);
 
       this.logAmplitudeEvent('collector', {
@@ -201,6 +200,7 @@ function adReward(): void {
   }
 
   this.logAmplitudeRevenue(type, 0, 'rewarded', properties);
+  this.autosave();
 }
 
 
