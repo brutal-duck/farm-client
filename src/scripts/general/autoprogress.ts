@@ -616,16 +616,15 @@ export default function autoprogress(load: boolean = false): void {
         if (factory.currentProduction) factory.productionTimer -= state.offlineTime;
         if ((factory.productionTimer <= 0 || factory.productionTimer > factorySettings.processingTime) && factory.currentProduction) factory.productionTimer = factorySettings.processingTime;
       }
-    } else {
-      for (const territory of territories) {
-        if (territory.type === 5) {
-          const factSettings: IfactorySettings = state.cowSettings.cowFactorySettings
-            .find((data: IfactorySettings) => territory.improve === data.improve);
-            
-          const storage: number = factSettings.lotSize * this.state.storageMultiply;
-          if (territory.volume > storage) territory.volume = storage;
-        } 
-      }
+    } 
+    for (const territory of territories) {
+      if (territory.type === 5) {
+        const factSettings: IfactorySettings = state.cowSettings.cowFactorySettings
+          .find((data: IfactorySettings) => territory.improve === data.improve);
+          
+        const storage: number = factSettings.lotSize * this.state.storageMultiply;
+        if (territory.volume > storage) territory.volume = storage;
+      } 
     }
   }
 
@@ -1250,7 +1249,6 @@ export default function autoprogress(load: boolean = false): void {
                 haveMilk = 0;
               }
             } else territory.volume = 0;
-            if (isNaN(territory.volume)) territory.volume = storage; 
           } 
         }
 
@@ -1258,16 +1256,15 @@ export default function autoprogress(load: boolean = false): void {
         if (factory.currentProduction) factory.productionTimer -= state.offlineTime;
         if ((factory.productionTimer <= 0 || factory.productionTimer > factorySettings.processingTime) && factory.currentProduction) factory.productionTimer = factorySettings.processingTime;
       }
-    } else {
-      for (const territory of territories) {
-        if (territory.territoryType === 5) {
-          const factSettings: IfactorySettings = state.cowSettings.cowFactorySettings
-            .find((data: IfactorySettings) => territory.improve === data.improve);
-            
-          const storage: number = factSettings.lotSize * this.state.storageMultiply;
-          if (territory.volume > storage) territory.volume = storage;
-        } 
-      }
+    } 
+    for (const territory of territories) {
+      if (territory.territoryType === 5) {
+        const factSettings: IfactorySettings = state.cowSettings.cowFactorySettings
+          .find((data: IfactorySettings) => territory.improve === data.improve);
+        
+        const storage: number = factSettings.lotSize * this.state.storageMultiply;
+        if (territory.volume > storage) territory.volume = storage;
+      } 
     }
   }
 

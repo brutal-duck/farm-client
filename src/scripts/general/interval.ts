@@ -298,7 +298,9 @@ function cowCollectorProgress(cowCollectorVolume: number): number {
       for (let i in Scene.state.cowTerritories) {
         const territory: Iterritories = Scene.state.cowTerritories[i];
         if (territory.type === 5) {
-          const max: number = Scene.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === territory.improve).lotSize * this.state.storageMultiply;
+          const max: number = Scene.state.cowSettings.cowFactorySettings
+            .find((data: IfactorySettings) => data.improve === territory.improve).lotSize * this.state.storageMultiply;
+          if (territory.volume >= max) territory.volume = max;
           for (let i: number = 0; i < collectedMilk; i += 1) {
             for (const cow of Scene.state.cow) {
               const cowPoints: IcowPoints = Scene.state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === cow.type);
@@ -309,7 +311,6 @@ function cowCollectorProgress(cowCollectorVolume: number): number {
                   territory.volume += cow.milk;
                   territory.money += price;
                   cow.milk = 0;
-                  collectedMilk -= 1;
                   break;
                 }
               }
