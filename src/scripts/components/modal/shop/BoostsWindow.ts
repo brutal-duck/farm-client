@@ -4,8 +4,8 @@ import Arrow from "../../animations/Arrow";
 
 const ONE_HOUR: number = 3600;
 const TWO_HOURS: number = 7200;
-export default class BoostsWindow {
-  private scene: Shop;
+export default class BoostsWindow extends Phaser.GameObjects.Sprite {
+  public scene: Shop;
   private farm: string
 
   private herdBoostTimerText: Phaser.GameObjects.Text;
@@ -35,12 +35,14 @@ export default class BoostsWindow {
   private maxWidth: number;
 
   constructor(scene: Shop) {
+    super(scene, 0, 0, 'pixel');
     this.scene = scene;
     this.init();
     this.create();
   }
 
   private init(): void {
+    this.scene.add.existing(this);
     this.scene.scrolling.bottom = this.scene.height - this.scene.heightWindow;
     this.farm = this.scene.state.farm;
     if (this.farm === 'Unicorn') this.farm = 'Event';
@@ -70,11 +72,10 @@ export default class BoostsWindow {
       if (this.checkEventHerdBoost()) this.eventHerdBoost();
       if (this.checkEventFeedBoost()) this.eventFeedBoost();
     }
-
-    this.scene.events.on(Phaser.Scenes.Events.POST_UPDATE, this.update, this);
   }
 
-  private update(): void {
+  public preUpdate(time: number, delta: number): void {
+    super.preUpdate(time, delta);
     if (this.collectorIsOn) this.updateCollectorTime();
     this.updateHerdBoostBtn();
     this.updateFeedBoostBtn();
@@ -202,7 +203,6 @@ export default class BoostsWindow {
 
     // бесплатный
     if (this.scene.state[`user${this.farm}`].collector === 0) {
-  
       if (this.scene.state[`user${this.farm}`].tutorial === 90) Arrow.generate(this.scene, 8);
   
       this.freeCollector = this.scene.boostButton(350, 100 + this.scene.height, String(freeTime), this.scene.state.lang.shortMinutes, this.scene.state.lang.take, 'free');
@@ -211,7 +211,9 @@ export default class BoostsWindow {
         this.scene.game.scene.keys[this.farm].autosave();
       });
       
-    } else this.freeCollector = this.scene.boostButton(350, 100 + this.scene.height, String(freeTime), this.scene.state.lang.shortMinutes, this.scene.state.lang.take, 'free-lock');  
+    } else {
+      this.freeCollector = this.scene.boostButton(350, 100 + this.scene.height, String(freeTime), this.scene.state.lang.shortMinutes, this.scene.state.lang.take, 'free-lock');
+    }  
   
     // удвоенный собиратель
     let doubleTime: number = freeTime * 2;
@@ -954,7 +956,7 @@ export default class BoostsWindow {
         this.improve.y -= 15;
         this.improveText.y -= 15;
       }
-    } else if (this.collectorTimer?.active && this.collectorTimer.text !== time) this.collectorTimer.setText(time);
+    } else if (this.collectorTimer?.text !== time) this.collectorTimer.setText(time);
   }
   
   private checkFeedBoost(): boolean {
