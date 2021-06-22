@@ -210,7 +210,7 @@ function cowIntervalProgress(): void {
   }
 }
 
-function sheepCollectorProgress(sheepCollectorVolume: number): void {
+function sheepCollectorProgress(sheepCollectorVolume: number): number {
   const Scene: Chicken | Cow | Unicorn = this;
   if (Scene.state.progress.sheep.collector > 0) {
     const speed: number = Scene.state.sheepCollectorSettings.find((data: IcollectorSettings) => data.level === Scene.state.userSheep.collectorLevel).speed;
@@ -218,7 +218,7 @@ function sheepCollectorProgress(sheepCollectorVolume: number): void {
     sheepCollectorVolume += 2 * SEC;
     let collectedWool: number = Math.floor(sheepCollectorVolume / speed / SEC);
     if (collectedWool > 0) {
-      sheepCollectorVolume -= collectedWool * speed * SEC;
+      sheepCollectorVolume -= collectedWool * SEC;
       for (let i in Scene.state.sheepTerritories) {
         const territory: Iterritories = Scene.state.sheepTerritories[i];
         if (territory.type === 5) {
@@ -246,9 +246,10 @@ function sheepCollectorProgress(sheepCollectorVolume: number): void {
       sheepCollectorVolume = 0;
     }
   }
+  return sheepCollectorVolume;
 }
 
-function chickenCollectorProgress(chickenCollectorVolume: number): void {
+function chickenCollectorProgress(chickenCollectorVolume: number): number {
   const Scene: Sheep | Cow | Unicorn = this;
   if (Scene.state.progress.chicken.collector > 0 && Scene.state.userChicken.part > 0) {
     const speed: number = Scene.state.chickenCollectorSettings.find((data: IcollectorSettings) => data.level === Scene.state.userChicken.collectorLevel).speed;
@@ -256,7 +257,7 @@ function chickenCollectorProgress(chickenCollectorVolume: number): void {
     chickenCollectorVolume += 2 * SEC;
     const collectedEggs: number = Math.floor(chickenCollectorVolume / speed / SEC);
     if (collectedEggs > 0) {
-      chickenCollectorVolume -= collectedEggs * speed * SEC;
+      chickenCollectorVolume -= collectedEggs * SEC;
       for (let i in Scene.state.chickenTerritories) {
         const territory: Iterritories = Scene.state.chickenTerritories[i];
         if (territory.type === 5) {
@@ -282,9 +283,10 @@ function chickenCollectorProgress(chickenCollectorVolume: number): void {
       chickenCollectorVolume = 0;
     }
   }
+  return chickenCollectorVolume;
 }
 
-function cowCollectorProgress(cowCollectorVolume: number): void {
+function cowCollectorProgress(cowCollectorVolume: number): number {
   const Scene: Sheep | Chicken | Unicorn = this;
   if (Scene.state.progress.cow.collector > 0 && Scene.state.userCow.part > 0) {
     const speed: number = Scene.state.cowCollectorSettings.find((data: IcollectorSettings) => data.level === Scene.state.userCow.collectorLevel).speed;
@@ -292,18 +294,16 @@ function cowCollectorProgress(cowCollectorVolume: number): void {
     cowCollectorVolume += 2 * SEC;
     let collectedMilk: number = Math.floor(cowCollectorVolume / speed / SEC);
     if (collectedMilk > 0) {
-      cowCollectorVolume -= collectedMilk * speed * SEC;
+      cowCollectorVolume -= collectedMilk * SEC;
       for (let i in Scene.state.cowTerritories) {
         const territory: Iterritories = Scene.state.cowTerritories[i];
         if (territory.type === 5) {
           const max: number = Scene.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === territory.improve).lotSize * this.state.storageMultiply;
-          
           for (let i: number = 0; i < collectedMilk; i += 1) {
             for (const cow of Scene.state.cow) {
               const cowPoints: IcowPoints = Scene.state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === cow.type);
               if (cow.type !== 0 && cow.milk >= cowPoints.maxMilkVolume) {
-                const cowPoints: IcowPoints = Scene.state.cowSettings.cowSettings.find((data: IcowPoints) => data.breed === cow.type);
-                if (max > territory.volume + cowPoints.maxMilkVolume) {
+                if (max > territory.volume) {
                   let price: number = 0;
                   if (Scene.state.userCow.feedBoostTime > 0) price *= this.feedBoostMultiplier;
                   territory.volume += cow.milk;
@@ -321,6 +321,7 @@ function cowCollectorProgress(cowCollectorVolume: number): void {
       cowCollectorVolume = 0;
     }
   }
+  return cowCollectorVolume;
 }
 
 function cowFactoryProgress(): void {
@@ -335,7 +336,6 @@ function cowFactoryProgress(): void {
       factory.boostTime -= 1;
     }
     let resourceAmount: number = 0;
-  
     if (factory.productionTimer <= 0) {
       if (factory.currentProduction) {
         const multiply: number = factory[`production${factory.currentProduction}Multiply`];
@@ -344,11 +344,9 @@ function cowFactoryProgress(): void {
         factory.currentProduction = undefined;
       } else {
         const storages: Iterritories[] = Scene.state.cowTerritories.filter((data: Iterritories) => data.type === 5);
-        
         storages.forEach((storage: Iterritories) => {
           resourceAmount += storage.volume;
         });
-    
         if (resourceAmount >= factorySettings.lotSize) {
           factory.productionTimer = factorySettings.processingTime;
           let lot: number = factorySettings.lotSize;

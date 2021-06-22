@@ -414,8 +414,8 @@ function interval(): void {
       checkCollector += 1;
     } else {
       checkCollector = 0;
-      this.cowCollectorProgress(cowCollectorVolume);
-      this.sheepCollectorProgress(sheepCollectorVolume);
+      cowCollectorVolume = this.cowCollectorProgress(cowCollectorVolume);
+      sheepCollectorVolume = this.sheepCollectorProgress(sheepCollectorVolume);
     }
   
     this.cowFactoryProgress();

@@ -1,13 +1,14 @@
 import { shortTime } from '../../general/basic';
 import Arrow from '../../components/animations/Arrow';
 import Hearts from '../../components/animations/Hearts';
-import { progressTerritoryCooldown } from '../../general/interval';
 import SpeechBubble from '../../components/animations/SpeechBuble';
 
 let checkCollector: number = 0;
 const BALANCE_HINT_COUNTDOWN = 20;
 let balanceCounter: number = 0;
 let balanceCounterMultiplier = 1;
+let chickenCollectorVolume: number = 0;
+let cowCollectorVolume: number = 0;
 
 function interval(): void {
   
@@ -411,10 +412,9 @@ function interval(): void {
       checkCollector += 1;
     } else {
       checkCollector = 0;
-      this.chickenCollectorProgress();
-      this.cowCollectorProgress();
+      chickenCollectorVolume = this.chickenCollectorProgress(chickenCollectorVolume);
+      cowCollectorVolume = this.cowCollectorProgress(cowCollectorVolume);
     }
-    
     this.cowFactoryProgress();
 
     this.updateProfileNative();

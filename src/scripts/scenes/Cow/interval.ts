@@ -355,8 +355,8 @@ function interval(): void {
       checkCollector += 1;
     } else {
       checkCollector = 0;
-      this.sheepCollectorProgress(sheepCollectorVolume);
-      this.chickenCollectorProgress(chickenCollectorVolume);
+      sheepCollectorVolume = this.sheepCollectorProgress(sheepCollectorVolume);
+      chickenCollectorVolume = this.chickenCollectorProgress(chickenCollectorVolume);
     }
     
     this.updateProfileNative();

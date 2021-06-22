@@ -1,7 +1,6 @@
 import { randomString, shortNum, shortTime } from '../../../general/basic';
 import Hearts from '../../../components/animations/Hearts';
 import BigInteger from '../../../libs/BigInteger';
-import Unicorn from './Main';
 let checkCollector: number = 0;
 let sheepCollectorVolume: number = 0;
 let chickenCollectorVolume: number = 0;
@@ -211,9 +210,9 @@ function interval(): void {
       checkCollector += 1;
     } else {
       checkCollector = 0;
-      this.sheepCollectorProgress(sheepCollectorVolume);
-      this.chickenCollectorProgress(chickenCollectorVolume);
-      this.cowCollectorProgress(cowCollectorVolume);
+      sheepCollectorVolume = this.sheepCollectorProgress(sheepCollectorVolume);
+      chickenCollectorVolume = this.chickenCollectorProgress(chickenCollectorVolume);
+      cowCollectorVolume =  this.cowCollectorProgress(cowCollectorVolume);
     }
   
     this.cowFactoryProgress();
