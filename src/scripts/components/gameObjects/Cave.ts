@@ -137,9 +137,6 @@ export default class Cave extends Phaser.GameObjects.Sprite {
         
         const time: string = timer(user.diamondAnimalTime);
         this.timer.setText(time);
-        if (this.scene.scene.isActive('Modal') && this.scene.state.modal?.type === 1 && this.scene.state.modal?.sysType === 9) {
-          this.scene.game.scene.keys['Modal'].caveTimer.setText(this.scene.state.lang.summonTime + time);
-        }
         if (user.diamondAnimalTime <= 0) {
           user.diamondAnimalAd = true;
           this.timer.setVisible(false);
