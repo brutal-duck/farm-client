@@ -38,7 +38,7 @@ class Boot extends Phaser.Scene {
   private params: URLSearchParams;
 
   public init(): void {
-    this.build = '3.7.1';
+    this.build = '3.7.2';
     console.log('Build ' + this.build);
     // console.log('y1')
     this.state = state;
