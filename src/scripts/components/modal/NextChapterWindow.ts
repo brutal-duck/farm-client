@@ -6,6 +6,7 @@ export default class NextChapterWindow {
   constructor(scene: Modal) {
     this.scene = scene;
     this.create();
+    this.scene.openModal(this.scene.cameras.main);
   }
 
   private create(): void {
@@ -27,21 +28,21 @@ export default class NextChapterWindow {
     this.scene.add.sprite(this.scene.cameras.main.centerX + 240, this.scene.cameras.main.centerY + 50, 'award-bg').setScale(0.9);
     this.scene.add.sprite(this.scene.cameras.main.centerX + 240, this.scene.cameras.main.centerY + 50, 'diamond').setScale(0.25).setAngle(5);
     this.scene.add.text(this.scene.cameras.main.centerX + 240, this.scene.cameras.main.centerY + 60, this.scene.state.modal.donePart.award, { font: '28px Shadow', fill: '#FFFFFF' }).setOrigin(0.5, 0.5).setAngle(5);
-    let btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY + 295, 'done-chapter-button');
-    let title: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY + 290, this.scene.state.lang.nextPart, {
+    const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY + 295, 'done-chapter-button');
+    const title: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY + 290, this.scene.state.lang.nextPart, {
       font: '24px Shadow',
       fill: '#FFD2D2',
       align: 'center',
       wordWrap: { width: 260 }
     }).setOrigin(0.5, 0.5).setStroke('#2C5D0C', 5);
   
-    this.scene.clickModalBtn({ btn, title }, (): void => {
-      this.scene.scene.stop();
-      this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-      this.scene.game.scene.keys[this.scene.state.farm].donePart();
-    });
-  
-    this.scene.openModal(this.scene.cameras.main);
+    this.scene.clickModalBtn({ btn, title }, (): void => { this.closeWindow() });
 
+  }
+
+  private closeWindow(): void {
+    this.scene.scene.stop();
+    this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
+    this.scene.game.scene.keys[this.scene.state.farm].donePart();
   }
 }

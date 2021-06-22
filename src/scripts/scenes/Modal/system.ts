@@ -9,6 +9,8 @@ import LogoutWindow from '../../components/modal/system/LogoutWindow';
 import DiamondAnimalAd from '../../components/modal/system/DiamondAnimalAd';
 import ImproveCollectorWindow from '../../components/modal/system/ImproveCollectorWindow';
 import ImproveCollectorEventWindow from '../../components/modal/system/ImproveCollectorEventWindow';
+import RepositoryExchangeWindow from '../../components/modal/system/RepositoryExchangeWindow';
+import ChangeNicknameWindow from '../../components/modal/system/ChangeNicknameWindow';
 
 function systemWindow(): void {
   let height:number = 0;
@@ -129,7 +131,7 @@ function systemWindow(): void {
       
     case 5: // окно подтверждения обмена территории
 
-      if (this.state.farm === 'Sheep' || this.state.farm === 'Chicken' || this.state.farm === 'Cow') new ExchangeTerritoryWindow(this)
+      if (this.state.farm !== 'Unicorn') new ExchangeTerritoryWindow(this)
       break;
 
     case 6: // окно подтверждения продажи животного
@@ -159,17 +161,12 @@ function systemWindow(): void {
       break;
     
     case 11: //окно смены территории
-      if(this.state.farm === 'Sheep') {
-        this.sheepWoolRepositoryExchange();
-      } else if (this.state.farm === 'Chicken') {
-        this.chickenEggRepositoryExchange();
-      } else if (this.state.farm === 'Cow') {
-        this.cowMilkRepositoryExchange();
-      }
+    
+      if (this.state.farm !== 'Unicorn') new RepositoryExchangeWindow(this)
       break;
     
     case 12: // Окно смены ника
-      this.changeNickname();
+      new ChangeNicknameWindow(this)
       break;
 
     case 13: // Окно ввода почты

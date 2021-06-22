@@ -2,34 +2,41 @@ import Modal from "../../scenes/Modal/Modal";
 
 export default class TasksWindow {
   public scene: Modal;
+
   private top: Phaser.GameObjects.Sprite;
   private middle: Phaser.GameObjects.TileSprite;
   private bottom: Phaser.GameObjects.Sprite;
   private close: Phaser.GameObjects.Sprite;
+  private centerY: number
+     
 
   constructor(scene: Modal) {
     this.scene = scene;
+    this.init();
     this.create();
+  }
+
+  private init(): void {
+    this.centerY = this.scene.cameras.main.centerY + 60
   }
 
   private create(): void {
 
     this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('show_tasks_window', {});
 
-    let centerY: number = this.scene.cameras.main.centerY + 60
     let height: number = 112
     let tasks: { task: Itasks, taskData: ItaskData }[] = [];
     let textsHeight = [];
     let countBreed: number;
     let countDone: number = 0
-    let taskCenterY: number = centerY - 134
+    let taskCenterY: number = this.centerY - 134
     let barHeight: number = 154
     let textWidth: number = 330
     
-    this.top = this.scene.add.sprite(this.scene.cameras.main.centerX + 1, centerY - Math.floor(height / 2), 'tasks-top').setOrigin(0.5, 1)
-    this.middle = this.scene.add.tileSprite(this.scene.cameras.main.centerX, centerY, 563, height, 'tasks-middle').setOrigin(0.5, 0.5)
-    this.bottom = this.scene.add.sprite(this.scene.cameras.main.centerX, centerY + Math.floor(height / 2), 'tasks-bottom').setOrigin(0.5, 0.5)
-    this.close = this.scene.add.sprite(606, centerY - Math.floor(height / 2 + 114), 'tasks-close').setDepth(2)
+    this.top = this.scene.add.sprite(this.scene.cameras.main.centerX + 1, this.centerY - Math.floor(height / 2), 'tasks-top').setOrigin(0.5, 1)
+    this.middle = this.scene.add.tileSprite(this.scene.cameras.main.centerX, this.centerY, 563, height, 'tasks-middle').setOrigin(0.5, 0.5)
+    this.bottom = this.scene.add.sprite(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2), 'tasks-bottom').setOrigin(0.5, 0.5)
+    this.close = this.scene.add.sprite(606, this.centerY - Math.floor(height / 2 + 114), 'tasks-close').setDepth(2)
   
     if (this.scene.state.farm === 'Cow') countBreed = this.scene.state.cowSettings.cowSettings.length
     else if (this.scene.state.farm === 'Chicken') countBreed = this.scene.state.chickenSettings.chickenSettings.length
@@ -126,7 +133,6 @@ export default class TasksWindow {
             iconTexture = 'sheepCoin';
           }
         }
-        // ----- //
 
         icon.setTint(0x777777);
         completed = this.scene.add.sprite(194, taskCenterY - 6, 'completed').setDepth(1).setOrigin(0.5, 0.5);
@@ -150,10 +156,7 @@ export default class TasksWindow {
           color: '#FFFFFF'
         }).setDepth(2).setOrigin(0.5, 0.5).setShadow(2, 2, 'rgba(0, 0, 0, 0.5)', 5);
 
-        awardIcon = this.scene.add.sprite(510, taskCenterY + (barHeight / 2) - 29, iconTexture)
-          .setDepth(2)
-          .setScale(0.14)
-          .setOrigin(0.5, 0.5);
+        awardIcon = this.scene.add.sprite(510, taskCenterY + (barHeight / 2) - 29, iconTexture).setDepth(2).setScale(0.14).setOrigin(0.5, 0.5);
           
         if (moneyTask) { // костыль
           awardText.setVisible(false);
@@ -253,28 +256,44 @@ export default class TasksWindow {
 
     }
 
+    this.progressLineAndOtherText(countDone, height)
+
+    // Кнопка закрытия
+    this.scene.clickButton(this.close, (): void => { this.closeWindow() });
+
+    this.resizeTasksWindow(height);
+
+    if (!this.scene.game.scene.keys[this.scene.state.farm].tasksOpened) {
+      this.scene.game.scene.keys[this.scene.state.farm].tasksOpened = true;
+      this.scene.openModal(this.scene.cameras.main);
+    }
+
+  }
+
+
+  private progressLineAndOtherText(countDone: number, height: number): void {
     // Полоска прогресса
     let percent: number = countDone / (this.scene.state.modal.tasksParams.tasks.length / 100);
     percent = 460 / 100 * percent;
     this.scene.add.tileSprite(132, this.scene.cameras.main.centerY + (height / 2) + 4, percent, 16, 'part-progress').setOrigin(0, 0.5);
 
     // Остальной текст
-    this.scene.add.text(this.scene.cameras.main.centerX, centerY - Math.floor(height / 2 + 200), this.scene.state.modal.tasksParams.part, {
+    this.scene.add.text(this.scene.cameras.main.centerX, this.centerY - Math.floor(height / 2 + 200), this.scene.state.modal.tasksParams.part, {
       font: '72px Shadow',
       fill: '#166c00'
     }).setOrigin(0.5, 0.5);
 
-    this.scene.add.text(this.scene.cameras.main.centerX, centerY - Math.floor(height / 2 + 150), this.scene.state.lang.part, {
+    this.scene.add.text(this.scene.cameras.main.centerX, this.centerY - Math.floor(height / 2 + 150), this.scene.state.lang.part, {
       font: '34px Shadow',
       fill: '#166c00'
     }).setOrigin(0.5, 0.5);
 
-    this.scene.add.text(this.scene.cameras.main.centerX, centerY - Math.floor(height / 2 + 78), this.scene.state.modal.tasksParams.name, {
+    this.scene.add.text(this.scene.cameras.main.centerX, this.centerY - Math.floor(height / 2 + 78), this.scene.state.modal.tasksParams.name, {
       font: '32px Shadow',
       fill: '#F2DCFF'
     }).setOrigin(0.5, 0.5)
 
-    this.scene.add.text(this.scene.cameras.main.centerX, centerY + Math.floor(height / 2 + 10), this.scene.state.modal.tasksParams.farmer, {
+    this.scene.add.text(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2 + 10), this.scene.state.modal.tasksParams.farmer, {
       font: '26px Shadow',
       fill: '#8f3f00'
     }).setOrigin(0.5, 0.5)
@@ -284,19 +303,17 @@ export default class TasksWindow {
     
     if (this.scene.state.modal.tasksParams.done && parts.length !== userPart) {
 
-      let nextPart = this.scene.add.sprite(this.scene.cameras.main.centerX, centerY + Math.floor(height / 2 + 60), 'big-btn-green').setDisplaySize(412, 64)
-      let nextPartText = this.scene.add.text(this.scene.cameras.main.centerX, centerY + Math.floor(height / 2 + 54), this.scene.state.lang.donePart, {
+      const nextPart = this.scene.add.sprite(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2 + 60), 'big-btn-green').setDisplaySize(412, 64)
+      const nextPartText = this.scene.add.text(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2 + 54), this.scene.state.lang.donePart, {
         font: '24px Shadow',
         fill: '#FFFFFF'
       }).setOrigin(0.5, 0.5)
 
-      this.scene.clickShopBtn({ btn: nextPart, title: nextPartText }, (): void => {
-        this.scene.game.scene.keys[this.scene.state.farm].nextPart();
-      });
+      this.scene.clickShopBtn({ btn: nextPart, title: nextPartText }, (): void => { this.scene.game.scene.keys[this.scene.state.farm].nextPart() });
 
     } else if (this.scene.state.modal.tasksParams.done && parts.length === userPart){
 
-      this.scene.add.text(this.scene.cameras.main.centerX, centerY + Math.floor(height / 2 + 60), this.scene.state.lang[`${this.scene.state.farm.toLowerCase()}CompanyDone`], {
+      this.scene.add.text(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2 + 60), this.scene.state.lang[`${this.scene.state.farm.toLowerCase()}CompanyDone`], {
         font: '20px Shadow',
         fill: '#c15e00',
         align: 'center',
@@ -305,7 +322,7 @@ export default class TasksWindow {
     
     } else if (!this.scene.state.modal.tasksParams.done) {
 
-      this.scene.add.text(this.scene.cameras.main.centerX, centerY + Math.floor(height / 2 + 60), this.scene.state.modal.tasksParams.description, {
+      this.scene.add.text(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2 + 60), this.scene.state.modal.tasksParams.description, {
         font: '20px Shadow',
         fill: '#c15e00',
         align: 'center',
@@ -313,30 +330,21 @@ export default class TasksWindow {
       }).setOrigin(0.5, 0.5)
     
     }
-
-    // Кнопка закрытия
-    this.scene.clickButton(this.close, (): void => {
-      this.scene.game.scene.keys[this.scene.state.farm].tasksOpened = false;
-      this.scene.scene.stop();
-      this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-    });
-
-    this.resizeTasksWindow(centerY, height);
-
-    if (!this.scene.game.scene.keys[this.scene.state.farm].tasksOpened) {
-      this.scene.game.scene.keys[this.scene.state.farm].tasksOpened = true;
-      this.scene.openModal(this.scene.cameras.main);
-    }
-
   }
 
+
+  private closeWindow(): void {
+    this.scene.game.scene.keys[this.scene.state.farm].tasksOpened = false;
+    this.scene.scene.stop();
+    this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
+  }
+
+
   // Перезадать размеры
-  private resizeTasksWindow(centerY: number, height: number): void {
-
-    this.top.y = centerY - Math.floor(height / 2);
+  private resizeTasksWindow(height: number): void {
+    this.top.y = this.centerY - Math.floor(height / 2);
     this.middle.height = height;
-    this.bottom.y = centerY + Math.floor(height / 2);
-    this.close.y = centerY - Math.floor(height / 2 + 114);
-
+    this.bottom.y = this.centerY + Math.floor(height / 2);
+    this.close.y = this.centerY - Math.floor(height / 2 + 114);
   }
 }
