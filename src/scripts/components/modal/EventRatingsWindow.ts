@@ -3,6 +3,7 @@ import Modal from "../../scenes/Modal/Modal";
 
 export default class EventRatingsWindow {
   public scene: Modal;
+
   private line: Phaser.GameObjects.Text;
   private playerPlaceAndName: Phaser.GameObjects.Text;
   private playerScore: Phaser.GameObjects.Text;
@@ -172,8 +173,10 @@ export default class EventRatingsWindow {
     this.price.setTint(0xC0C0C0);
 
     // Для тестов
-    // this.scene.state.progress.event.eventRaitings = [{ score: 5, place: 2, name: 'wrgw egrg' },{ score: 2, place: 3, name: '+wrgw egrg' }]
-    // this.scene.state.progress.event.userEventRaiting = { score: 20, place: 1, name: 'wrgtrgw egrg' }
+    // if (!this.scene.state.progress.event.eventRaitings) {
+    //   this.scene.state.progress.event.eventRaitings = [{ score: 5, place: 2, name: 'wrgw egrg' },{ score: 2, place: 3, name: '+wrgw egrg' }]
+    //   this.scene.state.progress.event.userEventRaiting = { score: 20, place: 1, name: 'wrgtrgw egrg' }
+    // }
 
     // Таблица
     let length: number = this.scene.state.progress.event.eventRaitings.length
@@ -194,9 +197,7 @@ export default class EventRatingsWindow {
       if (this.scene.state.progress.event.eventRaitings && this.scene.state.progress.event.eventRaitings[i].score !== null) {
         placeAndName.setText(this.scene.state.progress.event.eventRaitings[i].place + '. ' + this.scene.state.progress.event.eventRaitings[i].name).setCrop(0, 0, 260, 100);
         score.setText(String(this.scene.state.progress.event.eventRaitings[i].score));
-        if (i < 3) {
-          this.scene.add.sprite(placeAndNameX + 280 + 35, placeAndNameY + padding * Number(i), 'unicorn-status').setOrigin(0, 0).setScale(0.65);
-        }
+        if (i < 3)  this.scene.add.sprite(placeAndNameX + 280 + 35, placeAndNameY + padding * Number(i), 'unicorn-status').setOrigin(0, 0).setScale(0.65);
       }
 
       this.eventRatingsNames.push(placeAndName);
