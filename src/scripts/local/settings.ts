@@ -1,4 +1,4 @@
-let general: { autoSaveSpeed: number, maxMerginTime: number, boostSpeedAnimal: number, boostTime: number, boostPrice: number, packages: Ipackage[] } = {
+const general: { autoSaveSpeed: number, maxMerginTime: number, boostSpeedAnimal: number, boostTime: number, boostPrice: number, packages: Ipackage[] } = {
   autoSaveSpeed: 15,
   maxMerginTime: 30,
   boostSpeedAnimal: 100,
@@ -12,7 +12,7 @@ let general: { autoSaveSpeed: number, maxMerginTime: number, boostSpeedAnimal: n
   ],
 }
 
-let sheepSettings: IsheepSettings = {
+const sheepSettings: IsheepSettings = {
   buyBetterBreedSheep: 2,
   feedBoostPrice: 35,
   sheepBadPercent: 30,
@@ -103,7 +103,7 @@ let sheepSettings: IsheepSettings = {
   ]
 }
 
-let chickenSettings: IchickenSettings = {
+const chickenSettings: IchickenSettings = {
   buyBetterBreedChicken: 2,
   feedBoostPrice: 35,
   chickenBadPercent: 40,
@@ -194,7 +194,7 @@ let chickenSettings: IchickenSettings = {
   ]
 }
 
-let cowSettings: IcowSettings = {
+const cowSettings: IcowSettings = {
   buyBetterBreedCow: 2,
   feedBoostPrice: 35,
   cowBadPercent: 40,

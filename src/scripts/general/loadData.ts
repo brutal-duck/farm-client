@@ -10,7 +10,7 @@ import chickenCollectorSettings from '../local/chickenCollector';
 import cowCollectorSettings from '../local/cowCollector';
 const basicUserCow = userCow;
 
-function validateTerritories(territories: Iterritories[], basicTerritories: Iterritories[]): void {
+function validateTerritories(territories: Iterritories[], basicTerritories: Iterritories[]): Iterritories[] {
   const maxTerritoryType: number = 8;
   for (let i: number = 0; i < territories.length; i += 1) {
     const territory: Iterritories = basicTerritories.find((data: Iterritories) => territories[i].position === data.position && territories[i].block === data.block);
@@ -40,6 +40,7 @@ function validateTerritories(territories: Iterritories[], basicTerritories: Iter
       });
     }
   }
+  return territories;
 }
 
 function validateBoosts(boosts: Iboosts): Iboosts {
@@ -64,6 +65,20 @@ function validateBoosts(boosts: Iboosts): Iboosts {
   return userData.boosts;
 }
 
+function setTaskStatus(farmId: number, resTask: any[]): Itasks[] {
+  const updatedTasks: Itasks[] = [];
+  for (const task of tasks) if (task.farm === farmId) updatedTasks.push(task);
+  for (const usersTask of resTask) {
+    const task = tasks.find((task: Itasks) => task.id === usersTask.task_id);
+    if (task) {
+      task.done = usersTask.done;
+      task.got_awarded = usersTask.got_awarded;
+      task.progress = usersTask.progress;
+    }
+  }
+  return updatedTasks;
+}
+
 export default function loadData(response: any): void {
   if (this.state.farm === 'Sheep') this.state.offline = response.data.progress.sheepOfflineTime;
   else if (this.state.farm === 'Chicken') this.state.offline = response.data.progress.chickenOfflineTime;
@@ -84,77 +99,9 @@ export default function loadData(response: any): void {
   this.state.daily = response.data.progress.daily;
   this.state.timeToNewDay = response.data.progress.timeToNewDay;
 
-  const resSheepSettings: IsheepSettings = {
-    sheepBadPercent: response.data.settings.sheep.badPercent,
-    sheepPrice: response.data.settings.sheep.price,
-    territoriesSheepSettings: response.data.settings.sheep.territoriesSettings,
-    sheepSettings: response.data.settings.sheep.sheepSettings,
-    territoriesSheepPrice: response.data.settings.sheep.territoriesPrice,
-    sheepFairLevels: sheepSettings.sheepFairLevels,
-    sheepParts: response.data.settings.sheep.parts,
-    buyBetterBreedSheep: response.data.settings.sheep.buyBetterBreed,
-    doubledСollectorPrice: response.data.settings.sheep.doubledСollectorPrice,
-    collectorPrice4: response.data.settings.sheep.collectorPrice4,
-    collectorPrice12: response.data.settings.sheep.collectorPrice12,
-    unlockCollector4: response.data.settings.sheep.unlockCollector4,
-    unlockCollector12: response.data.settings.sheep.unlockCollector12,
-    sheepDiamondsTime: response.data.settings.sheep.diamondAnimalTime,
-    feedBoostPrice: response.data.settings.sheep.feedBoostPrice,
-  }
-
-
-  const resChickenSettings: IchickenSettings = {
-    chickenBadPercent: response.data.settings.chicken.badPercent,
-    chickenPrice: response.data.settings.chicken.price,
-    territoriesChickenSettings: response.data.settings.chicken.territoriesSettings,
-    chickenSettings: response.data.settings.chicken.chickenSettings,
-    territoriesChickenPrice: response.data.settings.chicken.territoriesPrice,
-    chickenFairLevels: chickenSettings.chickenFairLevels,
-    chickenParts: response.data.settings.chicken.parts,
-    buyBetterBreedChicken: response.data.settings.chicken.buyBetterBreed,
-    doubledСollectorPrice: response.data.settings.chicken.doubledСollectorPrice,
-    collectorPrice4: response.data.settings.chicken.collectorPrice4,
-    collectorPrice12: response.data.settings.chicken.collectorPrice12,
-    unlockCollector4: response.data.settings.chicken.unlockCollector4,
-    unlockCollector12: response.data.settings.chicken.unlockCollector12,
-    chickenDiamondsTime: response.data.settings.chicken.diamondAnimalTime,
-    feedBoostPrice: response.data.settings.chicken.feedBoostPrice,
-  };
-
-  const resCowSettings: IcowSettings = {
-    cowBadPercent: response.data.settings.cow.badPercent,
-    cowPrice: response.data.settings.cow.price,
-    territoriesCowSettings: response.data.settings.cow.territoriesSettings,
-    cowSettings: response.data.settings.cow.cowSettings,
-    territoriesCowPrice: response.data.settings.cow.territoriesPrice,
-    cowFairLevels: cowSettings.cowFairLevels,
-    cowParts: response.data.settings.cow.parts,
-    buyBetterBreedCow: response.data.settings.cow.buyBetterBreed,
-    doubledСollectorPrice: response.data.settings.cow.doubledСollectorPrice,
-    collectorPrice4: response.data.settings.cow.collectorPrice4,
-    collectorPrice12: response.data.settings.cow.collectorPrice12,
-    unlockCollector4: response.data.settings.cow.unlockCollector4,
-    unlockCollector12: response.data.settings.cow.unlockCollector12,
-    cowDiamondsTime: response.data.settings.cow.diamondAnimalTime,
-    feedBoostPrice: response.data.settings.cow.feedBoostPrice,
-    cowFactorySettings: response.data.settings.cow.cowFactorySettings,
-  };
-
-  for (const key in resSheepSettings) {
-    if (resSheepSettings[key] === undefined || resSheepSettings[key] === null) resSheepSettings[key] = sheepSettings[key];
-  }
-
-  for (const key in resChickenSettings) {
-    if (resChickenSettings[key] === undefined || resChickenSettings[key] === null) resChickenSettings[key] = chickenSettings[key];
-  }
-
-  for (const key in resCowSettings) {
-    if (resCowSettings[key] === undefined || resCowSettings[key] === null) resCowSettings[key] = cowSettings[key];
-  }
-
-  this.state.sheepSettings = resSheepSettings;
-  this.state.chickenSettings = resChickenSettings;
-  this.state.cowSettings = resCowSettings;
+  this.state.sheepSettings = sheepSettings;
+  this.state.chickenSettings = chickenSettings;
+  this.state.cowSettings = cowSettings;
   // животные
   const sheep: Isheep[] = [];
   for (let i in response.data.user.sheep) {    
@@ -207,8 +154,7 @@ export default function loadData(response: any): void {
 
   //территории для обычных ферм
   const sheepTerritories: Iterritories[] = []; 
-  for (let i in response.data.user.sheep_territories) {
-    const territory = response.data.user.sheep_territories[i];
+  for (const territory of response.data.user.sheep_territories) {
     sheepTerritories.push({
       _id: territory._id,
       block: response.data.user.sheep_territories[0].block === 0 ? territory.block + 1 : territory.block,
@@ -251,13 +197,9 @@ export default function loadData(response: any): void {
     });
   }
 
-  validateTerritories(sheepTerritories, basicSheepTerritories);
-  validateTerritories(chickenTerritories, basicChickenTerritories);
-  validateTerritories(cowTerritories, basicCowTerritories);
-
-  this.state.sheepTerritories = sheepTerritories;
-  this.state.chickenTerritories = chickenTerritories;
-  this.state.cowTerritories = cowTerritories;
+  this.state.sheepTerritories = validateTerritories(sheepTerritories, basicSheepTerritories);
+  this.state.chickenTerritories = validateTerritories(chickenTerritories, basicChickenTerritories);
+  this.state.cowTerritories = validateTerritories(cowTerritories, basicCowTerritories);
   // яйца
   const chickenEggs: IchickenEgg[] = [];
   for (let i in response.data.user.chicken_eggs) {
@@ -371,49 +313,14 @@ export default function loadData(response: any): void {
   this.state.userChicken = userChicken;
   this.state.userCow = userCow;
 
-  const sheepTasks: Itasks[] = [];
-  for (let i in tasks) if (tasks[i].farm === 1) sheepTasks.push(tasks[i]);
-  for (let i in response.data.user.sheep_tasks) {
-    const usersTask = response.data.user.sheep_tasks[i];
-    const task = tasks.find((task: Itasks) => task.id === usersTask.task_id);
-    if (task) {
-      task.done = usersTask.done;
-      task.got_awarded = usersTask.got_awarded;
-      task.progress = usersTask.progress;
-    }
-  }
-
-  const chickenTasks: Itasks[] = [];
-  for (let i in tasks) if (tasks[i].farm === 2) chickenTasks.push(tasks[i]);
-  for (let i in response.data.user.chicken_tasks) {
-    const usersTask = response.data.user.chicken_tasks[i];
-    const task = tasks.find((task: Itasks) => task.id === usersTask.task_id);
-    if (task) {
-      task.done = usersTask.done;
-      task.got_awarded = usersTask.got_awarded;
-      task.progress = usersTask.progress;
-    }
-  }
-
-  const cowTasks: Itasks[] = [];
-  for (let i in tasks) if (tasks[i].farm === 3) cowTasks.push(tasks[i]);
-  for (let i in response.data.user.cow_tasks) {
-    const usersTask = response.data.user.cow_tasks[i];
-    const task = tasks.find((task: Itasks) => task.id === usersTask.task_id);
-    if (task) {
-      task.done = usersTask.done;
-      task.got_awarded = usersTask.got_awarded;
-      task.progress = usersTask.progress;
-    }
-  }
-
-  this.state.sheepTasks = sheepTasks;
-  this.state.chickenTasks = chickenTasks;
-  this.state.cowTasks = cowTasks;
+  this.state.sheepTasks = setTaskStatus(1, response.data.user.sheep_tasks);
+  this.state.chickenTasks = setTaskStatus(2, response.data.user.chicken_tasks);;
+  this.state.cowTasks = setTaskStatus(3, response.data.user.cow_tasks);;
 
   this.state.sheepCollectorSettings = sheepCollectorSettings;
   this.state.chickenCollectorSettings = chickenCollectorSettings;
   this.state.cowCollectorSettings = cowCollectorSettings;
+
   const progress: Iprogress = {
     sheep: {
       part: response.data.user.sheep_part,
