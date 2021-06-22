@@ -12,6 +12,8 @@ import ImproveCollectorEventWindow from '../../components/modal/system/ImproveCo
 import RepositoryExchangeWindow from '../../components/modal/system/RepositoryExchangeWindow';
 import ChangeNicknameWindow from '../../components/modal/system/ChangeNicknameWindow';
 import AddEmailWindow from '../../components/modal/system/AddEmailWindow';
+import SupportWindow from '../../components/modal/system/SupportWindow';
+import RegistrationWindow from '../../components/modal/system/RegistrationWindow';
 
 function systemWindow(): void {
   let height:number = 0;
@@ -175,11 +177,11 @@ function systemWindow(): void {
       break;
 
     case 14: // Окно тех поддержки
-      this.support();
+      new SupportWindow(this)
       break;
 
     case 15: // Окно регистрации
-      this.registration();
+      new RegistrationWindow(this)
       break;
     
     case 16: // Окно улучшения фабрики

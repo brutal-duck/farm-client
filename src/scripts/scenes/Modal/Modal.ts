@@ -60,8 +60,6 @@ import {
 import DailyAwardWindow from '../../components/modal/DailyAwardWindow';
 import { bigButton, repositoryBtn, shopButton } from '../../elements';
 import { 
-  support,
-  registration,
   confirmBuyCooldown
 } from '../../general/modal';
   // буст "Стадо"
@@ -96,7 +94,7 @@ class Modal extends Phaser.Scene {
   public progressButton: any;
   public feedBoostText: Phaser.GameObjects.Text;
   public mainInput: HTMLInputElement;
-  public secondInput: HTMLInputElement;
+  public secondInput: HTMLTextAreaElement | HTMLInputElement;
   public enterKey: Phaser.Input.Keyboard.Key;
   public chatHeight: number = 0;
   public chatBG: Phaser.GameObjects.Sprite;
@@ -139,8 +137,6 @@ class Modal extends Phaser.Scene {
   public buySheepTerritory = buySheepTerritory.bind(this);
   public sheepConvertor = sheepConvertor.bind(this);
   public sheepWoolRepository = sheepWoolRepository.bind(this);
-  public support = support.bind(this);
-  public registration = registration.bind(this);
   public shopButton = shopButton.bind(this);
   public shortTime = shortTime.bind(this);
   public shortNum = shortNum.bind(this);
