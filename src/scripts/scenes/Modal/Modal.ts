@@ -164,7 +164,6 @@ class Modal extends Phaser.Scene {
 
   public init(state: Istate): void {
     this.state = state;
-    console.log('init ~ this.state', this.state)
   }
 
   public preload(): void {
