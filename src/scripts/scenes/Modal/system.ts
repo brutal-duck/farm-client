@@ -14,6 +14,7 @@ import ChangeNicknameWindow from '../../components/modal/system/ChangeNicknameWi
 import AddEmailWindow from '../../components/modal/system/AddEmailWindow';
 import SupportWindow from '../../components/modal/system/SupportWindow';
 import RegistrationWindow from '../../components/modal/system/RegistrationWindow';
+import CurrencyConvertorWindow from '../../components/modal/system/CurrencyConvertorWindow';
 
 function systemWindow(): void {
   let height:number = 0;
@@ -120,16 +121,7 @@ function systemWindow(): void {
     
     case 4: // окно конвертора
 
-      if (this.state.farm === 'Sheep') {
-        this.sheepConvertor();
-      } else if (this.state.farm === 'Chicken') {
-        this.chickenConvertor();
-      } else if (this.state.farm === 'Cow') {
-        this.cowConvertor();
-      } else if (this.state.farm === 'Unicorn') {
-        this.eventConvertor();
-      }
-
+      new CurrencyConvertorWindow(this)
       break;
       
     case 5: // окно подтверждения обмена территории

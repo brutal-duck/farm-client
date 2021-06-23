@@ -63,7 +63,7 @@ function interval(): void {
     }
     // уменьшаем время буста комбикорм
     if (this.state.userUnicorn.feedBoostTime > 0) {
-      if (Phaser.Math.Between(0, 7) >= 5) { // чтобы не так часто появлялись сердца
+      if (Phaser.Math.Between(0, 7) >= 5 && this.animals.children.entries.length > 0) { // чтобы не так часто появлялись сердца
         const randomIndex: number = Phaser.Math.Between(0, this.animals.children.entries.length - 1);
         if (this.animals.children.entries[randomIndex].data.values.active.data.values.working) {
           Hearts.create(this, this.animals.children.entries[randomIndex].data.values.active);

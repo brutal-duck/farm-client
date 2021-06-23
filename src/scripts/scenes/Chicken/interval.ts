@@ -41,7 +41,7 @@ function interval(): void {
         balanceCounterMultiplier++;
       }
 
-      if (Phaser.Math.Between(0, 7) >= 5) {
+      if (Phaser.Math.Between(0, 7) >= 5 && this.chicken.children.entries.length > 0) {
         let randomIndex: number = Phaser.Math.Between(0, this.chicken.children.entries.length - 1);
         let textures: string[] = ['not-enought-water', 'not-enought-grass'];
         let texture: string = textures[Phaser.Math.Between(0, 1)];
@@ -316,7 +316,7 @@ function interval(): void {
     // уменьшаем время буста комбикорм
     if (this.state.userChicken.feedBoostTime > 0) {
 
-      if (Phaser.Math.Between(0, 7) >= 5) { // чтобы не так часто появлялись сердца
+      if (Phaser.Math.Between(0, 7) >= 5 && this.chicken.children.entries.length > 0) { // чтобы не так часто появлялись сердца
 
         let randomIndex: number = Phaser.Math.Between(0, this.chicken.children.entries.length - 1);
         Hearts.create(this, this.chicken.children.entries[randomIndex])
