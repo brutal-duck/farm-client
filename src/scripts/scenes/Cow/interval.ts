@@ -41,7 +41,7 @@ function interval(): void {
         balanceCounterMultiplier++;
       }
 
-      if (Phaser.Math.Between(0, 7) >= 5) {
+      if (Phaser.Math.Between(0, 7) >= 5 && this.animalGroup.children.entries.length > 0) {
         let randomIndex: number = Phaser.Math.Between(0, this.animalGroup.children.entries.length - 1);
         let textures: string[] = ['not-enought-water', 'not-enought-grass'];
         let texture: string = textures[Phaser.Math.Between(0, 1)];
@@ -249,7 +249,7 @@ function interval(): void {
       !this.scene.isActive('Profile')) this.showDonate();
 
     if (this.state.userCow.feedBoostTime > 0) {
-      if (Phaser.Math.Between(0, 7) >= 5) { 
+      if (Phaser.Math.Between(0, 7) >= 5 && this.animalGroup.children.entries.length > 0) { 
         let randomIndex: number = Phaser.Math.Between(0, this.animalGroup.children.entries.length - 1);
         Hearts.create(this, this.animalGroup.children.entries[randomIndex])
       }

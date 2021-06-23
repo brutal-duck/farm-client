@@ -26,7 +26,6 @@ import {
   chickenWater,
   boughtChickenLand,
   buyChickenTerritory,
-  chickenConvertor,
   chickenEggsRepository,
 } from './chicken';
 import {
@@ -36,13 +35,11 @@ import {
   cowWater,
   boughtCowLand,
   buyCowTerritory,
-  cowConvertor,
   cowMilkRepository,
   improveFactoryWindow,
   confirmSellMilk
 } from './cow';
 import {
-  eventConvertor,
   buyEventTerritory,
   herdBoostEventWindow,
   eventDrag,
@@ -54,7 +51,6 @@ import {
   sheepWater,
   boughtSheepLand,
   buySheepTerritory,
-  sheepConvertor,
   sheepWoolRepository,
 } from './sheep';
 import DailyAwardWindow from '../../components/modal/DailyAwardWindow';
@@ -125,9 +121,7 @@ class Modal extends Phaser.Scene {
   public cowWater = cowWater.bind(this);
   public boughtCowLand = boughtCowLand.bind(this);
   public buyCowTerritory = buyCowTerritory.bind(this);
-  public chickenConvertor = chickenConvertor.bind(this);
   public chickenEggsRepository = chickenEggsRepository.bind(this);
-  public cowConvertor = cowConvertor.bind(this);
   public cowMilkRepository = cowMilkRepository.bind(this);
   public sheepFair = sheepFair.bind(this);
   public sheep = sheep.bind(this);
@@ -135,12 +129,10 @@ class Modal extends Phaser.Scene {
   public sheepWater = sheepWater.bind(this);
   public boughtSheepLand = boughtSheepLand.bind(this);
   public buySheepTerritory = buySheepTerritory.bind(this);
-  public sheepConvertor = sheepConvertor.bind(this);
   public sheepWoolRepository = sheepWoolRepository.bind(this);
   public shopButton = shopButton.bind(this);
   public shortTime = shortTime.bind(this);
   public shortNum = shortNum.bind(this);
-  public eventConvertor = eventConvertor.bind(this);
   public eventTerritory = eventTerritory.bind(this);
   public buyEventTerritory = buyEventTerritory.bind(this);
   public herdBoostEventWindow = herdBoostEventWindow.bind(this);
