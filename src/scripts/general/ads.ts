@@ -163,14 +163,15 @@ function adReward(): void {
       }
       axios.post(process.env.API + "/unicorn/takeAd", data)
         .then((response) => {
-          if (response.data.success) {
-            if (this.state.userUnicorn.takenAd === 0) this.state.userUnicorn.timeToAd += 60;
-            else if (this.state.userUnicorn.takenAd === 1) this.state.userUnicorn.timeToAd += 300;
-            else if (this.state.userUnicorn.takenAd === 2) this.state.userUnicorn.timeToAd += 1800;
-            else if (this.state.userUnicorn.takenAd === 3) this.state.userUnicorn.timeToAd += 7200;
-            else if (this.state.userUnicorn.takenAd >= 4) this.state.userUnicorn.timeToAd += 86400;
-            this.state.userUnicorn.takenAd += 1;
-          }
+          console.log(this.state.userUnicorn.takenAd)
+          if (this.state.userUnicorn.takenAd === 0) this.state.userUnicorn.timeToAd += 60;
+          else if (this.state.userUnicorn.takenAd === 1) this.state.userUnicorn.timeToAd += 300;
+          else if (this.state.userUnicorn.takenAd === 2) this.state.userUnicorn.timeToAd += 1800;
+          else if (this.state.userUnicorn.takenAd === 3) this.state.userUnicorn.timeToAd += 7200;
+          else if (this.state.userUnicorn.takenAd >= 4) this.state.userUnicorn.timeToAd += 86400;
+          else this.state.userUnicorn.timeToAd += Number.MAX_SAFE_INTEGER;
+          this.state.userUnicorn.takenAd += 1;
+          console.log(this.scene.state.userUnicorn.timeToAd);
         });
       this.getAnimal(id, breed, position.x, position.y);
       Firework.create(this, { x: position.x, y: position.y }, 1);

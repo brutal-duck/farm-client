@@ -82,7 +82,8 @@ export default class AnimalUnicornWindow {
 
         const diamondPrice = this.getDiamondPrice(4, animal.breed);
         let callback: Function
-
+        console.log(this.scene.state.userUnicorn.timeToAd);
+        console.log(this.scene.state.userUnicorn.takenAd);
         if (this.scene.state.readyAd && this.scene.state.userUnicorn.timeToAd <= 0) {
           
           btn = this.scene.shopButton(330, center,  this.scene.state.lang.pickUp, 'ad-icon');
@@ -104,7 +105,6 @@ export default class AnimalUnicornWindow {
             }
 
           }
-    
         } else {
 
           btn = this.scene.shopButton(330, center, String(diamondPrice), 'diamond');
@@ -172,9 +172,9 @@ export default class AnimalUnicornWindow {
 
 
   private closeWindow(): void {
-    this.scene.stop('Shop');
-    this.scene.stop('ShopBars');
-    this.scene.stop('Modal');
+    this.scene.scene.stop('Shop');
+    this.scene.scene.stop('ShopBars');
+    this.scene.scene.stop('Modal');
   }
 
 }
