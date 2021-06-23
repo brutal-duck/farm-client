@@ -410,6 +410,7 @@ export default function loadData(response: any): void {
         countAnimal.push({ counter: 1 });
       }
     }
+    console.log(response.data.event.timeToAd, 'res timetoad');
     const userUnicorn: IuserEvent = {  
       money: response.data.event.money,
       countAnimal: countAnimal,

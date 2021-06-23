@@ -82,8 +82,8 @@ export default class AnimalUnicornWindow {
 
         const diamondPrice = this.getDiamondPrice(4, animal.breed);
         let callback: Function
-        console.log(this.scene.state.userUnicorn.timeToAd);
-        console.log(this.scene.state.userUnicorn.takenAd);
+        console.log(this.scene.state.userUnicorn.timeToAd, 'timeToAd window');
+        console.log(this.scene.state.userUnicorn.takenAd, 'takenAd');
         if (this.scene.state.readyAd && this.scene.state.userUnicorn.timeToAd <= 0) {
           
           btn = this.scene.shopButton(330, center,  this.scene.state.lang.pickUp, 'ad-icon');
