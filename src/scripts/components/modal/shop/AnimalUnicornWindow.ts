@@ -75,17 +75,11 @@ export default class AnimalUnicornWindow {
           if (result) this.updatePrices({text: btn.title, breed: animal.breed, img: btn.img});
 
         }
-
-        this.createBtn(btn, animal.breed, callback)
-
+        this.createBtn(btn, animal.breed, callback);
       } else if (animal.breed <= this.scene.state.userUnicorn.maxLevelAnimal - 3 || animal.breed === 2 && this.scene.state.userUnicorn.maxLevelAnimal > 2) {
-
         const diamondPrice = this.getDiamondPrice(4, animal.breed);
-        let callback: Function
-        console.log(this.scene.state.userUnicorn.timeToAd, 'timeToAd window');
-        console.log(this.scene.state.userUnicorn.takenAd, 'takenAd');
+        let callback: () => void;
         if (this.scene.state.readyAd && this.scene.state.userUnicorn.timeToAd <= 0) {
-          
           btn = this.scene.shopButton(330, center,  this.scene.state.lang.pickUp, 'ad-icon');
           callback = (): void => {
             if (this.scene.game.scene.keys[this.scene.state.farm].getFreeBoostPositions().length > 0) {
@@ -94,40 +88,31 @@ export default class AnimalUnicornWindow {
               this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
             } else {
               this.closeWindow();
-              let modal: Imodal = {
+              const modal: Imodal = {
                 type: 1,
                 sysType: 3,
                 height: 150,
                 message: this.scene.state.lang.maxEventCount
-              }
+              };
               this.scene.state.modal = modal;
-              this.scene.launch('Modal', this.scene.state);
+              this.scene.scene.launch('Modal', this.scene.state);
             }
-
           }
         } else {
-
           btn = this.scene.shopButton(330, center, String(diamondPrice), 'diamond');
-          callback = (): void => { this.scene.game.scene.keys[this.scene.state.farm].buyAnimal(animal.breed, true, diamondPrice) }
-
+          callback = (): void => { this.scene.game.scene.keys[this.scene.state.farm].buyAnimal(animal.breed, true, diamondPrice); }
         }
-        
         this.createBtn(btn, animal.breed, callback)
-
       } else if (animal.breed <= this.scene.state.userUnicorn.maxLevelAnimal - 2 || animal.breed === 3 && this.scene.state.userUnicorn.maxLevelAnimal > 3) {
-
         const diamondPrice = this.getDiamondPrice(2, animal.breed);
-        const callback = (): void => { this.scene.game.scene.keys[this.scene.state.farm].buyAnimal(animal.breed, true, diamondPrice) }
+        const callback = (): void => { this.scene.game.scene.keys[this.scene.state.farm].buyAnimal(animal.breed, true, diamondPrice); }
         btn = this.scene.shopButton(330, center, String(diamondPrice), 'diamond');
-        this.createBtn(btn, animal.breed, callback)
-
+        this.createBtn(btn, animal.breed, callback);
       } else if (animal.breed <= this.scene.state.userUnicorn.maxLevelAnimal - 1 || animal.breed === 4 && this.scene.state.userUnicorn.maxLevelAnimal > 4) {
-
         const diamondPrice = this.getDiamondPrice(1, animal.breed);
-        const callback = (): void => { this.scene.game.scene.keys[this.scene.state.farm].buyAnimal(animal.breed, true, diamondPrice) }
+        const callback = (): void => { this.scene.game.scene.keys[this.scene.state.farm].buyAnimal(animal.breed, true, diamondPrice); }
         btn = this.scene.shopButton(330, center, String(diamondPrice), 'diamond');
-        this.createBtn(btn, animal.breed, callback)
-
+        this.createBtn(btn, animal.breed, callback);
       }
       
       let height: number = this.heightBtn + boundsName.height + boundsResource.height + 20;
@@ -140,26 +125,24 @@ export default class AnimalUnicornWindow {
         btn.title.y += height / 2 - (this.heightBtn / 2);
         btn.img.y += height / 2 - (this.heightBtn / 2);
       }
-
     }
-
   }
 
 
-  private createBtn(btn: any, breed: number, callback: Function) {
+  private createBtn(btn: any, breed: number, callback: () => void) {
     this.scene.clickShopBtn(btn, callback);
     this.buttons.push({ text: btn.title, breed, img: btn.img });
     this.heightBtn = btn.btn.height;
   }
 
 
-  private updatePrices({text, breed, img}): void {    
+  private updatePrices({ text, breed, img }: { text: Phaser.GameObjects.Text, breed: number, img: Phaser.GameObjects.Sprite }): void {    
     text.setText(String(shortNum(this.scene.animalPrice(breed).price)));
     img.x = text.getBounds().left - 25;
   }
 
 
-  private getDiamondPrice(devisor, breed): number {
+  private getDiamondPrice(devisor: number, breed: number): number {
     const lvl: number = 60;
     let diamondPrice: number = 40;
     let multiply: number = 1 + Math.floor((breed - lvl) / 5) 

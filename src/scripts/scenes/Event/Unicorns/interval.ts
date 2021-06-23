@@ -198,7 +198,6 @@ function interval(): void {
     
     if (this.state.userUnicorn.timeToAd > 0) {
       --this.state.userUnicorn.timeToAd;
-      console.log(this.state.userUnicorn.timeToAd, 'interval timetoad')
     }
 
     this.intervalPorgressCollectorTime();
