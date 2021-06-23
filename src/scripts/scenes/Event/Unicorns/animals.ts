@@ -247,7 +247,7 @@ function buyAnimal(breed: number, shop: boolean = false, diamond: number = 0): b
           fun: 0,
           count: diamond - this.state.user.diamonds,
           diamonds: diamond - this.state.user.diamonds,
-          type: 1
+          type: 2
         }
   
         this.game.scene.keys[this.state.farm].exchange();
