@@ -8,6 +8,7 @@ import { userCow, userData } from '../local/usersData';
 import sheepCollectorSettings from '../local/sheepCollector';
 import chickenCollectorSettings from '../local/chickenCollector';
 import cowCollectorSettings from '../local/cowCollector';
+import getProgress from '../local/progress';
 const basicUserCow = userCow;
 
 function validateTerritories(territories: Iterritories[], basicTerritories: Iterritories[]): Iterritories[] {
@@ -320,35 +321,37 @@ export default function loadData(response: any): void {
   this.state.sheepCollectorSettings = sheepCollectorSettings;
   this.state.chickenCollectorSettings = chickenCollectorSettings;
   this.state.cowCollectorSettings = cowCollectorSettings;
+  console.log(response.data.settings.farms)
 
+  const basicProgress: Iprogress = getProgress();
   const progress: Iprogress = {
     sheep: {
       part: response.data.user.sheep_part,
-      max: response.data.settings.sheep.parts.length,
+      max: basicProgress.sheep.max,
       open: true,
-      price: response.data.settings.farms[0].price,
-      unlock: response.data.settings.farms[0].open,
-      donate: response.data.settings.farms[0].donate,
+      price: basicProgress.sheep.price,
+      unlock: basicProgress.sheep.unlock,
+      donate: basicProgress.sheep.donate,
       collector: response.data.user.shaver_time,
       offlineTime: response.data.progress.sheepOfflineTime,
     },
     chicken: {
       part: response.data.user.chicken_part,
-      max: response.data.settings.chicken.parts.length,
+      max: basicProgress.chicken.max,
       open: response.data.user.chicken_part > 0,
-      price: response.data.settings.farms[1].price,
-      unlock: response.data.settings.farms[1].open,
-      donate: response.data.settings.farms[1].donate,
+      price: basicProgress.chicken.price,
+      unlock: basicProgress.chicken.unlock,
+      donate: basicProgress.chicken.donate,
       collector: response.data.user.chicken_collector,
       offlineTime: response.data.progress.chickenOfflineTime,
     },
     cow: {
       part: response.data.user.cow_part,
-      max: response.data.settings.cow.parts.length,
+      max: basicProgress.cow.max,
       open: response.data.user.cow_part > 0,
-      price: response.data.settings.farms[2].price,
-      unlock: response.data.settings.farms[2].open,
-      donate: response.data.settings.farms[2].donate,
+      price: basicProgress.cow.price,
+      unlock: basicProgress.cow.unlock,
+      donate: basicProgress.cow.donate,
       collector: response.data.user.cow_collector,
       offlineTime: response.data.progress.cowOfflineTime,
     },

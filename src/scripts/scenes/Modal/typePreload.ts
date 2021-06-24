@@ -90,7 +90,7 @@ export default function typePreload(): void {
     switch (this.state.modal.type) {
       case 1: // системное окно
         this.load.image('unicorn-status', unicornStatus);
-        if (this.state.platform !== 'web') {
+        if (this.state.platform === 'vk' || this.state.platform === 'ok' || this.state.platform === 'ya') {
           this.load.image('avatar', this.state.avatar);
         } else {
           this.load.image('farmer', farmer);

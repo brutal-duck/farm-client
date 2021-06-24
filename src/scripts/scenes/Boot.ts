@@ -40,7 +40,7 @@ class Boot extends Phaser.Scene {
   public init(): void {
     this.build = '3.7.2';
     console.log('Build ' + this.build);
-    // console.log('y1')
+    console.log('y1')
     this.state = state;
     this.fontsReady = false;
     this.userReady = false;
@@ -92,6 +92,7 @@ class Boot extends Phaser.Scene {
   private setPlatform(): void {
     this.platform = 'web';
     // this.platform = 'ya';
+    // this.platform = 'android';
     this.hash = '';
 
     const search: string = window.location.search;
@@ -233,22 +234,23 @@ class Boot extends Phaser.Scene {
       this.checkWebUser();
     } else if (this.platform === 'ya') {
       this.checkYandexUser();
+    } else if (this.platform === 'android') {
+      this.checkAndroidUser();
     }
   }
 
   private async checkVkUser(): Promise<void> {
-      // тестовые
-      // this.avatar = 'https://vk.com/images/camera_200.png';
-      // this.state.vkId = 20506616;
-      // data = 20506616;
-      bridge.send('VKWebAppInit', {});
-      let bridgeData: UserInfo = await bridge.send('VKWebAppGetUserInfo', {});
-      this.postCheckUser(bridgeData.id);
-      this.state.vkId = bridgeData.id;
-      this.name = bridgeData.first_name + ' ' + bridgeData.last_name;
-      this.avatar = bridgeData.photo_200;
-      this.checkVkTask();
-      this.hash = this.getCookieHash();
+    // тестовые
+    // this.avatar = 'https://vk.com/images/camera_200.png';
+    // this.state.vkId = 20506616;
+    // data = 20506616;
+    bridge.send('VKWebAppInit', {});
+    let bridgeData: UserInfo = await bridge.send('VKWebAppGetUserInfo', {});
+    this.postCheckUser(bridgeData.id);
+    this.state.vkId = bridgeData.id;
+    this.name = bridgeData.first_name + ' ' + bridgeData.last_name;
+    this.avatar = bridgeData.photo_200;
+    this.checkVkTask();
   }
 
   private checkOkUser(): void{
@@ -260,7 +262,6 @@ class Boot extends Phaser.Scene {
     this.name = FAPIData.user_name;
     this.avatar = FAPIData.user_image;
     this.checkOkTask({ id: FAPIData.logged_user_id, sessionKey: FAPIData.session_key, sessionSecretKey: FAPIData.session_secret_key });
-    this.hash = this.getCookieHash();
   }
 
   private checkWebUser(): void {
@@ -290,27 +291,39 @@ class Boot extends Phaser.Scene {
       }
   }
 
-  private initYandexUser(): Promise<void> {
+  private async initYandexUser(): Promise<void> {
     return this.state.ysdk.getPlayer().then(player => {
-        this.name = player.getName();
-        this.avatar = player.getPhoto('large');
-        if (this.name === '') {
-          this.name = 'Anonymous';
-        }
-        this.postCheckUser(player.getUniqueID());
+      this.name = player.getName();
+      this.avatar = player.getPhoto('large');
+      if (this.name === '') {
+        this.name = 'Anonymous';
+      }
+      this.postCheckUser(player.getUniqueID());
     });
   }
   
+  private checkAndroidUser(): void {
+    this.hash = localStorage?.getItem('hash');
+    this.postCheckUser(this.hash);
+  }
+
   private postCheckUser(id: number | string): void {
+    console.log(id, 'hash');
     axios.post(process.env.API + '/checkUser', {
       platform: this.platform,
       data: id
     }).then((response) => {
+      console.log(JSON.stringify(response.data))
       if (response.data.error === false) {
         if (this.platform === 'web' && response.data.status === 'new') {
           this.createLanding();
-        } else {
+        } else if (this.platform === 'web') {
           this.setCookieHash(response.data.hash, response.data.expires);
+        } else {
+          this.userReady = true;
+          if (this.platform === 'android') {
+            localStorage?.setItem('hash', response.data.hash);
+          }
         }
       } else this.createErrorWindow();
     }).catch((): void => {
@@ -328,7 +341,7 @@ class Boot extends Phaser.Scene {
 
   private createLanding(): void {
     amplitude.getInstance().logEvent('landing_view', {});
-
+    console.log('createLandings')
     let root = document.querySelector('#root');
     let modal = document.createElement('div');
     modal.setAttribute('class', 'modal');
@@ -543,7 +556,6 @@ class Boot extends Phaser.Scene {
         if (data.scope === 'menu') this.state.vkTask.addFavorites = data.allowed;
       })
     }).catch(err => console.log(err));
-
   }
 
   private checkOkTask(data: { id: string; sessionKey: string; sessionSecretKey: string; }): void {
