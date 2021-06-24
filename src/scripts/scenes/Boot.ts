@@ -95,6 +95,9 @@ class Boot extends Phaser.Scene {
     // this.platform = 'android';
     this.hash = '';
 
+    if (this.platform === 'android') {
+      this.androidInit();
+    }
     const search: string = window.location.search;
     this.params = new URLSearchParams(search);
     const vk: string = this.params.get('api_url');
@@ -403,6 +406,50 @@ class Boot extends Phaser.Scene {
         });
       }
     }
+  }
+
+  private androidInit(): void {
+    // eruda.init();
+    const cordovaScript: HTMLScriptElement = document.createElement('script');
+    cordovaScript.setAttribute('src', 'cordova.js');
+    document.body.appendChild(cordovaScript);
+
+    document.addEventListener('deviceready', (): void => {
+      window.screen.orientation.lock('portrait-primary');
+
+      document.addEventListener('admob.rewardvideo.events.LOAD_FAIL', (): void => {
+        // @ts-ignore
+        window.admob.rewardvideo.prepare();
+        this.state.readyAd = false;
+      });
+
+      document.addEventListener('admob.rewardvideo.events.LOAD', (): void => {
+        console.log('Android ad ready!');
+        this.state.readyAd = true;
+      });
+
+      document.addEventListener('admob.rewardvideo.events.CLOSE', (): void => {
+        // @ts-ignore
+        window.admob.rewardvideo.prepare();
+        this.state.readyAd = false;
+      });
+
+      document.addEventListener('admob.rewardvideo.events.REWARD', (): void => {
+        this.game.scene.keys[this.state.farm].adReward();
+        // @ts-ignore
+        window.admob.rewardvideo.prepare();
+        this.state.readyAd = false;
+      });
+
+      // @ts-ignore
+      window.admob.rewardvideo.config({
+        id: process.env.ADMOB_REWARDED_ID,
+        isTesting: true,
+      });
+
+      // @ts-ignore
+      window.admob.rewardvideo.prepare();
+    }, false);
   }
 
   private createAuthWindow(): void {

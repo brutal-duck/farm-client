@@ -68,6 +68,9 @@ function watchAd(type: number): void {
         },
       }
     });
+  } else if (this.state.platform === 'android') {
+    // @ts-ignore
+    window.admob.rewardvideo.show();
   }
 }
 
