@@ -22,17 +22,13 @@ import {
 import {
   chickenFair,
   chicken,
-  chickenPasture,
   chickenWater,
-  boughtChickenLand,
   chickenEggsRepository,
 } from './chicken';
 import {
   cowFair,
   cow,
-  cowPasture,
   cowWater,
-  boughtCowLand,
   cowMilkRepository,
 } from './cow';
 import {
@@ -42,17 +38,12 @@ import {
 import {
   sheepFair,
   sheep,
-  sheepPasture,
   sheepWater,
-  boughtSheepLand,
   sheepWoolRepository,
 } from './sheep';
 import DailyAwardWindow from '../../components/modal/DailyAwardWindow';
 import { bigButton, repositoryBtn, shopButton } from '../../elements';
-import { 
-  confirmBuyCooldown
-} from '../../general/modal';
-  // буст "Стадо"
+// буст "Стадо"
 import { createChatBars } from './Chat/elements';
 import { improveCollectorAnim, openModal } from '../../general/animations';
 import { clickTaskBoard } from '../../general/tasks';
@@ -106,20 +97,14 @@ class Modal extends Phaser.Scene {
   public bigButton = bigButton.bind(this);
   public repositoryBtn = repositoryBtn.bind(this);
   public chickenFair = chickenFair.bind(this);
-  public chickenPasture = chickenPasture.bind(this);
   public chickenWater = chickenWater.bind(this);
-  public boughtChickenLand = boughtChickenLand.bind(this);
   public cowFair = cowFair.bind(this);
-  public cowPasture = cowPasture.bind(this);
   public cowWater = cowWater.bind(this);
-  public boughtCowLand = boughtCowLand.bind(this);
   public chickenEggsRepository = chickenEggsRepository.bind(this);
   public cowMilkRepository = cowMilkRepository.bind(this);
   public sheepFair = sheepFair.bind(this);
   public sheep = sheep.bind(this);
-  public sheepPasture = sheepPasture.bind(this);
   public sheepWater = sheepWater.bind(this);
-  public boughtSheepLand = boughtSheepLand.bind(this);
   public sheepWoolRepository = sheepWoolRepository.bind(this);
   public shopButton = shopButton.bind(this);
   public shortTime = shortTime.bind(this);
@@ -134,7 +119,6 @@ class Modal extends Phaser.Scene {
   public clickTaskBoard = clickTaskBoard.bind(this);
   public openModal = openModal.bind(this);
   public loadingModal = loadingModal.bind(this);
-  public confirmBuyCooldown = confirmBuyCooldown.bind(this);
 
   public init(state: Istate): void {
     this.state = state;

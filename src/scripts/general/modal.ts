@@ -298,10 +298,6 @@ function startHerdBoost(): void {
 
 }
 
-function confirmBuyCooldown(): void {
-  
-}
-
 
 function openEmailWindow(): void {
 
@@ -326,5 +322,4 @@ export {
   showImproveCollector,
   startHerdBoost,
   openEmailWindow,
-  confirmBuyCooldown
 }

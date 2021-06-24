@@ -20,6 +20,8 @@ import BuyFarmTerritoryWindow from '../../components/modal/system/BuyFarmTerrito
 import ImproveFactoryWindow from '../../components/modal/system/ImproveFactoryWindow';
 import ConfirmSellMilk from '../../components/modal/system/ConfirmSellMilk';
 import ConfirmBuyCooldown from '../../components/modal/system/ConfirmBuyCooldown';
+import BoughtFarmLand from '../../components/modal/system/BoughtFarmLand';
+import FarmPasture from '../../components/modal/system/FarmPasture';
 
 function systemWindow(): void {
   let height:number = 0;
@@ -91,26 +93,17 @@ function systemWindow(): void {
   switch (this.state.modal.sysType) {
     case 1: // окно животного
     
-      if (this.state.farm === 'Sheep') {
-        this.sheep();
-      } else if (this.state.farm === 'Chicken') {
-        this.chicken();
-      } else if (this.state.farm === 'Cow') {
-        this.cow();
-      }
+      if (this.state.farm === 'Sheep') this.sheep();
+      else if (this.state.farm === 'Chicken') this.chicken();
+      else if (this.state.farm === 'Cow') this.cow();
       break;
 
     case 2: // окно территории
 
-      if (this.state.farm === 'Sheep') {
-        this.sheepTerritory();
-      } else if (this.state.farm === 'Chicken') {
-        this.chickenTerritory();
-      } else if (this.state.farm === 'Cow') {
-        this.cowTerritory();
-      } else if (this.state.farm === 'Unicorn') {
-        this.eventTerritory();
-      }
+      if (this.state.farm === 'Sheep')  this.sheepTerritory();
+      else if (this.state.farm === 'Chicken') this.chickenTerritory();
+      else if (this.state.farm === 'Cow') this.cowTerritory();
+      else if (this.state.farm === 'Unicorn') this.eventTerritory();
       break;
 
     case 3: // окно с сообщением
@@ -209,11 +202,11 @@ function chickenTerritory(): void {
       break;
 
     case 1: // купленная земля
-      this.boughtChickenLand();
+      new BoughtFarmLand(this);
       break;
 
     case 2: // пастбище
-      this.chickenPasture();
+      new FarmPasture(this);
       break;
       
     case 3: // поилка
@@ -246,11 +239,11 @@ function cowTerritory(): void {
       break;
 
     case 1: // купленная земля
-      this.boughtCowLand();
+      new BoughtFarmLand(this);
       break;
 
     case 2: // пастбище
-      this.cowPasture();
+      new FarmPasture(this);
       break;
       
     case 3: // поилка
@@ -288,11 +281,11 @@ function sheepTerritory(): void {
       break;
 
     case 1: // купленная земля
-      this.boughtSheepLand();
+      new BoughtFarmLand(this)
       break;
 
     case 2: // пастбище
-      this.sheepPasture();
+      new FarmPasture(this);
       break;
       
     case 3: // поилка

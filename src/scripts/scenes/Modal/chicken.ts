@@ -188,101 +188,6 @@ function chicken(): void {
 }
 
 
-// окно пастбища
-function chickenPasture(): void {
-
-  let pasture: string = this.state.lang.pasture.replace('$1', this.state.territory.improve);
-  this.textHeader.setText(pasture);
-
-  let part: Ipart = this.state.chickenSettings.chickenParts.find((data: Ipart) => data.sort === this.state.userChicken.part);
-
-  let exchange = {
-    icon: 'chickenCoin',
-    text: shortNum(part.improve_territory_2)
-  }
-
-  if (this.state.territory.improve < this.state.chickenSettings.territoriesChickenSettings.length) {
-
-    let price: number;
-
-    let lock: number = this.state.chickenSettings.territoriesChickenSettings.find((data: IterritoriesChickenSettings) => data.improve === this.state.territory.improve + 1).unlock_improve;
-    
-    if (this.state.userChicken.part >= lock) {
-
-      if (this.state.territory.improve === 1) {
-        price = part.improve_territory_2;
-      } else if (this.state.territory.improve === 2) {
-        price = part.improve_territory_3;
-      } else {
-        price = part.improve_territory_4;
-      }
-
-      let improve = {
-        icon: 'chickenCoin',
-        text: shortNum(price)
-      }
-
-      let improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.improve + 1);
-
-      let button = this.bigButton('green', 'left', -60, improveText, improve);
-      this.clickModalBtn(button, (): void => {
-        this.scene.stop();
-        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-        this.game.scene.keys[this.state.farm].improveTerritory();
-      });
-
-    } else {
-      
-      let improve = {
-        icon: 'lock',
-        text: this.state.lang.shortPart + ' ' + lock
-      }
-
-      let improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.improve + 1);
-
-      this.bigButton('grey', 'left', -60, improveText, improve);
-
-    }
-    
-    let button1 = this.bigButton('blue', 'left', 30, this.state.lang.exchangeWater, exchange);
-    this.clickModalBtn(button1, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].confirmExchangeTerritory(3);
-    });
-
-    let button2 = this.bigButton('orange', 'left', 120, this.state.lang.exchangeRepository, exchange);
-    this.clickModalBtn(button2, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].confirmExchangeTerritory(5);
-    });
-
-    this.resizeWindow(270);
-
-  } else {
-
-    let button1 = this.bigButton('blue', 'left', -15, this.state.lang.exchangeWater, exchange);
-    this.clickModalBtn(button1, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].confirmExchangeTerritory(3);
-    });
-
-    let button2 = this.bigButton('orange', 'left', 75, this.state.lang.exchangeRepository, exchange);
-    this.clickModalBtn(button2, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].confirmExchangeTerritory(5);
-    });
-
-    this.resizeWindow(200);
-
-  }
-
-}
-
-
 // окно поилки
 function chickenWater(): void {
 
@@ -374,50 +279,6 @@ function chickenWater(): void {
     this.resizeWindow(200);
 
   }
-
-}
-
-
-// купленная земля
-function boughtChickenLand(): void {
-  
-  this.textHeader.setText(this.state.lang.boughtLand);
-
-  let price: number = this.state.chickenSettings.territoriesChickenPrice.find((data: IterritoriesPrice) => data.block === this.state.territory.block && data.position === this.state.territory.position).price;
-
-  // 30% от суммы покупки
-  price = Math.round((price / 100) * 30);
-
-  let right = {
-    icon: 'chickenCoin',
-    text: shortNum(price)
-  }
-  
-  let button1 = this.bigButton('green', 'left', -60, this.state.lang.sowPasture, right);
-  this.clickModalBtn(button1, (): void => {
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-    this.state.exchangeTerritory = 2;
-    this.game.scene.keys[this.state.farm].installTerritory();
-  });
-
-  let button2 = this.bigButton('blue', 'left', 30, this.state.lang.installWater, right);
-  this.clickModalBtn(button2, (): void => {
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-    this.state.exchangeTerritory = 3;
-    this.game.scene.keys[this.state.farm].installTerritory();
-  });
-  
-  let button3 = this.bigButton('orange', 'left', 120, this.state.lang.buildRepository, right);
-  this.clickModalBtn(button3, (): void => {
-    this.scene.stop();
-    this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-    this.state.exchangeTerritory = 5;
-    this.game.scene.keys[this.state.farm].installTerritory();
-  });
-  
-  this.resizeWindow(270);
 
 }
 
@@ -569,8 +430,6 @@ function chickenEggsRepository(): void {
 export {
   chickenFair,
   chicken,
-  chickenPasture,
   chickenWater,
-  boughtChickenLand,
   chickenEggsRepository,
 }

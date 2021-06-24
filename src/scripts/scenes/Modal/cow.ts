@@ -185,86 +185,6 @@ function cow(): void {
 
 }
 
-// окно пастбища
-function cowPasture(): void {
-  const pasture: string = this.state.lang.pasture.replace('$1', this.state.territory.improve);
-  this.textHeader.setText(pasture);
-  
-  let improve: number = this.state.territory.improve + 1;
-  if (improve > this.state.cowSettings.territoriesCowSettings.length) {
-    improve = this.state.cowSettings.territoriesCowSettings.length;
-  }
-  const settings: IterritoriesCowSettings = this.state.cowSettings.territoriesCowSettings
-    .find((data: IterritoriesCowSettings) => data.improve === improve);
-    
-  const exchangePrice: number = this.state.cowSettings.territoriesCowSettings
-    .find((data: IterritoriesCowSettings) => data.improve === 2).improvePastureMoneyPrice;
-  
-  const exchange = {
-    icon: 'cowCoin',
-    text: shortNum(exchangePrice)
-  }
-
-  if (this.state.territory.improve < this.state.cowSettings.territoriesCowSettings.length) {
-    if (this.state.userCow.part >= settings.unlock_improve) {
-      let improve: any;
-      if (settings.improvePastureMoneyPrice) {
-        improve = {
-          icon: 'cowCoin',
-          text: shortNum(settings.improvePastureMoneyPrice)
-        }
-      } else if (settings.improvePastureDiamondPrice) {
-        improve = {
-          icon: 'diamond',
-          text: shortNum(settings.improvePastureDiamondPrice)
-        }
-      }
-      
-      const improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.improve + 1);
-      const button = this.bigButton('green', 'left', -60, improveText, improve);
-      this.clickModalBtn(button, (): void => {
-        this.scene.stop();
-        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-        this.state.territory.improveTerritory();
-      });
-    } else {
-      const improve = {
-        icon: 'lock',
-        text: this.state.lang.shortPart + ' ' + settings.unlock_improve
-      }
-      const improveText: string = this.state.lang.improveToLevel.replace('$1', this.state.territory.improve + 1);
-      this.bigButton('grey', 'left', -60, improveText, improve);
-    }
-    const button1 = this.bigButton('blue', 'left', 30, this.state.lang.exchangeWater, exchange);
-    this.clickModalBtn(button1, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].confirmExchangeTerritory(3);
-    });
-    const button2 = this.bigButton('orange', 'left', 120, this.state.lang.exchangeRepository, exchange);
-    this.clickModalBtn(button2, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].confirmExchangeTerritory(5);
-    });
-    this.resizeWindow(270);
-  } else {
-    const button1 = this.bigButton('blue', 'left', -15, this.state.lang.exchangeWater, exchange);
-    this.clickModalBtn(button1, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].confirmExchangeTerritory(3);
-    });
-    const button2 = this.bigButton('orange', 'left', 75, this.state.lang.exchangeRepository, exchange);
-    this.clickModalBtn(button2, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].confirmExchangeTerritory(5);
-    });
-    this.resizeWindow(200);
-  }
-}
-
 // окно поилки
 function cowWater(): void {
 
@@ -344,66 +264,6 @@ function cowWater(): void {
   }
 }
 
-// купленная земля
-function boughtCowLand(): void {
-  
-  this.textHeader.setText(this.state.lang.boughtLand);
-
-  let price: number = this.state.cowSettings.territoriesCowPrice.find((data: IterritoriesPrice) => data.block === this.state.territory.block && data.position === this.state.territory.position).price;
-
-  // 30% от суммы покупки
-  price = Math.round((price / 100) * 30);
-
-  let right = {
-    icon: 'cowCoin',
-    text: shortNum(price)
-  }
-  
-  if (this.state.territory.block === 3 && this.state.territory.position === 1 && this.state.territory.territoryType === 1) {
-    let button = this.bigButton('orange', 'left', 30, this.state.lang.buildFactory, right);
-    this.clickModalBtn(button, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.state.exchangeTerritory = 8;
-      this.game.scene.keys[this.state.farm].installTerritory();
-    });
-    this.resizeWindow(100);
-  } else if (this.state.territory.block === 2 && this.state.territory.position === 1 && this.state.territory.territoryType === 1) {
-    let button = this.bigButton('orange', 'left', 30, this.state.lang.buildRepository, right);
-    this.clickModalBtn(button, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.state.exchangeTerritory = 5;
-      this.game.scene.keys[this.state.farm].installTerritory();
-    });
-    this.resizeWindow(100);
-  } else {
-    let button1 = this.bigButton('green', 'left', -60, this.state.lang.sowPasture, right);
-    this.clickModalBtn(button1, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.state.exchangeTerritory = 2;
-      this.game.scene.keys[this.state.farm].installTerritory();
-    });
-  
-    let button2 = this.bigButton('blue', 'left', 30, this.state.lang.installWater, right);
-    this.clickModalBtn(button2, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.state.exchangeTerritory = 3;
-      this.game.scene.keys[this.state.farm].installTerritory();
-    });
-    
-    let button3 = this.bigButton('orange', 'left', 120, this.state.lang.buildRepository, right);
-    this.clickModalBtn(button3, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.state.exchangeTerritory = 5;
-      this.game.scene.keys[this.state.farm].installTerritory();
-    });
-    this.resizeWindow(270);
-  }
-}
 
 // хранилище молока
 function cowMilkRepository(): void {
@@ -569,8 +429,6 @@ function cowMilkRepository(): void {
 export {
   cowFair,
   cow,
-  cowPasture,
   cowWater,
-  boughtCowLand,
   cowMilkRepository,
 }
