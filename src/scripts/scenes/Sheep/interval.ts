@@ -316,11 +316,7 @@ function interval(): void {
     }
 
     // Проверяем и запускаем распростанение овец по полю
-    if (this.sheep.children.entries.every(el => el.spread === false)) {
-
-      this.spreadAnimals();
-
-    }
+    if (this.sheep.children.entries.every(el => el.spread === false)) this.spreadAnimals();
     
     // обновление времени евента
     if (this.state.progress.event.type === 1) {

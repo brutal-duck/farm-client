@@ -422,46 +422,6 @@ function boughtChickenLand(): void {
 }
 
 
-// земля для покупки
-function buyChickenTerritory(): void {
-  
-  this.textHeader.setText(this.state.lang.buyTerritory);
-
-  let settings: IterritoriesPrice = this.state.chickenSettings.territoriesChickenPrice.find((data: IterritoriesPrice) => data.block === this.state.territory.block && data.position === this.state.territory.position);
-
-  if (this.state.userChicken.part >= settings.unlock) {
-
-    // 70% от суммы покупки
-    let price = Math.round((settings.price / 100) * 70);
-
-    let right = {
-      icon: 'chickenCoin',
-      text: shortNum(price)
-    }
-  
-    let button = this.bigButton('yellow', 'left', 20, this.state.lang.buyTerritory, right);
-    this.clickModalBtn(button, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].buyTerritory();
-    });
-
-  } else {
-
-    let right = {
-      icon: 'lock',
-      text: this.state.lang.shortPart + ' ' + settings.unlock
-    }
-  
-    this.bigButton('grey', 'left', 20, this.state.lang.buyTerritory, right);
-
-  }
-  
-  this.resizeWindow(130);
-
-}
-
-
 // хранилище яиц
 function chickenEggsRepository(): void {
   
@@ -612,6 +572,5 @@ export {
   chickenPasture,
   chickenWater,
   boughtChickenLand,
-  buyChickenTerritory,
   chickenEggsRepository,
 }

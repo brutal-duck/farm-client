@@ -508,46 +508,6 @@ function boughtSheepLand(): void {
 }
 
 
-// земля для покупки
-function buySheepTerritory(): void {
-  
-  this.textHeader.setText(this.state.lang.buyTerritory);
-
-  let settings: IterritoriesPrice = this.state.sheepSettings.territoriesSheepPrice.find((data: IterritoriesPrice) => data.block === this.state.territory.block && data.position === this.state.territory.position);
-
-  if (this.state.userSheep.part >= settings.unlock) {
-
-    // 70% от суммы покупки
-    let price = Math.round((settings.price / 100) * 70);
-
-    let right = {
-      icon: 'sheepCoin',
-      text: shortNum(price)
-    }
-  
-    let button = this.bigButton('yellow', 'left', 20, this.state.lang.buyTerritory, right);
-    this.clickModalBtn(button, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].buyTerritory();
-    });
-
-  } else {
-
-    let right = {
-      icon: 'lock',
-      text: this.state.lang.shortPart + ' ' + settings.unlock
-    }
-  
-    this.bigButton('grey', 'left', 20, this.state.lang.buyTerritory, right);
-
-  }
-  
-  this.resizeWindow(130);
-
-}
-
-
 // хранилище шерсти
 function sheepWoolRepository(): void {
   
@@ -701,6 +661,5 @@ export {
   sheepPasture,
   sheepWater,
   boughtSheepLand,
-  buySheepTerritory,
   sheepWoolRepository,
 }

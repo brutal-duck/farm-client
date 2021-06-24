@@ -15,6 +15,11 @@ import AddEmailWindow from '../../components/modal/system/AddEmailWindow';
 import SupportWindow from '../../components/modal/system/SupportWindow';
 import RegistrationWindow from '../../components/modal/system/RegistrationWindow';
 import CurrencyConvertorWindow from '../../components/modal/system/CurrencyConvertorWindow';
+import MessageWindow from '../../components/modal/system/MessageWindow';
+import BuyFarmTerritoryWindow from '../../components/modal/system/BuyFarmTerritoryWindow';
+import ImproveFactoryWindow from '../../components/modal/system/ImproveFactoryWindow';
+import ConfirmSellMilk from '../../components/modal/system/ConfirmSellMilk';
+import ConfirmBuyCooldown from '../../components/modal/system/ConfirmBuyCooldown';
 
 function systemWindow(): void {
   let height:number = 0;
@@ -109,14 +114,7 @@ function systemWindow(): void {
       break;
 
     case 3: // окно с сообщением
-      this.textHeader.setText(this.state.lang.message);
-      this.resizeWindow(this.state.modal.height);
-      this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 20, this.state.modal.message, {
-        font: '26px Bip',
-        color: '#925C28',
-        align: 'center',
-        wordWrap: { width: 400 }
-      }).setOrigin(0.5, 0.5);
+      new MessageWindow(this)
       break;
     
     case 4: // окно конвертора
@@ -177,7 +175,7 @@ function systemWindow(): void {
       break;
     
     case 16: // Окно улучшения фабрики
-      this.improveFactoryWindow();
+      new ImproveFactoryWindow(this);
       break;
 
     case 17: // Окно ветрины фабрики
@@ -185,11 +183,11 @@ function systemWindow(): void {
       break;
     
     case 18: 
-      this.confirmSellMilk();
+      new ConfirmSellMilk(this);
       break;
     
     case 19: 
-      this.confirmBuyCooldown();
+      new ConfirmBuyCooldown(this);
       break;
       
     default:      
@@ -207,7 +205,7 @@ function chickenTerritory(): void {
   switch (this.state.territory.type) {
 
     case 0: // территория для покупки
-      this.buyChickenTerritory();
+      new BuyFarmTerritoryWindow(this)  
       break;
 
     case 1: // купленная земля
@@ -244,7 +242,7 @@ function cowTerritory(): void {
   switch (this.state.territory.territoryType) {
 
     case 0: // территория для покупки
-      this.buyCowTerritory();
+      new BuyFarmTerritoryWindow(this)
       break;
 
     case 1: // купленная земля
@@ -286,7 +284,7 @@ function sheepTerritory(): void {
   switch (this.state.territory.type) {
 
     case 0: // территория для покупки
-      this.buySheepTerritory();
+      new BuyFarmTerritoryWindow(this)
       break;
 
     case 1: // купленная земля
@@ -323,7 +321,7 @@ function eventTerritory(): void {
   switch (this.state.territory.type) {
 
     case 0: // территория для покупки
-      this.buyEventTerritory();
+      new BuyFarmTerritoryWindow(this)
       break;
 
     default:

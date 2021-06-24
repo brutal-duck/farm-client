@@ -148,7 +148,6 @@ function doneTutor_40(): void {
 
 // завершение шестого шага (покупка второй овцы)
 function doneTutor_50(): void {
-  
   this.logAmplitudeEvent('tutorial', {
     step: 50
   });
@@ -171,7 +170,6 @@ function doneTutor_50(): void {
 
 // завершение седьмого шага (награда за задание)
 function doneTutor_60(): void {
-
   this.logAmplitudeEvent('tutorial', {
     step: 60
   });
@@ -190,7 +188,6 @@ function doneTutor_60(): void {
 
 // завершение восьмого шага (мерджинг овец)
 function doneTutor_70(): void {
-
   this.showMergPointer = false;
   this.mergPointer?.destroy();
 
@@ -209,7 +206,6 @@ function doneTutor_70(): void {
 
 // завершение шага овцы второй породы
 function doneTutor_75(): void {
-  
   this.logAmplitudeEvent('tutorial', {
     step: 75
   });
@@ -442,11 +438,13 @@ function skipTutorial(): void {
   this.state.user.additionalTutorial.cave = true;
   this.state.user.additionalTutorial.herdBoost = true;
   this.state.user.additionalTutorial.feedBoost = true;
-
+  
   for (let i in this.sheep.children.entries) {
-    this.sheep.children.entries[i].setVisible(true);
-    this.sheep.children.entries[i].woolSprite.setVisible(true);
-    this.sheep.children.entries[i].shaveStatus.setVisible(true);
+    let sheep = this.sheep.children.entries[i]
+    sheep.setVisible(true)
+    sheep.shaveStatus.setVisible(true);
+    sheep.woolSprite.setVisible(true)
+    sheep.drag = false
   }
 
   this.game.scene.keys['SheepBars'].taskZone.setVisible(true);
