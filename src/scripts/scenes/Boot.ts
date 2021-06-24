@@ -40,7 +40,7 @@ class Boot extends Phaser.Scene {
   public init(): void {
     this.build = '3.7.2';
     console.log('Build ' + this.build);
-    console.log('y1')
+    // console.log('y1')
     this.state = state;
     this.fontsReady = false;
     this.userReady = false;
@@ -194,10 +194,10 @@ class Boot extends Phaser.Scene {
 
     this.scene.stop();
 
-    if (localStorage.farm === 'Sheep' ||
-      localStorage.farm === 'Chicken' ||
-      localStorage.farm === 'Cow') {
-      this.scene.start(localStorage.farm + 'Preload', this.state);
+    if (localStorage?.farm === 'Sheep' ||
+      localStorage?.farm === 'Chicken' ||
+      localStorage?.farm === 'Cow') {
+      this.scene.start(localStorage?.farm + 'Preload', this.state);
     } else {
       this.scene.start('SheepPreload', this.state);
     }
@@ -308,12 +308,10 @@ class Boot extends Phaser.Scene {
   }
 
   private postCheckUser(id: number | string): void {
-    console.log(id, 'hash');
     axios.post(process.env.API + '/checkUser', {
       platform: this.platform,
       data: id
     }).then((response) => {
-      console.log(JSON.stringify(response.data))
       if (response.data.error === false) {
         if (this.platform === 'web' && response.data.status === 'new') {
           this.createLanding();
@@ -321,6 +319,7 @@ class Boot extends Phaser.Scene {
           this.setCookieHash(response.data.hash, response.data.expires);
         } else {
           this.userReady = true;
+          this.hash = response.data.hash;
           if (this.platform === 'android') {
             localStorage?.setItem('hash', response.data.hash);
           }
@@ -341,7 +340,6 @@ class Boot extends Phaser.Scene {
 
   private createLanding(): void {
     amplitude.getInstance().logEvent('landing_view', {});
-    console.log('createLandings')
     let root = document.querySelector('#root');
     let modal = document.createElement('div');
     modal.setAttribute('class', 'modal');
