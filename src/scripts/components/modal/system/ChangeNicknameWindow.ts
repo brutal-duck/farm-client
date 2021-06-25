@@ -167,7 +167,11 @@ export default class ChangeNicknameWindow {
             if (res.data.success) {
     
               this.scene.state.user.login = this.scene.mainInput.value;
-              document.cookie = "farmHASH=" + res.data.hash + "; expires=" + res.data.expires + "; path=/;";
+              if (this.scene.state.platform === 'web') {
+                document.cookie = "farmHASH=" + res.data.hash + "; expires=" + res.data.expires + "; path=/;";
+              } else if (this.scene.state.platform === 'android'){
+                localStorage?.setItem('hash', res.data.hash)
+              }
               this.scene.state.user.hash = res.data.hash;
               this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
               this.scene.enterKey.destroy();

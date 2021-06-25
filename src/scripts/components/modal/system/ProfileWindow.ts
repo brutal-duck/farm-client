@@ -40,7 +40,7 @@ export default class ProfileWindow {
     this.scene.state[`user${this.scene.state.farm}`].part : 
     this.scene.state[`user${this.scene.state.farm}`].maxLevelAnimal;
 
-    if (this.scene.state.platform !== 'web') login = this.scene.state.name;
+    if (this.scene.state.platform === 'ya' || this.scene.state.platform === 'vk' || this.scene.state.platform === 'ok') login = this.scene.state.name;
 
     if (this.scene.state.platform === 'vk') avatar = this.scene.add.sprite(200, 0, 'avatar').setScale(0.85).setDepth(1);
     else if (this.scene.state.platform === 'ok') avatar = this.scene.add.sprite(200, 0, 'avatar').setScale(1.2).setDepth(1);
@@ -78,31 +78,38 @@ export default class ProfileWindow {
     }
     
     if (this.scene.state.platform === 'web') {
-    
-      const exit = this.scene.bigButton('orange', 'center', 80, this.scene.state.lang.profileExit);
-      this.scene.clickModalBtn(exit, (): void => { this.exit() });
+      if (this.scene.state.platform === 'web') {
+        const exit = this.scene.bigButton('orange', 'center', 80, this.scene.state.lang.profileExit);
+        this.scene.clickModalBtn(exit, (): void => { this.exit() });
+        this.height += 80;
+      }
       this.nameHeight = this.name.getBounds().height;
-
       if (statusSettings) {
-        this.setNick(90, 88)
-        this.updateStatus()
-      } else this.setNick(58, 55)
-
+        this.setNick(90);
+        this.updateStatus();
+      } else this.setNick(58);
       this.scene.clickModalBtn({ btn: this.nickBtn, title: this.nickText }, (): void => { this.openSysWindow(12) });
-      this.height += 80;
-
-    } else {
-      
+    } else if (this.scene.state.platform === 'vk' || this.scene.state.platform === 'ok' || this.scene.state.platform === 'ya') {
       this.heightText += this.name.getBounds().height;
       this.heightText += this.farmer.getBounds().height;
-
       if (statusSettings) {
-        this.updateNameAndFarmer(10)
-        this.updateStatus()
-      } else this.updateNameAndFarmer(25)
-      
+        this.updateNameAndFarmer(10);
+        this.updateStatus();
+      } else this.updateNameAndFarmer(25);
+    } else if (this.scene.state.platform === 'android') {
+      this.nameHeight = this.name.getBounds().height;
+      this.heightText += this.name.getBounds().height;
+      this.heightText += this.farmer.getBounds().height;
+      if (statusSettings) {
+        this.setNick(140);
+        this.updateNameAndFarmer(-20);
+        this.updateStatus();
+      } else {
+        this.setNick(120);
+        this.updateNameAndFarmer(0);
+      }
+      this.scene.clickModalBtn({ btn: this.nickBtn, title: this.nickText }, (): void => { this.openSysWindow(12) });
     }
-
     const support = this.scene.bigButton('green', 'center', 0, this.scene.state.lang.support);
     this.scene.clickModalBtn(support, (): void => {
       if (this.scene.state.platform === 'vk') window.open(process.env.VK_SUPPORT_LINK, '_blank');
@@ -138,11 +145,11 @@ export default class ProfileWindow {
   }
 
 
-  private setNick(btnPadiingY: number, textPaddingY: number): void {
+  private setNick(btnPadiingY: number): void {
     this.name.setY(this.scene.cameras.main.centerY - 170);
     this.farmer.setY(this.name.y + this.nameHeight + 23);
     this.nickBtn = this.scene.add.sprite(405, this.farmer.y + btnPadiingY, 'middle-button').setDepth(1);
-    this.nickText = this.scene.add.text(405, this.farmer.y + textPaddingY, this.scene.state.lang.changeNick, {
+    this.nickText = this.scene.add.text(405, this.farmer.y + btnPadiingY - 2, this.scene.state.lang.changeNick, {
       font: '22px Shadow',
       color: '#FFFFFF'
     }).setOrigin(0.5, 0.5).setDepth(1);

@@ -181,7 +181,7 @@ class Profile extends Phaser.Scene {
     if (status) {
       this.add.sprite(avatarGeom.right - 15, avatarGeom.top + 15, status.iconTexture).setVisible(status.iconVisible);
     }
-    let login: string = this.state.platform === 'web' ? this.state.user.login : this.state.name;
+    let login: string = this.state.platform === 'web' || this.state.platform === 'android'? this.state.user.login : this.state.name;
     if (!login) login = this.state.lang.unknownFarmer;
     const text: Phaser.GameObjects.Text = this.add.text(avatarGeom.right + 110, avatarGeom.centerY, login,  {
       font: '32px Shadow',
