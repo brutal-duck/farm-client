@@ -20,27 +20,18 @@ import {
   eventTerritory
 } from './system';
 import {
-  chickenFair,
   chicken,
-  chickenWater,
   chickenEggsRepository,
 } from './chicken';
 import {
-  cowFair,
   cow,
-  cowWater,
   cowMilkRepository,
 } from './cow';
 import {
   herdBoostEventWindow,
   eventDrag,
 } from './event';
-import {
-  sheepFair,
-  sheep,
-  sheepWater,
-  sheepWoolRepository,
-} from './sheep';
+import { sheep } from './sheep';
 import DailyAwardWindow from '../../components/modal/DailyAwardWindow';
 import { bigButton, repositoryBtn, shopButton } from '../../elements';
 // буст "Стадо"
@@ -96,16 +87,9 @@ class Modal extends Phaser.Scene {
   public resizeWindowTop = resizeWindowTop.bind(this);
   public bigButton = bigButton.bind(this);
   public repositoryBtn = repositoryBtn.bind(this);
-  public chickenFair = chickenFair.bind(this);
-  public chickenWater = chickenWater.bind(this);
-  public cowFair = cowFair.bind(this);
-  public cowWater = cowWater.bind(this);
   public chickenEggsRepository = chickenEggsRepository.bind(this);
   public cowMilkRepository = cowMilkRepository.bind(this);
-  public sheepFair = sheepFair.bind(this);
   public sheep = sheep.bind(this);
-  public sheepWater = sheepWater.bind(this);
-  public sheepWoolRepository = sheepWoolRepository.bind(this);
   public shopButton = shopButton.bind(this);
   public shortTime = shortTime.bind(this);
   public shortNum = shortNum.bind(this);
@@ -122,6 +106,7 @@ class Modal extends Phaser.Scene {
 
   public init(state: Istate): void {
     this.state = state;
+    console.log('Modal ~ init ~ this.state', this.state)
   }
 
   public preload(): void {

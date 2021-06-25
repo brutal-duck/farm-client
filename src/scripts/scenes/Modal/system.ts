@@ -21,20 +21,18 @@ import ImproveFactoryWindow from '../../components/modal/system/ImproveFactoryWi
 import ConfirmSellMilk from '../../components/modal/system/ConfirmSellMilk';
 import ConfirmBuyCooldown from '../../components/modal/system/ConfirmBuyCooldown';
 import BoughtFarmLand from '../../components/modal/system/BoughtFarmLand';
-import FarmPasture from '../../components/modal/system/FarmPasture';
+import FarmPastureWindow from '../../components/modal/system/FarmPastureWindow';
+import FarmWaterWindow from '../../components/modal/system/FarmWaterWindow';
+import FarmFairWindow from '../../components/modal/system/FarmFairWindow';
+import FarmResourceRepositoryWindow from '../../components/modal/system/FarmResourceRepositoryWindow';
 
 function systemWindow(): void {
   let height:number = 0;
 
-  this.header = this.add.image(this.cameras.main.centerX - 1, this.cameras.main.centerY - Math.floor(height / 2), 'header-syst')
-    .setOrigin(0.5, 1);
-  this.close = this.add.sprite(620, this.cameras.main.centerY - Math.floor(height / 2) - 45, 'header-close')
-    .setOrigin(0.5, 0.5)
-    .setDepth(1);
-  this.bottom = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY + Math.floor(height / 2), 'bottom-syst')
-    .setOrigin(0.5, 0);
-  this.body = this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY, 614, height + 2, 'mid-syst')
-    .setOrigin(0.5, 0.5);
+  this.header = this.add.image(this.cameras.main.centerX - 1, this.cameras.main.centerY - Math.floor(height / 2), 'header-syst').setOrigin(0.5, 1);
+  this.close = this.add.sprite(620, this.cameras.main.centerY - Math.floor(height / 2) - 45, 'header-close').setOrigin(0.5, 0.5).setDepth(1);
+  this.bottom = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY + Math.floor(height / 2), 'bottom-syst').setOrigin(0.5, 0);
+  this.body = this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY, 614, height + 2, 'mid-syst').setOrigin(0.5, 0.5);
   this.textHeader = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - Math.floor(height / 2) - 25, '', {
     font: '37px Shadow',
     fill: '#F9D48D'
@@ -206,15 +204,15 @@ function chickenTerritory(): void {
       break;
 
     case 2: // пастбище
-      new FarmPasture(this);
+      new FarmPastureWindow(this);
       break;
       
     case 3: // поилка
-      this.chickenWater();
+      new FarmWaterWindow(this);
       break;
 
     case 4: // ярмарка
-      this.chickenFair();
+      new FarmFairWindow(this);
       break;
 
     case 5: // хранилище яиц
@@ -243,15 +241,15 @@ function cowTerritory(): void {
       break;
 
     case 2: // пастбище
-      new FarmPasture(this);
+      new FarmPastureWindow(this);
       break;
       
     case 3: // поилка
-      this.cowWater();
+      new FarmWaterWindow(this);
       break;
 
     case 4: // ярмарка
-      this.cowFair();
+      new FarmFairWindow(this);
       break;
 
     case 5: // хранилище яиц
@@ -285,19 +283,19 @@ function sheepTerritory(): void {
       break;
 
     case 2: // пастбище
-      new FarmPasture(this);
+      new FarmPastureWindow(this);
       break;
       
     case 3: // поилка
-      this.sheepWater();
+      new FarmWaterWindow(this);
       break;
 
     case 4: // ярмарка
-      this.sheepFair();
+      new FarmFairWindow(this);
       break;
 
     case 5: // хранилище шерсти
-      this.sheepWoolRepository();
+      new FarmResourceRepositoryWindow(this);
       break;
 
     default:
