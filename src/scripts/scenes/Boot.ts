@@ -93,7 +93,7 @@ class Boot extends Phaser.Scene {
   private setPlatform(): void {
     this.platform = 'web';
     // this.platform = 'ya';
-    this.platform = 'android';
+    // this.platform = 'android';
     this.hash = '';
 
     if (this.platform === 'android') {
