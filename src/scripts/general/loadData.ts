@@ -83,16 +83,16 @@ function setTaskStatus(farmId: number, resTask: any[]): Itasks[] {
 function initAndroidStore(state: Istate): void {
   const store: any = window['store'];
   if (!store) {
-      console.log('Store not available');
-      return;
+    console.log('Store not available');
+    return;
   }
 
   for (const pack of state.packages) {
     store.register({
-        id:    String(pack.id),
-        alias: String(pack.diamonds + ' diamonds'),
-        price: pack.price,
-        type:   store.CONSUMABLE
+      id:    String(pack.id),
+      alias: String(pack.diamonds + ' diamonds'),
+      price: pack.price,
+      type:   store.CONSUMABLE
     });
   }
 
@@ -102,17 +102,19 @@ function initAndroidStore(state: Istate): void {
     store.when(String(pack.id))
       .approved(p => {
         console.log('approved');
+        console.log(p);
         p.verify();
       })
       .verified((p) => {
         console.log('verified')
         state.user.diamonds += pack.diamonds;
+        console.log(p, 'p verified')
         p.finish();
       });
   }
 
-  store.error(function(error) {
-      console.log('ERROR ' + error.code + ': ' + error.message);
+  store.error(error => {
+    console.log('ERROR ' + error.code + ': ' + error.message);
   });
 
   store.refresh();
@@ -360,7 +362,6 @@ export default function loadData(response: any): void {
   this.state.sheepCollectorSettings = sheepCollectorSettings;
   this.state.chickenCollectorSettings = chickenCollectorSettings;
   this.state.cowCollectorSettings = cowCollectorSettings;
-  console.log(response.data.settings.farms)
 
   const basicProgress: Iprogress = getProgress();
   const progress: Iprogress = {
