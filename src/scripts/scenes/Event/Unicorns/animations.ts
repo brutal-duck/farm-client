@@ -97,7 +97,7 @@ function teleportation(
   click: boolean = false
   ): void {
  
-  if (animal1.data.values.drag === false) {
+  if (animal1.data?.values?.drag === false) {
 
     if (!animal2) {
       
