@@ -142,6 +142,11 @@ function interval(): void {
       this.game.scene.keys['UnicornBars'].proceedsText.setText(text3);
     } 
     
+    
+    if (this.state.donate &&
+      !this.scene.isActive('Modal') &&
+      !this.scene.isActive('Tutorial') &&
+      !this.scene.isActive('Profile')) this.showDonate();
 
     // Обновление иконки feed буста
     if (this.state.userUnicorn.maxLevelAnimal >= this.game.scene.keys['Unicorn'].feedBoostLvl) {
