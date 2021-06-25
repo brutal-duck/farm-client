@@ -1435,12 +1435,12 @@ function getEventRaiting(): void {
     login = this.state.name
   } else login = this.state.user.login
 
-  let score: number = this.state.farm === 'Unicorn' ? this.state.userUnicorn.maxLevelAnimal : this.state.progress.event.eventPoints;
+  const points: number = this.state.farm === 'Unicorn' ? this.state.userUnicorn.maxLevelAnimal : this.state.progress.event.eventPoints;
 
-  this.state.socket.io.emit('setRating', {
+  this.state.socket.io.emit('setUnicornRating', {
     name: login,
-    mongo: this.state.user.id,
-    score: score
+    userId: this.state.user.id,
+    points: points
   });
 }
 
