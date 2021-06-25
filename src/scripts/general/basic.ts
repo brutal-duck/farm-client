@@ -275,6 +275,12 @@ function payYandex(id: number): void {
   }
 }
 
+function payAndroid(id: number): void {
+  const store: any = window['store'];
+  console.log(id, 'id package')
+  store.order(id);
+}
+
 // римское число
 function romanize (num: number): string {
 
@@ -1793,6 +1799,7 @@ export {
   payOdnoklassniki,
   payVK,
   payYandex,
+  payAndroid,
   romanize,
   logout,
   convertDiamonds,

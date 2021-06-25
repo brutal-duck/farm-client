@@ -1,4 +1,4 @@
-import { payOdnoklassniki, payRobokassa, payVK } from "../../../general/basic";
+import { payRobokassa, payAndroid } from "../../../general/basic";
 import Shop from "../../../scenes/Modal/Shop/Main";
 
 const FREE_DIAMONDS: number = 1;
@@ -181,6 +181,7 @@ export default class DiamondsWindow {
     if (this.scene.state.platform === 'ok') this.scene.payOdnoklassniki(pack.id);
     else if (this.scene.state.platform === 'vk') this.scene.payVK(pack.id);
     else if (this.scene.state.platform === 'ya') this.scene.payYandex(pack.id);
+    else if (this.scene.state.platform === 'android') payAndroid(pack.id);
     else payRobokassa(pack.id, this.scene.state);
   }
 

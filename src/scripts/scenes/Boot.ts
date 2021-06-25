@@ -5,6 +5,7 @@ import state from '../state';
 import langs from '../langs';
 import bridge, { UserInfo } from '@vkontakte/vk-bridge';
 import * as amplitude from 'amplitude-js';
+import * as eruda from 'eruda';
 import { okCallback } from '../general/callbacks';
 amplitude.getInstance().init(process.env.AMPLITUDE);
 
@@ -92,7 +93,7 @@ class Boot extends Phaser.Scene {
   private setPlatform(): void {
     this.platform = 'web';
     // this.platform = 'ya';
-    // this.platform = 'android';
+    this.platform = 'android';
     this.hash = '';
 
     if (this.platform === 'android') {
@@ -409,9 +410,10 @@ class Boot extends Phaser.Scene {
   }
 
   private androidInit(): void {
-    // eruda.init();
+    eruda.init();
     const cordovaScript: HTMLScriptElement = document.createElement('script');
     cordovaScript.setAttribute('src', 'cordova.js');
+    if (!cordovaScript) return;
     document.body.appendChild(cordovaScript);
 
     document.addEventListener('deviceready', (): void => {

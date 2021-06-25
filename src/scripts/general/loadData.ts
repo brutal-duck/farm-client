@@ -80,6 +80,44 @@ function setTaskStatus(farmId: number, resTask: any[]): Itasks[] {
   return updatedTasks;
 }
 
+function initAndroidStore(state: Istate): void {
+  const store: any = window['store'];
+  if (!store) {
+      console.log('Store not available');
+      return;
+  }
+
+  for (const pack of state.packages) {
+    store.register({
+        id:    String(pack.id),
+        alias: String(pack.diamonds + ' diamonds'),
+        price: pack.price,
+        type:   store.CONSUMABLE
+    });
+  }
+
+  for (const pack of state.packages) {
+    const finded = store.get(String(pack.id));
+    console.log(finded);
+    store.when(String(pack.id))
+      .approved(p => {
+        console.log('approved');
+        p.verify();
+      })
+      .verified((p) => {
+        console.log('verified')
+        state.user.diamonds += pack.diamonds;
+        p.finish();
+      });
+  }
+
+  store.error(function(error) {
+      console.log('ERROR ' + error.code + ': ' + error.message);
+  });
+
+  store.refresh();
+}
+
 export default function loadData(response: any): void {
   if (this.state.farm === 'Sheep') this.state.offline = response.data.progress.sheepOfflineTime;
   else if (this.state.farm === 'Chicken') this.state.offline = response.data.progress.chickenOfflineTime;
@@ -93,6 +131,7 @@ export default function loadData(response: any): void {
   this.state.herdBoostPrice = response.data.settings.general.herdBoostPrice;
   this.state.herdBoostDelay = response.data.settings.general.herdBoostDelay;
   this.state.packages = response.data.settings.packages;
+  if (this.state.platform === 'android') initAndroidStore(this.state);
 
   // общие данные
   this.state.dailyAwards = response.data.user.dailyAwards;
