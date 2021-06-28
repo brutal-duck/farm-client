@@ -19,19 +19,6 @@ import {
   resizeWindowTop,
   eventTerritory
 } from './system';
-import {
-  chicken,
-  chickenEggsRepository,
-} from './chicken';
-import {
-  cow,
-  cowMilkRepository,
-} from './cow';
-import {
-  herdBoostEventWindow,
-  eventDrag,
-} from './event';
-import { sheep } from './sheep';
 import DailyAwardWindow from '../../components/modal/DailyAwardWindow';
 import { bigButton, repositoryBtn, shopButton } from '../../elements';
 // буст "Стадо"
@@ -49,6 +36,7 @@ import SocialTasksWindow from './../../components/modal/SocialTasksWindow';
 import EventProgressWindow from '../../components/modal/EventProgressWindow';
 import EventEndWindow from '../../components/modal/EventEndWindow';
 import EventRatingsWindow from '../../components/modal/EventRatingsWindow';
+import HerdBoostUnicornWindow from '../../components/modal/HerdBoostUnicornWindow';
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -78,24 +66,17 @@ class Modal extends Phaser.Scene {
   public clickModalBtn = clickModalBtn.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
   public systemWindow = systemWindow.bind(this);
-  public chicken = chicken.bind(this);
   public chickenTerritory = chickenTerritory.bind(this);
-  public cow = cow.bind(this);
   public cowTerritory = cowTerritory.bind(this);
   public sheepTerritory = sheepTerritory.bind(this);
   public resizeWindow = resizeWindow.bind(this);
   public resizeWindowTop = resizeWindowTop.bind(this);
   public bigButton = bigButton.bind(this);
   public repositoryBtn = repositoryBtn.bind(this);
-  public chickenEggsRepository = chickenEggsRepository.bind(this);
-  public cowMilkRepository = cowMilkRepository.bind(this);
-  public sheep = sheep.bind(this);
   public shopButton = shopButton.bind(this);
   public shortTime = shortTime.bind(this);
   public shortNum = shortNum.bind(this);
   public eventTerritory = eventTerritory.bind(this);
-  public herdBoostEventWindow = herdBoostEventWindow.bind(this);
-  public eventDrag = eventDrag.bind(this);
   public createChatBars = createChatBars.bind(this);
   public improveCollectorAnim = improveCollectorAnim.bind(this);
   public getStatusSettings = getStatusSettings.bind(this);
@@ -145,11 +126,8 @@ class Modal extends Phaser.Scene {
         new DonateWindow(this)
         break;
       case 8: // окно стадного буста
-        if (this.state.farm !== 'Unicorn') new HerdBoostWindow(this)
-        else {
-          this.eventDrag();
-          this.herdBoostEventWindow();
-        }
+        if (this.state.farm === 'Unicorn') new HerdBoostUnicornWindow(this)
+        else new HerdBoostWindow(this)
         break;
       case 9: // Чат
         this.chatBG = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + this.chatHeight, 'chat-bg');
