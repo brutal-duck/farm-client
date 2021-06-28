@@ -264,19 +264,19 @@ class Unicorn extends Phaser.Scene {
     this.animalBrain();
     this.updateTeleportation();  
     if (!this.scene.isActive('Tutorial')) this.dragEventAnimal(true);
-    if (this.state.user.additionalTutorial.eventTutorial === 30) {
+    if (this.state.userUnicorn.tutorial === 30) {
       if (this.animals.children.entries.length > 1) {
         this.doneEventTutor_30();
       }
     }  
 
-    if (this.state.user.additionalTutorial.eventTutorial === 40) {
-      if (this.state.userUnicorn.maxLevelAnimal >= 2) {
+    if (this.state.userUnicorn.tutorial === 40) {
+      if (this.state.userUnicorn.points >= 2) {
         this.doneEventTutor_40();
       }
     }
     
-    if (this.state.user.additionalTutorial.eventTutorial === 50 && !this.scene.isActive('Tutorial')) {
+    if (this.state.userUnicorn.tutorial === 50 && !this.scene.isActive('Tutorial')) {
       this.animals.children.entries.forEach((animal) => {
         if (animal.data.values.active.data.values.working) this.doneEventTutor_50();
       });

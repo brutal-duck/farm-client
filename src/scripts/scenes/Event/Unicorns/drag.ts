@@ -1,7 +1,7 @@
 function drag(): void {
 
   this.input.on('dragstart', (pointer: any, animal: Phaser.Physics.Arcade.Sprite): void => {
-    if (this.state.user.additionalTutorial.eventTutorial >= 40) {
+    if (this.state.userUnicorn.tutorial >= 40) {
       
       if (animal.state === 'base') {
         if (animal.data.values.active.data.values.teleport) return;
@@ -22,7 +22,7 @@ function drag(): void {
   });
 
   this.input.on('drag', (pointer: any, animal: Phaser.Physics.Arcade.Sprite, dragX: number, dragY: number): void => {
-    if (this.state.user.additionalTutorial.eventTutorial >= 40) {
+    if (this.state.userUnicorn.tutorial >= 40) {
 
       if (animal.data.values.drag) {
   
@@ -38,7 +38,7 @@ function drag(): void {
   // дропзоны для мерджинга
   this.input.on('drop', (pointer: any, animal: Phaser.Physics.Arcade.Sprite, zone: Phaser.GameObjects.Zone): void => {
     
-    if (this.state.user.additionalTutorial.eventTutorial >= 40) {
+    if (this.state.userUnicorn.tutorial >= 40) {
 
       if (animal.state === 'base') {
         if (zone.type === 'type0') {
@@ -58,7 +58,7 @@ function drag(): void {
         
         
         if (zone.type === 'type0') {
-          if (this.state.user.additionalTutorial.eventTutorial >= 50) {
+          if (this.state.userUnicorn.tutorial >= 50) {
             animal.data.values.working = true;
             animal.data.values.zone = true;
           } else {
@@ -89,7 +89,7 @@ function drag(): void {
     if (!animal.data.values.zone)  {
       
       if (animal.y > this.topIndent + 480 + 240 * 3.5){
-        if (this.state.user.additionalTutorial.eventTutorial >= 80) {
+        if (this.state.userUnicorn.tutorial >= 80) {
           if (animal.state === 'active') { 
             animal.data.values.base.data.values.expel = true;
             this.state.animal = animal.data.values.base;
@@ -130,7 +130,7 @@ function drag(): void {
             // удаление животного
             if (territory.data.values.type === 0) {
               this.teleportation(animal, undefined, true);
-              if (this.state.user.additionalTutorial.eventTutorial >= 80) {
+              if (this.state.userUnicorn.tutorial >= 80) {
                 animal.data.values.base.data.values.expel = true;
                 this.state.animal = animal.data.values.base;
                 this.confirmExpelAnimal();
@@ -155,7 +155,7 @@ function drag(): void {
           if (territory.data.values.type === 0) {
             
             this.teleportation(animal, undefined, true);
-            if ( this.state.user.additionalTutorial.eventTutorial >= 80) {
+            if ( this.state.userUnicorn.tutorial >= 80) {
               animal.data.values.expel = true;
               this.state.animal = animal;
               this.confirmExpelAnimal();

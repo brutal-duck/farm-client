@@ -7,7 +7,7 @@ export default (): Iprogress => {
   let cowPart: number = 0;
   let openChicken: boolean = false;
   let openCow: boolean = false;
-  let eventMaxLevelAnimal: number = 0
+  let eventpoints: number = 0
 
   if (localStorage.userSheep) sheepPart = JSON.parse(localStorage.userSheep).part;
 
@@ -51,13 +51,10 @@ export default (): Iprogress => {
       donate: false
     },
     event: {
-      eventPoints: eventMaxLevelAnimal,
+      eventPoints: eventpoints,
       startTime: 0,
       endTime: 0,
       open: false,
-      eventRaitings: [],
-      userEventRaiting: null,
-      updateRaitings: false,
       type: 1,
     }
   }

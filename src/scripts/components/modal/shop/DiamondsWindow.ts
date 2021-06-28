@@ -209,7 +209,7 @@ export default class DiamondsWindow {
     return !this.scene.state.user.starterpack && 
     (this.scene.state.userSheep?.part > 4 ||
     this.scene.state.userChicken?.part >= 1 ||
-    this.scene.state.userUnicorn?.maxLevelAnimal >= 1 ||
+    this.scene.state.userUnicorn?.points >= 1 ||
     this.scene.state.userCow?.part >= 1);
   }
 

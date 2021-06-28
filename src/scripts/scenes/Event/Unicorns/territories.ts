@@ -2,7 +2,7 @@ import Firework from '../../../components/animations/Firework';
 import BigInteger from './../../../libs/BigInteger';
 function deleteTerritoriesLocks(): void {
 
-  let lvl: number = this.state.userUnicorn.maxLevelAnimal;
+  let lvl: number = this.state.userUnicorn.points;
   let prices: IeventTerritoriesPrice[] = this.state.unicornSettings.territoriesUnicornPrice;
 
   for (let i in this.territories.children.entries) {
@@ -34,7 +34,7 @@ function buyTerritory(): void {
   if (!settings) return;
   if (this.state.territory.data.values.type === 0) {
 
-    if (this.state.userUnicorn.maxLevelAnimal >= settings.unlock) {
+    if (this.state.userUnicorn.points >= settings.unlock) {
   
   
         let price: number = settings.price;

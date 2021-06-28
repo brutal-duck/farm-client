@@ -390,14 +390,20 @@ function interval(): void {
       this.state.progress.event.endTime > 0 &&
       this.state.progress.event.open) {
         
-      if (this.state.user.additionalTutorial.eventTutorial === 0 &&
+      if ((this.state.user.additionalTutorial.eventTutorial === 0 &&
+        this.state.progress.event.type !== 1 ||
+        this.state.userUnicorn?.tutorial === 0 &&
+        this.state.progress.event.type === 1) &&
         !arrowOnMap && !this.scene.isActive('Modal') &&
         !this.scene.isActive('Tutorial') &&
         !this.scene.isActive('Profile')) {
         Arrow.generate(this.game.scene.keys[`${this.state.farm}Bars`], 17);
       }
   
-      if (this.state.user.additionalTutorial.eventTutorial === 0 &&
+      if ((this.state.user.additionalTutorial.eventTutorial === 0 &&
+        this.state.progress.event.type !== 1 ||
+        this.state.userUnicorn?.tutorial === 0 &&
+        this.state.progress.event.type === 1) &&
         !this.scene.isActive('Tutorial') &&
         this.scene.isActive('Profile') &&
         this.state.progress.event.open) {

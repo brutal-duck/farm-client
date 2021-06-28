@@ -407,7 +407,6 @@ export default function loadData(response: any): void {
   if (
     this.state.progress.event.type === 1 
     && this.state.progress.event.startTime < 0 
-    && this.state.progress.event.endTime > 0 
     && this.state.progress.event.open
   ) {
     this.state.unicornSettings = unicornSettings;
@@ -463,10 +462,10 @@ export default function loadData(response: any): void {
       autosaveCounter: response.data.event.autosaveCounter,
       takenHerdBoost: response.data.event.takenHerdBoost,
       feedBoostTime: response.data.event.feedBoostTime,
-      maxLevelAnimal: response.data.user.eventPoints,
       herdBoostAnimals: response.data.event.herdBoostAnimals,
       takenAd: response.data.event.takenAd,
       timeToAd: response.data.event.timeToAd,
+      points: response.data.event.points,
     };
 
     this.state.eventTerritories = eventTerritories;

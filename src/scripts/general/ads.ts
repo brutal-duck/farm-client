@@ -153,7 +153,7 @@ function adReward(): void {
     case 4: 
       let position = this.game.scene.keys['Unicorn'].getFreePosition();
       if (position.x === null || position.y === null) return;
-      let breed: number = this.state.userUnicorn.maxLevelAnimal - 3;
+      let breed: number = this.state.userUnicorn.points - 3;
       if (breed < 2) breed = 2;
       this.currentTerritory(position.x, position.y).data.values.animal = breed;
       id = 'local_' + randomString(18);

@@ -326,8 +326,8 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
     let check: any = territory?.data.values.merging.find((data: any) => data._id === animal.data.values.base.data.values._id);
     oldTerritory = this.currentTerritory(animal.data.values.base.x, animal.data.values.base.y);
     
-    if (animal.data.values.base.data.values.type > this.state.userUnicorn.maxLevelAnimal) {
-      this.state.userUnicorn.maxLevelAnimal = animal.data.values.base.data.values.type;
+    if (animal.data.values.base.data.values.type > this.state.userUnicorn.points) {
+      this.state.userUnicorn.points = animal.data.values.base.data.values.type;
       this.deleteTerritoriesLocks();
       this.getEventRaiting();
     }
@@ -357,8 +357,8 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
     let check = territory?.data.values.merging.find((data: any) => data._id === animal.data.values._id);
     oldTerritory = this.currentTerritory(animal.data.values.oldX, animal.data.values.oldY);
 
-    if (animal.data.values.type > this.state.userUnicorn.maxLevelAnimal) {
-      this.state.userUnicorn.maxLevelAnimal = animal.data.values.type;
+    if (animal.data.values.type > this.state.userUnicorn.points) {
+      this.state.userUnicorn.points = animal.data.values.type;
       this.deleteTerritoriesLocks();
       this.getEventRaiting();
     }

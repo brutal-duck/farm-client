@@ -124,11 +124,11 @@ function getFreeBoostPositions(): Iposition[] {
 // максимальная порода для покупки
 function maxBreedForBuy(): number {
 
-  let breed: number = this.state.userUnicorn.maxLevelAnimal - 4;
+  let breed: number = this.state.userUnicorn.points - 4;
   
   if (breed <= 0) {
     breed = 1;
-  } else if (this.state.userUnicorn.maxLevelAnimal <= 10) {
+  } else if (this.state.userUnicorn.points <= 10) {
     let currentPrice: string;
     let breedPrice: string;
     for (let i = breed; i >= 1; i--) {
@@ -140,10 +140,10 @@ function maxBreedForBuy(): number {
         breed = i ;
       }
     }
-  } else if (this.state.userUnicorn.maxLevelAnimal > 10) {
+  } else if (this.state.userUnicorn.points > 10) {
     let currentPrice: string;
     let breedPrice: string;
-    for (let i = breed; i >= this.state.userUnicorn.maxLevelAnimal - 9; i--) {
+    for (let i = breed; i >= this.state.userUnicorn.points - 9; i--) {
 
       currentPrice = this.animalPrice(i).price;
       breedPrice = this.animalPrice(breed).price;
@@ -239,7 +239,7 @@ function buyCollector(type: number): void {
   this.scene.stop('ShopBars');
   this.scene.stop('Modal');
 
-  if (settings['unlockCollector' + hours] <= user.maxLevelAnimal) {
+  if (settings['unlockCollector' + hours] <= user.points) {
     
     if (this.state.user.diamonds >= settings['collectorPrice' + hours]) {
 
@@ -270,7 +270,7 @@ function buyCollector(type: number): void {
 function convertDiamonds(diamonds: number): string {
   
   let breedSettings: IeventPoints[] = this.state.unicornSettings.unicornSettings;
-  let maxLevel: number = this.state.userUnicorn.maxLevelAnimal;
+  let maxLevel: number = this.state.userUnicorn.points;
   
   let setting: IeventPoints = breedSettings.find((item: IeventPoints) => item.breed === maxLevel);
   let exchange: string;
@@ -287,7 +287,7 @@ function convertDiamonds(diamonds: number): string {
 function convertMoney(money: string): number {
 
   let breedSettings: IeventPoints[] = this.state.unicornSettings.unicornSettings;
-  let maxLevel: number = this.state.userUnicorn.maxLevelAnimal;
+  let maxLevel: number = this.state.userUnicorn.points;
   
   let setting: IeventPoints = breedSettings.find((item: IeventPoints) => item.breed === maxLevel);
   let exchange: string = setting ? setting.exchange : String(1);
@@ -477,12 +477,12 @@ function tryTask(): void {
 }
 
 function updateRaitingsBar(): void {
-  if (this.state.progress.event.updateRaitings) {
-    this.state.progress.event.updateRaitings = false;
-    let score: number = this.state.progress.event.eventPoints < 0 ? 0 : this.state.progress.event.eventPoints;
+  if (this.state.unicornRaitings) {
+    this.state.unicornRaitings.updated = false;
+    let score: number = this.state.unicornRaitings.user.score < 0 ? 0 : this.state.unicornRaitings.user.score;
 
     this.score.setText(score + ' ' + this.scoreEnding(score, this.state.lang));
-    this.place.setText(this.state.progress.event.userEventRaiting.place + ' ' + this.state.lang.eventPlace);
+    this.place.setText(this.state.unicornRaitings.user.place + ' ' + this.state.lang.eventPlace);
     
   }
   

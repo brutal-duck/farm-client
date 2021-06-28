@@ -1435,7 +1435,7 @@ function getEventRaiting(): void {
     login = this.state.name
   } else login = this.state.user.login
 
-  const points: number = this.state.farm === 'Unicorn' ? this.state.userUnicorn.maxLevelAnimal : this.state.progress.event.eventPoints;
+  const points: number = this.state.userUnicorn.points;
 
   this.state.socket.io.emit('setUnicornRating', {
     name: login,
@@ -1575,7 +1575,7 @@ function logAmplitudeEvent(eventName: string, data: IamplitudeData): void {
     eventData = {
       test: this.state.user.test,
       farm_id: this.state.farm,
-      chapter: this.state[`user${this.state.farm}`].maxLevelAnimal,
+      chapter: this.state[`user${this.state.farm}`].points,
       diamonds: this.state.user.diamonds,
       money: this.state[`user${this.state.farm}`].money,
       collector: this.state[`user${this.state.farm}`].collector,
@@ -1619,7 +1619,7 @@ function logAmplitudeRevenue(productId: string, price: number, type: string = ''
     revenueData = {
       test: this.state.user.test,
       farm_id: this.state.farm,
-      chapter: this.state[`user${this.state.farm}`].maxLevelAnimal,
+      chapter: this.state[`user${this.state.farm}`].points,
       diamonds: this.state.user.diamonds,
       money: this.state[`user${this.state.farm}`].money,
       collector: this.state[`user${this.state.farm}`].collector,

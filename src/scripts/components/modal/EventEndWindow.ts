@@ -171,13 +171,13 @@ export default class EventEndWindow {
     this.price.setTint(0xC0C0C0);
     
     // Для тестов
-    // if (!this.scene.state.progress.event.eventRaitings) {
-    //   this.scene.state.progress.event.eventRaitings = [{ score: 5, place: 2, name: 'wrgw egrg' },{ score: 2, place: 3, name: '+wrgw egrg' }]
-    //   this.scene.state.progress.event.userEventRaiting = { score: 20, place: 1, name: 'wrgtrgw egrg' }
+    // if (!this.scene.state.unicornRaitings?.ratings) {
+    //   this.scene.state.unicornRaitings?.ratings = [{ score: 5, place: 2, name: 'wrgw egrg' },{ score: 2, place: 3, name: '+wrgw egrg' }]
+    //   this.scene.state.unicornRaitings?.user = { score: 20, place: 1, name: 'wrgtrgw egrg' }
     // }
 
     // Таблица
-    let length: number = this.scene.state.progress.event.eventRaitings.length
+    let length: number = this.scene.state.unicornRaitings?.ratings.length
     if (length > 10) length = 10
 
     for (let i: number = 0; i < length; i++) {
@@ -192,9 +192,9 @@ export default class EventEndWindow {
         color: '#793D0A',
       });
 
-      if (this.scene.state.progress.event.eventRaitings[i].score !== null) {
-        placeAndName.setText(this.scene.state.progress.event.eventRaitings[i].place + '. ' + this.scene.state.progress.event.eventRaitings[i].name).setCrop(0, 0, 260, 100);
-        score.setText(String(this.scene.state.progress.event.eventRaitings[i].score));
+      if (this.scene.state.unicornRaitings?.ratings[i].score !== null) {
+        placeAndName.setText(this.scene.state.unicornRaitings?.ratings[i].place + '. ' + this.scene.state.unicornRaitings?.ratings[i].name).setCrop(0, 0, 260, 100);
+        score.setText(String(this.scene.state.unicornRaitings?.ratings[i].score));
         if (i < 3) this.scene.add.sprite(placeAndNameX + 280 + 35, placeAndNameY + padding * Number(i), 'unicorn-status').setOrigin(0, 0).setScale(0.65);
       }
       
@@ -208,17 +208,17 @@ export default class EventEndWindow {
       color: '#793D0A',
     })
 
-    this.playerPlaceAndName = this.scene.add.text(placeAndNameX, placeAndNameY + 270, this.scene.state.progress.event.userEventRaiting.place + '. ' + this.scene.state.progress.event.userEventRaiting.name, {
+    this.playerPlaceAndName = this.scene.add.text(placeAndNameX, placeAndNameY + 270, this.scene.state.unicornRaitings?.user.place + '. ' + this.scene.state.unicornRaitings?.user.name, {
       font: '21px Bip',
       color: '#793D0A',
     }).setCrop(0, 0, 220, 100);
 
-    this.playerScore = this.scene.add.text(placeAndNameX + 280, placeAndNameY + 270, String(this.scene.state.progress.event.userEventRaiting.score), {
+    this.playerScore = this.scene.add.text(placeAndNameX + 280, placeAndNameY + 270, String(this.scene.state.unicornRaitings?.user.score), {
       font: '21px Bip',
       color: '#793D0A',
     })
 
-    if (this.scene.state.progress.event.userEventRaiting.place <= 10) {
+    if (this.scene.state.unicornRaitings?.user.place <= 10) {
 
       this.line.setVisible(false);
       this.playerPlaceAndName.setVisible(false);
@@ -248,13 +248,13 @@ export default class EventEndWindow {
     this.priceBtn.on('pointerdown', (): void => { this.toogleBtn(false) });
 
     let diamonds: number;
-    if (this.scene.state.progress.event.userEventRaiting.place === 1) diamonds = 1000;
-    else if (this.scene.state.progress.event.userEventRaiting.place === 2) diamonds = 700;
-    else if (this.scene.state.progress.event.userEventRaiting.place === 3) diamonds = 400;
-    else if (this.scene.state.progress.event.userEventRaiting.place <= 10) diamonds = 300;
-    else if (this.scene.state.progress.event.userEventRaiting.place <= 100) diamonds = 100;
-    else if (this.scene.state.progress.event.userEventRaiting.place <= 500) diamonds = 50;
-    else if (this.scene.state.progress.event.userEventRaiting.place >= 501) diamonds = 20;
+    if (this.scene.state.unicornRaitings?.user.place === 1) diamonds = 1000;
+    else if (this.scene.state.unicornRaitings?.user.place === 2) diamonds = 700;
+    else if (this.scene.state.unicornRaitings?.user.place === 3) diamonds = 400;
+    else if (this.scene.state.unicornRaitings?.user.place <= 10) diamonds = 300;
+    else if (this.scene.state.unicornRaitings?.user.place <= 100) diamonds = 100;
+    else if (this.scene.state.unicornRaitings?.user.place <= 500) diamonds = 50;
+    else if (this.scene.state.unicornRaitings?.user.place >= 501) diamonds = 20;
     // кнопка
     let btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY + height, 'repository-sell-btn').setScale(0.7);
     let title: Phaser.GameObjects.Text = this.scene.add.text(btn.getBounds().centerX, this.scene.cameras.main.centerY - 10 + height, this.scene.state.lang.pickUp + ' + ' + diamonds, {
@@ -269,7 +269,7 @@ export default class EventEndWindow {
       this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('event_finished', {
         farm_id: 'Unicorn'
       });
-      if (this.scene.state.progress.event.userEventRaiting.place <= 3) {
+      if (this.scene.state.unicornRaitings?.user.place <= 3) {
 
         this.scene.state.user.status = 'unicorn';
         
@@ -282,8 +282,7 @@ export default class EventEndWindow {
         axios.post(process.env.API + "/newStatus", data)
           .then(res => {});
       }
-      this.scene.state.progress.event.eventPoints = -1;
-      this.scene.state.user.additionalTutorial.eventTutorial = 0;
+      this.scene.state.userUnicorn.points = -1;
 
       this.scene.state.user.diamonds += diamonds;
       this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('diamonds_get', {
@@ -293,6 +292,8 @@ export default class EventEndWindow {
       });
       this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
       this.scene.game.scene.keys[this.scene.state.farm].autosave();
+      axios.post(process.env.API + "/takeAward", { id: this.scene.state.user.id })
+          .then(res => {console.log(res)});
       this.scene.scene.stop('Modal');
       MoneyAnimation.create(this.scene.game.scene.keys[this.scene.state.farm + 'Bars'], 'diamond');
       

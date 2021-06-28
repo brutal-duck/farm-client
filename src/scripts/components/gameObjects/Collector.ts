@@ -122,7 +122,7 @@ export default class Collector extends Phaser.GameObjects.Text {
       || (this.scene.state[`user${this.scene.state.farm}`].collector === 0 
       && this.scene.state[`user${this.scene.state.farm}`].tutorial >= 100 
       && this.scene.state.farm === 'Sheep') || (
-      this.scene.state.user.additionalTutorial.eventTutorial > 70 
+      this.scene.state.userUnicorn.tutorial > 70 
       && this.scene.state.farm === 'Unicorn' && this.scene.state[`user${this.scene.state.farm}`].collector === 0 
       )) {
       this.pulseTimer++;

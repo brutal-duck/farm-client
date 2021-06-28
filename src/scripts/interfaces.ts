@@ -103,7 +103,7 @@ interface IeventUserAutoSave {
   autosaveCounter: number;
   takenHerdBoost: number;
   feedBoostTime: number;
-  eventPoints: number;
+  // eventPoints: number;
   additionalTutorial: IadditionalTutorial;
   status: string;
   boosts: Iboosts;
@@ -243,10 +243,15 @@ interface IuserEvent {
   autosaveCounter: number;
   takenHerdBoost: number;
   feedBoostTime: number;
-  maxLevelAnimal: number;
   herdBoostAnimals: number[];
   takenAd: number;
   timeToAd: number;
+  points: number;
+}
+interface IunicornRaitingsData {
+  ratings: IeventRaiting[];
+  user: IeventRaiting;
+  updated: boolean;
 }
 interface Iterritories {
   block: number;
@@ -589,9 +594,6 @@ interface IeventProgress {
   startTime: number;
   endTime: number;
   open: boolean;
-  eventRaitings?: IeventRaiting[];
-  userEventRaiting?: IeventRaiting;
-  updateRaitings?: boolean;
   type: number;
 }
 interface Iprogress {
@@ -767,4 +769,5 @@ interface Istate {
   okTask: IsociaTasks;
   shownSocialTaskWindow: boolean;
   ysdk?: any;
+  unicornRaitings?: IunicornRaitingsData;
 }

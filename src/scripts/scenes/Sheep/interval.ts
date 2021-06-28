@@ -345,18 +345,9 @@ function interval(): void {
         this.state.progress.event.endTime--;
       }
     }
-
-    if (this.state.progress.event.endTime <= 0 && 
-      this.state.progress.event.eventPoints > 0 && 
-      this.state.progress.event.open &&
-      this.scene.isActive('Profile') && 
-      this.state.progress.event.type === 1) {
-      this.autosave();
-      this.scene.stop('Profile');
-    }
     
     if (this.state.progress.event.endTime <= 0 && 
-      this.state.progress.event.eventPoints > 0 && 
+      this.state.userUnicorn.points > 0 && 
       this.state.progress.event.open &&
       !this.scene.isActive('Modal') && 
       !this.scene.isActive('Tutorial') &&
@@ -367,15 +358,13 @@ function interval(): void {
         checkRaiting = true;
       }
       
-      if (this.state.progress.event.updateRaitings) {
-
+      if (this.state.unicornRaitings?.updated) {
         let modal: Imodal = {
           type: 12,
         };
 
         this.state.modal = modal;
         this.scene.launch('Modal', this.state);
-
       }
     }
 
@@ -385,18 +374,22 @@ function interval(): void {
       this.state.progress.event.startTime <= 0 && 
       this.state.progress.event.endTime > 0 &&
       this.state.progress.event.open) {
-      if (this.state.user.additionalTutorial.eventTutorial === 0 &&
-        !arrowOnMap &&
-        !this.scene.isActive('Modal') &&
+      if ((this.state.user.additionalTutorial.eventTutorial === 0 &&
+        this.state.progress.event.type !== 1 ||
+        this.state.userUnicorn?.tutorial === 0 &&
+        this.state.progress.event.type === 1) &&
+        !arrowOnMap && !this.scene.isActive('Modal') &&
         !this.scene.isActive('Tutorial') &&
         !this.scene.isActive('Profile')) {
-        arrowOnMap = Arrow.generate(this.game.scene.keys[`${this.state.farm}Bars`], 17)
+        Arrow.generate(this.game.scene.keys[`${this.state.farm}Bars`], 17);
       }
   
-      if (this.state.user.additionalTutorial.eventTutorial === 0 &&
+      if ((this.state.user.additionalTutorial.eventTutorial === 0 &&
+        this.state.progress.event.type !== 1 ||
+        this.state.userUnicorn?.tutorial === 0 &&
+        this.state.progress.event.type === 1) &&
         !this.scene.isActive('Tutorial') &&
         this.scene.isActive('Profile') &&
-        this.state.progress.event.startTime <= 0 &&
         this.state.progress.event.open) {
         this.showEventTutorial();
       }

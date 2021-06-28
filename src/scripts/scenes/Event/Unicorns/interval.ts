@@ -94,13 +94,13 @@ function interval(): void {
     this.nextDayTimer();
 
 
-    if (this.state[`user${this.state.farm}`].maxLevelAnimal >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
+    if (this.state[`user${this.state.farm}`].points >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
      this.state[`user${this.state.farm}`].takenHerdBoost <= 0 && 
      this.state.user.additionalTutorial.herdBoost) {
       this.state.nativeCounter[3] = 1;
     } else this.state.nativeCounter[3] = 0;
 
-    if (!this.state.user.takenFreeDiamonds && this.state.user.additionalTutorial.eventTutorial > 70) this.state.nativeCounter[0] = 1;
+    if (!this.state.user.takenFreeDiamonds && this.state.userUnicorn.tutorial > 70) this.state.nativeCounter[0] = 1;
     else this.state.nativeCounter[0] = 0;
 
     let nativeCount = 0;
@@ -149,7 +149,7 @@ function interval(): void {
       !this.scene.isActive('Profile')) this.showDonate();
 
     // Обновление иконки feed буста
-    if (this.state.userUnicorn.maxLevelAnimal >= this.game.scene.keys['Unicorn'].feedBoostLvl) {
+    if (this.state.userUnicorn.points >= this.game.scene.keys['Unicorn'].feedBoostLvl) {
       if (this.state.userUnicorn.feedBoostTime > 0 && !this.game.scene.keys['UnicornBars'].feedBoostTime.visible) {
         this.game.scene.keys['UnicornBars'].proceedsText.y = 80;
         this.game.scene.keys['UnicornBars'].proceedsText.setColor('#cbff40');
@@ -166,8 +166,8 @@ function interval(): void {
     }
 
     // повтор шага туториала про мерджинг животных
-    if ((this.state.user.additionalTutorial.eventTutorial === 40 || 
-      this.state.user.additionalTutorial.eventTutorial === 50) && 
+    if ((this.state.userUnicorn.tutorial === 40 || 
+      this.state.userUnicorn.tutorial === 50) && 
       !this.scene.isActive('Tutorial')) {
 
       this.mergTutor++;

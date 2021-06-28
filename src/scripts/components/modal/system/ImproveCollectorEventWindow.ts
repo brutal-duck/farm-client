@@ -57,7 +57,7 @@ export default class ImproveCollectorEventWindow {
 
     }
 
-    if (this.scene.state.userUnicorn.maxLevelAnimal >= nextLevel.chapter) {
+    if (this.scene.state.userUnicorn.points >= nextLevel.chapter) {
 
       if (nextLevel.diamonds) icon = 'diamond';
       else icon = 'unicornCoin';
@@ -132,7 +132,7 @@ export default class ImproveCollectorEventWindow {
       text = '(+' + (nextLevel.speed - thisLevel.speed).toFixed(1) + ' ' + this.scene.state.lang.seconds +  ')';
     }
     nextLevelText?.setPosition(position?.x, position?.y).setText(text);
-    if (this.scene.state.userUnicorn.maxLevelAnimal >= nextLevel?.chapter) {
+    if (this.scene.state.userUnicorn.points >= nextLevel?.chapter) {
       let icon: string;
       if (nextLevel?.diamonds) icon = 'diamond';
       else icon = 'unicornCoin';

@@ -426,7 +426,7 @@ function updateNativeState(): void {
     this.state.progress.event.startTime < 0 && 
     this.state.progress.event.endTime > 0 &&
     this.state.progress.event.open && 
-    this.state.user.additionalTutorial.eventTutorial > 0 &&
+    this.state.userUnicorn.tutorial > 0 &&
     (this.state.user.login || this.state.name) &&
     (this.state.progress.sheep.part > 4 ||
     this.state.progress.chicken.part >= 1 ||
@@ -527,7 +527,7 @@ function updateMapNative(): void {
   const count: number = this.state.farm === 'Sheep' ? chickenCount + cowCount + unicornCount + socialCount :
   this.state.farm === 'Chicken' ? sheepCount + cowCount + unicornCount + socialCount :
   this.state.farm === 'Cow' ? sheepCount + chickenCount + unicornCount + socialCount :
-  this.state.farm === 'Unicorn' && this.state.user.additionalTutorial.eventTutorial >= 80 ? sheepCount + chickenCount + cowCount + socialCount : 0;
+  this.state.farm === 'Unicorn' && this.state.userUnicorn.tutorial >= 80 ? sheepCount + chickenCount + cowCount + socialCount : 0;
 
   const text: Phaser.GameObjects.Text = this.game.scene.keys[`${this.state.farm}Bars`].mapNativeText;
   const bg: Phaser.GameObjects.Graphics = this.game.scene.keys[`${this.state.farm}Bars`].mapNativeBg;

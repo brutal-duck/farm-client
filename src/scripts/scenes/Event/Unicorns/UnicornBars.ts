@@ -97,7 +97,7 @@ class UnicornBars extends Phaser.Scene {
     const raitingZone:Phaser.GameObjects.Zone = this.add.zone(0,0, 480, 280);
 
     this.click(raitingZone, () => {
-      if (this.state.user.additionalTutorial.eventTutorial > 70) {
+      if (this.state.userUnicorn.tutorial > 70) {
 
         this.game.scene.keys['Unicorn'].getEventRaiting();
         const modal: Imodal = {
@@ -134,7 +134,7 @@ class UnicornBars extends Phaser.Scene {
 
     // быстрая покупка Животного
     this.clickButton(this.animalBuy, (): void => {
-      if (this.state.user.additionalTutorial.eventTutorial > 70 || this.state.user.additionalTutorial.eventTutorial === 30)
+      if (this.state.userUnicorn.tutorial > 70 || this.state.userUnicorn.tutorial === 30)
       this.game.scene.keys[this.state.farm].buyAnimal(this.game.scene.keys['Unicorn'].maxBreedForBuy());
       this.updateAnimalPrice();
     });
@@ -218,7 +218,7 @@ class UnicornBars extends Phaser.Scene {
     }).setDepth(2).setOrigin(0.5, 0.5).setShadow(4, 2, '#00000030', 0.5);
 
     this.clickButton(this.addDiamonds, (): void => {
-      if (this.state.user.additionalTutorial.eventTutorial > 70) {
+      if (this.state.userUnicorn.tutorial > 70) {
         let modal: Imodal = {
           type: 2,
           shopType: 1
@@ -229,7 +229,7 @@ class UnicornBars extends Phaser.Scene {
     });
 
     this.clickButton(this.addMoney, (): void => {
-      if (this.state.user.additionalTutorial.eventTutorial > 70) {
+      if (this.state.userUnicorn.tutorial > 70) {
 
         let modal: Imodal = {
           type: 2,
@@ -275,7 +275,7 @@ class UnicornBars extends Phaser.Scene {
     }).setOrigin(0, 0.5).setVisible(false);
 
         // блокировка баров для туториала
-    if (this.state.user.additionalTutorial.eventTutorial < 80) {
+    if (this.state.userUnicorn.tutorial < 80) {
 
       this.shop.setVisible(false);
       this.map.setVisible(false);
@@ -284,7 +284,7 @@ class UnicornBars extends Phaser.Scene {
       this.collector.bubble.setVisible(false);
     }
 
-    if (this.state.user.additionalTutorial.eventTutorial < 30) {
+    if (this.state.userUnicorn.tutorial < 30) {
       this.animalBuy.setVisible(false);
       this.animalPrice.setVisible(false);
       this.animalPriceBubble.setVisible(false);
@@ -398,15 +398,15 @@ class UnicornBars extends Phaser.Scene {
     
     if ((this.state.userUnicorn.herdBoostAnimals.length > 0 || 
       BigInteger.greaterThan(price, this.state.userUnicorn.money) || 
-      (this.state.user.additionalTutorial.eventTutorial < 70 &&
-      this.state.user.additionalTutorial.eventTutorial !== 30)) && 
+      (this.state.userUnicorn.tutorial < 70 &&
+      this.state.userUnicorn.tutorial !== 30)) && 
       this.animalBuy.tintBottomLeft === 0xFFFFFF) {
       this.animalBuy.setTint(0x777777);
     } else if (this.state.userUnicorn.herdBoostAnimals.length <= 0 && 
       BigInteger.lessThanOrEqual(price, this.state.userUnicorn.money) &&
       this.animalBuy.tintBottomLeft === 0x777777 &&
-      (this.state.user.additionalTutorial.eventTutorial > 70 ||
-      this.state.user.additionalTutorial.eventTutorial === 30)) {
+      (this.state.userUnicorn.tutorial > 70 ||
+      this.state.userUnicorn.tutorial === 30)) {
       this.animalBuy.setTint(0xFFFFFF);
     }
 

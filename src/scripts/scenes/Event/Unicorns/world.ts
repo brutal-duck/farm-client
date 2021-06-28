@@ -117,7 +117,7 @@ function world(): void {
       territory.data.values.lock_image = this.add.image(x, y, 'lock-event-territory').setDepth(territory.y + 3).setVisible(false);
 
         // проверка на замок
-      if (unlock > this.state.userUnicorn.maxLevelAnimal) {
+      if (unlock > this.state.userUnicorn.points) {
         territory.data.values.btn.setVisible(false);
         territory.data.values.btnText.setVisible(false);
         territory.data.values.lock_image = this.add.image(x, y, 'lock-event-territory').setDepth(territory.y + 3).setVisible(true);
@@ -137,7 +137,7 @@ function world(): void {
 
     
     this.clickTerritory(territory, (): void => {
-      if (this.state.user.additionalTutorial.eventTutorial > 70) {
+      if (this.state.userUnicorn.tutorial > 70) {
         
         const modal: Imodal = {
           type: 1,
@@ -190,7 +190,8 @@ function world(): void {
   });
 
   // туториал, если нужен
-  if (this.state.user.additionalTutorial.eventTutorial > 0 && this.state.user.additionalTutorial.eventTutorial < 80) this.showEventTutorial();
+  if (this.state.userUnicorn.tutorial === 0) this.state.userUnicorn.tutorial = 10;
+  if (this.state.userUnicorn.tutorial > 0 && this.state.userUnicorn.tutorial < 80) this.showEventTutorial();
 
   // расчет оффлайн прогресса
   this.autoprogress(true);

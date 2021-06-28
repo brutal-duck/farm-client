@@ -231,7 +231,7 @@ function dragEventAnimal(animal: boolean = false): void {
  
   if (this.showMergPointer) {
     
-    if (this.state.user.additionalTutorial.eventTutorial === 40) {
+    if (this.state.userUnicorn.tutorial === 40) {
       if (!this.mergPointer.start) {
         let distance: number = 285;
         let target: Phaser.Math.Vector2 = new Phaser.Math.Vector2();
@@ -283,7 +283,7 @@ function dragEventAnimal(animal: boolean = false): void {
           }, callbackScope: this, loop: false });
         }
       }
-    } else if (this.state.user.additionalTutorial.eventTutorial === 50) {
+    } else if (this.state.userUnicorn.tutorial === 50) {
       
       if (!this.mergPointer.start) {
         let target: Phaser.Math.Vector2 = new Phaser.Math.Vector2();

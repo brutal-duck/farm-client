@@ -3,14 +3,14 @@ function showEventTutorial(additional: boolean | string = false): void {
   
   if (this.scene.isActive('Modal')) this.scene.stop('Modal');
   if (this.scene.isActive('Tutorial')) this.scene.stop('Tutorial');
-  if (this.state.user.additionalTutorial.eventTutorial > 0) {
+  if (this.state.userUnicorn.tutorial > 0) {
     if (this.scene.isActive('Profile')) this.scene.stop('Profile');
   }
   let tutorial: Itutorial;
   if (this.state.progress.event.type === 1) {
     tutorial = {
       farm: 3,
-      step: this.state.user.additionalTutorial.eventTutorial,
+      step: this.state.userUnicorn.tutorial,
       additional: additional
     };
     
@@ -22,7 +22,7 @@ function showEventTutorial(additional: boolean | string = false): void {
   } else if (this.state.progress.event.type === 2) {
     tutorial = {
       farm: 4,
-      step: this.state.user.additionalTutorial.eventTutorial,
+      step: this.state.userUnicorn.tutorial,
       additional: additional
     };
   }
@@ -39,8 +39,8 @@ function doneEventTutor_0(): void {
       step: 0,
       farm_id: 'Unicorn'
     });
-    this.state.user.eventPoints = 0;
-    this.state.user.additionalTutorial.eventTutorial = 10;
+    // this.state.user.eventPoints = 0;
+    this.state.userUnicorn.tutorial = 10;
     
     this.scene.stop('Tutorial');
     this.scene.stop(this.state.farm);
@@ -54,8 +54,8 @@ function doneEventTutor_0(): void {
       step: 0,
       farm_id: 'Fortune'
     });
-    this.state.user.eventPoints = 1;
-    this.state.user.additionalTutorial.eventTutorial = 10;
+    // this.state.user.eventPoints = 1;
+    this.state.userUnicorn.tutorial = 10;
     
     this.scene.stop('Tutorial');
     this.scene.stop('Profile');
@@ -69,7 +69,7 @@ function doneEventTutor_10(): void {
   this.logAmplitudeEvent('tutorial', {
     step: 10,
   });
-  this.state.user.additionalTutorial.eventTutorial = 20;
+  this.state.userUnicorn.tutorial = 20;
   this.scene.stop('Tutorial');
 
   this.time.addEvent({ delay: 1000, callback: (): void => {
@@ -85,7 +85,7 @@ function doneEventTutor_20(): void {
   this.logAmplitudeEvent('tutorial', {
     step: 20,
   });
-  this.state.user.additionalTutorial.eventTutorial = 30;
+  this.state.userUnicorn.tutorial = 30;
   this.scene.stop('Tutorial');
   this.time.addEvent({ delay: 1000, callback: (): void => {
     this.showEventTutorial();
@@ -99,7 +99,7 @@ function doneEventTutor_30(): void {
   this.logAmplitudeEvent('tutorial', {
     step: 30,
   });
-  this.state.user.additionalTutorial.eventTutorial = 40;
+  this.state.userUnicorn.tutorial = 40;
   this.game.scene.keys['UnicornBars'].animalBuy.setVisible(true);
   this.game.scene.keys['UnicornBars'].animalPrice.setVisible(true);
   this.game.scene.keys['UnicornBars'].animalPriceBubble.setVisible(true);
@@ -120,7 +120,7 @@ function doneEventTutor_40(): void {
   this.showMergPointer = false;
   this.mergPointer?.data.values.animal?.destroy();
   this.mergPointer?.destroy();
-  this.state.user.additionalTutorial.eventTutorial = 50;
+  this.state.userUnicorn.tutorial = 50;
 
   this.time.addEvent({ delay: 500, callback: (): void => {
     this.showEventTutorial();
@@ -136,7 +136,7 @@ function doneEventTutor_50(): void {
   });
   this.mergPointer?.data.values.animal?.destroy();
   this.mergPointer?.destroy();
-  this.state.user.additionalTutorial.eventTutorial = 60;
+  this.state.userUnicorn.tutorial = 60;
   this.time.addEvent({ delay: 500, callback: (): void => {
     this.showEventTutorial();
     
@@ -150,7 +150,7 @@ function doneEventTutor_60(): void {
   this.logAmplitudeEvent('tutorial', {
     step: 60,
   });
-  this.state.user.additionalTutorial.eventTutorial = 70;
+  this.state.userUnicorn.tutorial = 70;
   this.scene.stop('Tutorial');
 
   this.time.addEvent({ delay: 500, callback: (): void => {
@@ -167,7 +167,7 @@ function doneEventTutor_70(): void {
   this.logAmplitudeEvent('tutorial', {
     step: 70,
   });
-  this.state.user.additionalTutorial.eventTutorial = 80;
+  this.state.userUnicorn.tutorial = 80;
   this.game.scene.keys['UnicornBars'].shop.setVisible(true);
   this.game.scene.keys['UnicornBars'].map.setVisible(true);
   this.game.scene.keys['UnicornBars'].collectorBtn.setVisible(true);

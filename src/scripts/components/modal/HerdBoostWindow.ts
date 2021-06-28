@@ -137,7 +137,7 @@ export default class HerdBoostWindow {
     const xTextLevel: number = farm === 'cow' ? this.x - 75 : this.x + 80;
     const textLevel: Phaser.GameObjects.Text = this.scene.add.text(xTextLevel, this.yTextLevel, this.scene.state[`user${this.scene.state.farm}`].fair, { font: '36px Shadow', color: '#b5315a' }).setOrigin(0.5, 0.5).setDepth(this.y * 2).setAlpha(0);
     
-    if (farm === 'unicorn') textLevel.setText(String(this.scene.state.userUnicorn.maxLevelAnimal));
+    if (farm === 'unicorn') textLevel.setText(String(this.scene.state.userUnicorn.points));
     // дорога
     const road: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.xRoad, this.yRoad, `herd-boost-road-${farm}`).setOrigin(0).setDepth(this.yRoad).setDataEnabled().setAlpha(0);
   
@@ -318,7 +318,7 @@ export default class HerdBoostWindow {
     // Изменение рандома
     let randomArray: number[] = [];
     let max: number = this.scene.state[`user${this.scene.state.farm}`].fair;
-    if (this.scene.state.farm === 'Unicorn') max = this.scene.state[`user${this.scene.state.farm}`].maxLevelAnimal;
+    if (this.scene.state.farm === 'Unicorn') max = this.scene.state[`user${this.scene.state.farm}`].points;
   
     for (let i: number = 0; i < max; i++) { randomArray.push(i ** 2 * 100); }
   

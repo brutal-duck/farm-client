@@ -9,7 +9,7 @@ function buyEventTerritory(): void {
 
   let settings: IeventTerritoriesPrice = this.state.unicornSettings.territoriesUnicornPrice.find((data: IeventTerritoriesPrice) => data.block === this.state.territory.block && data.position === this.state.territory.position);
 
-  if (this.state.userUnicorn.maxLevelAnimal >= settings.unlock) {
+  if (this.state.userUnicorn.points >= settings.unlock) {
 
       let price: number = settings.price;
   
@@ -223,7 +223,7 @@ function createWorld(): any[] {
     color: '#b5315a'
   }).setOrigin(0.5, 0.5).setDepth(y * 2).setAlpha(0);
   
-  if (farm === 'event') textLevel.setText(this.state.userUnicorn.maxLevelAnimal);
+  if (farm === 'event') textLevel.setText(this.state.userUnicorn.points);
   // дорога
   let road: Phaser.GameObjects.Sprite = this.add.sprite(xRoad, yRoad, `herd-boost-road-${farm}`)
     .setOrigin(0)
@@ -368,10 +368,10 @@ function getRandomAnimal(type: string): void {
 
   // Изменение рандома
   let randomArray: number[] = [];
-  let max: number = this.state[`user${this.state.farm}`].maxLevelAnimal - 4;
+  let max: number = this.state[`user${this.state.farm}`].points - 4;
   max = max <= 0 ? 1 : max;
 
-  let min: number = this.state[`user${this.state.farm}`].maxLevelAnimal - 14;
+  let min: number = this.state[`user${this.state.farm}`].points - 14;
   min = min <= 0 ? 0 : min;
 
   for (let i: number = min; i < max; i++) {

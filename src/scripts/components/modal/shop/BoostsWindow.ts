@@ -281,7 +281,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     this.freeEventCollectorBtns()
   
     // 4 часа собирателя
-    if (this.scene.state.unicornSettings.unlockCollector4 <= this.scene.state.userUnicorn.maxLevelAnimal) {
+    if (this.scene.state.unicornSettings.unlockCollector4 <= this.scene.state.userUnicorn.points) {
   
       let hours4 = this.scene.boostButton(350, 220 + this.scene.height, '4', this.scene.state.lang.shortHours, String(this.scene.state.unicornSettings.collectorPrice4), 'diamond');
       this.scene.clickBoostBtn(hours4, (): void => { this.scene.game.scene.keys[this.scene.state.farm].buyCollector(3) });
@@ -289,7 +289,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     } else this.scene.boostButton(350, 220 + this.scene.height, '4', this.scene.state.lang.shortHours, String(this.scene.state.unicornSettings.unlockCollector4), 'lock');
   
     // 12 часа собирателя
-    if (this.scene.state.unicornSettings.unlockCollector12 <= this.scene.state.userUnicorn.maxLevelAnimal) {
+    if (this.scene.state.unicornSettings.unlockCollector12 <= this.scene.state.userUnicorn.points) {
   
       let hours12 = this.scene.boostButton(350, 280 + this.scene.height, '12', this.scene.state.lang.shortHours, String(this.scene.state.unicornSettings.collectorPrice12), 'diamond');
       this.scene.clickBoostBtn(hours12, (): void => {
@@ -973,11 +973,11 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
 
   private checkEventHerdBoost(): boolean {
     return this.scene.state.modal.shopType === 4 && 
-    this.scene.state[`user${this.scene.state.farm}`].maxLevelAnimal >= this.scene.game.scene.keys[this.scene.state.farm].herdBoostLvl;
+    this.scene.state[`user${this.scene.state.farm}`].points >= this.scene.game.scene.keys[this.scene.state.farm].herdBoostLvl;
   }
 
   private checkEventFeedBoost(): boolean {
     return this.scene.state.modal.shopType === 4 && 
-      this.scene.state[`user${this.scene.state.farm}`].maxLevelAnimal >= this.scene.game.scene.keys[this.scene.state.farm].feedBoostLvl;
+      this.scene.state[`user${this.scene.state.farm}`].points >= this.scene.game.scene.keys[this.scene.state.farm].feedBoostLvl;
   }
 }

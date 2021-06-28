@@ -38,7 +38,7 @@ export default class ProfileWindow {
     
     const userFarmPart: number = this.scene.state.farm !== 'Unicorn' ? 
     this.scene.state[`user${this.scene.state.farm}`].part : 
-    this.scene.state[`user${this.scene.state.farm}`].maxLevelAnimal;
+    this.scene.state[`user${this.scene.state.farm}`].points;
 
     if (this.scene.state.platform === 'ya' || this.scene.state.platform === 'vk' || this.scene.state.platform === 'ok') login = this.scene.state.name;
 

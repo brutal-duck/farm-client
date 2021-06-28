@@ -35,7 +35,7 @@ export default class AnimalUnicornWindow {
       let animal = this.scene.state.unicornSettings.unicornSettings.find((data: IeventPoints) => data.breed === i + 1);
 
       // иконка
-      if (this.scene.state.userUnicorn.maxLevelAnimal < animal.breed) this.scene.add.sprite(110, y + this.scene.height + 110, 'disable-animal');
+      if (this.scene.state.userUnicorn.points < animal.breed) this.scene.add.sprite(110, y + this.scene.height + 110, 'disable-animal');
       else this.scene.add.sprite(110, y + this.scene.height + 110, 'animal' + animal.breed);
 
       // описание
@@ -64,7 +64,7 @@ export default class AnimalUnicornWindow {
       // кнопка покупки
       let btn: any = false
 
-      if (animal.breed <= this.scene.state.userUnicorn.maxLevelAnimal - 4 || animal.breed === 1) {
+      if (animal.breed <= this.scene.state.userUnicorn.points - 4 || animal.breed === 1) {
 
         let price: string = String(shortNum(this.scene.animalPrice(animal.breed).price));
         
@@ -76,7 +76,7 @@ export default class AnimalUnicornWindow {
 
         }
         this.createBtn(btn, animal.breed, callback);
-      } else if (animal.breed <= this.scene.state.userUnicorn.maxLevelAnimal - 3 || animal.breed === 2 && this.scene.state.userUnicorn.maxLevelAnimal > 2) {
+      } else if (animal.breed <= this.scene.state.userUnicorn.points - 3 || animal.breed === 2 && this.scene.state.userUnicorn.points > 2) {
         const diamondPrice = this.getDiamondPrice(4, animal.breed);
         let callback: () => void;
         if (this.scene.state.readyAd && this.scene.state.userUnicorn.timeToAd <= 0) {
@@ -103,12 +103,12 @@ export default class AnimalUnicornWindow {
           callback = (): void => { this.scene.game.scene.keys[this.scene.state.farm].buyAnimal(animal.breed, true, diamondPrice); }
         }
         this.createBtn(btn, animal.breed, callback)
-      } else if (animal.breed <= this.scene.state.userUnicorn.maxLevelAnimal - 2 || animal.breed === 3 && this.scene.state.userUnicorn.maxLevelAnimal > 3) {
+      } else if (animal.breed <= this.scene.state.userUnicorn.points - 2 || animal.breed === 3 && this.scene.state.userUnicorn.points > 3) {
         const diamondPrice = this.getDiamondPrice(2, animal.breed);
         const callback = (): void => { this.scene.game.scene.keys[this.scene.state.farm].buyAnimal(animal.breed, true, diamondPrice); }
         btn = this.scene.shopButton(330, center, String(diamondPrice), 'diamond');
         this.createBtn(btn, animal.breed, callback);
-      } else if (animal.breed <= this.scene.state.userUnicorn.maxLevelAnimal - 1 || animal.breed === 4 && this.scene.state.userUnicorn.maxLevelAnimal > 4) {
+      } else if (animal.breed <= this.scene.state.userUnicorn.points - 1 || animal.breed === 4 && this.scene.state.userUnicorn.points > 4) {
         const diamondPrice = this.getDiamondPrice(1, animal.breed);
         const callback = (): void => { this.scene.game.scene.keys[this.scene.state.farm].buyAnimal(animal.breed, true, diamondPrice); }
         btn = this.scene.shopButton(330, center, String(diamondPrice), 'diamond');

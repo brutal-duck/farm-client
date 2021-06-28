@@ -20,13 +20,12 @@ export default class Socket {
 
     });
 
-    this.io.on('getUnicornRating', (data: any) => {
+    this.io.on('getUnicornRating', (data: IunicornRaitingsData) => {
       // console.log(data)
       // console.log(this.state.progress)
-      this.state.progress.event.updateRaitings = true;
-      this.state.progress.event.eventRaitings = data.ratings;
-      this.state.progress.event.userEventRaiting = data.user;
-      this.state.progress.event.eventPoints = data.user.score;
+      this.state.userUnicorn.points = Number(data.user.score);
+      this.state.unicornRaitings = data;
+      this.state.unicornRaitings.updated = true;
       // console.log(this.state);
     });
 

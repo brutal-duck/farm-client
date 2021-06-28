@@ -128,7 +128,6 @@ class Profile extends Phaser.Scene {
   }
   public create(): void {
     if (
-      this.state.progress.event.eventPoints >= 0 && 
       this.state.progress.event.open && 
       this.state.progress.event.type === 1 && 
       this.state.progress.event.startTime < 0 && 
@@ -781,7 +780,10 @@ class Profile extends Phaser.Scene {
     if (
       this.state.progress.event.startTime > 0 && 
       this.state.progress.event.open && 
-      this.state.user.additionalTutorial.eventTutorial === 0 && 
+      (this.state.user.additionalTutorial.eventTutorial === 0 && 
+      this.state.progress.event.type !== 1 ||
+      // this.state.userUnicorn?.tutorial === 0 &&
+      this.state.progress.event.type === 1) && 
       (this.state.progress.sheep.part > 4 ||
       this.state.progress.chicken.part >= 1 ||
       this.state.progress.cow.part >= 1) && 
@@ -803,7 +805,9 @@ class Profile extends Phaser.Scene {
     } else if (
       this.state.progress.event.startTime <= 0 && 
       this.state.progress.event.open && 
-      this.state.user.additionalTutorial.eventTutorial > 0 &&
+      (this.state.user.additionalTutorial.eventTutorial > 0 &&
+      this.state.progress.event.type !== 1 || this.state.userUnicorn.tutorial > 0 &&
+      this.state.progress.event.type === 1) &&
       this.state.progress.event.endTime > 0 && 
       (this.state.progress.sheep.part > 4 || 
       this.state.progress.chicken.part >= 1 || 
@@ -823,7 +827,10 @@ class Profile extends Phaser.Scene {
     } else if (
       this.state.progress.event.startTime <= 0 && 
       this.state.progress.event.open && 
-      this.state.user.additionalTutorial.eventTutorial === 0 && 
+      (this.state.user.additionalTutorial.eventTutorial === 0 && 
+      this.state.progress.event.type !== 1 ||
+      this.state.userUnicorn?.tutorial === 0 && 
+      this.state.progress.event.type === 1) && 
       (this.state.user.login || this.state.name) && 
       (this.state.progress.sheep.part > 4 || 
       this.state.progress.chicken.part >= 1 || 
@@ -878,13 +885,14 @@ class Profile extends Phaser.Scene {
 
     } 
     
-    if (this.state.progress.event.updateRaitings && this.state.progress.event.type === 1) {
-      const points: number = this.state.progress.event.eventPoints >= 0 ? this.state.progress.event.eventPoints : 0;
+    if (this.state.unicornRaitings?.updated && this.state.progress.event.type === 1) {
+      console.log(this.state.unicornRaitings)
+      const points: number = this.state.userUnicorn.points;
 
       this.eventScore.setText(points + ' ' + this.scoreEnding(points, this.state.lang));
-      this.eventPlace.setText(this.state.progress.event.userEventRaiting.place + ' ' + this.state.lang.eventPlace);
+      this.eventPlace.setText(this.state.unicornRaitings?.user.place + ' ' + this.state.lang.eventPlace);
       this.eventEndTime.setText(shortTime(this.state.progress.event.endTime, this.state.lang));
-      this.state.progress.event.updateRaitings = false;
+      this.state.unicornRaitings.updated = false;
     }
 
     if (this.state.progress.event.type === 2 && this.state.progress.event.startTime < 0) {

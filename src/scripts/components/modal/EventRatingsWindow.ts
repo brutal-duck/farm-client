@@ -45,7 +45,7 @@ export default class EventRatingsWindow extends Phaser.GameObjects.Sprite {
     this.scene.add.sprite(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY, 'rating-bg');
     this.rulesBtn = this.scene.add.sprite(this.scene.cameras.main.centerX - 130, this.scene.cameras.main.centerY - 264, 'rating-rules-btn').setInteractive();
     this.priceBtn = this.scene.add.sprite(this.scene.cameras.main.centerX + 126, this.scene.cameras.main.centerY - 264, 'rating-price-btn').setInteractive();
-    let closeBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX + 268, this.scene.cameras.main.centerY - 452, 'tasks-close').setOrigin(0.5, 0.5).setScale(1.15);
+    const closeBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX + 268, this.scene.cameras.main.centerY - 452, 'tasks-close').setOrigin(0.5, 0.5).setScale(1.15);
 
     // Заголовок
     this.scene.add.text(this.scene.cameras.main.centerX + 20, this.scene.cameras.main.centerY - 430, this.scene.state.lang.unicornField, {
@@ -91,30 +91,30 @@ export default class EventRatingsWindow extends Phaser.GameObjects.Sprite {
     this.scene.eventLeftTime = this.scene.add.text(this.scene.cameras.main.centerX + 114, this.scene.cameras.main.centerY - 25, shortTime(this.scene.state.progress.event.endTime, this.scene.state.lang), { font: '24px Bip', color: '#459D1A' }).setOrigin(0, 0.5).setDepth(2);
 
     // Призы
-    let topPlaces: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX - 140, this.scene.cameras.main.centerY - 170, 'rating-places').setScale(0.9).setVisible(false);
+    const topPlaces: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX - 140, this.scene.cameras.main.centerY - 170, 'rating-places').setScale(0.9).setVisible(false);
 
-    let priceTopPlaces: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 20, this.scene.cameras.main.centerY - 210,
+    const priceTopPlaces: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 20, this.scene.cameras.main.centerY - 210,
       '1 ' + this.scene.state.lang.eventPlace + '\n' + '2 ' + this.scene.state.lang.eventPlace + '\n' + '3 ' + this.scene.state.lang.eventPlace, {
       font: 'Bold 21px Bip',
       color: '#793D0A',
       align: 'right'
     }).setOrigin(1, 0).setVisible(false);
 
-    let pricePlaces: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 20, this.scene.cameras.main.centerY - 124,
+    const pricePlaces: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 20, this.scene.cameras.main.centerY - 124,
       '4-10 ' + this.scene.state.lang.eventPlace + '\n' + '11-100 ' + this.scene.state.lang.eventPlace + '\n' + '101-500 ' + this.scene.state.lang.eventPlace + '\n' + '500+ ' + this.scene.state.lang.eventPlace, {
       font: '21px Bip',
       color: '#793D0A',
       align: 'right'
     }).setOrigin(1, 0).setVisible(false);
 
-    let priceTopPlacesDiamonds: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX + 50, this.scene.cameras.main.centerY - 210,
+    const priceTopPlacesDiamonds: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX + 50, this.scene.cameras.main.centerY - 210,
       '- 1000\n' + '- 700\n' + '- 400', {
       font: 'Bold 21px Bip',
       color: '#793D0A',
       align: 'left'
     }).setOrigin(0, 0).setVisible(false);
 
-    let pricePlacesDiamonds: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX + 50, this.scene.cameras.main.centerY - 124,
+    const pricePlacesDiamonds: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX + 50, this.scene.cameras.main.centerY - 124,
       '- 300\n- 100\n- 50\n- 20', {
       font: '21px Bip',
       color: '#793D0A',
@@ -122,7 +122,7 @@ export default class EventRatingsWindow extends Phaser.GameObjects.Sprite {
     }).setOrigin(0, 0).setVisible(false);
 
     // Кучки кристалов
-    let firstPlaceDiamonds: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 175, this.scene.cameras.main.centerY - 200, [
+    const firstPlaceDiamonds: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 175, this.scene.cameras.main.centerY - 200, [
       this.scene.add.sprite(13, 4, 'diamond').setScale(0.11).setAngle(45).setTint(0x000000),
       this.scene.add.sprite(13, 4, 'diamond').setScale(0.1).setAngle(45),
       this.scene.add.sprite(0, 0, 'diamond').setScale(0.14).setTint(0x000000),
@@ -131,34 +131,34 @@ export default class EventRatingsWindow extends Phaser.GameObjects.Sprite {
       this.scene.add.sprite(-10, 9, 'diamond').setScale(0.09).setAngle(-30),
     ]).setVisible(false)
 
-    let secondPlaceDiamonds: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 180, this.scene.cameras.main.centerY - 169, [
+    const secondPlaceDiamonds: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 180, this.scene.cameras.main.centerY - 169, [
       this.scene.add.sprite(0, 0, 'diamond').setScale(0.13).setAngle(19).setTint(0x000000),
       this.scene.add.sprite(0, 0, 'diamond').setScale(0.12).setAngle(19),
       this.scene.add.sprite(-12, 5, 'diamond').setScale(0.11).setAngle(-12).setTint(0x000000),
       this.scene.add.sprite(-12, 5, 'diamond').setScale(0.1).setAngle(-12),
     ]).setVisible(false)
 
-    let thirdPlaceDiamond: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 178, this.scene.cameras.main.centerY - 139, [
+    const thirdPlaceDiamond: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 178, this.scene.cameras.main.centerY - 139, [
       this.scene.add.sprite(0, 0, 'diamond').setScale(0.13).setAngle(-19).setTint(0x000000),
       this.scene.add.sprite(0, 0, 'diamond').setScale(0.12).setAngle(-19),
     ]).setVisible(false)
 
-    let fourthPlaceDiamond: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 109, [
+    const fourthPlaceDiamond: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 109, [
       this.scene.add.sprite(0, 0, 'diamond').setScale(0.11).setTint(0x000000),
       this.scene.add.sprite(0, 0, 'diamond').setScale(0.1),
     ]).setVisible(false)
 
-    let fifthPlaceDiamond: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 81, [
+    const fifthPlaceDiamond: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 81, [
       this.scene.add.sprite(0, 0, 'diamond').setScale(0.1).setTint(0x000000),
       this.scene.add.sprite(0, 0, 'diamond').setScale(0.09),
     ]).setVisible(false)
 
-    let sixthPlaceDiamond: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 55, [
+    const sixthPlaceDiamond: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 55, [
       this.scene.add.sprite(0, 0, 'diamond').setScale(0.09).setTint(0x000000),
       this.scene.add.sprite(0, 0, 'diamond').setScale(0.08),
     ]).setVisible(false)
 
-    let seventhPlaceDiamond: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 27, [
+    const seventhPlaceDiamond: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 27, [
       this.scene.add.sprite(0, 0, 'diamond').setScale(0.08).setTint(0x000000),
       this.scene.add.sprite(0, 0, 'diamond').setScale(0.07),
     ]).setVisible(false)
@@ -175,13 +175,13 @@ export default class EventRatingsWindow extends Phaser.GameObjects.Sprite {
     this.price.setTint(0xC0C0C0);
 
     // Для тестов
-    // if (!this.scene.state.progress.event.eventRaitings) {
-    //   this.scene.state.progress.event.eventRaitings = [{ score: 5, place: 2, name: 'wrgw egrg' },{ score: 2, place: 3, name: '+wrgw egrg' }]
-    //   this.scene.state.progress.event.userEventRaiting = { score: 20, place: 1, name: 'wrgtrgw egrg' }
+    // if (!this.scene.state.progress.event.ratings) {
+    //   this.scene.state.progress.event.ratings = [{ score: 5, place: 2, name: 'wrgw egrg' },{ score: 2, place: 3, name: '+wrgw egrg' }]
+    //   this.scene.state.progress.event.user = { score: 20, place: 1, name: 'wrgtrgw egrg' }
     // }
 
     // Таблица
-    let length: number = this.scene.state.progress.event.eventRaitings.length
+    let length: number = this.scene.state.unicornRaitings?.ratings.length
     if (length > 10) length = 10
 
     for (let i: number = 0; i < length; i++) {
@@ -196,9 +196,9 @@ export default class EventRatingsWindow extends Phaser.GameObjects.Sprite {
         color: '#793D0A',
       });
 
-      if (this.scene.state.progress.event.eventRaitings && this.scene.state.progress.event.eventRaitings[i].score !== null) {
-        placeAndName.setText(this.scene.state.progress.event.eventRaitings[i].place + '. ' + this.scene.state.progress.event.eventRaitings[i].name).setCrop(0, 0, 260, 100);
-        score.setText(String(this.scene.state.progress.event.eventRaitings[i].score));
+      if (this.scene.state.unicornRaitings?.ratings && this.scene.state.unicornRaitings?.ratings[i].score !== null) {
+        placeAndName.setText(this.scene.state.unicornRaitings?.ratings[i].place + '. ' + this.scene.state.unicornRaitings?.ratings[i].name).setCrop(0, 0, 260, 100);
+        score.setText(String(this.scene.state.unicornRaitings?.ratings[i].score));
         if (i < 3)  this.scene.add.sprite(placeAndNameX + 280 + 35, placeAndNameY + padding * Number(i), 'unicorn-status').setOrigin(0, 0).setScale(0.65);
       }
 
@@ -212,17 +212,17 @@ export default class EventRatingsWindow extends Phaser.GameObjects.Sprite {
       color: '#793D0A',
     })
 
-    this.playerPlaceAndName = this.scene.add.text(placeAndNameX, placeAndNameY + 270, this.scene.state.progress.event.userEventRaiting.place + '. ' + this.scene.state.progress.event.userEventRaiting.name, {
+    this.playerPlaceAndName = this.scene.add.text(placeAndNameX, placeAndNameY + 270, this.scene.state.unicornRaitings?.user.place + '. ' + this.scene.state.unicornRaitings?.user.name, {
       font: '21px Bip',
       color: '#793D0A',
     }).setCrop(0, 0, 240, 100);
 
-    this.playerScore = this.scene.add.text(placeAndNameX + 280, placeAndNameY + 270, String(this.scene.state.progress.event.userEventRaiting.score), {
+    this.playerScore = this.scene.add.text(placeAndNameX + 280, placeAndNameY + 270, String(this.scene.state.unicornRaitings?.user.score), {
       font: '21px Bip',
       color: '#793D0A',
     })
 
-    if (this.scene.state.progress.event.userEventRaiting.place <= 10) {
+    if (this.scene.state.unicornRaitings?.user.place <= 10) {
       this.line.setVisible(false);
       this.playerPlaceAndName.setVisible(false);
       this.playerScore.setVisible(false);
@@ -249,7 +249,6 @@ export default class EventRatingsWindow extends Phaser.GameObjects.Sprite {
     // Нажатие на 'Призы'
     this.priceBtn.on('pointerdown', (): void => { this.toogleBtn(false) });
 
-
     // Закрытие окна
     this.scene.clickButton(closeBtn, (): void => {
       this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
@@ -258,42 +257,31 @@ export default class EventRatingsWindow extends Phaser.GameObjects.Sprite {
   }
 
   public preUpdate(): void {
-
     // Обновление таблицы рейтингов евента
-    if (this.scene.state.progress.event.updateRaitings && this.scene.state.modal.type === 11 && this.eventRatingsNames) {
-      console.log(this.scene.state.progress.event.eventRaitings)
+    if (this.scene.state.unicornRaitings?.updated && this.scene.state.modal.type === 11 && this.eventRatingsNames) {
       for (let i: number = 0; i < 10; i++) {
-        if (this.scene.state.progress.event.eventRaitings[i]?.score) {
-          this.eventRatingsNames[i]?.setText(this.scene.state.progress.event.eventRaitings[i].place + '. ' + this.scene.state.progress.event.eventRaitings[i].name).setCrop(0, 0, 260, 100);
-          this.eventRatingsScores[i]?.setText(String(this.scene.state.progress.event.eventRaitings[i].score));
+        if (this.scene.state.unicornRaitings?.ratings[i]?.score) {
+          this.eventRatingsNames[i]?.setText(this.scene.state.unicornRaitings?.ratings[i].place + '. ' + this.scene.state.unicornRaitings?.ratings[i].name).setCrop(0, 0, 260, 100);
+          this.eventRatingsScores[i]?.setText(String(this.scene.state.unicornRaitings?.ratings[i].score));
         }
       }
-      
       if (this.line && this.playerPlaceAndName && this.playerScore) {
-          if (this.scene.state.progress.event.userEventRaiting.place <= 10) {
-            
+          if (this.scene.state.unicornRaitings?.user.place <= 10) {
             this.line?.setVisible(false);
             this.playerPlaceAndName?.setVisible(false);
             this.playerScore?.setVisible(false);
-        
-          } else if (this.scene.state.progress.event.userEventRaiting.place > 10) {
-            
+          } else if (this.scene.state.unicornRaitings?.user.place > 10) {
             this.line?.setVisible(true);
             this.playerPlaceAndName?.setVisible(true).setCrop(0, 0, 280, 100);
             this.playerScore?.setVisible(true);
-            
           }
         }
-
-      this.scene.state.progress.event.updateRaitings = false
-
+      this.scene.state.unicornRaitings.updated = false
     }
-    
   }
 
 
   private toogleBtn(showRules: boolean): void {
-
     if (showRules) {
       this.priceBtn.setTint(0xC0C0C0).setCrop(0, 0, 400, 90);
       this.price.setTint(0xC0C0C0);
@@ -312,7 +300,5 @@ export default class EventRatingsWindow extends Phaser.GameObjects.Sprite {
     this.scene.eventLeftTime.setVisible(showRules);
 
     this.priceElements.forEach(el => el.setVisible(!showRules));
-
   }
-
 }
