@@ -813,7 +813,7 @@ export default class Fortune extends Phaser.Scene {
         this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
           type: 'Sheep'
         });
-      } {
+      } else {
         this.state.user.boosts.chicken.herd += 1;
         Hint.create(this, -250, this.state.lang.fortuneHint_5_Chicken, 3);
         this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
