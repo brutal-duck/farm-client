@@ -20,7 +20,7 @@ export default class BuyFarmTerritoryWindow {
 
     const settings = this.scene.state[`${farm.toLowerCase()}Settings`][`territories${farm}Price`].find((data: IterritoriesPrice) => data.block === this.scene.state.territory.block && data.position === this.scene.state.territory.position);
 
-    if (this.scene.state[`user${farm}`].part >= settings.unlock || this.scene.state.userUnicorn.points >= settings.unlock) {
+    if (this.scene.state[`user${farm}`].part >= settings.unlock || this.scene.state.userUnicorn?.points >= settings.unlock) {
 
       let price: number
       // 70% от суммы покупки

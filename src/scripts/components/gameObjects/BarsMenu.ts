@@ -134,11 +134,11 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       this.profileIcon.setVisible(true);
     }
 
-    if (this.scene.state.farm === 'Unicorn' && this.scene.state.userUnicorn.tutorial < 80 && this.visible) {
+    if (this.scene.state.farm === 'Unicorn' && this.scene.state.userUnicorn?.tutorial < 80 && this.visible) {
       this.setVisible(false);
       this.chatIcon.setVisible(false);
       this.profileIcon.setVisible(false);
-    } else if (this.scene.state.farm === 'Unicorn' && this.scene.state.userUnicorn.tutorial >= 80 &&  !this.visible) {
+    } else if (this.scene.state.farm === 'Unicorn' && this.scene.state.userUnicorn?.tutorial >= 80 &&  !this.visible) {
       this.setVisible(true);
       this.profileIcon.setVisible(true);
       this.chatIcon.setVisible(true);
