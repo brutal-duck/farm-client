@@ -84,7 +84,7 @@ export default class EventEndWindow {
       wordWrap: { width: 380 },
     }).setOrigin(0.5, 0.5).setDepth(2);
 
-    this.status = this.scene.add.text(this.scene.cameras.main.centerX, this.rulesTextStatus.getBounds().bottom + 17, this.scene.state.lang.eventProfileName , {
+    this.status = this.scene.add.text(this.scene.cameras.main.centerX, this.rulesTextStatus.getBounds().bottom + 17, this.scene.state.lang.unicornProfileName , {
       font: '24px Bip',
       color: '#459D1A',
       align: 'left',
