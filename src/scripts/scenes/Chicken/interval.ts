@@ -356,25 +356,24 @@ function interval(): void {
       }
   
       if (this.state.progress.event.endTime <= 0 && 
-        this.state.progress.event.eventPoints > 0 && this.state.progress.event.open &&
+        this.state.userUnicorn.points > 0 && 
+        this.state.progress.event.open &&
         !this.scene.isActive('Modal') && 
         !this.scene.isActive('Tutorial') &&
-        !this.scene.isActive('Profile')) { 
-        
+        !this.scene.isActive('Profile') && 
+        this.state.progress.event.type === 1) { 
         if (!checkRaiting) {
           this.getEventRaiting();
           checkRaiting = true;
         }
         
-        if (this.state.progress.event.updateRaitings) {
-  
+        if (this.state.unicornRaitings?.updated) {
           let modal: Imodal = {
             type: 12,
           };
   
           this.state.modal = modal;
           this.scene.launch('Modal', this.state);
-  
         }
       }
     }
