@@ -280,9 +280,7 @@ export default class EventEndWindow {
           status: this.scene.state.user.status
         }
         axios.post(process.env.API + "/newStatus", data)
-          .then(res => {
-            console.log(res);
-          });
+          .then(res => {});
       }
       this.scene.state.progress.event.eventPoints = -1;
       this.scene.state.user.additionalTutorial.eventTutorial = 0;
