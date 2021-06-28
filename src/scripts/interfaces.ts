@@ -567,6 +567,7 @@ interface Iconvertor {
 }
 interface Ipackage {
   bonus: number;
+  active: boolean;
   diamonds: number;
   id: number;
   price: number;

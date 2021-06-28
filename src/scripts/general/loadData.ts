@@ -3,7 +3,7 @@ import basicSheepTerritories from '../local/sheepTerritories';
 import basicChickenTerritories from '../local/chickenTerritories';
 import basicCowTerritories from '../local/cowTerritories';
 import basicUnicornCollector from '../local/unicornCollector';
-import { unicornSettings, sheepSettings, chickenSettings, cowSettings } from '../local/settings';
+import { unicornSettings, sheepSettings, chickenSettings, cowSettings, general } from '../local/settings';
 import { userCow, userData } from '../local/usersData';
 import sheepCollectorSettings from '../local/sheepCollector';
 import chickenCollectorSettings from '../local/chickenCollector';
@@ -128,11 +128,11 @@ export default function loadData(response: any): void {
   // общие настройки
   this.state.autoSaveSpeed = response.data.settings.general.autoSaveSpeed;
   this.state.maxMerginTime = response.data.settings.general.maxMerginTime;
-  this.state.herdBoostSpeedAnimal = response.data.settings.general.herdBoostSpeedAnimal;
-  this.state.herdBoostTime = response.data.settings.general.herdBoostTime;
-  this.state.herdBoostPrice = response.data.settings.general.herdBoostPrice;
-  this.state.herdBoostDelay = response.data.settings.general.herdBoostDelay;
-  this.state.packages = response.data.settings.packages;
+  this.state.herdBoostSpeedAnimal = general.herdBoostSpeedAnimal;
+  this.state.herdBoostTime = general.herdBoostTime;
+  this.state.herdBoostPrice = general.herdBoostPrice;
+  this.state.herdBoostDelay = general.herdBoostDelay;
+  this.state.packages = general.packages;
   if (this.state.platform === 'android') initAndroidStore(this.state);
 
   // общие данные

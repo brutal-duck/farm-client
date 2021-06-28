@@ -1,14 +1,59 @@
-const general: { autoSaveSpeed: number, maxMerginTime: number, boostSpeedAnimal: number, boostTime: number, boostPrice: number, packages: Ipackage[] } = {
+const general: { 
+  autoSaveSpeed: number,
+  maxMerginTime: number,
+  herdBoostSpeedAnimal: number,
+  herdBoostTime: number,
+  herdBoostPrice: number,
+  herdBoostDelay: number,
+  packages: Ipackage[]
+} = {
   autoSaveSpeed: 15,
   maxMerginTime: 30,
-  boostSpeedAnimal: 100,
-  boostTime: 30,
-  boostPrice: 20,
+  herdBoostSpeedAnimal: 150,
+  herdBoostTime: 25,
+  herdBoostPrice: 20,
+  herdBoostDelay: 300,
   packages: [
-    { bonus: 25, diamonds: 225, id: 1, price: 75, voices: 11, stock: 10, top: false },
-    { bonus: 150, diamonds: 600, id: 2, price: 200, voices: 29, stock: 20, top: false },
-    { bonus: 500, diamonds: 1500, id: 3, price: 500, voices: 72, stock: 25, top: true },
-    { bonus: 2600, diamonds: 4900, id: 4, price: 1500, voices: 215, stock: 40, top: false }
+    {
+      id: 1,
+      active: true,
+      price: 75,
+      voices: 11,
+      diamonds: 225,
+      bonus: 25,
+      stock: 10,
+      top: false,
+    },
+    {
+      id: 2,
+      active: true,
+      price: 200,
+      voices: 29,
+      diamonds: 600,
+      bonus: 150,
+      stock: 20,
+      top: false,
+    },
+    {
+      id: 3,
+      active: true,
+      price: 500,
+      voices: 72,
+      diamonds: 1500,
+      bonus: 500,
+      stock: 25,
+      top: true,
+    },
+    {
+      id: 4,
+      active: true,
+      price: 1500,
+      voices: 215,
+      diamonds: 4900,
+      bonus: 2600,
+      stock: 40,
+      top: false,
+    },
   ],
 }
 
