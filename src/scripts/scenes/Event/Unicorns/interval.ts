@@ -190,6 +190,7 @@ function interval(): void {
          this.scene.stop('MapBars');
          this.scene.stop('Unicorn');
          this.scene.stop('UnicornBars');
+         this.scene.stop('Modal');
          this.scene.start('SheepPreload', this.state);
        }
    
