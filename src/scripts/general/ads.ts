@@ -42,13 +42,11 @@ function watchAd(type: number): void {
     this.state.adTimeout = false;
     
     this.state.adman.onStarted((): void => {
-      this.game.scene.keys[this.state.farm].scene.pause();
-      this.game.scene.keys[`${this.state.farm}Bars`].scene.pause();
+      this.scene.launch('Block');
     });
     this.state.adman.onCompleted((): void => {
       this.adReward();
-      this.game.scene.keys[this.state.farm].scene.resume();
-      this.game.scene.keys[`${this.state.farm}Bars`].scene.resume();
+      this.scene.stop('Block');
     });
     this.state.adman.onSkipped((): void => {});      
     this.state.adman.onClicked((): void => {}); 
