@@ -886,7 +886,6 @@ class Profile extends Phaser.Scene {
     } 
     
     if (this.state.unicornRaitings?.updated && this.state.progress.event.type === 1) {
-      console.log(this.state.unicornRaitings)
       const points: number = this.state.userUnicorn.points;
 
       this.eventScore.setText(points + ' ' + this.scoreEnding(points, this.state.lang));
