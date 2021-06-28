@@ -1,4 +1,4 @@
-function createChatBars(height: number = 0): void {
+export default function createChatBars(height: number = 0): void {
 
   // Заголовок
   let chatTitle: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 388 + height, this.state.lang.chat, {
@@ -219,6 +219,3 @@ function createChatBars(height: number = 0): void {
   
 }
 
-export {
-  createChatBars
-}

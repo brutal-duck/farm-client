@@ -25,6 +25,9 @@ import FarmPastureWindow from '../../components/modal/system/FarmPastureWindow';
 import FarmWaterWindow from '../../components/modal/system/FarmWaterWindow';
 import FarmFairWindow from '../../components/modal/system/FarmFairWindow';
 import FarmResourceRepositoryWindow from '../../components/modal/system/FarmResourceRepositoryWindow';
+import SheepWindow from '../../components/modal/system/SheepWindow';
+import ChickenWindow from '../../components/modal/system/ChickenWindow';
+import CowWindow from '../../components/modal/system/CowWindow';
 
 function systemWindow(): void {
   let height:number = 0;
@@ -91,9 +94,9 @@ function systemWindow(): void {
   switch (this.state.modal.sysType) {
     case 1: // окно животного
     
-      if (this.state.farm === 'Sheep') this.sheep();
-      else if (this.state.farm === 'Chicken') this.chicken();
-      else if (this.state.farm === 'Cow') this.cow();
+      if (this.state.farm === 'Sheep') new SheepWindow(this);
+      else if (this.state.farm === 'Chicken') new ChickenWindow(this);
+      else if (this.state.farm === 'Cow') new CowWindow(this);
       break;
 
     case 2: // окно территории
@@ -109,32 +112,26 @@ function systemWindow(): void {
       break;
     
     case 4: // окно конвертора
-
       new CurrencyConvertorWindow(this)
       break;
       
     case 5: // окно подтверждения обмена территории
-
       if (this.state.farm !== 'Unicorn') new ExchangeTerritoryWindow(this)
       break;
 
     case 6: // окно подтверждения продажи животного
-
       new ExpelAnimalWindow(this)
       break;
 
     case 7: // окно профиля
-
       new ProfileWindow(this)
       break;
 
     case 8: // окно завершения сессии
-      
       new LogoutWindow(this)
       break;
 
     case 9: // окно завершения сессии
-      
       new DiamondAnimalAd(this)
       break;
 

@@ -289,7 +289,7 @@ export default class HerdBoostWindow {
   
 
   private stopBoostScene(): void {
-    this.scene.input.on('pointerdown', ()=> {
+    this.scene.input.on('pointerdown', (): void => {
       this.scene.scene.stop();
       this.scene.game.scene.keys[this.scene.state.farm].createBoostAnimal();
     });
@@ -394,7 +394,7 @@ export default class HerdBoostWindow {
         this.mergingArray.push({
           _id: animal.data.values._id,
           type: animal.data.values.type,
-          position: position
+          position
         })
     
         // проверка позиции для овец
