@@ -17,6 +17,8 @@ export default class HerdBoostUnicornWindow {
   private animalForBoost: Phaser.Physics.Arcade.Group;
 
   constructor(scene: Modal) {
+    console.log("!");
+    
     this.scene = scene;
     this.init();
     this.eventDrag();
@@ -402,17 +404,16 @@ export default class HerdBoostUnicornWindow {
   
     // Изменение рандома
     let randomArray: number[] = [];
-    let max: number = this.scene.state[`user${this.scene.state.farm}`].maxLevelAnimal - 4;
+    let max: number = this.scene.state[`user${this.scene.state.farm}`].points - 4;
     max = max <= 0 ? 1 : max;
   
-    let min: number = this.scene.state[`user${this.scene.state.farm}`].maxLevelAnimal - 14;
+    let min: number = this.scene.state[`user${this.scene.state.farm}`].points - 14;
     min = min <= 0 ? 0 : min;
   
     for (let i: number = min; i < max; i++) {
       randomArray.push(i ** 2 * 100);
     }
   
-    // let randomIndex: number = random(min + 1 , max ** 2 * 100);
     let randomIndex: number = Phaser.Math.Between(min + 1 , max ** 2 * 100);
     let randomType: number;
     
@@ -423,8 +424,7 @@ export default class HerdBoostUnicornWindow {
       } else randomType = min;
     }
   
-    const animal: Phaser.Physics.Arcade.Sprite = this.animalForBoost.create(x, y, 'animal' + randomType).setDepth(y).setInteractive().setDataEnabled();
-   
+    const animal: Phaser.Physics.Arcade.Sprite = this.animalForBoost.create(x, y, 'animal' + randomType).setDepth(y).setInteractive().setDataEnabled();   
     animal.data.values.velocity = -this.scene.state.herdBoostSpeedAnimal;
   
     if (side === 'right') {
