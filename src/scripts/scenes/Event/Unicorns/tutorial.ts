@@ -39,6 +39,7 @@ function doneEventTutor_0(): void {
       step: 0,
       farm_id: 'Unicorn'
     });
+    this.state.user.evetPoints = 0;
     this.state.userUnicorn.tutorial = 10;
     
     this.scene.stop('Tutorial');
