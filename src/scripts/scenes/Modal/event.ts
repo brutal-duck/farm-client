@@ -3,57 +3,6 @@ import { random, getRandomBool, randomString, shortTime, } from "../../general/b
 import Hint from '../../components/animations/Hint';
 import MergingCloud from '../../components/animations/MergingCloud';
 
-
-function buyEventTerritory(): void {
-  this.textHeader.setText(this.state.lang.buyTerritory);
-
-  let settings: IeventTerritoriesPrice = this.state.unicornSettings.territoriesUnicornPrice.find((data: IeventTerritoriesPrice) => data.block === this.state.territory.block && data.position === this.state.territory.position);
-
-  if (this.state.userUnicorn.points >= settings.unlock) {
-
-      let price: number = settings.price;
-  
-      let right = {
-        icon: 'unicornCoin',
-        text: this.shortNum(price)
-      }
-    
-      let button = this.bigButton('green', 'left', 20, this.state.lang.buyTerritory, right);
-      this.clickModalBtn(button, (): void => {
-        this.scene.stop();
-        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-        this.game.scene.keys[this.state.farm].buyTerritory();
-      });
-
-      this.resizeWindow(130);
-  } else {
-
-    let right1 = {
-      icon: 'diamond',
-      text: settings.diamond
-    }
-  
-    let button = this.bigButton('green', 'left', -15, this.state.lang.buyTerritory, right1);
-    this.clickModalBtn(button, (): void => {
-      this.scene.stop();
-      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-      this.game.scene.keys[this.state.farm].buyTerritory();
-    });
-
-    let right2 = {
-      icon: 'lock',
-      text: this.state.lang.shortLevel + '. ' + settings.unlock
-    }
-  
-    this.bigButton('grey', 'left', 65, this.state.lang.buyTerritory, right2);
-
-    this.resizeWindow(150);
-  }
-  
-  
-}
-
-
 let x: number = 600;
 let y: number = 360;
 let yTent: number;
@@ -623,7 +572,6 @@ function flyAnimal(): void {
 
 
 export { 
-  buyEventTerritory,
   herdBoostEventWindow,
   eventDrag,
 } 

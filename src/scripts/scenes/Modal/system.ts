@@ -15,19 +15,24 @@ import AddEmailWindow from '../../components/modal/system/AddEmailWindow';
 import SupportWindow from '../../components/modal/system/SupportWindow';
 import RegistrationWindow from '../../components/modal/system/RegistrationWindow';
 import CurrencyConvertorWindow from '../../components/modal/system/CurrencyConvertorWindow';
+import MessageWindow from '../../components/modal/system/MessageWindow';
+import BuyFarmTerritoryWindow from '../../components/modal/system/BuyFarmTerritoryWindow';
+import ImproveFactoryWindow from '../../components/modal/system/ImproveFactoryWindow';
+import ConfirmSellMilk from '../../components/modal/system/ConfirmSellMilk';
+import ConfirmBuyCooldown from '../../components/modal/system/ConfirmBuyCooldown';
+import BoughtFarmLand from '../../components/modal/system/BoughtFarmLand';
+import FarmPastureWindow from '../../components/modal/system/FarmPastureWindow';
+import FarmWaterWindow from '../../components/modal/system/FarmWaterWindow';
+import FarmFairWindow from '../../components/modal/system/FarmFairWindow';
+import FarmResourceRepositoryWindow from '../../components/modal/system/FarmResourceRepositoryWindow';
 
 function systemWindow(): void {
   let height:number = 0;
 
-  this.header = this.add.image(this.cameras.main.centerX - 1, this.cameras.main.centerY - Math.floor(height / 2), 'header-syst')
-    .setOrigin(0.5, 1);
-  this.close = this.add.sprite(620, this.cameras.main.centerY - Math.floor(height / 2) - 45, 'header-close')
-    .setOrigin(0.5, 0.5)
-    .setDepth(1);
-  this.bottom = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY + Math.floor(height / 2), 'bottom-syst')
-    .setOrigin(0.5, 0);
-  this.body = this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY, 614, height + 2, 'mid-syst')
-    .setOrigin(0.5, 0.5);
+  this.header = this.add.image(this.cameras.main.centerX - 1, this.cameras.main.centerY - Math.floor(height / 2), 'header-syst').setOrigin(0.5, 1);
+  this.close = this.add.sprite(620, this.cameras.main.centerY - Math.floor(height / 2) - 45, 'header-close').setOrigin(0.5, 0.5).setDepth(1);
+  this.bottom = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY + Math.floor(height / 2), 'bottom-syst').setOrigin(0.5, 0);
+  this.body = this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY, 614, height + 2, 'mid-syst').setOrigin(0.5, 0.5);
   this.textHeader = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - Math.floor(height / 2) - 25, '', {
     font: '37px Shadow',
     fill: '#F9D48D'
@@ -86,37 +91,21 @@ function systemWindow(): void {
   switch (this.state.modal.sysType) {
     case 1: // окно животного
     
-      if (this.state.farm === 'Sheep') {
-        this.sheep();
-      } else if (this.state.farm === 'Chicken') {
-        this.chicken();
-      } else if (this.state.farm === 'Cow') {
-        this.cow();
-      }
+      if (this.state.farm === 'Sheep') this.sheep();
+      else if (this.state.farm === 'Chicken') this.chicken();
+      else if (this.state.farm === 'Cow') this.cow();
       break;
 
     case 2: // окно территории
 
-      if (this.state.farm === 'Sheep') {
-        this.sheepTerritory();
-      } else if (this.state.farm === 'Chicken') {
-        this.chickenTerritory();
-      } else if (this.state.farm === 'Cow') {
-        this.cowTerritory();
-      } else if (this.state.farm === 'Unicorn') {
-        this.eventTerritory();
-      }
+      if (this.state.farm === 'Sheep')  this.sheepTerritory();
+      else if (this.state.farm === 'Chicken') this.chickenTerritory();
+      else if (this.state.farm === 'Cow') this.cowTerritory();
+      else if (this.state.farm === 'Unicorn') this.eventTerritory();
       break;
 
     case 3: // окно с сообщением
-      this.textHeader.setText(this.state.lang.message);
-      this.resizeWindow(this.state.modal.height);
-      this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 20, this.state.modal.message, {
-        font: '26px Bip',
-        color: '#925C28',
-        align: 'center',
-        wordWrap: { width: 400 }
-      }).setOrigin(0.5, 0.5);
+      new MessageWindow(this)
       break;
     
     case 4: // окно конвертора
@@ -177,7 +166,7 @@ function systemWindow(): void {
       break;
     
     case 16: // Окно улучшения фабрики
-      this.improveFactoryWindow();
+      new ImproveFactoryWindow(this);
       break;
 
     case 17: // Окно ветрины фабрики
@@ -185,11 +174,11 @@ function systemWindow(): void {
       break;
     
     case 18: 
-      this.confirmSellMilk();
+      new ConfirmSellMilk(this);
       break;
     
     case 19: 
-      this.confirmBuyCooldown();
+      new ConfirmBuyCooldown(this);
       break;
       
     default:      
@@ -207,27 +196,27 @@ function chickenTerritory(): void {
   switch (this.state.territory.type) {
 
     case 0: // территория для покупки
-      this.buyChickenTerritory();
+      new BuyFarmTerritoryWindow(this)  
       break;
 
     case 1: // купленная земля
-      this.boughtChickenLand();
+      new BoughtFarmLand(this);
       break;
 
     case 2: // пастбище
-      this.chickenPasture();
+      new FarmPastureWindow(this);
       break;
       
     case 3: // поилка
-      this.chickenWater();
+      new FarmWaterWindow(this);
       break;
 
     case 4: // ярмарка
-      this.chickenFair();
+      new FarmFairWindow(this);
       break;
 
     case 5: // хранилище яиц
-      this.chickenEggsRepository();
+      new FarmResourceRepositoryWindow(this)
       break;
 
     default:
@@ -244,27 +233,27 @@ function cowTerritory(): void {
   switch (this.state.territory.territoryType) {
 
     case 0: // территория для покупки
-      this.buyCowTerritory();
+      new BuyFarmTerritoryWindow(this)
       break;
 
     case 1: // купленная земля
-      this.boughtCowLand();
+      new BoughtFarmLand(this);
       break;
 
     case 2: // пастбище
-      this.cowPasture();
+      new FarmPastureWindow(this);
       break;
       
     case 3: // поилка
-      this.cowWater();
+      new FarmWaterWindow(this);
       break;
 
     case 4: // ярмарка
-      this.cowFair();
+      new FarmFairWindow(this);
       break;
 
     case 5: // хранилище яиц
-      this.cowMilkRepository();
+      new FarmResourceRepositoryWindow(this)
       break;
 
     case 8: // хранилище яиц
@@ -286,27 +275,27 @@ function sheepTerritory(): void {
   switch (this.state.territory.type) {
 
     case 0: // территория для покупки
-      this.buySheepTerritory();
+      new BuyFarmTerritoryWindow(this)
       break;
 
     case 1: // купленная земля
-      this.boughtSheepLand();
+      new BoughtFarmLand(this)
       break;
 
     case 2: // пастбище
-      this.sheepPasture();
+      new FarmPastureWindow(this);
       break;
       
     case 3: // поилка
-      this.sheepWater();
+      new FarmWaterWindow(this);
       break;
 
     case 4: // ярмарка
-      this.sheepFair();
+      new FarmFairWindow(this);
       break;
 
     case 5: // хранилище шерсти
-      this.sheepWoolRepository();
+      new FarmResourceRepositoryWindow(this);
       break;
 
     default:
@@ -323,7 +312,7 @@ function eventTerritory(): void {
   switch (this.state.territory.type) {
 
     case 0: // территория для покупки
-      this.buyEventTerritory();
+      new BuyFarmTerritoryWindow(this)
       break;
 
     default:

@@ -421,7 +421,7 @@ function cancelMerging(territory: any, sheep1: any, sheep2: any) {
 
 // покупка овцы
 function buySheep(breed: number, shop: boolean = false): boolean {
-    let success: boolean = false;
+  let success: boolean = false;
 
   if (this.sheep.children.entries.length < 50) {
 

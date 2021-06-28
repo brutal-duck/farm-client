@@ -47,7 +47,7 @@ export default class CurrencyConvertorWindow {
       align: 'center'
     }).setOrigin(0, 0.5);
 
-    this.scene.add.sprite(border.right + 5, this.scene.cameras.main.centerY - 10, 'sheepCoin').setOrigin(0, 0.5).setScale(0.15);
+    this.scene.add.sprite(border.right + 5, this.scene.cameras.main.centerY - 10, `${this.scene.state.farm.toLowerCase()}Coin`).setOrigin(0, 0.5).setScale(0.15);
 
     if (this.scene.state.convertor.diamonds === 1 && this.scene.state.readyAd) {
 
