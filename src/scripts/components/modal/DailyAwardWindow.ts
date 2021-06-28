@@ -115,7 +115,7 @@ export default class DailyAwardWindow extends Phaser.GameObjects.Sprite {
           type: 'daily_award',
           count: AWARDS[this.day].count,
         });
-
+        this.scene.game.scene.keys[this.scene.state.farm].autosave();
         this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].getCurrency({ x: this.scene.cameras.main.centerX, y: this.scene.cameras.main.centerY }, AWARDS[this.day].count, 'diamond');
 
         const text: string = this.scene.state.lang.dailyHint_1.replace('$1', String(AWARDS[this.day].count)); 

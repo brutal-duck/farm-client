@@ -593,7 +593,8 @@ export default class Fortune extends Phaser.Scene {
     this.game.scene.keys[this.state.farm].logAmplitudeEvent('diamonds_get', {
       type: 'fortune',
       count: prize,
-    })
+    });
+    this.game.scene.keys[this.state.farm].autosave();
   }
 
   private getJackpot(prize: number): void {

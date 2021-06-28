@@ -362,11 +362,6 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
       y: cow.y - 50
     }
 
-    // this.logAmplitudeEvent('diamonds_get', {
-    //   type: 'diamond_animal',
-    //   count: 1,
-    // });
-
     cow.milk = 0;
     cow.diamond++;
     this.game.scene.keys['CowBars'].getCurrency(position, 1, 'diamond');
@@ -375,19 +370,9 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
 
 
     if (cow.diamond >= 3) {
-
-      // if (this.caveTutor) {
-        
-      //   this.time.addEvent({ delay: 2000, callback: (): void => {
-      //     this.showTutorial('cave3');
-      //     this.caveTutor = false;
-      //   }, callbackScope: this, loop: false });
-
-      // }
- 
       Firework.create(this, cow, 1);
       cow.destroy();
-      
+      this.scene.game.scene.keys[this.scene.state.farm].autosave();
       this.logAmplitudeEvent('diamonds_get', {
         type: 'diamond_animal',
         count: 3,

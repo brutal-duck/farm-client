@@ -488,7 +488,7 @@ function pickUpTaskReward(id: number): void {
       type: 'task_award',
       count: task.diamonds,
     });
-
+    this.autosave();
     this.state.user.xp += task.xp;
     task.got_awarded = 1;
 
