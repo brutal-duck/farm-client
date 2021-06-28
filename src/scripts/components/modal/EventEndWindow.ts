@@ -289,7 +289,7 @@ export default class EventEndWindow {
 
       this.scene.state.user.diamonds += diamonds;
       this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('diamonds_get', {
-        type: 'other',
+        type: 'unicorn_award',
         farm_id: 'Unicorn',
         count: diamonds,
       });
