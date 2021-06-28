@@ -292,8 +292,13 @@ export default class EventEndWindow {
       });
       this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
       this.scene.game.scene.keys[this.scene.state.farm].autosave();
-      axios.post(process.env.API + "/takeAward", { id: this.scene.state.user.id })
-          .then(res => {console.log(res)});
+      const data: any = {
+        id: this.scene.state.user.id,
+        hash: this.scene.state.user.hash,
+        counter: this.scene.state.user.counter,
+      }
+      axios.post(process.env.API + "/takeAward", data)
+          .then(res => {console.log(res.data)});
       this.scene.scene.stop('Modal');
       MoneyAnimation.create(this.scene.game.scene.keys[this.scene.state.farm + 'Bars'], 'diamond');
       

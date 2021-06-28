@@ -806,7 +806,7 @@ class Profile extends Phaser.Scene {
       this.state.progress.event.startTime <= 0 && 
       this.state.progress.event.open && 
       (this.state.user.additionalTutorial.eventTutorial > 0 &&
-      this.state.progress.event.type !== 1 || this.state.userUnicorn.tutorial > 0 &&
+      this.state.progress.event.type !== 1 || this.state.userUnicorn?.tutorial > 0 &&
       this.state.progress.event.type === 1) &&
       this.state.progress.event.endTime > 0 && 
       (this.state.progress.sheep.part > 4 || 

@@ -3,7 +3,7 @@ function showEventTutorial(additional: boolean | string = false): void {
   
   if (this.scene.isActive('Modal')) this.scene.stop('Modal');
   if (this.scene.isActive('Tutorial')) this.scene.stop('Tutorial');
-  if (this.state.userUnicorn.tutorial > 0) {
+  if (this.state.userUnicorn?.tutorial > 0) {
     if (this.scene.isActive('Profile')) this.scene.stop('Profile');
   }
   let tutorial: Itutorial;
@@ -22,7 +22,7 @@ function showEventTutorial(additional: boolean | string = false): void {
   } else if (this.state.progress.event.type === 2) {
     tutorial = {
       farm: 4,
-      step: this.state.userUnicorn.tutorial,
+      step: this.state.user.additionalTutorial.eventTutorial,
       additional: additional
     };
   }
@@ -39,7 +39,6 @@ function doneEventTutor_0(): void {
       step: 0,
       farm_id: 'Unicorn'
     });
-    // this.state.user.eventPoints = 0;
     this.state.userUnicorn.tutorial = 10;
     
     this.scene.stop('Tutorial');
@@ -54,8 +53,8 @@ function doneEventTutor_0(): void {
       step: 0,
       farm_id: 'Fortune'
     });
-    // this.state.user.eventPoints = 1;
-    this.state.userUnicorn.tutorial = 10;
+    this.state.user.eventPoints = 1;
+    this.state.user.additionalTutorial.eventTutorial = 10;
     
     this.scene.stop('Tutorial');
     this.scene.stop('Profile');
