@@ -528,7 +528,17 @@ export default function autoprogress(load: boolean = false): void {
     if (factoryTerritory && state.userCow.tutorial >= 50) {
       const factory: Ifactory = state.userCow.factory;
       const factorySettings: IfactorySettings = state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === factoryTerritory.improve);
-  
+      let maxStorageVolume: number = 0;
+      for (const territory of territories) {
+        if (territory.type === 5) {
+          const factSettings: IfactorySettings = state.cowSettings.cowFactorySettings
+            .find((data: IfactorySettings) => territory.improve === data.improve);
+            
+          const storage: number = factSettings.lotSize * state.storageMultiply;
+          maxStorageVolume += storage;
+        } 
+      }
+      
       if (state.offlineTime > factory.productionTimer) {
         const countLaunchedProductions: number = Math.floor((state.offlineTime + factorySettings.processingTime - factory.productionTimer) / factorySettings.processingTime);
         const needMilk: number = countLaunchedProductions * factorySettings.lotSize;
@@ -542,10 +552,10 @@ export default function autoprogress(load: boolean = false): void {
         // сколько фактически производств было
         let count: number = 0;
 
-        if (needMilk < haveMilk) {
+        if (needMilk < haveMilk && maxStorageVolume > factorySettings.lotSize) {
           haveMilk -= needMilk;
           count = countLaunchedProductions;
-        } else {
+        } else if (maxStorageVolume > factorySettings.lotSize) {
           count = Math.floor(haveMilk / factorySettings.lotSize);
           haveMilk -= count * factorySettings.lotSize;
           if (haveMilk < 0) haveMilk = 0;
@@ -566,7 +576,7 @@ export default function autoprogress(load: boolean = false): void {
             if (currentProduction && i === 0) {
               factory[`production${currentProduction}Money`] += factorySettings.lotSize * factory[`production${currentProduction}Multiply`];
               factory.money += factorySettings.lotSize * factory[`production${currentProduction}Multiply`];
-            } else {
+            } else if (maxStorageVolume > factorySettings.lotSize) {
               if (boostedCount > 0) {
                 boostedCount -= 1;
               }
@@ -1175,6 +1185,16 @@ export default function autoprogress(load: boolean = false): void {
     if (factoryTerritory && state.userCow.tutorial >= 50) {
       const factory: Factory = factoryTerritory.factory;
       const factorySettings: IfactorySettings = factory.settings;
+      let maxStorageVolume: number = 0;
+      for (const territory of territories) {
+        if (territory.territoryType === 5) {
+          const factSettings: IfactorySettings = state.cowSettings.cowFactorySettings
+            .find((data: IfactorySettings) => territory.improve === data.improve);
+            
+          const storage: number = factSettings.lotSize * state.storageMultiply;
+          maxStorageVolume += storage;
+        } 
+      }
       if (state.offlineTime > factory.productionTimer) {
         const countLaunchedProductions: number = Math.floor((state.offlineTime + factorySettings.processingTime - factory.productionTimer) / factorySettings.processingTime);
         const needMilk: number = countLaunchedProductions * factorySettings.lotSize;
@@ -1187,10 +1207,10 @@ export default function autoprogress(load: boolean = false): void {
         }
         // сколько фактически производств было
         let count: number = 0;
-        if (needMilk < haveMilk) {
+        if (needMilk < haveMilk && maxStorageVolume > factorySettings.lotSize) {
           haveMilk -= needMilk;
           count = countLaunchedProductions;
-        } else {
+        } else if (maxStorageVolume > factorySettings.lotSize) {
           count = Math.floor(haveMilk / factorySettings.lotSize);
           haveMilk -= count * factorySettings.lotSize;
           if (haveMilk < 0) haveMilk = 0;
@@ -1210,7 +1230,7 @@ export default function autoprogress(load: boolean = false): void {
             if (currentProduction && i === 0) {
               factory[`production${currentProduction}Money`] += factorySettings.lotSize * state.userCow.factory[`production${currentProduction}Multiply`];
               factory.money += factorySettings.lotSize * state.userCow.factory[`production${currentProduction}Multiply`];
-            } else {
+            } else if (maxStorageVolume > factorySettings.lotSize) {
               const type: number = getRandomProductId(factorySettings, boostedCount > 0);
               factory[`production${type}Money`] += factorySettings.lotSize * state.userCow.factory[`production${type}Multiply`];
               factory.money += factorySettings.lotSize * state.userCow.factory[`production${type}Multiply`];
