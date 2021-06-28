@@ -216,7 +216,7 @@ function chickenTerritory(): void {
       break;
 
     case 5: // хранилище яиц
-      this.chickenEggsRepository();
+      new FarmResourceRepositoryWindow(this)
       break;
 
     default:
@@ -253,7 +253,7 @@ function cowTerritory(): void {
       break;
 
     case 5: // хранилище яиц
-      this.cowMilkRepository();
+      new FarmResourceRepositoryWindow(this)
       break;
 
     case 8: // хранилище яиц

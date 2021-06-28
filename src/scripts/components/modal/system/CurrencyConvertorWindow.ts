@@ -9,8 +9,6 @@ export default class CurrencyConvertorWindow {
     this.scene = scene;
     this.create();
     this.scene.openModal(this.scene.cameras.main);
-    console.log('1');
-    
   }
 
   private create(): void {
