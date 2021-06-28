@@ -277,7 +277,7 @@ export default class HerdBoostUnicornWindow {
       color: '#b5315a'
     }).setOrigin(0.5, 0.5).setDepth(this.y * 2).setAlpha(0);
     
-    if (farm === 'event') textLevel.setText(String(this.scene.state.userUnicorn.maxLevelAnimal));
+    if (farm === 'event') textLevel.setText(String(this.scene.state.userUnicorn.points));
     // дорога
     const road: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.xRoad, this.yRoad, `herd-boost-road-${farm}`).setOrigin(0).setDepth(this.yRoad).setDataEnabled().setAlpha(0);
   
