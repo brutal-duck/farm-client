@@ -266,9 +266,11 @@ function payVK(id: number): void {
 function payYandex(id: number): void {
   const pack: Ipackage = this.state.packages.find((data: any) => data.id === id);
   if (pack) {
+    console.log(pack, 'pack')
     this.state.ysdk.getPayments({ signed: true }).then(payments => {
+      console.log(payments, 'payments')
       payments.purchase({ id }).then(purchase => {
-        console.log(purchase);
+        console.log(purchase, 'purchase');
           this.state.user.diamonds += pack.diamonds;
       });
     }).catch(err => { console.log(err); });
