@@ -3,6 +3,7 @@ import Socket from '../../Socket';
 import loadCow from '../../local/loadCow';
 import loadData from '../../general/loadData';
 import { loadingScreen, checkStorage } from '../../general/basic';
+import LocalStorage from './../../libs/LocalStorage';
 
 const pixel: string = require('./../../../assets/images/pixel.png');
 const bg: string = require('./../../../assets/images/scroll-bg.png');
@@ -508,17 +509,19 @@ class CowPreload extends Phaser.Scene {
 
         // подрубаем амплитуду
         const Amplitude = this.state.amplitude;
-        const identify = new Amplitude.Identify().setOnce('start_version', '3.0')
-          .set('diamond_balance', this.state.user.diamonds)
-          .set('partner', this.state.platform)
-          .set('user_id', this.state.user.id)
-          .set('test', this.state.user.test)
-          .set('browser', navigator.userAgent);
-        Amplitude.getInstance().identify(identify);
-        console.log(`Test - ${this.state.user.test}`);
-        // Amplitude.getInstance().logEvent('load_time', {
-        //   seconds: loadTime
-        // });
+        if (Amplitude) {
+          const identify = new Amplitude.Identify().setOnce('start_version', '3.0')
+            .set('diamond_balance', this.state.user.diamonds)
+            .set('partner', this.state.platform)
+            .set('user_id', this.state.user.id)
+            .set('test', this.state.user.test)
+            .set('browser', navigator.userAgent);
+          Amplitude.getInstance().identify(identify);
+          console.log(`Test - ${this.state.user.test}`);
+          // Amplitude.getInstance().logEvent('load_time', {
+          //   seconds: loadTime
+          // });
+        }
       }
 
       this.userReady = false;
@@ -548,8 +551,8 @@ class CowPreload extends Phaser.Scene {
 
     //   // let localSaveCounter: number = 0;
 
-    //   // if (localStorage.userCow) {
-    //   //   let user: IuserCow = JSON.parse(localStorage.userCow);
+    //   // if (LocalStorage.get('userCow')) {
+    //   //   let user: IuserCow = JSON.parse(LocalStorage.get('userCow'));
     //   //   if (typeof user.autosaveCounter === 'number') localSaveCounter = user.autosaveCounter;
     //   // }
 
@@ -562,8 +565,10 @@ class CowPreload extends Phaser.Scene {
         this.state.nativeCounter = [0, 0, 0, 0];
 
         const Amplitude = this.state.amplitude;
-        const identify = new Amplitude.Identify().set('CatcherCow', this.state.userCow.collectorLevel);
-        Amplitude.getInstance().identify(identify);
+        if (Amplitude) {
+          const identify = new Amplitude.Identify().set('CatcherCow', this.state.userCow.collectorLevel);
+          Amplitude.getInstance().identify(identify);
+        }
     //   // } else {
     //   //   this.loadCow(response.data.user.counter);
     //   // }
@@ -574,7 +579,7 @@ class CowPreload extends Phaser.Scene {
     // });
 
 
-    localStorage.farm = 'Cow';
+    LocalStorage.set('farm', 'Cow');
   }
 
   

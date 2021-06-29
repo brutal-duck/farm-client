@@ -4,6 +4,7 @@ import collectorSettings from './sheepCollector';
 import { userData, userSheep } from './usersData';
 import tasks from '../tasks';
 import progress from './progress';
+import LocalStorage from './../libs/LocalStorage';
 
 function loadSheep(counter: number = 0): void {
 
@@ -18,14 +19,14 @@ function loadSheep(counter: number = 0): void {
   this.state.daily = false;
   this.state.newbieTime = 0;
   this.state.timeToBoost = 0;
-  if (localStorage.dailyAwards) this.state.dailyAwards = JSON.parse(localStorage.dailyAwards);
+  if (LocalStorage.get('dailyAwards')) this.state.dailyAwards = JSON.parse(LocalStorage.get('dailyAwards'));
 
-  if (localStorage.sheep) this.state.sheep = JSON.parse(localStorage.sheep);
+  if (LocalStorage.get('sheep')) this.state.sheep = JSON.parse(LocalStorage.get('sheep'));
 
-  if (localStorage.sheepTerritories) {
+  if (LocalStorage.get('sheepTerritories')) {
 
     let sheepTerritories: Iterritories[] = [];
-    let storageTerritories: Iterritories[] = JSON.parse(localStorage.sheepTerritories);
+    let storageTerritories: Iterritories[] = JSON.parse(LocalStorage.get('sheepTerritories'));
 
     for (let i in storageTerritories) {
 
@@ -46,15 +47,15 @@ function loadSheep(counter: number = 0): void {
 
   } else this.state.sheepTerritories = territories;
 
-  if (localStorage.user) this.state.user = JSON.parse(localStorage.user);
+  if (LocalStorage.get('user')) this.state.user = JSON.parse(LocalStorage.get('user'));
   else this.state.user = userData;
 
   if (counter > 0) this.state.user.counter = counter;
 
-  if (localStorage.userSheep) this.state.userSheep = JSON.parse(localStorage.userSheep);
+  if (LocalStorage.get('userSheep')) this.state.userSheep = JSON.parse(LocalStorage.get('userSheep'));
   else this.state.userSheep = userSheep;
 
-  if (localStorage.sheepTasks) this.state.sheepTasks = JSON.parse(localStorage.sheepTasks);
+  if (LocalStorage.get('sheepTasks')) this.state.sheepTasks = JSON.parse(LocalStorage.get('sheepTasks'));
   else {
 
     let sheepTasks: Itasks[] = [];
@@ -63,10 +64,10 @@ function loadSheep(counter: number = 0): void {
 
   }
   
-  if (localStorage.sheepTime) {
+  if (LocalStorage.get('sheepTime')) {
 
     let time: number = Math.round(new Date().getTime() / 1000);
-    this.state.offlineTime = time - Number(localStorage.sheepTime);
+    this.state.offlineTime = time - Number(LocalStorage.get('sheepTime'));
 
   } else this.state.offlineTime = 0;
 

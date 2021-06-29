@@ -2,7 +2,6 @@ import './interfaces';
 import '../css/style.css';
 import * as Phaser from 'phaser';
 import * as NineSlicePlugin from 'phaser3-nineslice'
-
 import Boot from './scenes/Boot';
 import Preload from './scenes/Preload';
 import SheepPreload from './scenes/Sheep/SheepPreload';
@@ -19,18 +18,12 @@ import Shop from './scenes/Modal/Shop/Main';
 import ShopBars from './scenes/Modal/Shop/Bars';
 import Chat from './scenes/Modal/Chat/Main';
 import Tutorial from './scenes/Tutorial';
-import * as eruda from 'eruda';
 import UnicornBars from './scenes/Event/Unicorns/UnicornBars';
 import UnicornPreload from './scenes/Event/Unicorns/UnicornPreload';
 import Unicorn from './scenes/Event/Unicorns/Main';
 import Fortune from './scenes/Event/Fortune/Fortune';
 import Block from './scenes/Block';
 import Profile from './scenes/Profile';
-
-// eruda
-if (process.env.DEV_CLIENT === window.location.origin) {
-  eruda.init();
-}
 
 function gcd(num1: number, num2: number): number {
   while (num1 && num2) num1 > num2 ? num1 %= num2 : num2 %= num1;
@@ -42,7 +35,7 @@ function gcd(num1: number, num2: number): number {
 window.onload = (): void => {
 
   setTimeout((): void => {
-
+    console.log('message')
     let width: number = 0;
     let height: number = 0;
     let root: HTMLElement = document.querySelector('#root');

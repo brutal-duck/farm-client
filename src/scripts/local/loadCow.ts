@@ -4,6 +4,7 @@ import collectorSettings from './cowCollector';
 import { userData, userCow } from './usersData';
 import tasks from '../tasks';
 import progress from './progress';
+import LocalStorage from './../libs/LocalStorage';
 
 function loadCow(counter: number = 0): void {
   
@@ -19,23 +20,23 @@ function loadCow(counter: number = 0): void {
   this.state.daily = false;
   this.state.newbieTime = 0;
   this.state.timeToBoost = 0;
-  if (localStorage.dailyAwards) this.state.dailyAwards = JSON.parse(localStorage.dailyAwards);
+  if (LocalStorage.get('dailyAwards')) this.state.dailyAwards = JSON.parse(LocalStorage.get('dailyAwards'));
 
-  if (localStorage.cow) this.state.cow = JSON.parse(localStorage.cow);
-  if (localStorage.cowMilk) this.state.cowMilk = JSON.parse(localStorage.cowMilk);
+  if (LocalStorage.get('cow')) this.state.cow = JSON.parse(LocalStorage.get('cow'));
+  if (LocalStorage.get('cowMilk')) this.state.cowMilk = JSON.parse(LocalStorage.get('cowMilk'));
 
-  if (localStorage.cowTerritories) this.state.cowTerritories = JSON.parse(localStorage.cowTerritories);
+  if (LocalStorage.get('cowTerritories')) this.state.cowTerritories = JSON.parse(LocalStorage.get('cowTerritories'));
   else this.state.cowTerritories = territories;
 
-  if (localStorage.user) this.state.user = JSON.parse(localStorage.user);
+  if (LocalStorage.get('user')) this.state.user = JSON.parse(LocalStorage.get('user'));
   else this.state.user = userData;
   
   if (counter > 0) this.state.user.counter = counter;
 
-  if (localStorage.userCow) this.state.userCow = JSON.parse(localStorage.userCow);
+  if (LocalStorage.get('userCow')) this.state.userCow = JSON.parse(LocalStorage.get('userCow'));
   else this.state.userCow = userCow;
 
-  if (localStorage.cowTasks) this.state.cowTasks = JSON.parse(localStorage.cowTasks);
+  if (LocalStorage.get('cowTasks')) this.state.cowTasks = JSON.parse(LocalStorage.get('cowTasks'));
   else {
 
     let cowTasks: Itasks[] = [];
@@ -44,10 +45,10 @@ function loadCow(counter: number = 0): void {
 
   }
 
-  if (localStorage.cowTime) {
+  if (LocalStorage.get('cowTime')) {
 
     let time: number = Math.round(new Date().getTime() / 1000);
-    this.state.offlineTime = time - Number(localStorage.cowTime);
+    this.state.offlineTime = time - Number(LocalStorage.get('cowTime'));
 
   } else this.state.offlineTime = 0;
 

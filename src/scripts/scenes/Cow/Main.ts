@@ -107,6 +107,7 @@ import {
 import setCollector from './collector';
 import { showEventTutorial, doneEventTutor_0 } from '../Event/Unicorns/tutorial';
 import CowGroup from '../../components/AnimalGroup/CowGroup';
+import LocalStorage from './../../libs/LocalStorage';
 import {
   sheepIntervalProgress,
   sheepCollectorProgress,
@@ -287,8 +288,8 @@ class Cow extends Phaser.Scene {
     this.animations();
 
     // Заменить на нормальное открытие
-    if (!localStorage?.openCow) {
-      localStorage?.setItem('openCow', 'true');
+    if (!LocalStorage.get('openCow')) {
+      LocalStorage.set('openCow', 'true');
       sendSocialEvent(this.state, 3, 100);
       sendAppEventVk(this.state, 4, 100);
     }

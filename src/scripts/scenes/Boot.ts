@@ -5,8 +5,9 @@ import state from '../state';
 import langs from '../langs';
 import bridge, { UserInfo } from '@vkontakte/vk-bridge';
 import * as amplitude from 'amplitude-js';
-import * as eruda from 'eruda';
 import { okCallback } from '../general/callbacks';
+import LocalStorage from './../libs/LocalStorage';
+
 amplitude.getInstance().init(process.env.AMPLITUDE);
 
 const headerSyst: string = require('./../../assets/images/modal/header-syst.png');
@@ -41,7 +42,7 @@ class Boot extends Phaser.Scene {
   public init(): void {
     this.build = '3.7.2';
     console.log('Build ' + this.build);
-    // console.log('y1')
+    console.log('y1')
     this.state = state;
     this.fontsReady = false;
     this.userReady = false;
@@ -49,7 +50,6 @@ class Boot extends Phaser.Scene {
     this.authorization = false;
     this.name = '';
     this.avatar = '';
-
     this.setAutosaveListener();
     this.checkAbBlock();
     this.setLangs();
@@ -57,8 +57,15 @@ class Boot extends Phaser.Scene {
     this.initAmplitude();
     this.loadFonts();
     this.checkUser();
+
+    if (process.env.DEV_CLIENT === window.location.origin) {
+      this.initEruda();
+    }
   }
 
+  private initEruda(): void {
+    // require('../libs/eruda')();
+  }
   private setAutosaveListener(): void {
     window.addEventListener('beforeunload', (): void => {
       if ((this.state.farm === 'Sheep' && this.scene.isActive('Sheep')) ||
@@ -100,10 +107,10 @@ class Boot extends Phaser.Scene {
       this.androidInit();
     }
     const search: string = window.location.search;
+    console.log(search)
     this.params = new URLSearchParams(search);
     const vk: string = this.params.get('api_url');
     const ok: string = this.params.get('api_server');
-    
     if (vk === 'https://api.vk.com/api.php') this.platform = 'vk';
     else if (ok === 'https://api.ok.ru/') this.platform = 'ok';
     // this.platform = 'vk'
@@ -134,20 +141,25 @@ class Boot extends Phaser.Scene {
   }
 
   private initAmplitude(): void {
-    const identify = new amplitude.Identify().setOnce('start_version', this.build)
-      .set('partner', this.platform)
-      .set('browser', navigator.userAgent);
-    amplitude.getInstance().identify(identify);
-    
-    this.state.amplitude = amplitude;
-    const OutSum = this.params.get('OutSum');
-    const InvId = this.params.get('InvId');
-
-    if (OutSum && InvId) {
-      const revenue: amplitude.Revenue = new amplitude.Revenue()
-        .setProductId('Product #' + InvId)
-        .setPrice(OutSum);
-      amplitude.logRevenueV2(revenue);
+    try {
+      const identify = new amplitude.Identify().setOnce('start_version', this.build)
+        .set('partner', this.platform)
+        .set('browser', navigator.userAgent);
+      amplitude.getInstance().identify(identify);
+      
+      this.state.amplitude = amplitude;
+      const OutSum = this.params.get('OutSum');
+      const InvId = this.params.get('InvId');
+  
+      if (OutSum && InvId) {
+        const revenue: amplitude.Revenue = new amplitude.Revenue()
+          .setProductId('Product #' + InvId)
+          .setPrice(OutSum);
+        amplitude.logRevenueV2(revenue);
+      }
+    } catch (e) {
+      console.log(e)
+      this.state.amplitude = null;
     }
   }
 
@@ -198,10 +210,10 @@ class Boot extends Phaser.Scene {
 
     this.scene.stop();
 
-    if (localStorage?.farm === 'Sheep' ||
-      localStorage?.farm === 'Chicken' ||
-      localStorage?.farm === 'Cow') {
-      this.scene.start(localStorage?.farm + 'Preload', this.state);
+    if (LocalStorage.get('farm') === 'Sheep' ||
+    LocalStorage.get('farm') === 'Chicken' ||
+    LocalStorage.get('farm') === 'Cow') {
+      this.scene.start(LocalStorage.get('farm') + 'Preload', this.state);
     } else {
       this.scene.start('SheepPreload', this.state);
     }
@@ -307,7 +319,7 @@ class Boot extends Phaser.Scene {
   }
   
   private checkAndroidUser(): void {
-    this.hash = localStorage?.getItem('hash');
+    this.hash = LocalStorage.get('hash');
     this.postCheckUser(this.hash);
   }
 
@@ -325,7 +337,7 @@ class Boot extends Phaser.Scene {
           this.userReady = true;
           this.hash = response.data.hash;
           if (this.platform === 'android') {
-            localStorage?.setItem('hash', response.data.hash);
+            LocalStorage.set('hash', response.data.hash);
           }
         }
       } else this.createErrorWindow();
@@ -343,7 +355,11 @@ class Boot extends Phaser.Scene {
   }
 
   private createLanding(): void {
-    amplitude.getInstance().logEvent('landing_view', {});
+    try {
+      amplitude.getInstance().logEvent('landing_view', {});
+    } catch (e) {
+      console.log(e);
+    }
     let root = document.querySelector('#root');
     let modal = document.createElement('div');
     modal.setAttribute('class', 'modal');
@@ -400,7 +416,11 @@ class Boot extends Phaser.Scene {
         }).then((response) => {
           if (response.data.error === false) {
             this.setCookieHash(response.data.hash, response.data.expires);
-            amplitude.getInstance().logEvent('landing_login', {});
+            try {
+              amplitude.getInstance().logEvent('landing_login', {});
+            } catch (e) {
+              console.log(e);
+            }
           } else this.createErrorWindow();
         }).catch(() => {
           this.createLocalUser();
@@ -410,7 +430,7 @@ class Boot extends Phaser.Scene {
   }
 
   private androidInit(): void {
-    eruda.init();
+    this.initEruda();
     const cordovaScript: HTMLScriptElement = document.createElement('script');
     cordovaScript.setAttribute('src', 'cordova.js');
     if (!cordovaScript) return;
@@ -566,7 +586,11 @@ class Boot extends Phaser.Scene {
 
   private createLocalUser(): void {
     console.log('localUser');
-    amplitude.getInstance().logEvent('landing_login', {});
+    try {
+      amplitude.getInstance().logEvent('landing_login', {});
+    } catch (e) {
+      console.log(e);
+    }
     let expires: Date | string = new Date();
     expires.setFullYear(expires.getFullYear() + 1);
     expires = expires.toUTCString();

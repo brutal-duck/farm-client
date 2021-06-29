@@ -121,6 +121,7 @@ import {
   showFeedBoostSpeechBubble,
   progressTerritoryCooldown,
 } from '../../general/interval';
+import LocalStorage from './../../libs/LocalStorage';
 
 class Chicken extends Phaser.Scene {
   constructor() {
@@ -289,8 +290,8 @@ class Chicken extends Phaser.Scene {
     this.setCollector();
 
     // Заменить на нормальное открытие
-    if (!localStorage?.openChicken) {
-      localStorage?.setItem('openChicken', 'true');
+    if (!LocalStorage.get('openChicken')) {
+      LocalStorage.set('openChicken', 'true');
       sendSocialEvent(this.state, 2, 100);
       sendAppEventVk(this.state, 3, 100);
     }

@@ -610,16 +610,18 @@ class EventPreload extends Phaser.Scene {
         });
         // подрубаем амплитуду
         const Amplitude = this.state.amplitude;
-        const identify = new Amplitude.Identify().setOnce('start_version', '3.0')
-          .set('diamond_balance', this.state.user.diamonds)
-          .set('partner', this.state.platform)
-          .set('user_id', this.state.user.id)
-          .set('browser', navigator.userAgent);
-        Amplitude.getInstance().identify(identify);
-        console.log(`Test - ${this.state.user.test}`);
-        // Amplitude.getInstance().logEvent('load_time', {
-        //   seconds: loadTime
-        // });
+        if (Amplitude) {
+          const identify = new Amplitude.Identify().setOnce('start_version', '3.0')
+            .set('diamond_balance', this.state.user.diamonds)
+            .set('partner', this.state.platform)
+            .set('user_id', this.state.user.id)
+            .set('browser', navigator.userAgent);
+          Amplitude.getInstance().identify(identify);
+          console.log(`Test - ${this.state.user.test}`);
+          // Amplitude.getInstance().logEvent('load_time', {
+          //   seconds: loadTime
+          // });
+        }
       }
 
       this.userReady = false;

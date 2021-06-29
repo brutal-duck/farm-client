@@ -3,6 +3,7 @@ import Socket from '../../Socket';
 import loadSheep from '../../local/loadSheep';
 import loadData from '../../general/loadData';
 import { checkStorage, loadingScreen } from '../../general/basic';
+import LocalStorage from './../../libs/LocalStorage';
 
 const pixel: string = require("./../../../assets/images/pixel.png");
 const bg: string = require("./../../../assets/images/scroll-bg.png");
@@ -722,18 +723,21 @@ class SheepPreload extends Phaser.Scene {
 
         // подрубаем амплитуду
         const Amplitude = this.state.amplitude;
-        const identify = new Amplitude.Identify()
-          .set('diamond_balance', this.state.user.diamonds)
-          .set('user_id', this.state.user.id)
-          .set('browser', navigator.userAgent)
-          .set('partner', this.state.platform)
-          .set('test', this.state.user.test);
-          
-        Amplitude.getInstance().identify(identify);
-        console.log(`Test - ${this.state.user.test}`);
-        // Amplitude.getInstance().logEvent('load_time', {
-        //   seconds: loadTime
-        // });
+
+        if (Amplitude) {
+          const identify = new Amplitude.Identify()
+            .set('diamond_balance', this.state.user.diamonds)
+            .set('user_id', this.state.user.id)
+            .set('browser', navigator.userAgent)
+            .set('partner', this.state.platform)
+            .set('test', this.state.user.test);
+            
+          Amplitude.getInstance().identify(identify);
+          console.log(`Test - ${this.state.user.test}`);
+          // Amplitude.getInstance().logEvent('load_time', {
+          //   seconds: loadTime
+          // });
+        }
 
       }
 
@@ -763,8 +767,8 @@ class SheepPreload extends Phaser.Scene {
 
       // let localSaveCounter: number = 0;
 
-      // if (localStorage.userSheep) {
-      //   let user: IuserSheep = JSON.parse(localStorage.userSheep);
+      // if (LocalStorage.get('userSheep')) {
+      //   let user: IuserSheep = JSON.parse(LocalStorage.get('userSheep'));
       //   if (typeof user.autosaveCounter === 'number') localSaveCounter = user.autosaveCounter;
       // }
 
@@ -776,9 +780,11 @@ class SheepPreload extends Phaser.Scene {
         this.userReady = true;
         
         const Amplitude = this.state.amplitude;
-        const identify = new Amplitude.Identify().set('CatcherSheep', this.state.userSheep.collectorLevel);
-        Amplitude.getInstance().identify(identify);
-        if (response.data.user.tutor === 0) this.state.amplitude.getInstance().logEvent('tutor_before_load', {});
+        if (Amplitude) {
+          const identify = new Amplitude.Identify().set('CatcherSheep', this.state.userSheep.collectorLevel);
+          Amplitude.getInstance().identify(identify);
+          if (response.data.user.tutor === 0) this.state.amplitude.getInstance().logEvent('tutor_before_load', {});
+        }
       // } else {
       //   this.loadSheep(response.data.user.counter);
       // }
@@ -788,7 +794,7 @@ class SheepPreload extends Phaser.Scene {
     //   this.loadSheep();
     // });
 
-    localStorage.farm = 'Sheep';
+    LocalStorage.set('farm', 'Sheep');
   }
   
 }

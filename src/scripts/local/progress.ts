@@ -1,4 +1,5 @@
 import { sheepSettings, chickenSettings, cowSettings } from './settings';
+import LocalStorage from './../libs/LocalStorage';
 
 export default (): Iprogress => {
 
@@ -9,18 +10,18 @@ export default (): Iprogress => {
   let openCow: boolean = false;
   let eventpoints: number = 0
 
-  if (localStorage.userSheep) sheepPart = JSON.parse(localStorage.userSheep).part;
+  if (LocalStorage.get('userSheep')) sheepPart = JSON.parse(LocalStorage.get('userSheep')).part;
 
-  if (localStorage.userChicken) {
+  if (LocalStorage.get('userChicken')) {
 
-    chickenPart = JSON.parse(localStorage.userChicken).part;
+    chickenPart = JSON.parse(LocalStorage.get('userChicken')).part;
     if (chickenPart > 0) openChicken = true;
 
   }
 
-  if (localStorage.userCow) {
+  if (LocalStorage.get('userCow')) {
 
-    cowPart = JSON.parse(localStorage.userCow).part;
+    cowPart = JSON.parse(LocalStorage.get('userCow')).part;
     if (cowPart > 0) openCow = true;
 
   }

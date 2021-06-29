@@ -2,6 +2,7 @@ import SheepBars from '../../scenes/Sheep/SheepBars';
 import ChickenBars from '../../scenes/Chicken/ChickenBars';
 import CowBars from '../../scenes/Cow/CowBars';
 import { sendAppEventVk } from '../../general/basic';
+import LocalStorage from './../../libs/LocalStorage';
 
 /**
   *  Планка заданий в барах сцен    
@@ -416,10 +417,10 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
         this.taskProgress?.clear();
 
         const farm: string = this.scene.state.farm;
-        if (this.scene.state.platform === 'vk' && localStorage && !localStorage[`done${farm}`]) {
+        if (this.scene.state.platform === 'vk' && !LocalStorage.get(`done${farm}`)) {
           const mission: number = farm === 'Sheep' ? 5 :
           farm === 'Chicken' ? 6 : farm === 'Cow' ? 7 : 0;
-          localStorage?.setItem(`done${farm}`, 'true');
+          LocalStorage.set(`done${farm}`, 'true');
           sendAppEventVk(this.scene.state, mission, 100);
         }
       }

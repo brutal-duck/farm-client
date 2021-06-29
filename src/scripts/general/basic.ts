@@ -7,6 +7,7 @@ import Firework from '../components/animations/Firework';
 import BigInteger from '../libs/BigInteger';
 import MoneyAnimation from './../components/animations/MoneyAnimation';
 import SpeechBubble from './../components/animations/SpeechBuble';
+import LocalStorage from './../libs/LocalStorage';
 
 // рандомное число
 function random(min: number, max: number): number {
@@ -555,12 +556,12 @@ function socialButtons(): void {
 // очистка не актуального localStorage
 function checkStorage(hash: string): void {
 
-  if (localStorage.user) {
+  if (LocalStorage.get('user')) {
 
-    let user: Iuser = JSON.parse(localStorage.user);
+    let user: Iuser = JSON.parse(LocalStorage.get('user'));
 
     if (user.hash !== hash) {
-      localStorage.clear();
+      LocalStorage.clear();
       console.log('clear localStorage');
     }
 
@@ -1587,7 +1588,7 @@ function logAmplitudeEvent(eventName: string, data: IamplitudeData): void {
   for (const key in data) {
     eventData[key] = data[key];
   }
-  this.state.amplitude.getInstance().logEvent(eventName, eventData);
+  this.state.amplitude?.getInstance().logEvent(eventName, eventData);
 }
 
 
@@ -1632,14 +1633,19 @@ function logAmplitudeRevenue(productId: string, price: number, type: string = ''
     revenueData[key] = data[key];
   }
 
-  const revenue: amplitude.Revenue = new amplitude.Revenue()
+  try { 
+    const revenue: amplitude.Revenue = new amplitude.Revenue()
     .setProductId(productId)
     .setPrice(price)
     .setEventProperties(revenueData);
 
   if (type) revenue.setRevenueType(type);
 
-  this.state.amplitude.logRevenueV2(revenue);
+  this.state.amplitude?.logRevenueV2(revenue);
+  } catch (e) {
+    console.log(e);
+  }
+
 }
 
 function farmBalance(farm: string): Ibalance {

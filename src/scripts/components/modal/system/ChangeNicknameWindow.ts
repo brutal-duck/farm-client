@@ -1,5 +1,6 @@
 import axios from "axios";
 import Modal from "../../../scenes/Modal/Modal";
+import LocalStorage from './../../../libs/LocalStorage';
 
 export default class ChangeNicknameWindow {
   public scene: Modal;
@@ -170,7 +171,7 @@ export default class ChangeNicknameWindow {
               if (this.scene.state.platform === 'web') {
                 document.cookie = "farmHASH=" + res.data.hash + "; expires=" + res.data.expires + "; path=/;";
               } else if (this.scene.state.platform === 'android'){
-                localStorage?.setItem('hash', res.data.hash)
+                LocalStorage.set('hash', res.data.hash)
               }
               this.scene.state.user.hash = res.data.hash;
               this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;

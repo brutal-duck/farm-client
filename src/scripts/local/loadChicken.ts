@@ -4,6 +4,7 @@ import collectorSettings from './chickenCollector';
 import { userData, userChicken } from './usersData';
 import tasks from '../tasks';
 import progress from './progress';
+import LocalStorage from './../libs/LocalStorage';
 
 function loadChicken(counter: number = 0): void {
   
@@ -19,23 +20,23 @@ function loadChicken(counter: number = 0): void {
   this.state.daily = false;
   this.state.newbieTime = 0;
   this.state.timeToBoost = 0;
-  if (localStorage.dailyAwards) this.state.dailyAwards = JSON.parse(localStorage.dailyAwards);
+  if (LocalStorage.get('dailyAwards')) this.state.dailyAwards = JSON.parse(LocalStorage.get('dailyAwards'));
 
-  if (localStorage.chicken) this.state.chicken = JSON.parse(localStorage.chicken);
-  if (localStorage.chickenEggs) this.state.chickenEggs = JSON.parse(localStorage.chickenEggs);
+  if (LocalStorage.get('chicken')) this.state.chicken = JSON.parse(LocalStorage.get('chicken'));
+  if (LocalStorage.get('chickenEggs')) this.state.chickenEggs = JSON.parse(LocalStorage.get('chickenEggs'));
 
-  if (localStorage.chickenTerritories) this.state.chickenTerritories = JSON.parse(localStorage.chickenTerritories);
+  if (LocalStorage.get('chickenTerritories')) this.state.chickenTerritories = JSON.parse(LocalStorage.get('chickenTerritories'));
   else this.state.chickenTerritories = territories;
 
-  if (localStorage.user) this.state.user = JSON.parse(localStorage.user);
+  if (LocalStorage.get('user')) this.state.user = JSON.parse(LocalStorage.get('user'));
   else this.state.user = userData;
   
   if (counter > 0) this.state.user.counter = counter;
 
-  if (localStorage.userChicken) this.state.userChicken = JSON.parse(localStorage.userChicken);
+  if (LocalStorage.get('userChicken')) this.state.userChicken = JSON.parse(LocalStorage.get('userChicken'));
   else this.state.userChicken = userChicken;
 
-  if (localStorage.chickenTasks) this.state.chickenTasks = JSON.parse(localStorage.chickenTasks);
+  if (LocalStorage.get('chickenTasks')) this.state.chickenTasks = JSON.parse(LocalStorage.get('chickenTasks'));
   else {
 
     let chickenTasks: Itasks[] = [];
@@ -44,10 +45,10 @@ function loadChicken(counter: number = 0): void {
 
   }
 
-  if (localStorage.chickenTime) {
+  if (LocalStorage.get('chickenTime')) {
 
     let time: number = Math.round(new Date().getTime() / 1000);
-    this.state.offlineTime = time - Number(localStorage.chickenTime);
+    this.state.offlineTime = time - Number(LocalStorage.get('chickenTime'));
 
   } else this.state.offlineTime = 0;
 

@@ -1,5 +1,6 @@
 import axios from "axios";
 import Modal from "../../../scenes/Modal/Modal";
+import LocalStorage from './../../../libs/LocalStorage';
 
 export default class RegistrationWindow {
   public scene: Modal;
@@ -215,7 +216,7 @@ export default class RegistrationWindow {
     // Выход
     this.scene.clickModalBtn(logoutBtn, (): void => {
       document.cookie = "farmHASH=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      localStorage.farm = '';
+      LocalStorage.set('farm', '');
       window.location.reload();
     });
 
