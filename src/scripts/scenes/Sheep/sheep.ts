@@ -630,7 +630,7 @@ function collectWool(sheep: any, manualСollect: boolean = false): void {
       sheep.shaveStatus.destroy();
       sheep.destroy();
       
-      this.game.scene.keys[this.scene.state.farm].autosave();
+      this.game.scene.keys[this.state.farm].autosave();
       this.logAmplitudeEvent('diamonds_get', {
         type: 'diamond_animal',
         count: 3,
