@@ -42,7 +42,7 @@ class Boot extends Phaser.Scene {
   public init(): void {
     this.build = '3.7.2';
     console.log('Build ' + this.build);
-    console.log('y1')
+    // console.log('y1')
     this.state = state;
     this.fontsReady = false;
     this.userReady = false;
@@ -107,7 +107,6 @@ class Boot extends Phaser.Scene {
       this.androidInit();
     }
     const search: string = window.location.search;
-    console.log(search)
     this.params = new URLSearchParams(search);
     const vk: string = this.params.get('api_url');
     const ok: string = this.params.get('api_server');
@@ -158,7 +157,7 @@ class Boot extends Phaser.Scene {
         amplitude.logRevenueV2(revenue);
       }
     } catch (e) {
-      console.log(e)
+      console.log(e);
       this.state.amplitude = null;
     }
   }
