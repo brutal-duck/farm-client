@@ -1,7 +1,7 @@
 export default class LocalStorage {
   public static get(key: string): string {
     try {
-      return localStorage?.getItem(key);
+      return window?.localStorage.getItem(key);
     } catch (e) {
       console.log(e);
     } 
@@ -10,7 +10,16 @@ export default class LocalStorage {
 
   public static set(key: string, value: string): void {
     try {
-      localStorage?.setItem(key, value);
+      window?.localStorage.setItem(key, value);
+    } catch (e) {
+      console.log(e);
+    } 
+  }
+
+  public static clear(): void {
+    try {
+      window?.localStorage.clear();
+      console.log('clear')
     } catch (e) {
       console.log(e);
     } 
