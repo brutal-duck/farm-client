@@ -311,10 +311,8 @@ class Boot extends Phaser.Scene {
     return this.state.ysdk.getPlayer().then(player => {
       this.name = player.getName();
       this.avatar = player.getPhoto('large');
-      if (this.name === '') {
-        this.name = 'Anonymous';
-      }
-      this.postCheckUser(player.getUniqueID());
+      const id: string = player.getUniqueID();
+      this.postCheckUser(id);
     });
   }
   

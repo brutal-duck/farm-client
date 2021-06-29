@@ -276,6 +276,11 @@ export default function loadData(response: any): void {
     takenSocialAward: response.data.user.takenSocialAward,
   };
   this.state.user = user;
+
+  if (this.state.name === '' && this.state.platform === 'ya') {
+    this.state.name = `yandex_${user.id.substr(0, 4)}`;
+  }
+  
   if (response.data.user.chicken_part === 0 && this.state.farm === 'Chicken') response.data.user.chicken_part = 1;
   if (response.data.user.cow_part === 0 && this.state.farm === 'Cow') response.data.user.cow_part = 1;
 
