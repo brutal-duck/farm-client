@@ -59,7 +59,7 @@ export default class DailyNewbieWindow extends Phaser.GameObjects.Sprite {
     this.createElements();
     this.setListeners();
 
-    if (this.scene.state.progress.chicken.part > 0 && this.scene.state.daily === 4 && this.scene.state.user.test === 'A') {
+    if (this.scene.state.progress.chicken.part > 0 && this.scene.state.daily === 4 && this.scene.state.user.test !== 'B') {
       this.scene.state.user.takenReward = true;
       axios.post(process.env.API + "/takenNewbieReward", { hash: this.scene.state.user.hash });
     }    
@@ -367,7 +367,7 @@ export default class DailyNewbieWindow extends Phaser.GameObjects.Sprite {
     });
 
     this.scene.click(this, () => {
-      if (!this.scene.state.user.takenReward || this.scene.state.daily === 4 && this.scene.state.user.test === 'A' || this.scene.state.user.test === 'B') {
+      if (!this.scene.state.user.takenReward || this.scene.state.daily === 4 && this.scene.state.user.test !== 'B' || this.scene.state.user.test === 'B') {
         this.scene.scene.stop();
         this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
         this.scene.game.scene.keys[this.scene.state.farm].takeNewbieAward();

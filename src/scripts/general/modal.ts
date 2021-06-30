@@ -219,7 +219,7 @@ function takeNewbieAward(): void {
       this.state.daily === 2 ||
       this.state.daily === 3 ||
       this.state.daily === 8) &&
-      this.state.farm !== 'Sheep' && this.state.user.test === 'A') {
+      this.state.farm !== 'Sheep' && this.state.user.test !== 'B') {
 
       this.game.scene.keys[this.state.farm + 'Bars'].newbieAwardAnimation();
 
@@ -227,7 +227,7 @@ function takeNewbieAward(): void {
 
     if ((this.state.daily === 4 ||
       this.state.daily === 6) &&
-      this.state.farm !== 'Chicken' && this.state.user.test === 'A') {
+      this.state.farm !== 'Chicken' && this.state.user.test !== 'B') {
       
       if (this.state.daily === 4) {
         this.state.dailyAwards[3] = false;
@@ -238,7 +238,7 @@ function takeNewbieAward(): void {
     }
 
     // анимашка для собирателей в любом случае
-    if ((this.state.daily === 5 || this.state.daily === 7) && this.state.user.test === 'A') {
+    if ((this.state.daily === 5 || this.state.daily === 7) && this.state.user.test !== 'B') {
       this.game.scene.keys[this.state.farm + 'Bars'].newbieAwardAnimation();
     }
 
