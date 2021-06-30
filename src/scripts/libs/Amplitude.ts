@@ -18,12 +18,10 @@ export default class Amplitude {
   }
 
   public static init(): void {
-    console.log('init')
     amplitude.getInstance().init(process.env.AMPLITUDE);
   }
 
   public startIdentify(): void {
-    console.log('start')
     try {
       const identify = new this.amplitude.Identify().setOnce('start_version', this.scene.build);
       this.amplitude.getInstance().identify(identify);
@@ -33,12 +31,10 @@ export default class Amplitude {
       console.log(e);
       this.active = false;
     }
-    console.log(this.active);
   }
 
   public setFarmIdentify(): void {
     if (this.active) {
-      console.log('set')
       const identify = new this.amplitude.Identify()
         .set('diamond_balance', this.state.user.diamonds)
         .set('user_id', this.state.user.id)
