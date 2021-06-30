@@ -7,6 +7,12 @@ import bridge, { UserInfo } from '@vkontakte/vk-bridge';
 import * as amplitude from 'amplitude-js';
 import * as eruda from 'eruda';
 import { okCallback } from '../general/callbacks';
+import Landing from '../components/Web/Landing';
+import Login from '../components/Web/Login';
+import ErrorWindow from '../components/Web/ErrorWindow';
+import { clickShopBtn, clickModalBtn, click } from './../general/clicks';
+import { shopButton, bigButton } from './../elements';
+
 amplitude.getInstance().init(process.env.AMPLITUDE);
 
 const headerSyst: string = require('./../../assets/images/modal/header-syst.png');
@@ -18,6 +24,10 @@ const pbFullCorner: string = require('./../../assets/images/modal/pb_full_corner
 const pbFullMid: string = require('./../../assets/images/modal/pb_full_mid.png');
 const modal: string = require('./../../assets/images/modal/modal.png');
 const close: string = require('./../../assets/images/modal/header_close.png');
+const landingBtn: string = require('./../../assets/images/modal/middle-button.png');
+const loginBtnGreen: string = require('./../../assets/images/modal/btn_lg.png');
+const loginBtnRed: string = require('./../../assets/images/modal/btn_lr.png');
+const pixelForLanding: string = require('./../../assets/images/white-pixel.jpg');
 
 class Boot extends Phaser.Scene {
   constructor() {
@@ -31,12 +41,19 @@ class Boot extends Phaser.Scene {
   private fontsReady: boolean;
   private userReady: boolean;
   private play: boolean;
-  private authorization: boolean;
   private name: string;
   private avatar: string;
   public okCallback = okCallback.bind(this);
   private build: string;
   private params: URLSearchParams;
+  private landing: Landing
+  private authorizationWindow
+
+  public shopButton = shopButton.bind(this);
+  public bigButton = bigButton.bind(this);
+  public clickShopBtn = clickShopBtn.bind(this);
+  public clickModalBtn = clickModalBtn.bind(this);
+  public click = click.bind(this);
 
   public init(): void {
     this.build = '3.7.2';
@@ -46,7 +63,6 @@ class Boot extends Phaser.Scene {
     this.fontsReady = false;
     this.userReady = false;
     this.play = false;
-    this.authorization = false;
     this.name = '';
     this.avatar = '';
 
@@ -80,6 +96,12 @@ class Boot extends Phaser.Scene {
     this.load.image('pb-full-mid', pbFullMid);
     this.load.image('modal', modal);
     this.load.image('header-close', close);
+    if (this.platform = 'web') {
+      this.load.image('shop-btn', landingBtn);
+      this.load.image('big-btn-green', loginBtnGreen);
+      this.load.image('big-btn-red', loginBtnRed);
+      this.load.image('pixel-landing', pixelForLanding);
+    }
   }
 
   public update(): void {
@@ -223,7 +245,7 @@ class Boot extends Phaser.Scene {
     return hash;
   }
 
-  private setCookieHash(hash: string, expires: string): void {
+  public setCookieHash(hash: string, expires: string): void {
     this.hash = hash;
     document.cookie = 'farmHASH=' + hash + '; expires=' + expires + '; path=/;';
     this.userReady = true;
@@ -342,71 +364,44 @@ class Boot extends Phaser.Scene {
     });
   }
 
-  private createLanding(): void {
-    amplitude.getInstance().logEvent('landing_view', {});
-    let root = document.querySelector('#root');
-    let modal = document.createElement('div');
-    modal.setAttribute('class', 'modal');
-    root.append(modal);
-    let modalWindow = document.createElement('div');
-    modalWindow.setAttribute('class', 'window');
-    modal.append(modalWindow);
+  public createLanding(): void {
+    if (this.authorizationWindow) this.landing = new Landing(this)
+    else this.load.on('complete', (): void => { this.landing = new Landing(this) })
+    this.destroyAuthorizationWindow()
+  }
 
-    let body = document.createElement('div');
-    body.setAttribute('class', 'body-window');
-    modalWindow.append(body);
-    let header = document.createElement('div');
-    header.setAttribute('class', 'header');
-    modalWindow.append(header);
-    let footer = document.createElement('div');
-    footer.setAttribute('class', 'footer');
-    modalWindow.append(footer);
+  private destroyLanding(): void {
+    this.landing?.destroy()
+  }
 
-    let welcome = document.createElement('div');
-    welcome.setAttribute('class', 'welcome');
-    welcome.innerHTML = this.state.lang.welcomeToFarm;
-    body.append(welcome);
+  public createAuthorizationWindow(): void {
+    this.destroyLanding()
+    this.authorizationWindow = new Login(this)
+  }
 
-    let playBtn = document.createElement('div');
-    playBtn.setAttribute('class', 'play-btn middle-btn');
-    playBtn.innerHTML = this.state.lang.play;
-    body.append(playBtn);
+  private destroyAuthorizationWindow(): void {
+    this.authorizationWindow?.destroy()
+  }
 
-    let loginText = document.createElement('div');
-    loginText.setAttribute('class', 'login');
-    let login = document.createElement('span');
-    login.innerHTML = this.state.lang.enterTo;
-    loginText.append(login);
-    loginText.append(this.state.lang.yourAccaunt);
-    body.append(loginText);
-
-    let agreement = document.createElement('div');
-    agreement.setAttribute('class', 'agreement');
-    agreement.innerHTML = this.state.lang.agreement;
-    body.append(agreement);
-
-    login.onclick = (): void => {
-      modal.remove();
-      this.createAuthWindow();
+  public playBtnHandler(): void {
+    if (!this.play) {
+      axios.post(process.env.API + '/checkUser', {
+        platform: 'webNew',
+      }).then((response) => {
+        if (response.data.error === false) {
+          this.setCookieHash(response.data.hash, response.data.expires);
+          amplitude.getInstance().logEvent('landing_login', {});
+        } else this.createErrorWindow();
+      }).catch(() => {
+        this.createLocalUser();
+      });
     }
+  }
 
-    agreement.onclick = (): void => { window.open('https://' + location.hostname + '/agreement', '_blank'); }
-
-    playBtn.onclick = (): void => {
-      if (!this.play) {
-        modal.remove();
-        axios.post(process.env.API + '/checkUser', {
-          platform: 'webNew',
-        }).then((response) => {
-          if (response.data.error === false) {
-            this.setCookieHash(response.data.hash, response.data.expires);
-            amplitude.getInstance().logEvent('landing_login', {});
-          } else this.createErrorWindow();
-        }).catch(() => {
-          this.createLocalUser();
-        });
-      }
-    }
+  public createErrorWindow(): void {
+    this.destroyLanding()
+    this.destroyAuthorizationWindow()
+    new ErrorWindow(this)
   }
 
   private androidInit(): void {
@@ -454,115 +449,6 @@ class Boot extends Phaser.Scene {
     }, false);
   }
 
-  private createAuthWindow(): void {
-    let root = document.querySelector('#root');
-    let modal = document.createElement('div');
-    modal.setAttribute('class', 'modal');
-    root.append(modal);
-    let modalWindow = document.createElement('div');
-    modalWindow.setAttribute('class', 'window');
-    modal.append(modalWindow);
-
-    let body = document.createElement('div');
-    body.setAttribute('class', 'body-window');
-    modalWindow.append(body);
-    let header = document.createElement('div');
-    header.setAttribute('class', 'header');
-    modalWindow.append(header);
-    let footer = document.createElement('div');
-    footer.setAttribute('class', 'footer');
-    modalWindow.append(footer);
-
-    let auth = document.createElement('div');
-    auth.setAttribute('class', 'auth');
-    auth.innerHTML = this.state.lang.authorize;
-    body.append(auth);
-
-    let error = document.createElement('div');
-    error.setAttribute('class', 'error');
-    body.append(error);
-    
-    let login = document.createElement('input');
-    login.setAttribute('class', 'login-pass');
-    login.setAttribute('type', 'text');
-    body.append(login);
-    let pass = document.createElement('input');
-    pass.setAttribute('class', 'login-pass');
-    pass.setAttribute('type', 'password');
-    body.append(pass);
-
-    let btnAuth = document.createElement('div');
-    btnAuth.setAttribute('class', 'big-btn big-btn-css mt-10');
-    btnAuth.innerHTML = this.state.lang.enter;
-    body.append(btnAuth);
-    
-    let cancel = document.createElement('div');
-    cancel.setAttribute('class', 'big-btn big-btn-css');
-    cancel.innerHTML = this.state.lang.cancel;
-    body.append(cancel);
-
-    cancel.onclick = (): void => {
-      modal.remove();
-      this.createLanding();
-    }
-
-    btnAuth.onclick = (): void => {
-      if (!this.authorization) {
-        error.innerHTML = '';
-        axios.post(process.env.API + '/authorization', {
-          login: login.value,
-          pass: pass.value
-        }).then((response) => {
-          this.authorization = false;
-          if (response.data.success) {
-            modal.remove();
-            this.setCookieHash(response.data.hash, response.data.expires);
-          } else error.innerHTML = this.state.lang.wrongLoginPass;
-        }).catch(() => {
-          this.createErrorWindow();
-        });
-      }
-    }
-  }
-
-  public createErrorWindow(): void {
-
-    let modal = document.querySelector('.modal');
-    if (modal) modal.remove();
-    
-    let root = document.querySelector('#root');
-    modal = document.createElement('div');
-    modal.setAttribute('class', 'modal');
-    root.append(modal);
-    let modalWindow = document.createElement('div');
-    modalWindow.setAttribute('class', 'window');
-    modal.append(modalWindow);
-
-    let body = document.createElement('div');
-    body.setAttribute('class', 'body-window');
-    modalWindow.append(body);
-    let header = document.createElement('div');
-    header.setAttribute('class', 'header');
-    modalWindow.append(header);
-    let footer = document.createElement('div');
-    footer.setAttribute('class', 'footer');
-    modalWindow.append(footer);
-
-    let error = document.createElement('div');
-    error.setAttribute('class', 'unknown-error');
-    error.innerHTML = this.state.lang.unknownError;
-    body.append(error);
-
-    let reload = document.createElement('div');
-    reload.setAttribute('class', 'reload-btn middle-btn');
-    reload.innerHTML = this.state.lang.reload;
-    body.append(reload);
-
-    reload.onclick = (): void => {
-      window.location.reload();
-    }
-
-  }
 
   private createLocalUser(): void {
     console.log('localUser');

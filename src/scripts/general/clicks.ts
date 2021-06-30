@@ -11,8 +11,10 @@ function clickShopBtn(btn: any, action: any) {
 
   button.on('pointerdown', (): void => {
 
-    this.game.scene.keys[this.state.farm].scrolling.enabled = false;
-    this.game.scene.keys[this.state.farm].scrolling.downHandler();
+    if (this.game.scene.keys[this.state.farm]) {
+      this.game.scene.keys[this.state.farm].scrolling.enabled = false;
+      this.game.scene.keys[this.state.farm].scrolling.downHandler();
+    }
 
     button.press = true;
     button.increase = false;
@@ -98,12 +100,10 @@ function clickShopBtn(btn: any, action: any) {
   
       }, callbackScope: this, loop: true });
 
-      this.game.scene.keys[this.state.farm].scrolling.enabled = true;
+      if (this.game.scene.keys[this.state.farm]) this.game.scene.keys[this.state.farm].scrolling.enabled = true;
       action();
 
-    } else {
-      this.game.scene.keys[this.state.farm].scrolling.enabled = true;
-    }
+    } else if (this.game.scene.keys[this.state.farm]) this.game.scene.keys[this.state.farm].scrolling.enabled = true;
 
   });
 
@@ -286,8 +286,10 @@ function clickModalBtn(arr: any, action: any) {
 
   button.on('pointerdown', (): void => {
 
-    this.game.scene.keys[this.state.farm].scrolling.enabled = false;
-    this.game.scene.keys[this.state.farm].scrolling.downHandler();
+    if (this.game.scene.keys[this.state.farm]) {
+      this.game.scene.keys[this.state.farm].scrolling.enabled = false;
+      this.game.scene.keys[this.state.farm].scrolling.downHandler();
+    }
 
     button.press = true;
     button.increase = false;
@@ -418,12 +420,10 @@ function clickModalBtn(arr: any, action: any) {
   
       }, callbackScope: this, loop: true });
 
-      this.game.scene.keys[this.state.farm].scrolling.enabled = true;
+      if (this.game.scene.keys[this.state.farm]) this.game.scene.keys[this.state.farm].scrolling.enabled = true;
       action();
 
-    } else {
-      this.game.scene.keys[this.state.farm].scrolling.enabled = true;
-    }
+    } else if (this.game.scene.keys[this.state.farm])  this.game.scene.keys[this.state.farm].scrolling.enabled = true;
 
   });
 
