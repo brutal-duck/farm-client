@@ -4,13 +4,11 @@ import axios from 'axios';
 import state from '../state';
 import langs from '../langs';
 import bridge, { UserInfo } from '@vkontakte/vk-bridge';
-import * as amplitude from 'amplitude-js';
 import { okCallback } from '../general/callbacks';
 import LocalStorage from './../libs/LocalStorage';
 import Amplitude from './../libs/Amplitude';
 
 Amplitude.init();
-// amplitude.getInstance().init(process.env.AMPLITUDE);
 
 const headerSyst: string = require('./../../assets/images/modal/header-syst.png');
 const midSyst: string = require('./../../assets/images/modal/mid-syst.png');
@@ -66,7 +64,7 @@ class Boot extends Phaser.Scene {
   }
 
   private initEruda(): void {
-    // require('../libs/eruda')();
+    require('../libs/eruda')();
   }
   private setAutosaveListener(): void {
     window.addEventListener('beforeunload', (): void => {
