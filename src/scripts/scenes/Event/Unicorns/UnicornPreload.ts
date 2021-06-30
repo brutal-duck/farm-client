@@ -2,6 +2,7 @@ import axios from 'axios';
 import Socket from '../../../Socket';
 import loadData from '../../../general/loadData';
 import { loadingScreen } from '../../../general/basic';
+import Amplitude from './../../../libs/Amplitude';
 
 const pixel: any = require("./../../../../assets/images/pixel.png");
 const bg: any = require("./../../../../assets/images/scroll-bg.png");
@@ -608,20 +609,10 @@ class EventPreload extends Phaser.Scene {
           screen_size: sizes,
           loadTime: loadTime
         });
-        // подрубаем амплитуду
-        const Amplitude = this.state.amplitude;
-        if (Amplitude) {
-          const identify = new Amplitude.Identify().setOnce('start_version', '3.0')
-            .set('diamond_balance', this.state.user.diamonds)
-            .set('partner', this.state.platform)
-            .set('user_id', this.state.user.id)
-            .set('browser', navigator.userAgent);
-          Amplitude.getInstance().identify(identify);
-          console.log(`Test - ${this.state.user.test}`);
-          // Amplitude.getInstance().logEvent('load_time', {
-          //   seconds: loadTime
-          // });
-        }
+        
+        const Amplitude:Amplitude = this.state.amplitude;
+        Amplitude.setFarmIdentify();
+        console.log(`Test - ${this.state.user.test}`);
       }
 
       this.userReady = false;
