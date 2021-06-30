@@ -150,7 +150,7 @@ function takeDiamondChicken(): void {
   if (this.state.userChicken.part >= 3) {
 
     if (this.state.userChicken.diamondAnimalTime === 0) {
-      this.logAmplitudeEvent('take_diamond_animal', {
+      this.state.amplitude.logAmplitudeEvent('take_diamond_animal', {
         price: 'hard'
       });
 

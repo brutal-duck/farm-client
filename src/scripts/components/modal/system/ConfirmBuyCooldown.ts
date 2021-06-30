@@ -44,7 +44,7 @@ export default class ConfirmBuyCooldown {
 
 
   private confirmBuy(price: number): void {
-    this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('diamonds_spent', {
+    this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
       type: 'cooldown',
       count: price,
     });

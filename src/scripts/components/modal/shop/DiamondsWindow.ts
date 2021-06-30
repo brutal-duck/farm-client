@@ -13,7 +13,7 @@ export default class DiamondsWindow {
   }
 
   private init(): void {
-    this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('bank_page_viewed', {});
+    this.scene.state.amplitude.logAmplitudeEvent('bank_page_viewed', {});
     this.rows = Math.ceil(this.scene.state.packages.length / 2);
     this.setScrolling();
   }
@@ -198,7 +198,7 @@ export default class DiamondsWindow {
       x: this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].cameras.main.centerX,
       y: this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].cameras.main.centerY,
     }, FREE_DIAMONDS, 'diamond');
-    this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('diamonds_get', {
+    this.scene.state.amplitude.logAmplitudeEvent('diamonds_get', {
       type: 'bank_page',
       count: FREE_DIAMONDS,
     });

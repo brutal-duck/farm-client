@@ -101,7 +101,7 @@ export default class EventProgressWindow {
       this.scene.scene.stop();
     } else if (this.scene.state.user.diamonds >= this.doubleProfitPrice) {
       this.scene.state.user.diamonds -= this.doubleProfitPrice;
-      this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('diamonds_spent', {
+      this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
         type: 'event_double_salary',
         count: this.doubleProfitPrice,
       });

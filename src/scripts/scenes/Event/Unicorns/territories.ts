@@ -41,7 +41,7 @@ function buyTerritory(): void {
         
         if (BigInteger.greaterThanOrEqual(this.state.userUnicorn.money, String(price))) {
           
-          this.logAmplitudeEvent('buy_territory', {
+          this.state.amplitude.logAmplitudeEvent('buy_territory', {
             block: this.state.territory.data.values.block,
             position: this.state.territory.data.values.position,
           });
@@ -89,11 +89,11 @@ function buyTerritory(): void {
       let price: number = settings.diamond;
       if (this.state.user.diamonds >= price) {
   
-        this.logAmplitudeEvent('buy_territory', {
+        this.state.amplitude.logAmplitudeEvent('buy_territory', {
           block: this.state.territory.data.values.block,
           position: this.state.territory.data.values.position,
         });
-        this.logAmplitudeEvent('diamonds_spent', {
+        this.state.amplitude.logAmplitudeEvent('diamonds_spent', {
           type: 'buy_territory',
           count: price,
         });

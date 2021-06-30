@@ -136,7 +136,7 @@ class Tutorial extends Phaser.Scene {
 
       if (this.state.tutorial.additional === 'balance') {
 
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('tutorial_balance', {});
+        this.state.amplitude.logAmplitudeEvent('tutorial_balance', {});
         this.tutorText = this.state.lang.addTutorialBalance;
         this.showContinue = true;
         this.generalClick = (): void => {
@@ -206,7 +206,7 @@ class Tutorial extends Phaser.Scene {
 
       } else if (this.state.tutorial.additional === 'cave1') {
 
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('tutorial_cave', {
+        this.state.amplitude.logAmplitudeEvent('tutorial_cave', {
           step: 1
         });
 
@@ -226,7 +226,7 @@ class Tutorial extends Phaser.Scene {
         
       } else if (this.state.tutorial.additional === 'cave2') {
 
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('tutorial_cave', {
+        this.state.amplitude.logAmplitudeEvent('tutorial_cave', {
           step: 2
         });
 
@@ -253,7 +253,7 @@ class Tutorial extends Phaser.Scene {
 
       } else if (this.state.tutorial.additional === 'cave3') {
 
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('tutorial_cave', {
+        this.state.amplitude.logAmplitudeEvent('tutorial_cave', {
           step: 3
         });
 
@@ -265,7 +265,7 @@ class Tutorial extends Phaser.Scene {
         this.simpleTutorial();
 
       } else if (this.state.tutorial.additional === 'herdBoost1') {
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('tutorial_herd_boost', {
+        this.state.amplitude.logAmplitudeEvent('tutorial_herd_boost', {
           step: 1
         });
         Arrow.generate(this, 11);
@@ -292,7 +292,7 @@ class Tutorial extends Phaser.Scene {
         }); 
 
       } else if (this.state.tutorial.additional === 'herdBoost2') {
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('tutorial_herd_boost', {
+        this.state.amplitude.logAmplitudeEvent('tutorial_herd_boost', {
           step: 2
         });
         // окно буста
@@ -350,7 +350,7 @@ class Tutorial extends Phaser.Scene {
         });
 
       } else if (this.state.tutorial.additional === 'feedBoost1') {
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('tutorial_feed_boost', {
+        this.state.amplitude.logAmplitudeEvent('tutorial_feed_boost', {
           step: 1
         });
         Arrow.generate(this, 13);
@@ -377,7 +377,7 @@ class Tutorial extends Phaser.Scene {
         }); 
 
       } else if (this.state.tutorial.additional === 'feedBoost2') {
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('tutorial_feed_boost', {
+        this.state.amplitude.logAmplitudeEvent('tutorial_feed_boost', {
           step: 2
         });
         // окно буста
@@ -479,7 +479,7 @@ class Tutorial extends Phaser.Scene {
         // первый шаг
         if (this.state.tutorial.step === 0) {
 
-          this.game.scene.keys[this.state.farm].logAmplitudeEvent('tutor_after_load', {});
+          this.state.amplitude.logAmplitudeEvent('tutor_after_load', {});
           this.tutorText = this.state.lang.sheepTutorial_0;
           this.generalClick = (): void => this.game.scene.keys[this.state.farm].doneTutor_0();
           this.simpleTutorial();

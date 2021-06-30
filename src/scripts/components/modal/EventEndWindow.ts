@@ -266,7 +266,7 @@ export default class EventEndWindow {
     let coin: Phaser.GameObjects.Sprite = this.scene.add.sprite(title.getBounds().centerX + title.width / 2 + 25, this.scene.cameras.main.centerY - 10 + height, 'diamond').setOrigin(0.5, 0.5).setScale(0.15);
     
     this.scene.clickModalBtn({ btn, title, img1: coin }, (): void => {
-      this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('event_finished', {
+      this.scene.state.amplitude.logAmplitudeEvent('event_finished', {
         farm_id: 'Unicorn'
       });
       if (this.scene.state.unicornRaitings?.user.place <= 3) {
@@ -285,7 +285,7 @@ export default class EventEndWindow {
       this.scene.state.userUnicorn.points = -1;
 
       this.scene.state.user.diamonds += diamonds;
-      this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('diamonds_get', {
+      this.scene.state.amplitude.logAmplitudeEvent('diamonds_get', {
         type: 'unicorn_award',
         farm_id: 'Unicorn',
         count: diamonds,

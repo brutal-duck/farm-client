@@ -426,7 +426,7 @@ function exchange(ad: boolean = false): void {
     MoneyAnimation.create(this.game.scene.keys[`${this.state.farm}Bars`]);
     if (!ad) {
 
-      this.logAmplitudeEvent('diamonds_spent', {
+      this.state.amplitude.logAmplitudeEvent('diamonds_spent', {
         type: 'convertor',
         count: this.state.convertor.diamonds,
       });
@@ -570,7 +570,7 @@ function buyNextFarm(): void {
         if (res.data.success) {
           user.money -= progress.price;
 
-          this.logAmplitudeEvent('get_new_farm', {
+          this.state.amplitude.logAmplitudeEvent('get_new_farm', {
             type: 'buy',
             farm_id: farm
           });

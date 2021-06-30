@@ -22,7 +22,7 @@ export default class TasksWindow {
 
   private create(): void {
 
-    this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('show_tasks_window', {});
+    this.scene.state.amplitude.logAmplitudeEvent('show_tasks_window', {});
 
     let height: number = 112
     let tasks: { task: Itasks, taskData: ItaskData }[] = [];

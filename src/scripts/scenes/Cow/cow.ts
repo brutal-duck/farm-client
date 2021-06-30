@@ -373,7 +373,7 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
       Firework.create(this, cow, 1);
       cow.destroy();
       this.game.scene.keys[this.state.farm].autosave();
-      this.logAmplitudeEvent('diamonds_get', {
+      this.state.amplitude.logAmplitudeEvent('diamonds_get', {
         type: 'diamond_animal',
         count: 3,
       });

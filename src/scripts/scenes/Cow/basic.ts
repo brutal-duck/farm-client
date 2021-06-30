@@ -138,7 +138,7 @@ function takeDiamondCow(): void {
   if (this.state.userCow.part >= 3) {
 
     if (this.state.userCow.diamondAnimalTime === 0) {
-      this.logAmplitudeEvent('take_diamond_animal', {
+      this.state.amplitude.logAmplitudeEvent('take_diamond_animal', {
         price: 'hard'
       });
 
@@ -393,7 +393,7 @@ function buyNextFarm(): void {
     if (progress.donate) this.state.user.diamonds -= progress.price;
     else user.money -= progress.price;
 
-    this.logAmplitudeEvent('get_new_farm', {
+    this.state.amplitude.logAmplitudeEvent('get_new_farm', {
       type: 'buy',
       farm_id: farm
     });

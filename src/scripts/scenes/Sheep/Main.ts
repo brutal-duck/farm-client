@@ -39,8 +39,6 @@ import {
   nextDayTimer,
   autoporgressCollectorTime,
   remainderSellResource,
-  logAmplitudeEvent,
-  logAmplitudeRevenue,
   farmBalance,
   randomString,
 } from '../../general/basic';
@@ -312,8 +310,6 @@ class Sheep extends Phaser.Scene {
   public openEmailWindow = openEmailWindow.bind(this);
   public remainderSellResource = remainderSellResource.bind(this);
   public findFreeTerritory = findFreeTerritory.bind(this);
-  public logAmplitudeEvent = logAmplitudeEvent.bind(this);
-  public logAmplitudeRevenue = logAmplitudeRevenue.bind(this);  
   public farmBalance = farmBalance.bind(this);
   public randomString = randomString.bind(this);
   public chickenIntervalProgress = chickenIntervalProgress.bind(this);

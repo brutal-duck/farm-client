@@ -198,12 +198,12 @@ function fairLevelUp(): void {
 
         }, callbackScope: this, loop: false });
 
-        this.logAmplitudeEvent('fair_up', {
+        this.state.amplitude.logAmplitudeEvent('fair_up', {
           level: user.fair,
         });
         if (nextFair.price_d > 0) {
 
-          this.logAmplitudeEvent('diamonds_spent', {
+          this.state.amplitude.logAmplitudeEvent('diamonds_spent', {
             type: 'fair',
             count: nextFair.price_d
           });
@@ -312,7 +312,7 @@ function improveTerritory(): void {
         else if (this.state.territory.type === 3) territory = 'water';
         else if (this.state.territory.type === 5) territory = 'repository';
   
-        this.logAmplitudeEvent('improve_territory', {
+        this.state.amplitude.logAmplitudeEvent('improve_territory', {
           block: this.state.territory.block,
           position: this.state.territory.position,
           level: improve,
@@ -438,7 +438,7 @@ function exchangeTerritory(): void {
           else if (this.state.exchangeTerritory === 3) to = 'water';
           else if (this.state.exchangeTerritory === 5) to = 'repository';
     
-          this.logAmplitudeEvent('exchange_territory', {
+          this.state.amplitude.logAmplitudeEvent('exchange_territory', {
             block: this.state.territory.block,
             position: this.state.territory.position,
             from: from,
@@ -498,7 +498,7 @@ function exchangeTerritory(): void {
         if (this.state.exchangeTerritory === 2) to = 'grass';
         else if (this.state.exchangeTerritory === 3) to = 'water';
         else if (this.state.exchangeTerritory === 5) to = 'repository';
-        this.logAmplitudeEvent('exchange_territory', {
+        this.state.amplitude.logAmplitudeEvent('exchange_territory', {
           block: this.state.territory.block,
           position: this.state.territory.position,
           from: from,
@@ -745,7 +745,7 @@ function buyTerritory(): void {
 
     if (user.money >= price) {
 
-      this.logAmplitudeEvent('buy_territory', {
+      this.state.amplitude.logAmplitudeEvent('buy_territory', {
         block: this.state.territory.block,
         position: this.state.territory.position,
       });

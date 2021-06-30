@@ -30,8 +30,6 @@ import {
   getEventRaiting,
   nextDayTimer,
   autoporgressCollectorTime,
-  logAmplitudeEvent,
-  logAmplitudeRevenue,
   farmBalance,
   sendSocialEvent,
   sendAppEventVk,
@@ -242,8 +240,6 @@ class Chicken extends Phaser.Scene {
   public intervalPorgressCollectorTime = intervalPorgressCollectorTime.bind(this);
   public autoporgressCollectorTime = autoporgressCollectorTime.bind(this);
   public findFreeTerritory = findFreeTerritory.bind(this);
-  public logAmplitudeEvent = logAmplitudeEvent.bind(this);
-  public logAmplitudeRevenue = logAmplitudeRevenue.bind(this);  
   public farmBalance = farmBalance.bind(this);
   public sheepIntervalProgress = sheepIntervalProgress.bind(this);
   public sheepCollectorProgress = sheepCollectorProgress.bind(this);

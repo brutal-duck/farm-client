@@ -325,7 +325,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       const price = Math.round((settings.price / 100) * 70);
 
       if (user.money >= price) {
-        this.scene.logAmplitudeEvent('buy_territory', {
+        this.scene.state.amplitude.logAmplitudeEvent('buy_territory', {
           block: this.block,
           position: this.position,
         });
@@ -430,7 +430,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
             
             const to: string = 'repository';
 
-            this.scene.logAmplitudeEvent('exchange_territory', {
+            this.scene.state.amplitude.logAmplitudeEvent('exchange_territory', {
               block: this.block,
               position: this.position,
               from: from,
@@ -477,7 +477,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
           else if (this.scene.state.exchangeTerritory === 3) to = 'water';
           else if (this.scene.state.exchangeTerritory === 5) to = 'repository';
     
-          this.scene.logAmplitudeEvent('exchange_territory', {
+          this.scene.state.amplitude.logAmplitudeEvent('exchange_territory', {
             block: this.block,
             position: this.position,
             from: from,
@@ -645,12 +645,12 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
           }, callbackScope: this, loop: false });
 
-          this.scene.logAmplitudeEvent('fair_up', {
+          this.scene.state.amplitude.logAmplitudeEvent('fair_up', {
             level: user.fair,
           });
 
           if (nextFair.price_d > 0) {
-            this.scene.logAmplitudeEvent('diamonds_spent', {
+            this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
               type: 'fair',
               count: nextFair.price_d,
             });
@@ -727,7 +727,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       else if (this.territoryType === 3) territory = 'water';
       else if (this.territoryType === 5) territory = 'repository';
 
-      this.scene.logAmplitudeEvent('improve_territory', {
+      this.scene.state.amplitude.logAmplitudeEvent('improve_territory', {
         block: this.block,
         position: this.position,
         level: improve,
@@ -781,7 +781,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       else if (this.territoryType === 3) territory = 'water';
       else if (this.territoryType === 5) territory = 'repository';
 
-      this.scene.logAmplitudeEvent('improve_territory', {
+      this.scene.state.amplitude.logAmplitudeEvent('improve_territory', {
         block: this.block,
         position: this.position,
         level: improve,
@@ -795,7 +795,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         this.scene.tryTask(17, improve);
         this.changeSprite();
         Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
-        this.scene.logAmplitudeEvent('diamonds_spent', {
+        this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
           type: 'storage',
           count: price,
         });
@@ -870,12 +870,12 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
           }, callbackScope: this, loop: false });
 
-          this.scene.logAmplitudeEvent('factory_up', {
+          this.scene.state.amplitude.logAmplitudeEvent('factory_up', {
             level: this.factory.improve,
           });
 
           if (nextImprove.improveDiamondPrice > 0) {
-            this.scene.logAmplitudeEvent('diamonds_spent', {
+            this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
               type: 'factory',
               count: nextImprove.improveDiamondPrice,
             });

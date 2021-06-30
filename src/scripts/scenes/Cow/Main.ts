@@ -26,8 +26,6 @@ import {
   spreadAnimals,
   getEventRaiting,
   nextDayTimer,
-  logAmplitudeEvent,
-  logAmplitudeRevenue,
   farmBalance,
   autoporgressCollectorTime,
   sendSocialEvent,
@@ -240,8 +238,6 @@ class Cow extends Phaser.Scene {
   public findFreeTerritory = findFreeTerritory.bind(this);
   public showImproveFactory = showImproveFactory.bind(this);
   public showFactoryBoost = showFactoryBoost.bind(this);
-  public logAmplitudeEvent = logAmplitudeEvent.bind(this);
-  public logAmplitudeRevenue = logAmplitudeRevenue.bind(this);  
   public farmBalance = farmBalance.bind(this);
   public autoporgressCollectorTime = autoporgressCollectorTime.bind(this);
   public intervalPorgressCollectorTime = intervalPorgressCollectorTime.bind(this);

@@ -384,7 +384,7 @@ function exchange(ad: boolean = false): void {
     MoneyAnimation.create(this.game.scene.keys[`${this.state.farm}Bars`]);
     if (!ad) {
 
-      this.logAmplitudeEvent('diamonds_spent', {
+      this.state.amplitude.logAmplitudeEvent('diamonds_spent', {
         type: 'convertor',
         count: this.state.convertor.diamonds,
       });
@@ -429,7 +429,7 @@ function donePart(): void {
   
   const award: number = parts.find((data: Ipart) => data.sort === user.part).award;
   this.state.user.diamonds += award;
-  this.logAmplitudeEvent('diamonds_get', {
+  this.state.amplitude.logAmplitudeEvent('diamonds_get', {
     type: 'part_award',
     count: award,
   });
@@ -440,7 +440,7 @@ function donePart(): void {
   this.deleteTerritoriesLocks();
   this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
 
-  this.logAmplitudeEvent('chapter_done', {
+  this.state.amplitude.logAmplitudeEvent('chapter_done', {
     chapter: user.part - 1
   });
   this.autosave();
@@ -487,7 +487,7 @@ function pickUpTaskReward(id: number): void {
       else this.state.user.diamonds += task.diamonds;
     } else this.state.user.diamonds += task.diamonds;
 
-    this.logAmplitudeEvent('diamonds_get', {
+    this.state.amplitude.logAmplitudeEvent('diamonds_get', {
       type: 'task_award',
       count: task.diamonds,
     });
@@ -655,7 +655,7 @@ function buyNextFarm(): void {
     if (progress.donate) this.state.user.diamonds -= progress.price;
     else user.money -= progress.price;
 
-    this.logAmplitudeEvent('get_new_farm', {
+    this.state.amplitude.logAmplitudeEvent('get_new_farm', {
       type: 'buy',
       farm_id: farm
     });
@@ -744,7 +744,7 @@ function getNewbieAward(): void {
         this.scene.stop('SheepBars');
         this.scene.start('ChickenPreload', this.state);
   
-        this.logAmplitudeEvent('get_new_farm', {
+        this.state.amplitude.logAmplitudeEvent('get_new_farm', {
           type: 'daily',
           farm_id: 'Chicken',
         });
@@ -1018,7 +1018,7 @@ function takeDonate(): void {
           'chapter': chapter,
           'stock': this.state.stock,
         };
-        this.logAmplitudeRevenue('Product #' + res.data.package, pack.price, '', eventPorerties);
+        this.state.amplitude.logAmplitudeRevenue('Product #' + res.data.package, pack.price, '', eventPorerties);
 
         MoneyAnimation.create(this.game.scene.keys[this.state.farm + 'Bars'], 'diamond');
         this.autosave();
@@ -1549,105 +1549,6 @@ function createTaskZone(): void {
   });
 }
 
-function logAmplitudeEvent(eventName: string, data: IamplitudeData): void {
-  let eventData: IamplitudeData;
-
-  if (this.state.farm !== 'Unicorn' && data.farm_id !== 'Unicorn') {
-    const balance: Ibalance = this.balance();
-    const waterPercent: number = balance.notEnoughWater? -1 * balance.waterPercent : balance.waterPercent;
-    const grassPercent: number = balance.notEnoughGrass ? -1 * balance.grassPercent : balance.grassPercent;
-    let countAnimal: number = this[this.state.farm.toLowerCase()]?.children.entries.length;
-    if (!countAnimal) countAnimal = 0;
-    if (this.state.farm === 'Cow') countAnimal = this.animalGroup?.children.entries.length;
-    eventData = {
-      test: this.state.user.test,
-      farm_id: this.state.farm,
-      chapter: this.state[`user${this.state.farm}`].part,
-      diamonds: this.state.user.diamonds,
-      money: this.state[`user${this.state.farm}`].money,
-      fairLevel: this.state[`user${this.state.farm}`].fair,
-      collector: this.state[`user${this.state.farm}`].collector,
-      countAnimal: countAnimal,
-      balanceWaterPercent: waterPercent,
-      balanceGrassPercent: grassPercent,
-    }
-  } else {
-    let countAnimal: number = this.animals?.children.entries.length;
-    if (!countAnimal) countAnimal = 0;
-
-    eventData = {
-      test: this.state.user.test,
-      farm_id: this.state.farm,
-      chapter: this.state[`user${this.state.farm}`].points,
-      diamonds: this.state.user.diamonds,
-      money: this.state[`user${this.state.farm}`].money,
-      collector: this.state[`user${this.state.farm}`].collector,
-      countAnimal: countAnimal,
-    }
-  }
-  for (const key in data) {
-    eventData[key] = data[key];
-  }
-  this.state.amplitude?.getInstance().logEvent(eventName, eventData);
-}
-
-
-function logAmplitudeRevenue(productId: string, price: number, type: string = '',  data: IamplitudeData): void {
-  let revenueData: IamplitudeData;
-
-  if (this.state.farm !== 'Unicorn' && data.farm_id !== 'Unicorn') {
-    const balance: Ibalance = this.balance();
-    const waterPercent: number = balance.notEnoughWater? -1 * balance.waterPercent : balance.waterPercent;
-    const grassPercent: number = balance.notEnoughGrass ? -1 * balance.grassPercent : balance.grassPercent;
-    let countAnimal: number = this[this.state.farm.toLowerCase()]?.children.entries.length;
-    if (this.state.farm === 'Cow') countAnimal = this.animalGroup?.children.entries.length;
-    if (!countAnimal) countAnimal = 0;
-
-    revenueData = {
-      test: this.state.user.test,
-      farm_id: this.state.farm,
-      chapter: this.state[`user${this.state.farm}`].part,
-      diamonds: this.state.user.diamonds,
-      money: this.state[`user${this.state.farm}`].money,
-      fairLevel: this.state[`user${this.state.farm}`].fair,
-      collector: this.state[`user${this.state.farm}`].collector,
-      countAnimal: countAnimal,
-      balanceWaterPercent: waterPercent,
-      balanceGrassPercent: grassPercent,
-    }
-  } else {
-    let countAnimal: number = this.animals?.children.entries.length;
-    if (!countAnimal) countAnimal = 0;
-
-    revenueData = {
-      test: this.state.user.test,
-      farm_id: this.state.farm,
-      chapter: this.state[`user${this.state.farm}`].points,
-      diamonds: this.state.user.diamonds,
-      money: this.state[`user${this.state.farm}`].money,
-      collector: this.state[`user${this.state.farm}`].collector,
-      countAnimal: countAnimal,
-    }
-  }
-  for (const key in data) {
-    revenueData[key] = data[key];
-  }
-
-  try { 
-    const revenue: amplitude.Revenue = new amplitude.Revenue()
-    .setProductId(productId)
-    .setPrice(price)
-    .setEventProperties(revenueData);
-
-  if (type) revenue.setRevenueType(type);
-
-  this.state.amplitude?.logRevenueV2(revenue);
-  } catch (e) {
-    console.log(e);
-  }
-
-}
-
 function farmBalance(farm: string): Ibalance {
 
   let waterConsumption: number = 0;
@@ -1736,7 +1637,6 @@ function farmBalance(farm: string): Ibalance {
   }
 }
 
-
 function sendSocialEvent(state: Istate, type: number, value: number): void {
   const langs: { [key: string]: string } = {
     sheep5: `У меня завершено уже ${value} главы на овечьей ферме! Присоединяйся к игре!`,
@@ -1796,6 +1696,7 @@ function sendAppEventVk(state: Istate, type: number, value: number): void {
     axios.post(process.env.API + "/appEventVk", data).then((res) => {console.log(res.data)});
   }
 }
+
 export {
   random,
   getRandomBool,
@@ -1831,8 +1732,6 @@ export {
   loadingModal,
   remainderSellResource,
   createTaskZone,
-  logAmplitudeEvent,
-  logAmplitudeRevenue,
   farmBalance,
   sendSocialEvent,
   sendAppEventVk,

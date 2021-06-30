@@ -111,7 +111,7 @@ export default class DailyAwardWindow extends Phaser.GameObjects.Sprite {
       if (AWARDS[this.day].type === 1 || AWARDS[this.day].type === 2) {
         this.scene.state.user.diamonds += AWARDS[this.day].count;
 
-        this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('diamonds_get', {
+        this.scene.state.amplitude.logAmplitudeEvent('diamonds_get', {
           type: 'daily_award',
           count: AWARDS[this.day].count,
         });

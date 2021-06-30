@@ -14,9 +14,9 @@ function balance(): Ibalance {
   let notEnoughGrass: boolean = false;
   let notEnoughWater: boolean = false;
 
-  for (let i in this.sheep.children.entries) {
+  for (let i in this.sheep?.children.entries) {
 
-    let sheep = this.sheep.children.entries[i];
+    let sheep = this.sheep?.children.entries[i];
 
     let breed: number;
     if (sheep.type === 0) breed = 1;
@@ -32,9 +32,9 @@ function balance(): Ibalance {
   grassConsumption = Math.round(grassConsumption / 2);
   waterConsumption = Math.round(waterConsumption / 2);
 
-  for (let i in this.territories.children.entries) {
+  for (let i in this.territories?.children.entries) {
 
-    let territory = this.territories.children.entries[i];
+    let territory = this.territories?.children.entries[i];
 
     if (territory.type === 2 || territory.type === 3) {
       
@@ -151,7 +151,7 @@ function takeDiamondSheep(): void {
 
     if (this.state.userSheep.diamondAnimalTime === 0) {
 
-      this.logAmplitudeEvent('take_diamond_animal', {});
+      this.state.amplitude.logAmplitudeEvent('take_diamond_animal', {});
 
       this.tryTask(18, 0);
       this.state.userSheep.diamondAnimalTime = this.state.sheepSettings.sheepDiamondsTime;

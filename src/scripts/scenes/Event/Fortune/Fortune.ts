@@ -530,7 +530,7 @@ export default class Fortune extends Phaser.Scene {
 
       this.state.user.diamonds -= this.price;
 
-      this.game.scene.keys[this.state.farm].logAmplitudeEvent('diamonds_spent', {
+      this.state.amplitude.logAmplitudeEvent('diamonds_spent', {
         type: 'fortune',
         count: this.price,
         countFortune: this.state.progress.event.eventPoints,
@@ -590,7 +590,7 @@ export default class Fortune extends Phaser.Scene {
   private getFreeDiamonds(prize: number): void {
     this.state.user.diamonds += prize;
 
-    this.game.scene.keys[this.state.farm].logAmplitudeEvent('diamonds_get', {
+    this.state.amplitude.logAmplitudeEvent('diamonds_get', {
       type: 'fortune',
       count: prize,
     });
@@ -743,19 +743,19 @@ export default class Fortune extends Phaser.Scene {
       if (randomIndex === 1) {
         this.state.user.boosts.sheep.feed += 1;
         Hint.create(this, -250, this.state.lang.fortuneHint_4_Sheep, 3);
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('feed_boost_get', {
+        this.state.amplitude.logAmplitudeEvent('feed_boost_get', {
           type: 'Sheep'
         });
       } else if (randomIndex === 1) {
         this.state.user.boosts.chicken.feed += 1;
         Hint.create(this, -250, this.state.lang.fortuneHint_4_Chicken, 3);
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('feed_boost_get', {
+        this.state.amplitude.logAmplitudeEvent('feed_boost_get', {
           type: 'Chicken'
         });
       } else {
         this.state.user.boosts.cow.feed += 1;
         Hint.create(this, -250, this.state.lang.fortuneHint_4_Cow, 3);
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
+        this.state.amplitude.logAmplitudeEvent('herd_boost_get', {
           type: 'Cow'
         });
       }
@@ -764,20 +764,20 @@ export default class Fortune extends Phaser.Scene {
       if (randomIndex === 1) {
         this.state.user.boosts.sheep.feed += 1;
         Hint.create(this, -250, this.state.lang.fortuneHint_4_Sheep, 3);
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('feed_boost_get', {
+        this.state.amplitude.logAmplitudeEvent('feed_boost_get', {
           type: 'Sheep'
         });
       } else {
         this.state.user.boosts.chicken.feed += 1;
         Hint.create(this, -250, this.state.lang.fortuneHint_4_Chicken, 3);
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('feed_boost_get', {
+        this.state.amplitude.logAmplitudeEvent('feed_boost_get', {
           type: 'Chicken'
         });
       } 
     } else {
       this.state.user.boosts.sheep.feed += 1;
       Hint.create(this, -250, this.state.lang.fortuneHint_4_Sheep, 3);
-      this.game.scene.keys[this.state.farm].logAmplitudeEvent('feed_boost_get', {
+      this.state.amplitude.logAmplitudeEvent('feed_boost_get', {
         type: 'Sheep'
       });
     }
@@ -789,19 +789,19 @@ export default class Fortune extends Phaser.Scene {
       if (randomIndex === 1) {
         this.state.user.boosts.sheep.herd += 1;
         Hint.create(this, -250, this.state.lang.fortuneHint_5_Sheep, 3);
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
+        this.state.amplitude.logAmplitudeEvent('herd_boost_get', {
           type: 'Sheep'
         });
       } else if (randomIndex === 2) {
         this.state.user.boosts.chicken.herd += 1;
         Hint.create(this, -250, this.state.lang.fortuneHint_5_Chicken, 3);
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
+        this.state.amplitude.logAmplitudeEvent('herd_boost_get', {
           type: 'Chicken'
         });
       } else {
         this.state.user.boosts.cow.herd += 1;
         Hint.create(this, -250, this.state.lang.fortuneHint_5_Cow, 3);
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
+        this.state.amplitude.logAmplitudeEvent('herd_boost_get', {
           type: 'Cow'
         });
       }
@@ -810,20 +810,20 @@ export default class Fortune extends Phaser.Scene {
       if (randomIndex === 1) {
         this.state.user.boosts.sheep.herd += 1;
         Hint.create(this, -250, this.state.lang.fortuneHint_5_Sheep, 3);
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
+        this.state.amplitude.logAmplitudeEvent('herd_boost_get', {
           type: 'Sheep'
         });
       } else {
         this.state.user.boosts.chicken.herd += 1;
         Hint.create(this, -250, this.state.lang.fortuneHint_5_Chicken, 3);
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
+        this.state.amplitude.logAmplitudeEvent('herd_boost_get', {
           type: 'Chicken'
         });
       }
     } else {
       this.state.user.boosts.sheep.herd += 1;
       Hint.create(this, -250, this.state.lang.fortuneHint_5_Sheep, 3);
-      this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
+      this.state.amplitude.logAmplitudeEvent('herd_boost_get', {
         type: 'Sheep'
       });
     }
@@ -835,19 +835,19 @@ export default class Fortune extends Phaser.Scene {
       if (randomIndex === 1) {
         this.state.user.boosts.sheep.collector4 += 1;
         Hint.create(this, -250, this.state.lang.fortuneHint_7_Sheep, 3);
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
+        this.state.amplitude.logAmplitudeEvent('herd_boost_get', {
           type: 'Sheep'
         });
       } else if (randomIndex === 2) {
         this.state.user.boosts.chicken.collector4 += 1;
         Hint.create(this, -250, this.state.lang.fortuneHint_7_Chicken, 3);
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
+        this.state.amplitude.logAmplitudeEvent('herd_boost_get', {
           type: 'Chicken'
         });
       } else {
         this.state.user.boosts.cow.collector4 += 1;
         Hint.create(this, -250, this.state.lang.fortuneHint_7_Cow, 3);
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
+        this.state.amplitude.logAmplitudeEvent('herd_boost_get', {
           type: 'Cow'
         });
       }
@@ -856,20 +856,20 @@ export default class Fortune extends Phaser.Scene {
       if (randomIndex === 1) {
         this.state.user.boosts.sheep.collector4 += 1;
         Hint.create(this, -250, this.state.lang.fortuneHint_7_Sheep, 3);
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
+        this.state.amplitude.logAmplitudeEvent('herd_boost_get', {
           type: 'Sheep'
         });
       } else {
         this.state.user.boosts.chicken.collector4 += 1;
         Hint.create(this, -250, this.state.lang.fortuneHint_7_Chicken, 3);
-        this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
+        this.state.amplitude.logAmplitudeEvent('herd_boost_get', {
           type: 'Chicken'
         });
       }
     } else {
       this.state.user.boosts.sheep.collector4 += 1;
       Hint.create(this, -250, this.state.lang.fortuneHint_7_Sheep, 3);
-      this.game.scene.keys[this.state.farm].logAmplitudeEvent('herd_boost_get', {
+      this.state.amplitude.logAmplitudeEvent('herd_boost_get', {
         type: 'Sheep'
       });
     }

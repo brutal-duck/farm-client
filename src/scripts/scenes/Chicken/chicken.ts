@@ -510,7 +510,7 @@ function collectEgg(egg: Egg, manualСollect: boolean = false): void {
       y: egg.y
     };
 
-    this.logAmplitudeEvent('diamonds_get', {
+    this.state.amplitude.logAmplitudeEvent('diamonds_get', {
       type: 'diamond_animal',
       count: 1,
     });

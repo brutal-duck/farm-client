@@ -110,7 +110,7 @@ function adReward(): void {
 
       this.tryTask(18, 0);
 
-      this.logAmplitudeEvent('take_diamond_animal', {
+      this.state.amplitude.logAmplitudeEvent('take_diamond_animal', {
         price: 'ad'
       });
       break;
@@ -144,7 +144,7 @@ function adReward(): void {
       }
       this.tryTask(3, 0, time);
 
-      this.logAmplitudeEvent('collector', {
+      this.state.amplitude.logAmplitudeEvent('collector', {
         type: 'free',
         price: 'ad',
       });
@@ -178,7 +178,7 @@ function adReward(): void {
       this.getAnimal(id, breed, position.x, position.y);
       Firework.create(this, { x: position.x, y: position.y }, 1);
 
-      this.logAmplitudeEvent('take_event_animal', {
+      this.state.amplitude.logAmplitudeEvent('take_event_animal', {
         price: 'ad'
       });
 
@@ -187,7 +187,7 @@ function adReward(): void {
     case 5:
       this.state.userUnicorn.money = BigInteger.add(this.state.userUnicorn.money, this.state.modal.eventParams.offlineProgress);
       MoneyAnimation.create(this.game.scene.keys[this.state.farm + 'Bars']);
-      this.logAmplitudeEvent('take_double_profit_event', {
+      this.state.amplitude.logAmplitudeEvent('take_double_profit_event', {
         price: 'ad'
       });
       type = 'take_double_profit_event';
@@ -202,7 +202,7 @@ function adReward(): void {
     screen: type
   }
 
-  this.logAmplitudeRevenue(type, 0, 'rewarded', properties);
+  this.state.amplitude.logAmplitudeRevenue(type, 0, 'rewarded', properties);
   this.autosave();
 }
 

@@ -554,18 +554,18 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
         this.scene.scene.launch('Modal', this.scene.state);
       } else {
         this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].feed -= 1;
-        this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('feed_boost_spent', {});
+        this.scene.state.amplitude.logAmplitudeEvent('feed_boost_spent', {});
         this.scene.state.boughtFeedBoost = true;
         if (this.scene.state[`user${this.scene.state.farm}`].feedBoostTime <= 0) {
           this.scene.state[`user${this.scene.state.farm}`].feedBoostTime += ONE_HOUR; // прибавить час
-          this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('booster_feed_x2', {
+          this.scene.state.amplitude.logAmplitudeEvent('booster_feed_x2', {
             price: 0,
             time: 1,
           });
           this.scene.game.scene.keys[this.scene.state.farm].tryTask(21, 0, 1);
         } else {
           const time: number = Math.ceil(this.scene.state[`user${this.scene.state.farm}`].feedBoostTime / ONE_HOUR / 2) + 1;
-          this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('booster_feed_x2', {
+          this.scene.state.amplitude.logAmplitudeEvent('booster_feed_x2', {
             price: 0,
             time: time,
           });
@@ -592,7 +592,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
           
         } else {
   
-          this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('diamonds_spent', {
+          this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
             type: 'booster_feed_x2',
             count: this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].feedBoostPrice,
           });
@@ -605,14 +605,14 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
           if (this.scene.state[`user${this.scene.state.farm}`].feedBoostTime <= 0) {
             this.scene.state[`user${this.scene.state.farm}`].feedBoostTime += ONE_HOUR; // прибавить час
   
-            this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('booster_feed_x2', {
+            this.scene.state.amplitude.logAmplitudeEvent('booster_feed_x2', {
               price: this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].feedBoostPrice,
               time: 1,
             });
             this.scene.game.scene.keys[this.scene.state.farm].tryTask(21, 0, 1);
           } else {
             const time: number = Math.ceil(this.scene.state[`user${this.scene.state.farm}`].feedBoostTime / ONE_HOUR / 2) + 1;
-            this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('booster_feed_x2', {
+            this.scene.state.amplitude.logAmplitudeEvent('booster_feed_x2', {
               price: this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].feedBoostPrice,
               time: time,
             });
@@ -760,7 +760,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     const price: number = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].feedBoostPrice;
     if (this.scene.state.user.diamonds >= price) {
       this.scene.state.user.diamonds -= price;
-      this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('diamonds_spent', {
+      this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
         type: 'booster_feed_x2',
         count: price,
       });
@@ -787,7 +787,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
         if (this.scene.state[`user${this.scene.state.farm}`].feedBoostTime <= 0) {
           this.scene.state[`user${this.scene.state.farm}`].feedBoostTime += ONE_HOUR; // прибавить час
 
-          this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('booster_feed_x2', {
+          this.scene.state.amplitude.logAmplitudeEvent('booster_feed_x2', {
             price: price,
             time: 1,
           });
@@ -795,7 +795,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
         } else {
           
           let time: number = Math.ceil(this.scene.state[`user${this.scene.state.farm}`].feedBoostTime / ONE_HOUR / 2) + 1;
-          this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('booster_feed_x2', {
+          this.scene.state.amplitude.logAmplitudeEvent('booster_feed_x2', {
             price: price,
             time: time,
           });

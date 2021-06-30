@@ -385,12 +385,12 @@ export default class HerdBoostUnicornWindow {
       this.scene.state[`user${this.scene.state.farm}`].takenHerdBoost++;
       this.scene.scene.stop();
       this.scene.game.scene.keys['Unicorn'].startCreateHerdBoostAnimal = true;
-      this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('diamonds_spent', {
+      this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
         type: 'herd',
         count: this.scene.state.herdBoostPrice * this.scene.state[`user${this.scene.state.farm}`].takenHerdBoost,
       });
     
-      this.scene.game.scene.keys[this.scene.state.farm].logAmplitudeEvent('booster_merge', {
+      this.scene.state.amplitude.logAmplitudeEvent('booster_merge', {
         count: this.scene.state[`user${this.scene.state.farm}`].takenHerdBoost,
       });
     });

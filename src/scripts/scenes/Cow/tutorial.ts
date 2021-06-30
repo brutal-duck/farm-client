@@ -51,7 +51,7 @@ function showTutorial(additional: boolean | string = false): void {
 // завершение первого шага (приветствие)
 function doneTutor_0(): void {
 
-  this.logAmplitudeEvent('tutorial', {
+  this.state.amplitude.logAmplitudeEvent('tutorial', {
     step: 0
   });
   
@@ -61,7 +61,7 @@ function doneTutor_0(): void {
 
 function doneTutor_10(): void {
 
-  this.logAmplitudeEvent('tutorial', {
+  this.state.amplitude.logAmplitudeEvent('tutorial', {
     step: 10
   });
   
@@ -76,7 +76,7 @@ function doneTutor_10(): void {
 
 function doneTutor_20(): void {
 
-  this.logAmplitudeEvent('tutorial', {
+  this.state.amplitude.logAmplitudeEvent('tutorial', {
     step: 20
   });
   
@@ -91,7 +91,7 @@ function doneTutor_20(): void {
 
 function doneTutor_30(): void {
 
-  this.logAmplitudeEvent('tutorial', {
+  this.state.amplitude.logAmplitudeEvent('tutorial', {
     step: 30
   });
   
@@ -106,7 +106,7 @@ function doneTutor_30(): void {
 
 function doneTutor_40(): void {
 
-  this.logAmplitudeEvent('tutorial', {
+  this.state.amplitude.logAmplitudeEvent('tutorial', {
     step: 40
   });
   

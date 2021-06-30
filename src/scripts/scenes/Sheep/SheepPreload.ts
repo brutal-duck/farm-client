@@ -4,6 +4,7 @@ import loadSheep from '../../local/loadSheep';
 import loadData from '../../general/loadData';
 import { checkStorage, loadingScreen } from '../../general/basic';
 import LocalStorage from './../../libs/LocalStorage';
+import Amplitude from './../../libs/Amplitude';
 
 const pixel: string = require("./../../../assets/images/pixel.png");
 const bg: string = require("./../../../assets/images/scroll-bg.png");
@@ -720,24 +721,11 @@ class SheepPreload extends Phaser.Scene {
           screen_size: sizes,
           loadTime: loadTime
         });
-
+        
+        console.log(`Test - ${this.state.user.test}`);
         // подрубаем амплитуду
-        const Amplitude = this.state.amplitude;
-
-        if (Amplitude) {
-          const identify = new Amplitude.Identify()
-            .set('diamond_balance', this.state.user.diamonds)
-            .set('user_id', this.state.user.id)
-            .set('browser', navigator.userAgent)
-            .set('partner', this.state.platform)
-            .set('test', this.state.user.test);
-            
-          Amplitude.getInstance().identify(identify);
-          console.log(`Test - ${this.state.user.test}`);
-          // Amplitude.getInstance().logEvent('load_time', {
-          //   seconds: loadTime
-          // });
-        }
+        const Amplitude: Amplitude = this.state.amplitude;
+        Amplitude.setFarmIdentify();
 
       }
 
@@ -779,12 +767,8 @@ class SheepPreload extends Phaser.Scene {
         this.state.nativeCounter = [0, 0, 0, 0];
         this.userReady = true;
         
-        const Amplitude = this.state.amplitude;
-        if (Amplitude) {
-          const identify = new Amplitude.Identify().set('CatcherSheep', this.state.userSheep.collectorLevel);
-          Amplitude.getInstance().identify(identify);
-          if (response.data.user.tutor === 0) this.state.amplitude.getInstance().logEvent('tutor_before_load', {});
-        }
+        const Amplitude: Amplitude = this.state.amplitude;
+        if (response.data.user.tutor === 0) Amplitude.logAmplitudeEvent('tutor_before_load', {});
       // } else {
       //   this.loadSheep(response.data.user.counter);
       // }

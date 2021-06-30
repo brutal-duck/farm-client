@@ -58,12 +58,12 @@ function interval(): void {
     }
 
     if (!statusBalance && balance.alarm) {
-      this.logAmplitudeEvent('resources', {
+      this.state.amplitude.logAmplitudeEvent('resources', {
         status: 'problem started',
       });
 
     } else if (statusBalance && !balance.alarm) {
-      this.logAmplitudeEvent('resources', {
+      this.state.amplitude.logAmplitudeEvent('resources', {
         status: 'problem is over',
       });
     }

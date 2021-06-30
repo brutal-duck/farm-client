@@ -233,7 +233,7 @@ function buyAnimal(breed: number, shop: boolean = false, diamond: number = 0): b
         this.state.user.diamonds -= diamond;
         this.state.userUnicorn.countAnimal[breed - 1].counter = animalPrice.countAnimal;
 
-        this.logAmplitudeEvent('diamonds_spent', {
+        this.state.amplitude.logAmplitudeEvent('diamonds_spent', {
           type: 'buy_unicorn',
           count: diamond,
         });

@@ -35,7 +35,7 @@ function showEventTutorial(additional: boolean | string = false): void {
 // завершение первого шага (зазывание на карте)
 function doneEventTutor_0(): void {
   if (this.state.progress.event.type === 1) {
-    this.logAmplitudeEvent('tutorial', {
+    this.state.amplitude.logAmplitudeEvent('tutorial', {
       step: 0,
       farm_id: 'Unicorn'
     });
@@ -49,7 +49,7 @@ function doneEventTutor_0(): void {
 
   } else if (this.state.progress.event.type === 2) {
 
-    this.logAmplitudeEvent('tutorial', {
+    this.state.amplitude.logAmplitudeEvent('tutorial', {
       step: 0,
       farm_id: 'Fortune'
     });
@@ -65,7 +65,7 @@ function doneEventTutor_0(): void {
 
 // завершение второго шага (приветствие часть 1)
 function doneEventTutor_10(): void {
-  this.logAmplitudeEvent('tutorial', {
+  this.state.amplitude.logAmplitudeEvent('tutorial', {
     step: 10,
   });
   this.state.userUnicorn.tutorial = 20;
@@ -81,7 +81,7 @@ function doneEventTutor_10(): void {
 
 // завершение третьего шага (приветствие часть 2)
 function doneEventTutor_20(): void {
-  this.logAmplitudeEvent('tutorial', {
+  this.state.amplitude.logAmplitudeEvent('tutorial', {
     step: 20,
   });
   this.state.userUnicorn.tutorial = 30;
@@ -95,7 +95,7 @@ function doneEventTutor_20(): void {
 
 // завершение четвертого шага (купи 2 единорога)
 function doneEventTutor_30(): void {
-  this.logAmplitudeEvent('tutorial', {
+  this.state.amplitude.logAmplitudeEvent('tutorial', {
     step: 30,
   });
   this.state.userUnicorn.tutorial = 40;
@@ -113,7 +113,7 @@ function doneEventTutor_30(): void {
 
 // завершение пятого шага (смерджи два единорога)
 function doneEventTutor_40(): void {
-  this.logAmplitudeEvent('tutorial', {
+  this.state.amplitude.logAmplitudeEvent('tutorial', {
     step: 40,
   });
   this.showMergPointer = false;
@@ -130,7 +130,7 @@ function doneEventTutor_40(): void {
 
 // завершение шестого шага (отправь на работу единорога)
 function doneEventTutor_50(): void {
-  this.logAmplitudeEvent('tutorial', {
+  this.state.amplitude.logAmplitudeEvent('tutorial', {
     step: 50,
   });
   this.mergPointer?.data.values.animal?.destroy();
@@ -146,7 +146,7 @@ function doneEventTutor_50(): void {
 
 // завершение седьмого шага (заключение часть 1)
 function doneEventTutor_60(): void {
-  this.logAmplitudeEvent('tutorial', {
+  this.state.amplitude.logAmplitudeEvent('tutorial', {
     step: 60,
   });
   this.state.userUnicorn.tutorial = 70;
@@ -163,7 +163,7 @@ function doneEventTutor_60(): void {
 function doneEventTutor_70(): void {
 
 
-  this.logAmplitudeEvent('tutorial', {
+  this.state.amplitude.logAmplitudeEvent('tutorial', {
     step: 70,
   });
   this.state.userUnicorn.tutorial = 80;

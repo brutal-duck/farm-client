@@ -90,7 +90,7 @@ function tryTask(type: number, state: number, count: number = 1, currentProgress
     task.progress += count;
     if (task.progress >= task.count) {
       task.done = 1;
-      this.logAmplitudeEvent('task_done', {
+      this.state.amplitude.logAmplitudeEvent('task_done', {
         task_id: task.id,
         part: part,
       });
@@ -102,7 +102,7 @@ function tryTask(type: number, state: number, count: number = 1, currentProgress
     task.progress = currentProgress;
     if (task.progress >= task.count) {
       task.done = 1;
-      this.logAmplitudeEvent('task_done', {
+      this.state.amplitude.logAmplitudeEvent('task_done', {
         task_id: task.id,
         part: part,
       });
@@ -112,7 +112,7 @@ function tryTask(type: number, state: number, count: number = 1, currentProgress
 
   if (task?.progress >= task?.count && (task?.type === 21 || task?.type === 22)) {
     task.done = 1;
-    this.logAmplitudeEvent('task_done', {
+    this.state.amplitude.logAmplitudeEvent('task_done', {
       task_id: task.id,
       part: part,
     });

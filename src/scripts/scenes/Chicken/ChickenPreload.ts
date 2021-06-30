@@ -4,6 +4,7 @@ import loadChicken from '../../local/loadChicken';
 import loadData from '../../general/loadData';
 import { checkStorage, loadingScreen,  } from '../../general/basic';
 import LocalStorage from './../../libs/LocalStorage';
+import Amplitude from './../../libs/Amplitude';
 
 const pixel: string = require("./../../../assets/images/pixel.png");
 const bg: string = require("./../../../assets/images/scroll-bg.png");
@@ -507,22 +508,9 @@ class ChickenPreload extends Phaser.Scene {
         });
 
         // подрубаем амплитуду
-        const Amplitude = this.state.amplitude;
-        if (Amplitude) {
-          const identify = new Amplitude.Identify().setOnce('start_version', '3.0')
-            .set('diamond_balance', this.state.user.diamonds)
-            .set('user_id', this.state.user.id)
-            .set('browser', navigator.userAgent)
-            .set('partner', this.state.platform)
-            .set('test', this.state.user.test);
-            
-          Amplitude.getInstance().identify(identify);
-          console.log(`Test - ${this.state.user.test}`);
-          // Amplitude.getInstance().logEvent('load_time', {
-          //   seconds: loadTime
-          // });
-        }
-
+        const Amplitude: Amplitude = this.state.amplitude;
+        Amplitude.setFarmIdentify();
+        console.log(`Test - ${this.state.user.test}`);
       }
 
       this.userReady = false;
@@ -563,11 +551,6 @@ class ChickenPreload extends Phaser.Scene {
         this.state.offlineTime = response.data.progress.chickenOfflineTime;
         this.userReady = true;
         this.state.nativeCounter = [0, 0, 0, 0];
-        const Amplitude = this.state.amplitude;
-        if (Amplitude) {
-          const identify = new Amplitude.Identify().set('CatcherSheep', this.state.userChicken.collectorLevel);
-          Amplitude.getInstance().identify(identify);
-        }
       // } else {
       //   this.loadChicken(response.data.user.counter);
       // }

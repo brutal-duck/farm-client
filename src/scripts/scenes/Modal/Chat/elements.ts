@@ -116,7 +116,7 @@ export default function createChatBars(height: number = 0): void {
       else login = this.state.user.login;
       
 
-      this.game.scene.keys[this.state.farm].logAmplitudeEvent('chat_send', {});
+      this.state.amplitude.logAmplitudeEvent('chat_send', {});
       
       this.state.socket.io.emit('send', {
         id: this.state.user.id,

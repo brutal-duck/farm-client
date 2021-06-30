@@ -7,8 +7,10 @@ import bridge, { UserInfo } from '@vkontakte/vk-bridge';
 import * as amplitude from 'amplitude-js';
 import { okCallback } from '../general/callbacks';
 import LocalStorage from './../libs/LocalStorage';
+import Amplitude from './../libs/Amplitude';
 
-amplitude.getInstance().init(process.env.AMPLITUDE);
+Amplitude.init();
+// amplitude.getInstance().isnit(process.env.AMPLITUDE);
 
 const headerSyst: string = require('./../../assets/images/modal/header-syst.png');
 const midSyst: string = require('./../../assets/images/modal/mid-syst.png');
@@ -26,7 +28,7 @@ class Boot extends Phaser.Scene {
   }
 
   public state: Istate;
-  private platform: string;
+  public platform: string;
   private hash: string;
   private lang: string;
   private fontsReady: boolean;
@@ -36,8 +38,8 @@ class Boot extends Phaser.Scene {
   private name: string;
   private avatar: string;
   public okCallback = okCallback.bind(this);
-  private build: string;
-  private params: URLSearchParams;
+  public build: string;
+  public params: URLSearchParams;
 
   public init(): void {
     this.build = '3.7.2';
@@ -140,26 +142,8 @@ class Boot extends Phaser.Scene {
   }
 
   private initAmplitude(): void {
-    try {
-      const identify = new amplitude.Identify().setOnce('start_version', this.build)
-        .set('partner', this.platform)
-        .set('browser', navigator.userAgent);
-      amplitude.getInstance().identify(identify);
-      
-      this.state.amplitude = amplitude;
-      const OutSum = this.params.get('OutSum');
-      const InvId = this.params.get('InvId');
-  
-      if (OutSum && InvId) {
-        const revenue: amplitude.Revenue = new amplitude.Revenue()
-          .setProductId('Product #' + InvId)
-          .setPrice(OutSum);
-        amplitude.logRevenueV2(revenue);
-      }
-    } catch (e) {
-      console.log(e);
-      this.state.amplitude = null;
-    }
+    this.state.amplitude = new Amplitude(this);
+    this.state.amplitude.startIdentify();
   }
 
   private setStartState(): void {

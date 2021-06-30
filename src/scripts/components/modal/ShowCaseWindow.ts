@@ -323,7 +323,7 @@ export default class ShowCaseWindow {
   
           this.state.boughtFactoryBoost = true;
   
-          this.scene.game.scene.keys[this.state.farm].logAmplitudeEvent('diamonds_spent', {
+          this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
             type: 'booster_factory',
             count: this.price,
           });
@@ -344,7 +344,7 @@ export default class ShowCaseWindow {
             this.state.user.diamonds -= this.price;
             this.scene.game.scene.keys[this.scene.state.farm].tryTask(15, 0, this.price);
             this.state.userCow.factory.boostTime += 2 * ONE_HOUR;
-            this.scene.game.scene.keys[this.state.farm].logAmplitudeEvent('diamonds_spent', {
+            this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
               type: 'booster_factory',
               count: this.price,
             });
