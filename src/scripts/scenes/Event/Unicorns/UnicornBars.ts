@@ -92,22 +92,17 @@ class UnicornBars extends Phaser.Scene {
 
 
   public create(): void {
-
     this.add.sprite(0, 0, 'topbar-event').setOrigin(0, 0).setInteractive();
     const raitingZone:Phaser.GameObjects.Zone = this.add.zone(0,0, 480, 280);
-
     this.click(raitingZone, () => {
       if (this.state.userUnicorn.tutorial > 70) {
-
         this.game.scene.keys['Unicorn'].getEventRaiting();
         const modal: Imodal = {
           type: 11
         }
         this.state.modal = modal;
         this.scene.launch('Modal', this.state);
-        
       }
-      
     })
 
     this.add.sprite(0, this.height + 10, 'tabbar')
@@ -153,40 +148,33 @@ class UnicornBars extends Phaser.Scene {
 
     // кнопка собирателя 
     this.clickButton(this.collectorBtn, (): void => {
-
-      let modal: Imodal = {
+      const modal: Imodal = {
         type: 2,
         shopType: 4
       }
       this.state.modal = modal;
       this.scene.launch('Modal', this.state);
-
     });
     
     // кнопка магазина
     this.clickButton(this.shop, (): void => {
-
-      let modal: Imodal = {
+      const modal: Imodal = {
         type: 2,
         shopType: this.state.modal?.shopType || 1
       }
       this.state.modal = modal;
       this.scene.launch('Modal', this.state);
-
     });
     
     // кнопка карты
     this.clickButton(this.map, (): void => {
-
       this.game.scene.keys[this.state.farm].scrolling.downHandler();
       this.game.scene.keys[this.state.farm].scrolling.enabled = false;
       this.game.scene.keys[this.state.farm].scrolling.wheel = false;
       this.scene.launch('Profile', this.state);
-      
     });
 
     this.menu = BarsMenu.create(this);
-
     this.offline = this.add.sprite(650, this.height - 90, 'offline')
       .setInteractive()
       .setDepth(this.height + 4)
@@ -219,7 +207,7 @@ class UnicornBars extends Phaser.Scene {
 
     this.clickButton(this.addDiamonds, (): void => {
       if (this.state.userUnicorn.tutorial > 70) {
-        let modal: Imodal = {
+        const modal: Imodal = {
           type: 2,
           shopType: 1
         }
@@ -230,8 +218,7 @@ class UnicornBars extends Phaser.Scene {
 
     this.clickButton(this.addMoney, (): void => {
       if (this.state.userUnicorn.tutorial > 70) {
-
-        let modal: Imodal = {
+        const modal: Imodal = {
           type: 2,
           shopType: 2
         }
@@ -276,7 +263,6 @@ class UnicornBars extends Phaser.Scene {
 
         // блокировка баров для туториала
     if (this.state.userUnicorn.tutorial < 80) {
-
       this.shop.setVisible(false);
       this.map.setVisible(false);
       this.collectorBtn.setVisible(false);
@@ -314,7 +300,6 @@ class UnicornBars extends Phaser.Scene {
         loopDelay: 4000,
       });
     }
-
   }
 
 
@@ -392,9 +377,8 @@ class UnicornBars extends Phaser.Scene {
 
   // затемнение на кнопке покупки животного
   public buyAnimalStatus(): void {
-
-    let breed: number = this.game.scene.keys['Unicorn'].maxBreedForBuy();
-    let price: string = this.game.scene.keys[this.state.farm].animalPrice(breed).price
+    const breed: number = this.game.scene.keys['Unicorn'].maxBreedForBuy();
+    const price: string = this.game.scene.keys[this.state.farm].animalPrice(breed).price
     
     if ((this.state.userUnicorn.herdBoostAnimals.length > 0 || 
       BigInteger.greaterThan(price, this.state.userUnicorn.money) || 

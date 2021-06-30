@@ -49,9 +49,6 @@ function interval(): void {
       this.state.userUnicorn.collector--;
     } 
     
-    if (this.state.userUnicorn.herdBoostAnimals.length > 0) {
-      this.startCreateHerdBoostAnimal = true;
-    }
     if (this.startCreateHerdBoostAnimal) {
       const freePositions: Iposition[] = this.getFreeBoostPositions();
       this.createBoostAnimal(freePositions);

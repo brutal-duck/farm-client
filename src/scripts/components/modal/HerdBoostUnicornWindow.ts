@@ -350,8 +350,8 @@ export default class HerdBoostUnicornWindow {
                 y: 400,
                 duration: 800,
                 onComplete: (): void => {
-                  this.createScoreText()
-                  this.stopBoostScene()
+                  this.createScoreText();
+                  this.stopBoostScene();
                 }
               })
 
@@ -381,7 +381,9 @@ export default class HerdBoostUnicornWindow {
   
 
   private stopBoostScene(): void {
-    this.scene.input.on('pointerdown', ()=>{
+    this.scene.input.on('pointerdown', (): void => {
+      const price: number = this.scene.state.herdBoostPrice * this.scene.state[`user${this.scene.state.farm}`].takenHerdBoost;
+      this.scene.state.user.diamonds -= price;
       this.scene.state[`user${this.scene.state.farm}`].takenHerdBoost++;
       this.scene.scene.stop();
       this.scene.game.scene.keys['Unicorn'].startCreateHerdBoostAnimal = true;
@@ -402,10 +404,10 @@ export default class HerdBoostUnicornWindow {
   
     // Изменение рандома
     let randomArray: number[] = [];
-    let max: number = this.scene.state[`user${this.scene.state.farm}`].maxLevelAnimal - 4;
+    let max: number = this.scene.state[`user${this.scene.state.farm}`].points - 4;
     max = max <= 0 ? 1 : max;
   
-    let min: number = this.scene.state[`user${this.scene.state.farm}`].maxLevelAnimal - 14;
+    let min: number = this.scene.state[`user${this.scene.state.farm}`].points - 14;
     min = min <= 0 ? 0 : min;
   
     for (let i: number = min; i < max; i++) {

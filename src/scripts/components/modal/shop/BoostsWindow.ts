@@ -682,7 +682,6 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   private eventHerdBoostBtnHandler(): void {
     const price: number = this.scene.state.herdBoostPrice * this.scene.state[`user${this.scene.state.farm}`].takenHerdBoost;
       if (this.scene.state.user.diamonds >= price) {
-        this.scene.state.user.diamonds -= price;
         this.scene.game.scene.keys[this.scene.state.farm].startHerdBoost();
       } else {
         this.scene.state.convertor = {

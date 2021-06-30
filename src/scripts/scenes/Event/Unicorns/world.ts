@@ -191,6 +191,7 @@ function world(): void {
   if (this.state.userUnicorn.tutorial === 0) this.state.userUnicorn.tutorial = 10;
   if (this.state.userUnicorn.tutorial > 0 && this.state.userUnicorn.tutorial < 80) this.showEventTutorial();
 
+  this.startCreateHerdBoostAnimal = this.state.userUnicorn.herdBoostAnimals.length > 0;
   // расчет оффлайн прогресса
   this.autoprogress(true);
   
