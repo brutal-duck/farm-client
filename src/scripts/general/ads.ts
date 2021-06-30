@@ -129,18 +129,18 @@ function adReward(): void {
         type = 'egg_catcher';
         time = this.state.chickenCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userChicken.collectorLevel).time * 2;
         this.state.userChicken.collector = time * 60;
-        this.state.userChicken.collectorTakenTime = this.state.userSheep.collector;
+        this.state.userChicken.collectorTakenTime = this.state.userChicken.collector;
       } else if (this.state.farm === 'Cow') {
         
         type = 'milk_picker';
         time = this.state.cowCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userCow.collectorLevel).time * 2;
         this.state.userCow.collector = time * 60;
-        this.state.userCow.collectorTakenTime = this.state.userSheep.collector;
+        this.state.userCow.collectorTakenTime = this.state.userCow.collector;
       } else if (this.state.farm === 'Unicorn') {
         type = 'resource_catcher';
         time = this.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userUnicorn.collectorLevel).time * 2;
         this.state.userUnicorn.collector = time * 60;
-        this.state.userUnicorn.collectorTakenTime = this.state.userSheep.collector;
+        this.state.userUnicorn.collectorTakenTime = this.state.userUnicorn.collector;
       }
       this.tryTask(3, 0, time);
 
