@@ -553,11 +553,6 @@ class CowPreload extends Phaser.Scene {
         this.userReady = true;
         this.state.nativeCounter = [0, 0, 0, 0];
 
-        const Amplitude = this.state.amplitude;
-        if (Amplitude) {
-          const identify = new Amplitude.Identify().set('CatcherCow', this.state.userCow.collectorLevel);
-          Amplitude.getInstance().identify(identify);
-        }
     //   // } else {
     //   //   this.loadCow(response.data.user.counter);
     //   // }

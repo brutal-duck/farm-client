@@ -267,7 +267,7 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
         }
       break;
       case 16: 
-        result = this.scene.stat?.userUnicorn?.tutorial > 30;
+        result = this.scene.state?.userUnicorn?.tutorial > 30;
       break;
       case 17: 
         if (this.scene.state.progress.event.type === 1) {
