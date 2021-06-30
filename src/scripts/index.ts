@@ -35,7 +35,6 @@ function gcd(num1: number, num2: number): number {
 window.onload = (): void => {
 
   setTimeout((): void => {
-    console.log('message')
     let width: number = 0;
     let height: number = 0;
     let root: HTMLElement = document.querySelector('#root');
