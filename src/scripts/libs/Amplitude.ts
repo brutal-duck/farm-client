@@ -90,20 +90,20 @@ export default class Amplitude {
   
     if (this.state.farm !== 'Unicorn' && data.farm_id !== 'Unicorn') {
       const balance: Ibalance = MainScene?.balance();
-      const waterPercent: number = balance.notEnoughWater ? -1 * balance.waterPercent : balance.waterPercent;
-      const grassPercent: number = balance.notEnoughGrass ? -1 * balance.grassPercent : balance.grassPercent;
+      const waterPercent: number = balance?.notEnoughWater ? -1 * balance?.waterPercent : balance?.waterPercent;
+      const grassPercent: number = balance?.notEnoughGrass ? -1 * balance?.grassPercent : balance?.grassPercent;
       let countAnimal: number = 0;
-      if (this.state.farm !== 'Cow') this[this.state.farm.toLowerCase()]?.children.entries.length;
+      if (this.state.farm !== 'Cow') this[this.state.farm?.toLowerCase()]?.children.entries.length;
       if (this.state.farm === 'Cow') countAnimal = CowScene?.animalGroup?.children.entries.length;
   
       eventData = {
-        test: this.state.user.test,
+        test: this.state.user?.test,
         farm_id: this.state.farm,
-        chapter: this.state[`user${this.state.farm}`].part,
-        diamonds: this.state.user.diamonds,
-        money: this.state[`user${this.state.farm}`].money,
-        fairLevel: this.state[`user${this.state.farm}`].fair,
-        collector: this.state[`user${this.state.farm}`].collector,
+        chapter: this.state[`user${this.state.farm}`]?.part,
+        diamonds: this.state.user?.diamonds,
+        money: this.state[`user${this.state.farm}`]?.money,
+        fairLevel: this.state[`user${this.state.farm}`]?.fair,
+        collector: this.state[`user${this.state.farm}`]?.collector,
         countAnimal: countAnimal,
         balanceWaterPercent: waterPercent,
         balanceGrassPercent: grassPercent,

@@ -10,7 +10,7 @@ import LocalStorage from './../libs/LocalStorage';
 import Amplitude from './../libs/Amplitude';
 
 Amplitude.init();
-// amplitude.getInstance().isnit(process.env.AMPLITUDE);
+// amplitude.getInstance().init(process.env.AMPLITUDE);
 
 const headerSyst: string = require('./../../assets/images/modal/header-syst.png');
 const midSyst: string = require('./../../assets/images/modal/mid-syst.png');
@@ -42,7 +42,7 @@ class Boot extends Phaser.Scene {
   public params: URLSearchParams;
 
   public init(): void {
-    this.build = '3.7.2';
+    this.build = '3.7.3';
     console.log('Build ' + this.build);
     // console.log('y1')
     this.state = state;
@@ -336,11 +336,7 @@ class Boot extends Phaser.Scene {
   }
 
   private createLanding(): void {
-    try {
-      amplitude.getInstance().logEvent('landing_view', {});
-    } catch (e) {
-      console.log(e);
-    }
+    this.state.amplitude.logAmplitudeEvent('landing_view', {});
     let root = document.querySelector('#root');
     let modal = document.createElement('div');
     modal.setAttribute('class', 'modal');
@@ -397,11 +393,7 @@ class Boot extends Phaser.Scene {
         }).then((response) => {
           if (response.data.error === false) {
             this.setCookieHash(response.data.hash, response.data.expires);
-            try {
-              amplitude.getInstance().logEvent('landing_login', {});
-            } catch (e) {
-              console.log(e);
-            }
+            this.state.amplitude.logAmplitudeEvent('landing_login', {});
           } else this.createErrorWindow();
         }).catch(() => {
           this.createLocalUser();
@@ -567,11 +559,7 @@ class Boot extends Phaser.Scene {
 
   private createLocalUser(): void {
     console.log('localUser');
-    try {
-      amplitude.getInstance().logEvent('landing_login', {});
-    } catch (e) {
-      console.log(e);
-    }
+    this.state.amplitude.logAmplitudeEvent('landing_login', {});
     let expires: Date | string = new Date();
     expires.setFullYear(expires.getFullYear() + 1);
     expires = expires.toUTCString();
