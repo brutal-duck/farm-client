@@ -208,7 +208,7 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private destoryListElemets(): void {
-    if (this.listElements.length > 0) {
+    if (this.listElements?.length > 0) {
       this.listElements.forEach(el => {
         el?.name?.destroy();
         el?.count?.destroy();
@@ -318,6 +318,7 @@ export default class Fortune extends Phaser.Scene {
 
     this.clickButton(this.closeBtn, () => {
       this.scene.stop();
+      this.destoryListElemets();
     })
   }
 
