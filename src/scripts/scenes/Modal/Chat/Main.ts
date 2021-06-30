@@ -304,7 +304,7 @@ class Chat extends Phaser.Scene {
       const status: IstatusSettings = this.getStatusSettings(msgData.status);
 
       if (status) {
-        this.add.sprite(bgX + bgWidth + 35, this.windowHeight + this.scrollHeight + padding, status.iconTexture).setOrigin(1, 0).setScale(0.8);
+        this.add.sprite(bgX + bgWidth + 65, this.windowHeight + this.scrollHeight + padding, status.iconTexture).setOrigin(1, 0).setScale(0.8);
       }
 
       // Фон сообщения
