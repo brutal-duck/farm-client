@@ -109,7 +109,6 @@ class Boot extends Phaser.Scene {
       this.load.image('big-btn-red', loginBtnRed);
       this.load.image('pixel-landing', pixelForLanding);
     }
-    console.log(this.scene.isActive('Boot'))
   }
 
   public update(): void {
