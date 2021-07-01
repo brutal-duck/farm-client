@@ -11,20 +11,19 @@ export default class BoughtFarmLand {
   }
 
   private create(): void {
-
     this.scene.textHeader.setText(this.scene.state.lang.boughtLand);
 
-    const farm: string = this.scene.state.farm
-    let height: number = 120
+    const farm: string = this.scene.state.farm;
+    let height: number = 120;
     let price: number = this.scene.state[`${farm.toLowerCase()}Settings`][`territories${farm}Price`].find((data: IterritoriesPrice) => data.block === this.scene.state.territory.block && data.position === this.scene.state.territory.position).price;
 
     // 30% от суммы покупки
     price = Math.round((price / 100) * 30);
 
-    let right = {
+    const right = {
       icon: `${farm.toLowerCase()}Coin`,
       text: shortNum(price)
-    }
+    };
     
     if (
       this.scene.state.userSheep.tutorial === 20 &&
@@ -32,66 +31,64 @@ export default class BoughtFarmLand {
       this.scene.state.territory.position === 3
     ) {
 
-      let button = this.scene.bigButton('green', 'left', 30, this.scene.state.lang.sowPasture, right);
+      const button = this.scene.bigButton('green', 'left', 30, this.scene.state.lang.sowPasture, right);
       this.scene.clickModalBtn(button, (): void => { this.setTerritory(2) });
-      
+
     } else if (
       this.scene.state.userSheep.tutorial === 30 &&
       this.scene.state.territory.block === 2 &&
       this.scene.state.territory.position === 2
     ) {
 
-      let button = this.scene.bigButton('blue', 'left', 30, this.scene.state.lang.installWater, right);
+      const button = this.scene.bigButton('blue', 'left', 30, this.scene.state.lang.installWater, right);
       this.scene.clickModalBtn(button, (): void => { this.setTerritory(3) });
-      
+
     } else if (
       this.scene.state.userSheep.tutorial === 80 &&
       this.scene.state.territory.block === 2 &&
       this.scene.state.territory.position === 1
     ) {
 
-      let button = this.scene.bigButton('orange', 'left', 30, this.scene.state.lang.buildRepository, right);
+      const button = this.scene.bigButton('orange', 'left', 30, this.scene.state.lang.buildRepository, right);
       this.scene.clickModalBtn(button, (): void => { this.setTerritory(5) });
-      
+
     } else if (farm === 'Cow') {
 
       if (this.scene.state.territory.block === 3 && this.scene.state.territory.position === 1 && this.scene.state.territory.territoryType === 1) {
-        let button = this.scene.bigButton('orange', 'left', 30, this.scene.state.lang.buildFactory, right);
+        const button = this.scene.bigButton('orange', 'left', 30, this.scene.state.lang.buildFactory, right);
         this.scene.clickModalBtn(button, (): void => { this.setTerritory(8) });
-        height = 100
+        height = 100;
       } else if (this.scene.state.territory.block === 2 && this.scene.state.territory.position === 1 && this.scene.state.territory.territoryType === 1) {
-        let button = this.scene.bigButton('orange', 'left', 30, this.scene.state.lang.buildRepository, right);
+        const button = this.scene.bigButton('orange', 'left', 30, this.scene.state.lang.buildRepository, right);
         this.scene.clickModalBtn(button, (): void => { this.setTerritory(5) });
-        height = 100
+        height = 100;
       } else {
-        let button1 = this.scene.bigButton('green', 'left', -60, this.scene.state.lang.sowPasture, right);
+        const button1 = this.scene.bigButton('green', 'left', -60, this.scene.state.lang.sowPasture, right);
         this.scene.clickModalBtn(button1, (): void => { this.setTerritory(2) });
       
-        let button2 = this.scene.bigButton('blue', 'left', 30, this.scene.state.lang.installWater, right);
+        const button2 = this.scene.bigButton('blue', 'left', 30, this.scene.state.lang.installWater, right);
         this.scene.clickModalBtn(button2, (): void => { this.setTerritory(3) });
         
-        let button3 = this.scene.bigButton('orange', 'left', 120, this.scene.state.lang.buildRepository, right);
+        const button3 = this.scene.bigButton('orange', 'left', 120, this.scene.state.lang.buildRepository, right);
         this.scene.clickModalBtn(button3, (): void => { this.setTerritory(5) });
         height = 270
-      }
-      
+      };
+
     } else {
 
-      let button1 = this.scene.bigButton('green', 'left', -60, this.scene.state.lang.sowPasture, right);
+      const button1 = this.scene.bigButton('green', 'left', -60, this.scene.state.lang.sowPasture, right);
       this.scene.clickModalBtn(button1, (): void => { this.setTerritory(2) });
 
-      let button2 = this.scene.bigButton('blue', 'left', 30, this.scene.state.lang.installWater, right);
+      const button2 = this.scene.bigButton('blue', 'left', 30, this.scene.state.lang.installWater, right);
       this.scene.clickModalBtn(button2, (): void => { this.setTerritory(3) });
       
-      let button3 = this.scene.bigButton('orange', 'left', 120, this.scene.state.lang.buildRepository, right);
+      const button3 = this.scene.bigButton('orange', 'left', 120, this.scene.state.lang.buildRepository, right);
       this.scene.clickModalBtn(button3, (): void => { this.setTerritory(5) });
+      height = 270;
       
-      height = 270
-
-    }
+    };
     
     this.scene.resizeWindow(height);
-
   }
 
 

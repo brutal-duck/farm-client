@@ -10,7 +10,6 @@ export default class NextChapterWindow {
   }
 
   private create(): void {
-
     this.scene.add.sprite(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 50, 'done-chapter');
     this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 300, this.scene.state.modal.donePart.part, { font: '30px Shadow', fill: '#290F5B' }).setOrigin(0.5, 0.5);
     this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 260, this.scene.state.modal.donePart.name, { font: '36px Shadow', fill: '#FFDDA7' }).setOrigin(0.5, 0.5);
@@ -36,8 +35,7 @@ export default class NextChapterWindow {
       wordWrap: { width: 260 }
     }).setOrigin(0.5, 0.5).setStroke('#2C5D0C', 5);
   
-    this.scene.clickModalBtn({ btn, title }, (): void => { this.closeWindow() });
-
+    this.scene.clickModalBtn({ btn, title }, (): void => { this.closeWindow(); });
   }
 
   private closeWindow(): void {

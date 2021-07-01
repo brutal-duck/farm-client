@@ -71,7 +71,7 @@ export default class EventProgressWindow {
       title,
       text1,
       img1
-    }
+    };
     this.scene.clickModalBtn(modalBtn, (): void => { this.doubleProfitBtnHandler(); });
   
     this.scene.time.addEvent({ delay: 3000, callback: (): void => {
@@ -115,7 +115,7 @@ export default class EventProgressWindow {
         count: this.doubleProfitPrice - this.scene.state.user.diamonds,
         diamonds: this.doubleProfitPrice - this.scene.state.user.diamonds,
         type: 1
-      }
+      };
       this.scene.game.scene.keys[this.scene.state.farm].exchange();
     }
   }

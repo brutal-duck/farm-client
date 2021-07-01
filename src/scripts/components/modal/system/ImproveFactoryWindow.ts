@@ -41,7 +41,6 @@ export default class ImproveFactoryWindow {
   }
 
   private create(): void {
-
     const factory: string = this.scene.state.lang.factory.replace('$1', this.scene.state.territory.factory.improve);
     this.scene.textHeader.setText(factory);
     
@@ -56,9 +55,9 @@ export default class ImproveFactoryWindow {
       }
     }
 
-    if (nextLevelProductId > 0) this.newProductNameText(nextLevelProductId)
+    if (nextLevelProductId > 0) this.newProductNameText(nextLevelProductId);
 
-    const dY: number = nextLevelProductId > 0 ? 0 : 20
+    const dY: number = nextLevelProductId > 0 ? 0 : 20;
     
     const nextLevelHeader: string = `${this.scene.state.lang.nextFactory.replace('$1', String(this.nextLevel.improve))}`;
     const header: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 110, nextLevelHeader, this.headerStyle).setOrigin(0.5);
@@ -75,18 +74,17 @@ export default class ImproveFactoryWindow {
     const efficiencyText: string = `${this.scene.state.lang.efficiency}: ${this.thisLevel.efficiency}%`;
     this.efficiency = this.scene.add.text(125, this.scene.cameras.main.centerY + 20 + dY, efficiencyText, this.basicStyle);
 
-    if (this.nextLevel.processingTime > this.thisLevel.processingTime) this.nextLevelProcessingTimeText()
-    if (this.nextLevel.lotSize > this.thisLevel.lotSize) this.nextLevelLotSizeText()
-    if (this.nextLevel.efficiency > this.thisLevel.efficiency) this.nextLevelEfficiencyText()
+    if (this.nextLevel.processingTime > this.thisLevel.processingTime) this.nextLevelProcessingTimeText();
+    if (this.nextLevel.lotSize > this.thisLevel.lotSize) this.nextLevelLotSizeText();
+    if (this.nextLevel.efficiency > this.thisLevel.efficiency) this.nextLevelEfficiencyText();
 
-    this.improveBtn(nextLevelProductId)
+    this.improveBtn(nextLevelProductId);
 
     if (nextLevelProductId > 0)  this.scene.resizeWindow(320);
     else {
       header.setY(header.y += 20);
       this.scene.resizeWindow(280);
     }
-  
   }
 
 
@@ -101,7 +99,7 @@ export default class ImproveFactoryWindow {
     const position: Iposition = {
       x: this.duration.getBounds().right + 10,
       y: this.duration.y
-    }
+    };
     const time: string = (this.nextLevel.processingTime - this.thisLevel.processingTime) / 60 < 1 ? 
     `${(this.nextLevel.processingTime - this.thisLevel.processingTime)} ${this.scene.state.lang.seconds}`: 
     `${shortNum(Math.ceil((this.nextLevel.processingTime - this.thisLevel.processingTime) / 60)) } ${this.scene.state.lang.minutes}`;
@@ -115,7 +113,7 @@ export default class ImproveFactoryWindow {
     const position: Iposition = {
       x: this.lot.getBounds().right + 10,
       y: this.lot.y
-    }
+    };
     const text: string = `(+${shortNum(this.nextLevel.lotSize - this.thisLevel.lotSize)} ${this.scene.state.lang.litres})`;
     this.scene.add.text(position.x, position.y, text, this.improveStyle);
   }
@@ -125,14 +123,13 @@ export default class ImproveFactoryWindow {
     const position: Iposition = {
       x: this.efficiency.getBounds().right + 10,
       y: this.efficiency.y
-    }
+    };
     const text: string = `(+${shortNum(this.nextLevel.efficiency - this.thisLevel.efficiency)}%)`;
     this.scene.add.text(position.x, position.y, text, this.improveStyle);
   }
 
 
   private improveBtn(nextLevelProductId: number): void {
-    
     let icon: string;
     let text: string;
     const btnY: number = nextLevelProductId > 0 ? 150 : 130;
@@ -149,18 +146,18 @@ export default class ImproveFactoryWindow {
       const right = {
         icon: icon,
         text: shortNum(text)
-      }
+      };
       const improve = this.scene.bigButton('green', 'left', btnY, this.scene.state.lang.improve, right);
       this.scene.clickModalBtn(improve, (): void => { this.scene.state.territory.improveFactory(); });
 
     } else {
 
-      let improve = {
+      const improve = {
         icon: 'lock',
         text: `${this.scene.state.lang.shortPart} ${this.nextLevel.unlock_improve}`,
-      }
+      };
       this.scene.bigButton('grey', 'left', btnY, this.scene.state.lang.improve, improve);
+      
     }
-
   }
 }

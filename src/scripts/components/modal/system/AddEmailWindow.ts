@@ -5,27 +5,26 @@ import Modal from "../../../scenes/Modal/Modal";
 export default class AddEmailWindow {
   public scene: Modal;
 
-  private enterEmail: Phaser.GameObjects.Text
+  private enterEmail: Phaser.GameObjects.Text;
   private result: Phaser.GameObjects.Text;
-  private send: boolean
-  private emailError: boolean
-  private reMail: RegExp
+  private send: boolean;
+  private emailError: boolean;
+  private reMail: RegExp;
 
   constructor(scene: Modal) {
     this.scene = scene;
-    this.init()
+    this.init();
     this.create();
     this.scene.openModal(this.scene.cameras.main);
   }
 
   private init(): void {
-    this.send = false
-    this.emailError = false
-    this.reMail = /^[\w-.]+@[\w-]+\.[a-z]{2,4}$/i
+    this.send = false;
+    this.emailError = false;
+    this.reMail = /^[\w-.]+@[\w-]+\.[a-z]{2,4}$/i;
   }
 
   private create(): void {
-
     // Заголовок и описание
     this.scene.textHeader.setText(this.scene.state.lang.yourMail);
     this.enterEmail = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 70, this.scene.state.lang.enterYourEmail, {
@@ -34,7 +33,7 @@ export default class AddEmailWindow {
     }).setOrigin(0.5, 0.5).setDepth(3);
 
     // HTML элементы
-    let root: HTMLDivElement = document.querySelector('#root');
+    const root: HTMLDivElement = document.querySelector('#root');
     this.scene.mainInput = document.createElement('input');
     root.append(this.scene.mainInput);
     this.scene.mainInput.setAttribute("id", "nickname");
@@ -48,22 +47,22 @@ export default class AddEmailWindow {
     const windowHeight: number = window.innerHeight;
 
     // Отрисовка текста, полученного из инпут
-    let emailText: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 220, this.scene.cameras.main.centerY + 35, this.scene.mainInput.value, {
+    const emailText: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 220, this.scene.cameras.main.centerY + 35, this.scene.mainInput.value, {
       font: '24px Bip',
       color: '#974f00'
     }).setOrigin(0, 0.5).setDepth(3).setCrop(0, 0, 434, 100);
     
-    let emailModalZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY, 710, 1200).setDropZone(undefined, () => {}).setInteractive();
-    let emailInputZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY + 36, 460, 70).setDropZone(undefined, () => {}).setInteractive();
+    const emailModalZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY, 710, 1200).setDropZone(undefined, (): void => {}).setInteractive();
+    const emailInputZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY + 36, 460, 70).setDropZone(undefined, (): void => {}).setInteractive();
     
     // Фон инпута
-    let emailBG: Phaser.GameObjects.Graphics = this.scene.add.graphics({
+    const emailBG: Phaser.GameObjects.Graphics = this.scene.add.graphics({
       x: this.scene.cameras.main.centerX - 230,
       y: this.scene.cameras.main.centerY
     }).setDepth(2).fillStyle(0xffffff, 1).fillRoundedRect(0, 0, 460, 70, 16);
 
     // Кнопка
-    let sendEmailBtn = this.scene.bigButton('green', 'center', 130, this.scene.state.lang.sendEmail);
+    const sendEmailBtn = this.scene.bigButton('green', 'center', 130, this.scene.state.lang.sendEmail);
     this.result = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 90, '', {
       font: '19px Shadow',
       color: '#FF0000',
@@ -88,7 +87,6 @@ export default class AddEmailWindow {
 
 
     window.onresize = (): void => {
-        
       tempHeight = window.innerHeight;
 
       if (windowHeight !== tempHeight && centered) {
@@ -107,7 +105,6 @@ export default class AddEmailWindow {
         centered = true;
 
       }
-      
     }
 
     // Фокус
@@ -129,13 +126,10 @@ export default class AddEmailWindow {
     this.scene.enterKey.on('down', (): void => { this.sendEmail() });
 
     this.scene.resizeWindow(270);
-  
   }
 
   private sendEmail(): void {
-
     if (!this.send) {
-
       if (this.reMail.test(this.scene.mainInput.value)) {
 
         this.send = true;
@@ -146,31 +140,22 @@ export default class AddEmailWindow {
           counter: this.scene.state.user.counter,
           mail: this.scene.mainInput.value
         }).then((res) => {
-
           if (res.data.error) logout();
           else {
-
             this.send = false;
             this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-            this.scene.enterKey.destroy()
+            this.scene.enterKey.destroy();
             this.scene.mainInput.remove();
             this.scene.scene.stop();
             this.scene.game.scene.keys[this.scene.state.farm].tryTask(16, 1);
-
           }
-
         });
 
       } else {
-
         if (!this.emailError) this.enterEmail.setY(this.enterEmail.y + 34);
         this.emailError = true;
         this.result.setText(this.scene.state.lang.emailError).setAlpha(1);
-
       }
-
     }
-
   }
-
 }

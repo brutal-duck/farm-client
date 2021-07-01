@@ -3,8 +3,8 @@ import Shop from "../../../scenes/Modal/Shop/Main";
 
 export default class AnimalWindow {
   private scene: Shop;
-  private animal: string
-  private resource: string
+  private animal: string;
+  private resource: string;
   public buttons: IshopButtons[];
 
   constructor(scene: Shop) {
@@ -14,22 +14,21 @@ export default class AnimalWindow {
   }
 
   private init(): void {
-    this.animal = this.scene.state.farm
+    this.animal = this.scene.state.farm;
     this.buttons = [];
-    if (this.animal === 'Sheep') this.resource = 'wool'
-    else if (this.animal === 'Chicken') this.resource = 'egg'
-    else if (this.animal === 'Cow') this.resource = 'milk'
+    if (this.animal === 'Sheep') this.resource = 'wool';
+    else if (this.animal === 'Chicken') this.resource = 'egg';
+    else if (this.animal === 'Cow') this.resource = 'milk';
   }
 
   private create(): void {
-
-    let rows: number = this.scene.state[`${this.animal.toLowerCase()}Settings`][`${this.animal.toLowerCase()}Settings`].length;
+    const rows: number = this.scene.state[`${this.animal.toLowerCase()}Settings`][`${this.animal.toLowerCase()}Settings`].length;
     let height: number = rows * 270 + 40;
     this.scene.scrolling.bottom = this.scene.height - this.scene.heightWindow + height;
     
     for (let i: number = 0; i < rows; i++) {
 
-      let y: number = i * 270 + 40;
+      const y: number = i * 270 + 40;
       this.scene.add.sprite(0, y + this.scene.height, 'animal-shop-bg').setOrigin(0, 0);
 
       // let sheep: IsheepPoints = this.scene.state.sheepSettings.sheepSettings.find((data: IsheepPoints) => data.breed === i + 1);
@@ -38,37 +37,36 @@ export default class AnimalWindow {
       // иконка
       if (this.scene.state[`user${this.animal}`].fair + 1 < animal.breed) this.scene.add.sprite(110, y + this.scene.height + 110, `disable-${this.animal.toLowerCase()}`);
       else {
-
-        let sprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(110, y + this.scene.height + 110, `${this.animal.toLowerCase()}-stay-right${animal.breed}`);
+        const sprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(110, y + this.scene.height + 110, `${this.animal.toLowerCase()}-stay-right${animal.breed}`);
         if (this.animal === 'Sheep') this.scene.add.sprite(sprite.x, sprite.y, `${this.animal.toLowerCase()}-right-` + (i + 1)  + '-2');
         sprite.anims.play(`${this.animal.toLowerCase()}-stay-right${animal.breed}`, true);
-
       }
 
       // описание
-      let center: number = y + 110 + this.scene.height;
-      let animalName: string = this.scene.state.lang[`${this.animal.toLowerCase()}Breed${animal.breed}`];
-      let name: Phaser.GameObjects.Text = this.scene.add.text(240, center, animalName, {
+      const center: number = y + 110 + this.scene.height;
+      const animalName: string = this.scene.state.lang[`${this.animal.toLowerCase()}Breed${animal.breed}`];
+      const name: Phaser.GameObjects.Text = this.scene.add.text(240, center, animalName, {
         font: '28px Shadow',
         fill: '#FFFFFF',
         align: 'left',
         wordWrap: { width: 230 }
       }).setOrigin(0, 0.5);
-      let boundsName = name.getBounds();
+      const boundsName = name.getBounds();
 
-      let resourcePriceText: string = this.scene.state.lang[`${this.resource}Price`];
-      let resource: Phaser.GameObjects.Text = this.scene.add.text(240, center, resourcePriceText, {
+      const resourcePriceText: string = this.scene.state.lang[`${this.resource}Price`];
+      const resource: Phaser.GameObjects.Text = this.scene.add.text(240, center, resourcePriceText, {
         font: '20px Shadow',
         fill: '#FFFFFF'
       }).setOrigin(0, 0.5);
-      let resourceBounds = resource.getBounds();
+      const resourceBounds = resource.getBounds();
       
-      let price: string = ''
-      if (this.animal === 'Sheep') price = String(shortNum(animal.long_wool))
-      else if (this.animal === 'Chicken') price = String(shortNum(animal.eggPrice))
-      else if (this.animal === 'Cow') price = String(shortNum(animal.maxMilkVolume))
+      let price: string = '';
 
-      let resourcePrice: Phaser.GameObjects.Text = this.scene.add.text(resourceBounds.right, center, price, {
+      if (this.animal === 'Sheep') price = String(shortNum(animal.long_wool));
+      else if (this.animal === 'Chicken') price = String(shortNum(animal.eggPrice));
+      else if (this.animal === 'Cow') price = String(shortNum(animal.maxMilkVolume));
+
+      const resourcePrice: Phaser.GameObjects.Text = this.scene.add.text(resourceBounds.right, center, price, {
         font: '20px Shadow',
         fill: '#ECC896'
       }).setOrigin(0, 0.5);
@@ -79,14 +77,12 @@ export default class AnimalWindow {
       
       if (animal.breed <= this.scene.state[`user${this.animal}`].fair - this.scene.state[`${this.animal.toLowerCase()}Settings`][`buyBetterBreed${this.animal}`] || animal.breed === 1) {
 
-        let price: string = String(shortNum(this.scene[`${this.animal.toLowerCase()}Price`](animal.breed).price));
+        const price: string = String(shortNum(this.scene[`${this.animal.toLowerCase()}Price`](animal.breed).price));
         
         btn = this.scene.shopButton(330, center, price, `${this.animal.toLowerCase()}Coin`);
         this.scene.clickShopBtn(btn, (): void => {
-
-          let result: boolean = this.scene.game.scene.keys[this.scene.state.farm][`buy${this.animal}`](animal.breed, true);
+          const result: boolean = this.scene.game.scene.keys[this.scene.state.farm][`buy${this.animal}`](animal.breed, true);
           if (result) this.updatePrices();
-
         });
 
         this.buttons.push({
@@ -111,7 +107,6 @@ export default class AnimalWindow {
       }
 
     }
-
   }
 
 

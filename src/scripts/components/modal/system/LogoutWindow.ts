@@ -10,7 +10,6 @@ export default class LogoutWindow {
   }
 
   private create(): void {
-
     this.scene.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0)');
     this.scene.close.setVisible(false);
     this.scene.textHeader.setText(this.scene.state.lang.message);
@@ -22,6 +21,5 @@ export default class LogoutWindow {
     }).setOrigin(0.5, 0.5);
     
     this.scene.resizeWindow(120);
-  
   }
 }

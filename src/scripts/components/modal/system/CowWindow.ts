@@ -12,19 +12,15 @@ export default class CowWindow {
   }
 
   private create(): void {
-
     this.scene.textHeader.setText(this.scene.state.lang.cow);
-
-    if (this.scene.state.animal.breed !== 0) this.customCow()
-    else this.crystalCow()
-  
+    if (this.scene.state.animal.breed !== 0) this.customCow();
+    else this.crystalCow();
   }
 
 
   private customCow(): void {
-
-    let icon: string = 'cow' + this.scene.state.animal.breed;
-    let sprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 145, icon);
+    const icon: string = 'cow' + this.scene.state.animal.breed;
+    const sprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 145, icon);
     sprite.anims.play('cow-drag' + this.scene.state.animal.breed, true);
 
     let breed: string = this.scene.state.lang['cowBreed' + this.scene.state.animal.breed];
@@ -63,26 +59,25 @@ export default class CowWindow {
     let priceWidth: number = price.getBounds().left - 25;
     this.scene.add.sprite(priceWidth, this.scene.cameras.main.centerY + 135, 'cowCoin').setScale(0.15);
 
-    let sellPrice = {
+    const sellPrice = {
       icon: 'cowCoin',
       text: shortNum(Math.round(this.scene.game.scene.keys[this.scene.state.farm].cowPrice(1).price / 2))
-    }
-    let button = this.scene.bigButton('red', 'left', 220, this.scene.state.lang.expel, sellPrice);
+    };
+
+    const button = this.scene.bigButton('red', 'left', 220, this.scene.state.lang.expel, sellPrice);
     this.scene.clickModalBtn(button, (): void => {
       this.scene.scene.stop();
       this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-      new ExpelAnimalWindow(this.scene)
+      new ExpelAnimalWindow(this.scene);
     });
 
     this.scene.resizeWindow(460);
-
   }
 
 
   private crystalCow(): void {
-
-    let icon: string = 'cow' + this.scene.state.animal.breed;
-    let sprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 85, icon);
+    const icon: string = 'cow' + this.scene.state.animal.breed;
+    const sprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 85, icon);
     sprite.anims.play('cow-drag0', true);
 
     let breed: string = this.scene.state.lang['cowBreed' + this.scene.state.animal.breed];
@@ -97,7 +92,6 @@ export default class CowWindow {
     this.scene.progressBar = this.scene.add.tileSprite(136, this.scene.cameras.main.centerY + 95, 0, 16, 'green-progress').setOrigin(0, 0.5);
 
     let points: IcowPoints = this.scene.state.cowSettings.cowSettings.find((item: IcowPoints) => item.breed === 1);
-    
     let milkSpeed: number = Math.round(points.maxMilkVolume / 60);
 
     this.scene.add.text(132, this.scene.cameras.main.centerY + 150, this.scene.state.lang.diamondSpeed, {
@@ -111,6 +105,5 @@ export default class CowWindow {
     }).setOrigin(1, 0.5);
 
     this.scene.resizeWindow(350);
-
   }
 }

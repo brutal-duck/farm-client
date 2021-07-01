@@ -11,26 +11,25 @@ export default class RepositoryExchangeWindow {
   }
 
   private create(): void {
-
-    const farm: string = this.scene.state.farm.toLowerCase()
+    const farm: string = this.scene.state.farm.toLowerCase();
     let repository: string = this.scene.state.lang.repository.replace('$1', this.scene.state.territory.improve);
     this.scene.textHeader.setText(repository);
 
-    let settings: any
-    let exchange: any
+    let settings: any;
+    let exchange: any;
 
     if (this.scene.state.farm !== 'Cow') {
       settings = this.scene.state[`${farm}Settings`][`${farm}Parts`].find((data: Ipart) => data.sort === this.scene.state[`user${this.scene.state.farm}`].part);
       exchange = {
         icon: `${farm}Coin`,
         text: shortNum(settings.improve_territory_2)
-      }
+      };
     } else {
       settings = this.scene.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === 2);
       exchange = {
         icon: 'cowCoin',
         text: shortNum(settings.improvePastureMoneyPrice)
-      }
+      };
     }
 
     let textTitle: string = this.scene.state.lang.exchangeRepositoryTitle.replace('$1', this.scene.state.territory.improve);
@@ -52,24 +51,20 @@ export default class RepositoryExchangeWindow {
     this.scene.clickModalBtn(button3, (): void => { this.exchangeTerritory() });
 
     this.scene.resizeWindow(310);
-  
   }
 
   private exchangeTerritory(territiryType?: number): void {
-
     this.scene.scene.stop();
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
 
     if (territiryType) this.scene.game.scene.keys[this.scene.state.farm].confirmExchangeTerritory(territiryType);
     else {
-      let modal: Imodal = {
+      const modal: Imodal = {
         type: 1,
         sysType: 2
-      }
+      };
       this.scene.state.modal = modal;
       this.scene.scene.start('Modal', this.scene.state);
     }
-
   }
-
 }

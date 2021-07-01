@@ -5,8 +5,8 @@ import LocalStorage from './../../../libs/LocalStorage';
 export default class RegistrationWindow {
   public scene: Modal;
 
-  private errorType: string
-  private extraHeight: number
+  private errorType: string;
+  private extraHeight: number;
   private result: Phaser.GameObjects.Text;
   private reg: boolean;
   private lastLogin: string;
@@ -23,13 +23,13 @@ export default class RegistrationWindow {
   }
 
   private init(): void {
-    this.errorType = ''
-    this.extraHeight = 50
-    this.reg = false
-    this.lastLogin = ''
-    this.re = /^[a-zA-Z0-9]+$/
-    this.isLoginTouched = false
-    this.isPassTouched = false
+    this.errorType = '';
+    this.extraHeight = 50;
+    this.reg = false;
+    this.lastLogin = '';
+    this.re = /^[a-zA-Z0-9]+$/;
+    this.isLoginTouched = false;
+    this.isPassTouched = false;
   }
 
   private create(): void {
@@ -37,7 +37,7 @@ export default class RegistrationWindow {
     this.scene.textHeader.setText(this.scene.state.lang.saving);
 
     // HTML элементы
-    let root: HTMLDivElement = document.querySelector('#root');
+    const root: HTMLDivElement = document.querySelector('#root');
     this.scene.mainInput = document.createElement('input');
     this.scene.secondInput = document.createElement('input');
     root.append(this.scene.mainInput);
@@ -56,41 +56,41 @@ export default class RegistrationWindow {
     const windowHeight: number = window.innerHeight;
     
     // Отрисовка текста, полученного из инпут + placeholder
-    let loginText: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 220, this.scene.cameras.main.centerY - 113, this.scene.state.lang.loginSixSymbols, {
+    const loginText: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 220, this.scene.cameras.main.centerY - 113, this.scene.state.lang.loginSixSymbols, {
       font: '24px Bip',
       color: '#974f00'
     }).setOrigin(0, 0.5).setDepth(4).setCrop(0, 0, 434, 100);
 
     // Отрисовка текста, полученного из инпут + placeholder
-    let passText: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 220, this.scene.cameras.main.centerY - 18, this.scene.state.lang.passSixSymbols, {
+    const passText: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 220, this.scene.cameras.main.centerY - 18, this.scene.state.lang.passSixSymbols, {
       font: '24px Bip',
       color: '#974f00'
     }).setOrigin(0, 0.5).setDepth(4).setCrop(0, 0, 434, 100);
 
     // Зоны
-    let regModalZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY, 710, 1200).setDropZone(undefined, () => {}).setInteractive();
-    let loginInputZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 113, 460, 70).setDropZone(undefined, () => {}).setInteractive();
-    let passTextareaZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 18, 460, 70).setDropZone(undefined, () => {}).setInteractive();
+    const regModalZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY, 710, 1200).setDropZone(undefined, () => {}).setInteractive();
+    const loginInputZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 113, 460, 70).setDropZone(undefined, () => {}).setInteractive();
+    const passTextareaZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 18, 460, 70).setDropZone(undefined, () => {}).setInteractive();
 
     // Фон логина
-    let loginBG: Phaser.GameObjects.Graphics = this.scene.add.graphics({
+    const loginBG: Phaser.GameObjects.Graphics = this.scene.add.graphics({
       x: this.scene.cameras.main.centerX - 230,
       y: this.scene.cameras.main.centerY - 149
     }).setDepth(2).fillStyle(0xffffff, 1).fillRoundedRect(0, 0, 460, 70, 16);
 
     // Фон пароля
-    let passBG: Phaser.GameObjects.Graphics = this.scene.add.graphics({
+    const passBG: Phaser.GameObjects.Graphics = this.scene.add.graphics({
       x: this.scene.cameras.main.centerX - 230,
       y: this.scene.cameras.main.centerY - 53
     }).setDepth(2).fillStyle(0xffffff, 1).fillRoundedRect(0, 0, 460, 70, 16);
 
-    let regBtn = this.scene.bigButton('green', 'center', 130, this.scene.state.lang.save);
-    regBtn.btn.y = this.scene.cameras.main.centerY + 80
-    regBtn.title.y = this.scene.cameras.main.centerY + 74
+    const regBtn = this.scene.bigButton('green', 'center', 130, this.scene.state.lang.save);
+    regBtn.btn.y = this.scene.cameras.main.centerY + 80;
+    regBtn.title.y = this.scene.cameras.main.centerY + 74;
 
-    let logoutBtn = this.scene.bigButton('red', 'center', 130, this.scene.state.lang.profileExit);
-    logoutBtn.btn.y = this.scene.cameras.main.centerY + 166
-    logoutBtn.title.y = this.scene.cameras.main.centerY + 160
+    const logoutBtn = this.scene.bigButton('red', 'center', 130, this.scene.state.lang.profileExit);
+    logoutBtn.btn.y = this.scene.cameras.main.centerY + 166;
+    logoutBtn.title.y = this.scene.cameras.main.centerY + 160;
 
     this.result = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 180, '', {
       font: '19px Shadow',
@@ -116,23 +116,20 @@ export default class RegistrationWindow {
       logoutBtn.btn,
       logoutBtn.title,
       this.result
-    )
+    );
     
     // resize
     window.onresize = (): void => {
-      
       tempHeight = window.innerHeight;
 
       if (windowHeight !== tempHeight && centered) {
 
         root.scrollIntoView(false);
-
         modalElement.forEach((el) => el.setY(el.y + padding));
         this.scene.mainInput.style.top = '59.5%';
         this.scene.mainInput.style.bottom = '34.5%';
         this.scene.secondInput.style.top = '67.5%';
         this.scene.secondInput.style.bottom = '26.5%';
-        
         centered = false;
 
       } else if (windowHeight === tempHeight && !centered) {
@@ -142,48 +139,39 @@ export default class RegistrationWindow {
         this.scene.mainInput.style.bottom = '56.5%';
         this.scene.secondInput.style.top = '45.5%';
         this.scene.secondInput.style.bottom = '48.5%';
-    
         centered = true;
 
       }
-
     }
     
     // Фокус на логин
     loginInputZone.on('pointerdown', (): void => {
-
       this.scene.secondInput.style.display = 'none';
       this.scene.mainInput.style.display = 'block';
       this.scene.mainInput.focus();
       
-      if (this.scene.secondInput.value === '') passText.setText(this.scene.state.lang.passSixSymbols).setDepth(4).setCrop(0, 0, 434, 100)
+      if (this.scene.secondInput.value === '') passText.setText(this.scene.state.lang.passSixSymbols).setDepth(4).setCrop(0, 0, 434, 100);
       else passText.setText(this.hidePass()).setDepth(4).setCrop(0, 0, 434, 100);
       
-      if (!this.isLoginTouched) this.isLoginTouched = true
+      if (!this.isLoginTouched) this.isLoginTouched = true;
       this.validate();
-
     });
 
     // Фокус на пароль
     passTextareaZone.on('pointerdown', (): void => {
-
       this.scene.mainInput.style.display = 'none';
       this.scene.secondInput.style.display = 'block';
       this.scene.secondInput.focus();
 
-      if (this.scene.mainInput.value === '') loginText.setText(this.scene.state.lang.loginSixSymbols).setDepth(4).setCrop(0, 0, 434, 100)
+      if (this.scene.mainInput.value === '') loginText.setText(this.scene.state.lang.loginSixSymbols).setDepth(4).setCrop(0, 0, 434, 100);
       else loginText.setText(this.scene.mainInput.value).setDepth(4).setCrop(0, 0, 434, 100);
       
-      if (!this.isPassTouched) this.isPassTouched = true
+      if (!this.isPassTouched) this.isPassTouched = true;
       this.validate();
-
     });
 
     // Блюр
     regModalZone.on('pointerdown', (): void => {
-
-      // isInputActive = false
-
       this.scene.mainInput.style.display = 'none';
       this.scene.secondInput.style.display = 'none';
       this.scene.mainInput.blur();
@@ -196,7 +184,6 @@ export default class RegistrationWindow {
       else passText.setText(this.hidePass()).setDepth(4).setCrop(0, 0, 434, 100);
 
       this.validate();
-
     });
 
     // Отправка
@@ -225,12 +212,12 @@ export default class RegistrationWindow {
 
 
   private hidePass(): string {
-    let output: string = ''
-    let i: number = 0
+    let output: string = '';
+    let i: number = 0;
 
     while (i < this.scene.secondInput.value.length) {
-      output += '*'
-      i++
+      output += '*';
+      i++;
     }
 
     return output
@@ -238,7 +225,6 @@ export default class RegistrationWindow {
 
 
   private validate(): void {
-
     if (
       this.errorType === 'validLoginPass' &&
       this.re.test(this.scene.mainInput.value) &&
@@ -251,20 +237,18 @@ export default class RegistrationWindow {
 
       this.scene.resizeWindowTop(-(this.extraHeight + 20));
       this.result.setAlpha(0);
-      this.errorType = ''
+      this.errorType = '';
 
     } else if (this.errorType === 'haveAccaunt' && this.lastLogin !== this.scene.mainInput.value) {
 
       this.scene.resizeWindowTop(-(this.extraHeight + 20));
       this.result.setAlpha(0);
-      this.errorType = ''
+      this.errorType = '';
 
     }
-
   }
 
   private registration(): void {
-
     if (!this.reg) {
       
       let checkLogin: boolean = true;
@@ -306,17 +290,17 @@ export default class RegistrationWindow {
               document.cookie = "farmHASH=" + res.data.hash + "; expires=" + res.data.expires + "; path=/;";
               this.scene.state.user.hash = res.data.hash;
               this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-              this.scene.enterKey.destroy()
+              this.scene.enterKey.destroy();
               this.scene.secondInput.remove();
               this.scene.mainInput.remove();
               this.scene.scene.stop();
 
             } else {
 
-              this.lastLogin = this.scene.mainInput.value
+              this.lastLogin = this.scene.mainInput.value;
               this.result.setText(this.scene.state.lang.haveAccaunt).setAlpha(1);
-              this.setExtraHeight()
-              this.errorType = 'haveAccaunt'
+              this.setExtraHeight();
+              this.errorType = 'haveAccaunt';
           
             }
 
@@ -327,29 +311,22 @@ export default class RegistrationWindow {
       } else {
         
         this.result.setText(this.scene.state.lang.validLoginPass).setAlpha(1);
-        this.setExtraHeight()
-        this.errorType = 'validLoginPass'
+        this.setExtraHeight();
+        this.errorType = 'validLoginPass';
         
       }
-
     }
-
   }
 
 
   private setExtraHeight(): void {
-
     if (this.errorType === '') {
-
       this.extraHeight = this.result.getBounds().height
       this.scene.resizeWindowTop(this.extraHeight + 20);
-
     } else if (this.errorType === 'haveAccaunt' || this.errorType === 'validLoginPass') {
-
       this.scene.resizeWindowTop(-(this.extraHeight + 20));
       this.extraHeight = this.result.getBounds().height
       this.scene.resizeWindowTop(this.extraHeight + 20);
-
     }
   }
 

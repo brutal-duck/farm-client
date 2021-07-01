@@ -18,7 +18,7 @@ export default class DonateWindow {
       align: 'center',
       color: '#763701',
       wordWrap: { width: 350 }
-    }
+    };
 
     this.scene.add.sprite(x, y, 'donate');
     this.scene.add.text(x, y + 10, this.scene.state.lang.crystalsCredited, textStyle).setOrigin(0.5);

@@ -5,11 +5,10 @@ import LocalStorage from './../../../libs/LocalStorage';
 export default class ChangeNicknameWindow {
   public scene: Modal;
 
-  private enterNickname: Phaser.GameObjects.Text
+  private enterNickname: Phaser.GameObjects.Text;
   private result: Phaser.GameObjects.Text;
   private nicknameError: boolean;
   private change: boolean;
-
 
   constructor(scene: Modal) {
     this.scene = scene;
@@ -19,12 +18,11 @@ export default class ChangeNicknameWindow {
   }
 
   private init(): void {
-    this.nicknameError = false
-    this.change = false
+    this.nicknameError = false;
+    this.change = false;
   }
 
   private create(): void {
-
     // Заголовок и описание
     this.scene.textHeader.setText(this.scene.state.lang.nickname);
     this.enterNickname = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 70, this.scene.state.lang.enterNickname, {
@@ -53,13 +51,13 @@ export default class ChangeNicknameWindow {
     }).setOrigin(0, 0.5).setDepth(3).setCrop(0, 0, 434, 100);
 
     // Зона для интерактива и ее границы для всего окна
-    const nicknameModalZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY, 710, 1200).setDropZone(undefined, () => {}).setInteractive();
+    const nicknameModalZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY, 710, 1200).setDropZone(undefined, (): void => {}).setInteractive();
     // let graphics: Phaser.GameObjects.Graphics = this.scene.add.graphics()
     // .lineStyle(2, 0x7b40b8)
     // .strokeRect(nicknameModalZone.x - nicknameModalZone.input.hitArea.width / 2, nicknameModalZone.y - nicknameModalZone.input.hitArea.height / 2, nicknameModalZone.input.hitArea.width, nicknameModalZone.input.hitArea.height);
 
     // Зона для интерактива и ее границы для инпут
-    const nicknameInputZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY + 36, 460, 70).setDropZone(undefined, () => {}).setInteractive();
+    const nicknameInputZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY + 36, 460, 70).setDropZone(undefined, (): void => {}).setInteractive();
     // let graphics2: Phaser.GameObjects.Graphics = this.scene.add.graphics()
     // .lineStyle(2, 0xFFFF00)
     // .strokeRect(nicknameInputZone.x - nicknameInputZone.input.hitArea.width / 2, nicknameInputZone.y - nicknameInputZone.input.hitArea.height / 2, nicknameInputZone.input.hitArea.width, nicknameInputZone.input.hitArea.height);
@@ -96,7 +94,6 @@ export default class ChangeNicknameWindow {
     );
 
     window.onresize = (): void => {
-        
       tempHeight = window.innerHeight;
 
       if (windowHeight !== tempHeight && centered) {
@@ -105,17 +102,16 @@ export default class ChangeNicknameWindow {
         modalElement.forEach((el) => el.setY(el.y + padding))
         this.scene.mainInput.style.top = '80%';
         this.scene.mainInput.style.bottom = '14%';
-        centered = false
+        centered = false;
 
       } else if (windowHeight === tempHeight && !centered) {
         
         modalElement.forEach((el) => el.setY(el.y - padding));
         this.scene.mainInput.style.top = '50%';
         this.scene.mainInput.style.bottom = '44%';
-        centered = true
+        centered = true;
 
       }
-
     }
 
     // Фокус
@@ -133,19 +129,17 @@ export default class ChangeNicknameWindow {
 
     // Кнопка смены ника
     this.scene.clickModalBtn(changeNicknameBtn, (): void => { this.changeNickname() });
-    this.scene.enterKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER)
+    this.scene.enterKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
     this.scene.enterKey.on('down', (): void => { this.changeNickname() });
 
     this.scene.resizeWindow(270);
-  
   }
 
   private changeNickname(): void {
-
     if (!this.change) {
 
       let checkLogin: boolean = true;
-      let re: RegExp = /^[a-zA-Z0-9]+$/;
+      const re: RegExp = /^[a-zA-Z0-9]+$/;
       checkLogin = re.test(this.scene.mainInput.value);
           
       if (this.scene.mainInput.value.length < 6) checkLogin = false;
@@ -196,9 +190,6 @@ export default class ChangeNicknameWindow {
         this.result.setText(this.scene.state.lang.validNickname).setAlpha(1);
 
       }
-
     }
-
   }
-
 }

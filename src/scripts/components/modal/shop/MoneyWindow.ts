@@ -3,7 +3,7 @@ import Shop from "../../../scenes/Modal/Shop/Main";
 
 export default class MoneyWindow {
   public scene: Shop;
-  private animal: string
+  private animal: string;
 
   constructor(scene: Shop) {
     this.scene = scene;
@@ -12,12 +12,11 @@ export default class MoneyWindow {
   }
 
   private init(): void {
-    this.animal = this.scene.state.farm.toLowerCase()
-    if (this.animal === 'unicorn') this.animal = 'event'
+    this.animal = this.scene.state.farm.toLowerCase();
+    if (this.animal === 'unicorn') this.animal = 'event';
   }
 
   private create(): void {
-
     const diamonds: number[] = [1, 10, 50, 100, 500, 1000];
     const rows: number = Math.ceil(diamonds.length / 2);
     const height: number = rows * 270 + 40;
@@ -40,7 +39,6 @@ export default class MoneyWindow {
       this.scene.clickShopBtn(btn, (): void => { this.convert(left) });
   
       if (right) {
-  
         const pack: Phaser.GameObjects.Sprite = this.scene.add.sprite(240, y + this.scene.height, `${this.animal}-money-package`).setOrigin(0, 0);
         this.scene.click(pack, (): void => { this.convert(right) });
   
@@ -52,7 +50,7 @@ export default class MoneyWindow {
         }).setOrigin(0.5, 0.5);
   
         const btn = this.scene.shopButton(350, y + 223 + this.scene.height, right, 'diamond');
-        this.scene.clickShopBtn(btn, (): void => { this.convert(right) });
+        this.scene.clickShopBtn(btn, (): void => { this.convert(right); });
       }
     }
   }
@@ -63,12 +61,11 @@ export default class MoneyWindow {
       count: side,
       diamonds: side,
       type: 1
-    }
+    };
     this.scene.game.scene.keys[this.scene.state.farm].exchange();
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
     this.scene.scene.stop();
     this.scene.scene.stop('ShopBars');
     this.scene.scene.stop('Modal');
   }
-
 }

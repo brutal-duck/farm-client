@@ -10,7 +10,6 @@ export default class MessageWindow {
   }
 
   private create(): void {
-
     this.scene.textHeader.setText(this.scene.state.lang.message);
     this.scene.resizeWindow(this.scene.state.modal.height);
     this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY + 20, this.scene.state.modal.message, {
@@ -19,6 +18,5 @@ export default class MessageWindow {
       align: 'center',
       wordWrap: { width: 400 }
     }).setOrigin(0.5, 0.5);
-  
   }
 }

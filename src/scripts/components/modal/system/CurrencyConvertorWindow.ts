@@ -13,15 +13,12 @@ export default class CurrencyConvertorWindow {
 
   private create(): void {
     this.scene.textHeader.setText(this.scene.state.lang.exchange);
-
-    if (this.scene.state.convertor.type === 1) this.typeOneConverter()
-    else if (this.scene.state.convertor.type === 2) this.typeTwoConverter()
-    
+    if (this.scene.state.convertor.type === 1) this.typeOneConverter();
+    else if (this.scene.state.convertor.type === 2) this.typeTwoConverter();
   }
 
 
   private typeOneConverter(): void {
-
     this.scene.resizeWindow(300);
 
     let count: number | string = shortNum(this.scene.state.convertor.count);
@@ -34,12 +31,12 @@ export default class CurrencyConvertorWindow {
       wordWrap: { width: 440 }
     }).setOrigin(0.5, 0);
 
-    let notEnaugh: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - length, this.scene.cameras.main.centerY - 10, this.scene.state.lang.notEnoughForYou, {
+    const notEnaugh: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - length, this.scene.cameras.main.centerY - 10, this.scene.state.lang.notEnoughForYou, {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0.5);
 
-    let border = notEnaugh.getBounds();
+    const border = notEnaugh.getBounds();
 
     this.scene.add.text(border.right + 50, this.scene.cameras.main.centerY - 10, count, {
       font: '26px Bip',
@@ -51,13 +48,13 @@ export default class CurrencyConvertorWindow {
 
     if (this.scene.state.convertor.diamonds === 1 && this.scene.state.readyAd) {
 
-      let right = {
+      const right = {
         icon: 'ad-icon',
         text: ''
-      }
+      };
 
-      let ad = this.scene.bigButton('green', 'left', 60, this.scene.state.lang.addCoins, right);
-      this.scene.clickModalBtn(ad, (): void => { this.watchAdAndClose() });
+      const ad = this.scene.bigButton('green', 'left', 60, this.scene.state.lang.addCoins, right);
+      this.scene.clickModalBtn(ad, (): void => { this.watchAdAndClose(); });
 
     } else {
 
@@ -73,29 +70,28 @@ export default class CurrencyConvertorWindow {
       //   this.scene.game.scene.keys[this.scene.state.farm].exchange();
       // });
 
-      let btn = this.scene.bigButton('green', 'center', 60, this.scene.state.lang.goExchanger);
-      this.scene.clickModalBtn(btn, (): void => { this.openModal() });
+      const btn = this.scene.bigButton('green', 'center', 60, this.scene.state.lang.goExchanger);
+      this.scene.clickModalBtn(btn, (): void => { this.openModal(); });
 
     }
   
-    let cancel = this.scene.bigButton('yellow', 'center', 140, this.scene.state.lang.cancel);
-    this.scene.clickModalBtn(cancel, (): void => { this.closeWindow() });
+    const cancel = this.scene.bigButton('yellow', 'center', 140, this.scene.state.lang.cancel);
+    this.scene.clickModalBtn(cancel, (): void => { this.closeWindow(); });
   }
 
 
   private typeTwoConverter(): void {
-
     this.scene.resizeWindow(280);
 
     let count: number | string = shortNum(this.scene.state.convertor.count);
     let length: number = String(count).length * 10 + 15;
 
-    let notEnaugh: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - length, this.scene.cameras.main.centerY - 55, this.scene.state.lang.notEnoughForYou, {
+    const notEnaugh: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - length, this.scene.cameras.main.centerY - 55, this.scene.state.lang.notEnoughForYou, {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0.5);
 
-    let border = notEnaugh.getBounds();
+    const border = notEnaugh.getBounds();
 
     this.scene.add.text(border.right + 50, this.scene.cameras.main.centerY - 55, count, {
       font: '26px Bip',
@@ -105,12 +101,11 @@ export default class CurrencyConvertorWindow {
 
     this.scene.add.sprite(border.right + 5, this.scene.cameras.main.centerY - 55, 'diamond').setOrigin(0, 0.5).setScale(0.15);
 
-    let pay = this.scene.bigButton('green', 'center', 40, this.scene.state.lang.buy);
-    this.scene.clickModalBtn(pay, (): void => { this.showBankAndClose() });
+    const pay = this.scene.bigButton('green', 'center', 40, this.scene.state.lang.buy);
+    this.scene.clickModalBtn(pay, (): void => { this.showBankAndClose(); });
 
-    let cancel = this.scene.bigButton('yellow', 'center', 120, this.scene.state.lang.cancel);
-    this.scene.clickModalBtn(cancel, (): void => { this.closeWindow() });
-
+    const cancel = this.scene.bigButton('yellow', 'center', 120, this.scene.state.lang.cancel);
+    this.scene.clickModalBtn(cancel, (): void => { this.closeWindow(); });
   }
 
 
@@ -140,10 +135,10 @@ export default class CurrencyConvertorWindow {
 
 
   private openModal(): void {
-    let modal: Imodal = {
+    const modal: Imodal = {
       type: 2,
       shopType: 2
-    }
+    };
     this.scene.state.modal = modal;
     this.scene.scene.stop();
     this.scene.scene.start('Modal', this.scene.state);

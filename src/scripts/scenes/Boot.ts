@@ -48,7 +48,7 @@ class Boot extends Phaser.Scene {
   public params: URLSearchParams;
   private landing: Landing;
   private authorizationWindow: Login;
-  private createnLanding: boolean = false;
+  private createnLanding: boolean = true;
 
   public shopButton = shopButton.bind(this);
   public bigButton = bigButton.bind(this);
@@ -418,7 +418,7 @@ class Boot extends Phaser.Scene {
   }
 
   private destroyLanding(): void {
-    this.landing?.destroy()
+    this.landing?.destroy();
   }
 
   public createAuthorizationWindow(): void {
@@ -427,7 +427,7 @@ class Boot extends Phaser.Scene {
   }
 
   private destroyAuthorizationWindow(): void {
-    this.authorizationWindow?.destroy()
+    this.authorizationWindow?.destroy();
   }
 
   public playBtnHandler(): void {
@@ -446,9 +446,9 @@ class Boot extends Phaser.Scene {
   }
 
   public createErrorWindow(): void {
-    this.destroyLanding()
-    this.destroyAuthorizationWindow()
-    new ErrorWindow(this)
+    this.destroyLanding();
+    this.destroyAuthorizationWindow();
+    new ErrorWindow(this);
   }
 
   private createLocalUser(): void {

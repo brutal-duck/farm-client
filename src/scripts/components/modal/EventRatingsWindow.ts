@@ -129,39 +129,39 @@ export default class EventRatingsWindow extends Phaser.GameObjects.Sprite {
       this.scene.add.sprite(0, 0, 'diamond').setScale(0.13),
       this.scene.add.sprite(-10, 9, 'diamond').setScale(0.1).setAngle(-30).setTint(0x000000),
       this.scene.add.sprite(-10, 9, 'diamond').setScale(0.09).setAngle(-30),
-    ]).setVisible(false)
+    ]).setVisible(false);
 
     const secondPlaceDiamonds: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 180, this.scene.cameras.main.centerY - 169, [
       this.scene.add.sprite(0, 0, 'diamond').setScale(0.13).setAngle(19).setTint(0x000000),
       this.scene.add.sprite(0, 0, 'diamond').setScale(0.12).setAngle(19),
       this.scene.add.sprite(-12, 5, 'diamond').setScale(0.11).setAngle(-12).setTint(0x000000),
       this.scene.add.sprite(-12, 5, 'diamond').setScale(0.1).setAngle(-12),
-    ]).setVisible(false)
+    ]).setVisible(false);
 
     const thirdPlaceDiamond: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 178, this.scene.cameras.main.centerY - 139, [
       this.scene.add.sprite(0, 0, 'diamond').setScale(0.13).setAngle(-19).setTint(0x000000),
       this.scene.add.sprite(0, 0, 'diamond').setScale(0.12).setAngle(-19),
-    ]).setVisible(false)
+    ]).setVisible(false);
 
     const fourthPlaceDiamond: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 109, [
       this.scene.add.sprite(0, 0, 'diamond').setScale(0.11).setTint(0x000000),
       this.scene.add.sprite(0, 0, 'diamond').setScale(0.1),
-    ]).setVisible(false)
+    ]).setVisible(false);
 
     const fifthPlaceDiamond: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 81, [
       this.scene.add.sprite(0, 0, 'diamond').setScale(0.1).setTint(0x000000),
       this.scene.add.sprite(0, 0, 'diamond').setScale(0.09),
-    ]).setVisible(false)
+    ]).setVisible(false);
 
     const sixthPlaceDiamond: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 55, [
       this.scene.add.sprite(0, 0, 'diamond').setScale(0.09).setTint(0x000000),
       this.scene.add.sprite(0, 0, 'diamond').setScale(0.08),
-    ]).setVisible(false)
+    ]).setVisible(false);
 
     const seventhPlaceDiamond: Phaser.GameObjects.Container = this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 27, [
       this.scene.add.sprite(0, 0, 'diamond').setScale(0.08).setTint(0x000000),
       this.scene.add.sprite(0, 0, 'diamond').setScale(0.07),
-    ]).setVisible(false)
+    ]).setVisible(false);
 
 
     // 'Рейтинг'
@@ -181,11 +181,10 @@ export default class EventRatingsWindow extends Phaser.GameObjects.Sprite {
     // }
 
     // Таблица
-    let length: number = this.scene.state.unicornRaitings?.ratings.length
-    if (length > 10) length = 10
+    let length: number = this.scene.state.unicornRaitings?.ratings.length;
+    if (length > 10) length = 10;
 
     for (let i: number = 0; i < length; i++) {
-      
       placeAndName = this.scene.add.text(placeAndNameX, placeAndNameY + padding * Number(i), '', {
         font: '21px Bip',
         color: '#793D0A',
@@ -204,13 +203,12 @@ export default class EventRatingsWindow extends Phaser.GameObjects.Sprite {
 
       this.eventRatingsNames.push(placeAndName);
       this.eventRatingsScores.push(score);
-
     }
 
     this.line = this.scene.add.text(placeAndNameX, placeAndNameY + 240, '-----', {
       font: '26px Shadow',
       color: '#793D0A',
-    })
+    });
 
     this.playerPlaceAndName = this.scene.add.text(placeAndNameX, placeAndNameY + 270, this.scene.state.unicornRaitings?.user.place + '. ' + this.scene.state.unicornRaitings?.user.name, {
       font: '21px Bip',
@@ -220,7 +218,7 @@ export default class EventRatingsWindow extends Phaser.GameObjects.Sprite {
     this.playerScore = this.scene.add.text(placeAndNameX + 280, placeAndNameY + 270, String(this.scene.state.unicornRaitings?.user.score), {
       font: '21px Bip',
       color: '#793D0A',
-    })
+    });
 
     if (this.scene.state.unicornRaitings?.user.place <= 10) {
       this.line.setVisible(false);
@@ -244,10 +242,10 @@ export default class EventRatingsWindow extends Phaser.GameObjects.Sprite {
     );
 
     // Нажатие на 'Условия'
-    this.rulesBtn.on('pointerdown', (): void => { this.toogleBtn(true) });
+    this.rulesBtn.on('pointerdown', (): void => { this.toogleBtn(true); });
 
     // Нажатие на 'Призы'
-    this.priceBtn.on('pointerdown', (): void => { this.toogleBtn(false) });
+    this.priceBtn.on('pointerdown', (): void => { this.toogleBtn(false); });
 
     // Закрытие окна
     this.scene.clickButton(closeBtn, (): void => {
@@ -276,7 +274,7 @@ export default class EventRatingsWindow extends Phaser.GameObjects.Sprite {
             this.playerScore?.setVisible(true);
           }
         }
-      this.scene.state.unicornRaitings.updated = false
+      this.scene.state.unicornRaitings.updated = false;
     }
   }
 
