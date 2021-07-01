@@ -10,6 +10,7 @@ const LANGS: { [key: string]: string } = {
   subGroupVK: 'Подпишись на ЛС от группы',
   subGroupOK: 'Подпишись на ЛС от группы',
   subNativeVK: 'Подпишись на уведомления',
+  sendPostOK: 'Сделать репост в ленту',
   title: 'Социальные задания',
   subtitle: 'Получай ежедневную награду'
 }
@@ -140,6 +141,9 @@ export default class SocialTasksWindow {
       } else if (key === 'addFavorites') {
         this.addFavoritesTask = new Task(this, key, { x: centerX, y: y });
         this.addFavoritesTask.setState(this.socialTasks[key]);
+      } else if (key === 'sendPost') {
+        this.addFavoritesTask = new Task(this, key, { x: centerX, y: y });
+        this.addFavoritesTask.setState(this.socialTasks[key]);
       }
     }
     this.height = count * 100;
@@ -235,6 +239,8 @@ class Task {
       case 'subNative':
         this.subNativeCallback();
       break;
+      case 'sendPost':
+        this.sendPostCallback();
       default: 
         console.log('Wrong key');
       break;
@@ -304,6 +310,23 @@ class Task {
         this.setState(res.result);
         this.window.setTakeBtnState();
       }).catch(err => console.log(err));
+    }
+  }
+
+  private sendPostCallback(): void {
+    if (this.scene.state.platform === 'ok') {
+      FAPI.UI.postMediatopic({
+        "media": [
+          {
+            "type": "text", 
+            "text": 'priv',
+          },
+          {
+            "type": "link",
+            "url": process.env.OK_APP_LINK
+          },  
+        ]
+      }, false);
     }
   }
 

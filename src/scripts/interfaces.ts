@@ -687,6 +687,7 @@ interface IsociaTasks {
   addFavorites?: boolean;
   subGroup?: boolean;
   subNative?: boolean;
+  sendPost?:boolean;
 }
 interface Istate {
   platform: string;

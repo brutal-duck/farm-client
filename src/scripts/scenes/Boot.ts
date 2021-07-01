@@ -133,6 +133,9 @@ class Boot extends Phaser.Scene {
     }
     const search: string = window.location.search;
     this.params = new URLSearchParams(search);
+    location.search.substr(1).split('&').forEach(function (item) {
+      console.log(item)
+    })
     const vk: string = this.params.get('api_url');
     const ok: string = this.params.get('api_server');
     if (vk === 'https://api.vk.com/api.php') this.platform = 'vk';
@@ -494,10 +497,12 @@ class Boot extends Phaser.Scene {
       joinGroup: false,
       subGroup: false,
       addFavorites: false,
+      sendPost: false,
     };
     axios.post(process.env.API + '/checkOkTask', data).then(res => {
       this.state.okTask.joinGroup = res.data.data.joinGroup;
       this.state.okTask.subGroup = res.data.data.subGroup;
+      // this.state.okTask.sendPost = res.data.data.sendPost;
     });
 
     FAPI.Client.call({ 'method':'storage.get', 'keys': 'addFavourites' }, (status, data, error) => {

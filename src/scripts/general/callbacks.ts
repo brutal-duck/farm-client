@@ -29,7 +29,6 @@ function okCallback(): void {
     }
 
     if (method === 'showPermissions') {
-      console.log(result)
       if (result === 'ok') {
         this.state.okTask.subGroup = true;
         if (this.scene.isActive('Modal') && this.state.modal.type === 14) {
@@ -38,6 +37,10 @@ function okCallback(): void {
           this.game.scene.keys['Modal'].socialTakskWindow.setTakeBtnState();
         }
       }
+    }
+    
+    if (method === 'postMediatopic') {
+      console.log(result)
     }
   }
 }
