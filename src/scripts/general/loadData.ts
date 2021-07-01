@@ -126,8 +126,8 @@ export default function loadData(response: any): void {
   else if (this.state.farm === 'Cow') this.state.offline = response.data.progress.cowOfflineTime;
   else if (this.state.farm === 'Unicorn') this.state.offline = response.data.progress.eventOfflineTime;
   // общие настройки
-  this.state.autoSaveSpeed = response.data.settings.general.autoSaveSpeed;
-  this.state.maxMerginTime = response.data.settings.general.maxMerginTime;
+  this.state.autoSaveSpeed = general.autoSaveSpeed;
+  this.state.maxMerginTime = general.maxMerginTime;
   this.state.herdBoostSpeedAnimal = general.herdBoostSpeedAnimal;
   this.state.herdBoostTime = general.herdBoostTime;
   this.state.herdBoostPrice = general.herdBoostPrice;
