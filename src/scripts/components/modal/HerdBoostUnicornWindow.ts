@@ -3,10 +3,10 @@ import Modal from "../../scenes/Modal/Modal";
 import MergingCloud from "../animations/MergingCloud";
 
 export default class HerdBoostUnicornWindow {
-  public scene: Modal
+  public scene: Modal;
 
-  private x: number
-  private y: number
+  private x: number;
+  private y: number;
   private yTent: number;
   private yTextLevel: number;
   private xRoad: number;
@@ -17,8 +17,6 @@ export default class HerdBoostUnicornWindow {
   private animalForBoost: Phaser.Physics.Arcade.Group;
 
   constructor(scene: Modal) {
-    console.log("!");
-    
     this.scene = scene;
     this.init();
     this.eventDrag();
@@ -35,7 +33,6 @@ export default class HerdBoostUnicornWindow {
 
 
   private create(): void {
-
     let startCount: number = 5;
 
     this.boostCounterWindow = this.scene.physics.add.sprite(360, 400, 'boost-window-bg').setDepth(1);
@@ -59,12 +56,12 @@ export default class HerdBoostUnicornWindow {
     const leaves2: Phaser.GameObjects.Sprite = this.scene.add.sprite(280, 510, 'boost-leaves').setDepth(0).setFlip(false, true);
     const timerText: Phaser.GameObjects.Text = this.scene.add.text(362, 492, String(startCount), { font: '64px Shadow',  color: '#f3eae6' }).setOrigin(0.5, 0.5).setDepth(3);
     
-    this.elements = [timerText, leaves1, leaves2, countdown, text1, text2]
+    this.elements = [timerText, leaves1, leaves2, countdown, text1, text2];
   
-    let timer: Phaser.Time.TimerEvent = this.scene.time.addEvent({
+    const timer: Phaser.Time.TimerEvent = this.scene.time.addEvent({
       delay: 1000,
       loop: true,
-      callback: () => {
+      callback: (): void => {
         --startCount;
         timerText.setText(String(startCount));
         if (startCount < 1) {
@@ -79,12 +76,10 @@ export default class HerdBoostUnicornWindow {
       },
       callbackScope: this
     });
-    
   }
 
 
   private eventDrag(): void {
-
     this.scene.input.on('dragstart', (pointer: any, animal: Phaser.Physics.Arcade.Sprite): void => {
       if (animal.body === null) return;
       animal.data.values.drag = true;
@@ -153,7 +148,6 @@ export default class HerdBoostUnicornWindow {
   
 
   private checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): void {
-
     animal.data.values.merging = true;
     let check = this.mergingArray.find((data: any) => data._id === animal.data.values._id);
     
@@ -169,7 +163,7 @@ export default class HerdBoostUnicornWindow {
         _id: animal.data.values._id,
         type: animal.data.values.type,
         position
-      })
+      });
   
       // проверка позиции для кур
       if (position === 'left') {
@@ -180,7 +174,7 @@ export default class HerdBoostUnicornWindow {
       } else if (position === 'right') {
   
         if (animal.data.values.side === 'left') animal.data.values.side = 'right';
-        animal.setPosition(this.x + 50, this.y)
+        animal.setPosition(this.x + 50, this.y);
 
       }
     }
@@ -211,9 +205,7 @@ export default class HerdBoostUnicornWindow {
           }, callbackScope: this, loop: false });
         } else {
           this.scene.time.addEvent({ delay: 100, callback: (): void => {
-          
             MergingCloud.create(this.scene, { x: this.x, y: this.y }, true);
-  
             animal1?.data?.values.cloud?.destroy();
             animal2?.data?.values.cloud?.destroy();
             animal1.destroy();
@@ -227,14 +219,13 @@ export default class HerdBoostUnicornWindow {
   
 
   private moveItems(): void {
-    // let y = this.boostCounterWindow.y;
-    let [timerText, leaves1, leaves2, countdown, text1, text2]: any = this.elements
+    let [timerText, leaves1, leaves2, countdown, text1, text2]: any = this.elements;
     
     // установка новых позиций
     timerText.setText(this.scene.state.herdBoostTime).setPosition(430, 355);
-    countdown.setPosition(430, 360)
-    leaves1.setAngle(90).setPosition(455, 420)
-    leaves2.setAngle(90).setPosition(455, 290)
+    countdown.setPosition(430, 360);
+    leaves1.setAngle(90).setPosition(455, 420);
+    leaves2.setAngle(90).setPosition(455, 290);
 
     text1.style.wordWrapWidth = 280;
     text1.setText(this.scene.state.lang[`herdBoostTimer${this.scene.state.farm}_1`] + this.scene.state.herdBoostTime + ' ' + this.scene.state.lang.seconds).setFontSize('26px').setY(1050);    
@@ -257,7 +248,6 @@ export default class HerdBoostUnicornWindow {
 
       }
     })
-
   }
 
 
@@ -295,12 +285,11 @@ export default class HerdBoostUnicornWindow {
 
 
   private createAnimals(): void {
-
     // дроп зоны 
-    let leftZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.x - 75, this.y - 30, 145, 300).setDropZone(undefined, () => {});
+    const leftZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.x - 75, this.y - 30, 145, 300).setDropZone(undefined, () => {});
     leftZone.type = 'left';
     
-    let rightZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.x + 70, this.y - 30, 145, 300).setDropZone(undefined, () => {});
+    const rightZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.x + 70, this.y - 30, 145, 300).setDropZone(undefined, () => {});
     rightZone.type = 'right';
 
     // для проверки дроп зон
@@ -312,23 +301,22 @@ export default class HerdBoostUnicornWindow {
     // graphics2.lineStyle(2, 0x00ff00);
     // graphics2.strokeRect(rightZone.x - rightZone.input.hitArea.width / 2, rightZone.y - rightZone.input.hitArea.height / 2, rightZone.input.hitArea.width, rightZone.input.hitArea.height);
 
-
     // создаю группу для животных
     this.animalForBoost = this.scene.physics.add.group();
     this.flyAnimal(); // полет животных
     let currentTime: number = this.scene.state.herdBoostTime;
 
-    let timerCreate: Phaser.Time.TimerEvent = this.scene.time.addEvent({
+    const timerCreate: Phaser.Time.TimerEvent = this.scene.time.addEvent({
       delay: this.scene.state.herdBoostDelay,
       loop: true,
       callback: () => { this.getRandomAnimal(); },
       callbackScope: this
     });
     
-    let [timerText]: any = this.elements
+    let [timerText]: any = this.elements;
 
     // таймер переключающий время
-    let timerTickText: Phaser.Time.TimerEvent = this.scene.time.addEvent({
+    const timerTickText: Phaser.Time.TimerEvent = this.scene.time.addEvent({
       delay: 1000,
       loop: true,
       callback: () => {
@@ -465,15 +453,14 @@ export default class HerdBoostUnicornWindow {
 
 
   private flyAnimal(): void {
-
     this.scene.time.addEvent({
       delay: 30,
       callback: (): void => {
         this.animalForBoost?.children?.entries.forEach((animal: Phaser.GameObjects.Sprite) => {
           if (!animal.data.values.drag && !animal.data.values.merging) {
   
-            let coefficient: number = animal.height / animal.data.values.cloud.height;
-            let originTerm: number = 0.0065;
+            const coefficient: number = animal.height / animal.data.values.cloud.height;
+            const originTerm: number = 0.0065;
   
             if (animal.data.values.topPosition) {
               animal.originY -= originTerm;
@@ -495,9 +482,6 @@ export default class HerdBoostUnicornWindow {
         });
       },
       loop: true
-  
     });
-  
   }
-  
 }

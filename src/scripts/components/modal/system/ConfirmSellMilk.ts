@@ -11,7 +11,6 @@ export default class ConfirmSellMilk {
   }
 
   private create(): void {
-
     const factory: string = this.scene.state.lang.repository.replace('$1', this.scene.state.territory.improve);
     this.scene.textHeader.setText(factory);
 
@@ -25,16 +24,15 @@ export default class ConfirmSellMilk {
     const milkMoney = {
       icon: 'cowCoin',
       text: shortNum(this.scene.state.territory.volume * this.scene.game.scene.keys[this.scene.state.farm].milkMultiply)
-    }
+    };
 
     this.scene.progressButton = this.scene.bigButton('red', 'left', 50, this.scene.state.lang.sellMilk , milkMoney);
     const greenBtn = this.scene.bigButton('green', 'center', 140, this.scene.state.lang.dontSellMilk);
 
-    this.scene.clickModalBtn(this.scene.progressButton, (): void => { this.confirmSellMilk() });
-    this.scene.clickModalBtn(greenBtn, (): void => { this.cancelSellMilk() });
+    this.scene.clickModalBtn(this.scene.progressButton, (): void => { this.confirmSellMilk(); });
+    this.scene.clickModalBtn(greenBtn, (): void => { this.cancelSellMilk(); });
 
     this.scene.resizeWindow(300);
-  
   }
 
 

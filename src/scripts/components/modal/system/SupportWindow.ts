@@ -10,7 +10,7 @@ export default class SupportWindow {
   private isInputTouched: boolean;
   private isTextareaTouched: boolean;
   private result: Phaser.GameObjects.Text;
-  private description: Phaser.GameObjects.Text
+  private description: Phaser.GameObjects.Text;
 
   constructor(scene: Modal) {
     this.scene = scene;
@@ -20,15 +20,14 @@ export default class SupportWindow {
   }
 
   private init(): void {
-    this.send = false
-    this.sendError = false
-    this.reMail = /^[\w-.]+@[\w-]+\.[a-z]{2,4}$/i
-    this.isInputTouched = false
-    this.isTextareaTouched = false
+    this.send = false;
+    this.sendError = false;
+    this.reMail = /^[\w-.]+@[\w-]+\.[a-z]{2,4}$/i;
+    this.isInputTouched = false;
+    this.isTextareaTouched = false;
   }
 
   private create(): void {
-
     // Заголовок и описание
     this.scene.textHeader.setText(this.scene.state.lang.help);
     this.description = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 216, this.scene.state.lang.needHelp, {
@@ -57,13 +56,13 @@ export default class SupportWindow {
     const windowHeight: number = window.innerHeight;
 
     // Отрисовка текста, полученного из инпут + placeholder
-    let emailText: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 220, this.scene.cameras.main.centerY - 101, this.scene.state.lang.yourMail, {
+    const emailText: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 220, this.scene.cameras.main.centerY - 101, this.scene.state.lang.yourMail, {
       font: '24px Bip',
       color: '#974f00'
     }).setOrigin(0, 0.5).setDepth(4).setCrop(0, 0, 434, 100);
 
     // Отрисовка текста, полученного из текстэрии + placeholder
-    let msgText: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 220, this.scene.cameras.main.centerY - 42, this.scene.state.lang.yourMessage, {
+    const msgText: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 220, this.scene.cameras.main.centerY - 42, this.scene.state.lang.yourMessage, {
       font: '25px Bip',
       color: '#974f00',
       align: 'left',
@@ -71,24 +70,24 @@ export default class SupportWindow {
     }).setOrigin(0, 0).setDepth(4).setCrop(0, 0, 445, 254);
     
     // Зоны
-    let helpModalZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY, 710, 1200).setDropZone(undefined, () => {}).setInteractive();
-    let helpInputZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 101, 460, 70).setDropZone(undefined, () => {}).setInteractive();
-    let helpTextareaZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY + 84, 460, 260).setDropZone(undefined, () => {}).setInteractive();
+    const helpModalZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY, 710, 1200).setDropZone(undefined, () => {}).setInteractive();
+    const helpInputZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 101, 460, 70).setDropZone(undefined, () => {}).setInteractive();
+    const helpTextareaZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY + 84, 460, 260).setDropZone(undefined, () => {}).setInteractive();
 
     // Фон инпута
-    let emailBG: Phaser.GameObjects.Graphics = this.scene.add.graphics({
+    const emailBG: Phaser.GameObjects.Graphics = this.scene.add.graphics({
       x: this.scene.cameras.main.centerX - 230,
       y: this.scene.cameras.main.centerY - 137
     }).setDepth(2).fillStyle(0xffffff, 1).fillRoundedRect(0, 0, 460, 70, 16);
 
     // Фон текстэрии
-    let msgBG: Phaser.GameObjects.Graphics = this.scene.add.graphics({
+    const msgBG: Phaser.GameObjects.Graphics = this.scene.add.graphics({
       x: this.scene.cameras.main.centerX - 230,
       y: this.scene.cameras.main.centerY - 46
     }).setDepth(2).fillStyle(0xffffff, 1).fillRoundedRect(0, 0, 460, 260, 16);
 
     // Кнопка
-    let sendMsgBtn = this.scene.bigButton('green', 'center', 130, this.scene.state.lang.send);
+    const sendMsgBtn = this.scene.bigButton('green', 'center', 130, this.scene.state.lang.send);
     sendMsgBtn.btn.y = this.scene.cameras.main.centerY + 280
     sendMsgBtn.title.y = this.scene.cameras.main.centerY + 274
     this.result = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 166, '', {
@@ -114,42 +113,36 @@ export default class SupportWindow {
       sendMsgBtn.btn,
       sendMsgBtn.title,
       this.result
-    )
+    );
     
     // resize
     window.onresize = (): void => {
-        
       tempHeight = window.innerHeight;
 
       if (windowHeight !== tempHeight && centered) {
 
         root.scrollIntoView(false);
-
         modalElement.forEach((el) => el.setY(el.y + padding));
         this.scene.mainInput.style.top = '53.5%';
         this.scene.mainInput.style.bottom = '40.5%';
         this.scene.secondInput.style.top = '61%';
         this.scene.secondInput.style.bottom = '17%';
-    
         centered = false;
 
-        } else if (windowHeight === tempHeight && !centered) {
+      } else if (windowHeight === tempHeight && !centered) {
               
         modalElement.forEach((el) => el.setY(el.y - padding));
         this.scene.mainInput.style.top = '38.5%';
         this.scene.mainInput.style.bottom = '55.5%';
         this.scene.secondInput.style.top = '46%';
         this.scene.secondInput.style.bottom = '32%';
-
         centered = true;
 
       }
-
     }
 
     // Фокус на инпут
     helpInputZone.on('pointerdown', (): void => {
-
       this.scene.secondInput.style.display = 'none';
       this.scene.mainInput.style.display = 'block';
       this.scene.secondInput.blur();
@@ -158,14 +151,12 @@ export default class SupportWindow {
       msgText.setText(this.scene.secondInput.value).setDepth(4).setCrop(0, 0, 445, 254);
       if (this.scene.secondInput.value === '') msgText.setText(this.scene.state.lang.yourMessage).setDepth(4).setCrop(0, 0, 434, 100);
 
-      if (!this.isInputTouched) this.isInputTouched = true
+      if (!this.isInputTouched) this.isInputTouched = true;
       this.validate('textarea');
-
     });
 
     // Фокус на текстэрия
     helpTextareaZone.on('pointerdown', (): void => {
-
       this.scene.mainInput.style.display = 'none';
       this.scene.secondInput.style.display = 'block';
       this.scene.mainInput.blur();
@@ -174,14 +165,12 @@ export default class SupportWindow {
       emailText.setText(this.scene.mainInput.value).setDepth(4).setCrop(0, 0, 434, 100);
       if (this.scene.mainInput.value === '') emailText.setText(this.scene.state.lang.yourMail).setDepth(4).setCrop(0, 0, 434, 100);
 
-      if (!this.isTextareaTouched) this.isTextareaTouched = true
+      if (!this.isTextareaTouched) this.isTextareaTouched = true;
       this.validate('input');
-
     });
 
     // Блюр
     helpModalZone.on('pointerdown', (): void => {
-                  
       this.scene.mainInput.style.display = 'none';
       this.scene.secondInput.style.display = 'none';
       this.scene.mainInput.blur();
@@ -192,7 +181,6 @@ export default class SupportWindow {
       if (this.scene.mainInput.value === '') emailText.setText(this.scene.state.lang.yourMail).setDepth(4).setCrop(0, 0, 434, 100);
       if (this.scene.secondInput.value === '') msgText.setText(this.scene.state.lang.yourMessage).setDepth(4).setCrop(0, 0, 434, 100);
       this.validate();
-
     });
 
     // Отправка
@@ -210,32 +198,29 @@ export default class SupportWindow {
     });
     
     this.scene.resizeWindow(580);
-  
   }
 
+  
   private validate(elements: string = 'all'): void {
-
     if (elements === 'all' || elements === 'input') {
       if (this.sendError && this.reMail.test(this.scene.mainInput.value) && this.isInputTouched && this.result.text === this.scene.state.lang.emailError) {
         this.description.setY(this.description.y + 24);
-        this.result.setAlpha(0)
-        this.sendError = false
+        this.result.setAlpha(0);
+        this.sendError = false;
       }
     }
 
     if (elements === 'all' || elements === 'textarea') {
       if (this.sendError && this.scene.secondInput.value !== '' && this.isTextareaTouched && this.result.text === this.scene.state.lang.messageError) {
         this.description.setY(this.description.y + 24);
-        this.result.setAlpha(0)
-        this.sendError = false
+        this.result.setAlpha(0);
+        this.sendError = false;
       }
     }
-
   }
 
 
   private sendToSupport(): void {
-
     if (!this.send) {
 
       if (this.reMail.test(this.scene.mainInput.value)) {
@@ -259,7 +244,7 @@ export default class SupportWindow {
 
               this.scene.game.scene.keys[this.scene.state.farm].messageIsSent();
               this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-              this.scene.enterKey.destroy()
+              this.scene.enterKey.destroy();
               this.scene.secondInput.remove();
               this.scene.mainInput.remove();
               this.scene.scene.stop();  
@@ -283,9 +268,6 @@ export default class SupportWindow {
         this.result.setText(this.scene.state.lang.emailError).setAlpha(1);
   
       }
-
     }
-
   }
-
 }

@@ -11,9 +11,8 @@ export default class FarmPastureWindow {
   }
 
   private create(): void {
-
-    let height: number = 270
-    const farm: string = this.scene.state.farm
+    let height: number = 270;
+    const farm: string = this.scene.state.farm;
     const pasture: string = this.scene.state.lang.pasture.replace('$1', this.scene.state.territory.improve);
     this.scene.textHeader.setText(pasture);
 
@@ -22,9 +21,9 @@ export default class FarmPastureWindow {
     ? this.scene.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === 2).improvePastureMoneyPrice
     : part.improve_territory_2
 
-    const icon: string = `${farm.toLowerCase()}Coin`
-    const text = shortNum(exchangePrice)
-    const exchange: any = { icon, text }
+    const icon: string = `${farm.toLowerCase()}Coin`;
+    const text = shortNum(exchangePrice);
+    const exchange: any = { icon, text };
 
     if (farm === 'Cow' && this.scene.state.territory.improve < this.scene.state.cowSettings.territoriesCowSettings.length) {
 
@@ -42,12 +41,12 @@ export default class FarmPastureWindow {
           improve = {
             icon: 'cowCoin',
             text: shortNum(settings.improvePastureMoneyPrice)
-          }
+          };
         } else if (settings.improvePastureDiamondPrice) {
           improve = {
             icon: 'diamond',
             text: shortNum(settings.improvePastureDiamondPrice)
-          }
+          };
         }
         
         const improveText: string = this.scene.state.lang.improveToLevel.replace('$1', this.scene.state.territory.improve + 1);
@@ -63,7 +62,7 @@ export default class FarmPastureWindow {
         const improve = {
           icon: 'lock',
           text: this.scene.state.lang.shortPart + ' ' + settings.unlock_improve
-        }
+        };
         const improveText: string = this.scene.state.lang.improveToLevel.replace('$1', this.scene.state.territory.improve + 1);
         this.scene.bigButton('grey', 'left', -60, improveText, improve);
         
@@ -86,13 +85,13 @@ export default class FarmPastureWindow {
         else if (this.scene.state.territory.improve === 2) price = part.improve_territory_3;
         else price = part.improve_territory_4;
 
-        let improve = {
+        const improve = {
           icon: `${farm.toLowerCase()}Coin`,
           text: shortNum(price)
-        }
+        };
 
         let improveText: string = this.scene.state.lang.improveToLevel.replace('$1', this.scene.state.territory.improve + 1);
-        let button = this.scene.bigButton('green', 'left', -60, improveText, improve);
+        const button = this.scene.bigButton('green', 'left', -60, improveText, improve);
         this.scene.clickModalBtn(button, (): void => {
           this.scene.scene.stop();
           this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
@@ -101,35 +100,34 @@ export default class FarmPastureWindow {
 
       } else {
         
-        let improve = {
+        const improve = {
           icon: 'lock',
           text: this.scene.state.lang.shortPart + ' ' + lock
-        }
+        };
 
         let improveText: string = this.scene.state.lang.improveToLevel.replace('$1', this.scene.state.territory.improve + 1);
         this.scene.bigButton('grey', 'left', -60, improveText, improve);
 
       }
       
-      let button1 = this.scene.bigButton('blue', 'left', 30, this.scene.state.lang.exchangeWater, exchange);
+      const button1 = this.scene.bigButton('blue', 'left', 30, this.scene.state.lang.exchangeWater, exchange);
       this.scene.clickModalBtn(button1, (): void => { this.exchangeTerritory(3) });
 
-      let button2 = this.scene.bigButton('orange', 'left', 120, this.scene.state.lang.exchangeRepository, exchange);
+      const button2 = this.scene.bigButton('orange', 'left', 120, this.scene.state.lang.exchangeRepository, exchange);
       this.scene.clickModalBtn(button2, (): void => { this.exchangeTerritory(5) });
 
     } else {
 
-      let button1 = this.scene.bigButton('blue', 'left', -15, this.scene.state.lang.exchangeWater, exchange);
+      const button1 = this.scene.bigButton('blue', 'left', -15, this.scene.state.lang.exchangeWater, exchange);
       this.scene.clickModalBtn(button1, (): void => { this.exchangeTerritory(3) });
 
-      let button2 = this.scene.bigButton('orange', 'left', 75, this.scene.state.lang.exchangeRepository, exchange);
+      const button2 = this.scene.bigButton('orange', 'left', 75, this.scene.state.lang.exchangeRepository, exchange);
       this.scene.clickModalBtn(button2, (): void => { this.exchangeTerritory(5) });
 
       height = 200;
     }
 
     this.scene.resizeWindow(height);
-  
   }
 
 

@@ -11,7 +11,6 @@ export default class ConfirmBuyCooldown {
   }
 
   private create(): void {
-
     this.scene.textHeader.setText(this.scene.state.lang.buyTerritory);
     const price: number = this.scene.state.territory.cooldownSprite.price;
 
@@ -31,15 +30,14 @@ export default class ConfirmBuyCooldown {
     const redBtn = this.scene.bigButton('red', 'center', 110, this.scene.state.lang.cancel);
 
     this.scene.clickModalBtn(this.scene.progressButton, (): void => {
-      this.closeWindow()
-      if (this.scene.state.user.diamonds >= price) this.confirmBuy(price)
-      else this.openConvertor(price)
+      this.closeWindow();
+      if (this.scene.state.user.diamonds >= price) this.confirmBuy(price);
+      else this.openConvertor(price);
     });
 
-    this.scene.clickModalBtn(redBtn, (): void => { this.closeWindow() });
+    this.scene.clickModalBtn(redBtn, (): void => { this.closeWindow(); });
 
     this.scene.resizeWindow(250);
-  
   }
 
 
@@ -60,7 +58,7 @@ export default class ConfirmBuyCooldown {
       count: price,
       diamonds: price,
       type: 1
-    }
+    };
     this.scene.game.scene.keys[this.scene.state.farm].exchange();
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
   }
@@ -70,5 +68,4 @@ export default class ConfirmBuyCooldown {
     this.scene.scene.stop();
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
   }
-
 }

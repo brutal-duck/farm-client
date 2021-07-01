@@ -25,12 +25,11 @@ export default class ProfileWindow {
   }
 
   private init(): void {
-    this.height = 360
-    this.heightText = 23
+    this.height = 360;
+    this.heightText = 23;
   }
 
   private create(): void {
-
     this.scene.textHeader.setText(this.scene.state.lang.profile);
 
     let avatar: Phaser.GameObjects.Sprite;
@@ -115,7 +114,7 @@ export default class ProfileWindow {
     this.scene.clickModalBtn(support, (): void => {
       if (this.scene.state.platform === 'vk') window.open(process.env.VK_SUPPORT_LINK, '_blank');
       else if (this.scene.state.platform === 'ok') window.open(process.env.OK_SUPPORT_LINK, '_blank');
-      else this.openSysWindow(14)
+      else this.openSysWindow(14);
     });
 
     const agreement: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX, 0, this.scene.state.lang.agreement, {
@@ -142,7 +141,6 @@ export default class ProfileWindow {
     } 
 
     this.scene.resizeWindow(this.height);
-  
   }
 
 
@@ -170,7 +168,7 @@ export default class ProfileWindow {
 
 
   private openSysWindow(sysType: number) {
-    const modal: Imodal = { type: 1, sysType }
+    const modal: Imodal = { type: 1, sysType };
     this.scene.state.modal = modal;
     this.scene.game.scene.keys[this.scene.state.farm].scene.launch('Modal', this.scene.state);
   }

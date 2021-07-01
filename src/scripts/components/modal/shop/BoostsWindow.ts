@@ -6,7 +6,7 @@ const ONE_HOUR: number = 3600;
 const TWO_HOURS: number = 7200;
 export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   public scene: Shop;
-  private farm: string
+  private farm: string;
 
   private herdBoostTimerText: Phaser.GameObjects.Text;
   private herdBoostBtnRightText: Phaser.GameObjects.Text;
@@ -30,8 +30,8 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   private freeCollector: any;
   private doubleCollector: any;
   private adBtn: any;
-  private improve: Phaser.GameObjects.Sprite
-  private improveText: Phaser.GameObjects.Text
+  private improve: Phaser.GameObjects.Sprite;
+  private improveText: Phaser.GameObjects.Text;
   private maxWidth: number;
 
   constructor(scene: Shop) {
@@ -94,17 +94,17 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     if (this.scene.state.farm === 'Cow') resource = 'milk';
     this.scene.add.sprite(0, 20 + this.scene.height, 'boost-bg').setOrigin(0, 0);
     this.scene.add.text(225, 40 + this.scene.height, this.scene.state.lang[`${resource}Collector`], { font: '28px Shadow', color: '#FFFFFF' }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
-    let collectorSprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(40, 65 + this.scene.height, `shop-${this.scene.state.farm.toLowerCase()}-${resource}-collector`).setOrigin(0, 0);
-    let levelBg: Phaser.GameObjects.Sprite = this.scene.add.sprite(10, 55 + this.scene.height, 'level-bg').setOrigin(0, 0);
+    const collectorSprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(40, 65 + this.scene.height, `shop-${this.scene.state.farm.toLowerCase()}-${resource}-collector`).setOrigin(0, 0);
+    const levelBg: Phaser.GameObjects.Sprite = this.scene.add.sprite(10, 55 + this.scene.height, 'level-bg').setOrigin(0, 0);
     let level: string = String(this.scene.state[`user${this.scene.state.farm}`].collectorLevel);
     if (this.scene.state[`user${this.scene.state.farm}`].collectorLevel === this.scene.state[`${this.scene.state.farm.toLowerCase()}CollectorSettings`].length) level = 'Max';
   
-    let userLevel: Phaser.GameObjects.Text = this.scene.add.text(52, 90 + this.scene.height, level, { font: '26px Bip', color: '#F8DF86' }).setOrigin(0.5, 0.5).setStroke('#B66B06', 2);
-    let levelText: Phaser.GameObjects.Text = this.scene.add.text(52, 110 + this.scene.height, this.scene.state.lang.shortLevel, { font: '18px Bip', color: '#F8DF86' }).setOrigin(0.5, 0.5).setStroke('#B66B06', 2);
+    const userLevel: Phaser.GameObjects.Text = this.scene.add.text(52, 90 + this.scene.height, level, { font: '26px Bip', color: '#F8DF86' }).setOrigin(0.5, 0.5).setStroke('#B66B06', 2);
+    const levelText: Phaser.GameObjects.Text = this.scene.add.text(52, 110 + this.scene.height, this.scene.state.lang.shortLevel, { font: '18px Bip', color: '#F8DF86' }).setOrigin(0.5, 0.5).setStroke('#B66B06', 2);
   
     // осталось времени
     if (this.scene.state[`user${this.scene.state.farm}`].collector > 0) {
-      let time: string = shortTime(this.scene.state[`user${this.scene.state.farm}`].collector, this.scene.state.lang);
+      const time: string = shortTime(this.scene.state[`user${this.scene.state.farm}`].collector, this.scene.state.lang);
       this.collectorTimer = this.scene.add.text(120, 235 + this.scene.height, this.scene.state.lang.still + ' ' + time, { font: '20px Shadow', color: '#FFFFFF' }).setOrigin(0.5, 0.5);
     }
     
@@ -196,8 +196,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   }
 
   private freeCollectorBtns(): void {
-
-    this.destroyCollectorBtns()
+    this.destroyCollectorBtns();
 
     let freeTime: number = this.scene.state[`${this.farm.toLowerCase()}CollectorSettings`].find((data: IcollectorSettings) => data.level === this.scene.state[`user${this.farm}`].collectorLevel).time;
 
@@ -232,13 +231,11 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   
         this.doubleCollector = this.scene.boostButton(350, 160 + this.scene.height, String(doubleTime), this.scene.state.lang.shortMinutes, '', 'ad');
         this.scene.clickBoostBtn(this.doubleCollector, (): void => {
-  
           this.scene.game.scene.keys[this.scene.state.farm].watchAd(3);
           this.scene.scene.stop('Shop');
           this.scene.scene.stop('ShopBars');
           this.scene.scene.stop('Modal');
           this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-  
         });
   
       } else {
@@ -263,13 +260,13 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     // собиратель шерсти
     this.scene.add.sprite(0, 20 + this.scene.height, 'boost-bg').setOrigin(0, 0);
     this.scene.add.text(225, 40 + this.scene.height, this.scene.state.lang.resourceCollector, { font: '28px Shadow', color: '#FFFFFF' }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
-    let collectorSprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(40, 65 + this.scene.height, `shop-event-resource-collector`).setOrigin(0, 0);
-    let levelBg: Phaser.GameObjects.Sprite = this.scene.add.sprite(10, 55 + this.scene.height, 'level-bg').setOrigin(0, 0);
+    const collectorSprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(40, 65 + this.scene.height, `shop-event-resource-collector`).setOrigin(0, 0);
+    const levelBg: Phaser.GameObjects.Sprite = this.scene.add.sprite(10, 55 + this.scene.height, 'level-bg').setOrigin(0, 0);
     let level: string = String(this.scene.state.userUnicorn.collectorLevel);
     if (this.scene.state.userUnicorn.collectorLevel === this.scene.state.eventCollectorSettings.length) level = 'Max';
   
-    let userLevel: Phaser.GameObjects.Text = this.scene.add.text(52, 90 + this.scene.height, level, { font: '26px Bip', color: '#F8DF86' }).setOrigin(0.5, 0.5).setStroke('#B66B06', 2);
-    let levelText: Phaser.GameObjects.Text = this.scene.add.text(52, 110 + this.scene.height, this.scene.state.lang.shortLevel, { font: '18px Bip', color: '#F8DF86' }).setOrigin(0.5, 0.5).setStroke('#B66B06', 2);
+    const userLevel: Phaser.GameObjects.Text = this.scene.add.text(52, 90 + this.scene.height, level, { font: '26px Bip', color: '#F8DF86' }).setOrigin(0.5, 0.5).setStroke('#B66B06', 2);
+    const levelText: Phaser.GameObjects.Text = this.scene.add.text(52, 110 + this.scene.height, this.scene.state.lang.shortLevel, { font: '18px Bip', color: '#F8DF86' }).setOrigin(0.5, 0.5).setStroke('#B66B06', 2);
     let freeTime: number = this.scene.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userUnicorn.collectorLevel).time;
   
     // осталось времени
@@ -278,7 +275,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
       this.collectorTimer = this.scene.add.text(120, 235 + this.scene.height, this.scene.state.lang.still + ' ' + time, { font: '20px Shadow', color: '#FFFFFF' }).setOrigin(0.5, 0.5);
     }
 
-    this.freeEventCollectorBtns()
+    this.freeEventCollectorBtns();
   
     // 4 часа собирателя
     if (this.scene.state.unicornSettings.unlockCollector4 <= this.scene.state.userUnicorn.points) {
@@ -331,12 +328,10 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
       }
   
     }
-  
   }
 
   private freeEventCollectorBtns(): void {
-
-    this.destroyCollectorBtns()
+    this.destroyCollectorBtns();
     
     let freeTime: number = this.scene.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userUnicorn.collectorLevel).time;
 
@@ -355,7 +350,6 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   
     // удвоенный собиратель
     let doubleTime: number = freeTime * 2;
-  
     let doubleTimePrice: number = Math.floor(doubleTime / 60 * this.scene.state.unicornSettings.doubledСollectorPrice);
     
     // проверки для двойного собирателя разные
@@ -367,13 +361,11 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   
         this.doubleCollector = this.scene.boostButton(350, 160 + this.scene.height, String(doubleTime), this.scene.state.lang.shortMinutes, '', 'ad');
         this.scene.clickBoostBtn(this.doubleCollector, (): void => {
-  
           this.scene.game.scene.keys['Unicorn'].watchAd(3);
           this.scene.scene.stop('Shop');
           this.scene.scene.stop('ShopBars');
           this.scene.scene.stop('Modal');
           this.scene.game.scene.keys['Unicorn'].scrolling.wheel = true;
-  
         });
   
       } else {
@@ -392,7 +384,6 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
       else this.adBtn = this.scene.boostButton(350, 160 + this.scene.height, String(doubleTime), this.scene.state.lang.shortMinutes, String(doubleTimePrice), 'lock-ad-diamond');
   
     }
-
   }
 
   private destroyCollectorBtns(): void {
@@ -403,7 +394,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   
 
   private herdBoost(): void {
-    let y: number = 335 + this.scene.height;
+    const y: number = 335 + this.scene.height;
     this.scene.add.tileSprite(0, y, 466, 235, 'boost-bg').setOrigin(0, 0);
     this.scene.add.text(240, y + 35, this.scene.state.lang[`herdBoostTitle${this.scene.state.farm}`], { 
       font: '28px Shadow',
@@ -478,7 +469,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
           count: price,
           diamonds: price,
           type: 1
-        }
+        };
         this.scene.game.scene.keys[this.scene.state.farm].exchange();
         this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
         this.scene.scene.stop();
@@ -489,7 +480,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   }
 
   private feedBoost(): void {
-    let y: number = 585 + this.scene.height;
+    const y: number = 585 + this.scene.height;
     this.scene.add.tileSprite(0, y, 466, 270, 'boost-bg').setOrigin(0, 0);
     this.scene.add.text(240, y + 20, this.scene.state.lang.feedBoostTitle, { 
       font: '28px Shadow',
@@ -549,7 +540,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
           sysType: 3,
           height: 150,
           message: this.scene.state.lang.feedBoostMax
-        }
+        };
         this.scene.state.modal = modal;
         this.scene.scene.launch('Modal', this.scene.state);
       } else {
@@ -580,12 +571,13 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
           this.scene.scene.stop('Shop');
           this.scene.scene.stop('ShopBars');
           this.scene.scene.stop('Modal');
+
           let modal: Imodal = {
             type: 1,
             sysType: 3,
             height: 150,
             message: this.scene.state.lang.feedBoostMax
-          }
+          };
           
           this.scene.state.modal = modal;
           this.scene.scene.launch('Modal', this.scene.state);
@@ -627,7 +619,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
           count: this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].feedBoostPrice,
           diamonds: this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].feedBoostPrice,
           type: 1
-        }
+        };
         this.scene.game.scene.keys[this.scene.state.farm].exchange();
         this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
         this.scene.scene.stop();
@@ -640,7 +632,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   private eventHerdBoost(): void {
     if (this.scene.state[`user${this.scene.state.farm}`].takenHerdBoost <= 0) this.scene.state[`user${this.scene.state.farm}`].takenHerdBoost = 1;
     
-    let y: number = 335 + this.scene.height;
+    const y: number = 335 + this.scene.height;
     this.scene.add.tileSprite(0, y, 466, 235, 'boost-bg').setOrigin(0, 0);
     this.scene.add.text(240, y + 35, this.scene.state.lang[`herdBoostTitle${this.scene.state.farm}`], { 
       font: '28px Shadow',
@@ -681,21 +673,21 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
 
   private eventHerdBoostBtnHandler(): void {
     const price: number = this.scene.state.herdBoostPrice * this.scene.state[`user${this.scene.state.farm}`].takenHerdBoost;
-      if (this.scene.state.user.diamonds >= price) {
-        this.scene.game.scene.keys[this.scene.state.farm].startHerdBoost();
-      } else {
-        this.scene.state.convertor = {
-          fun: 0,
-          count: price,
-          diamonds: price,
-          type: 1
-        }
-        this.scene.game.scene.keys[this.scene.state.farm].exchange();
-        this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-        this.scene.scene.stop();
-        this.scene.scene.stop('ShopBars');
-        this.scene.scene.stop('Modal');
+    if (this.scene.state.user.diamonds >= price) {
+      this.scene.game.scene.keys[this.scene.state.farm].startHerdBoost();
+    } else {
+      this.scene.state.convertor = {
+        fun: 0,
+        count: price,
+        diamonds: price,
+        type: 1
       }
+      this.scene.game.scene.keys[this.scene.state.farm].exchange();
+      this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
+      this.scene.scene.stop();
+      this.scene.scene.stop('ShopBars');
+      this.scene.scene.stop('Modal');
+    }
   }
   
   private eventFeedBoost(): void {
@@ -819,42 +811,42 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   }
 
   private updateHerdBoostBtn(): void {
-      if (this.checkHerdBoost()) {
-        let xBtn: number =  330;
-        let yBtn: number = 500 + this.scene.height;
+    if (this.checkHerdBoost()) {
+      let xBtn: number =  330;
+      let yBtn: number = 500 + this.scene.height;
+      
+      if (this.herdBoostTimerText?.active) this.herdBoostTimerText?.setText(this.scene.state.lang.stillForBoost + ' ' + shortTime(this.scene.state.timeToNewDay, this.scene.state.lang));
+      if (this.scene.state.timeToNewDay <= 0 && this.herdBoostBtn?.active && this.herdBoostBtnUpdated) this.herdBoostBtnUpdated = false;
+      
+      if (this.scene.state[`user${this.scene.state.farm}`].takenHerdBoost <= 0 && this.herdBoostBtn?.active && !this.herdBoostBtnUpdated) {
+        this.herdBoostBtnUpdated = true;
+        this.herdBoostBtnLeftText?.setText(this.scene.state.lang.free).setY(yBtn - 25).setX(xBtn).setOrigin(0.5); 
+        this.herdBoostBtnRightText?.setVisible(false);
+        this.herdBoostDiamondBtn?.setVisible(false);
+        this.herdBoostBtn?.setY(yBtn - 23);
+        this.herdBoostTimerText?.setVisible(false);
         
-        if (this.herdBoostTimerText?.active) this.herdBoostTimerText?.setText(this.scene.state.lang.stillForBoost + ' ' + shortTime(this.scene.state.timeToNewDay, this.scene.state.lang));
-        if (this.scene.state.timeToNewDay <= 0 && this.herdBoostBtn?.active && this.herdBoostBtnUpdated) this.herdBoostBtnUpdated = false;
-        
-        if (this.scene.state[`user${this.scene.state.farm}`].takenHerdBoost <= 0 && this.herdBoostBtn?.active && !this.herdBoostBtnUpdated) {
-          this.herdBoostBtnUpdated = true;
-          this.herdBoostBtnLeftText?.setText(this.scene.state.lang.free).setY(yBtn - 25).setX(xBtn).setOrigin(0.5); 
-          this.herdBoostBtnRightText?.setVisible(false);
-          this.herdBoostDiamondBtn?.setVisible(false);
-          this.herdBoostBtn?.setY(yBtn - 23);
-          this.herdBoostTimerText?.setVisible(false);
-          
-          if (this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].herd > 0) {
-            this.herdBoostNative?.setX(this.herdBoostBtn?.getBounds().right - 20);
-            this.herdBoostNative?.setY(this.herdBoostBtn?.getBounds().top - 3);
-            this.herdBoostNativeBg?.setPosition(this.herdBoostNative?.x, this.herdBoostNative?.y);
-          }
-        }
-          if (this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].herd > 0 && 
-          this.scene.state[`user${this.scene.state.farm}`].takenHerdBoost > 0 && 
-          this.herdBoostBtn?.active && !this.herdBoostBtnUpdated) {
-
-          this.herdBoostBtnUpdated = true;
-          this.herdBoostBtnLeftText?.setText(this.scene.state.lang.pickUp).setX(xBtn).setOrigin(0.5, 0.5);
-          this.herdBoostBtnRightText?.setVisible(false);
-          this.herdBoostDiamondBtn?.setVisible(false);
-          this.herdBoostNative?.setY(this.herdBoostNative.y + 25);
-          
-          const textGeom: Phaser.Geom.Rectangle = this.herdBoostNative?.getBounds();
-          const width: number = textGeom.width + 30 < 60 ? 60 : textGeom.width + 30;
-          this.herdBoostNativeBg?.setPosition(textGeom.centerX, textGeom.centerY).setDisplaySize(width, textGeom.height + 20);
+        if (this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].herd > 0) {
+          this.herdBoostNative?.setX(this.herdBoostBtn?.getBounds().right - 20);
+          this.herdBoostNative?.setY(this.herdBoostBtn?.getBounds().top - 3);
+          this.herdBoostNativeBg?.setPosition(this.herdBoostNative?.x, this.herdBoostNative?.y);
         }
       }
+        if (this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].herd > 0 && 
+        this.scene.state[`user${this.scene.state.farm}`].takenHerdBoost > 0 && 
+        this.herdBoostBtn?.active && !this.herdBoostBtnUpdated) {
+
+        this.herdBoostBtnUpdated = true;
+        this.herdBoostBtnLeftText?.setText(this.scene.state.lang.pickUp).setX(xBtn).setOrigin(0.5, 0.5);
+        this.herdBoostBtnRightText?.setVisible(false);
+        this.herdBoostDiamondBtn?.setVisible(false);
+        this.herdBoostNative?.setY(this.herdBoostNative.y + 25);
+        
+        const textGeom: Phaser.Geom.Rectangle = this.herdBoostNative?.getBounds();
+        const width: number = textGeom.width + 30 < 60 ? 60 : textGeom.width + 30;
+        this.herdBoostNativeBg?.setPosition(textGeom.centerX, textGeom.centerY).setDisplaySize(width, textGeom.height + 20);
+      }
+    }
   }
 
   private updateFeedBoostBtn(): void {
@@ -977,6 +969,6 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
 
   private checkEventFeedBoost(): boolean {
     return this.scene.state.modal.shopType === 4 && 
-      this.scene.state[`user${this.scene.state.farm}`].points >= this.scene.game.scene.keys[this.scene.state.farm].feedBoostLvl;
+    this.scene.state[`user${this.scene.state.farm}`].points >= this.scene.game.scene.keys[this.scene.state.farm].feedBoostLvl;
   }
 }

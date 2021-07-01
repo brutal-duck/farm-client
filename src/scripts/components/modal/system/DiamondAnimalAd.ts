@@ -4,7 +4,7 @@ import Modal from "../../../scenes/Modal/Modal";
 export default class DiamondAnimalAd {
   public scene: Modal;
 
-  private farm: string
+  private farm: string;
   private caveTimer: Phaser.GameObjects.Text;
 
   constructor(scene: Modal) {
@@ -19,10 +19,9 @@ export default class DiamondAnimalAd {
   }
 
   private create(): void {
-
     this.scene.textHeader.setText(this.scene.state.lang[`summon${this.farm}`]);
 
-    let sprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 145, `${this.farm.toLowerCase()}0`);
+    const sprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 145, `${this.farm.toLowerCase()}0`);
     if (this.farm === 'Chicken') sprite.anims.play('chicken-drag0', true);
     else sprite.anims.play(`${this.farm.toLowerCase()}-stay-right0`, true);
     if (this.farm === 'Sheep') this.scene.add.sprite(sprite.x, sprite.y, 'sheep-right-0-4');
@@ -42,7 +41,7 @@ export default class DiamondAnimalAd {
       wordWrap: { width: 420 }
     }).setOrigin(0.5, 0);
 
-    const right = { icon: 'ad-icon', text: '' }
+    const right = { icon: 'ad-icon', text: '' };
 
     const ad = this.scene.bigButton('green', 'left', 135, this.scene.state.lang.summon, right);
     this.scene.clickModalBtn(ad, (): void => { this.adButtonHandler(); });

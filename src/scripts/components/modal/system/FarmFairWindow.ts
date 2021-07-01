@@ -11,9 +11,8 @@ export default class FarmFairWindow {
   }
 
   private create(): void {
-
-    let height = 220
-    const farm: string = this.scene.state.farm
+    let height = 220;
+    const farm: string = this.scene.state.farm;
     const fair: string = this.scene.state.lang.fair.replace('$1', String(this.scene.state[`user${farm}`].fair));
     this.scene.textHeader.setText(fair);
 
@@ -36,40 +35,35 @@ export default class FarmFairWindow {
 
         if (nextFair.price_m > 0 && nextFair.price_d > 0) {
 
-          let right1 = {
+          const right1 = {
             icon: `${farm.toLowerCase()}Coin`,
             text: priceM
-          }
-          let right2 = {
+          };
+          const right2 = {
             icon: 'diamond',
             text: priceD
-          }
-          let button = this.scene.bigButton('green', 'left', 90, text, right1, right2);
+          };
+          const button = this.scene.bigButton('green', 'left', 90, text, right1, right2);
           this.scene.clickModalBtn(button, (): void => { this.upgradeFair() });
 
         } else {
-          
-          let right = {
+          const right = {
             icon: `${farm.toLowerCase()}Coin`,
             text: priceM
-          }
-          let button = this.scene.bigButton('green', 'left', 90, text, right);
+          };
+          const button = this.scene.bigButton('green', 'left', 90, text, right);
           this.scene.clickModalBtn(button, (): void => { this.upgradeFair() });
-          
         }
         
       } else {
-
-        let right = {
+        const right = {
           icon: 'lock',
           text: this.scene.state.lang.shortPart + ' ' + nextFair.part_unlock
-        }
+        };
         this.scene.bigButton('grey', 'left', 90, text, right);
-
       }
 
     } else {
-
       this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 20, this.scene.state.lang.maxFairLevel, {
         font: '26px Shadow',
         fill: '#925C28',
@@ -79,11 +73,10 @@ export default class FarmFairWindow {
         }
       }).setDepth(1).setOrigin(0.5, 0);
 
-      height = 170
+      height = 170;
     }
 
     this.scene.resizeWindow(height);
-  
   }
 
 

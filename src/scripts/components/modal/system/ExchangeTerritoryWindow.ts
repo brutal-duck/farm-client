@@ -10,16 +10,15 @@ export default class ExchangeTerritoryWindow {
   }
 
   private create(): void {
-
     this.scene.textHeader.setText(this.scene.state.lang.exchangeTerritory);
     this.scene.resizeWindow(250);
 
     let repository: string = '';
-    let resurce: string = ''
+    let resurce: string = '';
 
-    if (this.scene.state.farm === 'Sheep') resurce = 'wool'
-    else if (this.scene.state.farm === 'Chicken') resurce = 'eggs'
-    else if (this.scene.state.farm === 'Cow') resurce = 'milk'
+    if (this.scene.state.farm === 'Sheep') resurce = 'wool';
+    else if (this.scene.state.farm === 'Chicken') resurce = 'eggs';
+    else if (this.scene.state.farm === 'Cow') resurce = 'milk';
 
     if (this.scene.state.territory.type === 5) repository = ' ' + this.scene.state.lang[`${resurce}WillBeSold`];
 
@@ -31,25 +30,24 @@ export default class ExchangeTerritoryWindow {
     }).setOrigin(0.5, 0.5);
 
     const cancel = this.scene.bigButton('yellow', 'center', 120, this.scene.state.lang.cancel);
-    this.scene.clickModalBtn(cancel, (): void => { this.closeWindow(false) });
+    this.scene.clickModalBtn(cancel, (): void => { this.closeWindow(false); });
 
     if (this.scene.state.exchangeTerritory === 2) {
 
       const confirm = this.scene.bigButton('green', 'center', 40, this.scene.state.lang.exchangeGrass);
-      this.scene.clickModalBtn(confirm, (): void => { this.closeWindow() });
+      this.scene.clickModalBtn(confirm, (): void => { this.closeWindow(); });
 
     } else if (this.scene.state.exchangeTerritory === 3) {
 
       const confirm = this.scene.bigButton('blue', 'center', 40, this.scene.state.lang.exchangeWater);
-      this.scene.clickModalBtn(confirm, (): void => { this.closeWindow() });
+      this.scene.clickModalBtn(confirm, (): void => { this.closeWindow(); });
 
     } else if (this.scene.state.exchangeTerritory === 5) {
 
       const confirm = this.scene.bigButton('orange', 'center', 40, this.scene.state.lang.exchangeRepository);
-      this.scene.clickModalBtn(confirm, (): void => { this.closeWindow() });
+      this.scene.clickModalBtn(confirm, (): void => { this.closeWindow(); });
 
     }
-
   }
 
   private closeWindow(exchange: boolean = true): void {

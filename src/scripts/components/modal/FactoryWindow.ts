@@ -268,7 +268,7 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
     if (storageVolume < factory.settings.lotSize && factory.productionTimer <= 0 && !this.emptyAnimation) {
       this.setEmptyAnimation();
     } else if (storageVolume > factory.settings.lotSize && this.emptyAnimation) {
-      this.removeEmptyAnimation()
+      this.removeEmptyAnimation();
     }
 
 

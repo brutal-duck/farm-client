@@ -17,12 +17,11 @@ export default class AnimalUnicornWindow {
 
   private init(): void {
     this.buttons = [];
-    this.heightBtn = 0
+    this.heightBtn = 0;
   }
 
   private create(): void {
-
-    let rows: number = this.scene.state.unicornSettings.unicornSettings.length;
+    const rows: number = this.scene.state.unicornSettings.unicornSettings.length;
     let height: number = rows * 270 + 40;
     this.scene.scrolling.bottom = this.scene.height - this.scene.heightWindow + height;
     
@@ -39,43 +38,42 @@ export default class AnimalUnicornWindow {
       else this.scene.add.sprite(110, y + this.scene.height + 110, 'animal' + animal.breed);
 
       // описание
-      let animalName: string = this.scene.state.lang['eventBreed' + animal.breed];
-      let name: Phaser.GameObjects.Text = this.scene.add.text(240, center, animalName, {
+      const animalName: string = this.scene.state.lang['eventBreed' + animal.breed];
+      const name: Phaser.GameObjects.Text = this.scene.add.text(240, center, animalName, {
         font: '28px Shadow',
         fill: '#FFFFFF',
         align: 'left',
         wordWrap: { width: 230 }
       }).setOrigin(0, 0.5);
-      let boundsName = name.getBounds();
+      const boundsName = name.getBounds();
 
-      let resourcePriceText: string = this.scene.state.lang.resourcePrice;
+      const resourcePriceText: string = this.scene.state.lang.resourcePrice;
 
-      let resource: Phaser.GameObjects.Text = this.scene.add.text(240, center, resourcePriceText, {
+      const resource: Phaser.GameObjects.Text = this.scene.add.text(240, center, resourcePriceText, {
         font: '20px Shadow',
         fill: '#FFFFFF'
       }).setOrigin(0, 0.5);
-      let boundsResource = resource.getBounds();
+      const boundsResource = resource.getBounds();
       
-      let resourcePrice: Phaser.GameObjects.Text = this.scene.add.text(boundsResource.right, center, String(shortNum(BigInteger.divide(animal.resourcePrice, String(10)))), {
+      const resourcePrice: Phaser.GameObjects.Text = this.scene.add.text(boundsResource.right, center, String(shortNum(BigInteger.divide(animal.resourcePrice, String(10)))), {
         font: '20px Shadow',
         fill: '#ECC896'
       }).setOrigin(0, 0.5);
 
       // кнопка покупки
-      let btn: any = false
+      let btn: any = false;
 
       if (animal.breed <= this.scene.state.userUnicorn.points - 4 || animal.breed === 1) {
 
-        let price: string = String(shortNum(this.scene.animalPrice(animal.breed).price));
+        const price: string = String(shortNum(this.scene.animalPrice(animal.breed).price));
         
         btn = this.scene.shopButton(330, center, price, 'unicornCoin');
         const callback = (): void => {
-          
-          let result: boolean = this.scene.game.scene.keys[this.scene.state.farm].buyAnimal(animal.breed, true);
+          const result: boolean = this.scene.game.scene.keys[this.scene.state.farm].buyAnimal(animal.breed, true);
           if (result) this.updatePrices({text: btn.title, breed: animal.breed, img: btn.img});
-
         }
         this.createBtn(btn, animal.breed, callback);
+
       } else if (animal.breed <= this.scene.state.userUnicorn.points - 3 || animal.breed === 2 && this.scene.state.userUnicorn.points > 2) {
         const diamondPrice = this.getDiamondPrice(4, animal.breed);
         let callback: () => void;
@@ -102,7 +100,7 @@ export default class AnimalUnicornWindow {
           btn = this.scene.shopButton(330, center, String(diamondPrice), 'diamond');
           callback = (): void => { this.scene.game.scene.keys[this.scene.state.farm].buyAnimal(animal.breed, true, diamondPrice); }
         }
-        this.createBtn(btn, animal.breed, callback)
+        this.createBtn(btn, animal.breed, callback);
       } else if (animal.breed <= this.scene.state.userUnicorn.points - 2 || animal.breed === 3 && this.scene.state.userUnicorn.points > 3) {
         const diamondPrice = this.getDiamondPrice(2, animal.breed);
         const callback = (): void => { this.scene.game.scene.keys[this.scene.state.farm].buyAnimal(animal.breed, true, diamondPrice); }
@@ -145,8 +143,8 @@ export default class AnimalUnicornWindow {
   private getDiamondPrice(devisor: number, breed: number): number {
     const lvl: number = 60;
     let diamondPrice: number = 40;
-    let multiply: number = 1 + Math.floor((breed - lvl) / 5) 
-    let inc: number = 5;
+    let multiply: number = 1 + Math.floor((breed - lvl) / 5);
+    const inc: number = 5;
     if (breed > lvl) {
       diamondPrice += inc * multiply;
     }
@@ -159,5 +157,4 @@ export default class AnimalUnicornWindow {
     this.scene.scene.stop('ShopBars');
     this.scene.scene.stop('Modal');
   }
-
 }

@@ -11,7 +11,6 @@ export default class ImproveCollectorWindow {
   }
 
   private create(): void {
-
     const farm: string = this.scene.state.farm.toLowerCase();
     const resource: string = this.scene.state.farm === 'Sheep' ? 'wool' : 
     this.scene.state.farm === 'Chicken' ? 'egg' : 
@@ -42,7 +41,7 @@ export default class ImproveCollectorWindow {
       const position: Iposition = {
         x: duration.getBounds().right + 10,
         y: duration.y
-      }
+      };
 
       const text: string = `(+${(nextLevel.time - thisLevel.time)} ${this.scene.state.lang.shortMinutes})`;
       nextLevelText = this.scene.add.text(position.x, position.y, text, { font: '30px Bip', color: '#57A90E' });
@@ -52,7 +51,7 @@ export default class ImproveCollectorWindow {
       const position: Iposition = {
         x: speed.getBounds().right + 10,
         y: speed.y
-      }
+      };
 
       let text: string = `(+${(nextLevel.speed - thisLevel.speed).toFixed(1)})`;
       nextLevelText = this.scene.add.text(position.x, position.y, text, {
@@ -75,17 +74,16 @@ export default class ImproveCollectorWindow {
 
     } else {
 
-      let improve = {
+      const improve = {
         icon: 'lock',
         text: `${this.scene.state.lang.shortPart} ${nextLevel.chapter}`,
-      }
+      };
 
       this.scene.bigButton('grey', 'left', 90, this.scene.state.lang.improve, improve);
 
     }
 
     this.scene.resizeWindow(250);
-
   }
 
 
@@ -119,14 +117,14 @@ export default class ImproveCollectorWindow {
     const durationText: string = `${this.scene.state.lang.duration}: ${thisLevel.time} ${this.scene.state.lang.minutes}`;
     duration.setText(durationText);
   
-    let position: Iposition
+    let position: Iposition;
     let text: string;
     if (nextLevel?.time > thisLevel.time) {
   
       position = {
         x: duration.getBounds().right + 10,
         y: duration.y
-      }
+      };
       text = `(+${(nextLevel.time - thisLevel.time)} ${this.scene.state.lang.shortMinutes})`;
       
     } else if (nextLevel?.speed > thisLevel.speed) {
@@ -134,9 +132,10 @@ export default class ImproveCollectorWindow {
       position = {
         x: speed.getBounds().right + 10,
         y: speed.y
-      }
+      };
       text =  `(+${(nextLevel.speed - thisLevel.speed).toFixed(1)} ${this.scene.state.lang.seconds})`;
     }
+
     nextLevelText?.setPosition(position?.x, position?.y).setText(text);
     if (this.scene.state[`user${this.scene.state.farm}`].part >= nextLevel?.chapter) {
       let icon: string;
@@ -146,7 +145,7 @@ export default class ImproveCollectorWindow {
       let right = {
         icon: icon,
         text: shortNum(nextLevel.price)
-      }
+      };
   
       btn.text1.setText(right.text);
       btn.img1.setTexture(right.icon);
@@ -162,11 +161,8 @@ export default class ImproveCollectorWindow {
       let improve = {
         icon: 'lock',
         text: `${this.scene.state.lang.shortPart} ${nextLevel?.chapter}`,
-      }
+      };
       this.scene.bigButton('grey', 'left', 90, this.scene.state.lang.improve, improve);
-  
     }
-    
   }
-
 }

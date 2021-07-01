@@ -7,7 +7,7 @@ export default class TasksWindow {
   private middle: Phaser.GameObjects.TileSprite;
   private bottom: Phaser.GameObjects.Sprite;
   private close: Phaser.GameObjects.Sprite;
-  private centerY: number
+  private centerY: number;
      
 
   constructor(scene: Modal) {
@@ -17,30 +17,29 @@ export default class TasksWindow {
   }
 
   private init(): void {
-    this.centerY = this.scene.cameras.main.centerY + 60
+    this.centerY = this.scene.cameras.main.centerY + 60;
   }
 
   private create(): void {
-
     this.scene.state.amplitude.logAmplitudeEvent('show_tasks_window', {});
 
-    let height: number = 112
+    let height: number = 112;
     let tasks: { task: Itasks, taskData: ItaskData }[] = [];
     let textsHeight = [];
     let countBreed: number;
-    let countDone: number = 0
-    let taskCenterY: number = this.centerY - 134
-    let barHeight: number = 154
-    let textWidth: number = 330
+    let countDone: number = 0;
+    let taskCenterY: number = this.centerY - 134;
+    let barHeight: number = 154;
+    let textWidth: number = 330;
     
-    this.top = this.scene.add.sprite(this.scene.cameras.main.centerX + 1, this.centerY - Math.floor(height / 2), 'tasks-top').setOrigin(0.5, 1)
-    this.middle = this.scene.add.tileSprite(this.scene.cameras.main.centerX, this.centerY, 563, height, 'tasks-middle').setOrigin(0.5, 0.5)
-    this.bottom = this.scene.add.sprite(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2), 'tasks-bottom').setOrigin(0.5, 0.5)
-    this.close = this.scene.add.sprite(606, this.centerY - Math.floor(height / 2 + 114), 'tasks-close').setDepth(2)
+    this.top = this.scene.add.sprite(this.scene.cameras.main.centerX + 1, this.centerY - Math.floor(height / 2), 'tasks-top').setOrigin(0.5, 1);
+    this.middle = this.scene.add.tileSprite(this.scene.cameras.main.centerX, this.centerY, 563, height, 'tasks-middle').setOrigin(0.5, 0.5);
+    this.bottom = this.scene.add.sprite(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2), 'tasks-bottom').setOrigin(0.5, 0.5);
+    this.close = this.scene.add.sprite(606, this.centerY - Math.floor(height / 2 + 114), 'tasks-close').setDepth(2);
   
-    if (this.scene.state.farm === 'Cow') countBreed = this.scene.state.cowSettings.cowSettings.length
-    else if (this.scene.state.farm === 'Chicken') countBreed = this.scene.state.chickenSettings.chickenSettings.length
-    else if (this.scene.state.farm === 'Sheep')  countBreed = this.scene.state.sheepSettings.sheepSettings.length
+    if (this.scene.state.farm === 'Cow') countBreed = this.scene.state.cowSettings.cowSettings.length;
+    else if (this.scene.state.farm === 'Chicken') countBreed = this.scene.state.chickenSettings.chickenSettings.length;
+    else if (this.scene.state.farm === 'Sheep')  countBreed = this.scene.state.sheepSettings.sheepSettings.length;
 
     // Определение общей высоты с текстом и позиции 1ой плашки заданий
     for (let i = 0; i < this.scene.state.modal.tasksParams.tasks.length; i++) {
@@ -48,7 +47,7 @@ export default class TasksWindow {
       let task: Itasks = this.scene.state.modal.tasksParams.tasks[i];
       let taskData: ItaskData = this.scene.game.scene.keys[this.scene.state.farm].getTaskData(task);
 
-      let textForWidth: Phaser.GameObjects.Text = this.scene.add.text(0, 0, taskData.name, {
+      const textForWidth: Phaser.GameObjects.Text = this.scene.add.text(0, 0, taskData.name, {
         font: '24px Bip',
         color: '#944000',
         align: 'center',
@@ -145,7 +144,8 @@ export default class TasksWindow {
         const position: Iposition = {
           x: 422,
           y: taskCenterY + (barHeight / 2) - 26
-        }
+        };
+
         takeText = this.scene.add.text(422, taskCenterY + (barHeight / 2) - 29, this.scene.state.lang.pickUp, {
           font: '22px Shadow',
           color: '#FFFFFF'
@@ -215,10 +215,7 @@ export default class TasksWindow {
           color: '#FFFFFF'
         }).setDepth(2).setOrigin(0.5, 0.5).setShadow(2, 2, 'rgba(0, 0, 0, 0.5)', 5);
 
-        awardIcon = this.scene.add.sprite(510, taskCenterY + (barHeight / 2) - 29, iconTexture)
-          .setDepth(2)
-          .setScale(0.14)
-          .setOrigin(0.5, 0.5);
+        awardIcon = this.scene.add.sprite(510, taskCenterY + (barHeight / 2) - 29, iconTexture).setDepth(2).setScale(0.14).setOrigin(0.5, 0.5);
         
         if (moneyTask) { // костыль //
           takeText.setVisible(false);
@@ -231,7 +228,7 @@ export default class TasksWindow {
           color: '#944000'
         }).setDepth(1).setOrigin(0.5, 0.5).setShadow(1, 1, 'rgba(0, 0, 0, 0.5)', 2);
 
-        let progress: number = (100 / count * tasks[i].task.progress) * (6.3 / 100) - Math.PI / 2
+        let progress: number = (100 / count * tasks[i].task.progress) * (6.3 / 100) - Math.PI / 2;
 
         this.scene.add.graphics()
           .clear()
@@ -250,16 +247,15 @@ export default class TasksWindow {
           .beginPath()
           .arc(194, taskCenterY - 6, 51, 0, Math.PI * 2)
           .strokePath()
-          .setDepth(3)
+          .setDepth(3);
 
       }
-
     }
 
-    this.progressLineAndOtherText(countDone, height)
+    this.progressLineAndOtherText(countDone, height);
 
     // Кнопка закрытия
-    this.scene.clickButton(this.close, (): void => { this.closeWindow() });
+    this.scene.clickButton(this.close, (): void => { this.closeWindow(); });
 
     this.resizeTasksWindow(height);
 
@@ -267,7 +263,6 @@ export default class TasksWindow {
       this.scene.game.scene.keys[this.scene.state.farm].tasksOpened = true;
       this.scene.openModal(this.scene.cameras.main);
     }
-
   }
 
 
@@ -291,12 +286,12 @@ export default class TasksWindow {
     this.scene.add.text(this.scene.cameras.main.centerX, this.centerY - Math.floor(height / 2 + 78), this.scene.state.modal.tasksParams.name, {
       font: '32px Shadow',
       fill: '#F2DCFF'
-    }).setOrigin(0.5, 0.5)
+    }).setOrigin(0.5, 0.5);
 
     this.scene.add.text(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2 + 10), this.scene.state.modal.tasksParams.farmer, {
       font: '26px Shadow',
       fill: '#8f3f00'
-    }).setOrigin(0.5, 0.5)
+    }).setOrigin(0.5, 0.5);
     
     const parts: Ipart[] = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`${this.scene.state.farm.toLowerCase()}Parts`];
     const userPart: number = this.scene.state[`user${this.scene.state.farm}`].part;
@@ -307,7 +302,7 @@ export default class TasksWindow {
       const nextPartText = this.scene.add.text(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2 + 54), this.scene.state.lang.donePart, {
         font: '24px Shadow',
         fill: '#FFFFFF'
-      }).setOrigin(0.5, 0.5)
+      }).setOrigin(0.5, 0.5);
 
       this.scene.clickShopBtn({ btn: nextPart, title: nextPartText }, (): void => { this.scene.game.scene.keys[this.scene.state.farm].nextPart() });
 
@@ -318,7 +313,7 @@ export default class TasksWindow {
         fill: '#c15e00',
         align: 'center',
         wordWrap: { width: 420 }
-      }).setOrigin(0.5, 0.5)
+      }).setOrigin(0.5, 0.5);
     
     } else if (!this.scene.state.modal.tasksParams.done) {
 
@@ -327,7 +322,7 @@ export default class TasksWindow {
         fill: '#c15e00',
         align: 'center',
         wordWrap: { width: 420 }
-      }).setOrigin(0.5, 0.5)
+      }).setOrigin(0.5, 0.5);
     
     }
   }

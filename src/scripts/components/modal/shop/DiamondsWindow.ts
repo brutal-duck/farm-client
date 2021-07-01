@@ -2,9 +2,10 @@ import { payRobokassa, payAndroid } from "../../../general/basic";
 import Shop from "../../../scenes/Modal/Shop/Main";
 
 const FREE_DIAMONDS: number = 1;
+
 export default class DiamondsWindow {
   public scene: Shop;
-  private rows: number
+  private rows: number;
 
   constructor(scene: Shop) {
     this.scene = scene;
@@ -107,7 +108,7 @@ export default class DiamondsWindow {
     }).setOrigin(0.5);
     this.scene.add.sprite(diamondCount.getBounds().right + 5, y, 'diamond').setScale(0.23).setOrigin(0, 0.5);
     const takeBtn: any = this.scene.shopButton(this.scene.cameras.main.centerX - 30, y, '0 ' + this.scene.state.lang.ruble);
-    this.scene.clickShopBtn(takeBtn, () => { this.freeDiamondsBtnHandler(); });
+    this.scene.clickShopBtn(takeBtn, (): void => { this.freeDiamondsBtnHandler(); });
   }
 
   private createStarterpack(): void {

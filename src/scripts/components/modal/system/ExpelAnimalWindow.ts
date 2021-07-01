@@ -1,20 +1,18 @@
-import { currentTerritory } from "../../../scenes/Event/Unicorns/basic";
 import Modal from "../../../scenes/Modal/Modal";
 
 export default class ExpelAnimalWindow {
   public scene: Modal;
 
-  private farm: string
+  private farm: string;
 
   constructor(scene: Modal) {
     this.scene = scene;
-    this.farm = this.scene.state.farm
+    this.farm = this.scene.state.farm;
     this.create();
     this.scene.openModal(this.scene.cameras.main);
   }
 
   private create(): void {
-
     this.scene.textHeader.setText(this.scene.state.lang[`expel${this.farm}`]);
 
     this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 60, this.scene.state.lang[`confirmExpel${this.farm}`], {
@@ -26,23 +24,21 @@ export default class ExpelAnimalWindow {
   
     const button = this.scene.bigButton('red', 'center', 40, this.scene.state.lang.expel);
     this.scene.clickModalBtn(button, (): void => {
-      this.closeWindow()
+      this.closeWindow();
       this.expelAnimal();
     });
   
     const cancel = this.scene.bigButton('yellow', 'center', 120, this.scene.state.lang.cancel);
     this.scene.clickModalBtn(cancel, (): void => {
       this.scene.state.animal.expel = false;
-      this.closeWindow()
+      this.closeWindow();
     });
   
     this.scene.resizeWindow(250);
-  
   }
 
 
   private expelAnimal(): void {
-
     if (this.farm === 'Sheep') {
       this.scene.state.animal.woolSprite.destroy();
       this.scene.state.animal.shaveStatus.destroy();
@@ -53,7 +49,6 @@ export default class ExpelAnimalWindow {
     }
   
     this.scene.state.animal.destroy();
-  
   }
 
 
