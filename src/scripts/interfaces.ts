@@ -612,7 +612,7 @@ interface IcollectorSettings {
   diamonds: boolean;
 }
 
-type modalElementType = Phaser.GameObjects.Sprite | Phaser.GameObjects.Image | Phaser.GameObjects.Zone | Phaser.GameObjects.Text | Phaser.GameObjects.Graphics | Phaser.GameObjects.Container;
+type modalElementType = Phaser.GameObjects.Sprite | Phaser.GameObjects.Image | Phaser.GameObjects.Zone | Phaser.GameObjects.Text | Phaser.GameObjects.Graphics | Phaser.GameObjects.Container | Phaser.GameObjects.TileSprite;
 interface Ichat {
   login: string;
   time: string;
