@@ -15,7 +15,7 @@ const jackpotBg: string = require('../../../../assets/images/event/fortune/jackp
 const doneChapterButton: string = require('../../../../assets/images/modal/done-chapter-button.png');
 
 const JACKPOT: number = 22;
-const DIAMOND: number = 50;
+const DIAMOND: number = 500;
 const MONEY_1: number = 1354;
 const MONEY_2: number = 1354;
 const MONEY_3: number = 1354;
