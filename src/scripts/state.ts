@@ -78,6 +78,7 @@ let storageMultiply: number = 2;
 let vkTask: IsociaTasks = {};
 let okTask: IsociaTasks = {};
 let shownSocialTaskWindow: boolean = false;
+let build: number = 0;
 
 let state: Istate = {
   // записываемые в localStorage
@@ -163,6 +164,7 @@ let state: Istate = {
   vkTask,
   okTask,
   shownSocialTaskWindow,
+  build
 }
 
 export default state;

@@ -301,6 +301,7 @@ export default function autosave(): void {
     id: state.user.id,
     hash: state.user.hash,
     counter: state.user.counter,
+    build: state.build,
     user: user,
     dailyAwards: state.dailyAwards,
 

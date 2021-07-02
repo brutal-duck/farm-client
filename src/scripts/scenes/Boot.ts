@@ -44,7 +44,7 @@ class Boot extends Phaser.Scene {
   private name: string;
   private avatar: string;
   public okCallback = okCallback.bind(this);
-  public build: string;
+  public build: number;
   public params: URLSearchParams;
   private landing: Landing;
   private authorizationWindow: Login;
@@ -57,7 +57,7 @@ class Boot extends Phaser.Scene {
   public click = click.bind(this);
 
   public init(): void {
-    this.build = '3.7.3';
+    this.build = 3.8;
     console.log('Build ' + this.build);
     // console.log('y1')
     this.state = state;
@@ -214,6 +214,7 @@ class Boot extends Phaser.Scene {
       takenSocialAward: false,
     }
     this.state.platform = this.platform;
+    this.state.build = this.build;
     this.state.name = this.name;
     this.state.avatar = this.avatar;
 
@@ -261,7 +262,7 @@ class Boot extends Phaser.Scene {
       this.checkYandexUser();
     } else if (this.platform === 'android') {
       this.checkAndroidUser();
-    }
+    } 
   }
 
   private async checkVkUser(): Promise<void> {
@@ -380,6 +381,7 @@ class Boot extends Phaser.Scene {
       platform: this.platform,
       data: id
     }).then((response) => {
+      response.data
       if (response.data.error === false) {
         if (this.platform === 'web' && response.data.status === 'new') {
           this.createnLanding = false;

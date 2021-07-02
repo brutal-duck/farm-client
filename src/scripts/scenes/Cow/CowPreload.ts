@@ -5,6 +5,7 @@ import loadData from '../../general/loadData';
 import { loadingScreen, checkStorage } from '../../general/basic';
 import LocalStorage from './../../libs/LocalStorage';
 import Amplitude from './../../libs/Amplitude';
+import { clickShopBtn } from '../../general/clicks';
 
 const pixel: string = require('./../../../assets/images/pixel.png');
 const bg: string = require('./../../../assets/images/scroll-bg.png');
@@ -237,6 +238,7 @@ class CowPreload extends Phaser.Scene {
   public loadCow = loadCow.bind(this);
   public loadingScreen = loadingScreen.bind(this);
   public loadData = loadData.bind(this);
+  public clickShopBtn = clickShopBtn.bind(this);
 
   constructor() {
     super('CowPreload');
@@ -550,7 +552,6 @@ class CowPreload extends Phaser.Scene {
 
         this.loadData(response);
         this.state.offlineTime = response.data.progress.cowOfflineTime;
-        this.userReady = true;
         this.state.nativeCounter = [0, 0, 0, 0];
 
     //   // } else {

@@ -218,19 +218,19 @@ function payRobokassa(id: number, state: Istate): void {
     packageId: id
   }
   axios.post(process.env.API + "/addOrder", data)
-  .then((response) => {
-    if (response.data.error === true) window.location.reload();
-    else {
-      for (let prop in response.data) {
-        if (prop !== 'error') {
-          let element: any = document.querySelector('input[name="' + prop + '"]');
-          element.value = response.data[prop];
+    .then((response) => {
+      if (response.data.error === true) window.location.reload();
+      else {
+        for (let prop in response.data) {
+          if (prop !== 'error') {
+            let element: any = document.querySelector('input[name="' + prop + '"]');
+            element.value = response.data[prop];
+          }
         }
+        let form: any = document.querySelector('#robokassa');
+        form.submit();
       }
-      let form: any = document.querySelector('#robokassa');
-      form.submit();
-    }
-  });
+    });
 }
 
 
@@ -1203,22 +1203,22 @@ function loadingScreen(farmType: string): void {
   this.load.on('progress', (value: number): void => {
 
     let percent: number = Math.round(value * 100);
-
-    if (percent >= 5 && leftCorner.alpha === 0) leftCorner.setAlpha(1);
-    if (percent >= 95 && rightCorner.alpha === 0) {
-      progress.setDisplaySize(436, 130);
-      rightCorner.setAlpha(1);
+    if (!progress.active) return;
+    if (percent >= 5 && leftCorner?.alpha === 0) leftCorner?.setAlpha(1);
+    if (percent >= 95 && rightCorner?.alpha === 0) {
+      progress?.setDisplaySize(436, 130);
+      rightCorner?.setAlpha(1);
     }
 
     if (percent > 5 && percent < 95) {
 
       let onePercent: number = 420 / 90;
       let bar: number = Math.round(percent * onePercent);
-      progress.setDisplaySize(bar, 130).setVisible(true);
+      progress?.setDisplaySize(bar, 130).setVisible(true);
       
     }
     
-    text.setText(percent + '%');
+    text?.setText(percent + '%');
 
   });
 }

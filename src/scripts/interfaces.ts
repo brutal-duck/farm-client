@@ -143,6 +143,7 @@ interface IdataAutoSave {
   unicorn: IeventAnimal[];
   unicornTerritories: IeventTerritories[];
   unicornResource: IeventResource[];
+  build: number;
 }
 // for state
 interface IadditionalTutorial {
@@ -772,4 +773,5 @@ interface Istate {
   shownSocialTaskWindow: boolean;
   ysdk?: any;
   unicornRaitings?: IunicornRaitingsData;
+  build: number;
 }

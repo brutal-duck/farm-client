@@ -5,6 +5,7 @@ import loadData from '../../general/loadData';
 import { checkStorage, loadingScreen,  } from '../../general/basic';
 import LocalStorage from './../../libs/LocalStorage';
 import Amplitude from './../../libs/Amplitude';
+import { clickShopBtn } from '../../general/clicks';
 
 const pixel: string = require("./../../../assets/images/pixel.png");
 const bg: string = require("./../../../assets/images/scroll-bg.png");
@@ -238,6 +239,7 @@ class ChickenPreload extends Phaser.Scene {
   public loadChicken = loadChicken.bind(this);
   public loadingScreen = loadingScreen.bind(this);
   public loadData = loadData.bind(this);
+  public clickShopBtn = clickShopBtn.bind(this);
 
   constructor() {
     super('ChickenPreload');
@@ -549,7 +551,6 @@ class ChickenPreload extends Phaser.Scene {
         this.state.farm = 'Chicken';
         this.loadData(response);
         this.state.offlineTime = response.data.progress.chickenOfflineTime;
-        this.userReady = true;
         this.state.nativeCounter = [0, 0, 0, 0];
       // } else {
       //   this.loadChicken(response.data.user.counter);

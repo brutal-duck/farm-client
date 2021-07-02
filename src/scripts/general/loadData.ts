@@ -4,12 +4,15 @@ import basicChickenTerritories from '../local/chickenTerritories';
 import basicCowTerritories from '../local/cowTerritories';
 import basicUnicornCollector from '../local/unicornCollector';
 import { unicornSettings, sheepSettings, chickenSettings, cowSettings, general } from '../local/settings';
-import { userCow, userData } from '../local/usersData';
+import { userCow, userData, userSheep, userChicken } from '../local/usersData';
 import sheepCollectorSettings from '../local/sheepCollector';
 import chickenCollectorSettings from '../local/chickenCollector';
 import cowCollectorSettings from '../local/cowCollector';
 import getProgress from '../local/progress';
+import ErrorWindow from './../components/Web/ErrorWindow';
 const basicUserCow = userCow;
+const basicUserSheep = userSheep;
+const basicUserChicken = userChicken;
 
 function validateTerritories(territories: Iterritories[], basicTerritories: Iterritories[]): Iterritories[] {
   const maxTerritoryType: number = 8;
@@ -121,6 +124,11 @@ function initAndroidStore(state: Istate): void {
 }
 
 export default function loadData(response: any): void {
+  if (this.state.build < response.data.user.build) {
+    this.children.destroy();
+    new ErrorWindow(this);
+    return;
+  }
   if (this.state.farm === 'Sheep') this.state.offline = response.data.progress.sheepOfflineTime;
   else if (this.state.farm === 'Chicken') this.state.offline = response.data.progress.chickenOfflineTime;
   else if (this.state.farm === 'Cow') this.state.offline = response.data.progress.cowOfflineTime;
@@ -238,6 +246,10 @@ export default function loadData(response: any): void {
       cooldown: territory.cooldown,
     });
   }
+
+  if (sheepTerritories.length === 0) response.data.user.money = basicUserSheep.money;
+  if (chickenTerritories.length === 0) response.data.user.chicken_money = basicUserCow.money;
+  if (cowTerritories.length === 0) response.data.user.cow_money = basicUserChicken.money;
 
   this.state.sheepTerritories = validateTerritories(sheepTerritories, basicSheepTerritories);
   this.state.chickenTerritories = validateTerritories(chickenTerritories, basicChickenTerritories);
@@ -478,4 +490,6 @@ export default function loadData(response: any): void {
     this.state.userUnicorn = userUnicorn;
     this.state.eventCollectorSettings = basicUnicornCollector;
   }
+  this.userReady = true;
+
 }

@@ -5,6 +5,7 @@ import loadData from '../../general/loadData';
 import { checkStorage, loadingScreen } from '../../general/basic';
 import LocalStorage from './../../libs/LocalStorage';
 import Amplitude from './../../libs/Amplitude';
+import { clickShopBtn } from '../../general/clicks';
 
 const pixel: string = require("./../../../assets/images/pixel.png");
 const bg: string = require("./../../../assets/images/scroll-bg.png");
@@ -344,6 +345,7 @@ class SheepPreload extends Phaser.Scene {
   public loadSheep = loadSheep.bind(this);
   public loadingScreen = loadingScreen.bind(this);
   public loadData = loadData.bind(this);
+  public clickShopBtn = clickShopBtn.bind(this);
 
   constructor() {
     super('SheepPreload');
@@ -765,7 +767,6 @@ class SheepPreload extends Phaser.Scene {
         this.loadData(response);
         this.state.offlineTime = response.data.progress.sheepOfflineTime;
         this.state.nativeCounter = [0, 0, 0, 0];
-        this.userReady = true;
         
         const Amplitude: Amplitude = this.state.amplitude;
         if (response.data.user.tutor === 0) Amplitude.logAmplitudeEvent('tutor_before_load', {});
