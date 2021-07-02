@@ -427,12 +427,12 @@ function donePart(): void {
     parts = this.state.cowSettings.cowParts;
   }
   
-  const award: number = parts.find((data: Ipart) => data.sort === user.part).award;
-  this.state.user.diamonds += award;
-  this.state.amplitude.logAmplitudeEvent('diamonds_get', {
-    type: 'part_award',
-    count: award,
-  });
+  // const award: number = parts.find((data: Ipart) => data.sort === user.part).award;
+  // this.state.user.diamonds += award;
+  // this.state.amplitude.logAmplitudeEvent('diamonds_get', {
+  //   type: 'part_award',
+  //   count: award,
+  // });
 
   user.part++;
   this.state.progress[this.state.farm.toLowerCase()].part = user.part;
