@@ -1,3 +1,5 @@
+import { FAPI } from '../libs/Fapi.js';
+
 // коллбэк одноклассников
 function okCallback(): void {
 
@@ -41,12 +43,14 @@ function okCallback(): void {
     
     if (method === 'postMediatopic') {
       if (result === 'ok') {
+        this.state.amplitude.logAmplitudeEvent('social_post', {});
         this.state.okTask.sendPost = true;
         if (this.scene.isActive('Modal') && this.state.modal.type === 14) {
           this.game.scene.keys['Modal'].socialTakskWindow.socialTasks.sendPost = true;
           this.game.scene.keys['Modal'].socialTakskWindow.sendPostTask.setState(true);
           this.game.scene.keys['Modal'].socialTakskWindow.setTakeBtnState();
         }
+        FAPI.Client.call({ 'method':'storage.set', 'key': 'sendPost', 'value': JSON.stringify(true) });
       }
     }
   }

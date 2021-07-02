@@ -505,8 +505,11 @@ class Boot extends Phaser.Scene {
       // this.state.okTask.sendPost = res.data.data.sendPost;
     });
 
-    FAPI.Client.call({ 'method':'storage.get', 'keys': 'addFavourites' }, (status, data, error) => {
-      if (data) this.state.okTask.addFavorites = JSON.parse(data.data.addFavourites);
+    FAPI.Client.call({ 'method':'storage.get', 'keys': 'addFavourites, sendPost' }, (status, data, error) => {
+      if (data) {
+        this.state.okTask.addFavorites = JSON.parse(data.data.addFavourites);
+        this.state.okTask.sendPost = JSON.parse(data.data.sendPost);
+      }
     });
   }
 }

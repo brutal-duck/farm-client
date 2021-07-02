@@ -1,26 +1,23 @@
 import axios from 'axios';
 import { romanize, shortNum } from './basic';
+import { FAPI } from '../libs/Fapi.js';
 
 // окно подтверждения смены территории
 function confirmExchangeTerritory(type: number): void {
-  
   this.state.exchangeTerritory = type;
-  let modal: Imodal = {
+  const modal: Imodal = {
     type: 1,
     sysType: 5
   }
   this.state.modal = modal;
   this.scene.launch('Modal', this.state);
-
 }
 
 
 // сообщение об успешной отправки запроса в техподдержку
 function messageIsSent(): void {
-
   this.time.addEvent({ delay: 1500, callback: (): void => {
-
-    let modal: Imodal = {
+    const modal: Imodal = {
       type: 1,
       sysType: 3,
       height: 150,
@@ -28,100 +25,74 @@ function messageIsSent(): void {
     }
     this.state.modal = modal;
     this.scene.launch('Modal', this.state);
-
   }, callbackScope: this, loop: false });
-  
 }
 
 
 // окно банка
 function showBank(): void {
-
-  let modal: Imodal = {
+  const modal: Imodal = {
     type: 2,
     shopType: 1
   }
   this.state.modal = modal;
   this.scene.launch('Modal', this.state);
-
 }
 
 
 // окно завершения текущей главы
 function nextPart(): void {
-
   let user: IuserSheep | IuserChicken | IuserCow;
   let parts: Ipart[];
-
   if (this.state.farm === 'Sheep') {
-
     user = this.state.userSheep;
     parts = this.state.sheepSettings.sheepParts;
-
   } else if (this.state.farm === 'Chicken') {
-
     user = this.state.userChicken;
     parts = this.state.chickenSettings.chickenParts;
-
   } else if (this.state.farm === 'Cow') {
-
     user = this.state.userCow;
     parts = this.state.cowSettings.cowParts;
-
   }
 
   if (parts.length > user.part) {
-
-    let tasks: Itasks[] = this.partTasks();
+    const tasks: Itasks[] = this.partTasks();
     let status: boolean = true;
-
     if (tasks.length === 0) status = false;
-    
     for (let i: number = 0; i < tasks.length; i++) {
-
       if ((tasks[i].done !== 1 || tasks[i].got_awarded !== 1) && tasks[i].necessary === 1) {
         status = false;
         break;
       }
-
     }
 
     if (status) {
-
-      let thisPart: Ipart = parts.find((data: Ipart) => data.sort === user.part);
-
-      let part: string = this.state.lang.part + ' ' + user.part;
-      let namePart: string = this.state.lang[this.state.farm.toLowerCase() + 'NamePart' + user.part];
-      let award: number = thisPart.award;
-      let doneText: string = this.state.lang[this.state.farm.toLowerCase() + 'PartDone' + user.part];
-
-      let donePart: IdonePart = {
+      const thisPart: Ipart = parts.find((data: Ipart) => data.sort === user.part);
+      const part: string = this.state.lang.part + ' ' + user.part;
+      const namePart: string = this.state.lang[this.state.farm.toLowerCase() + 'NamePart' + user.part];
+      const award: number = thisPart.award;
+      const doneText: string = this.state.lang[this.state.farm.toLowerCase() + 'PartDone' + user.part];
+      const donePart: IdonePart = {
         part: part,
         name: namePart,
         award: 'x ' + award,
         doneText: doneText,
         chapter: this.state.farm.toLowerCase() + '-chapter-' + user.part
       }
-
-      let modal: Imodal = {
+      const modal: Imodal = {
         type: 5,
         donePart: donePart
       }
       this.state.modal = modal;
       this.scene.launch('Modal', this.state);
-
     }
-    
   }
-
 }
 
 
 // окно заданий
 function showTasks(): void {
-
   let part: number;
-
   if (this.state.farm === 'Sheep') part = this.state.userSheep.part;
   else if (this.state.farm === 'Chicken') part = this.state.userChicken.part;
   else if (this.state.farm === 'Cow') part = this.state.userCow.part;
@@ -130,15 +101,13 @@ function showTasks(): void {
   let tasks: Itasks[] = this.partTasks();
 
   for (let i in tasks) {
-
     if (tasks[i].necessary === 1 && tasks[i].got_awarded === 0) {
       done = false;
       break;
     }
-
   }
 
-  let tasksParams: ItasksParams = {
+  const tasksParams: ItasksParams = {
     part: String(part),
     name: this.state.lang[this.state.farm.toLowerCase() + 'NamePart' + part],
     farmer: this.state.lang[this.state.farm.toLowerCase() + 'ProfileName'] + ' ' + romanize(part),
@@ -147,7 +116,7 @@ function showTasks(): void {
     tasks: tasks
   }
 
-  let modal: Imodal = {
+  const modal: Imodal = {
     type: 3,
     tasksParams: tasksParams
   }
@@ -180,6 +149,12 @@ function dailyAward(): void {
     !this.scene.isActive('Profile') && 
     !this.scene.isActive('Fortune')) {
     this.dailyStartCheck = false;
+
+    if (this.state.platform === 'ok' && this.state.okTask) {
+      this.state.okTask.sendPost = false;
+      FAPI.Client.call({ 'method':'storage.set', 'key': 'sendPost', 'value': JSON.stringify(false) });
+    }
+    
     // дейлики для новичка
     if (this.state.newbieTime > 0) {
       const modal: Imodal = { type: 6 }

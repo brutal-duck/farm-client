@@ -1659,7 +1659,10 @@ function sendSocialEvent(state: Istate, type: number, value: number): void {
       bridge.send("VKWebAppShowWallPostBox", {
           "message": langs[farm + type],
           "attachments": `${attach},${process.env.VK_APP_LINK}`
-      }).then(() => {});
+      }).then((res) => {
+        if (res.post_id) this.state.amplitude.logAmplitudeEvent('social_post', {});
+
+      });
     } 
   };
   if (state.platform === 'ok') {
