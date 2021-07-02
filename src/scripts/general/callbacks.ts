@@ -43,7 +43,7 @@ function okCallback(): void {
     
     if (method === 'postMediatopic') {
       if (result === 'ok') {
-        this.state.amplitude.logAmplitudeEvent('social_post', {});
+        this.state.amplitude.logAmplitudeEvent('wall_post', {});
         this.state.okTask.sendPost = true;
         if (this.scene.isActive('Modal') && this.state.modal.type === 14) {
           this.game.scene.keys['Modal'].socialTakskWindow.socialTasks.sendPost = true;

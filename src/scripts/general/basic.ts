@@ -1660,7 +1660,7 @@ function sendSocialEvent(state: Istate, type: number, value: number): void {
           "message": langs[farm + type],
           "attachments": `${attach},${process.env.VK_APP_LINK}`
       }).then((res) => {
-        if (res.post_id) this.state.amplitude.logAmplitudeEvent('social_post', {});
+        if (res.post_id) this.state.amplitude.logAmplitudeEvent('wall_post', {});
 
       });
     } 
