@@ -2,6 +2,7 @@ import { randomString } from '../../general/basic';
 import SpeechBubble from '../../components/animations/SpeechBuble';
 import CowSprite from './../../components/Animal/CowSprite';
 import Territory from './../../components/Territories/Territory';
+import Firework from './../../components/animations/Firework';
 
 // расчет баланса фермы
 function balance(): Ibalance {
@@ -151,6 +152,7 @@ function takeDiamondCow(): void {
       if (this.animalGroup.children.entries.length <= 50) {
         let id: string = 'local_' + randomString(18);
         this.animalGroup.generate({ x, y }, 0, id, 0, 0);
+        Firework.create(this, { x, y }, 1);
       } else {
         let diamondCow = this.animalGroup.children.entries.find((data: any) => data.type === 0);
         if (diamondCow) {
@@ -158,7 +160,8 @@ function takeDiamondCow(): void {
           diamondCow.x = x;
           diamondCow.y = y;
         } else {
-          let id: string = 'local_' + randomString(18);
+          let id: string = 'local_' + randomString(18); 
+          Firework.create(this, { x, y }, 1);
           this.animalGroup.generate({ x, y }, 0, id, 0, 500, 0, 7, true);
         }
       }
