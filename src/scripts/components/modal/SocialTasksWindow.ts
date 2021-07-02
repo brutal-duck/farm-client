@@ -35,6 +35,7 @@ export default class SocialTasksWindow {
   private subGroupTask: Task;
   private subNativeTask: Task;
   private addFavoritesTask: Task;
+  private sendPostTask: Task;
   
   constructor(scene: Modal) {
     this.scene = scene;
@@ -142,8 +143,8 @@ export default class SocialTasksWindow {
         this.addFavoritesTask = new Task(this, key, { x: centerX, y: y });
         this.addFavoritesTask.setState(this.socialTasks[key]);
       } else if (key === 'sendPost') {
-        this.addFavoritesTask = new Task(this, key, { x: centerX, y: y });
-        this.addFavoritesTask.setState(this.socialTasks[key]);
+        this.sendPostTask = new Task(this, key, { x: centerX, y: y });
+        this.sendPostTask.setState(this.socialTasks[key]);
       }
     }
     this.height = count * 100;

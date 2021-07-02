@@ -133,9 +133,9 @@ class Boot extends Phaser.Scene {
     }
     const search: string = window.location.search;
     this.params = new URLSearchParams(search);
-    location.search.substr(1).split('&').forEach(function (item) {
-      console.log(item)
-    })
+    // location.search.substr(1).split('&').forEach(function (item) {
+    //   console.log(item)
+    // })
     const vk: string = this.params.get('api_url');
     const ok: string = this.params.get('api_server');
     if (vk === 'https://api.vk.com/api.php') this.platform = 'vk';
@@ -269,6 +269,8 @@ class Boot extends Phaser.Scene {
     // this.avatar = 'https://vk.com/images/camera_200.png';
     // this.state.vkId = 20506616;
     // data = 20506616;
+    const hash = location.hash;
+    console.log(hash, 'hash from checkVkUser');
     bridge.send('VKWebAppInit', {});
     let bridgeData: UserInfo = await bridge.send('VKWebAppGetUserInfo', {});
     this.postCheckUser(bridgeData.id);
@@ -278,8 +280,9 @@ class Boot extends Phaser.Scene {
     this.checkVkTask();
   }
 
-  private checkOkUser(): void{
-    let FAPIData = FAPI.Util.getRequestParameters();
+  private checkOkUser(): void {
+    const FAPIData = FAPI.Util.getRequestParameters();
+    console.log(FAPIData);
     FAPI.init(FAPIData.api_server, FAPIData.apiconnection, (): void => {
       this.okCallback(); // коллбэк одноклассников
     });

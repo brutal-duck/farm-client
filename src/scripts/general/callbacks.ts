@@ -41,6 +41,14 @@ function okCallback(): void {
     
     if (method === 'postMediatopic') {
       console.log(result)
+      if (result === 'ok') {
+        this.state.okTask.sendPost = true;
+        if (this.scene.isActive('Modal') && this.state.modal.type === 14) {
+          this.game.scene.keys['Modal'].socialTakskWindow.socialTasks.sendPost = true;
+          this.game.scene.keys['Modal'].socialTakskWindow.sendPostTask.setState(true);
+          this.game.scene.keys['Modal'].socialTakskWindow.setTakeBtnState();
+        }
+      }
     }
   }
 }
