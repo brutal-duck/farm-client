@@ -343,7 +343,7 @@ class Task {
     const farm: string = this.scene.state.farm;
     if (farm === 'Unicorn') return LANGS.postUnicorn;
     const user: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${farm}`];
-    const partsCount: number = this.scene.state[`${farm.toLowerCase()}Settings`][`${farm.toLowerCase()}Parts`];
+    const partsCount: number = this.scene.state[`${farm.toLowerCase()}Settings`][`${farm.toLowerCase()}Parts`].length;
     if (user.part < partsCount) return LANGS[`postPart${farm}`].replace('$1', String(user.part));
     else if (user.part === partsCount) {
       const tasks: Itasks[] = this.scene.game.scene.keys[farm].partTasks();
@@ -352,6 +352,7 @@ class Task {
     }
     return LANGS.basicPost;
   }
+
   public setState(complete: boolean): void {
     if (complete) {
       this.bg.setTint(0xc0c0c0);
