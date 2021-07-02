@@ -12,7 +12,15 @@ const LANGS: { [key: string]: string } = {
   subNativeVK: 'Подпишись на уведомления',
   sendPostOK: 'Сделать репост в ленту',
   title: 'Социальные задания',
-  subtitle: 'Получай ежедневную награду'
+  subtitle: 'Получай ежедневную награду',
+  postPartSheep: 'Я уже на $1 главе овечей фермы! Что же будет дальше?',
+  postPartChicken: 'Я уже на $1 главе куриной фермы! Что же будет дальше?',
+  postPartCow: 'Я уже на $1 главе коровьей фермы! Что же будет дальше?',
+  postUnicorn: 'Единорожья ферма уже в игре! Что же будет дальше?',
+  postCompanyDoneSheep: 'Я уже завершил овечью кампанию! Что же будет дальше?',
+  postCompanyDoneChicken: 'Я уже завершил куриную кампанию! Что же будет дальше?',
+  postCompanyDoneCow: 'Я уже завершил коровью кампанию! Что же будет дальше?',
+  basicPost: 'Заходи в игру и играй вместе со мной!'
 }
 
 export default class SocialTasksWindow {
@@ -320,7 +328,7 @@ class Task {
         "media": [
           {
             "type": "text", 
-            "text": 'priv',
+            "text": this.getPostMassage(),
           },
           {
             "type": "link",
@@ -331,6 +339,19 @@ class Task {
     }
   }
 
+  private getPostMassage(): string {
+    const farm: string = this.scene.state.farm;
+    if (farm === 'Unicorn') return LANGS.postUnicorn;
+    const user: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${farm}`];
+    const partsCount: number = this.scene.state[`${farm.toLowerCase()}Settings`][`${farm.toLowerCase()}Parts`];
+    if (user.part < partsCount) return LANGS[`postPart${farm}`].replace('$1', String(user.part));
+    else if (user.part === partsCount) {
+      const tasks: Itasks[] = this.scene.game.scene.keys[farm].partTasks();
+      if (tasks.every(el => el.done === 1)) return LANGS[`postCompanyDone${farm}`];
+      return LANGS[`postPart${farm}`].replace('$1', String(user.part - 1));
+    }
+    return LANGS.basicPost;
+  }
   public setState(complete: boolean): void {
     if (complete) {
       this.bg.setTint(0xc0c0c0);

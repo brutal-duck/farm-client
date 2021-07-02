@@ -40,7 +40,6 @@ function okCallback(): void {
     }
     
     if (method === 'postMediatopic') {
-      console.log(result)
       if (result === 'ok') {
         this.state.okTask.sendPost = true;
         if (this.scene.isActive('Modal') && this.state.modal.type === 14) {
