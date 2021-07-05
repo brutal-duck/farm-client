@@ -57,7 +57,7 @@ class Boot extends Phaser.Scene {
   public click = click.bind(this);
 
   public init(): void {
-    this.build = 3.8;
+    this.build = 3.9;
     console.log('Build ' + this.build);
     // console.log('y1')
     this.state = state;
