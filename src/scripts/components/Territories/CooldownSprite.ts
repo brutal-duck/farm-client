@@ -15,7 +15,8 @@ export default class CooldownSprite extends Phaser.GameObjects.Sprite {
   private price: number;
 
   constructor(territory: any) {
-    super(territory.scene, territory.x + 80, territory.y + 80, 'hatchet');
+    const texture: string = territory.type === 0 || territory.territoryType === 0 ? 'hatchet' : 'hammer';
+    super(territory.scene, territory.x + 80, territory.y + 80, texture);
     this.territory = territory;
     this.price = Math.round(this.territory.cooldown / 60) * TIMER_COEFFICIENT;
     this.create();
@@ -89,11 +90,15 @@ export default class CooldownSprite extends Phaser.GameObjects.Sprite {
     }
   }
 
-  private checkDestroy() {
-    return (this.territory.type === 0 || this.territory.territoryType === 0) 
+  private checkDestroy(): boolean {
+    // return (this.territory.type === 0 || this.territory.territoryType === 0) 
+    //   && this.territory.cooldown <= 0
+    //   || this.territory.type !== 0 && this.scene.state.farm !== 'Cow'
+    //   || this.territory.territoryType !== 0 && this.scene.state.farm === 'Cow';
+    
+    return (this.territory.type !== this.territory.boughtType 
+      || this.territory.territoryType !== this.territory.boughtType) 
       && this.territory.cooldown <= 0
-      || this.territory.type !== 0 && this.scene.state.farm !== 'Cow'
-      || this.territory.territoryType !== 0 && this.scene.state.farm === 'Cow';
   }
 
   private setHatchAnimation(): void {

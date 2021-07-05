@@ -39,6 +39,7 @@ function loadSheep(counter: number = 0): void {
         improve: storageTerritories[i].improve,
         money: storageTerritories[i].money,
         cooldown: storageTerritories[i].cooldown,
+        boughtType: storageTerritories[i].boughtType,
       });
 
     }

@@ -41,6 +41,7 @@ function validateTerritories(territories: Iterritories[], basicTerritories: Iter
         improve: territory.improve,
         money: territory.money, 
         cooldown: territory.cooldown,
+        boughtType: territory.boughtType,
       });
     }
   }
@@ -203,7 +204,7 @@ export default function loadData(response: any): void {
   this.state.cow = cow;
 
   //территории для обычных ферм
-  const sheepTerritories: Iterritories[] = []; 
+  const sheepTerritories: Iterritories[] = [];
   for (const territory of response.data.user.sheep_territories) {
     sheepTerritories.push({
       _id: territory._id,
@@ -214,6 +215,7 @@ export default function loadData(response: any): void {
       improve: territory.improve,
       money: territory.money,
       cooldown: territory.cooldown,
+      boughtType: territory.boughtType,
     });
   }
 
@@ -229,6 +231,7 @@ export default function loadData(response: any): void {
       improve: territory.improve,
       money: territory.money,
       cooldown: territory.cooldown,
+      boughtType: territory.boughtType,
     });
   }
 
@@ -244,6 +247,7 @@ export default function loadData(response: any): void {
       improve: territory.improve,
       money: territory.money,
       cooldown: territory.cooldown,
+      boughtType: territory.boughtType,
     });
   }
 

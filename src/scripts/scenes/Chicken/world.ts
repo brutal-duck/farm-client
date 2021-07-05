@@ -285,11 +285,12 @@ function world(): void {
       Cave.create(this, { x, y });
     }
     
-    if (territory.type === 0 && territory.cooldown > 0) {
+    if (territory.cooldown > 0) {
       territory.cooldownSprite = new CooldownSprite(territory);
     }
 
     territory.bought = data.bought;
+    territory.boughtType = data.boughtType;
 
     if (territory.bought && territory.cooldown === 0) {
       this.unlockTerritory(territory);

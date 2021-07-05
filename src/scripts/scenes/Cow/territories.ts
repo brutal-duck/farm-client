@@ -68,7 +68,7 @@ function installTerritory(): void {
       this.scene.launch('Modal', this.state);
 
     }
-  } else if (this.state.exchangeTerritory === 8) {
+  } else if (this.state.exchangeTerritory === 8 && this.state.territory) {
     this.state.territory.setTexture('cow-repository');
     this.state.territory.improve = 1;
     this.state.territory.territoryType = this.state.exchangeTerritory;

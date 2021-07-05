@@ -751,7 +751,7 @@ function buyTerritory(): void {
       });
 
       user.money -= price;      
-      this.setTerritoryUnlockCooldown();
+      this.setTerritoryUnlockCooldown(1);
     } else {
 
       let count: number = price - user.money;
@@ -776,15 +776,15 @@ function buyTerritory(): void {
 
 }
 
-function setTerritoryUnlockCooldown(): void {
+function setTerritoryUnlockCooldown(type: number): void {
   const territory: any = this.state.territory;
   const settings: IterritoriesPrice = this.state[`${this.state.farm.toLowerCase()}Settings`][`territories${this.state.farm}Price`]
     .find((el: IterritoriesPrice) => el.block === territory.block && el.position === territory.position);
   
   territory.cooldown = settings.unlockCooldown;
+  territory.boughtType = type;
   territory.bought = true;
   territory.cooldownSprite = new CooldownSprite(territory);
-
 }
 
 function unlockTerritory(terr: any): void {
@@ -797,6 +797,13 @@ function unlockTerritory(terr: any): void {
       Firework.create(this, { x: terr.x + 120, y: terr.y + 120 }, 3);
       this.buildBorders();
     }, callbackScope: this, loop: false });
+  }
+  if (terr.bought && terr.cooldown <= 0 && terr.type !== terr.boughtType) {
+    console.log(terr);
+    terr.type = terr.boughtType;
+    this.state.territory = terr;
+    this.state.exchangeTerritory = terr.boughtType;
+    this.installTerritory();
   }
 }
 

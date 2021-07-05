@@ -263,6 +263,7 @@ interface Iterritories {
   money: number;
   cooldown: number,
   bought?: boolean;
+  boughtType: number;
   _id?: any;
 }
 interface IeventTerritories {

@@ -93,6 +93,7 @@ export default function autosave(): void {
         improve: territory.improve,
         money: territory.money,
         cooldown: territory.cooldown,
+        boughtType: territory.boughtType,
       });
     }
   
@@ -135,6 +136,7 @@ export default function autosave(): void {
         improve: territory.improve,
         money: territory.money,
         cooldown: territory.cooldown,
+        boughtType: territory.boughtType,
       });
   
     }
@@ -188,6 +190,7 @@ export default function autosave(): void {
         improve: territory.improve,
         money: territory.money,
         cooldown: territory.cooldown,
+        boughtType: territory.boughtType,
       });
     }
   

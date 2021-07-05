@@ -17,6 +17,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   public money: number;
   public cooldown: number;
   public bought: boolean;
+  public boughtType: number;
   public borderTop: Phaser.GameObjects.Sprite;
   public borderBottom: Phaser.GameObjects.Sprite;
   public borderLeft: Phaser.GameObjects.Sprite;
@@ -331,7 +332,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         });
 
         user.money -= price;
-        this.setTerritoryUnlockCooldown();
+        this.setTerritoryUnlockCooldown(1);
       } else {
         const count: number = price - user.money;
         const diamonds: number = this.scene.convertMoney(count);
@@ -340,12 +341,12 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-
-  private setTerritoryUnlockCooldown(): void {
+  private setTerritoryUnlockCooldown(type: number): void {
     const settings: IterritoriesPrice = this.scene.state.cowSettings.territoriesCowPrice
       .find((el: IterritoriesPrice) => el.block === this.block && el.position === this.position);
     
     this.cooldown = settings.unlockCooldown;
+    this.boughtType = type;
     this.bought = true;
     this.cooldownSprite = new CooldownSprite(this);
   }
@@ -360,6 +361,12 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
         this.scene.buildBorders();
       }, callbackScope: this, loop: false });
+    }
+
+    if (this.bought && this.cooldown <= 0 && this.territoryType === 1) {
+      this.territoryType = this.boughtType;
+      this.scene.state.exchangeTerritory = this.boughtType;
+      this.scene.installTerritory();
     }
   }
 
@@ -423,7 +430,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
           if (user.money >= settings.improvePastureMoneyPrice) {
   
             let from: string;
-  
             if (this.territoryType === 2) from = 'grass';
             else if (this.territoryType === 3) from = 'water';
             else if (this.territoryType === 5) from = 'repository';
@@ -897,7 +903,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-
   public productionOfProducts(): void {
     let resourceAmount: number = 0;
     if (this.territoryType === 8) {
@@ -985,7 +990,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     }
     return productId;
   }
-
 
   public sellProducts(): void {
     if (this.territoryType === 8 && this.factory.money > 0) {

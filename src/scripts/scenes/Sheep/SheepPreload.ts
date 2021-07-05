@@ -310,6 +310,7 @@ const shaveStatus: string = require("./../../../assets/images/sheep/icons/shave-
 const diamondStatus: string = require('./../../../assets/images/icons/diamond-status.png');
 const offline: string = require("./../../../assets/images/icons/offline.png");
 const hatchet: string = require("./../../../assets/images/icons/hatchet.png");
+const hammer: string = require("./../../../assets/images/icons/hammer.png");
 const arrow: string = require("./../../../assets/images/arrow.png");
 const tutorBtn: string = require("./../../../assets/images/modal/tutor-btn.png");
 const сurrencyBg: string = require("./../../../assets/images/сurrency-bg.png");
@@ -679,6 +680,7 @@ class SheepPreload extends Phaser.Scene {
     this.load.image('diamond-status', diamondStatus);
     this.load.image('offline', offline);
     this.load.image('hatchet', hatchet);
+    this.load.image('hammer', hammer);
     this.load.image('arrow', arrow);
     this.load.image('tutor-btn', tutorBtn);
     this.load.image('сurrency-bg', сurrencyBg);
