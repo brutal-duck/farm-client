@@ -1696,7 +1696,7 @@ function sendAppEventVk(state: Istate, type: number, value: number): void {
       activityId: type,
       value,
     };
-    axios.post(process.env.API + "/appEventVk", data).then((res) => {console.log(res.data)});
+    axios.post(process.env.API + "/appEventVk", data).then((res) => {});
   }
 }
 

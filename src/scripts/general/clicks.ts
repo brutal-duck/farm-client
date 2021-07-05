@@ -10,7 +10,6 @@ function clickShopBtn(btn: any, action: any) {
   button.setInteractive();
 
   button.on('pointerdown', (): void => {
-    console.log(this.game.scene.keys[this.state.farm]?.scene.isActive())
     if (this.game.scene.keys[this.state.farm]?.scene.isActive()) {
       this.game.scene.keys[this.state.farm].scrolling.enabled = false;
       this.game.scene.keys[this.state.farm].scrolling.downHandler();

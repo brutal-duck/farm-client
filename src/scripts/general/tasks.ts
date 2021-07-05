@@ -174,7 +174,6 @@ function getTaskData(task: Itasks): ItaskData {
   if (!name) {
     name = this.state.lang.taskName;
   }
-  if (task.type === 128) console.log(task)
   name = name.replace('$1', String(task.count));
   name = name.replace('$2', String(task.state));
   return {
