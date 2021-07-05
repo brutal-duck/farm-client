@@ -10,8 +10,8 @@ function clickShopBtn(btn: any, action: any) {
   button.setInteractive();
 
   button.on('pointerdown', (): void => {
-    console.log(this.game.scene.keys[this.state.farm].scene.isActive())
-    if (this.game.scene.keys[this.state.farm].scene.isActive()) {
+    console.log(this.game.scene.keys[this.state.farm]?.scene.isActive())
+    if (this.game.scene.keys[this.state.farm]?.scene.isActive()) {
       this.game.scene.keys[this.state.farm].scrolling.enabled = false;
       this.game.scene.keys[this.state.farm].scrolling.downHandler();
     }
@@ -100,9 +100,9 @@ function clickShopBtn(btn: any, action: any) {
   
       }, callbackScope: this, loop: true });
 
-      if (this.game.scene.keys[this.state.farm].scene.isActive()) this.game.scene.keys[this.state.farm].scrolling.enabled = true;
+      if (this.game.scene.keys[this.state.farm]?.scene.isActive()) this.game.scene.keys[this.state.farm].scrolling.enabled = true;
       action();
-    } else if (this.game.scene.keys[this.state.farm].scene.isActive()) this.game.scene.keys[this.state.farm].scrolling.enabled = true;
+    } else if (this.game.scene.keys[this.state.farm]?.scene.isActive()) this.game.scene.keys[this.state.farm].scrolling.enabled = true;
   });
 }
 
