@@ -447,7 +447,7 @@ function donePart(): void {
   
   this.state.user.level += 1;
   if (((user.part / 4) ^ 0) === user.part / 4) {
-    sendSocialEvent(this.state, 5, user.part - 1);
+    sendSocialEvent(this.state, 5, user.part);
   }
   sendAppEventVk(this.state, 1, this.state.userSheep.part + this.state.userChicken.part + this.state.userCow.part);
   
@@ -1639,9 +1639,9 @@ function farmBalance(farm: string): Ibalance {
 
 function sendSocialEvent(state: Istate, type: number, value: number): void {
   const langs: { [key: string]: string } = {
-    sheep5: `У меня завершено уже ${value} главы на овечьей ферме! Присоединяйся к игре!`,
-    chicken5: `У меня завершено уже ${value} главы на куриной ферме! Присоединяйся к игре!`,
-    cow5: `У меня завершено уже ${value} главы на коровьей ферме! Присоединяйся к игре!`,
+    sheep5: `Я уже на ${value} главе овечей фермы! Что же будет дальше?`,
+    chicken5: `Я уже на ${value} главе куриной фермы! Что же будет дальше?`,
+    cow5: `Я уже на ${value} главе коровьей фермы! Что же будет дальше?`,
     chicken2: 'Я уже на куриной ферме! Что же будет дальше?',
     cow3: 'Я уже на коровьей ферме! Что же будет дальше?',
     sheep4: `Мной было захвачено ${value} овечек на овечьем переполохе! Сможешь больше?`,
