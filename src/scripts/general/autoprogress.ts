@@ -4,6 +4,7 @@ import { randomString } from './basic';
 import CowSprite from './../components/Animal/CowSprite';
 import Territory from './../components/Territories/Territory';
 import Factory from './../components/Territories/Factory';
+import CowTerritory from './../components/Territories/CowTerritory';
 
 export default function autoprogress(load: boolean = false): void {
   const state: Istate = this.state;
@@ -1169,7 +1170,7 @@ export default function autoprogress(load: boolean = false): void {
       }
     }
 
-    const territories: Territory[] = this.territories.children.entries;
+    const territories: CowTerritory[] = this.territories.children.entries;
     for (const milk of milkCollected) {
       milk.count *= (1 + feedPercent); // коэфф
       for (const territory of territories) {
@@ -1181,7 +1182,7 @@ export default function autoprogress(load: boolean = false): void {
       }
     }
 
-    const factoryTerritory: Territory = territories.find((data: Territory) => data.territoryType === 8);
+    const factoryTerritory: CowTerritory = territories.find((data: CowTerritory) => data.territoryType === 8);
     if (factoryTerritory && state.userCow.tutorial >= 50) {
       const factory: Factory = factoryTerritory.factory;
       const factorySettings: IfactorySettings = factory.settings;

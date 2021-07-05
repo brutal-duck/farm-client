@@ -3,6 +3,7 @@ import SheepBars from '../../scenes/Sheep/SheepBars';
 import Tutorial from '../../scenes/Tutorial';
 import Shop from '../../scenes/Modal/Shop/Main';
 import Territory from './../Territories/Territory';
+import CowTerritory from './../Territories/CowTerritory';
 /**
   *  Конструктор принимает:
   ** Объект сцены, состояние(номер типа) и необязательный параметр позиции.
@@ -280,7 +281,7 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
         result = this.scene.state[`user${this.scene.state.farm}`].collector > 0;
       break;
       case 19: 
-        const factoryTerritory: Territory = this.scene.territories.children.entries.find((data: Territory) => data.territoryType === 8);
+        const factoryTerritory: CowTerritory = this.scene.territories.children.entries.find((data: CowTerritory) => data.territoryType === 8);
         result = factoryTerritory.factory.money <= 0 || factoryTerritory.factory.currentProduction !== undefined;
       break;
     }

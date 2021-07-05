@@ -35,16 +35,14 @@ function changeSprite(territory: any): void {
         break;
     }
 
-    if (territory.volume < 200) {
+    if (territory.volume < 250) {
       sprite += 1;
-    } else if (territory.volume >= 200 && territory.volume < 400) {
+    } else if (territory.volume >= 250 && territory.volume < 500) {
       sprite += 2;
-    } else if (territory.volume >= 400 && territory.volume < 600) {
+    } else if (territory.volume >= 500 && territory.volume < 750) {
       sprite += 3;
-    } else if (territory.volume >= 600 && territory.volume < 800) {
+    } else if (territory.volume >= 750) {
       sprite += 4;
-    } else if (territory.volume >= 800) {
-      sprite += 5;
     }
 
   }

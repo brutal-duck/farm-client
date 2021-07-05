@@ -2,6 +2,7 @@ import { shortNum, shortTime } from '../../general/basic';
 import Factory from './../Territories/Factory';
 import Territory from './../Territories/Territory';
 import Modal from './../../scenes/Modal/Modal';
+import CowTerritory from './../Territories/CowTerritory';
 
 const ACTIVE_COLOR: string = '#773a05';
 const LOCKED_COLOR: string =  '#595959';
@@ -211,7 +212,7 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
   public preUpdate(): void {
     let percent: number = 0;
   
-    const factoryTerritory: Territory = this.scene.state.territory;
+    const factoryTerritory: CowTerritory = this.scene.state.territory;
     const factory: Factory = factoryTerritory.factory;
   
     if (factory.productionTimer > 0) {

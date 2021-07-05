@@ -5,6 +5,7 @@ import CowSprite from './../../components/Animal/CowSprite';
 import Territory from './../../components/Territories/Territory';
 import SpeechBubble from '../../components/animations/SpeechBuble';
 import Factory from './../../components/Territories/Factory';
+import CowTerritory from './../../components/Territories/CowTerritory';
 
 let checkCollector: number = 0;
 let sheepCollectorVolume: number = 0;
@@ -166,7 +167,7 @@ function interval(): void {
         arrowOnTerrirory = Arrow.generate(this, 10, { x: territory.x + 120, y: territory.y + 180 });
       }
 
-      const factory: Territory = this.territories.children.entries.find((el: Territory) => el.territoryType === 8)
+      const factory: CowTerritory = this.territories.children.entries.find((el: CowTerritory) => el.territoryType === 8)
       const milkTask: Itasks = tasks.find(el => el.id === 138);
       const factoryTask: Itasks = tasks.find(el => el.id === 137);
       if (milkTask?.done === 1 && (factoryTask?.done === 1 || factory)
@@ -344,7 +345,7 @@ function interval(): void {
     }
 
 
-    const factoryTerritory: Territory = this.territories.children.entries.find((data: Territory) => data.territoryType === 8);
+    const factoryTerritory: CowTerritory = this.territories.children.entries.find((data: CowTerritory) => data.territoryType === 8);
     if (factoryTerritory) {
       const factory: Factory = factoryTerritory.factory;
       if (this.state.userCow.tutorial >= 50) {

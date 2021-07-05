@@ -68,16 +68,14 @@ function world(): void {
           break;
       }
 
-      if (data.volume < 200) {
+      if (data.volume < 250) {
         type += 1;
-      } else if (data.volume >= 200 && data.volume < 400) {
+      } else if (data.volume >= 250 && data.volume < 500) {
         type += 2;
-      } else if (data.volume >= 400 && data.volume < 600) {
+      } else if (data.volume >= 500 && data.volume < 750) {
         type += 3;
-      } else if (data.volume >= 600 && data.volume < 800) {
+      } else if (data.volume >= 750) {
         type += 4;
-      } else if (data.volume >= 800) {
-        type += 5;
       }
       
     } else if (data.type === 3) {

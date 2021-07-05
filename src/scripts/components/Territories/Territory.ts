@@ -5,9 +5,11 @@ import Stars from './../animations/Stars';
 import Factory from './Factory';
 import SpeechBubble from './../animations/SpeechBuble';
 import CooldownSprite from './CooldownSprite';
+import Chicken from './../../scenes/Chicken/Main';
+import Sheep from './../../scenes/Sheep/Main';
 
 export default class Territory extends Phaser.Physics.Arcade.Sprite {
-  public scene: Cow;
+  public scene: Cow | Sheep | Chicken;
   public _id: string;
   public block: number;
   public position: number;
@@ -42,12 +44,12 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   public house: Phaser.GameObjects.Sprite;
 
   // тип территории 8
-  public factory: Factory;
+
 
   public cooldownSprite: CooldownSprite;
 
 
-  constructor(scene: Cow, x: number, y: number, type: string, data: Iterritories) {
+  constructor(scene: Cow | Sheep | Chicken, x: number, y: number, type: string, data: Iterritories) {
     super(scene, x, y, type);
 
     this.init(data);
@@ -70,7 +72,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     this.setListeners();
   }
 
-  private createElements(): void {
+  protected createElements(): void {
     if (this.territoryType === 2 || this.territoryType === 3 || this.territoryType === 5 || this.territoryType === 8) {
       this.createImproveText();
     }
@@ -82,9 +84,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       this.createHouseSprite();
     } else if (this.territoryType === 7) {
       this.createCave();
-    } else if (this.territoryType === 8) {
-      this.createFactorySprite();
-    }
+    } 
   }
 
   private createImproveText(): void {
@@ -253,14 +253,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     Cave.create(this.scene, { x: this.x + 120, y: this.y + 240 });
   }
 
-  private createFactorySprite(): void {
-    this.factory = new Factory(this.scene, this.x + 120, this.y + 85, this.improve);
-    this.factory.setDepth(this.y + 1);
-    this.improveText.setPosition(this.x + 187, this.y + 97);
-    this.improveText.setStyle({ fontSize: '32px' });
-
-  }
-
   private setListeners(): void {
     this.scene.clickTerritory(this, (): void => {
       if (this.cooldown > 0) {
@@ -303,7 +295,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
           SpeechBubble.create(this.scene.game.scene.keys[`${this.scene.state.farm}Bars`], this.scene.state.lang.maxCollectorLevel, 3);
         }
       } else if (this.territoryType === 7) {
-        this.scene.takeDiamondCow();
+        this.takeDiamondAnimal();
       } else if (this.territoryType === 8) {
         const modal: Imodal = {
           type: 13,
@@ -313,6 +305,10 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         this.scene.scene.launch('Modal', this.scene.state);
       }
     });
+  }
+
+  public takeDiamondAnimal(): void {
+
   }
 
   public buyTerritory(): void {
@@ -370,7 +366,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  private openConvertor(count: number, diamonds: number, type: number): void {
+  public openConvertor(count: number, diamonds: number, type: number): void {
     
     this.scene.state.convertor = {
       fun: 0,
@@ -391,18 +387,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     const user: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
     let farm: string = this.scene.state.farm.toLowerCase();
     let territoriesSettings: IterritoriesCowSettings[] = this.scene.state[`${farm}Settings`][`territories${this.scene.state.farm}Settings`]
-    let sell: any;
-  
-    if (this.scene.state.farm === 'Sheep') {
-      //@ts-ignore
-      sell = (): void => this.scene.sellWool();
-    } else if (this.scene.state.farm === 'Chicken') {
-      //@ts-ignore
-      sell = (): void => this.scene.sellEggs();
-    } else if (this.scene.state.farm === 'Cow') {
-      sell = (): void => this.scene.sellMilk();
-    }
-  
+
     if (this.scene.state.exchangeTerritory === 2 ||
       this.scene.state.exchangeTerritory === 3 ||
       this.scene.state.exchangeTerritory === 5
@@ -491,7 +476,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
           });
   
           if (this.territoryType === 5 && this.repository) {
-            sell();
+            this.sellResource();
             this.repository.destroy();
           }
     
@@ -514,6 +499,10 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         }
       }
     }
+  }
+
+  public sellResource(): void {
+
   }
 
   public checkExchangeRepository(): boolean {
@@ -549,16 +538,14 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     if (this.territoryType === 2) {
       sprite = `${farm}-grass${stage}-`
 
-      if (this.volume < 200) {
+      if (this.volume < 250) {
         sprite += 1;
-      } else if (this.volume >= 200 && this.volume < 400) {
+      } else if (this.volume >= 250 && this.volume < 500) {
         sprite += 2;
-      } else if (this.volume >= 400 && this.volume < 600) {
+      } else if (this.volume >= 500 && this.volume < 750) {
         sprite += 3;
-      } else if (this.volume >= 600 && this.volume < 800) {
+      } else if (this.volume >= 750) {
         sprite += 4;
-      } else if (this.volume >= 800) {
-        sprite += 5;
       }
     }
   
@@ -857,51 +844,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     this.checkAndSetRepositoryAnim();
   }
 
-  public improveFactory(): void {
-    const settings: IfactorySettings[] = this.scene.state.cowSettings.cowFactorySettings;
-    const user: IuserCow = this.scene.state.userCow;
-
-    const nextImprove = settings.find((item: IfactorySettings) => item.improve === this.improve + 1);
-    if (nextImprove && this.improve < settings.length) {
-      if (user.part >= nextImprove.unlock_improve) {
-        if (user.money >= nextImprove.improveMoneyPrice && this.scene.state.user.diamonds >= nextImprove.improveDiamondPrice) {
-          user.money -= nextImprove.improveMoneyPrice;
-          this.scene.state.user.diamonds -= nextImprove.improveDiamondPrice;
-          this.improve += 1;
-          this.factory.improve += 1;
-          this.factory.settings = nextImprove;
-          this.scene.time.addEvent({ delay: 200, callback: (): void => {
-            this.improveText?.setText(String(this.improve));
-            Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 5);
-
-          }, callbackScope: this, loop: false });
-
-          this.scene.state.amplitude.logAmplitudeEvent('factory_up', {
-            level: this.factory.improve,
-          });
-
-          if (nextImprove.improveDiamondPrice > 0) {
-            this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
-              type: 'factory',
-              count: nextImprove.improveDiamondPrice,
-            });
-            this.scene.tryTask(15, 0, nextImprove.improveDiamondPrice);
-          }
-          this.scene.game.scene.keys['Modal'].scene.stop();
-          this.scene.tryTask(24, this.factory.improve);
-        } else {
-          if (this.scene.state.user.diamonds < nextImprove.improveDiamondPrice) {
-            const count: number = nextImprove.improveDiamondPrice - this.scene.state.user.diamonds;
-            this.openConvertor(count, count, 2);
-          } else {
-            const count: number = nextImprove.improveMoneyPrice - user.money;
-            const diamonds: number = this.scene.convertMoney(count);
-            this.openConvertor(count, diamonds, 1);
-          }
-        }
-      }
-    }
-  }
+  
 
 
 }
