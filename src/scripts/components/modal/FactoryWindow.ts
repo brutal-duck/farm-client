@@ -203,7 +203,7 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
       if (factory.money > 0) {
         this.scene.scene.stop();
         this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-        this.scene.state.territory.sellProducts();
+        this.scene.state.territory.factory.sellProducts();
       }
     }); 
   }

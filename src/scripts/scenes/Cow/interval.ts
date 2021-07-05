@@ -3,8 +3,8 @@ import Arrow from '../../components/animations/Arrow';
 import Hearts from '../../components/animations/Hearts';
 import CowSprite from './../../components/Animal/CowSprite';
 import Territory from './../../components/Territories/Territory';
-import { progressTerritoryCooldown } from '../../general/interval';
 import SpeechBubble from '../../components/animations/SpeechBuble';
+import Factory from './../../components/Territories/Factory';
 
 let checkCollector: number = 0;
 let sheepCollectorVolume: number = 0;
@@ -345,11 +345,12 @@ function interval(): void {
 
 
     const factoryTerritory: Territory = this.territories.children.entries.find((data: Territory) => data.territoryType === 8);
-    if (factoryTerritory && this.state.userCow.tutorial >= 50) {
-      factoryTerritory?.productionOfProducts();
-    }
     if (factoryTerritory) {
-      if (factoryTerritory.factory.money > 0 && !arrowOnFactory?.active && !factoryTerritory.factory.currentProduction) {
+      const factory: Factory = factoryTerritory.factory;
+      if (this.state.userCow.tutorial >= 50) {
+        factory.productionOfProducts();
+      }
+      if (factory.money > 0 && !arrowOnFactory?.active && !factory.currentProduction) {
           arrowOnFactory = Arrow.generate(this, 19, { x: factoryTerritory.x + 120, y: factoryTerritory.y + 180 });
       }
     }
