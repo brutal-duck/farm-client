@@ -68,7 +68,7 @@ import {
   buildBorders,
   findFreeTerritory,
 } from '../../general/territories';
-import { animations, repositoryAnimation } from './animations';
+import { animations } from './animations';
 import {
   teleportation,
   reverse,
@@ -136,7 +136,7 @@ import {
   showFeedBoostSpeechBubble,
   progressTerritoryCooldown,
 } from '../../general/interval';
-import axios from 'axios';
+
 class Sheep extends Phaser.Scene {
   constructor() {
     super('Sheep');
@@ -210,7 +210,6 @@ class Sheep extends Phaser.Scene {
   public confirmExchangeTerritory = confirmExchangeTerritory.bind(this);
   public installTerritory = installTerritory.bind(this);
   public deleteTerritoriesLocks = deleteTerritoriesLocks.bind(this);
-  public repositoryAnimation = repositoryAnimation.bind(this);
   public balance = balance.bind(this);
   public convertDiamonds = convertDiamonds.bind(this);
   public convertMoney = convertMoney.bind(this);
@@ -354,8 +353,6 @@ class Sheep extends Phaser.Scene {
   public update(): void {
     // мозг овец
     this.sheepBrain();
-    // анимация полных хранилищ
-    this.repositoryAnimation();
     // перетаскивание овец
     this.dragSheep(true);
   }

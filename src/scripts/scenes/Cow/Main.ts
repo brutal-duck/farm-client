@@ -61,7 +61,7 @@ import {
   findFreeTerritory,
   deleteTerritoriesLocks,
 } from '../../general/territories';
-import { repositoryAnimation, animations } from './animations';
+import { animations } from './animations';
 import {
   teleportation,
   checkMerging,
@@ -170,7 +170,6 @@ class Cow extends Phaser.Scene {
   public confirmExchangeTerritory = confirmExchangeTerritory.bind(this);
   public installTerritory = installTerritory.bind(this);
   public deleteTerritoriesLocks = deleteTerritoriesLocks.bind(this);
-  public repositoryAnimation = repositoryAnimation.bind(this);
   public balance = balance.bind(this);
   public convertDiamonds = convertDiamonds.bind(this);
   public convertMoney = convertMoney.bind(this);
@@ -320,8 +319,6 @@ class Cow extends Phaser.Scene {
 
 
   public update(): void {
-    // анимация полных хранилищ
-    this.repositoryAnimation();
 
   }
 

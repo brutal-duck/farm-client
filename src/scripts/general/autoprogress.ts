@@ -5,6 +5,8 @@ import CowSprite from './../components/Animal/CowSprite';
 import Territory from './../components/Territories/Territory';
 import Factory from './../components/Territories/Factory';
 import CowTerritory from './../components/Territories/CowTerritory';
+import ChickenTerritory from './../components/Territories/ChickenTerritory';
+import SheepTerritory from './../components/Territories/SheepTerritory';
 
 export default function autoprogress(load: boolean = false): void {
   const state: Istate = this.state;
@@ -760,9 +762,9 @@ export default function autoprogress(load: boolean = false): void {
       price *= (1 + feedPercent); // коэфф
 
       for (let j in this.territories.children.entries) {
-        if (this.territories.children.entries[j].type === 5) {
+        if (this.territories.children.entries[j].territoryType === 5) {
 
-          let territory = this.territories.children.entries[j];
+          const territory: SheepTerritory = this.territories.children.entries[j];
           let max: number = this.settings.territoriesSheepSettings.find((item: IterritoriesSheepSettings) => item.improve === territory.improve).storage;
 
           if (territory.volume < max) {
@@ -966,9 +968,9 @@ export default function autoprogress(load: boolean = false): void {
 
       for (let j in this.territories.children.entries) {
 
-        if (this.territories.children.entries[j].type === 5) {
+        if (this.territories.children.entries[j].territoryType === 5) {
 
-          let territory = this.territories.children.entries[j];
+          const territory: ChickenTerritory = this.territories.children.entries[j];
 
           let max: number = this.settings.territoriesChickenSettings.find((item: IterritoriesChickenSettings) => item.improve === territory.improve).storage;
 
@@ -1010,9 +1012,9 @@ export default function autoprogress(load: boolean = false): void {
     let freeSpace: Iposition[] = [];
     for (let i in this.territories.children.entries) {
 
-      let territory = this.territories.children.entries[i];
+      const territory: ChickenTerritory = this.territories.children.entries[i];
 
-      if (territory.type === 2 || territory.type === 3) {
+      if (territory.territoryType === 2 || territory.territoryType === 3) {
 
         let count: number = this.settings.territoriesChickenSettings.find((item: IterritoriesChickenSettings) => item.improve === territory.improve).countEggs;
         let minX: number = (territory.position - 1) * 240 + indent;

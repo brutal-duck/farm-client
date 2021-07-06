@@ -15,24 +15,15 @@ export default class RepositoryExchangeWindow {
     let repository: string = this.scene.state.lang.repository.replace('$1', this.scene.state.territory.improve);
     this.scene.textHeader.setText(repository);
 
-    let settings: any;
-    let exchange: any;
+    const territoriesSettings: IterritoriesSheepSettings[] | IterritoriesChickenSettings[] | IterritoriesCowSettings[] = this.scene.state[`${farm}Settings`][`territories${this.scene.state.farm}Settings`];
+    const exchangePrice: number = territoriesSettings.find((data: IterritoriesCowSettings) => data.improve === 2).improvePastureMoneyPrice;
 
-    if (this.scene.state.farm !== 'Cow') {
-      settings = this.scene.state[`${farm}Settings`][`${farm}Parts`].find((data: Ipart) => data.sort === this.scene.state[`user${this.scene.state.farm}`].part);
-      exchange = {
-        icon: `${farm}Coin`,
-        text: shortNum(settings.improve_territory_2)
-      };
-    } else {
-      settings = this.scene.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === 2);
-      exchange = {
-        icon: 'cowCoin',
-        text: shortNum(settings.improvePastureMoneyPrice)
-      };
-    }
+    const exchange: any = {
+      icon: `${farm}Coin`,
+      text: shortNum(exchangePrice)
+    };;
 
-    let textTitle: string = this.scene.state.lang.exchangeRepositoryTitle.replace('$1', this.scene.state.territory.improve);
+    const textTitle: string = this.scene.state.lang.exchangeRepositoryTitle.replace('$1', this.scene.state.territory.improve);
 
     this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 100, textTitle, {
       font: '26px Bip',

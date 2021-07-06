@@ -1,5 +1,6 @@
 import { random } from '../../general/basic';
 import Hearts from '../../components/animations/Hearts';
+import SheepTerritory from './../../components/Territories/SheepTerritory';
 
 function sheepBrain(): void {
 
@@ -10,7 +11,7 @@ function sheepBrain(): void {
     // если не перетаскиваем
     if (!sheep.drag) {
 
-      let territory = this.currentTerritory(sheep.x, sheep.y);
+      let territory: SheepTerritory = this.currentTerritory(sheep.x, sheep.y);
 
       if (territory) {
         

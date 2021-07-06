@@ -2,8 +2,6 @@ import Cow from './../../scenes/Cow/Main';
 import Cave from './../gameObjects/Cave';
 import Firework from './../animations/Firework';
 import Stars from './../animations/Stars';
-import Factory from './Factory';
-import SpeechBubble from './../animations/SpeechBuble';
 import CooldownSprite from './CooldownSprite';
 import Chicken from './../../scenes/Chicken/Main';
 import Sheep from './../../scenes/Sheep/Main';
@@ -291,8 +289,9 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
     const foundSettings:IterritoriesPrice = settings
       .find((el: IterritoriesPrice) => el.block === this.block && el.position === this.position);
+    const time: number = type === 1 ? foundSettings.unlockCooldown: Math.round(foundSettings.unlockCooldown / 4);
     
-    this.cooldown = foundSettings.unlockCooldown;
+    this.cooldown = time;
     this.boughtType = type;
     this.bought = true;
     this.cooldownSprite = new CooldownSprite(this);

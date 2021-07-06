@@ -65,7 +65,7 @@ import {
   buildBorders,
   findFreeTerritory,
 } from '../../general/territories';
-import { animations, repositoryAnimation } from './animations';
+import { animations } from './animations';
 import {
   teleportation,
   reverse,
@@ -163,7 +163,6 @@ class Chicken extends Phaser.Scene {
   public confirmExchangeTerritory = confirmExchangeTerritory.bind(this);
   public installTerritory = installTerritory.bind(this);
   public deleteTerritoriesLocks = deleteTerritoriesLocks.bind(this);
-  public repositoryAnimation = repositoryAnimation.bind(this);
   public balance = balance.bind(this);
   public convertDiamonds = convertDiamonds.bind(this);
   public convertMoney = convertMoney.bind(this);
@@ -293,8 +292,6 @@ class Chicken extends Phaser.Scene {
   public update(): void {
     // мозг куриц
     this.chickenBrain();
-    // анимация полных хранилищ
-    this.repositoryAnimation();
   }
 }
 

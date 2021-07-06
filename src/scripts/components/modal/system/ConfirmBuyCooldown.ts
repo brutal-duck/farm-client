@@ -11,12 +11,11 @@ export default class ConfirmBuyCooldown {
   }
 
   private create(): void {
-    const headerText: string = this.scene.state.territory.territoryType === 0 || this.scene.state.territory.type === 0 ? this.scene.state.lang.buyTerritory : this.scene.state.lang.boughtLand;
+    const headerText: string = this.scene.state.territory.territoryType === 0 ? this.scene.state.lang.buyTerritory : this.scene.state.lang.boughtLand;
     this.scene.textHeader.setText(headerText);
     const price: number = this.scene.state.territory.cooldownSprite.price;
 
-    const text: string = this.scene.state.territory.territoryType === 0 
-    || this.scene.state.territory.type === 0 ? this.scene.state.lang.confirmBuyCooldownForest : this.scene.state.lang.confirmBuyCooldownBuild;
+    const text: string = this.scene.state.territory.territoryType === 0 ? this.scene.state.lang.confirmBuyCooldownForest : this.scene.state.lang.confirmBuyCooldownBuild;
 
     this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 70, text, {
       font: '26px Bip',
@@ -30,8 +29,7 @@ export default class ConfirmBuyCooldown {
       text: shortNum(price), // Обработать обновление текста кнопки
     };
 
-    const textBtn: string = this.scene.state.territory.territoryType === 0 
-    || this.scene.state.territory.type === 0 ? this.scene.state.lang.speedUpForest : this.scene.state.lang.speedUpBuild;
+    const textBtn: string = this.scene.state.territory.territoryType === 0 ? this.scene.state.lang.speedUpForest : this.scene.state.lang.speedUpBuild;
     this.scene.progressButton = this.scene.bigButton('green', 'left', 20, textBtn, img);
     const redBtn = this.scene.bigButton('red', 'center', 110, this.scene.state.lang.cancel);
 

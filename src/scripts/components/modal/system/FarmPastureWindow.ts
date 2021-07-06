@@ -16,7 +16,7 @@ export default class FarmPastureWindow {
     const pasture: string = this.scene.state.lang.pasture.replace('$1', this.scene.state.territory.improve);
     this.scene.textHeader.setText(pasture);
     const territoriesSettings: IterritoriesSheepSettings[] | IterritoriesChickenSettings[] | IterritoriesCowSettings[] = this.scene.state[`${farm.toLowerCase()}Settings`][`territories${farm}Settings`];
-    const exchangePrice: number = territoriesSettings.find((data: IterritoriesCowSettings) => data.improve === 2).improvePastureMoneyPrice
+    const exchangePrice: number = territoriesSettings.find((data: IterritoriesCowSettings) => data.improve === 2).improvePastureMoneyPrice;
 
     const icon: string = `${farm.toLowerCase()}Coin`;
     const text = shortNum(exchangePrice);
