@@ -2,6 +2,7 @@ import Territory from './Territory';
 import Cow from './../../scenes/Cow/Main';
 import Factory from './Factory';
 import Firework from './../animations/Firework';
+import SpeechBubble from './../animations/SpeechBuble';
 
 export default class CowTerritory extends Territory {
   public scene: Cow;
@@ -75,6 +76,65 @@ export default class CowTerritory extends Territory {
           }
         }
       }
+    }
+  }
+
+  public createMetgingZone(): void {
+    super.createMetgingZone();
+    const topZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.x + 120, this.y + 45, 300, 145).setDropZone(undefined, () => {});
+    topZone.type = 'top';
+    // let graphics1 = this.add.graphics().setDepth(territory.y * 5);
+    // graphics1.lineStyle(2, 0xffff00);
+    // graphics1.strokeRect(topZone.x - topZone.input.hitArea.width / 2, topZone.y - topZone.input.hitArea.height / 2, topZone.input.hitArea.width, topZoneinput.hitArea.height);
+    
+    const bottomZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.x + 120, this.y + 190, 300, 145).setDropZone(undefined, () => {});
+    bottomZone.type = 'bottom';
+    
+    // let graphics2 = this.add.graphics().setDepth(territory.y * 5);
+    // graphics2.lineStyle(2, 0x00ff00);
+    // graphics2.strokeRect(bottomZone.x - bottomZone.input.hitArea.width / 2, bottomZone.y - bottomZone.input.hitArea.height / 2, bottomZone.input.hitAreawidth, bottomZone.input.hitArea.height);
+  }
+
+  public onTerritoryClick(): void {
+    super.onTerritoryClick();
+    if (this.scene.state.userCow.part < 3) {
+      const task: Itasks = this.scene.state.cowTasks.find(el => el.id === 138);
+      if (this.block === 3 && this.position === 1 && this.territoryType === 0 && task.done === 1 && task.got_awarded === 1) {
+        const modal: Imodal = {
+          type: 1,
+          sysType: 2
+        }
+        this.scene.state.modal = modal;
+        this.scene.state.territory = this;
+        this.scene.scene.launch('Modal', this.scene.state);
+      } else if (this.block === 3 && this.position === 1 && this.territoryType === 0) {
+        SpeechBubble.create(this.scene.game.scene.keys[`${this.scene.state.farm}Bars`], this.scene.state.lang.doneFirstTask, 3);
+        return;
+      } 
+    }
+    if (this.territoryType !== 6 && this.territoryType !== 7 && this.territoryType !== 8) {
+      const modal: Imodal = {
+        type: 1,
+        sysType: 2
+      }
+      this.scene.state.modal = modal;
+      this.scene.state.territory = this;
+      this.scene.scene.launch('Modal', this.scene.state);
+    } else if (this.territoryType === 6) {
+      if (this.scene.state[`user${this.scene.state.farm}`].collectorLevel < this.scene.state[`${this.scene.state.farm.toLowerCase()}CollectorSettings`].length) {
+        this.scene.showImproveCollector();
+      } else {
+        SpeechBubble.create(this.scene.game.scene.keys[`${this.scene.state.farm}Bars`], this.scene.state.lang.maxCollectorLevel, 3);
+      }
+    } else if (this.territoryType === 7) {
+      this.scene.takeDiamondCow();
+    } else if (this.territoryType === 8) {
+      const modal: Imodal = {
+        type: 13,
+      }
+      this.scene.state.modal = modal;
+      this.scene.state.territory = this;
+      this.scene.scene.launch('Modal', this.scene.state);
     }
   }
 }

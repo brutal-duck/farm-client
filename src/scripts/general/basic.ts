@@ -1578,7 +1578,7 @@ function farmBalance(farm: string): Ibalance {
   const territories: Iterritories[] = this.state[`${farm.toLowerCase()}Territories`];
   const territoriesSettings = this.state[`${farm.toLowerCase()}Settings`][`territories${farm}Settings`];
   for (let i in territories) {
-    const territory = territories[i];
+    const territory: Iterritories = territories[i];
     if (territory.type === 2 || territory.type === 3) {
       let reg: number = territoriesSettings.find(item => item.improve === territory.improve).regeneration;
       if (territory.type === 2) {

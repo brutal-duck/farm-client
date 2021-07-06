@@ -2,6 +2,7 @@ import { shortTime } from '../../general/basic';
 import Arrow from '../../components/animations/Arrow';
 import Hearts from '../../components/animations/Hearts';
 import SpeechBubble from '../../components/animations/SpeechBuble';
+import SheepTerritory from './../../components/Territories/SheepTerritory';
 
 let checkCollector: number = 0;
 const BALANCE_HINT_COUNTDOWN = 20;
@@ -113,8 +114,8 @@ function interval(): void {
 
     // восстановаление территорий
     for (let i in this.territories.children.entries) {
-      let territory = this.territories.children.entries[i];
-      if ((territory.type === 2 || territory.type === 3) && territory.volume < 1000) {
+      let territory: SheepTerritory = this.territories.children.entries[i];
+      if ((territory.territoryType === 2 || territory.territoryType === 3) && territory.volume < 1000) {
         let reg: number = this.settings.territoriesSheepSettings.find((item: IterritoriesSheepSettings) => item.improve === territory.improve).regeneration;
         territory.volume += reg;
         if (territory.volume > 1000) {
@@ -142,12 +143,12 @@ function interval(): void {
       }
 
       // отнимаем очки у территории
-      let territory = this.currentTerritory(sheep.x, sheep.y);
+      let territory: SheepTerritory = this.currentTerritory(sheep.x, sheep.y);
       if (territory && !sheep.drag) {
-        if (territory.type === 2) {
+        if (territory.territoryType === 2) {
           if (points.eating > territory.volume) territory.volume = 0;
           else territory.volume -= points.eating;
-        } else if (territory.type === 3) {
+        } else if (territory.territoryType === 3) {
           if (points.drinking > territory.volume) territory.volume = 0;
           else territory.volume -= points.drinking;
         }
@@ -156,11 +157,11 @@ function interval(): void {
 
     // меняем спрайты территорий, если нужно
     for (let i in this.territories.children.entries) {
-      let territory = this.territories.children.entries[i];
-      if (territory.type === 2 || territory.type === 3 || territory.type === 5) {
+      const territory: SheepTerritory = this.territories.children.entries[i];
+      if (territory.territoryType === 2 || territory.territoryType === 3 || territory.territoryType === 5) {
         this.changeSprite(territory);
       }
-      if (territory.type === 4) {
+      if (territory.territoryType === 4) {
         if (territory.mergingCounter > 0) territory.mergingCounter++;
         if (territory.mergingCounter > this.state.maxMerginTime) {
           let sheep1: any;
@@ -208,7 +209,7 @@ function interval(): void {
     if (this.state.userSheep.tutorial === 70 && !this.scene.isActive('Tutorial')) {
 
       this.mergTutor++;
-      let successMergin: any = this.territories.children.entries.find((data: any) => data.type === 4);
+      let successMergin: any = this.territories.children.entries.find((data: any) => data.territoryType === 4);
 
       if (this.mergTutor > 5 && successMergin.merging.length === 0) this.showTutorial();
 
@@ -246,7 +247,7 @@ function interval(): void {
       // задание с продажей шерсти из хранилища
       if (task?.done === 0 && task?.id === 127 && !arrowOnStorage) {
 
-        let territory: any = this.territories.children.entries.find((data: any) => data.type === 5);
+        let territory: any = this.territories.children.entries.find((data: any) => data.territoryType === 5);
         
         if (territory?.volume > 0) {
           arrowOnStorage = Arrow.generate(this, 9, { x: territory.x + 120, y: territory.y + 120 });

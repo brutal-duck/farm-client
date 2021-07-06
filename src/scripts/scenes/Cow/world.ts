@@ -1,6 +1,4 @@
 import Scrolling from '../../libs/Scrolling';
-import Cave from '../../components/gameObjects/Cave';
-import CowSprite from '../../components/Animal/CowSprite';
 import CowGroup from '../../components/AnimalGroup/CowGroup';
 import Territory from './../../components/Territories/Territory';
 import CooldownSprite from './../../components/Territories/CooldownSprite';
@@ -46,7 +44,7 @@ function world(): void {
 
     const type: string = getTerritoryType.bind(this)(data);
 
-    let territory: Territory = new CowTerritory(this, x, y, type, data);
+    let territory: CowTerritory = new CowTerritory(this, x, y, type, data);
 
     let topBorder: number = 1;
     let bottomBorder: number = 1;
@@ -105,9 +103,7 @@ function getTerritoryType(data: Iterritories): string {
       }
     }
   }
-  // if (data.block === 3 && data.position === 1 && data.type !== 8) {
-  //   data.type = 8;
-  // }
+
   if (data.type === 0) type = 'cow-for-buying';
   else if (data.type === 1) type = 'cow-bought';
   else if (data.type === 2) {

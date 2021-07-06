@@ -10,8 +10,8 @@ function collisions(): void {
 
   this.physics.add.overlap(animals, this.territories, (animal: any, territory: any): void => {
 
-    if (territory.type !== 2 &&
-      territory.type !== 3 &&
+    if (territory.territoryType !== 2 &&
+      territory.territoryType !== 3 &&
       !animal.drag &&
       !animal.aim) {
 
@@ -26,7 +26,7 @@ function collisions(): void {
 
       } else {
 
-        if (territory.type === 2 || territory.type === 3) {
+        if (territory.territoryType === 2 || territory.territoryType === 3) {
 
           let minX: number = (territory.position - 1) * this.height + halfWidth;
           let maxX: number = territory.position * this.height - halfWidth;

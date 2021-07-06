@@ -269,7 +269,7 @@ function cowTerritory(): void {
 // окно овечей территории
 function sheepTerritory(): void {
   
-  switch (this.state.territory.type) {
+  switch (this.state.territory.territoryType) {
 
     case 0: // территория для покупки
       new BuyFarmTerritoryWindow(this)
