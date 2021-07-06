@@ -267,12 +267,15 @@ function payVK(id: number): void {
 function payYandex(id: number): void {
   const pack: Ipackage = this.state.packages.find((data: any) => data.id === id);
   if (pack) {
-    console.log(pack, 'pack')
     this.state.ysdk.getPayments({ signed: true }).then(payments => {
-      console.log(payments, 'payments')
-      payments.purchase({ id }).then(purchase => {
-        console.log(purchase, 'purchase');
-          this.state.user.diamonds += pack.diamonds;
+      payments.purchase({ id: String(id) }).then(purchase => {
+        axios.post(process.env.API + "/addOrderYa", {
+          signature: purchase.signature,
+          userId: this.state.user.id, 
+          packageId: id, 
+        }).then(res => {
+          if (!res.data.error) this.game.scene.keys[this.state.farm].autosave();
+        }); 
       });
     }).catch(err => { console.log(err); });
   }
