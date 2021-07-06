@@ -477,8 +477,8 @@ function collectEgg(egg: Egg, manualСollect: boolean = false): void {
     } else {
       for (let i in this.territories.children.entries) {
         const territory = this.territories.children.entries[i];
-        if (territory.type === 5) {
-          const max: number = this.state.chickenSettings.territoriesChickenSettings.find((data: IterritoriesChickenSettings) => data.improve === territory.improve).eggStorage;
+        if (territory.territoryType === 5) {
+          const max: number = this.state.chickenSettings.territoriesChickenSettings.find((data: IterritoriesChickenSettings) => data.improve === territory.improve).storage;
 
           if (max > territory.volume) {
             const position: Iposition = {
@@ -528,7 +528,7 @@ function sellEggs(): void {
 
   if (this.state.territory) {
 
-    if (this.state.territory.type === 5 && this.state.territory.money > 0) {
+    if (this.state.territory.territoryType === 5 && this.state.territory.money > 0) {
 
       this.tryTask(20, 0);
 

@@ -98,10 +98,6 @@ export default class BoughtFarmLand {
     // this.scene.state.exchangeTerritory = type;
     // this.scene.game.scene.keys[this.scene.state.farm].installTerritory();
     this.scene.state.territory.bougthType = type;
-    if (this.scene.state.farm !== 'Cow') {
-      this.scene.game.scene.keys[this.scene.state.farm].setTerritoryUnlockCooldown(type);
-    } else {
-      this.scene.state.territory.setTerritoryUnlockCooldown(type);
-    }
+    this.scene.state.territory.setTerritoryUnlockCooldown(type);
   }
 }

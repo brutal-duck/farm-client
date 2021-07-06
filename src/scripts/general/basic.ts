@@ -1516,8 +1516,8 @@ function remainderSellResource(): void {
       const storages: any[] = this.territories.children.entries.filter(el => el.type === 5)
       let check: boolean = false;
       for (let i: number =0; i < storages.length; i++) {
-        const setting = this.state.sheepSettings.territoriesSheepSettings.find(elSetting => elSetting.improve === storages[i].improve);
-        if (storages[i].volume >= setting.woolStorage * remainderPercent) {
+        const setting: IterritoriesSheepSettings = this.state.sheepSettings.territoriesSheepSettings.find(elSetting => elSetting.improve === storages[i].improve);
+        if (storages[i].volume >= setting.storage * remainderPercent) {
           check = true;
           break;
         }

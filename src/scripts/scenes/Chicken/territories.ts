@@ -26,7 +26,7 @@ function installTerritory(): void {
       // });
 
       this.state.territory.improve = 1;
-      this.state.territory.type = this.state.exchangeTerritory;
+      this.state.territory.territoryType = this.state.exchangeTerritory;
       this.state.userChicken.money -= price;
       this.tryTask(5, this.state.exchangeTerritory);
 
@@ -38,9 +38,8 @@ function installTerritory(): void {
         let y: number = this.state.territory.y + 240;
   
         this.state.territory.setTexture('chicken-repository');
-        this.state.territory.repository = this.add.image(x, y, 'chicken-repository-1-1')
-          .setDepth(this.state.territory.y + 50)
-          .setOrigin(0.5, 1);
+        this.state.territory.createImproveText();
+        this.state.territory.createRepositorySprite();
         Firework.create(this, { x: this.state.territory.x + 120, y: this.state.territory.y + 120 }, 3);
 
       } else {

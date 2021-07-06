@@ -7,10 +7,9 @@ export default class FarmResourceRepositoryWindow {
 
   private resource: string;
   private farm: string;
-  private part: Ipart;
-  private settings: IterritoriesCowSettings;
-  private improve: number;
+  private settings: IterritoriesSheepSettings | IterritoriesChickenSettings | IterritoriesCowSettings;
   private money: any;
+  private territoriesSettings: IterritoriesSheepSettings[] | IterritoriesChickenSettings[] | IterritoriesCowSettings[];
 
   constructor(scene: Modal) {
     this.scene = scene;
@@ -26,15 +25,10 @@ export default class FarmResourceRepositoryWindow {
     else if (this.farm === 'Chicken') this.resource = 'Eggs';
     else if (this.farm === 'Cow') this.resource = 'Milk';
 
-    if (this.farm !== 'Cow') this.part = this.scene.state[`${this.farm.toLowerCase()}Settings`][`${this.farm.toLowerCase()}Parts`].find((data: Ipart) => data.sort === this.scene.state[`user${this.farm}`].part);
-    else {
-      this.improve = this.scene.state.territory.improve + 1;
-      if (this.improve > this.scene.state.cowSettings.territoriesCowSettings.length) {
-        this.improve = this.scene.state.cowSettings.territoriesCowSettings.length;
-      }
-      this.settings = this.scene.state.cowSettings.territoriesCowSettings.find((data: IterritoriesCowSettings) => data.improve === this.improve);
-    }
+    this.territoriesSettings = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`territories${this.scene.state.farm}Settings`];
 
+    this.settings = this.territoriesSettings
+      .find((data: IterritoriesSheepSettings | IterritoriesChickenSettings | IterritoriesCowSettings) => data.improve === this.scene.state.territory.improve + 1);
     this.money = {
       icon: `${this.farm.toLowerCase()}Coin`,
       text: shortNum(this.scene.state.territory.money)
@@ -46,11 +40,11 @@ export default class FarmResourceRepositoryWindow {
     let repository: string = this.scene.state.lang.repository.replace('$1', this.scene.state.territory.improve);
     this.scene.textHeader.setText(repository);
 
-    if (this.farm !== 'Cow' && this.scene.state.territory.improve < this.scene.state[`${this.farm.toLowerCase()}Settings`][`territories${this.farm}Settings`].length) {
+    if (this.farm !== 'Cow' && this.scene.state.territory.improve < this.territoriesSettings.length) {
       
       this.nonCowRepositoryUpgradeAvalable();
 
-    } else if (this.farm === 'Cow' && this.scene.state.territory.improve < this.scene.state.cowSettings.territoriesCowSettings.length) {
+    } else if (this.farm === 'Cow' && this.scene.state.territory.improve < this.territoriesSettings.length) {
 
       this.cowRepositoryApgradeAvalable();
       
@@ -64,20 +58,20 @@ export default class FarmResourceRepositoryWindow {
 
 
   private nonCowRepositoryUpgradeAvalable(): void {
-    let price: number;
-    let lock: number = this.scene.state[`${this.farm.toLowerCase()}Settings`][`territories${this.farm}Settings`].find(data => data.improve === this.scene.state.territory.improve + 1).unlock_improve;
-    
-    if (this.scene.state[`user${this.farm}`].part >= lock) {
+    if (this.scene.state[`user${this.scene.state.farm}`].part >= this.settings.unlock_improve) {
 
-      if (this.scene.state.territory.improve === 1) price = this.part.improve_territory_2;
-      else if (this.scene.state.territory.improve === 2) price = this.part.improve_territory_3;
-      else price = this.part.improve_territory_4;
-
-      const improve = {
-        icon: `${this.farm.toLowerCase()}Coin`,
-        text: shortNum(price)
-      };
-
+      let improve: any;
+      if (this.settings.improveStorageMoneyPrice) {
+        improve = {
+          icon: 'cowCoin',
+          text: shortNum(this.settings.improveStorageMoneyPrice)
+        };
+      } else if (this.settings.improveStorageDiamondPrice) {
+        improve = {
+          icon: 'diamond',
+          text: shortNum(this.settings.improveStorageDiamondPrice)
+        };
+      }
       let improveText: string = this.scene.state.lang.improveToLevel.replace('$1', this.scene.state.territory.improve + 1);
       const button = this.scene.bigButton('orange', 'left', 110, improveText, improve);
       this.scene.clickModalBtn(button, (): void => { this.improveTerritory() });
@@ -86,9 +80,8 @@ export default class FarmResourceRepositoryWindow {
       
       const improve = {
         icon: 'lock',
-        text: this.scene.state.lang.shortPart + ' ' + lock
+        text: this.scene.state.lang.shortPart + ' ' + this.settings.unlock_improve
       };
-
       let improveText: string = this.scene.state.lang.improveToLevel.replace('$1', this.scene.state.territory.improve + 1);
       this.scene.bigButton('grey', 'left', 110, improveText, improve);
 
@@ -272,15 +265,14 @@ export default class FarmResourceRepositoryWindow {
     if (this.scene.state.territory.money > 0) {
       this.scene.scene.stop();
       this.scene.game.scene.keys[this.farm].scrolling.wheel = true;
-      this.scene.game.scene.keys[this.farm][`sell${this.resource}`]();
+      this.scene.state.territory.sellResource();
     }
   }
 
   private improveTerritory(): void {
     this.scene.scene.stop();
     this.scene.game.scene.keys[this.farm].scrolling.wheel = true;
-    if (this.farm !== 'Cow') this.scene.game.scene.keys[this.farm].improveTerritory();
-    else this.scene.state.territory.improveTerritory();
+    this.scene.state.territory.improveTerritory();
   }
 
 }

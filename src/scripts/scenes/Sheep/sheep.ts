@@ -559,9 +559,9 @@ function collectWool(sheep: any, manualСollect: boolean = false): void {
 
         let territory = this.territories.children.entries[i];
 
-        if (territory.type === 5) {
+        if (territory.territoryType === 5) {
           
-          let max: number = this.state.sheepSettings.territoriesSheepSettings.find((data: IterritoriesSheepSettings) => data.improve === territory.improve).woolStorage;
+          let max: number = this.state.sheepSettings.territoriesSheepSettings.find((data: IterritoriesSheepSettings) => data.improve === territory.improve).storage;
 
           if (max > territory.volume) {
 
@@ -644,7 +644,7 @@ function sellWool(): void {
 
   if (this.state.territory) {
 
-    if (this.state.territory.type === 5 && this.state.territory.money > 0) {
+    if (this.state.territory.territoryType === 5 && this.state.territory.money > 0) {
 
       this.tryTask(20, 0);
 

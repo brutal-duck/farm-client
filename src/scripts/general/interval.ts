@@ -222,7 +222,7 @@ function sheepCollectorProgress(sheepCollectorVolume: number): number {
       for (let i in Scene.state.sheepTerritories) {
         const territory: Iterritories = Scene.state.sheepTerritories[i];
         if (territory.type === 5) {
-          const max: number = Scene.state.sheepSettings.territoriesSheepSettings.find((data: IterritoriesSheepSettings) => data.improve === territory.improve).woolStorage;
+          const max: number = Scene.state.sheepSettings.territoriesSheepSettings.find((data: IterritoriesSheepSettings) => data.improve === territory.improve).storage;
           for (let i: number = 0; i < collectedWool; i += 1) {
             for (let i in Scene.state.sheep) {
               const sheep: Isheep = Scene.state.sheep[i];
@@ -261,7 +261,7 @@ function chickenCollectorProgress(chickenCollectorVolume: number): number {
       for (let i in Scene.state.chickenTerritories) {
         const territory: Iterritories = Scene.state.chickenTerritories[i];
         if (territory.type === 5) {
-          const max: number = Scene.state.chickenSettings.territoriesChickenSettings.find((data: IterritoriesChickenSettings) => data.improve === territory.improve).eggStorage;
+          const max: number = Scene.state.chickenSettings.territoriesChickenSettings.find((data: IterritoriesChickenSettings) => data.improve === territory.improve).storage;
           if (max > territory.volume) {
             const eggArray: IchickenEgg[] = Scene.state.chickenEggs.filter((el: IchickenEgg) => el.type !== 0);
             if (eggArray.length > 0) {
@@ -547,14 +547,14 @@ function checkStorageSheep(): boolean {
   if (this.state.farm === 'Sheep') {
     for (const territory of this.territories.children.entries) {
       if (territory.type === 5) {
-        const max: number = this.state.sheepSettings.territoriesSheepSettings.find(el => el.improve === territory.improve).woolStorage;
+        const max: number = this.state.sheepSettings.territoriesSheepSettings.find(el => el.improve === territory.improve).storage;
         check.push(territory.volume >= max); 
       }
     }
   } else {
     for (const territory of this.state.sheepTerritories) {
       if (territory.type === 5) {
-        const max: number = this.state.sheepSettings.territoriesSheepSettings.find(el => el.improve === territory.improve).woolStorage;
+        const max: number = this.state.sheepSettings.territoriesSheepSettings.find(el => el.improve === territory.improve).storage;
         check.push(territory.volume >= max); 
       }
     }
@@ -567,14 +567,14 @@ function checkStorageChicken(): boolean {
   if (this.state.farm === 'Chicken') {
     for (const territory of this.territories.children.entries) {
       if (territory.type === 5) {
-        const max: number = this.state.chickenSettings.territoriesChickenSettings.find(el => el.improve === territory.improve).eggStorage;
+        const max: number = this.state.chickenSettings.territoriesChickenSettings.find(el => el.improve === territory.improve).storage;
         check.push(territory.volume >= max); 
       }
     }
   } else {
     for (const territory of this.state.chickenTerritories) {
       if (territory.type === 5) {
-        const max: number = this.state.chickenSettings.territoriesChickenSettings.find(el => el.improve === territory.improve).eggStorage;
+        const max: number = this.state.chickenSettings.territoriesChickenSettings.find(el => el.improve === territory.improve).storage;
         check.push(territory.volume >= max); 
       }
     }

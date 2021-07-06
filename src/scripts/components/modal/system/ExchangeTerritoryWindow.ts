@@ -53,8 +53,7 @@ export default class ExchangeTerritoryWindow {
   private closeWindow(exchange: boolean = true): void {
     this.scene.scene.stop();
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-    if (exchange && this.scene.state.farm !== 'Cow') this.scene.game.scene.keys[this.scene.state.farm].exchangeTerritory();
-    else if (exchange) this.scene.state.territory.exchangeTerritory();
+    if (exchange) this.scene.state.territory.exchangeTerritory();
   }
 
 }

@@ -62,11 +62,7 @@ export default class CooldownSprite extends Phaser.GameObjects.Sprite {
     super.preUpdate(time, delta);
     if (this.checkDestroy()) {
       if (this.active) {
-        if (this.scene.state.farm !== 'Cow') {
-          this.scene.unlockTerritory(this.territory);
-        } else {
-          this.territory.unlockTerritory();
-        }
+        this.territory.unlockTerritory();
         if (this.scene.scene.isActive('Modal') && this.scene.state.modal?.type === 1 && this.scene.state.modal?.sysType === 19) {
           this.scene.scene.stop('Modal');
         }

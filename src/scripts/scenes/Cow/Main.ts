@@ -58,7 +58,8 @@ import {
 } from '../../general/tasks';
 import {
   currentTerritory,
-  findFreeTerritory
+  findFreeTerritory,
+  deleteTerritoriesLocks,
 } from '../../general/territories';
 import { repositoryAnimation, animations } from './animations';
 import {
@@ -73,7 +74,6 @@ import {
 } from './cow';
 import { 
   installTerritory,  
-  deleteTerritoriesLocks
 } from './territories';
 import {
   balance,

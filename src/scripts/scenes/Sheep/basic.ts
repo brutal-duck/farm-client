@@ -36,11 +36,11 @@ function balance(): Ibalance {
 
     let territory = this.territories?.children.entries[i];
 
-    if (territory.type === 2 || territory.type === 3) {
+    if (territory.territoryType === 2 || territory.territoryType === 3) {
       
       let reg: number = this.settings.territoriesSheepSettings.find(item => item.improve === territory.improve).regeneration;
 
-      if (territory.type === 2) {
+      if (territory.territoryType === 2) {
         grassRecovery += reg;
       } else {
         waterRecovery += reg;

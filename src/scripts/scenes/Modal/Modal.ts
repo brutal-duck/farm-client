@@ -219,18 +219,18 @@ class Modal extends Phaser.Scene {
     }
 
     // прогресс для хранилищ
-    if (this.state.territory?.type === 5 && this.state.modal?.sysType === 2) {
+    if (this.state.territory?.territoryType === 5 && this.state.modal?.sysType === 2) {
 
       let max: number, count: string, percent: number = 0;
 
       if (this.state.farm === 'Sheep') {
 
-        max = this.state.sheepSettings.territoriesSheepSettings.find((data: IterritoriesSheepSettings) => data.improve === this.state.territory.improve).woolStorage;
+        max = this.state.sheepSettings.territoriesSheepSettings.find((data: IterritoriesSheepSettings) => data.improve === this.state.territory.improve).storage;
         count = this.state.lang.countWool;
 
       } else if (this.state.farm === 'Chicken') {
 
-        max = this.state.chickenSettings.territoriesChickenSettings.find((data: IterritoriesChickenSettings) => data.improve === this.state.territory.improve).eggStorage;
+        max = this.state.chickenSettings.territoriesChickenSettings.find((data: IterritoriesChickenSettings) => data.improve === this.state.territory.improve).storage;
         count = this.state.lang.countEggs;
 
       } else if (this.state.farm === 'Cow') {

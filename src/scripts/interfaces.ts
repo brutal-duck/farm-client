@@ -369,7 +369,11 @@ interface IterritoriesSheepSettings {
   improve: number;
   regeneration: number;
   unlock_improve: number;
-  woolStorage: number;
+  storage: number;
+  improvePastureMoneyPrice: number;
+  improveStorageMoneyPrice: number;
+  improvePastureDiamondPrice: number;
+  improveStorageDiamondPrice: number;
   id?: any;
 }
 interface IterritoriesChickenSettings {
@@ -377,7 +381,11 @@ interface IterritoriesChickenSettings {
   regeneration: number;
   countEggs: number;
   unlock_improve: number;
-  eggStorage: number;
+  storage: number;
+  improvePastureMoneyPrice: number;
+  improveStorageMoneyPrice: number;
+  improvePastureDiamondPrice: number;
+  improveStorageDiamondPrice: number;
   id?: any;
 }
 interface IterritoriesCowSettings {

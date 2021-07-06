@@ -14,12 +14,12 @@ function sheepBrain(): void {
 
       if (territory) {
         
-        if (territory.type !== 4 || sheep.aim) {
+        if (territory.territoryType !== 4 || sheep.aim) {
 
           // проверка, не находится ли за бортом
-          if (territory.type !== 2 && territory.type !== 3 && territory.type !== 4) {
+          if (territory.territoryType !== 2 && territory.territoryType !== 3 && territory.territoryType !== 4) {
 
-            if (territory.type === 0 && sheep.expel) {
+            if (territory.territoryType === 0 && sheep.expel) {
 
               sheep.aim = false;
               sheep.spread = false;
@@ -27,7 +27,7 @@ function sheepBrain(): void {
               sheep.setVelocity(0, 0);
               sheep.body.reset(sheep.x, sheep.y);
 
-            } else if (territory.type === 1 && this.state.userSheep.tutorial === 20) {
+            } else if (territory.territoryType === 1 && this.state.userSheep.tutorial === 20) {
               
               if (!sheep.aim) {
                 
@@ -42,7 +42,7 @@ function sheepBrain(): void {
 
               }
 
-            } else if (!(territory.type === 1 && this.state.userSheep.tutorial === 30)) {
+            } else if (!(territory.territoryType === 1 && this.state.userSheep.tutorial === 30)) {
               this.teleportation(sheep);
             }
 
@@ -163,7 +163,7 @@ function sheepBrain(): void {
       sheep.setDepth(sheep.y + Math.round((sheep.height / 2) + 1)); // z-index
 
       // уход с ярмарки, если там не нужно быть
-      if (territory.type === 4 && !sheep.merging && !sheep.aim) {
+      if (territory.territoryType === 4 && !sheep.merging && !sheep.aim) {
 
         sheep.merging = false;
         let randomX: number = random(territory.x + 40, territory.x + 200);

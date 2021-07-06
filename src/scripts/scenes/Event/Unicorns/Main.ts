@@ -24,9 +24,6 @@ import {
   startHerdBoost
 } from '../../../general/modal';
 import {
-  checkExchangeRepository,
-} from '../../../general/territories';
-import {
   findAd,
   watchAd,
   adReward,
@@ -145,7 +142,6 @@ class Unicorn extends Phaser.Scene {
   public clickTerritory = clickTerritory.bind(this);
   public currentTerritory = currentTerritory.bind(this);
   public confirmExchangeTerritory = confirmExchangeTerritory.bind(this);
-  public checkExchangeRepository = checkExchangeRepository.bind(this);
   public convertDiamonds = convertDiamonds.bind(this);
   public exchange = exchange.bind(this);
   public showBank = showBank.bind(this);

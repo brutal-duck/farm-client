@@ -13,12 +13,12 @@ function chickenBrain(): void {
       
       if (territory) {
 
-        if (territory.type !== 4 || chicken.aim) {
+        if (territory.territoryType !== 4 || chicken.aim) {
 
           // проверка, не находится ли за бортом
-          if (territory.type !== 2 && territory.type !== 3 && territory.type !== 4) {
+          if (territory.territoryType !== 2 && territory.territoryType !== 3 && territory.territoryType !== 4) {
 
-            if (territory.type === 0 && chicken.expel) {
+            if (territory.territoryType === 0 && chicken.expel) {
 
               chicken.aim = false;
               chicken.spread = false;
@@ -130,7 +130,7 @@ function chickenBrain(): void {
       chicken.setDepth(chicken.y + Math.round((chicken.height / 2) + 1)); // z-index
 
       // уход с ярмарки, если там не нужно быть
-      if (territory.type === 4 && !chicken.merging && !chicken.aim) {
+      if (territory.territoryType === 4 && !chicken.merging && !chicken.aim) {
 
         chicken.merging = false;
         let randomX: number = random(territory.x + 40, territory.x + 200);

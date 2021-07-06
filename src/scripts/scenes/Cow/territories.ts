@@ -80,34 +80,6 @@ function installTerritory(): void {
   }
 }
 
-function deleteTerritoriesLocks(): void {
-  let part: number;
-  let prices: IterritoriesPrice[] = [];
-
-  if (this.state.farm === 'Sheep') {
-    part = this.state.userSheep.part;
-    prices = this.state.sheepSettings.territoriesSheepPrice;
-  } else if (this.state.farm === 'Chicken') {
-    part = this.state.userChicken.part;
-    prices = this.state.chickenSettings.territoriesChickenPrice;
-  } else if (this.state.farm === 'Cow') {
-    part = this.state.userCow.part;
-    prices = this.state.cowSettings.territoriesCowPrice;
-  }
-
-  for (let i in this.territories.children.entries) {
-    const territory: Territory = this.territories.children.entries[i];
-    if (territory.territoryType === 0) {
-      const unlock: number = prices.find((data: IterritoriesPrice) => data.block === territory.block && data.position === territory.position).unlock;
-      if (part >= unlock && territory.lock_image && territory.lock_text) {
-        territory.lock_image.destroy();
-        territory.lock_text.destroy();
-      }
-    }
-  }
-}
-
 export {
   installTerritory,
-  deleteTerritoriesLocks
 }

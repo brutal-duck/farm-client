@@ -159,7 +159,7 @@ function interval(): void {
     for (let i in this.territories.children.entries) {
       const territory: SheepTerritory = this.territories.children.entries[i];
       if (territory.territoryType === 2 || territory.territoryType === 3 || territory.territoryType === 5) {
-        this.changeSprite(territory);
+        territory.changeSprite();
       }
       if (territory.territoryType === 4) {
         if (territory.mergingCounter > 0) territory.mergingCounter++;

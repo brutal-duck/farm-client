@@ -1,8 +1,6 @@
 // поставить территорию
 import Firework from '../../components/animations/Firework';
 function installTerritory(): void {
-  console.log(this.state.exchangeTerritory)
-  console.log(this.state.territory)
   if (this.state.exchangeTerritory === 2 ||
     this.state.exchangeTerritory === 3 ||
     this.state.exchangeTerritory === 5) {
@@ -29,7 +27,7 @@ function installTerritory(): void {
       // });
 
       this.state.territory.improve = 1;
-      this.state.territory.type = this.state.exchangeTerritory;
+      this.state.territory.territoryType = this.state.exchangeTerritory;
       this.state.userSheep.money -= price;
       this.tryTask(5, this.state.exchangeTerritory);
 
@@ -56,9 +54,8 @@ function installTerritory(): void {
         let y: number = this.state.territory.y + 240;
   
         this.state.territory.setTexture('sheep-repository');
-        this.state.territory.repository = this.add.image(x, y, 'sheep-repository-1-1')
-          .setDepth(this.state.territory.y + 50)
-          .setOrigin(0.5, 1);
+        this.state.territory.createImproveText();
+        this.state.territory.createRepositorySprite();
         Firework.create(this, { x: this.state.territory.x + 120, y: this.state.territory.y + 120 }, 3);
 
       } else {
@@ -67,7 +64,7 @@ function installTerritory(): void {
 
         this.time.addEvent({ delay: 500, callback: (): void => {
 
-          this.changeSprite(this.state.territory);
+          this.state.territory.changeSprite();
           Firework.create(this, { x: this.state.territory.x + 120, y: this.state.territory.y + 120 }, 3);
           
         }, callbackScope: this, loop: false });
@@ -83,27 +80,22 @@ function installTerritory(): void {
       }
 
     } else {
-
-      let count: number = price - this.state.userSheep.money;
-      let diamonds: number = this.convertMoney(count);
+      const count: number = price - this.state.userSheep.money;
+      const diamonds: number = this.convertMoney(count);
       this.state.convertor = {
         fun: 5,
         count: count,
         diamonds: diamonds,
         type: 1
       }
-
-      let modal: Imodal = {
+      const modal: Imodal = {
         type: 1,
         sysType: 4
       }
       this.state.modal = modal;
       this.scene.launch('Modal', this.state);
-
     }
-
   }
-
 }
 
 

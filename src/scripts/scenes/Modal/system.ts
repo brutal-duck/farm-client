@@ -190,7 +190,7 @@ function systemWindow(): void {
 // окно куриной территории
 function chickenTerritory(): void {
   
-  switch (this.state.territory.type) {
+  switch (this.state.territory.territoryType) {
 
     case 0: // территория для покупки
       new BuyFarmTerritoryWindow(this)  

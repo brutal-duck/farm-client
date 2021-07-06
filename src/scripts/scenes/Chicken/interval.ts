@@ -5,6 +5,7 @@ import Hearts from '../../components/animations/Hearts';
 import Egg from '../../components/Resource/Egg';
 import { progressTerritoryCooldown } from '../../general/interval';
 import SpeechBubble from '../../components/animations/SpeechBuble';
+import ChickenTerritory from './../../components/Territories/ChickenTerritory';
 let checkCollector: number = 0;
 let sheepCollectorVolume: number = 0;
 let cowCollectorVolume: number = 0;
@@ -74,7 +75,7 @@ function interval(): void {
 
       let territory = this.territories.children.entries[i];
 
-      if ((territory.type === 2 || territory.type === 3) && territory.volume < 1000) {
+      if ((territory.territoryType === 2 || territory.territoryType === 3) && territory.volume < 1000) {
 
         let reg: number = this.settings.territoriesChickenSettings.find((item: IterritoriesChickenSettings) => item.improve === territory.improve).regeneration;
         territory.volume += reg;
@@ -133,7 +134,7 @@ function interval(): void {
 
           }
 
-          if (eggs < countEggs && !chicken.drag && (territory.type === 2 || territory.type === 3)) {
+          if (eggs < countEggs && !chicken.drag && (territory.territoryType === 2 || territory.territoryType === 3)) {
 
             chicken.egg = 0;
 
@@ -181,12 +182,12 @@ function interval(): void {
 
       if (territory && !chicken.drag) {
 
-        if (territory.type === 2) {
+        if (territory.territoryType === 2) {
 
           if (points.eating > territory.volume) territory.volume = 0;
           else territory.volume -= points.eating;
   
-        } else if (territory.type === 3) {
+        } else if (territory.territoryType === 3) {
 
           if (points.drinking > territory.volume) territory.volume = 0;
           else territory.volume -= points.drinking;
@@ -200,13 +201,13 @@ function interval(): void {
     // меняем спрайты территорий, если нужно
     for (let i in this.territories.children.entries) {
 
-      let territory = this.territories.children.entries[i];
+      let territory: ChickenTerritory = this.territories.children.entries[i];
 
-      if (territory.type === 2 || territory.type === 3 || territory.type === 5) {
-        this.changeSprite(territory);
+      if (territory.territoryType === 2 || territory.territoryType === 3 || territory.territoryType === 5) {
+        territory.changeSprite();
       }
 
-      if (territory.type === 4) {
+      if (territory.territoryType === 4) {
 
         if (territory.mergingCounter > 0) territory.mergingCounter++;
         if (territory.mergingCounter > this.state.maxMerginTime) {

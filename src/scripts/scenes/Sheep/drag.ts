@@ -47,7 +47,7 @@ function drag(): void {
     
     if (territory) {
 
-      if (territory.type === 4) {
+      if (territory.territoryType === 4) {
 
         if (sheep.type === 0) {
           SpeechBubble.create(this, this.state.lang.mergingDiamondSheep, 1);
@@ -101,13 +101,13 @@ function drag(): void {
 
     if (typeTerritory) {
 
-      if (typeTerritory.type !== 4) {
+      if (typeTerritory.territoryType !== 4) {
 
         // мерджинг на поле
         this.dragSheepMerging(sheep);
 
         // удаление животного
-        if ((typeTerritory === undefined || typeTerritory.type === 0) && this.state.userSheep.tutorial >= 100) {
+        if ((typeTerritory === undefined || typeTerritory.territoryType === 0) && this.state.userSheep.tutorial >= 100) {
 
           sheep.expel = true;
           this.state.animal = sheep;
@@ -119,7 +119,7 @@ function drag(): void {
 
           let territory = this.territories.children.entries[i];
 
-          if (territory.type === 4) {
+          if (territory.territoryType === 4) {
 
             let check = territory.merging.find((data: Imerging) => data._id === sheep._id);
 

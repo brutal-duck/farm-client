@@ -4,6 +4,7 @@ import Territory from './../components/Territories/Territory';
 import CowSprite from './../components/Animal/CowSprite';
 import Factory from './../components/Territories/Factory';
 import SheepTerritory from './../components/Territories/SheepTerritory';
+import ChickenTerritory from './../components/Territories/ChickenTerritory';
 
 export default function autosave(): void {
   const state: Istate = this.state;
@@ -127,12 +128,12 @@ export default function autosave(): void {
     else state.userChicken.autosaveCounter = 0;
 
     for (const i in this.territories.children.entries) {
-      const territory = this.territories.children.entries[i];
+      const territory: ChickenTerritory = this.territories.children.entries[i];
       territories.push({
         _id: territory._id,
         block: territory.block,
         position: territory.position,
-        type: territory.type,
+        type: territory.territoryType,
         volume: territory.volume,
         improve: territory.improve,
         money: territory.money,

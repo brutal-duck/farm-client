@@ -5,7 +5,6 @@ import SpeechBubble from './../animations/SpeechBuble';
 
 export default class SheepTerritory extends Territory {
   public scene: Sheep;
-  public factory: Factory;
   constructor(scene: Sheep, x: number, y: number, type: string, data: Iterritories) {
     super(scene, x, y, type, data);
   }
@@ -18,16 +17,25 @@ export default class SheepTerritory extends Territory {
     this.scene.sellWool();
   }
 
-  public createMetgingZone(): void {
-    super.createMetgingZone();
+  public createMergingZone(): void {
+    super.createMergingZone();
 
-    let topZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.x + 120, this.y + 45, 300, 145).setDropZone(undefined, () => {});
+    const farm: string = this.scene.state.farm.toLowerCase();
+    this.scene.add.sprite(this.x, this.y - 60, `${farm}-tent`).setDepth(this.y).setOrigin(0, 0);
+
+    const fairLevel: string = String(this.scene.state[`user${this.scene.state.farm}`].fair);
+    this.levelText = this.scene.add.text(this.x + 200, this.y + 180, fairLevel, {
+      font: '34px Shadow',
+      color: '#df870a'
+    }).setOrigin(0.5, 0.5).setDepth(this.y);
+
+    const topZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.x + 120, this.y + 45, 300, 145).setDropZone(undefined, () => {});
     topZone.type = 'top';
     // let graphics1 = this.add.graphics().setDepth(territory.y * 5);
     // graphics1.lineStyle(2, 0xffff00);
     // graphics1.strokeRect(topZone.x - topZone.input.hitArea.width / 2, topZone.y - topZone.input.hitArea.height / 2, topZone.input.hitArea.width, topZoneinput.hitArea.height);
     
-    let bottomZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.x + 120, this.y + 190, 300, 145).setDropZone(undefined, () => {});
+    const bottomZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.x + 120, this.y + 190, 300, 145).setDropZone(undefined, () => {});
     bottomZone.type = 'bottom';
     
     // let graphics2 = this.add.graphics().setDepth(territory.y * 5);
@@ -56,7 +64,7 @@ export default class SheepTerritory extends Territory {
           SpeechBubble.create(this.scene.game.scene.keys[`SheepBars`], this.scene.state.lang.maxCollectorLevel, 3);
         }
       } else if (this.territoryType === 7) {
-        this.scene.takeDiamondSheep();
+        this.takeDiamondAnimal();
       }
     }
   }

@@ -83,7 +83,6 @@ export default class FarmFairWindow {
   private upgradeFair(): void {
     this.scene.scene.stop();
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-    if (this.scene.state.farm === 'Cow') this.scene.game.scene.keys[this.scene.state.farm].territories.children.entries.find(el => el.territoryType === 4).fairLevelUp();
-    else this.scene.game.scene.keys[this.scene.state.farm].fairLevelUp();
+    this.scene.game.scene.keys[this.scene.state.farm].territories.children.entries.find(el => el.territoryType === 4).fairLevelUp();
   }
 }

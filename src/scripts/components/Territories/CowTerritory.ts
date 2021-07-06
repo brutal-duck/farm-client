@@ -79,8 +79,17 @@ export default class CowTerritory extends Territory {
     }
   }
 
-  public createMetgingZone(): void {
-    super.createMetgingZone();
+  public createMergingZone(): void {
+    super.createMergingZone();
+
+    const farm: string = this.scene.state.farm.toLowerCase();
+    this.scene.add.sprite(this.x, this.y - 35, `${farm}-tent`).setDepth(this.y).setOrigin(0, 0);
+
+    const fairLevel: string = String(this.scene.state[`user${this.scene.state.farm}`].fair);
+    this.levelText = this.scene.add.text(this.x + 47, this.y + 196, fairLevel, {
+      font: '34px Shadow',
+      color: '#df870a'
+    }).setOrigin(0.5, 0.5).setDepth(this.y);
     const topZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.x + 120, this.y + 45, 300, 145).setDropZone(undefined, () => {});
     topZone.type = 'top';
     // let graphics1 = this.add.graphics().setDepth(territory.y * 5);

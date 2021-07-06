@@ -56,7 +56,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   }
 
   private init(data: Iterritories): void {
-    console.log(data.type);
     this.scene.add.existing(this);
     this.scene.territories.add(this);
     this.setOrigin(0, 0);
@@ -78,7 +77,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       this.createImproveText();
     }
     if (this.territoryType === 4) {
-      this.createMetgingZone();
+      this.createMergingZone();
     } else if (this.territoryType === 5) {
       this.createRepositorySprite();
     } else if (this.territoryType === 6) {
@@ -140,18 +139,9 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  public createMetgingZone(): void {
-    const farm: string = this.scene.state.farm.toLowerCase();
-    const fairLevel: string = String(this.scene.state[`user${this.scene.state.farm}`].fair);
-
+  public createMergingZone(): void {
     this.merging = [];
     this.mergingCounter = 0;
-    this.scene.add.sprite(this.x, this.y - 35, `${farm}-tent`).setDepth(this.y).setOrigin(0, 0);
-    
-    this.levelText = this.scene.add.text(this.x + 47, this.y + 196, fairLevel, {
-      font: '34px Shadow',
-      color: '#df870a'
-    }).setOrigin(0.5, 0.5).setDepth(this.y);
   }
 
   private createRepositorySprite(): void {
@@ -171,9 +161,9 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     let max: number;   
 
     if (this.scene.state.farm === 'Sheep') {
-      max = this.scene.state.sheepSettings.territoriesSheepSettings[this.improve - 1].woolStorage;
+      max = this.scene.state.sheepSettings.territoriesSheepSettings[this.improve - 1].storage;
     } else if (this.scene.state.farm === 'Chicken') {
-      max = this.scene.state.chickenSettings.territoriesChickenSettings[this.improve - 1].eggStorage;
+      max = this.scene.state.chickenSettings.territoriesChickenSettings[this.improve - 1].storage;
     } else if (this.scene.state.farm === 'Cow') {
       max = this.scene.state.cowSettings.cowFactorySettings[this.improve - 1].lotSize * this.scene.state.storageMultiply;
     }
@@ -297,10 +287,12 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   }
 
   private setTerritoryUnlockCooldown(type: number): void {
-    const settings: IterritoriesPrice = this.scene.state.cowSettings.territoriesCowPrice
+    const settings: IterritoriesPrice[] = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`territories${this.scene.state.farm}Price`];
+
+    const foundSettings:IterritoriesPrice = settings
       .find((el: IterritoriesPrice) => el.block === this.block && el.position === this.position);
     
-    this.cooldown = settings.unlockCooldown;
+    this.cooldown = foundSettings.unlockCooldown;
     this.boughtType = type;
     this.bought = true;
     this.cooldownSprite = new CooldownSprite(this);
@@ -308,7 +300,8 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   
   public unlockTerritory(): void {
     if (this.bought && this.cooldown <= 0 && this.territoryType === 0) {
-      this.territoryType = 1;
+      console.log('1')
+      this.territoryType = this.boughtType;
       this.scene.tryTask(5, 1);
       this.scene.time.addEvent({ delay: 500, callback: (): void => {
         this.forest?.destroy();
@@ -527,9 +520,9 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       let max: number;
       
       if (this.scene.state.farm === 'Sheep') {
-        max = this.scene.state.sheepSettings.territoriesSheepSettings[this.improve - 1].woolStorage;
+        max = this.scene.state.sheepSettings.territoriesSheepSettings[this.improve - 1].storage;
       } else if (this.scene.state.farm === 'Chicken') {
-        max = this.scene.state.chickenSettings.territoriesChickenSettings[this.improve - 1].eggStorage;
+        max = this.scene.state.chickenSettings.territoriesChickenSettings[this.improve - 1].storage;
       } else if (this.scene.state.farm === 'Cow') {
         max = this.scene.state.cowSettings.cowFactorySettings[this.improve - 1].lotSize * this.scene.state.storageMultiply;
       }
@@ -802,8 +795,4 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     super.preUpdate(time, delta);
     this.checkAndSetRepositoryAnim();
   }
-
-  
-
-
 }
