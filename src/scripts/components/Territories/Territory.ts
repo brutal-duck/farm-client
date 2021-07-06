@@ -56,6 +56,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   }
 
   private init(data: Iterritories): void {
+    console.log(data.type);
     this.scene.add.existing(this);
     this.scene.territories.add(this);
     this.setOrigin(0, 0);

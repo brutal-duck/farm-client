@@ -595,29 +595,24 @@ function deleteTerritoriesLocks(): void {
 function buildBorders(): void {
   
   for (let i in this.territories.children.entries) {
-
-    let territory = this.territories.children.entries[i];
-
-    if (territory.type === 7) {
-
+    const territory = this.territories.children.entries[i];
+    if (territory.territoryType === 7) {
       territory.borderTop.setVisible(true);
       territory.borderLeft.setVisible(true);
 
-      let bottomTer = this.territories.children.entries.find((data: any) => data.block === 2 && data.position === 1)
-      
-      if (bottomTer.type === 0) territory.borderBottom.setVisible(true);
+      const bottomTer = this.territories.children.entries.find((data: any) => data.block === 2 && data.position === 1)
+      if (bottomTer.territoryType === 0) territory.borderBottom.setVisible(true);
       else territory.borderBottom.setVisible(false);
-
     }
 
-    if (territory.type === 6) {
+    if (territory.territoryType === 6) {
       territory.borderTop.setVisible(true);
     }
 
-    if (territory.type === 1 ||
-      territory.type === 2 ||
-      territory.type === 3 ||
-      territory.type === 5) {
+    if (territory.territoryType === 1 ||
+      territory.territoryType === 2 ||
+      territory.territoryType === 3 ||
+      territory.tyterritoryTypepe === 5) {
 
       if (territory.position === 1) {
         territory.borderLeft.setVisible(true);
@@ -628,78 +623,62 @@ function buildBorders(): void {
       }
       
       if (territory.block !== 8) {
+        const topTer = this.territories.children.entries.find((data: any) => data.block === territory.block - 1 && data.position === territory.position);
+        const bottomTer = this.territories.children.entries.find((data: any) => data.block === territory.block + 1 && data.position === territory.position);
 
-        let topTer = this.territories.children.entries.find((data: any) => data.block === territory.block - 1 && data.position === territory.position);
-        
-        let bottomTer = this.territories.children.entries.find((data: any) => data.block === territory.block + 1 && data.position === territory.position);
-
-        if (topTer !== undefined && topTer.type === 0) {
+        if (topTer !== undefined && topTer.territoryType === 0) {
           territory.borderTop.setVisible(true);
         } else {
           territory.borderTop.setVisible(false);
         }
-
-        if (bottomTer.type === 1 ||
-          bottomTer.type === 2 ||
-          bottomTer.type === 3 ||
-          bottomTer.type === 5) {
+        if (bottomTer.territoryType === 1 ||
+          bottomTer.territoryType === 2 ||
+          bottomTer.territoryType === 3 ||
+          bottomTer.territoryType === 5) {
           territory.borderBottom.setVisible(false);
         } else {
           territory.borderBottom.setVisible(true);
         }
 
         if (territory.position === 1) {
+          const centerTer = this.territories.children.entries.find((data: any) => data.block === territory.block && data.position === 2);
 
-          let centerTer = this.territories.children.entries.find((data: any) => data.block === territory.block && data.position === 2);
-
-          if (centerTer.type === 0) {
+          if (centerTer.territoryType === 0) {
             territory.borderRight.setVisible(true);
           } else {
             territory.borderRight.setVisible(false);
           }
-
         }
         
         if (territory.position === 2) {
+          const leftTer = this.territories.children.entries.find((data: any) => data.block === territory.block && data.position === 1);
+          const rightTer = this.territories.children.entries.find((data: any) => data.block === territory.block && data.position === 3);
 
-          let leftTer = this.territories.children.entries.find((data: any) => data.block === territory.block && data.position === 1);
-
-          let rightTer = this.territories.children.entries.find((data: any) => data.block === territory.block && data.position === 3);
-
-          if (leftTer.type === 0) {
+          if (leftTer.territoryType === 0) {
             territory.borderLeft.setVisible(true);
           } else {
             territory.borderLeft.setVisible(false);
           }
-
-          if (rightTer.type === 0) {
+          if (rightTer.territoryType === 0) {
             territory.borderRight.setVisible(true);
           } else {
             territory.borderRight.setVisible(false);
           }
-
         }
 
         if (territory.position === 3) {
-
-          let centerTer = this.territories.children.entries.find((data: any) => data.block === territory.block && data.position === 2);
-
-          if (centerTer.type === 0) {
+          const centerTer = this.territories.children.entries.find((data: any) => data.block === territory.block && data.position === 2);
+          if (centerTer.territoryType === 0) {
             territory.borderLeft.setVisible(true);
           } else {
             territory.borderLeft.setVisible(false);
           }
-
         }
-
       } else {
         territory.borderBottom.setVisible(true);
       }
-
     }
-
   }
-  
 }
 
 
