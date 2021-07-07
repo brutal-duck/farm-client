@@ -17,7 +17,6 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
   private chatAnim: Phaser.Tweens.Tween;
   private fortuneAnim: Phaser.Tweens.Tween;
 
-
   constructor(scene: SheepBars | ChickenBars | CowBars | UnicornBars) {
     super(scene, 650, scene.height - 90, 'sandwich');
     this.init();
@@ -26,7 +25,7 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
     return new BarsMenu(scene);
   }
 
-  private init(): void {
+  private async init(): Promise<void> {
     this.buildElements();
     this.setListeners();
   }
@@ -51,12 +50,17 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
 
   private setListeners(): void {
     this.scene.clickButton(this.authIcon, (): void => {
-      let modal: Imodal = {
-        type: 1,
-        sysType: 15
+      if (this.scene.state.platform === 'web') {
+        let modal: Imodal = {
+          type: 1,
+          sysType: 15
+        }
+        this.scene.state.modal = modal;
+        this.scene.scene.launch('Modal', this.scene.state);
+      } else if (this.scene.state.platform === 'ya') {
+        this.scene.game.scene.keys[this.scene.state.farm].yandexAuth();
       }
-      this.scene.state.modal = modal;
-      this.scene.scene.launch('Modal', this.scene.state);
+
     });
     this.scene.clickButton(this.profileIcon, (): void => {
       let modal: Imodal = {
@@ -115,6 +119,18 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       this.chatIcon.setVisible(true);
     }
 
+    if (this.scene.state.platform === 'ya' && !this.scene.state.yaPlayer && !this.authIcon.visible) { 
+      this.authIcon.setVisible(true);
+      this.setVisible(false);
+      this.profileIcon.setVisible(false);
+      this.chatIcon.setVisible(false);
+    } else if (this.scene.state.platform === 'ya' && this.scene.state.yaPlayer && this.authIcon.visible) {
+      this.authIcon.setVisible(false);
+      this.setVisible(true);
+      this.profileIcon.setVisible(true);
+      this.chatIcon.setVisible(true);
+    }
+
     if (!this.scene.state.online && !this.offlineIcon.visible) {
       this.offlineIcon.setVisible(true);
       this.hideElements();
@@ -125,9 +141,9 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       this.setVisible(false);
       this.chatIcon.setVisible(false);
       this.profileIcon.setVisible(false);
-    } else if (this.scene.state.farm === 'Sheep' && this.scene.state.userSheep.tutorial >= 100 && this.scene.state.platform === 'web' && !this.visible) {
+    } else if (this.scene.state.farm === 'Sheep' && this.scene.state.userSheep.tutorial >= 100 && (this.scene.state.platform === 'web' || this.scene.state.platform === 'ya') && !this.visible) {
       this.authIcon.setVisible(true);
-    } else if (this.scene.state.farm === 'Sheep' && this.scene.state.userSheep.tutorial >= 100 && this.scene.state.platform !== 'web') {
+    } else if (this.scene.state.farm === 'Sheep' && this.scene.state.userSheep.tutorial >= 100 && this.scene.state.platform !== 'web' && this.scene.state.platform !== 'ya') {
       this.authIcon.setVisible(false);
       this.setVisible(true);
       this.chatIcon.setVisible(true);
@@ -151,7 +167,7 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       this.scene.state.progress.event.startTime < 0 && 
       this.scene.state.progress.event.eventPoints > 0
     ) {
-      if (this.scene.state.platform === 'web' && this.scene.state.user.login === '') {
+      if (this.scene.state.platform === 'web' && this.scene.state.user.login === '' || this.scene.state.platform === 'ya' && !this.scene.state.yaPlayer) {
         this.fortuneIcon.setVisible(false);
       } else {
         this.fortuneIcon.setVisible(true);

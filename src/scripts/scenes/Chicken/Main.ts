@@ -33,6 +33,7 @@ import {
   farmBalance,
   sendSocialEvent,
   sendAppEventVk,
+  yandexAuth
 } from '../../general/basic';
 import {
   improveCollector,
@@ -252,6 +253,7 @@ class Chicken extends Phaser.Scene {
   public setTerritoryUnlockCooldown = setTerritoryUnlockCooldown.bind(this);
   public unlockTerritory = unlockTerritory.bind(this);
   public progressTerritoryCooldown = progressTerritoryCooldown.bind(this);
+  public yandexAuth = yandexAuth.bind(this);
 
   public init(state: Istate): void {
 

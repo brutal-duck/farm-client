@@ -271,7 +271,7 @@ class Preload extends Phaser.Scene {
     this.load.image('big-btn-yellow', bigButtonYellow);
     this.load.image('repository-sell-btn', repositorySellBtn);
 
-    if (this.state.platform === 'vk' || this.state.platform === 'ok' || this.state.platform === 'ya') {
+    if ((this.state.platform === 'vk' || this.state.platform === 'ok' || this.state.platform === 'ya') && this.state.avatar !== '') {
       this.load.image('avatar', this.state.avatar);
     }
 

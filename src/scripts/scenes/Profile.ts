@@ -787,7 +787,7 @@ class Profile extends Phaser.Scene {
       (this.state.progress.sheep.part > 4 ||
       this.state.progress.chicken.part >= 1 ||
       this.state.progress.cow.part >= 1) && 
-      (this.state.user.login || this.state.name) &&
+      (this.state.user.login || this.state.name && this.state.platform !== 'ya' || this.state.yaPlayer) &&
       !this.eventStartText?.visible
     ) {
       this.eventIsland?.setVisible(true);
@@ -812,7 +812,7 @@ class Profile extends Phaser.Scene {
       (this.state.progress.sheep.part > 4 || 
       this.state.progress.chicken.part >= 1 || 
       this.state.progress.cow.part >= 1) && 
-      (this.state.user.login || this.state.name) &&
+      (this.state.user.login || this.state.name && this.state.platform !== 'ya' || this.state.yaPlayer) &&
       !this.eventMapFarm?.visible
     ) {
       this.eventStartText?.setVisible(false);
@@ -831,7 +831,7 @@ class Profile extends Phaser.Scene {
       this.state.progress.event.type !== 1 ||
       this.state.userUnicorn?.tutorial === 0 && 
       this.state.progress.event.type === 1) && 
-      (this.state.user.login || this.state.name) && 
+      (this.state.user.login || this.state.name && this.state.platform !== 'ya' || this.state.yaPlayer) && 
       (this.state.progress.sheep.part > 4 || 
       this.state.progress.chicken.part >= 1 || 
       this.state.progress.cow.part >= 1) && 
@@ -844,7 +844,7 @@ class Profile extends Phaser.Scene {
     } else if (
       this.state.progress.event.endTime <= 0 &&
       this.state.progress.event.open &&
-      (this.state.user.login || this.state.name) &&
+      (this.state.user.login || this.state.name && this.state.platform !== 'ya' || this.state.yaPlayer) &&
       (this.state.progress.sheep.part > 4 ||
       this.state.progress.chicken.part >= 1 ||
       this.state.progress.cow.part >= 1) 
@@ -865,7 +865,7 @@ class Profile extends Phaser.Scene {
 
     } else if (
       ((!this.state.user.login && 
-      !this.state.name || 
+      (!this.state.name && this.state.platform !== 'ya' || this.state.yaPlayer) || 
       this.state.progress.sheep.part <= 4 && 
       this.state.progress.chicken.part < 1 && 
       this.state.progress.cow.part < 1) || 

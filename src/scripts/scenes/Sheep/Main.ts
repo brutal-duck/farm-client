@@ -41,6 +41,7 @@ import {
   remainderSellResource,
   farmBalance,
   randomString,
+  yandexAuth
 } from '../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -144,7 +145,6 @@ import {
   showFeedBoostSpeechBubble,
   progressTerritoryCooldown,
 } from '../../general/interval';
-import axios from 'axios';
 class Sheep extends Phaser.Scene {
   constructor() {
     super('Sheep');
@@ -323,6 +323,7 @@ class Sheep extends Phaser.Scene {
   public setTerritoryUnlockCooldown = setTerritoryUnlockCooldown.bind(this);
   public unlockTerritory = unlockTerritory.bind(this);
   public progressTerritoryCooldown = progressTerritoryCooldown.bind(this);
+  public yandexAuth = yandexAuth.bind(this);
 
   public init(state: Istate): void {
 

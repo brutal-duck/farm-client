@@ -267,18 +267,64 @@ function payVK(id: number): void {
 function payYandex(id: number): void {
   const pack: Ipackage = this.state.packages.find((data: any) => data.id === id);
   if (pack) {
-    this.state.ysdk.getPayments({ signed: true }).then(payments => {
-      payments.purchase({ id: String(id) }).then(purchase => {
-        axios.post(process.env.API + "/addOrderYa", {
-          signature: purchase.signature,
-          userId: this.state.user.id, 
-          packageId: id, 
-        }).then(res => {
-          if (!res.data.error) this.game.scene.keys[this.state.farm].autosave();
-        }); 
-      });
-    }).catch(err => { console.log(err); });
+    this.state.ysdk.getPlayer().then(() => {
+      this.state.ysdk.getPayments({ signed: true }).then(payments => {
+        payments.purchase({ id: String(id) }).then(purchase => {
+          axios.post(process.env.API + "/addOrderYa", {
+            signature: purchase.signature,
+            userId: this.state.user.id, 
+            packageId: id, 
+          }).then(res => {
+            if (!res.data.error) this.game.scene.keys[this.state.farm].autosave();
+          }); 
+        });
+      }).catch(err => { console.log(err); });
+    }).catch(() => {
+      this.game.scene.keys[this.state.farm].yandexAuth();
+    });
   }
+}
+
+function yandexAuth(): Promise<void> {
+  return this.state.ysdk.auth.openAuthDialog().then(() => {
+    console.log('подтвердить авторизацию')
+    this.state.ysdk.getPlayer().then((player) => {
+      console.log({
+        id: this.state.user.id,
+        hash: this.state.user.hash,
+        counter: this.state.user.counter,
+        yaId: player.getUniqueID(),
+      })
+      axios.post(process.env.API + "/authYa", {
+        id: this.state.user.id,
+        hash: this.state.user.hash,
+        counter: this.state.user.counter,
+        yaId: player.getUniqueID(),
+      }).then((res) => {
+        console.log(res.data);
+        const { founded, error } = res.data;
+        if (!error) {
+          if (founded) {
+            const modal: Imodal = {
+              type: 1,
+              sysType: 20,
+            }
+            this.state.modal = modal;
+            this.scene.launch('Modal', this.state);
+          }
+        }
+      })
+    });
+  }).catch((err) => {
+    const modal: Imodal = {
+      type: 1,
+      sysType: 3,
+      height: 150,
+      message: this.state.lang.authorizationRequired
+    }
+    this.state.modal = modal;
+    this.scene.launch('Modal', this.state);
+  });
 }
 
 function payAndroid(id: number): void {
@@ -1704,6 +1750,7 @@ function sendAppEventVk(state: Istate, type: number, value: number): void {
 }
 
 export {
+  yandexAuth,
   random,
   getRandomBool,
   randomString,
