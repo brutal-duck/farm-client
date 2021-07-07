@@ -284,7 +284,8 @@ function payYandex(id: number): void {
 function payAndroid(id: number): void {
   const store: any = window['store'];
   console.log(id, 'id package')
-  store.order(id);
+  console.log(store)
+  store.order(String(id));
 }
 
 // римское число
