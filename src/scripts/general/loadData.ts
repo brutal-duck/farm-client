@@ -1,4 +1,4 @@
-import tasks from '../tasks';
+import AllTasks from '../tasks';
 import basicSheepTerritories from '../local/sheepTerritories';
 import basicChickenTerritories from '../local/chickenTerritories';
 import basicCowTerritories from '../local/cowTerritories';
@@ -72,9 +72,9 @@ function validateBoosts(boosts: Iboosts): Iboosts {
 
 function setTaskStatus(farmId: number, resTask: any[]): Itasks[] {
   const updatedTasks: Itasks[] = [];
-  for (const task of tasks) if (task.farm === farmId) updatedTasks.push(task);
+  for (const task of AllTasks) if (task.farm === farmId) updatedTasks.push(task);
   for (const usersTask of resTask) {
-    const task = tasks.find((task: Itasks) => task.id === usersTask.task_id);
+    const task = AllTasks.find((task: Itasks) => task.id === usersTask.task_id);
     if (task) {
       task.done = usersTask.done;
       task.got_awarded = usersTask.got_awarded;
@@ -124,13 +124,90 @@ function initAndroidStore(state: Istate): void {
   store.refresh();
 }
 
+function updateImproveTerritories(territories: Iterritories[]): Iterritories[] {
+  return territories.map(el => {
+    if (el.improve === 2) {
+      el.improve = 6 
+    } else if (el.improve === 3) {
+      el.improve = 13
+    } else if (el.improve === 4) {
+      el.improve = 20
+    } else el.improve = 1;
+    return el;
+  });
+}
+
+
+function checkDoneTasks(state: Istate): void {
+  const sheepTasks: Itasks[] = AllTasks.filter(el => el.part === state.userSheep.part && el.farm === 1);
+
+  const chickenTasks: Itasks[] = AllTasks.filter(el => el.part === state.userChicken.part && el.farm === 2);
+
+  for (const task of sheepTasks) {
+    // задания на улучшение земель
+    if (task.type === 8
+      || task.type === 9
+      || task.type === 17
+      || task.type === 24) {
+
+      let count: number = 0;
+      let type: number;
+
+      if (task.type === 8) type = 2;
+      else if (task.type === 9) type = 3;
+      else if (task.type === 17) type = 5;
+      else if (task.type === 24) type = 8
+
+      for (const territory of state.sheepTerritories) {
+        if (type === territory.type &&
+          territory.improve >= task.state) count++
+      }
+
+      if (count >= task.count) {
+        task.progress = task.count;
+        task.done = 1;
+      } else {
+        task.progress = count;
+      }
+    }
+  }
+  for (const task of chickenTasks) {
+    // задания на улучшение земель
+    if (task.type === 8
+      || task.type === 9
+      || task.type === 17
+      || task.type === 24) {
+
+      let count: number = 0;
+      let type: number;
+
+      if (task.type === 8) type = 2;
+      else if (task.type === 9) type = 3;
+      else if (task.type === 17) type = 5;
+      else if (task.type === 24) type = 8
+
+      for (const territory of state.chickenTerritories) {
+        if (type === territory.type &&
+          territory.improve >= task.state) count++
+      }
+
+      if (count >= task.count) {
+        task.progress = task.count;
+        task.done = 1;
+      } else {
+        task.progress = count;
+      }
+    }
+  }
+}
+
 export default function loadData(response: any): void {
   if (this.state.build < response.data.user.build) {
     this.children.destroy();
     new ErrorWindow(this);
     return;
   }
-  console.log(response.data)
+
   if (this.state.farm === 'Sheep') this.state.offline = response.data.progress.sheepOfflineTime;
   else if (this.state.farm === 'Chicken') this.state.offline = response.data.progress.chickenOfflineTime;
   else if (this.state.farm === 'Cow') this.state.offline = response.data.progress.cowOfflineTime;
@@ -259,6 +336,12 @@ export default function loadData(response: any): void {
   this.state.sheepTerritories = validateTerritories(sheepTerritories, basicSheepTerritories);
   this.state.chickenTerritories = validateTerritories(chickenTerritories, basicChickenTerritories);
   this.state.cowTerritories = validateTerritories(cowTerritories, basicCowTerritories);
+
+  if (response.data.build < 3.9) {
+    this.state.sheepTerritories = updateImproveTerritories(this.state.sheepTerritories);
+    this.state.chickenTerritories = updateImproveTerritories(this.state.chickenTerritories);
+    checkDoneTasks(this.state);
+  }
   // яйца
   const chickenEggs: IchickenEgg[] = [];
   for (let i in response.data.user.chicken_eggs) {
