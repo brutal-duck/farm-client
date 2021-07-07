@@ -267,25 +267,66 @@ function payVK(id: number): void {
 function payYandex(id: number): void {
   const pack: Ipackage = this.state.packages.find((data: any) => data.id === id);
   if (pack) {
-    this.state.ysdk.getPayments({ signed: true }).then(payments => {
-      payments.purchase({ id: String(id) }).then(purchase => {
-        axios.post(process.env.API + "/addOrderYa", {
-          signature: purchase.signature,
-          userId: this.state.user.id, 
-          packageId: id, 
-        }).then(res => {
-          if (!res.data.error) this.game.scene.keys[this.state.farm].autosave();
-        }); 
-      });
-    }).catch(err => { console.log(err); });
+    this.state.ysdk.getPlayer().then(() => {
+      this.state.ysdk.getPayments({ signed: true }).then(payments => {
+        payments.purchase({ id: String(id) }).then(purchase => {
+          axios.post(process.env.API + "/addOrderYa", {
+            signature: purchase.signature,
+            userId: this.state.user.id, 
+            packageId: id, 
+          }).then(res => {
+            if (!res.data.error) this.game.scene.keys[this.state.farm].autosave();
+          }); 
+        });
+      }).catch(err => { console.log(err); });
+    }).catch(() => {
+      this.game.scene.keys[this.state.farm].yandexAuth();
+    });
   }
+}
+
+function yandexAuth(): Promise<void> {
+  return this.state.ysdk.auth.openAuthDialog().then(() => {
+    this.state.ysdk.getPlayer().then((player) => {
+      this.state.yaPlayer = player;
+      this.state.name = player.getName();
+      if (this.state.name === '') this.state.name = `yandex_${this.state.user.id.substr(0, 4)}`;
+      this.state.avatar = player.getPhoto('large');
+      axios.post(process.env.API + "/authYa", {
+        id: this.state.user.id,
+        hash: this.state.user.hash,
+        counter: this.state.user.counter,
+        yaId: player.getUniqueID(),
+      }).then((res) => {
+        const { founded, error } = res.data;
+        if (!error) {
+          if (founded) {
+            const modal: Imodal = {
+              type: 1,
+              sysType: 20,
+            }
+            this.state.modal = modal;
+            this.scene.launch('Modal', this.state);
+          }
+        }
+      })
+    });
+  }).catch((err) => {
+    const modal: Imodal = {
+      type: 1,
+      sysType: 3,
+      height: 150,
+      message: this.state.lang.authorizationRequired
+    }
+    this.state.modal = modal;
+    this.scene.launch('Modal', this.state);
+  });
 }
 
 function payAndroid(id: number): void {
   const store: any = window['store'];
   console.log(id, 'id package')
-  console.log(store)
-  store.order(String(id));
+  store.order('package_' + id);
 }
 
 // римское число
@@ -1705,6 +1746,7 @@ function sendAppEventVk(state: Istate, type: number, value: number): void {
 }
 
 export {
+  yandexAuth,
   random,
   getRandomBool,
   randomString,

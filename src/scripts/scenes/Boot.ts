@@ -297,32 +297,29 @@ class Boot extends Phaser.Scene {
 
   private checkYandexUser(): void {
     const d: Document = document;
-      const t: HTMLScriptElement = d.getElementsByTagName('script')[0];
-      const s: HTMLScriptElement = d.createElement('script');
-      s.src = 'https://yandex.ru/games/sdk/v2';
-      s.async = true;
-      t.parentNode.insertBefore(s, t);
-      s.onload = (): void => {
-        window['YaGames'].init().then((ysdk: any) => {
-          this.state.ysdk = ysdk;
-          this.initYandexUser().catch((err) => {
-            console.log(err);
-            ysdk.auth.openAuthDialog().then(() => {
-              this.initYandexUser();
-            }).catch(() => {
-              this.createErrorWindow();
-            });
-          });
+    const t: HTMLScriptElement = d.getElementsByTagName('script')[0];
+    const s: HTMLScriptElement = d.createElement('script');
+    s.src = 'https://yandex.ru/games/sdk/v2';
+    s.async = true;
+    t.parentNode.insertBefore(s, t);
+    s.onload = (): void => {
+      window['YaGames'].init().then((ysdk: any) => {
+        this.state.ysdk = ysdk;
+        this.initYandexUser().catch((err) => {
+          this.hash = this.getCookieHash();
+          this.postCheckUser(this.hash);
         });
-      }
+      });
+    }
   }
 
   private async initYandexUser(): Promise<void> {
     return this.state.ysdk.getPlayer().then(player => {
       this.name = player.getName();
       this.avatar = player.getPhoto('large');
+      this.state.yaPlayer = player;
       const id: string = player.getUniqueID();
-      this.postCheckUser(id);
+      this.postCheckUser(id, true);
     });
   }
   
@@ -376,22 +373,23 @@ class Boot extends Phaser.Scene {
     }, false);
   }
 
-  private postCheckUser(id: number | string): void {
+  private postCheckUser(id: number | string, auth?: boolean): void {
     axios.post(process.env.API + '/checkUser', {
       platform: this.platform,
-      data: id
+      data: id,
+      auth: auth,
     }).then((response) => {
-      response.data
-      if (response.data.error === false) {
-        if (this.platform === 'web' && response.data.status === 'new') {
+      const { hash, error, expires, status } = response.data
+      if (error === false) {
+        if (this.platform === 'web' && status === 'new') {
           this.createnLanding = false;
-        } else if (this.platform === 'web') {
-          this.setCookieHash(response.data.hash, response.data.expires);
+        } else if (this.platform === 'web' || this.platform === 'ya' && expires) {
+          this.setCookieHash(hash, expires);
         } else {
           this.userReady = true;
-          this.hash = response.data.hash;
+          this.hash = hash;
           if (this.platform === 'android') {
-            LocalStorage.set('hash', response.data.hash);
+            LocalStorage.set('hash', hash);
           }
         }
       } else this.createErrorWindow();

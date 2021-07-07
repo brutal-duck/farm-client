@@ -164,7 +164,7 @@ let state: Istate = {
   vkTask,
   okTask,
   shownSocialTaskWindow,
-  build
+  build,
 }
 
 export default state;

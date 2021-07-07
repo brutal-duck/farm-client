@@ -783,4 +783,5 @@ interface Istate {
   ysdk?: any;
   unicornRaitings?: IunicornRaitingsData;
   build: number;
+  yaPlayer?: any;
 }

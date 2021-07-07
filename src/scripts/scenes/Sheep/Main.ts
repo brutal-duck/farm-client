@@ -41,6 +41,7 @@ import {
   remainderSellResource,
   farmBalance,
   randomString,
+  yandexAuth
 } from '../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -306,6 +307,7 @@ class Sheep extends Phaser.Scene {
   public intervalCollectorTutorial = intervalCollectorTutorial.bind(this);
   public showFeedBoostSpeechBubble = showFeedBoostSpeechBubble.bind(this);
   public progressTerritoryCooldown = progressTerritoryCooldown.bind(this);
+  public yandexAuth = yandexAuth.bind(this);
 
   public init(state: Istate): void {
 
