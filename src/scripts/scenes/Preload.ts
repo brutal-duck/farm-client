@@ -146,12 +146,17 @@ const factoryProductionSlot3: string = require('./../../assets/images/cow/modal/
 const factoryProductionSlotDisable3: string = require('./../../assets/images/cow/modal/factory-resource-slot-disable-3.png');
 const factoryProductionSlot4: string = require('./../../assets/images/cow/modal/factory-resource-slot-4.png');
 const factoryProductionSlotDisable4: string = require('./../../assets/images/cow/modal/factory-resource-slot-disable-4.png');
+
+const music: string = require('./../../assets/sounds/music.mp3');
+
 class Preload extends Phaser.Scene {
   constructor() {
     super('Preload');
   }
 
   public state: Istate;
+
+  private readySounds: boolean = false;
 
   public init(state: Istate): void {
     this.state = state;
@@ -324,6 +329,19 @@ class Preload extends Phaser.Scene {
     this.load.image('factory-production-slot-disable-3', factoryProductionSlotDisable3);
     this.load.image('factory-production-slot-4', factoryProductionSlot4);
     this.load.image('factory-production-slot-disable-4', factoryProductionSlotDisable4);
+
+    if (!this.readySounds) {
+      this.load.audio('music', music);
+    }
+  }
+
+  public create(): void {
+    if (!this.readySounds) {
+      const music = this.sound.add('music', { volume: 0.5, loop: true })
+      music.play()
+      console.log('create ~ music', music)
+      this.readySounds = true;
+    }
   }
 
 }
