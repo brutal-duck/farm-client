@@ -80,7 +80,7 @@ class Boot extends Phaser.Scene {
   }
 
   private initEruda(): void {
-    require('../libs/eruda')();
+    // require('../libs/eruda')();
   }
   private setAutosaveListener(): void {
     window.addEventListener('beforeunload', (): void => {
