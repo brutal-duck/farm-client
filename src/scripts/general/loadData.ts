@@ -92,31 +92,31 @@ function initAndroidStore(state: Istate): void {
 
   for (const pack of state.packages) {
     store.register({
-      id:    String(pack.id),
-      alias: String(pack.diamonds + ' diamonds'),
+      id: String(pack.id),
+      alias: 'package_' + pack.id,
       price: pack.price,
-      type:   store.CONSUMABLE
+      type: store.CONSUMABLE
     });
   }
 
   for (const pack of state.packages) {
     const finded = store.get(String(pack.id));
     console.log(finded);
-    store.when(String(pack.id))
-      .approved(p => {
+    store.when('package_' + pack.id)
+      .approved((p) => {
         console.log('approved');
         console.log(p);
         p.verify();
       })
       .verified((p) => {
-        console.log('verified')
+        console.log('verified');
         state.user.diamonds += pack.diamonds;
-        console.log(p, 'p verified')
+        console.log(p, 'p verified');
         p.finish();
       });
   }
 
-  store.error(error => {
+  store.error((error) => {
     console.log('ERROR ' + error.code + ': ' + error.message);
   });
 
