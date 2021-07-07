@@ -327,13 +327,14 @@ function checkAnimalTask(): void {
 
 // проверка на уже выполненние задания
 function checkDoneTasks(): void {
-
-  let tasks: Itasks[] = this.partTasks();
-
+  const tasks: Itasks[] = this.partTasks();
   for (let i in tasks) {
 
     // задания на улучшение земель
-    if (tasks[i].type === 8 || tasks[i].type === 9 || tasks[i].type === 17 || tasks[i].type === 24) {
+    if (tasks[i].type === 8
+      || tasks[i].type === 9
+      || tasks[i].type === 17
+      || tasks[i].type === 24) {
 
       let count: number = 0;
       let type: number;
@@ -344,20 +345,13 @@ function checkDoneTasks(): void {
       else if (tasks[i].type === 24) type = 8
 
       for (let j in this.territories.children.entries) {
-        if (this.state.farm !== 'Cow') {
-          if (type === this.territories.children.entries[j].type &&
-            this.territories.children.entries[j].improve >= tasks[i].state) count++
-        } else {
-          if (type === this.territories.children.entries[j].territoryType &&
-            this.territories.children.entries[j].improve >= tasks[i].state) count++
-        }
+        if (type === this.territories.children.entries[j].territoryType &&
+          this.territories.children.entries[j].improve >= tasks[i].state) count++
       }
 
       if (count >= tasks[i].count) {
-
         tasks[i].progress = tasks[i].count;
         tasks[i].done = 1;
-
       } else {
         tasks[i].progress = count;
       }
@@ -371,7 +365,6 @@ function checkDoneTasks(): void {
     }
   }
   this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
-
 }
 
 function clickTaskBoard(task: Itasks): void {
