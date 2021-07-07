@@ -129,6 +129,7 @@ export default function loadData(response: any): void {
     new ErrorWindow(this);
     return;
   }
+  console.log(response.data)
   if (this.state.farm === 'Sheep') this.state.offline = response.data.progress.sheepOfflineTime;
   else if (this.state.farm === 'Chicken') this.state.offline = response.data.progress.chickenOfflineTime;
   else if (this.state.farm === 'Cow') this.state.offline = response.data.progress.cowOfflineTime;

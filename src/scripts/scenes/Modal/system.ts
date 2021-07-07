@@ -28,6 +28,7 @@ import FarmResourceRepositoryWindow from '../../components/modal/system/FarmReso
 import SheepWindow from '../../components/modal/system/SheepWindow';
 import ChickenWindow from '../../components/modal/system/ChickenWindow';
 import CowWindow from '../../components/modal/system/CowWindow';
+import ConfirmSaveProgress from './../../components/modal/system/ConfirmSaveProgress';
 
 function systemWindow(): void {
   let height:number = 0;
@@ -176,6 +177,10 @@ function systemWindow(): void {
     
     case 19: 
       new ConfirmBuyCooldown(this);
+      break;
+
+    case 20: 
+      new ConfirmSaveProgress(this);
       break;
       
     default:      

@@ -30,6 +30,7 @@ import {
   autoporgressCollectorTime,
   sendSocialEvent,
   sendAppEventVk,
+  yandexAuth
 } from '../../general/basic';
 import {
   improveCollector,
@@ -250,6 +251,7 @@ class Cow extends Phaser.Scene {
   public showFeedBoostSpeechBubble = showFeedBoostSpeechBubble.bind(this);
   public showConfirmSellMilk = showConfirmSellMilk.bind(this);
   public progressTerritoryCooldown = progressTerritoryCooldown.bind(this);
+  public yandexAuth = yandexAuth.bind(this);
 
   public init(state: Istate): void {
 

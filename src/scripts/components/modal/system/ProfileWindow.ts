@@ -117,18 +117,20 @@ export default class ProfileWindow {
       else this.openSysWindow(14);
     });
 
-    const agreement: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX, 0, this.scene.state.lang.agreement, {
-      font: '22px Shadow',
-      color: '#777777'
-    }).setOrigin(0.5, 0.5);
-
-    this.scene.clickButton(agreement, (): void => { window.open('https://' + location.hostname + '/agreement', '_blank') });
+    if (this.scene.state.platform !== 'ya') {
+      const agreement: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX, 0, this.scene.state.lang.agreement, {
+        font: '22px Shadow',
+        color: '#777777'
+      }).setOrigin(0.5, 0.5);
+  
+      this.scene.clickButton(agreement, (): void => { window.open('https://' + location.hostname + '/agreement', '_blank') });
+      agreement.setY(this.scene.cameras.main.centerY + (this.height / 2) + 10);
+    }
     
     const bg: Phaser.GameObjects.Graphics = this.scene.add.graphics({ x: 115, y: this.scene.cameras.main.centerY - (this.height / 2) + 25 });
     bg.fillStyle(0xF8EFCE, 1);
     bg.fillRoundedRect(0, 0, 490, 220, 16);
 
-    agreement.setY(this.scene.cameras.main.centerY + (this.height / 2) + 10);
     support.btn.setY(this.scene.cameras.main.centerY + (this.height / 2) - 60);
     support.title.setY(support.btn.y - 5);
     avatar.setY(this.scene.cameras.main.centerY - (this.height / 2) + 135);
