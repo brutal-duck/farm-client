@@ -287,21 +287,17 @@ function payYandex(id: number): void {
 
 function yandexAuth(): Promise<void> {
   return this.state.ysdk.auth.openAuthDialog().then(() => {
-    console.log('подтвердить авторизацию')
     this.state.ysdk.getPlayer().then((player) => {
-      console.log({
-        id: this.state.user.id,
-        hash: this.state.user.hash,
-        counter: this.state.user.counter,
-        yaId: player.getUniqueID(),
-      })
+      this.state.yaPlayer = player;
+      this.state.name = player.getName();
+      if (this.state.name === '') this.state.name = `yandex_${this.state.user.id.substr(0, 4)}`;
+      this.state.avatar = player.getPhoto('large');
       axios.post(process.env.API + "/authYa", {
         id: this.state.user.id,
         hash: this.state.user.hash,
         counter: this.state.user.counter,
         yaId: player.getUniqueID(),
       }).then((res) => {
-        console.log(res.data);
         const { founded, error } = res.data;
         if (!error) {
           if (founded) {
