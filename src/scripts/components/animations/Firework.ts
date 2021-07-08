@@ -199,7 +199,7 @@ export default class Firework {
 
     const thisScene = this.scene as Sheep | Chicken | Cow | Unicorn;
     const mainScene = thisScene.game.scene.getScene(thisScene.state.farm) as Sheep | Chicken | Cow | Unicorn;
-    mainScene.playSoundOnce('firework-sound')
+    mainScene.playSoundOnce('firework-sound');
   }
 
   private get firework(): Phaser.GameObjects.Sprite {

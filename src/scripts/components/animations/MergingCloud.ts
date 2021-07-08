@@ -50,8 +50,8 @@ export default class MergingCloud {
 
     const mainScene = this.scene.game.scene.getScene(this.scene.state.farm) as Sheep | Chicken | Cow | Unicorn;
     
-    if (this.type) mainScene.playSoundOnce('error-sound')
-    else mainScene.playSoundOnce('merge-sound')
+    if (this.type) mainScene.playSoundOnce('error-sound');
+    else mainScene.playSoundOnce('merge-sound');
   }
 
   private get cloud(): [ Phaser.GameObjects.Sprite, Phaser.GameObjects.Text ] {

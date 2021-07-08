@@ -37,8 +37,8 @@ function clickShopBtn(btn: any, action: any) {
       if (counter >= 3) interval.remove(false);
 
     }, callbackScope: this, loop: true });
-
-    this.game.scene.keys[this.state.farm]?.playSoundOnce('click-sound')
+;
+    this.game.scene.keys[this.state.farm]?.playSoundOnce('click-sound');
 
   });
 
@@ -150,7 +150,7 @@ function clickBoostBtn(btn: any, action: any) {
 
     }, callbackScope: this, loop: true });
 
-    this.game.scene.keys[this.state.farm]?.playSoundOnce('click-sound')
+    this.game.scene.keys[this.state.farm]?.playSoundOnce('click-sound');
 
   });
 
@@ -329,7 +329,7 @@ function clickModalBtn(arr: any, action: any) {
 
     }, callbackScope: this, loop: true });
 
-    this.game.scene.keys[this.state.farm]?.playSoundOnce('click-sound')
+    this.game.scene.keys[this.state.farm]?.playSoundOnce('click-sound');
 
   });
 
@@ -456,7 +456,7 @@ function clickButtonUp(button: any, action: any, icon: any = false): void {
 
     }, callbackScope: this, loop: true });
 
-    this.game.scene.keys[this.state.farm]?.playSoundOnce('click-sound')
+    this.game.scene.keys[this.state.farm]?.playSoundOnce('click-sound');
 
   });
 
@@ -644,7 +644,7 @@ function clickButton(button: any, action: any): void {
 
     }, callbackScope: this, loop: true });
 
-    this.game.scene.keys[this.state.farm]?.playSoundOnce('click-sound')
+    this.game.scene.keys[this.state.farm]?.playSoundOnce('click-sound');
 
   });
 

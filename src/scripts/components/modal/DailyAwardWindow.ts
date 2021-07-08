@@ -139,7 +139,7 @@ export default class DailyAwardWindow extends Phaser.GameObjects.Sprite {
       }
 
       const mainScene = this.scene.game.scene.getScene(this.scene.state.farm) as Sheep | Chicken | Cow | Unicorn;
-      mainScene.playSoundOnce('award-sound')
+      mainScene.playSoundOnce('award-sound');
       
       this.scene.state.daily = false;
       this.scene.state.user.takenReward = true;

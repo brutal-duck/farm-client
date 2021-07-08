@@ -158,7 +158,7 @@ export default class MoneyAnimation  {
     });
 
     const mainScene = this.scene.game.scene.getScene(this.scene.state.farm) as Sheep | Chicken | Cow | Unicorn;
-    if (this.texture !== 'diamond') mainScene.playSoundOnce('coins-sound')
+    if (this.texture !== 'diamond') mainScene.playSoundOnce('coins-sound');
   }
 
   private flyToBar(sprite: Phaser.GameObjects.Sprite): void {

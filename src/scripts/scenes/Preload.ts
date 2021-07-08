@@ -164,6 +164,8 @@ const coinsSound: string = require('./../../assets/sounds/misc/coins-sound.mp3')
 const errorSound: string = require('./../../assets/sounds/misc/error-sound.mp3');
 const mergeSound: string = require('./../../assets/sounds/misc/merge-sound.mp3');
 const awardSound: string = require('./../../assets/sounds/misc/award-sound.mp3');
+const donateWindowSound: string = require('./../../assets/sounds/misc/donate-window-sound.mp3');
+const donateTakeSound: string = require('./../../assets/sounds/misc/donate-take-sound.mp3');
 const treeFallingSound: string = require('./../../assets/sounds/misc/tree-falling-sound.mp3');
 
 class Preload extends Phaser.Scene {
@@ -354,6 +356,8 @@ class Preload extends Phaser.Scene {
     this.load.audio('error-sound', errorSound);
     this.load.audio('merge-sound', mergeSound);
     this.load.audio('award-sound', awardSound);
+    this.load.audio('donate-window-sound', donateWindowSound);
+    this.load.audio('donate-take-sound', donateTakeSound);
     this.load.audio('tree-falling-sound', treeFallingSound);
     if (this.game.scene.keys['Sheep'].scene.isActive()) {
       this.load.audio('sheep-sound-1', sheepSound1);
