@@ -91,10 +91,10 @@ export default class SheepTerritory extends Territory {
         position.x = this.x + 73;
         position.y = this.y + 136;
       } else if (this.improve < 15) {
-        position.x = this.x + 60;
+        position.x = this.x + 58;
         position.y = this.y + 136;
       } else {
-        position.x = this.x + 46;
+        position.x = this.x + 47;
         position.y = this.y + 129;
       }
       if (this.improveText.x !== position.x || this.improveText.y !== position.y) {

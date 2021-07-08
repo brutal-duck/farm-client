@@ -85,16 +85,16 @@ export default class ChickenTerritory extends Territory {
       };
   
       if (this.improve < 5) {
-        position.x = this.x + 168;
+        position.x = this.x + 177;
         position.y = this.y + 134;
       } else if (this.improve < 10) {
         position.x = this.x + 155;
-        position.y = this.y + 152;
+        position.y = this.y + 154;
       } else if (this.improve < 15) {
-        position.x = this.x + 138;
+        position.x = this.x + 140;
         position.y = this.y + 147;
       } else {
-        position.x = this.x + 170;
+        position.x = this.x + 176;
         position.y = this.y + 150;
       }
       if (this.improveText.x !== position.x || this.improveText.y !== position.y) {
