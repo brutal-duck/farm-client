@@ -332,13 +332,13 @@ class Boot extends Phaser.Scene {
   
   private androidInit(): void {
     this.initEruda();
-    this.initAndroidStore();
     const cordovaScript: HTMLScriptElement = document.createElement('script');
     cordovaScript.setAttribute('src', 'cordova.js');
     if (!cordovaScript) return;
     document.body.appendChild(cordovaScript);
-
+    
     document.addEventListener('deviceready', (): void => {
+      this.initAndroidStore();
       window.screen.orientation.lock('portrait-primary');
 
       document.addEventListener('admob.rewardvideo.events.LOAD_FAIL', (): void => {
