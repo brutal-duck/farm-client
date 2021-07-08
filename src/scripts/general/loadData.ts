@@ -126,13 +126,13 @@ function initAndroidStore(state: Istate): void {
 
 function updateImproveTerritories(territories: Iterritories[]): Iterritories[] {
   return territories.map(el => {
-    if (el.improve === 2) {
+    if (el.improve === 2 && (el.type === 2 || el.type === 3 || el.type === 5)) {
       el.improve = 6 
-    } else if (el.improve === 3) {
+    } else if (el.improve === 3 &&  (el.type === 2 || el.type === 3 || el.type === 5)) {
       el.improve = 13
-    } else if (el.improve === 4) {
+    } else if (el.improve === 4 && (el.type === 2 || el.type === 3 || el.type === 5)) {
       el.improve = 20
-    } else el.improve = 1;
+    } else if (el.improve === 1 && (el.type === 2 || el.type === 3 || el.type === 5)) el.improve = 1;
     return el;
   });
 }
@@ -337,11 +337,6 @@ export default function loadData(response: any): void {
   this.state.chickenTerritories = validateTerritories(chickenTerritories, basicChickenTerritories);
   this.state.cowTerritories = validateTerritories(cowTerritories, basicCowTerritories);
 
-  if (response.data.build < 3.9) {
-    this.state.sheepTerritories = updateImproveTerritories(this.state.sheepTerritories);
-    this.state.chickenTerritories = updateImproveTerritories(this.state.chickenTerritories);
-    checkDoneTasks(this.state);
-  }
   // яйца
   const chickenEggs: IchickenEgg[] = [];
   for (let i in response.data.user.chicken_eggs) {
@@ -508,6 +503,12 @@ export default function loadData(response: any): void {
     }
   }
   this.state.progress = progress;
+  if (response.data.user.build < 3.9) {
+    this.state.sheepTerritories = updateImproveTerritories(this.state.sheepTerritories);
+    this.state.chickenTerritories = updateImproveTerritories(this.state.chickenTerritories);
+    checkDoneTasks(this.state);
+  }
+  
   if (
     this.state.progress.event.type === 1 
     && this.state.progress.event.startTime < 0 
