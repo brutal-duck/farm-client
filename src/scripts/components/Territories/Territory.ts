@@ -253,7 +253,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   
   public unlockTerritory(): void {
     if (this.bought && this.cooldown <= 0 && this.territoryType === 0) {
-      console.log('1')
       this.territoryType = this.boughtType;
       this.scene.tryTask(5, 1);
       this.scene.time.addEvent({ delay: 500, callback: (): void => {
