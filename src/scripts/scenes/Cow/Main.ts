@@ -30,7 +30,8 @@ import {
   autoporgressCollectorTime,
   sendSocialEvent,
   sendAppEventVk,
-  yandexAuth
+  yandexAuth,
+  playSoundOnce,
 } from '../../general/basic';
 import {
   improveCollector,
@@ -251,6 +252,7 @@ class Cow extends Phaser.Scene {
   public showConfirmSellMilk = showConfirmSellMilk.bind(this);
   public progressTerritoryCooldown = progressTerritoryCooldown.bind(this);
   public yandexAuth = yandexAuth.bind(this);
+  public playSoundOnce = playSoundOnce.bind(this);
 
   public init(state: Istate): void {
 
@@ -293,28 +295,31 @@ class Cow extends Phaser.Scene {
 
     // let cursors = this.input.keyboard.createCursorKeys();
     // cursors.space.on('down', (): void => {
-    //   //@ts-ignore
-    //   // this.territories.children.entries.find((el) => el.territoryType === 8).improve = 0
-    //   // this.state.userCow.factory.boostTime = 0;
-    //   // this.state.userCow.diamondAnimalTime = 0
-    //   // this.state.newbieTime = 0
-    //   // this.state.daily = Number(this.state.daily) + 1
-    //   // this.state.dailyAwards = [false, false, false, false, false, false, false, false]
-    //   // this.state.user.diamonds = 10000;
-    //   // let modal: Imodal = {
-    //   //   type: 4,
-    //   // }
-    //   // this.state.userCow.part = 6
-    //   // this.state.modal = modal;
-    //   // this.scene.launch('Modal', this.state);
-    //   // this.state.userSheep.feedBoostTimer = 10
-    //   // this.scene.launch('Modal', this.state);
-    //   // let tasks = this.partTasks();
-    //   // for (let i in tasks) {
-    //   //   tasks[i].done = 1;
-    //     // tasks[i].got_awarded = 1;
-    //   // }
-    //   // this.offlineTestProgress();
+      // Firework.create(this, { x: 360, y: 360 }, 3)
+      // console.log(this.state);
+      
+      //@ts-ignore
+      // this.territories.children.entries.find((el) => el.territoryType === 8).improve = 0
+      // this.state.userCow.factory.boostTime = 0;
+      // this.state.userCow.diamondAnimalTime = 0
+      // this.state.newbieTime = 0
+      // this.state.daily = Number(this.state.daily) + 1
+      // this.state.dailyAwards = [false, false, false, false, false, false, false, false]
+      // this.state.user.diamonds = 10000;
+      // let modal: Imodal = {
+      //   type: 4,
+      // }
+      // this.state.userCow.part = 6
+      // this.state.modal = modal;
+      // this.scene.launch('Modal', this.state);
+      // this.state.userSheep.feedBoostTimer = 10
+      // this.scene.launch('Modal', this.state);
+      // let tasks = this.partTasks();
+      // for (let i in tasks) {
+      //   tasks[i].done = 1;
+        // tasks[i].got_awarded = 1;
+      // }
+      // this.offlineTestProgress();
     // });
     
   }

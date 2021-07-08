@@ -1,5 +1,9 @@
 import { getRandomBool, randomString } from "../../general/basic";
+import Chicken from "../../scenes/Chicken/Main";
+import Cow from "../../scenes/Cow/Main";
+import Unicorn from "../../scenes/Event/Unicorns/Main";
 import Modal from "../../scenes/Modal/Modal";
+import Sheep from "../../scenes/Sheep/Main";
 import MergingCloud from "../animations/MergingCloud";
 
 export default class HerdBoostWindow {

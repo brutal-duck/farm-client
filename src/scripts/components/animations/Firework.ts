@@ -7,6 +7,11 @@
   *3. количество феерверков (1, 3, 5);  
 */
 
+import Sheep from '../../scenes/Sheep/Main';
+import Chicken from '../../scenes/Chicken/Main';
+import Cow from '../../scenes/Cow/Main';
+import Unicorn from '../../scenes/Event/Unicorns/Main';
+
 export default class Firework {
   public scene: Phaser.Scene;
   public position: Iposition;
@@ -21,7 +26,7 @@ export default class Firework {
     this.fireworks = this.scene.add.group();
     this.init();
   }
-  static create(scene: Phaser.Scene, position: Iposition, count: number): Firework {
+  public static create(scene: Phaser.Scene, position: Iposition, count: number): Firework {
     return new Firework(scene, position, count);
   }
 
@@ -191,6 +196,10 @@ export default class Firework {
         alpha: { value: 0, delay: 200, duration: 150 }
       },
     });
+
+    const thisScene = this.scene as Sheep | Chicken | Cow | Unicorn;
+    const mainScene = thisScene.game.scene.getScene(thisScene.state.farm) as Sheep | Chicken | Cow | Unicorn;
+    mainScene.playSoundOnce('firework-sound');
   }
 
   private get firework(): Phaser.GameObjects.Sprite {

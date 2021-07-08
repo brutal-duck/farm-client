@@ -33,7 +33,8 @@ import {
   farmBalance,
   sendSocialEvent,
   sendAppEventVk,
-  yandexAuth
+  yandexAuth,
+  playSoundOnce,
 } from '../../general/basic';
 import {
   improveCollector,
@@ -237,9 +238,9 @@ class Chicken extends Phaser.Scene {
   public showFeedBoostSpeechBubble = showFeedBoostSpeechBubble.bind(this);
   public progressTerritoryCooldown = progressTerritoryCooldown.bind(this);
   public yandexAuth = yandexAuth.bind(this);
+  public playSoundOnce = playSoundOnce.bind(this);
 
   public init(state: Istate): void {
-
     this.autoprogressTimer = Math.round(new Date().getTime() / 1000);
     this.autoSaveTimer = 0;
     this.state = state;

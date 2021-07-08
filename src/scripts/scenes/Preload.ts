@@ -146,12 +146,36 @@ const factoryProductionSlot3: string = require('./../../assets/images/cow/modal/
 const factoryProductionSlotDisable3: string = require('./../../assets/images/cow/modal/factory-resource-slot-disable-3.png');
 const factoryProductionSlot4: string = require('./../../assets/images/cow/modal/factory-resource-slot-4.png');
 const factoryProductionSlotDisable4: string = require('./../../assets/images/cow/modal/factory-resource-slot-disable-4.png');
+
+const music: string = require('./../../assets/sounds/music.mp3');
+const sheepSound1: string = require('./../../assets/sounds/sheep/sheep-sound-1.mp3');
+const sheepSound2: string = require('./../../assets/sounds/sheep/sheep-sound-2.mp3');
+const chickenSound1: string = require('./../../assets/sounds/chicken/chicken-sound-1.mp3');
+const chickenSound2: string = require('./../../assets/sounds/chicken/chicken-sound-2.mp3');
+const chickenSound3: string = require('./../../assets/sounds/chicken/chicken-sound-3.mp3');
+const chickenSound4: string = require('./../../assets/sounds/chicken/chicken-sound-4.mp3');
+const chickenSound5: string = require('./../../assets/sounds/chicken/chicken-sound-5.mp3');
+const cowSound1: string = require('./../../assets/sounds/cow/cow-sound-1.mp3');
+const cowSound2: string = require('./../../assets/sounds/cow/cow-sound-2.mp3');
+const cowSound3: string = require('./../../assets/sounds/cow/cow-sound-3.mp3');
+const clickSound: string = require('./../../assets/sounds/misc/click-sound.mp3');
+const fireworkSound: string = require('./../../assets/sounds/misc/firework-sound.mp3');
+const coinsSound: string = require('./../../assets/sounds/misc/coins-sound.mp3');
+const errorSound: string = require('./../../assets/sounds/misc/error-sound.mp3');
+const mergeSound: string = require('./../../assets/sounds/misc/merge-sound.mp3');
+const awardSound: string = require('./../../assets/sounds/misc/award-sound.mp3');
+const donateWindowSound: string = require('./../../assets/sounds/misc/donate-window-sound.mp3');
+const donateTakeSound: string = require('./../../assets/sounds/misc/donate-take-sound.mp3');
+const treeFallingSound: string = require('./../../assets/sounds/misc/tree-falling-sound.mp3');
+
 class Preload extends Phaser.Scene {
   constructor() {
     super('Preload');
   }
 
   public state: Istate;
+
+  public readySounds: boolean = false;
 
   public init(state: Istate): void {
     this.state = state;
@@ -324,6 +348,41 @@ class Preload extends Phaser.Scene {
     this.load.image('factory-production-slot-disable-3', factoryProductionSlotDisable3);
     this.load.image('factory-production-slot-4', factoryProductionSlot4);
     this.load.image('factory-production-slot-disable-4', factoryProductionSlotDisable4);
+
+    this.load.audio('music', music);
+    this.load.audio('click-sound', clickSound);
+    this.load.audio('firework-sound', fireworkSound);
+    this.load.audio('coins-sound', coinsSound);
+    this.load.audio('error-sound', errorSound);
+    this.load.audio('merge-sound', mergeSound);
+    this.load.audio('award-sound', awardSound);
+    this.load.audio('donate-window-sound', donateWindowSound);
+    this.load.audio('donate-take-sound', donateTakeSound);
+    this.load.audio('tree-falling-sound', treeFallingSound);
+    if (this.game.scene.keys['Sheep'].scene.isActive()) {
+      this.load.audio('sheep-sound-1', sheepSound1);
+      this.load.audio('sheep-sound-2', sheepSound2);
+    }
+    if (this.game.scene.keys['Chicken'].scene.isActive()) {
+      this.load.audio('chicken-sound-1', chickenSound1);
+      this.load.audio('chicken-sound-2', chickenSound2);
+      this.load.audio('chicken-sound-3', chickenSound3);
+      this.load.audio('chicken-sound-4', chickenSound4);
+      this.load.audio('chicken-sound-5', chickenSound5);
+    }
+    if (this.game.scene.keys['Cow'].scene.isActive()) {
+      this.load.audio('cow-sound-1', cowSound1);
+      this.load.audio('cow-sound-2', cowSound2);
+      this.load.audio('cow-sound-3', cowSound3);
+    }
+  }
+
+  public create(): void {
+    if (!this.readySounds) {
+      const music: Phaser.Sound.BaseSound = this.sound.add('music', { volume: 0.5, loop: true })
+      music.play()
+      this.readySounds = true;
+    }
   }
 
 }

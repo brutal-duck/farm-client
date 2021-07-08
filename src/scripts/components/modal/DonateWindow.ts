@@ -1,4 +1,8 @@
+import Chicken from "../../scenes/Chicken/Main";
+import Cow from "../../scenes/Cow/Main";
+import Unicorn from "../../scenes/Event/Unicorns/Main";
 import Modal from "../../scenes/Modal/Modal";
+import Sheep from "../../scenes/Sheep/Main";
 
 export default class DonateWindow {
   public scene: Modal;
@@ -32,9 +36,15 @@ export default class DonateWindow {
     }).setOrigin(0.5).setStroke('#2C5D0C', 5);
   
     this.scene.clickModalBtn({ btn, title }, (): void => { this.btnHandler(); });
+
+    const mainScene = this.scene.game.scene.getScene(this.scene.state.farm) as Sheep | Chicken | Cow | Unicorn;
+    mainScene.playSoundOnce('donate-window-sound');
   }
 
   private btnHandler(): void {
+    const mainScene = this.scene.game.scene.getScene(this.scene.state.farm) as Sheep | Chicken | Cow | Unicorn;
+    mainScene.playSoundOnce('donate-take-sound');
+
     this.scene.scene.stop();
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
     this.scene.game.scene.keys[this.scene.state.farm].takeDonate();

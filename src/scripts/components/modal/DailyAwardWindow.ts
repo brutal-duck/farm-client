@@ -1,4 +1,8 @@
+import Chicken from '../../scenes/Chicken/Main';
+import Cow from '../../scenes/Cow/Main';
+import Unicorn from '../../scenes/Event/Unicorns/Main';
 import Modal from '../../scenes/Modal/Modal';
+import Sheep from '../../scenes/Sheep/Main';
 import Hint from '../animations/Hint';
 interface Iaward {
   type: number;
@@ -132,10 +136,15 @@ export default class DailyAwardWindow extends Phaser.GameObjects.Sprite {
         this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].collector4 += AWARDS[this.day].count;
         const text: string = this.scene.state.lang[`dailyHint_5_${this.scene.state.farm}`]; 
         Hint.create(this.scene.game.scene.keys[`${this.scene.state.farm}Bars`], -250, text, 2);
-      } 
+      }
+
+      const mainScene = this.scene.game.scene.getScene(this.scene.state.farm) as Sheep | Chicken | Cow | Unicorn;
+      mainScene.playSoundOnce('award-sound');
+      
       this.scene.state.daily = false;
       this.scene.state.user.takenReward = true;
       this.scene.scene.stop();
+      
     });
     
   }

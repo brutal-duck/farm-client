@@ -14,6 +14,7 @@ import {
   autoporgressCollectorTime,
   farmBalance,
   randomString,
+  playSoundOnce,
 } from '../../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -220,6 +221,7 @@ class Unicorn extends Phaser.Scene {
   public updateProfileNative = updateProfileNative.bind(this);
   public randomString = randomString.bind(this);
   public progressTerritoryCooldown = progressTerritoryCooldown.bind(this);
+  public playSoundOnce = playSoundOnce.bind(this);
 
   public init(state: Istate): void {
     this.state = state;

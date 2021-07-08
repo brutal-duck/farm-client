@@ -2,6 +2,10 @@ import SheepBars from './../../scenes/Sheep/SheepBars';
 import ChickenBars from './../../scenes/Chicken/ChickenBars';
 import CowBars from './../../scenes/Cow/CowBars';
 import UnicornBars from '../../scenes/Event/Unicorns/UnicornBars';
+import Sheep from '../../scenes/Sheep/Main';
+import Chicken from '../../scenes/Chicken/Main';
+import Cow from '../../scenes/Cow/Main';
+import Unicorn from '../../scenes/Event/Unicorns/Main';
 
 export default class MoneyAnimation  {
   public scene: SheepBars | ChickenBars | CowBars | UnicornBars;
@@ -152,6 +156,9 @@ export default class MoneyAnimation  {
       onCompleteScope: this,
       ease: 'Sine.easeInOut',
     });
+
+    const mainScene = this.scene.game.scene.getScene(this.scene.state.farm) as Sheep | Chicken | Cow | Unicorn;
+    if (this.texture !== 'diamond') mainScene.playSoundOnce('coins-sound');
   }
 
   private flyToBar(sprite: Phaser.GameObjects.Sprite): void {

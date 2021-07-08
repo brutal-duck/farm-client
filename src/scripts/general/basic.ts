@@ -1746,6 +1746,13 @@ function sendAppEventVk(state: Istate, type: number, value: number): void {
   }
 }
 
+function playSoundOnce(soundName: string): void {
+  if (this.game.scene.keys['Preload'].readySounds) {    
+    const sound = this.sound.add(soundName, { volume: 1, loop: false });
+    sound.play();
+  }
+}
+
 export {
   yandexAuth,
   random,
@@ -1785,4 +1792,5 @@ export {
   farmBalance,
   sendSocialEvent,
   sendAppEventVk,
+  playSoundOnce,
 }
