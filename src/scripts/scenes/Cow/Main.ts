@@ -119,7 +119,6 @@ import {
   showFeedBoostSpeechBubble,
   progressTerritoryCooldown,
 } from '../../general/interval';
-import Firework from '../../components/animations/Firework';
 
 class Cow extends Phaser.Scene {
   constructor() {
