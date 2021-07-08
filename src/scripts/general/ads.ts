@@ -121,7 +121,7 @@ function adReward(): void {
       if (this.state.farm === 'Sheep') {
 
         type = 'sheep_trimmer';
-        time = time = this.state.sheepCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userSheep.collectorLevel).time * 2;
+        time = this.state.sheepCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userSheep.collectorLevel).time * 2;
         this.state.userSheep.collector = time * 60;
         this.state.userSheep.collectorTakenTime = this.state.userSheep.collector;
       } else if (this.state.farm === 'Chicken') {
