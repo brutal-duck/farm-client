@@ -14,7 +14,7 @@ function teleportation(sheep: any): void {
   // берем только нужные территории
   for (let i in this.territories.children.entries) {
 
-    if (this.territories.children.entries[i].type === 2 || this.territories.children.entries[i].type === 3) {
+    if (this.territories.children.entries[i].territoryType === 2 || this.territories.children.entries[i].territoryType === 3) {
       territories.push({
         _id: this.territories.children.entries[i]._id,
         block: this.territories.children.entries[i].block,
@@ -454,7 +454,7 @@ function buySheep(breed: number, shop: boolean = false): boolean {
       this.tryTask(4, breed);
       this.checkAnimalTask();
 
-      let land: number = this.territories.children.entries.find((data: any) => data.block === 2 && data.position === 3).type;
+      let land: number = this.territories.children.entries.find((data: any) => data.block === 2 && data.position === 3).territoryType;
 
       if (land !== 2 && land !== 3) {
 

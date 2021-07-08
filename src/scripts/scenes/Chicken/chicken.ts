@@ -12,7 +12,7 @@ function teleportation(chicken: any): void {
   // берем только нужные территории
   for (let i in this.territories.children.entries) {
 
-    if (this.territories.children.entries[i].type === 2 || this.territories.children.entries[i].type === 3) {
+    if (this.territories.children.entries[i].territoryType === 2 || this.territories.children.entries[i].territoryType === 3) {
       territories.push({
         _id: this.territories.children.entries[i]._id,
         block: this.territories.children.entries[i].block,
