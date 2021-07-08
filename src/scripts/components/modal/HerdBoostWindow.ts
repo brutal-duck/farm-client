@@ -463,8 +463,6 @@ export default class HerdBoostWindow {
               animal1?.destroy();
               animal2?.destroy();
             }, callbackScope: this, loop: false });
-            const mainScene = this.scene.game.scene.getScene(this.scene.state.farm) as Sheep | Chicken | Cow | Unicorn;
-            mainScene.playSoundOnce('error-sound')
           }
           this.mergingArray = [];
         }

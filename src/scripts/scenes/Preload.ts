@@ -162,6 +162,9 @@ const clickSound: string = require('./../../assets/sounds/misc/click-sound.mp3')
 const fireworkSound: string = require('./../../assets/sounds/misc/firework-sound.mp3');
 const coinsSound: string = require('./../../assets/sounds/misc/coins-sound.mp3');
 const errorSound: string = require('./../../assets/sounds/misc/error-sound.mp3');
+const mergeSound: string = require('./../../assets/sounds/misc/merge-sound.mp3');
+const awardSound: string = require('./../../assets/sounds/misc/award-sound.mp3');
+const treeFallingSound: string = require('./../../assets/sounds/misc/tree-falling-sound.mp3');
 
 class Preload extends Phaser.Scene {
   constructor() {
@@ -349,6 +352,9 @@ class Preload extends Phaser.Scene {
     this.load.audio('firework-sound', fireworkSound);
     this.load.audio('coins-sound', coinsSound);
     this.load.audio('error-sound', errorSound);
+    this.load.audio('merge-sound', mergeSound);
+    this.load.audio('award-sound', awardSound);
+    this.load.audio('tree-falling-sound', treeFallingSound);
     if (this.game.scene.keys['Sheep'].scene.isActive()) {
       this.load.audio('sheep-sound-1', sheepSound1);
       this.load.audio('sheep-sound-2', sheepSound2);
