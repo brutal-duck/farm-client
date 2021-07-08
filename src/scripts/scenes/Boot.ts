@@ -12,6 +12,7 @@ import Login from '../components/Web/Login';
 import ErrorWindow from '../components/Web/ErrorWindow';
 import { clickShopBtn, clickModalBtn, click } from './../general/clicks';
 import { shopButton, bigButton } from './../elements';
+import { general } from './../local/settings'
 
 Amplitude.init();
 
@@ -328,8 +329,10 @@ class Boot extends Phaser.Scene {
     this.postCheckUser(this.hash);
   }
 
+  
   private androidInit(): void {
     this.initEruda();
+    this.initAndroidStore();
     const cordovaScript: HTMLScriptElement = document.createElement('script');
     cordovaScript.setAttribute('src', 'cordova.js');
     if (!cordovaScript) return;
@@ -372,7 +375,80 @@ class Boot extends Phaser.Scene {
       window.admob.rewardvideo.prepare();
     }, false);
   }
+  
+  private initAndroidStore(): void {
+    const { packages } = general;
+    const store: any = window['store'];
+    if (!store) {
+      console.log('Store not available');
+      return;
+    }
+  
+    // for (const pack of packages) {
+    //   store.register({
+    //     id: String(pack.id),
+    //     alias: 'package_' + pack.id,
+    //     price: pack.price,
+    //     type: store.CONSUMABLE
+    //   });
+    // }
+    
+  
+    // for (const pack of packages) {
+    //   const finded = store.get(String(pack.id));
+    //   console.log(finded);
+    //   store.when('package_' + pack.id)
+    //     .approved((p) => {
+    //       p.verify();
+    //     })
+    //     .verified((p) => {
+    //       console.log(p, 'p verified');
+    //       axios.post(process.env.API + '/callbackPayNative', {
+    //         id: this.state.user.id,
+    //         hash: this.state.user.hash,
+    //         counter: this.state.user.counter,
+    //         pack: p,
+    //       }).then(res => {
+    //         if (!res.data.error) this.game.scene.keys[this.state.farm].autosave();
+    //       });
+    //       p.finish();
+    //     });
+    // }
 
+    store.register({
+          id: 'cc.fovea.purchase.consumable1',
+          alias: 'alias_fovea1',
+          price: 15,
+          type: store.CONSUMABLE
+    });
+
+    const finded = store.get('cc.fovea.purchase.consumable1');
+    console.log(finded);
+    store.when('alias_fovea1')
+        .approved((p) => {
+          p.verify();
+        })
+        .verified((p) => {
+          console.log(p, 'p verified');
+          const pack = {
+            id: 1,
+          }
+          axios.post(process.env.API + '/callbackPayNative', {
+            id: this.state.user.id,
+            hash: this.state.user.hash,
+            counter: this.state.user.counter,
+            pack: pack,
+          }).then(res => {
+            if (!res.data.error) this.game.scene.keys[this.state.farm].autosave();
+          });
+          p.finish();
+        });
+    store.error((error) => {
+      console.log('ERROR ' + error.code + ': ' + error.message);
+    });
+  
+    store.refresh();
+  }
   private postCheckUser(id: number | string, auth?: boolean): void {
     axios.post(process.env.API + '/checkUser', {
       platform: this.platform,

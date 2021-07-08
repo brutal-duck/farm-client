@@ -84,46 +84,6 @@ function setTaskStatus(farmId: number, resTask: any[]): Itasks[] {
   return updatedTasks;
 }
 
-function initAndroidStore(state: Istate): void {
-  const store: any = window['store'];
-  if (!store) {
-    console.log('Store not available');
-    return;
-  }
-
-  for (const pack of state.packages) {
-    store.register({
-      id: String(pack.id),
-      alias: 'package_' + pack.id,
-      price: pack.price,
-      type: store.CONSUMABLE
-    });
-  }
-
-  for (const pack of state.packages) {
-    const finded = store.get(String(pack.id));
-    console.log(finded);
-    store.when('package_' + pack.id)
-      .approved((p) => {
-        console.log('approved');
-        console.log(p);
-        p.verify();
-      })
-      .verified((p) => {
-        console.log('verified');
-        state.user.diamonds += pack.diamonds;
-        console.log(p, 'p verified');
-        p.finish();
-      });
-  }
-
-  store.error((error) => {
-    console.log('ERROR ' + error.code + ': ' + error.message);
-  });
-
-  store.refresh();
-}
-
 function updateImproveTerritories(territories: Iterritories[]): Iterritories[] {
   return territories.map(el => {
     if (el.improve === 2 && (el.type === 2 || el.type === 3 || el.type === 5)) {
@@ -220,7 +180,6 @@ export default function loadData(response: any): void {
   this.state.herdBoostPrice = general.herdBoostPrice;
   this.state.herdBoostDelay = general.herdBoostDelay;
   this.state.packages = general.packages;
-  if (this.state.platform === 'android') initAndroidStore(this.state);
 
   // общие данные
   this.state.dailyAwards = response.data.user.dailyAwards;

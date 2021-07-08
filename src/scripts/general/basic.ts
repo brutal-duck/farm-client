@@ -325,8 +325,9 @@ function yandexAuth(): Promise<void> {
 
 function payAndroid(id: number): void {
   const store: any = window['store'];
-  console.log(id, 'id package')
-  store.order('package_' + id);
+  // console.log(id, 'id package')
+  // store.order('package_' + id);
+  store.order('alias_fovea1')
 }
 
 // римское число
