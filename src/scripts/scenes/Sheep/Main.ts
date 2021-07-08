@@ -41,7 +41,8 @@ import {
   remainderSellResource,
   farmBalance,
   randomString,
-  yandexAuth
+  yandexAuth,
+  playSoundOnce,
 } from '../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -324,9 +325,9 @@ class Sheep extends Phaser.Scene {
   public unlockTerritory = unlockTerritory.bind(this);
   public progressTerritoryCooldown = progressTerritoryCooldown.bind(this);
   public yandexAuth = yandexAuth.bind(this);
+  public playSoundOnce = playSoundOnce.bind(this);
 
   public init(state: Istate): void {
-
     this.autoprogressTimer = Math.round(new Date().getTime() / 1000);
     this.autoSaveTimer = 0;
     this.state = state;

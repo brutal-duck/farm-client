@@ -148,6 +148,20 @@ const factoryProductionSlot4: string = require('./../../assets/images/cow/modal/
 const factoryProductionSlotDisable4: string = require('./../../assets/images/cow/modal/factory-resource-slot-disable-4.png');
 
 const music: string = require('./../../assets/sounds/music.mp3');
+const sheepSound1: string = require('./../../assets/sounds/sheep/sheep-sound-1.mp3');
+const sheepSound2: string = require('./../../assets/sounds/sheep/sheep-sound-2.mp3');
+const chickenSound1: string = require('./../../assets/sounds/chicken/chicken-sound-1.mp3');
+const chickenSound2: string = require('./../../assets/sounds/chicken/chicken-sound-2.mp3');
+const chickenSound3: string = require('./../../assets/sounds/chicken/chicken-sound-3.mp3');
+const chickenSound4: string = require('./../../assets/sounds/chicken/chicken-sound-4.mp3');
+const chickenSound5: string = require('./../../assets/sounds/chicken/chicken-sound-5.mp3');
+const cowSound1: string = require('./../../assets/sounds/cow/cow-sound-1.mp3');
+const cowSound2: string = require('./../../assets/sounds/cow/cow-sound-2.mp3');
+const cowSound3: string = require('./../../assets/sounds/cow/cow-sound-3.mp3');
+const clickSound: string = require('./../../assets/sounds/misc/click-sound.mp3');
+const fireworkSound: string = require('./../../assets/sounds/misc/firework-sound.mp3');
+const coinsSound: string = require('./../../assets/sounds/misc/coins-sound.mp3');
+const errorSound: string = require('./../../assets/sounds/misc/error-sound.mp3');
 
 class Preload extends Phaser.Scene {
   constructor() {
@@ -156,7 +170,7 @@ class Preload extends Phaser.Scene {
 
   public state: Istate;
 
-  private readySounds: boolean = false;
+  public readySounds: boolean = false;
 
   public init(state: Istate): void {
     this.state = state;
@@ -330,16 +344,33 @@ class Preload extends Phaser.Scene {
     this.load.image('factory-production-slot-4', factoryProductionSlot4);
     this.load.image('factory-production-slot-disable-4', factoryProductionSlotDisable4);
 
-    if (!this.readySounds) {
-      this.load.audio('music', music);
+    this.load.audio('music', music);
+    this.load.audio('click-sound', clickSound);
+    this.load.audio('firework-sound', fireworkSound);
+    this.load.audio('coins-sound', coinsSound);
+    this.load.audio('error-sound', errorSound);
+    if (this.game.scene.keys['Sheep'].scene.isActive()) {
+      this.load.audio('sheep-sound-1', sheepSound1);
+      this.load.audio('sheep-sound-2', sheepSound2);
+    }
+    if (this.game.scene.keys['Chicken'].scene.isActive()) {
+      this.load.audio('chicken-sound-1', chickenSound1);
+      this.load.audio('chicken-sound-2', chickenSound2);
+      this.load.audio('chicken-sound-3', chickenSound3);
+      this.load.audio('chicken-sound-4', chickenSound4);
+      this.load.audio('chicken-sound-5', chickenSound5);
+    }
+    if (this.game.scene.keys['Cow'].scene.isActive()) {
+      this.load.audio('cow-sound-1', cowSound1);
+      this.load.audio('cow-sound-2', cowSound2);
+      this.load.audio('cow-sound-3', cowSound3);
     }
   }
 
   public create(): void {
     if (!this.readySounds) {
-      const music = this.sound.add('music', { volume: 0.5, loop: true })
+      const music: Phaser.Sound.BaseSound = this.sound.add('music', { volume: 0.5, loop: true })
       music.play()
-      console.log('create ~ music', music)
       this.readySounds = true;
     }
   }

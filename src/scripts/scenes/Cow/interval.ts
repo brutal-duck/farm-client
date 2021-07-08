@@ -374,6 +374,10 @@ function interval(): void {
     const volume = this.territories.children.entries.find(el => el.territoryType === 5)?.volume;
     this.tryTask(26, 0, 0, volume);
 
+    // Звуки
+    if (this.animalGroup?.children.entries.length > 0 && time % 7 === 0) {
+      this.playSoundOnce(`cow-sound-${Phaser.Math.Between(1, 3)}`)
+    }
     
   }, callbackScope: this, loop: true });
 }

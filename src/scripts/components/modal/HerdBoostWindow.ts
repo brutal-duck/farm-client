@@ -1,5 +1,9 @@
 import { getRandomBool, randomString } from "../../general/basic";
+import Chicken from "../../scenes/Chicken/Main";
+import Cow from "../../scenes/Cow/Main";
+import Unicorn from "../../scenes/Event/Unicorns/Main";
 import Modal from "../../scenes/Modal/Modal";
+import Sheep from "../../scenes/Sheep/Main";
 import MergingCloud from "../animations/MergingCloud";
 
 export default class HerdBoostWindow {
@@ -459,6 +463,8 @@ export default class HerdBoostWindow {
               animal1?.destroy();
               animal2?.destroy();
             }, callbackScope: this, loop: false });
+            const mainScene = this.scene.game.scene.getScene(this.scene.state.farm) as Sheep | Chicken | Cow | Unicorn;
+            mainScene.playSoundOnce('error-sound')
           }
           this.mergingArray = [];
         }

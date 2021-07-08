@@ -427,6 +427,12 @@ function interval(): void {
     this.cowFactoryProgress();
     this.updateProfileNative();
     this.showFeedBoostSpeechBubble();
+
+    // Звуки
+    if (this.chicken?.children.entries.length > 0 && time % 7 === 0) {
+      this.playSoundOnce(`chicken-sound-${Phaser.Math.Between(1, 5)}`)
+    }
+    
   }, callbackScope: this, loop: true });
 
 }
