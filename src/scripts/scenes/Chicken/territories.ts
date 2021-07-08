@@ -19,7 +19,7 @@ function installTerritory(): void {
     } else {
       this.state.territory.volume = 1000;
       this.time.addEvent({ delay: 500, callback: (): void => {
-        this.changeSprite(this.state.territory);
+        this.state.territory.changeSprite();
         Firework.create(this, { x: this.state.territory.x + 120, y: this.state.territory.y + 120 }, 3);
       }, callbackScope: this, loop: false });
     }

@@ -45,18 +45,26 @@ export default class SheepTerritory extends Territory {
 
   public onTerritoryClick(): void {
     super.onTerritoryClick();
+    if (this.cooldown > 0) {
+      const modal: Imodal = {
+        type: 1,
+        sysType: 19,
+      }
+      this.scene.state.territory = this;
+      this.scene.state.modal = modal;
+      this.scene.scene.launch('Modal', this.scene.state);
+      return;
+    };
     if (this.scene.state.userSheep.tutorial >= 100) {
         
       if (this.territoryType !== 6 && this.territoryType !== 7) {
-
-        let modal: Imodal = {
+        const modal: Imodal = {
           type: 1,
           sysType: 2
         }
         this.scene.state.modal = modal;
         this.scene.state.territory = this;
         this.scene.scene.launch('Modal', this.scene.state);
-
       } else if (this.territoryType === 6) {
         if (this.scene.state.userSheep.collectorLevel < this.scene.state.sheepCollectorSettings.length) {
           this.scene.showImproveCollector();
@@ -65,6 +73,45 @@ export default class SheepTerritory extends Territory {
         }
       } else if (this.territoryType === 7) {
         this.takeDiamondAnimal();
+      }
+    }
+  }
+
+  public setPositionImproveText(): void {
+    if (this.territoryType === 5) {
+      const position: Iposition = {
+        x: this.improveText?.x,
+        y: this.improveText?.y,
+      };
+  
+      if (this.improve < 5) {
+        position.x = this.x + 70;
+        position.y = this.y + 136;
+      } else if (this.improve < 10) {
+        position.x = this.x + 73;
+        position.y = this.y + 136;
+      } else if (this.improve < 15) {
+        position.x = this.x + 60;
+        position.y = this.y + 136;
+      } else {
+        position.x = this.x + 46;
+        position.y = this.y + 129;
+      }
+      if (this.improveText.x !== position.x || this.improveText.y !== position.y) {
+        this.improveText
+          .setPosition(position.x, position.y)
+          .setDepth(this.repository.depth + 1);
+      }
+    } else if (this.territoryType === 2 || this.territoryType === 3) {
+      const position: Iposition = {
+        x: this.x + 38,
+        y: this.y + 24,
+      };
+  
+      if (this.improveText.x !== position.x || this.improveText.y !== position.y) {
+        this.improveText
+          .setPosition(position.x, position.y)
+          .setDepth(this.depth + 2);
       }
     }
   }

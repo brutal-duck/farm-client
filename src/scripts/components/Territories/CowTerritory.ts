@@ -106,6 +106,16 @@ export default class CowTerritory extends Territory {
 
   public onTerritoryClick(): void {
     super.onTerritoryClick();
+    if (this.cooldown > 0) {
+      let modal: Imodal = {
+        type: 1,
+        sysType: 19,
+      }
+      this.scene.state.territory = this;
+      this.scene.state.modal = modal;
+      this.scene.scene.launch('Modal', this.scene.state);
+      return;
+    };
     if (this.scene.state.userCow.part < 3) {
       const task: Itasks = this.scene.state.cowTasks.find(el => el.id === 138);
       if (this.block === 3 && this.position === 1 && this.territoryType === 0 && task.done === 1 && task.got_awarded === 1) {
@@ -144,6 +154,46 @@ export default class CowTerritory extends Territory {
       this.scene.state.modal = modal;
       this.scene.state.territory = this;
       this.scene.scene.launch('Modal', this.scene.state);
+    }
+  }
+
+  public setPositionImproveText(): void {
+    if (this.territoryType === 5) {
+      const position: Iposition = {
+        x: this.improveText?.x,
+        y: this.improveText?.y,
+      };
+  
+      if (this.improve < 5) {
+        position.x = this.x + 127;
+        position.y = this.y + 125;
+      } else if (this.improve < 10) {
+        position.x = this.x + 87;
+        position.y = this.y + 140;
+      } else if (this.improve < 15) {
+        position.x = this.x + 168;
+        position.y = this.y + 138;
+      } else {
+        position.x = this.x + 130;
+        position.y = this.y + 140;
+      }
+      if (this.improveText.x !== position.x || this.improveText.y !== position.y) {
+        this.improveText.setPosition(position.x, position.y);
+        this.improveText.setStyle({ fontSize: '32px' });
+        this.improveText.setDepth(this.repository.depth + 1);
+      }
+    } else if (this.territoryType === 2 || this.territoryType === 3) {
+      const position: Iposition = {
+        x: this.x + 38,
+        y: this.y + 24,
+      };
+  
+      if (this.improveText.x !== position.x || this.improveText.y !== position.y) {
+        this.improveText
+          .setPosition(position.x, position.y)
+          .setStyle({ fontSize: '26px' })
+          .setDepth(this.depth + 2);
+      }
     }
   }
 }

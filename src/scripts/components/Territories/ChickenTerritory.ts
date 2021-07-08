@@ -45,6 +45,16 @@ export default class ChickenTerritory extends Territory {
 
   public onTerritoryClick(): void {
     super.onTerritoryClick();
+    if (this.cooldown > 0) {
+      const modal: Imodal = {
+        type: 1,
+        sysType: 19,
+      }
+      this.scene.state.territory = this;
+      this.scene.state.modal = modal;
+      this.scene.scene.launch('Modal', this.scene.state);
+      return;
+    };
     if (this.territoryType !== 6 && this.territoryType !== 7) {
 
       const modal: Imodal = {
@@ -64,6 +74,44 @@ export default class ChickenTerritory extends Territory {
       }
     } else if (this.territoryType === 7) {
       this.takeDiamondAnimal();
+    }
+  }
+
+  public setPositionImproveText(): void {
+    if (this.territoryType === 5) {
+      const position: Iposition = {
+        x: this.improveText?.x,
+        y: this.improveText?.y,
+      };
+  
+      if (this.improve < 5) {
+        position.x = this.x + 168;
+        position.y = this.y + 134;
+      } else if (this.improve < 10) {
+        position.x = this.x + 155;
+        position.y = this.y + 152;
+      } else if (this.improve < 15) {
+        position.x = this.x + 138;
+        position.y = this.y + 147;
+      } else {
+        position.x = this.x + 170;
+        position.y = this.y + 150;
+      }
+      if (this.improveText.x !== position.x || this.improveText.y !== position.y) {
+        this.improveText.setPosition(position.x, position.y);
+        this.improveText.setDepth(this.repository.depth + 1);
+      }
+    } else if (this.territoryType === 2 || this.territoryType === 3) {
+      const position: Iposition = {
+        x: this.x + 38,
+        y: this.y + 24,
+      };
+  
+      if (this.improveText.x !== position.x || this.improveText.y !== position.y) {
+        this.improveText
+          .setPosition(position.x, position.y)
+          .setDepth(this.depth + 2);
+      }
     }
   }
 }
