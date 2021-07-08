@@ -77,6 +77,7 @@ export default class BuyFarmTerritoryWindow {
   private buyTerritoryAndClose(): void {
     this.scene.scene.stop();
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-    this.scene.state.territory.buyTerritory();
+    if (this.scene.state.farm !== 'Unicorn') this.scene.state.territory.buyTerritory();
+    else this.scene.game.scene.keys['Unicorn'].buyTerritory();
   }
 }
