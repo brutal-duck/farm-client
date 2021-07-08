@@ -319,8 +319,8 @@ function interval(): void {
 
     }
 
-    if ((this.state.name !== '' && this.state.platform !== 'ya' || this.state.user.login !== ''
-    || !this.state.yaPlayer) && 
+    if ((this.state.name !== '' ||  this.state.user.login !== ''
+    || this.state.platform === 'ya' && !this.state.yaPlayer) && 
       this.state.progress.event.startTime <= 0 && 
       this.state.progress.event.endTime > 0 &&
       this.state.progress.event.open) {
