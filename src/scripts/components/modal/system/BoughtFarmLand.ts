@@ -3,6 +3,7 @@ import Modal from "../../../scenes/Modal/Modal";
 
 export default class BoughtFarmLand {
   public scene: Modal;
+  private price: number;
 
   constructor(scene: Modal) {
     this.scene = scene;
@@ -15,43 +16,40 @@ export default class BoughtFarmLand {
 
     const farm: string = this.scene.state.farm;
     let height: number = 120;
-    let price: number = this.scene.state[`${farm.toLowerCase()}Settings`][`territories${farm}Price`].find((data: IterritoriesPrice) => data.block === this.scene.state.territory.block && data.position === this.scene.state.territory.position).price;
+    this.price = this.scene.state[`${farm.toLowerCase()}Settings`][`territories${farm}Price`]
+      .find((data: IterritoriesPrice) => data.block === this.scene.state.territory.block && data.position === this.scene.state.territory.position).price;
 
     // 30% от суммы покупки
-    price = Math.round((price / 100) * 30);
+    this.price = Math.round((this.price / 100) * 30);
 
     const right = {
       icon: `${farm.toLowerCase()}Coin`,
-      text: shortNum(price)
+      text: shortNum(this.price)
     };
     
-    if (
-      this.scene.state.userSheep.tutorial === 20 &&
-      this.scene.state.territory.block === 2 &&
-      this.scene.state.territory.position === 3
-    ) {
-
-      const button = this.scene.bigButton('green', 'left', 30, this.scene.state.lang.sowPasture, right);
-      this.scene.clickModalBtn(button, (): void => { this.setTerritory(2) });
-
-    } else if (
-      this.scene.state.userSheep.tutorial === 30 &&
-      this.scene.state.territory.block === 2 &&
-      this.scene.state.territory.position === 2
-    ) {
-
-      const button = this.scene.bigButton('blue', 'left', 30, this.scene.state.lang.installWater, right);
-      this.scene.clickModalBtn(button, (): void => { this.setTerritory(3) });
-
-    } else if (
-      this.scene.state.userSheep.tutorial === 80 &&
-      this.scene.state.territory.block === 2 &&
-      this.scene.state.territory.position === 1
-    ) {
-
-      const button = this.scene.bigButton('orange', 'left', 30, this.scene.state.lang.buildRepository, right);
-      this.scene.clickModalBtn(button, (): void => { this.setTerritory(5) });
-
+    if (farm === 'Sheep' && this.scene.state.userSheep.tutorial < 100) {
+      if (
+        this.scene.state.userSheep.tutorial === 20 &&
+        this.scene.state.territory.block === 2 &&
+        this.scene.state.territory.position === 3
+      ) {
+        const button = this.scene.bigButton('green', 'left', 30, this.scene.state.lang.sowPasture, right);
+        this.scene.clickModalBtn(button, (): void => { this.setTerritory(2) });
+      } else if (
+        this.scene.state.userSheep.tutorial === 30 &&
+        this.scene.state.territory.block === 2 &&
+        this.scene.state.territory.position === 2
+      ) {
+        const button = this.scene.bigButton('blue', 'left', 30, this.scene.state.lang.installWater, right);
+        this.scene.clickModalBtn(button, (): void => { this.setTerritory(3) });
+      } else if (
+        this.scene.state.userSheep.tutorial === 80 &&
+        this.scene.state.territory.block === 2 &&
+        this.scene.state.territory.position === 1
+      ) {
+        const button = this.scene.bigButton('orange', 'left', 30, this.scene.state.lang.buildRepository, right);
+        this.scene.clickModalBtn(button, (): void => { this.setTerritory(5) });
+      }
     } else if (farm === 'Cow') {
 
       if (this.scene.state.territory.block === 3 && this.scene.state.territory.position === 1 && this.scene.state.territory.territoryType === 1) {
@@ -95,9 +93,25 @@ export default class BoughtFarmLand {
   private setTerritory(type: number) {
     this.scene.scene.stop();
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-    // this.scene.state.exchangeTerritory = type;
-    // this.scene.game.scene.keys[this.scene.state.farm].installTerritory();
-    this.scene.state.territory.bougthType = type;
-    this.scene.state.territory.setTerritoryUnlockCooldown(type);
+    if (this.scene.state[`user${this.scene.state.farm}`].money >= this.price) {
+      this.scene.state[`user${this.scene.state.farm}`].money -= this.price;
+      this.scene.state.territory.bougthType = type;
+      this.scene.state.territory.setTerritoryUnlockCooldown(type);
+    } else {
+      const count: number = this.price - this.scene.state[`user${this.scene.state.farm}`].money;
+      const diamonds: number = this.scene.game.scene.keys[this.scene.state.farm].convertMoney(count);
+      this.scene.state.convertor = {
+        fun: 5,
+        count: count,
+        diamonds: diamonds,
+        type: 1
+      }
+      const modal: Imodal = {
+        type: 1,
+        sysType: 4
+      }
+      this.scene.state.modal = modal;
+      this.scene.scene.launch('Modal', this.scene.state);
+    }
   }
 }
