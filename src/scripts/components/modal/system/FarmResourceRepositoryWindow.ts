@@ -63,7 +63,7 @@ export default class FarmResourceRepositoryWindow {
       let improve: any;
       if (this.settings.improveStorageMoneyPrice) {
         improve = {
-          icon: 'cowCoin',
+          icon: `${this.scene.state.farm.toLowerCase()}Coin`,
           text: shortNum(this.settings.improveStorageMoneyPrice)
         };
       } else if (this.settings.improveStorageDiamondPrice) {
@@ -118,7 +118,7 @@ export default class FarmResourceRepositoryWindow {
       let improve: any;
       if (this.settings.improveStorageMoneyPrice) {
         improve = {
-          icon: 'cowCoin',
+          icon: `${this.scene.state.farm.toLowerCase()}Coin`,
           text: shortNum(this.settings.improveStorageMoneyPrice)
         };
       } else if (this.settings.improveStorageDiamondPrice) {
