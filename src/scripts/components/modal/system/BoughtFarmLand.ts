@@ -91,12 +91,13 @@ export default class BoughtFarmLand {
 
 
   private setTerritory(type: number) {
-    this.scene.scene.stop();
-    this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
+
     if (this.scene.state[`user${this.scene.state.farm}`].money >= this.price) {
       this.scene.state[`user${this.scene.state.farm}`].money -= this.price;
       this.scene.state.territory.bougthType = type;
       this.scene.state.territory.setTerritoryUnlockCooldown(type);
+      this.scene.scene.stop();
+      this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
     } else {
       const count: number = this.price - this.scene.state[`user${this.scene.state.farm}`].money;
       const diamonds: number = this.scene.game.scene.keys[this.scene.state.farm].convertMoney(count);
@@ -111,7 +112,7 @@ export default class BoughtFarmLand {
         sysType: 4
       }
       this.scene.state.modal = modal;
-      this.scene.scene.launch('Modal', this.scene.state);
+      this.scene.scene.restart(this.scene.state);
     }
   }
 }
