@@ -78,6 +78,7 @@ export default class SheepTerritory extends Territory {
   }
 
   public setPositionImproveText(): void {
+    super.setPositionImproveText();
     if (this.territoryType === 5) {
       const position: Iposition = {
         x: this.improveText?.x,
@@ -130,9 +131,9 @@ export default class SheepTerritory extends Territory {
     }
 
     if (this.block === 2 && this.position === 3) {
-      for (let i in this.scene.sheep.children.entries) {
+      for (let i in this.scene.sheep?.children.entries) {
         //@ts-ignore
-        this.scene.sheep.children.entries[i].drag = false;
+        this.scene.sheep?.children.entries[i].drag = false;
       }
     }
     super.unlockTerritory();

@@ -440,7 +440,7 @@ function exchange(ad: boolean = false): void {
     if (this.state.convertor.fun === 1) {
       buyAnimal();
     } else if (this.state.convertor.fun === 2) {
-      this.fairLevelUp();
+      // this.fairLevelUp();
     } else if (this.state.convertor.fun === 3) {
       this.improveTerritory();
     } else if (this.state.convertor.fun === 4) {
