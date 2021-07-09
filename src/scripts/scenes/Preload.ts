@@ -379,8 +379,8 @@ class Preload extends Phaser.Scene {
 
   public create(): void {
     if (!this.readySounds) {
-      const music: Phaser.Sound.BaseSound = this.sound.add('music', { volume: 0.5, loop: true })
-      music.play()
+      const music: Phaser.Sound.BaseSound = this.sound.add('music', { volume: 1, loop: true });
+      music.play();
       this.readySounds = true;
     }
   }
