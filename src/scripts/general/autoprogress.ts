@@ -635,7 +635,7 @@ export default function autoprogress(load: boolean = false): void {
         const factSettings: IfactorySettings = state.cowSettings.cowFactorySettings
           .find((data: IfactorySettings) => territory.improve === data.improve);
           
-        const storage: number = factSettings.lotSize * this.state.storageMultiply;
+        const storage: number = factSettings.lotSize * state.storageMultiply;
         if (territory.volume > storage) territory.volume = storage;
       } 
     }
