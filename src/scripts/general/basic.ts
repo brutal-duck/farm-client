@@ -1,13 +1,15 @@
 import axios from 'axios';
 import { FAPI } from '../libs/Fapi.js';
 import bridge from '@vkontakte/vk-bridge';
-import * as amplitude from 'amplitude-js';
 import Hint from '../components/animations/Hint';
 import Firework from '../components/animations/Firework';
 import BigInteger from '../libs/BigInteger';
 import MoneyAnimation from './../components/animations/MoneyAnimation';
 import SpeechBubble from './../components/animations/SpeechBuble';
 import LocalStorage from './../libs/LocalStorage';
+import ChickenTerritory from './../components/Territories/ChickenTerritory';
+import SheepTerritory from './../components/Territories/SheepTerritory';
+import CowTerritory from './../components/Territories/CowTerritory';
 
 // рандомное число
 function random(min: number, max: number): number {
@@ -1295,28 +1297,26 @@ function loadingModal(): void {
 // Перераспределние животных на поле
 function spreadAnimals(): void {
 
-  let animal: string = this.state.farm.toLowerCase();
-  
+  const animal: string = this.state.farm === 'Cow' ? 'animalGroup' : this.state.farm.toLowerCase();
   let localSpread: boolean = false; // Локальная метка на передвижение
-  let allTerritories = []; // Все территории
+  const allTerritories = []; // Все территории
   let nearTerritories = [];  // Территории вокруг самой заполенной
   let animalWithoutAim: any = false; // Овца без цели
 
   // 1. ПОДГОТОВКА ДАННЫХ
   // берем только нужные территории
-  for (let i in this.territories.children.entries) {
-
-    if (this.territories.children.entries[i].territoryType === 2 || this.territories.children.entries[i].territoryType === 3) {
+  const territories: SheepTerritory[] | ChickenTerritory[] | CowTerritory[] = this.territories.children.entries;
+  for (const territory of territories) {
+    if (territory.territoryType === 2 || territory.territoryType === 3) {
       allTerritories.push({
-        _id: this.territories.children.entries[i]._id,
-        block: this.territories.children.entries[i].block,
-        position: this.territories.children.entries[i].position,
+        _id: territory._id,
+        block: territory.block,
+        position: territory.position,
         count: [],
-        x: this.territories.children.entries[i].x + this.territories.children.entries[i].width / 2,
-        y: this.territories.children.entries[i].y + this.territories.children.entries[i].height / 2
+        x: territory.x + territory.width / 2,
+        y: territory.y + territory.height / 2
       });
     }
-
   }
 
   // смотрим, где какая овца сидит
