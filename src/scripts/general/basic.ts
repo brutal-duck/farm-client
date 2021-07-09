@@ -1306,7 +1306,7 @@ function spreadAnimals(): void {
   // берем только нужные территории
   for (let i in this.territories.children.entries) {
 
-    if (this.territories.children.entries[i].type === 2 || this.territories.children.entries[i].type === 3) {
+    if (this.territories.children.entries[i].territoryType === 2 || this.territories.children.entries[i].territoryType === 3) {
       allTerritories.push({
         _id: this.territories.children.entries[i]._id,
         block: this.territories.children.entries[i].block,
@@ -1556,7 +1556,7 @@ function remainderSellResource(): void {
   if (this.state[`user${this.state.farm}`].part <= remainderMaxPart) {
     this.remaindSellTimer++;
     if (this.remaindSellTimer >= delay) {
-      const storages: any[] = this.territories.children.entries.filter(el => el.type === 5)
+      const storages: any[] = this.territories.children.entries.filter(el => el.territoryType === 5)
       let check: boolean = false;
       for (let i: number =0; i < storages.length; i++) {
         const setting: IterritoriesSheepSettings = this.state.sheepSettings.territoriesSheepSettings.find(elSetting => elSetting.improve === storages[i].improve);
