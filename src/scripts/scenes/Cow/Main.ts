@@ -74,9 +74,6 @@ import {
   confirmExpelCow,
   dragCowMerging
 } from './cow';
-import { 
-  installTerritory,  
-} from './territories';
 import {
   balance,
   cowPrice,
@@ -170,7 +167,6 @@ class Cow extends Phaser.Scene {
   public teleportation = teleportation.bind(this);
   public currentTerritory = currentTerritory.bind(this);
   public confirmExchangeTerritory = confirmExchangeTerritory.bind(this);
-  public installTerritory = installTerritory.bind(this);
   public deleteTerritoriesLocks = deleteTerritoriesLocks.bind(this);
   public balance = balance.bind(this);
   public convertDiamonds = convertDiamonds.bind(this);

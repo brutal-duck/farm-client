@@ -144,6 +144,8 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
   private createRepositorySprite(): void {
     const farm: string = this.scene.state.farm.toLowerCase();
+    this.setTexture(`${farm}-repository`);
+
     let stage: number = 1;
     if (this.improve >= 5) {
       stage = 2;
@@ -186,7 +188,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       .setOrigin(0.5, 1);
     
     this.setPositionImproveText();
-
   }
 
   public setPositionImproveText(): void {
@@ -252,21 +253,33 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   }
   
   public unlockTerritory(): void {
-    if (this.bought && this.cooldown <= 0 && this.territoryType === 0) {
-      this.territoryType = this.boughtType;
-      this.scene.tryTask(5, 1);
-      this.scene.time.addEvent({ delay: 500, callback: (): void => {
-        this.forest?.destroy();
-        this.setTexture(this.scene.state.farm.toLowerCase() + '-bought');
-        Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
-        this.scene.buildBorders();
-      }, callbackScope: this, loop: false });
-    }
-
-    if (this.bought && this.cooldown <= 0 && this.territoryType === 1) {
-      this.territoryType = this.boughtType;
-      this.scene.state.exchangeTerritory = this.boughtType;
-      this.scene.installTerritory();
+    if (this.bought && this.cooldown <= 0) {
+      this.scene.tryTask(5, this.territoryType);
+      if (this.territoryType === 0) {
+        this.territoryType = this.boughtType;
+        this.scene.time.addEvent({ delay: 500, callback: (): void => {
+          this.changeSprite();
+          this.forest?.destroy();
+          this.setTexture(this.scene.state.farm.toLowerCase() + '-bought');
+          Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
+          this.scene.buildBorders();
+        }, callbackScope: this, loop: false });
+      } else if (this.territoryType === 1) {
+        this.territoryType = this.boughtType;
+        if (this.territoryType === 5) {
+          this.volume = 0;
+          this.money = 0;
+          this.changeSprite();
+          this.createRepositorySprite();
+          Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
+        } else {
+          this.volume = 1000;
+          this.changeSprite();
+          this.scene.time.addEvent({ delay: 500, callback: (): void => {
+            Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
+          }, callbackScope: this, loop: false });
+        }
+      }
     }
   }
 
@@ -491,12 +504,12 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       } else {
         sprite += 4;
       }
-      if (this.repository.texture.key !== sprite) {
-        this.repository.setTexture(sprite);
+      if (this.repository?.texture?.key !== sprite) {
+        this.repository?.setTexture(sprite);
       }
     }
     
-    if (this.texture.key !== sprite && this.territoryType !== 5) {
+    if (this.texture?.key !== sprite && this.territoryType !== 5) {
       this.setTexture(sprite);
     } 
 

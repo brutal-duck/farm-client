@@ -446,7 +446,7 @@ function exchange(ad: boolean = false): void {
     } else if (this.state.convertor.fun === 4) {
       this.exchangeTerritory();
     } else if (this.state.convertor.fun === 5) {
-      this.installTerritory();
+      // this.installTerritory();
     } else if (this.state.convertor.fun === 6) {
       this.buyTerritory();
     } else if (this.state.convertor.fun === 7) {

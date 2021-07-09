@@ -1,4 +1,5 @@
 // включение туториала
+import SheepTerritory from './../../components/Territories/SheepTerritory';
 function showTutorial(additional: boolean | string = false): void {
   
   if (this.scene.isActive('Modal')) this.scene.stop('Modal');
@@ -292,7 +293,7 @@ function progressTutor_20(): void {
   
   this.scene.stop('Tutorial');
 
-  let territory = this.territories.children.entries.find((data: any) => data.block === 2 && data.position === 3);
+  const territory: SheepTerritory = this.territories.children.entries.find((data: any) => data.block === 2 && data.position === 3);
   let modal: Imodal = {
     type: 1,
     sysType: 2
@@ -309,7 +310,7 @@ function progressTutor_30(): void {
   
   this.scene.stop('Tutorial');
 
-  let territory = this.territories.children.entries.find((data: any) => data.block === 2 && data.position === 2);
+  const territory: SheepTerritory = this.territories.children.entries.find((data: any) => data.block === 2 && data.position === 2);
   let modal: Imodal = {
     type: 1,
     sysType: 2
