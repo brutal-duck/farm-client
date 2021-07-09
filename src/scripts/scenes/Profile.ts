@@ -155,6 +155,7 @@ class Profile extends Phaser.Scene {
     this.createProfileInfo();
     this.createFarms();
     this.createShop();
+    this.createProfile();
     this.creaetePointer();
     if (this.state.platform === 'vk' || this.state.platform === 'ok') this.createSocialTaskBtn();
   }
@@ -506,38 +507,6 @@ class Profile extends Phaser.Scene {
     }
   }
 
-  private createLockedCowFarm(): void {
-    const farmPosition: Iposition = { x: 0, y: 1050 };
-    const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-cow-farm-lock').setOrigin(0, 0.5);
-    const text: Phaser.GameObjects.Text = this.add.text(farmPosition.x + 150, farmPosition.y, this.state.lang.unlockNextUpdate, {
-      font: '20px Shadow',
-      color: '#fbd0b9',
-      wordWrap: { width: 200 },
-      align: 'center',
-    }).setOrigin(0.5).setDepth(2);
-    const textBounds: Phaser.Geom.Rectangle = text.getBounds();
-
-    this.add.graphics({ x: textBounds.left - 20, y: textBounds.top - 20 })
-      .fillStyle(0x2b3d11, 0.5)
-      .fillRoundedRect(0, 0, textBounds.width + 40, textBounds.height + 40).setDepth(1);
-    
-    this.click(farmSprite, (): void => {
-      if (this.state.farm !== 'Cow') {
-        this.game.scene.keys[this.state.farm].autosave();
-        this.scene.stop();
-        this.scene.stop(this.state.farm);
-        this.scene.stop(this.state.farm + 'Bars');
-        this.scene.start('Cow' + 'Preload', this.state);
-      } else {
-        this.game.scene.keys[this.state.farm].scrolling.downHandler();
-        this.game.scene.keys[this.state.farm].scrolling.enabled = true;
-        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-        this.scene.stop();
-      }
-    }, 8);
-    
-  }
-
   private createUnicornFarm(): void {
     const farmPosition: Iposition = {
       x: 720,
@@ -774,6 +743,31 @@ class Profile extends Phaser.Scene {
       font: '30px Bip',
       color: '#ffffff',
     }).setOrigin(0.5).setVisible(false);
+  }
+
+  private createProfile(): void {
+    const shopPosition: Iposition = {
+      x: 395,
+      y: 360
+    }
+    const zoneSize: Isize = {
+      width: 200,
+      height: 250
+    }
+    const zone: Phaser.GameObjects.Zone = this.add.zone(shopPosition.x, shopPosition.y, zoneSize.width, zoneSize.height).setDropZone(undefined, () => {});
+      
+    // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
+    // graphics.lineStyle(5, 0xFF0000);
+    // graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+
+    this.click(zone, (): void => {
+      const modal: Imodal = {
+        type: 1,
+        sysType: 7,
+      }
+      this.state.modal = modal;
+      this.scene.launch('Modal', this.state);
+    });
   }
 
   private updateEvent(): void {
