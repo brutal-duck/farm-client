@@ -373,6 +373,20 @@ class Boot extends Phaser.Scene {
 
       // @ts-ignore
       window.admob.rewardvideo.prepare();
+
+      document.addEventListener('pause', (): void => {
+        console.log('pause event');
+        const music: Phaser.Sound.BaseSound = this.sound.get('music');
+        console.log(music);
+        music?.pause();
+      }, false);
+
+      document.addEventListener('resume', (): void => {
+        console.log('resume event')
+        const music: Phaser.Sound.BaseSound = this.sound.get('music');
+        console.log(music);
+        music?.play();
+      }, false);
     }, false);
   }
   
