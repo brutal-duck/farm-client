@@ -373,11 +373,11 @@ function interval(): void {
     this.updateProfileNative();
     this.showFeedBoostSpeechBubble();
 
-    const volume = this.territories.children.entries.find(el => el.territoryType === 5)?.volume;
+    const volume: number = this.territories.children.entries.find(el => el.territoryType === 5)?.volume;
     this.tryTask(26, 0, 0, volume);
 
     // Звуки
-    if (this.animalGroup?.children.entries.length > 0 && time % 7 === 0) {
+    if (this.animalGroup?.children.entries.length > 0 && time % 14 === 0) {
       this.playSoundOnce(`cow-sound-${Phaser.Math.Between(1, 3)}`)
     }
     

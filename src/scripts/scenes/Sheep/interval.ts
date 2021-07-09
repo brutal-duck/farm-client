@@ -412,7 +412,7 @@ function interval(): void {
     this.showFeedBoostSpeechBubble();
 
     // Звуки
-    if (this.sheep?.children.entries.length > 0 && time % 7 === 0) {
+    if (this.sheep?.children.entries.length > 0 && time % 14 === 0) {
       this.playSoundOnce(`sheep-sound-${Phaser.Math.Between(1, 2)}`)
     }
 
