@@ -4,7 +4,6 @@ import Hint from '../../components/animations/Hint';
 import ShowCaseWindow from './../../components/modal/ShowCaseWindow';
 import ExchangeTerritoryWindow from '../../components/modal/system/ExchangeTerritoryWindow';
 import ExpelAnimalWindow from '../../components/modal/system/ExpelAnimalWindow';
-import ProfileWindow from '../../components/modal/system/ProfileWindow';
 import LogoutWindow from '../../components/modal/system/LogoutWindow';
 import DiamondAnimalAd from '../../components/modal/system/DiamondAnimalAd';
 import ImproveCollectorWindow from '../../components/modal/system/ImproveCollectorWindow';
@@ -125,7 +124,6 @@ function systemWindow(): void {
       break;
 
     case 7: // окно профиля
-      new ProfileWindow(this)
       break;
 
     case 8: // окно завершения сессии

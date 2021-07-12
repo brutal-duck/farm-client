@@ -762,8 +762,7 @@ class Profile extends Phaser.Scene {
 
     this.click(zone, (): void => {
       const modal: Imodal = {
-        type: 1,
-        sysType: 7,
+        type: 15,
       }
       this.state.modal = modal;
       this.scene.launch('Modal', this.state);

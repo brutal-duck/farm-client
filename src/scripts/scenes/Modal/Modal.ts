@@ -37,6 +37,7 @@ import EventProgressWindow from '../../components/modal/EventProgressWindow';
 import EventEndWindow from '../../components/modal/EventEndWindow';
 import EventRatingsWindow from '../../components/modal/EventRatingsWindow';
 import HerdBoostUnicornWindow from '../../components/modal/HerdBoostUnicornWindow';
+import ProfileWindow from '../../components/modal/ProfileWindow';
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -149,6 +150,10 @@ class Modal extends Phaser.Scene {
         break;
       case 14: 
         this.socialTakskWindow = new SocialTasksWindow(this);
+        this.openModal(this.cameras.main);
+        break;
+      case 15: 
+        new ProfileWindow(this);
         this.openModal(this.cameras.main);
         break;
       default:
