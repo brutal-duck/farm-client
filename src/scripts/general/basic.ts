@@ -1318,25 +1318,19 @@ function spreadAnimals(): void {
   }
 
   // смотрим, где какая овца сидит
-  if (this[animal] !== undefined) {
-
+  if (this[animal]) {
     for (let i in this[animal].children.entries) {
   
       let c = this[animal].children.entries[i];
       let territory = this.currentTerritory(c.x, c.y);
   
-      if (territory !== undefined) {
+      if (territory) {
         
         territory = allTerritories.find(data => data._id === territory._id);
-  
-        if (territory !== undefined) {
-          territory.count.push(this[animal].children.entries[i])
-        }
-        
-      }
-      
-    }
+        if (territory) territory.count.push(this[animal].children.entries[i])
 
+      }
+    }
   }
 
   // 2. ОТПРАВЛЯЕМ ОВЕЦ НА САМЫЕ НИЖНИЕ ТЕРРИТОРИИ
@@ -1354,23 +1348,23 @@ function spreadAnimals(): void {
       let topTerritory = allTerritories.find(data => data.block === allTerritories[i].block - 1 && data.position === allTerritories[i].position);
       
       if (
-        topTerritory !== undefined &&
-        topTerritory.count.length !== 0 &&
-        topTerritory.count.every(el => el.spread === false) &&
-        topTerritory.count.find(data => data.aim === false) !== undefined
+        topTerritory &&
+        topTerritory.count.length >= 2 &&
+        topTerritory.count.every(el => !el.spread) &&
+        topTerritory.count.find(data => !data.aim) !== undefined
       ) {
 
-        animalWithoutAim = topTerritory.count.find(data => data.aim === false);        
-        animalWithoutAim.spread = true;
-        let randomX: number = Phaser.Math.Between(allTerritories[i].x - 10, allTerritories[i].x + 10);
-        let randomY: number = Phaser.Math.Between(allTerritories[i].y - 10, allTerritories[i].y + 10);
-        if (this.state.farm === 'Cow') {
-          animalWithoutAim.setAim(randomX, randomY);
-        } else {
-          this.aim(animalWithoutAim, randomX, randomY);
+        animalWithoutAim = topTerritory.count.find(data => !data.aim);        
+        
+        if (this[animal].children.entries.every(animal => !animal.spread)) {
+          animalWithoutAim.spread = true;
+          let randomX: number = Phaser.Math.Between(allTerritories[i].x - 10, allTerritories[i].x + 10);
+          let randomY: number = Phaser.Math.Between(allTerritories[i].y - 10, allTerritories[i].y + 10);
+  
+          if (this.state.farm === 'Cow') animalWithoutAim.setAim(randomX, randomY);
+          else this.aim(animalWithoutAim, randomX, randomY);
+          localSpread = true;
         }
-        localSpread = true;
-
       }
     }
   }
@@ -1386,12 +1380,11 @@ function spreadAnimals(): void {
     });
  
     for (let i in allTerritories) {
-  
       // Проверяем, есть ли перемещающаяся овца
-      if (allTerritories[i].count.every(el => el.spread === false)) {
+      if (allTerritories[i].count.every(el => !el.spread)) {
         
         // Находим лишнюю овцу без цели
-        animalWithoutAim = allTerritories[i].count.find(data => data.aim === false);
+        animalWithoutAim = allTerritories[i].count.find(data => !data.aim);
         nearTerritories = [];
       
         // Проверяем территорию снизу и если она пустая, то перемещаем овцу
@@ -1400,47 +1393,44 @@ function spreadAnimals(): void {
           let bottomTerritory = allTerritories.find(data => data.block === allTerritories[i].block + 1 && data.position === allTerritories[i].position);
     
           if (
-            bottomTerritory !== undefined &&
+            bottomTerritory &&
             bottomTerritory.count.length === 0 &&
             animalWithoutAim &&
-            animalWithoutAim.spread === false
+            !animalWithoutAim.spread
           ) {
     
             animalWithoutAim.spread = true;
             let randomX: number = Phaser.Math.Between(bottomTerritory.x - 10, bottomTerritory.x + 10);
             let randomY: number = Phaser.Math.Between(bottomTerritory.y - 10, bottomTerritory.y + 10);
-            if (this.state.farm === 'Cow') {
-              animalWithoutAim.setAim(randomX, randomY);
-            } else {
-              this.aim(animalWithoutAim, randomX, randomY);
 
-            }
+            if (this.state.farm === 'Cow') animalWithoutAim.setAim(randomX, randomY);
+            else this.aim(animalWithoutAim, randomX, randomY);
             
             break;
   
-          } else if (bottomTerritory !== undefined) nearTerritories.push(bottomTerritory);
+          } else if (bottomTerritory) nearTerritories.push(bottomTerritory);
     
         }
     
         // Если овца еще не перемещается, то продолжаем проверять территорию вокруг
-        if (animalWithoutAim && animalWithoutAim.spread === false) {
+        if (animalWithoutAim && !animalWithoutAim.spread) {
           
           // Проверяем территорию справа
           if (allTerritories[i].position + 1 <= 3) {
             let rightTerritory = allTerritories.find(data => data.position === allTerritories[i].position + 1 && data.block === allTerritories[i].block);
-            if (rightTerritory !== undefined) nearTerritories.push(rightTerritory);
+            if (rightTerritory) nearTerritories.push(rightTerritory);
           }
           
           // Проверяем территорию слева 
           if (allTerritories[i].position - 1 >= 1) {
             let leftTerritory = allTerritories.find(data => data.position === allTerritories[i].position - 1 && data.block === allTerritories[i].block);
-            if (leftTerritory !== undefined) nearTerritories.push(leftTerritory);
+            if (leftTerritory) nearTerritories.push(leftTerritory);
           }
             
           // Проверяем территорию сверху
           if (allTerritories[i].block - 1 >= 2) {
             let topTerritory = allTerritories.find(data => data.block === allTerritories[i].block - 1 && data.position === allTerritories[i].position);
-            if (topTerritory !== undefined) nearTerritories.push(topTerritory);
+            if (topTerritory) nearTerritories.push(topTerritory);
           }
           
           // Сортируем по запонености
@@ -1456,19 +1446,15 @@ function spreadAnimals(): void {
             nearTerritories.length !== 0 &&
             allTerritories[i].count.length > nearTerritories[0].count.length + 1
           ) {
-        
+
             animalWithoutAim.spread = true;
             let randomX: number = Phaser.Math.Between(nearTerritories[0].x - 10, nearTerritories[0].x + 10);
             let randomY: number = Phaser.Math.Between(nearTerritories[0].y - 10, nearTerritories[0].y + 10);
 
-            if (this.state.farm === 'Cow') {
-              animalWithoutAim.setAim(randomX, randomY);
-            } else {
-              this.aim(animalWithoutAim, randomX, randomY);
-            }
+            if (this.state.farm === 'Cow') animalWithoutAim.setAim(randomX, randomY);
+            else this.aim(animalWithoutAim, randomX, randomY);
 
             break;
-  
           }
         }
       }
