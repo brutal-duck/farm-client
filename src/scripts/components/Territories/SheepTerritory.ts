@@ -78,6 +78,7 @@ export default class SheepTerritory extends Territory {
   }
 
   public setPositionImproveText(): void {
+    super.setPositionImproveText();
     if (this.territoryType === 5) {
       const position: Iposition = {
         x: this.improveText?.x,
@@ -100,7 +101,7 @@ export default class SheepTerritory extends Territory {
       if (this.improveText.x !== position.x || this.improveText.y !== position.y) {
         this.improveText
           .setPosition(position.x, position.y)
-          .setDepth(this.repository.depth + 1);
+          .setDepth(this.repository?.depth + 1);
       }
     } else if (this.territoryType === 2 || this.territoryType === 3) {
       const position: Iposition = {
@@ -114,5 +115,27 @@ export default class SheepTerritory extends Territory {
           .setDepth(this.depth + 2);
       }
     }
+  }
+
+  public unlockTerritory(): void {
+    if (this.scene.state.userSheep.tutorial === 20 && this.boughtType === 2) {
+      this.scene.doneTutor_20();
+    }
+  
+    if (this.scene.state.userSheep.tutorial === 30 && this.boughtType === 3) {
+      this.scene.doneTutor_30();
+    }
+
+    if (this.boughtType === 5 && this.scene.state.userSheep.tutorial === 80) {
+    this.scene.doneTutor_80();
+    }
+
+    if (this.block === 2 && this.position === 3) {
+      for (let i in this.scene.sheep?.children.entries) {
+        //@ts-ignore
+        this.scene.sheep?.children.entries[i].drag = false;
+      }
+    }
+    super.unlockTerritory();
   }
 }

@@ -85,7 +85,6 @@ import {
   woolSprite,
   dragSheepMerging
 } from './sheep';
-import { installTerritory } from './territories';
 import {
   balance,
   sheepPrice,
@@ -210,7 +209,6 @@ class Sheep extends Phaser.Scene {
   public getSheep = getSheep.bind(this);
   public currentTerritory = currentTerritory.bind(this);
   public confirmExchangeTerritory = confirmExchangeTerritory.bind(this);
-  public installTerritory = installTerritory.bind(this);
   public deleteTerritoriesLocks = deleteTerritoriesLocks.bind(this);
   public balance = balance.bind(this);
   public convertDiamonds = convertDiamonds.bind(this);

@@ -31,47 +31,20 @@ function world(): void {
   this.territories = this.physics.add.group(); // группа территорий
   let forest: number = 1;
   this.state.sheepTerritories.map((data: Iterritories) => {
-
     let x: number = (data.position - 1) * this.height;
     let y: number = (data.block - 1) * this.height;
 
     forest++;
     if (forest > 8) forest = 1;
 
-    if (data.position === 0) x++;
-    if (data.block === 0) y++;
+    // if (data.position === 0) x++;
+    // if (data.block === 0) y++;
     y += this.topIndent;
 
     const type: string = getTerritoryType.bind(this)(data);
 
-    let territory: SheepTerritory = new SheepTerritory(this, x, y, type, data);
+    const territory: SheepTerritory = new SheepTerritory(this, x, y, type, data);
 
-    let topBorder: number = 1;
-    let bottomBorder: number = 1;
-  
-    if (territory.position === 1) {
-      topBorder = 1;
-      bottomBorder = 3;
-    } else if (territory.position === 2) {
-      topBorder = 2;
-      bottomBorder = 1;
-    } else if (territory.position === 3) {
-      topBorder = 3;
-      bottomBorder = 2;
-    }
-
-    if (territory.cooldown > 0) {
-      territory.cooldownSprite = new CooldownSprite(territory);
-    }
-
-    territory.bought = data.bought;
-    territory.boughtType = data.boughtType;
-
-    if (territory.bought && territory.cooldown === 0) {
-      territory.unlockTerritory();
-    }
-
-    territory.createBorders(topBorder, bottomBorder)
     territory.createForest(forest);
   });
   this.buildBorders();
