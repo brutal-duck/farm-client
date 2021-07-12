@@ -163,19 +163,21 @@ class Profile extends Phaser.Scene {
   private createProfileInfo(): void {
     const farmer: Phaser.GameObjects.Sprite = this.add.sprite(80, 75, 'farmer').setScale(0.45).setVisible(false);
     let avatar: Phaser.GameObjects.Sprite;
-    if (this.state.platform === 'web' || this.state.platform === 'android' ) {
-      avatar = farmer;
-      avatar.setVisible(true);
-    } else {
-      avatar = this.add.sprite(farmer.x, farmer.y, 'avatar');
-      if (this.state.platform === 'vk') {
-        avatar.setScale(0.6);
-      }
-      avatar.setMask(new Phaser.Display.Masks.BitmapMask(this, farmer));
-      if (avatar.texture.key === '__MISSING') {
-        avatar.setTexture('farmer');
-      }
-    }
+    avatar = farmer;
+    avatar.setVisible(true);
+    // if (this.state.platform === 'web' || this.state.platform === 'android' ) {
+    //   avatar = farmer;
+    //   avatar.setVisible(true);
+    // } else {
+    //   avatar = this.add.sprite(farmer.x, farmer.y, 'avatar');
+    //   if (this.state.platform === 'vk') {
+    //     avatar.setScale(0.6);
+    //   }
+    //   avatar.setMask(new Phaser.Display.Masks.BitmapMask(this, farmer));
+    //   if (avatar.texture.key === '__MISSING') {
+    //     avatar.setTexture('farmer');
+    //   }
+    // }
     const avatarGeom: Phaser.Geom.Rectangle = farmer.getBounds();
     const status: IstatusSettings = this.getStatusSettings(this.state.user.status);
     if (status) {
