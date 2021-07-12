@@ -86,6 +86,7 @@ const factoryProductionSlotDisable3: string = require('./../../../assets/images/
 const factoryProductionSlot4: string = require('./../../../assets/images/cow/modal/factory-resource-slot-4.png');
 const factoryProductionSlotDisable4: string = require('./../../../assets/images/cow/modal/factory-resource-slot-disable-4.png');
 const profileWindowBtn: string = require('./../../../assets/images/modal/profile-window-button.png');
+const profileWindowBtnRed: string = require('./../../../assets/images/modal/profile-window-button-red.png');
 const profileWindowEditBtn: string = require('./../../../assets/images/modal/profile-window-edit-btn.png');
 const profileWindowFooter: string = require('./../../../assets/images/modal/profile-window-footer.png');
 const profileWindowHeader: string = require('./../../../assets/images/modal/profile-window-header.png');
@@ -238,6 +239,7 @@ export default function typePreload(): void {
         this.load.image('profile-window-header', profileWindowHeader);
         this.load.image('profile-window-level', profileWindowLevel);
         this.load.image('profile-window-bg', profileWindowBg);
+        this.load.image('profile-window-button-red', profileWindowBtnRed);
         this.load.image('tasks-close', tasksClose);
         break;
       default:
