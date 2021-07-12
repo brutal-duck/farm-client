@@ -12,9 +12,14 @@ import LocalStorage from './../../libs/LocalStorage';
 */
 
 // плашка заданий
-export default class TaskBoard extends Phaser.GameObjects.TileSprite{
+export default class TaskBoard extends Phaser.GameObjects.TileSprite {
 
   public scene: SheepBars | ChickenBars | CowBars;
+
+  public bg: Phaser.GameObjects.RenderTexture;
+  public bgY: number
+  public elements: modalElementType[]
+
   public isVisibile: boolean;
   public status: number;
   public taskStatus: number;
@@ -50,9 +55,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
   public listMoving: boolean = false;
   public isMoving: boolean = false;
 
-  constructor(
-    scene: SheepBars | ChickenBars | CowBars
-  ) {
+  constructor(scene: SheepBars | ChickenBars | CowBars) {
     super(scene, 0, 0, 0, 0, 'white-pixel')
     this.scene = scene;
     this.isVisibile = false;
@@ -67,66 +70,54 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
     this.scene.add.existing(this);
     this.setOrigin(0).setVisible(false).setInteractive();
 
+    this.elements = []
     this.positionY = this.scene.height;
+    this.bgY = this.positionY - 195
     this.createElements();
 
     this.listTimer = this.scene.time.addEvent({
       delay: 1000,
-      callback: (): void => {
-        this.tickListTimer();
-      },
+      callback: (): void => { this.tickListTimer(); },
       loop: true,
     });
   }
 
-  private createElements(): void {
-    this.taskIcon = this.scene.add.sprite(0, 0, ' ')
-      .setVisible(false);
 
-    this.star = this.scene.add.sprite(0, 0, 'star')
-      .setVisible(false);
+  private createElements(): void {
+
+    this.bg = this.scene.add.nineslice(this.scene.cameras.main.centerX, this.bgY, 660, 110, 'na', 15).setOrigin(0.5, 1)
+    
+    // Иконка задания
+    this.taskIcon = this.scene.add.sprite(0, 0, ' ').setVisible(false);
+    // Звезда
+    this.star = this.scene.add.sprite(0, 0, 'star').setVisible(false);
 
     this.doneText = this.scene.add.text(0, 0, ' ', {
       font: '20px Bip',
       color: '#525252'
-    })
-      .setDepth(this.scene.height)
-      .setOrigin(0, 0.5)
-      .setVisible(false);
+    }).setDepth(this.scene.height).setOrigin(0, 0.5).setVisible(false);
 
     this.taskText = this.scene.add.text(0, 0, ' ', { 
       font: '23px Bip',
       color: '#713D1E',
       align: 'left',
       wordWrap: { width: 450 }
-    })
-      .setDepth(this.scene.height)
-      .setOrigin(0, 0)
-      .setVisible(false);
+    }).setDepth(this.scene.height).setOrigin(0, 0).setVisible(false);
 
-    this.doneIcon = this.scene.add.sprite(0, 0, 'completed')
-      .setVisible(false);
-
-    this.done = this.scene.add.sprite(0, 0, 'little-button')
-      .setDepth(this.scene.height)
-      .setVisible(false);
+    this.doneIcon = this.scene.add.sprite(0, 0, 'completed').setVisible(false);
+    this.done = this.scene.add.sprite(0, 0, 'little-button').setDepth(this.scene.height).setVisible(false);
 
     this.takeText = this.scene.add.text(0, 0, this.scene.state.lang.pickUp, {
       font: '20px Shadow',
       color: '#FFFFFF'
-    })
-      .setOrigin(0.5, 0.5)
-      .setDepth(this.scene.height)
-      .setVisible(false);
+    }).setOrigin(0.5, 0.5).setDepth(this.scene.height).setVisible(false);
 
     this.award = this.scene.add.text(0, 0, ' ', {
       font: '20px Bip',
       color: '#FFFFFF'
-    })
-      .setDepth(this.scene.height + 1)
-      .setOrigin(0, 0.5)
-      .setVisible(false);
-      
+    }).setDepth(this.scene.height + 1).setOrigin(0, 0.5).setVisible(false);
+    
+    // БГ валюты награды
     this.awardBg = this.scene.add.nineslice(0, 0, 60, 40, 'tasks-uncomplete-rend', 16)
       .setOrigin(0, 0.1)
       .setTint(0x6B000A)
@@ -139,17 +130,12 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       .setOrigin(0, 0.5)
       .setVisible(false);
 
-    this.doneButton = this.scene.add.sprite(0, 0, 'big-btn-green')
-      .setDepth(1)
-      .setVisible(false);
+    this.doneButton = this.scene.add.sprite(0, 0, 'big-btn-green').setDepth(1).setVisible(false);
 
     this.doneButtonText = this.scene.add.text(0, 0, this.scene.state.lang.donePart, {
       font: '22px Shadow',
       color: '#FFFFFF'
-    })
-      .setDepth(1)
-      .setOrigin(0.5, 0.5)
-      .setVisible(false);
+    }).setDepth(1).setOrigin(0.5, 0.5).setVisible(false);
     
     let lastPartText: string = this.scene.state.lang[this.scene.state.farm.toLowerCase() + 'CompanyDone'];
 
@@ -166,15 +152,14 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       color: '#713D1E',
       align: 'center',
       wordWrap: { width: 500 },
-    }).setDepth(1).setOrigin(0.5, 0.5).setVisible(false);
+    }).setDepth(1).setOrigin(0.5).setVisible(false);
 
     this.taskProgress = this.scene.add.graphics().setVisible(false);
-
     this.listButton = this.scene.add.sprite(0, 0,'scroll-arrow').setVisible(false);
   }
 
   public preUpdate(): void {
-
+    
     this.checkVisibility();
     let stateParts: Ipart[];
     let userData: IuserSheep | IuserChicken | IuserCow;
@@ -212,7 +197,6 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
     });
     
     let setter: boolean = false;
-
     const task: Itasks = tasks[0];
 
     if (
@@ -222,9 +206,8 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       this.gotAward === task?.got_awarded ||
       this.isMoving) return;
     else {
-      if (this.taskId !== task?.id) {
-        setter = true;
-      }
+      if (this.taskId !== task?.id) setter = true;
+
       this.currentTaskProgress = task.progress;
       this.gotAward = task.got_awarded;
       this.taskStatus = task.done;
@@ -235,59 +218,46 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       if (this.status === 3
         && task?.done === 1
         && task?.got_awarded === 1
-        && stateParts.length === userData.part) {
-        this.status = 4;
-      }
-      this.animation?.remove();
-      if (this.status === 3 || this.status === 2) {
-        this.setDoneAnim();
-      } 
-      this.isUpdated = false;   
+        && stateParts.length === userData.part
+      ) this.status = 4;
       
+      this.animation?.remove();
+      if (this.status === 3 || this.status === 2) this.setDoneAnim();
+      this.isUpdated = false;
     }
   
     if (!this.isUpdated) {
       // this.awardBg?.clear();
       this.taskProgress?.clear();
 
+      // Выполняется
+      console.log('preUpdate ~ this.status', this.status)
       if (this.status === 1 && task) {
         const taskData: ItaskData = this.scene.game.scene.keys[this.scene.state.farm].getTaskData(task);
         
-        this.taskText
-          .setText(taskData.name)
-          .setWordWrapWidth(450);
-          
+        this.taskText.setText(taskData.name).setWordWrapWidth(450);
+        
         const taskTextBounds = this.taskText.getBounds();
         this.taskText.setPosition(150, this.scene.height - taskTextBounds.height - 244);
         let count: number = task.count;
   
         if (task.type === 14 && task.count === 0) count = countBreed;
         
-        this.doneText
-          .setText(this.scene.state.lang.performed + ' ' + task.progress + ' / ' + count)
-          .setPosition(150, this.scene.height - 220);
+        this.doneText.setText(this.scene.state.lang.performed + ' ' + task.progress + ' / ' + count).setPosition(150, this.scene.height - 220);
             
         let height: number = 70 + taskTextBounds.height;
         if (height < 110) height = 110;
 
-        this
-          .setPosition(30, this.scene.height - 190 - height)
-          .setDisplaySize(660, height)
-          .removeAllListeners()
-          .setTint(0xFFEBC5);
-
-        this.taskIcon
-          .setTexture(taskData.icon)
-          .setPosition(88, this.scene.height  - 190 - height / 2)
-          .setTint();
+        this.setPosition(30, this.scene.height - 190 - height).setDisplaySize(660, height).removeAllListeners().setTint(0xFFEBC5);
+        this.bg.setY(this.bgY + 5).setDisplaySize(660, height)
+        
+        this.taskIcon.setTexture(taskData.icon).setPosition(88, this.scene.height  - 190 - height / 2).setTint();
 
         const progress: number = (100 / count * task.progress) * (6.3 / 100) - Math.PI / 2;
 
         this.star.setPosition(630, this.scene.height - 190 - height / 2);
 
-        this.scene.click(this, () => {
-          this.scene.clickTaskBoard(task);
-        });
+        this.scene.click(this, () => { this.scene.clickTaskBoard(task); });
       
         this.taskProgress
           .setPosition(this.taskIcon.x, this.scene.height  - 190 - height / 2)
@@ -314,25 +284,20 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
         this.scene.click(this.listButton, () => {
           if (!this.listMoving) this.toggleList();
         });
+
+        // Получить награду
       } else if (this.status === 2 && task) {
         const taskData: ItaskData = this.scene.game.scene.keys[this.scene.state.farm].getTaskData(task);
         
-        this.taskText
-          .setText(taskData.name)
-          .setWordWrapWidth(390);
+        this.taskText.setText(taskData.name).setWordWrapWidth(390);
         const taskTextBounds: Phaser.Geom.Rectangle = this.taskText.getBounds();
         this.taskText.setPosition(150, this.scene.height - taskTextBounds.height - 244);
         
         let icon: string = 'diamond';
         let award: number = task.diamonds;
         
-        this.award
-          .setText(String(award))
-          .setPosition(190, this.positionY - 220);
-
-        this.diamond
-          .setTexture(icon)
-          .setPosition(160, this.positionY - 220);
+        this.award.setText(String(award)).setPosition(190, this.positionY - 220);
+        this.diamond.setTexture(icon).setPosition(160, this.positionY - 220);
 
         if (this.scene.state.farm === 'Sheep') {     
           let moneyTask: any = this.scene.game.scene.keys['Sheep'].moneyTasks.find(el => el.id === task.id);
@@ -345,22 +310,15 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
         }
 
         const bounds = this.award.getBounds();
-
         this.awardBg.setPosition(bounds.left - 40, bounds.top - 3)
       
         let height: number = 70 + taskTextBounds.height;
         if (height < 110) height = 110;
       
-        this
-          .setPosition(30, this.positionY - 190 - height)
-          .setDisplaySize(660, height)
-          .removeAllListeners()
-          .setTint(0xFFEBC5);
-        
-        this.taskIcon
-          .setTexture(taskData.icon)
-          .setPosition(88, this.positionY - 190 - height / 2)
-          .setTint(0x777777);
+        this.setPosition(30, this.positionY - 190 - height).setDisplaySize(660, height).removeAllListeners().setTint(0xFFEBC5);
+        this.bg.setY(this.bgY + 5).setDisplaySize(660, height)
+
+        this.taskIcon.setTexture(taskData.icon).setPosition(88, this.positionY - 190 - height / 2).setTint(0x777777);
 
         this.done.setPosition(620, this.positionY - 190 - height / 2);
         this.takeText.setPosition(620, this.positionY - 193 - height / 2);
@@ -382,12 +340,11 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
         });
       
         this.taskProgress?.clear();
+
+        // Завершить главу
       } else if (this.status === 3 && task) {
-        this
-          .setPosition(30, this.positionY - 300)
-          .setDisplaySize(660, 110)
-          .removeAllListeners()
-          .setTint(0xFFEBC5);
+        this.setPosition(30, this.positionY - 300).setDisplaySize(660, 110).removeAllListeners().setTint(0xFFEBC5);
+        this.bg.setY(this.bgY + 5).setDisplaySize(660, 110)
       
         this.doneButton.setPosition(this.scene.cameras.main.centerX, this.positionY - 245);
 
@@ -404,15 +361,13 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
         
         this.taskProgress?.clear();
       }
-          
+      
+      // Кампания завершена
       if (this.status === 4 && task) {
 
-        this
-          .setPosition(30, this.scene.height - 300)
-          .removeAllListeners()
-          .setDisplaySize(660, 110)
-          .setTint(0xFFEBC5);
-      
+        this.setPosition(30, this.scene.height - 300).removeAllListeners().setDisplaySize(660, 110).setTint(0xFFEBC5);
+        this.bg.setY(this.bgY + 5).setDisplaySize(660, 110)
+
         this.lastPart.setPosition(this.scene.cameras.main.centerX, this.scene.height - 245);
         this.taskProgress?.clear();
 
@@ -432,11 +387,12 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
         this.scene.scene.isActive('Modal') ||
         this.scene.scene.isActive('Tutorial') ||
         this.scene.scene.isActive('Fortune')) &&
-        !checkSheepTutor) {
-          this.hideAllElement();
-          if (this.listIsOpen) {
-            this.hideTaskListElements();
-          }
+        !checkSheepTutor
+      ) {
+
+        this.hideAllElement();
+        if (this.listIsOpen) this.hideTaskListElements();
+
       } else if (!this.scene.menu.isOpened &&
         !this.scene.scene.isActive('Modal') &&
         !this.scene.scene.isActive('Tutorial') &&
@@ -454,7 +410,8 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
     if (this.listIsOpen) this.closeTaskListAnimation();
     this.animation = this.scene.tweens.add({
       targets: [
-        this, 
+        this,
+        this.bg,
         this.taskIcon,
         this.star,
         this.doneText,
@@ -501,6 +458,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
   private setStartY(): void {
     const dYanim: number = 250;
     this.setY(this.y + dYanim);
+    this.bg.setY(this.bg.y + dYanim);
     this.taskIcon.setY(this.taskIcon.y + dYanim);
     this.star.setY(this.star.y + dYanim);
     this.doneText.setY(this.doneText.y + dYanim);
@@ -525,7 +483,8 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
     this.scene.tweens.add({
       duration: 500,
       targets: [
-        this, 
+        this,
+        this.bg,
         this.taskIcon,
         this.star,
         this.doneText,
@@ -598,9 +557,8 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       !this.scene.scene.isActive('Modal') &&
       !this.scene.scene.isActive('Tutorial') &&
       !this.scene.scene.isActive('Fortune') &&
-      !this.isVisibile && checkSheepTutor) {
-        this.shownElements();
-    } 
+      !this.isVisibile && checkSheepTutor
+    ) this.shownElements();
 
     if (!this.listIsOpen) {
       this.setMainPositionListButton();
@@ -611,6 +569,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
     this.isVisibile = false;
     this.hideListButton();
     this.setVisible(false);
+    this.bg.setVisible(false);
     this.taskIcon?.setVisible(false);
     this.star?.setVisible(false);
     this.doneText?.setVisible(false);
@@ -637,6 +596,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
 
     if (this.status === 1) {
       this.setVisible(true);
+      this.bg.setVisible(true);
       this.star?.setVisible(true);
       this.taskIcon?.setVisible(true);
       this.doneText?.setVisible(true);
@@ -645,6 +605,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       this.listButton?.setVisible(true);
     } else if (this.status === 2) {
       this.setVisible(true);
+      this.bg.setVisible(true);
       this.taskText.setVisible(true);
       this.award.setVisible(true);
       this.diamond.setVisible(true);
@@ -654,10 +615,12 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
       this.takeText.setVisible(true);
     } else if (this.status === 3) {
       this.setVisible(true);
+      this.bg.setVisible(true);
       this.doneButton.setVisible(true);
       this.doneButtonText.setVisible(true);
     } else if (this.status === 4) {
       this.setVisible(true);
+      this.bg.setVisible(true);
       this.lastPart.setVisible(true);
     }
   }
@@ -716,16 +679,22 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
     });
 
     tasksParams.pop()
-    for (let i: number = 0; i < tasksParams.length; i += 1) {    
+    if (this.elements.length > 0) this.elements.forEach(el => { el?.destroy() })
+    this.elements = []
+
+    for (let i: number = 0; i < tasksParams.length; i++) {    
       const task: Itasks = tasksParams[i];
       const taskData: ItaskData = this.scene.game.scene.keys[this.scene.state.farm].getTaskData(task);
-      this.createTaskListElement(task, taskData);
+      this.elements = this.elements.concat(this.createTaskListElement(task, taskData, i))
     }
+    console.log('createAllTasks ~ this.elements', this.elements)
+    this.openTaskListAnimation()
+
   }
 
-  private createTaskListElement(task: Itasks, taskData: ItaskData): void {
-    let icon: Phaser.GameObjects.Image = this.scene.add.sprite(88, this.positionY - 250, taskData.icon).setDepth(1).setScale(0.9).setAlpha(0);
-    let text: Phaser.GameObjects.Text = this.scene.add.text(icon.getBounds().right + 20, this.positionY - 250, taskData.name, {
+  private createTaskListElement(task: Itasks, taskData: ItaskData, i: number): any[] {
+    let icon: Phaser.GameObjects.Image = this.scene.add.sprite(88, this.positionY - 250 - (i + 1) * 110, taskData.icon).setDepth(1).setScale(0.9).setAlpha(0);
+    let text: Phaser.GameObjects.Text = this.scene.add.text(icon.getBounds().right + 20, this.positionY - 250 - (i + 1) * 110, taskData.name, {
       font: '24px Bip',
       color: '#713D1E',
       align: 'left',
@@ -733,75 +702,117 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
     }).setDepth(1).setOrigin(0, 0.5).setAlpha(0);
     let height = icon.height + 20;
 
-    const bgTile: Phaser.GameObjects.TileSprite = this.scene.add.tileSprite(this.scene.cameras.main.centerX, this.positionY - 250, 660, height, 'white-pixel');
-    bgTile.setTint(0xFFEBC5).setInteractive().setDepth(-1);
-    let lineTile: Phaser.GameObjects.TileSprite = this.scene.add.tileSprite(this.scene.cameras.main.centerX, bgTile.y + bgTile.height / 2 - 5, 620, 3, 'white-pixel')
-      .setDepth(1)
-      .setAlpha(0);
-    lineTile.setTint(0x858585);
+    // const bgTile: Phaser.GameObjects.TileSprite = this.scene.add.tileSprite(this.scene.cameras.main.centerX, this.positionY - 250, 660, height, 'white-pixel');
+    // bgTile.setTint(0xFFEBC5).setInteractive().setDepth(-1);
+    // let lineTile: Phaser.GameObjects.TileSprite = this.scene.add.tileSprite(this.scene.cameras.main.centerX, bgTile.y + bgTile.height / 2 - 5, 620, 3, 'white-pixel')
+    //   .setDepth(1)
+    //   .setAlpha(0);
+    // lineTile.setTint(0x858585);
 
     let completed: Phaser.GameObjects.Sprite = null;
     if (task.done === 1 && task.got_awarded === 1) {
       icon.setTint(0x777777).setAlpha(0);
       completed = this.scene.add.sprite(icon.x, icon.y, 'completed').setDepth(1).setTint(0xc0c0c0).setOrigin(0.5, 0.5).setAlpha(0);
       text.setColor('#494949').setAlpha(0);
-    }    
+    }
     this.dY -= (height);
-    const targets: any[] = [ icon, text, lineTile, completed,  bgTile ];
+    const targets: any[] = [ completed ];
     this.taskListElements = [...this.taskListElements, targets];
-    this.openTaskListAnimation(targets)
+    return [
+      icon,
+      text,
+      completed
+    ]
   }
 
-  private openTaskListAnimation(targets: any[]): void {
-    let target: any[] = [...targets]; 
-    const timeline: Phaser.Tweens.Timeline = this.scene.tweens.timeline();
-    timeline.add({
-      targets: targets,
+  private openTaskListAnimation(): void {
+    this.scene.tweens.add({
+      targets: this.bg,
+      height: '+=330',
       duration: 500,
-      y: `-=${this.dY}`,
-      ease: 'Power1', 
-    });
-    target.pop();
-    timeline.add({
-      targets: target,
-      alpha: { from: 0, to: 1},
-      duration: 300,
+      ease: 'Power1',
+      onUpdate: (): void => {
+        this.bg.setSize(this.bg.width, this.bg.height++)
+      },
+    })
+    this.scene.tweens.add({
+      targets: this.elements,
+      alpha: 1,
+      duration: 500,
+      ease: 'Power1',
       onComplete: (): void => {
         this.listMoving = false;
       }
-    });
-    timeline.play();
+    })
+    // timeline.add({
+    //   onStart: (): void => {},
+    //   targets: targets,
+    //   duration: 500,
+    //   y: `-=${this.dY}`,
+    //   ease: 'Power1', 
+    // });
+    // target.pop();
+    // timeline.add({
+    //   targets: target,
+    //   alpha: { from: 0, to: 1},
+    //   duration: 300,
+      onComplete: (): void => {
+        this.listMoving = false;
+      }
+    // });
     
   }
 
   private closeTaskListAnimation(): void {
-    this.taskListElements.reverse();
-    this.taskListElements.forEach((array: any[], index)=> {
-      const timeline: Phaser.Tweens.Timeline = this.scene.tweens.timeline();
-      const targets = [...array];
-      this.dY = (105) * (index + 1); 
-      targets.pop();
-      timeline.add({
-        targets: [...targets, this.listButton],
-        alpha: { from: 1, to: 0 },
-        duration: 300,
-      });
-      timeline.add({
-        targets: array,
+    // this.taskListElements.reverse();
+    // this.taskListElements.forEach((array: any[], index)=> {
+    //   const timeline: Phaser.Tweens.Timeline = this.scene.tweens.timeline();
+      // const targets = [...array];
+      // this.dY = (105) * (index + 1); 
+      // targets.pop();
+      // timeline.add({
+      //   targets: [...targets, this.listButton],
+      //   alpha: { from: 1, to: 0 },
+      //   duration: 300,
+      // });
+      this.scene.tweens.add({
+        targets: this.bg,
+        height: 110,
         duration: 500,
-        y: `+=${this.dY}`,
-        ease: 'Power1', 
+        ease: 'Power1',
+        onUpdate: (): void => {
+          this.bg.setSize(this.bg.width, this.bg.height--)
+        },
         onComplete: (): void => {
           this.listMoving = false;
-          array.forEach(el => {
-            el?.destroy();
-          });
-          this.setMainPositionListButton();
-          this.fadeOutListButton();
         }
-      });
-      timeline.play();
-    });
+      })
+      this.scene.tweens.add({
+        targets: this.elements,
+        alpha: 0,
+        y: this.bgY - 40,
+        duration: 500,
+        ease: 'Power1',
+        onComplete: (): void => {
+          this.listMoving = false;
+        }
+      })
+
+      // timeline.add({
+      //   onStart: (): void => {},
+      //   targets: array,
+      //   duration: 500,
+      //   y: `+=${this.dY}`,
+      //   ease: 'Power1',
+      //   onComplete: (): void => {
+      //     this.listMoving = false;
+      //     array.forEach(el => { el?.destroy(); });
+          // this.setMainPositionListButton();
+          // this.fadeOutListButton();
+      //   }
+      // });
+    //   timeline.play();
+    // });
     this.scene.time.addEvent({
       delay: 750,
       callback: (): void => {
@@ -861,9 +872,8 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite{
 
   private hideTaskListElements(): void {
     if (!this.listMoving) this.closeTaskListAnimation();
-    else {
-      this.listIsOpen = false;
-    }
+    else this.listIsOpen = false;
+    
     this.taskListElements.forEach(array => {
       array.forEach(el => el?.setVisible(false));
     })
