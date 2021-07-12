@@ -26,6 +26,7 @@ export default class ProfileWindow {
   private exitProfileBtn: Phaser.GameObjects.Sprite;
   private exitProfileBtnText: Phaser.GameObjects.Text;
   private licenseBtnText: Phaser.GameObjects.Text;
+  private height: number;
 
   constructor(scene: Modal) {
     this.scene = scene;
@@ -48,18 +49,27 @@ export default class ProfileWindow {
   }
 
   private createMainElements(): void {
+    this.bg = this.scene.add.sprite(this.x, this.y, 'profile-window-bg');
+    this.height = this.bg.getBounds().height;
+    this.createHeader();
+    this.createFooter();
+  }
+
+  private createHeader(): void {
     const headerTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       color: '#F3FBD0',
       fontFamily: 'Shadow',
       fontSize: '38px',
     };
+    this.header = this.scene.add.sprite(this.x, this.y - this.height / 2 + 10 , 'profile-window-header').setOrigin(0.5, 1);
+    const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
 
-    this.bg = this.scene.add.sprite(this.x, this.y, 'profile-window-bg');
-    const bgGeom: Phaser.Geom.Rectangle = this.bg.getBounds();
-    this.header = this.scene.add.sprite(this.x, bgGeom.top + 10, 'profile-window-header').setOrigin(0.5, 1);
-    this.headerText = this.scene.add.text(this.header.x, this.header.getCenter().y - 15, this.scene.state.lang.profile, headerTextStyle).setOrigin(0.5);
-    this.closeBtn = this.scene.add.sprite(this.x + this.header.width / 2 - 35, bgGeom.top - this.header.height + 45, 'tasks-close');
-    this.footer = this.scene.add.sprite(this.x, bgGeom.bottom + 20, 'profile-window-footer').setDepth(-1).setOrigin(0.5, 1);
+    this.headerText = this.scene.add.text(headerGeom.centerX, headerGeom.centerY - 15, this.scene.state.lang.profile, headerTextStyle).setOrigin(0.5);
+    this.closeBtn = this.scene.add.sprite(headerGeom.right - 35, headerGeom.top + 35, 'tasks-close');
+  }
+
+  private createFooter(): void {
+    this.footer = this.scene.add.sprite(this.x, this.y + this.height / 2 + 20, 'profile-window-footer').setDepth(-1).setOrigin(0.5, 1);
   }
 
   private createAvatar(): void {
@@ -67,13 +77,13 @@ export default class ProfileWindow {
       x: 220,
       y: this.y - 60,
     };
+    this.avatar = this.scene.add.sprite(pos.x, pos.y, 'farmer').setScale(0.53).setDepth(1);
     // if (this.scene.state.platform === 'vk') this.avatar = this.scene.add.sprite(pos.x, pos.y, 'avatar').setScale(0.8).setDepth(1);
     // else if (this.scene.state.platform === 'ok') this.avatar = this.scene.add.sprite(pos.x, pos.y, 'avatar').setScale(1.1).setDepth(1);
     // else if (this.scene.state.platform === 'ya') this.avatar = this.scene.add.sprite(pos.x, pos.y, 'avatar').setDepth(1);
     // else this.avatar = this.scene.add.sprite(pos.x, pos.y, 'farmer').setScale(0.53).setDepth(1);
     // if (this.avatar.texture.key === '__MISSING') this.avatar.setTexture('farmer').setScale(0.53);
     
-    this.avatar = this.scene.add.sprite(pos.x, pos.y, 'farmer').setScale(0.53).setDepth(1);
     // if (this.scene.state.platform !== 'web') {
     //   const mask: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos.x, pos.y, 'farmer').setScale(0.53).setVisible(false);
     //   this.avatar.mask = new Phaser.Display.Masks.BitmapMask(this.scene, mask);
@@ -143,15 +153,15 @@ export default class ProfileWindow {
   private createBtns(): void {
     const pos1: Iposition = {
       x: this.x - 150,
-      y: this.y + 100,
+      y: this.y + 97,
     };
     const pos2: Iposition = {
       x: this.x,
-      y: this.y + 100,
+      y: this.y + 97,
     }
     const pos3: Iposition = {
       x: this.x + 150,
-      y: this.y + 100,
+      y: this.y + 97,
     }
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Shadow',
