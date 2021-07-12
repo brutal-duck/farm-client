@@ -168,6 +168,12 @@ const donateWindowSound: string = require('./../../assets/sounds/misc/donate-win
 const donateTakeSound: string = require('./../../assets/sounds/misc/donate-take-sound.mp3');
 const treeFallingSound: string = require('./../../assets/sounds/misc/tree-falling-sound.mp3');
 
+const profileWindowBtn: string = require('./../../assets/images/modal/profile-window-button.png');
+const profileWindowEditBtn: string = require('./../../assets/images/modal/profile-window-edit-btn.png');
+const profileWindowFooter: string = require('./../../assets/images/modal/profile-window-footer.png');
+const profileWindowHeader: string = require('./../../assets/images/modal/profile-window-header.png');
+const profileWindowLevel: string = require('./../../assets/images/modal/profile-window-level.png');
+const profileWindowBg: string = require('./../../assets/images/modal/profile-window-plate.png');
 class Preload extends Phaser.Scene {
   constructor() {
     super('Preload');
@@ -375,6 +381,12 @@ class Preload extends Phaser.Scene {
       this.load.audio('cow-sound-2', cowSound2);
       this.load.audio('cow-sound-3', cowSound3);
     }
+    this.load.image('profile-window-button', profileWindowBtn);
+    this.load.image('profile-window-edit-btn', profileWindowEditBtn);
+    this.load.image('profile-window-footer', profileWindowFooter);
+    this.load.image('profile-window-header', profileWindowHeader);
+    this.load.image('profile-window-level', profileWindowLevel);
+    this.load.image('profile-window-bg', profileWindowBg);
   }
 
   public create(): void {

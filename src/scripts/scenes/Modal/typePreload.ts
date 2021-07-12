@@ -85,6 +85,12 @@ const factoryProductionSlot3: string = require('./../../../assets/images/cow/mod
 const factoryProductionSlotDisable3: string = require('./../../../assets/images/cow/modal/factory-resource-slot-disable-3.png');
 const factoryProductionSlot4: string = require('./../../../assets/images/cow/modal/factory-resource-slot-4.png');
 const factoryProductionSlotDisable4: string = require('./../../../assets/images/cow/modal/factory-resource-slot-disable-4.png');
+const profileWindowBtn: string = require('./../../../assets/images/modal/profile-window-button.png');
+const profileWindowEditBtn: string = require('./../../../assets/images/modal/profile-window-edit-btn.png');
+const profileWindowFooter: string = require('./../../../assets/images/modal/profile-window-footer.png');
+const profileWindowHeader: string = require('./../../../assets/images/modal/profile-window-header.png');
+const profileWindowLevel: string = require('./../../../assets/images/modal/profile-window-level.png');
+const profileWindowBg: string = require('./../../../assets/images/modal/profile-window-plate.png');
 
 export default function typePreload(): void {
     switch (this.state.modal.type) {
@@ -103,8 +109,7 @@ export default function typePreload(): void {
         this.load.image('big-btn-yellow', bigButtonYellow);
         this.load.image('repository-sell-btn', repositorySellBtn);
         this.load.image('green-progress', greenProgress);
-        this.load.image('middle-button', middleButton);
-
+        this.load.image('middle-button', middleButton);        
         break;
       case 2: // магазин
         // this.load.image('shop-window', shopWindow);
@@ -224,6 +229,15 @@ export default function typePreload(): void {
         this.load.image('social-task-middle', socialTaskMiddle);
         this.load.image('shop-btn', shopBtn);
         this.load.image('shop-btn-disable', shopBtnDisable);
+        this.load.image('tasks-close', tasksClose);
+        break;
+      case 15: 
+        this.load.image('profile-window-button', profileWindowBtn);
+        this.load.image('profile-window-edit-btn', profileWindowEditBtn);
+        this.load.image('profile-window-footer', profileWindowFooter);
+        this.load.image('profile-window-header', profileWindowHeader);
+        this.load.image('profile-window-level', profileWindowLevel);
+        this.load.image('profile-window-bg', profileWindowBg);
         this.load.image('tasks-close', tasksClose);
         break;
       default:
