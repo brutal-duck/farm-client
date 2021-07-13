@@ -110,14 +110,17 @@ const firework1: string = require("./../../assets/images/animations/firework1.pn
 const firework2: string = require("./../../assets/images/animations/firework2.png");
 const firework3: string = require("./../../assets/images/animations/firework3.png");
 const fireworkBg: string = require("./../../assets/images/animations/fireworkBg.png");
-const tile1: string = require("./../../assets/images/chat-tile-1.png");
-const tile2: string = require("./../../assets/images/chat-tile-2.png");
-const corner1: string = require("./../../assets/images/chat-corner-1.png");
-const corner2: string = require("./../../assets/images/chat-corner-2.png");
-const chatBackground: string = require("./../../assets/images/modal/chat-bg.png");
-const chatSendBtn: string = require("./../../assets/images/modal/chat-send-btn.png");
-const chatEmojiBtn: string = require("./../../assets/images/modal/chat-emoji-btn.png");
-const fortunePlate: string = require("./../../assets/images/event/fortune/chat-plate.png");
+const tile1: string = require("./../../assets/images/modal/chat/tile-1.png");
+const tile2: string = require("./../../assets/images/modal/chat/tile-2.png");
+const corner1: string = require("./../../assets/images/modal/chat/corner-1.png");
+const corner2: string = require("./../../assets/images/modal/chat/corner-2.png");
+const chatBackground: string = require("./../../assets/images/modal/chat/bg.png");
+const chatSendBtn: string = require("./../../assets/images/modal/chat/send-btn.png");
+const chatEmojiBtn: string = require("./../../assets/images/modal/chat/emoji-btn.png");
+const fortunePlate: string = require("./../../assets/images/modal/chat/fortune-plate.png");
+const chatTab: string = require('./../../assets/images/modal/chat/tab.png');
+const chatTabActive: string = require('./../../assets/images/modal/chat/tab-active.png');
+const chatInput: string = require('./../../assets/images/modal/chat/input.png');
 
 
 const profileBackground: string = require('./../../assets/images/profile/background.jpg');
@@ -333,6 +336,9 @@ class Preload extends Phaser.Scene {
     this.load.image('fireworkBg', fireworkBg);
 
     this.load.image('chat-bg', chatBackground);
+    this.load.image('chat-tab', chatTab);
+    this.load.image('chat-tab-active', chatTabActive);
+    this.load.image('chat-input-bg', chatInput);
     this.load.image('chat-send-btn', chatSendBtn);
     this.load.image('chat-emoji-btn', chatEmojiBtn);
     this.load.image('unicorn-status', unicornStatus);

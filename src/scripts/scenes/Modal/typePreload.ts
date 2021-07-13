@@ -53,9 +53,12 @@ const boostWindowBg: string = require("./../../../assets/images/boost/background
 const boostCountdown: string = require("./../../../assets/images/boost/countdown.png");
 const boostLeaves: string = require("./../../../assets/images/boost/leaves.png");
 const flags: string = require("./../../../assets/images/modal/flags.png");
-const chatBackground: string = require("./../../../assets/images/modal/chat-bg.png");
-const chatSendBtn: string = require("./../../../assets/images/modal/chat-send-btn.png");
-const chatEmojiBtn: string = require("./../../../assets/images/modal/chat-emoji-btn.png");
+const chatBackground: string = require("./../../../assets/images/modal/chat/bg.png");
+const chatTab: string = require('./../../../assets/images/modal/chat/tab.png');
+const chatTabActive: string = require('./../../../assets/images/modal/chat/tab-active.png');
+const chatInput: string = require('./../../../assets/images/modal/chat/input.png');
+const chatSendBtn: string = require("./../../../assets/images/modal/chat/send-btn.png");
+const chatEmojiBtn: string = require("./../../../assets/images/modal/chat/emoji-btn.png");
 const autoprogressBG: string = require("./../../../assets/images/event/modal/autoprogress-bg.png");
 const purpleBtn: string = require("./../../../assets/images/event/modal/purple-btn.png");
 const ratingBG: string = require("./../../../assets/images/event/modal/rating-bg.png");
@@ -68,10 +71,10 @@ const ratingBGAfter: string = require("./../../../assets/images/event/modal/rait
 const unicornStatus: string = require("./../../../assets/images/icons/unicorn-status.png");
 const feedBoostChickenIcon: string = require("./../../../assets/images/icons/chicken-feed-boost.png");
 const feedBoostCowIcon: string = require("./../../../assets/images/icons/cow-feed-boost.png");
-const tile1: string = require("./../../../assets/images/chat-tile-1.png");
-const tile2: string = require("./../../../assets/images/chat-tile-2.png");
-const corner1: string = require("./../../../assets/images/chat-corner-1.png");
-const corner2: string = require("./../../../assets/images/chat-corner-2.png");
+const tile1: string = require("./../../../assets/images/modal/chat/tile-1.png");
+const tile2: string = require("./../../../assets/images/modal/chat/tile-2.png");
+const corner1: string = require("./../../../assets/images/modal/chat/corner-1.png");
+const corner2: string = require("./../../../assets/images/modal/chat/corner-2.png");
 const factoryWindow: string = require('./../../../assets/images/cow/modal/factory-window.png');
 const factoryWheel: string = require('./../../../assets/images/cow/modal/factory-wheel.png');
 const factoryProduction1: string = require('./../../../assets/images/cow/modal/factory-resource-1.png');
@@ -178,6 +181,9 @@ export default function typePreload(): void {
         break;
       case 9: // Чат +
         this.load.image('chat-bg', chatBackground);
+        this.load.image('chat-tab', chatTab);
+        this.load.image('chat-tab-active', chatTabActive);
+        this.load.image('chat-input-bg', chatInput);
         this.load.image('chat-send-btn', chatSendBtn);
         this.load.image('chat-emoji-btn', chatEmojiBtn);
         this.load.image('unicorn-status', unicornStatus);
