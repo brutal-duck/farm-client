@@ -9,6 +9,7 @@ import {
   clickButton,
   clickModalBtn,
   clickShopBtn,
+  clickButtonUp
 } from '../../general/clicks';
 import {
   systemWindow,
@@ -22,7 +23,6 @@ import {
 import DailyAwardWindow from '../../components/modal/DailyAwardWindow';
 import { bigButton, repositoryBtn, shopButton } from '../../elements';
 // буст "Стадо"
-import createChatBars from './Chat/elements';
 import { improveCollectorAnim, openModal } from '../../general/animations';
 import { clickTaskBoard } from '../../general/tasks';
 import typePreload from './typePreload';
@@ -38,6 +38,7 @@ import EventEndWindow from '../../components/modal/EventEndWindow';
 import EventRatingsWindow from '../../components/modal/EventRatingsWindow';
 import HerdBoostUnicornWindow from '../../components/modal/HerdBoostUnicornWindow';
 import ProfileWindow from '../../components/modal/ProfileWindow';
+import ChatBars from './../../components/modal/ChatBars';
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -78,13 +79,13 @@ class Modal extends Phaser.Scene {
   public shortTime = shortTime.bind(this);
   public shortNum = shortNum.bind(this);
   public eventTerritory = eventTerritory.bind(this);
-  public createChatBars = createChatBars.bind(this);
   public improveCollectorAnim = improveCollectorAnim.bind(this);
   public getStatusSettings = getStatusSettings.bind(this);
   public typePreload = typePreload.bind(this);
   public clickTaskBoard = clickTaskBoard.bind(this);
   public openModal = openModal.bind(this);
   public loadingModal = loadingModal.bind(this);
+  public clickButtonUp = clickButtonUp.bind(this);
 
   public init(state: Istate): void {
     this.state = state;
@@ -98,6 +99,7 @@ class Modal extends Phaser.Scene {
   }
   
   public create(): void {
+    console.log();
     this.add.tileSprite(0, 0,
       Number(this.game.config.width),
       Number(this.game.config.height),
@@ -131,9 +133,8 @@ class Modal extends Phaser.Scene {
         else new HerdBoostWindow(this)
         break;
       case 9: // Чат
-        this.chatBG = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + this.chatHeight, 'chat-bg');
+        new ChatBars(this);
         this.scene.launch('Chat', this.state);
-        this.createChatBars(this.chatHeight);
         break;
       case 10: // окно автопрогресса ивентовой фермы
         new EventProgressWindow(this);

@@ -561,6 +561,7 @@ interface IeventParams {
 interface Imodal {
   type: number;
   sysType?: number;
+  chatType?: number;
   shopType?: number;
   donePart?: IdonePart;
   height?: number;

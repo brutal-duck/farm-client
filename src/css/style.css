@@ -146,9 +146,9 @@ textarea:focus, input:focus { outline: none; }
   display: none;
   position: absolute;
   width: 39%;
-  top: 76%;
+  top: 78%;
   left: 19%;
-  bottom: 19%;
+  bottom: 17%;
   z-index: 10;
   border: none;
   padding-left: 6px;

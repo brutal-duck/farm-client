@@ -433,6 +433,7 @@ function clickModalBtn(arr: any, action: any) {
 
 // нажатие на табы
 function clickButtonUp(button: any, action: any, icon: any = false): void {
+  console.log('121')
 
   button.setInteractive();
   button.up = 0;

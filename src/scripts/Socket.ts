@@ -32,5 +32,8 @@ export default class Socket {
     this.io.on('fortune', (data: any) => {
       this.state.fortuneData = data;
     });
+    this.io.on('newPersonalMessage', (data: any) => {
+      console.log(data)
+    });
   }
 }

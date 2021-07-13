@@ -70,7 +70,7 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       this.scene.scene.launch('Modal', this.scene.state);
     });
     this.scene.clickButton(this.chatIcon, (): void => {
-      let modal: Imodal = { type: 9 }
+      let modal: Imodal = { type: 9, chatType: 1 }
       this.scene.state.modal = modal;
       this.scene.scene.launch('Modal', this.scene.state);
     });
