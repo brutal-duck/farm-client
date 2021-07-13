@@ -221,7 +221,7 @@ const hatchet: string = require("./../../../assets/images/icons/hatchet.png");
 const hammer: string = require("./../../../assets/images/icons/hammer.png");
 const improveCollector: string = require("./../../../assets/images/modal/improve-collector.png");
 const tasksUncomplete: string = require("./../../../assets/images/modal/tasks-uncomplete.png");
-const na: string = require("./../../../assets/images/native.png");
+const tasksBarNs: string = require("./../../../assets/images/modal/tasks-bar-ns.png");
 
 
 class CowPreload extends Phaser.Scene {
@@ -481,7 +481,7 @@ class CowPreload extends Phaser.Scene {
     this.load.image('hammer', hammer);
     this.load.image('improve-collector', improveCollector);
     this.load.image('tasks-uncomplete-rend', tasksUncomplete);
-    this.load.image('na', na);
+    this.load.image('tasks-bar-ns', tasksBarNs);
 
   }
 
