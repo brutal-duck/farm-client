@@ -136,6 +136,7 @@ interface Imessage {
 interface IuserPersonalMessage {
   userId: string;
   name: string;
+  status: string;
   messages: IpersonalMessage[];
 }
 interface IpersonalMessage {
@@ -143,6 +144,9 @@ interface IpersonalMessage {
   time: number;
   text: string;
   check: boolean;
+  fromId?: string;
+  name?: string;
+  status?: string;
 }
 interface IdataAutoSave {
   id: string;

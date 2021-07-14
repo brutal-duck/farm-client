@@ -48,8 +48,8 @@ export default class ChatBars {
 
   private create(): void {
     this.createMainElements();
-    this.createInput();
-    this.setListeners();
+    if (this.scene.state.modal.chatType === 1) this.createInput();
+    this.setTabsListeners();
     this.setResize();
   }
 
@@ -59,7 +59,8 @@ export default class ChatBars {
     let centered: boolean = true;
     let tempHeight: number = window.innerHeight;
     let windowHeight: number = window.innerHeight;
-    const modalElements: Array<Phaser.GameObjects.Text | Phaser.GameObjects.TileSprite | Phaser.GameObjects.Sprite | Phaser.GameObjects.Zone | Phaser.GameObjects.RenderTexture> = this.smilePanelElements.concat();
+    const modalElements: Array<Phaser.GameObjects.Text | Phaser.GameObjects.TileSprite | Phaser.GameObjects.Sprite | Phaser.GameObjects.Zone | Phaser.GameObjects.RenderTexture> = [];
+    if (this.smilePanelElements) modalElements.concat(this.smilePanelElements)
     modalElements.push(this.bg,
     this.chatText,
     this.chatInputZone,
@@ -201,7 +202,7 @@ export default class ChatBars {
     }
   }
 
-  private createInput(): void {
+  public createInput(): void {
     const pos: Iposition = {
       x: this.scene.cameras.main.centerX,
       y: this.scene.cameras.main.centerY + 330,
@@ -228,9 +229,7 @@ export default class ChatBars {
     this.smileBtn = this.scene.add.sprite(pos.x + 102, pos.y + 34, 'chat-emoji-btn').setOrigin(0.5).setDepth(3);
 
     this.createSmilePanel();
-  }
 
-  private setListeners(): void {
     this.scene.clickButton(this.smileBtn, (): void => { this.toggleSmilePannel(); });
     // Фокус
     this.chatInputZone.on('pointerdown', (): void => {
@@ -250,9 +249,9 @@ export default class ChatBars {
 
     this.enterKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
     this.enterKey.on('down', (): void => this.sendMsg());
+  }
 
-    this.scene.click(this.smileBtn, (): void => { this.toggleSmilePannel(); });
-
+  private setTabsListeners(): void {
     if (this.scene.state.modal.chatType !== 1) {
       this.scene.clickButtonUp(this.tabChat, (): void => {
         this.scene.mainInput.remove();
@@ -279,8 +278,6 @@ export default class ChatBars {
     }
 
     this.scene.clickButtonUp(this.tabClose, (): void => { this.onCloseBtnClick(); }, this.tabCloseBtn);
-
-
   }
 
   private onSmileClick(el: Phaser.GameObjects.Text): void {
@@ -296,16 +293,27 @@ export default class ChatBars {
       
       let login: string = this.scene.state.user.login;;
       if (this.scene.state.platform !== 'web' && this.scene.state.platform !== 'android') login = this.scene.state.name;
-  
       this.scene.state.amplitude.logAmplitudeEvent('chat_send', {});
-      this.scene.state.socket.io.emit('send', {
-        id: this.scene.state.user.id,
-        hash: this.scene.state.user.hash,
-        login: login,
-        text: this.scene.mainInput.value,
-        type: 1,
-        status: this.scene.state.user.status
-      });
+  
+      if (this.scene.state.modal.chatType === 1) {
+        this.scene.state.socket.io.emit('send', {
+          id: this.scene.state.user.id,
+          hash: this.scene.state.user.hash,
+          login: login,
+          text: this.scene.mainInput.value,
+          type: 1,
+          status: this.scene.state.user.status
+        });
+      } else if (this.scene.state.modal.chatType === 2) {
+        this.scene.state.socket.io.emit('sendPersonalMessage', {
+          id: this.scene.state.user.id,
+          toId: '60ed08498bab5225643ea2a6',
+          message: this.scene.mainInput.value,
+          userName: login,
+          userStatus: this.scene.state.user.status,
+        });
+      }
+
 
       this.scene.mainInput.value = '';
       this.chatText.setText(this.scene.mainInput.value).setDepth(4).setCrop(0, 0, 280, 100).setAlpha(1);
