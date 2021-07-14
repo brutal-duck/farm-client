@@ -1,4 +1,4 @@
-import Modal from './../../scenes/Modal/Modal';
+import Modal from '../../../scenes/Modal/Modal';
 const SMILES: string[] = ['😊', '😟', '😝', '😍', '😎', '😭', '😘', '😳', '😱'];
 const SMILE_HEIGHT: number = 52;
 const tabTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
@@ -25,7 +25,8 @@ export default class ChatBars {
   private scene: Modal;
   private smilePanelElements: Array<Phaser.GameObjects.Text | Phaser.GameObjects.TileSprite>;
   private chatText: Phaser.GameObjects.Text;
-  private closeBtn: Phaser.GameObjects.Sprite;
+  private tabClose: Phaser.GameObjects.Sprite | Phaser.GameObjects.RenderTexture;
+  private tabCloseBtn: Phaser.GameObjects.Sprite;
   private bg: Phaser.GameObjects.Sprite;
   private chatModalZone: Phaser.GameObjects.Zone;
   private chatInputZone: Phaser.GameObjects.Zone;
@@ -48,7 +49,6 @@ export default class ChatBars {
   private create(): void {
     this.createMainElements();
     this.createInput();
-    this.createSmilePanel();
     this.setListeners();
     this.setResize();
   }
@@ -59,26 +59,33 @@ export default class ChatBars {
     let centered: boolean = true;
     let tempHeight: number = window.innerHeight;
     let windowHeight: number = window.innerHeight;
-    const modalElements: Array<Phaser.GameObjects.Text | Phaser.GameObjects.TileSprite | Phaser.GameObjects.Sprite | Phaser.GameObjects.Zone> = this.smilePanelElements.concat();
+    const modalElements: Array<Phaser.GameObjects.Text | Phaser.GameObjects.TileSprite | Phaser.GameObjects.Sprite | Phaser.GameObjects.Zone | Phaser.GameObjects.RenderTexture> = this.smilePanelElements.concat();
     modalElements.push(this.bg,
     this.chatText,
     this.chatInputZone,
     this.sendMsgBtn,
     this.smileBtn,
     this.inputBg,
-    this.closeBtn);
+    this.tabChat,
+    this.tabChatText,
+    this.tabPersonal, 
+    this.tabPersonalText,
+    this.tabClan,
+    this.tabClanText,
+    this.tabClose,
+    this.tabCloseBtn);
     window.onresize = (): void => {    
       if (window.innerHeight !== tempHeight) {
         tempHeight = window.innerHeight;
         if (tempHeight < windowHeight && centered) {
           root.scrollIntoView(false)
-          modalElements.forEach((el) => el.setY(el.y + padding))
+          modalElements.forEach((el) => el?.setY(el.y + padding))
           this.scene.game.scene.keys['Chat'].scrolling.y += padding
           this.scene.mainInput.style.top = '86%';
           this.scene.mainInput.style.bottom = '9%';
           centered = false
         } else if (!centered) {
-          modalElements.forEach((el) => el.setY(el.y - padding))
+          modalElements.forEach((el) => el?.setY(el.y - padding))
           this.scene.game.scene.keys['Chat'].scrolling.y -= padding
           this.scene.mainInput.style.top = '76%';
           this.scene.mainInput.style.bottom = '19%';
@@ -95,15 +102,11 @@ export default class ChatBars {
     }
 
     
-    this.bg = this.scene.add.sprite(pos.x, pos.y, 'chat-bg').setDepth(2);
+    this.bg = this.scene.add.sprite(pos.x, pos.y + 20, 'chat-bg').setDepth(3);
     const bgGeom: Phaser.Geom.Rectangle = this.bg.getBounds();
     // Зона окна
-    this.chatModalZone = this.scene.add.zone(0, 0, this.scene.game.canvas.width, this.scene.game.canvas.height).setOrigin(0).setDropZone(undefined, (): void => {});
-    this.chatModalZone.setDepth(2).setInteractive();
-    
-    this.closeBtn = this.scene.add.sprite(bgGeom.right - 55, bgGeom.top + 38, 'tasks-close').setOrigin(0.5, 0.5).setDepth(2);
-    
-    this.scene.clickButton(this.closeBtn, (): void => { this.onCloseBtnClick(); });
+    this.chatModalZone = this.scene.add.zone(bgGeom.left, bgGeom.top + 20, bgGeom.width, bgGeom.height).setOrigin(0).setDropZone(undefined, (): void => {});
+    this.chatModalZone.setDepth(3).setInteractive();
     this.createTabs();
   }
 
@@ -112,7 +115,9 @@ export default class ChatBars {
     const maxWidth: number = 440;
     const tabHeight: number = 74;
     const activeTabHeight: number = 93;
+    const slice: number = 30;
     const type: number = this.scene.state.modal.chatType;
+    this.createCloseTab();
     // if (CLAN) {
     //   this.tabChat = this.scene.add.sprite(bgGeom.left + 10, bgGeom.top - 20, 'chat-tab-active').setDepth(2).setOrigin(0, 0);
     //   const tabChatGeom: Phaser.Geom.Rectangle = this.tabChat.getBounds();
@@ -125,33 +130,48 @@ export default class ChatBars {
       let tabPersonalGeom: Phaser.Geom.Rectangle;
       switch (type) {
         case 1:
-          this.tabChat = this.scene.add.nineslice(bgGeom.left + 10, bgGeom.top - 20, maxWidth / 2, activeTabHeight, 'chat-tab-active', 20).setDepth(2);
+          this.tabChat = this.scene.add.nineslice(bgGeom.left + 10, bgGeom.top + 25, maxWidth / 2, activeTabHeight, 'chat-tab-active', slice)
+          this.tabChat 
+            .setDepth(2)
+            .setOrigin(0, 1);
           tabChatGeom = this.tabChat.getBounds();
           this.tabChatText = this.scene.add.text(tabChatGeom.centerX, tabChatGeom.centerY, 'Общий чат', tabActiveTextStyle).setDepth(2).setOrigin(0.5);
-          this.tabPersonal = this.scene.add.nineslice(tabChatGeom.right - 3 , bgGeom.top, maxWidth / 2, tabHeight, 'chat-tab', 20).setDepth(4);
+
+          this.tabPersonal = this.scene.add.nineslice(tabChatGeom.right - 3 , bgGeom.top + 25, maxWidth / 2, tabHeight, 'chat-tab', slice);
+          this.tabPersonal
+            .setDepth(2)
+            .setOrigin(0, 1);
           tabPersonalGeom = this.tabPersonal.getBounds();
           this.tabPersonalText = this.scene.add.text(tabPersonalGeom.centerX, tabPersonalGeom.centerY, 'Личный чат', tabTextStyle).setDepth(4).setOrigin(0.5);
         break;
         case 2: 
-          this.tabChat = this.scene.add.nineslice(bgGeom.left + 10, bgGeom.top, maxWidth / 2, tabHeight, 'chat-tab', 20).setDepth(2);
+          this.tabChat = this.scene.add.nineslice(bgGeom.left + 10, bgGeom.top + 25, maxWidth / 2, tabHeight, 'chat-tab', slice);
+          this.tabChat 
+            .setDepth(2)
+            .setOrigin(0, 1);
           tabChatGeom = this.tabChat.getBounds();
           this.tabChatText = this.scene.add.text(tabChatGeom.centerX, tabChatGeom.centerY, 'Общий чат', tabTextStyle).setDepth(2).setOrigin(0.5);
-          this.tabPersonal = this.scene.add.nineslice(tabChatGeom.right - 3 , bgGeom.top  - 20, maxWidth / 2, activeTabHeight, 'chat-tab-active', 20).setDepth(4);
+          
+          this.tabPersonal = this.scene.add.nineslice(tabChatGeom.right - 3 , bgGeom.top + 25, maxWidth / 2, activeTabHeight, 'chat-tab-active', slice);
+          this.tabPersonal
+            .setDepth(2)
+            .setOrigin(0, 1);
           tabPersonalGeom = this.tabPersonal.getBounds();
-          this.tabPersonalText = this.scene.add.text(tabPersonalGeom.centerX, tabPersonalGeom.centerY, 'Личный чат', tabActiveTextStyle).setDepth(4).setOrigin(0.5);
+          this.tabPersonalText = this.scene.add.text(tabPersonalGeom.centerX, tabPersonalGeom.centerY, 'Личный чат', tabActiveTextStyle).setDepth(2).setOrigin(0.5);
         break;
       }
 
     // }
-    this.setTabMask();
+    // this.setTabMask();
   }
   
-  private setTabMask(): void {
-    const bgMask: Phaser.Display.Masks.BitmapMask = new Phaser.Display.Masks.BitmapMask(this.scene, this.bg);
-    this.tabChat.setMask(bgMask).mask.invertAlpha = true;
-    this.tabPersonal.setMask(bgMask).mask.invertAlpha = true;
-    // if (CLAN) this.tabClan.setMask(bgMask).mask.invertAlpha = true;
+  private createCloseTab(): void {
+    const bgGeom: Phaser.Geom.Rectangle = this.bg.getBounds();
+    this.tabClose = this.scene.add.sprite(bgGeom.right - 18, bgGeom.top + 25, 'chat-tab-close').setOrigin(1, 1).setDepth(2);
+    const tabGeom: Phaser.Geom.Rectangle = this.tabClose.getBounds();
+    this.tabCloseBtn = this.scene.add.sprite(tabGeom.centerX + 30, tabGeom.centerY, 'tasks-close').setOrigin(0.5).setDepth(2);
   }
+
   private createSmilePanel(): void {
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Bip',
@@ -164,14 +184,14 @@ export default class ChatBars {
     this.smilePanelElements = [];
     const bg: Phaser.GameObjects.TileSprite = this.scene.add.tileSprite(pos.x + 210, pos.y, 482, SMILE_HEIGHT + 2, 'white-pixel')
       .setTint(0x742990)
-      .setDepth(2)
+      .setDepth(3)
       .setVisible(false);
     this.smilePanelElements.push(bg);
 
     for (let i: number = 0; i < SMILES.length; i += 1) {
       const smile: Phaser.GameObjects.Text = this.scene.add.text(pos.x + SMILE_HEIGHT * i, pos.y, SMILES[i], textStyle);
       smile.setOrigin(0.5, 0.5)
-        .setDepth(2)
+        .setDepth(3)
         .setVisible(false)
         .setInteractive();
       this.scene.click(smile, (): void => {
@@ -193,19 +213,21 @@ export default class ChatBars {
     this.scene.mainInput.setAttribute("id", "chat");
     this.scene.mainInput.setAttribute("autocomplete", "off");
     
-    this.inputBg = this.scene.add.sprite(pos.x, pos.y + 32, 'chat-input-bg').setDepth(2);
+    this.inputBg = this.scene.add.sprite(pos.x, pos.y + 32, 'chat-input-bg').setDepth(3);
     // Отрисовка текста, полученного из инпут
     this.chatText = this.scene.add.text(pos.x - 216, pos.y + 33, this.scene.mainInput.value, {
       font: '24px Bip',
       color: '#974f00'
-    }).setOrigin(0, 0.5).setDepth(5)
+    }).setOrigin(0, 0.5).setDepth(5);
     
     // Зона инпута
     this.chatInputZone = this.scene.add.zone(134, pos.y, 294, 65).setOrigin(0).setDropZone(undefined, (): void => {});
-    this.chatInputZone.setInteractive().setDepth(2);
+    this.chatInputZone.setInteractive().setDepth(3);
     
-    this.sendMsgBtn = this.scene.add.sprite(pos.x + 187, pos.y + 34, 'chat-send-btn').setOrigin(0.5).setDepth(2);
-    this.smileBtn = this.scene.add.sprite(pos.x + 102, pos.y + 34, 'chat-emoji-btn').setOrigin(0.5).setDepth(2);
+    this.sendMsgBtn = this.scene.add.sprite(pos.x + 187, pos.y + 34, 'chat-send-btn').setOrigin(0.5).setDepth(3);
+    this.smileBtn = this.scene.add.sprite(pos.x + 102, pos.y + 34, 'chat-emoji-btn').setOrigin(0.5).setDepth(3);
+
+    this.createSmilePanel();
   }
 
   private setListeners(): void {
@@ -231,8 +253,9 @@ export default class ChatBars {
 
     this.scene.click(this.smileBtn, (): void => { this.toggleSmilePannel(); });
 
-    if (this.scene.state.modal.type !== 1) {
+    if (this.scene.state.modal.chatType !== 1) {
       this.scene.clickButtonUp(this.tabChat, (): void => {
+        this.scene.mainInput.remove();
         console.log('1');
         this.scene.state.modal = {
           type: 9,
@@ -242,8 +265,9 @@ export default class ChatBars {
         this.scene.scene.restart(this.scene.state);
       }, this.tabChatText);
     }
-    if (this.scene.state.modal.type !== 2) {
+    if (this.scene.state.modal.chatType !== 2) {
       this.scene.clickButtonUp(this.tabPersonal, (): void => {
+        this.scene.mainInput.remove();
         console.log('2');
         this.scene.state.modal = {
           type: 9,
@@ -253,6 +277,9 @@ export default class ChatBars {
         this.scene.scene.restart(this.scene.state);
       }, this.tabPersonalText);
     }
+
+    this.scene.clickButtonUp(this.tabClose, (): void => { this.onCloseBtnClick(); }, this.tabCloseBtn);
+
 
   }
 

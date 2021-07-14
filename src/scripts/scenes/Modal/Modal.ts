@@ -38,7 +38,7 @@ import EventEndWindow from '../../components/modal/EventEndWindow';
 import EventRatingsWindow from '../../components/modal/EventRatingsWindow';
 import HerdBoostUnicornWindow from '../../components/modal/HerdBoostUnicornWindow';
 import ProfileWindow from '../../components/modal/ProfileWindow';
-import ChatBars from './../../components/modal/ChatBars';
+import ChatBars from '../../components/modal/chat/ChatBars';
 
 class Modal extends Phaser.Scene {
   constructor() {
