@@ -1,6 +1,7 @@
 import Scrolling from '../../../libs/Scrolling';
 import { getStatusSettings, loadingModal } from '../../../general/basic';
 import GeneralChat from './../../../components/modal/chat/GeneralChat';
+import PersonalChatList from './../../../components/modal/chat/PersonalChatList';
 class Chat extends Phaser.Scene {
   constructor() {
     super('Chat');
@@ -13,20 +14,25 @@ class Chat extends Phaser.Scene {
   public windowHeight: number;
   public windowWidth: number;
   public isFirstBuild: boolean;
-  public textWrap: number;
   public msg: Ichat[];
   public generalChat: GeneralChat;
+  public personalChatList: PersonalChatList;
 
   public getStatusSettings = getStatusSettings.bind(this);
   public loadingModal = loadingModal.bind(this);
 
   public init(state: Istate): void {
     this.state = state;
-    this.scrollHeight = Number(this.game.config.height) - 1200 + 562;
-    this.windowHeight = 630;
+    this.scrollHeight = 0;
+    if (this.state.modal.chatType === 1) {
+      this.windowHeight = 640;
+    } else if (this.state.modal.chatType === 2) {
+      this.windowHeight = 722;
+    } else {
+      this.windowHeight = 640;
+    }
     this.windowWidth = 479;
     this.isFirstBuild = true;
-    this.textWrap = 340;
     this.initScrolling();
   }
 
@@ -36,6 +42,8 @@ class Chat extends Phaser.Scene {
   public create(): void {   
     if (this.state.modal.chatType === 1) {
       this.generalChat = new GeneralChat(this);
+    } else if (this.state.modal.chatType === 2) {
+      this.personalChatList = new PersonalChatList(this);
     }
   }
 

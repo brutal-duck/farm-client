@@ -17,6 +17,7 @@ export default class GeneralChat {
   private ready: boolean;
   private msg: Array<Ichat>;
   private lastMsgFromUser: string;
+  private textWrap: number;
 
   constructor (scene: Chat) {
     this.scene = scene;
@@ -24,7 +25,11 @@ export default class GeneralChat {
   }
 
   private init(): void {
+    this.scene.scrollHeight = Number(this.scene.game.config.height) - 1200 + 562;
+    this.scene.scrolling.bottom = 0;
+    this.scene.scrolling.scrollY = 0;
     this.msg = [];
+    this.textWrap = 340;
     this.getLastChatMessages();
   }
 
@@ -128,17 +133,17 @@ export default class GeneralChat {
     if (this.lastMsgFromUser !== msgData.login) padding += 20;
 
     // Текст исходящего сообщения
-    const outputText: Phaser.GameObjects.Text = this.scene.add.text(this.scene.windowWidth - this.scene.textWrap - 24,  this.scene.windowHeight + this.scene.scrollHeight + padding, msgData.text, {
+    const outputText: Phaser.GameObjects.Text = this.scene.add.text(this.scene.windowWidth - this.textWrap - 24, this.scene.windowHeight + this.scene.scrollHeight + padding, msgData.text, {
       font: '21px Bip',
       color: '#FADAC1',
       align: 'left',
-      wordWrap: { width: this.scene.textWrap }
+      wordWrap: { width: this.textWrap }
     })
       .setOrigin(0, 0)
       .setDepth(2);
       
     let textHeight: number = outputText.getBounds().height;
-    outputText.setCrop(0, 0, this.scene.textWrap - 5, textHeight);
+    outputText.setCrop(0, 0, this.textWrap - 5, textHeight);
     let textWidth: number = outputText.getBounds().width;
           
     // Текст Ника
@@ -208,12 +213,12 @@ export default class GeneralChat {
       font: '21px Bip',
       color: '#5E340C',
       align: 'left',
-      wordWrap: { width: this.scene.textWrap }
+      wordWrap: { width: this.textWrap }
     }).setOrigin(0)
       .setDepth(2);
     
     const textHeight: number = gettedText.getBounds().height;
-    gettedText.setCrop(0, 0, this.scene.textWrap - 5, textHeight);
+    gettedText.setCrop(0, 0, this.textWrap - 5, textHeight);
     const textWidth: number = gettedText.getBounds().width;
     
     // Текст Ника

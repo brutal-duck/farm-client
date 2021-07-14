@@ -56,6 +56,7 @@ const flags: string = require("./../../../assets/images/modal/flags.png");
 const chatBackground: string = require("./../../../assets/images/modal/chat/bg.png");
 const chatTab: string = require('./../../../assets/images/modal/chat/tab.png');
 const chatTabClose: string = require('./../../../assets/images/modal/chat/tab-close.png');
+const chatMessageBg: string = require('./../../../assets/images/modal/chat/message-bg.png');
 const chatTabActive: string = require('./../../../assets/images/modal/chat/tab-active.png');
 const chatInput: string = require('./../../../assets/images/modal/chat/input.png');
 const chatSendBtn: string = require("./../../../assets/images/modal/chat/send-btn.png");
@@ -183,6 +184,7 @@ export default function typePreload(): void {
       case 9: // Чат +
         this.load.image('chat-bg', chatBackground);
         this.load.image('chat-tab', chatTab);
+        this.load.image('chat-message-bg', chatMessageBg);
         this.load.image('chat-tab-close', chatTabClose);
         this.load.image('chat-tab-active', chatTabActive);
         this.load.image('chat-input-bg', chatInput);
