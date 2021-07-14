@@ -45,6 +45,8 @@ let userData: Iuser = {
   test: 'A',
   takenFreeDiamonds: false,
   takenSocialAward: false,
+  messages: [],
+  personalMessages: [],
 }
 
 let userSheep: IuserSheep = {

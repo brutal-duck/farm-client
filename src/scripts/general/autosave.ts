@@ -300,6 +300,8 @@ export default function autosave(): void {
     userUnicorn: userUnicorn, 
     takenFreeDiamonds: state.user.takenFreeDiamonds,
     takenSocialAward: state.user.takenSocialAward,
+    messages: state.user.messages,
+    personalMessages: state.user.personalMessages,
   }
 
   const data: IdataAutoSave = { 

@@ -213,6 +213,8 @@ class Boot extends Phaser.Scene {
       test: '',
       takenFreeDiamonds: false,
       takenSocialAward: false,
+      messages: [],
+      personalMessages: [],
     }
     this.state.platform = this.platform;
     this.state.build = this.build;

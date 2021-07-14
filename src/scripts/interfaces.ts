@@ -123,6 +123,26 @@ interface IuserAutoSave {
   test: string;
   takenFreeDiamonds: boolean;
   takenSocialAward: boolean;
+  messages: Imessage[];
+  personalMessages: IuserPersonalMessage[];
+}
+interface Imessage {
+  type: number;
+  text: string;
+  status: number;
+  check: boolean;
+  time: number;
+}
+interface IuserPersonalMessage {
+  userId: string;
+  name: string;
+  messages: IpersonalMessage[];
+}
+interface IpersonalMessage {
+  owned: boolean;
+  time: number;
+  text: string;
+  check: boolean;
 }
 interface IdataAutoSave {
   id: string;
@@ -172,6 +192,8 @@ interface Iuser {
   test: string;
   takenFreeDiamonds: boolean;
   takenSocialAward: boolean;
+  messages: Imessage[];
+  personalMessages: IuserPersonalMessage[];
 }
 interface IuserSheep {
   money: number;
