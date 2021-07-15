@@ -31,8 +31,8 @@ export default class PersonalChatList {
 
   private createElements(): void {
     this.scene.state.user.personalMessages.sort((a, b) => {
-      const timeA: number = a.messages[a.messages.length - 1]?.time;
-      const timeB: number = b.messages[b.messages.length - 1]?.time;
+      const timeA: number = new Date(a.messages[a.messages.length - 1]?.time).getTime();
+      const timeB: number = new Date(b.messages[b.messages.length - 1]?.time).getTime();
       return timeB - timeA;
     })
     this.scene.state.user.personalMessages.forEach(el => {
@@ -51,7 +51,7 @@ export default class PersonalChatList {
     const lastMessage: IpersonalMessage = messages[messages.length - 1] || {
       owned: false,
       check: true,
-      time: 0,
+      time: new Date(),
       text: '',
     };
 
@@ -120,12 +120,14 @@ export default class PersonalChatList {
     });
   }
 
-  private getDate(data: number): string {
-    const time: Date = new Date(Number(data) * 1000);
+  private getDate(data: Date): string {
+    const time: Date = new Date(data);
     const year: number = time.getFullYear();
     const month: number = time.getMonth() + 1;
     const day: number = time.getDate();
-    const date: string = day + '.' + month + '.' + year;
+    const hours: number = time.getHours();
+    const minutes: number = time.getMinutes();
+    const date: string = day + '.' + month + '.' + year + ' ' + hours + ':' + minutes;
     return date;
   }
 

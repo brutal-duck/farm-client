@@ -315,18 +315,6 @@ export default class ChatBars {
         });
       } else if (this.scene.state.modal.chatType === 2) {
         const user: IuserPersonalMessage = this.scene.state.user.personalMessages.find(el => el.userId === this.scene.state.modal.chatUserId);
-
-        const time: number = new Date().getTime();
-        const message: IpersonalMessage = {
-          time: time,
-          text: this.scene.mainInput.value,
-          owned: true,
-          check: true
-        };
-        
-        if (user) {
-          user.messages.push(message);
-        } 
         this.scene.state.socket.io.emit('sendPersonalMessage', {
           id: this.scene.state.user.id,
           toId: user.userId,

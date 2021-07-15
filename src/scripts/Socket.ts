@@ -39,20 +39,27 @@ export default class Socket {
         owned: data.owned,
         time: data.time,
       };
-      this.state.updatePersonalMessage = true;
-      const user: IuserPersonalMessage = this.state.user.personalMessages.find(el => el.userId === data.fromId);
-      if (user) {
-        if (user.name !== data.name) user.name = data.name;
-        if (user.status !== data.status) user.status = data.status;
-        user.messages.push(message);
+      if (data.owned) {
+        const user: IuserPersonalMessage = this.state.user.personalMessages.find(el => el.userId === data.toId);
+        if (user) {
+          user.messages.push(message);
+        }
       } else {
-        const createnUser: IuserPersonalMessage = {
-          name: data.name,
-          userId: data.fromId,
-          status: data.status,
-          messages: [message]
-        };
-        this.state.user.personalMessages.push(createnUser);
+        this.state.updatePersonalMessage = true;
+        const user: IuserPersonalMessage = this.state.user.personalMessages.find(el => el.userId === data.fromId);
+        if (user) {
+          if (user.name !== data.name) user.name = data.name;
+          if (user.status !== data.status) user.status = data.status;
+          user.messages.push(message);
+        } else {
+          const createnUser: IuserPersonalMessage = {
+            name: data.name,
+            userId: data.fromId,
+            status: data.status,
+            messages: [message]
+          };
+          this.state.user.personalMessages.push(createnUser);
+        }
       }
     });
   }

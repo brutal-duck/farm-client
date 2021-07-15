@@ -141,10 +141,11 @@ interface IuserPersonalMessage {
 }
 interface IpersonalMessage {
   owned: boolean;
-  time: number;
+  time: Date;
   text: string;
   check: boolean;
   fromId?: string;
+  toId?:string;
   name?: string;
   status?: string;
 }
@@ -657,6 +658,7 @@ interface Ichat {
   text: string;
   id: string;
   status: string;
+  userId: string;
 }
 interface IScrollingOptions {
   x: number;

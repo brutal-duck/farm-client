@@ -129,7 +129,6 @@ export default class GeneralChat {
   }
 
   private createUserMessage(msgData: Ichat): void {
-    console.log(msgData);
     const messageTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontSize: '21px',
       fontFamily: 'Bip',
@@ -214,7 +213,6 @@ export default class GeneralChat {
   }
 
   private createForeignMessage(msgData: Ichat): void {
-    console.log(msgData);
     const messageTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontSize: '21px',
       fontFamily: 'Bip',
@@ -290,11 +288,11 @@ export default class GeneralChat {
   }
 
   private onPersonalClick(msgData: Ichat): void {
-    const user: IuserPersonalMessage = this.scene.state.user.personalMessages.find(el => el.userId === msgData.id);
+    const user: IuserPersonalMessage = this.scene.state.user.personalMessages.find(el => el.userId === msgData.userId);
       if (!user) {
         const createnUser: IuserPersonalMessage = {
           name: msgData.login,
-          userId: msgData.id,
+          userId: msgData.userId,
           status: msgData.status,
           messages: [],
         };
@@ -304,7 +302,7 @@ export default class GeneralChat {
     this.scene.state.modal = {
       type: 9,
       chatType: 2,
-      chatUserId: msgData.id,
+      chatUserId: msgData.userId,
     };
     this.scene.scene.stop('Chat');
     const ModalScene: Modal = this.scene.scene.get('Modal') as Modal;

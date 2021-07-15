@@ -48,11 +48,13 @@ export default class PersonalChat {
   }
 
   private getDate(msgData: IpersonalMessage): string {
-    const time: Date = new Date(Number(msgData.time) * 1000);
+    const time: Date = new Date(msgData.time);
     const year: number = time.getFullYear();
     const month: number = time.getMonth() + 1;
     const day: number = time.getDate();
-    const date: string = day + '.' + month + '.' + year;
+    const hours: number = time.getHours();
+    const minutes: number = time.getMinutes();
+    const date: string = day + '.' + month + '.' + year + ' ' + hours + ':' + minutes;
     return date;
   }
 
