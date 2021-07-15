@@ -327,7 +327,6 @@ export default class ChatBars {
         if (user) {
           user.messages.push(message);
         } 
-        console.log(user.userId);
         this.scene.state.socket.io.emit('sendPersonalMessage', {
           id: this.scene.state.user.id,
           toId: user.userId,

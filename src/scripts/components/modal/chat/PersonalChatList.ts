@@ -31,8 +31,8 @@ export default class PersonalChatList {
 
   private createElements(): void {
     this.scene.state.user.personalMessages.sort((a, b) => {
-      const timeA: number = a.messages[a.messages.length - 1].time;
-      const timeB: number = b.messages[b.messages.length - 1].time;
+      const timeA: number = a.messages[a.messages.length - 1]?.time;
+      const timeB: number = b.messages[b.messages.length - 1]?.time;
       return timeB - timeA;
     })
     this.scene.state.user.personalMessages.forEach(el => {
@@ -48,7 +48,12 @@ export default class PersonalChatList {
       y: this.scene.windowHeight + this.scene.scrollHeight + padding,
     };
     const { name, status, messages } = data;
-    const lastMessage: IpersonalMessage = messages[messages.length - 1];
+    const lastMessage: IpersonalMessage = messages[messages.length - 1] || {
+      owned: false,
+      check: true,
+      time: 0,
+      text: '',
+    };
 
     const nameTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Shadow',

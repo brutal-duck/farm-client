@@ -1,5 +1,6 @@
 import Chat from './../../../scenes/Modal/Chat/Main';
 import axios from 'axios';
+import Modal from './../../../scenes/Modal/Modal';
 const KEY: string = 
 `6307b55e185c4058b9c12d9d076ddae6
     26cd32b7a7d1d6096528ae647c235d6f
@@ -128,6 +129,7 @@ export default class GeneralChat {
   }
 
   private createUserMessage(msgData: Ichat): void {
+    console.log(msgData);
     const messageTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontSize: '21px',
       fontFamily: 'Bip',
@@ -212,6 +214,7 @@ export default class GeneralChat {
   }
 
   private createForeignMessage(msgData: Ichat): void {
+    console.log(msgData);
     const messageTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontSize: '21px',
       fontFamily: 'Bip',
@@ -280,5 +283,31 @@ export default class GeneralChat {
   
     this.lastMsgFromUser = msgData.login;
     this.scene.scrollHeight += textHeight + padding + 40;
+
+    this.scene.click(bg, () => {
+      this.onPersonalClick(msgData);
+    });
+  }
+
+  private onPersonalClick(msgData: Ichat): void {
+    const user: IuserPersonalMessage = this.scene.state.user.personalMessages.find(el => el.userId === msgData.id);
+      if (!user) {
+        const createnUser: IuserPersonalMessage = {
+          name: msgData.login,
+          userId: msgData.id,
+          status: msgData.status,
+          messages: [],
+        };
+        this.scene.state.user.personalMessages.push(createnUser);
+      }
+
+    this.scene.state.modal = {
+      type: 9,
+      chatType: 2,
+      chatUserId: msgData.id,
+    };
+    this.scene.scene.stop('Chat');
+    const ModalScene: Modal = this.scene.scene.get('Modal') as Modal;
+    ModalScene.scene.restart(this.scene.state);
   }
 }
