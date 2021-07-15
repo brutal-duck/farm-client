@@ -117,6 +117,7 @@ import {
   progressTerritoryCooldown,
 } from '../../general/interval';
 import Ads from '../../components/Utils/Ads';
+import RoundedProgress from '../../components/animations/RoundedProgress';
 
 class Cow extends Phaser.Scene {
   constructor() {
@@ -271,17 +272,7 @@ class Cow extends Phaser.Scene {
 
   public create(): void {
 
-    // let a = this.add.nineslice(this.cameras.main.centerX, this.cameras.main.centerY, 660, 110, 'na', 15).setOrigin(0.5).setDepth(5000)
-    // console.log('1', a.height)
-    // this.tweens.add({
-    //   targets: a, 
-    //   height: 300,
-    //   duration: 500,
-    //   delay: 500,
-    //   onUpdate: (): void => { a.setSize(a.width, a.height++) },
-    //   yoyo: -1,
-    //   loop: -1
-    // })
+    new RoundedProgress(this)
   
     // сторим мир
     this.world();
