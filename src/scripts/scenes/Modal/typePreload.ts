@@ -54,6 +54,8 @@ const boostCountdown: string = require("./../../../assets/images/boost/countdown
 const boostLeaves: string = require("./../../../assets/images/boost/leaves.png");
 const flags: string = require("./../../../assets/images/modal/flags.png");
 const chatBackground: string = require("./../../../assets/images/modal/chat/bg.png");
+const chatNotification: string = require("./../../../assets/images/modal/chat/notification.png");
+const chatArrow: string = require("./../../../assets/images/modal/chat/arrow.png");
 const chatTab: string = require('./../../../assets/images/modal/chat/tab.png');
 const chatTabClose: string = require('./../../../assets/images/modal/chat/tab-close.png');
 const chatForeignMessageBg: string = require('./../../../assets/images/modal/chat/foreign-message-bg.png');
@@ -182,6 +184,8 @@ export default function typePreload(): void {
         break;
       case 9: // Чат +
         this.load.image('chat-bg', chatBackground);
+        this.load.image('chat-notification', chatNotification);
+        this.load.image('chat-arrow', chatArrow);
         this.load.image('chat-tab', chatTab);
         this.load.image('chat-foreign-message-bg', chatForeignMessageBg);
         this.load.image('chat-clan-message-bg', chatClanMessageBg);
