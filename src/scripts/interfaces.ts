@@ -588,6 +588,7 @@ interface Imodal {
   type: number;
   sysType?: number;
   chatType?: number;
+  chatUserId?: string;
   shopType?: number;
   donePart?: IdonePart;
   height?: number;

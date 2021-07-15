@@ -2,6 +2,9 @@ import Scrolling from '../../../libs/Scrolling';
 import { getStatusSettings, loadingModal } from '../../../general/basic';
 import GeneralChat from './../../../components/modal/chat/GeneralChat';
 import PersonalChatList from './../../../components/modal/chat/PersonalChatList';
+import PersonalChat from '../../../components/modal/chat/PersonalChat';
+import { click } from '../../../general/clicks';
+
 class Chat extends Phaser.Scene {
   constructor() {
     super('Chat');
@@ -17,9 +20,11 @@ class Chat extends Phaser.Scene {
   public msg: Ichat[];
   public generalChat: GeneralChat;
   public personalChatList: PersonalChatList;
+  public personalChat;
 
   public getStatusSettings = getStatusSettings.bind(this);
   public loadingModal = loadingModal.bind(this);
+  public click = click.bind(this);
 
   public init(state: Istate): void {
     this.state = state;
@@ -42,8 +47,10 @@ class Chat extends Phaser.Scene {
   public create(): void {   
     if (this.state.modal.chatType === 1) {
       this.generalChat = new GeneralChat(this);
-    } else if (this.state.modal.chatType === 2) {
+    } else if (this.state.modal.chatType === 2 && !this.state.modal.chatUserId) {
       this.personalChatList = new PersonalChatList(this);
+    } else if (this.state.modal.chatType === 2 && this.state.modal.chatUserId) {
+      this.personalChat = new PersonalChat(this);
     }
   }
 

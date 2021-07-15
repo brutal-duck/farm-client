@@ -1,4 +1,5 @@
 import Chat from './../../../scenes/Modal/Chat/Main';
+import Modal from './../../../scenes/Modal/Modal';
 
 export default class PersonalChatList {
   private scene: Chat;
@@ -16,77 +17,9 @@ export default class PersonalChatList {
   }
 
   private createElements(): void {
-    const data: IuserPersonalMessage = {
-      userId: '60d59563df63e60c70517a8d',
-      name: 'Вася пупкин',
-      status: '',
-      messages: [{
-        owned: false,
-        time: 123,
-        text: 'Халоу вам',
-        check: false,
-      }],
-    }
-
-    const data1: IuserPersonalMessage = {
-      userId: '60d59563df63e60c70517a8d',
-      name: 'Пупкин Вася 123213123',
-      status: '',
-      messages: [{
-        owned: false,
-        time: 123,
-        text: 'Халоу /* dsakdlaskdlasldkaskdlask ldk askdlas kdlkas;dka;sk sad askd kas;dk  вфывфы фвы вфы вфывф */',
-        check: false,
-      }],
-    }
-
-    const data2: IuserPersonalMessage = {
-      userId: '60d59563df63e60c70517a8d',
-      name: 'Дмитрий-Владимирович Непупкин',
-      status: 'unicorn',
-      messages: [{
-        owned: false,
-        time: 123,
-        text: 'Халоу вфывфыв фыв фыв фыв фыв фыв фыв ыфы фв фывф ы вфыв фыв фыв фыв фывфывфыв ыфвыфв фывфы в фыв фыв фы sadashdkj ahskjdhas kjdhaskjhd jkas h jkdhakjdh jkashdsk ah djkashd kjashdkjash djkas hdkjh askjd haskjdhaskjdhasjkhdaskjhdjkashdjkhaskjdhsakjdhsajkhdaskjhkj',
-        check: false,
-      }],
-    }
-
-    const data3: IuserPersonalMessage = {
-      userId: '60d59563df63e60c70517a8d',
-      name: 'Васёк 228',
-      status: 'unicorn',
-      messages: [{
-        owned: false,
-        time: 123213123123,
-        text: '123123',
-        check: false,
-      }],
-    }
-    this.createPersonal(data);
-    this.createPersonal(data3);
-    this.createPersonal(data2);
-    this.createPersonal(data1);
-    this.createPersonal(data2);
-    this.createPersonal(data1);
-    this.createPersonal(data2);
-    this.createPersonal(data3);
-    this.createPersonal(data);
-    this.createPersonal(data2);
-    this.createPersonal(data1);
-    this.createPersonal(data2);
-    this.createPersonal(data3);
-    this.createPersonal(data1);
-    this.createPersonal(data);
-    this.createPersonal(data3);
-    this.createPersonal(data2);
-    this.createPersonal(data1);
-    this.createPersonal(data2);
-    this.createPersonal(data);
-    this.createPersonal(data2);
-    this.createPersonal(data1);
-    this.createPersonal(data);
-    this.createPersonal(data3);
+    this.scene.state.user.personalMessages.forEach(el => {
+      this.createPersonal(el);
+    });
   }
 
   private createPersonal(data: IuserPersonalMessage): void {
@@ -126,7 +59,7 @@ export default class PersonalChatList {
     const messageTextGeom: Phaser.Geom.Rectangle = messageText.getBounds();
 
     const bgHeight: number = nameTextGeom.height + messageTextGeom.height + 50;
-    const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(nameTextGeom.left - 20, nameTextGeom.top - 20, bgWidth, bgHeight, 'chat-message-bg', 30).setOrigin(0);
+    const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(nameTextGeom.left - 20, nameTextGeom.top - 20, bgWidth, bgHeight, 'chat-foreign-message-bg', 20).setOrigin(0);
     const bgGeom: Phaser.Geom.Rectangle = bg.getBounds();
     const date: string = this.getDate(lastMessage.time);
     const time: Phaser.GameObjects.Text = this.scene.add.text(bgGeom.left + 15, bgGeom.bottom, date, timeTextStyle).setOrigin(0);
@@ -141,8 +74,11 @@ export default class PersonalChatList {
     messageText.setCrop(0, 0, bgWidth - 40, 500);
     this.scene.scrollHeight += bgHeight + padding;
     this.scene.scrolling.bottom = this.scene.scrollHeight;
-  }
 
+    this.scene.click(bg, () => {
+      this.onPersonalClick(data.userId);
+    })
+  }
 
   private getDate(data: number): string {
     const time: Date = new Date(Number(data) * 1000);
@@ -151,5 +87,16 @@ export default class PersonalChatList {
     const day: number = time.getDate();
     const date: string = day + '.' + month + '.' + year;
     return date;
+  }
+
+  private onPersonalClick(id: string): void {
+    this.scene.state.modal = {
+      type: 9,
+      chatType: 2,
+      chatUserId: id,
+    };
+    this.scene.scene.stop('Chat');
+    const ModalScene: Modal = this.scene.scene.get('Modal') as Modal;
+    ModalScene.scene.restart(this.scene.state);
   }
 };
