@@ -16,8 +16,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
 
   public scene: SheepBars | ChickenBars | CowBars;
 
-  public t: any
-
+  // private t: any
   private bg: Phaser.GameObjects.RenderTexture;
   private bgY: number;
   private bgOriginHeight: number;
@@ -25,7 +24,6 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
   private elements: Array<Phaser.GameObjects.Sprite | Phaser.GameObjects.Text | Phaser.GameObjects.TileSprite>;
   private interactiveElements: Array<Phaser.GameObjects.Sprite | Phaser.GameObjects.Text | Phaser.GameObjects.TileSprite>;;
   private aditionalHeight: number;
-
   private isVisibile: boolean;
   private status: number;
   private taskStatus: number;
@@ -34,7 +32,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
   private star: Phaser.GameObjects.Sprite;
   private doneText: Phaser.GameObjects.Text;
   private taskText: Phaser.GameObjects.Text;
-  private doneIcon: Phaser.GameObjects.Sprite;
+  private checkMark: Phaser.GameObjects.Sprite;
   private done: Phaser.GameObjects.Sprite;
   private takeText: Phaser.GameObjects.Text;
   private award: Phaser.GameObjects.Text;
@@ -60,8 +58,6 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
     this.scene = scene;
     this.isVisibile = false;
     this.init();
-    console.log(scene.state);
-    
   }
 
   static create(scene: SheepBars | ChickenBars | CowBars): TaskBoard {
@@ -89,7 +85,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
 
   private createElements(): void {
     // Тестирование: на пробел выполняется задание
-    this.scene.input.keyboard.addKey('SPACE').on('down', (): void => { this.t.done = 1 })
+    // this.scene.input.keyboard.addKey('SPACE').on('down', (): void => { this.t.done = 1 })
 
     this.bg = this.scene.add.nineslice(this.scene.cameras.main.centerX, this.bgY, 660, 120, 'tasks-bar-ns', 15).setVisible(false).setOrigin(0.5, 1);
     
@@ -107,8 +103,8 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
       align: 'left',
       wordWrap: { width: 450 }
     }).setDepth(this.scene.height).setOrigin(0, 0).setVisible(false);
-
-    this.doneIcon = this.scene.add.sprite(0, 0, 'completed').setVisible(false);
+    
+    this.checkMark = this.scene.add.sprite(0, 0, 'completed').setVisible(false);
     this.done = this.scene.add.sprite(0, 0, 'little-button').setDepth(this.scene.height).setVisible(false);
 
     this.takeText = this.scene.add.text(0, 0, this.scene.state.lang.pickUp, {
@@ -185,12 +181,12 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
     const task: Itasks = tasks[0];
 
     // Поиск невыполненого задания для тестирования
-    for (let i = tasks.length - 1; i >= 0; i--) {
-      if (!tasks[i].done) {
-        this.t = tasks[i]
-        break
-      }
-    }
+    // for (let i = tasks.length - 1; i >= 0; i--) {
+    //   if (!tasks[i].done) {
+    //     this.t = tasks[i]
+    //     break
+    //   }
+    // }
 
     if (
       this.taskStatus === task?.done && 
@@ -220,11 +216,9 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
     }
   
     if (!this.isUpdated) {
-      // this.awardBg?.clear();
       this.taskProgress?.clear();
 
       // Выполняется
-      console.log('preUpdate ~ this.status', task)
       if (this.status === 1 && task) {
         const taskData: ItaskData = this.scene.game.scene.keys[this.scene.state.farm].getTaskData(task);
         
@@ -304,10 +298,8 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
         let height = 70 + taskTextBounds.height < 120 ? 120 : 70 + taskTextBounds.height;
         if (!this.closingAniIsPlaying) this.bg.setY(this.bgY).setDisplaySize(660, height);
 
-        this.taskIcon.setTexture(taskData.icon).setPosition(88, this.positionY - 190 - height / 2).setTint(0x777777);
-        this.doneIcon.setVisible(true).setPosition(this.taskIcon.x, this.taskIcon.y)
-        console.log('preUpdate ~ this.taskIcon', this.taskIcon)
-        console.log('preUpdate ~ this.doneIcon', this.doneIcon)
+        this.taskIcon.setTexture(taskData.icon).setPosition(88, this.positionY - 190 - height / 2).setTint(0x777777).setAlpha(0.6);
+        this.checkMark.setVisible(true).setPosition(this.taskIcon.x, this.taskIcon.y);
         this.done.setPosition(620, this.positionY - 190 - height / 2);
         this.takeText.setPosition(620, this.positionY - 193 - height / 2);
         
@@ -324,7 +316,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
             this.createOldBoard(task);
           }
         });
-      
+
         this.taskProgress?.clear();
 
         // Завершить главу
@@ -396,7 +388,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
         this.star,
         this.doneText,
         this.taskText,
-        this.doneIcon,
+        this.checkMark,
         this.done,
         this.takeText,
         this.award,
@@ -440,7 +432,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
     this.star.setY(this.star.y + dYanim);
     this.doneText.setY(this.doneText.y + dYanim);
     this.taskText.setY(this.taskText.y + dYanim);
-    this.doneIcon.setY(this.doneIcon.y + dYanim);
+    this.checkMark.setY(this.checkMark.y + dYanim);
     this.done.setY(this.done.y + dYanim);
     this.takeText.setY(this.takeText.y + dYanim);
     this.award.setY(this.award.y + dYanim);
@@ -458,6 +450,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
       this.isMoving = true;
       this.setStartY();
       this.removeButtonsInteractive();
+
       this.scene.tweens.add({
         duration: 500,
         targets: [
@@ -466,7 +459,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
           this.star,
           this.doneText,
           this.taskText,
-          this.doneIcon,
+          this.checkMark,
           this.done,
           this.takeText,
           this.award,
@@ -478,7 +471,11 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
           this.taskProgress,
           this.listButton,
         ],
-        alpha: { from: 0, to: 1 },
+        alpha: (target): number => {
+          target.setAlpha(0);
+          if (target.tintTopLeft === parseInt('0x777777', 16) && this.status === 2) return 0.6;
+          else return 1;
+        },
         y: '-=250',
         ease: 'Power3',
         onComplete: (): void => {
@@ -501,8 +498,8 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
       
     let height = 70 + this.taskText.getBounds().height < 120 ? 120 : 70 + this.taskText.getBounds().height;
   
-    const oldTaskIcon: Phaser.GameObjects.Image = this.scene.add.image(88, this.positionY - 190 - height / 2, taskData.icon).setDepth(oldTaskBoard.depth).setTint(0x777777);
-    const oldDoneIcon: Phaser.GameObjects.Image = this.scene.add.image(88, this.positionY - 190 - height / 2, 'completed').setDepth(oldTaskBoard.depth);
+    const oldTaskIcon: Phaser.GameObjects.Image = this.scene.add.image(88, this.positionY - 190 - height / 2, taskData.icon).setDepth(oldTaskBoard.depth).setTint(0x777777).setAlpha(0.6);
+    const oldDoneIcon: Phaser.GameObjects.Image = this.scene.add.image(88, this.positionY - 190 - height / 2, 'completed').setDepth(oldTaskBoard.depth).setTint(0xc0c0c0).setAlpha(0.9);
     this.flyOutOldBoardAnim(oldTaskText, oldTaskBoard, oldTaskIcon, oldDoneIcon);
   }
 
@@ -534,13 +531,12 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
     this.isVisibile = false;
     this.hideListButton();
     this.nineSliceAnimationFix();
-    this.setVisible(false);
     this.bg?.setVisible(false);
     this.taskIcon?.setVisible(false);
     this.star?.setVisible(false);
     this.doneText?.setVisible(false);
     this.taskText?.setVisible(false);
-    this.doneIcon?.setVisible(false);
+    this.checkMark?.setVisible(false);
     this.done?.setVisible(false);
     this.takeText?.setVisible(false);
     this.award?.setVisible(false);
@@ -571,6 +567,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
     } else if (this.status === 2) {
       this.bg.setVisible(true);
       this.taskText.setVisible(true);
+      this.checkMark.setVisible(true);
       this.award.setVisible(true);
       this.diamond.setVisible(true);
       this.awardBg.setVisible(true);
@@ -649,7 +646,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
     let completed: Phaser.GameObjects.Sprite = null;
     if (task.done === 1 && task.got_awarded === 1) {
       icon.setTint(0x777777).setAlpha(0);
-      completed = this.scene.add.sprite(icon.x, icon.y, 'completed').setDepth(1).setTint(0xc0c0c0).setOrigin(0.5, 0.5).setAlpha(0);
+      completed = this.scene.add.sprite(icon.x, icon.y, 'completed').setDepth(1).setTint(0xc0c0c0).setOrigin(0.5).setAlpha(0);
       text.setColor('#6f6f6f').setAlpha(0);
     }
 
@@ -671,25 +668,31 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
       duration: 500,
       ease: 'Power1',
       onUpdate: (): void => {
-        this.bg.setSize(this.bg.width, this.bg.height--)
-        this.bg.setDisplaySize(this.bg.width, this.bg.height)
+        this.bg.setSize(this.bg.width, this.bg.height--);
+        this.bg.setDisplaySize(this.bg.width, this.bg.height);
       },
       onComplete: (): void => {
-        this.listButton.setY(this.bg.getTopCenter().y)
-        this.nineSliceAnimationFix()
+        this.listButton.setY(this.bg.getTopCenter().y);
+        this.nineSliceAnimationFix();
       }
     });
 
     this.scene.tweens.add({
       onStart: (): void => { this.nineSliceAnimationFix() },
       targets: this.elements,
-      alpha: { value: 1, duration: 300, delay: 500 },
+      alpha: (target): number => {
+        if (target.tintTopLeft === parseInt('0x777777', 16)) return 0.6;
+        else if (target.tintTopLeft === parseInt('0xc0c0c0', 16)) return 0.9;
+        else return 1;
+      },
+      duration: 300,
+      delay: 500,
       ease: 'Power1',
     });
   }
 
   private closeTaskListAnimation(): void {
-    this.closingAniIsPlaying = true
+    this.closingAniIsPlaying = true;
     this.listButton.setAlpha(0);
 
     if (this.interactiveElements.length > 0) {
@@ -713,14 +716,14 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
       onUpdate: (): void => {
         this.bg.setSize(this.bg.width, this.bg.height--);
         this.bg.setDisplaySize(this.bg.width, this.bg.height);
-        if (this.elements.some(el => el?.alpha !== 0)) this.elements.forEach(el => { el?.setAlpha(0) })
+        if (this.elements.some(el => el?.alpha !== 0)) this.elements.forEach(el => { el?.setAlpha(0) });
       },
       onComplete: (): void => {
         if (this.isVisibile && this.status === 1) this.listButton?.setVisible(true);
-        this.elements.forEach(el => { el?.destroy() })
+        this.elements.forEach(el => { el?.destroy() });
         this.fadeOutListButton();
         this.nineSliceAnimationFix();
-        this.closingAniIsPlaying = false
+        this.closingAniIsPlaying = false;
       }
     });
 

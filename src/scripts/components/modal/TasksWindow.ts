@@ -113,10 +113,10 @@ export default class TasksWindow {
 
         // Галочка и затемнение иконки
         icon.setTint(0x777777).setAlpha(0.5);
-        completed = this.scene.add.sprite(194, taskCenterY - 6, 'completed').setDepth(1).setTint(0xc0c0c0).setOrigin(0.5, 0.5).setAlpha(0.9);
+        completed = this.scene.add.sprite(194, taskCenterY - 6, 'completed').setDepth(1).setTint(0xc0c0c0).setOrigin(0.5).setAlpha(0.9);
 
         // Плашка задания
-        this.scene.add.sprite(this.scene.cameras.main.centerX + 2, taskCenterY, 'tasks-complete').setOrigin(0.5, 0.5).setDisplaySize(460, barHeight);
+        this.scene.add.sprite(this.scene.cameras.main.centerX + 2, taskCenterY, 'tasks-complete').setOrigin(0.5).setDisplaySize(460, barHeight);
         text.setColor('#494949').setAlpha(0.6).setY(text.y + 20);
         countDone++;
 
