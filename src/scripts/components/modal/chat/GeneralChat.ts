@@ -128,31 +128,47 @@ export default class GeneralChat {
   }
 
   private createUserMessage(msgData: Ichat): void {
+    const messageTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontSize: '21px',
+      fontFamily: 'Bip',
+      color: '#FADAC1',
+      align: 'left',
+      wordWrap: { width: this.textWrap }
+    };
+    const nameTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontSize: '18px',
+      fontFamily: 'Shadow',
+      color: '#FADAC1',
+      align: 'right'
+    };
+    const timeTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontSize: '16px',
+      fontFamily: 'Shadow',
+      color: '#63527F',
+      align: 'right'
+    };
+
     const date: string = this.getDate(msgData);
     let padding: number = 18;
     if (this.lastMsgFromUser !== msgData.login) padding += 20;
 
+    const pos: Iposition = {
+      x: this.scene.windowWidth - this.textWrap - 32,
+      y: this.scene.windowHeight + this.scene.scrollHeight + padding
+    }
     // Текст исходящего сообщения
-    const outputText: Phaser.GameObjects.Text = this.scene.add.text(this.scene.windowWidth - this.textWrap - 24, this.scene.windowHeight + this.scene.scrollHeight + padding, msgData.text, {
-      font: '21px Bip',
-      color: '#FADAC1',
-      align: 'left',
-      wordWrap: { width: this.textWrap }
-    })
+    const text: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, msgData.text, messageTextStyle)
       .setOrigin(0, 0)
       .setDepth(2);
-      
-    let textHeight: number = outputText.getBounds().height;
-    outputText.setCrop(0, 0, this.textWrap - 5, textHeight);
-    let textWidth: number = outputText.getBounds().width;
+     
+    const textGeom: Phaser.Geom.Rectangle = text.getBounds();
+    const textHeight: number = text.getBounds().height;
+    text.setCrop(0, 0, this.textWrap - 5, textHeight);
+    const textWidth: number = text.getBounds().width;
           
     // Текст Ника
     if (this.lastMsgFromUser !== msgData.login) {
-      const nicknameText: Phaser.GameObjects.Text = this.scene.add.text(32, outputText.y - 34, msgData.login, {
-        font: '18px Shadow',
-        color: '#63527F',
-        align: 'right'
-      })
+      const nicknameText: Phaser.GameObjects.Text = this.scene.add.text(32, text.y - 34, msgData.login, nameTextStyle)
       .setOrigin(0)
       .setCrop(0, 0, this.scene.windowWidth - 40, 100)
       .setDepth(1);
@@ -162,25 +178,21 @@ export default class GeneralChat {
     }
 
     // Время исходящего сообщения
-    const timeText: Phaser.GameObjects.Text = this.scene.add.text(this.scene.windowWidth - 24, outputText.y + textHeight + 36, date, {
-      font: '16px Shadow',
-      color: '#FADAC1',
-      align: 'right'
-    })
-    .setOrigin(1)
-    .setDepth(2);
+    const timeText: Phaser.GameObjects.Text = this.scene.add.text(this.scene.windowWidth - 24, text.y + textHeight + 36, date, timeTextStyle)
+      .setOrigin(1)
+      .setDepth(2);
 
     const timeWidth: number = timeText.getBounds().width;
     
 
     // Определяем размер и положение плашки и текста
-    let bgX: number = outputText.x - 14;
-    let bgWidth: number = textWidth;
+    let bgX: number = text.x - 14;
+    let bgWidth: number = textWidth + 40;
 
     if (textWidth > 364) bgWidth = 336;
     else {
-      outputText.setX(this.scene.windowWidth - textWidth - 24);
-      bgX = outputText.x - 14;
+      text.setX(this.scene.windowWidth - textWidth - 32);
+      bgX = text.x - 14;
     }
     // Минимальный размер и положение плашки
     if (textWidth < timeWidth - 10) {
@@ -191,62 +203,69 @@ export default class GeneralChat {
     if (status) {
       this.scene.add.sprite(bgX - 12, this.scene.windowHeight + this.scene.scrollHeight + padding, status.iconTexture).setOrigin(1, 0).setScale(0.8);
     }
-    // Фон сообщения
-    this.scene.add.tileSprite(bgX + 10, outputText.y - 14, bgWidth + 8, textHeight + 28, 'tile2').setOrigin(0);
-    this.scene.add.tileSprite(bgX, outputText.y - 4, bgWidth + 28, textHeight + 8, 'tile2').setOrigin(0);
-    let corner1: Phaser.GameObjects.Sprite = this.scene.add.sprite(bgX + 10, outputText.y - 4, 'corner2').setOrigin(1);
-    let corner2: Phaser.GameObjects.Sprite = this.scene.add.sprite(corner1.x + bgWidth + 8, corner1.y, 'corner2').setOrigin(1).setAngle(90);
-    let corner3: Phaser.GameObjects.Sprite = this.scene.add.sprite(corner2.x, corner2.y + textHeight + 8, 'corner2').setOrigin(1).setAngle(180);
-    let corner4: Phaser.GameObjects.Sprite = this.scene.add.sprite(corner1.x, corner3.y, 'corner2').setOrigin(1).setAngle(270);
-    
+
+    const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(bgX, text.y - 10, bgWidth, textHeight + 30, 'chat-user-message-bg', 20).setOrigin(0);
+
     this.lastMsgFromUser = msgData.login;
     // Добавляем длинну скролла если высота всех сообщений уходит за границу
     this.scene.scrollHeight += textHeight + padding + 40; 
   }
 
   private createForeignMessage(msgData: Ichat): void {
-    const date: string = this.getDate(msgData);
-    let padding: number = 18;
-    if (this.lastMsgFromUser !== msgData.login) padding += 20;
-    
-    const gettedText: Phaser.GameObjects.Text = this.scene.add.text(24, this.scene.windowHeight + this.scene.scrollHeight + padding, msgData.text, {
-      font: '21px Bip',
+    const messageTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontSize: '21px',
+      fontFamily: 'Bip',
       color: '#5E340C',
       align: 'left',
       wordWrap: { width: this.textWrap }
-    }).setOrigin(0)
+    };
+    const nameTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontSize: '18px',
+      fontFamily: 'Shadow',
+      color: '#FADAC1',
+      align: 'right'
+    };
+    const timeTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontSize: '16px',
+      fontFamily: 'Shadow',
+      color: '#63527F',
+      align: 'right'
+    };
+    const date: string = this.getDate(msgData);
+    let padding: number = 18;
+    if (this.lastMsgFromUser !== msgData.login) padding += 20;
+
+    const pos: Iposition = {
+      x: 24,
+      y: this.scene.windowHeight + this.scene.scrollHeight + padding,
+    };
+
+    const text: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, msgData.text, messageTextStyle).setOrigin(0)
       .setDepth(2);
+    const textGeom: Phaser.Geom.Rectangle = text.getBounds();
+    const textHeight: number = textGeom.height;
+    text.setCrop(0, 0, this.textWrap - 5, textHeight);
+
+    const textWidth: number = textGeom.width;
     
-    const textHeight: number = gettedText.getBounds().height;
-    gettedText.setCrop(0, 0, this.textWrap - 5, textHeight);
-    const textWidth: number = gettedText.getBounds().width;
-    
-    // Текст Ника
     if (this.lastMsgFromUser !== msgData.login) {
-      const nicknameText: Phaser.GameObjects.Text = this.scene.add.text(10, gettedText.y - 34, msgData.login, {
-        font: '18px Shadow',
-        color: '#63527F',
-        align: 'right'
-      }).setOrigin(0)
+      this.scene.add.text(pos.x - 14, text.y - 34, msgData.login, nameTextStyle)
+        .setOrigin(0)
         .setCrop(0, 0, this.scene.windowWidth - 40, 100)
         .setDepth(1);  
     }
   
-  
     // Время сообщения
-    const timeText: Phaser.GameObjects.Text = this.scene.add.text(24, gettedText.y + textHeight + 36, date, {
-      font: '16px Shadow',
-      color: '#FADAC1',
-      align: 'right'
-    }).setOrigin(0, 1)
+    const timeText: Phaser.GameObjects.Text = this.scene.add.text(24, text.y + textHeight + 36, date, timeTextStyle)
+      .setOrigin(0, 1)
       .setDepth(2);
   
     const timeWidth: number = timeText.getBounds().width;
     
   
     // Определяем плашки и текст
-    let bgX: number = gettedText.x - 14;
-    let bgWidth: number = textWidth;
+    let bgX: number = text.x - 14;
+    let bgWidth: number = textWidth + 40;
   
     // Устанавливает минимальный размер и положение плашки
     if (textWidth > 364) bgWidth = 364;
@@ -254,17 +273,10 @@ export default class GeneralChat {
     
     const status: IstatusSettings = this.scene.getStatusSettings(msgData.status);
     if (status) {
-      this.scene.add.sprite(bgX + bgWidth + 65, this.scene.windowHeight + this.scene.scrollHeight + padding, status.iconTexture).setOrigin(1, 0).setScale(0.8);
+      this.scene.add.sprite(bgX + bgWidth + 30, this.scene.windowHeight + this.scene.scrollHeight + padding, status.iconTexture).setOrigin(1, 0).setScale(0.8);
     }
   
-    // Фон сообщения
-    const tile: Phaser.GameObjects.TileSprite = this.scene.add.tileSprite(bgX + 10, gettedText.y - 14, bgWidth + 8, textHeight + 28, 'tile1').setOrigin(0);
-    const tile2: Phaser.GameObjects.TileSprite = this.scene.add.tileSprite(bgX, gettedText.y - 4, bgWidth + 28, textHeight + 8, 'tile1').setOrigin(0);
-  
-    const corner1: Phaser.GameObjects.Sprite = this.scene.add.sprite(bgX + 10, gettedText.y - 4, 'corner1').setOrigin(1);
-    const corner2: Phaser.GameObjects.Sprite = this.scene.add.sprite(corner1.x + bgWidth + 8, corner1.y, 'corner1').setOrigin(1).setAngle(90);
-    const corner3: Phaser.GameObjects.Sprite = this.scene.add.sprite(corner2.x, corner2.y + textHeight + 8, 'corner1').setOrigin(1).setAngle(180);
-    const corner4: Phaser.GameObjects.Sprite = this.scene.add.sprite(corner1.x, corner3.y, 'corner1').setOrigin(1).setAngle(270);
+    const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(bgX, text.y - 10, bgWidth, textHeight + 30, 'chat-foreign-message-bg', 20).setOrigin(0);
   
     this.lastMsgFromUser = msgData.login;
     this.scene.scrollHeight += textHeight + padding + 40;
