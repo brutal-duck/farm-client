@@ -12,7 +12,8 @@ export default class NextChapterWindow {
   private create(): void {
     this.scene.add.sprite(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 50, 'done-chapter');
     this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 300, this.scene.state.modal.donePart.part, { font: '30px Shadow', fill: '#290F5B' }).setOrigin(0.5, 0.5);
-    this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 260, this.scene.state.modal.donePart.name, { font: '36px Shadow', fill: '#FFDDA7' }).setOrigin(0.5, 0.5);
+    const partName: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 260, this.scene.state.modal.donePart.name, { font: '36px Shadow', fill: '#FFDDA7' }).setOrigin(0.5, 0.5);
+    if (partName.width > 440) partName.setFontSize(30)
     this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 190, this.scene.state.lang.partDone, { font: '44px Shadow', fill: '#50241D' }).setOrigin(0.5, 0.5).setStroke('#FF7700', 7);
     this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 80, this.scene.state.modal.donePart.doneText, {
       font: '22px Shadow',

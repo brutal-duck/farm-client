@@ -1,3 +1,4 @@
+import { shortNum } from "../../general/basic";
 import Modal from "../../scenes/Modal/Modal";
 
 export default class TasksWindow {
@@ -112,10 +113,10 @@ export default class TasksWindow {
 
         // Галочка и затемнение иконки
         icon.setTint(0x777777).setAlpha(0.5);
-        completed = this.scene.add.sprite(194, taskCenterY - 6, 'completed').setDepth(1).setTint(0xc0c0c0).setOrigin(0.5, 0.5).setAlpha(0.9);
+        completed = this.scene.add.sprite(194, taskCenterY - 6, 'completed').setDepth(1).setTint(0xc0c0c0).setOrigin(0.5).setAlpha(0.9);
 
         // Плашка задания
-        this.scene.add.sprite(this.scene.cameras.main.centerX + 2, taskCenterY, 'tasks-complete').setOrigin(0.5, 0.5).setDisplaySize(460, barHeight);
+        this.scene.add.sprite(this.scene.cameras.main.centerX + 2, taskCenterY, 'tasks-complete').setOrigin(0.5).setDisplaySize(460, barHeight);
         text.setColor('#494949').setAlpha(0.6).setY(text.y + 20);
         countDone++;
 
@@ -223,10 +224,12 @@ export default class TasksWindow {
           awardText.setX(awardIcon.getBounds().right + 5).setOrigin(0, 0.5);
         }
 
-        doneText = this.scene.add.text(194, taskCenterY + 60, tasks[i].task.progress + '/' + count, {
+        doneText = this.scene.add.text(194, taskCenterY + 60, `${shortNum(tasks[i].task.progress)}/${shortNum(count)}`, {
           font: '26px Shadow',
           color: '#944000'
-        }).setDepth(1).setOrigin(0.5, 0.5).setShadow(1, 1, 'rgba(0, 0, 0, 0.5)', 2);
+        }).setDepth(1).setOrigin(0.5).setShadow(1, 1, 'rgba(0, 0, 0, 0.5)', 2);
+        
+        if (doneText.width > 120) doneText.setOrigin(0, 0.5).setX(icon.getLeftCenter().x - 18).setFontSize(24)
 
         let progress: number = (100 / count * tasks[i].task.progress) * (6.3 / 100) - Math.PI / 2;
 
