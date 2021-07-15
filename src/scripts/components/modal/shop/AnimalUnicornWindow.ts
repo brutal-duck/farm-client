@@ -81,7 +81,8 @@ export default class AnimalUnicornWindow {
           btn = this.scene.shopButton(330, center,  this.scene.state.lang.pickUp, 'ad-icon');
           callback = (): void => {
             if (this.scene.game.scene.keys[this.scene.state.farm].getFreeBoostPositions().length > 0) {
-              this.scene.game.scene.keys[this.scene.state.farm].watchAd(4);
+              // this.scene.game.scene.keys[this.scene.state.farm].watchAd(4);
+              this.scene.game.scene.keys[this.scene.state.farm].ads.watchAd(4);
               this.closeWindow();
               this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
             } else {

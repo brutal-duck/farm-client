@@ -361,7 +361,8 @@ class Boot extends Phaser.Scene {
       });
 
       document.addEventListener('admob.rewardvideo.events.REWARD', (): void => {
-        this.game.scene.keys[this.state.farm].adReward();
+        // this.game.scene.keys[this.state.farm].adReward();
+        this.game.scene.keys[this.state.farm].ads.adReward();
         // @ts-ignore
         window.admob.rewardvideo.prepare();
         this.state.readyAd = false;

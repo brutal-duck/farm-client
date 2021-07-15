@@ -103,6 +103,7 @@ import {
   progressTerritoryCooldown,
   updateProfileNative
 } from '../../../general/interval';
+import Ads from '../../../components/Utils/Ads';
 class Unicorn extends Phaser.Scene {
   constructor() {
     super('Unicorn');
@@ -137,6 +138,7 @@ class Unicorn extends Phaser.Scene {
   public showMergPointer: boolean; // показ пальца с перетаскиванием овец для тутора
   public mergPointer: any; // спрайт пальца с перетаскиванием
   public scrollPoint: number;
+  public ads: Ads;
 
   public collisions = collisions.bind(this);
   public click = click.bind(this);
@@ -228,6 +230,7 @@ class Unicorn extends Phaser.Scene {
     console.log('Unicorn');
     this.state.farm = 'Unicorn';
     this.collectorTimer = null;
+    this.ads = new Ads(this)
 
     if (this.state.userUnicorn.takenHerdBoost <= 0) this.state.userUnicorn.takenHerdBoost = 1;
   }

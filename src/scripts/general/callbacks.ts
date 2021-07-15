@@ -26,7 +26,8 @@ function okCallback(): void {
     if (method === 'showLoadedAd') {
       this.state.adTimeout = false;
       if (result === 'ok' && (data === 'complete' || data === 'ad_shown')) {
-        this.game.scene.keys[this.state.farm].adReward();
+        // this.game.scene.keys[this.state.farm].adReward();
+        this.game.scene.keys[this.state.farm].ads.adReward();
       }
     }
 

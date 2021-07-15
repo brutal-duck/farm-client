@@ -96,7 +96,8 @@ export default class EventProgressWindow {
   private doubleProfitBtnHandler(): void {
     this.scene.state.userUnicorn.money = BigInteger.add(this.scene.state.userUnicorn.money, this.params.offlineProgress);
     if (this.checkAd()) {
-      this.scene.game.scene.keys[this.scene.state.farm].watchAd(5);
+      // this.scene.game.scene.keys[this.scene.state.farm].watchAd(5);
+      this.scene.game.scene.keys[this.scene.state.farm].ads.watchAd(5);
       this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
       this.scene.scene.stop();
     } else if (this.scene.state.user.diamonds >= this.doubleProfitPrice) {

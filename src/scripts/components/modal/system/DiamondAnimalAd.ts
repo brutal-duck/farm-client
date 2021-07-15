@@ -61,7 +61,8 @@ export default class DiamondAnimalAd {
 
   private adButtonHandler(): void {
     this.scene.state[`user${this.farm}`].diamondAnimalAd = false;
-    this.scene.game.scene.keys[this.farm].watchAd(2);
+    // this.scene.game.scene.keys[this.farm].watchAd(2);
+    this.scene.game.scene.keys[this.farm].ads.watchAd(2);
     this.closeWindow();
   }
 

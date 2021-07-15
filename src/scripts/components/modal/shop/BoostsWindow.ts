@@ -231,7 +231,8 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   
         this.doubleCollector = this.scene.boostButton(350, 160 + this.scene.height, String(doubleTime), this.scene.state.lang.shortMinutes, '', 'ad');
         this.scene.clickBoostBtn(this.doubleCollector, (): void => {
-          this.scene.game.scene.keys[this.scene.state.farm].watchAd(3);
+          // this.scene.game.scene.keys[this.scene.state.farm].watchAd(3);
+          this.scene.game.scene.keys[this.scene.state.farm].ads.watchAd(3);
           this.scene.scene.stop('Shop');
           this.scene.scene.stop('ShopBars');
           this.scene.scene.stop('Modal');
@@ -361,7 +362,8 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   
         this.doubleCollector = this.scene.boostButton(350, 160 + this.scene.height, String(doubleTime), this.scene.state.lang.shortMinutes, '', 'ad');
         this.scene.clickBoostBtn(this.doubleCollector, (): void => {
-          this.scene.game.scene.keys['Unicorn'].watchAd(3);
+          // this.scene.game.scene.keys['Unicorn'].watchAd(3);
+          this.scene.game.scene.keys['Unicorn'].ads.watchAd(3);
           this.scene.scene.stop('Shop');
           this.scene.scene.stop('ShopBars');
           this.scene.scene.stop('Modal');

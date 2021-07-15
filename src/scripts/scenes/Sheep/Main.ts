@@ -137,6 +137,7 @@ import {
   showFeedBoostSpeechBubble,
   progressTerritoryCooldown,
 } from '../../general/interval';
+import Ads from '../../components/Utils/Ads';
 
 class Sheep extends Phaser.Scene {
   constructor() {
@@ -182,6 +183,7 @@ class Sheep extends Phaser.Scene {
   public dailyStartCheck: boolean = true; // запущено ли открытие окна daily
   public remaindSellTimer: number = 0;
   public feedBoostRemaindTimer: number = 0;
+  public ads: Ads;
 
   public readonly moneyTasks: { id: number, money: number }[] = [
     {
@@ -319,6 +321,7 @@ class Sheep extends Phaser.Scene {
     this.arrow = null;
     this.collectorTimer = null;
     this.counterWithoutCollector = 0;
+    this.ads = new Ads(this)
     console.log('Sheep');
     this.autoprogress(true);
   }
