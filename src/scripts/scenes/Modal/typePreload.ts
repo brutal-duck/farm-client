@@ -56,7 +56,10 @@ const flags: string = require("./../../../assets/images/modal/flags.png");
 const chatBackground: string = require("./../../../assets/images/modal/chat/bg.png");
 const chatTab: string = require('./../../../assets/images/modal/chat/tab.png');
 const chatTabClose: string = require('./../../../assets/images/modal/chat/tab-close.png');
-const chatMessageBg: string = require('./../../../assets/images/modal/chat/message-bg.png');
+const chatForeignMessageBg: string = require('./../../../assets/images/modal/chat/foreign-message-bg.png');
+const chatClanMessageBg: string = require('./../../../assets/images/modal/chat/clan-message-bg.png');
+const chatAdminMessageBg: string = require('./../../../assets/images/modal/chat/admin-message-bg.png');
+const chatUserMessageBg: string = require('./../../../assets/images/modal/chat/user-message-bg.png');
 const chatTabActive: string = require('./../../../assets/images/modal/chat/tab-active.png');
 const chatInput: string = require('./../../../assets/images/modal/chat/input.png');
 const chatSendBtn: string = require("./../../../assets/images/modal/chat/send-btn.png");
@@ -73,10 +76,6 @@ const ratingBGAfter: string = require("./../../../assets/images/event/modal/rait
 const unicornStatus: string = require("./../../../assets/images/icons/unicorn-status.png");
 const feedBoostChickenIcon: string = require("./../../../assets/images/icons/chicken-feed-boost.png");
 const feedBoostCowIcon: string = require("./../../../assets/images/icons/cow-feed-boost.png");
-const tile1: string = require("./../../../assets/images/modal/chat/tile-1.png");
-const tile2: string = require("./../../../assets/images/modal/chat/tile-2.png");
-const corner1: string = require("./../../../assets/images/modal/chat/corner-1.png");
-const corner2: string = require("./../../../assets/images/modal/chat/corner-2.png");
 const factoryWindow: string = require('./../../../assets/images/cow/modal/factory-window.png');
 const factoryWheel: string = require('./../../../assets/images/cow/modal/factory-wheel.png');
 const factoryProduction1: string = require('./../../../assets/images/cow/modal/factory-resource-1.png');
@@ -184,17 +183,16 @@ export default function typePreload(): void {
       case 9: // Чат +
         this.load.image('chat-bg', chatBackground);
         this.load.image('chat-tab', chatTab);
-        this.load.image('chat-message-bg', chatMessageBg);
+        this.load.image('chat-foreign-message-bg', chatForeignMessageBg);
+        this.load.image('chat-clan-message-bg', chatClanMessageBg);
+        this.load.image('chat-admin-message-bg', chatAdminMessageBg);
+        this.load.image('chat-user-message-bg', chatUserMessageBg);
         this.load.image('chat-tab-close', chatTabClose);
         this.load.image('chat-tab-active', chatTabActive);
         this.load.image('chat-input-bg', chatInput);
         this.load.image('chat-send-btn', chatSendBtn);
         this.load.image('chat-emoji-btn', chatEmojiBtn);
         this.load.image('unicorn-status', unicornStatus);
-        this.load.image('tile1', tile1);
-        this.load.image('tile2', tile2);
-        this.load.image('corner1', corner1);
-        this.load.image('corner2', corner2);
         break;
       case 10: // окно автопрогресса ивентовой фермы +
         this.load.image('autoprogress-bg', autoprogressBG);
