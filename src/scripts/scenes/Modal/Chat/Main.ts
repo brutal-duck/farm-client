@@ -31,10 +31,10 @@ class Chat extends Phaser.Scene {
     this.scrollHeight = 0;
     if (this.state.modal.chatType === 1) {
       this.windowHeight = 640;
-    } else if (this.state.modal.chatType === 2) {
+    } else if (this.state.modal.chatType === 2 && !this.state.modal.chatUserId) {
       this.windowHeight = 722;
-    } else {
-      this.windowHeight = 640;
+    } else if (this.state.modal.chatType === 2 && this.state.modal.chatUserId){
+      this.windowHeight = 568;
     }
     this.windowWidth = 479;
     this.isFirstBuild = true;
@@ -60,15 +60,19 @@ class Chat extends Phaser.Scene {
         this.generalChat?.update();
         break;
       case 2: 
+        if (!this.state.modal.chatUserId) this.personalChatList?.update(); 
+        else this.personalChat?.update();
         break;
     }
   }
 
   private initScrolling(): void {
-    this.height = Number(this.game.config.height)
+    this.height = Number(this.game.config.height);
+    let y: number = this.cameras.main.centerY - 320;
+    if (this.state.modal.chatType === 2 && this.state.modal.chatUserId) y += 70;
     const cameraOptions: IScrollingOptions = {
       x: 120,
-      y: this.cameras.main.centerY - 320,
+      y: y,
       width: this.windowWidth,
       height: this.windowHeight,
       wheel: true,

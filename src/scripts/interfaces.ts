@@ -812,4 +812,5 @@ interface Istate {
   unicornRaitings?: IunicornRaitingsData;
   build: number;
   yaPlayer?: any;
+  updatePersonalMessage?: boolean;
 }

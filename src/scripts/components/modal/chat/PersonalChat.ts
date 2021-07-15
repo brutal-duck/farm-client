@@ -14,7 +14,7 @@ export default class PersonalChat {
   }
 
   private init(): void {
-    this.scene.scrollHeight = Number(this.scene.game.config.height) - 1200 + 562;
+    this.scene.scrollHeight = Number(this.scene.game.config.height) - 1200 + 640;
     this.scene.scrolling.bottom = 0;
     this.scene.scrolling.scrollY = 0;
     this.msg = [];
@@ -27,7 +27,7 @@ export default class PersonalChat {
   }
 
   private printNewChatMessages(): void {
-    if (this.userMsg.messages.length > this.msg.length && this.ready) {
+    if (this.userMsg?.messages.length > this.msg.length) {
       const index: number = this.userMsg.messages.length - (this.userMsg.messages.length - this.msg.length); // Индекс ненапечатанного сообщения
       for (let i: number = index; i < this.userMsg.messages.length; i++) {
         this.msg.push(this.userMsg.messages[i]);
@@ -37,7 +37,8 @@ export default class PersonalChat {
   }
 
   private newMsg(msgData: IpersonalMessage) {
-    if (this.userMsg.userId !== this.scene.state.user.id) {
+    msgData.check = true;
+    if (msgData.owned) {
       this.createUserMessage(msgData);
     } else {
       this.createForeignMessage(msgData);
@@ -76,9 +77,10 @@ export default class PersonalChat {
       align: 'right'
     };
 
+    const login: string = this.scene.state.name ? this.scene.state.name : this.scene.state.user.login;
     const date: string = this.getDate(msgData);
     let padding: number = 18;
-    if (this.lastMsgFromUser !== this.scene.state.name) padding += 20;
+    if (this.lastMsgFromUser !== login) padding += 20;
 
     const pos: Iposition = {
       x: this.scene.windowWidth - this.textWrap - 32,
@@ -95,8 +97,9 @@ export default class PersonalChat {
     const textWidth: number = text.getBounds().width;
           
     // Текст Ника
-    if (this.lastMsgFromUser !== this.scene.state.name) {
-      const nicknameText: Phaser.GameObjects.Text = this.scene.add.text(32, text.y - 34, this.scene.state.name, nameTextStyle)
+
+    if (this.lastMsgFromUser !== login) {
+      const nicknameText: Phaser.GameObjects.Text = this.scene.add.text(32, text.y - 34, login, nameTextStyle)
       .setOrigin(0)
       .setCrop(0, 0, this.scene.windowWidth - 40, 100)
       .setDepth(1);
@@ -134,7 +137,7 @@ export default class PersonalChat {
 
     const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(bgX, text.y - 10, bgWidth, textHeight + 30, 'chat-user-message-bg', 20).setOrigin(0);
 
-    this.lastMsgFromUser = this.scene.state.name;
+    this.lastMsgFromUser = login;
     // Добавляем длинну скролла если высота всех сообщений уходит за границу
     this.scene.scrollHeight += textHeight + padding + 40; 
   }

@@ -40,6 +40,9 @@ export default class ChatBars {
   private tabPersonalText: Phaser.GameObjects.Text;
   private tabClan: Phaser.GameObjects.Sprite | Phaser.GameObjects.RenderTexture;
   private tabClanText: Phaser.GameObjects.Text;
+  private bgNamePlate: Phaser.GameObjects.TileSprite;
+  private name: Phaser.GameObjects.Text;
+  private arrow: Phaser.GameObjects.Sprite;
 
   constructor(scene: Modal) {
     this.scene = scene;
@@ -48,7 +51,8 @@ export default class ChatBars {
 
   private create(): void {
     this.createMainElements();
-    if (this.scene.state.modal.chatType === 1) this.createInput();
+    if (this.scene.state.modal.chatType === 1 || this.scene.state.modal.chatType === 2 && this.scene.state.modal.chatUserId) this.createInput();
+    if (this.scene.state.modal.chatType === 2 && this.scene.state.modal.chatUserId) this.createPersonalChatPlate();
     this.setTabsListeners();
     this.setResize();
   }
@@ -61,20 +65,25 @@ export default class ChatBars {
     let windowHeight: number = window.innerHeight;
     const modalElements: Array<Phaser.GameObjects.Text | Phaser.GameObjects.TileSprite | Phaser.GameObjects.Sprite | Phaser.GameObjects.Zone | Phaser.GameObjects.RenderTexture> = [];
     if (this.smilePanelElements) modalElements.concat(this.smilePanelElements)
-    modalElements.push(this.bg,
-    this.chatText,
-    this.chatInputZone,
-    this.sendMsgBtn,
-    this.smileBtn,
-    this.inputBg,
-    this.tabChat,
-    this.tabChatText,
-    this.tabPersonal, 
-    this.tabPersonalText,
-    this.tabClan,
-    this.tabClanText,
-    this.tabClose,
-    this.tabCloseBtn);
+    modalElements.push(
+      this.bg,
+      this.chatText,
+      this.chatInputZone,
+      this.sendMsgBtn,
+      this.smileBtn,
+      this.inputBg,
+      this.tabChat,
+      this.tabChatText,
+      this.tabPersonal, 
+      this.tabPersonalText,
+      this.tabClan,
+      this.tabClanText,
+      this.tabClose,
+      this.tabCloseBtn,
+      this.arrow,
+      this.name,
+      this.bgNamePlate,
+    );
     window.onresize = (): void => {    
       if (window.innerHeight !== tempHeight) {
         tempHeight = window.innerHeight;
@@ -305,9 +314,23 @@ export default class ChatBars {
           status: this.scene.state.user.status
         });
       } else if (this.scene.state.modal.chatType === 2) {
+        const user: IuserPersonalMessage = this.scene.state.user.personalMessages.find(el => el.userId === this.scene.state.modal.chatUserId);
+
+        const time: number = new Date().getTime();
+        const message: IpersonalMessage = {
+          time: time,
+          text: this.scene.mainInput.value,
+          owned: true,
+          check: true
+        };
+        
+        if (user) {
+          user.messages.push(message);
+        } 
+        console.log(user.userId);
         this.scene.state.socket.io.emit('sendPersonalMessage', {
           id: this.scene.state.user.id,
-          toId: '60ed08498bab5225643ea2a6',
+          toId: user.userId,
           message: this.scene.mainInput.value,
           userName: login,
           userStatus: this.scene.state.user.status,
@@ -333,6 +356,42 @@ export default class ChatBars {
     
     this.scene.game.scene.keys['Chat'].scrolling.bottom = this.scene.game.scene.keys['Chat'].scrollHeight;
     this.scene.game.scene.keys['Chat'].scrolling.scrollY = this.scene.game.scene.keys['Chat'].scrollHeight;
+  }
+
+  private createPersonalChatPlate(): void {
+    const pos: Iposition = {
+      x: this.scene.cameras.main.centerX - 1, 
+      y: this.bg.getBounds().top + 71,
+    };
+    const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '40px',
+      color: '#fffcf9',
+      shadow: {
+        offsetX: 1,
+        offsetY: 2, 
+        color: 'rgba(0, 0, 0, 0.5)',
+        blur: 2,
+        fill: true,
+      },
+    };
+
+    const user: IuserPersonalMessage = this.scene.state.user.personalMessages.find(el => el.userId === this.scene.state.modal.chatUserId);
+    const windowWidth: number = 482;
+    this.bgNamePlate = this.scene.add.tileSprite(pos.x, pos.y, windowWidth, 68, 'white-pixel').setDepth(4).setAlpha(0.3).setOrigin(0.5, 0);
+    const bgGeom: Phaser.Geom.Rectangle = this.bgNamePlate.getBounds();
+    this.name = this.scene.add.text(pos.x, bgGeom.centerY, user.name, textStyle).setDepth(4).setOrigin(0.5);
+    this.arrow = this.scene.add.sprite(bgGeom.left + 20, bgGeom.centerY, 'chat-arrow').setDepth(4).setOrigin(0, 0.5);
+
+    this.scene.click(this.arrow, () => {
+      this.scene.mainInput.remove();
+      this.scene.state.modal = {
+        type: 9,
+        chatType: 2,
+      };
+      this.scene.scene.stop('Chat');
+      this.scene.scene.restart(this.scene.state);
+    });
   }
 
   private onCloseBtnClick(): void {

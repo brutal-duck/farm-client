@@ -16,7 +16,25 @@ export default class PersonalChatList {
     this.scene.scrolling.scrollY = 0;
   }
 
+  public update(): void {
+    if (this.scene.state.updatePersonalMessage) {
+      this.scene.state.modal = {
+        type: 9,
+        chatType: 2,
+      };
+      this.scene.scene.stop('Chat');
+      const ModalScene: Modal = this.scene.scene.get('Modal') as Modal;
+      ModalScene.scene.restart(this.scene.state);
+      this.scene.state.updatePersonalMessage = false;
+    }
+  }
+
   private createElements(): void {
+    this.scene.state.user.personalMessages.sort((a, b) => {
+      const timeA: number = a.messages[a.messages.length - 1].time;
+      const timeB: number = b.messages[b.messages.length - 1].time;
+      return timeB - timeA;
+    })
     this.scene.state.user.personalMessages.forEach(el => {
       this.createPersonal(el);
     });
@@ -37,6 +55,13 @@ export default class PersonalChatList {
       fontSize: '24px',
       color: '#692e96'
     };
+    
+    const notificationTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '24px',
+      color: '#ffffff'
+    };
+
     const messageTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Bip',
       fontSize: '20px',
@@ -57,7 +82,7 @@ export default class PersonalChatList {
 
     const messageText: Phaser.GameObjects.Text = this.scene.add.text(nameTextGeom.left, nameTextGeom.bottom, message, messageTextStyle).setDepth(2).setOrigin(0);
     const messageTextGeom: Phaser.Geom.Rectangle = messageText.getBounds();
-
+    
     const bgHeight: number = nameTextGeom.height + messageTextGeom.height + 50;
     const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(nameTextGeom.left - 20, nameTextGeom.top - 20, bgWidth, bgHeight, 'chat-foreign-message-bg', 20).setOrigin(0);
     const bgGeom: Phaser.Geom.Rectangle = bg.getBounds();
@@ -69,6 +94,16 @@ export default class PersonalChatList {
       const y: number = nameTextGeom.centerY;
       this.scene.add.sprite(x, y, statusSettings.iconTexture).setVisible(statusSettings.iconVisible).setOrigin(0, 0.5).setScale(0.7);
     }
+    const checkNotification: boolean = data.messages.some(el => !el.check);
+    if (checkNotification) {
+      const pos: Iposition = {
+        x: bgGeom.right - 10,
+        y: bgGeom.top + 10,
+      };
+      this.scene.add.sprite(pos.x, pos.y, 'chat-notification');
+      const count: number = data.messages.filter(el => !el.check).length;
+      this.scene.add.text(pos.x, pos.y - 2, String(count), notificationTextStyle).setOrigin(0.5);
+    }
 
     nameText.setCrop(0, 0, bgWidth - 80, 500);
     messageText.setCrop(0, 0, bgWidth - 40, 500);
@@ -77,7 +112,7 @@ export default class PersonalChatList {
 
     this.scene.click(bg, () => {
       this.onPersonalClick(data.userId);
-    })
+    });
   }
 
   private getDate(data: number): string {
