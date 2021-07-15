@@ -116,6 +116,7 @@ import {
   showFeedBoostSpeechBubble,
   progressTerritoryCooldown,
 } from '../../general/interval';
+import Ads from '../../components/Utils/Ads';
 
 class Cow extends Phaser.Scene {
   constructor() {
@@ -156,6 +157,7 @@ class Cow extends Phaser.Scene {
   public counterWithoutCollector: number = 0;
   public spaceCount: number = 0;
   public feedBoostRemaindTimer: number = 0;
+  public ads: Ads;
 
   public world = world.bind(this);
   public drag = drag.bind(this);
@@ -260,6 +262,7 @@ class Cow extends Phaser.Scene {
     this.settings = state.cowSettings;
     this.caveIconsTimer = 0;
     this.counterWithoutCollector = 0;
+    this.ads = new Ads(this);
     console.log('Cow');
     
     this.autoprogress(true);

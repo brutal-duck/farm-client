@@ -113,6 +113,7 @@ import {
   progressTerritoryCooldown,
 } from '../../general/interval';
 import LocalStorage from './../../libs/LocalStorage';
+import Ads from '../../components/Utils/Ads';
 
 class Chicken extends Phaser.Scene {
   constructor() {
@@ -146,6 +147,7 @@ class Chicken extends Phaser.Scene {
   public feedBoostStack: number = 11; // максимальный стек часов
   public dailyStartCheck: boolean = true; // запущено ли открытие окна daily
   public counterWithoutCollector: number = 0;
+  public ads: Ads;
 
   public world = world.bind(this);
   public drag = drag.bind(this);
@@ -247,6 +249,7 @@ class Chicken extends Phaser.Scene {
     this.settings = state.chickenSettings;
     this.counterWithoutCollector = 0;
     this.caveIconsTimer = 0;
+    this.ads = new Ads(this)
     console.log('Chicken');
     this.autoprogress(true);
   }

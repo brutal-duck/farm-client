@@ -121,7 +121,8 @@ export default class CurrencyConvertorWindow {
 
 
   private watchAdAndClose(): void {
-    this.scene.game.scene.keys[this.scene.state.farm].watchAd(1);
+    // this.scene.game.scene.keys[this.scene.state.farm].watchAd(1);
+    this.scene.game.scene.keys[this.scene.state.farm].ads.watchAd(1);
     this.scene.scene.stop();
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
   }
