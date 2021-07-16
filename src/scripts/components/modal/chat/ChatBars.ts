@@ -1,24 +1,6 @@
 import Modal from '../../../scenes/Modal/Modal';
 const SMILES: string[] = ['😊', '😟', '😝', '😍', '😎', '😭', '😘', '😳', '😱'];
 const SMILE_HEIGHT: number = 52;
-const tabTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
-  fontFamily: 'Shadow',
-  fontSize: '20px',
-  color: '#ffb27c',
-  align: 'center',
-  stroke: '#602000',
-  strokeThickness: 3,
-  wordWrap: { width: 100 },
-};
-const tabActiveTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
-  fontFamily: 'Shadow',
-  fontSize: '20px',
-  color: '#fff2e7',
-  align: 'center',
-  stroke: '#aa6100',
-  strokeThickness: 3,
-  wordWrap: { width: 100 },
-};
 
 export default class ChatBars {
   private scene: Modal;
@@ -42,6 +24,8 @@ export default class ChatBars {
   private bgNamePlate: Phaser.GameObjects.TileSprite;
   private name: Phaser.GameObjects.Text;
   private arrow: Phaser.GameObjects.Sprite;
+  private personalTabNotification: Phaser.GameObjects.Sprite;
+  private personalTabNotificationText: Phaser.GameObjects.Text;
 
   constructor(scene: Modal) {
     this.scene = scene;
@@ -120,6 +104,30 @@ export default class ChatBars {
   }
 
   private createTabs(): void {
+    const tabTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '20px',
+      color: '#ffb27c',
+      align: 'center',
+      stroke: '#602000',
+      strokeThickness: 3,
+      wordWrap: { width: 100 },
+    };
+    const tabActiveTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '20px',
+      color: '#fff2e7',
+      align: 'center',
+      stroke: '#aa6100',
+      strokeThickness: 3,
+      wordWrap: { width: 100 },
+    };
+    const notificationTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '24px',
+      color: '#ffffff'
+    };
+
     const bgGeom: Phaser.Geom.Rectangle = this.bg.getBounds();
     const maxWidth: number = 440;
     const tabHeight: number = 74;
@@ -152,6 +160,14 @@ export default class ChatBars {
             .setOrigin(0, 1);
           tabPersonalGeom = this.tabPersonal.getBounds();
           this.tabPersonalText = this.scene.add.text(tabPersonalGeom.centerX, tabPersonalGeom.centerY, this.scene.state.lang.personalChat, tabTextStyle).setDepth(4).setOrigin(0.5);
+          
+          const countNotification: number = this.getPersonalTabCountNotification();
+          const notificationPos: Iposition = {
+            x: tabPersonalGeom.right - 10,
+            y: tabPersonalGeom.top + 10,
+          };
+          this.personalTabNotification = this.scene.add.sprite(notificationPos.x, notificationPos.y, 'chat-notification').setDepth(4).setVisible(countNotification > 0);
+          this.personalTabNotificationText = this.scene.add.text(notificationPos.x, notificationPos.y - 2, String(countNotification), notificationTextStyle).setDepth(4).setOrigin(0.5).setVisible(countNotification > 0);
         break;
         case 2: 
           this.tabChat = this.scene.add.nineslice(bgGeom.left + 10, bgGeom.top + 25, maxWidth / 2, tabHeight, 'chat-tab', slice);
@@ -169,11 +185,30 @@ export default class ChatBars {
           this.tabPersonalText = this.scene.add.text(tabPersonalGeom.centerX, tabPersonalGeom.centerY, this.scene.state.lang.personalChat, tabActiveTextStyle).setDepth(2).setOrigin(0.5);
         break;
       }
-
-    // }
-    // this.setTabMask();
   }
   
+  public update(): void {
+    if (this.scene.state.updatePersonalMessage) {
+      const count: number = this.getPersonalTabCountNotification();
+      this.personalTabNotification?.setVisible(count > 0);
+      this.personalTabNotificationText?.setVisible(count > 0);
+      this.personalTabNotificationText?.setText(String(count));
+    }
+  }
+
+  private getPersonalTabCountNotification(): number {
+    let count: number = 0;
+    for (const user of this.scene.state.user.personalMessages) {
+      for (const message of user.messages) {
+        if (!message.check) {
+          count += 1;
+          break;
+        }
+      }
+    }
+    return count;
+  }
+
   private createCloseTab(): void {
     const bgGeom: Phaser.Geom.Rectangle = this.bg.getBounds();
     this.tabClose = this.scene.add.sprite(bgGeom.right - 18, bgGeom.top + 25, 'chat-tab-close').setOrigin(1, 1).setDepth(2);
@@ -258,7 +293,7 @@ export default class ChatBars {
     this.enterKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
     this.enterKey.on('down', (): void => this.sendMsg());
   }
-
+  
   private setTabsListeners(): void {
     if (this.scene.state.modal.chatType !== 1) {
       this.scene.clickButtonUp(this.tabChat, (): void => {

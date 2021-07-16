@@ -62,6 +62,7 @@ class Modal extends Phaser.Scene {
   public chatBG: Phaser.GameObjects.Sprite;
   public eventLeftTime: Phaser.GameObjects.Text;
   public socialTakskWindow: SocialTasksWindow;
+  public chatBars: ChatBars;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -133,7 +134,7 @@ class Modal extends Phaser.Scene {
         else new HerdBoostWindow(this)
         break;
       case 9: // Чат
-        new ChatBars(this);
+        this.chatBars = new ChatBars(this);
         this.scene.launch('Chat', this.state);
         break;
       case 10: // окно автопрогресса ивентовой фермы

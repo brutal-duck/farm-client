@@ -4,6 +4,7 @@ import GeneralChat from './../../../components/modal/chat/GeneralChat';
 import PersonalChatList from './../../../components/modal/chat/PersonalChatList';
 import PersonalChat from '../../../components/modal/chat/PersonalChat';
 import { click } from '../../../general/clicks';
+import Modal from './../Modal';
 
 class Chat extends Phaser.Scene {
   constructor() {
@@ -64,6 +65,8 @@ class Chat extends Phaser.Scene {
         else this.personalChat?.update();
         break;
     }
+    const ModalScene: Modal = this.scene.get('Modal') as Modal;
+    ModalScene.chatBars?.update();
   }
 
   private initScrolling(): void {

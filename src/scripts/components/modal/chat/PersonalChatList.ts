@@ -73,12 +73,14 @@ export default class PersonalChatList {
       color: '#8f4804',
       wordWrap: { width: bgWidth - 40 }
     };
+
     const timeTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Shadow',
       fontSize: '16px',
       color: '#63527F',
       align: 'left'
     };
+    
     const statusSettings: IstatusSettings = this.scene.getStatusSettings(status);
     const nameText: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, name, nameTextStyle).setDepth(2).setOrigin(0, 1);
     const nameTextGeom: Phaser.Geom.Rectangle = nameText.getBounds();
@@ -106,8 +108,7 @@ export default class PersonalChatList {
         y: bgGeom.top + 10,
       };
       this.scene.add.sprite(pos.x, pos.y, 'chat-notification');
-      const count: number = data.messages.filter(el => !el.check).length;
-      this.scene.add.text(pos.x, pos.y - 2, String(count), notificationTextStyle).setOrigin(0.5);
+      this.scene.add.text(pos.x, pos.y - 2, String(1), notificationTextStyle).setOrigin(0.5);
     }
 
     nameText.setCrop(0, 0, bgWidth - 80, 500);
