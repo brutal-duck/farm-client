@@ -132,7 +132,7 @@ export default class PersonalChat {
       timeText.setX(this.scene.windowWidth - 14);
     }
     
-    const status: IstatusSettings = this.scene.getStatusSettings(msgData.status);
+    const status: IstatusSettings = this.scene.getStatusSettings(this.scene.state.user.status);
     if (status) {
       this.scene.add.sprite(bgX - 12, this.scene.windowHeight + this.scene.scrollHeight + padding, status.iconTexture).setOrigin(1, 0).setScale(0.8);
     }
@@ -203,8 +203,8 @@ export default class PersonalChat {
     // Устанавливает минимальный размер и положение плашки
     if (textWidth > 364) bgWidth = 364;
     if (textWidth < timeWidth - 10) timeText.setX(14);
-    
-    const status: IstatusSettings = this.scene.getStatusSettings(msgData.status);
+
+    const status: IstatusSettings = this.scene.getStatusSettings(this.userMsg.status);
     if (status) {
       this.scene.add.sprite(bgX + bgWidth + 30, this.scene.windowHeight + this.scene.scrollHeight + padding, status.iconTexture).setOrigin(1, 0).setScale(0.8);
     }
