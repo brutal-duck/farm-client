@@ -21,6 +21,8 @@ export default class CowTerritory extends Territory {
   private createFactorySprite(): void {
     this.factory = new Factory(this.scene, this.x + 120, this.y + 85, this.improve);
     this.factory.setDepth(this.y + 1);
+    this.setTexture('cow-repository');
+    this.createImproveText();
     this.improveText.setPosition(this.x + 187, this.y + 97);
     this.improveText.setStyle({ fontSize: '32px' });
   }
@@ -193,6 +195,41 @@ export default class CowTerritory extends Territory {
           .setPosition(position.x, position.y)
           .setStyle({ fontSize: '26px' })
           .setDepth(this.depth + 2);
+      }
+    }
+  }
+
+  public unlockTerritory(): void {
+    if (this.bought && this.cooldown <= 0) {
+      this.scene.tryTask(5, this.boughtType);
+      if (this.territoryType === 0) {
+        this.territoryType = this.boughtType;
+        this.scene.time.addEvent({ delay: 500, callback: (): void => {
+          this.changeSprite();
+          this.forest?.destroy();
+          this.setTexture(this.scene.state.farm.toLowerCase() + '-bought');
+          Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
+          this.scene.buildBorders();
+        }, callbackScope: this, loop: false });
+      } else if (this.territoryType === 1) {
+        this.territoryType = this.boughtType;
+        if (this.territoryType === 5) {
+          this.volume = 0;
+          this.money = 0;
+          this.createRepositorySprite();
+          Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
+        } else if (this.territoryType === 8) {
+          this.volume = 0;
+          this.money = 0;
+          this.createFactorySprite();
+          Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
+        } else {
+          this.volume = 1000;
+          this.changeSprite();
+          this.scene.time.addEvent({ delay: 500, callback: (): void => {
+            Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
+          }, callbackScope: this, loop: false });
+        }
       }
     }
   }

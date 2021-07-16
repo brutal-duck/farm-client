@@ -92,7 +92,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  private createImproveText(): void {
+  protected createImproveText(): void {
     this.improveText = this.scene.add.text(this.x + 38, this.y + 24, String(this.improve), {
       font: '26px Shadow',
       color: '#ffe571',
@@ -163,7 +163,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     this.mergingCounter = 0;
   }
 
-  private createRepositorySprite(): void {
+  public createRepositorySprite(): void {
     if (!this.improveText) {
       this.createImproveText();
     }

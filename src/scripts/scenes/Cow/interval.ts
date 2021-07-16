@@ -350,11 +350,13 @@ function interval(): void {
     const factoryTerritory: CowTerritory = this.territories.children.entries.find((data: CowTerritory) => data.territoryType === 8);
     if (factoryTerritory) {
       const factory: Factory = factoryTerritory.factory;
-      if (this.state.userCow.tutorial >= 50) {
-        factory.productionOfProducts();
-      }
-      if (factory.money > 0 && !arrowOnFactory?.active && !factory.currentProduction) {
-          arrowOnFactory = Arrow.generate(this, 19, { x: factoryTerritory.x + 120, y: factoryTerritory.y + 180 });
+      if (factory) {
+        if (this.state.userCow.tutorial >= 50) {
+          factory.productionOfProducts();
+        }
+        if (factory.money > 0 && !arrowOnFactory?.active && !factory.currentProduction) {
+            arrowOnFactory = Arrow.generate(this, 19, { x: factoryTerritory.x + 120, y: factoryTerritory.y + 180 });
+        }
       }
     }
 
