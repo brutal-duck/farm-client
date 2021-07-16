@@ -91,14 +91,14 @@ export default class ChatBars {
           root.scrollIntoView(false)
           modalElements.forEach((el) => el?.setY(el.y + padding))
           this.scene.game.scene.keys['Chat'].scrolling.y += padding
-          this.scene.mainInput.style.top = '86%';
-          this.scene.mainInput.style.bottom = '9%';
+          this.scene.mainInput.style.top = '88%';
+          this.scene.mainInput.style.bottom = '7%';
           centered = false
         } else if (!centered) {
           modalElements.forEach((el) => el?.setY(el.y - padding))
           this.scene.game.scene.keys['Chat'].scrolling.y -= padding
-          this.scene.mainInput.style.top = '76%';
-          this.scene.mainInput.style.bottom = '19%';
+          this.scene.mainInput.style.top = '78%';
+          this.scene.mainInput.style.bottom = '17%';
           centered = true
         }
       }
