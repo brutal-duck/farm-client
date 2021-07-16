@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Modal from '../../../scenes/Modal/Modal';
 const SMILES: string[] = ['😊', '😟', '😝', '😍', '😎', '😭', '😘', '😳', '😱'];
 const SMILE_HEIGHT: number = 52;
@@ -419,6 +420,9 @@ export default class ChatBars {
       this.scene.scene.stop('Chat');
       this.scene.scene.restart(this.scene.state);
     });
+    this.scene.click(this.name, () => {
+      this.onUserNameClick(user.userId)
+    })
   }
 
   private deleteUserWithoutMessages(): void {
@@ -435,5 +439,42 @@ export default class ChatBars {
     this.scene.scene.stop('Chat');
     this.scene.scene.stop('Modal');
     this.enterKey?.destroy();
+  }
+
+  private onUserNameClick(id: string): void {
+    const data = {
+      userId: this.scene.state.user.id,
+      hash: this.scene.state.user.hash,
+      counter: this.scene.state.user.counter,
+      id: id,
+    };
+    axios.post(process.env.API +'/getUserInfo', data).then((res) => {
+      const { result, error }: { result: IprofileData, error: boolean }  = res.data;
+      if (!error) {
+        this.scene.mainInput?.remove();
+        this.enterKey?.destroy();
+        if (result.avatar) {
+          this.scene.load.image(`avatar${result.id}`, result.avatar);
+          this.scene.load.start();
+          this.scene.load.once(Phaser.Loader.Events.COMPLETE, () => {
+            this.scene.state.modal = {
+              type: 15,
+            };
+            this.scene.state.foreignProfile = result;
+            this.scene.scene.stop('Chat');
+            const ModalScene: Modal = this.scene.scene.get('Modal') as Modal;
+            ModalScene.scene.restart(this.scene.state);
+          });
+        } else {
+          this.scene.state.modal = {
+            type: 15,
+          };
+          this.scene.state.foreignProfile = result;
+          this.scene.scene.stop('Chat');
+          const ModalScene: Modal = this.scene.scene.get('Modal') as Modal;
+          ModalScene.scene.restart(this.scene.state);
+        }
+      }
+    });
   }
 }
