@@ -131,9 +131,9 @@ export default class SheepTerritory extends Territory {
     }
 
     if (this.block === 2 && this.position === 3) {
-      for (let i in this.scene.sheep?.children.entries) {
+      for (let i in this.scene.sheep?.children?.entries) {
         //@ts-ignore
-        this.scene.sheep?.children.entries[i].drag = false;
+        this.scene.sheep?.children?.entries[i].drag = false;
       }
     }
     super.unlockTerritory();
