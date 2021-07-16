@@ -149,6 +149,13 @@ interface IpersonalMessage {
   name?: string;
   status?: string;
 }
+interface IprofileData {
+  id: string;
+  name: string;
+  status: string;
+  level: number;
+  avatar: string;
+}
 interface IdataAutoSave {
   id: string;
   hash: string;
@@ -815,4 +822,5 @@ interface Istate {
   build: number;
   yaPlayer?: any;
   updatePersonalMessage?: boolean;
+  foreignProfile?: IprofileData; 
 }

@@ -935,6 +935,11 @@ export default {
     level: 'Уровень',
     onlineStatus: 'В сети',
     offlineStatus: 'Не в сети',
+    writing: 'Написать', 
+    goToFarm: 'Зайти на ферму',
+    blocking: 'Блокировать',
+    generalChat: 'Общий чат',
+    personalChat: 'Личный чат',
   },
 
   en: {
@@ -1873,5 +1878,10 @@ export default {
     level: 'Уровень',
     onlineStatus: 'В сети',
     offlineStatus: 'Не в сети',
+    writing: 'Написать', 
+    goToFarm: 'Зайти на ферму',
+    blocking: 'Блокировать',
+    generalChat: 'Общий чат',
+    personalChat: 'Личный чат',
   },
 }

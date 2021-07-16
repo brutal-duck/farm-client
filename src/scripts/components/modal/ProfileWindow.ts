@@ -26,10 +26,19 @@ export default class ProfileWindow {
   private exitProfileBtn: Phaser.GameObjects.Sprite;
   private exitProfileBtnText: Phaser.GameObjects.Text;
   private licenseBtnText: Phaser.GameObjects.Text;
+  private writeBtn: Phaser.GameObjects.Sprite;
+  private writeBtnText: Phaser.GameObjects.Text;
+  private farmBtn: Phaser.GameObjects.Sprite;
+  private farmBtnText: Phaser.GameObjects.Text;
+  private blockBtn: Phaser.GameObjects.Sprite;
+  private blockBtnText: Phaser.GameObjects.Text;
   private height: number;
+  private profile: IprofileData;
+  private owner: boolean = false;
 
   constructor(scene: Modal) {
     this.scene = scene;
+    this.profile = scene.state.foreignProfile;
     this.init();
     this.create();
     this.scene.openModal(this.scene.cameras.main);
@@ -38,13 +47,31 @@ export default class ProfileWindow {
   private init(): void {
     this.x = this.scene.cameras.main.centerX;
     this.y = this.scene.cameras.main.centerY;
+    if (this.profile) {
+      this.owner = false;
+    } else {
+      this.owner = true;
+      let nameText: string = this.scene.state.user.login;
+      if (this.scene.state.platform === 'ya' 
+        || this.scene.state.platform === 'vk' 
+        || this.scene.state.platform === 'ok') nameText = this.scene.state.name;
+      const profile: IprofileData = {
+        id: this.scene.state.user.id,
+        name: nameText,
+        avatar: 'avatar',
+        status: this.scene.state.user.status,
+        level: this.scene.state.user.level,
+      };
+      this.profile = profile;
+    }
   }
 
   private create(): void {
     this.createMainElements();
     this.createAvatar();
     this.createProfileInfo();
-    this.createBtns();
+    if (this.owner) this.createOwnerBtns();
+    else this.createForeignBtns();
     this.setListeners();
   }
 
@@ -78,9 +105,9 @@ export default class ProfileWindow {
       y: this.y - 60,
     };
     this.avatar = this.scene.add.sprite(pos.x, pos.y, 'farmer').setScale(0.53).setDepth(1);
-    // if (this.scene.state.platform === 'vk') this.avatar = this.scene.add.sprite(pos.x, pos.y, 'avatar').setScale(0.8).setDepth(1);
-    // else if (this.scene.state.platform === 'ok') this.avatar = this.scene.add.sprite(pos.x, pos.y, 'avatar').setScale(1.1).setDepth(1);
-    // else if (this.scene.state.platform === 'ya') this.avatar = this.scene.add.sprite(pos.x, pos.y, 'avatar').setDepth(1);
+    // if (this.scene.state.platform === 'vk') this.avatar = this.scene.add.sprite(pos.x, pos.y, `avatar${this.profile.id}`).setScale(0.8).setDepth(1);
+    // else if (this.scene.state.platform === 'ok') this.avatar = this.scene.add.sprite(pos.x, pos.y, `avatar${this.profile.id}`).setScale(1.1).setDepth(1);
+    // else if (this.scene.state.platform === 'ya') this.avatar = this.scene.add.sprite(pos.x, pos.y, `avatar${this.profile.id}`).setDepth(1);
     // else this.avatar = this.scene.add.sprite(pos.x, pos.y, 'farmer').setScale(0.53).setDepth(1);
     // if (this.avatar.texture.key === '__MISSING') this.avatar.setTexture('farmer').setScale(0.53);
     
@@ -93,12 +120,14 @@ export default class ProfileWindow {
   private createProfileInfo(): void {
     const pos: Iposition = {
       x: this.x - 50,
-      y: this.y - 80,
+      y: this.y - 85,
     };
     const nameTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Shadow',
       fontSize: '24px',
-      color: '#FFEBD0'
+      color: '#FFEBD0',
+      wordWrap: { width: 240 },
+      align: 'left'
     };
 
     const levelTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
@@ -113,24 +142,24 @@ export default class ProfileWindow {
       color: '#FBCB8D'
     };
 
-    let nameText: string = this.scene.state.user.login;
-    if (this.scene.state.platform === 'ya' 
-      || this.scene.state.platform === 'vk' 
-      || this.scene.state.platform === 'ok') nameText = this.scene.state.name;
-
-    this.name = this.scene.add.text(pos.x, pos.y, nameText, nameTextStyle).setOrigin(0, 0.5);
-    this.name.setCrop(0, 0, 240, 30);
-
-    const editBtnX: number = this.name.getBounds().width > 240 ? pos.x + 245 : this.name.getBounds().right + 5;
+    this.name = this.scene.add.text(pos.x, pos.y, this.profile.name, nameTextStyle).setOrigin(0, 0.5);
+    this.name.setCrop(0, 0, 240, 50);
+    
+    const nameGeom: Phaser.Geom.Rectangle = this.name.getBounds();
+    const editBtnX: number = nameGeom.width > 240 ? pos.x + 245 : nameGeom.right + 5;
+    if (nameGeom.height > 50) {
+      this.name.setY(this.name.y + 15)
+    }
     this.editNicknameBtn = this.scene.add.sprite(editBtnX, pos.y, 'profile-window-edit-btn')
       .setOrigin(0, 0.5)
-      .setVisible(this.scene.state.platform === 'web' || this.scene.state.platform === 'android');
+      .setVisible((this.scene.state.platform === 'web' || this.scene.state.platform === 'android') && this.owner);
 
-    const levelText: string = `${this.scene.state.lang.level} ${this.scene.state.user.level}`;
+    const levelText: string = `${this.scene.state.lang.level} ${this.profile.level}`;
     const levelPlate: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.avatar.x, this.avatar.y + this.avatar.displayHeight / 2, 'profile-window-level').setDepth(1);
     this.level = this.scene.add.text(levelPlate.x, levelPlate.y, levelText, levelTextStyle).setDepth(2).setOrigin(0.5);
 
-    this.onlineStatus = this.scene.add.text(pos.x, pos.y + 15, this.scene.state.lang.onlineStatus, onlineStatusTextStyle);
+    const onlineY: number = nameGeom.height > 50 ? pos.y + 25 : nameGeom.bottom;
+    this.onlineStatus = this.scene.add.text(pos.x, onlineY, this.scene.state.lang.onlineStatus, onlineStatusTextStyle).setOrigin(0);
 
     const statusSettings: IstatusSettings = this.scene.getStatusSettings(this.scene.state.user.status);
     // const statusSettings: IstatusSettings = this.scene.getStatusSettings('unicorn');
@@ -141,16 +170,18 @@ export default class ProfileWindow {
         fontSize: '20px',
         color: '#fce700',
       };
-  
-      this.status = this.scene.add.text(pos.x, pos.y + 55, statusSettings?.text, statusTextStyle).setOrigin(0, 0.5);
-      this.statusIcon = this.scene.add.sprite(this.status.getBounds().right, this.status.y, statusSettings.iconTexture)
+
+      const onlineGeom: Phaser.Geom.Rectangle = this.onlineStatus.getBounds();
+      const statusY: number = onlineGeom.bottom;
+      this.status = this.scene.add.text(pos.x, statusY, statusSettings.text, statusTextStyle).setOrigin(0);
+      this.statusIcon = this.scene.add.sprite(this.status.getBounds().right, this.status.getBounds().centerY, statusSettings.iconTexture)
         .setVisible(statusSettings.iconVisible)
         .setOrigin(0, 0.5);
     }
 
   }
 
-  private createBtns(): void {
+  private createOwnerBtns(): void {
     const pos1: Iposition = {
       x: this.x - 150,
       y: this.y + 97,
@@ -203,6 +234,42 @@ export default class ProfileWindow {
     }
   }
 
+  private createForeignBtns(): void {
+    const pos1: Iposition = {
+      x: this.x - 150,
+      y: this.y + 97,
+    };
+    const pos2: Iposition = {
+      x: this.x,
+      y: this.y + 97,
+    }
+    const pos3: Iposition = {
+      x: this.x + 150,
+      y: this.y + 97,
+    }
+    const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      wordWrap: { width: 100 },
+      align: 'center',
+      fontSize: '14px',
+      color: '#ffe2e2',
+      stroke: '#D78A31',
+      strokeThickness: 3,
+    };
+
+    this.writeBtn = this.scene.add.sprite(pos1.x, pos1.y, 'profile-window-button');
+    this.writeBtnText = this.scene.add.text(this.writeBtn.x, this.writeBtn.y - 5, this.scene.state.lang.writing, textStyle).setOrigin(0.5);
+
+    // this.farmBtn = this.scene.add.sprite(pos2.x, pos2.y, 'profile-window-button');
+    // this.farmBtnText = this.scene.add.text(this.farmBtn.x + 2, this.farmBtn.y - 5, this.scene.state.lang.goToFarm, textStyle)
+    //   .setOrigin(0.5);
+
+    // this.blockBtn = this.scene.add.sprite(pos3.x + 2, pos3.y - 5, 'profile-window-button-red');
+    // this.blockBtnText = this.scene.add.text(this.blockBtn.x + 2, this.blockBtn.y - 5, this.scene.state.lang.blocking, textStyle)
+    // .setOrigin(0.5)
+    // .setStroke('#990000', 2);
+  }
+
   private setListeners(): void {
     if (this.supportBtn) {
       this.scene.clickModalBtn({ btn: this.supportBtn, title: this.supportBtnText }, () => { this.onSupportBtn(); });
@@ -216,7 +283,32 @@ export default class ProfileWindow {
     if (this.editNicknameBtn) {
       this.scene.clickButton(this.editNicknameBtn, () => { this.onEditNicknameBtn(); });
     }
+    if(this.writeBtn) {
+      this.scene.clickModalBtn({ btn: this.writeBtn, title: this.writeBtnText }, () => { this.onWriteBtn(); });
+    }
+
     this.scene.clickButton(this.closeBtn, () => { this.onCloseBtn(); } );
+  }
+
+  private onWriteBtn(): void {
+    const user: IuserPersonalMessage = this.scene.state.user.personalMessages.find(el => el.userId === this.profile.id);
+      if (!user) {
+        const createnUser: IuserPersonalMessage = {
+          name: this.profile.name,
+          userId: this.profile.id,
+          status: this.profile.status,
+          messages: [],
+        };
+        this.scene.state.user.personalMessages.push(createnUser);
+      }
+
+    this.scene.state.modal = {
+      type: 9,
+      chatType: 2,
+      chatUserId: this.profile.id,
+    };
+    const ModalScene: Modal = this.scene.scene.get('Modal') as Modal;
+    ModalScene.scene.restart(this.scene.state);
   }
 
   private onSupportBtn(): void {
@@ -242,6 +334,7 @@ export default class ProfileWindow {
   private onCloseBtn(): void {
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
     this.scene.scene.stop();
+    this.scene.state.foreignProfile = undefined;
   }
 
   private openSysWindow(sysType: number) {

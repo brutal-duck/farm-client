@@ -3,7 +3,7 @@ const SMILES: string[] = ['😊', '😟', '😝', '😍', '😎', '😭', '😘'
 const SMILE_HEIGHT: number = 52;
 const tabTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
   fontFamily: 'Shadow',
-  fontSize: '18px',
+  fontSize: '20px',
   color: '#ffb27c',
   align: 'center',
   stroke: '#602000',
@@ -12,7 +12,7 @@ const tabTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
 };
 const tabActiveTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
   fontFamily: 'Shadow',
-  fontSize: '18px',
+  fontSize: '20px',
   color: '#fff2e7',
   align: 'center',
   stroke: '#aa6100',
@@ -20,7 +20,6 @@ const tabActiveTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
   wordWrap: { width: 100 },
 };
 
-const CLAN: boolean = true;
 export default class ChatBars {
   private scene: Modal;
   private smilePanelElements: Array<Phaser.GameObjects.Text | Phaser.GameObjects.TileSprite>;
@@ -131,10 +130,10 @@ export default class ChatBars {
     // if (CLAN) {
     //   this.tabChat = this.scene.add.sprite(bgGeom.left + 10, bgGeom.top - 20, 'chat-tab-active').setDepth(2).setOrigin(0, 0);
     //   const tabChatGeom: Phaser.Geom.Rectangle = this.tabChat.getBounds();
-    //   this.tabChatText = this.scene.add.text(tabChatGeom.centerX, tabChatGeom.centerY, 'Общий чат', tabActiveTextStyle).setDepth(2).setOrigin(0.5);
+    //   this.tabChatText = this.scene.add.text(tabChatGeom.centerX, tabChatGeom.centerY, this.scene.state.lang.generalChat, tabActiveTextStyle).setDepth(2).setOrigin(0.5);
     //   this.tabPersonal = this.scene.add.sprite(tabChatGeom.right, bgGeom.top, 'chat-tab').setDepth(2).setOrigin(0, 0);
     //   const tabPersonalGeom: Phaser.Geom.Rectangle = this.tabPersonal.getBounds();
-    //   this.tabPersonalText = this.scene.add.text(tabPersonalGeom.centerX, tabPersonalGeom.centerY, 'Личный чат', tabTextStyle).setDepth(2).setOrigin(0.5);
+    //   this.tabPersonalText = this.scene.add.text(tabPersonalGeom.centerX, tabPersonalGeom.centerY, this.scene.state.lang.personalChat, tabTextStyle).setDepth(2).setOrigin(0.5);
     // } else {
       let tabChatGeom: Phaser.Geom.Rectangle;
       let tabPersonalGeom: Phaser.Geom.Rectangle;
@@ -145,14 +144,14 @@ export default class ChatBars {
             .setDepth(2)
             .setOrigin(0, 1);
           tabChatGeom = this.tabChat.getBounds();
-          this.tabChatText = this.scene.add.text(tabChatGeom.centerX, tabChatGeom.centerY, 'Общий чат', tabActiveTextStyle).setDepth(2).setOrigin(0.5);
+          this.tabChatText = this.scene.add.text(tabChatGeom.centerX, tabChatGeom.centerY, this.scene.state.lang.generalChat, tabActiveTextStyle).setDepth(2).setOrigin(0.5);
 
           this.tabPersonal = this.scene.add.nineslice(tabChatGeom.right - 3 , bgGeom.top + 25, maxWidth / 2, tabHeight, 'chat-tab', slice);
           this.tabPersonal
             .setDepth(2)
             .setOrigin(0, 1);
           tabPersonalGeom = this.tabPersonal.getBounds();
-          this.tabPersonalText = this.scene.add.text(tabPersonalGeom.centerX, tabPersonalGeom.centerY, 'Личный чат', tabTextStyle).setDepth(4).setOrigin(0.5);
+          this.tabPersonalText = this.scene.add.text(tabPersonalGeom.centerX, tabPersonalGeom.centerY, this.scene.state.lang.personalChat, tabTextStyle).setDepth(4).setOrigin(0.5);
         break;
         case 2: 
           this.tabChat = this.scene.add.nineslice(bgGeom.left + 10, bgGeom.top + 25, maxWidth / 2, tabHeight, 'chat-tab', slice);
@@ -160,14 +159,14 @@ export default class ChatBars {
             .setDepth(2)
             .setOrigin(0, 1);
           tabChatGeom = this.tabChat.getBounds();
-          this.tabChatText = this.scene.add.text(tabChatGeom.centerX, tabChatGeom.centerY, 'Общий чат', tabTextStyle).setDepth(2).setOrigin(0.5);
+          this.tabChatText = this.scene.add.text(tabChatGeom.centerX, tabChatGeom.centerY, this.scene.state.lang.generalChat, tabTextStyle).setDepth(2).setOrigin(0.5);
           
           this.tabPersonal = this.scene.add.nineslice(tabChatGeom.right - 3 , bgGeom.top + 25, maxWidth / 2, activeTabHeight, 'chat-tab-active', slice);
           this.tabPersonal
             .setDepth(2)
             .setOrigin(0, 1);
           tabPersonalGeom = this.tabPersonal.getBounds();
-          this.tabPersonalText = this.scene.add.text(tabPersonalGeom.centerX, tabPersonalGeom.centerY, 'Личный чат', tabActiveTextStyle).setDepth(2).setOrigin(0.5);
+          this.tabPersonalText = this.scene.add.text(tabPersonalGeom.centerX, tabPersonalGeom.centerY, this.scene.state.lang.personalChat, tabActiveTextStyle).setDepth(2).setOrigin(0.5);
         break;
       }
 
