@@ -369,7 +369,10 @@ export default class ChatBars {
     const bgGeom: Phaser.Geom.Rectangle = this.bgNamePlate.getBounds();
     this.name = this.scene.add.text(pos.x, bgGeom.centerY, user.name, textStyle).setDepth(4).setOrigin(0.5);
     this.arrow = this.scene.add.sprite(bgGeom.left + 20, bgGeom.centerY, 'chat-arrow').setDepth(4).setOrigin(0, 0.5);
-
+    if (this.name.displayWidth > 350) {
+      const multiply: number = this.name.displayWidth / 350;
+      this.name.setFontSize(parseInt(this.name.style.fontSize) / multiply);
+    }
     this.scene.click(this.arrow, () => {
       this.scene.mainInput.remove();
       this.scene.state.modal = {

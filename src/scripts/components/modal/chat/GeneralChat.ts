@@ -71,7 +71,7 @@ export default class GeneralChat {
   private newMsg(msgData: Ichat) {
     if (msgData.text.includes(KEY)) {
       this.createFortunePlate(msgData);
-    } else if (msgData.login === this.scene.state.user.login || msgData.login === this.scene.state.name) {
+    } else if (msgData.userId === this.scene.state.user.id) {
       this.createUserMessage(msgData);
     } else {
       this.createForeignMessage(msgData);
