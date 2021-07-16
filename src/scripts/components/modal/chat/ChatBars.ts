@@ -264,6 +264,7 @@ export default class ChatBars {
       this.scene.clickButtonUp(this.tabChat, (): void => {
         this.scene.mainInput.remove();
         this.deleteUserWithoutMessages();
+        this.enterKey?.destroy();
         console.log('1');
         this.scene.state.modal = {
           type: 9,
@@ -276,6 +277,7 @@ export default class ChatBars {
     if (this.scene.state.modal.chatType !== 2) {
       this.scene.clickButtonUp(this.tabPersonal, (): void => {
         this.scene.mainInput.remove();
+        this.enterKey?.destroy();
         console.log('2');
         this.scene.state.modal = {
           type: 9,
@@ -323,10 +325,8 @@ export default class ChatBars {
           userStatus: this.scene.state.user.status,
         });
       }
-
-
       this.scene.mainInput.value = '';
-      this.chatText.setText(this.scene.mainInput.value).setDepth(4).setCrop(0, 0, 280, 100).setAlpha(1);
+      this.chatText.setText('').setDepth(4).setCrop(0, 0, 280, 100).setAlpha(1);
     }
   }
 
@@ -375,6 +375,7 @@ export default class ChatBars {
     }
     this.scene.click(this.arrow, () => {
       this.scene.mainInput.remove();
+      this.enterKey?.destroy();
       this.deleteUserWithoutMessages();
       this.scene.state.modal = {
         type: 9,
