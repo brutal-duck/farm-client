@@ -264,6 +264,7 @@ export default class ChatBars {
     if (this.scene.state.modal.chatType !== 1) {
       this.scene.clickButtonUp(this.tabChat, (): void => {
         this.scene.mainInput.remove();
+        this.deleteUserWithoutMessages();
         console.log('1');
         this.scene.state.modal = {
           type: 9,
@@ -375,6 +376,7 @@ export default class ChatBars {
     }
     this.scene.click(this.arrow, () => {
       this.scene.mainInput.remove();
+      this.deleteUserWithoutMessages();
       this.scene.state.modal = {
         type: 9,
         chatType: 2,
@@ -384,8 +386,16 @@ export default class ChatBars {
     });
   }
 
+  private deleteUserWithoutMessages(): void {
+    if (this.scene.state.modal.chatType === 2 && this.scene.state.modal.chatUserId) {
+      const user: IuserPersonalMessage = this.scene.state.user.personalMessages.find(el => el.userId === this.scene.state.modal.chatUserId);
+      if (user.messages.length <= 0) this.scene.state.user.personalMessages.pop();
+    }
+  }
+
   private onCloseBtnClick(): void {
     this.scene.mainInput.remove();
+    this.deleteUserWithoutMessages();
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
     this.scene.scene.stop('Chat');
     this.scene.scene.stop('Modal');
