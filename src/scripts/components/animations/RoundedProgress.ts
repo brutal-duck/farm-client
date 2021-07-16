@@ -17,7 +17,10 @@ export default class RoundedProgress {
   private rightSegment: Phaser.GameObjects.Sprite
   private leftSegment: Phaser.GameObjects.Sprite
   private mask: Phaser.Display.Masks.BitmapMask
-  private animation: Phaser.Tweens.Tween
+  private timeoutAni: Phaser.Tweens.Tween
+  private setAni: Phaser.Tweens.Tween
+  private halfPoint: number
+  private currentPercent: number
 
   constructor(
     scene: Sheep | Chicken | Cow | Unicorn,
@@ -42,8 +45,9 @@ export default class RoundedProgress {
   }
 
   private init(): void {
-
-  
+    this.time = 15000
+    this.percent = 70
+    this.currentPercent = this.percent
   }
 
   private create(): void {
@@ -52,52 +56,87 @@ export default class RoundedProgress {
     this.rightSegment = this.scene.add.sprite(this.x, this.y, this.texture).setOrigin(0, 0.5).setTint(this.tint).setScale(this.scale).setDepth(100000)
     this.leftSegment = this.scene.add.sprite(this.x, this.y, this.texture).setOrigin(1, 0.5).setFlipX(true).setTint(this.tint).setScale(this.scale).setDepth(100000)
 
-    this.mask = this.scene.add.tileSprite(this.x, this.y, this.rightSegment.getBounds().width + 5, this.rightSegment.getBounds().height + 5, 'white-pixel').setDepth(this.rightSegment.depth - 2).setTint(0xee0000).createBitmapMask()
+    this.mask = this.scene.add.tileSprite(this.x, this.y, this.rightSegment.getBounds().width + 5, this.rightSegment.getBounds().height + 5, 'white-pixel').setOrigin(0, 1).setDepth(this.rightSegment.depth - 2).setTint(0xee0000).createBitmapMask()
     this.mask.invertAlpha = true
+    this.leftSegment.setMask(this.mask)
 
-    if (this.time) this.play()
+    if (this.time) this.play(360 / 100 * this.percent)
+
+    
   }
 
-  private play(): void {
+  private play(from: number): void {
+    this.timeoutAni?.remove()
+    
     let targets = this.mask.bitmapMask as Phaser.GameObjects.TileSprite
-    let duration = this.time
-    let from: number
-    let to: number
-    let callback: Function
-    console.log('play ~ targets', targets)
+    let to: number = 0
+    
+    console.log('play ~ this.percent', this.percent)
+    
+    this.timeoutAni = this.scene.tweens.add({
+      onStart: (): void => { this.updateElements() },
+      targets,
+      angle: { from, to },
+      duration: this.time,
+      onUpdate: (): void => { this.checkElements() },
+    })
 
-    // if (this.clockWise) {
-    //   targets.setOrigin(1)
-    //   this.rightSegment.setMask(this.mask)
-    //   from = 0
-    //   to = 360
-    //   callback = (): void => {
-    //     if (targets.angle >= 90 && targets.originY === 1) targets.setOrigin(1, 0.5)
-    //     if (this.animation.elapsed >= duration / 2 && this.rightSegment.visible) {
-    //       this.rightSegment.setVisible(false)
-    //       this.leftSegment.setMask(this.mask)
-    //     }
-    //   }
-    // } else {
-      targets.setOrigin(0, 1)
-      this.leftSegment.setMask(this.mask)
-      from = 360
-      to = 0
-      callback = (): void => {
-        if (targets.angle <= 270 && targets.originY === 1) targets.setOrigin(0, 0.5)
-        if (this.animation.elapsed >= duration / 2 && this.leftSegment.visible) {
-          this.leftSegment.setVisible(false)
-          this.rightSegment.setMask(this.mask)
-        }
+    this.scene.time.addEvent({
+      delay: Phaser.Math.Between(2500, 4000),
+      callback: (): void => {
+        this.setPercent(Phaser.Math.Between(30, 80))
       }
-    // }
+    })
 
-    this.animation = this.scene.tweens.add({
+  }
+
+  public setPercent(percent: number, time: number = 0) {
+    let targets = this.mask.bitmapMask as Phaser.GameObjects.TileSprite
+    let duration = 2000
+    let from = this.timeoutAni.data[0].current
+    let to = 360 / 100 * percent
+    this.time = time ? time : this.time
+
+    if (this.timeoutAni?.isPlaying()) this.timeoutAni.stop()
+
+    this.setAni = this.scene.tweens.add({
+      // onStart: (): void => { this.updateElements(percent) },
       targets,
       angle: { from, to },
       duration,
-      onUpdate: (): void => { callback() },
+      ease: 'Power4',
+      onUpdate: (): void => { if (targets.angle >= 270 && targets.originY !== 1) targets.setOrigin(0, 1) },
+      onComplete: (): void => { if (this.time) this.play(to) }
     })
+
+  }
+
+  private checkElements(): void {
+    let target = this.mask.bitmapMask as Phaser.GameObjects.TileSprite
+
+    if (target.angle <= 270 && target.originY === 1) target.setOrigin(0, 0.5)
+    else if (target.angle > 270 && target.originY !== 1) target.setOrigin(0, 1)
+
+    if (this.percent > 50 && this.timeoutAni.elapsed >= this.halfPoint && this.leftSegment.visible) {
+      this.leftSegment.setVisible(false)
+      this.rightSegment.setMask(this.mask)
+    }
+  }
+
+  private updateElements(percent: number = this.percent): void {
+    this.percent = percent
+    this.halfPoint = this.percent <= 100 && this.percent > 50 ? this.time / this.percent * (this.percent - 50) : null
+
+    if (this.percent <= 100 && this.percent > 50) {
+      this.rightSegment.clearMask()
+      this.leftSegment.setVisible(true)
+    } else if (this.percent <= 50 && this.percent > 0) {
+      this.leftSegment.setVisible(false)
+      this.rightSegment.setMask(this.mask)
+    } else {
+      this.rightSegment.setVisible(false)
+      this.leftSegment.setVisible(false)
+    }
   }
 
 }
