@@ -257,7 +257,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
           .beginPath()
           .arc(0, 0, 51, 0, Math.PI * 2)
           .strokePath()
-          .setDepth(3);
+          .setDepth(this.bg.depth + 1);
         
          
         if (!this.listIsOpen) {
