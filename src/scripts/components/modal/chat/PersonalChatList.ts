@@ -107,7 +107,7 @@ export default class PersonalChatList {
         x: bgGeom.right - 10,
         y: bgGeom.top + 10,
       };
-      this.scene.add.sprite(pos.x, pos.y, 'chat-notification');
+      this.scene.add.sprite(pos.x, pos.y, 'notification-bg');
       this.scene.add.text(pos.x, pos.y - 2, String(1), notificationTextStyle).setOrigin(0.5);
     }
 
@@ -127,7 +127,7 @@ export default class PersonalChatList {
     const month: number = time.getMonth() + 1;
     const day: number = time.getDate();
     const hours: number = time.getHours();
-    const minutes: number = time.getMinutes();
+    const minutes: string = time.getMinutes() < 10 ? '0' + time.getMinutes() : String(time.getMinutes());
     const date: string = day + '.' + month + '.' + year + ' ' + hours + ':' + minutes;
     return date;
   }
