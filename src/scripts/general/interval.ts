@@ -447,64 +447,24 @@ function updateProfileNotification(load: boolean = false): void {
   if (!this.scene.isActive('Profile') && !load) return;
 
   const Profile: Profile = this.game.scene.keys['Profile'];
-  if (Profile.sheepNotificationText) {
+  if (Profile.sheepNotificator) {
     const count: number = this.state.sheepNotificationCount.reduce((prev, cur) => prev += cur);
-    if (Profile.sheepNotificationText.text !== String(count)) Profile.sheepNotificationText.setText(String(count));
-    
-    if (count <= 0 && Profile.sheepNotificationText.visible) {
-      Profile.sheepNotificationText.setVisible(false);
-      Profile.sheepNotificationBg.setVisible(false);
-      Profile.animSheepSprite.setVisible(false);
-    } else if (count > 0 && !Profile.sheepNotificationText.visible) {
-      Profile.sheepNotificationText.setVisible(true);
-      Profile.sheepNotificationBg.setVisible(true);
-      Profile.animSheepSprite.setVisible(true);
-    }
+    Profile.sheepNotificator.setCount(count);
   }
 
-  if (Profile.chickenNotificationText) {
+  if (Profile.chickenNotificator) {
     const count: number = this.state.chickenNotificationCount.reduce((prev, cur) => prev += cur);
-    if (Profile.chickenNotificationText.text !== String(count)) Profile.chickenNotificationText.setText(String(count));
-
-    if (count <= 0 && Profile.chickenNotificationText.visible) {
-      Profile.chickenNotificationText.setVisible(false);
-      Profile.chickenNotificationBg.setVisible(false);
-      Profile.animChickenSprite.setVisible(false);
-    } else if (count > 0 && !Profile.chickenNotificationText.visible) {
-      Profile.chickenNotificationText.setVisible(true);
-      Profile.chickenNotificationBg.setVisible(true);
-      Profile.animChickenSprite.setVisible(true);
-    }
+    Profile.chickenNotificator.setCount(count);
   }
   
-  if (Profile.cowNotificationText) {
+  if (Profile.cowNotificator) {
     const count: number = this.state.cowNotificationCount.reduce((prev, cur) => prev += cur);
-    if (Profile.cowNotificationText.text !== String(count)) Profile.cowNotificationText.setText(String(count));
-    
-    if (count <= 0 && Profile.cowNotificationText.visible) {
-      Profile.cowNotificationText.setVisible(false);
-      Profile.cowNotificationBg.setVisible(false);
-      Profile.animCowSprite.setVisible(false);
-    } else if (count > 0 && !Profile.cowNotificationText.visible) {
-      Profile.cowNotificationText.setVisible(true);
-      Profile.cowNotificationBg.setVisible(true);
-      Profile.animCowSprite.setVisible(true);
-    }
+    Profile.cowNotificator.setCount(count);
   }
 
-  if (Profile.unicornNotificationText) {
+  if (Profile.unicornNotificator) {
     const count: number = this.state.unicornNotificationCount.reduce((prev, cur) => prev += cur);
-    if (Profile.unicornNotificationText.text !== String(count)) Profile.unicornNotificationText.setText(String(count));
-    
-    if (count <= 0 && Profile.unicornNotificationText.visible) {
-      Profile.unicornNotificationText.setVisible(false);
-      Profile.unicornNotificationBg.setVisible(false);
-      Profile.animUnicornSprite.setVisible(false);
-    } else if (count > 0 && !Profile.unicornNotificationText.visible) {
-      Profile.unicornNotificationText.setVisible(true);
-      Profile.unicornNotificationBg.setVisible(true);
-      Profile.animUnicornSprite.setVisible(true);
-    }
+    Profile.unicornNotificator.setCount(count);
   }
 }
 

@@ -1,0 +1,68 @@
+export default class Notificator {
+  private scene: Phaser.Scene;
+  private bg: Phaser.GameObjects.Sprite;
+  private text: Phaser.GameObjects.Text;
+  private anim: boolean;
+  private animBg: Phaser.GameObjects.Sprite;
+  private position: Iposition;
+  private count: number;
+  private visible: boolean = true;
+
+  constructor(scene: Phaser.Scene, position: Iposition, anim?: boolean) { 
+    this.scene = scene;
+    this.position = position;
+    this.anim = anim;
+    this.visible = true;
+    this.create();
+    if (this.anim) this.setAnim();
+  };
+
+  private create(): void {
+    const notificationTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Bip',
+      fontSize: '24px',
+      color: '#ffffff',
+      fontStyle: 'Bold',
+    };
+
+    this.animBg = this.scene.add.sprite(this.position.x, this.position.y, 'notification-bg');
+    this.bg = this.scene.add.sprite(this.position.x, this.position.y, 'notification-bg');
+    this.text = this.scene.add.text(this.position.x, this.position.y, '1', notificationTextStyle).setOrigin(0.5);
+  }
+
+  private setAnim(): void {
+    this.scene.tweens.add({
+      targets: [ this.animBg ],
+      scale: { from: 1.05, to: 2 },
+      alpha: { from: 0.5, to: 0 },
+      duration: 500,
+      repeat: -1,
+      repeatDelay: 1150,
+    });
+  }
+  
+  private setText(text: string | number): void {
+    this.text.setText(String(text));
+  }
+
+  public setVisible(visible: boolean): void {
+    if (this.visible !== visible) {
+      this.visible = visible;
+      this.animBg.setVisible(this.visible);
+      this.bg.setVisible(this.visible);
+      this.text.setVisible(this.visible);
+    }
+  }
+
+  public setCount(count: number): void {
+    if (count !== this.count) {
+      this.count = count;
+      if (this.count <= 0) {
+        this.setVisible(false);
+      } else {
+        this.setText(count);
+        this.setVisible(true);
+      }
+    }
+  }
+}
