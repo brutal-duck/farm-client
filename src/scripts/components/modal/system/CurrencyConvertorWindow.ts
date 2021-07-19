@@ -111,7 +111,7 @@ export default class CurrencyConvertorWindow {
 
   private closeWindow(): void {
     if (this.scene.state.boughtFeedBoost) {
-      Hint.create(this.scene.game.scene.keys[`${this.scene.state.farm}Bars`], -250, `${this.scene.state.lang.feedBoostNative} ${shortTime(this.scene.state[`user${this.scene.state.farm}`].feedBoostTime, this.scene.state.lang)}`, 2);
+      Hint.create(this.scene.game.scene.keys[`${this.scene.state.farm}Bars`], -250, `${this.scene.state.lang.feedBoostNotification} ${shortTime(this.scene.state[`user${this.scene.state.farm}`].feedBoostTime, this.scene.state.lang)}`, 2);
       this.scene.state.boughtFeedBoost = false;
     };
     

@@ -95,18 +95,18 @@ function interval(): void {
     if (this.state[`user${this.state.farm}`].points >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
      this.state[`user${this.state.farm}`].takenHerdBoost <= 0 && 
      this.state.user.additionalTutorial.herdBoost) {
-      this.state.nativeCounter[3] = 1;
-    } else this.state.nativeCounter[3] = 0;
+      this.state.notificationCounter[3] = 1;
+    } else this.state.notificationCounter[3] = 0;
 
-    if (!this.state.user.takenFreeDiamonds && this.state.userUnicorn.tutorial > 70) this.state.nativeCounter[0] = 1;
-    else this.state.nativeCounter[0] = 0;
+    if (!this.state.user.takenFreeDiamonds && this.state.userUnicorn.tutorial > 70) this.state.notificationCounter[0] = 1;
+    else this.state.notificationCounter[0] = 0;
 
-    let nativeCount = 0;
+    let notificationCount = 0;
     
-    for (let i = 0; i < this.state.nativeCounter.length; i++) {
-      nativeCount += this.state.nativeCounter[i];
+    for (let i = 0; i < this.state.notificationCounter.length; i++) {
+      notificationCount += this.state.notificationCounter[i];
     }
-    this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setText(nativeCount);
+    this.game.scene.keys[`${this.state.farm}Bars`].notificationShopCounter.setText(notificationCount);
 
     let proceeds: string = String(0);
     this.animals.children.entries.forEach(animal => {
@@ -220,7 +220,7 @@ function interval(): void {
     }
   
     this.cowFactoryProgress();
-    this.updateProfileNative();
+    this.updateProfileNotification();
 
   }, callbackScope: this, loop: true });
 }

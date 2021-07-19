@@ -418,7 +418,7 @@ class Boot extends Phaser.Scene {
           p.verify();
         })
         .verified((p) => {
-          axios.post(process.env.API + '/callbackPayNative', {
+          axios.post(process.env.API + '/callbackPayNotification', {
             id: this.state.user.id,
             hash: this.state.user.hash,
             counter: this.state.user.counter,
@@ -535,7 +535,7 @@ class Boot extends Phaser.Scene {
     this.state.vkTask = {
       joinGroup: false,
       subGroup: false,
-      subNative: false,
+      subNotification: false,
       addFavorites: false
     }
     const data = {
@@ -549,7 +549,7 @@ class Boot extends Phaser.Scene {
    
     bridge.send('VKWebAppCheckAllowedScopes', { scopes: 'menu, notify' }).then(res => {
       res.result.forEach(data => {
-        if (data.scope === 'notify') this.state.vkTask.subNative = data.allowed;
+        if (data.scope === 'notify') this.state.vkTask.subNotification = data.allowed;
         if (data.scope === 'menu') this.state.vkTask.addFavorites = data.allowed;
       })
     }).catch(err => console.log(err));

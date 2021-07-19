@@ -62,7 +62,6 @@ const feedBoostSheepIcon: string = require("./../../../../assets/images/icons/sh
 const feedBoostChickenIcon: string = require("./../../../../assets/images/icons/chicken-feed-boost.png");
 const feedBoostCowIcon: string = require("./../../../../assets/images/icons/cow-feed-boost.png");
 const feedBoostEventIcon: string = require("./../../../../assets/images/icons/event-feed-boost.png");
-const nativeBg: string = require("./../../../../assets/images/modal/native-bg.png");
 const freeDiamondsBg: string = require("./../../../../assets/images/modal/free-diamonds-bg.png");
 
 class Shop extends Phaser.Scene {
@@ -131,7 +130,6 @@ class Shop extends Phaser.Scene {
     this.load.image('improve-collector', improveCollector);
     this.load.image('starterpack-bg', starterpackBg);
     this.load.image('starterpack-shadow', starterpackShadow);
-    this.load.image('native-bg', nativeBg);
     this.load.image('free-diamonds-bg', freeDiamondsBg);
     if (this.state.farm === 'Sheep') this.load.image('sheep-herd-boost-icon', herdBoostSheepIcon);
     if (this.state.farm === 'Chicken') this.load.image('chicken-herd-boost-icon', herdBoostChickenIcon);

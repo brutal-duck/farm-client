@@ -8,10 +8,10 @@ class ShopBars extends Phaser.Scene {
   public state: Istate;
   public clickButtonUp = clickButtonUp.bind(this);
   public openShop = openShop.bind(this);
-  public nativeBoost: Phaser.GameObjects.Graphics;
-  public nativeBoostCounter: Phaser.GameObjects.Text;
-  public nativeDiamond: Phaser.GameObjects.Graphics;
-  public nativeDiamondCounter: Phaser.GameObjects.Text;
+  public notificationBoost: Phaser.GameObjects.Graphics;
+  public notificationBoostCounter: Phaser.GameObjects.Text;
+  public notificationDiamond: Phaser.GameObjects.Graphics;
+  public notificationDiamondCounter: Phaser.GameObjects.Text;
   public opened: boolean = false;
 
   constructor() {
@@ -33,11 +33,11 @@ class ShopBars extends Phaser.Scene {
     let close: Phaser.GameObjects.Sprite = this.add.sprite(605, this.cameras.main.centerY - 465, 'shop-close');
     this.clickButtonUp(close, (): void => {
       if (this.state.boughtFeedBoost) {
-        Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, `${this.state.lang.feedBoostNative} ${shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang)}`, 2);
+        Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, `${this.state.lang.feedBoostNotification} ${shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang)}`, 2);
         this.state.boughtFeedBoost = false;
       }
       if (this.state.boughtFactoryBoost) {
-        Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, `${this.state.lang.factoryBoostNative} ${shortTime(this.state[`user${this.state.farm}`].factory.boostTime, this.state.lang)}`, 2);
+        Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, `${this.state.lang.factoryBoostNotification} ${shortTime(this.state[`user${this.state.farm}`].factory.boostTime, this.state.lang)}`, 2);
         this.state.boughtFactoryBoost = false;
       };
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
@@ -49,12 +49,12 @@ class ShopBars extends Phaser.Scene {
     });
 
     //натив вкладки с бустами
-    this.nativeBoost = this.add.graphics()
+    this.notificationBoost = this.add.graphics()
       .fillStyle(0xFF2400, 1)
       .fillCircle(550, this.cameras.main.centerY - 520, 20)
       .setDepth(2)
       .setVisible(false);
-    this.nativeBoostCounter = this.add.text(550, this.cameras.main.centerY - 520, String(this.state.nativeCounter[3]), {
+    this.notificationBoostCounter = this.add.text(550, this.cameras.main.centerY - 520, String(this.state.notificationCounter[3]), {
       font: '32px Shadow',
       color: '#f3eae6'
     }).setDepth(3)
@@ -62,12 +62,12 @@ class ShopBars extends Phaser.Scene {
       .setVisible(false);
 
     //натив вкладки с diamonds
-    this.nativeDiamond = this.add.graphics()
+    this.notificationDiamond = this.add.graphics()
       .fillStyle(0xFF2400, 1)
       .fillCircle(175, this.cameras.main.centerY - 520, 20)
       .setDepth(2)
       .setVisible(false);
-    this.nativeDiamondCounter = this.add.text(175, this.cameras.main.centerY - 520, String(this.state.nativeCounter[0]), {
+    this.notificationDiamondCounter = this.add.text(175, this.cameras.main.centerY - 520, String(this.state.notificationCounter[0]), {
       font: '32px Shadow',
       color: '#f3eae6'
     }).setDepth(3)
@@ -230,61 +230,61 @@ class ShopBars extends Phaser.Scene {
   }
 
   public update(): void {
-    this.updateNative();
-    // this.updateEventNative();
+    this.updateNotification();
+    // this.updateEventNotification();
   }
 
-  public updateNative(): void{  
+  public updateNotification(): void{  
     if (this.state.modal.shopType === 4 && 
     (this.state[`user${this.state.farm}`].part < this.game.scene.keys[this.state.farm].herdBoostLvl ||
     this.state[`user${this.state.farm}`].takenHerdBoost > 0 ||
-    this.nativeBoostCounter.text === '0' || !this.state.user.additionalTutorial.herdBoost) &&
-    this.nativeBoost.visible) {
-      this.nativeBoost.setVisible(false);
-      this.nativeBoostCounter.setVisible(false);
+    this.notificationBoostCounter.text === '0' || !this.state.user.additionalTutorial.herdBoost) &&
+    this.notificationBoost.visible) {
+      this.notificationBoost.setVisible(false);
+      this.notificationBoostCounter.setVisible(false);
     } else if (!(this.state.modal.shopType === 4) &&
     this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
     this.state[`user${this.state.farm}`].takenHerdBoost <= 0 &&
-    !this.nativeBoost.visible && 
-    this.nativeBoostCounter.text !== '0' && this.state.user.additionalTutorial.herdBoost) {
-      this.nativeBoost.setVisible(true);
-      this.nativeBoostCounter.setVisible(true);
+    !this.notificationBoost.visible && 
+    this.notificationBoostCounter.text !== '0' && this.state.user.additionalTutorial.herdBoost) {
+      this.notificationBoost.setVisible(true);
+      this.notificationBoostCounter.setVisible(true);
     }
 
     if ((this.state.modal.shopType === 1 ||
       this.state.user.starterpack || 
-      this.nativeDiamondCounter.text === '0') && 
-      this.nativeDiamond.visible) {
+      this.notificationDiamondCounter.text === '0') && 
+      this.notificationDiamond.visible) {
         
-      this.nativeDiamond.setVisible(false);
-      this.nativeDiamondCounter.setVisible(false);
+      this.notificationDiamond.setVisible(false);
+      this.notificationDiamondCounter.setVisible(false);
 
     } else if (this.state.modal.shopType !== 1 &&
       !this.state.user.starterpack && 
-      this.nativeDiamondCounter.text !== '0' && 
-      !this.nativeDiamond.visible) {
+      this.notificationDiamondCounter.text !== '0' && 
+      !this.notificationDiamond.visible) {
 
-      this.nativeDiamond.setVisible(true);
-      this.nativeDiamondCounter.setVisible(true);
+      this.notificationDiamond.setVisible(true);
+      this.notificationDiamondCounter.setVisible(true);
 
     }
   }
 
-  public updateEventNative(): void{  
+  public updateEventNotification(): void{  
     if (this.state.modal.shopType === 4 && 
     (this.state[`user${this.state.farm}`].points < this.game.scene.keys[this.state.farm].herdBoostLvl ||
     this.state[`user${this.state.farm}`].takenHerdBoost > 0 ||
-    this.nativeBoostCounter.text === '0' || !this.state.user.additionalTutorial.herdBoost) &&
-    this.nativeBoost.visible) {
-      this.nativeBoost.setVisible(false);
-      this.nativeBoostCounter.setVisible(false);
+    this.notificationBoostCounter.text === '0' || !this.state.user.additionalTutorial.herdBoost) &&
+    this.notificationBoost.visible) {
+      this.notificationBoost.setVisible(false);
+      this.notificationBoostCounter.setVisible(false);
     } else if (!(this.state.modal.shopType === 4) &&
     this.state[`user${this.state.farm}`].points >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
     this.state[`user${this.state.farm}`].takenHerdBoost <= 0 &&
-    !this.nativeBoost.visible && 
-    this.nativeBoostCounter.text !== '0' && this.state.user.additionalTutorial.herdBoost) {
-      this.nativeBoost.setVisible(true);
-      this.nativeBoostCounter.setVisible(true);
+    !this.notificationBoost.visible && 
+    this.notificationBoostCounter.text !== '0' && this.state.user.additionalTutorial.herdBoost) {
+      this.notificationBoost.setVisible(true);
+      this.notificationBoostCounter.setVisible(true);
     }
   }
 }

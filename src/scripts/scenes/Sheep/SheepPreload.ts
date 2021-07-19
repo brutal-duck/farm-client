@@ -764,7 +764,7 @@ class SheepPreload extends Phaser.Scene {
         this.state.farm = 'Sheep';
         this.loadData(response);
         this.state.offlineTime = response.data.progress.sheepOfflineTime;
-        this.state.nativeCounter = [0, 0, 0, 0];
+        this.state.notificationCounter = [0, 0, 0, 0];
         
         const Amplitude: Amplitude = this.state.amplitude;
         if (response.data.user.tutor === 0) Amplitude.logAmplitudeEvent('tutor_before_load', {});

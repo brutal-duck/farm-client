@@ -101,7 +101,7 @@ import {
   cowFactoryProgress,
   intervalPorgressCollectorTime,
   progressTerritoryCooldown,
-  updateProfileNative
+  updateProfileNotification
 } from '../../../general/interval';
 import Ads from '../../../components/Utils/Ads';
 class Unicorn extends Phaser.Scene {
@@ -220,7 +220,7 @@ class Unicorn extends Phaser.Scene {
   public cowIntervalProgress = cowIntervalProgress.bind(this);
   public cowCollectorProgress = cowCollectorProgress.bind(this);
   public cowFactoryProgress = cowFactoryProgress.bind(this);
-  public updateProfileNative = updateProfileNative.bind(this);
+  public updateProfileNotification = updateProfileNotification.bind(this);
   public randomString = randomString.bind(this);
   public progressTerritoryCooldown = progressTerritoryCooldown.bind(this);
   public playSoundOnce = playSoundOnce.bind(this);

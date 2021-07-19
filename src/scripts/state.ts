@@ -20,7 +20,7 @@ let herdBoostPrice: number;
 let herdBoostTime: number;
 let herdBoostDelay: number;
 let herdBoostAnimals: number[] = [];
-let nativeCounter: number[];
+let notificationCounter: number[];
 let timeToNewDay: number;
 let user: Iuser;
 let userSheep: IuserSheep;
@@ -70,10 +70,10 @@ let chat: Ichat[] = [];
 let starterpack: boolean = false;
 let stock: string = '';
 let fortuneData: IfortuneData;
-let sheepNativeCount: number[] = [ 0, 0, 0, 0 ];
-let chickenNativeCount: number[] = [ 0, 0, 0, 0 ];
-let cowNativeCount: number[] = [ 0, 0, 0, 0, 0 ];
-let unicornNativeCount: number[] = [ 0 ];
+let sheepNotificationCount: number[] = [ 0, 0, 0, 0 ];
+let chickenNotificationCount: number[] = [ 0, 0, 0, 0 ];
+let cowNotificationCount: number[] = [ 0, 0, 0, 0, 0 ];
+let unicornNotificationCount: number[] = [ 0 ];
 let storageMultiply: number = 2;
 let vkTask: IsociaTasks = {};
 let okTask: IsociaTasks = {};
@@ -117,7 +117,7 @@ let state: Istate = {
   dailyAwards, // награды новичка
 
   // не записываемые в localStorage
-  nativeCounter, // счетчик нативов в магазине ['diamonds', 'gold', 'animals', 'booster']
+  notificationCounter, // счетчик нативов в магазине ['diamonds', 'gold', 'animals', 'booster']
   lang, // массив слов выбранного языка
   modal, // настройки окон
   animal, // сюда присваиваем животное (для окна)
@@ -156,10 +156,10 @@ let state: Istate = {
   stock, // тип акции, собтия для revenue
   boughtFactoryBoost, // куплен ли шоколад
   fortuneData, // объект данных колеса
-  sheepNativeCount, // натификаторы для профиля
-  chickenNativeCount, // натификаторы для профиля
-  cowNativeCount, // натификаторы для профиля
-  unicornNativeCount, // натификаторы для профиля
+  sheepNotificationCount, // натификаторы для профиля
+  chickenNotificationCount, // натификаторы для профиля
+  cowNotificationCount, // натификаторы для профиля
+  unicornNotificationCount, // натификаторы для профиля
   storageMultiply, // множитель для коров
   vkTask,
   okTask,

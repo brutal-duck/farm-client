@@ -9,7 +9,7 @@ import {
   shortTime,
 } from '../../../general/basic';
 import {
-  updateNativeShop, 
+  updateNotificationShop, 
 } from '../../../general/boosts';
 import { 
   updateRaitingsBar,
@@ -48,8 +48,8 @@ class UnicornBars extends Phaser.Scene {
   public offline: Phaser.GameObjects.Sprite;
   public calendarText: Phaser.GameObjects.Text;
   public calendar: any;
-  public nativeShop: Phaser.GameObjects.Graphics;
-  public nativeShopCounter: Phaser.GameObjects.Text;
+  public notificationShop: Phaser.GameObjects.Graphics;
+  public notificationShopCounter: Phaser.GameObjects.Text;
   public proceedsText: Phaser.GameObjects.Text;
   public score: Phaser.GameObjects.Text;
   public place: Phaser.GameObjects.Text;
@@ -63,8 +63,8 @@ class UnicornBars extends Phaser.Scene {
   public collectorBtn: Phaser.GameObjects.Image;
   public starterpackIcon: Phaser.GameObjects.Image;
   public hints: Phaser.GameObjects.Group;
-  public mapNativeText: Phaser.GameObjects.Text;
-  public mapNativeBg: Phaser.GameObjects.Graphics;
+  public mapNotificationText: Phaser.GameObjects.Text;
+  public mapNotificationBg: Phaser.GameObjects.Graphics;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -73,7 +73,7 @@ class UnicornBars extends Phaser.Scene {
   public increaseDiamonds = increaseDiamonds.bind(this);
   public newbieAwardAnimation = newbieAwardAnimation.bind(this);
   public getCurrency = getCurrency.bind(this);
-  public updateNativeShop = updateNativeShop.bind(this);
+  public updateNotificationShop = updateNotificationShop.bind(this);
   public updateRaitingsBar = updateRaitingsBar.bind(this);
   public scoreEnding = scoreEnding.bind(this);
   
@@ -115,12 +115,12 @@ class UnicornBars extends Phaser.Scene {
     this.shop = this.add.image(370, this.height - 90, 'shop');
     this.map = this.add.image(510, this.height - 90, 'map-icon');
 
-    this.nativeShop = this.add.graphics()
+    this.notificationShop = this.add.graphics()
       .fillStyle(0xFF2400, 1)
       .fillCircle(405, this.height - 140, 20)
       .setDepth(2)
       .setVisible(false);
-    this.nativeShopCounter = this.add.text(405, this.height - 140, '!', {
+    this.notificationShopCounter = this.add.text(405, this.height - 140, '!', {
       font: '32px Shadow',
       color: '#f3eae6'
     }).setDepth(3)
@@ -134,12 +134,12 @@ class UnicornBars extends Phaser.Scene {
       this.updateAnimalPrice();
     });
     
-    this.mapNativeBg = this.add.graphics()
+    this.mapNotificationBg = this.add.graphics()
       .fillStyle(0xFF2400, 1)
       .fillCircle(this.map.x + 35, this.map.y - 50, 20)
       .setDepth(2)
       .setVisible(false);
-    this.mapNativeText = this.add.text(this.map.x + 35, this.map.y - 50, '!', {
+    this.mapNotificationText = this.add.text(this.map.x + 35, this.map.y - 50, '!', {
       font: '32px Shadow',
       color: '#f3eae6'
     }).setDepth(3)
@@ -351,7 +351,7 @@ class UnicornBars extends Phaser.Scene {
     this.buyAnimalStatus();
 
     // Обновление натива магазина
-    this.updateNativeShop();
+    this.updateNotificationShop();
 
     this.updateRaitingsBar();
 

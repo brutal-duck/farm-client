@@ -21,9 +21,10 @@ const socialBtnVk: string = require('./../../assets/images/profile/social-btn-vk
 const socialBtnOk: string = require('./../../assets/images/profile/social-btn-ok.png');
 
 const notificationTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
-  fontFamily: 'Shadow',
+  fontFamily: 'Bip',
   fontSize: '24px',
-  color: '#ffffff'
+  color: '#ffffff',
+  fontStyle: 'Bold',
 };
 class Profile extends Phaser.Scene {
   constructor() {
@@ -45,32 +46,32 @@ class Profile extends Phaser.Scene {
   public avatar: Phaser.GameObjects.Sprite;
   public diamondsText: Phaser.GameObjects.Text;
   public eventIsland: Phaser.GameObjects.Sprite;
-  public sheepNativeCount: number[] = [ 0, 0, 0, 0 ];
-  public chickenNativeCount: number[] = [ 0, 0, 0, 0 ];
-  public cowNativeCount: number[] = [ 0, 0, 0, 0, 0 ];
-  public sheepNativeText: Phaser.GameObjects.Text;
-  public chickenNativeText: Phaser.GameObjects.Text;
-  public cowNativeText: Phaser.GameObjects.Text;
-  public unicornNativeText: Phaser.GameObjects.Text;
-  public sheepNativeBg: Phaser.GameObjects.Sprite;
-  public chickenNativeBg: Phaser.GameObjects.Sprite;
-  public cowNativeBg: Phaser.GameObjects.Sprite;
-  public unicornNativeBg: Phaser.GameObjects.Sprite;
+  public sheepNotificationCount: number[] = [ 0, 0, 0, 0 ];
+  public chickenNotificationCount: number[] = [ 0, 0, 0, 0 ];
+  public cowNotificationCount: number[] = [ 0, 0, 0, 0, 0 ];
+  public sheepNotificationText: Phaser.GameObjects.Text;
+  public chickenNotificationText: Phaser.GameObjects.Text;
+  public cowNotificationText: Phaser.GameObjects.Text;
+  public unicornNotificationText: Phaser.GameObjects.Text;
+  public sheepNotificationBg: Phaser.GameObjects.Sprite;
+  public chickenNotificationBg: Phaser.GameObjects.Sprite;
+  public cowNotificationBg: Phaser.GameObjects.Sprite;
+  public unicornNotificationBg: Phaser.GameObjects.Sprite;
   public animSheepSprite: Phaser.GameObjects.Sprite;
   public animChickenSprite: Phaser.GameObjects.Sprite;
   public animCowSprite: Phaser.GameObjects.Sprite;
   public socialTaskBtn: Phaser.GameObjects.Sprite;
-  public socialTaskNative: Phaser.GameObjects.Sprite;
-  public socialTaskNativeText: Phaser.GameObjects.Text;
+  public socialTaskNotification: Phaser.GameObjects.Sprite;
+  public socialTaskNotificationText: Phaser.GameObjects.Text;
   public socialTasks: IsociaTasks;
   public animUnicornSprite: Phaser.GameObjects.Sprite;
   public currentEndTime: string = ' ';
   private currentDiamonds: number;
   private animDiamondsCount: number = 0;
-  private shopNativeText: Phaser.GameObjects.Text;
-  private shopNativeBg: Phaser.GameObjects.Sprite; 
-  private personalMessageNative: Phaser.GameObjects.Sprite;
-  private personalMessageNativeText: Phaser.GameObjects.Text;
+  private shopNotificationText: Phaser.GameObjects.Text;
+  private shopNotificationBg: Phaser.GameObjects.Sprite; 
+  private personalMessageNotification: Phaser.GameObjects.Sprite;
+  private personalMessageNotificationText: Phaser.GameObjects.Text;
   private animPersonalMessage: Phaser.GameObjects.Sprite;
   
   public click = click.bind(this);
@@ -146,15 +147,15 @@ class Profile extends Phaser.Scene {
     
     this.createElements();
     this.setListeners();
-    this.setNativeAnim();
-    this.game.scene.keys[this.state.farm].updateProfileNative(true);
+    this.setNotificationAnim();
+    this.game.scene.keys[this.state.farm].updateProfileNotification(true);
   }
 
   public update(): void {
     this.updateEvent();
     this.updateUserDiamonds();
-    this.updateShopNative();
-    this.updatePersonalMessagesNative();
+    this.updateShopNotification();
+    this.updatePersonalMessagesNotification();
   }
 
   private createElements(): void {
@@ -235,9 +236,9 @@ class Profile extends Phaser.Scene {
       color: '#ffe5d7'
     }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
     
-    this.sheepNativeText = this.add.text(farmPosition.x + 110, farmPosition.y - 125, '', notificationTextStyle).setOrigin(0.5).setDepth(1).setVisible(false);
-    this.sheepNativeBg = this.add.sprite(this.sheepNativeText.x, this.sheepNativeText.y, 'notification-bg').setVisible(false);
-    this.animSheepSprite = this.add.sprite(this.sheepNativeBg.x, this.sheepNativeBg.y, 'notification-bg').setVisible(false);
+    this.sheepNotificationText = this.add.text(farmPosition.x + 110, farmPosition.y - 125, '', notificationTextStyle).setOrigin(0.5).setDepth(1).setVisible(false);
+    this.sheepNotificationBg = this.add.sprite(this.sheepNotificationText.x, this.sheepNotificationText.y, 'notification-bg').setVisible(false);
+    this.animSheepSprite = this.add.sprite(this.sheepNotificationBg.x, this.sheepNotificationBg.y, 'notification-bg').setVisible(false);
     this.click(farmSprite, (): void => {
       if (this.state.farm !== 'Sheep') {
         this.game.scene.keys[this.state.farm].autosave();
@@ -262,9 +263,9 @@ class Profile extends Phaser.Scene {
         font: '28px Shadow',
         color: '#ffe5d7'
       }).setOrigin(0.5, 0.5).setStroke('#522007', 5).setDepth(1);
-      this.chickenNativeText = this.add.text(farmPosition.x - 160, farmPosition.y - 125, '', notificationTextStyle).setOrigin(0.5).setDepth(3).setVisible(false);
-      this.chickenNativeBg = this.add.sprite(this.chickenNativeText.x, this.chickenNativeText.y, 'notification-bg').setDepth(1).setVisible(false);
-      this.animChickenSprite = this.add.sprite(this.chickenNativeBg.x, this.chickenNativeBg.y, 'notification-bg').setDepth(2).setVisible(false);
+      this.chickenNotificationText = this.add.text(farmPosition.x - 160, farmPosition.y - 125, '', notificationTextStyle).setOrigin(0.5).setDepth(3).setVisible(false);
+      this.chickenNotificationBg = this.add.sprite(this.chickenNotificationText.x, this.chickenNotificationText.y, 'notification-bg').setDepth(1).setVisible(false);
+      this.animChickenSprite = this.add.sprite(this.chickenNotificationBg.x, this.chickenNotificationBg.y, 'notification-bg').setDepth(2).setVisible(false);
 
       this.click(farmSprite, (): void => {
         if (this.state.farm !== 'Chicken') {
@@ -315,9 +316,9 @@ class Profile extends Phaser.Scene {
         color: '#ffe5d7'
       }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
 
-      this.cowNativeText = this.add.text(farmPosition.x + 280, farmPosition.y - 100, '', notificationTextStyle).setOrigin(0.5).setDepth(3).setVisible(false);
-      this.cowNativeBg = this.add.sprite(this.cowNativeText.x, this.cowNativeText.y, 'notification-bg').setVisible(false);
-      this.animCowSprite = this.add.sprite(this.cowNativeBg.x, this.cowNativeBg.y, 'notification-bg').setDepth(2).setVisible(false);
+      this.cowNotificationText = this.add.text(farmPosition.x + 280, farmPosition.y - 100, '', notificationTextStyle).setOrigin(0.5).setDepth(3).setVisible(false);
+      this.cowNotificationBg = this.add.sprite(this.cowNotificationText.x, this.cowNotificationText.y, 'notification-bg').setVisible(false);
+      this.animCowSprite = this.add.sprite(this.cowNotificationBg.x, this.cowNotificationBg.y, 'notification-bg').setDepth(2).setVisible(false);
 
       this.click(farmSprite, (): void => {
         if (this.state.farm !== 'Cow') {
@@ -378,9 +379,9 @@ class Profile extends Phaser.Scene {
         font: '28px Shadow',
         color: '#ffe5d7'
       }).setOrigin(0.5, 0.5).setStroke('#522007', 5).setDepth(1);
-      this.chickenNativeText = this.add.text(farmPosition.x - 160, farmPosition.y - 125, '', notificationTextStyle).setOrigin(0.5).setDepth(3).setVisible(false);
-      this.chickenNativeBg = this.add.sprite(this.chickenNativeText.x, this.chickenNativeText.y, 'notification-bg').setDepth(1).setVisible(false);
-      this.animChickenSprite = this.add.sprite(this.chickenNativeBg.x, this.chickenNativeBg.y, 'notification-bg').setDepth(2).setVisible(false);
+      this.chickenNotificationText = this.add.text(farmPosition.x - 160, farmPosition.y - 125, '', notificationTextStyle).setOrigin(0.5).setDepth(3).setVisible(false);
+      this.chickenNotificationBg = this.add.sprite(this.chickenNotificationText.x, this.chickenNotificationText.y, 'notification-bg').setDepth(1).setVisible(false);
+      this.animChickenSprite = this.add.sprite(this.chickenNotificationBg.x, this.chickenNotificationBg.y, 'notification-bg').setDepth(2).setVisible(false);
 
       this.click(farmSprite, (): void => {
         if (this.state.farm !== 'Chicken') {
@@ -445,9 +446,9 @@ class Profile extends Phaser.Scene {
         color: '#ffe5d7'
       }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
 
-      this.cowNativeText = this.add.text(farmPosition.x + 280, farmPosition.y - 100, '', notificationTextStyle).setOrigin(0.5).setDepth(3).setVisible(false);
-      this.cowNativeBg = this.add.sprite(this.cowNativeText.x, this.cowNativeText.y, 'notification-bg').setVisible(false);
-      this.animCowSprite = this.add.sprite(this.cowNativeBg.x, this.cowNativeBg.y, 'notification-bg').setDepth(2).setVisible(false);
+      this.cowNotificationText = this.add.text(farmPosition.x + 280, farmPosition.y - 100, '', notificationTextStyle).setOrigin(0.5).setDepth(3).setVisible(false);
+      this.cowNotificationBg = this.add.sprite(this.cowNotificationText.x, this.cowNotificationText.y, 'notification-bg').setVisible(false);
+      this.animCowSprite = this.add.sprite(this.cowNotificationBg.x, this.cowNotificationBg.y, 'notification-bg').setDepth(2).setVisible(false);
 
       this.click(farmSprite, (): void => {
         if (this.state.farm !== 'Cow') {
@@ -563,9 +564,9 @@ class Profile extends Phaser.Scene {
       },
     }).fillRoundedRect(this.eventStartText.getBounds().left - 25, this.eventStartText.getBounds().top - 20, this.eventStartText.width + 50, 60).setVisible(false);
 
-    this.unicornNativeText = this.add.text(farmPosition.x - 210, farmPosition.y - 80, '', notificationTextStyle).setOrigin(0.5).setDepth(3).setVisible(false);
-    this.unicornNativeBg = this.add.sprite(this.unicornNativeText.x, this.unicornNativeText.y, 'notification-bg').setVisible(false);
-    this.animUnicornSprite = this.add.sprite(this.unicornNativeBg.x, this.unicornNativeBg.y, 'notification-bg').setDepth(2).setVisible(false);
+    this.unicornNotificationText = this.add.text(farmPosition.x - 210, farmPosition.y - 80, '', notificationTextStyle).setOrigin(0.5).setDepth(3).setVisible(false);
+    this.unicornNotificationBg = this.add.sprite(this.unicornNotificationText.x, this.unicornNotificationText.y, 'notification-bg').setVisible(false);
+    this.animUnicornSprite = this.add.sprite(this.unicornNotificationBg.x, this.unicornNotificationBg.y, 'notification-bg').setDepth(2).setVisible(false);
 
     this.click(this.eventZone, (): void => {
       if (this.state.farm !== 'Unicorn') {
@@ -733,8 +734,8 @@ class Profile extends Phaser.Scene {
         this.scene.launch('Modal', this.state);
       });
     }
-    this.shopNativeBg = this.add.sprite(pos.x - 50, pos.y - 70, 'notification-bg').setVisible(false);
-    this.shopNativeText = this.add.text(pos.x - 50, pos.y - 70, '1', notificationTextStyle).setOrigin(0.5).setVisible(false);
+    this.shopNotificationBg = this.add.sprite(pos.x - 50, pos.y - 70, 'notification-bg').setVisible(false);
+    this.shopNotificationText = this.add.text(pos.x - 50, pos.y - 70, '1', notificationTextStyle).setOrigin(0.5).setVisible(false);
   }
 
   private createProfile(): void {
@@ -786,18 +787,18 @@ class Profile extends Phaser.Scene {
 
     const count: number = this.getPersonalTabCountNotification();
     this.animPersonalMessage = this.add.sprite(pos.x + 25, pos.y - 45, 'notification-bg').setVisible(count > 0);
-    this.personalMessageNative = this.add.sprite(pos.x + 25, pos.y - 45, 'notification-bg').setVisible(count > 0);
-    this.personalMessageNativeText = this.add.text(this.personalMessageNative.x, this.personalMessageNative.y, String(count), notificationTextStyle).setOrigin(0.5).setVisible(count > 0);
+    this.personalMessageNotification = this.add.sprite(pos.x + 25, pos.y - 45, 'notification-bg').setVisible(count > 0);
+    this.personalMessageNotificationText = this.add.text(this.personalMessageNotification.x, this.personalMessageNotification.y, String(count), notificationTextStyle).setOrigin(0.5).setVisible(count > 0);
   }
 
-  private updatePersonalMessagesNative(): void {
+  private updatePersonalMessagesNotification(): void {
     if (this.state.updatePersonalMessage) {
       this.state.updatePersonalMessage = false;
       const count: number = this.getPersonalTabCountNotification();
       this.animPersonalMessage?.setVisible(count > 0);
-      this.personalMessageNative?.setVisible(count > 0);
-      this.personalMessageNativeText?.setVisible(count > 0);
-      this.personalMessageNativeText?.setText(String(count));
+      this.personalMessageNotification?.setVisible(count > 0);
+      this.personalMessageNotificationText?.setVisible(count > 0);
+      this.personalMessageNotificationText?.setText(String(count));
     }
   }
 
@@ -946,8 +947,8 @@ class Profile extends Phaser.Scene {
     }
   }
   
-  private setNativeAnim(): void {
-    if (this.sheepNativeBg) {
+  private setNotificationAnim(): void {
+    if (this.sheepNotificationBg) {
       this.tweens.add({
         targets: [ this.animSheepSprite ],
         scale: { from: 1.05, to: 2 },
@@ -957,7 +958,7 @@ class Profile extends Phaser.Scene {
         repeatDelay: 1150,
       });
     }
-    if (this.chickenNativeBg) {
+    if (this.chickenNotificationBg) {
       this.tweens.add({
         targets: [ this.animChickenSprite ],
         scale: { from: 1.05, to: 2 },
@@ -967,7 +968,7 @@ class Profile extends Phaser.Scene {
         repeatDelay: 1150,
       });
     } 
-    if (this.cowNativeBg) {
+    if (this.cowNotificationBg) {
       this.tweens.add({
         targets: [ this.animCowSprite ],
         scale: { from: 1.05, to: 2 },
@@ -977,7 +978,7 @@ class Profile extends Phaser.Scene {
         repeatDelay: 1150,
       });
     }
-    if (this.unicornNativeBg) {
+    if (this.unicornNotificationBg) {
       this.tweens.add({
         targets: [ this.animUnicornSprite ],
         scale: { from: 1.05, to: 2 },
@@ -987,7 +988,7 @@ class Profile extends Phaser.Scene {
         repeatDelay: 1150,
       });
     }
-    if (this.personalMessageNative) {
+    if (this.personalMessageNotification) {
       this.tweens.add({
         targets: [ this.animPersonalMessage ],
         scale: { from: 1.05, to: 2 },
@@ -1003,18 +1004,18 @@ class Profile extends Phaser.Scene {
     const position: Iposition = { x: 70, y: 230 };
     if (this.state.userSheep.tutorial >= 100) {
       this.socialTaskBtn = this.add.sprite(position.x, position.y, `profile-social-btn-${this.state.platform}`);
-      this.socialTaskNativeText = this.add.text(position.x + this.socialTaskBtn.displayWidth / 2 - 10, position.y - this.socialTaskBtn.displayHeight / 2 + 5, '1', notificationTextStyle).setOrigin(0.5).setDepth(1);
-      this.socialTaskNative = this.add.sprite(this.socialTaskNativeText.x, this.socialTaskNativeText.y, 'notification-bg');
+      this.socialTaskNotificationText = this.add.text(position.x + this.socialTaskBtn.displayWidth / 2 - 10, position.y - this.socialTaskBtn.displayHeight / 2 + 5, '1', notificationTextStyle).setOrigin(0.5).setDepth(1);
+      this.socialTaskNotification = this.add.sprite(this.socialTaskNotificationText.x, this.socialTaskNotificationText.y, 'notification-bg');
       this.clickButton(this.socialTaskBtn, (): void => {
         const modal: Imodal = { type: 14 };
         this.state.modal = modal;
         this.scene.launch('Modal', this.state);
       });
-      this.updateSocialTaskNative();
+      this.updateSocialTaskNotification();
     }
   }
 
-  public updateSocialTaskNative(): void {
+  public updateSocialTaskNotification(): void {
     const check: boolean[] = [];
     for (const key in this.socialTasks) {
       check.push(this.socialTasks[key]);
@@ -1025,16 +1026,16 @@ class Profile extends Phaser.Scene {
     }
     if (this.state.userSheep.tutorial < 100 || this.state.shownSocialTaskWindow) count = 0;
     if (this.state.user.takenSocialAward) {
-      this.socialTaskNativeText.setVisible(false);
-      this.socialTaskNative.setVisible(false);
+      this.socialTaskNotificationText.setVisible(false);
+      this.socialTaskNotification.setVisible(false);
     } else {
       if (count <= 0) {
-        this.socialTaskNativeText.setVisible(false);
-        this.socialTaskNative.setVisible(false);
+        this.socialTaskNotificationText.setVisible(false);
+        this.socialTaskNotification.setVisible(false);
       } else if (count > 0) {
-        this.socialTaskNative.setVisible(true);
-        this.socialTaskNativeText.setVisible(true);
-        this.socialTaskNativeText.setText(String(count));
+        this.socialTaskNotification.setVisible(true);
+        this.socialTaskNotificationText.setVisible(true);
+        this.socialTaskNotificationText.setText(String(count));
       }
     }
   }
@@ -1061,17 +1062,17 @@ class Profile extends Phaser.Scene {
     }
   }
 
-  private updateShopNative(): void {
-    if (!this.checkFreeDiamondsNative() && this.shopNativeBg.visible) {
-      this.shopNativeBg.setVisible(false);
-      this.shopNativeText.setVisible(false);
-    } else if (this.checkFreeDiamondsNative() && !this.shopNativeBg.visible){
-      this.shopNativeBg.setVisible(true);
-      this.shopNativeText.setVisible(true);
+  private updateShopNotification(): void {
+    if (!this.checkFreeDiamondsNotification() && this.shopNotificationBg.visible) {
+      this.shopNotificationBg.setVisible(false);
+      this.shopNotificationText.setVisible(false);
+    } else if (this.checkFreeDiamondsNotification() && !this.shopNotificationBg.visible){
+      this.shopNotificationBg.setVisible(true);
+      this.shopNotificationText.setVisible(true);
     }
   }
 
-  private checkFreeDiamondsNative(): boolean {
+  private checkFreeDiamondsNotification(): boolean {
     return !this.state.user.takenFreeDiamonds && 
     (this.state.userSheep.tutorial >= 100 || 
     this.state.progress.chicken.part >= 1 || 

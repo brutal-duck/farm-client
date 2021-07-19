@@ -9,7 +9,7 @@ import {
   clickShopBtn,
   clickModalBtn,
 } from '../../general/clicks';
-import { updateNativeShop } from './../../general/boosts';
+import { updateNotificationShop } from './../../general/boosts';
 import {
   pulseBalance,
   increaseDiamonds,
@@ -55,10 +55,10 @@ class CowBars extends Phaser.Scene {
   public stepsDiamonds: number[] = [];
   public calendarText: Phaser.GameObjects.Text;
   public calendar: any;
-  public nativeShop: Phaser.GameObjects.Graphics;
-  public nativeShopCounter: Phaser.GameObjects.Text;
-  public mapNativeText: Phaser.GameObjects.Text;
-  public mapNativeBg: Phaser.GameObjects.Graphics;
+  public notificationShop: Phaser.GameObjects.Graphics;
+  public notificationShopCounter: Phaser.GameObjects.Text;
+  public mapNotificationText: Phaser.GameObjects.Text;
+  public mapNotificationBg: Phaser.GameObjects.Graphics;
   public starterpackIcon: Phaser.GameObjects.Image;
   public hints: Phaser.GameObjects.Group;
   public taskZone: Phaser.GameObjects.Zone;
@@ -70,7 +70,7 @@ class CowBars extends Phaser.Scene {
   public pulseBalance = pulseBalance.bind(this);
   public increaseDiamonds = increaseDiamonds.bind(this);
   public newbieAwardAnimation = newbieAwardAnimation.bind(this);
-  public updateNativeShop = updateNativeShop.bind(this);
+  public updateNotificationShop = updateNotificationShop.bind(this);
   public shortTime = shortTime.bind(this);
   public clickTaskBoard = clickTaskBoard.bind(this);
   public plusMoneyAnimation = plusMoneyAnimation.bind(this);
@@ -105,24 +105,24 @@ class CowBars extends Phaser.Scene {
     let map: Phaser.GameObjects.Image = this.add.image(510, this.height - 90, 'map-icon');
 
     // Нативка бустов
-    this.nativeShop = this.add.graphics()
+    this.notificationShop = this.add.graphics()
       .fillStyle(0xFF2400, 1)
       .fillCircle(shop.x + 35, shop.y - 50, 20)
       .setDepth(2)
       .setVisible(false);
-    this.nativeShopCounter = this.add.text(shop.x + 35, shop.y - 50, '!', {
+    this.notificationShopCounter = this.add.text(shop.x + 35, shop.y - 50, '!', {
       font: '32px Shadow',
       color: '#f3eae6'
     }).setDepth(3)
       .setOrigin(0.5, 0.5)
       .setVisible(false);
 
-    this.mapNativeBg = this.add.graphics()
+    this.mapNotificationBg = this.add.graphics()
       .fillStyle(0xFF2400, 1)
       .fillCircle(map.x + 35, map.y - 50, 20)
       .setDepth(2)
       .setVisible(false);
-    this.mapNativeText = this.add.text(map.x + 35, map.y - 50, '!', {
+    this.mapNotificationText = this.add.text(map.x + 35, map.y - 50, '!', {
       font: '32px Shadow',
       color: '#f3eae6'
     }).setDepth(3)
@@ -364,7 +364,7 @@ class CowBars extends Phaser.Scene {
     // актуальный статус кнопки покупки корова
     this.buyCowStatus();
 
-    this.updateNativeShop();
+    this.updateNotificationShop();
 
     if (this.starterpackIcon && this.state.user.starterpack) this.starterpackIcon?.destroy();
 

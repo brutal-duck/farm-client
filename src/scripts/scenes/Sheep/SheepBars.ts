@@ -9,7 +9,7 @@ import {
   shortTime,
   createTaskZone
 } from '../../general/basic';
-import { updateNativeShop } from './../../general/boosts';
+import { updateNotificationShop } from './../../general/boosts';
 
 import {
   pulseBalance,
@@ -65,10 +65,10 @@ class SheepBars extends Phaser.Scene {
   public offline: Phaser.GameObjects.Sprite;
   public calendarText: Phaser.GameObjects.Text;
   public calendar: any;
-  public nativeShop: Phaser.GameObjects.Graphics;
-  public nativeShopCounter: Phaser.GameObjects.Text;
-  public mapNativeText: Phaser.GameObjects.Text;
-  public mapNativeBg: Phaser.GameObjects.Graphics;
+  public notificationShop: Phaser.GameObjects.Graphics;
+  public notificationShopCounter: Phaser.GameObjects.Text;
+  public mapNotificationText: Phaser.GameObjects.Text;
+  public mapNotificationBg: Phaser.GameObjects.Graphics;
   public starterpackIcon: Phaser.GameObjects.Image;
   public hints: Phaser.GameObjects.Group;
   public taskZone: Phaser.GameObjects.Zone;
@@ -80,7 +80,7 @@ class SheepBars extends Phaser.Scene {
   public pulseBalance = pulseBalance.bind(this);
   public increaseDiamonds = increaseDiamonds.bind(this);
   public newbieAwardAnimation = newbieAwardAnimation.bind(this);
-  public updateNativeShop = updateNativeShop.bind(this);
+  public updateNotificationShop = updateNotificationShop.bind(this);
   public shortTime = shortTime.bind(this);
   public getCurrency = getCurrency.bind(this);
   public clickTaskBoard = clickTaskBoard.bind(this);
@@ -111,24 +111,24 @@ class SheepBars extends Phaser.Scene {
     this.map = this.add.image(510, this.height - 90, 'map-icon');
     
     // Нативка бустов
-    this.nativeShop = this.add.graphics()
+    this.notificationShop = this.add.graphics()
       .fillStyle(0xFF2400, 1)
       .fillCircle(this.shop.x + 35, this.shop.y - 50, 20)
       .setDepth(2)
       .setVisible(false);
-    this.nativeShopCounter = this.add.text(this.shop.x + 35, this.shop.y - 50, '!', {
+    this.notificationShopCounter = this.add.text(this.shop.x + 35, this.shop.y - 50, '!', {
       font: '32px Shadow',
       color: '#f3eae6'
     }).setDepth(3)
       .setOrigin(0.5, 0.5)
       .setVisible(false);
 
-    this.mapNativeBg = this.add.graphics()
+    this.mapNotificationBg = this.add.graphics()
       .fillStyle(0xFF2400, 1)
       .fillCircle(this.map.x + 35, this.map.y - 50, 20)
       .setDepth(2)
       .setVisible(false);
-    this.mapNativeText = this.add.text(this.map.x + 35, this.map.y - 50, '!', {
+    this.mapNotificationText = this.add.text(this.map.x + 35, this.map.y - 50, '!', {
       font: '32px Shadow',
       color: '#f3eae6'
     }).setDepth(3)
@@ -448,7 +448,7 @@ class SheepBars extends Phaser.Scene {
       }
     }
 
-    this.updateNativeShop();
+    this.updateNotificationShop();
 
     if (this.starterpackIcon && this.state.user.starterpack) this.starterpackIcon?.destroy();
     if (this.starterpackIcon && this.starterpackIcon.visible && this.state.userSheep.tutorial < 70 && this.state.userSheep?.part < 4) this.starterpackIcon.setVisible(false);

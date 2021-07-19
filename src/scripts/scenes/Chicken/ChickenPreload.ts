@@ -548,7 +548,7 @@ class ChickenPreload extends Phaser.Scene {
         this.state.farm = 'Chicken';
         this.loadData(response);
         this.state.offlineTime = response.data.progress.chickenOfflineTime;
-        this.state.nativeCounter = [0, 0, 0, 0];
+        this.state.notificationCounter = [0, 0, 0, 0];
       // } else {
       //   this.loadChicken(response.data.user.counter);
       // }

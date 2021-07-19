@@ -9,7 +9,7 @@ const LANGS: { [key: string]: string } = {
   addFavoritesOK: 'Добавь группу в закладки',
   subGroupVK: 'Подпишись на ЛС от группы',
   subGroupOK: 'Подпишись на ЛС от группы',
-  subNativeVK: 'Подпишись на уведомления',
+  subNotificationVK: 'Подпишись на уведомления',
   sendPostOK: 'Сделать репост в ленту',
   title: 'Социальные задания',
   subtitle: 'Получай ежедневную награду',
@@ -41,7 +41,7 @@ export default class SocialTasksWindow {
   private readonly award: number = 3;
   private joinGroupTask: Task;
   private subGroupTask: Task;
-  private subNativeTask: Task;
+  private subNotificationTask: Task;
   private addFavoritesTask: Task;
   private sendPostTask: Task;
   
@@ -52,7 +52,7 @@ export default class SocialTasksWindow {
   }
 
   private init(): void {
-    if (this.scene.scene.isActive('Profile')) this.scene.game.scene.keys['Profile'].updateSocialTaskNative();
+    if (this.scene.scene.isActive('Profile')) this.scene.game.scene.keys['Profile'].updateSocialTaskNotification();
     this.height = 0;
     if (this.scene.state.platform === 'vk') {
       this.socialTasks = this.scene.state.vkTask;
@@ -99,7 +99,7 @@ export default class SocialTasksWindow {
 
     if (!this.scene.state.user.takenSocialAward && !this.checkTask()) {
       this.scene.state.shownSocialTaskWindow = true;
-      if (this.scene.scene.isActive('Profile')) this.scene.game.scene.keys['Profile'].updateSocialTaskNative();
+      if (this.scene.scene.isActive('Profile')) this.scene.game.scene.keys['Profile'].updateSocialTaskNotification();
     }
     this.setTakeBtnState();
     this.createElements();
@@ -144,9 +144,9 @@ export default class SocialTasksWindow {
       } else if (key === 'subGroup') {
         this.subGroupTask = new Task(this, key, { x: centerX, y: y });
         this.subGroupTask.setState(this.socialTasks[key]);
-      } else if (key === 'subNative') {
-        this.subNativeTask = new Task(this, key, { x: centerX, y: y });
-        this.subNativeTask.setState(this.socialTasks[key]);
+      } else if (key === 'subNotification') {
+        this.subNotificationTask = new Task(this, key, { x: centerX, y: y });
+        this.subNotificationTask.setState(this.socialTasks[key]);
       } else if (key === 'addFavorites') {
         this.addFavoritesTask = new Task(this, key, { x: centerX, y: y });
         this.addFavoritesTask.setState(this.socialTasks[key]);
@@ -185,7 +185,7 @@ export default class SocialTasksWindow {
     
     this.scene.state.user.diamonds += this.award;
     this.scene.state.user.takenSocialAward = true;
-    if (this.scene.scene.isActive('Profile')) this.scene.game.scene.keys['Profile'].updateSocialTaskNative();
+    if (this.scene.scene.isActive('Profile')) this.scene.game.scene.keys['Profile'].updateSocialTaskNotification();
     this.scene.scene.stop();
     this.scene.game.scene.keys[this.scene.state.farm].autosave();
     this.scene.state.amplitude.logAmplitudeEvent('diamonds_get', {
@@ -245,8 +245,8 @@ class Task {
       case 'subGroup':
         this.subGroupCallback();
       break;
-      case 'subNative':
-        this.subNativeCallback();
+      case 'subNotification':
+        this.subNotificationCallback();
       break;
       case 'sendPost':
         this.sendPostCallback();
@@ -310,11 +310,11 @@ class Task {
     }
   }
 
-  private subNativeCallback(): void {
+  private subNotificationCallback(): void {
     if (this.scene.state.platform === 'vk') {
       bridge.send('VKWebAppAllowNotifications').then(res => {
         if (res.result) {
-          this.window.socialTasks.subNative = res.result;
+          this.window.socialTasks.subNotification = res.result;
         }
         this.setState(res.result);
         this.window.setTakeBtnState();

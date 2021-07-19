@@ -375,53 +375,53 @@ function cowFactoryProgress(): void {
   }
 }
 
-function updateNativeState(): void {
+function updateNotificationState(): void {
 
-  if (this.state.progress.sheep.collector <= 0 && this.state.sheepNativeCount[0] !== 1) this.state.sheepNativeCount[0] = 1;
-  else if (this.state.progress.sheep.collector > 0 && this.state.sheepNativeCount[0] !== 0) this.state.sheepNativeCount[0] = 0;
+  if (this.state.progress.sheep.collector <= 0 && this.state.sheepNotificationCount[0] !== 1) this.state.sheepNotificationCount[0] = 1;
+  else if (this.state.progress.sheep.collector > 0 && this.state.sheepNotificationCount[0] !== 0) this.state.sheepNotificationCount[0] = 0;
 
   const check: boolean = checkStorageSheep.bind(this)();
-  if (check && this.state.sheepNativeCount[1] !== 1) this.state.sheepNativeCount[1] = 1;
-  else if (!check && this.state.sheepNativeCount[1] !== 0) this.state.sheepNativeCount[1] = 0;
+  if (check && this.state.sheepNotificationCount[1] !== 1) this.state.sheepNotificationCount[1] = 1;
+  else if (!check && this.state.sheepNotificationCount[1] !== 0) this.state.sheepNotificationCount[1] = 0;
 
-  if (this.state.userSheep.part >= 3 && this.state.userSheep.diamondAnimalTime <= 0 && this.state.sheepNativeCount[2] !== 1) this.state.sheepNativeCount[2] = 1;
-  else if ((this.state.userSheep.part < 3 || this.state.userSheep.diamondAnimalTime > 0) && this.state.sheepNativeCount[2] !== 0) this.state.sheepNativeCount[2] = 0;
+  if (this.state.userSheep.part >= 3 && this.state.userSheep.diamondAnimalTime <= 0 && this.state.sheepNotificationCount[2] !== 1) this.state.sheepNotificationCount[2] = 1;
+  else if ((this.state.userSheep.part < 3 || this.state.userSheep.diamondAnimalTime > 0) && this.state.sheepNotificationCount[2] !== 0) this.state.sheepNotificationCount[2] = 0;
 
-  if (this.state.userSheep.takenHerdBoost <= 0 && this.state.userSheep.part >= 5 && this.state.sheepNativeCount[3] !== 1) this.state.sheepNativeCount[3] = 1;
-  else if (this.state.userSheep.takenHerdBoost > 0 && this.state.userSheep.part >= 5 && this.state.sheepNativeCount[3] !== 0) this.state.sheepNativeCount[3] = 0;
+  if (this.state.userSheep.takenHerdBoost <= 0 && this.state.userSheep.part >= 5 && this.state.sheepNotificationCount[3] !== 1) this.state.sheepNotificationCount[3] = 1;
+  else if (this.state.userSheep.takenHerdBoost > 0 && this.state.userSheep.part >= 5 && this.state.sheepNotificationCount[3] !== 0) this.state.sheepNotificationCount[3] = 0;
 
   if (this.state.userChicken.part > 0) {
-    if (this.state.progress.chicken.collector <= 0 && this.state.chickenNativeCount[0] !== 1) this.state.chickenNativeCount[0] = 1;
-    else if (this.state.progress.chicken.collector > 0 && this.state.chickenNativeCount[0] !== 0) this.state.chickenNativeCount[0] = 0;
+    if (this.state.progress.chicken.collector <= 0 && this.state.chickenNotificationCount[0] !== 1) this.state.chickenNotificationCount[0] = 1;
+    else if (this.state.progress.chicken.collector > 0 && this.state.chickenNotificationCount[0] !== 0) this.state.chickenNotificationCount[0] = 0;
   
     const check: boolean = checkStorageChicken.bind(this)();
   
-    if (check && this.state.chickenNativeCount[1] !== 1) this.state.chickenNativeCount[1] = 1;
-    else if (!check && this.state.chickenNativeCount[1] !== 0) this.state.chickenNativeCount[1] = 0;
-    if (this.state.userChicken.part >= 3 && this.state.userChicken.diamondAnimalTime <= 0 && this.state.chickenNativeCount[2] !== 1) this.state.chickenNativeCount[2] = 1;
-    else if ((this.state.userChicken.part < 3 || this.state.userChicken.diamondAnimalTime > 0) && this.state.chickenNativeCount[2] !== 0) this.state.chickenNativeCount[2] = 0;
-    if (this.state.userChicken.takenHerdBoost <= 0 && this.state.userChicken.part >= 5 && this.state.chickenNativeCount[3] !== 1) this.state.chickenNativeCount[3] = 1;
-    else if (this.state.userChicken.takenHerdBoost > 0 && this.state.userChicken.part >= 5 && this.state.chickenNativeCount[3] !== 0) this.state.chickenNativeCount[3] = 0;
+    if (check && this.state.chickenNotificationCount[1] !== 1) this.state.chickenNotificationCount[1] = 1;
+    else if (!check && this.state.chickenNotificationCount[1] !== 0) this.state.chickenNotificationCount[1] = 0;
+    if (this.state.userChicken.part >= 3 && this.state.userChicken.diamondAnimalTime <= 0 && this.state.chickenNotificationCount[2] !== 1) this.state.chickenNotificationCount[2] = 1;
+    else if ((this.state.userChicken.part < 3 || this.state.userChicken.diamondAnimalTime > 0) && this.state.chickenNotificationCount[2] !== 0) this.state.chickenNotificationCount[2] = 0;
+    if (this.state.userChicken.takenHerdBoost <= 0 && this.state.userChicken.part >= 5 && this.state.chickenNotificationCount[3] !== 1) this.state.chickenNotificationCount[3] = 1;
+    else if (this.state.userChicken.takenHerdBoost > 0 && this.state.userChicken.part >= 5 && this.state.chickenNotificationCount[3] !== 0) this.state.chickenNotificationCount[3] = 0;
   }
 
   if (this.state.userCow.part > 0) {
-    if (this.state.progress.cow.collector <= 0 && this.state.cowNativeCount[0] !== 1) this.state.cowNativeCount[0] = 1;
-    else if (this.state.progress.cow.collector > 0 && this.state.cowNativeCount[0] !== 0) this.state.cowNativeCount[0] = 0;
+    if (this.state.progress.cow.collector <= 0 && this.state.cowNotificationCount[0] !== 1) this.state.cowNotificationCount[0] = 1;
+    else if (this.state.progress.cow.collector > 0 && this.state.cowNotificationCount[0] !== 0) this.state.cowNotificationCount[0] = 0;
     
     const check: boolean = checkStorageCow.bind(this)();
     const checkFactory: boolean = this.state.userCow.tutorial >= 50 ? checkFactoryCow.bind(this)() : false;
 
-    if (check && this.state.cowNativeCount[1] !== 1) this.state.cowNativeCount[1] = 1;
-    else if (!check && this.state.cowNativeCount[1] !== 0) this.state.cowNativeCount[1] = 0;
+    if (check && this.state.cowNotificationCount[1] !== 1) this.state.cowNotificationCount[1] = 1;
+    else if (!check && this.state.cowNotificationCount[1] !== 0) this.state.cowNotificationCount[1] = 0;
     
-    if (this.state.userCow.part >= 3 && this.state.userCow.diamondAnimalTime <= 0 && this.state.cowNativeCount[2] !== 1) this.state.cowNativeCount[2] = 1;
-    else if ((this.state.userCow.part < 3 || this.state.userCow.diamondAnimalTime > 0) && this.state.cowNativeCount[2] !== 0) this.state.cowNativeCount[2] = 0;
+    if (this.state.userCow.part >= 3 && this.state.userCow.diamondAnimalTime <= 0 && this.state.cowNotificationCount[2] !== 1) this.state.cowNotificationCount[2] = 1;
+    else if ((this.state.userCow.part < 3 || this.state.userCow.diamondAnimalTime > 0) && this.state.cowNotificationCount[2] !== 0) this.state.cowNotificationCount[2] = 0;
 
-    if (this.state.userCow.takenHerdBoost <= 0 && this.state.userCow.part >= 5 && this.state.cowNativeCount[3] !== 1) this.state.cowNativeCount[3] = 1;
-    else if (this.state.userCow.takenHerdBoost > 0 && this.state.userCow.part >= 5 && this.state.cowNativeCount[3] !== 0) this.state.cowNativeCount[3] = 0;
+    if (this.state.userCow.takenHerdBoost <= 0 && this.state.userCow.part >= 5 && this.state.cowNotificationCount[3] !== 1) this.state.cowNotificationCount[3] = 1;
+    else if (this.state.userCow.takenHerdBoost > 0 && this.state.userCow.part >= 5 && this.state.cowNotificationCount[3] !== 0) this.state.cowNotificationCount[3] = 0;
 
-    if (checkFactory && this.state.cowNativeCount[4] !== 1) this.state.cowNativeCount[4] = 1;
-    else if (!checkFactory && this.state.cowNativeCount[4] !== 0) this.state.cowNativeCount[4] = 0;
+    if (checkFactory && this.state.cowNotificationCount[4] !== 1) this.state.cowNotificationCount[4] = 1;
+    else if (!checkFactory && this.state.cowNotificationCount[4] !== 0) this.state.cowNotificationCount[4] = 0;
   }
 
   if (
@@ -435,84 +435,84 @@ function updateNativeState(): void {
     this.state.progress.chicken.part >= 1 ||
     this.state.progress.cow.part >= 1)
   ) {
-    if (this.state.userUnicorn.collector <= 0 && this.state.unicornNativeCount[0] !== 1) this.state.unicornNativeCount[0] = 1;
-    else if (this.state.userUnicorn.collector > 0 && this.state.unicornNativeCount[0] !== 0) this.state.unicornNativeCount[0] = 0;
+    if (this.state.userUnicorn.collector <= 0 && this.state.unicornNotificationCount[0] !== 1) this.state.unicornNotificationCount[0] = 1;
+    else if (this.state.userUnicorn.collector > 0 && this.state.unicornNotificationCount[0] !== 0) this.state.unicornNotificationCount[0] = 0;
   }
 
 }
 
-function updateProfileNative(load: boolean = false): void {
-  updateNativeState.bind(this)();
-  updateMapNative.bind(this)();
+function updateProfileNotification(load: boolean = false): void {
+  updateNotificationState.bind(this)();
+  updateMapNotification.bind(this)();
   if (!this.scene.isActive('Profile') && !load) return;
 
   const Profile: Profile = this.game.scene.keys['Profile'];
-  if (Profile.sheepNativeText) {
-    const count: number = this.state.sheepNativeCount.reduce((prev, cur) => prev += cur);
-    if (Profile.sheepNativeText.text !== String(count)) Profile.sheepNativeText.setText(String(count));
+  if (Profile.sheepNotificationText) {
+    const count: number = this.state.sheepNotificationCount.reduce((prev, cur) => prev += cur);
+    if (Profile.sheepNotificationText.text !== String(count)) Profile.sheepNotificationText.setText(String(count));
     
-    if (count <= 0 && Profile.sheepNativeText.visible) {
-      Profile.sheepNativeText.setVisible(false);
-      Profile.sheepNativeBg.setVisible(false);
+    if (count <= 0 && Profile.sheepNotificationText.visible) {
+      Profile.sheepNotificationText.setVisible(false);
+      Profile.sheepNotificationBg.setVisible(false);
       Profile.animSheepSprite.setVisible(false);
-    } else if (count > 0 && !Profile.sheepNativeText.visible) {
-      Profile.sheepNativeText.setVisible(true);
-      Profile.sheepNativeBg.setVisible(true);
+    } else if (count > 0 && !Profile.sheepNotificationText.visible) {
+      Profile.sheepNotificationText.setVisible(true);
+      Profile.sheepNotificationBg.setVisible(true);
       Profile.animSheepSprite.setVisible(true);
     }
   }
 
-  if (Profile.chickenNativeText) {
-    const count: number = this.state.chickenNativeCount.reduce((prev, cur) => prev += cur);
-    if (Profile.chickenNativeText.text !== String(count)) Profile.chickenNativeText.setText(String(count));
+  if (Profile.chickenNotificationText) {
+    const count: number = this.state.chickenNotificationCount.reduce((prev, cur) => prev += cur);
+    if (Profile.chickenNotificationText.text !== String(count)) Profile.chickenNotificationText.setText(String(count));
 
-    if (count <= 0 && Profile.chickenNativeText.visible) {
-      Profile.chickenNativeText.setVisible(false);
-      Profile.chickenNativeBg.setVisible(false);
+    if (count <= 0 && Profile.chickenNotificationText.visible) {
+      Profile.chickenNotificationText.setVisible(false);
+      Profile.chickenNotificationBg.setVisible(false);
       Profile.animChickenSprite.setVisible(false);
-    } else if (count > 0 && !Profile.chickenNativeText.visible) {
-      Profile.chickenNativeText.setVisible(true);
-      Profile.chickenNativeBg.setVisible(true);
+    } else if (count > 0 && !Profile.chickenNotificationText.visible) {
+      Profile.chickenNotificationText.setVisible(true);
+      Profile.chickenNotificationBg.setVisible(true);
       Profile.animChickenSprite.setVisible(true);
     }
   }
   
-  if (Profile.cowNativeText) {
-    const count: number = this.state.cowNativeCount.reduce((prev, cur) => prev += cur);
-    if (Profile.cowNativeText.text !== String(count)) Profile.cowNativeText.setText(String(count));
+  if (Profile.cowNotificationText) {
+    const count: number = this.state.cowNotificationCount.reduce((prev, cur) => prev += cur);
+    if (Profile.cowNotificationText.text !== String(count)) Profile.cowNotificationText.setText(String(count));
     
-    if (count <= 0 && Profile.cowNativeText.visible) {
-      Profile.cowNativeText.setVisible(false);
-      Profile.cowNativeBg.setVisible(false);
+    if (count <= 0 && Profile.cowNotificationText.visible) {
+      Profile.cowNotificationText.setVisible(false);
+      Profile.cowNotificationBg.setVisible(false);
       Profile.animCowSprite.setVisible(false);
-    } else if (count > 0 && !Profile.cowNativeText.visible) {
-      Profile.cowNativeText.setVisible(true);
-      Profile.cowNativeBg.setVisible(true);
+    } else if (count > 0 && !Profile.cowNotificationText.visible) {
+      Profile.cowNotificationText.setVisible(true);
+      Profile.cowNotificationBg.setVisible(true);
       Profile.animCowSprite.setVisible(true);
     }
   }
 
-  if (Profile.unicornNativeText) {
-    const count: number = this.state.unicornNativeCount.reduce((prev, cur) => prev += cur);
-    if (Profile.unicornNativeText.text !== String(count)) Profile.unicornNativeText.setText(String(count));
+  if (Profile.unicornNotificationText) {
+    const count: number = this.state.unicornNotificationCount.reduce((prev, cur) => prev += cur);
+    if (Profile.unicornNotificationText.text !== String(count)) Profile.unicornNotificationText.setText(String(count));
     
-    if (count <= 0 && Profile.unicornNativeText.visible) {
-      Profile.unicornNativeText.setVisible(false);
-      Profile.unicornNativeBg.setVisible(false);
+    if (count <= 0 && Profile.unicornNotificationText.visible) {
+      Profile.unicornNotificationText.setVisible(false);
+      Profile.unicornNotificationBg.setVisible(false);
       Profile.animUnicornSprite.setVisible(false);
-    } else if (count > 0 && !Profile.unicornNativeText.visible) {
-      Profile.unicornNativeText.setVisible(true);
-      Profile.unicornNativeBg.setVisible(true);
+    } else if (count > 0 && !Profile.unicornNotificationText.visible) {
+      Profile.unicornNotificationText.setVisible(true);
+      Profile.unicornNotificationBg.setVisible(true);
       Profile.animUnicornSprite.setVisible(true);
     }
   }
 }
 
-function updateMapNative(): void {
-  const sheepCount: number = this.state.sheepNativeCount.reduce((prev, cur) => prev += cur);
-  const chickenCount: number = this.state.chickenNativeCount.reduce((prev, cur) => prev += cur);
-  const cowCount: number = this.state.cowNativeCount.reduce((prev, cur) => prev += cur);
-  const unicornCount: number = this.state.unicornNativeCount.reduce((prev, cur) => prev += cur);
+function updateMapNotification(): void {
+  const sheepCount: number = this.state.sheepNotificationCount.reduce((prev, cur) => prev += cur);
+  const chickenCount: number = this.state.chickenNotificationCount.reduce((prev, cur) => prev += cur);
+  const cowCount: number = this.state.cowNotificationCount.reduce((prev, cur) => prev += cur);
+  const unicornCount: number = this.state.unicornNotificationCount.reduce((prev, cur) => prev += cur);
 
   const checkSocial: boolean[] = [];
   const socialTask: IsociaTasks = this.state.platform === 'vk' ? this.state.vkTask :
@@ -532,8 +532,8 @@ function updateMapNative(): void {
   this.state.farm === 'Cow' ? sheepCount + chickenCount + unicornCount + socialCount :
   this.state.farm === 'Unicorn' && this.state.userUnicorn.tutorial >= 80 ? sheepCount + chickenCount + cowCount + socialCount : 0;
 
-  const text: Phaser.GameObjects.Text = this.game.scene.keys[`${this.state.farm}Bars`].mapNativeText;
-  const bg: Phaser.GameObjects.Graphics = this.game.scene.keys[`${this.state.farm}Bars`].mapNativeBg;
+  const text: Phaser.GameObjects.Text = this.game.scene.keys[`${this.state.farm}Bars`].mapNotificationText;
+  const bg: Phaser.GameObjects.Graphics = this.game.scene.keys[`${this.state.farm}Bars`].mapNotificationBg;
   if (text?.text !== String(count)) text?.setText(String(count));
 
   if (count <= 0 && text?.visible) {
@@ -707,7 +707,7 @@ export {
   chickenCollectorProgress,
   cowCollectorProgress,
   cowFactoryProgress,
-  updateProfileNative,
+  updateProfileNotification,
   intervalPorgressCollectorTime,
   intervalCollectorTutorial,
   showFeedBoostSpeechBubble,

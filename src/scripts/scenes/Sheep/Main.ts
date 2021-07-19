@@ -131,7 +131,7 @@ import {
   cowCollectorProgress,
   cowFactoryProgress,
   cowIntervalProgress,
-  updateProfileNative,
+  updateProfileNotification,
   intervalPorgressCollectorTime,
   intervalCollectorTutorial,
   showFeedBoostSpeechBubble,
@@ -304,7 +304,7 @@ class Sheep extends Phaser.Scene {
   public cowCollectorProgress = cowCollectorProgress.bind(this);
   public cowFactoryProgress = cowFactoryProgress.bind(this);
   public cowIntervalProgress = cowIntervalProgress.bind(this);
-  public updateProfileNative = updateProfileNative.bind(this);
+  public updateProfileNotification = updateProfileNotification.bind(this);
   public intervalCollectorTutorial = intervalCollectorTutorial.bind(this);
   public showFeedBoostSpeechBubble = showFeedBoostSpeechBubble.bind(this);
   public progressTerritoryCooldown = progressTerritoryCooldown.bind(this);

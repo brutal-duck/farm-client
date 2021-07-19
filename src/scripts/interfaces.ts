@@ -733,7 +733,7 @@ interface IsociaTasks {
   joinGroup?: boolean;
   addFavorites?: boolean;
   subGroup?: boolean;
-  subNative?: boolean;
+  subNotification?: boolean;
   sendPost?:boolean;
 }
 interface Istate {
@@ -745,7 +745,7 @@ interface Istate {
   herdBoostTime: number;
   herdBoostDelay: number;
   herdBoostAnimals: number[];
-  nativeCounter: number[];
+  notificationCounter: number[];
   timeToNewDay: number;
   sheepSettings: IsheepSettings;
   chickenSettings: IchickenSettings;
@@ -809,10 +809,10 @@ interface Istate {
   stock: string;
   starterpack: boolean;
   fortuneData: IfortuneData;
-  sheepNativeCount: number[];
-  chickenNativeCount: number[];
-  cowNativeCount: number[];
-  unicornNativeCount: number[];
+  sheepNotificationCount: number[];
+  chickenNotificationCount: number[];
+  cowNotificationCount: number[];
+  unicornNotificationCount: number[];
   storageMultiply: number;
   vkTask: IsociaTasks;
   okTask: IsociaTasks;

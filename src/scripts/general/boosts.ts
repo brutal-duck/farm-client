@@ -56,24 +56,24 @@ function createBoostAnimal(): void {
   this.state.herdBoostAnimals = [];
 }
 
-function updateNativeShop(): void {
+function updateNotificationShop(): void {
   let counter: number = 0;
-  for (let i = 0; i < this.state.nativeCounter.length; i++) {
-    counter += this.state.nativeCounter[i];
+  for (let i = 0; i < this.state.notificationCounter.length; i++) {
+    counter += this.state.notificationCounter[i];
   }
 
   if ((this.scene.isActive('Modal') ||
   this.scene.isActive('Tutorial')) &&
-  this.game.scene.keys[`${this.state.farm}Bars`].nativeShop.visible ||
+  this.game.scene.keys[`${this.state.farm}Bars`].notificationShop.visible ||
   counter <= 0) {
-    this.game.scene.keys[`${this.state.farm}Bars`].nativeShop.setVisible(false);
-    this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setVisible(false);
+    this.game.scene.keys[`${this.state.farm}Bars`].notificationShop.setVisible(false);
+    this.game.scene.keys[`${this.state.farm}Bars`].notificationShopCounter.setVisible(false);
   } else if (!this.scene.isActive('Modal') &&
   !this.scene.isActive('Tutorial') &&
-  !this.game.scene.keys[`${this.state.farm}Bars`].nativeShop.visible &&
+  !this.game.scene.keys[`${this.state.farm}Bars`].notificationShop.visible &&
   counter > 0) {
-    this.game.scene.keys[`${this.state.farm}Bars`].nativeShop.setVisible(true);
-    this.game.scene.keys[`${this.state.farm}Bars`].nativeShopCounter.setVisible(true);
+    this.game.scene.keys[`${this.state.farm}Bars`].notificationShop.setVisible(true);
+    this.game.scene.keys[`${this.state.farm}Bars`].notificationShopCounter.setVisible(true);
   }
 }
 
@@ -406,7 +406,7 @@ function buyCollector(type: number): void {
 }
 export {
   createBoostAnimal,
-  updateNativeShop,
+  updateNotificationShop,
   improveCollector,
   freeCollector,
   buyCollector,
