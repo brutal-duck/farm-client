@@ -67,8 +67,6 @@ class SheepBars extends Phaser.Scene {
   public calendarText: Phaser.GameObjects.Text;
   public calendar: any;
   public shopNotificator: Notificator;
-  public notificationShop: Phaser.GameObjects.Graphics;
-  public notificationShopCounter: Phaser.GameObjects.Text;
   public mapNotificator: Notificator;
   public starterpackIcon: Phaser.GameObjects.Image;
   public hints: Phaser.GameObjects.Group;

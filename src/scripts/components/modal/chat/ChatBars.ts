@@ -26,8 +26,6 @@ export default class ChatBars {
   private bgNamePlate: Phaser.GameObjects.TileSprite;
   private name: Phaser.GameObjects.Text;
   private arrow: Phaser.GameObjects.Sprite;
-  private personalTabNotification: Phaser.GameObjects.Sprite;
-  private personalTabNotificationText: Phaser.GameObjects.Text;
   private personalTabNotificator: Notificator;
 
   constructor(scene: Modal) {
@@ -125,11 +123,6 @@ export default class ChatBars {
       strokeThickness: 3,
       wordWrap: { width: 100 },
     };
-    const notificationTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
-      fontFamily: 'Shadow',
-      fontSize: '24px',
-      color: '#ffffff'
-    };
 
     const bgGeom: Phaser.Geom.Rectangle = this.bg.getBounds();
     const maxWidth: number = 440;
@@ -192,10 +185,10 @@ export default class ChatBars {
   }
   
   public update(): void {
-    if (this.scene.state.updatePersonalMessage) {
+    if (this.scene.state.updatePersonalMessage && this.personalTabNotificator) {
       this.scene.state.updatePersonalMessage = false;
       const count: number = this.getPersonalTabCountNotification();
-      this.personalTabNotificator.setCount(count);
+      this.personalTabNotificator?.setCount(count);
     }
   }
 

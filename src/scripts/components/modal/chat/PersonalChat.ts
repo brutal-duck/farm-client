@@ -20,6 +20,7 @@ export default class PersonalChat {
     this.msg = [];
     this.textWrap = 340;
     this.userMsg = this.scene.state.user.personalMessages.find(el => el.userId === this.scene.state.modal.chatUserId);
+    this.scene.state.updatePersonalMessage = true;
   }
 
   public update(): void {

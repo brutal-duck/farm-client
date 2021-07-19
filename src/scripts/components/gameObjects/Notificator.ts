@@ -47,16 +47,17 @@ export default class Notificator {
     this.text.setText(String(text));
   }
 
-  public setVisible(visible: boolean): void {
+  public setVisible(visible: boolean): Notificator {
     if (this.visible !== visible) {
       this.visible = visible;
       this.animBg.setVisible(this.visible);
       this.bg.setVisible(this.visible);
       this.text.setVisible(this.visible);
     }
+    return this;
   }
 
-  public setCount(count: number): void {
+  public setCount(count: number): Notificator {
     if (count !== this.count) {
       this.count = count;
       if (this.count <= 0) {
@@ -66,11 +67,25 @@ export default class Notificator {
         this.setVisible(true);
       }
     }
+    return this;
   }
 
-  public setDepth(depth: number): void {
+  public setDepth(depth: number): Notificator {
     this.animBg.setDepth(depth);
     this.bg.setDepth(depth);
     this.text.setDepth(depth);
+    return this;
+  }
+
+  get y(): number {
+    return this.bg.y;
+  }
+  
+  get x(): number {
+    return this.bg.x;
+  }
+
+  get children(): Array<Phaser.GameObjects.Text | Phaser.GameObjects.Sprite> {
+    return [ this.bg, this.text, this.animBg ];
   }
 }

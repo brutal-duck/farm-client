@@ -62,7 +62,7 @@ function updateNotificationShop(): void {
     counter += this.state.shopNotificationCount[i];
   }
 
-  if (this.scene.isActive('Modal') || this.scene.isActive('Tutorial')) {
+  if (this.scene.isActive('Modal') || this.scene.isActive('Tutorial') || this.state.farm === 'Sheep' && this.state.userSheep.tutorial < 100) {
     this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.setVisible(false);
   } else {
     this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.setVisible(true);

@@ -22,6 +22,7 @@ import TaskBoard from '../../components/gameObjects/TaskBoard';
 import Collector from '../../components/gameObjects/Collector';
 import BarsMenu from '../../components/gameObjects/BarsMenu';
 import SpeechBubble from './../../components/animations/SpeechBuble';
+import Notificator from './../../components/gameObjects/Notificator';
 
 class ChickenBars extends Phaser.Scene {
   constructor() {
@@ -56,10 +57,8 @@ class ChickenBars extends Phaser.Scene {
   public stepsDiamonds: number[] = [];
   public calendarText: Phaser.GameObjects.Text;
   public calendar: any;
-  public notificationShop: Phaser.GameObjects.Graphics;
-  public notificationShopCounter: Phaser.GameObjects.Text;
-  public mapNotificationText: Phaser.GameObjects.Text;
-  public mapNotificationBg: Phaser.GameObjects.Graphics;
+  public shopNotificator: Notificator;
+  public mapNotificator: Notificator;
   public starterpackIcon: Phaser.GameObjects.Image;
   public hints: Phaser.GameObjects.Group;
   public taskZone: Phaser.GameObjects.Zone;
@@ -106,30 +105,12 @@ class ChickenBars extends Phaser.Scene {
     let collector: Phaser.GameObjects.Image = this.add.image(230, this.height - 90, 'egg-collector');
     let shop: Phaser.GameObjects.Image = this.add.image(370, this.height - 90, 'shop');
     let map: Phaser.GameObjects.Image = this.add.image(510, this.height - 90, 'map-icon');
-    
-    this.notificationShop = this.add.graphics()
-      .fillStyle(0xFF2400, 1)
-      .fillCircle(shop.x + 35, shop.y - 50, 20)
-      .setDepth(2)
-      .setVisible(false);
-    this.notificationShopCounter = this.add.text(shop.x + 35, shop.y - 50, '!', {
-      font: '32px Shadow',
-      color: '#f3eae6'
-    }).setDepth(3)
-      .setOrigin(0.5, 0.5)
-      .setVisible(false);
 
-    this.mapNotificationBg = this.add.graphics()
-      .fillStyle(0xFF2400, 1)
-      .fillCircle(map.x + 35, map.y - 50, 20)
-      .setDepth(2)
-      .setVisible(false);
-    this.mapNotificationText = this.add.text(map.x + 35, map.y - 50, '!', {
-      font: '32px Shadow',
-      color: '#f3eae6'
-    }).setDepth(3)
-      .setOrigin(0.5, 0.5)
-      .setVisible(false);
+    this.mapNotificator = new Notificator(this, { x: map.x + 35, y: map.y - 50 });
+    this.mapNotificator.setCount(0);
+
+    this.shopNotificator = new Notificator(this, { x: shop.x + 35, y: shop.y - 50 });
+    this.shopNotificator.setCount(0);
     // быстрая покупка курицы
     this.clickButton(this.chickenBuy, (): void => {
       this.game.scene.keys[this.state.farm].buyChicken(this.game.scene.keys[this.state.farm].maxBreedForBuy());
