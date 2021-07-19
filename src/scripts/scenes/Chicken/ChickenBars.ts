@@ -22,6 +22,7 @@ import TaskBoard from '../../components/gameObjects/TaskBoard';
 import Collector from '../../components/gameObjects/Collector';
 import BarsMenu from '../../components/gameObjects/BarsMenu';
 import SpeechBubble from './../../components/animations/SpeechBuble';
+import RoundedProgress from '../../components/animations/RoundedProgress';
 
 class ChickenBars extends Phaser.Scene {
   constructor() {
@@ -45,8 +46,8 @@ class ChickenBars extends Phaser.Scene {
   public grassBg: Phaser.GameObjects.Image;
   public textWater: any;
   public textGrass: any;
-  public waterBar: Phaser.GameObjects.Graphics;
-  public grassBar: Phaser.GameObjects.Graphics;
+  public waterBar: RoundedProgress;
+  public grassBar: RoundedProgress;
   public waterProblem: boolean;
   public grassProblem: boolean;
   public timeout: Phaser.Time.TimerEvent; // таймаут пульсации алмазов
@@ -239,8 +240,10 @@ class ChickenBars extends Phaser.Scene {
     }).setDepth(2).setOrigin(0.5, 0.5);
     this.textWater.pulseTimer = 0;
     this.textGrass.pulseTimer = 0;
-    this.waterBar = this.add.graphics();
-    this.grassBar = this.add.graphics();
+    this.grassBar = new RoundedProgress(this, 170, 47, 0.9);
+    this.waterBar = new RoundedProgress(this, 70, 47, 0.9);
+    this.waterBg = this.add.image(70, 10, 'resource-enough').setOrigin(0.5, 0).setDepth(1);
+    this.grassBg = this.add.image(170, 10, 'resource-enough').setOrigin(0.5, 0).setDepth(1);
     this.setBalanceBars(this.game.scene.keys[this.state.farm].balance());
 
     // круглый бар собирателя
@@ -439,13 +442,7 @@ class ChickenBars extends Phaser.Scene {
     if (this.textWater.text !== waterPercent) {
 
       this.textWater.setText(waterPercent);
-      let end: number = balance.waterPercent * (6.3 / 100) + -1.66;
-      this.waterBar.clear();
-      this.waterBar.lineStyle(8, waterColor, 1);
-      this.waterBar.beginPath();
-      this.waterBar.arc(70, 47, 32, -1.66, end);
-      this.waterBar.strokePath();
-      this.waterBar.strokePath().setDepth(3);
+      this.waterBar.setPercent(balance.waterPercent).setTint(waterColor);
       
     }
 
@@ -462,14 +459,8 @@ class ChickenBars extends Phaser.Scene {
 
     if (this.textGrass.text !== grassPercent) {
 
-      this.textGrass.setText(grassPercent);
-      let end: number = balance.grassPercent * (6.3 / 100) + -1.66;
-      this.grassBar.clear();
-      this.grassBar.lineStyle(8, grassColor, 1);
-      this.grassBar.beginPath();
-      this.grassBar.arc(170, 47, 32, -1.66, end);
-      this.grassBar.strokePath();
-      this.grassBar.strokePath().setDepth(3);
+      this.textWater.setText(grassPercent);
+      this.waterBar.setPercent(balance.grassPercent).setTint(grassColor);
 
     }
     

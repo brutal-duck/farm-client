@@ -1,5 +1,6 @@
 import { shortNum } from "../../general/basic";
 import Modal from "../../scenes/Modal/Modal";
+import RoundedProgress from "../animations/RoundedProgress";
 
 export default class TasksWindow {
   public scene: Modal;
@@ -229,28 +230,11 @@ export default class TasksWindow {
           color: '#944000'
         }).setDepth(1).setOrigin(0.5).setShadow(1, 1, 'rgba(0, 0, 0, 0.5)', 2);
         
-        if (doneText.width > 120) doneText.setOrigin(0, 0.5).setX(icon.getLeftCenter().x - 18).setFontSize(24)
+        if (doneText.width > 120) doneText.setOrigin(0, 0.5).setX(icon.getLeftCenter().x - 18).setFontSize(24);
 
-        let progress: number = (100 / count * tasks[i].task.progress) * (6.3 / 100) - Math.PI / 2;
-
-        this.scene.add.graphics()
-          .clear()
-          // Внутренний круг
-          .lineStyle(4, 0xc09245, 1)
-          .beginPath()
-          .arc(194, taskCenterY - 6, 40, 0, Math.PI * 2)
-          .strokePath()
-          // Прогресс
-          .lineStyle(8, 0x70399f, 1)
-          .beginPath()
-          .arc(194, taskCenterY - 6, 46, Math.PI / -2, progress)
-          .strokePath()
-          // Внешний круг
-          .lineStyle(4, 0xc09245, 1)
-          .beginPath()
-          .arc(194, taskCenterY - 6, 51, 0, Math.PI * 2)
-          .strokePath()
-          .setDepth(3);
+        const progress = new RoundedProgress(this.scene, 194, taskCenterY - 6, 1.2).setPercent(Math.round(100 / count * tasks[i].task.progress)).setTint(0x70399f)
+        this.scene.add.sprite(progress.rightSegment.x, progress.rightSegment.y, 'circle-outline').setScale(0.95).setTint(0xc09245).setDepth(progress.rightSegment.depth + 1);
+        this.scene.add.sprite(progress.rightSegment.x, progress.rightSegment.y, 'circle-outline').setScale(1.2).setTint(0xc09245).setDepth(progress.rightSegment.depth + 1);
 
       }
     }
