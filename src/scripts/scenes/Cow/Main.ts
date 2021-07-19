@@ -271,8 +271,6 @@ class Cow extends Phaser.Scene {
 
 
   public create(): void {
-
-    // new RoundedProgress(this, this.cameras.main.centerX, this.cameras.main.centerY)
   
     // сторим мир
     this.world();

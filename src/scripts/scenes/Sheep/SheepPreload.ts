@@ -330,6 +330,8 @@ const improveCollector: string = require("./../../../assets/images/modal/improve
 const tasksUncomplete: string = require("./../../../assets/images/modal/tasks-uncomplete.png");
 const tasksBarNs: string = require("./../../../assets/images/modal/tasks-bar-ns.png");
 const notificationBg: string = require('./../../../assets/images/notification.png');
+const roundedBarSegment: string = require("./../../../assets/images/rounded-bar-segment.png");
+const circleOutline: string = require("./../../../assets/images/circle-outline.png");
 
 class SheepPreload extends Phaser.Scene {
 
@@ -698,6 +700,8 @@ class SheepPreload extends Phaser.Scene {
     this.load.image('tasks-uncomplete-rend', tasksUncomplete);
     this.load.image('tasks-bar-ns', tasksBarNs);
     this.load.image('notification-bg', notificationBg);
+    this.load.image('rounded-segment', roundedBarSegment);
+    this.load.image('circle-outline', circleOutline);
   }
   
   

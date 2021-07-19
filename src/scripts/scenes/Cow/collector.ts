@@ -6,7 +6,7 @@ function setCollector(): void {
 
   let config: Phaser.Types.Time.TimerEventConfig = {
 
-    delay: delay,
+    delay,
     callback: (): void => {
       if (this.state.userCow.collector > 0) {
         const storages: Territory[] = this.territories.children.entries.filter((el: Territory) => el.territoryType === 5);

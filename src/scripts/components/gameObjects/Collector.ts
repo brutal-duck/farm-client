@@ -3,6 +3,12 @@ import SheepBars from '../../scenes/Sheep/SheepBars';
 import ChickenBars from '../../scenes/Chicken/ChickenBars';
 import UnicornBars from '../../scenes/Event/Unicorns/UnicornBars';
 import CowBars from '../../scenes/Cow/CowBars';
+import RoundedProgress from "../animations/RoundedProgress";
+import Sheep from "../../scenes/Sheep/Main";
+import Chicken from "../../scenes/Chicken/Main";
+import Cow from "../../scenes/Cow/Main";
+import Unicorn from "../../scenes/Event/Unicorns/Main";
+import Modal from "../../scenes/Modal/Modal";
 
 /**
   *  Круговой бар собирателя    
@@ -15,20 +21,20 @@ import CowBars from '../../scenes/Cow/CowBars';
 */
 export default class Collector extends Phaser.GameObjects.Text {
 
-  public graphicX: number;
-  public graphicY: number;
+  public progressX: number;
+  public progressY: number;
   public radius: number;
   public startAngle: number;
   public endAngle: number;
   public color: number;
   public weight: number;
-  public collector: Phaser.GameObjects.Graphics;
   public scene: SheepBars | ChickenBars | UnicornBars | CowBars;
   public percent: number;
   public bubble: Phaser.GameObjects.Graphics;
   public pulseTimer: number = 0;
   public farmData: IuserSheep | IuserEvent | IuserChicken | IuserCow;
   private time: number;
+  private progress: RoundedProgress;
 
   constructor(
     scene: SheepBars | ChickenBars | UnicornBars | CowBars,
@@ -42,8 +48,8 @@ export default class Collector extends Phaser.GameObjects.Text {
       color: '#925C28',
       align: 'center'
     });
-    this.graphicX = x;
-    this.graphicY = y;
+    this.progressX = x;
+    this.progressY = y;
     this.radius = radius;
     this.startAngle = -1.66;
     this.endAngle = -1.66;
@@ -68,11 +74,9 @@ export default class Collector extends Phaser.GameObjects.Text {
     }
 
     this.percent = 6.3 / 100;
-    this.collector = this.scene.add.graphics();
-    this.collector.lineStyle(this.weight, this.color, 1);
-    this.collector.beginPath();
-    this.collector.arc(this.graphicX, this.graphicY, this.radius, this.startAngle, this.endAngle);
-    this.collector.strokePath();
+
+    let mainScene = this.scene as Sheep | SheepBars | Chicken | ChickenBars | Cow | CowBars | Unicorn | Modal
+    this.progress = new RoundedProgress(mainScene, this.progressX, this.progressY, 1.25, this.color).setDepth(0);
 
     const bounds: Phaser.Geom.Rectangle = this.getBounds();
     this.bubble = this.scene.add.graphics({ x: bounds.left - 15, y: bounds.top });
@@ -91,15 +95,11 @@ export default class Collector extends Phaser.GameObjects.Text {
       let percent: number = 0;
       
       if (this.farmData.collector > 0 && this.farmData.collectorTakenTime > 0) {
-        percent = Math.round(this.farmData.collector / (this.farmData.collectorTakenTime / 100));
+        percent = this.farmData.collector / (this.farmData.collectorTakenTime / 100);
       }
   
-      this.endAngle = percent * this.percent + this.startAngle;
-      this.collector.clear();
-      this.collector.lineStyle(this.weight, this.color, 1);
-      this.collector.beginPath();
-      this.collector.arc(this.graphicX, this.graphicY, this.radius, this.startAngle, this.endAngle);
-      this.collector.strokePath();
+      this.progress.setPercent(percent);
+
       const time: string = shortTime(this.farmData.collector, this.scene.state.lang);
       this.setText(time);
       this.setColor('#925C28');

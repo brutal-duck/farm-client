@@ -223,8 +223,9 @@ const improveCollector: string = require("./../../../assets/images/modal/improve
 const tasksUncomplete: string = require("./../../../assets/images/modal/tasks-uncomplete.png");
 const tasksBarNs: string = require("./../../../assets/images/modal/tasks-bar-ns.png");
 const circle: string = require("./../../../assets/images/circle.png");
-const sg: string = require("./../../../assets/images/sg.png");
 const notificationBg: string = require('../../../assets/images/notification.png');
+const roundedBarSegment: string = require("./../../../assets/images/rounded-bar-segment.png");
+const circleOutline: string = require("./../../../assets/images/circle-outline.png");
 
 
 class CowPreload extends Phaser.Scene {
@@ -486,8 +487,10 @@ class CowPreload extends Phaser.Scene {
     this.load.image('tasks-uncomplete-rend', tasksUncomplete);
     this.load.image('tasks-bar-ns', tasksBarNs);
     this.load.image('circle', circle);
-    this.load.image('sg', sg);
     this.load.image('notification-bg', notificationBg);
+    this.load.image('rounded-segment', roundedBarSegment);
+    this.load.image('circle-outline', circleOutline);
+
   }
 
   
