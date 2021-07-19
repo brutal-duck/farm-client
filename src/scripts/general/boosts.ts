@@ -1,5 +1,4 @@
-import { shortTime, randomString, shortNum, sendSocialEvent } from "./basic";
-import Arrow from '../components/animations/Arrow';
+import { randomString, sendSocialEvent } from "./basic";
 import Firework from '../components/animations/Firework';
 
 // получение животного по бусту

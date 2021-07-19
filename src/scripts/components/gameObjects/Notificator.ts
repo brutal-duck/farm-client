@@ -64,6 +64,7 @@ export default class Notificator {
         this.setVisible(false);
       } else {
         this.setVisible(true);
+        this.setText(count);
       }
     }
     return this;
