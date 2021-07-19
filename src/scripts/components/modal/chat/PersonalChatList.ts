@@ -1,5 +1,6 @@
 import Chat from './../../../scenes/Modal/Chat/Main';
 import Modal from './../../../scenes/Modal/Modal';
+import Notificator from './../../gameObjects/Notificator';
 
 export default class PersonalChatList {
   private scene: Chat;
@@ -61,12 +62,6 @@ export default class PersonalChatList {
       color: '#692e96'
     };
     
-    const notificationTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
-      fontFamily: 'Shadow',
-      fontSize: '24px',
-      color: '#ffffff'
-    };
-
     const messageTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Bip',
       fontSize: '20px',
@@ -107,8 +102,7 @@ export default class PersonalChatList {
         x: bgGeom.right - 10,
         y: bgGeom.top + 10,
       };
-      this.scene.add.sprite(pos.x, pos.y, 'notification-bg');
-      this.scene.add.text(pos.x, pos.y - 2, String(1), notificationTextStyle).setOrigin(0.5);
+      new Notificator(this.scene, pos).setCount(1);
     }
 
     nameText.setCrop(0, 0, bgWidth - 80, 500);

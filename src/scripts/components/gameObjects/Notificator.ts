@@ -6,13 +6,15 @@ export default class Notificator {
   private animBg: Phaser.GameObjects.Sprite;
   private position: Iposition;
   private count: number;
-  private visible: boolean = true;
+  private visible: boolean;
+  private depth: number;
 
   constructor(scene: Phaser.Scene, position: Iposition, anim?: boolean) { 
     this.scene = scene;
     this.position = position;
     this.anim = anim;
     this.visible = true;
+    this.depth = 0;
     this.create();
     if (this.anim) this.setAnim();
   };
@@ -20,14 +22,14 @@ export default class Notificator {
   private create(): void {
     const notificationTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Bip',
-      fontSize: '24px',
+      fontSize: '28px',
       color: '#ffffff',
       fontStyle: 'Bold',
     };
 
-    this.animBg = this.scene.add.sprite(this.position.x, this.position.y, 'notification-bg');
-    this.bg = this.scene.add.sprite(this.position.x, this.position.y, 'notification-bg');
-    this.text = this.scene.add.text(this.position.x, this.position.y, '1', notificationTextStyle).setOrigin(0.5);
+    this.animBg = this.scene.add.sprite(this.position.x, this.position.y, 'notification-bg').setDepth(this.depth);
+    this.bg = this.scene.add.sprite(this.position.x, this.position.y, 'notification-bg').setDepth(this.depth);
+    this.text = this.scene.add.text(this.position.x, this.position.y, '1', notificationTextStyle).setOrigin(0.5).setDepth(this.depth);
   }
 
   private setAnim(): void {
@@ -64,5 +66,11 @@ export default class Notificator {
         this.setVisible(true);
       }
     }
+  }
+
+  public setDepth(depth: number): void {
+    this.animBg.setDepth(depth);
+    this.bg.setDepth(depth);
+    this.text.setDepth(depth);
   }
 }

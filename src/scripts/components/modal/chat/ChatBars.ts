@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Modal from '../../../scenes/Modal/Modal';
+import Notificator from './../../gameObjects/Notificator';
 const SMILES: string[] = ['😊', '😟', '😝', '😍', '😎', '😭', '😘', '😳', '😱'];
 const SMILE_HEIGHT: number = 52;
 
@@ -27,6 +28,7 @@ export default class ChatBars {
   private arrow: Phaser.GameObjects.Sprite;
   private personalTabNotification: Phaser.GameObjects.Sprite;
   private personalTabNotificationText: Phaser.GameObjects.Text;
+  private personalTabNotificator: Notificator;
 
   constructor(scene: Modal) {
     this.scene = scene;
@@ -167,8 +169,9 @@ export default class ChatBars {
             x: tabPersonalGeom.right - 10,
             y: tabPersonalGeom.top + 10,
           };
-          this.personalTabNotification = this.scene.add.sprite(notificationPos.x, notificationPos.y, 'notification-bg').setDepth(4).setVisible(countNotification > 0);
-          this.personalTabNotificationText = this.scene.add.text(notificationPos.x, notificationPos.y - 2, String(countNotification), notificationTextStyle).setDepth(4).setOrigin(0.5).setVisible(countNotification > 0);
+          this.personalTabNotificator = new Notificator(this.scene, notificationPos);
+          this.personalTabNotificator.setDepth(4);
+          this.personalTabNotificator.setCount(countNotification);
         break;
         case 2: 
           this.tabChat = this.scene.add.nineslice(bgGeom.left + 10, bgGeom.top + 25, maxWidth / 2, tabHeight, 'chat-tab', slice);
@@ -192,9 +195,7 @@ export default class ChatBars {
     if (this.scene.state.updatePersonalMessage) {
       this.scene.state.updatePersonalMessage = false;
       const count: number = this.getPersonalTabCountNotification();
-      this.personalTabNotification?.setVisible(count > 0);
-      this.personalTabNotificationText?.setVisible(count > 0);
-      this.personalTabNotificationText?.setText(String(count));
+      this.personalTabNotificator.setCount(count);
     }
   }
 
