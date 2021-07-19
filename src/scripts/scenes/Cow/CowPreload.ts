@@ -224,6 +224,7 @@ const tasksUncomplete: string = require("./../../../assets/images/modal/tasks-un
 const tasksBarNs: string = require("./../../../assets/images/modal/tasks-bar-ns.png");
 const circle: string = require("./../../../assets/images/circle.png");
 const sg: string = require("./../../../assets/images/sg.png");
+const notificationBg: string = require('../../../assets/images/notification.png');
 
 
 class CowPreload extends Phaser.Scene {
@@ -486,7 +487,7 @@ class CowPreload extends Phaser.Scene {
     this.load.image('tasks-bar-ns', tasksBarNs);
     this.load.image('circle', circle);
     this.load.image('sg', sg);
-
+    this.load.image('notification-bg', notificationBg);
   }
 
   

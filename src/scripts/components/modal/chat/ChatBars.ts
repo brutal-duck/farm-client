@@ -167,7 +167,7 @@ export default class ChatBars {
             x: tabPersonalGeom.right - 10,
             y: tabPersonalGeom.top + 10,
           };
-          this.personalTabNotification = this.scene.add.sprite(notificationPos.x, notificationPos.y, 'chat-notification').setDepth(4).setVisible(countNotification > 0);
+          this.personalTabNotification = this.scene.add.sprite(notificationPos.x, notificationPos.y, 'notification-bg').setDepth(4).setVisible(countNotification > 0);
           this.personalTabNotificationText = this.scene.add.text(notificationPos.x, notificationPos.y - 2, String(countNotification), notificationTextStyle).setDepth(4).setOrigin(0.5).setVisible(countNotification > 0);
         break;
         case 2: 
@@ -190,6 +190,7 @@ export default class ChatBars {
   
   public update(): void {
     if (this.scene.state.updatePersonalMessage) {
+      this.scene.state.updatePersonalMessage = false;
       const count: number = this.getPersonalTabCountNotification();
       this.personalTabNotification?.setVisible(count > 0);
       this.personalTabNotificationText?.setVisible(count > 0);
@@ -298,7 +299,7 @@ export default class ChatBars {
   private setTabsListeners(): void {
     if (this.scene.state.modal.chatType !== 1) {
       this.scene.clickButtonUp(this.tabChat, (): void => {
-        this.scene.mainInput.remove();
+        this.scene.mainInput?.remove();
         this.deleteUserWithoutMessages();
         this.enterKey?.destroy();
         console.log('1');
@@ -312,7 +313,7 @@ export default class ChatBars {
     }
     if (this.scene.state.modal.chatType !== 2) {
       this.scene.clickButtonUp(this.tabPersonal, (): void => {
-        this.scene.mainInput.remove();
+        this.scene.mainInput?.remove();
         this.enterKey?.destroy();
         console.log('2');
         this.scene.state.modal = {
@@ -410,7 +411,7 @@ export default class ChatBars {
       this.name.setFontSize(parseInt(this.name.style.fontSize) / multiply);
     }
     this.scene.click(this.arrow, () => {
-      this.scene.mainInput.remove();
+      this.scene.mainInput?.remove();
       this.enterKey?.destroy();
       this.deleteUserWithoutMessages();
       this.scene.state.modal = {
@@ -433,7 +434,8 @@ export default class ChatBars {
   }
 
   private onCloseBtnClick(): void {
-    this.scene.mainInput.remove();
+    this.scene.state.updatePersonalMessage = true;
+    this.scene.mainInput?.remove();
     this.deleteUserWithoutMessages();
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
     this.scene.scene.stop('Chat');

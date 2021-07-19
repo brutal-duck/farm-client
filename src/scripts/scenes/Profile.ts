@@ -19,8 +19,12 @@ const pointer: string = require('./../../assets/images/profile/pointer.png');
 const fortune: string = require('./../../assets/images/profile/event-fortune.png');
 const socialBtnVk: string = require('./../../assets/images/profile/social-btn-vk.png');
 const socialBtnOk: string = require('./../../assets/images/profile/social-btn-ok.png');
-const nativeBg: string = require('./../../assets/images/native.png');
 
+const notificationTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+  fontFamily: 'Shadow',
+  fontSize: '24px',
+  color: '#ffffff'
+};
 class Profile extends Phaser.Scene {
   constructor() {
     super('Profile');
@@ -65,6 +69,9 @@ class Profile extends Phaser.Scene {
   private animDiamondsCount: number = 0;
   private shopNativeText: Phaser.GameObjects.Text;
   private shopNativeBg: Phaser.GameObjects.Sprite; 
+  private personalMessageNative: Phaser.GameObjects.Sprite;
+  private personalMessageNativeText: Phaser.GameObjects.Text;
+  private animPersonalMessage: Phaser.GameObjects.Sprite;
   
   public click = click.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
@@ -102,7 +109,6 @@ class Profile extends Phaser.Scene {
     this.load.image('profile-btn', btn);
     this.load.image('profile-pointer', pointer);
     this.load.image('profile-fortune', fortune);
-    this.load.image('profile-native-bg', nativeBg)
     this.load.image('profile-social-btn-vk', socialBtnVk);
     this.load.image('profile-social-btn-ok', socialBtnOk);
   }
@@ -148,6 +154,7 @@ class Profile extends Phaser.Scene {
     this.updateEvent();
     this.updateUserDiamonds();
     this.updateShopNative();
+    this.updatePersonalMessagesNative();
   }
 
   private createElements(): void {
@@ -156,6 +163,7 @@ class Profile extends Phaser.Scene {
     this.createFarms();
     this.createShop();
     this.createProfile();
+    this.createPersonalMessages();
     this.creaetePointer();
     if (this.state.platform === 'vk' || this.state.platform === 'ok') this.createSocialTaskBtn();
   }
@@ -227,12 +235,9 @@ class Profile extends Phaser.Scene {
       color: '#ffe5d7'
     }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
     
-    this.sheepNativeText = this.add.text(farmPosition.x + 110, farmPosition.y - 125, '', {
-      font: '30px Bip',
-      color: '#ffffff',
-    }).setOrigin(0.5).setDepth(1).setVisible(false);
-    this.sheepNativeBg = this.add.sprite(this.sheepNativeText.x, this.sheepNativeText.y, 'profile-native-bg').setVisible(false);
-    this.animSheepSprite = this.add.sprite(this.sheepNativeBg.x, this.sheepNativeBg.y, 'profile-native-bg').setVisible(false);
+    this.sheepNativeText = this.add.text(farmPosition.x + 110, farmPosition.y - 125, '', notificationTextStyle).setOrigin(0.5).setDepth(1).setVisible(false);
+    this.sheepNativeBg = this.add.sprite(this.sheepNativeText.x, this.sheepNativeText.y, 'notification-bg').setVisible(false);
+    this.animSheepSprite = this.add.sprite(this.sheepNativeBg.x, this.sheepNativeBg.y, 'notification-bg').setVisible(false);
     this.click(farmSprite, (): void => {
       if (this.state.farm !== 'Sheep') {
         this.game.scene.keys[this.state.farm].autosave();
@@ -257,12 +262,9 @@ class Profile extends Phaser.Scene {
         font: '28px Shadow',
         color: '#ffe5d7'
       }).setOrigin(0.5, 0.5).setStroke('#522007', 5).setDepth(1);
-      this.chickenNativeText = this.add.text(farmPosition.x - 160, farmPosition.y - 125, '', {
-        font: '30px Bip',
-        color: '#ffffff',
-      }).setOrigin(0.5).setDepth(3).setVisible(false);
-      this.chickenNativeBg = this.add.sprite(this.chickenNativeText.x, this.chickenNativeText.y, 'profile-native-bg').setDepth(1).setVisible(false);
-      this.animChickenSprite = this.add.sprite(this.chickenNativeBg.x, this.chickenNativeBg.y, 'profile-native-bg').setDepth(2).setVisible(false);
+      this.chickenNativeText = this.add.text(farmPosition.x - 160, farmPosition.y - 125, '', notificationTextStyle).setOrigin(0.5).setDepth(3).setVisible(false);
+      this.chickenNativeBg = this.add.sprite(this.chickenNativeText.x, this.chickenNativeText.y, 'notification-bg').setDepth(1).setVisible(false);
+      this.animChickenSprite = this.add.sprite(this.chickenNativeBg.x, this.chickenNativeBg.y, 'notification-bg').setDepth(2).setVisible(false);
 
       this.click(farmSprite, (): void => {
         if (this.state.farm !== 'Chicken') {
@@ -313,12 +315,9 @@ class Profile extends Phaser.Scene {
         color: '#ffe5d7'
       }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
 
-      this.cowNativeText = this.add.text(farmPosition.x + 280, farmPosition.y - 100, '', {
-        font: '30px Bip',
-        color: '#ffffff',
-      }).setOrigin(0.5).setDepth(3).setVisible(false);
-      this.cowNativeBg = this.add.sprite(this.cowNativeText.x, this.cowNativeText.y, 'profile-native-bg').setVisible(false);
-      this.animCowSprite = this.add.sprite(this.cowNativeBg.x, this.cowNativeBg.y, 'profile-native-bg').setDepth(2).setVisible(false);
+      this.cowNativeText = this.add.text(farmPosition.x + 280, farmPosition.y - 100, '', notificationTextStyle).setOrigin(0.5).setDepth(3).setVisible(false);
+      this.cowNativeBg = this.add.sprite(this.cowNativeText.x, this.cowNativeText.y, 'notification-bg').setVisible(false);
+      this.animCowSprite = this.add.sprite(this.cowNativeBg.x, this.cowNativeBg.y, 'notification-bg').setDepth(2).setVisible(false);
 
       this.click(farmSprite, (): void => {
         if (this.state.farm !== 'Cow') {
@@ -379,12 +378,9 @@ class Profile extends Phaser.Scene {
         font: '28px Shadow',
         color: '#ffe5d7'
       }).setOrigin(0.5, 0.5).setStroke('#522007', 5).setDepth(1);
-      this.chickenNativeText = this.add.text(farmPosition.x - 160, farmPosition.y - 125, '', {
-        font: '30px Bip',
-        color: '#ffffff',
-      }).setOrigin(0.5).setDepth(3).setVisible(false);
-      this.chickenNativeBg = this.add.sprite(this.chickenNativeText.x, this.chickenNativeText.y, 'profile-native-bg').setDepth(1).setVisible(false);
-      this.animChickenSprite = this.add.sprite(this.chickenNativeBg.x, this.chickenNativeBg.y, 'profile-native-bg').setDepth(2).setVisible(false);
+      this.chickenNativeText = this.add.text(farmPosition.x - 160, farmPosition.y - 125, '', notificationTextStyle).setOrigin(0.5).setDepth(3).setVisible(false);
+      this.chickenNativeBg = this.add.sprite(this.chickenNativeText.x, this.chickenNativeText.y, 'notification-bg').setDepth(1).setVisible(false);
+      this.animChickenSprite = this.add.sprite(this.chickenNativeBg.x, this.chickenNativeBg.y, 'notification-bg').setDepth(2).setVisible(false);
 
       this.click(farmSprite, (): void => {
         if (this.state.farm !== 'Chicken') {
@@ -449,12 +445,9 @@ class Profile extends Phaser.Scene {
         color: '#ffe5d7'
       }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
 
-      this.cowNativeText = this.add.text(farmPosition.x + 280, farmPosition.y - 100, '', {
-        font: '30px Bip',
-        color: '#ffffff',
-      }).setOrigin(0.5).setDepth(3).setVisible(false);
-      this.cowNativeBg = this.add.sprite(this.cowNativeText.x, this.cowNativeText.y, 'profile-native-bg').setVisible(false);
-      this.animCowSprite = this.add.sprite(this.cowNativeBg.x, this.cowNativeBg.y, 'profile-native-bg').setDepth(2).setVisible(false);
+      this.cowNativeText = this.add.text(farmPosition.x + 280, farmPosition.y - 100, '', notificationTextStyle).setOrigin(0.5).setDepth(3).setVisible(false);
+      this.cowNativeBg = this.add.sprite(this.cowNativeText.x, this.cowNativeText.y, 'notification-bg').setVisible(false);
+      this.animCowSprite = this.add.sprite(this.cowNativeBg.x, this.cowNativeBg.y, 'notification-bg').setDepth(2).setVisible(false);
 
       this.click(farmSprite, (): void => {
         if (this.state.farm !== 'Cow') {
@@ -570,9 +563,9 @@ class Profile extends Phaser.Scene {
       },
     }).fillRoundedRect(this.eventStartText.getBounds().left - 25, this.eventStartText.getBounds().top - 20, this.eventStartText.width + 50, 60).setVisible(false);
 
-    this.unicornNativeText = this.add.text(farmPosition.x - 210, farmPosition.y - 80, '', { font: '30px Bip', color: '#ffffff' }).setOrigin(0.5).setDepth(3).setVisible(false);
-    this.unicornNativeBg = this.add.sprite(this.unicornNativeText.x, this.unicornNativeText.y, 'profile-native-bg').setVisible(false);
-    this.animUnicornSprite = this.add.sprite(this.unicornNativeBg.x, this.unicornNativeBg.y, 'profile-native-bg').setDepth(2).setVisible(false);
+    this.unicornNativeText = this.add.text(farmPosition.x - 210, farmPosition.y - 80, '', notificationTextStyle).setOrigin(0.5).setDepth(3).setVisible(false);
+    this.unicornNativeBg = this.add.sprite(this.unicornNativeText.x, this.unicornNativeText.y, 'notification-bg').setVisible(false);
+    this.animUnicornSprite = this.add.sprite(this.unicornNativeBg.x, this.unicornNativeBg.y, 'notification-bg').setDepth(2).setVisible(false);
 
     this.click(this.eventZone, (): void => {
       if (this.state.farm !== 'Unicorn') {
@@ -693,15 +686,15 @@ class Profile extends Phaser.Scene {
   }
 
   private createShop(): void {
-    const shopPosition: Iposition = {
+    const pos: Iposition = {
       x: 290,
       y: 600
     }
-    const zoneSize: Isize = {
+    const size: Isize = {
       width: 170,
       height: 170
     }
-    const zone: Phaser.GameObjects.Zone = this.add.zone(shopPosition.x, shopPosition.y, zoneSize.width, zoneSize.height).setDropZone(undefined, () => {});
+    const zone: Phaser.GameObjects.Zone = this.add.zone(pos.x, pos.y, size.width, size.height).setDropZone(undefined, () => {});
       
     // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
     // graphics.lineStyle(5, 0xFF0000);
@@ -719,7 +712,7 @@ class Profile extends Phaser.Scene {
 
     if (!this.state.user.starterpack && (this.state.progress.sheep.part > 4 || this.state.progress.chicken.part >= 1)) {
 
-      const starterpackIcon: Phaser.GameObjects.Sprite = this.add.sprite(shopPosition.x + 60, shopPosition.y - 80, 'starterpack-icon').setScale(0.25)
+      const starterpackIcon: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 60, pos.y - 80, 'starterpack-icon').setScale(0.25)
       this.tweens.add({
         targets: starterpackIcon,
         delay: 2000,
@@ -740,23 +733,20 @@ class Profile extends Phaser.Scene {
         this.scene.launch('Modal', this.state);
       });
     }
-    this.shopNativeBg = this.add.sprite(shopPosition.x - 50, shopPosition.y - 70, 'profile-native-bg').setVisible(false);
-    this.shopNativeText = this.add.text(shopPosition.x - 50, shopPosition.y - 70, '1', {
-      font: '30px Bip',
-      color: '#ffffff',
-    }).setOrigin(0.5).setVisible(false);
+    this.shopNativeBg = this.add.sprite(pos.x - 50, pos.y - 70, 'notification-bg').setVisible(false);
+    this.shopNativeText = this.add.text(pos.x - 50, pos.y - 70, '1', notificationTextStyle).setOrigin(0.5).setVisible(false);
   }
 
   private createProfile(): void {
-    const shopPosition: Iposition = {
+    const pos: Iposition = {
       x: 395,
       y: 360
     }
-    const zoneSize: Isize = {
+    const size: Isize = {
       width: 200,
       height: 250
     }
-    const zone: Phaser.GameObjects.Zone = this.add.zone(shopPosition.x, shopPosition.y, zoneSize.width, zoneSize.height).setDropZone(undefined, () => {});
+    const zone: Phaser.GameObjects.Zone = this.add.zone(pos.x, pos.y, size.width, size.height).setDropZone(undefined, () => {});
       
     // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
     // graphics.lineStyle(5, 0xFF0000);
@@ -769,6 +759,59 @@ class Profile extends Phaser.Scene {
       this.state.modal = modal;
       this.scene.launch('Modal', this.state);
     });
+  }
+
+  private createPersonalMessages(): void {
+    const pos: Iposition = {
+      x: 500,
+      y: 535
+    }
+    const size: Isize = {
+      width: 100,
+      height: 120
+    }
+    const zone: Phaser.GameObjects.Zone = this.add.zone(pos.x, pos.y, size.width, size.height).setDepth(1).setDropZone(undefined, () => {});
+      
+    // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
+    // graphics.lineStyle(5, 0xFFFF00);
+    // graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+
+    this.click(zone, (): void => {
+      const modal: Imodal = {
+        type: 9, chatType: 2 
+      }
+      this.state.modal = modal;
+      this.scene.launch('Modal', this.state);
+    });
+
+    const count: number = this.getPersonalTabCountNotification();
+    this.animPersonalMessage = this.add.sprite(pos.x + 25, pos.y - 45, 'notification-bg').setVisible(count > 0);
+    this.personalMessageNative = this.add.sprite(pos.x + 25, pos.y - 45, 'notification-bg').setVisible(count > 0);
+    this.personalMessageNativeText = this.add.text(this.personalMessageNative.x, this.personalMessageNative.y, String(count), notificationTextStyle).setOrigin(0.5).setVisible(count > 0);
+  }
+
+  private updatePersonalMessagesNative(): void {
+    if (this.state.updatePersonalMessage) {
+      this.state.updatePersonalMessage = false;
+      const count: number = this.getPersonalTabCountNotification();
+      this.animPersonalMessage?.setVisible(count > 0);
+      this.personalMessageNative?.setVisible(count > 0);
+      this.personalMessageNativeText?.setVisible(count > 0);
+      this.personalMessageNativeText?.setText(String(count));
+    }
+  }
+
+  private getPersonalTabCountNotification(): number {
+    let count: number = 0;
+    for (const user of this.state.user.personalMessages) {
+      for (const message of user.messages) {
+        if (!message.check) {
+          count += 1;
+          break;
+        }
+      }
+    }
+    return count;
   }
 
   private updateEvent(): void {
@@ -944,19 +987,26 @@ class Profile extends Phaser.Scene {
         repeatDelay: 1150,
       });
     }
+    if (this.personalMessageNative) {
+      this.tweens.add({
+        targets: [ this.animPersonalMessage ],
+        scale: { from: 1.05, to: 2 },
+        alpha: { from: 0.5, to: 0 },
+        duration: 500,
+        repeat: -1,
+        repeatDelay: 1150,
+      });
+    }
   }
 
   private createSocialTaskBtn(): void {
     const position: Iposition = { x: 70, y: 230 };
     if (this.state.userSheep.tutorial >= 100) {
       this.socialTaskBtn = this.add.sprite(position.x, position.y, `profile-social-btn-${this.state.platform}`);
-      this.socialTaskNativeText = this.add.text(position.x + this.socialTaskBtn.displayWidth / 2 - 10, position.y - this.socialTaskBtn.displayHeight / 2 + 5, '1', {
-        font: '30px Bip',
-        color: '#ffffff',
-      }).setOrigin(0.5).setDepth(1);
-      this.socialTaskNative = this.add.sprite(this.socialTaskNativeText.x, this.socialTaskNativeText.y, 'profile-native-bg');
+      this.socialTaskNativeText = this.add.text(position.x + this.socialTaskBtn.displayWidth / 2 - 10, position.y - this.socialTaskBtn.displayHeight / 2 + 5, '1', notificationTextStyle).setOrigin(0.5).setDepth(1);
+      this.socialTaskNative = this.add.sprite(this.socialTaskNativeText.x, this.socialTaskNativeText.y, 'notification-bg');
       this.clickButton(this.socialTaskBtn, (): void => {
-        let modal: Imodal = { type: 14 };
+        const modal: Imodal = { type: 14 };
         this.state.modal = modal;
         this.scene.launch('Modal', this.state);
       });

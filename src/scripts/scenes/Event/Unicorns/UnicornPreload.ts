@@ -281,6 +281,8 @@ let eventTutorMerging: any = require("./../../../../assets/images/event/tutor-me
 
 let eventTerritoryBtn: any = require("./../../../../assets/images/event/territories/buy-button.png");
 let starterpackIcon: any = require("./../../../../assets/images/icons/starterpack.png");
+
+const notificationBg: string = require('../../../../assets/images/notification.png');
 class EventPreload extends Phaser.Scene {
 
   public lang: string; // индекс языка
@@ -589,6 +591,8 @@ class EventPreload extends Phaser.Scene {
     this.load.image('firework2', firework2);
     this.load.image('firework3', firework3);
     this.load.image('fireworkBg', fireworkBg);
+    this.load.image('notification-bg', notificationBg);
+
   }
 
   

@@ -221,7 +221,7 @@ const hammer: string = require("./../../../assets/images/icons/hammer.png");
 const improveCollector: string = require("./../../../assets/images/modal/improve-collector.png");
 const tasksUncomplete: string = require("./../../../assets/images/modal/tasks-uncomplete.png");
 const tasksBarNs: string = require("./../../../assets/images/modal/tasks-bar-ns.png");
-
+const notificationBg: string = require('../../../assets/images/notification.png');
 
 
 class ChickenPreload extends Phaser.Scene {
@@ -480,6 +480,7 @@ class ChickenPreload extends Phaser.Scene {
     this.load.image('improve-collector', improveCollector);
     this.load.image('tasks-uncomplete-rend', tasksUncomplete);
     this.load.image('tasks-bar-ns', tasksBarNs);
+    this.load.image('notification-bg', notificationBg);
 
   }
 
