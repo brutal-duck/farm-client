@@ -141,9 +141,10 @@ function findFreeTerritory (x: number, y: number): Iposition {
   if (territory) {
     if (territory.territoryType === 2 || territory.territoryType === 3) {
       return { x: territory.x + 120, y: territory.y + 120 };
-    } else return this.findFreeTerritory(x - 240, y);
+    } 
+    return this.findFreeTerritory(x - 240, y);
   } else if (y > 0) return this.findFreeTerritory(600, y - 240);
-  else return;
+  return;
 } 
 
 export {

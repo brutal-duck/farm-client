@@ -34,19 +34,13 @@ function world(): void {
   this.state.chickenTerritories.map((data: Iterritories) => {
     let x: number = (data.position - 1) * this.height;
     let y: number = (data.block - 1) * this.height;
-
     forest++;
     if (forest > 8) forest = 1;
-
-    // if (data.position === 0) x++;
-    // if (data.block === 0) y++;
     y += this.topIndent;
-
     const type: string = getTerritoryType.bind(this)(data);
-
     const territory: ChickenTerritory = new ChickenTerritory(this, x, y, type, data);
-
     territory.createForest(forest);
+    this.territories.add(territory);
   });
 
   this.buildBorders();
@@ -74,6 +68,7 @@ function world(): void {
 }
 
 function getTerritoryType(data: Iterritories): string {
+  const farm: string = this.state.farm.toLowerCase();
   let type: string;
   let stage: number = 1;
   if (data.improve >= 5) {
@@ -86,10 +81,10 @@ function getTerritoryType(data: Iterritories): string {
     }
   }
 
-  if (data.type === 0) type = 'chicken-for-buying';
-  else if (data.type === 1) type = 'chicken-bought';
+  if (data.type === 0) type = `${farm}-for-buying`;
+  else if (data.type === 1) type = `${farm}-bought`;
   else if (data.type === 2) {
-    type = `chicken-grass${stage}-`;
+    type = `${farm}-grass${stage}-`;
 
     if (data.volume < 250) type += 1;
     else if (data.volume >= 250 && data.volume < 500) type += 2;
@@ -97,18 +92,18 @@ function getTerritoryType(data: Iterritories): string {
     else if (data.volume >= 750) type += 4;
     
   } else if (data.type === 3) {
-    type = `chicken-water${stage}-`;
+    type = `${farm}-water${stage}-`;
 
     if (data.volume < 250) type += 1;
     else if (data.volume >= 250 && data.volume < 500) type += 2;
     else if (data.volume >= 500 && data.volume < 750) type += 3;
     else if (data.volume >= 750) type += 4;
 
-  } else if (data.type === 4) type = 'chicken-merging';
-  else if (data.type === 5) type = 'chicken-repository';
-  else if (data.type === 6) type = 'chicken-house';
-  else if (data.type === 7) type = 'chicken-ground';
-  else if (data.type === 8) type = 'chicken-repository';
+  } else if (data.type === 4) type = `${farm}-merging`;
+  else if (data.type === 5) type = `${farm}-repository`;
+  else if (data.type === 6) type = `${farm}-house`;
+  else if (data.type === 7) type = `${farm}-ground`;
+  else if (data.type === 8) type = `${farm}-repository`;
   
   return type;
 }
