@@ -36,8 +36,8 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
   public preUpdate(): void {
     this.setVisibility();
     this.tickShowTimerAndSetState();
-    if (this.scene.state.updatePersonalMessage) {
-      this.scene.state.updatePersonalMessage = false;
+    const countMessages: number = this.getMessagesCount();
+    if (this.chatNotificator.countMessage !== countMessages) {
       this.chatNotificator.setCount(this.getMessagesCount());
     }
   }
@@ -114,7 +114,6 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
   }
 
   private setVisibility(): void {
-
     if (this.scene.state.platform === 'web' && this.scene.state.user.login === '' && !this.authIcon.visible) { 
       this.authIcon.setVisible(true);
       this.setVisible(false);

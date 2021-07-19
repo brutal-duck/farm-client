@@ -54,7 +54,7 @@ export default class PersonalChat {
     const month: number = time.getMonth() + 1;
     const day: number = time.getDate();
     const hours: number = time.getHours();
-    const minutes: number = time.getMinutes();
+    const minutes: string = time.getMinutes() < 10 ? '0' + time.getMinutes() : String(time.getMinutes());
     const date: string = day + '.' + month + '.' + year + ' ' + hours + ':' + minutes;
     return date;
   }

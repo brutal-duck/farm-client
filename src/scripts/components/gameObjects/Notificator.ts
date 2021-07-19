@@ -88,4 +88,8 @@ export default class Notificator {
   get children(): Array<Phaser.GameObjects.Text | Phaser.GameObjects.Sprite> {
     return [ this.bg, this.text, this.animBg ];
   }
+
+  get countMessage(): number {
+    return this.count;
+  }
 }
