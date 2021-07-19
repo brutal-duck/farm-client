@@ -61,12 +61,18 @@ function updateNotificationShop(): void {
   for (let i = 0; i < this.state.shopNotificationCount.length; i++) {
     counter += this.state.shopNotificationCount[i];
   }
-
-  if (this.scene.isActive('Modal') || this.scene.isActive('Tutorial') || this.state.farm === 'Sheep' && this.state.userSheep.tutorial < 100) {
+  
+  if (this.scene.isActive('Modal') || this.scene.isActive('Tutorial') || this.state.farm === 'Sheep' && this.state.userSheep.tutorial < 100 && this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.visible && counter <= 0) {
     this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.setVisible(false);
-  } else {
-    this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.setVisible(true);
-    this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.setCount(counter);
+  } else if (!this.scene.isActive('Modal') && !this.scene.isActive('Tutorial') && !this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.visible && counter > 0) {
+    if (this.state.farm === 'Sheep' && this.state.userSheep.tutorial >= 100) {
+      this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.setVisible(true);
+      this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.setCount(counter);
+    }
+    if (this.state.farm !== 'Sheep') {
+      this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.setVisible(true);
+      this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.setCount(counter);
+    }
   }
 }
 

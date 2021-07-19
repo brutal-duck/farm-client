@@ -6,7 +6,7 @@ export default class Notificator {
   private animBg: Phaser.GameObjects.Sprite;
   private position: Iposition;
   private count: number;
-  private visible: boolean;
+  public visible: boolean;
   private depth: number;
 
   constructor(scene: Phaser.Scene, position: Iposition, anim?: boolean) { 
@@ -63,7 +63,6 @@ export default class Notificator {
       if (this.count <= 0) {
         this.setVisible(false);
       } else {
-        this.setText(count);
         this.setVisible(true);
       }
     }
