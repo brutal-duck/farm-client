@@ -59,7 +59,7 @@ const general: {
 
 const sheepSettings: IsheepSettings = {
   buyBetterBreedSheep: 2,
-  feedBoostPrice: 35,
+  feedBoostPrice: 20,
   sheepBadPercent: 30,
   sheepDiamondsTime: 14400,
   sheepPrice: 100,
@@ -346,7 +346,7 @@ const sheepSettings: IsheepSettings = {
 
 const chickenSettings: IchickenSettings = {
   buyBetterBreedChicken: 2,
-  feedBoostPrice: 35,
+  feedBoostPrice: 20,
   chickenBadPercent: 40,
   chickenDiamondsTime: 14400,
   chickenPrice: 100,
@@ -653,7 +653,7 @@ const chickenSettings: IchickenSettings = {
 
 const cowSettings: IcowSettings = {
   buyBetterBreedCow: 2,
-  feedBoostPrice: 35,
+  feedBoostPrice: 20,
   cowBadPercent: 40,
   cowDiamondsTime: 14400,
   cowPrice: 100,
@@ -1204,7 +1204,7 @@ const cowSettings: IcowSettings = {
 const unicornSettings: IeventSettings = {
   buyBetterBreedAnimal: 2,
   doubledСollectorPrice: 25,
-  feedBoostPrice: 40,
+  feedBoostPrice: 20,
   collectorPrice4: 90,
   collectorPrice12: 250,
   unlockCollector4: 5,
