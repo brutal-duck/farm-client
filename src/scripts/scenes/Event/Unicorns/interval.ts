@@ -95,18 +95,13 @@ function interval(): void {
     if (this.state[`user${this.state.farm}`].points >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
      this.state[`user${this.state.farm}`].takenHerdBoost <= 0 && 
      this.state.user.additionalTutorial.herdBoost) {
-      this.state.notificationCounter[3] = 1;
-    } else this.state.notificationCounter[3] = 0;
+      this.state.shopNotificationCount[3] = 1;
+    } else this.state.shopNotificationCount[3] = 0;
 
-    if (!this.state.user.takenFreeDiamonds && this.state.userUnicorn.tutorial > 70) this.state.notificationCounter[0] = 1;
-    else this.state.notificationCounter[0] = 0;
+    if (!this.state.user.takenFreeDiamonds && this.state.userUnicorn.tutorial > 70) this.state.shopNotificationCount[0] = 1;
+    else this.state.shopNotificationCount[0] = 0;
 
-    let notificationCount = 0;
-    
-    for (let i = 0; i < this.state.notificationCounter.length; i++) {
-      notificationCount += this.state.notificationCounter[i];
-    }
-    this.game.scene.keys[`${this.state.farm}Bars`].notificationShopCounter.setText(notificationCount);
+    this.game.scene.keys[`${this.state.farm}Bars`].updateNotificationShop();
 
     let proceeds: string = String(0);
     this.animals.children.entries.forEach(animal => {
@@ -223,11 +218,6 @@ function interval(): void {
     this.updateProfileNotification();
 
   }, callbackScope: this, loop: true });
-}
-
-function arrayInterval(): void {
-
-
 }
 
 export default interval;

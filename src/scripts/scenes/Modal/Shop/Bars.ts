@@ -54,7 +54,7 @@ class ShopBars extends Phaser.Scene {
       .fillCircle(550, this.cameras.main.centerY - 520, 20)
       .setDepth(2)
       .setVisible(false);
-    this.notificationBoostCounter = this.add.text(550, this.cameras.main.centerY - 520, String(this.state.notificationCounter[3]), {
+    this.notificationBoostCounter = this.add.text(550, this.cameras.main.centerY - 520, String(this.state.shopNotificationCount[3]), {
       font: '32px Shadow',
       color: '#f3eae6'
     }).setDepth(3)
@@ -67,7 +67,7 @@ class ShopBars extends Phaser.Scene {
       .fillCircle(175, this.cameras.main.centerY - 520, 20)
       .setDepth(2)
       .setVisible(false);
-    this.notificationDiamondCounter = this.add.text(175, this.cameras.main.centerY - 520, String(this.state.notificationCounter[0]), {
+    this.notificationDiamondCounter = this.add.text(175, this.cameras.main.centerY - 520, String(this.state.shopNotificationCount[0]), {
       font: '32px Shadow',
       color: '#f3eae6'
     }).setDepth(3)

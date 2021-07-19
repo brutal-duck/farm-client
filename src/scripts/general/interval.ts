@@ -492,17 +492,7 @@ function updateMapNotification(): void {
   this.state.farm === 'Cow' ? sheepCount + chickenCount + unicornCount + socialCount :
   this.state.farm === 'Unicorn' && this.state.userUnicorn.tutorial >= 80 ? sheepCount + chickenCount + cowCount + socialCount : 0;
 
-  const text: Phaser.GameObjects.Text = this.game.scene.keys[`${this.state.farm}Bars`].mapNotificationText;
-  const bg: Phaser.GameObjects.Graphics = this.game.scene.keys[`${this.state.farm}Bars`].mapNotificationBg;
-  if (text?.text !== String(count)) text?.setText(String(count));
-
-  if (count <= 0 && text?.visible) {
-    text?.setVisible(false);
-    bg?.setVisible(false);
-  } else if (count > 0 && !text?.visible) {
-    text?.setVisible(true);
-    bg?.setVisible(true);
-  }
+  this.game.scene.keys[`${this.state.farm}Bars`].mapNotificator.setCount(count);
 }
 
 function checkStorageSheep(): boolean {

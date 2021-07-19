@@ -23,6 +23,7 @@ import TaskBoard from '../../components/gameObjects/TaskBoard';
 import Collector from '../../components/gameObjects/Collector';
 import BarsMenu from '../../components/gameObjects/BarsMenu';
 import SpeechBubble from './../../components/animations/SpeechBuble';
+import Notificator from './../../components/gameObjects/Notificator';
 
 class SheepBars extends Phaser.Scene {
   constructor() {
@@ -65,10 +66,10 @@ class SheepBars extends Phaser.Scene {
   public offline: Phaser.GameObjects.Sprite;
   public calendarText: Phaser.GameObjects.Text;
   public calendar: any;
+  public shopNotificator: Notificator;
   public notificationShop: Phaser.GameObjects.Graphics;
   public notificationShopCounter: Phaser.GameObjects.Text;
-  public mapNotificationText: Phaser.GameObjects.Text;
-  public mapNotificationBg: Phaser.GameObjects.Graphics;
+  public mapNotificator: Notificator;
   public starterpackIcon: Phaser.GameObjects.Image;
   public hints: Phaser.GameObjects.Group;
   public taskZone: Phaser.GameObjects.Zone;
@@ -110,30 +111,11 @@ class SheepBars extends Phaser.Scene {
     this.shop = this.add.image(370, this.height - 90, 'shop');
     this.map = this.add.image(510, this.height - 90, 'map-icon');
     
-    // Нативка бустов
-    this.notificationShop = this.add.graphics()
-      .fillStyle(0xFF2400, 1)
-      .fillCircle(this.shop.x + 35, this.shop.y - 50, 20)
-      .setDepth(2)
-      .setVisible(false);
-    this.notificationShopCounter = this.add.text(this.shop.x + 35, this.shop.y - 50, '!', {
-      font: '32px Shadow',
-      color: '#f3eae6'
-    }).setDepth(3)
-      .setOrigin(0.5, 0.5)
-      .setVisible(false);
+    this.mapNotificator = new Notificator(this, { x: this.map.x + 35, y: this.map.y - 50 });
+    this.mapNotificator.setCount(0);
 
-    this.mapNotificationBg = this.add.graphics()
-      .fillStyle(0xFF2400, 1)
-      .fillCircle(this.map.x + 35, this.map.y - 50, 20)
-      .setDepth(2)
-      .setVisible(false);
-    this.mapNotificationText = this.add.text(this.map.x + 35, this.map.y - 50, '!', {
-      font: '32px Shadow',
-      color: '#f3eae6'
-    }).setDepth(3)
-      .setOrigin(0.5, 0.5)
-      .setVisible(false);
+    this.shopNotificator = new Notificator(this, { x: this.shop.x + 35, y: this.shop.y - 50 });
+    this.shopNotificator.setCount(0);
 
     // быстрая покупка овцы
     this.clickButton(this.sheepBuy, (): void => {

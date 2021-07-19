@@ -58,22 +58,15 @@ function createBoostAnimal(): void {
 
 function updateNotificationShop(): void {
   let counter: number = 0;
-  for (let i = 0; i < this.state.notificationCounter.length; i++) {
-    counter += this.state.notificationCounter[i];
+  for (let i = 0; i < this.state.shopNotificationCount.length; i++) {
+    counter += this.state.shopNotificationCount[i];
   }
 
-  if ((this.scene.isActive('Modal') ||
-  this.scene.isActive('Tutorial')) &&
-  this.game.scene.keys[`${this.state.farm}Bars`].notificationShop.visible ||
-  counter <= 0) {
-    this.game.scene.keys[`${this.state.farm}Bars`].notificationShop.setVisible(false);
-    this.game.scene.keys[`${this.state.farm}Bars`].notificationShopCounter.setVisible(false);
-  } else if (!this.scene.isActive('Modal') &&
-  !this.scene.isActive('Tutorial') &&
-  !this.game.scene.keys[`${this.state.farm}Bars`].notificationShop.visible &&
-  counter > 0) {
-    this.game.scene.keys[`${this.state.farm}Bars`].notificationShop.setVisible(true);
-    this.game.scene.keys[`${this.state.farm}Bars`].notificationShopCounter.setVisible(true);
+  if (this.scene.isActive('Modal') || this.scene.isActive('Tutorial')) {
+    this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.setVisible(false);
+  } else {
+    this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.setVisible(true);
+    this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.setCount(counter);
   }
 }
 

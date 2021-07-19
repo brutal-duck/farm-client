@@ -640,7 +640,7 @@ class EventPreload extends Phaser.Scene {
       this.loadData(response);
       this.state.offlineTime = response.data.progress.eventOfflineTime;
       this.userReady = true;
-      this.state.notificationCounter = [0, 0, 0, 0];
+      this.state.shopNotificationCount = [0, 0, 0, 0];
     })
   }
 }

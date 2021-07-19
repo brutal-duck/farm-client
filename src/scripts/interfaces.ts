@@ -745,7 +745,7 @@ interface Istate {
   herdBoostTime: number;
   herdBoostDelay: number;
   herdBoostAnimals: number[];
-  notificationCounter: number[];
+  shopNotificationCount: number[];
   timeToNewDay: number;
   sheepSettings: IsheepSettings;
   chickenSettings: IchickenSettings;
