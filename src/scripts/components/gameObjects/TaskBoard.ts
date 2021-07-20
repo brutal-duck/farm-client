@@ -291,7 +291,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
         if (!this.closingAniIsPlaying) this.bg.setY(this.bgY).setDisplaySize(660, height).removeAllListeners();
 
         this.taskIcon.setTexture(taskData.icon).setPosition(88, this.positionY - 190 - height / 2).setTint(0x777777).setAlpha(0.6);
-        this.checkMark.setVisible(true).setPosition(this.taskIcon.x, this.taskIcon.y);
+        this.checkMark.setPosition(this.taskIcon.x, this.taskIcon.y);
         this.done.setPosition(620, this.positionY - 190 - height / 2);
         this.takeText.setPosition(620, this.positionY - 193 - height / 2);
         
@@ -643,11 +643,11 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
       wordWrap: { width: 460 }
     }).setDepth(this.bg.depth + 1).setOrigin(0, 0.5).setAlpha(0);
 
-    const lineTile: Phaser.GameObjects.TileSprite = this.scene.add.tileSprite(this.scene.cameras.main.centerX, icon.y + icon.getBounds().height / 2 + 14, 620, 3, 'white-pixel').setDepth(this.bg.depth + 1).setAlpha(0).setTint(0xdf9241);
-    const clickZone: Phaser.GameObjects.TileSprite = this.scene.add.tileSprite(icon.getTopLeft().x - 14, icon.getTopLeft().y - 13, 650, lineTile.y - icon.getTopCenter().y + 21, 'white-pixel').setDepth(this.bg.depth + 2).setOrigin(0).setAlpha(0.0001).setInteractive();
+    const lineTile: Phaser.GameObjects.TileSprite = this.scene.add.tileSprite(this.scene.cameras.main.centerX, icon.y + icon.getBounds().height / 2 + 18, 620, 3, 'white-pixel').setDepth(this.bg.depth + 1).setAlpha(0).setTint(0xdf9241);
+    const clickZone: Phaser.GameObjects.TileSprite = this.scene.add.tileSprite(icon.getTopLeft().x - 14, icon.getTopLeft().y - 10, 650, lineTile.y - icon.getTopCenter().y + 21, 'white-pixel').setDepth(this.bg.depth + 2).setOrigin(0).setAlpha(0.0001).setInteractive();
     this.scene.click(clickZone, () => { if (!task.done) this.scene.clickTaskBoard(task) });
     this.interactiveElements.push(clickZone);
-    this.aditionalHeight += clickZone.height + 6;
+    this.aditionalHeight += clickZone.height + 4;
 
     let completed: Phaser.GameObjects.Sprite = null;
     let progress: RoundedProgress = null;
