@@ -104,6 +104,7 @@ export default class ProfileWindow {
             loadingSprite?.destroy();
           }
         } else {
+          this.scene.scene.stop('Modal');
           this.scene.scene.stop('Block');
           animation?.remove();
           loadingSprite?.destroy();
