@@ -15,7 +15,7 @@ export default class ChatBars {
   private chatInputZone: Phaser.GameObjects.Zone;
   private sendMsgBtn: Phaser.GameObjects.Sprite;
   private smileBtn: Phaser.GameObjects.Sprite;
-  private enterKey: Phaser.Input.Keyboard.Key;
+  public enterKey: Phaser.Input.Keyboard.Key;
   private inputBg: Phaser.GameObjects.Sprite;
   private tabChat: Phaser.GameObjects.Sprite | Phaser.GameObjects.RenderTexture;
   private tabChatText: Phaser.GameObjects.Text;
@@ -436,39 +436,13 @@ export default class ChatBars {
   }
 
   private onUserNameClick(id: string): void {
-    const data = {
-      userId: this.scene.state.user.id,
-      hash: this.scene.state.user.hash,
-      counter: this.scene.state.user.counter,
-      id: id,
+    this.scene.mainInput?.remove();
+    this.enterKey?.destroy();
+    this.scene.state.foreignProfileId = id;
+    this.scene.state.modal = {
+      type: 15,
     };
-    axios.post(process.env.API +'/getUserInfo', data).then((res) => {
-      const { result, error }: { result: IprofileData, error: boolean }  = res.data;
-      if (!error) {
-        this.scene.mainInput?.remove();
-        this.enterKey?.destroy();
-        if (result.avatar) {
-          this.scene.load.image(`avatar${result.id}`, result.avatar);
-          this.scene.load.start();
-          this.scene.load.once(Phaser.Loader.Events.COMPLETE, () => {
-            this.scene.state.modal = {
-              type: 15,
-            };
-            this.scene.state.foreignProfile = result;
-            this.scene.scene.stop('Chat');
-            const ModalScene: Modal = this.scene.scene.get('Modal') as Modal;
-            ModalScene.scene.restart(this.scene.state);
-          });
-        } else {
-          this.scene.state.modal = {
-            type: 15,
-          };
-          this.scene.state.foreignProfile = result;
-          this.scene.scene.stop('Chat');
-          const ModalScene: Modal = this.scene.scene.get('Modal') as Modal;
-          ModalScene.scene.restart(this.scene.state);
-        }
-      }
-    });
+    this.scene.scene.stop('Chat');
+    this.scene.scene.restart(this.scene.state);
   }
 }

@@ -1,3 +1,4 @@
+import axios from "axios";
 import Modal from "../../scenes/Modal/Modal";
 import LocalStorage from '../../libs/LocalStorage';
 
@@ -38,7 +39,7 @@ export default class ProfileWindow {
 
   constructor(scene: Modal) {
     this.scene = scene;
-    this.profile = scene.state.foreignProfile;
+    this.getUserInfo();
     this.init();
     this.create();
     this.scene.openModal(this.scene.cameras.main);
@@ -66,6 +67,35 @@ export default class ProfileWindow {
     }
   }
 
+  private getUserInfo(): void {
+    if (this.scene.state.foreignProfileId) {
+      const data = {
+        userId: this.scene.state.user.id,
+        hash: this.scene.state.user.hash,
+        counter: this.scene.state.user.counter,
+        id: this.scene.state.foreignProfileId,
+      };
+      axios.post(process.env.API +'/getUserInfo', data).then((res) => {
+        const { result, error }: { result: IprofileData, error: boolean }  = res.data;
+        if (!error) {
+          if (result.avatar) {
+            this.scene.load.image(`avatar${result.id}`, result.avatar);
+            this.scene.load.start();
+            this.scene.load.once(Phaser.Loader.Events.COMPLETE, () => {
+              this.profile = result;
+              this.init();
+              this.create();
+            });
+          } else {
+            this.profile = result;
+            this.init();
+            this.create();
+          }
+        }
+      });
+    }
+  }
+  
   private create(): void {
     this.createMainElements();
     this.createAvatar();
@@ -334,7 +364,7 @@ export default class ProfileWindow {
   private onCloseBtn(): void {
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
     this.scene.scene.stop();
-    this.scene.state.foreignProfile = undefined;
+    this.scene.state.foreignProfileId = undefined;
   }
 
   private openSysWindow(sysType: number) {

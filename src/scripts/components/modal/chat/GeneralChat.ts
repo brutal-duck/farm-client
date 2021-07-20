@@ -288,38 +288,14 @@ export default class GeneralChat {
   }
 
   private onPersonalClick(msgData: Ichat): void {
-    const data = {
-      userId: this.scene.state.user.id,
-      hash: this.scene.state.user.hash,
-      counter: this.scene.state.user.counter,
-      id: msgData.userId,
+    const ModalScene: Modal = this.scene.scene.get('Modal') as Modal;
+    ModalScene.mainInput?.remove();
+    ModalScene.chatBars.enterKey?.destroy();
+    this.scene.state.foreignProfileId = msgData.userId;
+    this.scene.state.modal = {
+      type: 15,
     };
-
-    axios.post(process.env.API +'/getUserInfo', data).then((res) => {
-      const { result, error }: { result: IprofileData, error: boolean }  = res.data;
-      if (!error) {
-        if (result.avatar) {
-          this.scene.load.image(`avatar${result.id}`, result.avatar);
-          this.scene.load.start();
-          this.scene.load.once(Phaser.Loader.Events.COMPLETE, () => {
-            this.scene.state.modal = {
-              type: 15,
-            };
-            this.scene.state.foreignProfile = result;
-            this.scene.scene.stop('Chat');
-            const ModalScene: Modal = this.scene.scene.get('Modal') as Modal;
-            ModalScene.scene.restart(this.scene.state);
-          });
-        } else {
-          this.scene.state.modal = {
-            type: 15,
-          };
-          this.scene.state.foreignProfile = result;
-          this.scene.scene.stop('Chat');
-          const ModalScene: Modal = this.scene.scene.get('Modal') as Modal;
-          ModalScene.scene.restart(this.scene.state);
-        }
-      }
-    });
+    this.scene.scene.stop('Chat');
+    this.scene.scene.launch('Modal',this.scene.state);
   }
 }

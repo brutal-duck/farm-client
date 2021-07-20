@@ -822,5 +822,5 @@ interface Istate {
   build: number;
   yaPlayer?: any;
   updatePersonalMessage?: boolean;
-  foreignProfile?: IprofileData; 
+  foreignProfileId?: string; 
 }
