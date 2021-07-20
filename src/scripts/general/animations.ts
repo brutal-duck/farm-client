@@ -3,7 +3,7 @@ import Currency from './../components/animations/Currency';
 // пульсация баланс-баров
 function pulseBalance(): void {
 
-  if (this.waterProblem) {
+  if (this.waterProblem && this.state.userSheep.tutorial >= 100) {
 
     this.textWater.pulseTimer++;
 
@@ -17,7 +17,7 @@ function pulseBalance(): void {
     this.textWater.setColor('#FFFFFF');
   }
 
-  if (this.grassProblem) {
+  if (this.grassProblem && this.state.userSheep.tutorial >= 100) {
 
     this.textGrass.pulseTimer++;
 
