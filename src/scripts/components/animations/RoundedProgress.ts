@@ -1,14 +1,6 @@
-import ChickenBars from "../../scenes/Chicken/ChickenBars";
-import Chicken from "../../scenes/Chicken/Main";
-import CowBars from "../../scenes/Cow/CowBars";
-import Cow from "../../scenes/Cow/Main";
-import Unicorn from "../../scenes/Event/Unicorns/Main";
-import Modal from "../../scenes/Modal/Modal";
-import Sheep from "../../scenes/Sheep/Main";
-import SheepBars from "../../scenes/Sheep/SheepBars";
 
 export default class RoundedProgress {
-  public scene: Sheep | SheepBars | Chicken | ChickenBars | Cow | CowBars | Unicorn | Modal
+  public scene: Phaser.Scene;
 
   private x: number;
   private y: number;
@@ -25,7 +17,7 @@ export default class RoundedProgress {
   private setAni: Phaser.Tweens.Tween;
 
   constructor(
-    scene: Sheep | SheepBars | Chicken | ChickenBars | Cow | CowBars | Unicorn | Modal,
+    scene: Phaser.Scene,
     x: number,
     y: number,
     scale: number = 1,
@@ -74,6 +66,8 @@ export default class RoundedProgress {
 
 
   public setPercent(percent: number, time: number = 0): RoundedProgress {
+    console.log('setPercent ~ this', this)
+    if (percent === 100) percent = 99.9
     const targets = this.mask.bitmapMask as Phaser.GameObjects.TileSprite;
     const duration = 500;
     let from = this.timeoutAni?.isPlaying() ? this.timeoutAni.data[0].current : 360 / 100 * this.percent;
@@ -163,11 +157,11 @@ export default class RoundedProgress {
   }
 
   public destroy(): void {
-    this.rightSegment.destroy();
-    this.leftSegment.destroy();
-    this.mask.destroy();
-    this.timeoutAni.remove();
-    this.setAni.remove();
+    this.rightSegment?.destroy();
+    this.leftSegment?.destroy();
+    this.mask?.destroy();
+    this.timeoutAni?.remove();
+    this.setAni?.remove();
   }
 
 }

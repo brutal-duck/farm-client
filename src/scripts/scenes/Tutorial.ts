@@ -9,6 +9,7 @@ import { dragEventAnimal } from './Event/Unicorns/animations';
 import Arrow from '../components/animations/Arrow';
 import Hint from '../components/animations/Hint';
 import Firework from './../components/animations/Firework';
+import RoundedProgress from '../components/animations/RoundedProgress';
 
 
 class Tutorial extends Phaser.Scene {
@@ -141,6 +142,8 @@ class Tutorial extends Phaser.Scene {
         this.showContinue = true;
         this.generalClick = (): void => {
           this.scene.stop();
+          waterBar?.destroy();
+          grassBar?.destroy();
         }
 
         let balance: Ibalance = this.game.scene.keys[this.state.farm].balance();
@@ -182,20 +185,8 @@ class Tutorial extends Phaser.Scene {
           color: '#FFFFFF'
         }).setOrigin(0.5, 0.5);
 
-        let endWater: number = balance.waterPercent * (6.3 / 100) + -1.66;
-        let waterBar: Phaser.GameObjects.Graphics = this.add.graphics();
-        waterBar.lineStyle(8, waterColor, 1);
-        waterBar.beginPath();
-        waterBar.arc(70, 47, 32, -1.66, endWater);
-        waterBar.strokePath();
-
-        let endGrass: number = balance.grassPercent * (6.3 / 100) + -1.66;
-        let grassBar: Phaser.GameObjects.Graphics = this.add.graphics();
-        grassBar.clear();
-        grassBar.lineStyle(8, grassColor, 1);
-        grassBar.beginPath();
-        grassBar.arc(170, 47, 32, -1.66, endGrass);
-        grassBar.strokePath();
+        const waterBar = new RoundedProgress(this, 70, 47, 0.9).setPercent(balance.waterPercent).setTint(waterColor);
+        const grassBar = new RoundedProgress(this, 170, 47, 0.9).setPercent(balance.grassPercent).setTint(grassColor);
 
         this.topPosition = true;
         this.indent = 170;

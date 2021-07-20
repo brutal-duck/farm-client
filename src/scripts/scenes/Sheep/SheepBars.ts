@@ -194,25 +194,21 @@ class SheepBars extends Phaser.Scene {
     this.addMoney = this.add.sprite(680, 100, 'plus').setDepth(2);
 
     this.clickButton(this.addDiamonds, (): void => {
-
       let modal: Imodal = {
         type: 2,
         shopType: 1
       }
       this.state.modal = modal;
       this.scene.launch('Modal', this.state);
-
     });
 
     this.clickButton(this.addMoney, (): void => {
-
       let modal: Imodal = {
         type: 2,
         shopType: 2
       }
       this.state.modal = modal;
       this.scene.launch('Modal', this.state);
-      
     });
 
     this.add.sprite(352, 0, 'sheep-leaves').setOrigin(0.5, 0);
@@ -244,6 +240,14 @@ class SheepBars extends Phaser.Scene {
     this.waterBar = new RoundedProgress(this, 70, 47, 0.9);
     this.setBalanceBars(this.game.scene.keys[this.state.farm].balance());
 
+    if (this.state.userSheep.tutorial >= 40 && this.state.userSheep.tutorial < 100) {
+      this.grassBar.setVisible(false)
+      this.waterBar.setVisible(false)
+    } else {
+      this.grassBar.setVisible(true)
+      this.waterBar.setVisible(true)
+    }
+    
     // круглый бар собирателя
     this.collector = Collector.create(this, 230, this.height - 90, 44);
 

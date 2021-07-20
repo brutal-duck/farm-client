@@ -4,11 +4,6 @@ import ChickenBars from '../../scenes/Chicken/ChickenBars';
 import UnicornBars from '../../scenes/Event/Unicorns/UnicornBars';
 import CowBars from '../../scenes/Cow/CowBars';
 import RoundedProgress from "../animations/RoundedProgress";
-import Sheep from "../../scenes/Sheep/Main";
-import Chicken from "../../scenes/Chicken/Main";
-import Cow from "../../scenes/Cow/Main";
-import Unicorn from "../../scenes/Event/Unicorns/Main";
-import Modal from "../../scenes/Modal/Modal";
 
 /**
   *  Круговой бар собирателя    
@@ -74,9 +69,7 @@ export default class Collector extends Phaser.GameObjects.Text {
     }
 
     this.percent = 6.3 / 100;
-
-    let mainScene = this.scene as Sheep | SheepBars | Chicken | ChickenBars | Cow | CowBars | Unicorn | Modal
-    this.progress = new RoundedProgress(mainScene, this.progressX, this.progressY, 1.25, this.color).setDepth(0);
+    this.progress = new RoundedProgress(this.scene, this.progressX, this.progressY, 1.25, this.color).setDepth(0);
 
     const bounds: Phaser.Geom.Rectangle = this.getBounds();
     this.bubble = this.scene.add.graphics({ x: bounds.left - 15, y: bounds.top });
@@ -97,7 +90,7 @@ export default class Collector extends Phaser.GameObjects.Text {
       if (this.farmData.collector > 0 && this.farmData.collectorTakenTime > 0) {
         percent = this.farmData.collector / (this.farmData.collectorTakenTime / 100);
       }
-  
+
       this.progress.setPercent(percent);
 
       const time: string = shortTime(this.farmData.collector, this.scene.state.lang);

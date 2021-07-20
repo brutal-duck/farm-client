@@ -440,8 +440,8 @@ class ChickenBars extends Phaser.Scene {
 
     if (this.textGrass.text !== grassPercent) {
 
-      this.textWater.setText(grassPercent);
-      this.waterBar.setPercent(balance.grassPercent).setTint(grassColor);
+      this.textGrass.setText(grassPercent);
+      this.grassBar.setPercent(balance.grassPercent).setTint(grassColor);
 
     }
     
