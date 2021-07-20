@@ -209,10 +209,9 @@ export default class ProfileWindow {
     this.level = this.scene.add.text(levelPlate.x, levelPlate.y, levelText, levelTextStyle).setDepth(2).setOrigin(0.5);
 
     const onlineY: number = nameGeom.height > 50 ? pos.y + 25 : nameGeom.bottom;
-    this.onlineStatus = this.scene.add.text(pos.x, onlineY, this.scene.state.lang.onlineStatus, onlineStatusTextStyle).setOrigin(0);
+    this.onlineStatus = this.scene.add.text(pos.x, onlineY, this.scene.state.lang.onlineStatus, onlineStatusTextStyle).setOrigin(0).setVisible(this.owner);
 
-    const statusSettings: IstatusSettings = this.scene.getStatusSettings(this.scene.state.user.status);
-    // const statusSettings: IstatusSettings = this.scene.getStatusSettings('unicorn');
+    const statusSettings: IstatusSettings = this.scene.getStatusSettings(this.profile.status);
 
     if (statusSettings) {
       const statusTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {

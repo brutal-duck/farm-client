@@ -61,7 +61,14 @@ function updateNotificationShop(): void {
     counter += this.state.shopNotificationCount[i];
   }
   
-  if (this.scene.isActive('Modal') || this.scene.isActive('Tutorial') || this.state.farm === 'Sheep' && this.state.userSheep.tutorial < 100 && this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.visible && counter <= 0) {
+  if ((
+    this.scene.isActive('Modal') 
+    || this.scene.isActive('Tutorial') 
+    || this.state.farm === 'Sheep' 
+    && this.state.userSheep.tutorial < 100 
+    || counter <= 0) 
+    && this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.visible
+  )  {
     this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.setVisible(false);
   } else if (!this.scene.isActive('Modal') && !this.scene.isActive('Tutorial') && !this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.visible && counter > 0) {
     if (this.state.farm === 'Sheep' && this.state.userSheep.tutorial >= 100) {
@@ -72,7 +79,7 @@ function updateNotificationShop(): void {
       this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.setVisible(true);
       this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.setCount(counter);
     }
-  }
+  } 
 }
 
 // улучшение собирателей
