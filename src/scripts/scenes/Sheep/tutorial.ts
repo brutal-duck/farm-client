@@ -78,20 +78,18 @@ function doneTutor_20(): void {
   this.state.userSheep.tutorial = 30;
   
   this.game.scene.keys['SheepBars'].setBalanceBars(this.balance());
-  this.game.scene.keys['SheepBars'].textGrass.setVisible(true).setAlpha(0);
-  this.game.scene.keys['SheepBars'].grassBg.setVisible(true).setAlpha(0);
-  this.game.scene.keys['SheepBars'].grassBalance.setVisible(true).setAlpha(0);
+  this.game.scene.keys['SheepBars'].grassBar.setVisible(true);
+  const elements = [
+    this.game.scene.keys['SheepBars'].textGrass.setVisible(true).setAlpha(0),
+    this.game.scene.keys['SheepBars'].grassBg.setVisible(true).setAlpha(0),
+    this.game.scene.keys['SheepBars'].grassBalance.setVisible(true).setAlpha(0),
+  ]
 
-  let opacity: number = 0;
-  let timeEvent: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 40, callback: (): void => {
-
-    opacity += 0.05;
-    this.game.scene.keys['SheepBars'].textGrass.setAlpha(opacity);
-    this.game.scene.keys['SheepBars'].grassBg.setAlpha(opacity);
-    this.game.scene.keys['SheepBars'].grassBalance.setAlpha(opacity);
-    if (opacity >= 1) timeEvent.remove(false);
-
-  }, callbackScope: this, loop: true });
+  this.tweens.add({
+    targets: elements,
+    alpha: 1,
+    duration: 500
+  })
 
   this.time.addEvent({ delay: 3000, callback: (): void => {
     this.showTutorial();
@@ -109,20 +107,18 @@ function doneTutor_30(): void {
   this.state.userSheep.tutorial = 40;
 
   this.game.scene.keys['SheepBars'].setBalanceBars(this.balance());
-  this.game.scene.keys['SheepBars'].textWater.setVisible(true);
-  this.game.scene.keys['SheepBars'].waterBg.setVisible(true);
-  this.game.scene.keys['SheepBars'].waterBalance.setVisible(true);
+  this.game.scene.keys['SheepBars'].waterBar.setVisible(true);
+  const elements = [
+    this.game.scene.keys['SheepBars'].textWater.setVisible(true),
+    this.game.scene.keys['SheepBars'].waterBg.setVisible(true),
+    this.game.scene.keys['SheepBars'].waterBalance.setVisible(true),
+  ]
 
-  let opacity: number = 0;
-  let timeEvent: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 40, callback: (): void => {
-
-    opacity += 0.05;
-    this.game.scene.keys['SheepBars'].textWater.setAlpha(opacity);
-    this.game.scene.keys['SheepBars'].waterBg.setAlpha(opacity);
-    this.game.scene.keys['SheepBars'].waterBalance.setAlpha(opacity);
-    if (opacity >= 1) timeEvent.remove(false);
-
-  }, callbackScope: this, loop: true });
+  this.tweens.add({
+    targets: elements,
+    alpha: 1,
+    duration: 500
+  })
 
   this.time.addEvent({ delay: 1000, callback: (): void => {
     this.showTutorial();

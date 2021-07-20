@@ -240,13 +240,6 @@ class SheepBars extends Phaser.Scene {
     this.waterBar = new RoundedProgress(this, 70, 47, 0.9);
     this.setBalanceBars(this.game.scene.keys[this.state.farm].balance());
 
-    if (this.state.userSheep.tutorial >= 40 && this.state.userSheep.tutorial < 100) {
-      this.grassBar.setVisible(false)
-      this.waterBar.setVisible(false)
-    } else {
-      this.grassBar.setVisible(true)
-      this.waterBar.setVisible(true)
-    }
     
     // круглый бар собирателя
     this.collector = Collector.create(this, 230, this.height - 90, 44);
@@ -282,27 +275,23 @@ class SheepBars extends Phaser.Scene {
     }
 
     if (this.state.userSheep.tutorial < 20) {
-
       this.sheepBuy.setVisible(false);
       this.sheepPrice.setVisible(false);
       this.sheepPriceBubble.setVisible(false);
-
     }
 
     if (this.state.userSheep.tutorial < 30) {
-
       this.textGrass.setVisible(false);
       this.grassBg.setVisible(false);
       this.grassBalance.setVisible(false);
-
+      this.grassBar.setVisible(false);
     }
 
     if (this.state.userSheep.tutorial < 40) {
-
       this.textWater.setVisible(false);
       this.waterBg.setVisible(false);
       this.waterBalance.setVisible(false);
-
+      this.waterBar.setVisible(false);
     }
 
     // иконка ежедневных наград для новичков
@@ -480,15 +469,15 @@ class SheepBars extends Phaser.Scene {
       this.balanceBg.setTexture('green-balance-bg');
     }
 
-    if (balance.notEnoughWater && this.waterBg.texture.key === 'resource-enough') {
+    if (balance.notEnoughWater && this.waterBg.texture.key === 'resource-enough' && this.state.userSheep.tutorial >= 100) {
       this.waterBg.setTexture('resource-problem');
-    } else if (!balance.notEnoughWater && this.waterBg.texture.key === 'resource-problem') {
+    } else if (!balance.notEnoughWater && this.waterBg.texture.key === 'resource-problem' && this.state.userSheep.tutorial >= 100) {
       this.waterBg.setTexture('resource-enough');
     }
 
-    if (balance.notEnoughGrass && this.grassBg.texture.key === 'resource-enough') {
+    if (balance.notEnoughGrass && this.grassBg.texture.key === 'resource-enough' && this.state.userSheep.tutorial >= 100) {
       this.grassBg.setTexture('resource-problem');
-    } else if (!balance.notEnoughGrass && this.grassBg.texture.key === 'resource-problem') {
+    } else if (!balance.notEnoughGrass && this.grassBg.texture.key === 'resource-problem' && this.state.userSheep.tutorial >= 100) {
       this.grassBg.setTexture('resource-enough');
     }
 
@@ -505,8 +494,13 @@ class SheepBars extends Phaser.Scene {
 
     if (this.textWater.text !== waterPercent && this.state.userSheep.tutorial >= 40) {
 
-      this.textWater.setText(waterPercent);
-      this.waterBar.setPercent(balance.waterPercent).setTint(waterColor);
+      if (this.state.userSheep.tutorial === 40 && waterPercent !== '-100%') {
+        this.waterBar.setPercent(balance.waterPercent).setTint(waterColor);
+        this.textWater.setText(waterPercent);
+      } else if (this.state.userSheep.tutorial > 40) {
+        this.waterBar.setPercent(balance.waterPercent).setTint(waterColor);
+        this.textWater.setText(waterPercent);
+      }
       
     }
 
@@ -523,8 +517,13 @@ class SheepBars extends Phaser.Scene {
 
     if (this.textGrass.text !== grassPercent && this.state.userSheep.tutorial >= 30) {
 
-      this.textGrass.setText(grassPercent);
-      this.grassBar.setPercent(balance.grassPercent).setTint(grassColor);
+      if (this.state.userSheep.tutorial === 30 && grassPercent !== '-100%') {
+        this.grassBar.setPercent(balance.grassPercent).setTint(grassColor);
+        this.textGrass.setText(grassPercent);
+      } else if (this.state.userSheep.tutorial > 30) {
+        this.grassBar.setPercent(balance.grassPercent).setTint(grassColor);
+        this.textGrass.setText(grassPercent);
+      }
 
     }
     
