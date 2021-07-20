@@ -296,7 +296,6 @@ export default class ChatBars {
         this.scene.mainInput?.remove();
         this.deleteUserWithoutMessages();
         this.enterKey?.destroy();
-        console.log('1');
         this.scene.state.modal = {
           type: 9,
           chatType: 1,
@@ -309,7 +308,6 @@ export default class ChatBars {
       this.scene.clickButtonUp(this.tabPersonal, (): void => {
         this.scene.mainInput?.remove();
         this.enterKey?.destroy();
-        console.log('2');
         this.scene.state.modal = {
           type: 9,
           chatType: 2,
