@@ -88,7 +88,8 @@ export default class RegistrationWindow {
     regBtn.btn.y = this.scene.cameras.main.centerY + 80;
     regBtn.title.y = this.scene.cameras.main.centerY + 74;
 
-    const logoutBtn = this.scene.bigButton('red', 'center', 130, this.scene.state.lang.profileExit);
+    const logoutBtnText: string = this.scene.state.lang.profileExit.replace('\n', ' ');
+    const logoutBtn = this.scene.bigButton('red', 'center', 130, logoutBtnText);
     logoutBtn.btn.y = this.scene.cameras.main.centerY + 166;
     logoutBtn.title.y = this.scene.cameras.main.centerY + 160;
 

@@ -84,7 +84,8 @@ export default class Landing {
 
 
   private agreementText(): void {
-    this.agreement = this.scene.add.text(this.bg.x, this.bg.getBottomCenter().y + 10, this.scene.state.lang.agreement, { font: '24px Shadow', color: '#777777' }).setOrigin(0.5, 0).setDepth(this.bg.depth + 1);
+    const agreementText: string = this.scene.state.lang.agreement.replace('\n', ' ');
+    this.agreement = this.scene.add.text(this.bg.x, this.bg.getBottomCenter().y + 10, agreementText, { font: '24px Shadow', color: '#777777' }).setOrigin(0.5, 0).setDepth(this.bg.depth + 1);
     this.agreementUnderline = this.scene.add.tileSprite(this.agreement.x - 1, this.agreement.y + this.agreement.getBounds().height - 2, this.agreement.width, 2, 'pixel-landing').setOrigin(0.5, 0).setTint(0x777777).setDepth(this.bg.depth + 1);
     this.agreementClickZone = this.scene.add.tileSprite(this.agreement.x, this.agreement.y - 5, this.agreement.width + 10, this.agreement.height + 10, 'pixel-landing').setAlpha(0.0001).setOrigin(0.5, 0).setDepth(this.bg.depth + 2).setInteractive();
     

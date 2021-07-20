@@ -240,7 +240,7 @@ class Profile extends Phaser.Scene {
         font: '28px Shadow',
         color: '#ffe5d7'
       }).setOrigin(0.5, 0.5).setStroke('#522007', 5).setDepth(1);
-      this.chickenNotificator = new Notificator(this, {x: farmPosition.x - 160, y: farmPosition.y - 125 }, true);
+      this.chickenNotificator = new Notificator(this, {x: farmPosition.x - 160, y: farmPosition.y - 125 }, true).setDepth(2);
       this.click(farmSprite, (): void => {
         if (this.state.farm !== 'Chicken') {
           this.game.scene.keys[this.state.farm].autosave();

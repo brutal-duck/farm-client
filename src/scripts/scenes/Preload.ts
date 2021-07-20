@@ -180,6 +180,7 @@ const profileWindowFooter: string = require('./../../assets/images/modal/profile
 const profileWindowHeader: string = require('./../../assets/images/modal/profile-window-header.png');
 const profileWindowLevel: string = require('./../../assets/images/modal/profile-window-level.png');
 const profileWindowBg: string = require('./../../assets/images/modal/profile-window-plate.png');
+const boostCounterBg: string = require('./../../assets/images/modal/boost-counter-bg.png');
 class Preload extends Phaser.Scene {
   constructor() {
     super('Preload');
@@ -399,6 +400,7 @@ class Preload extends Phaser.Scene {
     this.load.image('profile-window-header', profileWindowHeader);
     this.load.image('profile-window-level', profileWindowLevel);
     this.load.image('profile-window-bg', profileWindowBg);
+    this.load.image('boost-counter-bg', boostCounterBg);
   }
 
   public create(): void {

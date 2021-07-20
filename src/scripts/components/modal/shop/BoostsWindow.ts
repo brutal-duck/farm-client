@@ -124,7 +124,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
         }).setOrigin(0.5).setDepth(2).setShadow(2, 3, '#724719', 5);
         const textGeom: Phaser.Geom.Rectangle = text.getBounds();
         const width: number = textGeom.width + 30 < 60 ? 60 : textGeom.width + 30;
-        this.scene.add.sprite(text.x, text.y, 'notification-bg').setDisplaySize(width, textGeom.height + 25).setDepth(1);
+        this.scene.add.sprite(text.x, text.y, 'boost-counter-bg').setDisplaySize(width, textGeom.height + 25).setDepth(1);
       }
       this.scene.clickBoostBtn(hours4, (): void => {
         this.scene.game.scene.keys[this.scene.state.farm].buyCollector(3);
@@ -148,7 +148,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
         }).setOrigin(0.5).setDepth(2).setShadow(2, 3, '#724719', 5);
         const textGeom: Phaser.Geom.Rectangle = text.getBounds();
         const width: number = textGeom.width + 30 < 60 ? 60 : textGeom.width + 30;
-        this.scene.add.sprite(text.x, text.y, 'notification-bg').setDisplaySize(width, textGeom.height + 25).setDepth(1);
+        this.scene.add.sprite(text.x, text.y, 'boost-counter-bg').setDisplaySize(width, textGeom.height + 25).setDepth(1);
       }
       this.scene.clickBoostBtn(hours12, (): void => {
         this.scene.game.scene.keys[this.scene.state.farm].buyCollector(4);
@@ -431,7 +431,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
         color: '#FFFFFF'
       }).setDepth(2).setOrigin(0.5).setShadow(2, 3, '#724719', 5);
   
-      this.herdBoostNotificationBg = this.scene.add.sprite(0, 0, 'notification-bg').setDepth(1);
+      this.herdBoostNotificationBg = this.scene.add.sprite(0, 0, 'boost-counter-bg').setDepth(1);
       const textGeom: Phaser.Geom.Rectangle = this.herdBoostNotification.getBounds();
       const width: number = textGeom.width + 30 < 60 ? 60 : textGeom.width + 30;
       this.herdBoostNotificationBg.setPosition(textGeom.centerX, textGeom.centerY).setDisplaySize(width, textGeom.height + 20);
@@ -508,7 +508,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     this.feedBoostBtnLeftText = this.scene.add.text(xBtn, yBtn - 5 , '+1 ' + this.scene.state.lang.hour, { font: '23px Shadow', color: '#FFFFFF' }).setOrigin(1, 0.5).setStroke('#3B5367', 4).setDepth(10);
     this.feedBoostBtnRightText = this.scene.add.text(xBtn, yBtn - 5 , String(shortNum(this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].feedBoostPrice)), { font: '23px Shadow', color: '#FFFFFF' }).setOrigin(0, 0.5).setStroke('#3B5367', 4).setDepth(10);
     this.feedBoostNotification = this.scene.add.text(xBtn + 90, yBtn - 40, this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].feed, { font: '28px Shadow', color: '#FFFFFF' }).setDepth(1).setOrigin(0.5).setVisible(false).setShadow(2, 3, '#724719', 5);
-    this.feedBoostNotificationBg = this.scene.add.sprite(this.feedBoostNotification.x, this.feedBoostNotification.y, 'notification-bg');
+    this.feedBoostNotificationBg = this.scene.add.sprite(this.feedBoostNotification.x, this.feedBoostNotification.y, 'boost-counter-bg');
     this.feedBoostDiamondBtn.setX(this.feedBoostBtn.x + this.feedBoostBtnLeftText.width - 25 - this.feedBoostBtnRightText.width);
     this.feedBoostBtnLeftText.setX(this.feedBoostDiamondBtn.getBounds().left - 2);
     this.feedBoostBtnRightText.setX(this.feedBoostDiamondBtn.getBounds().right + 1);
