@@ -66,7 +66,6 @@ export default class RoundedProgress {
 
 
   public setPercent(percent: number, time: number = 0): RoundedProgress {
-    console.log('setPercent ~ this', this)
     if (percent === 100) percent = 99.9
     const targets = this.mask.bitmapMask as Phaser.GameObjects.TileSprite;
     const duration = 500;
