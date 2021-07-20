@@ -79,6 +79,7 @@ let vkTask: IsociaTasks = {};
 let okTask: IsociaTasks = {};
 let shownSocialTaskWindow: boolean = false;
 let build: number = 0;
+let yandexName: string = '';
 
 let state: Istate = {
   // записываемые в localStorage
@@ -165,6 +166,7 @@ let state: Istate = {
   okTask,
   shownSocialTaskWindow,
   build,
+  yandexName,
 }
 
 export default state;
