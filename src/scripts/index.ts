@@ -25,7 +25,7 @@ import Fortune from './scenes/Event/Fortune/Fortune';
 import Block from './scenes/Block';
 import Profile from './scenes/Profile';
 
-function gcd(num1: number, num2: number): number {
+const gcd = (num1: number, num2: number): number => {
   while (num1 && num2) num1 > num2 ? num1 %= num2 : num2 %= num1;
   num1 += num2;
   return num1;
@@ -43,7 +43,7 @@ window.onload = (): void => {
     let canvasWidth: number = 720;
     let canvasHeight: number = Math.round((720 * clientHeight) / clientWidth);
     
-    if (canvasHeight > 1440) canvasHeight = 1440;
+    if (canvasHeight > 1600) canvasHeight = 1600;
     else if (canvasHeight < 1200) canvasHeight = 1200;
  
     let x: number = canvasWidth / gcd(canvasHeight, canvasWidth);
@@ -62,7 +62,7 @@ window.onload = (): void => {
     root.style.width = width + 'px';
 
     // конфиг игры
-    let config: Phaser.Types.Core.GameConfig = {
+    const config: Phaser.Types.Core.GameConfig = {
       type: Phaser.WEBGL,
       width: canvasWidth,
       height: canvasHeight,
@@ -97,9 +97,20 @@ window.onload = (): void => {
     
     const game: Phaser.Game = new Phaser.Game(config);
     window.addEventListener('resize', (): void => {
+      let clientHeight: number = Math.round(document.body.clientHeight);
+      let clientWidth: number = Math.round(document.body.clientWidth);
+
+      if (clientHeight / y > clientWidth / x) {
+        width = clientWidth;
+        height = clientWidth / x * y;
+      } else {
+        width = clientHeight / y * x;
+        height = clientHeight;
+      }
+    
+      root.style.height = height + 'px';
+      root.style.width = width + 'px';
       game.scale.resize(canvasWidth, canvasHeight);
     }, false);
-
   }, 100);
-
 }

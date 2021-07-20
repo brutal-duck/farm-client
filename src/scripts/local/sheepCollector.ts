@@ -36,7 +36,7 @@ export default [
     chapter: 1,
     time: 6,
     speed: 0.9,
-    price: 5,
+    price: 1,
     diamonds: true
   },
   {
@@ -76,7 +76,7 @@ export default [
     chapter: 1,
     time: 10,
     speed: 1,
-    price: 15,
+    price: 5,
     diamonds: true
   },
   {
@@ -116,7 +116,7 @@ export default [
     chapter: 2,
     time: 14,
     speed: 1.1,
-    price: 25,
+    price: 15,
     diamonds: true
   },
   {

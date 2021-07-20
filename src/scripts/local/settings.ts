@@ -122,7 +122,7 @@ const sheepSettings: IsheepSettings = {
     { block :2, position: 2, unlockCooldown: 0,  price: 0, unlock: 1 },
     { block :2, position: 3, unlockCooldown: 0,  price: 0, unlock: 1 },
     { block :3, position: 1, unlockCooldown: 900,  price: 36000, unlock: 4 },
-    { block :3, position: 2, unlockCooldown: 60,  price: 24000, unlock: 3 },
+    { block :3, position: 2, unlockCooldown: 60,  price: 7000, unlock: 3 },
     { block :3, position: 3, unlockCooldown: 10,  price: 2000, unlock: 2 },
     { block :4, position: 1, unlockCooldown: 7200,  price: 407000, unlock: 7 },
     { block :4, position: 2, unlockCooldown: 3600,  price: 132000, unlock: 6 },
