@@ -319,7 +319,9 @@ class Boot extends Phaser.Scene {
   private async initYandexUser(): Promise<void> {
     return this.state.ysdk.getPlayer().then(player => {
       this.name = player.getName();
-      this.state.yandexName = player.getName();
+      if (this.name === '') this.name = `yandex_${this.state.user.id.substr(0, 4)}`;
+      this.state.yandexName = this.name;
+
       this.avatar = player.getPhoto('large');
       this.state.yaPlayer = player;
       const id: string = player.getUniqueID();
