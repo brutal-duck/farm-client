@@ -40,9 +40,6 @@ export default class ProfileWindow {
   constructor(scene: Modal) {
     this.scene = scene;
     this.getUserInfo();
-    this.init();
-    this.create();
-    this.scene.openModal(this.scene.cameras.main);
   }
 
   private init(): void {
@@ -75,24 +72,47 @@ export default class ProfileWindow {
         counter: this.scene.state.user.counter,
         id: this.scene.state.foreignProfileId,
       };
-      axios.post(process.env.API +'/getUserInfo', data).then((res) => {
+      this.scene.scene.launch('Block');
+      const loadingSprite:Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY, 'loading-spinner');
+      const animation:Phaser.Tweens.Tween = this.scene.tweens.add({
+        targets: loadingSprite,
+        rotation: 2 * Math.PI,
+        duration: 700,
+        repeat: -1,
+      });
+      axios.post(process.env.API +'/getUserInfo', data).then((res): void => {
         const { result, error }: { result: IprofileData, error: boolean }  = res.data;
         if (!error) {
           if (result.avatar) {
             this.scene.load.image(`avatar${result.id}`, result.avatar);
-            this.scene.load.start();
             this.scene.load.once(Phaser.Loader.Events.COMPLETE, () => {
+              this.scene.scene.stop('Block');
+              animation?.remove();
+              loadingSprite?.destroy();
               this.profile = result;
               this.init();
               this.create();
             });
+            this.scene.load.start();
+
           } else {
             this.profile = result;
             this.init();
             this.create();
+            this.scene.scene.stop('Block');
+            animation?.remove();
+            loadingSprite?.destroy();
           }
         }
+      }).catch(() => {
+        this.scene.scene.stop('Block');
+        animation?.remove();
+        loadingSprite?.destroy();
       });
+    } else {
+      this.init();
+      this.create();
+      this.scene.openModal(this.scene.cameras.main);
     }
   }
   
