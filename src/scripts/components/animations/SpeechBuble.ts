@@ -55,7 +55,7 @@ export default class SpeechBubble {
       font: '24px Bip',
       color: '#823431',
       align: 'left',
-      wordWrap: { width: this.width - 10 }
+      wordWrap: { width: this.width - 20 }
     }).setDepth(this.y + 240);
     this.bubbleFarmer = this.scene.add.image(0, 0, 'farmer').setScale(0.5).setVisible(false);
         
