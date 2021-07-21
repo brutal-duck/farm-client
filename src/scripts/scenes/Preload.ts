@@ -175,12 +175,19 @@ const treeFallingSound: string = require('./../../assets/sounds/misc/tree-fallin
 
 const profileWindowBtn: string = require('./../../assets/images/modal/profile-window-button.png');
 const profileWindowBtnRed: string = require('./../../assets/images/modal/profile-window-button-red.png');
-const profileWindowEditBtn: string = require('./../../assets/images/modal/profile-window-edit-btn.png');
+const profileWindowSettingsBtn: string = require('./../../assets/images/modal/profile-window-settings-btn.png');
 const profileWindowFooter: string = require('./../../assets/images/modal/profile-window-footer.png');
 const profileWindowHeader: string = require('./../../assets/images/modal/profile-window-header.png');
 const profileWindowLevel: string = require('./../../assets/images/modal/profile-window-level.png');
 const profileWindowBg: string = require('./../../assets/images/modal/profile-window-plate.png');
 const boostCounterBg: string = require('./../../assets/images/modal/boost-counter-bg.png');
+
+const settingsWindowHeader: string = require('./../../assets/images/modal/settings/header.png');
+const settingsWindowMinus: string = require('./../../assets/images/modal/settings/minus.png');
+const settingsWindowPlus: string = require('./../../assets/images/modal/settings/plus.png');
+const settingsWindowSegment: string = require('./../../assets/images/modal/settings/segment.png');
+const settingsWindowMusicPlate: string = require('./../../assets/images/modal/settings/music-plate.png');
+const settingsWindowSoundPlate: string = require('./../../assets/images/modal/settings/sound-plate.png');
 class Preload extends Phaser.Scene {
   constructor() {
     super('Preload');
@@ -395,12 +402,20 @@ class Preload extends Phaser.Scene {
     }
     this.load.image('profile-window-button', profileWindowBtn);
     this.load.image('profile-window-button-red', profileWindowBtnRed);
-    this.load.image('profile-window-edit-btn', profileWindowEditBtn);
+    this.load.image('profile-window-settings-btn', profileWindowSettingsBtn);
     this.load.image('profile-window-footer', profileWindowFooter);
     this.load.image('profile-window-header', profileWindowHeader);
     this.load.image('profile-window-level', profileWindowLevel);
     this.load.image('profile-window-bg', profileWindowBg);
     this.load.image('boost-counter-bg', boostCounterBg);
+
+    this.load.image('settings-window-header', settingsWindowHeader);
+    this.load.image('settings-window-minus', settingsWindowMinus);
+    this.load.image('settings-window-plus', settingsWindowPlus);
+    this.load.image('settings-window-segment', settingsWindowSegment);
+    this.load.image('settings-window-music-plate', settingsWindowMusicPlate);
+    this.load.image('settings-window-sound-plate', settingsWindowSoundPlate);
+    
   }
 
   public create(): void {
