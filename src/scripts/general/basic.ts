@@ -1737,6 +1737,20 @@ function playSoundOnce(soundName: string): void {
   }
 }
 
+function saveInPlatformStorage(key: string, value: any): void {
+  const valueString: string = JSON.stringify(value);
+  const callback = (): void => {
+
+  };
+  switch (this.state.platform) {
+    case 'vk':
+      bridge.send('VKWebAppStorageSet', { key: key, value: valueString });
+      break;
+    case 'ok':
+      FAPI.Client.call({method: 'storage.set', key: key, value: valueString }, () => {})
+  }
+}
+
 export {
   yandexAuth,
   random,
