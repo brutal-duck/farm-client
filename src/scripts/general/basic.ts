@@ -293,6 +293,7 @@ function yandexAuth(): Promise<void> {
       this.state.yaPlayer = player;
       this.state.name = player.getName();
       if (this.state.name === '') this.state.name = `yandex_${this.state.user.id.substr(0, 4)}`;
+      this.state.yandexName = this.name;
       this.state.avatar = player.getPhoto('large');
       axios.post(process.env.API + "/authYa", {
         id: this.state.user.id,
