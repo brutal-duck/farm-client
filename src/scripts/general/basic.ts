@@ -1738,18 +1738,67 @@ function playSoundOnce(soundName: string): void {
   }
 }
 
-function saveInPlatformStorage(key: string, value: any): void {
+function savePlatformStorage(key: string, value: any): void {
   const valueString: string = JSON.stringify(value);
-  const callback = (): void => {
-
-  };
   switch (this.state.platform) {
     case 'vk':
       bridge.send('VKWebAppStorageSet', { key: key, value: valueString });
       break;
     case 'ok':
-      FAPI.Client.call({method: 'storage.set', key: key, value: valueString }, () => {})
+      FAPI.Client.call({ method: 'storage.set', key: key, value: valueString });
+      break;
+    case 'ya':
+      this.state.yaPlayer.setData({ key: key, value: valueString });
+      break;
+    default:
+      LocalStorage.set(key, valueString);
+      break;
   }
+}
+
+function getPlatformStorage(key: string): Promise<any> {
+  const isJSON = (data: string): boolean => {
+    try {
+      JSON.parse(data);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  };
+
+  return new Promise((resolve, reject) => {
+    switch (this.state.platform) {
+      case 'vk':
+        bridge.send('VKWebAppStorageGet', { keys: [key] }).then(data => {
+          console.log(data)
+          const result = data.keys.find(data => data.key === key).value;
+          if (isJSON(result)) resolve(JSON.parse(result));
+          reject(false);
+        });
+        break;
+      case 'ok':
+        FAPI.Client.call({ method: 'storage.get', keys: [key] }, res => {
+          console.log(res);
+          const result = res.data[key];
+          if (isJSON(result)) resolve(JSON.parse(result));
+          reject(false);
+        });
+        break;
+      case 'ya':
+        this.state.yaPlayer.getData(key).then(data => {
+          console.log(data)
+          const result = data[key];
+          if (isJSON(result)) resolve(JSON.parse(result));
+          reject(false);
+        });
+        break;
+      default:
+        const result = LocalStorage.get(key);
+        if (isJSON(result)) resolve(JSON.parse(result));
+        reject(false);
+        break;
+    }
+  });
 }
 
 export {
@@ -1792,4 +1841,6 @@ export {
   sendSocialEvent,
   sendAppEventVk,
   playSoundOnce,
+  savePlatformStorage,
+  getPlatformStorage,
 }
