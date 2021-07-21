@@ -164,8 +164,6 @@ export default class SettingsWindow {
   private saveVolume(): void {
     //@ts-ignore
     this.scene.sound.get('music').volume = this.scene.state.musicVolume;
-    const music: Phaser.Sound.BaseSound = this.scene.sound.get('music');
-    console.log(music)
     this.scene.game.scene.keys[this.scene.state.farm].setPlatformStorage('musicVolume', this.scene.state.musicVolume);
     this.scene.game.scene.keys[this.scene.state.farm].setPlatformStorage('soundVolume', this.scene.state.soundVolume);
   }
