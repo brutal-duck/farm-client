@@ -940,6 +940,8 @@ export default {
     blocking: 'Блокировать',
     generalChat: 'Общий чат',
     personalChat: 'Личный чат',
+    settingsHeader: 'Настройки игры',
+
   },
 
   en: {
@@ -1883,5 +1885,6 @@ export default {
     blocking: 'Блокировать',
     generalChat: 'Общий чат',
     personalChat: 'Личный чат',
+    settingsHeader: 'Настройки игры',
   },
 }

@@ -39,6 +39,7 @@ import EventRatingsWindow from '../../components/modal/EventRatingsWindow';
 import HerdBoostUnicornWindow from '../../components/modal/HerdBoostUnicornWindow';
 import ProfileWindow from '../../components/modal/ProfileWindow';
 import ChatBars from '../../components/modal/chat/ChatBars';
+import SettingsWindow from './../../components/modal/SettingsWindow';
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -156,6 +157,10 @@ class Modal extends Phaser.Scene {
         break;
       case 15: 
         new ProfileWindow(this);
+        this.openModal(this.cameras.main);
+        break;
+      case 16: 
+        new SettingsWindow(this);
         this.openModal(this.cameras.main);
         break;
       default:

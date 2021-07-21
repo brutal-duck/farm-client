@@ -20,7 +20,7 @@ export default class ProfileWindow {
   private closeBtn: Phaser.GameObjects.Sprite;
   private footer: Phaser.GameObjects.Sprite;
   private level: Phaser.GameObjects.Text;
-  private editNicknameBtn: Phaser.GameObjects.Sprite;
+  private settingsBtn: Phaser.GameObjects.Sprite;
   private onlineStatus: Phaser.GameObjects.Text;
   private supportBtn: Phaser.GameObjects.Sprite;
   private supportBtnText: Phaser.GameObjects.Text;
@@ -151,7 +151,7 @@ export default class ProfileWindow {
   }
 
   private createFooter(): void {
-    this.footer = this.scene.add.sprite(this.x, this.y + this.height / 2 + 20, 'profile-window-footer').setDepth(-1).setOrigin(0.5, 1);
+    this.footer = this.scene.add.sprite(this.x, this.y + this.height / 2 + 23, 'profile-window-footer').setDepth(-1).setOrigin(0.5, 1);
   }
 
   private createAvatar(): void {
@@ -201,20 +201,18 @@ export default class ProfileWindow {
     this.name.setCrop(0, 0, 240, 50);
     
     const nameGeom: Phaser.Geom.Rectangle = this.name.getBounds();
-    const editBtnX: number = nameGeom.width > 240 ? pos.x + 245 : nameGeom.right + 5;
-    if (nameGeom.height > 50) {
-      this.name.setY(this.name.y + 15)
-    }
-    this.editNicknameBtn = this.scene.add.sprite(editBtnX, pos.y, 'profile-window-edit-btn')
-      .setOrigin(0, 0.5)
-      .setVisible((this.scene.state.platform === 'web' || this.scene.state.platform === 'android') && this.owner);
+
+    this.settingsBtn = this.scene.add.sprite(pos.x + 250, pos.y + 180, 'profile-window-settings-btn')
+      .setVisible(this.owner);
 
     const levelText: string = `${this.scene.state.lang.level} ${this.profile.level}`;
     const levelPlate: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.avatar.x, this.avatar.y + this.avatar.displayHeight / 2, 'profile-window-level').setDepth(1);
     this.level = this.scene.add.text(levelPlate.x, levelPlate.y, levelText, levelTextStyle).setDepth(2).setOrigin(0.5);
 
     const onlineY: number = nameGeom.height > 50 ? pos.y + 25 : nameGeom.bottom;
-    this.onlineStatus = this.scene.add.text(pos.x, onlineY, this.scene.state.lang.onlineStatus, onlineStatusTextStyle).setOrigin(0).setVisible(this.owner);
+    this.onlineStatus = this.scene.add.text(pos.x, onlineY, this.scene.state.lang.onlineStatus, onlineStatusTextStyle)
+      .setOrigin(0)
+      .setVisible(this.owner);
 
     const statusSettings: IstatusSettings = this.scene.getStatusSettings(this.profile.status);
 
@@ -237,15 +235,15 @@ export default class ProfileWindow {
 
   private createOwnerBtns(): void {
     const pos1: Iposition = {
-      x: this.x - 150,
+      x: this.x - 165,
       y: this.y + 97,
     };
     const pos2: Iposition = {
-      x: this.x,
+      x: this.x - 25,
       y: this.y + 97,
     }
     const pos3: Iposition = {
-      x: this.x + 150,
+      x: this.x + 105,
       y: this.y + 97,
     }
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
@@ -334,8 +332,8 @@ export default class ProfileWindow {
     if (this.licenseBtnText) {
       this.scene.clickButton(this.licenseBtnText, () => { this.onLicenseBtn(); });
     }
-    if (this.editNicknameBtn) {
-      this.scene.clickButton(this.editNicknameBtn, () => { this.onEditNicknameBtn(); });
+    if (this.settingsBtn) {
+      this.scene.clickButton(this.settingsBtn, () => { this.onSettingsBtn(); });
     }
     if(this.writeBtn) {
       this.scene.clickModalBtn({ btn: this.writeBtn, title: this.writeBtnText }, () => { this.onWriteBtn(); });
@@ -381,8 +379,10 @@ export default class ProfileWindow {
     window.open('https://' + location.hostname + '/agreement', '_blank');
   }
   
-  private onEditNicknameBtn(): void {
-    this.openSysWindow(12);
+  private onSettingsBtn(): void {
+    const modal: Imodal = { type: 16 };
+    this.scene.state.modal = modal;
+    this.scene.scene.restart(this.scene.state);
   }
 
   private onCloseBtn(): void {
