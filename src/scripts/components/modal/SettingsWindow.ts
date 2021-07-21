@@ -164,8 +164,8 @@ export default class SettingsWindow {
   private saveVolume(): void {
     //@ts-ignore
     this.scene.sound.get('music').volume = this.scene.state.musicVolume;
-    this.scene.game.scene.keys[this.scene.state.farm].setPlatformStorage('musicVolume', this.scene.state.musicVolume);
-    this.scene.game.scene.keys[this.scene.state.farm].setPlatformStorage('soundVolume', this.scene.state.soundVolume);
+    this.scene.game.scene.keys[this.scene.state.farm].setPlatformStorage('musicVolume', String(this.scene.state.musicVolume));
+    this.scene.game.scene.keys[this.scene.state.farm].setPlatformStorage('soundVolume', String(this.scene.state.soundVolume));
   }
 
   private onChangeNickName = (): void => {

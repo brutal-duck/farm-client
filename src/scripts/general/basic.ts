@@ -1777,9 +1777,9 @@ function getPlatformStorage(key: string): Promise<any> {
         });
         break;
       case 'ok':
-        FAPI.Client.call({ method: 'storage.get', keys: [key] }, res => {
-          console.log(res);
-          const result = res.data[key];
+        FAPI.Client.call({ method: 'storage.get', keys: [key] }, (res, data) => {
+          console.log(data);
+          const result = data[key];
           if (isJSON(result)) resolve(JSON.parse(result));
           reject(false);
         });
