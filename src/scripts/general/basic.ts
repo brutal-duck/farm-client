@@ -1770,7 +1770,6 @@ function getPlatformStorage(key: string): Promise<any> {
     switch (this.state.platform) {
       case 'vk':
         bridge.send('VKWebAppStorageGet', { keys: [key] }).then(data => {
-          console.log(data)
           const result = data.keys.find(data => data.key === key).value;
           if (isJSON(result)) resolve(JSON.parse(result));
           reject(false);
@@ -1779,7 +1778,7 @@ function getPlatformStorage(key: string): Promise<any> {
       case 'ok':
         FAPI.Client.call({ method: 'storage.get', keys: [key] }, (res, data) => {
           console.log(data);
-          const result = data[key];
+          const result = data.data[key];
           if (isJSON(result)) resolve(JSON.parse(result));
           reject(false);
         });
