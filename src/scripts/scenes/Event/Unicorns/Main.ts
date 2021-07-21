@@ -15,6 +15,8 @@ import {
   farmBalance,
   randomString,
   playSoundOnce,
+  setPlatformStorage,
+  getPlatformStorage,
 } from '../../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -46,7 +48,7 @@ import {
   createBoostAnimal,
   getFreeBoostPositions,
   tryTask,
-  buyNextFarm
+  buyNextFarm,
 } from './basic';
 import { 
   buyAnimal, 
@@ -224,6 +226,8 @@ class Unicorn extends Phaser.Scene {
   public randomString = randomString.bind(this);
   public progressTerritoryCooldown = progressTerritoryCooldown.bind(this);
   public playSoundOnce = playSoundOnce.bind(this);
+  public setPlatformStorage = setPlatformStorage.bind(this);
+  public getPlatformStorage = getPlatformStorage.bind(this);
 
   public init(state: Istate): void {
     this.state = state;

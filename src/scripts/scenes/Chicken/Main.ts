@@ -35,6 +35,8 @@ import {
   sendAppEventVk,
   yandexAuth,
   playSoundOnce,
+  setPlatformStorage,
+  getPlatformStorage,
 } from '../../general/basic';
 import {
   improveCollector,
@@ -239,6 +241,8 @@ class Chicken extends Phaser.Scene {
   public progressTerritoryCooldown = progressTerritoryCooldown.bind(this);
   public yandexAuth = yandexAuth.bind(this);
   public playSoundOnce = playSoundOnce.bind(this);
+  public setPlatformStorage = setPlatformStorage.bind(this);
+  public getPlatformStorage = getPlatformStorage.bind(this);
 
   public init(state: Istate): void {
     this.autoprogressTimer = Math.round(new Date().getTime() / 1000);

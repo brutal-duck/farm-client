@@ -12,7 +12,8 @@ import Login from '../components/Web/Login';
 import ErrorWindow from '../components/Web/ErrorWindow';
 import { clickShopBtn, clickModalBtn, click } from './../general/clicks';
 import { shopButton, bigButton } from './../elements';
-import { general } from './../local/settings'
+import { general } from './../local/settings';
+import { setPlatformStorage, getPlatformStorage } from './../general/basic';
 
 Amplitude.init();
 
@@ -56,6 +57,8 @@ class Boot extends Phaser.Scene {
   public clickShopBtn = clickShopBtn.bind(this);
   public clickModalBtn = clickModalBtn.bind(this);
   public click = click.bind(this);
+  public setPlatformStorage = setPlatformStorage.bind(this);
+  public getPlatformStorage = getPlatformStorage.bind(this);
 
   public init(): void {
     this.build = 3.9;
@@ -118,10 +121,27 @@ class Boot extends Phaser.Scene {
       this.userReady = false;
       this.fontsReady = false;
       this.setStartState();
+      this.initVolume();
     }
     if (!this.createnLanding && this.fontsReady) {
       this.createLanding();
     }
+  }
+
+  private initVolume(): void {
+    this.getPlatformStorage('musicVolume').then(data => {
+      if (data) this.state.musicVolume = data;
+    }).catch(() => {
+      this.state.musicVolume = 1;
+      this.setPlatformStorage('musicVolume', this.state.musicVolume);
+    });
+
+    this.getPlatformStorage('soundVolume').then(data => {
+      if (data) this.state.soundVolume = data;
+    }).catch(() => {
+      this.state.soundVolume = 1;
+      this.setPlatformStorage('soundVolume', this.state.soundVolume);
+    });
   }
 
   private setPlatform(): void {

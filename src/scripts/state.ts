@@ -80,6 +80,8 @@ let okTask: IsociaTasks = {};
 let shownSocialTaskWindow: boolean = false;
 let build: number = 0;
 let yandexName: string = '';
+let musicVolume: number = 1;
+let soundVolume: number = 1;
 
 let state: Istate = {
   // записываемые в localStorage
@@ -167,6 +169,8 @@ let state: Istate = {
   shownSocialTaskWindow,
   build,
   yandexName,
+  musicVolume,
+  soundVolume,
 }
 
 export default state;

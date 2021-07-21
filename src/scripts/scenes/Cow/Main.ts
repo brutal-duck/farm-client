@@ -32,6 +32,8 @@ import {
   sendAppEventVk,
   yandexAuth,
   playSoundOnce,
+  setPlatformStorage,
+  getPlatformStorage,
 } from '../../general/basic';
 import {
   improveCollector,
@@ -252,6 +254,8 @@ class Cow extends Phaser.Scene {
   public progressTerritoryCooldown = progressTerritoryCooldown.bind(this);
   public yandexAuth = yandexAuth.bind(this);
   public playSoundOnce = playSoundOnce.bind(this);
+  public setPlatformStorage = setPlatformStorage.bind(this);
+  public getPlatformStorage = getPlatformStorage.bind(this);
 
   public init(state: Istate): void {
 

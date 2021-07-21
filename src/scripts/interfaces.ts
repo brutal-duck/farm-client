@@ -825,4 +825,6 @@ interface Istate {
   updatePersonalMessage?: boolean;
   foreignProfileId?: string;
   yandexName?: string;
+  musicVolume: number;
+  soundVolume: number;
 }
