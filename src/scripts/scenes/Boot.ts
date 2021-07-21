@@ -74,6 +74,7 @@ class Boot extends Phaser.Scene {
     this.initAmplitude();
     this.loadFonts();
     this.checkUser();
+    this.switchingMusic();
 
     if (process.env.DEV_CLIENT === window.location.origin) {
       this.initEruda();
@@ -575,6 +576,20 @@ class Boot extends Phaser.Scene {
         this.state.okTask.sendPost = JSON.parse(data.data.sendPost);
       }
     });
+  }
+
+  private switchingMusic(): void {
+    document.addEventListener('visibilitychange', (): void => {
+      if (document.visibilityState === 'visible') {
+        setTimeout((): void => {
+          const music: Phaser.Sound.BaseSound = this.sound.get('music');
+          music?.play();
+        }, 10);
+      } else {
+        const music: Phaser.Sound.BaseSound = this.sound.get('music');
+        music?.pause();
+      }
+    }, false);
   }
 }
 
