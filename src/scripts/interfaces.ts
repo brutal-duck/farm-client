@@ -125,6 +125,7 @@ interface IuserAutoSave {
   takenSocialAward: boolean;
   messages: Imessage[];
   personalMessages: IuserPersonalMessage[];
+  yandexName: string;
 }
 interface Imessage {
   type: number;
@@ -822,5 +823,6 @@ interface Istate {
   build: number;
   yaPlayer?: any;
   updatePersonalMessage?: boolean;
-  foreignProfileId?: string; 
+  foreignProfileId?: string;
+  yandexName?: string;
 }

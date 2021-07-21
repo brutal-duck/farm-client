@@ -302,6 +302,7 @@ export default function autosave(): void {
     takenSocialAward: state.user.takenSocialAward,
     messages: state.user.messages,
     personalMessages: state.user.personalMessages,
+    yandexName: state.yandexName,
   }
 
   const data: IdataAutoSave = { 

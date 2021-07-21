@@ -103,6 +103,11 @@ export default class ProfileWindow {
             animation?.remove();
             loadingSprite?.destroy();
           }
+        } else {
+          this.scene.scene.stop('Modal');
+          this.scene.scene.stop('Block');
+          animation?.remove();
+          loadingSprite?.destroy();
         }
       }).catch(() => {
         this.scene.scene.stop('Block');

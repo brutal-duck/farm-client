@@ -74,6 +74,7 @@ class Boot extends Phaser.Scene {
     this.initAmplitude();
     this.loadFonts();
     this.checkUser();
+    this.switchingMusic();
 
     if (process.env.DEV_CLIENT === window.location.origin) {
       this.initEruda();
@@ -319,6 +320,9 @@ class Boot extends Phaser.Scene {
   private async initYandexUser(): Promise<void> {
     return this.state.ysdk.getPlayer().then(player => {
       this.name = player.getName();
+      if (this.name === '') this.name = `yandex_${this.state.user.id.substr(0, 4)}`;
+      this.state.yandexName = this.name;
+
       this.avatar = player.getPhoto('large');
       this.state.yaPlayer = player;
       const id: string = player.getUniqueID();
@@ -377,21 +381,21 @@ class Boot extends Phaser.Scene {
       // @ts-ignore
       window.admob.rewardvideo.prepare();
 
-      document.addEventListener('pause', (): void => {
-        console.log('pause event');
-        const music: Phaser.Sound.BaseSound = this.sound.get('music');
-        console.log(music);
-        music?.pause();
-      }, false);
+      // document.addEventListener('pause', (): void => {
+      //   console.log('pause event');
+      //   const music: Phaser.Sound.BaseSound = this.sound.get('music');
+      //   console.log(music);
+      //   music?.pause();
+      // }, false);
 
-      document.addEventListener('resume', (): void => {
-        setTimeout(() => {
-          console.log('resume event')
-          const music: Phaser.Sound.BaseSound = this.sound.get('music');
-          console.log(music);
-          music?.play();
-        }, 0);
-      }, false);
+      // document.addEventListener('resume', (): void => {
+      //   setTimeout(() => {
+      //     console.log('resume event')
+      //     const music: Phaser.Sound.BaseSound = this.sound.get('music');
+      //     console.log(music);
+      //     music?.play();
+      //   }, 0);
+      // }, false);
     }, false);
   }
   
@@ -574,6 +578,20 @@ class Boot extends Phaser.Scene {
         this.state.okTask.sendPost = JSON.parse(data.data.sendPost);
       }
     });
+  }
+
+  private switchingMusic(): void {
+    document.addEventListener('visibilitychange', (): void => {
+      if (document.visibilityState === 'visible') {
+        setTimeout((): void => {
+          const music: Phaser.Sound.BaseSound = this.sound.get('music');
+          music?.play();
+        }, 10);
+      } else {
+        const music: Phaser.Sound.BaseSound = this.sound.get('music');
+        music?.pause();
+      }
+    }, false);
   }
 }
 
