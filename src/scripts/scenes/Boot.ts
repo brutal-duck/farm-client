@@ -129,19 +129,35 @@ class Boot extends Phaser.Scene {
   }
 
   private initVolume(): void {
-    this.getPlatformStorage('musicVolume').then(data => {
-      if (data) this.state.musicVolume = Number(data);
-    }).catch(() => {
-      this.state.musicVolume = 1;
-      this.setPlatformStorage('musicVolume', this.state.musicVolume);
-    });
-
-    this.getPlatformStorage('soundVolume').then(data => {
-      if (data) this.state.soundVolume = Number(data);
-    }).catch(() => {
-      this.state.soundVolume = 1;
-      this.setPlatformStorage('soundVolume', this.state.soundVolume);
-    });
+    if (this.state.platform !== 'ya') {
+      this.getPlatformStorage('musicVolume').then(data => {
+        if (data) this.state.musicVolume = Number(data);
+      }).catch(() => {
+        this.state.musicVolume = 1;
+        this.setPlatformStorage('musicVolume', String(this.state.musicVolume));
+      });
+  
+      this.getPlatformStorage('soundVolume').then(data => {
+        if (data) this.state.soundVolume = Number(data);
+      }).catch(() => {
+        this.state.soundVolume = 1;
+        this.setPlatformStorage('soundVolume', String(this.state.soundVolume));
+      });
+    } else {
+      this.getPlatformStorage('volume').then(data => {
+        if (data.music && data.sound) {
+          this.state.musicVolume = Number(data.music);
+          this.state.soundVolume = Number(data.sound);
+        } else {
+          this.state.musicVolume = 1;
+          this.state.soundVolume = 1;
+          this.setPlatformStorage('volume', {
+            music: this.state.musicVolume,
+            sound: this.state.soundVolume,
+          });
+        }
+      });
+    }
   }
 
   private setPlatform(): void {

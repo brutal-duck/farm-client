@@ -1748,7 +1748,10 @@ function setPlatformStorage(key: string, value: any): void {
       FAPI.Client.call({ method: 'storage.set', key: key, value: valueString });
       break;
     case 'ya':
-      this.state.yaPlayer.setData({ key: key, value: valueString });
+      const obj = {};
+      obj[key] = valueString;
+      this.state.yaPlayer?.setData(obj, true).then(res => {
+      });
       break;
     default:
       LocalStorage.set(key, valueString);
@@ -1777,19 +1780,17 @@ function getPlatformStorage(key: string): Promise<any> {
         break;
       case 'ok':
         FAPI.Client.call({ method: 'storage.get', keys: [key] }, (res, data) => {
-          console.log(data);
           const result = data.data[key];
           if (isJSON(result)) resolve(JSON.parse(result));
           reject(false);
         });
         break;
       case 'ya':
-        this.state.yaPlayer.getData(key).then(data => {
-          console.log(data)
+        this.state.yaPlayer?.getData().then(data => {
           const result = data[key];
           if (isJSON(result)) resolve(JSON.parse(result));
           reject(false);
-        });
+        }).catch(err => console.log(err));
         break;
       default:
         const result = LocalStorage.get(key);
