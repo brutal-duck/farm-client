@@ -28,6 +28,7 @@ import SheepWindow from '../../components/modal/system/SheepWindow';
 import ChickenWindow from '../../components/modal/system/ChickenWindow';
 import CowWindow from '../../components/modal/system/CowWindow';
 import ConfirmSaveProgress from './../../components/modal/system/ConfirmSaveProgress';
+import CreateClanWindow from './../../components/modal/system/CreateClanWindow';
 
 function systemWindow(): void {
   let height:number = 0;
@@ -55,7 +56,8 @@ function systemWindow(): void {
       this.state.modal.sysType === 12 || 
       this.state.modal.sysType === 13 ||
       this.state.modal.sysType === 14 ||
-      this.state.modal.sysType === 15
+      this.state.modal.sysType === 15 ||
+      this.state.modal.sysType === 21
     ) {
       this.enterKey.destroy();
       this.mainInput.remove();
@@ -179,6 +181,10 @@ function systemWindow(): void {
 
     case 20: 
       new ConfirmSaveProgress(this);
+      break;
+      
+    case 21: 
+      new CreateClanWindow(this);
       break;
       
     default:      

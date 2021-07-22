@@ -349,19 +349,11 @@ class Sheep extends Phaser.Scene {
     this.setCollector();
     let cursors = this.input.keyboard.createCursorKeys();
     cursors.space.on('down', (): void => {
-      const data = {
-        id: this.state.user.id,
-        hash: this.state.user.hash,
-        counter: this.state.user.counter,
-        name: 'КЛАН ТРУ! ПАЦАНОВ',
-      };
-      // axios.post(process.env.API + '/createClan', data).then(res => {
-      //   console.log(res.data);
-      // });
-      this.state.socket.io.emit('checkClanRoom', {
-        clanId: "60f9237a626ead35985f65fd",
-        userId: this.state.user.id,
-      })
+      this.state.modal = {
+        type: 1,
+        sysType: 21,
+      }
+      this.scene.launch('Modal', this.state);
       // let tasks = this.partTasks();
       // for (let i in tasks) {
       //       tasks[i].done = 1;
