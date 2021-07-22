@@ -510,6 +510,7 @@ class CowPreload extends Phaser.Scene {
 
         this.state.socket.io.emit('updateSession', {
           user_id: this.state.user.id,
+          clan_id: this.state.user.clanId,
           hash: this.state.user.hash,
           screen_size: sizes,
           loadTime: loadTime

@@ -140,7 +140,7 @@ import {
   progressTerritoryCooldown,
 } from '../../general/interval';
 import Ads from '../../components/Utils/Ads';
-
+import axios from 'axios';
 class Sheep extends Phaser.Scene {
   constructor() {
     super('Sheep');
@@ -347,14 +347,27 @@ class Sheep extends Phaser.Scene {
     // интервальные функция
     this.interval();
     this.setCollector();
-    // let cursors = this.input.keyboard.createCursorKeys();
-    // cursors.space.on('down', (): void => {
-    //   // let tasks = this.partTasks();
-    //   // for (let i in tasks) {
-    //   //       tasks[i].done = 1;
-    //   //       // tasks[i].got_awarded = 1;
-    //   // }
-    // });
+    let cursors = this.input.keyboard.createCursorKeys();
+    cursors.space.on('down', (): void => {
+      const data = {
+        id: this.state.user.id,
+        hash: this.state.user.hash,
+        counter: this.state.user.counter,
+        name: 'КЛАН ТРУ! ПАЦАНОВ',
+      };
+      // axios.post(process.env.API + '/createClan', data).then(res => {
+      //   console.log(res.data);
+      // });
+      this.state.socket.io.emit('checkClanRoom', {
+        clanId: "60f9237a626ead35985f65fd",
+        userId: this.state.user.id,
+      })
+      // let tasks = this.partTasks();
+      // for (let i in tasks) {
+      //       tasks[i].done = 1;
+      //       // tasks[i].got_awarded = 1;
+      // }
+    });
   }
 
 

@@ -312,6 +312,7 @@ export default function loadData(response: any): void {
   const user: Iuser = {
     diamonds: response.data.user.diamonds,
     id: response.data.user._id,
+    clanId: response.data.user.clanId,
     xp: response.data.user.xp,
     hash: response.data.user.hash,
     login: response.data.user.login,

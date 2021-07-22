@@ -609,6 +609,7 @@ class EventPreload extends Phaser.Scene {
         let sizes = document.body.clientWidth + ' * ' + document.body.clientHeight;
         this.state.socket.io.emit('updateSession', {
           user_id: this.state.user.id,
+          clan_id: this.state.user.clanId,
           hash: this.state.user.hash,
           screen_size: sizes,
           loadTime: loadTime

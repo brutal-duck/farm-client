@@ -190,6 +190,7 @@ interface IadditionalTutorial {
 interface Iuser {
   diamonds: number;
   id: string;
+  clanId: string;
   xp: number;
   hash: string;
   login: string;

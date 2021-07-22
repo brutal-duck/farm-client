@@ -2,6 +2,7 @@
 let userData: Iuser = {
   diamonds: 3,
   id: 'local',
+  clanId: '',
   xp: 0,
   hash: 'local',
   login: '',

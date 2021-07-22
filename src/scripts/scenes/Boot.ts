@@ -214,6 +214,7 @@ class Boot extends Phaser.Scene {
     this.state.user = {
       diamonds: 0,
       id: '',
+      clanId: '',
       xp: 0,
       hash: this.hash,
       login: '',
