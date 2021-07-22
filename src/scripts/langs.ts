@@ -944,6 +944,7 @@ export default {
     blocking: 'Блокировать',
     generalChat: 'Общий чат',
     personalChat: 'Личный чат',
+    clanChat: 'Клановый чат',
     settingsHeader: 'Настройки игры',
 
   },
@@ -1893,6 +1894,7 @@ export default {
     blocking: 'Блокировать',
     generalChat: 'Общий чат',
     personalChat: 'Личный чат',
+    clanChat: 'Клановый чат',
     settingsHeader: 'Настройки игры',
   },
 }

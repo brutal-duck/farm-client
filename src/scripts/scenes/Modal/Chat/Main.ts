@@ -5,6 +5,7 @@ import PersonalChatList from './../../../components/modal/chat/PersonalChatList'
 import PersonalChat from '../../../components/modal/chat/PersonalChat';
 import { click } from '../../../general/clicks';
 import Modal from './../Modal';
+import ClanChat from './../../../components/modal/chat/ClanChat';
 
 class Chat extends Phaser.Scene {
   constructor() {
@@ -21,7 +22,8 @@ class Chat extends Phaser.Scene {
   public msg: Ichat[];
   public generalChat: GeneralChat;
   public personalChatList: PersonalChatList;
-  public personalChat;
+  public personalChat: PersonalChat;
+  public clanChat: ClanChat;
 
   public getStatusSettings = getStatusSettings.bind(this);
   public loadingModal = loadingModal.bind(this);
@@ -30,7 +32,7 @@ class Chat extends Phaser.Scene {
   public init(state: Istate): void {
     this.state = state;
     this.scrollHeight = 0;
-    if (this.state.modal.chatType === 1) {
+    if (this.state.modal.chatType === 1 || this.state.modal.chatType === 3) {
       this.windowHeight = 640;
     } else if (this.state.modal.chatType === 2 && !this.state.modal.chatUserId) {
       this.windowHeight = 722;
@@ -52,6 +54,8 @@ class Chat extends Phaser.Scene {
       this.personalChatList = new PersonalChatList(this);
     } else if (this.state.modal.chatType === 2 && this.state.modal.chatUserId) {
       this.personalChat = new PersonalChat(this);
+    } else if (this.state.modal.chatType === 3) {
+      this.clanChat = new ClanChat(this);
     }
   }
 
@@ -63,6 +67,9 @@ class Chat extends Phaser.Scene {
       case 2: 
         if (!this.state.modal.chatUserId) this.personalChatList?.update(); 
         else this.personalChat?.update();
+        break;
+      case 3: 
+        this.clanChat?.update();
         break;
     }
     const ModalScene: Modal = this.scene.get('Modal') as Modal;

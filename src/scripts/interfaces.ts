@@ -665,7 +665,7 @@ interface Ichat {
   login: string;
   time: string;
   text: string;
-  id: string;
+  id?: string;
   status: string;
   userId: string;
 }
@@ -828,4 +828,5 @@ interface Istate {
   yandexName?: string;
   musicVolume: number;
   soundVolume: number;
+  clanChat: Array<Ichat>;
 }

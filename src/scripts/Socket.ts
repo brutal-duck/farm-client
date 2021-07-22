@@ -62,5 +62,9 @@ export default class Socket {
         }
       }
     });
+    this.io.on('newClanMessage', (data: Ichat) => {
+      this.state.clanChat.push(data);
+    });
+    
   }
 }

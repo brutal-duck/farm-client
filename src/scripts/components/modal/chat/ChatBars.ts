@@ -35,7 +35,12 @@ export default class ChatBars {
 
   private create(): void {
     this.createMainElements();
-    if (this.scene.state.modal.chatType === 1 || this.scene.state.modal.chatType === 2 && this.scene.state.modal.chatUserId) this.createInput();
+    if (
+      this.scene.state.modal.chatType === 1 
+      || this.scene.state.modal.chatType === 2 
+      && this.scene.state.modal.chatUserId 
+      || this.scene.state.modal.chatType === 3
+    ) this.createInput();
     if (this.scene.state.modal.chatType === 2 && this.scene.state.modal.chatUserId) this.createPersonalChatPlate();
     this.setTabsListeners();
     this.setResize();
@@ -131,14 +136,86 @@ export default class ChatBars {
     const slice: number = 30;
     const type: number = this.scene.state.modal.chatType;
     this.createCloseTab();
-    // if (CLAN) {
-    //   this.tabChat = this.scene.add.sprite(bgGeom.left + 10, bgGeom.top - 20, 'chat-tab-active').setDepth(2).setOrigin(0, 0);
-    //   const tabChatGeom: Phaser.Geom.Rectangle = this.tabChat.getBounds();
-    //   this.tabChatText = this.scene.add.text(tabChatGeom.centerX, tabChatGeom.centerY, this.scene.state.lang.generalChat, tabActiveTextStyle).setDepth(2).setOrigin(0.5);
-    //   this.tabPersonal = this.scene.add.sprite(tabChatGeom.right, bgGeom.top, 'chat-tab').setDepth(2).setOrigin(0, 0);
-    //   const tabPersonalGeom: Phaser.Geom.Rectangle = this.tabPersonal.getBounds();
-    //   this.tabPersonalText = this.scene.add.text(tabPersonalGeom.centerX, tabPersonalGeom.centerY, this.scene.state.lang.personalChat, tabTextStyle).setDepth(2).setOrigin(0.5);
-    // } else {
+    if (this.scene.state.user.clanId) {
+      let tabChatGeom: Phaser.Geom.Rectangle;
+      let tabPersonalGeom: Phaser.Geom.Rectangle;
+      let tabClanGeom: Phaser.Geom.Rectangle;
+      switch (type) {
+        case 1:
+          this.tabChat = this.scene.add.nineslice(bgGeom.left + 10, bgGeom.top + 25, maxWidth / 3, activeTabHeight, 'chat-tab-active', slice)
+          this.tabChat 
+            .setDepth(2)
+            .setOrigin(0, 1);
+          tabChatGeom = this.tabChat.getBounds();
+          this.tabChatText = this.scene.add.text(tabChatGeom.centerX, tabChatGeom.centerY, this.scene.state.lang.generalChat, tabActiveTextStyle).setDepth(2).setOrigin(0.5);
+
+          this.tabPersonal = this.scene.add.nineslice(tabChatGeom.right - 3 , bgGeom.top + 25, maxWidth / 3, tabHeight, 'chat-tab', slice);
+          this.tabPersonal
+            .setDepth(2)
+            .setOrigin(0, 1);
+          tabPersonalGeom = this.tabPersonal.getBounds();
+          this.tabPersonalText = this.scene.add.text(tabPersonalGeom.centerX, tabPersonalGeom.centerY, this.scene.state.lang.personalChat, tabTextStyle).setDepth(4).setOrigin(0.5);
+          
+          const countNotification: number = this.getPersonalTabCountNotification();
+          const notificationPos: Iposition = {
+            x: tabPersonalGeom.right - 10,
+            y: tabPersonalGeom.top + 10,
+          };
+          this.personalTabNotificator = new Notificator(this.scene, notificationPos);
+          this.personalTabNotificator.setDepth(4);
+          this.personalTabNotificator.setCount(countNotification);
+
+          this.tabClan = this.scene.add.nineslice(tabPersonalGeom.right - 3 , bgGeom.top + 25, maxWidth / 3, tabHeight, 'chat-tab', slice);
+          this.tabClan
+            .setDepth(2)
+            .setOrigin(0, 1);
+          tabClanGeom = this.tabClan.getBounds();
+          this.tabPersonalText = this.scene.add.text(tabClanGeom.centerX, tabClanGeom.centerY, this.scene.state.lang.clanChat, tabTextStyle).setDepth(4).setOrigin(0.5);
+        break;
+        case 2: 
+          this.tabChat = this.scene.add.nineslice(bgGeom.left + 10, bgGeom.top + 25, maxWidth / 3, tabHeight, 'chat-tab', slice);
+          this.tabChat 
+            .setDepth(2)
+            .setOrigin(0, 1);
+          tabChatGeom = this.tabChat.getBounds();
+          this.tabChatText = this.scene.add.text(tabChatGeom.centerX, tabChatGeom.centerY, this.scene.state.lang.generalChat, tabTextStyle).setDepth(2).setOrigin(0.5);
+          
+          this.tabPersonal = this.scene.add.nineslice(tabChatGeom.right - 3 , bgGeom.top + 25, maxWidth / 3, activeTabHeight, 'chat-tab-active', slice);
+          this.tabPersonal
+            .setDepth(2)
+            .setOrigin(0, 1);
+          tabPersonalGeom = this.tabPersonal.getBounds();
+          this.tabPersonalText = this.scene.add.text(tabPersonalGeom.centerX, tabPersonalGeom.centerY, this.scene.state.lang.personalChat, tabActiveTextStyle).setDepth(2).setOrigin(0.5);
+          this.tabClan = this.scene.add.nineslice(tabPersonalGeom.right - 3 , bgGeom.top + 25, maxWidth / 3, tabHeight, 'chat-tab', slice);
+          this.tabClan
+            .setDepth(2)
+            .setOrigin(0, 1);
+          tabClanGeom = this.tabClan.getBounds();
+          this.tabPersonalText = this.scene.add.text(tabClanGeom.centerX, tabClanGeom.centerY, this.scene.state.lang.clanChat, tabTextStyle).setDepth(4).setOrigin(0.5);
+        break;
+        case 3: 
+          this.tabChat = this.scene.add.nineslice(bgGeom.left + 10, bgGeom.top + 25, maxWidth / 3, tabHeight, 'chat-tab', slice);
+          this.tabChat 
+            .setDepth(2)
+            .setOrigin(0, 1);
+          tabChatGeom = this.tabChat.getBounds();
+          this.tabChatText = this.scene.add.text(tabChatGeom.centerX, tabChatGeom.centerY, this.scene.state.lang.generalChat, tabTextStyle).setDepth(2).setOrigin(0.5);
+          
+          this.tabPersonal = this.scene.add.nineslice(tabChatGeom.right - 3 , bgGeom.top + 25, maxWidth / 3, tabHeight, 'chat-tab', slice);
+          this.tabPersonal
+            .setDepth(2)
+            .setOrigin(0, 1);
+          tabPersonalGeom = this.tabPersonal.getBounds();
+          this.tabPersonalText = this.scene.add.text(tabPersonalGeom.centerX, tabPersonalGeom.centerY, this.scene.state.lang.personalChat, tabTextStyle).setDepth(2).setOrigin(0.5);
+          this.tabClan = this.scene.add.nineslice(tabPersonalGeom.right - 3 , bgGeom.top + 25, maxWidth / 3, activeTabHeight, 'chat-tab-active', slice);
+          this.tabClan
+            .setDepth(2)
+            .setOrigin(0, 1);
+          tabClanGeom = this.tabClan.getBounds();
+          this.tabPersonalText = this.scene.add.text(tabClanGeom.centerX, tabClanGeom.centerY, this.scene.state.lang.clanChat, tabActiveTextStyle).setDepth(4).setOrigin(0.5);
+        break;
+      }
+    } else {
       let tabChatGeom: Phaser.Geom.Rectangle;
       let tabPersonalGeom: Phaser.Geom.Rectangle;
       switch (type) {
@@ -182,6 +259,7 @@ export default class ChatBars {
           this.tabPersonalText = this.scene.add.text(tabPersonalGeom.centerX, tabPersonalGeom.centerY, this.scene.state.lang.personalChat, tabActiveTextStyle).setDepth(2).setOrigin(0.5);
         break;
       }
+    }
   }
   
   public update(): void {
@@ -316,6 +394,18 @@ export default class ChatBars {
         this.scene.scene.restart(this.scene.state);
       }, this.tabPersonalText);
     }
+    if (this.scene.state.modal.chatType !== 3 && this.tabClan) {
+      this.scene.clickButtonUp(this.tabClan, (): void => {
+        this.scene.mainInput?.remove();
+        this.enterKey?.destroy();
+        this.scene.state.modal = {
+          type: 9,
+          chatType: 3,
+        };
+        this.scene.scene.stop('Chat');
+        this.scene.scene.restart(this.scene.state);
+      }, this.tabClanText);
+    }
 
     this.scene.clickButtonUp(this.tabClose, (): void => { this.onCloseBtnClick(); }, this.tabCloseBtn);
   }
@@ -349,6 +439,14 @@ export default class ChatBars {
         this.scene.state.socket.io.emit('sendPersonalMessage', {
           id: this.scene.state.user.id,
           toId: user.userId,
+          message: this.scene.mainInput.value,
+          userName: login,
+          userStatus: this.scene.state.user.status,
+        });
+      } else if (this.scene.state.modal.chatType === 3) {
+        this.scene.state.socket.io.emit('sendClanMessage', {
+          id: this.scene.state.user.id,
+          clanId: this.scene.state.user.clanId,
           message: this.scene.mainInput.value,
           userName: login,
           userStatus: this.scene.state.user.status,
