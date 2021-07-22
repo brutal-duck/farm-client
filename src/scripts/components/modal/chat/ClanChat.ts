@@ -37,7 +37,6 @@ export default class ClanChat {
 
     axios.post(process.env.API + "/getClanMessages", data)
       .then((res) => {
-        console.log(res)
         if (!res.data.error) {
           this.scene.state.clanChat = [];
           for (let i: number = res.data.messages.length - 1; i >= 0; i--) {
