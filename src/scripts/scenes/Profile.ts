@@ -145,6 +145,7 @@ class Profile extends Phaser.Scene {
     this.createShop();
     this.createProfile();
     this.createPersonalMessages();
+    this.createClan();
     this.creaetePointer();
     if (this.state.platform === 'vk' || this.state.platform === 'ok') this.createSocialTaskBtn();
   }
@@ -752,6 +753,32 @@ class Profile extends Phaser.Scene {
     const count: number = this.getPersonalTabCountNotification();
     this.personalMessageNotificator = new Notificator(this, {x: pos.x + 25, y: pos.y - 45,}, true);
     this.personalMessageNotificator.setCount(count);
+  }
+
+  private createClan(): void {
+    const pos: Iposition = {
+      x: 620,
+      y: 420
+    }
+    const size: Isize = {
+      width: 150,
+      height: 150
+    }
+    const zone: Phaser.GameObjects.Zone = this.add.zone(pos.x, pos.y, size.width, size.height).setDepth(1).setDropZone(undefined, () => {});
+      
+    const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
+    graphics.lineStyle(5, 0xFFFF00);
+    graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+
+    if (!this.state.user.clanId) {
+      this.click(zone, (): void => {
+        const modal: Imodal = {
+          type: 1, sysType: 21, 
+        }
+        this.state.modal = modal;
+        this.scene.launch('Modal', this.state);
+      });
+    }
   }
 
   private updatePersonalMessagesNotification(): void {
