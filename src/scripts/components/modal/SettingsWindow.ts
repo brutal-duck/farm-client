@@ -17,7 +17,7 @@ export default class SettingsWindow {
   private soundMinus: Phaser.GameObjects.Sprite;
   private soundSegments: Array<Phaser.GameObjects.Sprite>;
   private musicSegments: Array<Phaser.GameObjects.Sprite>;
-
+  private clickCount: number;
 
   constructor(scene: Modal) {
     this.scene = scene;
@@ -30,6 +30,7 @@ export default class SettingsWindow {
     this.y = this.scene.cameras.main.centerY;
     this.height = 200;
     this.width = 527;
+    this.clickCount = 0;
   }
 
   private createElements(): void {
@@ -41,8 +42,23 @@ export default class SettingsWindow {
       this.createChangeNicknameBtn();
     }
     this.setSegmentsState();
+    this.createErudaZone();
   }
 
+  private createErudaZone(): void {
+    const zone: Phaser.GameObjects.Zone = this.scene.add.zone(50, 50, 100, 100).setDepth(1).setDropZone(undefined, () => {});
+      
+    // const graphics: Phaser.GameObjects.Graphics = this.scene.add.graphics();
+    // graphics.lineStyle(5, 0xFFFF00);
+    // graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+
+    this.scene.click(zone, () => {
+      this.clickCount += 1;
+      if (this.clickCount >= 5 && !window['eruda']) {
+        this.erudaLaunch();
+      }
+    })
+  }
   private createBg(): void {
     this.bg = this.scene.add.tileSprite(this.x, this.y, this.width, this.height, 'white-pixel').setTint(0xFA8F1F);
   }
@@ -179,5 +195,13 @@ export default class SettingsWindow {
     const modal: Imodal = { type: 1, sysType: 12 };
     this.scene.state.modal = modal;
     this.scene.scene.restart(this.scene.state);
+  }
+
+  private erudaLaunch(): void {
+    console.log('eruda launched');
+    const erudaCdn: HTMLScriptElement = document.createElement('script');
+    erudaCdn.src = '//cdn.jsdelivr.net/npm/eruda';
+    document.body.appendChild(erudaCdn);
+    erudaCdn.onload = (): void => { window['eruda'].init(); };
   }
 } 
