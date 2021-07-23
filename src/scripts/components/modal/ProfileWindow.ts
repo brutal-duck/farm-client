@@ -312,6 +312,15 @@ export default class ProfileWindow {
     this.writeBtn = this.scene.add.sprite(pos1.x, pos1.y, 'profile-window-button');
     this.writeBtnText = this.scene.add.text(this.writeBtn.x, this.writeBtn.y - 5, this.scene.state.lang.writing, textStyle).setOrigin(0.5);
 
+    if (this.scene.state.clan && this.scene.state.clan?.userStatus === 'owner') {
+      const inviteClanBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos2.x, pos2.y, 'profile-window-button');
+      const inviteClanBtnText: Phaser.GameObjects.Text = this.scene.add.text(inviteClanBtn.x + 2, inviteClanBtn.y - 5, this.scene.state.lang.inviteClan, textStyle)
+        .setOrigin(0.5);
+  
+      this.scene.clickModalBtn({ btn: inviteClanBtn, title: inviteClanBtnText }, () => { this.onInviteClanBtn(); });
+    }
+
+    
     // this.farmBtn = this.scene.add.sprite(pos2.x, pos2.y, 'profile-window-button');
     // this.farmBtnText = this.scene.add.text(this.farmBtn.x + 2, this.farmBtn.y - 5, this.scene.state.lang.goToFarm, textStyle)
     //   .setOrigin(0.5);
@@ -363,6 +372,17 @@ export default class ProfileWindow {
     ModalScene.scene.restart(this.scene.state);
   }
 
+  private onInviteClanBtn(): void {
+    const data = {
+      clanId: this.scene.state.clan.id,
+      userId: this.profile.id,
+    };
+    this.scene.state.socket.io.emit('inviteClan', data);
+    this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
+    this.scene.scene.stop();
+    this.scene.state.foreignProfileId = undefined;
+  }
+  
   private onSupportBtn(): void {
     if (this.scene.state.platform === 'vk') window.open(process.env.VK_SUPPORT_LINK, '_blank');
     else if (this.scene.state.platform === 'ok') window.open(process.env.OK_SUPPORT_LINK, '_blank');
