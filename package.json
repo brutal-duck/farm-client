@@ -32,7 +32,6 @@
     "@vkontakte/vk-bridge": "^2.4.2",
     "amplitude-js": "^7.3.0",
     "axios": "^0.21.1",
-    "eruda": "^2.4.1",
     "jsbi": "^3.1.4",
     "phaser": "3.24.1",
     "phaser3-nineslice": "^0.5.0",

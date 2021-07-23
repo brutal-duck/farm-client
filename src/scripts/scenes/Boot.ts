@@ -79,15 +79,8 @@ class Boot extends Phaser.Scene {
     this.loadFonts();
     this.checkUser();
     this.switchingMusic();
-
-    if (process.env.DEV_CLIENT === window.location.origin) {
-      this.initEruda();
-    }
   }
 
-  private initEruda(): void {
-    require('../libs/eruda')();
-  }
   private setAutosaveListener(): void {
     window.addEventListener('beforeunload', (): void => {
       if ((this.state.farm === 'Sheep' && this.scene.isActive('Sheep')) ||
@@ -366,7 +359,6 @@ class Boot extends Phaser.Scene {
   }
 
   private checkAndroidUser(): void {
-    this.initEruda();
     const cordovaScript: HTMLScriptElement = document.createElement('script');
     cordovaScript.setAttribute('src', 'cordova.js');
     if (!cordovaScript) return;
