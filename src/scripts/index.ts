@@ -97,19 +97,19 @@ window.onload = (): void => {
     
     const game: Phaser.Game = new Phaser.Game(config);
     window.addEventListener('resize', (): void => {
-      let clientHeight: number = Math.round(document.body.clientHeight);
-      let clientWidth: number = Math.round(document.body.clientWidth);
+      // let clientHeight: number = Math.round(document.body.clientHeight);
+      // let clientWidth: number = Math.round(document.body.clientWidth);
 
-      if (clientHeight / y > clientWidth / x) {
-        width = clientWidth;
-        height = clientWidth / x * y;
-      } else {
-        width = clientHeight / y * x;
-        height = clientHeight;
-      }
+      // if (clientHeight / y > clientWidth / x) {
+      //   width = clientWidth;
+      //   height = clientWidth / x * y;
+      // } else {
+      //   width = clientHeight / y * x;
+      //   height = clientHeight;
+      // }
     
-      root.style.height = height + 'px';
-      root.style.width = width + 'px';
+      // root.style.height = height + 'px';
+      // root.style.width = width + 'px';
       game.scale.resize(canvasWidth, canvasHeight);
     }, false);
   }, 100);
