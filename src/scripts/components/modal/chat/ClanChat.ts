@@ -38,9 +38,9 @@ export default class ClanChat {
     axios.post(process.env.API + "/getClanMessages", data)
       .then((res) => {
         if (!res.data.error) {
-          this.scene.state.clanChat = [];
+          this.scene.state.clan.chatMessages = [];
           for (let i: number = res.data.messages.length - 1; i >= 0; i--) {
-            this.scene.state.clanChat.push(res.data.messages[i]);
+            this.scene.state.clan.chatMessages.push(res.data.messages[i]);
           }
           this.ready = true;
         }
@@ -48,11 +48,11 @@ export default class ClanChat {
   }
 
   private printNewChatMessages(): void {
-    if (this.scene.state.clanChat.length > this.msg.length && this.ready) {
-      const index: number = this.scene.state.clanChat.length - (this.scene.state.clanChat.length - this.msg.length); // Индекс ненапечатанного сообщения
-      for (let i: number = index; i < this.scene.state.clanChat.length; i++) {
-        this.msg.push(this.scene.state.clanChat[i]);
-        this.newMsg(this.scene.state.clanChat[i]);
+    if (this.scene.state.clan.chatMessages.length > this.msg.length && this.ready) {
+      const index: number = this.scene.state.clan.chatMessages.length - (this.scene.state.clan.chatMessages.length - this.msg.length); // Индекс ненапечатанного сообщения
+      for (let i: number = index; i < this.scene.state.clan.chatMessages.length; i++) {
+        this.msg.push(this.scene.state.clan.chatMessages[i]);
+        this.newMsg(this.scene.state.clan.chatMessages[i]);
       }
     }
   }

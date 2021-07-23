@@ -333,6 +333,8 @@ export default function loadData(response: any): void {
   };
   this.state.user = user;
 
+  this.state.clan = response.data.clan;
+  console.log(this.state.clan)
   if (this.state.name === '' && this.state.platform === 'ya') {
     this.state.name = `yandex_${user.id.substr(0, 4)}`;
   }

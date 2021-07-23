@@ -738,6 +738,14 @@ interface IsociaTasks {
   subNotification?: boolean;
   sendPost?:boolean;
 }
+interface Iclan {
+  id: string;
+  userStatus: string;
+  ownerId: string;
+  name: string;
+  users: Array<string>;
+  chatMessages: Array<Ichat>;
+}
 interface Istate {
   platform: string;
   autoSaveSpeed: number;
@@ -828,5 +836,5 @@ interface Istate {
   yandexName?: string;
   musicVolume: number;
   soundVolume: number;
-  clanChat: Array<Ichat>;
+  clan?: Iclan;
 }
