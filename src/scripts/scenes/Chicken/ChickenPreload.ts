@@ -506,11 +506,16 @@ class ChickenPreload extends Phaser.Scene {
 
         this.state.socket.io.emit('updateSession', {
           user_id: this.state.user.id,
-          clan_id: this.state.user.clanId,
           hash: this.state.user.hash,
           screen_size: sizes,
           loadTime: loadTime
         });
+        
+        if (this.state.user.clanId) {
+          this.state.socket.io.emit('joinClanRoom', {
+            clanId: this.state.user.clanId,
+          });
+        }
 
         // подрубаем амплитуду
         const Amplitude: Amplitude = this.state.amplitude;
