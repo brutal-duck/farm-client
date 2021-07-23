@@ -429,7 +429,7 @@ class Boot extends Phaser.Scene {
     // @ts-ignore
     window.admob.rewardvideo.config({
       id: process.env.ADMOB_REWARDED_ID,
-      isTesting: true,
+      isTesting: false,
     });
 
     // @ts-ignore
