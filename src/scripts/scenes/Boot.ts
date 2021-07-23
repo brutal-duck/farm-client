@@ -51,6 +51,7 @@ class Boot extends Phaser.Scene {
   private landing: Landing;
   private authorizationWindow: Login;
   private createnLanding: boolean = true;
+  private pushToken: string = '';
 
   public shopButton = shopButton.bind(this);
   public bigButton = bigButton.bind(this);
@@ -136,7 +137,7 @@ class Boot extends Phaser.Scene {
         this.state.musicVolume = 1;
         this.setPlatformStorage('musicVolume', String(this.state.musicVolume));
       });
-  
+
       this.getPlatformStorage('soundVolume').then(data => {
         if (data) this.state.soundVolume = Number(data);
       }).catch(() => {
@@ -166,9 +167,6 @@ class Boot extends Phaser.Scene {
     // this.platform = 'android';
     this.hash = '';
 
-    if (this.platform === 'android') {
-      this.androidInit();
-    }
     const search: string = window.location.search;
     this.params = new URLSearchParams(search);
     // location.search.substr(1).split('&').forEach(function (item) {
@@ -181,7 +179,7 @@ class Boot extends Phaser.Scene {
     // this.platform = 'vk'
     console.log('Platform', this.platform);
   }
-  
+
   private loadFonts(): void {
     let scene: Boot = this;
     Webfont.load({
@@ -201,7 +199,7 @@ class Boot extends Phaser.Scene {
 
     if (ru !== -1) this.lang = 'ru';
     else this.lang = 'en';
-    
+
     this.state.lang = langs[this.lang];
   }
 
@@ -261,8 +259,8 @@ class Boot extends Phaser.Scene {
     this.scene.stop();
 
     if (LocalStorage.get('farm') === 'Sheep' ||
-    LocalStorage.get('farm') === 'Chicken' ||
-    LocalStorage.get('farm') === 'Cow') {
+      LocalStorage.get('farm') === 'Chicken' ||
+      LocalStorage.get('farm') === 'Cow') {
       this.scene.start(LocalStorage.get('farm') + 'Preload', this.state);
     } else {
       this.scene.start('SheepPreload', this.state);
@@ -273,7 +271,7 @@ class Boot extends Phaser.Scene {
     let cookie = document.cookie;
     let result = cookie.split(';');
     let hash: string = '';
-  
+
     for (let j = 0; j < result.length; j++) {
       result[j] = result[j]?.replace(/(\s*)\B(\s*)/g, '');
       let searchHash = result[j]?.indexOf('farmHASH');
@@ -302,7 +300,7 @@ class Boot extends Phaser.Scene {
       this.checkYandexUser();
     } else if (this.platform === 'android') {
       this.checkAndroidUser();
-    } 
+    }
   }
 
   private async checkVkUser(): Promise<void> {
@@ -365,76 +363,78 @@ class Boot extends Phaser.Scene {
       this.postCheckUser(id, true);
     });
   }
-  
-  private checkAndroidUser(): void {
-    this.hash = LocalStorage.get('hash');
-    this.postCheckUser(this.hash);
-  }
 
-  
-  private androidInit(): void {
-    // this.initEruda();
+  private checkAndroidUser(): void {
+    this.initEruda();
     const cordovaScript: HTMLScriptElement = document.createElement('script');
     cordovaScript.setAttribute('src', 'cordova.js');
     if (!cordovaScript) return;
     document.body.appendChild(cordovaScript);
-    
+
     document.addEventListener('deviceready', (): void => {
+      this.hash = LocalStorage.get('hash');
       this.initAndroidStore();
       window.screen.orientation.lock('portrait-primary');
+      this.initAndroidAd();
 
-      document.addEventListener('admob.rewardvideo.events.LOAD_FAIL', (): void => {
-        // @ts-ignore
-        window.admob.rewardvideo.prepare();
-        this.state.readyAd = false;
+      const PushNotification = window['PushNotification'];
+      const push = PushNotification.init({
+        android: {},
+        browser: {
+          pushServiceURL: 'https://fcm.googleapis.com/fcm/send'
+        },
+        ios: {
+          alert: 'true',
+          badge: 'true',
+          sound: 'true'
+        },
+        windows: {}
+      });
+      push.on('registration', (data) => {
+        const { registrationId } = data;
+        console.log(registrationId);
+        this.pushToken = registrationId;
+        this.postCheckUser(this.hash);
       });
 
-      document.addEventListener('admob.rewardvideo.events.LOAD', (): void => {
-        console.log('Android ad ready!');
-        this.state.readyAd = true;
-      });
-
-      document.addEventListener('admob.rewardvideo.events.CLOSE', (): void => {
-        // @ts-ignore
-        window.admob.rewardvideo.prepare();
-        this.state.readyAd = false;
-      });
-
-      document.addEventListener('admob.rewardvideo.events.REWARD', (): void => {
-        // this.game.scene.keys[this.state.farm].adReward();
-        this.game.scene.keys[this.state.farm].ads.adReward();
-        // @ts-ignore
-        window.admob.rewardvideo.prepare();
-        this.state.readyAd = false;
-      });
-
-      // @ts-ignore
-      window.admob.rewardvideo.config({
-        id: process.env.ADMOB_REWARDED_ID,
-        isTesting: true,
-      });
-
-      // @ts-ignore
-      window.admob.rewardvideo.prepare();
-
-      // document.addEventListener('pause', (): void => {
-      //   console.log('pause event');
-      //   const music: Phaser.Sound.BaseSound = this.sound.get('music');
-      //   console.log(music);
-      //   music?.pause();
-      // }, false);
-
-      // document.addEventListener('resume', (): void => {
-      //   setTimeout(() => {
-      //     console.log('resume event')
-      //     const music: Phaser.Sound.BaseSound = this.sound.get('music');
-      //     console.log(music);
-      //     music?.play();
-      //   }, 0);
-      // }, false);
     }, false);
   }
-  
+
+
+  private initAndroidAd(): void {
+    document.addEventListener('admob.rewardvideo.events.LOAD_FAIL', (): void => {
+      // @ts-ignore
+      window.admob.rewardvideo.prepare();
+      this.state.readyAd = false;
+    });
+
+    document.addEventListener('admob.rewardvideo.events.LOAD', (): void => {
+      console.log('Android ad ready!');
+      this.state.readyAd = true;
+    });
+
+    document.addEventListener('admob.rewardvideo.events.CLOSE', (): void => {
+      // @ts-ignore
+      window.admob.rewardvideo.prepare();
+      this.state.readyAd = false;
+    });
+
+    document.addEventListener('admob.rewardvideo.events.REWARD', (): void => {
+      this.game.scene.keys[this.state.farm].ads.adReward();
+      // @ts-ignore
+      window.admob.rewardvideo.prepare();
+      this.state.readyAd = false;
+    });
+
+    // @ts-ignore
+    window.admob.rewardvideo.config({
+      id: process.env.ADMOB_REWARDED_ID,
+      isTesting: true,
+    });
+
+    // @ts-ignore
+    window.admob.rewardvideo.prepare();
+  }
   private initAndroidStore(): void {
     const { packages } = general;
     const store: any = window['store'];
@@ -442,7 +442,7 @@ class Boot extends Phaser.Scene {
       console.log('Store not available');
       return;
     }
-  
+
     for (const pack of packages) {
       store.register({
         id: String(pack.id),
@@ -451,7 +451,7 @@ class Boot extends Phaser.Scene {
         type: store.CONSUMABLE
       });
     }
-    
+
     for (const pack of packages) {
       store.when('package_' + pack.id)
         .approved((p) => {
@@ -473,14 +473,16 @@ class Boot extends Phaser.Scene {
     store.error((error) => {
       console.log('ERROR ' + error.code + ': ' + error.message);
     });
-  
+
     store.refresh();
   }
+
   private postCheckUser(id: number | string, auth?: boolean): void {
     axios.post(process.env.API + '/checkUser', {
       platform: this.platform,
       data: id,
       auth: auth,
+      pushToken: this.pushToken,
     }).then((response) => {
       const { hash, error, expires, status } = response.data
       if (error === false) {
@@ -514,7 +516,7 @@ class Boot extends Phaser.Scene {
     if (this.authorizationWindow) {
       this.landing = new Landing(this);
     } else {
-      this.landing = new Landing(this); 
+      this.landing = new Landing(this);
       this.state.amplitude.logAmplitudeEvent('landing_view', {});
     }
     this.destroyAuthorizationWindow();
@@ -568,7 +570,7 @@ class Boot extends Phaser.Scene {
     const block = document.querySelector('#adblock');
     if (block) {
       if (block.clientHeight > 1) this.state.adBlock = false;
-    }  
+    }
   }
 
   private checkVkTask(): void {
@@ -586,7 +588,7 @@ class Boot extends Phaser.Scene {
       this.state.vkTask.joinGroup = res.data.data.joinGroup;
       this.state.vkTask.subGroup = res.data.data.subGroup;
     }).catch(err => console.log(err));
-   
+
     bridge.send('VKWebAppCheckAllowedScopes', { scopes: 'menu, notify' }).then(res => {
       res.result.forEach(data => {
         if (data.scope === 'notify') this.state.vkTask.subNotification = data.allowed;
@@ -608,7 +610,7 @@ class Boot extends Phaser.Scene {
       // this.state.okTask.sendPost = res.data.data.sendPost;
     });
 
-    FAPI.Client.call({ 'method':'storage.get', 'keys': 'addFavourites, sendPost' }, (status, data, error) => {
+    FAPI.Client.call({ 'method': 'storage.get', 'keys': 'addFavourites, sendPost' }, (status, data, error) => {
       if (data) {
         this.state.okTask.addFavorites = JSON.parse(data.data.addFavourites);
         this.state.okTask.sendPost = JSON.parse(data.data.sendPost);
