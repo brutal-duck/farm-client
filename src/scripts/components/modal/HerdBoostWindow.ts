@@ -428,8 +428,8 @@ export default class HerdBoostWindow {
           animal.anims.play(this.scene.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
           animal.setPosition(this.x - 50, this.y);
         } else if (position === 'right') {
-          if (animal.data.values.side === 'left') animal.data.values.side = 'right'
-          animal.anims.play(this.scene.state.farm.toLowerCase() + '-stay-right' + animal.data.values.type, true);
+          if (animal.data.values.side === 'right') animal.data.values.side = 'left'
+          animal.anims.play(this.scene.state.farm.toLowerCase() + '-stay-left' + animal.data.values.type, true);
           animal.setPosition(this.x + 50, this.y);
         }
       }
