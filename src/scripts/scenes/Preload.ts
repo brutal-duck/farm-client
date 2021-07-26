@@ -173,8 +173,9 @@ const donateWindowSound: string = require('./../../assets/sounds/misc/donate-win
 const donateTakeSound: string = require('./../../assets/sounds/misc/donate-take-sound.mp3');
 const treeFallingSound: string = require('./../../assets/sounds/misc/tree-falling-sound.mp3');
 
-const profileWindowBtn: string = require('./../../assets/images/modal/profile-window-button.png');
+const profileWindowBtnYellow: string = require('./../../assets/images/modal/profile-window-button-yellow.png');
 const profileWindowBtnRed: string = require('./../../assets/images/modal/profile-window-button-red.png');
+const profileWindowBtnGreen: string = require('./../../assets/images/modal/profile-window-button-green.png');
 const profileWindowSettingsBtn: string = require('./../../assets/images/modal/profile-window-settings-btn.png');
 const profileWindowFooter: string = require('./../../assets/images/modal/profile-window-footer.png');
 const profileWindowHeader: string = require('./../../assets/images/modal/profile-window-header.png');
@@ -400,8 +401,9 @@ class Preload extends Phaser.Scene {
       this.load.audio('cow-sound-2', cowSound2);
       this.load.audio('cow-sound-3', cowSound3);
     }
-    this.load.image('profile-window-button', profileWindowBtn);
+    this.load.image('profile-window-button-yellow', profileWindowBtnYellow);
     this.load.image('profile-window-button-red', profileWindowBtnRed);
+    this.load.image('profile-window-button-green', profileWindowBtnGreen);
     this.load.image('profile-window-settings-btn', profileWindowSettingsBtn);
     this.load.image('profile-window-footer', profileWindowFooter);
     this.load.image('profile-window-header', profileWindowHeader);

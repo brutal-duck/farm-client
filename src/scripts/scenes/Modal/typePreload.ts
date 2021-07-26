@@ -90,8 +90,9 @@ const factoryProductionSlot3: string = require('./../../../assets/images/cow/mod
 const factoryProductionSlotDisable3: string = require('./../../../assets/images/cow/modal/factory-resource-slot-disable-3.png');
 const factoryProductionSlot4: string = require('./../../../assets/images/cow/modal/factory-resource-slot-4.png');
 const factoryProductionSlotDisable4: string = require('./../../../assets/images/cow/modal/factory-resource-slot-disable-4.png');
-const profileWindowBtn: string = require('./../../../assets/images/modal/profile-window-button.png');
+const profileWindowBtnYellow: string = require('./../../../assets/images/modal/profile-window-button-yellow.png');
 const profileWindowBtnRed: string = require('./../../../assets/images/modal/profile-window-button-red.png');
+const profileWindowBtnGreen: string = require('./../../../assets/images/modal/profile-window-button-green.png');
 const profileWindowSettingsBtn: string = require('./../../../assets/images/modal/profile-window-settings-btn.png');
 const profileWindowFooter: string = require('./../../../assets/images/modal/profile-window-footer.png');
 const profileWindowHeader: string = require('./../../../assets/images/modal/profile-window-header.png');
@@ -197,6 +198,9 @@ export default function typePreload(): void {
         this.load.image('chat-send-btn', chatSendBtn);
         this.load.image('chat-emoji-btn', chatEmojiBtn);
         this.load.image('unicorn-status', unicornStatus);
+        this.load.image('profile-window-button-yellow', profileWindowBtnYellow);
+        this.load.image('profile-window-button-red', profileWindowBtnRed);
+        this.load.image('profile-window-button-green', profileWindowBtnGreen);
         break;
       case 10: // окно автопрогресса ивентовой фермы +
         this.load.image('autoprogress-bg', autoprogressBG);
@@ -245,13 +249,14 @@ export default function typePreload(): void {
         this.load.image('tasks-close', tasksClose);
         break;
       case 15: 
-        this.load.image('profile-window-button', profileWindowBtn);
         this.load.image('profile-window-settings-btn', profileWindowSettingsBtn);
         this.load.image('profile-window-footer', profileWindowFooter);
         this.load.image('profile-window-header', profileWindowHeader);
         this.load.image('profile-window-level', profileWindowLevel);
         this.load.image('profile-window-bg', profileWindowBg);
+        this.load.image('profile-window-button-yellow', profileWindowBtnYellow);
         this.load.image('profile-window-button-red', profileWindowBtnRed);
+        this.load.image('profile-window-button-green', profileWindowBtnGreen);
         this.load.image('tasks-close', tasksClose);
         break;
       case 15: 
