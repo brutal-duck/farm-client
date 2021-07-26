@@ -123,6 +123,7 @@ const chatUserMessageBg: string = require('./../../assets/images/modal/chat/user
 const chatTabClose: string = require('./../../assets/images/modal/chat/tab-close.png');
 const chatTabActive: string = require('./../../assets/images/modal/chat/tab-active.png');
 const chatInput: string = require('./../../assets/images/modal/chat/input.png');
+const chatTrash: string = require('./../../assets/images/modal/chat/trash.png');
 
 
 const profileBackground: string = require('./../../assets/images/profile/background.jpg');
@@ -347,6 +348,7 @@ class Preload extends Phaser.Scene {
     this.load.image('fireworkBg', fireworkBg);
 
     this.load.image('chat-bg', chatBackground);
+    this.load.image('chat-trash', chatTrash);
     this.load.image('chat-arrow', chatArrow);
     this.load.image('chat-tab', chatTab);
     this.load.image('chat-tab-close', chatTabClose);

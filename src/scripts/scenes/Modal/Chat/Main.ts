@@ -3,7 +3,7 @@ import { getStatusSettings, loadingModal } from '../../../general/basic';
 import GeneralChat from './../../../components/modal/chat/GeneralChat';
 import PersonalChatList from './../../../components/modal/chat/PersonalChatList';
 import PersonalChat from '../../../components/modal/chat/PersonalChat';
-import { click, clickModalBtn } from '../../../general/clicks';
+import { click, clickModalBtn, clickButton } from '../../../general/clicks';
 import Modal from './../Modal';
 import ClanChat from './../../../components/modal/chat/ClanChat';
 
@@ -29,6 +29,7 @@ class Chat extends Phaser.Scene {
   public loadingModal = loadingModal.bind(this);
   public click = click.bind(this);
   public clickModalBtn = clickModalBtn.bind(this);
+  public clickButton = clickButton.bind(this);
 
   public init(state: Istate): void {
     this.state = state;

@@ -157,6 +157,15 @@ export default class PersonalChatList {
         y: bgGeom.top + 10,
       };
       new Notificator(this.scene, pos).setCount(1);
+    } else {
+      const pos: Iposition = {
+        x: bgGeom.right - 50,
+        y: bgGeom.top + 30,
+      };
+      const trash: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos.x, pos.y, 'chat-trash');
+      this.scene.clickButton(trash, () => {
+        this.onPersonalDelete(data.userId);
+      })
     }
 
     nameText.setCrop(0, 0, bgWidth - 80, 500);
@@ -167,6 +176,16 @@ export default class PersonalChatList {
     this.scene.click(bg, () => {
       this.onPersonalClick(userId);
     });
+  }
+
+  private onPersonalDelete(userId: string): void {
+    this.scene.state.user.personalMessages = this.scene.state.user.personalMessages.filter(el => el.userId !== userId);
+    this.scene.state.updatePersonalMessage = true;
+  }
+
+  private onClanInviteDelete(id: string): void {
+    this.scene.state.user.messages = this.scene.state.user.messages.filter(el => el._id !== id);
+    this.scene.state.updatePersonalMessage = true;
   }
 
   private createClanInvite(data: IchatListData): void {
@@ -271,6 +290,15 @@ export default class PersonalChatList {
     const date: string = this.getDate(data.time);
     const time: Phaser.GameObjects.Text = this.scene.add.text(bgGeom.left + 15, bgGeom.bottom, date, timeTextStyle).setOrigin(0);
 
+    const trashPosition: Iposition = {
+      x: bgGeom.right - 50,
+      y: bgGeom.top + 30,
+    };
+    const trash: Phaser.GameObjects.Sprite = this.scene.add.sprite(trashPosition.x, trashPosition.y, 'chat-trash');
+    this.scene.clickButton(trash, () => {
+      this.onClanInviteDelete(data.userId);
+    })
+    
     messageText.setCrop(0, 0, bgWidth - 40, 500);
     this.scene.scrollHeight += bgHeight + padding;
     this.scene.scrolling.bottom = this.scene.scrollHeight;
