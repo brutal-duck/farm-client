@@ -200,7 +200,7 @@ export default class ClanChat {
     const textWidth: number = textGeom.width;
     
     if (this.lastMsgFromUser !== msgData.userId) {
-      this.scene.add.text(pos.x - 14, text.y - 34, msgData.userId, nameTextStyle)
+      this.scene.add.text(pos.x - 14, text.y - 34, msgData.login, nameTextStyle)
         .setOrigin(0)
         .setCrop(0, 0, this.scene.windowWidth - 40, 100)
         .setDepth(1);  

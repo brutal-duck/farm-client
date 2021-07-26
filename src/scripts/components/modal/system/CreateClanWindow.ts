@@ -157,7 +157,8 @@ export default class CreateClanWindow {
               this.result.setText(this.scene.state.lang.haveClan).setAlpha(1);
           } else {
             this.scene.state.user.clanId = res.data.result.clanId;
-          
+            this.scene.state.clan = res.data.result;
+
             this.scene.state.socket.io.emit('joinClanRoom', {
               clanId: this.scene.state.user.clanId,
             });

@@ -947,7 +947,14 @@ export default {
     personalChat: 'Личный чат',
     clanChat: 'Клановый чат',
     settingsHeader: 'Настройки игры',
-
+    inviteYouClan: 'приглашает вас в клан',
+    clans: 'Кланы',
+    accept: 'Принять',
+    declain: 'Отклонить',
+    youAcceptInvite: 'Вы приняли приглашение',
+    youDeclainInvite: 'Вы отклонили приглашение',
+    clanIsFull: 'Клан переполнен',
+    youAreInClan: 'Вы состоите в клане',
   },
 
   en: {
@@ -1898,5 +1905,13 @@ export default {
     personalChat: 'Личный чат',
     clanChat: 'Клановый чат',
     settingsHeader: 'Настройки игры',
+    inviteYouClan: 'приглашает вас в клан',
+    clans: 'Кланы',
+    accept: 'Принять',
+    declain: 'Отклонить',
+    youAcceptInvite: 'Вы приняли приглашение',
+    youDeclainInvite: 'Вы отклонили приглашение',
+    clanIsFull: 'Клан переполнен',
+    youAreInClan: 'Вы состоите в клане',
   },
 }

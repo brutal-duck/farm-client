@@ -259,14 +259,14 @@ export default class ProfileWindow {
     switch (this.scene.state.platform) {
       case 'vk':
       case 'ok':
-        this.supportBtn = this.scene.add.sprite(pos1.x, pos1.y, 'profile-window-button');
+        this.supportBtn = this.scene.add.sprite(pos1.x, pos1.y, 'profile-window-button-yellow');
         this.supportBtnText = this.scene.add.text(this.supportBtn.x, this.supportBtn.y - 5, this.scene.state.lang.support, textStyle).setOrigin(0.5);
         this.licenseBtnText = this.scene.add.text(pos2.x + 2, pos2.y - 5, this.scene.state.lang.agreement, textStyle)
           .setOrigin(0.5)
           .setStroke('#7a7a7a', 2);
         break;
       case 'web':
-        this.supportBtn = this.scene.add.sprite(pos1.x, pos1.y, 'profile-window-button');
+        this.supportBtn = this.scene.add.sprite(pos1.x, pos1.y, 'profile-window-button-yellow');
         this.exitProfileBtn = this.scene.add.sprite(pos2.x, pos2.y, 'profile-window-button-red');
         this.supportBtnText = this.scene.add.text(this.supportBtn.x, this.supportBtn.y - 5, this.scene.state.lang.support, textStyle).setOrigin(0.5);
         this.exitProfileBtnText = this.scene.add.text(this.exitProfileBtn.x + 2, this.exitProfileBtn.y - 5, this.scene.state.lang.profileExit, textStyle)
@@ -278,7 +278,7 @@ export default class ProfileWindow {
         break;
       case 'ya':
       case 'android':
-        this.supportBtn = this.scene.add.sprite(pos1.x, pos1.y, 'profile-window-button');
+        this.supportBtn = this.scene.add.sprite(pos1.x, pos1.y, 'profile-window-button-yellow');
         this.supportBtnText = this.scene.add.text(this.supportBtn.x, this.supportBtn.y - 5, this.scene.state.lang.support, textStyle).setOrigin(0.5);
         break;
       default: 
@@ -309,11 +309,11 @@ export default class ProfileWindow {
       strokeThickness: 3,
     };
 
-    this.writeBtn = this.scene.add.sprite(pos1.x, pos1.y, 'profile-window-button');
+    this.writeBtn = this.scene.add.sprite(pos1.x, pos1.y, 'profile-window-button-yellow');
     this.writeBtnText = this.scene.add.text(this.writeBtn.x, this.writeBtn.y - 5, this.scene.state.lang.writing, textStyle).setOrigin(0.5);
 
     if (this.scene.state.clan && this.scene.state.clan?.userStatus === 'owner') {
-      const inviteClanBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos2.x, pos2.y, 'profile-window-button');
+      const inviteClanBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos2.x, pos2.y, 'profile-window-button-yellow');
       const inviteClanBtnText: Phaser.GameObjects.Text = this.scene.add.text(inviteClanBtn.x + 2, inviteClanBtn.y - 5, this.scene.state.lang.inviteClan, textStyle)
         .setOrigin(0.5);
   
@@ -373,9 +373,15 @@ export default class ProfileWindow {
   }
 
   private onInviteClanBtn(): void {
+    let name: string = this.scene.state.user.login;
+    if (this.scene.state.platform === 'ya' 
+      || this.scene.state.platform === 'vk' 
+      || this.scene.state.platform === 'ok') name = this.scene.state.name;
+
     const data = {
       clanId: this.scene.state.clan.id,
       userId: this.profile.id,
+      name: name,
     };
     this.scene.state.socket.io.emit('inviteClan', data);
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;

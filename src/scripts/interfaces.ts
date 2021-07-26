@@ -128,11 +128,12 @@ interface IuserAutoSave {
   yandexName: string;
 }
 interface Imessage {
+  _id?: string;
   type: number;
   text: string;
   status: number;
   check: boolean;
-  time: number;
+  time: Date;
 }
 interface IuserPersonalMessage {
   userId: string;
