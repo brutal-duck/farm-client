@@ -215,30 +215,56 @@ export default class PersonalChatList {
     const messageTextGeom: Phaser.Geom.Rectangle = messageText.getBounds();
     
     let height: number = 0;
-    
-    if (data.status === 0 && !this.scene.state.clan) {
-      const acceptBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos.x + 50, messageTextGeom.bottom + 10, 'profile-window-button-green').setOrigin(0, 0).setDepth(2);
-      const acceptBtnGeom: Phaser.Geom.Rectangle = acceptBtn.getBounds();
-      const acceptBtnText: Phaser.GameObjects.Text = this.scene.add.text(acceptBtnGeom.centerX, acceptBtnGeom.centerY - 3, this.scene.state.lang.accept, btnTextStyle).setOrigin(0.5).setDepth(2);
-  
-      const declainBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(acceptBtnGeom.right + 40, messageTextGeom.bottom + 10, 'profile-window-button-red').setOrigin(0, 0).setDepth(2);
-      const declainBtnGeom: Phaser.Geom.Rectangle = declainBtn.getBounds();
-      const declainBtnText: Phaser.GameObjects.Text = this.scene.add.text(declainBtnGeom.centerX, declainBtnGeom.centerY - 3, this.scene.state.lang.declain, btnTextStyle).setOrigin(0.5).setDepth(2);
-      height = acceptBtnGeom.height;
 
-      this.scene.clickModalBtn({ btn: acceptBtn, title: acceptBtnText }, () => { this.onAcceptInvite(data._id); });
-      this.scene.clickModalBtn({ btn: declainBtn, title: declainBtnText }, () => { this.onDeclainInvite(data._id); });
+    const acceptBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos.x + 50, messageTextGeom.bottom + 10, 'profile-window-button-green')
+      .setOrigin(0, 0)
+      .setDepth(2)
+      .setVisible(false);
+    const acceptBtnGeom: Phaser.Geom.Rectangle = acceptBtn.getBounds();
+    const acceptBtnText: Phaser.GameObjects.Text = this.scene.add.text(acceptBtnGeom.centerX, acceptBtnGeom.centerY - 3, this.scene.state.lang.accept, btnTextStyle)
+      .setOrigin(0.5)
+      .setDepth(2)
+      .setVisible(false);
+
+    const declainBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(acceptBtnGeom.right + 40, messageTextGeom.bottom + 10, 'profile-window-button-red')
+      .setOrigin(0, 0)
+      .setDepth(2)
+      .setVisible(false);
+    const declainBtnGeom: Phaser.Geom.Rectangle = declainBtn.getBounds();
+    const declainBtnText: Phaser.GameObjects.Text = this.scene.add.text(declainBtnGeom.centerX, declainBtnGeom.centerY - 3, this.scene.state.lang.declain, btnTextStyle)
+      .setOrigin(0.5)
+      .setDepth(2)
+      .setVisible(false);
+
+    const text: Phaser.GameObjects.Text = this.scene.add.text(pos.x, messageTextGeom.bottom + 5, this.scene.state.lang.youAcceptInvite, notificationTextStyle)
+      .setDepth(2)
+      .setVisible(false);
+
+    this.scene.clickModalBtn({ btn: acceptBtn, title: acceptBtnText }, () => { this.onAcceptInvite(data._id); });
+    this.scene.clickModalBtn({ btn: declainBtn, title: declainBtnText }, () => { this.onDeclainInvite(data._id); });
+    if (data.status === 0 && !this.scene.state.clan) {
+      height = acceptBtnGeom.height;
+      acceptBtn.setVisible(true);
+      acceptBtnText.setVisible(true);
+      declainBtn.setVisible(true);
+      declainBtnText.setVisible(true);
     } else if (data.status === 1) {
-      const text: Phaser.GameObjects.Text = this.scene.add.text(pos.x, messageTextGeom.bottom + 5, this.scene.state.lang.youAcceptInvite, notificationTextStyle).setDepth(2);
       height = text.getBounds().height;
+      text.setVisible(true);
     } else if (data.status === 2) {
-      const text: Phaser.GameObjects.Text = this.scene.add.text(pos.x, messageTextGeom.bottom + 5, this.scene.state.lang.youDeclainInvite, notificationTextStyle).setDepth(2);
+      text.setText(this.scene.state.lang.youDeclainInvite);
+      text.setVisible(true);
+      height = text.getBounds().height;
+    } else if (data.status === 3) {
+      text.setText(this.scene.state.lang.clanIsFull);
+      text.setVisible(true);
       height = text.getBounds().height;
     } else if (this.scene.state.clan) {
-      const text: Phaser.GameObjects.Text = this.scene.add.text(pos.x, messageTextGeom.bottom + 5, this.scene.state.lang.youAreInClan, notificationTextStyle).setDepth(2);
+      text.setText(this.scene.state.lang.youAreInClan);
+      text.setVisible(true);
       height = text.getBounds().height;
     }
-
+    
     const bgHeight: number = messageTextGeom.height + 50 + height;
     const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(messageTextGeom.left - 20, messageTextGeom.top - 20, bgWidth, bgHeight, 'chat-clan-message-bg', 20).setOrigin(0);
     const bgGeom: Phaser.Geom.Rectangle = bg.getBounds();
@@ -280,14 +306,15 @@ export default class PersonalChatList {
       counter: this.scene.state.user.counter,
       clanId: message.text.split(',')[0],
     };
-    let login: string = this.scene.state.user.login;;
+    let login: string = this.scene.state.user.login;
     if (this.scene.state.platform !== 'web' && this.scene.state.platform !== 'android') login = this.scene.state.name;
 
     axios.post(process.env.API +'/acceptInviteClan', data).then((res): void => {
       const { status } = res.data.result;
       if (res.data.error) {
         if (status === 'limit') {
-          // показать текст что превышен лимит
+          message.status = 3;
+          this.scene.scene.restart(this.scene.state);
         }
       } else {
         console.log(res.data.result)
