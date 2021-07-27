@@ -1291,14 +1291,14 @@ const unicornSettings: IeventSettings = {
     { 
       breed: 12, 
       resource: 100, 
-      resourcePrice: '73000',
+      resourcePrice: '34000',
       price: '480000000',
       exchange: '12000000'
     },
     { 
       breed: 13, 
       resource: 100, 
-      resourcePrice: '34000',
+      resourcePrice: '73000',
       price: '150000000',
       exchange: '24000000'
     },
