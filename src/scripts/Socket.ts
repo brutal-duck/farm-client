@@ -62,6 +62,7 @@ export default class Socket {
         }
       }
     });
+
     this.io.on('newClanMessage', (data: Ichat) => {
       if (data.id === this.state.clan.id) {
         this.state.clan.chatMessages.push(data);
@@ -71,7 +72,15 @@ export default class Socket {
     this.io.on('newInviteClan', (data: Imessage) => {
       this.state.updatePersonalMessage = true;
       this.state.user.messages.push(data);
-    })
+    });
+
+    this.io.on('joinClanAccepted'), (data: Iclan) => {
+      this.state.user.clanId = data.id;
+      this.state.clan = data;
+      this.state.socket.io.emit('joinClanRoom', {
+        clanId: this.state.user.clanId,
+      });
+    }
     
   }
 }
