@@ -69,6 +69,7 @@ export default class Socket {
     });
 
     this.io.on('newInviteClan', (data: Imessage) => {
+      this.state.updatePersonalMessage = true;
       this.state.user.messages.push(data);
     })
     

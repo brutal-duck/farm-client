@@ -285,6 +285,11 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
         }
       }
     }
+    for (const message of this.scene.state.user.messages) {
+      if (!message.check) {
+        count += 1;
+      }
+    }
     return count;
   }
 }

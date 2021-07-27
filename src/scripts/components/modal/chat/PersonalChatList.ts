@@ -37,6 +37,7 @@ export default class PersonalChatList {
     const message: Imessage[] = this.scene.state.user.messages;
 
     message.forEach(el => {
+      if (!el.check) el.check = true;
       this.messages.push({
         _id: el._id,
         name: '',
