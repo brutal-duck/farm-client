@@ -958,6 +958,7 @@ export default {
     yes: 'Да',
     no: 'Нет',
     delete: 'Удалить?',
+    nowInClan: 'вступил в клан',
   },
 
   en: {
@@ -1919,5 +1920,6 @@ export default {
     yes: 'Да',
     no: 'Нет',
     delete: 'Удалить?',
+    nowInClan: 'вступил в клан',
   },
 }

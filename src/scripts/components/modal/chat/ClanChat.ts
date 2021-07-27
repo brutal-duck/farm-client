@@ -2,6 +2,8 @@ import Chat from './../../../scenes/Modal/Chat/Main';
 import axios from 'axios';
 import Modal from './../../../scenes/Modal/Modal';
 
+const KEY = '196ea80e3d8a8ef81b09c965d6658b7f';
+
 export default class ClanChat {
   private scene: Chat;
   private ready: boolean;
@@ -58,7 +60,9 @@ export default class ClanChat {
   }
 
   private newMsg(msgData: Ichat) {
-    if (msgData.userId === this.scene.state.user.id) {
+    if (msgData.text.includes(KEY)) {
+      this.createClanMessage(msgData);
+    } else if (msgData.userId === this.scene.state.user.id) {
       this.createUserMessage(msgData);
     } else {
       this.createForeignMessage(msgData);
@@ -107,6 +111,7 @@ export default class ClanChat {
       x: this.scene.windowWidth - this.textWrap - 32,
       y: this.scene.windowHeight + this.scene.scrollHeight + padding
     }
+
     // Текст исходящего сообщения
     const text: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, msgData.text, messageTextStyle)
       .setOrigin(0, 0)
@@ -235,6 +240,34 @@ export default class ClanChat {
     this.scene.click(bg, () => {
       this.onPersonalClick(msgData);
     });
+  }
+
+  private createClanMessage(msgData: Ichat): void {
+    const messageTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontSize: '21px',
+      fontFamily: 'Bip',
+      color: '#FADAC1',
+      align: 'center',
+      wordWrap: { width: this.textWrap }
+    };
+
+    const padding: number = 38;
+
+    const pos: Iposition = {
+      x: this.scene.cameras.main.centerX - 115,
+      y: this.scene.windowHeight + this.scene.scrollHeight + padding
+    }
+
+    const text: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, `${msgData.login} ${this.scene.state.lang.nowInClan}`, messageTextStyle).setOrigin(0.5, 0).setDepth(2);
+    const textHeight: number = text.getBounds().height + 30;
+    if (text.getBounds().width > this.textWrap) {
+      text.setCrop(this.textWrap / 2 - 10, 0, this.textWrap, textHeight);
+    }
+    const bgWidth: number = text.getBounds().width > this.textWrap ? this.textWrap + 50 : text.getBounds().width + 50;
+    const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(pos.x, pos.y - 10, bgWidth, textHeight, 'chat-user-message-bg', 20).setOrigin(0.5, 0).setAlpha(0.5);
+    this.lastMsgFromUser = '';
+    // Добавляем длинну скролла если высота всех сообщений уходит за границу
+    this.scene.scrollHeight += textHeight + padding; 
   }
 
   private onPersonalClick(msgData: Ichat): void {
