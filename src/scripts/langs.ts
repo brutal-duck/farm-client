@@ -955,6 +955,9 @@ export default {
     youDeclainInvite: 'Вы отклонили приглашение',
     clanIsFull: 'Клан переполнен',
     youAreInClan: 'Вы состоите в клане',
+    yes: 'Да',
+    no: 'Нет',
+    delete: 'Удалить?',
   },
 
   en: {
@@ -1913,5 +1916,8 @@ export default {
     youDeclainInvite: 'Вы отклонили приглашение',
     clanIsFull: 'Клан переполнен',
     youAreInClan: 'Вы состоите в клане',
+    yes: 'Да',
+    no: 'Нет',
+    delete: 'Удалить?',
   },
 }

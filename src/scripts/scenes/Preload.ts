@@ -111,6 +111,7 @@ const firework2: string = require("./../../assets/images/animations/firework2.pn
 const firework3: string = require("./../../assets/images/animations/firework3.png");
 const fireworkBg: string = require("./../../assets/images/animations/fireworkBg.png");
 const chatBackground: string = require("./../../assets/images/modal/chat/bg.png");
+const chatDeleteBg: string = require("./../../assets/images/modal/chat/delete-bg.png");
 const chatArrow: string = require("./../../assets/images/modal/chat/arrow.png");
 const chatSendBtn: string = require("./../../assets/images/modal/chat/send-btn.png");
 const chatEmojiBtn: string = require("./../../assets/images/modal/chat/emoji-btn.png");
@@ -348,6 +349,7 @@ class Preload extends Phaser.Scene {
     this.load.image('fireworkBg', fireworkBg);
 
     this.load.image('chat-bg', chatBackground);
+    this.load.image('chat-delete-bg', chatDeleteBg);
     this.load.image('chat-trash', chatTrash);
     this.load.image('chat-arrow', chatArrow);
     this.load.image('chat-tab', chatTab);

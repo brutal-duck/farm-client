@@ -78,7 +78,6 @@ export default class PersonalChatList {
   }
 
   private createElements(): void {
-    console.log(this.messages);
     this.messages.sort((a, b) => {
       const timeA: number = new Date(a?.time).getTime();
       const timeB: number = new Date(b?.time).getTime();
@@ -159,12 +158,12 @@ export default class PersonalChatList {
       new Notificator(this.scene, pos).setCount(1);
     } else {
       const pos: Iposition = {
-        x: bgGeom.right - 50,
+        x: bgGeom.right - 35,
         y: bgGeom.top + 30,
       };
       const trash: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos.x, pos.y, 'chat-trash');
       this.scene.clickButton(trash, () => {
-        this.onPersonalDelete(data.userId);
+        this.onPersonalDelete(data.userId, bg, trash);
       })
     }
 
@@ -178,14 +177,29 @@ export default class PersonalChatList {
     });
   }
 
-  private onPersonalDelete(userId: string): void {
-    this.scene.state.user.personalMessages = this.scene.state.user.personalMessages.filter(el => el.userId !== userId);
-    this.scene.state.updatePersonalMessage = true;
+  private onPersonalDelete(userId: string, bg: Phaser.GameObjects.RenderTexture, trash: Phaser.GameObjects.Sprite): void {
+    const { acceptBtn, acceptBtnText, declainBtn, declainBtnText } = this.createDeleteBubble(bg, trash);
+    
+    this.scene.clickModalBtn({ btn: acceptBtn, title: acceptBtnText }, () => {
+      this.scene.state.user.personalMessages = this.scene.state.user.personalMessages.filter(el => el.userId !== userId);
+      this.scene.state.updatePersonalMessage = true;
+    });
+
+    this.scene.clickModalBtn({ btn: declainBtn, title: declainBtnText }, () => {
+      this.scene.state.updatePersonalMessage = true;
+    }); 
   }
 
-  private onClanInviteDelete(id: string): void {
-    this.scene.state.user.messages = this.scene.state.user.messages.filter(el => el._id !== id);
-    this.scene.state.updatePersonalMessage = true;
+  private onClanInviteDelete(id: string, bg: Phaser.GameObjects.RenderTexture, trash: Phaser.GameObjects.Sprite): void {
+    const { acceptBtn, acceptBtnText, declainBtn, declainBtnText } = this.createDeleteBubble(bg, trash);
+    this.scene.clickModalBtn({ btn: acceptBtn, title: acceptBtnText }, () => {
+      this.scene.state.user.messages = this.scene.state.user.messages.filter(el => el._id !== id);
+      this.scene.state.updatePersonalMessage = true;
+    });
+
+    this.scene.clickModalBtn({ btn: declainBtn, title: declainBtnText }, () => {
+      this.scene.state.updatePersonalMessage = true;
+    }); 
   }
 
   private createClanInvite(data: IchatListData): void {
@@ -291,12 +305,12 @@ export default class PersonalChatList {
     const time: Phaser.GameObjects.Text = this.scene.add.text(bgGeom.left + 15, bgGeom.bottom, date, timeTextStyle).setOrigin(0);
 
     const trashPosition: Iposition = {
-      x: bgGeom.right - 50,
+      x: bgGeom.right - 35,
       y: bgGeom.top + 30,
     };
     const trash: Phaser.GameObjects.Sprite = this.scene.add.sprite(trashPosition.x, trashPosition.y, 'chat-trash');
     this.scene.clickButton(trash, () => {
-      this.onClanInviteDelete(data.userId);
+      this.onClanInviteDelete(data._id, bg, trash);
     })
     
     messageText.setCrop(0, 0, bgWidth - 40, 500);
@@ -345,7 +359,6 @@ export default class PersonalChatList {
           this.scene.scene.restart(this.scene.state);
         }
       } else {
-        console.log(res.data.result)
         if (res.data.result.id) {
           message.status = 1;
           this.scene.state.user.clanId = res.data.result.id;
@@ -370,8 +383,68 @@ export default class PersonalChatList {
   }
   
   private onDeclainInvite(id: string): void {
+
     const message: Imessage = this.scene.state.user.messages.find(el => el._id === id);
     message.status = 2;
     this.scene.scene.restart(this.scene.state);
+  }
+
+  private createDeleteBubble(bgMask: Phaser.GameObjects.RenderTexture, trash: Phaser.GameObjects.Sprite): {
+    acceptBtn: Phaser.GameObjects.Sprite;
+    acceptBtnText: Phaser.GameObjects.Text;
+    declainBtn: Phaser.GameObjects.Sprite;
+    declainBtnText: Phaser.GameObjects.Text;
+  } {
+    const pos: Iposition = {
+      x: trash.x - 50,
+      y: trash.y,
+    };
+    const btnTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      wordWrap: { width: 100 },
+      align: 'center',
+      fontSize: '12px',
+      color: '#ffe2e2',
+      stroke: '#D78A31',
+      strokeThickness: 1,
+    };
+    const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Bip',
+      wordWrap: { width: 100 },
+      align: 'center',
+      fontSize: '16px',
+      color: '#ffebdc',
+      stroke: '#373737',
+      strokeThickness: 1,
+    };
+    const mask: Phaser.Display.Masks.BitmapMask = new Phaser.Display.Masks.BitmapMask(this.scene, bgMask);
+    const bg: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos.x + 200, pos.y, 'chat-delete-bg').setMask(mask).setDepth(2);
+    const text:Phaser.GameObjects.Text = this.scene.add.text(pos.x + 200, pos.y - 15, this.scene.state.lang.delete, textStyle).setOrigin(0.5).setMask(mask).setDepth(2);
+    const acceptBtn = this.scene.add.sprite(pos.x - 35 + 200, pos.y + 14, 'profile-window-button-red').setOrigin(0.5).setScale(0.5).setMask(mask).setDepth(2);
+    const acceptBtnText = this.scene.add.text(pos.x - 35 + 200, pos.y + 10, this.scene.state.lang.yes, btnTextStyle).setOrigin(0.5).setMask(mask).setDepth(2);
+    const declainBtn = this.scene.add.sprite(pos.x + 35 + 200, pos.y + 14, 'profile-window-button-green').setOrigin(0.5).setScale(0.5).setMask(mask).setDepth(2);
+    const declainBtnText = this.scene.add.text(pos.x + 35 + 200, pos.y + 10, this.scene.state.lang.no, btnTextStyle).setOrigin(0.5).setMask(mask).setDepth(2);
+    
+    const tween: Phaser.Tweens.Tween = this.scene.add.tween({
+      targets: [bg,
+        text,
+        acceptBtn,
+        acceptBtnText,
+        declainBtn,
+        declainBtnText,
+      ],
+      ease: 'Power3',
+      onStart: () => {
+        trash.setVisible(false);
+      },
+      x: '-=200',
+      duration: 400,
+    });
+    return {
+      acceptBtn,
+      acceptBtnText,
+      declainBtn,
+      declainBtnText,
+    }
   }
 };

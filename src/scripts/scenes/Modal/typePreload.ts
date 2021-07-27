@@ -54,6 +54,7 @@ const boostCountdown: string = require("./../../../assets/images/boost/countdown
 const boostLeaves: string = require("./../../../assets/images/boost/leaves.png");
 const flags: string = require("./../../../assets/images/modal/flags.png");
 const chatBackground: string = require("./../../../assets/images/modal/chat/bg.png");
+const chatDeleteBg: string = require("./../../../assets/images/modal/chat/delete-bg.png");
 const chatTrash: string = require("./../../../assets/images/modal/chat/trash.png");
 const chatArrow: string = require("./../../../assets/images/modal/chat/arrow.png");
 const chatTab: string = require('./../../../assets/images/modal/chat/tab.png');
@@ -187,6 +188,7 @@ export default function typePreload(): void {
         break;
       case 9: // Чат +
         this.load.image('chat-bg', chatBackground);
+        this.load.image('chat-delete-bg', chatDeleteBg);
         this.load.image('chat-trash', chatTrash);
         this.load.image('chat-arrow', chatArrow);
         this.load.image('chat-tab', chatTab);
