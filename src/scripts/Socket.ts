@@ -74,13 +74,12 @@ export default class Socket {
       this.state.user.messages.push(data);
     });
 
-    this.io.on('joinClanAccepted'), (data: Iclan) => {
+    this.io.on('joinClanAccepted', (data: Iclan) => {
       this.state.user.clanId = data.id;
       this.state.clan = data;
       this.state.socket.io.emit('joinClanRoom', {
         clanId: this.state.user.clanId,
       });
-    }
-    
+    });
   }
 }
