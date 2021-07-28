@@ -600,6 +600,7 @@ interface Imodal {
   sysType?: number;
   chatType?: number;
   chatUserId?: string;
+  clanType?: number;
   shopType?: number;
   donePart?: IdonePart;
   height?: number;
