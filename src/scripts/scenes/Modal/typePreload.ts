@@ -272,7 +272,7 @@ export default function typePreload(): void {
         this.load.image('profile-window-button-green', profileWindowBtnGreen);
         this.load.image('tasks-close', tasksClose);
         break;
-      case 15: 
+      case 16: 
       this.load.image('settings-window-header', settingsWindowHeader);
       this.load.image('settings-window-minus', settingsWindowMinus);
       this.load.image('settings-window-plus', settingsWindowPlus);
@@ -281,7 +281,7 @@ export default function typePreload(): void {
       this.load.image('settings-window-sound-plate', settingsWindowSoundPlate);
       this.load.image('tasks-close', tasksClose);
         break;
-      case 16: 
+      case 17: 
       this.load.image('modal-square-bg', squareBg);
       this.load.image('clan-window-header', clanWindowHeader);
       this.load.image('clan-window-tab-active', clanWindowTabActive);

@@ -178,6 +178,13 @@ const settingsWindowMusicPlate: string = require('./../../assets/images/modal/se
 const settingsWindowSoundPlate: string = require('./../../assets/images/modal/settings/sound-plate.png');
 
 const sysSwitch: string = require('../../assets/images/modal/sys-switch.png');
+
+const squareBg: string = require('../../assets/images/modal/square-bg.png');
+const clanWindowHeader: string = require('../../assets/images/modal/clan/header.png');
+const clanWindowTabActive: string = require('../../assets/images/modal/clan/tab-active.png');
+const clanWindowTabDisable: string = require('../../assets/images/modal/clan/tab-disable.png');
+const clanWindowTabClose: string = require('../../assets/images/modal/clan/tab-close.png');
+const clanWindowCrown: string = require('../../assets/images/modal/clan/сrown.png');
 class Preload extends Phaser.Scene {
   constructor() {
     super('Preload');
@@ -394,6 +401,12 @@ class Preload extends Phaser.Scene {
     this.load.image('settings-window-sound-plate', settingsWindowSoundPlate);
     
     this.load.image('sys-switch', sysSwitch);
+    this.load.image('modal-square-bg', squareBg);
+    this.load.image('clan-window-header', clanWindowHeader);
+    this.load.image('clan-window-tab-active', clanWindowTabActive);
+    this.load.image('clan-window-tab-disable', clanWindowTabDisable);
+    this.load.image('clan-window-tab-close', clanWindowTabClose);
+    this.load.image('clan-window-crown', clanWindowCrown);
   }
 
   public create(): void {
