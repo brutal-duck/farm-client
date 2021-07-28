@@ -8,6 +8,10 @@ export default class CreateClanWindow {
   private result: Phaser.GameObjects.Text;
   private nameError: boolean;
   private change: boolean;
+  private clanIsClosed: boolean = true;
+  private switchBg: Phaser.GameObjects.Sprite;
+  private switchTextOpen: Phaser.GameObjects.Text;
+  private switchTextClose: Phaser.GameObjects.Text;
 
   constructor(scene: Modal) {
     this.scene = scene;
@@ -22,9 +26,14 @@ export default class CreateClanWindow {
   }
 
   private create(): void {
+    const pos: Iposition = {
+      x: this.scene.cameras.main.centerX,
+      y: this.scene.cameras.main.centerY - 40,
+    };
+
     // Заголовок и описание
     this.scene.textHeader.setText(this.scene.state.lang.clan);
-    this.enterName = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 70, this.scene.state.lang.enterClanName, {
+    this.enterName = this.scene.add.text(pos.x, pos.y - 70, this.scene.state.lang.enterClanName, {
       font: '28px Shadow',
       color: '#974f00'
     }).setOrigin(0.5, 0.5).setDepth(3);
@@ -44,32 +53,34 @@ export default class CreateClanWindow {
     const windowHeight: number = window.innerHeight;
 
     // Отрисовка текста, полученного из инпут
-    const clanNameText: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 220, this.scene.cameras.main.centerY + 35, this.scene.mainInput.value, {
+    const clanNameText: Phaser.GameObjects.Text = this.scene.add.text(pos.x - 190, pos.y + 35, this.scene.mainInput.value, {
       font: '24px Bip',
       color: '#974f00'
     }).setOrigin(0, 0.5).setDepth(3).setCrop(0, 0, 434, 100);
 
     // Зона для интерактива и ее границы для всего окна
-    const clanNameModalZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY, 710, 1200).setDropZone(undefined, (): void => {}).setInteractive();
-    // let graphics: Phaser.GameObjects.Graphics = this.scene.add.graphics()
-    // .lineStyle(2, 0x7b40b8)
-    // .strokeRect(nicknameModalZone.x - nicknameModalZone.input.hitArea.width / 2, nicknameModalZone.y - nicknameModalZone.input.hitArea.height / 2, nicknameModalZone.input.hitArea.width, nicknameModalZone.input.hitArea.height);
+    const clanNameModalZone: Phaser.GameObjects.Zone = this.scene.add.zone(pos.x, pos.y, 690, 1200).setDropZone(undefined, (): void => {}).setInteractive();
 
     // Зона для интерактива и ее границы для инпут
-    const clanNameInputZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY + 36, 460, 70).setDropZone(undefined, (): void => {}).setInteractive();
-    // let graphics2: Phaser.GameObjects.Graphics = this.scene.add.graphics()
-    // .lineStyle(2, 0xFFFF00)
-    // .strokeRect(nicknameInputZone.x - nicknameInputZone.input.hitArea.width / 2, nicknameInputZone.y - nicknameInputZone.input.hitArea.height / 2, nicknameInputZone.input.hitArea.width, nicknameInputZone.input.hitArea.height);
+    const clanNameInputZone: Phaser.GameObjects.Zone = this.scene.add.zone(pos.x, pos.y + 16, 460, 70).setDropZone(undefined, (): void => {}).setInteractive();
         
     // Фон инпута
     const clanNameBG: Phaser.GameObjects.Graphics = this.scene.add.graphics({
-      x: this.scene.cameras.main.centerX - 230,
-      y: this.scene.cameras.main.centerY
+      x: pos.x - 230,
+      y: pos.y - 20
     }).setDepth(2).fillStyle(0xffffff, 1).fillRoundedRect(0, 0, 460, 70, 16);
 
+    this.switchBg = this.scene.add.sprite(pos.x, pos.y + 100, 'sys-switch');
+    this.switchTextOpen = this.scene.add.text(pos.x - 90, pos.y + 100, this.scene.state.lang.clanIsOpen).setOrigin(0.5);
+    this.switchTextClose = this.scene.add.text(pos.x + 90, pos.y + 100, this.scene.state.lang.clanIsClose).setOrigin(0.5);
+    this.switchOpened();
+
+    this.scene.click(this.switchBg, () => {
+      this.switchOpened();
+    });
     // Кнопка
-    const createClanBtn = this.scene.bigButton('green', 'center', 130, this.scene.state.lang.createClan);
-    this.result = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 90, '', {
+    const createClanBtn = this.scene.bigButton('green', 'center', 150, this.scene.state.lang.createClan);
+    this.result = this.scene.add.text(pos.x, pos.y - 100, '', {
       font: '19px Shadow',
       color: '#FF0000',
       align: 'center',
@@ -84,6 +95,9 @@ export default class CreateClanWindow {
       this.scene.close,
       this.scene.textHeader,
       this.enterName,
+      this.switchBg,
+      this.switchTextOpen,
+      this.switchTextClose,
       clanNameText,
       clanNameInputZone,
       clanNameBG,
@@ -99,14 +113,14 @@ export default class CreateClanWindow {
 
         root.scrollIntoView(false)
         modalElement.forEach((el) => el.setY(el.y + padding))
-        this.scene.mainInput.style.top = '80%';
-        this.scene.mainInput.style.bottom = '14%';
+        this.scene.mainInput.style.top = '75%';
+        this.scene.mainInput.style.bottom = '19%';
         centered = false;
 
       } else if (windowHeight === tempHeight && !centered) {
         
         modalElement.forEach((el) => el.setY(el.y - padding));
-        this.scene.mainInput.style.top = '50%';
+        this.scene.mainInput.style.top = '49%';
         this.scene.mainInput.style.bottom = '44%';
         centered = true;
 
@@ -131,32 +145,71 @@ export default class CreateClanWindow {
     this.scene.enterKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
     this.scene.enterKey.on('down', (): void => { this.createClan(); });
 
-    this.scene.resizeWindow(270);
+    this.scene.resizeWindow(310);
+  }
+
+  private switchOpened(): void {
+    const textActiveStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '16px',
+      color: '#fff3e2',
+      wordWrap: { width: 50 },
+      align: 'center',
+      shadow: {
+        offsetX: 2,
+        offsetY: 3, 
+        color: '#4f8c0088',
+        blur: 2,
+        fill: true,
+      },
+    };
+    const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '16px',
+      color: '#8e8e8e',
+      wordWrap: { width: 50 },
+      align: 'center',
+      shadow: {
+        offsetX: 0,
+        offsetY: 0, 
+        color: '#000000',
+        blur: 0,
+        fill: true,
+      },
+    };
+    this.clanIsClosed = !this.clanIsClosed;
+    this.switchBg.setFlipX(this.clanIsClosed);
+    this.switchTextOpen.setStyle(!this.clanIsClosed ? textActiveStyle : textStyle);
+    this.switchTextClose.setStyle(this.clanIsClosed ? textActiveStyle : textStyle);
   }
 
   private createClan(): void {
+    console.log(this.clanIsClosed)
     if (!this.change) {
 
       let checkName: boolean = true;
-      const re: RegExp = /^[a-zA-Z0-9]+$/;
+      const re: RegExp = /[\wа-яА-Я]+\s/u;
       checkName = re.test(this.scene.mainInput.value);
           
-      if (this.scene.mainInput.value.length < 6) checkName = false;
-    
+      if (this.scene.mainInput.value.length < 6 || this.scene.mainInput.value.length > 20) checkName = false;
+      
       if (checkName) {
         this.change = true;
         axios.post(process.env.API + '/createClan', {
           id: this.scene.state.user.id,
           hash: this.scene.state.user.hash,
           counter: this.scene.state.user.counter,
-          name: this.scene.mainInput.value
+          name: this.scene.mainInput.value,
+          isClose: this.clanIsClosed,
         }).then((res) => {
           if (res.data.error) {
+            this.change = false;
             if (!this.nameError) this.enterName.setY(this.enterName.y + 34);
               this.nameError = true;
               this.result.setText(this.scene.state.lang.haveClan).setAlpha(1);
+              this.scene.resizeWindow(350);
           } else {
-            this.scene.state.user.clanId = res.data.result.clanId;
+            this.scene.state.user.clanId = res.data.result.id;
             this.scene.state.clan = res.data.result;
 
             this.scene.state.socket.io.emit('joinClanRoom', {
@@ -170,9 +223,10 @@ export default class CreateClanWindow {
           }
         });
       } else {
-        if (!this.nameError) this.enterName.setY(this.enterName.y + 34);
+        if (!this.nameError) this.enterName.setY(this.enterName.y + 24);
         this.nameError = true;
         this.result.setText(this.scene.state.lang.validNickname).setAlpha(1);
+        this.scene.resizeWindow(350);
       }
     }
   }

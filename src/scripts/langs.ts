@@ -964,6 +964,8 @@ export default {
     youAcceptAsk: 'Вы приняли запрос',
     youDeclainAsk: 'Вы отклонили запрос',
     userInClan: 'Пользователь уже в клане',
+    clanIsOpen: 'Открытый клан',
+    clanIsClose: 'Закрытый клан',
   },
 
   en: {
@@ -1931,5 +1933,7 @@ export default {
     youAcceptAsk: 'Вы приняли запрос',
     youDeclainAsk: 'Вы отклонили запрос',
     userInClan: 'Пользователь уже в клане',
+    clanIsOpen: 'Открытый клан',
+    clanIsClose: 'Закрытый клан',
   },
 }

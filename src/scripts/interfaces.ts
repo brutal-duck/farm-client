@@ -741,6 +741,7 @@ interface IsociaTasks {
 }
 interface Iclan {
   id: string;
+  isClosed: boolean;
   userStatus: string;
   ownerId: string;
   name: string;

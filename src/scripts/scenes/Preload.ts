@@ -2,17 +2,6 @@
 const sheepCoin: string = require("./../../assets/images/sheep/icons/money.png");
 const chickenCoin: string = require("./../../assets/images/chicken/icons/money.png");
 const cowCoin: string = require("./../../assets/images/cow/icons/money.png");
-// const back: string = require("./../../assets/images/icons/back.png");
-// const map: string = require("./../../assets/images/map.png");
-// const mapLockIcon: string = require("./../../assets/images/icons/map-lock-icon.png");
-// const mapChickenIcon: string = require("./../../assets/images/icons/map-chicken-icon.png");
-// const mapCowIcon: string = require("./../../assets/images/icons/map-cow-icon.png");
-// const mapSheepIcon: string = require("./../../assets/images/icons/map-sheep-icon.png");
-// const pointMap: string = require("./../../assets/images/icons/point-map.png");
-// const pbChapterMap: string = require("./../../assets/images/modal/pb-chapter-map.png");
-// const partProgress: string = require("./../../assets/images/modal/part-progress.png");
-// const mapBtn: string = require("./../../assets/images/modal/map-btn.png");
-
 // магазин
 const shopHead: string = require("./../../assets/images/modal/shop-head.png");
 const shopClose: string = require("./../../assets/images/modal/shop-close.png");
@@ -99,9 +88,6 @@ const herdBoostEventIcon: string = require("./../../assets/images/icons/event-he
 const iconShopEvent: string = require("./../../assets/images/event/icons/icon-shop-event.png");
 const eventMoneyPackage: string = require("./../../assets/images/event/money-package.png");
 const shopResourceCollector: string = require("./../../assets/images/event/shop-resource-collector.png");
-// const mapCloud: string = require("./../../assets/images/event/map-cloud.png");
-// const mapEventFarm: string = require("./../../assets/images/event/map-event-farm.png");
-// const mapEventIsland: string = require("./../../assets/images/event/map-event-island.png");
 const unicornStatus: string = require("./../../assets/images/icons/unicorn-status.png");
 const starterpackBg: string = require("./../../assets/images/modal/starterpack-bg.png");
 const starterpackShadow: string = require("./../../assets/images/modal/starterpack-icon-shadow.png");
@@ -125,7 +111,6 @@ const chatTabClose: string = require('./../../assets/images/modal/chat/tab-close
 const chatTabActive: string = require('./../../assets/images/modal/chat/tab-active.png');
 const chatInput: string = require('./../../assets/images/modal/chat/input.png');
 const chatTrash: string = require('./../../assets/images/modal/chat/trash.png');
-
 
 const profileBackground: string = require('./../../assets/images/profile/background.jpg');
 const profileBackButton: string = require('./../../assets/images/profile/back-button.png');
@@ -191,6 +176,8 @@ const settingsWindowPlus: string = require('./../../assets/images/modal/settings
 const settingsWindowSegment: string = require('./../../assets/images/modal/settings/segment.png');
 const settingsWindowMusicPlate: string = require('./../../assets/images/modal/settings/music-plate.png');
 const settingsWindowSoundPlate: string = require('./../../assets/images/modal/settings/sound-plate.png');
+
+const sysSwitch: string = require('../../assets/images/modal/sys-switch.png');
 class Preload extends Phaser.Scene {
   constructor() {
     super('Preload');
@@ -210,19 +197,6 @@ class Preload extends Phaser.Scene {
     this.load.image('sheepCoin', sheepCoin);
     this.load.image('chickenCoin', chickenCoin);
     this.load.image('cowCoin', cowCoin);
-    // this.load.image('back', back);
-    // this.load.image('map', map);
-    // this.load.image('map-lock-icon', mapLockIcon);
-    // this.load.image('map-sheep-icon', mapSheepIcon);
-    // this.load.image('map-chicken-icon', mapChickenIcon);
-    // this.load.image('map-cow-icon', mapCowIcon);
-    // this.load.image('point-map', pointMap);
-    // this.load.image('pb-chapter-map', pbChapterMap);
-    // this.load.image('part-progress', partProgress);
-    // this.load.image('map-btn', mapBtn);
-    // this.load.image('map-cloud', mapCloud);
-    // this.load.image('map-event-farm', mapEventFarm);
-    // this.load.image('map-event-island', mapEventIsland);
 
     //сцена Profile (профиль)
     this.load.image('profile-bg', profileBackground);
@@ -237,9 +211,6 @@ class Preload extends Phaser.Scene {
     this.load.image('profile-event-island', profileEventIsland);
     this.load.image('profile-btn', profileBtn);
     this.load.image('profile-pointer', profilePointer);
-
-
-
 
     // магазин
     this.load.image('shop-head', shopHead);
@@ -422,6 +393,7 @@ class Preload extends Phaser.Scene {
     this.load.image('settings-window-music-plate', settingsWindowMusicPlate);
     this.load.image('settings-window-sound-plate', settingsWindowSoundPlate);
     
+    this.load.image('sys-switch', sysSwitch);
   }
 
   public create(): void {

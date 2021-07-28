@@ -16,6 +16,7 @@ const donateBg: string = require("./../../../assets/images/modal/donate.png");
 const doneChapterButton: string = require("./../../../assets/images/modal/done-chapter-button.png");
 const dailyBg: string = require("./../../../assets/images/modal/daily-bg.png");
 const middleButton: string = require("./../../../assets/images/modal/middle-button.png");
+const sysSwitch: string = require("./../../../assets/images/modal/sys-switch.png");
 const awardBg: string = require("./../../../assets/images/icons/award-bg.png");
 const achievementDaily: string = require("./../../../assets/images/modal/achievement-daily.png");
 const flashDaily: string = require("./../../../assets/images/modal/flash-daily.png");
@@ -120,7 +121,8 @@ export default function typePreload(): void {
         this.load.image('big-btn-yellow', bigButtonYellow);
         this.load.image('repository-sell-btn', repositorySellBtn);
         this.load.image('green-progress', greenProgress);
-        this.load.image('middle-button', middleButton);        
+        this.load.image('middle-button', middleButton);    
+        this.load.image('sys-switch', sysSwitch);
         break;
       case 2: // магазин
         // this.load.image('shop-window', shopWindow);
