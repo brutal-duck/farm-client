@@ -107,6 +107,13 @@ const settingsWindowPlus: string = require('./../../../assets/images/modal/setti
 const settingsWindowSegment: string = require('./../../../assets/images/modal/settings/segment.png');
 const settingsWindowMusicPlate: string = require('./../../../assets/images/modal/settings/music-plate.png');
 const settingsWindowSoundPlate: string = require('./../../../assets/images/modal/settings/sound-plate.png');
+const squareBg: string = require('../../../assets/images/modal/square-bg.png');
+const clanWindowHeader: string = require('../../../assets/images/modal/clan/header.png');
+const clanWindowTabActive: string = require('../../../assets/images/modal/clan/tab-active.png');
+const clanWindowTabDisable: string = require('../../../assets/images/modal/clan/tab-disable.png');
+const clanWindowTabClose: string = require('../../../assets/images/modal/clan/tab-close.png');
+const clanWindowCrown: string = require('../../../assets/images/modal/clan/сrown.png');
+
 
 export default function typePreload(): void {
     switch (this.state.modal.type) {
@@ -272,6 +279,15 @@ export default function typePreload(): void {
       this.load.image('settings-window-segment', settingsWindowSegment);
       this.load.image('settings-window-music-plate', settingsWindowMusicPlate);
       this.load.image('settings-window-sound-plate', settingsWindowSoundPlate);
+      this.load.image('tasks-close', tasksClose);
+        break;
+      case 16: 
+      this.load.image('modal-square-bg', squareBg);
+      this.load.image('clan-window-header', clanWindowHeader);
+      this.load.image('clan-window-tab-active', clanWindowTabActive);
+      this.load.image('clan-window-tab-disable', clanWindowTabDisable);
+      this.load.image('clan-window-tab-close', clanWindowTabClose);
+      this.load.image('clan-window-crown', clanWindowCrown);
       this.load.image('tasks-close', tasksClose);
         break;
       default:
