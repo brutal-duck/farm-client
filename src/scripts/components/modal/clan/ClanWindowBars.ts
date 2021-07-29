@@ -39,7 +39,9 @@ export default class ClanWindowBars {
     this.createFooter();
     this.createTabs();
     this.setTabsListeners();
-
+    if (this.scene.state.modal.clanType === 1){
+      this.createClanInfo();
+    }
   }
 
   private createBg(): void {
@@ -47,11 +49,7 @@ export default class ClanWindowBars {
   }
 
   private createHeader(): void {
-    const headerTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
-      color: '#F3FBD0',
-      fontFamily: 'Shadow',
-      fontSize: '38px',
-    };
+
     this.header = this.scene.add.sprite(this.x, this.y - this.height / 2 + 10 , 'clan-window-header').setDepth(2).setOrigin(0.5, 1);
   }
 
@@ -217,5 +215,62 @@ export default class ClanWindowBars {
     }
 
     this.scene.clickButtonUp(this.tabClose, (): void => { this.onCloseBtn(); }, this.tabCloseBtn);
+  }
+
+  private createClanInfo(): void {
+    const headerTextStyle = {
+      color: '#fffdfa',
+      fontFamily: 'Shadow',
+      fontSize: '23px',
+      align: 'left',
+      shadow: {
+        offsetX: 1,
+        offsetY: 1, 
+        color: '#96580e',
+        blur: 2,
+        fill: true,
+      },
+      wordWrap: { width: 500 },
+    };
+    const scoreTextStyle = {
+      color: '#f3dcc9',
+      fontFamily: 'Shadow',
+      fontSize: '18px',
+      align: 'center',
+      shadow: {
+        offsetX: 1,
+        offsetY: 1, 
+        color: '#96580e',
+        blur: 2,
+        fill: true,
+      },
+    };
+    const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
+
+    this.headerText = this.scene.add.text(headerGeom.left + 120, headerGeom.centerY, this.scene.state.clan.name, headerTextStyle).setDepth(2).setOrigin(0, 0.5);
+    const clanAvatar = this.scene.add.sprite(headerGeom.left + 30, headerGeom.centerY, 'farmer').setDepth(2).setOrigin(0, 0.5).setScale(0.3);
+    const scoreBg = this.scene.add.nineslice(headerGeom.right - 20, headerGeom.centerY, 110, 35, 'modal-square-bg', 10).setDepth(2).setOrigin(1, 0.5);
+    const scoreBgGeom: Phaser.Geom.Rectangle = scoreBg.getBounds();
+    const scoreText = this.scene.add.text(scoreBgGeom.centerX, scoreBgGeom.centerY, 'Очки: 2000', scoreTextStyle).setDepth(2).setOrigin(0.5);
+    this.scene.add.nineslice(this.x, this.y + 100, 480, 600, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
+    this.createClanBtns();
+  }
+
+  private createClanBtns(): void {
+    const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      wordWrap: { width: 100 },
+      align: 'center',
+      fontSize: '18px',
+      color: '#ffffff',
+      stroke: '#D78A31',
+      strokeThickness: 3,
+    };
+    const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
+    const chatBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(headerGeom.centerX + 30, headerGeom.bottom + 45, 'profile-window-button-yellow');
+    const chatBtnText: Phaser.GameObjects.Text = this.scene.add.text(chatBtn.x, chatBtn.y - 5, this.scene.state.lang.clanChat.replace(' ', '\n'), textStyle).setOrigin(0.5);
+
+    const mapBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(headerGeom.centerX  + 170, headerGeom.bottom + 45, 'profile-window-button-yellow');
+    const mapBtnText: Phaser.GameObjects.Text = this.scene.add.text(mapBtn.x, mapBtn.y - 5, this.scene.state.lang.clanMap.replace(' ', '\n'), textStyle).setOrigin(0.5);
   }
 }
