@@ -330,6 +330,7 @@ export default function loadData(response: any): void {
     takenSocialAward: response.data.user.takenSocialAward,
     messages: response.data.user.messages,
     personalMessages: response.data.user.personalMessages,
+    avatar: response.data.user.avatar,
   };
   this.state.user = user;
 

@@ -184,7 +184,6 @@ export default class CreateClanWindow {
   }
 
   private createClan(): void {
-    console.log(this.clanIsClosed)
     if (!this.change) {
 
       let checkName: boolean = true;
@@ -194,6 +193,10 @@ export default class CreateClanWindow {
       if (this.scene.mainInput.value.length < 6 || this.scene.mainInput.value.length > 20) checkName = false;
       
       if (checkName) {
+        let login: string = this.scene.state.user.login;
+        if (this.scene.state.platform !== 'web' && this.scene.state.platform !== 'android') login = this.scene.state.name;
+        const avatar: string = Number(this.scene.state.user.avatar) > 0 ? this.scene.state.user.avatar : this.scene.state.avatar;
+
         this.change = true;
         axios.post(process.env.API + '/createClan', {
           id: this.scene.state.user.id,
@@ -201,6 +204,9 @@ export default class CreateClanWindow {
           counter: this.scene.state.user.counter,
           name: this.scene.mainInput.value,
           isClose: this.clanIsClosed,
+          userName: login,
+          userAvatar: avatar,
+          userStatus: this.scene.state.user.status,
         }).then((res) => {
           if (res.data.error) {
             this.change = false;

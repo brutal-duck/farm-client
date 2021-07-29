@@ -465,14 +465,18 @@ export default class PersonalChatList {
 
   private onAcceptInvite(id: string): void {
     const message: Imessage = this.scene.state.user.messages.find(el => el._id === id);
+    let login: string = this.scene.state.user.login;
+    if (this.scene.state.platform !== 'web' && this.scene.state.platform !== 'android') login = this.scene.state.name;
+    const avatar: string = Number(this.scene.state.user.avatar) > 0 ? this.scene.state.user.avatar : this.scene.state.avatar;
     const data = {
       userId: this.scene.state.user.id,
       hash: this.scene.state.user.hash,
       counter: this.scene.state.user.counter,
       clanId: message.text.split(',')[0],
+      userName: login,
+      userAvatar: avatar,
+      userStatus: this.scene.state.user.status,
     };
-    let login: string = this.scene.state.user.login;
-    if (this.scene.state.platform !== 'web' && this.scene.state.platform !== 'android') login = this.scene.state.name;
 
     axios.post(process.env.API +'/acceptInviteClan', data).then((res): void => {
       const { status } = res.data.result;
@@ -515,32 +519,48 @@ export default class PersonalChatList {
   private onAcceptAsk(id: string): void {
     const message: Imessage = this.scene.state.user.messages.find(el => el._id === id);
     const data = {
-      ownerId: this.scene.state.user.id,
-      clanId: this.scene.state.user.clanId,
-      userId: message.text.split(',')[0],
+      userId: this.scene.state.user.id,
       hash: this.scene.state.user.hash,
       counter: this.scene.state.user.counter,
+      id: this.scene.state.foreignProfileId,
     };
-    axios.post(process.env.API +'/acceptAskJoinClan', data).then((res): void => {
-      const { status } = res.data;
-      if (status === 'ok'){
-        message.status = 1;
-        this.scene.scene.restart(this.scene.state);
-        this.scene.state.socket.io.emit('sendClanMessage', {
-          id: this.scene.state.user.id,
+
+    axios.post(process.env.API +'/getUserInfo', data).then(res => {
+      const { result, error }: { result: IprofileData, error: boolean }  = res.data;
+      if (!error) {
+        const data = {
+          ownerId: this.scene.state.user.id,
           clanId: this.scene.state.user.clanId,
-          message: KEY,
-          userName: message.text.split(',')[1],
-          userStatus: this.scene.state.user.status,
+          userId: message.text.split(',')[0],
+          hash: this.scene.state.user.hash,
+          counter: this.scene.state.user.counter,
+          userName: result.name,
+          userAvatar: result.avatarType > 0 ? String(result.avatarType) : result.avatar,
+          userStatus: result.status,
+        };
+        axios.post(process.env.API +'/acceptAskJoinClan', data).then((res): void => {
+          const { status } = res.data;
+          if (status === 'ok'){
+            message.status = 1;
+            this.scene.scene.restart(this.scene.state);
+            this.scene.state.socket.io.emit('sendClanMessage', {
+              id: this.scene.state.user.id,
+              clanId: this.scene.state.user.clanId,
+              message: KEY,
+              userName: message.text.split(',')[1],
+              userStatus: this.scene.state.user.status,
+            });
+          } else if (status === 'limit'){
+            message.status = 3;
+            this.scene.scene.restart(this.scene.state);
+          } else if (status === 'inClan'){
+            message.status = 4;
+            this.scene.scene.restart(this.scene.state);
+          }
         });
-      } else if (status === 'limit'){
-        message.status = 3;
-        this.scene.scene.restart(this.scene.state);
-      } else if (status === 'inClan'){
-        message.status = 4;
-        this.scene.scene.restart(this.scene.state);
       }
     });
+    
   }
   
   private onDeclainAsk(id: string): void {

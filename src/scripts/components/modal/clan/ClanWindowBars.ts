@@ -17,6 +17,8 @@ export default class ClanWindowBars {
   private clanTabText: Phaser.GameObjects.Text;
   private leaderboardTabText: Phaser.GameObjects.Text;
   private searchTabText: Phaser.GameObjects.Text;
+  private tabClose: Phaser.GameObjects.Sprite;
+  private tabCloseBtn: Phaser.GameObjects.Sprite;
 
   constructor(scene: Modal) {
     this.scene = scene;
@@ -36,6 +38,7 @@ export default class ClanWindowBars {
     this.createHeader();
     this.createFooter();
     this.createTabs();
+    this.setTabsListeners();
 
   }
 
@@ -59,30 +62,86 @@ export default class ClanWindowBars {
   private onCloseBtn(): void {
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
     this.scene.scene.stop();
-    this.scene.state.foreignProfileId = undefined
+  }
+
+  private createCloseTab(): void {
+    const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
+    this.tabClose = this.scene.add.sprite(headerGeom.right - 18, headerGeom.top + 5, 'clan-window-tab-close').setOrigin(1, 1);
+    const tabGeom: Phaser.Geom.Rectangle = this.tabClose.getBounds();
+    this.tabCloseBtn = this.scene.add.sprite(tabGeom.centerX + 5, tabGeom.centerY - 5, 'tasks-close').setOrigin(0.5).setScale(0.9);
   }
 
   private createTabs(): void {
     const tabCount: number = this.scene.state.user.clanId ? 3 : 2;
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
-
+    this.createCloseTab();
     let tabClanGeom: Phaser.Geom.Rectangle;
     let leaderboardTabGeom: Phaser.Geom.Rectangle;
     let searchTabGeom: Phaser.Geom.Rectangle;
     switch (this.scene.state.modal.clanType) {
       case 1:
-        const clanTab = this.createTab({x: headerGeom.left + 20, y: headerGeom.top + 25}, true, tabCount, 'Клан');
+        const clanTab = this.createTab({x: headerGeom.left + 15, y: headerGeom.top + 10}, true, tabCount, 'Клан');
         this.clanTab = clanTab.tab;
         this.clanTabText = clanTab.text;
         tabClanGeom = this.clanTab.getBounds();
-        const leaderboardTab = this.createTab({x: tabClanGeom.right, y: headerGeom.top + 25}, false, tabCount, 'Лучшие кланы');
+        const leaderboardTab = this.createTab({x: tabClanGeom.right, y: headerGeom.top + 10}, false, tabCount, 'Лучшие кланы');
         this.leaderboardTab = leaderboardTab.tab;
         this.leaderboardTabText = leaderboardTab.text;
         leaderboardTabGeom = this.leaderboardTab.getBounds();
-        const searchTab = this.createTab({x: leaderboardTabGeom.right, y: headerGeom.top + 25}, false, tabCount, 'Поиск');
+        const searchTab = this.createTab({x: leaderboardTabGeom.right, y: headerGeom.top + 10}, false, tabCount, 'Поиск');
         this.searchTab = searchTab.tab;
         this.searchTabText = searchTab.text;
         searchTabGeom = this.searchTab.getBounds();
+        break;
+        case 2:
+        if (tabCount === 2) {
+          const leaderboardTab = this.createTab({x: headerGeom.left + 15, y: headerGeom.top + 10}, true, tabCount, 'Лучшие кланы');
+          this.leaderboardTab = leaderboardTab.tab;
+          this.leaderboardTabText = leaderboardTab.text;
+          leaderboardTabGeom = this.leaderboardTab.getBounds();
+          const searchTab = this.createTab({x: leaderboardTabGeom.right, y: headerGeom.top + 10}, false, tabCount, 'Поиск');
+          this.searchTab = searchTab.tab;
+          this.searchTabText = searchTab.text;
+          searchTabGeom = this.searchTab.getBounds();
+        } else {
+          const clanTab = this.createTab({x: headerGeom.left + 15, y: headerGeom.top + 10}, false, tabCount, 'Клан');
+          this.clanTab = clanTab.tab;
+          this.clanTabText = clanTab.text;
+          tabClanGeom = this.clanTab.getBounds();
+          const leaderboardTab = this.createTab({x: tabClanGeom.right, y: headerGeom.top + 10}, true, tabCount, 'Лучшие кланы');
+          this.leaderboardTab = leaderboardTab.tab;
+          this.leaderboardTabText = leaderboardTab.text;
+          leaderboardTabGeom = this.leaderboardTab.getBounds();
+          const searchTab = this.createTab({x: leaderboardTabGeom.right, y: headerGeom.top + 10}, false, tabCount, 'Поиск');
+          this.searchTab = searchTab.tab;
+          this.searchTabText = searchTab.text;
+          searchTabGeom = this.searchTab.getBounds();
+        }
+        break;
+        case 3:
+        if (tabCount === 2) {
+          const leaderboardTab = this.createTab({x: headerGeom.left + 15, y: headerGeom.top + 10}, false, tabCount, 'Лучшие кланы');
+          this.leaderboardTab = leaderboardTab.tab;
+          this.leaderboardTabText = leaderboardTab.text;
+          leaderboardTabGeom = this.leaderboardTab.getBounds();
+          const searchTab = this.createTab({x: leaderboardTabGeom.right, y: headerGeom.top + 10}, true, tabCount, 'Поиск');
+          this.searchTab = searchTab.tab;
+          this.searchTabText = searchTab.text;
+          searchTabGeom = this.searchTab.getBounds();
+        } else {
+          const clanTab = this.createTab({x: headerGeom.left + 15, y: headerGeom.top + 10}, false, tabCount, 'Клан');
+          this.clanTab = clanTab.tab;
+          this.clanTabText = clanTab.text;
+          tabClanGeom = this.clanTab.getBounds();
+          const leaderboardTab = this.createTab({x: tabClanGeom.right, y: headerGeom.top + 10}, false, tabCount, 'Лучшие кланы');
+          this.leaderboardTab = leaderboardTab.tab;
+          this.leaderboardTabText = leaderboardTab.text;
+          leaderboardTabGeom = this.leaderboardTab.getBounds();
+          const searchTab = this.createTab({x: leaderboardTabGeom.right, y: headerGeom.top + 10}, true, tabCount, 'Поиск');
+          this.searchTab = searchTab.tab;
+          this.searchTabText = searchTab.text;
+          searchTabGeom = this.searchTab.getBounds();
+        }
         break;
       default:
         break;
@@ -112,9 +171,9 @@ export default class ClanWindowBars {
       wordWrap: { width: 100 },
     };
 
-    const maxWidth: number = 440;
-    const tabHeight: number = 74;
-    const activeTabHeight: number = 93;
+    const maxWidth: number = 455;
+    const tabHeight: number = 75;
+    const activeTabHeight: number = 100;
     const slice: number = 30;
     const height: number = active ? activeTabHeight : tabHeight;
     const texture: string = active ? 'clan-window-tab-active' : 'clan-window-tab-disable';
@@ -123,5 +182,40 @@ export default class ClanWindowBars {
     const tabGeom = tab.getBounds();
     const text = this.scene.add.text(tabGeom.centerX, tabGeom.centerY, string, textStyle).setOrigin(0.5);
     return { tab, text };
+  }
+
+  private setTabsListeners(): void {
+    if (this.scene.state.modal.clanType !== 1 && this.clanTab) {
+      this.scene.clickButtonUp(this.clanTab, (): void => {
+        this.scene.state.modal = {
+          type: 17,
+          clanType: 1,
+        };
+        this.scene.scene.stop('Clan');
+        this.scene.scene.restart(this.scene.state);
+      }, this.clanTabText);
+    }
+    if (this.scene.state.modal.clanType !== 2) {
+      this.scene.clickButtonUp(this.leaderboardTab, (): void => {
+        this.scene.state.modal = {
+          type: 17,
+          clanType: 2,
+        };
+        this.scene.scene.stop('Clan');
+        this.scene.scene.restart(this.scene.state);
+      }, this.leaderboardTabText);
+    }
+    if (this.scene.state.modal.clanType !== 3) {
+      this.scene.clickButtonUp(this.searchTab, (): void => {
+        this.scene.state.modal = {
+          type: 17,
+          clanType: 3,
+        };
+        this.scene.scene.stop('Clan');
+        this.scene.scene.restart(this.scene.state);
+      }, this.searchTabText);
+    }
+
+    this.scene.clickButtonUp(this.tabClose, (): void => { this.onCloseBtn(); }, this.tabCloseBtn);
   }
 }

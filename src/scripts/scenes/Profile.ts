@@ -770,15 +770,20 @@ class Profile extends Phaser.Scene {
     graphics.lineStyle(5, 0xFFFF00);
     graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
 
-    if (!this.state.user.clanId) {
-      this.click(zone, (): void => {
-        const modal: Imodal = {
-          type: 1, sysType: 21, 
-        }
-        this.state.modal = modal;
-        this.scene.launch('Modal', this.state);
-      });
-    }
+    this.click(zone, (): void => {
+      if (!this.state.user.clanId) {
+        this.state.modal = {
+          type: 1,
+          sysType: 21,
+        };
+      } else {
+        this.state.modal = {
+          type: 17,
+          clanType: 1,
+        };
+      }
+      this.scene.launch('Modal', this.state);
+    });
   }
 
   private updatePersonalMessagesNotification(): void {

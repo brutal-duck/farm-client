@@ -166,7 +166,6 @@ class Modal extends Phaser.Scene {
         break;
       case 17: 
         new ClanWindowBars(this);
-        this.openModal(this.cameras.main);
         break;
       default:
         this.scene.stop();

@@ -1,5 +1,6 @@
 
 let userData: Iuser = {
+  avatar: '',
   diamonds: 3,
   id: 'local',
   clanId: '',

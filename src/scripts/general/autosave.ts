@@ -303,6 +303,7 @@ export default function autosave(): void {
     messages: state.user.messages,
     personalMessages: state.user.personalMessages,
     yandexName: state.yandexName,
+    avatar: state.user.avatar,
   }
 
   const data: IdataAutoSave = { 

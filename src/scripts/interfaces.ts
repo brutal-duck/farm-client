@@ -126,6 +126,7 @@ interface IuserAutoSave {
   messages: Imessage[];
   personalMessages: IuserPersonalMessage[];
   yandexName: string;
+  avatar: string;
 }
 interface Imessage {
   _id?: string;
@@ -157,6 +158,7 @@ interface IprofileData {
   status: string;
   level: number;
   avatar: string;
+  avatarType?: number;
 }
 interface IdataAutoSave {
   id: string;
@@ -193,6 +195,7 @@ interface Iuser {
   id: string;
   clanId: string;
   xp: number;
+  avatar: string;
   hash: string;
   login: string;
   counter: number;

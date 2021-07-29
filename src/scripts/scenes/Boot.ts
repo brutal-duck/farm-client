@@ -204,6 +204,7 @@ class Boot extends Phaser.Scene {
   private setStartState(): void {
     this.state.user = {
       diamonds: 0,
+      avatar: '',
       id: '',
       clanId: '',
       xp: 0,
