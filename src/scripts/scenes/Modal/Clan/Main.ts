@@ -1,6 +1,7 @@
 import Scrolling from '../../../libs/Scrolling';
 import { getStatusSettings, loadingModal } from '../../../general/basic';
 import { click, clickModalBtn, clickButton } from '../../../general/clicks';
+import ClanUsersList from './../../../components/modal/clan/ClanUsersList';
 
 class Clan extends Phaser.Scene {
   constructor() {
@@ -23,7 +24,7 @@ class Clan extends Phaser.Scene {
   public init(state: Istate): void {
     this.state = state;
     this.scrollHeight = 0;
-    this.windowHeight = 568;
+    this.windowHeight = 600;
     this.windowWidth = 479;
     this.initScrolling();
   }
@@ -32,6 +33,9 @@ class Clan extends Phaser.Scene {
   }
 
   public create(): void {
+    if (this.state.modal.clanType === 1) {
+      new ClanUsersList(this);
+    }
   }
 
   public update(): void {
@@ -39,7 +43,7 @@ class Clan extends Phaser.Scene {
 
   private initScrolling(): void {
     this.height = Number(this.game.config.height);
-    let y: number = this.cameras.main.centerY - 320;
+    let y: number = this.cameras.main.centerY - 200;
     const cameraOptions: IScrollingOptions = {
       x: 120,
       y: y,

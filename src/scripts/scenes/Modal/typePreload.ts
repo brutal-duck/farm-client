@@ -113,6 +113,7 @@ const clanWindowTabActive: string = require('../../../assets/images/modal/clan/t
 const clanWindowTabDisable: string = require('../../../assets/images/modal/clan/tab-disable.png');
 const clanWindowTabClose: string = require('../../../assets/images/modal/clan/tab-close.png');
 const clanWindowCrown: string = require('../../../assets/images/modal/clan/сrown.png');
+const clanWindowLine: string = require('../../../assets/images/modal/clan/line.png');
 
 
 export default function typePreload(): void {
@@ -288,6 +289,7 @@ export default function typePreload(): void {
       this.load.image('clan-window-tab-disable', clanWindowTabDisable);
       this.load.image('clan-window-tab-close', clanWindowTabClose);
       this.load.image('clan-window-crown', clanWindowCrown);
+      this.load.image('clan-window-line', clanWindowLine);
       this.load.image('tasks-close', tasksClose);
         break;
       default:

@@ -60,6 +60,7 @@ export default class ClanWindowBars {
   private onCloseBtn(): void {
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
     this.scene.scene.stop();
+    this.scene.scene.stop('Clan');
   }
 
   private createCloseTab(): void {
@@ -254,6 +255,7 @@ export default class ClanWindowBars {
     const scoreText = this.scene.add.text(scoreBgGeom.centerX, scoreBgGeom.centerY, 'Очки: 2000', scoreTextStyle).setDepth(2).setOrigin(0.5);
     this.scene.add.nineslice(this.x, this.y + 100, 480, 600, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
     this.createClanBtns();
+    this.scene.scene.launch('Clan', this.scene.state);
   }
 
   private createClanBtns(): void {

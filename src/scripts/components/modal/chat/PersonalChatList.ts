@@ -93,8 +93,6 @@ export default class PersonalChatList {
         this.createAskJoinClan(el);
       }
     });
-    this.scene.state.user.personalMessages.forEach(el => {
-    });
   }
 
   private createPersonal(data: IchatListData): void {

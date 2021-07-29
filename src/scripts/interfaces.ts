@@ -749,8 +749,15 @@ interface Iclan {
   userStatus: string;
   ownerId: string;
   name: string;
-  users: Array<string>;
+  users: Array<IclanUser>;
   chatMessages: Array<Ichat>;
+}
+interface IclanUser {
+  id: string;
+  points: number;
+  name: string;
+  avatar: string;
+  status: string;
 }
 interface Istate {
   platform: string;

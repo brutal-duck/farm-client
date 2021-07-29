@@ -185,6 +185,7 @@ const clanWindowTabActive: string = require('../../assets/images/modal/clan/tab-
 const clanWindowTabDisable: string = require('../../assets/images/modal/clan/tab-disable.png');
 const clanWindowTabClose: string = require('../../assets/images/modal/clan/tab-close.png');
 const clanWindowCrown: string = require('../../assets/images/modal/clan/сrown.png');
+const clanWindowLine: string = require('../../assets/images/modal/clan/line.png');
 class Preload extends Phaser.Scene {
   constructor() {
     super('Preload');
@@ -407,6 +408,7 @@ class Preload extends Phaser.Scene {
     this.load.image('clan-window-tab-disable', clanWindowTabDisable);
     this.load.image('clan-window-tab-close', clanWindowTabClose);
     this.load.image('clan-window-crown', clanWindowCrown);
+    this.load.image('clan-window-line', clanWindowLine);
   }
 
   public create(): void {
