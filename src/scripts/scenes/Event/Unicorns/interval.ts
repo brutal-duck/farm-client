@@ -84,11 +84,8 @@ function interval(): void {
     this.autoprogressTimer = time;
 
     // поиск рекламы
-    // this.findAd();
     this.ads.findAd();
     
-    // this.debug();
-
     this.nextDayTimer();
 
 

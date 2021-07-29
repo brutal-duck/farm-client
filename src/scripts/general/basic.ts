@@ -1078,113 +1078,6 @@ function takeDonate(): void {
 
 }
 
-function debug(): void {
-
-  let user: IuserSheep | IuserChicken | IuserCow;
-
-  if (this.state.farm === 'Sheep') {
-    user = this.state.userSheep;
-
-    let checkUsersData: boolean = false;
-    if (typeof this.state.userSheep.money !== 'number') checkUsersData = true;
-    if (typeof this.state.userSheep.fair !== 'number') checkUsersData = true;
-    if (typeof this.state.userSheep.part !== 'number') checkUsersData = true;
-    if (typeof this.state.userSheep.collector !== 'number') checkUsersData = true;
-    if (typeof this.state.userSheep.collectorLevel !== 'number') checkUsersData = true;
-    if (typeof this.state.userSheep.collectorTakenTime !== 'number') checkUsersData = true;
-    if (typeof this.state.userSheep.diamondAnimalTime !== 'number') checkUsersData = true;
-    if (typeof this.state.userSheep.tutorial !== 'number') checkUsersData = true;
-    if (typeof this.state.userSheep.autosaveCounter !== 'number') checkUsersData = true;
-    if (typeof this.state.userSheep.diamondAnimalAd !== 'boolean') checkUsersData = true;
-    if (typeof this.state.userSheep.countSheep !== 'number') checkUsersData = true;
-    if (checkUsersData && !this.game.scene.keys[this.state.farm].debugLog) {
-      this.game.scene.keys[this.state.farm].debugLog = true;
-      sendDebug(this.state.userSheep, this.state, 'userSheep');
-    }
-
-  } else if (this.state.farm === 'Chicken') {
-    user = this.state.userChicken;
-
-    let checkUsersData: boolean = false;
-    if (typeof this.state.userChicken.money !== 'number') checkUsersData = true;
-    if (typeof this.state.userChicken.fair !== 'number') checkUsersData = true;
-    if (typeof this.state.userChicken.part !== 'number') checkUsersData = true;
-    if (typeof this.state.userChicken.collector !== 'number') checkUsersData = true;
-    if (typeof this.state.userChicken.collectorLevel !== 'number') checkUsersData = true;
-    if (typeof this.state.userChicken.collectorTakenTime !== 'number') checkUsersData = true;
-    if (typeof this.state.userChicken.diamondAnimalTime !== 'number') checkUsersData = true;
-    if (typeof this.state.userChicken.tutorial !== 'number') checkUsersData = true;
-    if (typeof this.state.userChicken.autosaveCounter !== 'number') checkUsersData = true;
-    if (typeof this.state.userChicken.diamondAnimalAd !== 'boolean') checkUsersData = true;
-    if (typeof this.state.userChicken.countChicken !== 'number') checkUsersData = true;
-    if (checkUsersData && !this.game.scene.keys[this.state.farm].debugLog) {
-      this.game.scene.keys[this.state.farm].debugLog = true;
-      sendDebug(this.state.userChicken, this.state, 'userChicken');
-    }
-
-  } else if (this.state.farm === 'Cow') {
-    user = this.state.userCow;
-
-    let checkUsersData: boolean = false;
-    if (typeof this.state.userCow.money !== 'number') checkUsersData = true;
-    if (typeof this.state.userCow.fair !== 'number') checkUsersData = true;
-    if (typeof this.state.userCow.part !== 'number') checkUsersData = true;
-    if (typeof this.state.userCow.collector !== 'number') checkUsersData = true;
-    if (typeof this.state.userCow.collectorLevel !== 'number') checkUsersData = true;
-    if (typeof this.state.userCow.collectorTakenTime !== 'number') checkUsersData = true;
-    if (typeof this.state.userCow.diamondAnimalTime !== 'number') checkUsersData = true;
-    if (typeof this.state.userCow.tutorial !== 'number') checkUsersData = true;
-    if (typeof this.state.userCow.autosaveCounter !== 'number') checkUsersData = true;
-    if (typeof this.state.userCow.diamondAnimalAd !== 'boolean') checkUsersData = true;
-    if (typeof this.state.userCow.countCow !== 'number') checkUsersData = true;
-    if (checkUsersData && !this.game.scene.keys[this.state.farm].debugLog) {
-      this.game.scene.keys[this.state.farm].debugLog = true;
-      sendDebug(this.state.userCow, this.state, 'userCow');
-    }
-
-  }
-
-  if (user.collector > 0 && typeof this.game.scene.keys[this.state.farm].collectorTimer?.delay !== 'number' && !this.game.scene.keys[this.state.farm].debugLog) {
-    this.game.scene.keys[this.state.farm].debugLog = true;
-    sendDebug(user, this.state, 'collector');
-  }
-
-  let tasks: Itasks[] = this.partTasks();
-
-  if (tasks.length > 0) {
-    
-    // ярмарка
-    let fairTask = tasks.find(data => data.type === 7);
-
-    if (user.fair >= fairTask?.state && fairTask?.done === 0) {
-
-      fairTask.done = 1;
-      fairTask.got_awarded = 1;
-      this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
-      
-    }
-
-  }
-
-}
-
-// отправка дебага на сервер
-function sendDebug(data: any, state: Istate, type: string): void {
-
-  console.log('sendDebug', data, state, type);
-
-  const query = { 
-    id: state.user.id,
-    hash: state.user.hash,
-    counter: state.user.counter,
-    data: data,
-    type: type
-  }
-  axios.post(process.env.API + "/crashLog", query)
-
-}
-
-
 function loadingScreen(farmType: string): void {
 
   let loading: string = this.state.lang.loading;
@@ -1827,7 +1720,6 @@ export {
   buyNextFarm,
   getNewbieAward,
   takeDonate,
-  debug,
   loadingScreen,
   spreadAnimals,
   getEventRaiting,

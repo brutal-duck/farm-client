@@ -32,7 +32,6 @@ import {
   buyNextFarm,
   getNewbieAward,
   takeDonate,
-  debug,
   getRandomBool,
   spreadAnimals, 
   getEventRaiting,
@@ -285,7 +284,6 @@ class Sheep extends Phaser.Scene {
   public setCollector = setCollector.bind(this);
   public showImproveCollector = showImproveCollector.bind(this);
   public improveCollector = improveCollector.bind(this);
-  public debug = debug.bind(this);
   public createBoostAnimal = createBoostAnimal.bind(this);
   public startHerdBoost = startHerdBoost.bind(this);
   public getRandomBool = getRandomBool.bind(this);
