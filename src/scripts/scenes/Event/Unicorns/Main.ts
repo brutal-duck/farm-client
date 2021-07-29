@@ -8,7 +8,6 @@ import {
   logout,
   onlineStatus,
   takeDonate,
-  debug, 
   getEventRaiting,
   nextDayTimer,
   autoporgressCollectorTime,
@@ -165,7 +164,6 @@ class Unicorn extends Phaser.Scene {
   public takeDonate = takeDonate.bind(this);
   public showImproveCollector = showImproveCollector.bind(this);
   public improveCollector = improveCollector.bind(this);
-  public debug = debug.bind(this);
   public createBoostAnimal = createBoostAnimal.bind(this);
   public startHerdBoost = startHerdBoost.bind(this);
   public world = world.bind(this);

@@ -287,10 +287,7 @@ function interval(): void {
       !this.scene.isActive('Profile')) this.getNewbieAward();
 
     // поиск рекламы
-    // this.findAd();
     this.ads.findAd();
-
-    this.debug();
 
     this.nextDayTimer();
 
