@@ -4,14 +4,13 @@ import Clan from './../../../scenes/Modal/Clan/Main';
 
 export default class ClanLeaderboard {
   private scene: Clan;
-  private array: Array<Iclan>;
   constructor (scene: Clan) {
     this.scene = scene;
     this.init();
   }
 
   private init(): void {
-    const heightWindow: number = this.scene.state.user.clanId ? 570 : 600;
+    const heightWindow: number = this.scene.state.user.clanId ? 570 : 650;
     this.scene.scrollHeight = Number(this.scene.game.config.height) - 1200 + heightWindow;
     this.scene.scrolling.bottom = 0;
     this.scene.scrolling.scrollY = 0;

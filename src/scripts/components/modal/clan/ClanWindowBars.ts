@@ -1,3 +1,4 @@
+import { shortNum } from '../../../general/basic';
 import Modal from './../../../scenes/Modal/Modal';
 
 export default class ClanWindowBars {
@@ -48,7 +49,7 @@ export default class ClanWindowBars {
     this.createFooter();
     this.createCloseTab();
     if (this.scene.state.user.clanId) {
-      this.createTabs([1, 2, 3]);
+      this.createTabs([1, 2]);
     } else {
       this.createTabs([2, 3]);
     }
@@ -140,21 +141,23 @@ export default class ClanWindowBars {
     const tabGeom: Phaser.Geom.Rectangle = tab.getBounds();
     const tabIcon: Phaser.GameObjects.Text = this.scene.add.text(tabGeom.centerX, tabGeom.centerY, `clan - ${type}`, textStyle).setOrigin(0.5);
     this.modalElements.push(tab, tabIcon);
-    this.scene.clickButtonUp(tab, (): void => {
-      this.scene.state.modal = {
-        type: 17,
-        clanType: type,
-      };
-      this.scene.scene.stop('Clan');
-      this.scene.scene.restart(this.scene.state);
-    }, tabIcon);
+    if (!active) {
+      this.scene.clickButtonUp(tab, (): void => {
+        this.scene.state.modal = {
+          type: 17,
+          clanType: type,
+        };
+        this.scene.scene.stop('Clan');
+        this.scene.scene.restart(this.scene.state);
+      }, tabIcon);
+    }
   }
 
   private createClanInfo(): void {
     const scoreTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       color: '#f3dcc9',
       fontFamily: 'Shadow',
-      fontSize: '18px',
+      fontSize: '19px',
       align: 'center',
       shadow: {
         offsetX: 1,
@@ -166,11 +169,12 @@ export default class ClanWindowBars {
     };
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
 
-    this.headerText = this.scene.add.text(headerGeom.left + 120, headerGeom.centerY, this.scene.state.clan.name, this.headerTextStyle).setDepth(2).setOrigin(0, 0.5);
+    this.headerText = this.scene.add.text(headerGeom.left + 120, headerGeom.centerY, this.scene.state.clan.name, this.headerTextStyle).setDepth(2).setOrigin(0, 0.5).setFontSize(20);
     const clanAvatar = this.scene.add.sprite(headerGeom.left + 30, headerGeom.centerY, 'farmer').setDepth(2).setOrigin(0, 0.5).setScale(0.3);
-    const scoreBg = this.scene.add.nineslice(headerGeom.right - 20, headerGeom.centerY, 110, 35, 'modal-square-bg', 10).setDepth(2).setOrigin(1, 0.5);
+    const scoreBg = this.scene.add.sprite(headerGeom.right - 20, headerGeom.centerY, 'clan-window-points-bg').setDepth(2).setOrigin(1, 0.5);
     const scoreBgGeom: Phaser.Geom.Rectangle = scoreBg.getBounds();
-    const scoreText = this.scene.add.text(scoreBgGeom.centerX, scoreBgGeom.centerY, 'Очки: 2000', scoreTextStyle).setDepth(2).setOrigin(0.5);
+    const text: string = `${this.scene.state.lang.scores}: ${shortNum(Phaser.Math.Between(100, 200000))}`;
+    const scoreText = this.scene.add.text(scoreBgGeom.centerX, scoreBgGeom.centerY, text, scoreTextStyle).setDepth(2).setOrigin(0.5);
     this.scene.add.nineslice(this.x, this.y + 100, 480, 600, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
     this.createClanBtns();
     this.scene.scene.launch('Clan', this.scene.state);
@@ -196,7 +200,30 @@ export default class ClanWindowBars {
 
   private createLeaderboard(): void {
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
-    this.scene.add.nineslice(this.x, this.y + 70, 480, 680, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
+    if (this.scene.state.user.clanId) {
+      const bgHeight: number = 680;
+      const bgY: number = this.y + 70;
+      this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
+    } else {
+      const bgHeight: number = 590;
+      const bgY: number = this.y + 120;
+      this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
+      this.scene.add.tileSprite(this.x, headerGeom.bottom - 2, this.width, 100, 'white-pixel').setTint(0xD06900).setOrigin(0.5, 0);
+      const right1 = {
+        text: 250,
+        icon: 'diamond'
+      };
+      const btn = this.scene.bigButton('green', 'left', -240, this.scene.state.lang.createClan, right1);
+      this.scene.clickModalBtn(btn, () => {
+        this.scene.state.modal = {
+          type: 1,
+          sysType: 21,
+        }
+        this.scene.scene.stop('Clan');
+        this.scene.scene.restart(this.scene.state);
+      });
+    }
+
     this.headerText = this.scene.add.text(headerGeom.centerX, headerGeom.centerY - 3, this.scene.state.lang.clansLiderboard, this.headerTextStyle).setDepth(2).setOrigin(0.5);
     this.scene.scene.launch('Clan', this.scene.state);
   }

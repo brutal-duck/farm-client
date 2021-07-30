@@ -773,8 +773,8 @@ class Profile extends Phaser.Scene {
     this.click(zone, (): void => {
       if (!this.state.user.clanId) {
         this.state.modal = {
-          type: 1,
-          sysType: 21,
+          type: 17,
+          clanType: 2,
         };
       } else {
         this.state.modal = {

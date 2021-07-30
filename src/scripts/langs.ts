@@ -968,6 +968,7 @@ export default {
     clanIsOpen: 'Открытый клан',
     clanIsClose: 'Закрытый клан',
     clansLiderboard: 'Клановая таблица лидеров',
+    scores: 'Очки',
   },
 
   en: {
@@ -1939,5 +1940,6 @@ export default {
     clanIsOpen: 'Открытый клан',
     clanIsClose: 'Закрытый клан',
     clansLiderboard: 'Клановая таблица лидеров',
+    scores: 'Очки',
   },
 }

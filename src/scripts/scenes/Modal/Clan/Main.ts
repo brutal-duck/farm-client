@@ -50,14 +50,14 @@ class Clan extends Phaser.Scene {
     this.height = Number(this.game.config.height);
     let y: number;
     if (this.windowType === 1) {
-      y = this.cameras.main.centerY - 200;
-      this.windowHeight = 600;
+      y = this.cameras.main.centerY - 198;
+      this.windowHeight = 595;
     } else if (this.windowType === 2 && this.state.user.clanId) {
       y = this.cameras.main.centerY - 267;
       this.windowHeight = 673;
     } else if (this.windowType === 2) {
-      y = this.cameras.main.centerY - 200;
-      this.windowHeight = 600;
+      y = this.cameras.main.centerY - 172;
+      this.windowHeight = 584;
     }
 
     const cameraOptions: IScrollingOptions = {
