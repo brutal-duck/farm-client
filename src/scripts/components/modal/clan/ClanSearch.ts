@@ -25,16 +25,16 @@ export default class ClanSearch {
       hash: this.scene.state.user.hash,
       counter: this.scene.state.user.counter,
     };
-    axios.post(process.env.API + '/getClanRaitingList', data).then(res => {
+    axios.post(process.env.API + '/getSearchClan', data).then(res => {
       console.log(res.data)
-      res.data.forEach((el, id) => {
-        this.createClan(el, id + 1);
+      res.data.clans.forEach(el => {
+        this.createClan(el);
       });
       console.log(res.data);
     })
   }
 
-  private createClan(data: Iclan, ratePosition): void {
+  private createClan(data: Iclan): void {
     const nameTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       color: '#fffdfa',
       fontFamily: 'Shadow',
