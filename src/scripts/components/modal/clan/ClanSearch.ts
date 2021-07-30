@@ -1,12 +1,14 @@
 import axios from 'axios';
-import { shortNum } from '../../../general/basic';
 import Clan from './../../../scenes/Modal/Clan/Main';
+const KEY = '196ea80e3d8a8ef81b09c965d6658b7f';
 
 export default class ClanSearch {
   private scene: Clan;
+  private array: Array<Iclan>;
   constructor (scene: Clan) {
     this.scene = scene;
     this.init();
+    this.array = []
   }
 
   private init(): void {
@@ -60,20 +62,93 @@ export default class ClanSearch {
       x: this.scene.cameras.main.centerX - 330,
       y: this.scene.windowHeight + this.scene.scrollHeight + padding,
     };
-    const texture: string = data.isClosed ? 'profile-window-button-yellow' : 'profile-window-button-green';
-    const textBtn: string = data.isClosed ? this.scene.state.lang.sendInvite.replace(' ', '\n') : this.scene.state.lang.join;
+    const { name, isClosed, id } = data;
 
-    const { name } = data;
+    const texture: string = isClosed ? 'profile-window-button-yellow' : 'profile-window-button-green';
+    const textBtn: string = isClosed ? this.scene.state.lang.sendInvite.replace(' ', '\n') : this.scene.state.lang.join;
+
     
     const avatarSprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos.x + 40, pos.y, 'farmer').setScale(0.28).setDepth(1);
     const avatarGeom: Phaser.Geom.Rectangle = avatarSprite.getBounds();
     const nameText: Phaser.GameObjects.Text = this.scene.add.text(avatarGeom.right + 20, avatarSprite.y, name, nameTextStyle).setDepth(1).setOrigin(0, 0.5).setCrop(0, 0, 250, 250);
+
     const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos.x + 370, pos.y + 5, texture).setDepth(1);
     const btnText: Phaser.GameObjects.Text = this.scene.add.text(btn.x, btn.y - 5, textBtn, buttonTextStyle).setOrigin(0.5).setDepth(1);
+
+    this.scene.clickModalBtn({ btn: btn, title: btnText }, () => { this.onClickBtn(data); });
 
     this.scene.add.sprite(pos.x + 210, pos.y, 'clan-window-leader-plate');
 
     this.scene.scrollHeight += padding + avatarGeom.height + 10;
     this.scene.scrolling.bottom = this.scene.scrollHeight;
+  }
+
+  private onClickBtn(clan: Iclan): void {
+    if (clan.isClosed) {
+      this.askJoinClosedClan(clan);
+    } else {
+      this.joinOpenedClan(clan);
+    }
+  }
+
+  private askJoinClosedClan(clan: Iclan): void {
+    let login: string = this.scene.state.user.login;
+    if (this.scene.state.platform !== 'web' && this.scene.state.platform !== 'android') login = this.scene.state.name;
+    const avatar: string = Number(this.scene.state.user.avatar) > 0 ? this.scene.state.user.avatar : this.scene.state.avatar;
+    const data = {
+      clanId: clan.id, 
+      login: login,
+    };
+    this.scene.state.socket.io.emit('askJoinClan', data);
+  }
+
+  private joinOpenedClan(clan: Iclan): void {
+    let login: string = this.scene.state.user.login;
+    if (this.scene.state.platform !== 'web' && this.scene.state.platform !== 'android') login = this.scene.state.name;
+    const avatar: string = Number(this.scene.state.user.avatar) > 0 ? this.scene.state.user.avatar : this.scene.state.avatar;
+    const data = {
+      userId: this.scene.state.user.id,
+      hash: this.scene.state.user.hash,
+      counter: this.scene.state.user.counter,
+      clanId: clan.id,
+      userName: login,
+      userAvatar: avatar,
+      userStatus: this.scene.state.user.status,
+    };
+
+    axios.post(process.env.API +'/acceptInviteClan', data).then((res): void => {
+      const { status } = res.data.result;
+      if (res.data.error) {
+        if (status === 'limit') {
+          this.scene.state.modal = {
+            type: 1,
+            sysType: 3,
+            message: this.scene.state.lang.clanIsFull,
+          };
+          this.scene.scene.stop();
+          this.scene.scene.stop('Modal');
+          this.scene.scene.launch('Modal', this.scene.state);
+        }
+      } else {
+        if (res.data.result.id) {
+          this.scene.state.user.clanId = res.data.result.id;
+          this.scene.state.clan = res.data.result;
+  
+          this.scene.state.socket.io.emit('joinClanRoom', {
+            clanId: this.scene.state.user.clanId,
+          });
+          this.scene.state.socket.io.emit('sendClanMessage', {
+            id: this.scene.state.user.id,
+            clanId: this.scene.state.user.clanId,
+            message: KEY,
+            userName: login,
+            userStatus: this.scene.state.user.status,
+          });
+          this.scene.scene.stop('Modal');
+          this.scene.scene.stop();
+          this.scene.scene.launch('Modal', this.scene.state);
+        }
+      }
+    });    
   }
 }
