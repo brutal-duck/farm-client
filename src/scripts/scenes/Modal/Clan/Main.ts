@@ -2,6 +2,7 @@ import Scrolling from '../../../libs/Scrolling';
 import { getStatusSettings, loadingModal } from '../../../general/basic';
 import { click, clickModalBtn, clickButton } from '../../../general/clicks';
 import ClanUsersList from './../../../components/modal/clan/ClanUsersList';
+import ClanLeaderboard from './../../../components/modal/clan/ClanLeaderboard';
 
 class Clan extends Phaser.Scene {
   constructor() {
@@ -14,6 +15,7 @@ class Clan extends Phaser.Scene {
   public scrollHeight: number;
   public windowHeight: number;
   public windowWidth: number;
+  public windowType: number;
 
   public getStatusSettings = getStatusSettings.bind(this);
   public loadingModal = loadingModal.bind(this);
@@ -23,6 +25,7 @@ class Clan extends Phaser.Scene {
 
   public init(state: Istate): void {
     this.state = state;
+    this.windowType = this.state.modal.clanType || 2;
     this.scrollHeight = 0;
     this.windowHeight = 600;
     this.windowWidth = 479;
@@ -35,6 +38,8 @@ class Clan extends Phaser.Scene {
   public create(): void {
     if (this.state.modal.clanType === 1) {
       new ClanUsersList(this);
+    } else if (this.state.modal.clanType === 2) {
+      new ClanLeaderboard(this);
     }
   }
 
@@ -43,7 +48,18 @@ class Clan extends Phaser.Scene {
 
   private initScrolling(): void {
     this.height = Number(this.game.config.height);
-    let y: number = this.cameras.main.centerY - 200;
+    let y: number;
+    if (this.windowType === 1) {
+      y = this.cameras.main.centerY - 200;
+      this.windowHeight = 600;
+    } else if (this.windowType === 2 && this.state.user.clanId) {
+      y = this.cameras.main.centerY - 267;
+      this.windowHeight = 673;
+    } else if (this.windowType === 2) {
+      y = this.cameras.main.centerY - 200;
+      this.windowHeight = 600;
+    }
+
     const cameraOptions: IScrollingOptions = {
       x: 120,
       y: y,

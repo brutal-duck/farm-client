@@ -37,7 +37,7 @@ export default class ClanWindowBars {
   private init(): void {
     this.x = this.scene.cameras.main.centerX;
     this.y = this.scene.cameras.main.centerY;
-    this.windowType = this.scene.state.modal.clanType || 1;
+    this.windowType = this.scene.state.modal.clanType || 2;
     this.height = 600;
     this.width = 527;
   }

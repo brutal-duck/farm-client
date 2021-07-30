@@ -967,6 +967,7 @@ export default {
     userInClan: 'Пользователь уже в клане',
     clanIsOpen: 'Открытый клан',
     clanIsClose: 'Закрытый клан',
+    clansLiderboard: 'Клановая таблица лидеров',
   },
 
   en: {
@@ -1937,5 +1938,6 @@ export default {
     userInClan: 'Пользователь уже в клане',
     clanIsOpen: 'Открытый клан',
     clanIsClose: 'Закрытый клан',
+    clansLiderboard: 'Клановая таблица лидеров',
   },
 }

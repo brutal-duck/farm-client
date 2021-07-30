@@ -188,8 +188,6 @@ export default class CreateClanWindow {
 
       let checkName: boolean = true;
       const re: RegExp = /[\p{Alpha}\p{M}\p{Nd}\p{Pc}\p{Join_C}]/gu;
-      console.log(re);
-      console.log(this.scene.mainInput.value)
       checkName = re.test(this.scene.mainInput.value);
           
       if (this.scene.mainInput.value.length < 6 || this.scene.mainInput.value.length > 20) checkName = false;
