@@ -39,8 +39,10 @@ export default class ClanWindowBars {
     this.createFooter();
     this.createTabs();
     this.setTabsListeners();
-    if (this.scene.state.modal.clanType === 1){
+    if (this.scene.state.modal.clanType === 1) {
       this.createClanInfo();
+    } else if (this.scene.state.modal.clanType === 2) {
+      this.createLeaderboard();
     }
   }
 
@@ -49,7 +51,6 @@ export default class ClanWindowBars {
   }
 
   private createHeader(): void {
-
     this.header = this.scene.add.sprite(this.x, this.y - this.height / 2 + 10 , 'clan-window-header').setDepth(2).setOrigin(0.5, 1);
   }
 
@@ -274,5 +275,9 @@ export default class ClanWindowBars {
 
     const mapBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(headerGeom.centerX  + 170, headerGeom.bottom + 45, 'profile-window-button-yellow');
     const mapBtnText: Phaser.GameObjects.Text = this.scene.add.text(mapBtn.x, mapBtn.y - 5, this.scene.state.lang.clanMap.replace(' ', '\n'), textStyle).setOrigin(0.5);
+  }
+
+  private createLeaderboard(): void {
+    
   }
 }
