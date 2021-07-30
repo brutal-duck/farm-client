@@ -186,17 +186,48 @@ export default class ClanWindowBars {
       fontFamily: 'Shadow',
       wordWrap: { width: 100 },
       align: 'center',
-      fontSize: '18px',
+      fontSize: '16px',
       color: '#ffffff',
-      stroke: '#D78A31',
-      strokeThickness: 3,
+      shadow: {
+        offsetX: 1,
+        offsetY: 1, 
+        color: '#96580e',
+        blur: 2,
+        fill: true,
+      },
     };
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
-    const chatBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(headerGeom.centerX + 30, headerGeom.bottom + 45, 'profile-window-button-yellow');
+    
+    const leaveBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(headerGeom.centerX  + 30, headerGeom.bottom + 45, 'profile-window-button-red');
+    const leaveBtnText: Phaser.GameObjects.Text = this.scene.add.text(leaveBtn.x, leaveBtn.y - 5, this.scene.state.lang.leaveClan, textStyle).setOrigin(0.5);
+    
+    const chatBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(headerGeom.centerX + 170, headerGeom.bottom + 45, 'profile-window-button-yellow');
     const chatBtnText: Phaser.GameObjects.Text = this.scene.add.text(chatBtn.x, chatBtn.y - 5, this.scene.state.lang.clanChat.replace(' ', '\n'), textStyle).setOrigin(0.5);
 
-    const mapBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(headerGeom.centerX  + 170, headerGeom.bottom + 45, 'profile-window-button-yellow');
-    const mapBtnText: Phaser.GameObjects.Text = this.scene.add.text(mapBtn.x, mapBtn.y - 5, this.scene.state.lang.clanMap.replace(' ', '\n'), textStyle).setOrigin(0.5);
+    this.scene.clickModalBtn({ btn: leaveBtn, title: leaveBtnText }, () => { this.onLeaveBtn(); });
+
+    this.scene.clickModalBtn({ btn: chatBtn, title: chatBtnText }, () => { this.onChatBtn(); });
+  }
+
+  private onChatBtn(): void {
+    this.scene.state.modal = {
+      type: 9,
+      chatType: 3,
+    };
+    this.scene.scene.stop('Clan');
+    this.scene.scene.restart(this.scene.state);
+  }
+
+  private onLeaveBtn(): void {
+    this.scene.state.socket.io.emit('leaveClan');
+    this.scene.state.user.clanId = null;
+    this.scene.state.clan = null;
+    this.scene.state.modal = {
+      type: 17,
+      clanType: 3,
+    };
+    this.scene.scene.stop('Clan');
+    this.scene.scene.restart(this.scene.state);
   }
 
   private createLeaderboard(): void {

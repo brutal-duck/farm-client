@@ -972,6 +972,7 @@ export default {
     inputClanName: 'Введите название клана',
     join: 'Вступить',
     sendInvite: 'Отправить заявку',
+    leaveClan: 'Выйти из\nклана',
   },
 
   en: {
@@ -1947,5 +1948,6 @@ export default {
     inputClanName: 'Введите название клана',
     join: 'Вступить',
     sendInvite: 'Отправить заявку',
+    leaveClan: 'Выйти из\nклана',
   },
 }

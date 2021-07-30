@@ -131,6 +131,11 @@ export default class ClanSearch {
         }
       } else {
         if (res.data.result.id) {
+          this.scene.state.modal = {
+            type: 17,
+            clanType: 1,
+            message: this.scene.state.lang.clanIsFull,
+          };
           this.scene.state.user.clanId = res.data.result.id;
           this.scene.state.clan = res.data.result;
   
