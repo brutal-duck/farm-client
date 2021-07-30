@@ -119,6 +119,7 @@ const clanWindowMedalGold: string = require('../../../assets/images/modal/clan/m
 const clanWindowMedalSilver: string = require('../../../assets/images/modal/clan/medal-silver.png');
 const clanWindowMedal: string = require('../../../assets/images/modal/clan/medal.png');
 const clanWindowLeaderPlate: string = require('../../../assets/images/modal/clan/leader-plate.png');
+const clanWindowSearchPlate: string = require('../../../assets/images/modal/clan/search-plate.png');
 const clanWindowPointsBg: string = require('../../../assets/images/modal/clan/points-bg.png');
 const clanWindowWreath: string = require('../../../assets/images/modal/clan/wreath.png');
 
@@ -302,6 +303,7 @@ export default function typePreload(): void {
       this.load.image('clan-window-medal-silver', clanWindowMedalSilver);
       this.load.image('clan-window-medal', clanWindowMedal);
       this.load.image('clan-window-leader-plate', clanWindowLeaderPlate);
+      this.load.image('clan-window-search-plate', clanWindowSearchPlate);
       this.load.image('clan-window-points-bg', clanWindowPointsBg);
       this.load.image('clan-window-wreath', clanWindowWreath);
         break;
