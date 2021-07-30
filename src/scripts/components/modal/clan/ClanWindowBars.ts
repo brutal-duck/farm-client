@@ -11,14 +11,22 @@ export default class ClanWindowBars {
   private closeBtn: Phaser.GameObjects.Sprite;
   private headerText: Phaser.GameObjects.Text;
   private footer: Phaser.GameObjects.Sprite;
-  private clanTab: Phaser.GameObjects.RenderTexture;
-  private leaderboardTab: Phaser.GameObjects.RenderTexture;
-  private searchTab: Phaser.GameObjects.RenderTexture;
-  private clanTabText: Phaser.GameObjects.Text;
-  private leaderboardTabText: Phaser.GameObjects.Text;
-  private searchTabText: Phaser.GameObjects.Text;
-  private tabClose: Phaser.GameObjects.Sprite;
-  private tabCloseBtn: Phaser.GameObjects.Sprite;
+  private modalElements: Array<Phaser.GameObjects.Sprite | Phaser.GameObjects.TileSprite | Phaser.GameObjects.Text | Phaser.GameObjects.RenderTexture> = [];
+  private windowType: number = 1;
+  private headerTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+    color: '#fffdfa',
+    fontFamily: 'Shadow',
+    fontSize: '23px',
+    align: 'left',
+    shadow: {
+      offsetX: 1,
+      offsetY: 1, 
+      color: '#96580e',
+      blur: 2,
+      fill: true,
+    },
+    wordWrap: { width: 500 },
+  };
 
   constructor(scene: Modal) {
     this.scene = scene;
@@ -29,6 +37,7 @@ export default class ClanWindowBars {
   private init(): void {
     this.x = this.scene.cameras.main.centerX;
     this.y = this.scene.cameras.main.centerY;
+    this.windowType = this.scene.state.modal.clanType || 1;
     this.height = 600;
     this.width = 527;
   }
@@ -37,12 +46,27 @@ export default class ClanWindowBars {
     this.createBg();
     this.createHeader();
     this.createFooter();
-    this.createTabs();
-    this.setTabsListeners();
-    if (this.scene.state.modal.clanType === 1) {
-      this.createClanInfo();
-    } else if (this.scene.state.modal.clanType === 2) {
-      this.createLeaderboard();
+    this.createCloseTab();
+    if (this.scene.state.user.clanId) {
+      this.createTabs([1, 2, 3]);
+    } else {
+      this.createTabs([2, 3]);
+    }
+    this.createMainElements();
+  }
+
+  private createMainElements(): void {
+    switch (this.windowType) {
+      case 1:
+        this.createClanInfo();
+        break;
+      case 2:
+        this.createLeaderboard();
+        break;
+      case 3:
+        break;
+      default:
+        break;
     }
   }
 
@@ -66,92 +90,26 @@ export default class ClanWindowBars {
 
   private createCloseTab(): void {
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
-    this.tabClose = this.scene.add.sprite(headerGeom.right - 18, headerGeom.top + 5, 'clan-window-tab-close').setOrigin(1, 1);
-    const tabGeom: Phaser.Geom.Rectangle = this.tabClose.getBounds();
-    this.tabCloseBtn = this.scene.add.sprite(tabGeom.centerX + 5, tabGeom.centerY - 5, 'tasks-close').setOrigin(0.5).setScale(0.9);
+    const tab: Phaser.GameObjects.Sprite = this.scene.add.sprite(headerGeom.right - 18, headerGeom.top + 5, 'clan-window-tab-close').setOrigin(1, 1);
+    const tabGeom: Phaser.Geom.Rectangle = tab.getBounds();
+    const tabIcon: Phaser.GameObjects.Sprite = this.scene.add.sprite(tabGeom.centerX + 5, tabGeom.centerY - 5, 'tasks-close').setOrigin(0.5).setScale(0.9);
+    this.scene.clickButtonUp(tab, (): void => { this.onCloseBtn() }, tabIcon);
+    this.modalElements.push(tab, tabIcon);
   }
 
-  private createTabs(): void {
-    const tabCount: number = this.scene.state.user.clanId ? 3 : 2;
+  private createTabs(types: Array<number>): void {
+    const activeTab: number = this.windowType;
+    const tabCount: number = types.length;
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
-    this.createCloseTab();
-    let tabClanGeom: Phaser.Geom.Rectangle;
-    let leaderboardTabGeom: Phaser.Geom.Rectangle;
-    let searchTabGeom: Phaser.Geom.Rectangle;
-    switch (this.scene.state.modal.clanType) {
-      case 1:
-        const clanTab = this.createTab({x: headerGeom.left + 15, y: headerGeom.top + 10}, true, tabCount, 'Клан');
-        this.clanTab = clanTab.tab;
-        this.clanTabText = clanTab.text;
-        tabClanGeom = this.clanTab.getBounds();
-        const leaderboardTab = this.createTab({x: tabClanGeom.right, y: headerGeom.top + 10}, false, tabCount, 'Лучшие кланы');
-        this.leaderboardTab = leaderboardTab.tab;
-        this.leaderboardTabText = leaderboardTab.text;
-        leaderboardTabGeom = this.leaderboardTab.getBounds();
-        const searchTab = this.createTab({x: leaderboardTabGeom.right, y: headerGeom.top + 10}, false, tabCount, 'Поиск');
-        this.searchTab = searchTab.tab;
-        this.searchTabText = searchTab.text;
-        searchTabGeom = this.searchTab.getBounds();
-        break;
-        case 2:
-        if (tabCount === 2) {
-          const leaderboardTab = this.createTab({x: headerGeom.left + 15, y: headerGeom.top + 10}, true, tabCount, 'Лучшие кланы');
-          this.leaderboardTab = leaderboardTab.tab;
-          this.leaderboardTabText = leaderboardTab.text;
-          leaderboardTabGeom = this.leaderboardTab.getBounds();
-          const searchTab = this.createTab({x: leaderboardTabGeom.right, y: headerGeom.top + 10}, false, tabCount, 'Поиск');
-          this.searchTab = searchTab.tab;
-          this.searchTabText = searchTab.text;
-          searchTabGeom = this.searchTab.getBounds();
-        } else {
-          const clanTab = this.createTab({x: headerGeom.left + 15, y: headerGeom.top + 10}, false, tabCount, 'Клан');
-          this.clanTab = clanTab.tab;
-          this.clanTabText = clanTab.text;
-          tabClanGeom = this.clanTab.getBounds();
-          const leaderboardTab = this.createTab({x: tabClanGeom.right, y: headerGeom.top + 10}, true, tabCount, 'Лучшие кланы');
-          this.leaderboardTab = leaderboardTab.tab;
-          this.leaderboardTabText = leaderboardTab.text;
-          leaderboardTabGeom = this.leaderboardTab.getBounds();
-          const searchTab = this.createTab({x: leaderboardTabGeom.right, y: headerGeom.top + 10}, false, tabCount, 'Поиск');
-          this.searchTab = searchTab.tab;
-          this.searchTabText = searchTab.text;
-          searchTabGeom = this.searchTab.getBounds();
-        }
-        break;
-        case 3:
-        if (tabCount === 2) {
-          const leaderboardTab = this.createTab({x: headerGeom.left + 15, y: headerGeom.top + 10}, false, tabCount, 'Лучшие кланы');
-          this.leaderboardTab = leaderboardTab.tab;
-          this.leaderboardTabText = leaderboardTab.text;
-          leaderboardTabGeom = this.leaderboardTab.getBounds();
-          const searchTab = this.createTab({x: leaderboardTabGeom.right, y: headerGeom.top + 10}, true, tabCount, 'Поиск');
-          this.searchTab = searchTab.tab;
-          this.searchTabText = searchTab.text;
-          searchTabGeom = this.searchTab.getBounds();
-        } else {
-          const clanTab = this.createTab({x: headerGeom.left + 15, y: headerGeom.top + 10}, false, tabCount, 'Клан');
-          this.clanTab = clanTab.tab;
-          this.clanTabText = clanTab.text;
-          tabClanGeom = this.clanTab.getBounds();
-          const leaderboardTab = this.createTab({x: tabClanGeom.right, y: headerGeom.top + 10}, false, tabCount, 'Лучшие кланы');
-          this.leaderboardTab = leaderboardTab.tab;
-          this.leaderboardTabText = leaderboardTab.text;
-          leaderboardTabGeom = this.leaderboardTab.getBounds();
-          const searchTab = this.createTab({x: leaderboardTabGeom.right, y: headerGeom.top + 10}, true, tabCount, 'Поиск');
-          this.searchTab = searchTab.tab;
-          this.searchTabText = searchTab.text;
-          searchTabGeom = this.searchTab.getBounds();
-        }
-        break;
-      default:
-        break;
-    }
+    let left: number = headerGeom.left + 15;
+    const maxWidth: number = 455;
+    types.forEach((el: number) => {
+      this.createTab({x: left, y: headerGeom.top + 25}, activeTab === el, tabCount, el)
+      left += maxWidth / tabCount;
+    });
   }
 
-  private createTab(pos: Iposition, active: boolean, count: number, string: string): { 
-    tab: Phaser.GameObjects.RenderTexture;
-    text: Phaser.GameObjects.Text;
-  } {
+  private createTab(pos: Iposition, active: boolean, count: number, type: number): void {
     const tabTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Shadow',
       fontSize: '20px',
@@ -172,69 +130,28 @@ export default class ClanWindowBars {
     };
 
     const maxWidth: number = 455;
-    const tabHeight: number = 75;
-    const activeTabHeight: number = 100;
+    const tabHeight: number = 104;
+    const activeTabHeight: number = 115;
     const slice: number = 30;
     const height: number = active ? activeTabHeight : tabHeight;
     const texture: string = active ? 'clan-window-tab-active' : 'clan-window-tab-disable';
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = active ? tabActiveTextStyle : tabTextStyle;
-    const tab = this.scene.add.nineslice(pos.x, pos.y, maxWidth / count, height, texture, slice).setOrigin(0, 1);
-    const tabGeom = tab.getBounds();
-    const text = this.scene.add.text(tabGeom.centerX, tabGeom.centerY, string, textStyle).setOrigin(0.5);
-    return { tab, text };
-  }
-
-  private setTabsListeners(): void {
-    if (this.scene.state.modal.clanType !== 1 && this.clanTab) {
-      this.scene.clickButtonUp(this.clanTab, (): void => {
-        this.scene.state.modal = {
-          type: 17,
-          clanType: 1,
-        };
-        this.scene.scene.stop('Clan');
-        this.scene.scene.restart(this.scene.state);
-      }, this.clanTabText);
-    }
-    if (this.scene.state.modal.clanType !== 2) {
-      this.scene.clickButtonUp(this.leaderboardTab, (): void => {
-        this.scene.state.modal = {
-          type: 17,
-          clanType: 2,
-        };
-        this.scene.scene.stop('Clan');
-        this.scene.scene.restart(this.scene.state);
-      }, this.leaderboardTabText);
-    }
-    if (this.scene.state.modal.clanType !== 3) {
-      this.scene.clickButtonUp(this.searchTab, (): void => {
-        this.scene.state.modal = {
-          type: 17,
-          clanType: 3,
-        };
-        this.scene.scene.stop('Clan');
-        this.scene.scene.restart(this.scene.state);
-      }, this.searchTabText);
-    }
-
-    this.scene.clickButtonUp(this.tabClose, (): void => { this.onCloseBtn(); }, this.tabCloseBtn);
+    const tab: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(pos.x, pos.y, maxWidth / count, height, texture, slice).setOrigin(0, 1);
+    const tabGeom: Phaser.Geom.Rectangle = tab.getBounds();
+    const tabIcon: Phaser.GameObjects.Text = this.scene.add.text(tabGeom.centerX, tabGeom.centerY, `clan - ${type}`, textStyle).setOrigin(0.5);
+    this.modalElements.push(tab, tabIcon);
+    this.scene.clickButtonUp(tab, (): void => {
+      this.scene.state.modal = {
+        type: 17,
+        clanType: type,
+      };
+      this.scene.scene.stop('Clan');
+      this.scene.scene.restart(this.scene.state);
+    }, tabIcon);
   }
 
   private createClanInfo(): void {
-    const headerTextStyle = {
-      color: '#fffdfa',
-      fontFamily: 'Shadow',
-      fontSize: '23px',
-      align: 'left',
-      shadow: {
-        offsetX: 1,
-        offsetY: 1, 
-        color: '#96580e',
-        blur: 2,
-        fill: true,
-      },
-      wordWrap: { width: 500 },
-    };
-    const scoreTextStyle = {
+    const scoreTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       color: '#f3dcc9',
       fontFamily: 'Shadow',
       fontSize: '18px',
@@ -249,7 +166,7 @@ export default class ClanWindowBars {
     };
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
 
-    this.headerText = this.scene.add.text(headerGeom.left + 120, headerGeom.centerY, this.scene.state.clan.name, headerTextStyle).setDepth(2).setOrigin(0, 0.5);
+    this.headerText = this.scene.add.text(headerGeom.left + 120, headerGeom.centerY, this.scene.state.clan.name, this.headerTextStyle).setDepth(2).setOrigin(0, 0.5);
     const clanAvatar = this.scene.add.sprite(headerGeom.left + 30, headerGeom.centerY, 'farmer').setDepth(2).setOrigin(0, 0.5).setScale(0.3);
     const scoreBg = this.scene.add.nineslice(headerGeom.right - 20, headerGeom.centerY, 110, 35, 'modal-square-bg', 10).setDepth(2).setOrigin(1, 0.5);
     const scoreBgGeom: Phaser.Geom.Rectangle = scoreBg.getBounds();
@@ -278,6 +195,9 @@ export default class ClanWindowBars {
   }
 
   private createLeaderboard(): void {
-    
+    const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
+    this.scene.add.nineslice(this.x, this.y + 70, 480, 680, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
+    this.headerText = this.scene.add.text(headerGeom.centerX, headerGeom.centerY - 3, this.scene.state.lang.clansLiderboard, this.headerTextStyle).setDepth(2).setOrigin(0.5);
+    this.scene.scene.launch('Clan', this.scene.state);
   }
 }
