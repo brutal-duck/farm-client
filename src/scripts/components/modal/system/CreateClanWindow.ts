@@ -203,7 +203,7 @@ export default class CreateClanWindow {
           hash: this.scene.state.user.hash,
           counter: this.scene.state.user.counter,
           name: this.scene.mainInput.value,
-          isClose: this.clanIsClosed,
+          isClosed: this.clanIsClosed,
           userName: login,
           userAvatar: avatar,
           userStatus: this.scene.state.user.status,

@@ -969,6 +969,9 @@ export default {
     clanIsClose: 'Закрытый клан',
     clansLiderboard: 'Клановая таблица лидеров',
     scores: 'Очки',
+    inputClanName: 'Введите название клана',
+    join: 'Вступить',
+    sendInvite: 'Отправить заявку',
   },
 
   en: {
@@ -1941,5 +1944,8 @@ export default {
     clanIsClose: 'Закрытый клан',
     clansLiderboard: 'Клановая таблица лидеров',
     scores: 'Очки',
+    inputClanName: 'Введите название клана',
+    join: 'Вступить',
+    sendInvite: 'Отправить заявку',
   },
 }

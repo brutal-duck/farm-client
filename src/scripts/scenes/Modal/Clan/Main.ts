@@ -3,6 +3,7 @@ import { getStatusSettings, loadingModal } from '../../../general/basic';
 import { click, clickModalBtn, clickButton } from '../../../general/clicks';
 import ClanUsersList from './../../../components/modal/clan/ClanUsersList';
 import ClanLeaderboard from './../../../components/modal/clan/ClanLeaderboard';
+import ClanSearch from './../../../components/modal/clan/ClanSearch';
 
 class Clan extends Phaser.Scene {
   constructor() {
@@ -40,6 +41,8 @@ class Clan extends Phaser.Scene {
       new ClanUsersList(this);
     } else if (this.state.modal.clanType === 2) {
       new ClanLeaderboard(this);
+    } else if (this.state.modal.clanType === 3) {
+      new ClanSearch(this);
     }
   }
 
@@ -56,6 +59,9 @@ class Clan extends Phaser.Scene {
       y = this.cameras.main.centerY - 267;
       this.windowHeight = 673;
     } else if (this.windowType === 2) {
+      y = this.cameras.main.centerY - 172;
+      this.windowHeight = 584;
+    } else if (this.windowType === 3) {
       y = this.cameras.main.centerY - 172;
       this.windowHeight = 584;
     }

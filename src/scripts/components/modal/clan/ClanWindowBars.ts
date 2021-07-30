@@ -65,6 +65,7 @@ export default class ClanWindowBars {
         this.createLeaderboard();
         break;
       case 3:
+        this.createSearch();
         break;
       default:
         break;
@@ -225,6 +226,30 @@ export default class ClanWindowBars {
     }
 
     this.headerText = this.scene.add.text(headerGeom.centerX, headerGeom.centerY - 3, this.scene.state.lang.clansLiderboard, this.headerTextStyle).setDepth(2).setOrigin(0.5);
+    this.scene.scene.launch('Clan', this.scene.state);
+  }
+
+  
+  private createSearch(): void {
+    const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
+    const bgHeight: number = 590;
+    const bgY: number = this.y + 120;
+    this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
+    this.scene.add.tileSprite(this.x, headerGeom.bottom - 2, this.width, 100, 'white-pixel').setTint(0xD06900).setOrigin(0.5, 0);
+    const right1 = {
+      text: 250,
+      icon: 'diamond'
+    };
+    const btn = this.scene.bigButton('green', 'left', -240, this.scene.state.lang.createClan, right1);
+    this.scene.clickModalBtn(btn, () => {
+      this.scene.state.modal = {
+        type: 1,
+        sysType: 21,
+      }
+      this.scene.scene.stop('Clan');
+      this.scene.scene.restart(this.scene.state);
+    });
+
     this.scene.scene.launch('Clan', this.scene.state);
   }
 }
