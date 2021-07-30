@@ -114,7 +114,12 @@ const clanWindowTabDisable: string = require('../../../assets/images/modal/clan/
 const clanWindowTabClose: string = require('../../../assets/images/modal/clan/tab-close.png');
 const clanWindowCrown: string = require('../../../assets/images/modal/clan/сrown.png');
 const clanWindowLine: string = require('../../../assets/images/modal/clan/line.png');
-
+const clanWindowMedalBronze: string = require('../../../assets/images/modal/clan/medal-bronze.png');
+const clanWindowMedalGold: string = require('../../../assets/images/modal/clan/medal-gold.png');
+const clanWindowMedalSilver: string = require('../../../assets/images/modal/clan/medal-silver.png');
+const clanWindowLeaderPlate: string = require('../../../assets/images/modal/clan/leader-plate.png');
+const clanWindowPointsBg: string = require('../../../assets/images/modal/clan/points-bg.png');
+const clanWindowWreath: string = require('../../../assets/images/modal/clan/wreath.png');
 
 export default function typePreload(): void {
     switch (this.state.modal.type) {
@@ -291,6 +296,12 @@ export default function typePreload(): void {
       this.load.image('clan-window-crown', clanWindowCrown);
       this.load.image('clan-window-line', clanWindowLine);
       this.load.image('tasks-close', tasksClose);
+      this.load.image('clan-window-medal-bronze', clanWindowMedalBronze);
+      this.load.image('clan-window-medal-gold', clanWindowMedalGold);
+      this.load.image('clan-window-medal-silver', clanWindowMedalSilver);
+      this.load.image('clan-window-leader-plate', clanWindowLeaderPlate);
+      this.load.image('clan-window-points-bg', clanWindowPointsBg);
+      this.load.image('clan-window-wreath', clanWindowWreath);
         break;
       default:
         break;
