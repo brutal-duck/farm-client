@@ -189,6 +189,7 @@ const clanWindowLine: string = require('../../assets/images/modal/clan/line.png'
 const clanWindowMedalBronze: string = require('../../assets/images/modal/clan/medal-bronze.png');
 const clanWindowMedalGold: string = require('../../assets/images/modal/clan/medal-gold.png');
 const clanWindowMedalSilver: string = require('../../assets/images/modal/clan/medal-silver.png');
+const clanWindowMedal: string = require('../../assets/images/modal/clan/medal.png');
 const clanWindowLeaderPlate: string = require('../../assets/images/modal/clan/leader-plate.png');
 const clanWindowPointsBg: string = require('../../assets/images/modal/clan/points-bg.png');
 const clanWindowWreath: string = require('../../assets/images/modal/clan/wreath.png');
@@ -419,6 +420,7 @@ class Preload extends Phaser.Scene {
     this.load.image('clan-window-medal-bronze', clanWindowMedalBronze);
     this.load.image('clan-window-medal-gold', clanWindowMedalGold);
     this.load.image('clan-window-medal-silver', clanWindowMedalSilver);
+    this.load.image('clan-window-medal', clanWindowMedal);
     this.load.image('clan-window-leader-plate', clanWindowLeaderPlate);
     this.load.image('clan-window-points-bg', clanWindowPointsBg);
     this.load.image('clan-window-wreath', clanWindowWreath);
