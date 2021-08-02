@@ -523,19 +523,10 @@ export default class Fortune extends Phaser.Scene {
     }
     this.sendSocket(prize);
 
-    this.state.progress.event.eventPoints += 1;
-
     if (this.state.user.boosts.fortune > 0) {
       this.state.user.boosts.fortune -= 1;
     } else {
-
       this.state.user.diamonds -= this.price;
-
-      this.state.amplitude.logAmplitudeEvent('diamonds_spent', {
-        type: 'fortune',
-        count: this.price,
-        countFortune: this.state.progress.event.eventPoints,
-      });
     }
 
     switch (this.prizeId) {

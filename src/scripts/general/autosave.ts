@@ -290,7 +290,6 @@ export default function autosave(): void {
     xp: state.user.xp,
     takenReward: state.user.takenReward,
     additionalTutorial: state.user.additionalTutorial,
-    eventPoints: state.progress.event.eventPoints,
     status: state.user.status,
     boosts: state.user.boosts,
     test: state.user.test,
@@ -304,6 +303,7 @@ export default function autosave(): void {
     personalMessages: state.user.personalMessages,
     yandexName: state.yandexName,
     avatar: state.user.avatar,
+    fortuneTutorial: state.user.fortuneTutorial,
   }
 
   const data: IdataAutoSave = { 

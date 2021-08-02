@@ -83,8 +83,8 @@ export default class EventProgressWindow {
   private setPrice(): void {
     const THIRTY_MINUTES: number = 1800;
     const TWO_HOURS: number = 7200;
-    if (this.params.offlineTime >= THIRTY_MINUTES && this.params.offlineTime <= TWO_HOURS) this.doubleProfitPrice = 40;
-    else if (this.params.offlineTime > TWO_HOURS) this.doubleProfitPrice = 90;
+    if (this.params.offlineTime >= THIRTY_MINUTES && this.params.offlineTime <= TWO_HOURS) this.doubleProfitPrice = 10;
+    else if (this.params.offlineTime > TWO_HOURS) this.doubleProfitPrice = 20;
   }
 
   private pickUpBtnHandler(): void {

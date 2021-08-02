@@ -283,14 +283,17 @@ function interval(): void {
       } 
   
       if (this.state.progress.event.endTime <= 0 && 
-        this.state.progress.event.eventPoints > 0  && this.state.progress.event.open &&
+        this.state.progress.event.open &&
+        !this.state.userUnicorn?.takenAward &&
+        this.state.userUnicorn?.points > 0 &&
         this.scene.isActive('Profile')) {
         this.autosave();
         this.scene.stop('Profile');
       }
   
       if (this.state.progress.event.endTime <= 0 && 
-        this.state.userUnicorn?.points > 0 && 
+        !this.state.userUnicorn?.takenAward && 
+        this.state.userUnicorn?.points > 0 &&
         this.state.progress.event.open &&
         !this.scene.isActive('Modal') && 
         !this.scene.isActive('Tutorial') &&
@@ -318,8 +321,8 @@ function interval(): void {
       this.state.progress.event.startTime <= 0 && 
       this.state.progress.event.endTime > 0 &&
       this.state.progress.event.open) {
-        if ((this.state.user.additionalTutorial.eventTutorial === 0 &&
-          this.state.progress.event.type !== 1 ||
+        if ((!this.state.user.fortuneTutorial &&
+          this.state.progress.event.type === 2 ||
           this.state.userUnicorn?.tutorial === 0 &&
           this.state.progress.event.type === 1) &&
           !arrowOnMap && !this.scene.isActive('Modal') &&
@@ -328,8 +331,8 @@ function interval(): void {
           Arrow.generate(this.game.scene.keys[`${this.state.farm}Bars`], 17);
         }
     
-        if ((this.state.user.additionalTutorial.eventTutorial === 0 &&
-          this.state.progress.event.type !== 1 ||
+        if ((!this.state.user.fortuneTutorial &&
+          this.state.progress.event.type === 2 ||
           this.state.userUnicorn?.tutorial === 0 &&
           this.state.progress.event.type === 1) &&
           !this.scene.isActive('Tutorial') &&

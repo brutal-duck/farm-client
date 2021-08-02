@@ -63,7 +63,7 @@ export default class DailyNewbieWindow extends Phaser.GameObjects.Sprite {
     this.createElements();
     this.setListeners();
 
-    if (this.scene.state.progress.chicken.part > 0 && this.scene.state.daily === 4 && this.scene.state.user.test !== 'B') {
+    if (this.scene.state.progress.chicken.part > 0 && this.scene.state.daily === 4) {
       this.scene.state.user.takenReward = true;
       axios.post(process.env.API + "/takenNewbieReward", { hash: this.scene.state.user.hash });
     }    
@@ -97,18 +97,13 @@ export default class DailyNewbieWindow extends Phaser.GameObjects.Sprite {
     let width: number = timerText.displayWidth + this.timerNewbieAward.displayWidth + 5;
     timerText.setX(this.x - width / 2);
     this.timerNewbieAward.setX(timerText.getBounds().right + 5);
-
-    if (this.scene.state.user.test === 'B') {
-      this.createAwardTestB();
-    } else {
-      this.createAwardTestA();
-    }
-
+    this.createAward();
+    
     this.setElementsState();
     this.setAnimation();
   }
 
-  private createAwardTestA(): void {
+  private createAward(): void {
      // дни
     this.day0 = this.scene.add.sprite(195, this.y - 110, 'newbie-day-0');
     this.bgDay0 = this.scene.add.sprite(195, this.y - 178, 'day-yellow');
@@ -371,7 +366,7 @@ export default class DailyNewbieWindow extends Phaser.GameObjects.Sprite {
     });
 
     this.scene.click(this, () => {
-      if (!this.scene.state.user.takenReward || this.scene.state.daily === 4 && this.scene.state.user.test !== 'B' || this.scene.state.user.test === 'B') {
+      if (!this.scene.state.user.takenReward || this.scene.state.daily === 4) {
         const mainScene = this.scene.game.scene.getScene(this.scene.state.farm) as Sheep | Chicken | Cow | Unicorn;
         mainScene.playSoundOnce('award-sound')
         this.scene.scene.stop();

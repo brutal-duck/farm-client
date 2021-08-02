@@ -16,7 +16,7 @@ let userData: Iuser = {
     collector: false,
     herdBoost: false,
     feedBoost: false,
-    eventTutorial: 0
+    eventTutorial: false,
   },
   takenReward: false,
   status: '',
@@ -49,6 +49,7 @@ let userData: Iuser = {
   takenSocialAward: false,
   messages: [],
   personalMessages: [],
+  fortuneTutorial: false,
 }
 
 let userSheep: IuserSheep = {

@@ -49,7 +49,7 @@ export default class EventRatingsWindow extends Phaser.GameObjects.Sprite {
 
     // Заголовок
     this.scene.add.text(this.scene.cameras.main.centerX + 20, this.scene.cameras.main.centerY - 430, this.scene.state.lang.unicornField, {
-      font: '42px Shadow',
+      font: '38px Shadow',
       color: '#FFF7E6',
       align: 'center',
       wordWrap: { width: 400 }

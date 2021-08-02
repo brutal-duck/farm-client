@@ -331,6 +331,7 @@ export default function loadData(response: any): void {
     messages: response.data.user.messages,
     personalMessages: response.data.user.personalMessages,
     avatar: response.data.user.avatar,
+    fortuneTutorial: false,
   };
   this.state.user = user;
 
@@ -459,7 +460,6 @@ export default function loadData(response: any): void {
       offlineTime: response.data.progress.cowOfflineTime,
     },
     event: {
-      eventPoints: response.data.user.eventPoints,
       startTime: response.data.progress.event.startTime,
       endTime: response.data.progress.event.endTime,
       open: response.data.settings.event.open,
@@ -535,6 +535,7 @@ export default function loadData(response: any): void {
       takenAd: response.data.event.takenAd,
       timeToAd: response.data.event.timeToAd,
       points: response.data.event.points,
+      takenAward: response.data.event.takenAward,
     };
 
     this.state.eventTerritories = eventTerritories;
@@ -542,6 +543,14 @@ export default function loadData(response: any): void {
     this.state.eventResources = eventResources; 
     this.state.userUnicorn = userUnicorn;
     this.state.eventCollectorSettings = basicUnicornCollector;
+  }
+
+  if (
+    this.state.progress.event.type === 2 
+    && this.state.progress.event.startTime < 0 
+    && this.state.progress.event.open
+  ) {
+    this.state.user.fortuneTutorial = response.data.event;
   }
   this.userReady = true;
 

@@ -44,7 +44,6 @@ interface IsheepUserAutoSave {
   diamondSheepAd: boolean;
   takenHerdBoost: number;
   feedBoostTime: number;
-  eventPoints: number;
   status: string;
   boosts: Iboosts;
   
@@ -66,7 +65,6 @@ interface IchickenUserAutoSave {
   diamondChickenAd: boolean;
   takenHerdBoost: number;
   feedBoostTime: number;
-  eventPoints: number;
   status: string;
   boosts: Iboosts;
 }
@@ -87,7 +85,6 @@ interface IcowUserAutoSave {
   diamondCowAd: boolean;
   takenHerdBoost: number;
   feedBoostTime: number;
-  eventPoints: number;
   status: string;
   boosts: Iboosts;
 }
@@ -103,7 +100,6 @@ interface IeventUserAutoSave {
   autosaveCounter: number;
   takenHerdBoost: number;
   feedBoostTime: number;
-  // eventPoints: number;
   additionalTutorial: IadditionalTutorial;
   status: string;
   boosts: Iboosts;
@@ -111,7 +107,6 @@ interface IeventUserAutoSave {
 interface IuserAutoSave {
   diamonds: number;
   xp: number;
-  eventPoints: number;
   status: string;
   boosts: Iboosts;
   additionalTutorial: IadditionalTutorial;
@@ -127,6 +122,7 @@ interface IuserAutoSave {
   personalMessages: IuserPersonalMessage[];
   yandexName: string;
   avatar: string;
+  fortuneTutorial: boolean;
 }
 interface Imessage {
   _id?: string;
@@ -188,7 +184,7 @@ interface IadditionalTutorial {
   collector: boolean;
   herdBoost: boolean;
   feedBoost: boolean;
-  eventTutorial: number;
+  eventTutorial: boolean;
 }
 interface Iuser {
   diamonds: number;
@@ -212,6 +208,7 @@ interface Iuser {
   takenSocialAward: boolean;
   messages: Imessage[];
   personalMessages: IuserPersonalMessage[];
+  fortuneTutorial: boolean;
 }
 interface IuserSheep {
   money: number;
@@ -288,6 +285,7 @@ interface IuserEvent {
   takenAd: number;
   timeToAd: number;
   points: number;
+  takenAward: boolean;
 }
 interface IunicornRaitingsData {
   ratings: IeventRaiting[];
@@ -644,7 +642,6 @@ interface IpartProgress {
   offlineTime?: number;
 }
 interface IeventProgress {
-  eventPoints: number;
   startTime: number;
   endTime: number;
   open: boolean;

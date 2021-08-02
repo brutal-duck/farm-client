@@ -404,6 +404,9 @@ export default function autoprogress(load: boolean = false): void {
       } else break;
       index++;
     }
+    for (const territory of state.chickenTerritories) {
+      if (territory.type === 5 && territory.volume > 0 && territory.money === 0) territory.volume = 0;
+    }
   } 
 
   const cowOfflineProgress = (offlineTime: number = state.progress.cow.offlineTime): void => {
@@ -1057,6 +1060,11 @@ export default function autoprogress(load: boolean = false): void {
 
       index++;
 
+    }
+
+    for (let i in this.territories.children.entries) {
+      const territory: ChickenTerritory = this.territories.children.entries[i];
+      if (territory.territoryType === 5 && territory.volume > 0 && territory.money === 0) territory.volume = 0;
     }
   }
 

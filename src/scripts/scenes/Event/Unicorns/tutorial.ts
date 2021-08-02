@@ -22,7 +22,7 @@ function showEventTutorial(additional: boolean | string = false): void {
   } else if (this.state.progress.event.type === 2) {
     tutorial = {
       farm: 4,
-      step: this.state.user.additionalTutorial.eventTutorial,
+      step: !this.state.user.fortuneTutorial ? 0 : 10,
       additional: additional
     };
   }
@@ -53,8 +53,7 @@ function doneEventTutor_0(): void {
       step: 0,
       farm_id: 'Fortune'
     });
-    this.state.user.eventPoints = 1;
-    this.state.user.additionalTutorial.eventTutorial = 10;
+    this.state.user.fortuneTutorial = true;
     
     this.scene.stop('Tutorial');
     this.scene.stop('Profile');

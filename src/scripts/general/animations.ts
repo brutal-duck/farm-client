@@ -203,158 +203,82 @@ function showSheepSprite(): void {
 
 // анимация летящей плашки награды на значек карты
 function newbieAwardAnimation(): void {
-  const testA = (): void => {
-    let x: number = 195;
-    let y: number = this.cameras.main.centerY - 200;
-    let image: string = 'newbie-day-0';
-    let target: Iposition = { x: 510, y: this.height - 90 }
-  
-    if (this.state.daily === 2) {
-  
-      x = 355;
-      y = this.cameras.main.centerY - 210;
-      image = 'newbie-day-1';
-  
-    } else if (this.state.daily === 3) {
-  
-      x = 515;
-      y = this.cameras.main.centerY - 200;
-      image = 'newbie-day-2';
-      
-    } else if (this.state.daily === 4) {
-  
-      x = 195;
-      y = this.cameras.main.centerY - 30;
-      image = 'newbie-day-3';
-      
-    } else if (this.state.daily === 5) {
-  
-      x = 360;
-      y = this.cameras.main.centerY - 25;
-      image = 'newbie-day-4';
-      if (this.state.farm === 'Sheep'|| this.state.farm === 'Cow') target.x = 230;
-      
-    } else if (this.state.daily === 6) {
-  
-      x = 515;
-      y = this.cameras.main.centerY - 25;
-      image = 'newbie-day-5';
-      
-    } else if (this.state.daily === 7) {
-  
-      x = 195;
-      y = this.cameras.main.centerY + 155;
-      image = 'newbie-day-6';
-      if (this.state.farm === 'Chicken' || this.state.farm === 'Cow') target.x = 230;
-      
-    } else if (this.state.daily === 8) {
-  
-      x = 425;
-      y = this.cameras.main.centerY + 155;
-      image = 'newbie-day-7';
-      
-    }
-  
-    let sprite: Phaser.GameObjects.Sprite = this.physics.add.sprite(x, y, image).setDepth(this.height);
+  let x: number = 195;
+  let y: number = this.cameras.main.centerY - 200;
+  let image: string = 'newbie-day-0';
+  let target: Iposition = { x: 510, y: this.height - 90 }
+
+  if (this.state.daily === 2) {
+
+    x = 355;
+    y = this.cameras.main.centerY - 210;
+    image = 'newbie-day-1';
+
+  } else if (this.state.daily === 3) {
+
+    x = 515;
+    y = this.cameras.main.centerY - 200;
+    image = 'newbie-day-2';
     
-    this.tweens.add({
-      props: {
-        scaleX: { from: -1, to: 1, yoyo: true, duration: 300 },
-        x: { from: sprite.x, to: target.x, duration: 600 },
-        y: { from: sprite.y, to: target.y, duration: 600 },
-      },
-      onComplete: (): void => {
-        if (this.state.daily === 4 && this.state.farm === 'Sheep') {
-  
-          if (this.scene.isActive('Modal')) this.scene.stop('Modal');
-          if (this.scene.isActive('Tutorial')) this.scene.stop('Tutorial');
-          if (this.scene.isActive('Shop')) this.scene.stop('Shop');
-          if (this.scene.isActive('ShopBars')) this.scene.stop('ShopBars');
-          if (this.scene.isActive('Profile')) this.scene.stop('Profile');
-          this.scene.stop('Sheep');
-          this.scene.stop('SheepBars');
-          this.scene.start('ChickenPreload', this.state);
-  
-        }
-        sprite.destroy();
-      },
-      targets: sprite,
-    });
+  } else if (this.state.daily === 4) {
+
+    x = 195;
+    y = this.cameras.main.centerY - 30;
+    image = 'newbie-day-3';
+    
+  } else if (this.state.daily === 5) {
+
+    x = 360;
+    y = this.cameras.main.centerY - 25;
+    image = 'newbie-day-4';
+    if (this.state.farm === 'Sheep'|| this.state.farm === 'Cow') target.x = 230;
+    
+  } else if (this.state.daily === 6) {
+
+    x = 515;
+    y = this.cameras.main.centerY - 25;
+    image = 'newbie-day-5';
+    
+  } else if (this.state.daily === 7) {
+
+    x = 195;
+    y = this.cameras.main.centerY + 155;
+    image = 'newbie-day-6';
+    if (this.state.farm === 'Chicken' || this.state.farm === 'Cow') target.x = 230;
+    
+  } else if (this.state.daily === 8) {
+
+    x = 425;
+    y = this.cameras.main.centerY + 155;
+    image = 'newbie-day-7';
+    
   }
 
-  const testB = (): void => {
-    let x: number = 195;
-    let y: number = this.cameras.main.centerY - 200;
-    let image: string = 'newbie-day-0';
-    let target: Iposition = { x: 510, y: this.height - 90 }
+  let sprite: Phaser.GameObjects.Sprite = this.physics.add.sprite(x, y, image).setDepth(this.height);
   
-    if (this.state.daily === 2) {
-  
-      x = 355;
-      y = this.cameras.main.centerY - 210;
-      image = 'newbie-day-1';
-  
-    } else if (this.state.daily === 3) {
-  
-      x = 515;
-      y = this.cameras.main.centerY - 200;
-      image = 'newbie-day-2';
-      
-    } else if (this.state.daily === 4) {
-  
-      x = 195;
-      y = this.cameras.main.centerY - 30;
-      image = 'newbie-day-1';
-      
-    } else if (this.state.daily === 5) {
-  
-      x = 360;
-      y = this.cameras.main.centerY - 25;
-      image = 'newbie-day-4';
-      if (this.state.farm === 'Sheep') target.x = 230;
-      
-    } else if (this.state.daily === 6) {
-  
-      x = 515;
-      y = this.cameras.main.centerY - 25;
-      image = 'newbie-day-2';
-      
-    } else if (this.state.daily === 7) {
-  
-      x = 195;
-      y = this.cameras.main.centerY + 155;
-      image = 'newbie-day-4';
-      if (this.state.farm === 'Sheep') target.x = 230;
-      
-    } else if (this.state.daily === 8) {
-  
-      x = 425;
-      y = this.cameras.main.centerY + 155;
-      image = 'newbie-day-7';
-      
-    }
-  
-    const sprite: Phaser.GameObjects.Sprite = this.physics.add.sprite(x, y, image).setDepth(this.height);
+  this.tweens.add({
+    props: {
+      scaleX: { from: -1, to: 1, yoyo: true, duration: 300 },
+      x: { from: sprite.x, to: target.x, duration: 600 },
+      y: { from: sprite.y, to: target.y, duration: 600 },
+    },
+    onComplete: (): void => {
+      if (this.state.daily === 4 && this.state.farm === 'Sheep') {
 
-    this.tweens.add({
-      props: {
-        scaleX: { from: -1, to: 1, yoyo: true, duration: 300 },
-        x: { from: sprite.x, to: target.x, duration: 600 },
-        y: { from: sprite.y, to: target.y, duration: 600 },
-      },
-      onComplete: (): void => {
-        sprite.destroy();
-      },
-      targets: sprite,
-    })
-  }
+        if (this.scene.isActive('Modal')) this.scene.stop('Modal');
+        if (this.scene.isActive('Tutorial')) this.scene.stop('Tutorial');
+        if (this.scene.isActive('Shop')) this.scene.stop('Shop');
+        if (this.scene.isActive('ShopBars')) this.scene.stop('ShopBars');
+        if (this.scene.isActive('Profile')) this.scene.stop('Profile');
+        this.scene.stop('Sheep');
+        this.scene.stop('SheepBars');
+        this.scene.start('ChickenPreload', this.state);
 
-  if (this.state.user.test === 'B') {
-    testB();
-  } else {
-    testA();
-  }
-
+      }
+      sprite.destroy();
+    },
+    targets: sprite,
+  });
 }
 
 // получения нескольких ресурсов

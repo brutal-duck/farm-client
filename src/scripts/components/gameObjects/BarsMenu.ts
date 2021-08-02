@@ -191,7 +191,7 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       this.scene.state.progress.event.open &&
       this.scene.state.progress.event.endTime > 0 &&
       this.scene.state.progress.event.startTime < 0 &&
-      this.scene.state.progress.event.eventPoints > 0;
+      this.scene.state.user.fortuneTutorial;
   }
 
   private tickShowTimerAndSetState(): void {

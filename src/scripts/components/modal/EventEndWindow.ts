@@ -51,7 +51,7 @@ export default class EventEndWindow {
 
     // Заголовок
     this.scene.add.text(this.scene.cameras.main.centerX + 52, this.scene.cameras.main.centerY - 440, this.scene.state.lang.unicornField, {
-      font: '40px Shadow',
+      font: '38px Shadow',
       color: '#FFF7E6',
       align: 'center',
     }).setOrigin(0.5, 0.5).setDepth(2).setShadow(1, 4, 'rgba(0, 0, 0, 0.5)', 2);
@@ -277,7 +277,7 @@ export default class EventEndWindow {
         axios.post(process.env.API + "/newStatus", data)
           .then(res => {});
       }
-      this.scene.state.userUnicorn.points = -1;
+      this.scene.state.userUnicorn.takenAward = true;
 
       this.scene.state.user.diamonds += diamonds;
       this.scene.state.amplitude.logAmplitudeEvent('diamonds_get', {
@@ -292,8 +292,7 @@ export default class EventEndWindow {
         hash: this.scene.state.user.hash,
         counter: this.scene.state.user.counter,
       };
-      axios.post(process.env.API + "/takeAward", data)
-          .then(res => {console.log(res.data)});
+      axios.post(process.env.API + "/takeAward", data);
       this.scene.scene.stop('Modal');
       MoneyAnimation.create(this.scene.game.scene.keys[this.scene.state.farm + 'Bars'], 'diamond');
     });
