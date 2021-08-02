@@ -779,8 +779,8 @@ class Profile extends Phaser.Scene {
     if (
       this.state.progress.event.startTime > 0 && 
       this.state.progress.event.open && 
-      (this.state.user.additionalTutorial.eventTutorial === 0 && 
-      this.state.progress.event.type !== 1 ||
+      (!this.state.user.fortuneTutorial && 
+      this.state.progress.event.type === 2 ||
       // this.state.userUnicorn?.tutorial === 0 &&
       this.state.progress.event.type === 1) && 
       (this.state.progress.sheep.part > 4 ||
@@ -789,6 +789,7 @@ class Profile extends Phaser.Scene {
       (this.state.user.login || this.state.name && this.state.platform !== 'ya' || this.state.yaPlayer && this.state.platform === 'ya') &&
       !this.eventStartText?.visible
     ) {
+      console.log(1)
       this.eventIsland?.setVisible(true);
       this.eventStartText?.setY(795);
       this.eventStartText?.setVisible(true);
@@ -804,8 +805,8 @@ class Profile extends Phaser.Scene {
     } else if (
       this.state.progress.event.startTime <= 0 && 
       this.state.progress.event.open && 
-      (this.state.user.additionalTutorial.eventTutorial > 0 &&
-      this.state.progress.event.type !== 1 || this.state.userUnicorn?.tutorial > 0 &&
+      (this.state.user.fortuneTutorial &&
+      this.state.progress.event.type === 2 || this.state.userUnicorn?.tutorial > 0 &&
       this.state.progress.event.type === 1) &&
       this.state.progress.event.endTime > 0 && 
       (this.state.progress.sheep.part > 4 || 
@@ -814,6 +815,7 @@ class Profile extends Phaser.Scene {
       (this.state.user.login || this.state.name && this.state.platform !== 'ya' || this.state.yaPlayer && this.state.platform === 'ya') &&
       !this.eventMapFarm?.visible
     ) {
+      console.log(2);
       this.eventStartText?.setVisible(false);
       this.eventStartTime?.setVisible(false);
       this.eventStartBg?.setVisible(false);
@@ -826,8 +828,8 @@ class Profile extends Phaser.Scene {
     } else if (
       this.state.progress.event.startTime <= 0 && 
       this.state.progress.event.open && 
-      (this.state.user.additionalTutorial.eventTutorial === 0 && 
-      this.state.progress.event.type !== 1 ||
+      (!this.state.user.fortuneTutorial && 
+      this.state.progress.event.type === 2 ||
       this.state.userUnicorn?.tutorial === 0 && 
       this.state.progress.event.type === 1) && 
       (this.state.user.login || this.state.name && this.state.platform !== 'ya' || this.state.yaPlayer && this.state.platform === 'ya') &&
@@ -837,6 +839,7 @@ class Profile extends Phaser.Scene {
       this.state.progress.event.endTime > 0 &&
       this.eventZone.active
     ) {
+      console.log(3);
       this.eventIsland?.setVisible(true);
       this.eventZone?.destroy();
 
@@ -849,6 +852,7 @@ class Profile extends Phaser.Scene {
       this.state.progress.cow.part >= 1) 
       && !this.eventStartText.visible
     ) {
+      console.log(4);
       this.eventIsland?.setVisible(false);
       this.eventStartText?.setVisible(true);
       this.eventStartText?.setY(805);
@@ -871,6 +875,7 @@ class Profile extends Phaser.Scene {
       !this.state.progress.event.open) && 
       this.eventZone.active 
     ) {
+      console.log(5);
       this.eventIsland?.setVisible(false);
       this.eventStartText?.setVisible(false);
       this.eventStartTime?.setVisible(false);

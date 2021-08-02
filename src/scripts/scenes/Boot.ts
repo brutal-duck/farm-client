@@ -211,7 +211,7 @@ class Boot extends Phaser.Scene {
       counter: 0,
       mail: '',
       level: 0,
-      additionalTutorial: { balance: false, cave: false, collector: false, herdBoost: false, feedBoost: false, eventTutorial: 0 },
+      additionalTutorial: { balance: false, cave: false, collector: false, herdBoost: false, feedBoost: false, eventTutorial: false },
       takenReward: true,
       status: ' ',
       statuses: [],
@@ -243,6 +243,7 @@ class Boot extends Phaser.Scene {
       takenSocialAward: false,
       messages: [],
       personalMessages: [],
+      fortuneTutorial: false,
     }
     this.state.platform = this.platform;
     this.state.build = this.build;

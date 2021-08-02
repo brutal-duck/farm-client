@@ -344,7 +344,7 @@ function interval(): void {
       } 
   
       if (this.state.progress.event.endTime <= 0 && 
-        this.state.progress.event.eventPoints > 0  && this.state.progress.event.open &&
+        this.state.progress.event.open &&
         this.scene.isActive('Profile')) {
         this.autosave();
         this.scene.stop('Profile');
@@ -385,8 +385,8 @@ function interval(): void {
       this.state.progress.event.endTime > 0 &&
       this.state.progress.event.open) {
         
-      if ((this.state.user.additionalTutorial.eventTutorial === 0 &&
-        this.state.progress.event.type !== 1 ||
+      if ((!this.state.user.fortuneTutorial &&
+        this.state.progress.event.type === 2 ||
         this.state.userUnicorn?.tutorial === 0 &&
         this.state.progress.event.type === 1) &&
         !arrowOnMap && !this.scene.isActive('Modal') &&
@@ -395,8 +395,8 @@ function interval(): void {
         Arrow.generate(this.game.scene.keys[`${this.state.farm}Bars`], 17);
       }
   
-      if ((this.state.user.additionalTutorial.eventTutorial === 0 &&
-        this.state.progress.event.type !== 1 ||
+      if ((!this.state.user.fortuneTutorial &&
+        this.state.progress.event.type === 2 ||
         this.state.userUnicorn?.tutorial === 0 &&
         this.state.progress.event.type === 1) &&
         !this.scene.isActive('Tutorial') &&

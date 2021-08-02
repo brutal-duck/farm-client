@@ -44,7 +44,6 @@ interface IsheepUserAutoSave {
   diamondSheepAd: boolean;
   takenHerdBoost: number;
   feedBoostTime: number;
-  eventPoints: number;
   status: string;
   boosts: Iboosts;
   
@@ -66,7 +65,6 @@ interface IchickenUserAutoSave {
   diamondChickenAd: boolean;
   takenHerdBoost: number;
   feedBoostTime: number;
-  eventPoints: number;
   status: string;
   boosts: Iboosts;
 }
@@ -87,7 +85,6 @@ interface IcowUserAutoSave {
   diamondCowAd: boolean;
   takenHerdBoost: number;
   feedBoostTime: number;
-  eventPoints: number;
   status: string;
   boosts: Iboosts;
 }
@@ -103,7 +100,6 @@ interface IeventUserAutoSave {
   autosaveCounter: number;
   takenHerdBoost: number;
   feedBoostTime: number;
-  // eventPoints: number;
   additionalTutorial: IadditionalTutorial;
   status: string;
   boosts: Iboosts;
@@ -111,7 +107,6 @@ interface IeventUserAutoSave {
 interface IuserAutoSave {
   diamonds: number;
   xp: number;
-  eventPoints: number;
   status: string;
   boosts: Iboosts;
   additionalTutorial: IadditionalTutorial;
@@ -126,6 +121,7 @@ interface IuserAutoSave {
   messages: Imessage[];
   personalMessages: IuserPersonalMessage[];
   yandexName: string;
+  fortuneTutorial: boolean;
 }
 interface Imessage {
   type: number;
@@ -185,7 +181,7 @@ interface IadditionalTutorial {
   collector: boolean;
   herdBoost: boolean;
   feedBoost: boolean;
-  eventTutorial: number;
+  eventTutorial: boolean;
 }
 interface Iuser {
   diamonds: number;
@@ -207,6 +203,7 @@ interface Iuser {
   takenSocialAward: boolean;
   messages: Imessage[];
   personalMessages: IuserPersonalMessage[];
+  fortuneTutorial: boolean;
 }
 interface IuserSheep {
   money: number;
@@ -638,7 +635,6 @@ interface IpartProgress {
   offlineTime?: number;
 }
 interface IeventProgress {
-  eventPoints: number;
   startTime: number;
   endTime: number;
   open: boolean;
