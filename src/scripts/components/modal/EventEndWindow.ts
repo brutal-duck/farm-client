@@ -51,7 +51,7 @@ export default class EventEndWindow {
 
     // Заголовок
     this.scene.add.text(this.scene.cameras.main.centerX + 52, this.scene.cameras.main.centerY - 440, this.scene.state.lang.unicornField, {
-      font: '40px Shadow',
+      font: '38px Shadow',
       color: '#FFF7E6',
       align: 'center',
     }).setOrigin(0.5, 0.5).setDepth(2).setShadow(1, 4, 'rgba(0, 0, 0, 0.5)', 2);
