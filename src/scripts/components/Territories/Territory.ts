@@ -283,10 +283,9 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         FadeOut.create(this.scene, this.forest);
         this.scene.playSoundOnce('tree-falling-sound');
         this.territoryType = this.boughtType;
-        this.scene.time.addEvent({ delay: 500, callback: (): void => {
+        this.scene.time.addEvent({ delay: 0, callback: (): void => {
           this.changeSprite();
           this.setTexture(this.scene.state.farm.toLowerCase() + '-bought');
-          Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
           this.scene.buildBorders();
         }, callbackScope: this, loop: false });
       } else if (this.territoryType === 1) {

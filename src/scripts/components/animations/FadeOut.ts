@@ -18,7 +18,7 @@ export default class FadeOut {
     this._scene.add.tween({
       targets: this._gameObj,
       alpha: 0,
-      duration: 600,
+      duration: 1000,
       onComplete: (): void => {
         this._gameObj?.destroy();
       }
