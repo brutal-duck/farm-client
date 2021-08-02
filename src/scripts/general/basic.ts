@@ -1388,9 +1388,11 @@ function nextDayTimer(): void {
     --this.state.timeToNewDay;
   } else { // обнуление параметров
     this.state.timeToNewDay = 86400;
-    this.state[`user${this.state.farm}`].takenHerdBoost = 0;
-    this.takenFreeDiamonds = false;
-    this.takenSocialAward = false;
+    this.state.userSheep.takenHerdBoost = 0;
+    this.state.userChicken.takenHerdBoost = 0;
+    this.state.userCow.takenHerdBoost = 0;
+    this.state.user.takenFreeDiamonds = false;
+    this.state.user.takenSocialAward = false;
     axios.post(process.env.API + "/newDay", {    
       id: this.state.user.id,
       hash: this.state.user.hash,
