@@ -194,13 +194,8 @@ class Profile extends Phaser.Scene {
 
   private createFarms(): void {
     this.createSheepFarm();
-    if (this.state.user.test === 'B') {
-      this.createChickenFarmTestB();
-      this.createCowFarmTestB();
-    } else {
-      this.createChickenFarmTestA();
-      this.createCowFarmTestA();
-    }
+    this.createChickenFarm();
+    this.createCowFarm();
     if (this.state.progress.event.type === 1) {
       this.createUnicornFarm();
     } else if (this.state.progress.event.type === 2) {
@@ -232,7 +227,7 @@ class Profile extends Phaser.Scene {
     }, 8);
   }
   
-  private createChickenFarmTestA(): void {
+  private createChickenFarm(): void {
     const farmPosition: Iposition = { x: 720, y: 1025 };
     if (this.state.progress.chicken.open) {
       const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-chicken-farm').setOrigin(1, 0.5).setDepth(1);
@@ -279,7 +274,7 @@ class Profile extends Phaser.Scene {
     }
   }
 
-  private createCowFarmTestA(): void {
+  private createCowFarm(): void {
     const farmPosition: Iposition = { x: 0, y: 1050 };
 
     if (this.state.progress.cow.open) {
