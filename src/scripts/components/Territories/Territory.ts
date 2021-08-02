@@ -280,6 +280,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     if (this.bought && this.cooldown <= 0) {
       this.scene.tryTask(5, this.boughtType);
       if (this.territoryType === 0) {
+        FadeOut.create(this.scene, this.scene.add.sprite(this.x + 120, this.y + 120, this.scene.state.farm.toLowerCase() + '-for-buying').setDepth(this.forest.depth - 1));
         FadeOut.create(this.scene, this.forest);
         this.scene.playSoundOnce('tree-falling-sound');
         this.territoryType = this.boughtType;
