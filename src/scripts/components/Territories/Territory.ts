@@ -5,6 +5,7 @@ import Stars from './../animations/Stars';
 import CooldownSprite from './CooldownSprite';
 import Chicken from './../../scenes/Chicken/Main';
 import Sheep from './../../scenes/Sheep/Main';
+import FadeOut from './../animations/FadeOut';
 
 export default class Territory extends Phaser.Physics.Arcade.Sprite {
   public scene: Cow | Sheep | Chicken;
@@ -279,10 +280,11 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     if (this.bought && this.cooldown <= 0) {
       this.scene.tryTask(5, this.boughtType);
       if (this.territoryType === 0) {
+        FadeOut.create(this.scene, this.forest);
+        this.scene.playSoundOnce('tree-falling-sound');
         this.territoryType = this.boughtType;
         this.scene.time.addEvent({ delay: 500, callback: (): void => {
           this.changeSprite();
-          this.forest?.destroy();
           this.setTexture(this.scene.state.farm.toLowerCase() + '-bought');
           Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
           this.scene.buildBorders();
