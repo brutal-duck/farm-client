@@ -292,8 +292,7 @@ export default class EventEndWindow {
         hash: this.scene.state.user.hash,
         counter: this.scene.state.user.counter,
       };
-      axios.post(process.env.API + "/takeAward", data)
-          .then(res => {console.log(res.data)});
+      axios.post(process.env.API + "/takeAward", data);
       this.scene.scene.stop('Modal');
       MoneyAnimation.create(this.scene.game.scene.keys[this.scene.state.farm + 'Bars'], 'diamond');
     });
