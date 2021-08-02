@@ -284,6 +284,7 @@ function interval(): void {
   
       if (this.state.progress.event.endTime <= 0 && 
         this.state.progress.event.open &&
+        !this.state.userUnicorn?.takenAward &&
         this.scene.isActive('Profile')) {
         this.autosave();
         this.scene.stop('Profile');

@@ -356,6 +356,14 @@ function interval(): void {
       }
     }
 
+    if (this.state.progress.event.endTime <= 0 && 
+      !this.state.userUnicorn?.takenAward &&
+      this.state.progress.event.open &&
+      this.scene.isActive('Profile')) {
+      this.autosave();
+      this.scene.stop('Profile');
+    }
+    
     // туториал по ивентовой ферме
     if (this.state.userSheep.part > 4 && 
       (this.state.name !== '' ||  this.state.user.login !== ''
