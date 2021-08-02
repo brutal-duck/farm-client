@@ -336,6 +336,7 @@ function interval(): void {
     
     if (this.state.progress.event.endTime <= 0 && 
       !this.state.userUnicorn?.takenAward && 
+      this.state.userUnicorn?.points > 0 &&
       this.state.progress.event.open &&
       !this.scene.isActive('Modal') && 
       !this.scene.isActive('Tutorial') &&
@@ -358,6 +359,7 @@ function interval(): void {
 
     if (this.state.progress.event.endTime <= 0 && 
       !this.state.userUnicorn?.takenAward &&
+      this.state.userUnicorn?.points > 0 &&
       this.state.progress.event.open &&
       this.scene.isActive('Profile')) {
       this.autosave();
