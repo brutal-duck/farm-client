@@ -532,6 +532,7 @@ export default function loadData(response: any): void {
       takenAd: response.data.event.takenAd,
       timeToAd: response.data.event.timeToAd,
       points: response.data.event.points,
+      takenAward: response.data.event.takenAward,
     };
 
     this.state.eventTerritories = eventTerritories;

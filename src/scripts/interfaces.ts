@@ -280,6 +280,7 @@ interface IuserEvent {
   takenAd: number;
   timeToAd: number;
   points: number;
+  takenAward: boolean;
 }
 interface IunicornRaitingsData {
   ratings: IeventRaiting[];

@@ -277,7 +277,7 @@ export default class EventEndWindow {
         axios.post(process.env.API + "/newStatus", data)
           .then(res => {});
       }
-      this.scene.state.userUnicorn.points = -1;
+      this.scene.state.userUnicorn.takenAward = true;
 
       this.scene.state.user.diamonds += diamonds;
       this.scene.state.amplitude.logAmplitudeEvent('diamonds_get', {
