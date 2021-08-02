@@ -789,7 +789,6 @@ class Profile extends Phaser.Scene {
       (this.state.user.login || this.state.name && this.state.platform !== 'ya' || this.state.yaPlayer && this.state.platform === 'ya') &&
       !this.eventStartText?.visible
     ) {
-      console.log(1)
       this.eventIsland?.setVisible(true);
       this.eventStartText?.setY(795);
       this.eventStartText?.setVisible(true);
@@ -815,7 +814,6 @@ class Profile extends Phaser.Scene {
       (this.state.user.login || this.state.name && this.state.platform !== 'ya' || this.state.yaPlayer && this.state.platform === 'ya') &&
       !this.eventMapFarm?.visible
     ) {
-      console.log(2);
       this.eventStartText?.setVisible(false);
       this.eventStartTime?.setVisible(false);
       this.eventStartBg?.setVisible(false);
@@ -839,7 +837,6 @@ class Profile extends Phaser.Scene {
       this.state.progress.event.endTime > 0 &&
       this.eventZone.active
     ) {
-      console.log(3);
       this.eventIsland?.setVisible(true);
       this.eventZone?.destroy();
 
@@ -852,7 +849,6 @@ class Profile extends Phaser.Scene {
       this.state.progress.cow.part >= 1) 
       && !this.eventStartText.visible
     ) {
-      console.log(4);
       this.eventIsland?.setVisible(false);
       this.eventStartText?.setVisible(true);
       this.eventStartText?.setY(805);
@@ -875,7 +871,6 @@ class Profile extends Phaser.Scene {
       !this.state.progress.event.open) && 
       this.eventZone.active 
     ) {
-      console.log(5);
       this.eventIsland?.setVisible(false);
       this.eventStartText?.setVisible(false);
       this.eventStartTime?.setVisible(false);
@@ -886,7 +881,6 @@ class Profile extends Phaser.Scene {
       this.eventEndTime?.setVisible(false);
       this.eventEndText?.setVisible(false);
       this.eventZone?.destroy();
-
     } 
     
     if (this.state.unicornRaitings?.updated && this.state.progress.event.type === 1) {
