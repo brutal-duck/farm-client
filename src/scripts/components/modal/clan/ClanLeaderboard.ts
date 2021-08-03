@@ -15,6 +15,7 @@ export default class ClanLeaderboard {
     this.scene.scrollHeight = Number(this.scene.game.config.height) - 1200 + heightWindow;
     this.scene.scrolling.bottom = 0;
     this.scene.scrolling.scrollY = 0;
+    this.createLoading();
     this.getClanList();
   }
   
@@ -26,6 +27,7 @@ export default class ClanLeaderboard {
     };
     axios.post(process.env.API + '/getClanRaitingList', data).then(res => {
       if (this.scene.state.modal.clanType === 2) {
+        this.loadingText?.destroy();
         const { data } = res;
         data.forEach((el, id) => {
           this.createClan(el, id + 1);
@@ -38,27 +40,34 @@ export default class ClanLeaderboard {
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Shadow',
       wordWrap: { width: 350 },
-      color: '#ff4537',
+      color: '#ffffff',
       fontSize: '25px',
       align: 'center',
     };
     const pos: Iposition = {
-      x: this.scene.cameras.main.centerX - 330,
-      y: this.scene.windowHeight + this.scene.scrollHeight + 20,
+      x: this.scene.cameras.main.centerX - 120,
+      y: this.scene.windowHeight + this.scene.scrollHeight,
     };
     const maxDotCount: number = 4;
     let dotCount: number = 0;
-    this.loadingText = this.scene.add.text(pos.x, pos.y, this.scene.state.lang.loading, textStyle).setOrigin(0.5);
+    this.loadingText = this.scene.add.text(pos.x, pos.y, this.scene.state.lang.loading, textStyle).setOrigin(0.5).setAlpha(0.7);
 
-    this.scene.add.tween({
+    const tween: Phaser.Tweens.Tween = this.scene.add.tween({
       targets: this.loadingText,
+      duration: 0,
       onLoop: () => {
-        dotCount += 1;
-
-        this.loadingText.setText(this.scene.state.lang.loading + '.')
+        if (!this.loadingText.active) tween.remove();
+        if (dotCount < maxDotCount) dotCount += 1;
+        else dotCount = 0;
+        
+        let text: string = this.scene.state.lang.loading;
+        for (let i = 0; i < dotCount; i ++) {
+          text += '.'
+        }
+        if (this.loadingText.active) this.loadingText.setText(text);
       },
       loop: -1,
-      loopDelay: 300,
+      loopDelay: 150,
     });
 
   }
