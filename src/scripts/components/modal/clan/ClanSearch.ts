@@ -24,13 +24,23 @@ export default class ClanSearch {
       id: this.scene.state.user.id,
       hash: this.scene.state.user.hash,
       counter: this.scene.state.user.counter,
+      name: this.scene.state.searchClan,
     };
+    this.scene.state.searchClan = '';
     axios.post(process.env.API + '/getSearchClan', data).then(res => {
-      console.log(res.data)
-      res.data.clans.forEach(el => {
-        this.createClan(el);
-      });
-      console.log(res.data);
+      if (this.scene.state.modal.clanType === 3) {
+        const { status, clans } = res.data;
+        if (status === 'found') {
+          clans.forEach(el => {
+            this.createClan(el);
+          });
+        } else {
+          this.createNotFoundClans();
+          clans.forEach(el => {
+            this.createClan(el);
+          });
+        }
+      }
     })
   }
 
@@ -46,7 +56,7 @@ export default class ClanSearch {
       fontFamily: 'Shadow',
       wordWrap: { width: 100 },
       color: '#fffdfa',
-      fontSize: '18px',
+      fontSize: '16px',
       align: 'center',
       shadow: {
         offsetX: 1,
@@ -67,12 +77,11 @@ export default class ClanSearch {
     const texture: string = isClosed ? 'profile-window-button-yellow' : 'profile-window-button-green';
     const textBtn: string = isClosed ? this.scene.state.lang.sendInvite.replace(' ', '\n') : this.scene.state.lang.join;
 
-    
-    const avatarSprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos.x + 40, pos.y, 'farmer').setScale(0.28).setDepth(1);
+    const avatarSprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos.x + 25, pos.y, 'farmer').setScale(0.28).setDepth(1);
     const avatarGeom: Phaser.Geom.Rectangle = avatarSprite.getBounds();
     const nameText: Phaser.GameObjects.Text = this.scene.add.text(avatarGeom.right + 20, avatarSprite.y, name, nameTextStyle).setDepth(1).setOrigin(0, 0.5).setCrop(0, 0, 250, 250);
 
-    const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos.x + 370, pos.y + 5, texture).setDepth(1);
+    const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos.x + 370, pos.y + 5, texture).setDepth(1).setScale(0.92);
     const btnText: Phaser.GameObjects.Text = this.scene.add.text(btn.x, btn.y - 5, textBtn, buttonTextStyle).setOrigin(0.5).setDepth(1);
 
     this.scene.clickModalBtn({ btn: btn, title: btnText }, () => { this.onClickBtn(data); });
@@ -155,5 +164,30 @@ export default class ClanSearch {
         }
       }
     });    
+  }
+
+  private createNotFoundClans(): void {
+    const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      wordWrap: { width: 350 },
+      color: '#ff4537',
+      fontSize: '25px',
+      align: 'center',
+    };
+
+    const padding: number = 20;
+    const bgWidth: number = 460;
+
+    const pos: Iposition = {
+      x: this.scene.cameras.main.centerX - 350,
+      y: this.scene.windowHeight + this.scene.scrollHeight + padding,
+    };
+
+    const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(pos.x, pos.y, bgWidth, 100, 'tasks-bar-ns', 15).setOrigin(0, 0.5);
+    const bgGeom: Phaser.Geom.Rectangle = bg.getBounds();
+    const text: Phaser.GameObjects.Text = this.scene.add.text(bgGeom.centerX, bgGeom.centerY, this.scene.state.lang.clansNotFound, textStyle).setOrigin(0.5);
+
+    this.scene.scrollHeight += 10 + bg.height;
+    this.scene.scrolling.bottom = this.scene.scrollHeight;
   }
 }

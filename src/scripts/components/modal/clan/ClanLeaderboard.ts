@@ -4,6 +4,7 @@ import Clan from './../../../scenes/Modal/Clan/Main';
 
 export default class ClanLeaderboard {
   private scene: Clan;
+  private loadingText: Phaser.GameObjects.Text;
   constructor (scene: Clan) {
     this.scene = scene;
     this.init();
@@ -24,11 +25,42 @@ export default class ClanLeaderboard {
       counter: this.scene.state.user.counter,
     };
     axios.post(process.env.API + '/getClanRaitingList', data).then(res => {
-      res.data.forEach((el, id) => {
-        this.createClan(el, id + 1);
-      });
-      console.log(res.data);
-    })
+      if (this.scene.state.modal.clanType === 2) {
+        const { data } = res;
+        data.forEach((el, id) => {
+          this.createClan(el, id + 1);
+        });
+      }
+    });
+  }
+
+  private createLoading(): void {
+    const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      wordWrap: { width: 350 },
+      color: '#ff4537',
+      fontSize: '25px',
+      align: 'center',
+    };
+    const pos: Iposition = {
+      x: this.scene.cameras.main.centerX - 330,
+      y: this.scene.windowHeight + this.scene.scrollHeight + 20,
+    };
+    const maxDotCount: number = 4;
+    let dotCount: number = 0;
+    this.loadingText = this.scene.add.text(pos.x, pos.y, this.scene.state.lang.loading, textStyle).setOrigin(0.5);
+
+    this.scene.add.tween({
+      targets: this.loadingText,
+      onLoop: () => {
+        dotCount += 1;
+
+        this.loadingText.setText(this.scene.state.lang.loading + '.')
+      },
+      loop: -1,
+      loopDelay: 300,
+    });
+
   }
 
   private createClan(data: Iclan, ratePosition): void {

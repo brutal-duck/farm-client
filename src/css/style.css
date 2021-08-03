@@ -182,6 +182,27 @@ textarea:focus, input:focus { outline: none; }
   /* background: rgba(0, 0, 0, 0.5); */
 }
 
+/* Чат */
+#clan-search {
+  display: none;
+  position: absolute;
+  width: 39%;
+  top: 19%;
+  left: 19%;
+  bottom: 77%;
+  z-index: 10;
+  border: none;
+  padding-left: 6px;
+  font-family: 'Bip';
+  font-size: 100%;
+  color: '#974f00';
+}
+#clan-search:focus {
+  border: none;
+  background: transparent;
+  /* background: rgba(0, 0, 0, 0.5); */
+}
+
 /* Техподдержка */
 #sup-email {
   display: none;

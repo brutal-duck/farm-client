@@ -29,6 +29,10 @@ export default class ClanWindowBars {
     wordWrap: { width: 500 },
   };
 
+  private mainInput: HTMLInputElement;
+  private enterKey: Phaser.Input.Keyboard.Key;
+  private inputText: Phaser.GameObjects.Text;
+
   constructor(scene: Modal) {
     this.scene = scene;
     this.init();
@@ -86,6 +90,7 @@ export default class ClanWindowBars {
 
   private onCloseBtn(): void {
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
+    this.removeInput();
     this.scene.scene.stop();
     this.scene.scene.stop('Clan');
   }
@@ -148,6 +153,7 @@ export default class ClanWindowBars {
           type: 17,
           clanType: type,
         };
+        this.removeInput();
         this.scene.scene.stop('Clan');
         this.scene.scene.restart(this.scene.state);
       }, tabIcon);
@@ -226,6 +232,7 @@ export default class ClanWindowBars {
       type: 17,
       clanType: 3,
     };
+    this.removeInput();
     this.scene.scene.stop('Clan');
     this.scene.scene.restart(this.scene.state);
   }
@@ -251,6 +258,7 @@ export default class ClanWindowBars {
           type: 1,
           sysType: 21,
         }
+        this.removeInput();
         this.scene.scene.stop('Clan');
         this.scene.scene.restart(this.scene.state);
       });
@@ -262,11 +270,55 @@ export default class ClanWindowBars {
 
   
   private createSearch(): void {
+    const buttonTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      wordWrap: { width: 100 },
+      color: '#fffdfa',
+      fontSize: '19px',
+      align: 'center',
+      shadow: {
+        offsetX: 1,
+        offsetY: 1, 
+        color: '#96580e',
+        blur: 2,
+        fill: true,
+      },
+    };
+    const inputTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontSize: '22px',
+      fontFamily: 'Bip',
+      color: '#8f8f8f',
+    };
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     const bgHeight: number = 590;
     const bgY: number = this.y + 120;
     this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
     this.scene.add.tileSprite(this.x, headerGeom.bottom - 2, this.width, 100, 'white-pixel').setTint(0xD06900).setOrigin(0.5, 0);
+    const inputBg: Phaser.GameObjects.Sprite = this.scene.add.sprite(headerGeom.centerX - 45, headerGeom.centerY, 'clan-window-search-plate').setDepth(2);
+    const inputBgGeom: Phaser.Geom.Rectangle = inputBg.getBounds();
+    const searchBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(inputBgGeom.right + 40, inputBgGeom.centerY + 2, 'profile-window-button-green').setDepth(2).setScale(0.92);
+    const searchBtnText: Phaser.GameObjects.Text = this.scene.add.text(searchBtn.x, searchBtn.y - 5, this.scene.state.lang.search, buttonTextStyle).setDepth(2).setOrigin(0.5);
+
+    this.scene.clickModalBtn({ btn: searchBtn, title: searchBtnText }, () => { this.searchClans(); });
+
+    this.inputText = this.scene.add.text(inputBgGeom.left + 10, inputBgGeom.centerY, this.scene.state.lang.inputClanName, inputTextStyle).setOrigin(0, 0.5).setDepth(5);
+
+    this.createInput();
+
+    this.scene.click(inputBg, () => {
+      this.mainInput.style.display = 'block';
+      this.mainInput.focus();
+      this.inputText.setVisible(false);
+    });
+    
+    this.scene.click(this.header, () => {
+      this.mainInput.style.display = 'none';
+      this.mainInput.blur();
+      const text: string = this.mainInput.value ? this.mainInput.value : this.scene.state.lang.inputClanName;
+      const color: string = this.mainInput.value ? '#974f00' : '#8f8f8f';
+      this.inputText.setText(text).setColor(color).setDepth(4).setCrop(0, 0, 280, 100).setVisible(true);
+    })
+
     const right1 = {
       text: 250,
       icon: 'diamond'
@@ -277,10 +329,39 @@ export default class ClanWindowBars {
         type: 1,
         sysType: 21,
       }
+      this.removeInput();
       this.scene.scene.stop('Clan');
       this.scene.scene.restart(this.scene.state);
     });
 
     this.scene.scene.launch('Clan', this.scene.state);
+  }
+
+
+  private createInput(): void {
+    const root: HTMLDivElement = document.querySelector('#root');
+    this.mainInput = document.createElement('input');
+    root.append(this.mainInput);
+    this.mainInput.setAttribute("id", "clan-search");
+    this.mainInput.setAttribute("autocomplete", "off");
+    this.enterKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+    this.enterKey.on('down', (): void => this.searchClans());
+  }
+
+  private removeInput(): void {
+    this.mainInput?.remove();
+    this.enterKey?.destroy();
+  }
+
+  private searchClans(): void {
+    if (this.mainInput.value !== '') {
+      this.scene.scene.stop('Clan');
+      this.scene.state.searchClan = this.mainInput.value;
+      this.scene.scene.launch('Clan', this.scene.state);
+      this.mainInput.value = '';
+      this.mainInput.style.display = 'none';
+      this.mainInput.blur();
+      this.inputText.setText(this.scene.state.lang.inputClanName).setDepth(4).setCrop(0, 0, 280, 100).setColor('#8f8f8f').setVisible(true);
+    }
   }
 }

@@ -847,4 +847,5 @@ interface Istate {
   musicVolume: number;
   soundVolume: number;
   clan?: Iclan;
+  searchClan?: string;
 }

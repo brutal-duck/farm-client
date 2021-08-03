@@ -973,6 +973,8 @@ export default {
     join: 'Вступить',
     sendInvite: 'Отправить заявку',
     leaveClan: 'Выйти из\nклана',
+    search: 'Найти',
+    clansNotFound: 'По данному запросу кланы не найдены',
   },
 
   en: {
@@ -1949,5 +1951,7 @@ export default {
     join: 'Вступить',
     sendInvite: 'Отправить заявку',
     leaveClan: 'Выйти из\nклана',
+    search: 'Найти',
+    clansNotFound: 'По данному запросу кланы не найдены',
   },
 }
