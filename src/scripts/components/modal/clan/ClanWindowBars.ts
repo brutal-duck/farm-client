@@ -29,7 +29,7 @@ export default class ClanWindowBars {
     wordWrap: { width: 500 },
   };
 
-  private mainInput: HTMLInputElement;
+  private input: HTMLInputElement;
   private enterKey: Phaser.Input.Keyboard.Key;
   private inputText: Phaser.GameObjects.Text;
 
@@ -78,14 +78,17 @@ export default class ClanWindowBars {
 
   private createBg(): void {
     this.bg = this.scene.add.tileSprite(this.x, this.y, this.width, this.height, 'white-pixel').setTint(0xFA8F1F);
+    this.modalElements.push(this.bg);
   }
 
   private createHeader(): void {
     this.header = this.scene.add.sprite(this.x, this.y - this.height / 2 + 10 , 'clan-window-header').setDepth(2).setOrigin(0.5, 1);
+    this.modalElements.push(this.header);
   }
 
   private createFooter(): void {
     this.footer = this.scene.add.sprite(this.x, this.y + this.height / 2, 'profile-window-footer').setOrigin(0.5, 0);
+    this.modalElements.push(this.footer);
   }
 
   private onCloseBtn(): void {
@@ -268,7 +271,6 @@ export default class ClanWindowBars {
     this.scene.scene.launch('Clan', this.scene.state);
   }
 
-  
   private createSearch(): void {
     const buttonTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Shadow',
@@ -292,8 +294,8 @@ export default class ClanWindowBars {
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     const bgHeight: number = 590;
     const bgY: number = this.y + 120;
-    this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
-    this.scene.add.tileSprite(this.x, headerGeom.bottom - 2, this.width, 100, 'white-pixel').setTint(0xD06900).setOrigin(0.5, 0);
+    const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
+    const tile: Phaser.GameObjects.TileSprite = this.scene.add.tileSprite(this.x, headerGeom.bottom - 2, this.width, 100, 'white-pixel').setTint(0xD06900).setOrigin(0.5, 0);
     const inputBg: Phaser.GameObjects.Sprite = this.scene.add.sprite(headerGeom.centerX - 45, headerGeom.centerY, 'clan-window-search-plate').setDepth(2);
     const inputBgGeom: Phaser.Geom.Rectangle = inputBg.getBounds();
     const searchBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(inputBgGeom.right + 40, inputBgGeom.centerY + 2, 'profile-window-button-green').setDepth(2).setScale(0.92);
@@ -302,20 +304,19 @@ export default class ClanWindowBars {
     this.scene.clickModalBtn({ btn: searchBtn, title: searchBtnText }, () => { this.searchClans(); });
 
     this.inputText = this.scene.add.text(inputBgGeom.left + 10, inputBgGeom.centerY, this.scene.state.lang.inputClanName, inputTextStyle).setOrigin(0, 0.5).setDepth(5);
-
     this.createInput();
 
     this.scene.click(inputBg, () => {
-      this.mainInput.style.display = 'block';
-      this.mainInput.focus();
+      this.input.style.display = 'block';
+      this.input.focus();
       this.inputText.setVisible(false);
     });
     
     this.scene.click(this.header, () => {
-      this.mainInput.style.display = 'none';
-      this.mainInput.blur();
-      const text: string = this.mainInput.value ? this.mainInput.value : this.scene.state.lang.inputClanName;
-      const color: string = this.mainInput.value ? '#974f00' : '#8f8f8f';
+      this.input.style.display = 'none';
+      this.input.blur();
+      const text: string = this.input.value ? this.input.value : this.scene.state.lang.inputClanName;
+      const color: string = this.input.value ? '#974f00' : '#8f8f8f';
       this.inputText.setText(text).setColor(color).setDepth(4).setCrop(0, 0, 280, 100).setVisible(true);
     })
 
@@ -334,33 +335,83 @@ export default class ClanWindowBars {
       this.scene.scene.restart(this.scene.state);
     });
 
+    this.modalElements.push(
+      inputBg, 
+      searchBtn, 
+      searchBtnText, 
+      this.inputText,
+      btn.btn,
+      btn.title,
+      btn.text1,
+      btn.text2,
+      btn.img1,
+      btn.img2,
+      bg,
+      tile,
+    );
+
     this.scene.scene.launch('Clan', this.scene.state);
   }
 
-
   private createInput(): void {
     const root: HTMLDivElement = document.querySelector('#root');
-    this.mainInput = document.createElement('input');
-    root.append(this.mainInput);
-    this.mainInput.setAttribute("id", "clan-search");
-    this.mainInput.setAttribute("autocomplete", "off");
+    this.input = document.createElement('input');
+    root.append(this.input);
+    this.input.setAttribute("id", "clan-search");
+    this.input.setAttribute("autocomplete", "off");
+    const height = Number(this.scene.game.config.height) / 12 - 100;
+    const startTop: number = 19;
+    const startBottom: number = 77;
+    this.input.style.top = `${startTop + height / 4}%`;
+    this.input.style.bottom = `${startBottom - height / 4}%`;
     this.enterKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
     this.enterKey.on('down', (): void => this.searchClans());
+
+    const padding: number = this.scene.cameras.main.height / 100 * 10;
+    let centered: boolean = true;
+    let tempHeight: number = window.innerHeight;
+    let windowHeight: number = window.innerHeight;
+
+    window.onresize = (): void => {    
+      if (window.innerHeight !== tempHeight) {
+        tempHeight = window.innerHeight;
+        if (tempHeight < windowHeight && centered) {
+          root.scrollIntoView(false)
+          const height = Number(this.scene.game.config.height) / 12 - 100;
+          const startTop: number = 9;
+          const startBottom: number = 87;
+          this.scene.mainInput.style.top = `${startTop - height / 4}%`;
+          this.scene.mainInput.style.bottom = `${startBottom + height / 4}%`;
+          this.modalElements.forEach((el) => el?.setY(el.y + padding));
+          this.scene.game.scene.keys['Chat'].scrolling.y += padding;
+          centered = false;
+        } else if (!centered) {
+          const height = Number(this.scene.game.config.height) / 12 - 100;
+          const startTop: number = 19;
+          const startBottom: number = 77;
+          this.scene.mainInput.style.top = `${startTop - height / 4}%`;
+          this.scene.mainInput.style.bottom = `${startBottom + height / 4}%`;
+          this.modalElements.forEach((el) => el?.setY(el.y - padding));
+          this.scene.game.scene.keys['Chat'].scrolling.y -= padding;
+          centered = true;
+        }
+      }
+    }
   }
 
   private removeInput(): void {
-    this.mainInput?.remove();
+    this.input?.remove();
     this.enterKey?.destroy();
   }
 
   private searchClans(): void {
-    if (this.mainInput.value !== '') {
+    if (this.input.value !== '') {
       this.scene.scene.stop('Clan');
-      this.scene.state.searchClan = this.mainInput.value;
+      this.scene.state.searchClan = this.input.value;
       this.scene.scene.launch('Clan', this.scene.state);
-      this.mainInput.value = '';
-      this.mainInput.style.display = 'none';
-      this.mainInput.blur();
+      this.input.value = '';
+      this.input.style.display = 'none';
+      this.input.blur();
       this.inputText.setText(this.scene.state.lang.inputClanName).setDepth(4).setCrop(0, 0, 280, 100).setColor('#8f8f8f').setVisible(true);
     }
   }

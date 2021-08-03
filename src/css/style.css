@@ -118,7 +118,7 @@ textarea:focus, input:focus { outline: none; }
 /* НОВЫЙ ИНПУТ */
 
 #root {
-  position: absolute;
+  position: relative;
 }
 
 /* Никнейм и отправка почты */

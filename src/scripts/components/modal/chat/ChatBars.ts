@@ -78,17 +78,23 @@ export default class ChatBars {
         tempHeight = window.innerHeight;
         if (tempHeight < windowHeight && centered) {
           root.scrollIntoView(false)
-          modalElements.forEach((el) => el?.setY(el.y + padding))
-          this.scene.game.scene.keys['Chat'].scrolling.y += padding
-          this.scene.mainInput.style.top = '88%';
-          this.scene.mainInput.style.bottom = '7%';
-          centered = false
+          const height = Number(this.scene.game.config.height) / 12 - 100;
+          const startTop: number = 88;
+          const startBottom: number = 7;
+          this.scene.mainInput.style.top = `${startTop - height / 4}%`;
+          this.scene.mainInput.style.bottom = `${startBottom + height / 4}%`;
+          modalElements.forEach((el) => el?.setY(el.y + padding));
+          this.scene.game.scene.keys['Chat'].scrolling.y += padding;
+          centered = false;
         } else if (!centered) {
-          modalElements.forEach((el) => el?.setY(el.y - padding))
-          this.scene.game.scene.keys['Chat'].scrolling.y -= padding
-          this.scene.mainInput.style.top = '78%';
-          this.scene.mainInput.style.bottom = '17%';
-          centered = true
+          const height = Number(this.scene.game.config.height) / 12 - 100;
+          const startTop: number = 78;
+          const startBottom: number = 17;
+          this.scene.mainInput.style.top = `${startTop - height / 4}%`;
+          this.scene.mainInput.style.bottom = `${startBottom + height / 4}%`;
+          modalElements.forEach((el) => el?.setY(el.y - padding));
+          this.scene.game.scene.keys['Chat'].scrolling.y -= padding;
+          centered = true;
         }
       }
     }
@@ -346,6 +352,12 @@ export default class ChatBars {
     this.scene.mainInput.setAttribute("id", "chat");
     this.scene.mainInput.setAttribute("autocomplete", "off");
     
+    const height = Number(this.scene.game.config.height) / 12 - 100;
+    const startTop: number = 78;
+    const startBottom: number = 17;
+    this.scene.mainInput.style.top = `${startTop - height / 4}%`;
+    this.scene.mainInput.style.bottom = `${startBottom + height / 4}%`;
+
     this.inputBg = this.scene.add.sprite(pos.x, pos.y + 32, 'chat-input-bg').setDepth(3);
     // Отрисовка текста, полученного из инпут
     this.chatText = this.scene.add.text(pos.x - 216, pos.y + 33, this.scene.mainInput.value, {
