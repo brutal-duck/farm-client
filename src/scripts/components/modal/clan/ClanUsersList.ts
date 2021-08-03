@@ -4,12 +4,20 @@ import Clan from './../../../scenes/Modal/Clan/Main';
 export default class ClanUsersList {
   private scene: Clan;
   private array: Array<IclanUser>;
+  private listLength: number;
   constructor (scene: Clan) {
     this.scene = scene;
     this.init();
+    this.listLength = this.array.length;
     this.array.forEach(el => {
       this.createUser(el);
     })
+  }
+
+  public update(): void {
+    if (this.scene.state.clan.users.length !== this.listLength) {
+      this.scene.scene.restart(this.scene.state);
+    }
   }
 
   private init(): void {

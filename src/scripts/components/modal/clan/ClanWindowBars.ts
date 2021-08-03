@@ -1,5 +1,6 @@
 import { shortNum } from '../../../general/basic';
 import Modal from './../../../scenes/Modal/Modal';
+const KEY: string = '1491f4c9d53dfa6c50d0c4a375f9ba76';
 
 export default class ClanWindowBars {
   private scene: Modal;
@@ -228,6 +229,16 @@ export default class ClanWindowBars {
   }
 
   private onLeaveBtn(): void {
+    let login: string = this.scene.state.user.login;
+    if (this.scene.state.platform !== 'web' && this.scene.state.platform !== 'android') login = this.scene.state.name;
+    this.scene.state.socket.io.emit('sendClanMessage', {
+      id: this.scene.state.user.id,
+      clanId: this.scene.state.user.clanId,
+      message: KEY,
+      userName: login,
+      userStatus: this.scene.state.user.status,
+    });
+
     this.scene.state.socket.io.emit('leaveClan');
     this.scene.state.user.clanId = null;
     this.scene.state.clan = null;
@@ -380,8 +391,8 @@ export default class ClanWindowBars {
           const height = Number(this.scene.game.config.height) / 12 - 100;
           const startTop: number = 9;
           const startBottom: number = 87;
-          this.scene.mainInput.style.top = `${startTop - height / 4}%`;
-          this.scene.mainInput.style.bottom = `${startBottom + height / 4}%`;
+          this.input.style.top = `${startTop - height / 4}%`;
+          this.input.style.bottom = `${startBottom + height / 4}%`;
           this.modalElements.forEach((el) => el?.setY(el.y + padding));
           this.scene.game.scene.keys['Chat'].scrolling.y += padding;
           centered = false;
@@ -389,8 +400,8 @@ export default class ClanWindowBars {
           const height = Number(this.scene.game.config.height) / 12 - 100;
           const startTop: number = 19;
           const startBottom: number = 77;
-          this.scene.mainInput.style.top = `${startTop - height / 4}%`;
-          this.scene.mainInput.style.bottom = `${startBottom + height / 4}%`;
+          this.input.style.top = `${startTop - height / 4}%`;
+          this.input.style.bottom = `${startBottom + height / 4}%`;
           this.modalElements.forEach((el) => el?.setY(el.y - padding));
           this.scene.game.scene.keys['Chat'].scrolling.y -= padding;
           centered = true;

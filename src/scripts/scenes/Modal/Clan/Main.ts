@@ -17,6 +17,7 @@ class Clan extends Phaser.Scene {
   public windowHeight: number;
   public windowWidth: number;
   public windowType: number;
+  private usersList: ClanUsersList;
 
   public getStatusSettings = getStatusSettings.bind(this);
   public loadingModal = loadingModal.bind(this);
@@ -38,7 +39,7 @@ class Clan extends Phaser.Scene {
 
   public create(): void {
     if (this.state.modal.clanType === 1) {
-      new ClanUsersList(this);
+      this.usersList = new ClanUsersList(this);
     } else if (this.state.modal.clanType === 2) {
       new ClanLeaderboard(this);
     } else if (this.state.modal.clanType === 3) {
@@ -47,6 +48,9 @@ class Clan extends Phaser.Scene {
   }
 
   public update(): void {
+    if (this.state.modal.clanType === 1) {
+      this.usersList.update();
+    }
   }
 
   private initScrolling(): void {

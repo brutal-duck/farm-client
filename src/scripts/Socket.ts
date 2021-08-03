@@ -64,8 +64,10 @@ export default class Socket {
     });
 
     this.io.on('newClanMessage', (data: Ichat) => {
-      if (data.id === this.state.clan.id) {
-        this.state.clan.chatMessages.push(data);
+      if (this.state.clan) {
+        if (data.id === this.state.clan.id) {
+          this.state.clan.chatMessages.push(data);
+        }
       }
     });
 
@@ -80,6 +82,13 @@ export default class Socket {
       this.state.socket.io.emit('joinClanRoom', {
         clanId: this.state.user.clanId,
       });
+    });
+
+    this.io.on('newClanUser', (data: { users: IclanUser[], ownerId: string }) => {
+      if (this.state.clan) {
+        if (data.ownerId) this.state.clan.ownerId = data.ownerId;
+        this.state.clan.users = data.users;
+      }
     });
   }
 }
