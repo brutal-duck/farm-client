@@ -122,6 +122,9 @@ const clanWindowLeaderPlate: string = require('../../../assets/images/modal/clan
 const clanWindowSearchPlate: string = require('../../../assets/images/modal/clan/search-plate.png');
 const clanWindowPointsBg: string = require('../../../assets/images/modal/clan/points-bg.png');
 const clanWindowWreath: string = require('../../../assets/images/modal/clan/wreath.png');
+const clanWindowIcon1: string = require('../../../assets/images/modal/clan/icon-1.png');
+const clanWindowIcon2: string = require('../../../assets/images/modal/clan/icon-2.png');
+const clanWindowIcon3: string = require('../../../assets/images/modal/clan/icon-3.png');
 
 export default function typePreload(): void {
     switch (this.state.modal.type) {
@@ -306,6 +309,9 @@ export default function typePreload(): void {
       this.load.image('clan-window-search-plate', clanWindowSearchPlate);
       this.load.image('clan-window-points-bg', clanWindowPointsBg);
       this.load.image('clan-window-wreath', clanWindowWreath);
+      this.load.image('clan-window-icon-1', clanWindowIcon1);
+      this.load.image('clan-window-icon-2', clanWindowIcon2);
+      this.load.image('clan-window-icon-3', clanWindowIcon3);
         break;
       default:
         break;

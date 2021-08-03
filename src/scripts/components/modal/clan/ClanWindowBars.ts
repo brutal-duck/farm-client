@@ -145,7 +145,7 @@ export default class ClanWindowBars {
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = active ? tabActiveTextStyle : tabTextStyle;
     const tab: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(pos.x, pos.y, maxWidth / count, height, texture, slice).setOrigin(0, 1);
     const tabGeom: Phaser.Geom.Rectangle = tab.getBounds();
-    const tabIcon: Phaser.GameObjects.Text = this.scene.add.text(tabGeom.centerX, tabGeom.centerY, `clan - ${type}`, textStyle).setOrigin(0.5);
+    const tabIcon: Phaser.GameObjects.Sprite = this.scene.add.sprite(tabGeom.centerX, tabGeom.centerY - 10, `clan-window-icon-${type}`).setOrigin(0.5);
     this.modalElements.push(tab, tabIcon);
     if (!active) {
       this.scene.clickButtonUp(tab, (): void => {
