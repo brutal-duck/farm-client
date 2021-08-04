@@ -197,6 +197,7 @@ const clanWindowWreath: string = require('../../assets/images/modal/clan/wreath.
 const clanWindowIcon1: string = require('../../assets/images/modal/clan/icon-1.png');
 const clanWindowIcon2: string = require('../../assets/images/modal/clan/icon-2.png');
 const clanWindowIcon3: string = require('../../assets/images/modal/clan/icon-3.png');
+const clanWindowIcon4: string = require('../../assets/images/modal/clan/icon-4.png');
 const clanWindowExcludeBtn: string = require('../../assets/images/modal/clan/exclude-button.png');
 
 class Preload extends Phaser.Scene {
@@ -433,6 +434,7 @@ class Preload extends Phaser.Scene {
     this.load.image('clan-window-icon-1', clanWindowIcon1);
     this.load.image('clan-window-icon-2', clanWindowIcon2);
     this.load.image('clan-window-icon-3', clanWindowIcon3);
+    this.load.image('clan-window-icon-4', clanWindowIcon4);
     this.load.image('clan-window-exclude-button', clanWindowExcludeBtn);
   }
 
