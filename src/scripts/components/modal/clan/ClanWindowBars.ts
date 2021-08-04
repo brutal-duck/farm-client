@@ -442,5 +442,18 @@ export default class ClanWindowBars {
     this.headerText = this.scene.add.text(headerGeom.left + 120, headerGeom.centerY, this.scene.state.clan.name, this.headerTextStyle).setDepth(2).setOrigin(0, 0.5).setFontSize(30);
     const clanAvatar = this.scene.add.sprite(headerGeom.left + 30, headerGeom.centerY, 'farmer').setDepth(2).setOrigin(0, 0.5).setScale(0.3);
     this.scene.add.nineslice(this.x, this.y + 100, 480, 600, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
+
+    const right1 = {
+      text: 100,
+      icon: 'diamond'
+    };
+
+    const btn1 = this.scene.bigButton('green', 'left', -240, this.scene.state.lang.changeClanName, right1);
+    this.scene.clickModalBtn(btn1, () => {
+      console.log('Click')
+      this.removeInput();
+      this.scene.scene.stop('Clan');
+      this.scene.scene.restart(this.scene.state);
+    });
   }
 }
