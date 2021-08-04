@@ -27,7 +27,7 @@ export default class ClanWindowBars {
       blur: 2,
       fill: true,
     },
-    wordWrap: { width: 500 },
+    wordWrap: { width: 400, useAdvancedWrap: true },
   };
 
   private input: HTMLInputElement;
@@ -75,6 +75,9 @@ export default class ClanWindowBars {
         break;
       case 3:
         this.createSearch();
+        break;
+      case 4:
+        this.clanSettings();
         break;
       default:
         break;
@@ -184,7 +187,8 @@ export default class ClanWindowBars {
     };
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
 
-    this.headerText = this.scene.add.text(headerGeom.left + 120, headerGeom.centerY, this.scene.state.clan.name, this.headerTextStyle).setDepth(2).setOrigin(0, 0.5).setFontSize(20);
+    this.headerTextStyle.wordWrap = { width: 270, useAdvancedWrap: true };
+    this.headerText = this.scene.add.text(headerGeom.left + 120, headerGeom.centerY, this.scene.state.clan.name, this.headerTextStyle).setDepth(2).setOrigin(0, 0.5).setFontSize(25);
     const clanAvatar = this.scene.add.sprite(headerGeom.left + 30, headerGeom.centerY, 'farmer').setDepth(2).setOrigin(0, 0.5).setScale(0.3);
     const scoreBg = this.scene.add.sprite(headerGeom.right - 20, headerGeom.centerY, 'clan-window-points-bg').setDepth(2).setOrigin(1, 0.5);
     const scoreBgGeom: Phaser.Geom.Rectangle = scoreBg.getBounds();
@@ -430,5 +434,13 @@ export default class ClanWindowBars {
       this.input.blur();
       this.inputText.setText(this.scene.state.lang.inputClanName).setDepth(4).setCrop(0, 0, 280, 100).setColor('#8f8f8f').setVisible(true);
     }
+  }
+
+  private clanSettings(): void {
+    const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
+
+    this.headerText = this.scene.add.text(headerGeom.left + 120, headerGeom.centerY, this.scene.state.clan.name, this.headerTextStyle).setDepth(2).setOrigin(0, 0.5).setFontSize(30);
+    const clanAvatar = this.scene.add.sprite(headerGeom.left + 30, headerGeom.centerY, 'farmer').setDepth(2).setOrigin(0, 0.5).setScale(0.3);
+    this.scene.add.nineslice(this.x, this.y + 100, 480, 600, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
   }
 }
