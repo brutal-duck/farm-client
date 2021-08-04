@@ -29,7 +29,7 @@ import ChickenWindow from '../../components/modal/system/ChickenWindow';
 import CowWindow from '../../components/modal/system/CowWindow';
 import ConfirmSaveProgress from './../../components/modal/system/ConfirmSaveProgress';
 import CreateClanWindow from './../../components/modal/system/CreateClanWindow';
-import ConfimExpelUserWindow from './../../components/modal/system/ConfimExpelUserWindow';
+import ConfimExcludeUserWindow from '../../components/modal/system/ConfimExcludeUserWindow';
 
 function systemWindow(): void {
   let height:number = 0;
@@ -189,7 +189,7 @@ function systemWindow(): void {
       break;
 
     case 22: 
-      new ConfimExpelUserWindow(this);
+      new ConfimExcludeUserWindow(this);
       break;
       
     default:      
