@@ -366,7 +366,7 @@ export default class ProfileWindow {
     this.scene.state.modal = {
       type: 9,
       chatType: 2,
-      chatUserId: this.profile.id,
+      userId: this.profile.id,
     };
     const ModalScene: Modal = this.scene.scene.get('Modal') as Modal;
     ModalScene.scene.restart(this.scene.state);

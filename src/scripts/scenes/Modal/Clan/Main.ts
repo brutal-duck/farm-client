@@ -51,6 +51,18 @@ class Clan extends Phaser.Scene {
     if (this.state.modal.clanType === 1) {
       this.usersList.update();
     }
+    if (this.state.closeModal) {
+      this.state.closeModal = false;
+      if (this.scene.isActive('Modal') && this.scene.isActive('Clan')) {
+        this.scene.stop('Modal');
+        this.scene.stop('Clan');
+      }
+      if (this.scene.isActive('Modal') && this.scene.isActive('Chat')) {
+        this.scene.stop('Chat');
+        this.scene.stop('Modal');
+        this.scene.launch('Modal', this.state);
+      }
+    }
   }
 
   private initScrolling(): void {

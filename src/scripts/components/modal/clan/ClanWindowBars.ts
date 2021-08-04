@@ -242,6 +242,7 @@ export default class ClanWindowBars {
     this.scene.state.socket.io.emit('leaveClan');
     this.scene.state.user.clanId = null;
     this.scene.state.clan = null;
+    this.scene.state.user.messages = this.scene.state.user.messages.filter(el => el.type !== 5);
     this.scene.state.modal = {
       type: 17,
       clanType: 3,

@@ -600,7 +600,7 @@ interface Imodal {
   type: number;
   sysType?: number;
   chatType?: number;
-  chatUserId?: string;
+  userId?: string;
   clanType?: number;
   shopType?: number;
   donePart?: IdonePart;
@@ -848,4 +848,5 @@ interface Istate {
   soundVolume: number;
   clan?: Iclan;
   searchClan?: string;
+  closeModal?: boolean;
 }

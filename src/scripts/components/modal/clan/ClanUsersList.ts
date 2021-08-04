@@ -28,17 +28,32 @@ export default class ClanUsersList {
   }
 
   private createUser(data: IclanUser): void {
-    const nameTextStyle = {
+    const nameTextStyle: Phaser.Types.GameObjects.Text.TextStyle  = {
       color: '#fffdfa',
       fontFamily: 'Shadow',
       fontSize: '20px',
       align: 'left',
+      wordWrap: { width: 200},
     };
-    const scoreTextStyle = {
+    const scoreTextStyle: Phaser.Types.GameObjects.Text.TextStyle  = {
       color: '#f3dcc9',
       fontFamily: 'Shadow',
       fontSize: '20px',
       align: 'center',
+    };
+    const btnTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      wordWrap: { width: 100 },
+      align: 'center',
+      fontSize: '13px',
+      color: '#ffffff',
+      shadow: {
+        offsetX: 1,
+        offsetY: 1, 
+        color: '#96580e',
+        blur: 2,
+        fill: true,
+      },
     };
     const padding: number = 10;
     const bgWidth: number = 450;
@@ -49,10 +64,34 @@ export default class ClanUsersList {
     const { name, status, points, avatar, id } = data;
 
     const avatarSprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos.x, pos.y, 'farmer').setScale(0.35);
-    const nameText: Phaser.GameObjects.Text = this.scene.add.text(avatarSprite.x + avatarSprite.displayWidth / 2 + 10, avatarSprite.y, name, nameTextStyle).setOrigin(0, 0.5);
+
+    const expelBtnPosition: Iposition = {
+      x: avatarSprite.x + avatarSprite.displayWidth / 2 - 9,
+      y: avatarSprite.y + avatarSprite.displayHeight / 2 - 15,
+    };
+
+    const expelBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(expelBtnPosition.x, expelBtnPosition.y, 'clan-window-exclude-button').setScale(1);
+    expelBtn.setVisible(this.scene.state.user.id === this.scene.state.clan?.ownerId);
+
+    this.scene.clickButton(expelBtn, (): void => {
+      this.scene.state.modal = {
+        type: 1,
+        sysType: 22,
+        userId: id,
+        message: name,
+      };
+
+      this.scene.scene.stop('Clan');
+      this.scene.scene.stop('Modal');
+      this.scene.scene.launch('Modal', this.scene.state);
+    });
+
+    const nameText: Phaser.GameObjects.Text = this.scene.add.text(avatarSprite.x + avatarSprite.displayWidth / 2 + 10, avatarSprite.y, name, nameTextStyle)
+      .setOrigin(0, 0.5)
+      .setCrop(0, 0, 250, 200);
     const pointsText: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 360, pos.y, shortNum(Phaser.Math.Between(1, 50000)), scoreTextStyle).setOrigin(0.5);
 
-    const statusSettings: IstatusSettings = this.scene.getStatusSettings(status);
+    const statusSettings: IstatusSettings = this.scene.getStatusSettings('unicorn');
 
     if (statusSettings) {
       const x: number = avatarSprite.x + 25;
@@ -62,6 +101,7 @@ export default class ClanUsersList {
 
     if (this.scene.state.clan.ownerId === id) {
       this.scene.add.sprite(avatarSprite.x, avatarSprite.y - avatarSprite.displayHeight / 2, 'clan-window-crown');
+      expelBtn.setVisible(false);
     }
 
     const line: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos.x - avatarSprite.displayWidth / 2, pos.y + avatarSprite.displayHeight / 2 + 5, 'clan-window-line').setOrigin(0, 0.5);

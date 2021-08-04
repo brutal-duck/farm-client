@@ -976,6 +976,9 @@ export default {
     leaveClan: 'Выйти из\nклана',
     search: 'Найти',
     clansNotFound: 'По данному запросу кланы не найдены',
+    exclude: 'Исключить',
+    confirmExcludeUser: 'Вы действительно хотите исключить $1 из клана?',
+
   },
 
   en: {
@@ -1955,5 +1958,8 @@ export default {
     leaveClan: 'Выйти из\nклана',
     search: 'Найти',
     clansNotFound: 'По данному запросу кланы не найдены',
+    exclude: 'Исключить',
+    confirmExcludeUser: 'Вы действительно хотите исключить $1 из клана?',
+
   },
 }

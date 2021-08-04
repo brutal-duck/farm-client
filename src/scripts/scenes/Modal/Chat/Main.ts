@@ -36,9 +36,9 @@ class Chat extends Phaser.Scene {
     this.scrollHeight = 0;
     if (this.state.modal.chatType === 1 || this.state.modal.chatType === 3) {
       this.windowHeight = 640;
-    } else if (this.state.modal.chatType === 2 && !this.state.modal.chatUserId) {
+    } else if (this.state.modal.chatType === 2 && !this.state.modal.userId) {
       this.windowHeight = 722;
-    } else if (this.state.modal.chatType === 2 && this.state.modal.chatUserId){
+    } else if (this.state.modal.chatType === 2 && this.state.modal.userId){
       this.windowHeight = 568;
     }
     this.windowWidth = 479;
@@ -52,9 +52,9 @@ class Chat extends Phaser.Scene {
   public create(): void {   
     if (this.state.modal.chatType === 1) {
       this.generalChat = new GeneralChat(this);
-    } else if (this.state.modal.chatType === 2 && !this.state.modal.chatUserId) {
+    } else if (this.state.modal.chatType === 2 && !this.state.modal.userId) {
       this.personalChatList = new PersonalChatList(this);
-    } else if (this.state.modal.chatType === 2 && this.state.modal.chatUserId) {
+    } else if (this.state.modal.chatType === 2 && this.state.modal.userId) {
       this.personalChat = new PersonalChat(this);
     } else if (this.state.modal.chatType === 3) {
       this.clanChat = new ClanChat(this);
@@ -67,7 +67,7 @@ class Chat extends Phaser.Scene {
         this.generalChat?.update();
         break;
       case 2: 
-        if (!this.state.modal.chatUserId) this.personalChatList?.update(); 
+        if (!this.state.modal.userId) this.personalChatList?.update(); 
         else this.personalChat?.update();
         break;
       case 3: 
@@ -81,7 +81,7 @@ class Chat extends Phaser.Scene {
   private initScrolling(): void {
     this.height = Number(this.game.config.height);
     let y: number = this.cameras.main.centerY - 320;
-    if (this.state.modal.chatType === 2 && this.state.modal.chatUserId) y += 70;
+    if (this.state.modal.chatType === 2 && this.state.modal.userId) y += 70;
     const cameraOptions: IScrollingOptions = {
       x: 120,
       y: y,

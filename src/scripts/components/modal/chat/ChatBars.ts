@@ -38,10 +38,10 @@ export default class ChatBars {
     if (
       this.scene.state.modal.chatType === 1 
       || this.scene.state.modal.chatType === 2 
-      && this.scene.state.modal.chatUserId 
+      && this.scene.state.modal.userId 
       || this.scene.state.modal.chatType === 3
     ) this.createInput();
-    if (this.scene.state.modal.chatType === 2 && this.scene.state.modal.chatUserId) this.createPersonalChatPlate();
+    if (this.scene.state.modal.chatType === 2 && this.scene.state.modal.userId) this.createPersonalChatPlate();
     this.setTabsListeners();
     this.setResize();
   }
@@ -284,6 +284,18 @@ export default class ChatBars {
       const count: number = this.getPersonalTabCountNotification();
       this.personalTabNotificator?.setCount(count);
     }
+    if (this.scene.state.closeModal) {
+      this.scene.state.closeModal = false;
+      if (this.scene.scene.isActive('Modal') && this.scene.scene.isActive('Clan')) {
+        this.scene.scene.stop('Modal');
+        this.scene.scene.stop('Clan');
+      }
+      if (this.scene.scene.isActive('Modal') && this.scene.scene.isActive('Chat')) {
+        this.scene.scene.stop('Chat');
+        this.scene.scene.stop('Modal');
+        this.scene.scene.launch('Modal', this.scene.state);
+      }
+    }
   }
 
   private getPersonalTabCountNotification(): number {
@@ -462,7 +474,7 @@ export default class ChatBars {
           status: this.scene.state.user.status
         });
       } else if (this.scene.state.modal.chatType === 2) {
-        const user: IuserPersonalMessage = this.scene.state.user.personalMessages.find(el => el.userId === this.scene.state.modal.chatUserId);
+        const user: IuserPersonalMessage = this.scene.state.user.personalMessages.find(el => el.userId === this.scene.state.modal.userId);
         this.scene.state.socket.io.emit('sendPersonalMessage', {
           id: this.scene.state.user.id,
           toId: user.userId,
@@ -517,7 +529,7 @@ export default class ChatBars {
       },
     };
 
-    const user: IuserPersonalMessage = this.scene.state.user.personalMessages.find(el => el.userId === this.scene.state.modal.chatUserId);
+    const user: IuserPersonalMessage = this.scene.state.user.personalMessages.find(el => el.userId === this.scene.state.modal.userId);
     const windowWidth: number = 482;
     this.bgNamePlate = this.scene.add.tileSprite(pos.x, pos.y, windowWidth, 68, 'white-pixel').setDepth(4).setAlpha(0.3).setOrigin(0.5, 0);
     const bgGeom: Phaser.Geom.Rectangle = this.bgNamePlate.getBounds();
@@ -544,8 +556,8 @@ export default class ChatBars {
   }
 
   private deleteUserWithoutMessages(): void {
-    if (this.scene.state.modal.chatType === 2 && this.scene.state.modal.chatUserId) {
-      const user: IuserPersonalMessage = this.scene.state.user.personalMessages.find(el => el.userId === this.scene.state.modal.chatUserId);
+    if (this.scene.state.modal.chatType === 2 && this.scene.state.modal.userId) {
+      const user: IuserPersonalMessage = this.scene.state.user.personalMessages.find(el => el.userId === this.scene.state.modal.userId);
       if (user.messages.length <= 0) this.scene.state.user.personalMessages.pop();
     }
   }

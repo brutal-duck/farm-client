@@ -19,7 +19,7 @@ export default class PersonalChat {
     this.scene.scrolling.scrollY = 0;
     this.msg = [];
     this.textWrap = 340;
-    this.userMsg = this.scene.state.user.personalMessages.find(el => el.userId === this.scene.state.modal.chatUserId);
+    this.userMsg = this.scene.state.user.personalMessages.find(el => el.userId === this.scene.state.modal.userId);
     this.scene.state.updatePersonalMessage = true;
   }
 

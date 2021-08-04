@@ -41,7 +41,7 @@ export default class ClanChat {
       .then((res) => {
         if (!res.data.error) {
           this.scene.state.clan.chatMessages = [];
-          for (let i: number = res.data.messages.length - 1; i >= 0; i--) {
+          for (let i: number = 0; i < res.data.messages.length; i++) {
             this.scene.state.clan.chatMessages.push(res.data.messages[i]);
           }
           this.ready = true;

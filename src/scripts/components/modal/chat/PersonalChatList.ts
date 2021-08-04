@@ -76,6 +76,18 @@ export default class PersonalChatList {
       ModalScene.scene.restart(this.scene.state);
       this.scene.state.updatePersonalMessage = false;
     }
+    if (this.scene.state.closeModal) {
+      this.scene.state.closeModal = false;
+      if (this.scene.scene.isActive('Modal') && this.scene.scene.isActive('Clan')) {
+        this.scene.scene.stop('Modal');
+        this.scene.scene.stop('Clan');
+      }
+      if (this.scene.scene.isActive('Modal') && this.scene.scene.isActive('Chat')) {
+        this.scene.scene.stop('Chat');
+        this.scene.scene.stop('Modal');
+        this.scene.scene.launch('Modal', this.scene.state);
+      }
+    }
   }
 
   private createElements(): void {
@@ -89,6 +101,8 @@ export default class PersonalChatList {
         this.createPersonal(el);
       } else if (el.type === 2) {
         this.createClanInvite(el);
+      } else if (el.type === 3) {
+        this.createClanExpel(el);
       } else if (el.type === 5) {
         this.createAskJoinClan(el);
       }
@@ -204,6 +218,122 @@ export default class PersonalChatList {
   }
 
   private createClanInvite(data: IchatListData): void {
+    const padding: number = 35;
+    const bgWidth: number = 450;
+    const pos: Iposition = {
+      x: this.scene.cameras.main.centerX - 325,
+      y: this.scene.windowHeight + this.scene.scrollHeight + padding,
+    };
+
+    const btnTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      wordWrap: { width: 100 },
+      align: 'center',
+      fontSize: '16px',
+      color: '#ffe2e2',
+      stroke: '#D78A31',
+      strokeThickness: 1,
+    };
+
+    const messageTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Bip',
+      fontSize: '20px',
+      color: '#173cb4',
+      wordWrap: { width: bgWidth - 40 }
+    };
+
+    const timeTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '16px',
+      color: '#63527F',
+      align: 'left'
+    };
+    
+    const notificationTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Bip',
+      fontSize: '16px',
+      color: '#7b7b7b',
+      wordWrap: { width: bgWidth - 40 }
+    };
+
+    const splitedText: string[] = data.text.split(',');
+    const message: string = `${splitedText[2]} ${this.scene.state.lang.inviteYouClan} "${splitedText[1]}"`;
+
+    const messageText: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y + 30, message, messageTextStyle).setDepth(2).setOrigin(0, 1);
+    const messageTextGeom: Phaser.Geom.Rectangle = messageText.getBounds();
+    
+    let height: number = 0;
+
+    const acceptBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos.x + 50, messageTextGeom.bottom + 10, 'profile-window-button-green')
+      .setOrigin(0, 0)
+      .setDepth(2)
+      .setVisible(false);
+    const acceptBtnGeom: Phaser.Geom.Rectangle = acceptBtn.getBounds();
+    const acceptBtnText: Phaser.GameObjects.Text = this.scene.add.text(acceptBtnGeom.centerX, acceptBtnGeom.centerY - 3, this.scene.state.lang.accept, btnTextStyle)
+      .setOrigin(0.5)
+      .setDepth(2)
+      .setVisible(false);
+
+    const declainBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(acceptBtnGeom.right + 40, messageTextGeom.bottom + 10, 'profile-window-button-red')
+      .setOrigin(0, 0)
+      .setDepth(2)
+      .setVisible(false);
+    const declainBtnGeom: Phaser.Geom.Rectangle = declainBtn.getBounds();
+    const declainBtnText: Phaser.GameObjects.Text = this.scene.add.text(declainBtnGeom.centerX, declainBtnGeom.centerY - 3, this.scene.state.lang.declain, btnTextStyle)
+      .setOrigin(0.5)
+      .setDepth(2)
+      .setVisible(false);
+
+    const text: Phaser.GameObjects.Text = this.scene.add.text(pos.x, messageTextGeom.bottom + 5, this.scene.state.lang.youAcceptInvite, notificationTextStyle)
+      .setDepth(2)
+      .setVisible(false);
+
+    this.scene.clickModalBtn({ btn: acceptBtn, title: acceptBtnText }, () => { this.onAcceptInvite(data._id); });
+    this.scene.clickModalBtn({ btn: declainBtn, title: declainBtnText }, () => { this.onDeclainInvite(data._id); });
+    if (data.status === 0 && !this.scene.state.clan) {
+      height = acceptBtnGeom.height;
+      acceptBtn.setVisible(true);
+      acceptBtnText.setVisible(true);
+      declainBtn.setVisible(true);
+      declainBtnText.setVisible(true);
+    } else if (data.status === 1) {
+      height = text.getBounds().height;
+      text.setVisible(true);
+    } else if (data.status === 2) {
+      text.setText(this.scene.state.lang.youDeclainInvite);
+      text.setVisible(true);
+      height = text.getBounds().height;
+    } else if (data.status === 3) {
+      text.setText(this.scene.state.lang.clanIsFull);
+      text.setVisible(true);
+      height = text.getBounds().height;
+    } else if (this.scene.state.clan) {
+      text.setText(this.scene.state.lang.youAreInClan);
+      text.setVisible(true);
+      height = text.getBounds().height;
+    }
+    
+    const bgHeight: number = messageTextGeom.height + 50 + height;
+    const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(messageTextGeom.left - 20, messageTextGeom.top - 20, bgWidth, bgHeight, 'chat-clan-message-bg', 20).setOrigin(0);
+    const bgGeom: Phaser.Geom.Rectangle = bg.getBounds();
+    const date: string = this.getDate(data.time);
+    const time: Phaser.GameObjects.Text = this.scene.add.text(bgGeom.left + 15, bgGeom.bottom, date, timeTextStyle).setOrigin(0);
+
+    const trashPosition: Iposition = {
+      x: bgGeom.right - 35,
+      y: bgGeom.top + 30,
+    };
+    const trash: Phaser.GameObjects.Sprite = this.scene.add.sprite(trashPosition.x, trashPosition.y, 'chat-trash');
+    this.scene.clickButton(trash, () => {
+      this.onClanInviteDelete(data._id, bg, trash);
+    })
+    
+    messageText.setCrop(0, 0, bgWidth - 40, 500);
+    this.scene.scrollHeight += bgHeight + padding;
+    this.scene.scrolling.bottom = this.scene.scrollHeight;
+  }
+  
+  private createClanExpel(data: IchatListData): void {
     const padding: number = 35;
     const bgWidth: number = 450;
     const pos: Iposition = {
@@ -454,7 +584,7 @@ export default class PersonalChatList {
     this.scene.state.modal = {
       type: 9,
       chatType: 2,
-      chatUserId: id,
+      userId: id,
     };
     this.scene.scene.stop('Chat');
     const ModalScene: Modal = this.scene.scene.get('Modal') as Modal;
