@@ -54,7 +54,11 @@ export default class ClanWindowBars {
     this.createFooter();
     this.createCloseTab();
     if (this.scene.state.user.clanId) {
-      this.createTabs([1, 2]);
+      if (this.scene.state.user.id === this.scene.state.clan.ownerId) {
+        this.createTabs([1, 2, 4]);
+      } else {
+        this.createTabs([1, 2]);
+      }
     } else {
       this.createTabs([2, 3]);
     }
