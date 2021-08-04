@@ -284,18 +284,6 @@ export default class ChatBars {
       const count: number = this.getPersonalTabCountNotification();
       this.personalTabNotificator?.setCount(count);
     }
-    if (this.scene.state.closeModal) {
-      this.scene.state.closeModal = false;
-      if (this.scene.scene.isActive('Modal') && this.scene.scene.isActive('Clan')) {
-        this.scene.scene.stop('Modal');
-        this.scene.scene.stop('Clan');
-      }
-      if (this.scene.scene.isActive('Modal') && this.scene.scene.isActive('Chat')) {
-        this.scene.scene.stop('Chat');
-        this.scene.scene.stop('Modal');
-        this.scene.scene.launch('Modal', this.scene.state);
-      }
-    }
   }
 
   private getPersonalTabCountNotification(): number {

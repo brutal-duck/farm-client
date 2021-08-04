@@ -15,7 +15,7 @@ export default class ClanUsersList {
   }
 
   public update(): void {
-    if (this.scene.state.clan.users.length !== this.listLength) {
+    if (this.scene.state.clan?.users.length !== this.listLength) {
       this.scene.scene.restart(this.scene.state);
     }
   }
@@ -24,7 +24,7 @@ export default class ClanUsersList {
     this.scene.scrollHeight = Number(this.scene.game.config.height) - 1200 + 660;
     this.scene.scrolling.bottom = 0;
     this.scene.scrolling.scrollY = 0;
-    this.array = this.scene.state.clan.users.sort((a, b) => a.points - b.points);
+    this.array = this.scene.state.clan?.users.sort((a, b) => a.points - b.points);
   }
 
   private createUser(data: IclanUser): void {
