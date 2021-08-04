@@ -75,8 +75,6 @@ export default class Socket {
       this.state.updatePersonalMessage = true;
       this.state.user.messages.push(data);
       if (data.type === 3) {
-        this.state.user.clanId = '';
-        this.state.clan = null;
         this.state.closeModal = true;
       }
     });

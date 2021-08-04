@@ -4,6 +4,8 @@ import Modal from './../../../scenes/Modal/Modal';
 
 const JOIN_KEY = '196ea80e3d8a8ef81b09c965d6658b7f';
 const LEAVE_KEY = '1491f4c9d53dfa6c50d0c4a375f9ba76';
+const EXCLUDE_KEY = '8e06b3d7e677bf289936486aafbd0222';
+
 export default class ClanChat {
   private scene: Chat;
   private ready: boolean;
@@ -60,7 +62,7 @@ export default class ClanChat {
   }
 
   private newMsg(msgData: Ichat) {
-    if (msgData.text.includes(JOIN_KEY) || msgData.text.includes(LEAVE_KEY)) {
+    if (msgData.text.includes(JOIN_KEY) || msgData.text.includes(LEAVE_KEY) || msgData.text.includes(EXCLUDE_KEY)) {
       this.createClanMessage(msgData);
     } else if (msgData.userId === this.scene.state.user.id) {
       this.createUserMessage(msgData);
@@ -260,7 +262,9 @@ export default class ClanChat {
 
     let textString: string = msgData.text.includes(JOIN_KEY) ? 
     `${msgData.login} ${this.scene.state.lang.nowInClan}` : 
-    `${msgData.login} ${this.scene.state.lang.leaveOnClan}`;
+    msgData.text.includes(LEAVE_KEY) ? 
+    `${msgData.login} ${this.scene.state.lang.leaveOnClan}` : 
+    `${msgData.login} ${this.scene.state.lang.excludeOnClan}`;
 
     const text: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, textString, messageTextStyle).setOrigin(0.5, 0).setDepth(2);
     const textHeight: number = text.getBounds().height + 30;

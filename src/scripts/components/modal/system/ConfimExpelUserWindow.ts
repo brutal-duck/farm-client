@@ -1,4 +1,5 @@
 import Modal from "../../../scenes/Modal/Modal";
+const EXCLUDE_KEY = '8e06b3d7e677bf289936486aafbd0222';
 
 export default class ConfimExpelUserWindow {
   private scene: Modal;
@@ -47,6 +48,13 @@ export default class ConfimExpelUserWindow {
       ownerName: this.scene.state.modal.message,
     };
     this.scene.state.socket.io.emit('expelUserClan', data);
+    this.scene.state.socket.io.emit('sendClanMessage', {
+      id: this.scene.state.user.id,
+      clanId: this.scene.state.user.clanId,
+      message: EXCLUDE_KEY,
+      userName: this.scene.state.modal.message,
+      userStatus: this.scene.state.user.status,
+    });
     this.closeWindow();
   }
 

@@ -177,13 +177,14 @@ class Modal extends Phaser.Scene {
   public update(): void {
     if (this.state.closeModal) {
       this.state.closeModal = false;
-      if (this.scene.isActive('Modal') && this.scene.isActive('Clan')) {
+      this.state.user.clanId = '';
+      this.state.clan = null;
+      if (this.scene.isActive('Clan')) {
         this.scene.stop('Modal');
         this.scene.stop('Clan');
       }
-      if (this.scene.isActive('Modal') && this.scene.isActive('Chat')) {
+      if (this.scene.isActive('Chat')) {
         this.scene.stop('Chat');
-        this.scene.stop('Modal');
         this.scene.restart(this.state);
       }
     }

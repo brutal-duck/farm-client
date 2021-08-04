@@ -799,6 +799,11 @@ class Profile extends Phaser.Scene {
         }
       }
     }
+    for (const message of this.state.user.messages) {
+      if (!message.check) {
+        count += 1;
+      }
+    }
     return count;
   }
 

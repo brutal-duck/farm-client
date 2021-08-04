@@ -963,6 +963,7 @@ export default {
     delete: 'Удалить?',
     nowInClan: 'вступил в клан',
     leaveOnClan: 'вышел из клана',
+    excludeOnClan: 'исключен из клана',
     askToJoinInClan: 'хочет вступить в ваш клан',
     youAcceptAsk: 'Вы приняли запрос',
     youDeclainAsk: 'Вы отклонили запрос',
@@ -1946,6 +1947,7 @@ export default {
     delete: 'Удалить?',
     nowInClan: 'вступил в клан',
     leaveOnClan: 'вышел из клана',
+    excludeOnClan: 'исключен из клана',
     askToJoinInClan: 'хочет вступить в ваш клан',
     youAcceptAsk: 'Вы приняли запрос',
     youDeclainAsk: 'Вы отклонили запрос',
@@ -1962,6 +1964,5 @@ export default {
     clansNotFound: 'По данному запросу кланы не найдены',
     exclude: 'Исключить',
     confirmExcludeUser: 'Вы действительно хотите исключить $1 из клана?',
-
   },
 }

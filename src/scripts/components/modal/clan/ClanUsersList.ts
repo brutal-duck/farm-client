@@ -8,8 +8,8 @@ export default class ClanUsersList {
   constructor (scene: Clan) {
     this.scene = scene;
     this.init();
-    this.listLength = this.array.length;
-    this.array.forEach(el => {
+    this.listLength = this.array?.length || 0;
+    this.array?.forEach(el => {
       this.createUser(el);
     })
   }
@@ -91,7 +91,7 @@ export default class ClanUsersList {
       .setCrop(0, 0, 250, 200);
     const pointsText: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 360, pos.y, shortNum(Phaser.Math.Between(1, 50000)), scoreTextStyle).setOrigin(0.5);
 
-    const statusSettings: IstatusSettings = this.scene.getStatusSettings('unicorn');
+    const statusSettings: IstatusSettings = this.scene.getStatusSettings(status);
 
     if (statusSettings) {
       const x: number = avatarSprite.x + 25;
