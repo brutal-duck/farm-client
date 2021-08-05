@@ -196,7 +196,11 @@ export default class CreateClanWindow {
         let login: string = this.scene.state.user.login;
         if (this.scene.state.platform !== 'web' && this.scene.state.platform !== 'android') login = this.scene.state.name;
         const avatar: string = Number(this.scene.state.user.avatar) > 0 ? this.scene.state.user.avatar : this.scene.state.avatar;
-
+        const clanAvatar = {
+          bg: Phaser.Math.Between(1, 10),
+          frame: Phaser.Math.Between(1, 10),
+          icon: Phaser.Math.Between(1, 10),
+        };
         this.change = true;
         axios.post(process.env.API + '/createClan', {
           id: this.scene.state.user.id,
@@ -207,6 +211,7 @@ export default class CreateClanWindow {
           userName: login,
           userAvatar: avatar,
           userStatus: this.scene.state.user.status,
+          avatar: clanAvatar,
         }).then((res) => {
           if (res.data.error) {
             this.change = false;

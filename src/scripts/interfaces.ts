@@ -740,6 +740,11 @@ interface IsociaTasks {
   subNotification?: boolean;
   sendPost?:boolean;
 }
+interface IconfigIcon {
+  bg: number;
+  frame: number;
+  icon: number;
+};
 interface Iclan {
   id: string;
   isClosed: boolean;
@@ -748,6 +753,7 @@ interface Iclan {
   name: string;
   users: Array<IclanUser>;
   chatMessages: Array<Ichat>;
+  avatar: IconfigIcon;
 }
 interface IclanUser {
   id: string;

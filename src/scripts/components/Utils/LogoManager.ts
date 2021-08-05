@@ -1,9 +1,3 @@
-interface IconfigIcon {
-  bg: number;
-  frame: number;
-  icon: number;
-};
-
 export default class LogoManager {
   private static getClanTexture(scene: Phaser.Scene, { bg, frame, icon }: IconfigIcon): string {
     const check = Object.keys(scene.textures.list).find(el => el ===`clan-icon-${bg}-${frame}-${icon}`);
