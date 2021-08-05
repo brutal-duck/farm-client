@@ -12,9 +12,9 @@ export default class LogoManager {
       };
 
       const rt = scene.make.renderTexture(config, false);
-      const spriteBg = scene.make.sprite({ key: `clan-bg-${bg}`, origin: 0.5, scale: 1.05 });
-      const spriteFrame = scene.make.sprite({ key: `clan-frame-${frame}`, origin: 0.5 });
-      const spriteIcon = scene.make.sprite({ key: `clan-icon-${icon}`, origin: 0.5 });
+      const spriteBg = scene.make.sprite({ key: `clan-bg-${bg}`, origin: 0.5, scale: 1.05 }, false);
+      const spriteFrame = scene.make.sprite({ key: `clan-frame-${frame}`, origin: 0.5 }, false);
+      const spriteIcon = scene.make.sprite({ key: `clan-icon-${icon}`, origin: 0.5 }, false);
 
       rt.draw(spriteBg, width / 2, height / 2);
       rt.draw(spriteFrame,width / 2, height / 2);
@@ -45,6 +45,8 @@ class Icon {
   private _scale: number;
   private _y: number;
   private _x: number;
+  private _originX: number;
+  private _originY: number;
   private _mainTexture: string;
   private _scene: Phaser.Scene;
   private _depth: number;
@@ -55,6 +57,8 @@ class Icon {
     this._y = y;
     this._depth = 1;
     this._scale = 1;
+    this._originX = 0.5;
+    this._originY = 0.5;
     this._mainTexture = texture;
     this.createElements();
   }
@@ -98,6 +102,24 @@ class Icon {
     this._sprite.setScale(this._scale);
     this._frame.setScale(this._scale);
     return this;
+  }
+
+  public getBounds(): Phaser.Geom.Rectangle {
+    return this._frame.getBounds();
+  }
+
+  public get y(): number {
+    return this._y;
+  }
+
+  public get x(): number {
+    return this._x;
+  }
+
+  public destroy(): void {
+    this._mask.destroy();
+    this._sprite.destroy();
+    this._frame.destroy();
   }
 
 }

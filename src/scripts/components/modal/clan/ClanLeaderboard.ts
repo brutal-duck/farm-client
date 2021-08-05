@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { shortNum } from '../../../general/basic';
 import Clan from './../../../scenes/Modal/Clan/Main';
+import LogoManager from './../../Utils/LogoManager';
 
 export default class ClanLeaderboard {
   private scene: Clan;
@@ -96,7 +97,7 @@ export default class ClanLeaderboard {
     ratePosition === 2 ? 'clan-window-medal-silver' :
     ratePosition === 3 ? 'clan-window-medal-bronze' : 'clan-window-medal';
 
-    const { name, id } = data;
+    const { name, id, avatar } = data;
     
     const medalPos: Iposition = {
       x: ratePosition > 3 ? pos.x : pos.x + 2,
@@ -105,7 +106,7 @@ export default class ClanLeaderboard {
 
     const positionSprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(medalPos.x, medalPos.y, positionTexture).setDepth(1);
     const positionText: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, String(ratePosition), scoreTextStyle).setOrigin(0.5).setDepth(1);
-    const avatarSprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos.x + 70, pos.y, 'farmer').setScale(0.28).setDepth(1);
+    const avatarSprite = LogoManager.createIcon(this.scene, pos.x + 70, pos.y, avatar).setScale(0.35).setDepth(1)
     const avatarGeom: Phaser.Geom.Rectangle = avatarSprite.getBounds();
     const nameText: Phaser.GameObjects.Text = this.scene.add.text(avatarGeom.right + 20, avatarSprite.y, name, nameTextStyle).setDepth(1).setOrigin(0, 0.5).setCrop(0, 0, 250, 250);
     const pointsText: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 370, pos.y, shortNum(Phaser.Math.Between(1, 50000)), scoreTextStyle).setDepth(1).setOrigin(0, 0.5);
