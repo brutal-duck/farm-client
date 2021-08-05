@@ -432,83 +432,62 @@ function clickModalBtn(arr: any, action: any) {
 }
 
 // нажатие на табы
-function clickButtonUp(button: any, action: any, icon: any = false): void {
-
+function clickButtonUp(button: any, action: any, icon: any = false, text: any = false): void {
   button.setInteractive();
   button.up = 0;
 
   button.on('pointerdown', (): void => {
-
     this.game.scene.keys[this.state.farm].scrolling.enabled = false;
     this.game.scene.keys[this.state.farm].scrolling.downHandler();
-
     button.press = true;
     button.increase = false;
     let interval = this.time.addEvent({ delay: 5, callback: () => {
-
       if (button.up < 7 && !button.increase) {
         button.up++;
-        button.y++;
-        if (icon) icon.y++;
+        button.setY(button.y += 1);
+        if (icon) icon.setY(icon.y += 1);
+        if (text) text.setY(text.y += 1);
       }
-      
       if (button.up >= 7) interval.remove(false);
-
     }, callbackScope: this, loop: true });
-
     this.game.scene.keys[this.state.farm]?.playSoundOnce('click-sound');
-
   });
 
   button.on('pointerout', (): void => {
-
     if (button.press) {
-
       button.press = false;
       button.increase = true;
-      let interval = this.time.addEvent({ delay: 10, callback: () => {
-
+      const interval = this.time.addEvent({ delay: 10, callback: () => {
         if (button.up > 0 && button.increase) {
           button.up--;
-          button.y--;
-          if (icon) icon.y--;
+          button.setY(button.y -= 1);
+          if (icon) icon.setY(icon.y -= 1);
+          if (text) text.setY(text.y -= 1);
         }
-
         if (button.up <= 0) interval.remove(false);
-
       }, callbackScope: this, loop: true });
-
     }
-
   });
 
   button.on('pointerup', (): void => {
-
     if (button.press) {
-
       button.press = false;
       button.increase = true;
-      let interval = this.time.addEvent({ delay: 10, callback: () => {
-  
+      const interval = this.time.addEvent({ delay: 10, callback: () => {
         if (button.up > 0 && button.increase) {
           button.up--;
-          button.y--;
-          if (icon) icon.y--;
+          button.setY(button.y -= 1);
+          if (icon) icon.setY(icon.y -= 1);
+          if (text) text.setY(text.y -= 1);
         }
-
         if (button.up <= 0) interval.remove(false);
-  
       }, callbackScope: this, loop: true });
-
       this.game.scene.keys[this.state.farm].scrolling.enabled = true;
       action();
-
     } else {
       this.game.scene.keys[this.state.farm].scrolling.enabled = true;
     }
-
   });
-  
 }
 
 function doubleClick(object: any, action: any, maxMoveCounter: number = 3): void {

@@ -27,7 +27,7 @@ export default class ClanLeaderboard {
       counter: this.scene.state.user.counter,
     };
     axios.post(process.env.API + '/getClanRaitingList', data).then(res => {
-      if (this.scene.state.modal.clanType === 2) {
+      if (this.scene.state.modal.clanTabType === 2) {
         this.loadingText?.destroy();
         const { data } = res;
         data.forEach((el, id) => {

@@ -981,6 +981,7 @@ export default {
     clansNotFound: 'По данному запросу кланы не найдены',
     exclude: 'Исключить',
     confirmExcludeUser: 'Вы действительно хотите исключить $1 из клана?',
+    clanСreation: 'Создание клана',
 
   },
 
@@ -1966,5 +1967,6 @@ export default {
     clansNotFound: 'По данному запросу кланы не найдены',
     exclude: 'Исключить',
     confirmExcludeUser: 'Вы действительно хотите исключить $1 из клана?',
+    clanСreation: 'Создание клана',
   },
 }

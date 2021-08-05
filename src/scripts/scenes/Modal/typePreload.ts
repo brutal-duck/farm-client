@@ -315,7 +315,11 @@ export default function typePreload(): void {
       this.load.image('clan-window-icon-2', clanWindowIcon2);
       this.load.image('clan-window-icon-3', clanWindowIcon3);
       this.load.image('clan-window-icon-4', clanWindowIcon4);
+      this.load.image('clan-window-icon-5', clanWindowIcon4);
       this.load.image('clan-window-exclude-button', clanWindowExcludeBtn);
+        break;
+      case 18: 
+        this.load.image('clan-window-search-plate-ns', clanWindowSearchPlate);
         break;
       default:
         break;

@@ -27,7 +27,7 @@ class Clan extends Phaser.Scene {
 
   public init(state: Istate): void {
     this.state = state;
-    this.windowType = this.state.modal.clanType || 2;
+    this.windowType = this.state.modal.clanTabType || 2;
     this.scrollHeight = 0;
     this.windowHeight = 600;
     this.windowWidth = 479;
@@ -38,17 +38,17 @@ class Clan extends Phaser.Scene {
   }
 
   public create(): void {
-    if (this.state.modal.clanType === 1) {
+    if (this.state.modal.clanTabType === 1) {
       this.usersList = new ClanUsersList(this);
-    } else if (this.state.modal.clanType === 2) {
+    } else if (this.state.modal.clanTabType === 2) {
       new ClanLeaderboard(this);
-    } else if (this.state.modal.clanType === 3) {
+    } else if (this.state.modal.clanTabType === 3) {
       new ClanSearch(this);
     }
   }
 
   public update(): void {
-    if (this.state.modal.clanType === 1) {
+    if (this.state.modal.clanTabType === 1) {
       this.usersList.update();
     }    
   }

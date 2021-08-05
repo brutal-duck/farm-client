@@ -430,11 +430,13 @@ class Preload extends Phaser.Scene {
     this.load.image('clan-window-leader-plate', clanWindowLeaderPlate);
     this.load.image('clan-window-points-bg', clanWindowPointsBg);
     this.load.image('clan-window-search-plate', clanWindowSearchPlate);
+    this.load.image('clan-window-search-plate-ns', clanWindowSearchPlate);
     this.load.image('clan-window-wreath', clanWindowWreath);
     this.load.image('clan-window-icon-1', clanWindowIcon1);
     this.load.image('clan-window-icon-2', clanWindowIcon2);
     this.load.image('clan-window-icon-3', clanWindowIcon3);
     this.load.image('clan-window-icon-4', clanWindowIcon4);
+    this.load.image('clan-window-icon-5', clanWindowIcon4);
     this.load.image('clan-window-exclude-button', clanWindowExcludeBtn);
   }
 

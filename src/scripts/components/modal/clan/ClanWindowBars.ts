@@ -3,7 +3,7 @@ import Modal from './../../../scenes/Modal/Modal';
 import LogoManager from './../../Utils/LogoManager';
 const KEY: string = '1491f4c9d53dfa6c50d0c4a375f9ba76';
 
-export default class ClanWindowBars {
+export default class ClanTabsWindow {
   private scene: Modal;
   private x: number;
   private y: number;
@@ -44,7 +44,7 @@ export default class ClanWindowBars {
   private init(): void {
     this.x = this.scene.cameras.main.centerX;
     this.y = this.scene.cameras.main.centerY;
-    this.windowType = this.scene.state.modal.clanType || 2;
+    this.windowType = this.scene.state.modal.clanTabType || 2;
     this.height = 600;
     this.width = 527;
   }
@@ -163,7 +163,7 @@ export default class ClanWindowBars {
       this.scene.clickButtonUp(tab, (): void => {
         this.scene.state.modal = {
           type: 17,
-          clanType: type,
+          clanTabType: type,
         };
         this.removeInput();
         this.scene.scene.stop('Clan');
@@ -253,8 +253,8 @@ export default class ClanWindowBars {
     this.scene.state.clan = null;
     this.scene.state.user.messages = this.scene.state.user.messages.filter(el => el.type !== 5);
     this.scene.state.modal = {
-      type: 17,
-      clanType: 3,
+      type: 18,
+      clanWindowType: 1,
     };
     this.removeInput();
     this.scene.scene.stop('Clan');
@@ -279,8 +279,8 @@ export default class ClanWindowBars {
       const btn = this.scene.bigButton('green', 'left', -240, this.scene.state.lang.createClan, right1);
       this.scene.clickModalBtn(btn, () => {
         this.scene.state.modal = {
-          type: 1,
-          sysType: 21,
+          type: 18,
+          clanWindowType: 1,
         }
         this.removeInput();
         this.scene.scene.stop('Clan');
@@ -348,8 +348,8 @@ export default class ClanWindowBars {
     const btn = this.scene.bigButton('green', 'left', -240, this.scene.state.lang.createClan, right1);
     this.scene.clickModalBtn(btn, () => {
       this.scene.state.modal = {
-        type: 1,
-        sysType: 21,
+        type: 18,
+        clanWindowType: 1,
       }
       this.removeInput();
       this.scene.scene.stop('Clan');

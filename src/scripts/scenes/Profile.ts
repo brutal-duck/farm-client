@@ -769,12 +769,12 @@ class Profile extends Phaser.Scene {
       if (!this.state.user.clanId) {
         this.state.modal = {
           type: 17,
-          clanType: 2,
+          clanTabType: 2,
         };
       } else {
         this.state.modal = {
           type: 17,
-          clanType: 1,
+          clanTabType: 1,
         };
       }
       this.scene.launch('Modal', this.state);

@@ -28,7 +28,7 @@ export default class ClanSearch {
     };
     this.scene.state.searchClan = '';
     axios.post(process.env.API + '/getSearchClan', data).then(res => {
-      if (this.scene.state.modal.clanType === 3) {
+      if (this.scene.state.modal.clanTabType === 3) {
         this.loadingText?.destroy();
         const { status, clans } = res.data;
         if (status === 'found') {
@@ -143,7 +143,7 @@ export default class ClanSearch {
         if (res.data.result.id) {
           this.scene.state.modal = {
             type: 17,
-            clanType: 1,
+            clanTabType: 1,
             message: this.scene.state.lang.clanIsFull,
           };
           this.scene.state.user.clanId = res.data.result.id;

@@ -601,7 +601,8 @@ interface Imodal {
   sysType?: number;
   chatType?: number;
   userId?: string;
-  clanType?: number;
+  clanTabType?: number;
+  clanWindowType?: number;
   shopType?: number;
   donePart?: IdonePart;
   height?: number;
@@ -662,7 +663,7 @@ interface IcollectorSettings {
   diamonds: boolean;
 }
 
-type modalElementType = Phaser.GameObjects.Sprite | Phaser.GameObjects.Image | Phaser.GameObjects.Zone | Phaser.GameObjects.Text | Phaser.GameObjects.Graphics | Phaser.GameObjects.Container | Phaser.GameObjects.TileSprite;
+type modalElementType = Phaser.GameObjects.Sprite | Phaser.GameObjects.Image | Phaser.GameObjects.Zone | Phaser.GameObjects.Text | Phaser.GameObjects.Graphics | Phaser.GameObjects.Container | Phaser.GameObjects.TileSprite | Phaser.GameObjects.RenderTexture;
 interface Ichat {
   login: string;
   time: string;

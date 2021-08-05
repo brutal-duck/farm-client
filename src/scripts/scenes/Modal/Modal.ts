@@ -40,7 +40,8 @@ import HerdBoostUnicornWindow from '../../components/modal/HerdBoostUnicornWindo
 import ProfileWindow from '../../components/modal/ProfileWindow';
 import ChatBars from '../../components/modal/chat/ChatBars';
 import SettingsWindow from './../../components/modal/SettingsWindow';
-import ClanWindowBars from './../../components/modal/clan/ClanWindowBars';
+import ClanTabsWindow from './../../components/modal/clan/ClanWindowBars';
+import ClanWindow from '../../components/modal/clan/ClanWindow';
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -165,7 +166,10 @@ class Modal extends Phaser.Scene {
         this.openModal(this.cameras.main);
         break;
       case 17: 
-        new ClanWindowBars(this);
+        new ClanTabsWindow(this);
+        break;
+      case 18: 
+        new ClanWindow(this);
         break;
       default:
         this.scene.stop();
