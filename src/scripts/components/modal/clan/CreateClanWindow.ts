@@ -6,9 +6,7 @@ export default class CreateClanWindow {
   private window: ClanWindow;
   private scene: Modal;
 
-  private enterName: Phaser.GameObjects.Text;
   private result: Phaser.GameObjects.Text;
-  private nameError: boolean;
   private change: boolean;
   private clanIsClosed: boolean = true;
   private switchBg: Phaser.GameObjects.Sprite;
@@ -17,6 +15,8 @@ export default class CreateClanWindow {
   private bg: Phaser.GameObjects.RenderTexture;
   private x: number;
   private y: number;
+  private addHeightError: boolean;
+  private addHeightFounded: boolean;
 
   private inputText: Phaser.GameObjects.Text;
   private input: HTMLInputElement;
@@ -32,7 +32,6 @@ export default class CreateClanWindow {
   private init(): void {
     this.x = this.scene.cameras.main.centerX;
     this.y = this.scene.cameras.main.centerY;
-    this.nameError = false;
     this.change = false;
     this.window.headerText.setText(this.scene.state.lang.clanСreation);
   }
@@ -79,12 +78,14 @@ export default class CreateClanWindow {
     });
     // Кнопка
     const createClanBtn = this.scene.bigButton('green', 'center', 250, this.scene.state.lang.createClan);
-    this.result = this.scene.add.text(pos.x, pos.y - 100, '', {
-      font: '19px Shadow',
-      color: '#FF0000',
+    const errorTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '19px',
+      color: '#DC3D00',
       align: 'center',
-      wordWrap: { width: 520 }
-    }).setOrigin(0.5, 0.5).setDepth(4).setAlpha(0);
+      wordWrap: { width: 460, useAdvancedWrap: true },
+    };
+    this.result = this.scene.add.text(pos.x, inputBgGeom.top - 10, '', errorTextStyle).setOrigin(0.5, 1).setDepth(4).setAlpha(0);
 
     padding = this.scene.cameras.main.height / 100 * 30;
     this.window.modalElements.push(
@@ -93,7 +94,6 @@ export default class CreateClanWindow {
       this.scene.bottom,
       this.scene.close,
       this.scene.textHeader,
-      this.enterName,
       this.switchBg,
       this.switchTextOpen,
       this.switchTextClose,
@@ -108,7 +108,6 @@ export default class CreateClanWindow {
       tempHeight = window.innerHeight;
 
       if (windowHeight !== tempHeight && centered) {
-
         root.scrollIntoView(false)
         this.window.modalElements.forEach((el) => el.setY(el.y + padding))
         this.input.style.top = '75%';
@@ -116,26 +115,21 @@ export default class CreateClanWindow {
         centered = false;
 
       } else if (windowHeight === tempHeight && !centered) {
-        
         this.window.modalElements.forEach((el) => el.setY(el.y - padding));
         this.input.style.top = '49%';
         this.input.style.bottom = '44%';
         centered = true;
-
       }
     }
 
     // Фокус
     this.scene.click(inputBg, (): void => {
-      console.log('click')
       this.input.style.display = 'block';
       this.input.focus();
       this.inputText.setVisible(false);
-      this.window.addWindowHeight(100);
     });
 
     this.scene.click(this.window.bg, (): void => {
-      console.log('click bg')
       this.input.style.display = 'none';
       this.input.blur();
       const text: string = this.input.value ? this.input.value : this.scene.state.lang.inputClanName;
@@ -191,9 +185,9 @@ export default class CreateClanWindow {
 
       let checkName: boolean = true;
       const re: RegExp = /[\p{Alpha}\p{M}\p{Nd}\p{Pc}\p{Join_C}]/gu;
-      checkName = re.test(this.scene.mainInput.value);
+      checkName = re.test(this.input.value);
           
-      if (this.scene.mainInput.value.length < 6 || this.scene.mainInput.value.length > 20) checkName = false;
+      if (this.input.value.length < 6 || this.input.value.length > 20) checkName = false;
       
       if (checkName) {
         let login: string = this.scene.state.user.login;
@@ -209,7 +203,7 @@ export default class CreateClanWindow {
           id: this.scene.state.user.id,
           hash: this.scene.state.user.hash,
           counter: this.scene.state.user.counter,
-          name: this.scene.mainInput.value,
+          name: this.input.value,
           isClosed: this.clanIsClosed,
           userName: login,
           userAvatar: avatar,
@@ -218,10 +212,11 @@ export default class CreateClanWindow {
         }).then((res) => {
           if (res.data.error) {
             this.change = false;
-            if (!this.nameError) this.enterName.setY(this.enterName.y + 34);
-              this.nameError = true;
               this.result.setText(this.scene.state.lang.haveClan).setAlpha(1);
-              // this.scene.resizeWindow(350);
+              if (!this.addHeightError && !this.addHeightFounded) {
+                this.addHeightFounded = true;
+                this.window.addWindowHeight(10);
+              } 
           } else {
             this.scene.state.user.clanId = res.data.result.id;
             this.scene.state.clan = res.data.result;
@@ -232,15 +227,20 @@ export default class CreateClanWindow {
             
             this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
             this.scene.enterKey.destroy();
-            this.scene.mainInput.remove();
+            this.input.remove();
             this.scene.scene.stop();
           }
         });
       } else {
-        if (!this.nameError) this.enterName.setY(this.enterName.y + 24);
-        this.nameError = true;
-        this.result.setText(this.scene.state.lang.validNickname).setAlpha(1);
-        // this.scene.resizeWindow(350);
+        this.result.setText(this.scene.state.lang.validClanName).setAlpha(1);
+
+        if (!this.addHeightError && !this.addHeightFounded) {
+          this.addHeightError = true;
+          this.window.addWindowHeight(55);
+        } else if (!this.addHeightError) {
+          this.addHeightError = true;
+          this.window.addWindowHeight(45);
+        }
       }
     }
   }

@@ -253,8 +253,8 @@ export default class ClanTabsWindow {
     this.scene.state.clan = null;
     this.scene.state.user.messages = this.scene.state.user.messages.filter(el => el.type !== 5);
     this.scene.state.modal = {
-      type: 18,
-      clanWindowType: 1,
+      type: 17,
+      clanTabType: 2,
     };
     this.removeInput();
     this.scene.scene.stop('Clan');
