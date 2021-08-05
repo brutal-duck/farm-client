@@ -1,6 +1,7 @@
 import axios from "axios";
 import Modal from "../../../scenes/Modal/Modal";
 import ClanWindow from './ClanWindow';
+import LogoManager from './../../Utils/LogoManager';
 
 export default class CreateClanWindow {
   private window: ClanWindow;
@@ -17,6 +18,8 @@ export default class CreateClanWindow {
   private y: number;
   private addHeightError: boolean;
   private addHeightFounded: boolean;
+  private clanFlag: Phaser.GameObjects.Sprite;
+  private avatar: IconfigIcon;
 
   private inputText: Phaser.GameObjects.Text;
   private input: HTMLInputElement;
@@ -54,7 +57,11 @@ export default class CreateClanWindow {
     root.append(this.input);
     this.input.setAttribute("id", "clanname");
     this.input.setAttribute("autocomplete", "off");
-
+    const height = Number(this.scene.game.config.height) / 12 - 100;
+    const startTop: number = 37;
+    const startBottom: number = 57;
+    this.input.style.top = `${startTop + height / 4}%`;
+    this.input.style.bottom = `${startBottom - height / 4}%`;
     const inputWidth: number = 460;
     const inputHeigth: number = 70;
     const inputBg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(pos.x, pos.y - 20, inputWidth, inputHeigth, 'clan-window-search-plate-ns', 5).setDepth(2).setOrigin(0.5);
@@ -68,9 +75,10 @@ export default class CreateClanWindow {
     let tempHeight: number = window.innerHeight;
     const windowHeight: number = window.innerHeight;
 
-    this.switchBg = this.scene.add.sprite(pos.x, pos.y + 100, 'sys-switch');
-    this.switchTextOpen = this.scene.add.text(pos.x - 90, pos.y + 100, this.scene.state.lang.clanIsOpen).setOrigin(0.5);
-    this.switchTextClose = this.scene.add.text(pos.x + 90, pos.y + 100, this.scene.state.lang.clanIsClose).setOrigin(0.5);
+    this.switchBg = this.scene.add.sprite(pos.x, inputBgGeom.bottom + 10, 'sys-switch').setOrigin(0.5, 0);
+    const switchBgGeom: Phaser.Geom.Rectangle = this.switchBg.getBounds();
+    this.switchTextOpen = this.scene.add.text(pos.x - 90, switchBgGeom.centerY, this.scene.state.lang.clanIsOpen).setOrigin(0.5);
+    this.switchTextClose = this.scene.add.text(pos.x + 90, switchBgGeom.centerY, this.scene.state.lang.clanIsClose).setOrigin(0.5);
     this.switchOpened();
 
     this.scene.click(this.switchBg, () => {
@@ -109,15 +117,21 @@ export default class CreateClanWindow {
 
       if (windowHeight !== tempHeight && centered) {
         root.scrollIntoView(false)
-        this.window.modalElements.forEach((el) => el.setY(el.y + padding))
-        this.input.style.top = '75%';
-        this.input.style.bottom = '19%';
+        this.window.modalElements.forEach((el) => el.setY(el.y + padding));
+        const height = Number(this.scene.game.config.height) / 12 - 100;
+        const startTop: number = 47;
+        const startBottom: number = 47;
+        this.input.style.top = `${startTop + height / 4}%`;
+        this.input.style.bottom = `${startBottom - height / 4}%`;
         centered = false;
 
       } else if (windowHeight === tempHeight && !centered) {
         this.window.modalElements.forEach((el) => el.setY(el.y - padding));
-        this.input.style.top = '49%';
-        this.input.style.bottom = '44%';
+        const height = Number(this.scene.game.config.height) / 12 - 100;
+        const startTop: number = 37;
+        const startBottom: number = 57;
+        this.input.style.top = `${startTop + height / 4}%`;
+        this.input.style.bottom = `${startBottom - height / 4}%`;
         centered = true;
       }
     }
@@ -142,7 +156,7 @@ export default class CreateClanWindow {
     this.scene.enterKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
     this.scene.enterKey.on('down', (): void => { this.createClan(); });
 
-    // this.scene.resizeWindow(310);
+    this.createClanFlag();
   }
 
   private switchOpened(): void {
@@ -193,11 +207,6 @@ export default class CreateClanWindow {
         let login: string = this.scene.state.user.login;
         if (this.scene.state.platform !== 'web' && this.scene.state.platform !== 'android') login = this.scene.state.name;
         const avatar: string = Number(this.scene.state.user.avatar) > 0 ? this.scene.state.user.avatar : this.scene.state.avatar;
-        const clanAvatar = {
-          bg: Phaser.Math.Between(1, 10),
-          frame: Phaser.Math.Between(1, 10),
-          icon: Phaser.Math.Between(1, 10),
-        };
         this.change = true;
         axios.post(process.env.API + '/createClan', {
           id: this.scene.state.user.id,
@@ -208,7 +217,7 @@ export default class CreateClanWindow {
           userName: login,
           userAvatar: avatar,
           userStatus: this.scene.state.user.status,
-          avatar: clanAvatar,
+          avatar: this.avatar,
         }).then((res) => {
           if (res.data.error) {
             this.change = false;
@@ -243,5 +252,38 @@ export default class CreateClanWindow {
         }
       }
     }
+  }
+
+  private createClanFlag(): void {
+    const buttonTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      wordWrap: { width: 100 },
+      color: '#fffdfa',
+      fontSize: '19px',
+      align: 'center',
+      shadow: {
+        offsetX: 1,
+        offsetY: 1, 
+        color: '#96580e',
+        blur: 2,
+        fill: true,
+      },
+    };
+    this.initAvatar();
+    const icon = LogoManager.createIcon(this.scene, this.x - 90, this.y + 120, this.avatar).setScale(0.8);
+    const geom: Phaser.Geom.Rectangle = icon.getBounds();
+    const randomBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(geom.right + 100, geom.centerY - 35, 'profile-window-button-red').setScale(1.1);
+    const randomBtnText: Phaser.GameObjects.Text = this.scene.add.text(randomBtn.x, randomBtn.y - 5, 'Случайно', buttonTextStyle).setOrigin(0.5);
+
+    const changeBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(geom.right + 100, geom.centerY + 35, 'profile-window-button-green').setScale(1.1);
+    const changeBtnText: Phaser.GameObjects.Text = this.scene.add.text(changeBtn.x, changeBtn.y - 5, 'Изменить', buttonTextStyle).setOrigin(0.5);
+  }
+
+  private initAvatar(): void {
+    this.avatar = {
+      bg: Phaser.Math.Between(1, 10),
+      frame: Phaser.Math.Between(1, 10),
+      icon: Phaser.Math.Between(1, 10),
+    };
   }
 }
