@@ -333,6 +333,11 @@ const notificationBg: string = require('./../../../assets/images/notification.pn
 const roundedBarSegment: string = require("./../../../assets/images/rounded-bar-segment.png");
 const circleOutline: string = require("./../../../assets/images/circle-outline.png");
 
+const clanBg1: string = require('../../../assets/images/modal/clan/icon/bg-1.png');
+const clanFrame1: string = require('../../../assets/images/modal/clan/icon/frame-1.png');
+const clanIcon1: string = require('../../../assets/images/modal/clan/icon/icon-1.png');
+const clanMainFrame: string = require('../../../assets/images/modal/clan/icon/main-frame.png');
+
 class SheepPreload extends Phaser.Scene {
 
   public lang: string; // индекс языка
@@ -702,6 +707,12 @@ class SheepPreload extends Phaser.Scene {
     this.load.image('notification-bg', notificationBg);
     this.load.image('rounded-segment', roundedBarSegment);
     this.load.image('circle-outline', circleOutline);
+
+
+    this.load.image('clan-icon-1', clanIcon1);
+    this.load.image('clan-frame-1', clanFrame1);
+    this.load.image('clan-bg-1', clanBg1);
+    this.load.image('clan-main-frame',clanMainFrame);
   }
   
   
