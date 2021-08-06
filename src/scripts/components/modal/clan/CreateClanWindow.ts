@@ -294,9 +294,9 @@ export default class CreateClanWindow {
 
   private initAvatar(): void {
     this.avatar = {
-      bg: Phaser.Math.Between(1, 10),
-      frame: Phaser.Math.Between(1, 10),
-      icon: Phaser.Math.Between(1, 10),
+      bg: Phaser.Math.Between(1, 14),
+      frame: Phaser.Math.Between(1, 3),
+      icon: Phaser.Math.Between(1, 12),
     };
   }
 

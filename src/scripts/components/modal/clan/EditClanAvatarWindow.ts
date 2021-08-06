@@ -47,10 +47,9 @@ export default class EditClanAvatarWindow {
       y: this.y - 130,
     };
     const bg = this.scene.add.nineslice(pos.x, pos.y, this.window.width, 130, 'clan-window-leader-plate', 1).setOrigin(0.5);
-    this.scene.add.sprite(pos.x, pos.y, `clan-bg-${this.avatar.bg}`).setOrigin(0.5).setScale(0.55);
-    const bgGeom: Phaser.Geom.Rectangle = bg.getBounds();
-    this.flagBtnLeft = this.scene.add.sprite(bgGeom.left + 30, bgGeom.centerY, 'chat-arrow').setOrigin(0, 0.5);
-    this.flagBtnRight = this.scene.add.sprite(bgGeom.right - 30, bgGeom.centerY, 'chat-arrow').setFlipX(true).setOrigin(1, 0.5);
+    this.scene.add.tileSprite(pos.x, pos.y, 145, 115, 'white-pixel').setTint(0xD06900);
+    const scroller = new Scroller(this.scene, pos, 'clan-bg-', this.avatar.bg);
+    console.log(scroller);
   }
 
   private createFrameManager(): void {
@@ -59,6 +58,7 @@ export default class EditClanAvatarWindow {
       y: this.y + 10,
     };
     const bg = this.scene.add.nineslice(pos.x, pos.y, this.window.width, 130, 'clan-window-leader-plate', 1).setOrigin(0.5);
+    this.scene.add.tileSprite(pos.x, pos.y, 145, 115, 'white-pixel').setTint(0xD06900);
     this.scene.add.sprite(pos.x, pos.y, `clan-bg-${this.avatar.bg}`).setOrigin(0.5).setScale(0.55);
     this.scene.add.sprite(pos.x, pos.y, `clan-frame-${this.avatar.frame}`).setOrigin(0.5).setScale(0.55);
 
@@ -73,6 +73,7 @@ export default class EditClanAvatarWindow {
       y: this.y + 150,
     };
     const bg = this.scene.add.nineslice(pos.x, pos.y, this.window.width, 130, 'clan-window-leader-plate', 1).setOrigin(0.5);
+    this.scene.add.tileSprite(pos.x, pos.y, 145, 115, 'white-pixel').setTint(0xD06900);
     this.scene.add.sprite(pos.x, pos.y, `clan-bg-${this.avatar.bg}`).setOrigin(0.5).setScale(0.55);
     this.scene.add.sprite(pos.x, pos.y, `clan-frame-${this.avatar.frame}`).setOrigin(0.5).setScale(0.55);
     this.scene.add.sprite(pos.x, pos.y, `clan-icon-${this.avatar.icon}`).setOrigin(0.5).setScale(0.55);
@@ -115,9 +116,9 @@ export default class EditClanAvatarWindow {
 
   private initAvatar(): void {
     this.avatar = {
-      bg: Phaser.Math.Between(1, 10),
+      bg: Phaser.Math.Between(1, 14),
       frame: Phaser.Math.Between(1, 10),
-      icon: Phaser.Math.Between(1, 10),
+      icon: Phaser.Math.Between(1, 12),
     };
   }
 
@@ -131,4 +132,51 @@ export default class EditClanAvatarWindow {
     this.icon.destroy();
     this.icon = LogoManager.createIcon(this.scene, pos.x, pos.y, this.avatar).setScale(0.8);
   }
+}
+
+class Scroller {
+  private _scene: Phaser.Scene;
+  private _active: number;
+  private _textureKey: string;
+  private _array: Array<number>;
+  private _rightBtn: Phaser.GameObjects.Sprite;
+  private _leftBtn: Phaser.GameObjects.Sprite;
+  private _pos: Iposition;
+  private _arraySprites: Array<Phaser.GameObjects.Sprite>;
+
+  constructor(scene: Phaser.Scene, pos: Iposition, textureKey: string, start: number) {
+    this._scene = scene;
+    this._textureKey = textureKey;
+    this._active = start;
+    this._pos = pos;
+    this.initArray();
+    this.createElements();
+  }
+
+  private initArray(): void {
+    const textures = Object.keys(this._scene.textures.list).filter(el => el.includes(this._textureKey));
+    this._array = textures.map(el => Number(el.replace(this._textureKey, '')));
+  }
+
+  private createElements(): void {
+    this.createBtns();
+    this.createSprites();
+  }
+
+  private createBtns(): void {
+    this._leftBtn = this._scene.add.sprite(this._pos.x - 220, this._pos.y, 'chat-arrow');
+    this._rightBtn = this._scene.add.sprite(this._pos.x + 220, this._pos.y, 'chat-arrow').setFlipX(true);
+  }
+  private createSprites(): void {
+    let startX: number = -200 * (this._active - 1)
+
+    for (let i = 1; i <= this._array.length; i += 1) {
+      startX += 200
+      
+      const sprite = this._scene.add.sprite(this._pos.x + startX, this._pos.y, `${this._textureKey}${i}`).setScale(0.55);
+      console.log(sprite)
+    }
+  }
+ 
+
 }
