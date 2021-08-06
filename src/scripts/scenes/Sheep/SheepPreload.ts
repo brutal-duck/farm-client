@@ -343,6 +343,10 @@ const clanBg7: string = require('../../../assets/images/modal/clan/icon/bg-7.png
 const clanBg8: string = require('../../../assets/images/modal/clan/icon/bg-8.png');
 const clanBg9: string = require('../../../assets/images/modal/clan/icon/bg-9.png');
 const clanBg10: string = require('../../../assets/images/modal/clan/icon/bg-10.png');
+const clanBg11: string = require('../../../assets/images/modal/clan/icon/bg-11.png');
+const clanBg12: string = require('../../../assets/images/modal/clan/icon/bg-12.png');
+const clanBg13: string = require('../../../assets/images/modal/clan/icon/bg-13.png');
+const clanBg14: string = require('../../../assets/images/modal/clan/icon/bg-14.png');
 const clanFrame1: string = require('../../../assets/images/modal/clan/icon/frame-1.png');
 const clanFrame2: string = require('../../../assets/images/modal/clan/icon/frame-2.png');
 const clanFrame3: string = require('../../../assets/images/modal/clan/icon/frame-3.png');
@@ -767,6 +771,10 @@ class SheepPreload extends Phaser.Scene {
     this.load.image('clan-bg-8', clanBg8);
     this.load.image('clan-bg-9', clanBg9);
     this.load.image('clan-bg-10', clanBg10);
+    this.load.image('clan-bg-11', clanBg11);
+    this.load.image('clan-bg-12', clanBg12);
+    this.load.image('clan-bg-13', clanBg13);
+    this.load.image('clan-bg-14', clanBg14);
     this.load.image('clan-main-frame',clanMainFrame);
   }
   

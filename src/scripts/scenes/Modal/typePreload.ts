@@ -320,6 +320,7 @@ export default function typePreload(): void {
         break;
       case 18: 
         this.load.image('clan-window-search-plate-ns', clanWindowSearchPlate);
+        this.load.image('clan-window-leader-plate-ns', clanWindowLeaderPlate);
         break;
       default:
         break;

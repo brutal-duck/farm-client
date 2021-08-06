@@ -1,19 +1,21 @@
 import Modal from "../../../scenes/Modal/Modal";
+import { Icon } from "../../Utils/LogoManager";
 import CreateClanWindow from './CreateClanWindow';
+import EditClanAvatarWindow from './EditClanAvatarWindow';
 
 export default class ClanWindow {
   public scene: Modal;
   private x: number;
   private y: number;
   private height: number;
-  private width: number;
+  public width: number;
   public bg: Phaser.GameObjects.TileSprite;
   private header: Phaser.GameObjects.Sprite;
   private closeBtn: Phaser.GameObjects.Sprite;
   public headerText: Phaser.GameObjects.Text;
   private footer: Phaser.GameObjects.Sprite;
   private windowType: number
-  public modalElements: Array<modalElementType> = [];
+  public modalElements: Array<modalElementType | Icon> = [];
   
   constructor(scene: Modal) {
     this.scene = scene;
@@ -27,6 +29,9 @@ export default class ClanWindow {
     this.y = this.scene.cameras.main.centerY;
     this.windowType = this.scene.state.modal.clanWindowType || 1;
     this.height = 400;
+    if (this.windowType === 2) {
+      this.height = 435;
+    }
     this.width = 527;
   }
 
@@ -71,6 +76,9 @@ export default class ClanWindow {
     switch (this.windowType) {
       case 1:
         new CreateClanWindow(this);
+        break;
+      case 2: 
+        new EditClanAvatarWindow(this);
         break;
       default:
         break;

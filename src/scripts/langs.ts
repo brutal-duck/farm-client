@@ -983,7 +983,7 @@ export default {
     exclude: 'Исключить',
     confirmExcludeUser: 'Вы действительно хотите исключить $1 из клана?',
     clanСreation: 'Создание клана',
-
+    flagSettings: 'Настройки флага',
   },
 
   en: {
@@ -1970,5 +1970,6 @@ export default {
     exclude: 'Исключить',
     confirmExcludeUser: 'Вы действительно хотите исключить $1 из клана?',
     clanСreation: 'Создание клана',
+    flagSettings: 'Настройки флага',
   },
 }

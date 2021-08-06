@@ -1,7 +1,7 @@
 import axios from "axios";
 import Modal from "../../../scenes/Modal/Modal";
 import ClanWindow from './ClanWindow';
-import LogoManager from './../../Utils/LogoManager';
+import LogoManager, { Icon } from './../../Utils/LogoManager';
 
 export default class CreateClanWindow {
   private window: ClanWindow;
@@ -20,6 +20,7 @@ export default class CreateClanWindow {
   private addHeightFounded: boolean;
   private clanFlag: Phaser.GameObjects.Sprite;
   private avatar: IconfigIcon;
+  private icon: Icon;
 
   private inputText: Phaser.GameObjects.Text;
   private input: HTMLInputElement;
@@ -75,7 +76,7 @@ export default class CreateClanWindow {
     let tempHeight: number = window.innerHeight;
     const windowHeight: number = window.innerHeight;
 
-    this.switchBg = this.scene.add.sprite(pos.x, inputBgGeom.bottom + 10, 'sys-switch').setOrigin(0.5, 0);
+    this.switchBg = this.scene.add.sprite(pos.x, inputBgGeom.bottom + 20, 'sys-switch').setOrigin(0.5, 0);
     const switchBgGeom: Phaser.Geom.Rectangle = this.switchBg.getBounds();
     this.switchTextOpen = this.scene.add.text(pos.x - 90, switchBgGeom.centerY, this.scene.state.lang.clanIsOpen).setOrigin(0.5);
     this.switchTextClose = this.scene.add.text(pos.x + 90, switchBgGeom.centerY, this.scene.state.lang.clanIsClose).setOrigin(0.5);
@@ -85,7 +86,7 @@ export default class CreateClanWindow {
       this.switchOpened();
     });
     // Кнопка
-    const createClanBtn = this.scene.bigButton('green', 'center', 250, this.scene.state.lang.createClan);
+    const createClanBtn = this.scene.bigButton('green', 'center', 280, this.scene.state.lang.createClan);
     const errorTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Shadow',
       fontSize: '19px',
@@ -269,14 +270,26 @@ export default class CreateClanWindow {
         fill: true,
       },
     };
+    
+    const tile: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(this.x, this.switchBg.getBounds().bottom + 20, this.window.width - 50, 200, 'modal-square-bg', 10).setOrigin(0.5, 0);
     this.initAvatar();
-    const icon = LogoManager.createIcon(this.scene, this.x - 90, this.y + 120, this.avatar).setScale(0.8);
-    const geom: Phaser.Geom.Rectangle = icon.getBounds();
-    const randomBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(geom.right + 100, geom.centerY - 35, 'profile-window-button-red').setScale(1.1);
+    const y: number = tile.getBounds().centerY;
+    this.icon = LogoManager.createIcon(this.scene, this.x - 120, y, this.avatar).setScale(0.8);
+    const geom: Phaser.Geom.Rectangle = this.icon.getBounds();
+    const randomBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(geom.right + 150, geom.centerY - 40, 'profile-window-button-red').setScale(1.1);
     const randomBtnText: Phaser.GameObjects.Text = this.scene.add.text(randomBtn.x, randomBtn.y - 5, 'Случайно', buttonTextStyle).setOrigin(0.5);
 
-    const changeBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(geom.right + 100, geom.centerY + 35, 'profile-window-button-green').setScale(1.1);
+    const changeBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(geom.right + 150, geom.centerY + 40, 'profile-window-button-green').setScale(1.1);
     const changeBtnText: Phaser.GameObjects.Text = this.scene.add.text(changeBtn.x, changeBtn.y - 5, 'Изменить', buttonTextStyle).setOrigin(0.5);
+    this.scene.clickModalBtn({ btn: randomBtn, title: randomBtnText }, () => { this.getNewIcon(); });
+    this.scene.clickModalBtn({ btn: changeBtn, title: changeBtnText }, () => { this.openChangeWindow(); });
+    this.window.modalElements.push(
+      randomBtn,
+      randomBtnText,
+      changeBtn,
+      changeBtnText,
+      this.icon,
+    );
   }
 
   private initAvatar(): void {
@@ -285,5 +298,31 @@ export default class CreateClanWindow {
       frame: Phaser.Math.Between(1, 10),
       icon: Phaser.Math.Between(1, 10),
     };
+  }
+
+  private getNewIcon(): void {
+    this.initAvatar();
+    const pos: Iposition = {
+      x: this.icon.x,
+      y: this.icon.y,
+    };
+
+    this.icon.destroy();
+    this.icon = LogoManager.createIcon(this.scene, pos.x, pos.y, this.avatar).setScale(0.8);
+    console.log(this.avatar)
+  }
+
+  private openChangeWindow(): void {
+    this.scene.state.modal = {
+      type: 18,
+      clanWindowType: 2,
+    };
+    this.removeInput();
+    this.scene.scene.restart(this.scene.state);
+  }
+
+  private removeInput(): void {
+    this.input?.remove();
+    this.scene.enterKey?.destroy();
   }
 }

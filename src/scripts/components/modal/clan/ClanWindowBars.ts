@@ -281,7 +281,7 @@ export default class ClanTabsWindow {
         this.scene.state.modal = {
           type: 18,
           clanWindowType: 1,
-        }
+        };
         this.removeInput();
         this.scene.scene.stop('Clan');
         this.scene.scene.restart(this.scene.state);

@@ -38,7 +38,7 @@ export default class LogoManager {
   };
 };
 
-class Icon {
+export class Icon {
   private _frame: Phaser.GameObjects.Sprite;
   private _mask: Phaser.GameObjects.Sprite;
   private _sprite: Phaser.GameObjects.Sprite;
@@ -50,7 +50,7 @@ class Icon {
   private _mainTexture: string;
   private _scene: Phaser.Scene;
   private _depth: number;
-  private _basicSize: number = 200;
+  private _basicSize: number = 190;
   constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
     this._scene = scene;
     this._x = x;
