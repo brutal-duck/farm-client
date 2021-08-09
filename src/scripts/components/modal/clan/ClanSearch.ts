@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Clan from './../../../scenes/Modal/Clan/Main';
+import LogoManager from './../../Utils/LogoManager';
 const KEY = '196ea80e3d8a8ef81b09c965d6658b7f';
 
 export default class ClanSearch {
@@ -73,12 +74,13 @@ export default class ClanSearch {
       x: this.scene.cameras.main.centerX - 330,
       y: this.scene.windowHeight + this.scene.scrollHeight + padding,
     };
-    const { name, isClosed, id } = data;
+    const { name, isClosed, id, avatar } = data;
 
     const texture: string = isClosed ? 'profile-window-button-yellow' : 'profile-window-button-green';
     const textBtn: string = isClosed ? this.scene.state.lang.sendInvite.replace(' ', '\n') : this.scene.state.lang.join;
 
-    const avatarSprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos.x + 25, pos.y, 'farmer').setScale(0.28).setDepth(1);
+    const avatarSprite = LogoManager.createIcon(this.scene, pos.x + 15, pos.y, avatar).setScale(0.35).setDepth(1)
+
     const avatarGeom: Phaser.Geom.Rectangle = avatarSprite.getBounds();
     const nameText: Phaser.GameObjects.Text = this.scene.add.text(avatarGeom.right + 20, avatarSprite.y, name, nameTextStyle).setDepth(1).setOrigin(0, 0.5).setCrop(0, 0, 250, 250);
 

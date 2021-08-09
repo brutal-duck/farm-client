@@ -442,16 +442,32 @@ export default class ClanTabsWindow {
 
     this.headerText = this.scene.add.text(headerGeom.left + 110, headerGeom.centerY, this.scene.state.clan.name, this.headerTextStyle).setDepth(2).setOrigin(0, 0.5).setFontSize(30);
     const clanAvatar = LogoManager.createIcon(this.scene, headerGeom.left + 60, headerGeom.centerY, this.scene.state.clan.avatar).setDepth(2).setScale(0.40);
-    this.scene.add.nineslice(this.x, this.y + 100, 480, 600, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
 
     const right1 = {
       text: 100,
       icon: 'diamond'
     };
 
-    const btn1 = this.scene.bigButton('green', 'left', -240, this.scene.state.lang.changeClanName, right1);
+    const btn1 = this.scene.bigButton('green', 'left', -220, this.scene.state.lang.changeClanName, right1);
     this.scene.clickModalBtn(btn1, () => {
       console.log('Click')
+      this.removeInput();
+      this.scene.scene.stop('Clan');
+      this.scene.scene.restart(this.scene.state);
+    });
+
+    const right2 = {
+      text: 200,
+      icon: 'diamond'
+    };
+
+    const btn2 = this.scene.bigButton('green', 'left', -130, this.scene.state.lang.changeClanAvatar, right2);
+    this.scene.clickModalBtn(btn2, () => {
+      this.scene.state.clanAvatar = this.scene.state.clan.avatar;
+      this.scene.state.modal = {
+        type: 18,
+        clanWindowType: 2,
+      };
       this.removeInput();
       this.scene.scene.stop('Clan');
       this.scene.scene.restart(this.scene.state);

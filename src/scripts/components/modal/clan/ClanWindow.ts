@@ -67,11 +67,19 @@ export default class ClanWindow {
       this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
       this.scene.scene.stop();
     } else {
-      this.scene.state.modal = {
-        type: 18,
-        clanWindowType: 1,
-      };
-      this.scene.scene.restart(this.scene.state);
+      if (this.scene.state.clan) {
+        this.scene.state.modal = {
+          type: 17,
+          clanTabType: 4,
+        };
+        this.scene.scene.restart(this.scene.state);
+      } else {
+        this.scene.state.modal = {
+          type: 18,
+          clanWindowType: 1,
+        };
+        this.scene.scene.restart(this.scene.state);
+      }
     }
   }
 

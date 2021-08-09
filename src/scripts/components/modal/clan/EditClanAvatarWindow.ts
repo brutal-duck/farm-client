@@ -1,6 +1,7 @@
 import Modal from "../../../scenes/Modal/Modal";
 import ClanWindow from './ClanWindow';
 import LogoManager, { Icon } from '../../Utils/LogoManager';
+import axios from "axios";
 
 export default class EditClanAvatarWindow {
   private window: ClanWindow;
@@ -113,6 +114,27 @@ export default class EditClanAvatarWindow {
         clanWindowType: 1,
       };
       this.scene.scene.restart(this.scene.state);
+    } else {
+      const data = {
+        clanId: this.scene.state.clan.id,
+        userId: this.scene.state.user.id,
+        hash: this.scene.state.user.hash,
+        counter: this.scene.state.user.counter,
+        avatar: {
+          bg: this.bgScroller.active,
+          frame: this.frameScroller.active,
+          icon: this.iconScroller.active,
+        },
+      }
+      axios.post(process.env.API + '/changeClanAvatar', data).then(data => {
+        if (!data.data.error) {
+          this.scene.state.modal = {
+            type: 17,
+            clanTabType: 4,
+          };
+          this.scene.scene.restart(this.scene.state);
+        }
+      });
     }
   }
 

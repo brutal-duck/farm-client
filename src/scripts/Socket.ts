@@ -87,10 +87,9 @@ export default class Socket {
       });
     });
 
-    this.io.on('newClanUser', (data: { users: IclanUser[], ownerId: string }) => {
+    this.io.on('updateClanData', (data: Iclan) => {
       if (this.state.clan) {
-        if (data.ownerId) this.state.clan.ownerId = data.ownerId;
-        this.state.clan.users = data.users;
+        this.state.clan = data;
       }
     });
   }

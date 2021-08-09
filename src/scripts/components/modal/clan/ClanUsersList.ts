@@ -5,17 +5,25 @@ export default class ClanUsersList {
   private scene: Clan;
   private array: Array<IclanUser>;
   private listLength: number;
+  private clanName: string;
+  private clanAvatar: string;
   constructor (scene: Clan) {
     this.scene = scene;
     this.init();
     this.listLength = this.array?.length || 0;
+    this.clanName = this.scene.state.clan.name;
+    this.clanAvatar = JSON.stringify(this.scene.state.clan.avatar);
     this.array?.forEach(el => {
       this.createUser(el);
-    })
+    });
   }
 
   public update(): void {
-    if (this.scene.state.clan?.users.length !== this.listLength) {
+    if (
+      this.scene.state.clan?.users.length !== this.listLength
+      || this.clanName !== this.scene.state.clan?.name
+      || JSON.stringify(this.scene.state.clan.avatar) !== this.clanAvatar
+      ) {
       this.scene.scene.restart(this.scene.state);
     }
   }
