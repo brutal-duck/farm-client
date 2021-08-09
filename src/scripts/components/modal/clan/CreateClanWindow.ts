@@ -18,8 +18,6 @@ export default class CreateClanWindow {
   private y: number;
   private addHeightError: boolean;
   private addHeightFounded: boolean;
-  private clanFlag: Phaser.GameObjects.Sprite;
-  private avatar: IconfigIcon;
   private icon: Icon;
 
   private inputText: Phaser.GameObjects.Text;
@@ -218,7 +216,7 @@ export default class CreateClanWindow {
           userName: login,
           userAvatar: avatar,
           userStatus: this.scene.state.user.status,
-          avatar: this.avatar,
+          avatar: this.scene.state.clanAvatar,
         }).then((res) => {
           if (res.data.error) {
             this.change = false;
@@ -274,7 +272,7 @@ export default class CreateClanWindow {
     const tile: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(this.x, this.switchBg.getBounds().bottom + 20, this.window.width - 50, 200, 'modal-square-bg', 10).setOrigin(0.5, 0);
     this.initAvatar();
     const y: number = tile.getBounds().centerY;
-    this.icon = LogoManager.createIcon(this.scene, this.x - 120, y, this.avatar).setScale(0.8);
+    this.icon = LogoManager.createIcon(this.scene, this.x - 120, y, this.scene.state.clanAvatar).setScale(0.8);
     const geom: Phaser.Geom.Rectangle = this.icon.getBounds();
     const randomBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(geom.right + 150, geom.centerY - 40, 'profile-window-button-red').setScale(1.1);
     const randomBtnText: Phaser.GameObjects.Text = this.scene.add.text(randomBtn.x, randomBtn.y - 5, 'Случайно', buttonTextStyle).setOrigin(0.5);
@@ -293,10 +291,14 @@ export default class CreateClanWindow {
   }
 
   private initAvatar(): void {
-    this.avatar = {
-      bg: Phaser.Math.Between(1, 14),
-      frame: Phaser.Math.Between(1, 3),
-      icon: Phaser.Math.Between(1, 12),
+    if (this.scene.state.clanAvatar) return;
+    const bgMax: number = Object.keys(this.scene.textures.list).filter(el => el.includes('clan-bg-')).length;
+    const frameMax: number = Object.keys(this.scene.textures.list).filter(el => el.includes('clan-frame-')).length;
+    const iconMax: number = Object.keys(this.scene.textures.list).filter(el => el.includes('clan-icon-')).length;
+    this.scene.state.clanAvatar = {
+      bg: Phaser.Math.Between(1, bgMax),
+      frame: Phaser.Math.Between(1, frameMax),
+      icon: Phaser.Math.Between(1, iconMax),
     };
   }
 
@@ -308,8 +310,7 @@ export default class CreateClanWindow {
     };
 
     this.icon.destroy();
-    this.icon = LogoManager.createIcon(this.scene, pos.x, pos.y, this.avatar).setScale(0.8);
-    console.log(this.avatar)
+    this.icon = LogoManager.createIcon(this.scene, pos.x, pos.y, this.scene.state.clanAvatar).setScale(0.8);
   }
 
   private openChangeWindow(): void {

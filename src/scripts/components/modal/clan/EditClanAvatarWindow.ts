@@ -34,7 +34,7 @@ export default class EditClanAvatarWindow {
   }
 
   private createSettigs(): void {
-    this.initAvatar();
+    this.avatar = this.scene.state.clanAvatar;
     this.createFlagManager();
     this.createFrameManager();
     this.createIconManager();
@@ -90,22 +90,33 @@ export default class EditClanAvatarWindow {
       },
     };
     
-    this.initAvatar();
     const saveBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.x - 100, this.y + 285, 'profile-window-button-green').setScale(1.2);
     const saveBtnText: Phaser.GameObjects.Text = this.scene.add.text(saveBtn.x, saveBtn.y - 5, 'Сохранить', buttonTextStyle).setOrigin(0.5);
     const randomBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.x + 100, this.y + 285, 'profile-window-button-red').setScale(1.2);
     const randomBtnText: Phaser.GameObjects.Text = this.scene.add.text(randomBtn.x, randomBtn.y - 5, 'Случайно', buttonTextStyle).setOrigin(0.5);
 
-    // this.scene.clickModalBtn({ btn: saveBtn, title: saveBtnText }, () => { this.getNewIcon(); });
+    this.scene.clickModalBtn({ btn: saveBtn, title: saveBtnText }, () => { this.onSaveBtn(); });
 
     this.scene.clickModalBtn({ btn: randomBtn, title: randomBtnText }, () => { this.onRandomBtn(); });
   }
 
-  private initAvatar(): void {
+  private onSaveBtn(): void {
+    this.scene.state.clanAvatar = this.avatar;
+    this.scene.state.modal = {
+      type: 18,
+      clanWindowType: 1,
+    };
+    this.scene.scene.restart(this.scene.state);
+  }
+
+  private randomAvatar(): void {
+    const bgMax: number = Object.keys(this.scene.textures.list).filter(el => el.includes('clan-bg-')).length;
+    const frameMax: number = Object.keys(this.scene.textures.list).filter(el => el.includes('clan-frame-')).length;
+    const iconMax: number = Object.keys(this.scene.textures.list).filter(el => el.includes('clan-icon-')).length;
     this.avatar = {
-      bg: Phaser.Math.Between(1, 14),
-      frame: Phaser.Math.Between(1, 10),
-      icon: Phaser.Math.Between(1, 12),
+      bg: Phaser.Math.Between(1, bgMax),
+      frame: Phaser.Math.Between(1, frameMax),
+      icon: Phaser.Math.Between(1, iconMax),
     };
   }
 
@@ -120,10 +131,12 @@ export default class EditClanAvatarWindow {
 
   private onRandomBtn(): void {
     if (!this.bgScroller.checkAnim() && !this.frameScroller.checkAnim() && !this.iconScroller.checkAnim()) {
-      this.initAvatar();
-      this.bgScroller.setActive(this.avatar.bg);
-      this.frameScroller.setActive(this.avatar.frame);
-      this.iconScroller.setActive(this.avatar.icon);
+      this.randomAvatar();
+      this.bgScroller.restart(this.avatar.bg);
+      this.frameScroller.restart(this.avatar.frame);
+      this.iconScroller.restart(this.avatar.icon);
+      this.setBg(this.avatar.bg);
+      this.setFrame(this.avatar.frame);
     }
   }
 }
@@ -138,9 +151,9 @@ class Scroller {
   private _leftBtn: Phaser.GameObjects.Sprite;
   private _pos: Iposition;
   private _anim: Phaser.Tweens.Tween;
-  private _arraySprites: Array<Phaser.GameObjects.Sprite> = [];
   private _mask: Phaser.Display.Masks.GeometryMask;
   private _window: EditClanAvatarWindow;
+  private _viewArray: Array<Phaser.GameObjects.Sprite> = [];
 
   constructor(scene: Modal, pos: Iposition, textureKey: string, start: number, window: EditClanAvatarWindow) {
     this._scene = scene;
@@ -160,7 +173,7 @@ class Scroller {
 
   private createElements(): void {
     this.createBtns();
-    this.createSprites();
+    this.createViewArray();
   }
 
   private createBtns(): void {
@@ -170,35 +183,22 @@ class Scroller {
     this._scene.clickButton(this._rightBtn, () => { this.onRightBtn(); });
   }
 
-  private createSprites(): void {
-    let startX: number = -135 * (this._active)
-
-    for (let i = 1; i <= this._array.length; i += 1) {
-      startX += 135;
-      const sprite = this._scene.add.sprite(this._pos.x + startX, this._pos.y, `${this._textureKey}${i}`).setDepth(2).setScale(0.3);
-      if (this._active === i) {
-        sprite.setScale(0.55);
-      }
-      sprite.setMask(this._mask);
-      this._arraySprites.push(sprite);
-    }
-  }
-  
   public setActive(active: number): void {
     this._previous = this._active;
     this._active = active;
+  }
+
+  private animForDirection(direction: number): void {
     if (this._previous !== this._active) {
-      this.startAnim();
+      this.startAnim(direction);
     }
   }
 
-  private startAnim(): void {
-    this.setInactiveSize(this._arraySprites[this._previous - 1]);
-    this.setActiveSize(this._arraySprites[this._active - 1]);
+  private startAnim(direction: number): void {
     this._anim = this._scene.add.tween({
-      targets: this._arraySprites,
+      targets: this._viewArray,
       duration: 600,
-      x: `+=${(this._previous - this._active) * 135}`,
+      x: `+=${direction * 135}`,
       ease: 'Power3',
       onStart: (): void => {
         this._leftBtn.setTint(0xc09245);
@@ -216,7 +216,6 @@ class Scroller {
         this._anim = undefined;
       }
     });
-    
   }
 
   private createMask(): void {
@@ -225,20 +224,6 @@ class Scroller {
     const mask: Phaser.GameObjects.Graphics = this._scene.add.graphics().fillRect(this._pos.x - width / 2, this._pos.y - height / 2, width, height).setVisible(false);
 
     this._mask = mask.createGeometryMask();
-  }
-
-  private onLeftBtn(): void {
-    if (!this._anim) {
-      const newActive: number = this._active - 1 <= 0 ? this._array.length : this._active - 1;
-      this.setActive(newActive);
-    }
-  }
-
-  private onRightBtn(): void {
-    if (!this._anim) {
-      const newActive: number = this._active + 1 > this._array.length ? 1 : this._active + 1;
-      this.setActive(newActive);
-    }
   }
 
   private setInactiveSize(target: Phaser.GameObjects.Sprite): void {
@@ -259,5 +244,68 @@ class Scroller {
     });
   }
 
+  private createViewArray(): void {
+    let startX: number = -135 * 3;
+    for (let i = 0; i < 5; i += 1) {
+      startX += 135;
+      let key: number = this._active + i - 2;
+      if (key <= 0) {
+        key = this._array.length - key;
+      } 
+      if (key > this._array.length) {
+        key = this._array[i - 3];
+      }
+      const sprite = this._scene.add.sprite(this._pos.x + startX, this._pos.y, `${this._textureKey}${key}`).setScale(0.3);
+      if (i === 2) {
+        sprite.setScale(0.55);
+      }
+      sprite.setMask(this._mask);
+      this._viewArray.push(sprite);
+    }
+  }
+
+  private onLeftBtn(): void {
+    if (!this._anim) {
+      const newActive: number = this._active - 1 <= 0 ? this._array.length : this._active - 1;
+      this.setActive(newActive);
+      this.animForDirection(1);
+      this.setInactiveSize(this._viewArray[2]);
+      this.setActiveSize(this._viewArray[1]);
+      this._viewArray.pop().destroy();
+      const firstElement = this._viewArray[0];
+      const key: number = newActive - 2 <= 0 ? this._array.length - 2 + newActive : newActive - 2;
+      const newSprite = this._scene.add.sprite(firstElement.x, firstElement.y, this._textureKey + key).setMask(this._mask).setScale(0.3);
+      this._viewArray.unshift(newSprite);
+    }
+  }
+
+  private onRightBtn(): void {
+    if (!this._anim) {
+      const newActive: number = this._active + 1 > this._array.length ? 1 : this._active + 1;
+      this.setActive(newActive);
+      this.animForDirection(-1);
+      this.setInactiveSize(this._viewArray[2]);
+      this.setActiveSize(this._viewArray[3]);
+      this._viewArray.shift().destroy();
+      const lastElement = this._viewArray[this._viewArray.length - 1];
+      const key: number = newActive >= this._array.length - 1 ?  2 + newActive -  this._array.length : newActive + 2;
+      const newSprite = this._scene.add.sprite(lastElement.x, lastElement.y, this._textureKey + key).setMask(this._mask).setScale(0.3);
+      this._viewArray.push(newSprite);
+    }
+  }
+
+  public restart(start: number): void {
+    this.destroyArray();
+    this._active = start;
+    this._previous = null;
+    this.createViewArray();
+  }
+  
+  private destroyArray(): void {
+    this._viewArray.forEach(el => {
+      el.destroy();
+    });
+    this._viewArray = [];
+  }
   public checkAnim = (): boolean => this._anim ? true : false; 
 }

@@ -63,8 +63,16 @@ export default class ClanWindow {
   }
   
   private onCloseBtn(): void {
-    this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-    this.scene.scene.stop();
+    if (this.scene.state.modal.clanWindowType !== 2) {
+      this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
+      this.scene.scene.stop();
+    } else {
+      this.scene.state.modal = {
+        type: 18,
+        clanWindowType: 1,
+      };
+      this.scene.scene.restart(this.scene.state);
+    }
   }
 
   private createFooter(): void {
