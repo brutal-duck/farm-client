@@ -102,6 +102,11 @@ export default class EditClanAvatarWindow {
 
   private onSaveBtn(): void {
     if (!this.scene.state.user.clanId) {
+      this.avatar = {
+        bg: this.bgScroller.active,
+        frame: this.frameScroller.active,
+        icon: this.iconScroller.active,
+      };
       this.scene.state.clanAvatar = this.avatar;
       this.scene.state.modal = {
         type: 18,
@@ -185,7 +190,7 @@ class Scroller {
     this._scene.clickButton(this._rightBtn, () => { this.onRightBtn(); });
   }
 
-  public setActive(active: number): void {
+  private setActive(active: number): void {
     this._previous = this._active;
     this._active = active;
   }
@@ -199,7 +204,7 @@ class Scroller {
   private startAnim(direction: number): void {
     this._anim = this._scene.add.tween({
       targets: this._viewArray,
-      duration: 600,
+      duration: 450,
       x: `+=${direction * 135}`,
       ease: 'Power3',
       onStart: (): void => {
@@ -231,7 +236,7 @@ class Scroller {
   private setInactiveSize(target: Phaser.GameObjects.Sprite): void {
     this._scene.add.tween({
       targets: target,
-      duration: 500,
+      duration: 400,
       ease: 'Power3',
       scale: { from: 0.55, to: 0.3 },
     });
@@ -240,7 +245,7 @@ class Scroller {
   private setActiveSize(target: Phaser.GameObjects.Sprite): void {
     this._scene.add.tween({
       targets: target,
-      duration: 500,
+      duration: 400,
       ease: 'Power3',
       scale: { from: 0.3, to: 0.55 },
     });
@@ -309,5 +314,11 @@ class Scroller {
     });
     this._viewArray = [];
   }
+
   public checkAnim = (): boolean => this._anim ? true : false; 
+
+  public get active(): number {
+    return this._active;
+  }
+
 }
