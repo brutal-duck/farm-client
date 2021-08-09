@@ -450,9 +450,12 @@ export default class ClanTabsWindow {
 
     const btn1 = this.scene.bigButton('green', 'left', -220, this.scene.state.lang.changeClanName, right1);
     this.scene.clickModalBtn(btn1, () => {
-      console.log('Click')
       this.removeInput();
       this.scene.scene.stop('Clan');
+      this.scene.state.modal = {
+        type: 1,
+        sysType: 21,
+      }
       this.scene.scene.restart(this.scene.state);
     });
 

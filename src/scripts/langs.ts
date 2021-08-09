@@ -1973,5 +1973,6 @@ export default {
     confirmExcludeUser: 'Вы действительно хотите исключить $1 из клана?',
     clanСreation: 'Создание клана',
     flagSettings: 'Настройки флага',
+    
   },
 }

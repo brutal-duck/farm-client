@@ -30,6 +30,7 @@ import CowWindow from '../../components/modal/system/CowWindow';
 import ConfirmSaveProgress from './../../components/modal/system/ConfirmSaveProgress';
 import CreateClanWindow from './../../components/modal/system/CreateClanWindow';
 import ConfimExcludeUserWindow from '../../components/modal/system/ConfimExcludeUserWindow';
+import ChangeClanNameWindow from './../../components/modal/system/ChangeClanNameWindow';
 
 function systemWindow(): void {
   let height:number = 0;
@@ -57,8 +58,7 @@ function systemWindow(): void {
       this.state.modal.sysType === 12 || 
       this.state.modal.sysType === 13 ||
       this.state.modal.sysType === 14 ||
-      this.state.modal.sysType === 15 ||
-      this.state.modal.sysType === 21
+      this.state.modal.sysType === 15 
     ) {
       this.enterKey.destroy();
       this.mainInput.remove();
@@ -185,7 +185,7 @@ function systemWindow(): void {
       break;
       
     case 21: 
-      new CreateClanWindow(this);
+      new ChangeClanNameWindow(this);
       break;
 
     case 22: 
