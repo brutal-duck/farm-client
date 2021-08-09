@@ -101,12 +101,14 @@ export default class EditClanAvatarWindow {
   }
 
   private onSaveBtn(): void {
-    this.scene.state.clanAvatar = this.avatar;
-    this.scene.state.modal = {
-      type: 18,
-      clanWindowType: 1,
-    };
-    this.scene.scene.restart(this.scene.state);
+    if (!this.scene.state.user.clanId) {
+      this.scene.state.clanAvatar = this.avatar;
+      this.scene.state.modal = {
+        type: 18,
+        clanWindowType: 1,
+      };
+      this.scene.scene.restart(this.scene.state);
+    }
   }
 
   private randomAvatar(): void {
