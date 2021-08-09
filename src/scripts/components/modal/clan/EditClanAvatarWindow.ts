@@ -11,13 +11,12 @@ export default class EditClanAvatarWindow {
   private y: number;
   private avatar: IconfigIcon;
   private icon: Icon;
-  private flag: Phaser.GameObjects.Sprite;
-  private flagBtnLeft: Phaser.GameObjects.Sprite;
-  private flagBtnRight: Phaser.GameObjects.Sprite;
-  private frameBtnLeft: Phaser.GameObjects.Sprite;
-  private frameBtnRight: Phaser.GameObjects.Sprite;
-  private iconBtnLeft: Phaser.GameObjects.Sprite;
-  private iconBtnRight: Phaser.GameObjects.Sprite;
+  private frameBg: Phaser.GameObjects.Sprite;
+  private iconBg: Phaser.GameObjects.Sprite;
+  private iconFrame: Phaser.GameObjects.Sprite;
+  private bgScroller: Scroller;
+  private frameScroller: Scroller;
+  private iconScroller: Scroller;
 
   constructor(window: ClanWindow) {
     this.window = window;
@@ -48,8 +47,7 @@ export default class EditClanAvatarWindow {
     };
     const bg = this.scene.add.nineslice(pos.x, pos.y, this.window.width, 130, 'clan-window-leader-plate', 1).setOrigin(0.5);
     this.scene.add.tileSprite(pos.x, pos.y, 145, 115, 'white-pixel').setTint(0xD06900);
-    const scroller = new Scroller(this.scene, pos, 'clan-bg-', this.avatar.bg);
-    console.log(scroller);
+    this.bgScroller = new Scroller(this.scene, pos, 'clan-bg-', this.avatar.bg, this);
   }
 
   private createFrameManager(): void {
@@ -59,12 +57,8 @@ export default class EditClanAvatarWindow {
     };
     const bg = this.scene.add.nineslice(pos.x, pos.y, this.window.width, 130, 'clan-window-leader-plate', 1).setOrigin(0.5);
     this.scene.add.tileSprite(pos.x, pos.y, 145, 115, 'white-pixel').setTint(0xD06900);
-    this.scene.add.sprite(pos.x, pos.y, `clan-bg-${this.avatar.bg}`).setOrigin(0.5).setScale(0.55);
-    this.scene.add.sprite(pos.x, pos.y, `clan-frame-${this.avatar.frame}`).setOrigin(0.5).setScale(0.55);
-
-    const bgGeom: Phaser.Geom.Rectangle = bg.getBounds();
-    this.frameBtnLeft = this.scene.add.sprite(bgGeom.left + 30, bgGeom.centerY, 'chat-arrow').setOrigin(0, 0.5);
-    this.frameBtnRight = this.scene.add.sprite(bgGeom.right - 30, bgGeom.centerY, 'chat-arrow').setFlipX(true).setOrigin(1, 0.5);
+    this.frameBg = this.scene.add.sprite(pos.x, pos.y, `clan-bg-${this.avatar.bg}`).setOrigin(0.5).setScale(0.55);
+    this.frameScroller = new Scroller(this.scene, pos, 'clan-frame-', this.avatar.frame, this);
   }
 
   private createIconManager(): void {
@@ -74,13 +68,9 @@ export default class EditClanAvatarWindow {
     };
     const bg = this.scene.add.nineslice(pos.x, pos.y, this.window.width, 130, 'clan-window-leader-plate', 1).setOrigin(0.5);
     this.scene.add.tileSprite(pos.x, pos.y, 145, 115, 'white-pixel').setTint(0xD06900);
-    this.scene.add.sprite(pos.x, pos.y, `clan-bg-${this.avatar.bg}`).setOrigin(0.5).setScale(0.55);
-    this.scene.add.sprite(pos.x, pos.y, `clan-frame-${this.avatar.frame}`).setOrigin(0.5).setScale(0.55);
-    this.scene.add.sprite(pos.x, pos.y, `clan-icon-${this.avatar.icon}`).setOrigin(0.5).setScale(0.55);
-
-    const bgGeom: Phaser.Geom.Rectangle = bg.getBounds();
-    this.iconBtnLeft = this.scene.add.sprite(bgGeom.left + 30, bgGeom.centerY, 'chat-arrow').setOrigin(0, 0.5);
-    this.iconBtnRight = this.scene.add.sprite(bgGeom.right - 30, bgGeom.centerY, 'chat-arrow').setFlipX(true).setOrigin(1, 0.5);
+    this.iconBg = this.scene.add.sprite(pos.x, pos.y, `clan-bg-${this.avatar.bg}`).setOrigin(0.5).setScale(0.55);
+    this.iconFrame = this.scene.add.sprite(pos.x, pos.y, `clan-frame-${this.avatar.frame}`).setOrigin(0.5).setScale(0.55);
+    this.iconScroller = new Scroller(this.scene, pos, 'clan-icon-', this.avatar.icon, this);
   }
 
 
@@ -106,12 +96,9 @@ export default class EditClanAvatarWindow {
     const randomBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.x + 100, this.y + 285, 'profile-window-button-red').setScale(1.2);
     const randomBtnText: Phaser.GameObjects.Text = this.scene.add.text(randomBtn.x, randomBtn.y - 5, 'Случайно', buttonTextStyle).setOrigin(0.5);
 
-    this.scene.clickModalBtn({ btn: saveBtn, title: saveBtnText }, () => { this.getNewIcon(); });
-    this.window.modalElements.push(
-      saveBtn,
-      saveBtnText,
-      this.icon,
-    );
+    // this.scene.clickModalBtn({ btn: saveBtn, title: saveBtnText }, () => { this.getNewIcon(); });
+
+    this.scene.clickModalBtn({ btn: randomBtn, title: randomBtnText }, () => { this.onRandomBtn(); });
   }
 
   private initAvatar(): void {
@@ -122,34 +109,47 @@ export default class EditClanAvatarWindow {
     };
   }
 
-  private getNewIcon(): void {
-    this.initAvatar();
-    const pos: Iposition = {
-      x: this.icon.x,
-      y: this.icon.y,
-    };
+  public setBg(bg: number): void {
+    this.frameBg.setTexture(`clan-bg-${bg}`); 
+    this.iconBg.setTexture(`clan-bg-${bg}`); 
+  }
 
-    this.icon.destroy();
-    this.icon = LogoManager.createIcon(this.scene, pos.x, pos.y, this.avatar).setScale(0.8);
+  public setFrame(frame: number): void {
+    this.iconFrame.setTexture(`clan-frame-${frame}`); 
+  }
+
+  private onRandomBtn(): void {
+    if (!this.bgScroller.checkAnim() && !this.frameScroller.checkAnim() && !this.iconScroller.checkAnim()) {
+      this.initAvatar();
+      this.bgScroller.setActive(this.avatar.bg);
+      this.frameScroller.setActive(this.avatar.frame);
+      this.iconScroller.setActive(this.avatar.icon);
+    }
   }
 }
 
 class Scroller {
-  private _scene: Phaser.Scene;
+  private _scene: Modal;
   private _active: number;
   private _textureKey: string;
   private _array: Array<number>;
+  private _previous: number;
   private _rightBtn: Phaser.GameObjects.Sprite;
   private _leftBtn: Phaser.GameObjects.Sprite;
   private _pos: Iposition;
-  private _arraySprites: Array<Phaser.GameObjects.Sprite>;
+  private _anim: Phaser.Tweens.Tween;
+  private _arraySprites: Array<Phaser.GameObjects.Sprite> = [];
+  private _mask: Phaser.Display.Masks.GeometryMask;
+  private _window: EditClanAvatarWindow;
 
-  constructor(scene: Phaser.Scene, pos: Iposition, textureKey: string, start: number) {
+  constructor(scene: Modal, pos: Iposition, textureKey: string, start: number, window: EditClanAvatarWindow) {
     this._scene = scene;
     this._textureKey = textureKey;
     this._active = start;
     this._pos = pos;
+    this._window = window;
     this.initArray();
+    this.createMask();
     this.createElements();
   }
 
@@ -165,18 +165,99 @@ class Scroller {
 
   private createBtns(): void {
     this._leftBtn = this._scene.add.sprite(this._pos.x - 220, this._pos.y, 'chat-arrow');
+    this._scene.clickButton(this._leftBtn, () => { this.onLeftBtn(); });
     this._rightBtn = this._scene.add.sprite(this._pos.x + 220, this._pos.y, 'chat-arrow').setFlipX(true);
+    this._scene.clickButton(this._rightBtn, () => { this.onRightBtn(); });
   }
+
   private createSprites(): void {
-    let startX: number = -200 * (this._active - 1)
+    let startX: number = -135 * (this._active)
 
     for (let i = 1; i <= this._array.length; i += 1) {
-      startX += 200
-      
-      const sprite = this._scene.add.sprite(this._pos.x + startX, this._pos.y, `${this._textureKey}${i}`).setScale(0.55);
-      console.log(sprite)
+      startX += 135;
+      const sprite = this._scene.add.sprite(this._pos.x + startX, this._pos.y, `${this._textureKey}${i}`).setDepth(2).setScale(0.3);
+      if (this._active === i) {
+        sprite.setScale(0.55);
+      }
+      sprite.setMask(this._mask);
+      this._arraySprites.push(sprite);
     }
   }
- 
+  
+  public setActive(active: number): void {
+    this._previous = this._active;
+    this._active = active;
+    if (this._previous !== this._active) {
+      this.startAnim();
+    }
+  }
 
+  private startAnim(): void {
+    this.setInactiveSize(this._arraySprites[this._previous - 1]);
+    this.setActiveSize(this._arraySprites[this._active - 1]);
+    this._anim = this._scene.add.tween({
+      targets: this._arraySprites,
+      duration: 600,
+      x: `+=${(this._previous - this._active) * 135}`,
+      ease: 'Power3',
+      onStart: (): void => {
+        this._leftBtn.setTint(0xc09245);
+        this._rightBtn.setTint(0xc09245);
+      },
+      onComplete: (): void => {
+        if (this._textureKey === 'clan-bg-') {
+          this._window.setBg(this._active);
+        } else if (this._textureKey === 'clan-frame-') {
+          this._window.setFrame(this._active);
+        }
+        this._leftBtn.setTint(0xffffff);
+        this._rightBtn.setTint(0xffffff);
+        this._anim.remove();
+        this._anim = undefined;
+      }
+    });
+    
+  }
+
+  private createMask(): void {
+    const width: number = 400;
+    const height: number = 120;
+    const mask: Phaser.GameObjects.Graphics = this._scene.add.graphics().fillRect(this._pos.x - width / 2, this._pos.y - height / 2, width, height).setVisible(false);
+
+    this._mask = mask.createGeometryMask();
+  }
+
+  private onLeftBtn(): void {
+    if (!this._anim) {
+      const newActive: number = this._active - 1 <= 0 ? this._array.length : this._active - 1;
+      this.setActive(newActive);
+    }
+  }
+
+  private onRightBtn(): void {
+    if (!this._anim) {
+      const newActive: number = this._active + 1 > this._array.length ? 1 : this._active + 1;
+      this.setActive(newActive);
+    }
+  }
+
+  private setInactiveSize(target: Phaser.GameObjects.Sprite): void {
+    this._scene.add.tween({
+      targets: target,
+      duration: 500,
+      ease: 'Power3',
+      scale: { from: 0.55, to: 0.3 },
+    });
+  }
+
+  private setActiveSize(target: Phaser.GameObjects.Sprite): void {
+    this._scene.add.tween({
+      targets: target,
+      duration: 500,
+      ease: 'Power3',
+      scale: { from: 0.3, to: 0.55 },
+    });
+  }
+
+  public checkAnim = (): boolean => this._anim ? true : false; 
 }

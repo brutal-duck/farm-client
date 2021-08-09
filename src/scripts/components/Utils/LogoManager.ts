@@ -1,6 +1,6 @@
 export default class LogoManager {
   private static getClanTexture(scene: Phaser.Scene, { bg, frame, icon }: IconfigIcon): string {
-    const check = Object.keys(scene.textures.list).find(el => el ===`clan-icon-${bg}-${frame}-${icon}`);
+    const check = Object.keys(scene.textures.list).find(el => el ===`clan-texture-${bg}-${frame}-${icon}`);
     if (!check) {
       const height: number = 210;
       const width: number = 262;
@@ -20,10 +20,10 @@ export default class LogoManager {
       rt.draw(spriteFrame,width / 2, height / 2);
       rt.draw(spriteIcon, width / 2, height / 2);
       
-      var texture: Phaser.Textures.Texture = rt.saveTexture(`clan-icon-${bg}-${frame}-${icon}`);
+      var texture: Phaser.Textures.Texture = rt.saveTexture(`clan-texture-${bg}-${frame}-${icon}`);
       return texture.key;
     }
-    return `clan-icon-${bg}-${frame}-${icon}`;
+    return `clan-texture-${bg}-${frame}-${icon}`;
   }
 
   public static createIcon(scene: Phaser.Scene, x: number, y: number, { bg, frame, icon }: IconfigIcon): Icon {
