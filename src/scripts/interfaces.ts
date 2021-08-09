@@ -212,6 +212,8 @@ interface IuserSheep {
   countSheep: number;
   collector: number;
   collectorLevel: number;
+  collectorTimeLevel: number;
+  collectorSpeedLevel: number;
   collectorTakenTime: number;
   diamondAnimalTime: number;
   tutorial: number;

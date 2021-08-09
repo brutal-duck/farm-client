@@ -57,6 +57,8 @@ let userSheep: IuserSheep = {
   countSheep: 0,
   collector: 0,
   collectorLevel: 1,
+  collectorTimeLevel: 0,
+  collectorSpeedLevel: 0,
   collectorTakenTime: 0,
   diamondAnimalTime: 0,
   tutorial: 0,

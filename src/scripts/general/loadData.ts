@@ -347,6 +347,8 @@ export default function loadData(response: any): void {
     countSheep: response.data.user.count_sheep,
     collector: response.data.user.shaver_time,
     collectorLevel: response.data.user.sheepCollectorLevel,
+    collectorTimeLevel: response.data.user.sheepCollectorTimeLevel,
+    collectorSpeedLevel: response.data.user.sheepCollectorSpeedLevel,
     collectorTakenTime: response.data.user.shaver_time,
     diamondAnimalTime: response.data.user.diamonds_sheep_time,
     tutorial: response.data.user.tutor,

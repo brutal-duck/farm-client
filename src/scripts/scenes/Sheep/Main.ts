@@ -140,6 +140,8 @@ import {
 } from '../../general/interval';
 import Ads from '../../components/Utils/Ads';
 
+import { config } from '../../local/sheepSettings';
+
 class Sheep extends Phaser.Scene {
   constructor() {
     super('Sheep');
@@ -313,6 +315,7 @@ class Sheep extends Phaser.Scene {
   public setPlatformStorage = setPlatformStorage.bind(this);
   public getPlatformStorage = getPlatformStorage.bind(this);
 
+  private collectorConfig: any
   private collectorCD: number
   private collectorIsReady: boolean
 
@@ -330,7 +333,10 @@ class Sheep extends Phaser.Scene {
     console.log('Sheep');
     this.autoprogress(true);
 
-    this.collectorCD = 1000 / this.state.sheepCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userSheep.collectorLevel).speed;
+    console.log('init ~ this.state', this.state.userSheep)
+    this.collectorConfig = config
+    this.collectorCD = 1000 / this.collectorConfig.find((level, i) => this.state.userSheep.collectorSpeedLevel === i).collectorSpeed;
+    console.log('init ~ this.collectorCD', this.collectorCD)
     this.collectorIsReady = false
   }
 
@@ -364,7 +370,7 @@ class Sheep extends Phaser.Scene {
 
 
   private updateCollector(delta: number): void {
-    console.log('updateCollector ~ this.collectorIsReady', this.collectorIsReady)
+    // console.log('updateCollector ~ this.collectorIsReady', this.collectorIsReady)
     if (this.collectorCD <= 0) {
       this.collectorIsReady = true
 
@@ -376,8 +382,8 @@ class Sheep extends Phaser.Scene {
           if (sheep.wool >= 1000 && sheep.type !== 0) {
             this.collectWool(sheep);
             this.collectorIsReady = false
-            this.collectorCD = 1000 / this.state.sheepCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userSheep.collectorLevel).speed * 5;
-            console.log('collect ~ this.collectorCD:', this.collectorCD)
+            this.collectorCD = 1000 / this.collectorConfig.find((level, i) => this.state.userSheep.collectorSpeedLevel === i).collectorSpeed;
+            // console.log('collect ~ this.collectorCD:', this.collectorCD)
             break;
           }
         }

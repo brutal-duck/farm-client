@@ -95,7 +95,7 @@ export default class ImproveCollectorWindow {
       text1: Phaser.GameObjects.Text
       text2: Phaser.GameObjects.Text
       title: Phaser.GameObjects.Text
-    }, 
+    },
     speed: Phaser.GameObjects.Text, 
     duration: Phaser.GameObjects.Text, 
     nextLevelText: Phaser.GameObjects.Text

@@ -3,6 +3,7 @@ import {
   shortTime,
   getStatusSettings,
   loadingModal,
+  convertMoney
 } from '../../general/basic';
 import {
   click,
@@ -87,6 +88,7 @@ class Modal extends Phaser.Scene {
   public clickTaskBoard = clickTaskBoard.bind(this);
   public openModal = openModal.bind(this);
   public loadingModal = loadingModal.bind(this);
+  public convertMoney = convertMoney.bind(this);
   public clickButtonUp = clickButtonUp.bind(this);
 
   public init(state: Istate): void {

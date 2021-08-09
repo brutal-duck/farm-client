@@ -28,6 +28,7 @@ import SheepWindow from '../../components/modal/system/SheepWindow';
 import ChickenWindow from '../../components/modal/system/ChickenWindow';
 import CowWindow from '../../components/modal/system/CowWindow';
 import ConfirmSaveProgress from './../../components/modal/system/ConfirmSaveProgress';
+import ImproveCollectorWindowNew from '../../components/modal/system/ImproveCollectorWindowNew';
 
 function systemWindow(): void {
   let height:number = 0;
@@ -136,8 +137,9 @@ function systemWindow(): void {
 
     case 10: // окно улучшения собирателя
       
-      if (this.state.farm !== 'Unicorn') new ImproveCollectorWindow(this);
-      else new ImproveCollectorEventWindow(this)
+      if (this.state.farm === 'Sheep') new ImproveCollectorWindowNew(this);
+      else if (this.state.farm === 'Unicorn') new ImproveCollectorEventWindow(this);
+      else new ImproveCollectorWindow(this)
       break;
     
     case 11: //окно смены территории
