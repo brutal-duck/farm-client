@@ -313,6 +313,9 @@ class Sheep extends Phaser.Scene {
   public setPlatformStorage = setPlatformStorage.bind(this);
   public getPlatformStorage = getPlatformStorage.bind(this);
 
+  private collectorCD: number
+  private collectorIsReady: boolean
+
   public init(state: Istate): void {
     this.autoprogressTimer = Math.round(new Date().getTime() / 1000);
     this.autoSaveTimer = 0;
@@ -326,6 +329,9 @@ class Sheep extends Phaser.Scene {
     this.ads = new Ads(this)
     console.log('Sheep');
     this.autoprogress(true);
+
+    this.collectorCD = 1000 / this.state.sheepCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userSheep.collectorLevel).speed;
+    this.collectorIsReady = false
   }
 
 
@@ -344,7 +350,7 @@ class Sheep extends Phaser.Scene {
 
     // интервальные функция
     this.interval();
-    this.setCollector();
+    // this.setCollector();
     // let cursors = this.input.keyboard.createCursorKeys();
     // cursors.space.on('down', (): void => {
     //   // let tasks = this.partTasks();
@@ -353,14 +359,40 @@ class Sheep extends Phaser.Scene {
     //   //       // tasks[i].got_awarded = 1;
     //   // }
     // });
+
   }
 
 
-  public update(): void {
+  private updateCollector(delta: number): void {
+    console.log('updateCollector ~ this.collectorIsReady', this.collectorIsReady)
+    if (this.collectorCD <= 0) {
+      this.collectorIsReady = true
+
+      if (this.state.userSheep.collector > 0) {
+        for (let i in this.sheep.children.entries) {
+          let sheep = this.sheep.children.entries[i];
+          
+          // @ts-ignore
+          if (sheep.wool >= 1000 && sheep.type !== 0) {
+            this.collectWool(sheep);
+            this.collectorIsReady = false
+            this.collectorCD = 1000 / this.state.sheepCollectorSettings.find((data: IcollectorSettings) => data.level === this.state.userSheep.collectorLevel).speed * 5;
+            console.log('collect ~ this.collectorCD:', this.collectorCD)
+            break;
+          }
+        }
+      }
+    } else if (!this.collectorIsReady) this.collectorCD -= delta
+  }
+
+
+  public update(time: number, delta: number): void {
     // мозг овец
     this.sheepBrain();
     // перетаскивание овец
     this.dragSheep(true);
+
+    this.updateCollector(delta)
   }
 }
 
