@@ -152,27 +152,21 @@ function sheepBrain(): void {
           (territory.position === 3 && sheep.x > (3 * this.height) - sheep.width / 2) ||
           (territory.block === 8 && sheep.y > this.topIndent + (8 * this.height) - sheep.height / 2))
           && !sheep.aim) {
-
           let aimX: number = random(territory.x + Math.ceil(sheep.width / 2), territory.x - Math.ceil(sheep.width / 2) + 240);
           let aimY: number = random(territory.y + Math.ceil(sheep.width / 2), territory.y - Math.ceil(sheep.width / 2) + 240);
           this.aim(sheep, aimX, aimY);
+        }
 
+        if (territory.territoryType === 4 && !sheep.merging && !sheep.aim) {
+          sheep.merging = false;
+          const randomX: number = Phaser.Math.Between(territory.x + 40, territory.x + 200);
+          const randomY: number = Phaser.Math.Between(territory.y + 280, territory.y + 440);
+          this.aim(sheep, randomX, randomY);
         }
 
       } else this.teleportation(sheep);
 
       sheep.setDepth(sheep.y + Math.round((sheep.height / 2) + 1)); // z-index
-
-      // уход с ярмарки, если там не нужно быть
-      if (territory.territoryType === 4 && !sheep.merging && !sheep.aim) {
-
-        sheep.merging = false;
-        let randomX: number = random(territory.x + 40, territory.x + 200);
-        let randomY: number = random(territory.y + 280, territory.y + 440);
-        this.aim(sheep, randomX, randomY);
-
-      }
-
     } else {
       sheep.body.reset(sheep.x, sheep.y);
     }

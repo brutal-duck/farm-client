@@ -194,12 +194,9 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
     if (!this.drag) {
       let territory: Territory = this.scene.currentTerritory(this.x, this.y);
       if (territory) {
-
         if (territory.territoryType !== 4 || this.aim) {
-          
           // проверка, не находится ли за бортом
           if (territory.territoryType !== 2 && territory.territoryType !== 3 && territory.territoryType !== 4) {
-
             if (territory.territoryType === 0 && this.expel) {
               this.aim = false;
               this.spread = false;
@@ -207,7 +204,6 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
               this.setVelocity(0, 0);
               this.body.reset(this.x, this.y);
             } else this.teleportation();
-
           }
 
           // если нет цели у коровы
@@ -219,22 +215,18 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
             }
             // шанс остановки или продолжения движения
             if (this.counter > Phaser.Math.Between(130, 170)) {
-
               if (this.counter >= 400) this.counter = 0;
-
               if (this.moving !== false) {
                 this.moving = false;
                 this.setVelocity(0, 0);
                 this.body.reset(this.x, this.y);
               }
-
             } else {
-              
               if (!this.moving || this.changeVector) {
                 this.body.reset(this.x, this.y);
                 this.setVelocity(0, 0);
-                let x: number = Phaser.Math.Between(this.basicVelocity - 10, this.basicVelocity + 10);
-                let y: number = Phaser.Math.Between(this.basicVelocity - 10, this.basicVelocity + 10);
+                const x: number = Phaser.Math.Between(this.basicVelocity - 10, this.basicVelocity + 10);
+                const y: number = Phaser.Math.Between(this.basicVelocity - 10, this.basicVelocity + 10);
                 switch (this.vector) {
                   case 1: this.setVelocity(x, y); break;
                   case 2: this.setVelocity(-x, y); break;
@@ -253,19 +245,14 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
             // счетчик коллизий для обратного движения
             if (this.collision > 0) this.collision++;
             if (this.collision >= 200) this.collision = 0;
-            
             this.counter++;
-
           } else {
-
             // если есть точка-цель
-            let distance: number = Phaser.Math.Distance.Between(this.x, this.y, this.aimX, this.aimY);
-
+            const distance: number = Phaser.Math.Distance.Between(this.x, this.y, this.aimX, this.aimY);
             if (this.x < 0 ||
               this.x > 720 ||
               this.y < 0 ||
               (distance > this.distance && this.distance > 0)) {
-
               this.body.reset(this.x, this.y);
               this.aim = false;
               this.spread = false;
@@ -273,7 +260,6 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
               this.aimX = 0;
               this.aimY = 0;
               this.distance = 0;
-
             } else {
               this.distance = distance;
             }
@@ -285,27 +271,20 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
         (territory.position === 3 && this.x > (3 * this.scene.height) - this.width / 2) ||
         (territory.block === 8 && this.y > this.scene.topIndent + (8 * this.scene.height) - this.height / 2))
         && !this.aim) {
-
-        let aimX: number = Phaser.Math.Between(territory.x + Math.ceil(this.width / 2), territory.x - Math.ceil(this.width / 2) + 240);
-        let aimY: number = Phaser.Math.Between(territory.y + Math.ceil(this.width / 2), territory.y - Math.ceil(this.width / 2) + 240);
-        this.setAim(aimX, aimY);
-
+          const aimX: number = Phaser.Math.Between(territory.x + Math.ceil(this.width / 2), territory.x - Math.ceil(this.width / 2) + 240);
+          const aimY: number = Phaser.Math.Between(territory.y + Math.ceil(this.width / 2), territory.y - Math.ceil(this.width / 2) + 240);
+          this.setAim(aimX, aimY);
         }
-
+        if (territory?.territoryType === 4 && !this.merging && !this.aim) {
+          this.merging = false;
+          const randomX: number = Phaser.Math.Between(territory.x + 40, territory.x + 200);
+          const randomY: number = Phaser.Math.Between(territory.y + 280, territory.y + 440);
+          this.setAim(randomX, randomY);
+        }
       } else {
         this.teleportation()
       };
-
       this.setDepth(this.y + Math.round((this.height / 2) + 1)); // z-index
-
-      // уход с ярмарки, если там не нужно быть
-      if (territory?.territoryType === 4 && !this.merging && !this.aim) {
-        this.merging = false;
-        let randomX: number = Phaser.Math.Between(territory.x + 40, territory.x + 200);
-        let randomY: number = Phaser.Math.Between(territory.y + 280, territory.y + 440);
-        this.setAim(randomX, randomY);
-
-      }
     }
     if (!this.drag) {
       let side: string;
@@ -325,13 +304,10 @@ export default abstract class Animal extends Phaser.Physics.Arcade.Sprite {
   }
 
   public get openedTerritory(): any[] {
-    let territories: any[] = [];
-
+    const territories: any[] = [];
   // берем только нужные территории
     for (let i in this.scene.territories.children.entries) {
-      
-      //@ts-ignore
-      const territory: Territory = this.scene.territories.children.entries[i];
+      const territory: Territory = this.scene.territories.children.entries[i] as Territory;
       if (territory.territoryType === 2 || territory.territoryType === 3) {
         territories.push({
           _id: territory._id,

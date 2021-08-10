@@ -119,34 +119,24 @@ function chickenBrain(): void {
         (territory.block === 8 && chicken.y > this.topIndent + (8 * this.height) - chicken.height / 2))
         && !chicken.aim) {
 
-        let aimX: number = random(territory.x + Math.ceil(chicken.width / 2), territory.x - Math.ceil(chicken.width / 2) + 240);
-        let aimY: number = random(territory.y + Math.ceil(chicken.width / 2), territory.y - Math.ceil(chicken.width / 2) + 240);
-        this.aim(chicken, aimX, aimY);
+          const aimX: number = Phaser.Math.Between(territory.x + Math.ceil(chicken.width / 2), territory.x - Math.ceil(chicken.width / 2) + 240);
+          const aimY: number = Phaser.Math.Between(territory.y + Math.ceil(chicken.width / 2), territory.y - Math.ceil(chicken.width / 2) + 240);
+          this.aim(chicken, aimX, aimY);
 
-      }
-
+        }
+        if (territory.territoryType === 4 && !chicken.merging && !chicken.aim) {
+          chicken.merging = false;
+          const randomX: number = Phaser.Math.Between(territory.x + 40, territory.x + 200);
+          const randomY: number = Phaser.Math.Between(territory.y + 280, territory.y + 440);
+          this.aim(chicken, randomX, randomY);
+        }
       } else this.teleportation(chicken);
-
       chicken.setDepth(chicken.y + Math.round((chicken.height / 2) + 1)); // z-index
-
-      // уход с ярмарки, если там не нужно быть
-      if (territory.territoryType === 4 && !chicken.merging && !chicken.aim) {
-
-        chicken.merging = false;
-        let randomX: number = random(territory.x + 40, territory.x + 200);
-        let randomY: number = random(territory.y + 280, territory.y + 440);
-        this.aim(chicken, randomX, randomY);
-
-      }
-
     }
 
     if (!chicken.drag) {
-
       let side: string;
-
       if (chicken.merging) chicken.moving = false;
-
       if (chicken.vector === 2 ||
         chicken.vector === 3 ||
         chicken.vector === 7 ||
@@ -155,14 +145,10 @@ function chickenBrain(): void {
       } else {
         side = 'right';
       }
-
       if (chicken.moving || chicken.aim) chicken.anims.play('chicken-move-' + side + chicken.type, true);
       else chicken.anims.play('chicken-stay-' + side + chicken.type, true);
-  
     }
-
   }
-
 }
 
 export default chickenBrain;
