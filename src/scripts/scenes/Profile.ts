@@ -5,14 +5,11 @@ import Currency from '../components/animations/Currency';
 import Notificator from './../components/gameObjects/Notificator';
 
 const background: string = require('./../../assets/images/profile/background.jpg');
-const backButton: string = require('./../../assets/images/profile/back-button.png');
-const sheepFarm: string = require('./../../assets/images/profile/sheep-farm.png');
 const chickenFarm: string = require('./../../assets/images/profile/chicken-farm.png');
 const cowFarm: string = require('./../../assets/images/profile/cow-farm.png');
 const eventFarm: string = require('./../../assets/images/profile/event-farm.png');
 const sticker: string = require('./../../assets/images/profile/sticker.png');
 const cowFarmLock: string = require('./../../assets/images/profile/cow-farm-lock.png');
-const chickenFarmLock: string = require('./../../assets/images/profile/chicken-farm-lock.png');
 const profileLockIcon: string = require('./../../assets/images/icons/profile-lock-icon.png');
 const eventIsland: string = require('./../../assets/images/profile/event-island.png');
 const btn: string = require('./../../assets/images/profile/btn.png');
@@ -77,14 +74,11 @@ class Profile extends Phaser.Scene {
     this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)');
     this.loadingModal();
     this.load.image('profile-bg', background);
-    this.load.image('profile-back-button', backButton);
-    this.load.image('profile-sheep-farm', sheepFarm);
-    this.load.image('profile-chicken-farm', chickenFarm);
+    this.load.image('profile-chciken-farm', chickenFarm);
     this.load.image('profile-cow-farm', cowFarm);
     this.load.image('profile-event-farm', eventFarm);
     this.load.image('profile-sticker', sticker);
     this.load.image('profile-cow-farm-lock', cowFarmLock);
-    this.load.image('profile-chicken-farm-lock', chickenFarmLock);
     this.load.image('profile-lock-icon', profileLockIcon);
     this.load.image('profile-event-island', eventIsland);
     this.load.image('profile-btn', btn);
@@ -139,7 +133,7 @@ class Profile extends Phaser.Scene {
   }
 
   private createElements(): void {
-    this.backBtn = this.add.sprite(630, 80, 'profile-back-button');
+    this.backBtn = this.add.sprite(630, 62, 'tasks-close');
     this.createProfileInfo();
     this.createFarms();
     this.createShop();
@@ -151,7 +145,7 @@ class Profile extends Phaser.Scene {
   }
 
   private createProfileInfo(): void {
-    const farmer: Phaser.GameObjects.Sprite = this.add.sprite(80, 75, 'farmer').setScale(0.45).setVisible(false);
+    const farmer: Phaser.GameObjects.Sprite = this.add.sprite(280, 75, 'farmer').setScale(0.3).setVisible(false);
     let avatar: Phaser.GameObjects.Sprite;
     avatar = farmer;
     avatar.setVisible(true);
@@ -171,23 +165,25 @@ class Profile extends Phaser.Scene {
     const avatarGeom: Phaser.Geom.Rectangle = farmer.getBounds();
     const status: IstatusSettings = this.getStatusSettings(this.state.user.status);
     if (status) {
-      this.add.sprite(avatarGeom.right - 15, avatarGeom.top + 15, status.iconTexture).setVisible(status.iconVisible);
+      this.add.sprite(avatarGeom.right - 5, avatarGeom.top + 5, status.iconTexture).setVisible(status.iconVisible);
     }
     let login: string = this.state.platform === 'web' || this.state.platform === 'android'? this.state.user.login : this.state.name;
     if (!login) login = this.state.lang.unknownFarmer;
-    const text: Phaser.GameObjects.Text = this.add.text(avatarGeom.right + 110, avatarGeom.centerY, login,  {
-      font: '32px Shadow',
+    const nameTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontSize: '32px',
+      fontFamily: 'Shadow',
       color: '#FFFFFF',
       align: 'center',
-      wordWrap: { width: 220 },
-    }).setOrigin(0.5);
-    if (text.displayWidth > 200) {
-      const multiply: number = text.displayWidth / 200;
+      wordWrap: { width: 190, useAdvancedWrap: true },
+    }
+    const text: Phaser.GameObjects.Text = this.add.text(avatarGeom.right + 100, avatarGeom.centerY, login, nameTextStyle).setOrigin(0.5);
+    if (text.displayHeight > 100) {
+      const multiply: number = text.displayWidth / 100;
       text.setFontSize(parseInt(text.style.fontSize) / multiply);
     }
-    this.diamondsText = this.add.text(this.cameras.main.centerX + 120, 95, shortNum(this.state.user.diamonds), {
+    this.diamondsText = this.add.text(110, 75, shortNum(this.state.user.diamonds), {
       font: '32px Shadow',
-      color: '#FFFFFF',
+      color: '#7D3D0F',
       align: 'center',
       wordWrap: { width: 220 },
     }).setOrigin(0.5);
@@ -205,14 +201,20 @@ class Profile extends Phaser.Scene {
   }
 
   private createSheepFarm(): void {
-    const farmPosition: Iposition = { x: 160, y: 810 };
-    const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-sheep-farm');
-    this.add.text(farmPosition.x + 110, farmPosition.y + 5, `${this.state.progress.sheep.part}/${this.state.progress.sheep.max}`, {
+    const farmPosition: Iposition = { x: 140, y: 800 };
+    const width: number = 260;
+    const height: number = 250;
+    
+    const farmZone: Phaser.GameObjects.Zone = this.add.zone(farmPosition.x, farmPosition.y, width, height).setDropZone(undefined, () => {});
+    const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
+    graphics.lineStyle(5, 0xFFFF00);
+    graphics.strokeRect(farmZone.x - farmZone.input.hitArea.width / 2, farmZone.y - farmZone.input.hitArea.height / 2, farmZone.input.hitArea.width, farmZone.input.hitArea.height);
+    this.add.text(farmPosition.x + 121, farmPosition.y + 25, `${this.state.progress.sheep.part}/${this.state.progress.sheep.max}`, {
       font: '28px Shadow',
       color: '#ffe5d7'
     }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
     this.sheepNotificator = new Notificator(this, { x: farmPosition.x + 110, y: farmPosition.y - 125 }, true);
-    this.click(farmSprite, (): void => {
+    this.click(farmZone, (): void => {
       if (this.state.farm !== 'Sheep') {
         this.game.scene.keys[this.state.farm].autosave();
         this.scene.stop();
@@ -232,7 +234,7 @@ class Profile extends Phaser.Scene {
     const farmPosition: Iposition = { x: 720, y: 1025 };
     if (this.state.progress.chicken.open) {
       const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-chicken-farm').setOrigin(1, 0.5).setDepth(1);
-      this.add.text(farmPosition.x - 215, farmPosition.y - 25, `${this.state.progress.chicken.part}/${this.state.progress.chicken.max}`, {
+      this.add.text(farmPosition.x - 215, farmPosition.y - 15, `${this.state.progress.chicken.part}/${this.state.progress.chicken.max}`, {
         font: '28px Shadow',
         color: '#ffe5d7'
       }).setOrigin(0.5, 0.5).setStroke('#522007', 5).setDepth(1);
@@ -324,134 +326,6 @@ class Profile extends Phaser.Scene {
     } else {
       this.add.sprite(farmPosition.x, farmPosition.y, 'profile-cow-farm-lock').setOrigin(0, 0.5);
       const text: Phaser.GameObjects.Text = this.add.text(farmPosition.x + 150, farmPosition.y, this.state.lang.openChickenFarm, {
-        font: '20px Shadow',
-        color: '#fbd0b9',
-        wordWrap: { width: 250 },
-        align: 'center',
-      }).setOrigin(0.5).setDepth(2);
-
-      const textBounds: Phaser.Geom.Rectangle = text.getBounds();
-
-      this.add.graphics({ x: textBounds.left - 20, y: textBounds.top - 20 })
-        .fillStyle(0x2b3d11, 0.5)
-        .fillRoundedRect(0, 0, textBounds.width + 40, textBounds.height + 40).setDepth(1);
-    }
-  }
-
-  private createChickenFarmTestB(): void {
-    const farmPosition: Iposition = { x: 720, y: 1025 };
-    if (this.state.progress.chicken.open) {
-      const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-chicken-farm').setOrigin(1, 0.5).setDepth(1);
-      this.add.text(farmPosition.x - 215, farmPosition.y - 25, `${this.state.progress.chicken.part}/${this.state.progress.chicken.max}`, {
-        font: '28px Shadow',
-        color: '#ffe5d7'
-      }).setOrigin(0.5, 0.5).setStroke('#522007', 5).setDepth(1);
-
-      this.chickenNotificator = new Notificator(this, { x: farmPosition.x - 160, y: farmPosition.y - 125 }, true);
-
-      this.click(farmSprite, (): void => {
-        if (this.state.farm !== 'Chicken') {
-          this.game.scene.keys[this.state.farm].autosave();
-          this.scene.stop();
-          this.scene.stop(this.state.farm);
-          this.scene.stop(this.state.farm + 'Bars');
-          this.scene.start('Chicken' + 'Preload', this.state);
-        } else {
-          this.game.scene.keys[this.state.farm].scrolling.downHandler();
-          this.game.scene.keys[this.state.farm].scrolling.enabled = true;
-          this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-          this.scene.stop();
-        }
-      }, 8);
-
-    } else if (this.state.userSheep.part >= this.state.sheepSettings.sheepParts.length 
-      && this.state.sheepTasks.filter(el => el.part === this.state.sheepSettings.sheepParts.length).every(el => el.done === 1)) {
-      this.add.sprite(farmPosition.x, farmPosition.y, 'profile-chicken-farm').setOrigin(1, 0.5).setDepth(1);
-      this.add.sprite(farmPosition.x, farmPosition.y, 'profile-sticker').setOrigin(1, 0.5).setDepth(1)
-      const btn: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x - 125, farmPosition.y, 'profile-btn').setDepth(1);
-      const title: Phaser.GameObjects.Text = this.add.text(btn.x + 15, btn.y - 5, shortNum(this.state.progress.chicken.price), {
-        font: '22px Shadow',
-        color: '#FBD0B9',
-        wordWrap: { width: 165 }
-      }).setOrigin(0.5, 0.5).setStroke('#1F530A', 5).setDepth(1);
-
-      const left: number = title.getBounds().left - 17;
-      const img: Phaser.GameObjects.Sprite = this.add.sprite(left, title.y, 'sheepCoin').setScale(0.12).setDepth(1);
-
-      this.clickShopBtn({ btn: btn, title: title, img: img }, (): void => {
-        this.game.scene.keys[this.state.farm].buyNextFarm();
-        this.game.scene.keys[this.state.farm].scrolling.downHandler();
-        this.game.scene.keys[this.state.farm].scrolling.enabled = true;
-        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-        this.scene.stop();
-      });
-    } else {
-      this.add.sprite(farmPosition.x, farmPosition.y - 6, 'profile-chicken-farm-lock').setOrigin(1, 0.5);
-      const text: Phaser.GameObjects.Text = this.add.text(farmPosition.x - 150, farmPosition.y - 20, this.state.lang.accessSheepFarmDone, {
-        font: '20px Shadow',
-        color: '#fbd0b9',
-        wordWrap: { width: 250 },
-        align: 'center',
-      }).setOrigin(0.5).setDepth(2);
-      const textBounds: Phaser.Geom.Rectangle = text.getBounds();
-
-      this.add.graphics({ x: textBounds.left - 20, y: textBounds.top - 20 })
-        .fillStyle(0x2b3d11, 0.5)
-        .fillRoundedRect(0, 0, textBounds.width + 40, textBounds.height + 40).setDepth(1);
-    }
-  }
-
-  private createCowFarmTestB(): void {
-    const farmPosition: Iposition = { x: 0, y: 1050 };
-
-    if (this.state.progress.cow.open) {
-      const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-cow-farm').setOrigin(0, 0.5);
-
-      this.add.text(farmPosition.x + 290, farmPosition.y + 10, `${this.state.progress.cow.part}/${this.state.progress.cow.max}`, {
-        font: '28px Shadow',
-        color: '#ffe5d7'
-      }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
-
-      this.cowNotificator = new Notificator(this, { x: farmPosition.x + 280, y: farmPosition.y - 100 }, true);
-      this.click(farmSprite, (): void => {
-        if (this.state.farm !== 'Cow') {
-          this.game.scene.keys[this.state.farm].autosave();
-          this.scene.stop();
-          this.scene.stop(this.state.farm);
-          this.scene.stop(this.state.farm + 'Bars');
-          this.scene.start('Cow' + 'Preload', this.state);
-        } else {
-          this.game.scene.keys[this.state.farm].scrolling.downHandler();
-          this.game.scene.keys[this.state.farm].scrolling.enabled = true;
-          this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-          this.scene.stop();
-        }
-      }, 8);
-    } else if (this.state.userChicken.part >= this.state.chickenSettings.chickenParts.length 
-      && this.state.chickenTasks.filter(el => el.part === this.state.chickenSettings.chickenParts.length).every(el => el.done === 1)) {
-        this.add.sprite(farmPosition.x, farmPosition.y, 'profile-cow-farm').setOrigin(0, 0.5);
-        this.add.sprite(farmPosition.x + 30, farmPosition.y, 'profile-sticker').setOrigin(0, 0.5).setDepth(1)
-        const btn: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x + 145, farmPosition.y, 'profile-btn').setDepth(1);
-        const title: Phaser.GameObjects.Text = this.add.text(btn.x + 15, btn.y - 5, shortNum(this.state.progress.cow.price), {
-          font: '22px Shadow',
-          color: '#FBD0B9',
-          wordWrap: { width: 165 }
-        }).setOrigin(0.5, 0.5).setStroke('#1F530A', 5).setDepth(1);
-  
-        const left: number = title.getBounds().left - 17;
-        const img: Phaser.GameObjects.Sprite = this.add.sprite(left, title.y, 'chickenCoin').setScale(0.12).setDepth(1);
-  
-        this.clickShopBtn({ btn: btn, title: title, img: img }, (): void => {
-          this.game.scene.keys[this.state.farm].buyNextFarm();
-          this.game.scene.keys[this.state.farm].scrolling.downHandler();
-          this.game.scene.keys[this.state.farm].scrolling.enabled = true;
-          this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-          this.scene.stop();
-        });
-    } else {
-      this.add.sprite(farmPosition.x, farmPosition.y, 'profile-cow-farm-lock').setOrigin(0, 0.5);
-      const string: string = this.state.progress.chicken.part > 0 ? this.state.lang.accessChickenFarmDone : this.state.lang.accessSecondFarmDone
-      const text: Phaser.GameObjects.Text = this.add.text(farmPosition.x + 150, farmPosition.y, string, {
         font: '20px Shadow',
         color: '#fbd0b9',
         wordWrap: { width: 250 },
@@ -752,12 +626,12 @@ class Profile extends Phaser.Scene {
 
   private createClan(): void {
     const pos: Iposition = {
-      x: 620,
-      y: 420
+      x: 610,
+      y: 400
     }
     const size: Isize = {
       width: 150,
-      height: 150
+      height: 210
     }
     const zone: Phaser.GameObjects.Zone = this.add.zone(pos.x, pos.y, size.width, size.height).setDepth(1).setDropZone(undefined, () => {});
       

@@ -113,10 +113,8 @@ const chatInput: string = require('./../../assets/images/modal/chat/input.png');
 const chatTrash: string = require('./../../assets/images/modal/chat/trash.png');
 
 const profileBackground: string = require('./../../assets/images/profile/background.jpg');
-const profileBackButton: string = require('./../../assets/images/profile/back-button.png');
-const profileSheepFarm: string = require('./../../assets/images/profile/sheep-farm.png');
-const profileChickenFarm: string = require('./../../assets/images/profile/chicken-farm.png');
 const profileCowFarm: string = require('./../../assets/images/profile/cow-farm.png');
+const profileChickenFarm: string = require('./../../assets/images/profile/chicken-farm.png');
 const profileEventFarm: string = require('./../../assets/images/profile/event-farm.png');
 const profileSticker: string = require('./../../assets/images/profile/sticker.png');
 const profileCowFarmLock: string = require('./../../assets/images/profile/cow-farm-lock.png');
@@ -222,10 +220,8 @@ class Preload extends Phaser.Scene {
 
     //сцена Profile (профиль)
     this.load.image('profile-bg', profileBackground);
-    this.load.image('profile-back-button', profileBackButton);
-    this.load.image('profile-sheep-farm', profileSheepFarm);
-    this.load.image('profile-chicken-farm', profileChickenFarm);
     this.load.image('profile-cow-farm', profileCowFarm);
+    this.load.image('profile-chicken-farm', profileChickenFarm);
     this.load.image('profile-event-farm', profileEventFarm);
     this.load.image('profile-sticker', profileSticker);
     this.load.image('profile-cow-farm-lock', profileCowFarmLock);
