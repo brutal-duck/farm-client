@@ -503,7 +503,7 @@ export default [
     sort: 2,
     type: 3,
     state: 0,
-    count: 480,
+    count: 60,
     diamonds: 2,
     xp: 0,
     id: 33,
