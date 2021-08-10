@@ -25,6 +25,10 @@ export default class ChangeClanNameWindow {
     this.y = this.scene.cameras.main.centerY;
     this.change = false;
     this.scene.textHeader.setText(this.scene.state.lang.changeClanName);
+
+    this.scene.events.once(Phaser.Scenes.Events.SHUTDOWN,() => {
+      this.removeInput();
+    })
   }
 
   private create(): void {
@@ -91,9 +95,12 @@ export default class ChangeClanNameWindow {
       this.scene.close,
       this.scene.textHeader,
       this.inputText,
+      inputZone,
       inputBg,
       changeNameBtn.btn,
       changeNameBtn.title,
+      changeNameBtn.text1,
+      changeNameBtn.img1,
       this.result,
     );
 
@@ -104,8 +111,8 @@ export default class ChangeClanNameWindow {
         root.scrollIntoView(false)
         this.modalElements.forEach((el) => el.setY(el.y + padding));
         const height = Number(this.scene.game.config.height) / 12 - 100;
-        const startTop: number = 47;
-        const startBottom: number = 47;
+        const startTop: number = 75;
+        const startBottom: number = 19;
         this.input.style.top = `${startTop + height / 4}%`;
         this.input.style.bottom = `${startBottom - height / 4}%`;
         centered = false;
@@ -113,8 +120,8 @@ export default class ChangeClanNameWindow {
       } else if (windowHeight === tempHeight && !centered) {
         this.modalElements.forEach((el) => el.setY(el.y - padding));
         const height = Number(this.scene.game.config.height) / 12 - 100;
-        const startTop: number = 37;
-        const startBottom: number = 57;
+        const startTop: number = 45;
+        const startBottom: number = 49;
         this.input.style.top = `${startTop + height / 4}%`;
         this.input.style.bottom = `${startBottom - height / 4}%`;
         centered = true;
@@ -153,9 +160,6 @@ export default class ChangeClanNameWindow {
       if (this.input.value.length < 6 || this.input.value.length > 20) checkName = false;
       
       if (checkName) {
-        let login: string = this.scene.state.user.login;
-        if (this.scene.state.platform !== 'web' && this.scene.state.platform !== 'android') login = this.scene.state.name;
-        const avatar: string = Number(this.scene.state.user.avatar) > 0 ? this.scene.state.user.avatar : this.scene.state.avatar;
         this.change = true;
         axios.post(process.env.API + '/changeClanName', {
           clanId: this.scene.state.clan.id,
