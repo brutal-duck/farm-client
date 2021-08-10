@@ -335,7 +335,7 @@ class Sheep extends Phaser.Scene {
 
     console.log('init ~ this.state', this.state.userSheep)
     this.collectorConfig = config
-    this.collectorCD = 1000 / this.collectorConfig.find((level, i) => this.state.userSheep.collectorSpeedLevel === i).collectorSpeed;
+    this.collectorCD = Math.round(1000 / this.collectorConfig[this.state.userSheep.collectorSpeedLevel].collectorSpeed)
     console.log('init ~ this.collectorCD', this.collectorCD)
     this.collectorIsReady = false
   }
@@ -382,7 +382,7 @@ class Sheep extends Phaser.Scene {
           if (sheep.wool >= 1000 && sheep.type !== 0) {
             this.collectWool(sheep);
             this.collectorIsReady = false
-            this.collectorCD = 1000 / this.collectorConfig.find((level, i) => this.state.userSheep.collectorSpeedLevel === i).collectorSpeed;
+            this.collectorCD = Math.round(1000 / this.collectorConfig[this.state.userSheep.collectorSpeedLevel].collectorSpeed)
             // console.log('collect ~ this.collectorCD:', this.collectorCD)
             break;
           }

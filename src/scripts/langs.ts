@@ -906,6 +906,8 @@ export default {
     jackpotCongratulations: 'Поздравляем! вы выйграли',
     fortuneWelcome: 'Испытай колесо фортуны! Попробуй выйграть главный приз!',
     maxCollectorLevel: 'Достигнут максимальный уровень собирателя',
+    maxCollectortTimeLevel: 'Достигнут максимальный уровень времени собирателя',
+    maxCollectorSpeedLevel: 'Достигнут максимальный уровень мощности собирателя',
     probabilityOfProduction: 'Вероятность производства',
     milkInStorage: 'Молока в хранилищах',
     slotSize: 'Размер партии производства',
@@ -1852,6 +1854,8 @@ export default {
     jackpotCongratulations: 'Поздравляем! вы выйграли',
     fortuneWelcome: 'Испытай колесо фортуны! Попробуй выйграть главный приз!',
     maxCollectorLevel: 'Достигнут максимальный уровень собирателя',
+    maxCollectortTimeLevel: 'Достигнут максимальный уровень времени собирателя',
+    maxCollectorSpeedLevel: 'Достигнут максимальный уровень мощности собирателя',
     probabilityOfProduction: 'Вероятность производства',
     milkInStorage: 'Молока в хранилищах',
     slotSize: 'Размер партии производства',
@@ -1888,5 +1892,6 @@ export default {
     generalChat: 'Общий чат',
     personalChat: 'Личный чат',
     settingsHeader: 'Настройки игры',
+
   },
 }

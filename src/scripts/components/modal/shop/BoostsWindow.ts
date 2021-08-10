@@ -1,4 +1,5 @@
 import { shortNum, shortTime } from "../../../general/basic";
+import { config } from "../../../local/sheepSettings";
 import Shop from "../../../scenes/Modal/Shop/Main";
 import Arrow from "../../animations/Arrow";
 
@@ -53,7 +54,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
 
   private create(): void {
     if (this.scene.state.farm === 'Sheep') {
-      this.collectorBoost();
+      this.sheepCollectorBoost();
       if (this.checkHerdBoost()) this.herdBoost();
       if (this.checkFeedBoost()) this.feedBoost();
       
@@ -96,6 +97,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     this.scene.add.text(225, 40 + this.scene.height, this.scene.state.lang[`${resource}Collector`], { font: '28px Shadow', color: '#FFFFFF' }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
     const collectorSprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(40, 65 + this.scene.height, `shop-${this.scene.state.farm.toLowerCase()}-${resource}-collector`).setOrigin(0, 0);
     const levelBg: Phaser.GameObjects.Sprite = this.scene.add.sprite(10, 55 + this.scene.height, 'level-bg').setOrigin(0, 0);
+
     let level: string = String(this.scene.state[`user${this.scene.state.farm}`].collectorLevel);
     if (this.scene.state[`user${this.scene.state.farm}`].collectorLevel === this.scene.state[`${this.scene.state.farm.toLowerCase()}CollectorSettings`].length) level = 'Max';
   
@@ -195,10 +197,114 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     }
   }
 
+  private sheepCollectorBoost(): void {
+    // собиратель шерсти
+    let resource: string = 'wool'
+
+    this.scene.add.sprite(0, 20 + this.scene.height, 'boost-bg').setOrigin(0, 0);
+    this.scene.add.text(225, 40 + this.scene.height, this.scene.state.lang[`${resource}Collector`], { font: '28px Shadow', color: '#FFFFFF' }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
+
+    const collectorSprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(40, 65 + this.scene.height, `shop-${this.scene.state.farm.toLowerCase()}-${resource}-collector`).setOrigin(0, 0);
+    // const levelBg: Phaser.GameObjects.Sprite = this.scene.add.sprite(10, 55 + this.scene.height, 'level-bg').setOrigin(0, 0);
+  
+    // осталось времени
+    if (this.scene.state[`user${this.scene.state.farm}`].collector > 0) {
+      const time: string = shortTime(this.scene.state[`user${this.scene.state.farm}`].collector, this.scene.state.lang);
+      this.collectorTimer = this.scene.add.text(120, 235 + this.scene.height, this.scene.state.lang.still + ' ' + time, { font: '20px Shadow', color: '#FFFFFF' }).setOrigin(0.5, 0.5);
+    }
+    
+    this.freeCollectorBtns();
+  
+    // 4 часа собирателя
+    if (this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].unlockCollector4 <= this.scene.state[`user${this.scene.state.farm}`].part) {
+  
+      let hours4 = this.scene.boostButton(350, 220 + this.scene.height, '4', this.scene.state.lang.shortHours, String(this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].collectorPrice4), 'diamond');
+      if (this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].collector4 > 0) {
+        hours4.icon.setVisible(false);
+        hours4.right.setText(this.scene.state.lang.take);
+        const buttonGeom: Phaser.Geom.Rectangle =  hours4.btn.getBounds();
+        const text: Phaser.GameObjects.Text = this.scene.add.text(buttonGeom.left - 2, buttonGeom.top + 5, this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].collector4, {
+          font: '28px Shadow',
+          color: '#FFFFFF'
+        }).setOrigin(0.5).setDepth(2).setShadow(2, 3, '#724719', 5);
+        const textGeom: Phaser.Geom.Rectangle = text.getBounds();
+        const width: number = textGeom.width + 30 < 60 ? 60 : textGeom.width + 30;
+        this.scene.add.sprite(text.x, text.y, 'boost-counter-bg').setDisplaySize(width, textGeom.height + 25).setDepth(1);
+      }
+      this.scene.clickBoostBtn(hours4, (): void => {
+        this.scene.game.scene.keys[this.scene.state.farm].buyCollector(3);
+        this.scene.game.scene.keys[this.scene.state.farm].autosave();
+      });
+  
+    } else this.scene.boostButton(350, 220 + this.scene.height, '4', this.scene.state.lang.shortHours, String(this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].unlockCollector4), 'lock');
+      
+  
+    // 12 часа собирателя
+    if (this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].unlockCollector12 <= this.scene.state[`user${this.scene.state.farm}`].part) {
+  
+      let hours12 = this.scene.boostButton(350, 280 + this.scene.height, '12', this.scene.state.lang.shortHours, String(this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].collectorPrice12), 'diamond');
+      if (this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].collector12 > 0) {
+        hours12.icon.setVisible(false);
+        hours12.right.setText(this.scene.state.lang.take);
+        const buttonGeom: Phaser.Geom.Rectangle =  hours12.btn.getBounds();
+        const text: Phaser.GameObjects.Text = this.scene.add.text(buttonGeom.left - 2, buttonGeom.top + 5, this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].collector12, {
+          font: '28px Shadow',
+          color: '#FFFFFF'
+        }).setOrigin(0.5).setDepth(2).setShadow(2, 3, '#724719', 5);
+        const textGeom: Phaser.Geom.Rectangle = text.getBounds();
+        const width: number = textGeom.width + 30 < 60 ? 60 : textGeom.width + 30;
+        this.scene.add.sprite(text.x, text.y, 'boost-counter-bg').setDisplaySize(width, textGeom.height + 25).setDepth(1);
+      }
+      this.scene.clickBoostBtn(hours12, (): void => {
+        this.scene.game.scene.keys[this.scene.state.farm].buyCollector(4);
+        this.scene.game.scene.keys[this.scene.state.farm].autosave();
+      });
+  
+    } else this.scene.boostButton(350, 280 + this.scene.height, '12', this.scene.state.lang.shortHours, String(this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].unlockCollector12), 'lock');
+      
+    let check: boolean;
+    if (this.scene.state.farm === 'Sheep') check = this.scene.state[`user${this.scene.state.farm}`].collectorLevel < this.scene.state[`${this.scene.state.farm.toLowerCase()}CollectorSettings`].length && this.scene.state[`user${this.scene.state.farm}`].tutorial >= 100;
+    if (this.scene.state.farm === 'Chicken') check = this.scene.state[`user${this.scene.state.farm}`].collectorLevel < this.scene.state[`${this.scene.state.farm.toLowerCase()}CollectorSettings`].length;
+    if (this.scene.state.farm === 'Cow') check = this.scene.state[`user${this.scene.state.farm}`].collectorLevel < this.scene.state[`${this.scene.state.farm.toLowerCase()}CollectorSettings`].length;
+    
+    // кнопка улучшения
+    if (check) {
+      
+      this.improve = this.scene.add.sprite(120, 285 + this.scene.height, 'improve-collector');
+      this.improveText = this.scene.add.text(120, 281 + this.scene.height, this.scene.state.lang.improve, {
+        font: '26px Shadow',
+        color: '#FFFFFF'
+      }).setOrigin(0.5, 0.5).setStroke('#3B5367', 4);
+  
+      this.scene.clickShopBtn({ btn: this.improve, title: this.improveText }, (): void => { this.scene.game.scene.keys[this.scene.state.farm].showImproveCollector() });
+  
+      if (this.scene.state[`user${this.scene.state.farm}`].collector === 0) {
+        this.improve.y -= 15;
+        this.improveText.y -= 15;
+      }
+  
+    } else {
+      
+      if (this.scene.state[`user${this.scene.state.farm}`].collector > 0) {
+        this.collectorTimer.y += 45;
+        collectorSprite.y += 25;
+        // levelBg.y += 25;
+        // userLevel.y += 25;
+        // levelText.y += 25;
+      } else {
+        collectorSprite.y += 35;
+        // levelBg.y += 35;
+        // userLevel.y += 35;
+        // levelText.y += 35;
+      }
+    }
+  }
+
+
   private freeCollectorBtns(): void {
     this.destroyCollectorBtns();
 
-    let freeTime: number = this.scene.state[`${this.farm.toLowerCase()}CollectorSettings`].find((data: IcollectorSettings) => data.level === this.scene.state[`user${this.farm}`].collectorLevel).time;
+    let freeTime: number = this.farm === 'Sheep' ? config[this.scene.state.userSheep.collectorTimeLevel].collectorTime : this.scene.state[`${this.farm.toLowerCase()}CollectorSettings`].find((data: IcollectorSettings) => data.level === this.scene.state[`user${this.farm}`].collectorLevel).time;
 
     // бесплатный
     if (this.scene.state[`user${this.farm}`].collector === 0) {
@@ -256,6 +362,8 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   
     }
   }
+
+
 
   private eventCollectorBoost(): void {
     // собиратель шерсти

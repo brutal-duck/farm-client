@@ -74,7 +74,15 @@ export default class ImproveCollectorWindowNew {
 
 
   private createTimeBtn(): void {
-    if (this.scene.state.userSheep.part <= this.scene.state.userSheep.collectorTimeLevel + 1) {
+    if (!this.nextTimeLevel) {
+      this.scene.add.text(
+        this.scene.body.getCenter().x,
+        this.timeText.getBottomCenter().y + 60,
+        this.scene.state.lang.maxCollectortTimeLevel,
+        { font: '28px Bip', color: '#925C28', align: 'center', wordWrap: { width: 560 } }
+      ).setOrigin(0.5)
+
+    } else if (this.scene.state.userSheep.part <= this.scene.state.userSheep.collectorTimeLevel + 1) {
       const timeIcon = {
         icon: 'lock',
         text: this.nextTimeLevel ? `${this.scene.state.lang.shortPart} ${this.scene.state.userSheep.part + 1}` : '',
@@ -91,7 +99,15 @@ export default class ImproveCollectorWindowNew {
 
 
   private createSpeedBtn(): void {
-    if (this.scene.state.userSheep.part <= this.scene.state.userSheep.collectorSpeedLevel + 1) {
+    if (!this.nextSpeedLevel) {
+      this.scene.add.text(
+        this.scene.body.getCenter().x,
+        this.speedText.getBottomCenter().y + 60,
+        this.scene.state.lang.maxCollectorSpeedLevel,
+        { font: '28px Bip', color: '#925C28', align: 'center', wordWrap: { width: 560 } }
+      ).setOrigin(0.5)
+
+    } else if (this.scene.state.userSheep.part <= this.scene.state.userSheep.collectorSpeedLevel + 1) {
       const timeIcon = {
         icon: 'lock',
         text: this.nextSpeedLevel ? `${this.scene.state.lang.shortPart} ${this.scene.state.userSheep.part + 1}` : '',
@@ -122,13 +138,14 @@ export default class ImproveCollectorWindowNew {
 
     if (success) {
       Object.values(btn).forEach(el => { el?.destroy() })
-      this.setLevelConfig()
-
+      
       if (improveType === 'time') {
         this.scene.state.userSheep.collectorTimeLevel++
+        this.setLevelConfig()
         this.createTimeBtn()
       } else if (improveType === 'speed') {
         this.scene.state.userSheep.collectorSpeedLevel++
+        this.setLevelConfig()
         this.createSpeedBtn()
       }
       
@@ -159,8 +176,8 @@ export default class ImproveCollectorWindowNew {
     if (improveType === 'time' && this.scene.state.userSheep.money >= this.config[this.scene.state.userSheep.collectorTimeLevel + 1].collectorTimeCost) {
       this.scene.state.userSheep.money -= this.config[this.scene.state.userSheep.collectorTimeLevel + 1].collectorTimeCost
       return true
-    } else if (improveType === 'speed' && this.scene.state.user.diamonds >= this.config[this.scene.state.userSheep.collectorTimeLevel + 1].collectorSpeedCost) {
-      this.scene.state.user.diamonds -= this.config[this.scene.state.userSheep.collectorTimeLevel + 1].collectorSpeedCost
+    } else if (improveType === 'speed' && this.scene.state.user.diamonds >= this.config[this.scene.state.userSheep.collectorSpeedLevel + 1].collectorSpeedCost) {
+      this.scene.state.user.diamonds -= this.config[this.scene.state.userSheep.collectorSpeedLevel + 1].collectorSpeedCost
       return true
     } else return false
   }
@@ -180,6 +197,8 @@ export default class ImproveCollectorWindowNew {
 
   private setNextLevelInfoText(): void {
     if (this.nextTimeLevel) this.timeNextText.setText(`(+${this.nextTimeLevel - this.currentTimeLevel})`).setX(this.timeText.getRightCenter().x + 10)
+    else this.timeNextText.setText('')
     if (this.nextSpeedLevel) this.speedNextText.setText(`(+${(this.nextSpeedLevel - this.currentSpeedLevel).toFixed(1)})`).setX(this.speedText.getRightCenter().x + 10)
+    else this.speedNextText.setText('')
   }
 }
