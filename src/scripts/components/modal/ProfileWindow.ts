@@ -1,6 +1,8 @@
 import axios from "axios";
 import Modal from "../../scenes/Modal/Modal";
 import LocalStorage from '../../libs/LocalStorage';
+import { Icon } from "../Utils/LogoManager";
+import LogoManager from './../Utils/LogoManager';
 
 export default class ProfileWindow {
   public scene: Modal;
@@ -13,7 +15,8 @@ export default class ProfileWindow {
   private status: Phaser.GameObjects.Text; 
   private nickBtn: Phaser.GameObjects.Sprite;
   private nickText: Phaser.GameObjects.Text;
-  private bg: Phaser.GameObjects.Sprite;
+  private topBg: Phaser.GameObjects.Sprite;
+  private bottomBg: Phaser.GameObjects.TileSprite;
   private header: Phaser.GameObjects.Sprite;
   private headerText: Phaser.GameObjects.Text;
   private avatar: Phaser.GameObjects.Sprite;
@@ -37,6 +40,8 @@ export default class ProfileWindow {
   private profile: IprofileData;
   private owner: boolean = false;
 
+  private bottomHeight: number = 150;
+
   constructor(scene: Modal) {
     this.scene = scene;
     this.getUserInfo();
@@ -44,7 +49,7 @@ export default class ProfileWindow {
 
   private init(): void {
     this.x = this.scene.cameras.main.centerX;
-    this.y = this.scene.cameras.main.centerY;
+    this.y = this.scene.cameras.main.centerY - this.bottomHeight / 2;
     if (this.profile) {
       this.owner = false;
     } else {
@@ -59,6 +64,7 @@ export default class ProfileWindow {
         avatar: 'avatar',
         status: this.scene.state.user.status,
         level: this.scene.state.user.level,
+        clan: this.scene.state.clan
       };
       this.profile = profile;
     }
@@ -128,11 +134,13 @@ export default class ProfileWindow {
     if (this.owner) this.createOwnerBtns();
     else this.createForeignBtns();
     this.setListeners();
+    this.createClanInfo();
   }
 
   private createMainElements(): void {
-    this.bg = this.scene.add.sprite(this.x, this.y, 'profile-window-bg');
-    this.height = this.bg.getBounds().height;
+    this.topBg = this.scene.add.sprite(this.x, this.y, 'profile-window-bg');
+    this.createBottomBg();
+    this.height = this.topBg.getBounds().height;
     this.createHeader();
     this.createFooter();
   }
@@ -151,7 +159,7 @@ export default class ProfileWindow {
   }
 
   private createFooter(): void {
-    this.footer = this.scene.add.sprite(this.x, this.y + this.height / 2 + 23, 'profile-window-footer').setDepth(-1).setOrigin(0.5, 1);
+    this.footer = this.scene.add.sprite(this.x, this.bottomBg.getBounds().bottom - 55, 'profile-window-footer').setOrigin(0.5, 0);
   }
 
   private createAvatar(): void {
@@ -236,15 +244,15 @@ export default class ProfileWindow {
   private createOwnerBtns(): void {
     const pos1: Iposition = {
       x: this.x - 165,
-      y: this.y + 97,
+      y: this.y + 90,
     };
     const pos2: Iposition = {
       x: this.x - 25,
-      y: this.y + 97,
+      y: this.y + 90,
     }
     const pos3: Iposition = {
       x: this.x + 105,
-      y: this.y + 97,
+      y: this.y + 90,
     }
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Shadow',
@@ -289,15 +297,15 @@ export default class ProfileWindow {
   private createForeignBtns(): void {
     const pos1: Iposition = {
       x: this.x - 150,
-      y: this.y + 97,
+      y: this.y + 90,
     };
     const pos2: Iposition = {
       x: this.x,
-      y: this.y + 97,
+      y: this.y + 90,
     }
     const pos3: Iposition = {
       x: this.x + 150,
-      y: this.y + 97,
+      y: this.y + 90,
     }
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Shadow',
@@ -421,5 +429,72 @@ export default class ProfileWindow {
     const modal: Imodal = { type: 1, sysType };
     this.scene.state.modal = modal;
     this.scene.scene.restart(this.scene.state);
+  }
+
+  private createBottomBg(): void {
+    const pos: Iposition = {
+      x: this.x,
+      y: this.topBg.getBounds().bottom - 40,
+    };
+    const width: number = 527;
+    this.bottomBg = this.scene.add.tileSprite(pos.x, pos.y, width, this.bottomHeight, 'white-pixel').setTint(0xFA8F1F).setDepth(-1).setOrigin(0.5, 0);
+    this.scene.add.nineslice(pos.x, pos.y + 40, width - 40, this.bottomHeight , 'clan-window-search-plate-ns', 5).setOrigin(0.5, 0).setDepth(1);
+  }
+
+  private createClanInfo(): void {
+    const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '20px',
+      color: '#954F00',
+      wordWrap: { width: 350, useAdvancedWrap: true },
+    };
+    const bannerStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Bip',
+      fontSize: '16px',
+      color: '#D98C38',
+      wordWrap: { width: 330 },
+    };
+    const btnTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      wordWrap: { width: 100 },
+      align: 'center',
+      fontSize: '16px',
+      color: '#ffe2e2',
+      stroke: '#D78A31',
+      strokeThickness: 3,
+    };
+    const geom: Phaser.Geom.Rectangle = this.bottomBg.getBounds();
+    const pos: Iposition = {
+      x: geom.left + 60,
+      y: geom.centerY + 40,
+    };
+    if (this.profile.clan) {
+      const title: Phaser.GameObjects.Text = this.scene.add.text(geom.centerX, geom.centerY, 'В клане', textStyle).setOrigin(0.5).setDepth(2);
+      const avatar: Icon = LogoManager.createIcon(this.scene, pos.x, pos.y, this.profile.clan.avatar).setScale(0.3).setDepth(2);
+      const avatarGeom: Phaser.Geom.Rectangle = avatar.getBounds();
+      const text: Phaser.GameObjects.Text = this.scene.add.text(avatarGeom.right + 10, avatarGeom.centerY, this.profile.clan.name, textStyle).setDepth(2).setOrigin(0, 0.5);
+      if (this.owner) {
+        const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(geom.centerX + 100, pos.y, 'profile-window-button-yellow').setOrigin(0, 0.5).setDepth(2);
+        const btnText: Phaser.GameObjects.Text = this.scene.add.text(btn.getCenter().x, btn.getCenter().y - 5, this.scene.state.lang.clans, btnTextStyle).setDepth(2).setOrigin(0.5);
+        this.scene.clickModalBtn({ btn: btn, title: btnText }, () => {
+          console.log('Открывается ферма клана')
+        });
+      }
+    } else {
+      if (!this.owner) {
+        this.scene.add.text(this.scene.cameras.main.centerX, pos.y, this.scene.state.lang.userHasNotInClan, textStyle).setAlign('center').setDepth(2).setOrigin(0.5);
+      } else {
+        const bannerText = this.scene.add.text(pos.x - 20, pos.y, this.scene.state.lang.joinClanBanner, bannerStyle).setDepth(2).setOrigin(0, 0.5);
+        const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(bannerText.getBounds().right + 5, pos.y, 'profile-window-button-yellow').setOrigin(0, 0.5).setDepth(2);
+        const btnText: Phaser.GameObjects.Text = this.scene.add.text(btn.getCenter().x, btn.getCenter().y - 5, this.scene.state.lang.clans, btnTextStyle).setDepth(2).setOrigin(0.5);
+        this.scene.clickModalBtn({ btn: btn, title: btnText }, () => {
+          this.scene.state.modal = {
+            type: 17,
+            clanTabType: 3,
+          };
+          this.scene.scene.restart(this.scene.state);
+        });
+      }
+    }
   }
 };

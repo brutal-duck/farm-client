@@ -155,6 +155,14 @@ interface IprofileData {
   level: number;
   avatar: string;
   avatarType?: number;
+  clan?: IclanData;
+}
+interface IclanData {
+  id: string;
+  name: string;
+  ownerId: string;
+  isClosed: boolean;
+  avatar: IconfigIcon;
 }
 interface IdataAutoSave {
   id: string;

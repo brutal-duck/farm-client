@@ -283,6 +283,7 @@ export default function typePreload(): void {
         this.load.image('profile-window-button-yellow', profileWindowBtnYellow);
         this.load.image('profile-window-button-red', profileWindowBtnRed);
         this.load.image('profile-window-button-green', profileWindowBtnGreen);
+        this.load.image('clan-window-search-plate-ns', clanWindowSearchPlate);
         this.load.image('tasks-close', tasksClose);
         break;
       case 16: 
