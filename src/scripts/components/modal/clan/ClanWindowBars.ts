@@ -162,7 +162,7 @@ export default class ClanTabsWindow {
     if (type === 1) {
       const mask = new Phaser.Display.Masks.BitmapMask(this.scene, tabIcon);
       mask.invertAlpha = true;
-      flag = LogoManager.createFlag(this.scene, tabGeom.centerX, tabGeom.centerY - 10 - 2, this.scene.state.clan.avatar).setScale(0.223).setMask(mask);
+      flag = LogoManager.createFlag(this.scene, tabGeom.centerX + 5, tabGeom.centerY - 10 - 5, this.scene.state.clan.avatar).setScale(0.205).setMask(mask);
     }
     this.modalElements.push(tab, tabIcon);
     if (!active) {

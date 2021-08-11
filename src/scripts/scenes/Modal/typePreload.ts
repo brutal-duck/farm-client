@@ -151,6 +151,7 @@ const clanFrame7: string = require('../../../assets/images/modal/clan/icon/frame
 const clanFrame8: string = require('../../../assets/images/modal/clan/icon/frame-8.png');
 const clanFrame9: string = require('../../../assets/images/modal/clan/icon/frame-9.png');
 const clanFrame10: string = require('../../../assets/images/modal/clan/icon/frame-10.png');
+const clanFrame11: string = require('../../../assets/images/modal/clan/icon/frame-11.png');
 const clanIcon1: string = require('../../../assets/images/modal/clan/icon/icon-1.png');
 const clanIcon2: string = require('../../../assets/images/modal/clan/icon/icon-2.png');
 const clanIcon3: string = require('../../../assets/images/modal/clan/icon/icon-3.png');
@@ -379,6 +380,7 @@ export default function typePreload(): void {
       this.load.image('clan-frame-8', clanFrame8);
       this.load.image('clan-frame-9', clanFrame9);
       this.load.image('clan-frame-10', clanFrame10);
+      this.load.image('clan-frame-11', clanFrame11);
       this.load.image('clan-bg-1', clanBg1);
       this.load.image('clan-bg-2', clanBg2);
       this.load.image('clan-bg-3', clanBg3);
