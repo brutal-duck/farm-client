@@ -736,6 +736,14 @@ interface IsociaTasks {
   subNotification?: boolean;
   sendPost?:boolean;
 }
+interface Iconfig {
+  collectorTime: number;
+  collectorTimeCost: number;
+  collectorSpeed: number;
+  collectorSpeedCost: number;
+  repositoryCost: number;
+  repositoryVolume: number;
+}
 interface Istate {
   platform: string;
   autoSaveSpeed: number;
@@ -826,4 +834,5 @@ interface Istate {
   yandexName?: string;
   musicVolume: number;
   soundVolume: number;
+  config: Iconfig[];
 }

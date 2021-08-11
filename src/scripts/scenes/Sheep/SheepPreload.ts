@@ -355,7 +355,7 @@ class SheepPreload extends Phaser.Scene {
   
   public init(state: Istate): void {
 
-    this.state  = state;
+    this.state = state;
     this.userReady = false;
     this.loadingReady = false;
     this.socket = false;

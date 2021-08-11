@@ -1,6 +1,5 @@
 import { randomString, sendSocialEvent } from "./basic";
 import Firework from '../components/animations/Firework';
-import { config } from "../local/sheepSettings";
 
 // получение животного по бусту
 function createBoostAnimal(): void {
@@ -258,7 +257,7 @@ function freeCollector(type: number = 1): void {
 
   if (user.collector === 0) {
 
-    let minutes: number = this.state.farm === 'Sheep' ? config[this.state.userSheep.collectorTimeLevel].collectorTime : settings.find((data: IcollectorSettings) => data.level === user.collectorLevel).time;
+    let minutes: number = this.state.farm === 'Sheep' ? this.state.config[this.state.userSheep.collectorTimeLevel].collectorTime : settings.find((data: IcollectorSettings) => data.level === user.collectorLevel).time;
 
     if (type === 1) {
 

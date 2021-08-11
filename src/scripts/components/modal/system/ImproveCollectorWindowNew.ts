@@ -1,5 +1,4 @@
 import { convertMoney, shortNum } from "../../../general/basic";
-import { config } from "../../../local/sheepSettings";
 import Modal from "../../../scenes/Modal/Modal";
 
 export default class ImproveCollectorWindowNew {
@@ -26,7 +25,7 @@ export default class ImproveCollectorWindowNew {
 
   private init(): void {
     this.farm = this.scene.state.farm.toLowerCase();
-    this.config = config
+    this.config = this.scene.state.config
     this.setLevelConfig()
     this.scene.resizeWindow(300);
   }

@@ -1,5 +1,4 @@
 import { shortNum, shortTime } from "../../../general/basic";
-import { config } from "../../../local/sheepSettings";
 import Shop from "../../../scenes/Modal/Shop/Main";
 import Arrow from "../../animations/Arrow";
 
@@ -304,7 +303,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   private freeCollectorBtns(): void {
     this.destroyCollectorBtns();
 
-    let freeTime: number = this.farm === 'Sheep' ? config[this.scene.state.userSheep.collectorTimeLevel].collectorTime : this.scene.state[`${this.farm.toLowerCase()}CollectorSettings`].find((data: IcollectorSettings) => data.level === this.scene.state[`user${this.farm}`].collectorLevel).time;
+    let freeTime: number = this.farm === 'Sheep' ? this.scene.state.config[this.scene.state.userSheep.collectorTimeLevel].collectorTime : this.scene.state[`${this.farm.toLowerCase()}CollectorSettings`].find((data: IcollectorSettings) => data.level === this.scene.state[`user${this.farm}`].collectorLevel).time;
 
     // бесплатный
     if (this.scene.state[`user${this.farm}`].collector === 0) {

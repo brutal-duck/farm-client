@@ -140,8 +140,6 @@ import {
 } from '../../general/interval';
 import Ads from '../../components/Utils/Ads';
 
-import { config } from '../../local/sheepSettings';
-
 class Sheep extends Phaser.Scene {
   constructor() {
     super('Sheep');
@@ -333,7 +331,7 @@ class Sheep extends Phaser.Scene {
     console.log('Sheep');
     this.autoprogress(true);
 
-    this.collectorConfig = config
+    this.collectorConfig = this.state.config
     this.collectorCD = Math.round(1000 / this.collectorConfig[this.state.userSheep.collectorSpeedLevel].collectorSpeed)
     this.collectorIsReady = false
     console.log('init ~ this.state', this.state.userSheep)
