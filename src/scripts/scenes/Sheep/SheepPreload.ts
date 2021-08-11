@@ -329,7 +329,7 @@ const scrollArrow: string = require("./../../../assets/images/scroll-arrow.png")
 const improveCollector: string = require("./../../../assets/images/modal/improve-collector.png");
 const tasksUncomplete: string = require("./../../../assets/images/modal/tasks/uncomplete.png");
 const tasksBarNs: string = require("./../../../assets/images/modal/tasks/bar-ns.png");
-const notificationBg: string = require('./../../../assets/images/notification.png');
+const notificationBg: string = require('./../../../assets/images/icons/notificator.png');
 const roundedBarSegment: string = require("./../../../assets/images/rounded-bar-segment.png");
 const circleOutline: string = require("./../../../assets/images/circle-outline.png");
 

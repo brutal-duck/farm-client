@@ -282,7 +282,7 @@ let eventTutorMerging: any = require("./../../../../assets/images/event/tutor-me
 let eventTerritoryBtn: any = require("./../../../../assets/images/event/territories/buy-button.png");
 let starterpackIcon: any = require("./../../../../assets/images/icons/starterpack.png");
 
-const notificationBg: string = require('../../../../assets/images/notification.png');
+const notificationBg: string = require('../../../../assets/images/icons/notificator.png');
 class EventPreload extends Phaser.Scene {
 
   public lang: string; // индекс языка

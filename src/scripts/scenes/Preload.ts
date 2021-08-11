@@ -29,19 +29,19 @@ const levelBg: string = require("./../../assets/images/modal/level-bg.png");
 const boostBg: string = require("./../../assets/images/modal/boost-bg.png");
 
 // другие окна
-const newbieBg: string = require("./../../assets/images/daily/newbie-bg.png");
-const newbieDay0: string = require("./../../assets/images/daily/newbie-day-0.png");
-const newbieDay1: string = require("./../../assets/images/daily/newbie-day-1.png");
-const newbieDay2: string = require("./../../assets/images/daily/newbie-day-2.png");
-const newbieDay3: string = require("./../../assets/images/daily/newbie-day-3.png");
-const newbieDay4: string = require("./../../assets/images/daily/newbie-day-4.png");
-const newbieDay5: string = require("./../../assets/images/daily/newbie-day-5.png");
-const newbieDay6: string = require("./../../assets/images/daily/newbie-day-6.png");
-const newbieDay7: string = require("./../../assets/images/daily/newbie-day-7.png");
-const dayYellow: string = require("./../../assets/images/daily/day-yellow.png");
-const dayPurple: string = require("./../../assets/images/daily/day-purple.png");
-const dayRed: string = require("./../../assets/images/daily/day-red.png");
-const awardReceived: string = require("./../../assets/images/daily/award-received.png");
+const newbieBg: string = require("./../../assets/images/modal/daily/newbie-bg.png");
+const newbieDay0: string = require("./../../assets/images/modal/daily/newbie-day-0.png");
+const newbieDay1: string = require("./../../assets/images/modal/daily/newbie-day-1.png");
+const newbieDay2: string = require("./../../assets/images/modal/daily/newbie-day-2.png");
+const newbieDay3: string = require("./../../assets/images/modal/daily/newbie-day-3.png");
+const newbieDay4: string = require("./../../assets/images/modal/daily/newbie-day-4.png");
+const newbieDay5: string = require("./../../assets/images/modal/daily/newbie-day-5.png");
+const newbieDay6: string = require("./../../assets/images/modal/daily/newbie-day-6.png");
+const newbieDay7: string = require("./../../assets/images/modal/daily/newbie-day-7.png");
+const dayYellow: string = require("./../../assets/images/modal/daily/day-yellow.png");
+const dayPurple: string = require("./../../assets/images/modal/daily/day-purple.png");
+const dayRed: string = require("./../../assets/images/modal/daily/day-red.png");
+const awardReceived: string = require("./../../assets/images/modal/daily/award-received.png");
 const donateBg: string = require("./../../assets/images/modal/donate.png");
 const doneChapterButton: string = require("./../../assets/images/modal/done-chapter-button.png");
 const shopWindow: string = require("./../../assets/images/modal/shop.png");
@@ -73,9 +73,9 @@ const herdBoostRoadSheep: string = require("./../../assets/images/sheep/herd-boo
 const herdBoostRoadChicken: string = require("./../../assets/images/chicken/herd-boost-road-chicken.png");
 const herdBoostRoadCow: string = require("./../../assets/images/cow/herd-boost-road-cow.png");
 const badMergingAnimation: string = require("./../../assets/images/bad-merging-animation.png");
-const boostWindowBg: string = require("./../../assets/images/boost/background.png");
-const boostCountdown: string = require("./../../assets/images/boost/countdown.png");
-const boostLeaves: string = require("./../../assets/images/boost/leaves.png");
+const boostWindowBg: string = require("./../../assets/images/modal/herd-boost/background.png");
+const boostCountdown: string = require("./../../assets/images/modal/herd-boost/countdown.png");
+const boostLeaves: string = require("./../../assets/images/modal/herd-boost/leaves.png");
 const flags: string = require("./../../assets/images/modal/flags.png");
 const herdBoostSheepIcon: string = require("./../../assets/images/icons/sheep-herd-boost.png");
 const herdBoostChickenIcon: string = require("./../../assets/images/icons/chicken-herd-boost.png");
@@ -158,14 +158,14 @@ const donateWindowSound: string = require('./../../assets/sounds/misc/donate-win
 const donateTakeSound: string = require('./../../assets/sounds/misc/donate-take-sound.mp3');
 const treeFallingSound: string = require('./../../assets/sounds/misc/tree-falling-sound.mp3');
 
-const profileWindowBtnYellow: string = require('./../../assets/images/modal/profile-window-button-yellow.png');
-const profileWindowBtnRed: string = require('./../../assets/images/modal/profile-window-button-red.png');
-const profileWindowBtnGreen: string = require('./../../assets/images/modal/profile-window-button-green.png');
-const profileWindowSettingsBtn: string = require('./../../assets/images/modal/profile-window-settings-btn.png');
-const profileWindowFooter: string = require('./../../assets/images/modal/profile-window-footer.png');
-const profileWindowHeader: string = require('./../../assets/images/modal/profile-window-header.png');
-const profileWindowLevel: string = require('./../../assets/images/modal/profile-window-level.png');
-const profileWindowBg: string = require('./../../assets/images/modal/profile-window-plate.png');
+const profileWindowBtnYellow: string = require('./../../assets/images/modal/profile/button-yellow.png');
+const profileWindowBtnRed: string = require('./../../assets/images/modal/profile/button-red.png');
+const profileWindowBtnGreen: string = require('./../../assets/images/modal/profile/button-green.png');
+const profileWindowSettingsBtn: string = require('./../../assets/images/modal/profile/settings-btn.png');
+const profileWindowFooter: string = require('./../../assets/images/modal/profile/footer.png');
+const profileWindowHeader: string = require('./../../assets/images/modal/profile/header.png');
+const profileWindowLevel: string = require('./../../assets/images/modal/profile/level.png');
+const profileWindowBg: string = require('./../../assets/images/modal/profile/plate.png');
 const boostCounterBg: string = require('./../../assets/images/modal/boost-counter-bg.png');
 
 const settingsWindowHeader: string = require('./../../assets/images/modal/settings/header.png');
@@ -235,6 +235,10 @@ const clanIcon10: string = require('../../assets/images/modal/clan/icon/icon-10.
 const clanIcon11: string = require('../../assets/images/modal/clan/icon/icon-11.png');
 const clanIcon12: string = require('../../assets/images/modal/clan/icon/icon-12.png');
 const clanMainFrame: string = require('../../assets/images/modal/clan/icon/main-frame.png');
+const socialTaskBg: string = require("../../assets/images/modal/social-task/bg.png");
+const socialTaskTop: string = require("../../assets/images/modal/social-task/top.png");
+const socialTaskBottom: string = require("../../assets/images/modal/social-task/bottom.png");
+const socialTaskMiddle: string = require("../../assets/images/modal/social-task/middle.png");
 class Preload extends Phaser.Scene {
   constructor() {
     super('Preload');
@@ -448,6 +452,13 @@ class Preload extends Phaser.Scene {
     this.load.image('settings-window-music-plate', settingsWindowMusicPlate);
     this.load.image('settings-window-sound-plate', settingsWindowSoundPlate);
     
+    if (this.state.platform === 'ok' || this.state.platform === 'vk') {
+      this.load.image('social-task-bg', socialTaskBg);
+      this.load.image('social-task-top', socialTaskTop);
+      this.load.image('social-task-bottom', socialTaskBottom);
+      this.load.image('social-task-middle', socialTaskMiddle);
+    }
+
     this.load.image('sys-switch', sysSwitch);
     this.load.image('modal-square-bg', squareBg);
     this.load.image('clan-window-header', clanWindowHeader);
