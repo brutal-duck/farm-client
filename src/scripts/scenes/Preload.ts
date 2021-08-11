@@ -198,6 +198,43 @@ const clanWindowIcon3: string = require('../../assets/images/modal/clan/icon-3.p
 const clanWindowIcon4: string = require('../../assets/images/modal/clan/icon-4.png');
 const clanWindowExcludeBtn: string = require('../../assets/images/modal/clan/exclude-button.png');
 
+const clanBg1: string = require('../../assets/images/modal/clan/icon/bg-1.png');
+const clanBg2: string = require('../../assets/images/modal/clan/icon/bg-2.png');
+const clanBg3: string = require('../../assets/images/modal/clan/icon/bg-3.png');
+const clanBg4: string = require('../../assets/images/modal/clan/icon/bg-4.png');
+const clanBg5: string = require('../../assets/images/modal/clan/icon/bg-5.png');
+const clanBg6: string = require('../../assets/images/modal/clan/icon/bg-6.png');
+const clanBg7: string = require('../../assets/images/modal/clan/icon/bg-7.png');
+const clanBg8: string = require('../../assets/images/modal/clan/icon/bg-8.png');
+const clanBg9: string = require('../../assets/images/modal/clan/icon/bg-9.png');
+const clanBg10: string = require('../../assets/images/modal/clan/icon/bg-10.png');
+const clanBg11: string = require('../../assets/images/modal/clan/icon/bg-11.png');
+const clanBg12: string = require('../../assets/images/modal/clan/icon/bg-12.png');
+const clanBg13: string = require('../../assets/images/modal/clan/icon/bg-13.png');
+const clanBg14: string = require('../../assets/images/modal/clan/icon/bg-14.png');
+const clanFrame1: string = require('../../assets/images/modal/clan/icon/frame-1.png');
+const clanFrame2: string = require('../../assets/images/modal/clan/icon/frame-2.png');
+const clanFrame3: string = require('../../assets/images/modal/clan/icon/frame-3.png');
+const clanFrame4: string = require('../../assets/images/modal/clan/icon/frame-4.png');
+const clanFrame5: string = require('../../assets/images/modal/clan/icon/frame-5.png');
+const clanFrame6: string = require('../../assets/images/modal/clan/icon/frame-6.png');
+const clanFrame7: string = require('../../assets/images/modal/clan/icon/frame-7.png');
+const clanFrame8: string = require('../../assets/images/modal/clan/icon/frame-8.png');
+const clanFrame9: string = require('../../assets/images/modal/clan/icon/frame-9.png');
+const clanFrame10: string = require('../../assets/images/modal/clan/icon/frame-10.png');
+const clanIcon1: string = require('../../assets/images/modal/clan/icon/icon-1.png');
+const clanIcon2: string = require('../../assets/images/modal/clan/icon/icon-2.png');
+const clanIcon3: string = require('../../assets/images/modal/clan/icon/icon-3.png');
+const clanIcon4: string = require('../../assets/images/modal/clan/icon/icon-4.png');
+const clanIcon5: string = require('../../assets/images/modal/clan/icon/icon-5.png');
+const clanIcon6: string = require('../../assets/images/modal/clan/icon/icon-6.png');
+const clanIcon7: string = require('../../assets/images/modal/clan/icon/icon-7.png');
+const clanIcon8: string = require('../../assets/images/modal/clan/icon/icon-8.png');
+const clanIcon9: string = require('../../assets/images/modal/clan/icon/icon-9.png');
+const clanIcon10: string = require('../../assets/images/modal/clan/icon/icon-10.png');
+const clanIcon11: string = require('../../assets/images/modal/clan/icon/icon-11.png');
+const clanIcon12: string = require('../../assets/images/modal/clan/icon/icon-12.png');
+const clanMainFrame: string = require('../../assets/images/modal/clan/icon/main-frame.png');
 class Preload extends Phaser.Scene {
   constructor() {
     super('Preload');
@@ -434,6 +471,47 @@ class Preload extends Phaser.Scene {
     this.load.image('clan-window-icon-4', clanWindowIcon4);
     this.load.image('clan-window-icon-5', clanWindowIcon4);
     this.load.image('clan-window-exclude-button', clanWindowExcludeBtn);
+
+    this.load.image('clan-icon-1', clanIcon1);
+      this.load.image('clan-icon-2', clanIcon2);
+      this.load.image('clan-icon-3', clanIcon3);
+      this.load.image('clan-icon-4', clanIcon4);
+      this.load.image('clan-icon-5', clanIcon5);
+      this.load.image('clan-icon-6', clanIcon6);
+      this.load.image('clan-icon-7', clanIcon7);
+      this.load.image('clan-icon-8', clanIcon8);
+      this.load.image('clan-icon-9', clanIcon9);
+      this.load.image('clan-icon-10', clanIcon10);
+      this.load.image('clan-icon-11', clanIcon11);
+      this.load.image('clan-icon-12', clanIcon12);
+      this.load.image('clan-frame-1', clanFrame1);
+      this.load.image('clan-frame-1', clanFrame1);
+      this.load.image('clan-frame-2', clanFrame2);
+      this.load.image('clan-frame-3', clanFrame3);
+      this.load.image('clan-frame-4', clanFrame4);
+      this.load.image('clan-frame-5', clanFrame5);
+      this.load.image('clan-frame-6', clanFrame6);
+      this.load.image('clan-frame-7', clanFrame7);
+      this.load.image('clan-frame-8', clanFrame8);
+      this.load.image('clan-frame-9', clanFrame9);
+      this.load.image('clan-frame-10', clanFrame10);
+      this.load.image('clan-bg-1', clanBg1);
+      this.load.image('clan-bg-2', clanBg2);
+      this.load.image('clan-bg-3', clanBg3);
+      this.load.image('clan-bg-4', clanBg4);
+      this.load.image('clan-bg-5', clanBg5);
+      this.load.image('clan-bg-6', clanBg6);
+      this.load.image('clan-bg-7', clanBg7);
+      this.load.image('clan-bg-8', clanBg8);
+      this.load.image('clan-bg-9', clanBg9);
+      this.load.image('clan-bg-10', clanBg10);
+      this.load.image('clan-bg-11', clanBg11);
+      this.load.image('clan-bg-12', clanBg12);
+      this.load.image('clan-bg-13', clanBg13);
+      this.load.image('clan-bg-14', clanBg14);
+      this.load.image('clan-main-frame',clanMainFrame);
+      this.load.image('clan-window-search-plate-ns', clanWindowSearchPlate);
+      this.load.image('clan-window-leader-plate-ns', clanWindowLeaderPlate);
   }
 
   public create(): void {
