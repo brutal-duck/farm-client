@@ -325,30 +325,30 @@ class SheepBars extends Phaser.Scene {
     // graphics.lineStyle(2, 0xFFFF00);
     // graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
 
-    if (!this.state.user.starterpack) {
+    // if (!this.state.user.starterpack) {
       
-      this.starterpackIcon = this.add.image(490, 45, 'starterpack-icon').setScale(0.2).setVisible(false);
-      this.click(this.starterpackIcon, ()=>{
-        const modal: Imodal = {
-          type: 2,
-          shopType: 1,
-        }
-        this.state.modal = modal;
-        this.scene.launch('Modal', this.state);
-      });
+    //   this.starterpackIcon = this.add.image(490, 45, 'starterpack-icon').setScale(0.2).setVisible(false);
+    //   this.click(this.starterpackIcon, ()=>{
+    //     const modal: Imodal = {
+    //       type: 2,
+    //       shopType: 1,
+    //     }
+    //     this.state.modal = modal;
+    //     this.scene.launch('Modal', this.state);
+    //   });
       
-      this.tweens.add({
-        targets: this.starterpackIcon,
-        duration: 300,
-        yoyo: true,
-        ease: 'Power2',
-        repeat: 2,
-        delay: 400,
-        scale: 0.3,
-        loop: -1,
-        loopDelay: 4000,
-      });
-    }
+    //   this.tweens.add({
+    //     targets: this.starterpackIcon,
+    //     duration: 300,
+    //     yoyo: true,
+    //     ease: 'Power2',
+    //     repeat: 2,
+    //     delay: 400,
+    //     scale: 0.3,
+    //     loop: -1,
+    //     loopDelay: 4000,
+    //   });
+    // }
   }
 
 

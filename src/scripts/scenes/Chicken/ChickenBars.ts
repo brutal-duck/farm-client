@@ -268,30 +268,30 @@ class ChickenBars extends Phaser.Scene {
 
     }
 
-    if (!this.state.user.starterpack) {
+    // if (!this.state.user.starterpack) {
       
-      this.starterpackIcon = this.add.image(490, 45, 'starterpack-icon').setScale(0.2);
-      this.click(this.starterpackIcon, ()=>{
-        const modal: Imodal = {
-          type: 2,
-          shopType: 1,
-        }
-        this.state.modal = modal;
-        this.scene.launch('Modal', this.state);
-      });
+    //   this.starterpackIcon = this.add.image(490, 45, 'starterpack-icon').setScale(0.2);
+    //   this.click(this.starterpackIcon, ()=>{
+    //     const modal: Imodal = {
+    //       type: 2,
+    //       shopType: 1,
+    //     }
+    //     this.state.modal = modal;
+    //     this.scene.launch('Modal', this.state);
+    //   });
       
-      this.tweens.add({
-        targets: this.starterpackIcon,
-        duration: 300,
-        yoyo: true,
-        ease: 'Power2',
-        repeat: 2,
-        delay: 400,
-        scale: 0.3,
-        loop: -1,
-        loopDelay: 4000,
-      });
-    }
+    //   this.tweens.add({
+    //     targets: this.starterpackIcon,
+    //     duration: 300,
+    //     yoyo: true,
+    //     ease: 'Power2',
+    //     repeat: 2,
+    //     delay: 400,
+    //     scale: 0.3,
+    //     loop: -1,
+    //     loopDelay: 4000,
+    //   });
+    // }
 
   }
 
