@@ -743,6 +743,8 @@ interface Iconfig {
   collectorSpeedCost: number;
   repositoryCost: number;
   repositoryVolume: number;
+  fairCost: number;
+  grassAndWaterTerritoryCost: number;
 }
 interface Istate {
   platform: string;

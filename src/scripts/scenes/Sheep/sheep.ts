@@ -561,7 +561,7 @@ function collectWool(sheep: any, manualСollect: boolean = false): void {
 
         if (territory.territoryType === 5) {
           
-          let max: number = this.state.sheepSettings.territoriesSheepSettings.find((data: IterritoriesSheepSettings) => data.improve === territory.improve).storage;
+          let max: number = this.state.config[territory.improve - 1].repositoryVolume
 
           if (max > territory.volume) {
 

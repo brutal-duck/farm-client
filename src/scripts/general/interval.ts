@@ -225,7 +225,7 @@ function sheepCollectorProgress(sheepCollectorVolume: number): number {
       for (let i in Scene.state.sheepTerritories) {
         const territory: Iterritories = Scene.state.sheepTerritories[i];
         if (territory.type === 5) {
-          const max: number = Scene.state.sheepSettings.territoriesSheepSettings.find((data: IterritoriesSheepSettings) => data.improve === territory.improve).storage;
+          let max: number = this.state.config[territory.improve - 1].repositoryVolume
           for (let i: number = 0; i < collectedWool; i += 1) {
             for (let i in Scene.state.sheep) {
               const sheep: Isheep = Scene.state.sheep[i];
@@ -500,14 +500,14 @@ function checkStorageSheep(): boolean {
   if (this.state.farm === 'Sheep') {
     for (const territory of this.territories.children.entries) {
       if (territory.territoryType === 5) {
-        const max: number = this.state.sheepSettings.territoriesSheepSettings.find(el => el.improve === territory.improve).storage;
+        let max: number = this.state.config[territory.improve - 1].repositoryVolume
         check.push(territory.volume >= max); 
       }
     }
   } else {
     for (const territory of this.state.sheepTerritories) {
       if (territory.type === 5) {
-        const max: number = this.state.sheepSettings.territoriesSheepSettings.find(el => el.improve === territory.improve).storage;
+        let max: number = this.state.config[territory.improve - 1].repositoryVolume
         check.push(territory.volume >= max); 
       }
     }

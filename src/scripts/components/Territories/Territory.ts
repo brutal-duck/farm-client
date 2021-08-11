@@ -186,7 +186,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     let max: number;   
 
     if (this.scene.state.farm === 'Sheep') {
-      max = this.scene.state.sheepSettings.territoriesSheepSettings[this.improve - 1].storage;
+      max = this.scene.state.config[this.improve - 1].repositoryVolume
     } else if (this.scene.state.farm === 'Chicken') {
       max = this.scene.state.chickenSettings.territoriesChickenSettings[this.improve - 1].storage;
     } else if (this.scene.state.farm === 'Cow') {
@@ -500,7 +500,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       let max: number;
       
       if (this.scene.state.farm === 'Sheep') {
-        max = this.scene.state.sheepSettings.territoriesSheepSettings[this.improve - 1].storage;
+        max = this.scene.state.config[this.improve - 1].repositoryVolume
       } else if (this.scene.state.farm === 'Chicken') {
         max = this.scene.state.chickenSettings.territoriesChickenSettings[this.improve - 1].storage;
       } else if (this.scene.state.farm === 'Cow') {
@@ -531,8 +531,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     
   }
 
-  public fairLevelUp(): void {
-
+  public fairLevelUp(cost: number): void {
     const fairs: IfairLevel[] = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`${this.scene.state.farm.toLowerCase()}FairLevels`];
     const user: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
     let updateAnimalBuy: () => void;
@@ -554,59 +553,81 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       }
     }
 
-    const nextFair = fairs.find((item: IfairLevel) => item.level === user.fair + 1);
-    if (nextFair && user.fair < fairs.length) {
-      if (user.part >= nextFair.part_unlock) {
-        if (user.money >= nextFair.price_m && this.scene.state.user.diamonds >= nextFair.price_d) {
-          user.money -= nextFair.price_m;
-          this.scene.state.user.diamonds -= nextFair.price_d;
-          user.fair++;
-          updateAnimalBuy();
-          this.scene.tryTask(7, user.fair);
-          this.scene.tryTask(15, 0, nextFair.price_d);
-          this.scene.time.addEvent({ delay: 200, callback: (): void => {
-            this.levelText?.setText(String(user.fair));
-            Stars.create(this.scene, { x: this.x + 120, y: this.y + 120 });
+    if (cost) {
+      if (user.money >= cost) {
+        user.money -= cost;
+        user.fair++;
+        updateAnimalBuy();
+        // this.scene.tryTask(7, user.fair);
+        // this.scene.tryTask(15, 0, nextFair.price_d);
+        this.scene.time.addEvent({ delay: 200, callback: (): void => {
+          this.levelText?.setText(String(user.fair));
+          Stars.create(this.scene, { x: this.x + 120, y: this.y + 120 });
+        }, callbackScope: this, loop: false });
+  
+        this.scene.state.amplitude.logAmplitudeEvent('fair_up', { level: user.fair, });
+  
+      } else {
+        const count: number = cost - user.money;
+        const diamonds: number = this.scene.convertMoney(count);
+        this.openConvertor(count, diamonds, 1);
+      }
 
-          }, callbackScope: this, loop: false });
-
-          this.scene.state.amplitude.logAmplitudeEvent('fair_up', {
-            level: user.fair,
-          });
-
-          if (nextFair.price_d > 0) {
-            this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
-              type: 'fair',
-              count: nextFair.price_d,
+    } else {
+      // Старое
+      const nextFair = fairs.find((item: IfairLevel) => item.level === user.fair + 1);
+      if (nextFair && user.fair < fairs.length) {
+        if (user.part >= nextFair.part_unlock) {
+          if (user.money >= nextFair.price_m && this.scene.state.user.diamonds >= nextFair.price_d) {
+            user.money -= nextFair.price_m;
+            this.scene.state.user.diamonds -= nextFair.price_d;
+            user.fair++;
+            updateAnimalBuy();
+            this.scene.tryTask(7, user.fair);
+            this.scene.tryTask(15, 0, nextFair.price_d);
+            this.scene.time.addEvent({ delay: 200, callback: (): void => {
+              this.levelText?.setText(String(user.fair));
+              Stars.create(this.scene, { x: this.x + 120, y: this.y + 120 });
+  
+            }, callbackScope: this, loop: false });
+  
+            this.scene.state.amplitude.logAmplitudeEvent('fair_up', {
+              level: user.fair,
             });
-          }
-
-        } else {
-          if (this.scene.state.user.diamonds < nextFair.price_d) {
-            const count: number = nextFair.price_d - this.scene.state.user.diamonds;
-            this.openConvertor(count, count, 2);
+  
+            if (nextFair.price_d > 0) {
+              this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
+                type: 'fair',
+                count: nextFair.price_d,
+              });
+            }
+  
           } else {
-            const count: number = nextFair.price_m - user.money;
-            const diamonds: number = this.scene.convertMoney(count);
-            this.openConvertor(count, diamonds, 1);
+            if (this.scene.state.user.diamonds < nextFair.price_d) {
+              const count: number = nextFair.price_d - this.scene.state.user.diamonds;
+              this.openConvertor(count, count, 2);
+            } else {
+              const count: number = nextFair.price_m - user.money;
+              const diamonds: number = this.scene.convertMoney(count);
+              this.openConvertor(count, diamonds, 1);
+            }
           }
         }
       }
     }
+
   }
 
-  public improveTerritory(): void {
 
+  public improveTerritory(): void {
     let user: IuserSheep | IuserChicken | IuserCow;
     let territoriesSettings: any = [];
   
     if (this.scene.state.farm === 'Sheep') {
-  
       user = this.scene.state.userSheep;
       territoriesSettings = this.scene.state.sheepSettings.territoriesSheepSettings;
   
     } else if (this.scene.state.farm === 'Chicken') {
-  
       user = this.scene.state.userChicken;
       territoriesSettings = this.scene.state.chickenSettings.territoriesChickenSettings;
       
@@ -614,32 +635,38 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   
       user = this.scene.state.userCow;
       territoriesSettings = this.scene.state.cowSettings.territoriesCowSettings;
-      
     }
-  
-    if (this.improve < territoriesSettings.length &&
-      (this.territoryType === 2 ||
-      this.territoryType === 3 ||
-      this.territoryType === 5)) {
-  
+
+    if (this.scene.state.farm === 'Sheep' && this.territoryType === 5) {
+      this.diamondImprove(this.scene.state.config[this.improve].repositoryCost)
+
+    } else {
+      // Старое улучшение
+      if (this.improve < territoriesSettings.length &&
+        (this.territoryType === 2 ||
+        this.territoryType === 3 ||
+        this.territoryType === 5)
+      ) {
         const settings: IterritoriesCowSettings = territoriesSettings.find((data: any) => data.improve === this.improve + 1);
-      
-      if (user.part >= settings.unlock_improve) {
-        if (this.territoryType === 5) {
-          if (settings.improveStorageMoneyPrice) {
-            this.moneyImprove(user, settings.improveStorageMoneyPrice);
-          } else if (settings.improveStorageDiamondPrice) {
-            this.diamondImprove(settings.improveStorageDiamondPrice);
-          }
-        } else if (this.territoryType === 2 || this.territoryType === 3){
-          if (settings.improvePastureMoneyPrice) {
-            this.moneyImprove(user, settings.improvePastureMoneyPrice);
-          } else if (settings.improvePastureDiamondPrice) {
-            this.diamondImprove(settings.improvePastureDiamondPrice);
+        
+        if (user.part >= settings.unlock_improve) {
+          if (this.territoryType === 5) {
+            if (settings.improveStorageMoneyPrice) {
+              this.moneyImprove(user, settings.improveStorageMoneyPrice);
+            } else if (settings.improveStorageDiamondPrice) {
+              this.diamondImprove(settings.improveStorageDiamondPrice);
+            }
+          } else if (this.territoryType === 2 || this.territoryType === 3){
+            if (settings.improvePastureMoneyPrice) {
+              this.moneyImprove(user, settings.improvePastureMoneyPrice);
+            } else if (settings.improvePastureDiamondPrice) {
+              this.diamondImprove(settings.improvePastureDiamondPrice);
+            }
           }
         }
       }
     }
+  
   }  
 
   private moneyImprove(user: IuserSheep | IuserChicken | IuserCow, price: number) {
@@ -720,17 +747,11 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         this.scene.tryTask(17, improve);
         this.changeSprite();
         Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
-        this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
-          type: 'storage',
-          count: price,
-        });
+        this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', { type: 'storage', count: price, });
+
       } else {
-        if (this.territoryType === 2) {
-          this.scene.tryTask(8, improve);
-        }
-        if (this.territoryType === 3) {
-          this.scene.tryTask(9, improve);
-        }
+        if (this.territoryType === 2) this.scene.tryTask(8, improve);
+        if (this.territoryType === 3) this.scene.tryTask(9, improve);
         this.volume = 1000;
         this.scene.time.addEvent({ delay: 500, callback: (): void => {
           this.changeSprite();
@@ -744,7 +765,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     }
   };
 
-  private createFullStorageAnim(): void {
+  private createFullStorageAnim(): void {    
     this.repositoryAnim = this.scene.tweens.add({
       targets: [this.improveText, this.repository],
       y: '-=5',
@@ -756,9 +777,10 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
   private checkAndSetRepositoryAnim(): void {
     if (this.territoryType === 5) {
-      let max: number = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`territories${this.scene.state.farm}Settings`]
-        .find(data => data.improve === this.improve).storage;
-      if (this.scene.state.farm === 'Cow') {
+      let max: number = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`territories${this.scene.state.farm}Settings`].find(data => data.improve === this.improve).storage;
+      if (this.scene.state.farm === 'Sheep') {
+        max = this.scene.state.config[this.improve - 1].repositoryVolume
+      } else if (this.scene.state.farm === 'Cow') {
         max = this.scene.state.cowSettings.cowFactorySettings.find(data => data.improve === this.improve).lotSize * this.scene.state.storageMultiply;
       }
       if (this.volume >= max && !this.repositoryAnim) {

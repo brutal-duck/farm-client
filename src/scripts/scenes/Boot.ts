@@ -14,6 +14,7 @@ import { clickShopBtn, clickModalBtn, click } from './../general/clicks';
 import { shopButton, bigButton } from './../elements';
 import { general } from './../local/settings';
 import { setPlatformStorage, getPlatformStorage } from './../general/basic';
+import { config } from '../local/sheepSettings';
 
 Amplitude.init();
 
@@ -45,6 +46,7 @@ class Boot extends Phaser.Scene {
   private play: boolean;
   private name: string;
   private avatar: string;
+  private config: Iconfig[];
   public okCallback = okCallback.bind(this);
   public build: number;
   public params: URLSearchParams;
@@ -66,6 +68,7 @@ class Boot extends Phaser.Scene {
     console.log('Build ' + this.build);
     // console.log('y1')
     this.state = state;
+    this.config = config
     this.fontsReady = false;
     this.userReady = false;
     this.play = false;
@@ -249,6 +252,8 @@ class Boot extends Phaser.Scene {
     this.state.build = this.build;
     this.state.name = this.name;
     this.state.avatar = this.avatar;
+
+    this.state.config = this.config
 
     this.scene.stop();
 

@@ -239,7 +239,7 @@ class Modal extends Phaser.Scene {
 
       if (this.state.farm === 'Sheep') {
 
-        max = this.state.sheepSettings.territoriesSheepSettings.find((data: IterritoriesSheepSettings) => data.improve === this.state.territory.improve).storage;
+        max = this.state.config[this.state.territory.improve - 1].repositoryVolume
         count = this.state.lang.countWool;
 
       } else if (this.state.farm === 'Chicken') {

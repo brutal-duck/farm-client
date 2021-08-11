@@ -1,11 +1,14 @@
-const config = [
+const config: Iconfig[] = [
   //1
   {
     collectorTime: 3,
     collectorTimeCost: 0,
     collectorSpeed: 0.1,
     collectorSpeedCost: 0,
-    storageCost: 0,
+    repositoryCost: 0,
+    repositoryVolume: 27,
+    fairCost: 0,
+    grassAndWaterTerritoryCost: 500,
   },
   //2
   {
@@ -13,7 +16,10 @@ const config = [
     collectorTimeCost: 2600,
     collectorSpeed: 0.2,
     collectorSpeedCost: 2,
-    storageCost: 1,
+    repositoryCost: 1,
+    repositoryVolume: 90,
+    fairCost: 0,
+    grassAndWaterTerritoryCost: 650,
   },
   //3
   {
@@ -21,7 +27,10 @@ const config = [
     collectorTimeCost: 4300,
     collectorSpeed: 0.3,
     collectorSpeedCost: 3,
-    storageCost: 2,
+    repositoryCost: 2,
+    repositoryVolume: 126,
+    fairCost: 4300,
+    grassAndWaterTerritoryCost: 1720,
   },
   //4
   {
@@ -29,7 +38,10 @@ const config = [
     collectorTimeCost: 12100,
     collectorSpeed: 0.4,
     collectorSpeedCost: 4,
-    storageCost: 2,
+    repositoryCost: 2,
+    repositoryVolume: 216,
+    fairCost: 12100,
+    grassAndWaterTerritoryCost: 4033,
   },
   //5
   {
@@ -37,7 +49,10 @@ const config = [
     collectorTimeCost: 42000,
     collectorSpeed: 0.5,
     collectorSpeedCost: 5,
-    storageCost: 3,
+    repositoryCost: 3,
+    repositoryVolume: 330,
+    fairCost: 42000,
+    grassAndWaterTerritoryCost: 12000,
   },
   //6
   {
@@ -45,7 +60,10 @@ const config = [
     collectorTimeCost: 261200,
     collectorSpeed: 0.6,
     collectorSpeedCost: 6,
-    storageCost: 3,
+    repositoryCost: 3,
+    repositoryVolume: 468,
+    fairCost: 261200,
+    grassAndWaterTerritoryCost: 65300,
   },
   //7
   {
@@ -53,7 +71,10 @@ const config = [
     collectorTimeCost: 2243200,
     collectorSpeed: 0.8,
     collectorSpeedCost: 7,
-    storageCost: 4,
+    repositoryCost: 4,
+    repositoryVolume: 720,
+    fairCost: 0,
+    grassAndWaterTerritoryCost: 249244,
   },
   //8
   {
@@ -61,7 +82,10 @@ const config = [
     collectorTimeCost: 1720000,
     collectorSpeed: 0.9,
     collectorSpeedCost: 8,
-    storageCost: 4,
+    repositoryCost: 4,
+    repositoryVolume: 918,
+    fairCost: 1720000,
+    grassAndWaterTerritoryCost: 344000,
   },
   //9
   {
@@ -69,7 +93,10 @@ const config = [
     collectorTimeCost: 11744000,
     collectorSpeed: 1.1,
     collectorSpeedCost: 9,
-    storageCost: 5,
+    repositoryCost: 5,
+    repositoryVolume: 1254,
+    fairCost: 0,
+    grassAndWaterTerritoryCost: 1067636,
   },
   //10
   {
@@ -77,7 +104,10 @@ const config = [
     collectorTimeCost: 8008000,
     collectorSpeed: 1.2,
     collectorSpeedCost: 10,
-    storageCost: 5,
+    repositoryCost: 5,
+    repositoryVolume: 1386,
+    fairCost: 8008000,
+    grassAndWaterTerritoryCost: 1334667,
   },
   //11
   {
@@ -85,7 +115,10 @@ const config = [
     collectorTimeCost: 35468800,
     collectorSpeed: 1.3,
     collectorSpeedCost: 11,
-    storageCost: 6,
+    repositoryCost: 6,
+    repositoryVolume: 1794,
+    fairCost: 0,
+    grassAndWaterTerritoryCost: 2728369,
   },
   //12
   {
@@ -93,7 +126,10 @@ const config = [
     collectorTimeCost: 28662400,
     collectorSpeed: 1.4,
     collectorSpeedCost: 12,
-    storageCost: 6,
+    repositoryCost: 6,
+    repositoryVolume: 1950,
+    fairCost: 28662400,
+    grassAndWaterTerritoryCost: 4094629,
   },
   //13
   {
@@ -101,7 +137,10 @@ const config = [
     collectorTimeCost: 124774400,
     collectorSpeed: 1.5,
     collectorSpeedCost: 13,
-    storageCost: 7,
+    repositoryCost: 7,
+    repositoryVolume: 2430,
+    fairCost: 0,
+    grassAndWaterTerritoryCost: 8318293,
   },
   //14
   {
@@ -109,7 +148,10 @@ const config = [
     collectorTimeCost: 77664000,
     collectorSpeed: 1.6,
     collectorSpeedCost: 14,
-    storageCost: 7,
+    repositoryCost: 7,
+    repositoryVolume: 2610,
+    fairCost: 77664000,
+    grassAndWaterTerritoryCost: 9708000,
   },
   //15
   {
@@ -117,7 +159,10 @@ const config = [
     collectorTimeCost: 334028800,
     collectorSpeed: 1.7,
     collectorSpeedCost: 15,
-    storageCost: 8,
+    repositoryCost: 8,
+    repositoryVolume: 3060,
+    fairCost: 0,
+    grassAndWaterTerritoryCost: 19648753,
   },
   //16
   {
@@ -125,7 +170,10 @@ const config = [
     collectorTimeCost: 391462400,
     collectorSpeed: 1.8,
     collectorSpeedCost: 16,
-    storageCost: 8,
+    repositoryCost: 8,
+    repositoryVolume: 3162,
+    fairCost: 391462400,
+    grassAndWaterTerritoryCost: 43495822,
   },
   //17
   {
@@ -133,7 +181,10 @@ const config = [
     collectorTimeCost: 1618841600,
     collectorSpeed: 1.9,
     collectorSpeedCost: 17,
-    storageCost: 9,
+    repositoryCost: 9,
+    repositoryVolume: 3648,
+    fairCost: 0,
+    grassAndWaterTerritoryCost: 85202189,
   },
   //18
   {
@@ -141,7 +192,10 @@ const config = [
     collectorTimeCost: 933401600,
     collectorSpeed: 2,
     collectorSpeedCost: 18,
-    storageCost: 9,
+    repositoryCost: 9,
+    repositoryVolume: 3762,
+    fairCost: 933401600,
+    grassAndWaterTerritoryCost: 93340160,
   },
   //19
   {
@@ -149,7 +203,10 @@ const config = [
     collectorTimeCost: 3852083200,
     collectorSpeed: 2.1,
     collectorSpeedCost: 19,
-    storageCost: 10,
+    repositoryCost: 10,
+    repositoryVolume: 4284,
+    fairCost: 0,
+    grassAndWaterTerritoryCost: 183432533,
   },
   //20
   {
@@ -157,7 +214,10 @@ const config = [
     collectorTimeCost: 4386611200,
     collectorSpeed: 5,
     collectorSpeedCost: 20,
-    storageCost: 10,
+    repositoryCost: 10,
+    repositoryVolume: 4830,
+    fairCost: 0,
+    grassAndWaterTerritoryCost: 208886248,
   },
 ]
 

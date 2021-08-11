@@ -29,6 +29,7 @@ import ChickenWindow from '../../components/modal/system/ChickenWindow';
 import CowWindow from '../../components/modal/system/CowWindow';
 import ConfirmSaveProgress from './../../components/modal/system/ConfirmSaveProgress';
 import ImproveCollectorWindowNew from '../../components/modal/system/ImproveCollectorWindowNew';
+import FarmResourceRepositoryWindowNew from '../../components/modal/system/FarmResourceRepositoryWindowNew';
 
 function systemWindow(): void {
   let height:number = 0;
@@ -297,7 +298,7 @@ function sheepTerritory(): void {
       break;
 
     case 5: // хранилище шерсти
-      new FarmResourceRepositoryWindow(this);
+      new FarmResourceRepositoryWindowNew(this);
       break;
 
     default:

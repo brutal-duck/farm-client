@@ -146,7 +146,7 @@ export default class ImproveCollectorWindowNew {
         this.scene.state.userSheep.collectorSpeedLevel++
         this.setLevelConfig()
         this.createSpeedBtn()
-        console.log(Math.round(1000 / this.config[this.scene.state.userSheep.collectorSpeedLevel].collectorSpeed));
+        console.log('speed CD', Math.round(1000 / this.config[this.scene.state.userSheep.collectorSpeedLevel].collectorSpeed));
       }
       
       this.setCurrentLevelInfoText()
