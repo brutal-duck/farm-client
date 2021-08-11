@@ -37,7 +37,7 @@ export default class TasksWindow {
     this.top = this.scene.add.sprite(this.scene.cameras.main.centerX + 1, this.centerY - Math.floor(height / 2), 'tasks-top').setOrigin(0.5, 1);
     this.middle = this.scene.add.tileSprite(this.scene.cameras.main.centerX, this.centerY, 563, height, 'tasks-middle').setOrigin(0.5, 0.5);
     this.bottom = this.scene.add.sprite(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2), 'tasks-bottom').setOrigin(0.5, 0.5);
-    this.close = this.scene.add.sprite(606, this.centerY - Math.floor(height / 2 + 114), 'tasks-close').setDepth(2);
+    this.close = this.scene.add.sprite(606, this.centerY - Math.floor(height / 2 + 114), 'close-window-btn').setDepth(2);
   
     if (this.scene.state.farm === 'Cow') countBreed = this.scene.state.cowSettings.cowSettings.length;
     else if (this.scene.state.farm === 'Chicken') countBreed = this.scene.state.chickenSettings.chickenSettings.length;

@@ -17,6 +17,7 @@ const pointer: string = require('./../../assets/images/profile/pointer.png');
 const fortune: string = require('./../../assets/images/profile/event-fortune.png');
 const socialBtnVk: string = require('./../../assets/images/profile/social-btn-vk.png');
 const socialBtnOk: string = require('./../../assets/images/profile/social-btn-ok.png');
+const closeWindowBtn: string = require('../../assets/images/modal/close-window-btn.png');
 
 class Profile extends Phaser.Scene {
   constructor() {
@@ -86,6 +87,7 @@ class Profile extends Phaser.Scene {
     this.load.image('profile-fortune', fortune);
     this.load.image('profile-social-btn-vk', socialBtnVk);
     this.load.image('profile-social-btn-ok', socialBtnOk);
+    this.load.image('close-window-btn', closeWindowBtn);
   }
 
 
@@ -133,7 +135,7 @@ class Profile extends Phaser.Scene {
   }
 
   private createElements(): void {
-    this.backBtn = this.add.sprite(630, 62, 'tasks-close');
+    this.backBtn = this.add.sprite(630, 62, 'close-window-btn');
     this.createProfileInfo();
     this.createFarms();
     this.createShop();

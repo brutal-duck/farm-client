@@ -54,7 +54,7 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
       color: '#fffcdc'
     }).setOrigin(0.5);
 
-    this.closeBtn = this.scene.add.sprite(windowGeom.right - 50, windowGeom.top + 40,'tasks-close');
+    this.closeBtn = this.scene.add.sprite(windowGeom.right - 50, windowGeom.top + 40,'close-window-btn');
     
     this.scene.clickButton(this.closeBtn, () => {
       this.scene.scene.stop();

@@ -111,7 +111,7 @@ export default class ClanTabsWindow {
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     const tab: Phaser.GameObjects.Sprite = this.scene.add.sprite(headerGeom.right - 18, headerGeom.top + 5, 'clan-window-tab-close').setOrigin(1, 1);
     const tabGeom: Phaser.Geom.Rectangle = tab.getBounds();
-    const tabIcon: Phaser.GameObjects.Sprite = this.scene.add.sprite(tabGeom.centerX + 5, tabGeom.centerY - 5, 'tasks-close').setOrigin(0.5).setScale(0.9);
+    const tabIcon: Phaser.GameObjects.Sprite = this.scene.add.sprite(tabGeom.centerX + 5, tabGeom.centerY - 5, 'close-window-btn').setOrigin(0.5).setScale(0.9);
     this.scene.clickButtonUp(tab, (): void => { this.onCloseBtn() }, tabIcon);
     this.modalElements.push(tab, tabIcon);
   }

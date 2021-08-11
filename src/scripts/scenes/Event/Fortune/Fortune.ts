@@ -137,7 +137,7 @@ export default class Fortune extends Phaser.Scene {
 
     this.wheel = this.add.sprite(modalGeom.centerX - 142, modalGeom.centerY - 180, 'fortune-wheel');
     this.pointer = this.add.sprite(modalGeom.centerX - 138, modalGeom.centerY - 185, 'fortune-pointer');
-    this.closeBtn = this.add.sprite(modalGeom.right - 70, modalGeom.top + 40,'tasks-close')
+    this.closeBtn = this.add.sprite(modalGeom.right - 70, modalGeom.top + 40,'close-window-btn')
     
     this.add.text(modalGeom.centerX + 50, modalGeom.centerY + 45, this.state.lang.latestWinners, {
       font: '24px Shadow',

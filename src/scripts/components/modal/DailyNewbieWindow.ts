@@ -72,7 +72,7 @@ export default class DailyNewbieWindow extends Phaser.GameObjects.Sprite {
   }
 
   private createElements(): void {
-    this.closeBtn = this.scene.add.sprite(this.x + this.displayWidth / 2 - 45, this.y - this.displayHeight / 2 + 40, 'tasks-close').setDepth(2);
+    this.closeBtn = this.scene.add.sprite(this.x + this.displayWidth / 2 - 45, this.y - this.displayHeight / 2 + 40, 'close-window-btn').setDepth(2);
     // заголовок
     this.scene.add.text(this.x, this.y - 350, this.scene.state.lang.newbieAwards, {
       font: '36px Shadow',

@@ -27,14 +27,14 @@ const doneChapter: string = require("./../../../assets/images/modal/done-chapter
 const pbChapterAnimal: string = require("./../../../assets/images/modal/pb-chapter-modal.png");
 const greenProgress: string = require("./../../../assets/images/modal/green-progress.png");
 const farmer: string = require("./../../../assets/images/farmer.png");
-const tasksTop: string = require("./../../../assets/images/modal/tasks-top.png");
-const tasksMiddle: string = require("./../../../assets/images/modal/tasks-middle.png");
-const tasksBottom: string = require("./../../../assets/images/modal/tasks-bottom.png");
-const tasksComplete: string = require("./../../../assets/images/modal/tasks-complete.png");
-const tasksUncomplete: string = require("./../../../assets/images/modal/tasks-uncomplete.png");
-const tasksReward: string = require("./../../../assets/images/modal/tasks-reward.png");
-const tasksBar: string = require("./../../../assets/images/modal/tasks-bar.png");
-const tasksClose: string = require("./../../../assets/images/modal/tasks-close.png");
+const tasksTop: string = require("./../../../assets/images/modal/tasks/top.png");
+const tasksMiddle: string = require("./../../../assets/images/modal/tasks/middle.png");
+const tasksBottom: string = require("./../../../assets/images/modal/tasks/bottom.png");
+const tasksComplete: string = require("./../../../assets/images/modal/tasks/complete.png");
+const tasksUncomplete: string = require("./../../../assets/images/modal/tasks/uncomplete.png");
+const tasksReward: string = require("./../../../assets/images/modal/tasks/reward.png");
+const tasksBar: string = require("./../../../assets/images/modal/tasks/bar.png");
+const closeWindowBtn: string = require("./../../../assets/images/modal/close-window-btn.png");
 const socialTaskBg: string = require("./../../../assets/images/modal/social-task-bg.png");
 const socialTaskTop: string = require("./../../../assets/images/modal/social-task-top.png");
 const socialTaskBottom: string = require("./../../../assets/images/modal/social-task-bottom.png");
@@ -195,7 +195,7 @@ export default function typePreload(): void {
         this.load.image('tasks-uncomplete', tasksUncomplete);
         this.load.image('tasks-reward', tasksReward);
         this.load.image('tasks-bar', tasksBar);
-        this.load.image('tasks-close', tasksClose);
+        this.load.image('close-window-btn', closeWindowBtn);
         this.load.image('part-progress', partProgress);
 
         break;
@@ -228,7 +228,7 @@ export default function typePreload(): void {
         this.load.image('day-purple', dayPurple);
         this.load.image('day-red', dayRed);
         this.load.image('award-received', awardReceived);
-        this.load.image('tasks-close', tasksClose);
+        this.load.image('close-window-btn', closeWindowBtn);
         break;
       case 7: // окно выдачи донатных кристаллов +
         this.load.image('done-chapter-button', doneChapterButton);
@@ -275,7 +275,7 @@ export default function typePreload(): void {
         this.load.image('rating-price-btn', ratingPriseBtn);
         this.load.image('rating-places', ratingPrisePlaces);
         this.load.image('unicorn-status', unicornStatus);
-        this.load.image('tasks-close', tasksClose);
+        this.load.image('close-window-btn', closeWindowBtn);
         break;
       case 12: // окно выдачи наград ивентовой фермы +
         this.load.image('raiting-bg-after',ratingBGAfter);
@@ -283,7 +283,7 @@ export default function typePreload(): void {
         this.load.image('rating-rules-btn', ratingRulesBtn);
         this.load.image('rating-price-btn', ratingPriseBtn);
         this.load.image('unicorn-status', unicornStatus);
-        this.load.image('tasks-close', tasksClose);
+        this.load.image('close-window-btn', closeWindowBtn);
 
         break;
       case 13:
@@ -300,7 +300,7 @@ export default function typePreload(): void {
         this.load.image('factory-production-slot-disable-3', factoryProductionSlotDisable3);
         this.load.image('factory-production-slot-4', factoryProductionSlot4);
         this.load.image('factory-production-slot-disable-4', factoryProductionSlotDisable4);
-        this.load.image('tasks-close', tasksClose);
+        this.load.image('close-window-btn', closeWindowBtn);
         break;
       case 14: 
         this.load.image('social-task-bg', socialTaskBg);
@@ -309,7 +309,7 @@ export default function typePreload(): void {
         this.load.image('social-task-middle', socialTaskMiddle);
         this.load.image('shop-btn', shopBtn);
         this.load.image('shop-btn-disable', shopBtnDisable);
-        this.load.image('tasks-close', tasksClose);
+        this.load.image('close-window-btn', closeWindowBtn);
         break;
       case 15: 
         this.load.image('profile-window-settings-btn', profileWindowSettingsBtn);
@@ -321,7 +321,7 @@ export default function typePreload(): void {
         this.load.image('profile-window-button-red', profileWindowBtnRed);
         this.load.image('profile-window-button-green', profileWindowBtnGreen);
         this.load.image('clan-window-search-plate-ns', clanWindowSearchPlate);
-        this.load.image('tasks-close', tasksClose);
+        this.load.image('close-window-btn', closeWindowBtn);
         break;
       case 16: 
       this.load.image('settings-window-header', settingsWindowHeader);
@@ -330,7 +330,7 @@ export default function typePreload(): void {
       this.load.image('settings-window-segment', settingsWindowSegment);
       this.load.image('settings-window-music-plate', settingsWindowMusicPlate);
       this.load.image('settings-window-sound-plate', settingsWindowSoundPlate);
-      this.load.image('tasks-close', tasksClose);
+      this.load.image('close-window-btn', closeWindowBtn);
         break;
       case 17: 
       case 18: 
@@ -341,7 +341,7 @@ export default function typePreload(): void {
       this.load.image('clan-window-tab-close', clanWindowTabClose);
       this.load.image('clan-window-crown', clanWindowCrown);
       this.load.image('clan-window-line', clanWindowLine);
-      this.load.image('tasks-close', tasksClose);
+      this.load.image('close-window-btn', closeWindowBtn);
       this.load.image('clan-window-medal-bronze', clanWindowMedalBronze);
       this.load.image('clan-window-medal-gold', clanWindowMedalGold);
       this.load.image('clan-window-medal-silver', clanWindowMedalSilver);

@@ -155,7 +155,7 @@ export default class ProfileWindow {
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
 
     this.headerText = this.scene.add.text(headerGeom.centerX, headerGeom.centerY - 15, this.scene.state.lang.profile, headerTextStyle).setOrigin(0.5);
-    this.closeBtn = this.scene.add.sprite(headerGeom.right - 35, headerGeom.top + 35, 'tasks-close');
+    this.closeBtn = this.scene.add.sprite(headerGeom.right - 35, headerGeom.top + 35, 'close-window-btn');
   }
 
   private createFooter(): void {

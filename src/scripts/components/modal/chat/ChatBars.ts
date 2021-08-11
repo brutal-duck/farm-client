@@ -308,7 +308,7 @@ export default class ChatBars {
     const bgGeom: Phaser.Geom.Rectangle = this.bg.getBounds();
     this.tabClose = this.scene.add.sprite(bgGeom.right - 18, bgGeom.top + 25, 'chat-tab-close').setOrigin(1, 1).setDepth(2);
     const tabGeom: Phaser.Geom.Rectangle = this.tabClose.getBounds();
-    this.tabCloseBtn = this.scene.add.sprite(tabGeom.centerX + 30, tabGeom.centerY, 'tasks-close').setOrigin(0.5).setDepth(2);
+    this.tabCloseBtn = this.scene.add.sprite(tabGeom.centerX + 30, tabGeom.centerY, 'close-window-btn').setOrigin(0.5).setDepth(2);
   }
 
   private createSmilePanel(): void {

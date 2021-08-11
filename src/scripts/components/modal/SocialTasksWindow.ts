@@ -76,7 +76,7 @@ export default class SocialTasksWindow {
       color: '#942109',
       font: '22px Shadow',
     }).setOrigin(0.5);
-    this.close = this.scene.add.sprite(centerX, centerY, 'tasks-close').setDepth(2);
+    this.close = this.scene.add.sprite(centerX, centerY, 'close-window-btn').setDepth(2);
     this.scene.clickButton(this.close, () => {
       this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
       this.scene.scene.stop();
