@@ -97,7 +97,7 @@ export default class ClanUsersList {
     const nameText: Phaser.GameObjects.Text = this.scene.add.text(avatarSprite.x + avatarSprite.displayWidth / 2 + 10, avatarSprite.y, name, nameTextStyle)
       .setOrigin(0, 0.5)
       .setCrop(0, 0, 250, 100);
-    const pointsText: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 360, pos.y, shortNum(Phaser.Math.Between(1, 50000)), scoreTextStyle).setOrigin(0.5);
+    const pointsText: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 360, pos.y, shortNum(points), scoreTextStyle).setOrigin(0.5);
 
     const statusSettings: IstatusSettings = this.scene.getStatusSettings(status);
 
