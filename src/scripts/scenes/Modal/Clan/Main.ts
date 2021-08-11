@@ -5,9 +5,9 @@ import ClanUsersList from './../../../components/modal/clan/ClanUsersList';
 import ClanLeaderboard from './../../../components/modal/clan/ClanLeaderboard';
 import ClanSearch from './../../../components/modal/clan/ClanSearch';
 
-class Clan extends Phaser.Scene {
+class ClanScroll extends Phaser.Scene {
   constructor() {
-    super('Clan');
+    super('ClanScroll');
   }
 
   public state: Istate;
@@ -87,4 +87,4 @@ class Clan extends Phaser.Scene {
   }
 }
 
-export default Clan;
+export default ClanScroll;

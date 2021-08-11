@@ -477,7 +477,8 @@ export default class ProfileWindow {
         const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(geom.centerX + 100, pos.y, 'profile-window-button-yellow').setOrigin(0, 0.5).setDepth(2);
         const btnText: Phaser.GameObjects.Text = this.scene.add.text(btn.getCenter().x, btn.getCenter().y - 5, this.scene.state.lang.clans, btnTextStyle).setDepth(2).setOrigin(0.5);
         this.scene.clickModalBtn({ btn: btn, title: btnText }, () => {
-          console.log('Открывается ферма клана')
+          this.scene.scene.stop();
+          this.scene.scene.launch('ClanFarm', this.scene.state);
         });
       }
     } else {

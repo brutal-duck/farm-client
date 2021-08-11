@@ -104,7 +104,7 @@ export default class ClanTabsWindow {
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
     this.removeInput();
     this.scene.scene.stop();
-    this.scene.scene.stop('Clan');
+    this.scene.scene.stop('ClanScroll');
   }
 
   private createCloseTab(): void {
@@ -172,7 +172,7 @@ export default class ClanTabsWindow {
           clanTabType: type,
         };
         this.removeInput();
-        this.scene.scene.stop('Clan');
+        this.scene.scene.stop('ClanScroll');
         this.scene.scene.restart(this.scene.state);
       }, tabIcon, flag);
     }
@@ -203,7 +203,7 @@ export default class ClanTabsWindow {
     const scoreText = this.scene.add.text(scoreBgGeom.centerX, scoreBgGeom.centerY, text, scoreTextStyle).setDepth(2).setOrigin(0.5);
     this.scene.add.nineslice(this.x, this.y + 100, 480, 600, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
     this.createClanBtns();
-    this.scene.scene.launch('Clan', this.scene.state);
+    this.scene.scene.launch('ClanScroll', this.scene.state);
   }
 
   private createClanBtns(): void {
@@ -239,7 +239,7 @@ export default class ClanTabsWindow {
       type: 9,
       chatType: 3,
     };
-    this.scene.scene.stop('Clan');
+    this.scene.scene.stop('ClanScroll');
     this.scene.scene.restart(this.scene.state);
   }
 
@@ -263,7 +263,7 @@ export default class ClanTabsWindow {
       clanTabType: 2,
     };
     this.removeInput();
-    this.scene.scene.stop('Clan');
+    this.scene.scene.stop('ClanScroll');
     this.scene.scene.restart(this.scene.state);
   }
 
@@ -289,13 +289,13 @@ export default class ClanTabsWindow {
           clanWindowType: 1,
         };
         this.removeInput();
-        this.scene.scene.stop('Clan');
+        this.scene.scene.stop('ClanScroll');
         this.scene.scene.restart(this.scene.state);
       });
     }
 
     this.headerText = this.scene.add.text(headerGeom.centerX, headerGeom.centerY - 3, this.scene.state.lang.clansLiderboard, this.headerTextStyle).setDepth(2).setOrigin(0.5);
-    this.scene.scene.launch('Clan', this.scene.state);
+    this.scene.scene.launch('ClanScroll', this.scene.state);
   }
 
   private createSearch(): void {
@@ -358,7 +358,7 @@ export default class ClanTabsWindow {
         clanWindowType: 1,
       }
       this.removeInput();
-      this.scene.scene.stop('Clan');
+      this.scene.scene.stop('ClanScroll');
       this.scene.scene.restart(this.scene.state);
     });
 
@@ -377,7 +377,7 @@ export default class ClanTabsWindow {
       tile,
     );
 
-    this.scene.scene.launch('Clan', this.scene.state);
+    this.scene.scene.launch('ClanScroll', this.scene.state);
   }
 
   private createInput(): void {
@@ -433,9 +433,9 @@ export default class ClanTabsWindow {
 
   private searchClans(): void {
     if (this.input.value !== '') {
-      this.scene.scene.stop('Clan');
+      this.scene.scene.stop('ClanScroll');
       this.scene.state.searchClan = this.input.value;
-      this.scene.scene.launch('Clan', this.scene.state);
+      this.scene.scene.launch('ClanScroll', this.scene.state);
       this.input.value = '';
       this.input.style.display = 'none';
       this.input.blur();
@@ -457,7 +457,7 @@ export default class ClanTabsWindow {
     const btn1 = this.scene.bigButton('green', 'left', -220, this.scene.state.lang.changeClanName, right1);
     this.scene.clickModalBtn(btn1, () => {
       this.removeInput();
-      this.scene.scene.stop('Clan');
+      this.scene.scene.stop('ClanScroll');
       this.scene.state.modal = {
         type: 1,
         sysType: 21,
@@ -478,7 +478,7 @@ export default class ClanTabsWindow {
         clanWindowType: 2,
       };
       this.removeInput();
-      this.scene.scene.stop('Clan');
+      this.scene.scene.stop('ClanScroll');
       this.scene.scene.restart(this.scene.state);
     });
   }

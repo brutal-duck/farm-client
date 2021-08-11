@@ -647,13 +647,11 @@ class Profile extends Phaser.Scene {
           type: 17,
           clanTabType: 2,
         };
+        this.scene.launch('Modal', this.state);
       } else {
-        this.state.modal = {
-          type: 17,
-          clanTabType: 1,
-        };
+        this.scene.stop();
+        this.scene.launch('ClanFarm', this.state);
       }
-      this.scene.launch('Modal', this.state);
     });
   }
 

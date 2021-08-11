@@ -89,7 +89,7 @@ export default class ClanUsersList {
         message: name,
       };
 
-      this.scene.scene.stop('Clan');
+      this.scene.scene.stop('ClanScroll');
       this.scene.scene.stop('Modal');
       this.scene.scene.launch('Modal', this.scene.state);
     });
@@ -126,7 +126,7 @@ export default class ClanUsersList {
     this.scene.state.modal = {
       type: 15,
     };
-    this.scene.scene.stop('Clan');
+    this.scene.scene.stop('ClanScroll');
     this.scene.scene.launch('Modal',this.scene.state);
   }
 }

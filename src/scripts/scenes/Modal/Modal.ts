@@ -93,7 +93,6 @@ class Modal extends Phaser.Scene {
 
   public init(state: Istate): void {
     this.state = state;
-    // console.log('Modal ~ init ~ this.state', this.state)
   }
 
   public preload(): void {
@@ -183,9 +182,9 @@ class Modal extends Phaser.Scene {
       this.state.closeModal = false;
       this.state.user.clanId = '';
       this.state.clan = null;
-      if (this.scene.isActive('Clan')) {
+      if (this.scene.isActive('ClanScroll')) {
         this.scene.stop('Modal');
-        this.scene.stop('Clan');
+        this.scene.stop('ClanScroll');
       }
       if (this.scene.isActive('Chat')) {
         this.scene.stop('Chat');

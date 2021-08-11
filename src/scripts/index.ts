@@ -24,7 +24,8 @@ import Unicorn from './scenes/Event/Unicorns/Main';
 import Fortune from './scenes/Event/Fortune/Fortune';
 import Block from './scenes/Block';
 import Profile from './scenes/Profile';
-import Clan from './scenes/Modal/Clan/Main';
+import ClanScroll from './scenes/Modal/Clan/Main';
+import ClanFarm from './scenes/ClanFarm';
 
 const gcd = (num1: number, num2: number): number => {
   while (num1 && num2) num1 > num2 ? num1 %= num2 : num2 %= num1;
@@ -83,11 +84,11 @@ window.onload = (): void => {
         CowPreload, Cow, CowBars,
         UnicornPreload, Unicorn, UnicornBars,
         Fortune,
-        Profile,
+        Profile, ClanFarm,
         Modal, 
         Block,
         Shop, ShopBars,
-        Clan,
+        ClanScroll,
         Chat,
         Tutorial,
       ],
