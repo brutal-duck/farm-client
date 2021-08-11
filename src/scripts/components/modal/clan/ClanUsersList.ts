@@ -64,7 +64,7 @@ export default class ClanUsersList {
       },
     };
     const padding: number = 10;
-    const bgWidth: number = 450;
+    const bgWidth: number = 460;
     const pos: Iposition = {
       x: this.scene.cameras.main.centerX - 300,
       y: this.scene.windowHeight + this.scene.scrollHeight + padding,
@@ -107,6 +107,9 @@ export default class ClanUsersList {
       this.scene.add.sprite(x, y, statusSettings.iconTexture).setVisible(statusSettings.iconVisible).setOrigin(0, 0.5).setScale(0.9);
     }
 
+    const bgZone = this.scene.add.zone(pos.x - 50, pos.y, bgWidth, avatarSprite.displayHeight).setOrigin(0, 0.5).setDropZone(undefined, () => {});
+    this.scene.click(bgZone, () => { this.onUserPlateClick(id) });
+
     if (this.scene.state.clan.ownerId === id) {
       this.scene.add.sprite(avatarSprite.x, avatarSprite.y - avatarSprite.displayHeight / 2, 'clan-window-crown');
       expelBtn.setVisible(false);
@@ -116,5 +119,14 @@ export default class ClanUsersList {
 
     this.scene.scrollHeight += padding + avatarSprite.displayHeight;
     this.scene.scrolling.bottom = this.scene.scrollHeight;
+  }
+
+  private onUserPlateClick(id: string): void {
+    this.scene.state.foreignProfileId = id !== this.scene.state.user.id ? id : '';
+    this.scene.state.modal = {
+      type: 15,
+    };
+    this.scene.scene.stop('Clan');
+    this.scene.scene.launch('Modal',this.scene.state);
   }
 }
