@@ -581,9 +581,6 @@ export default function loadData(response: any): void {
   ) {
     this.state.user.fortuneTutorial = response.data.event;
   }
-  if (this.state.user.clanId) {
-    console.log(this.state.user.clanId)
-    checkUserName(this.state);
-  }
+  if (this.state.user.clanId) checkUserName(this.state);
   this.userReady = true;
 }

@@ -234,7 +234,7 @@ class Profile extends Phaser.Scene {
     const farmPosition: Iposition = { x: 720, y: 1025 };
     if (this.state.progress.chicken.open) {
       const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-chicken-farm').setOrigin(1, 0.5).setDepth(1);
-      this.add.text(farmPosition.x - 215, farmPosition.y - 15, `${this.state.progress.chicken.part}/${this.state.progress.chicken.max}`, {
+      this.add.text(farmPosition.x - 212, farmPosition.y - 17, `${this.state.progress.chicken.part}/${this.state.progress.chicken.max}`, {
         font: '28px Shadow',
         color: '#ffe5d7'
       }).setOrigin(0.5, 0.5).setStroke('#522007', 5).setDepth(1);
