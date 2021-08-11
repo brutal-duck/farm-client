@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import AllTasks from '../tasks';
 import basicSheepTerritories from '../local/sheepTerritories';
 import basicChickenTerritories from '../local/chickenTerritories';
@@ -14,7 +16,34 @@ const basicUserCow = userCow;
 const basicUserSheep = userSheep;
 const basicUserChicken = userChicken;
 
-function validateTerritories(territories: Iterritories[], basicTerritories: Iterritories[]): Iterritories[] {
+const checkUserName = (state: Istate) => {
+  const { user, clan, platform, name, avatar } = state;
+
+  const clanUser = clan.users.find(el => el.id === user.id);
+
+  let newName: string = user.login;
+  if (platform !== 'web' && platform !== 'android') newName = name;
+  const newAvatar: string = Number(user.avatar) > 0 ? user.avatar : avatar;
+
+  if (clanUser.name !== newName || clanUser.avatar !== newAvatar) {
+    const data = {
+      id: user.id,
+      hash: user.hash,
+      counter: user.counter,
+      name: newName,
+      avatar: newAvatar,
+    };
+    axios.post(process.env.API + '/updateClanUser', data).then(res => {
+      if (!res.data.error) {
+        clanUser.name = newName;
+        clanUser.avatar = newAvatar;
+      }
+    });
+  }
+}
+
+
+const validateTerritories = (territories: Iterritories[], basicTerritories: Iterritories[]): Iterritories[] => {
   const maxTerritoryType: number = 8;
   for (let i: number = 0; i < territories.length; i += 1) {
     const territory: Iterritories = basicTerritories.find((data: Iterritories) => territories[i].position === data.position && territories[i].block === data.block);
@@ -48,7 +77,7 @@ function validateTerritories(territories: Iterritories[], basicTerritories: Iter
   return territories;
 }
 
-function validateBoosts(boosts: Iboosts): Iboosts {
+const validateBoosts = (boosts: Iboosts): Iboosts => {
   if (boosts) {
     const sheepBoostsBasic: IfarmBosts = userData.boosts.sheep;
     const chickenBoostsBasic: IfarmBosts = userData.boosts.chicken;
@@ -70,7 +99,7 @@ function validateBoosts(boosts: Iboosts): Iboosts {
   return userData.boosts;
 }
 
-function setTaskStatus(farmId: number, resTask: any[]): Itasks[] {
+const setTaskStatus = (farmId: number, resTask: any[]): Itasks[] => {
   const updatedTasks: Itasks[] = [];
   for (const task of AllTasks) if (task.farm === farmId) updatedTasks.push(task);
   for (const usersTask of resTask) {
@@ -84,7 +113,7 @@ function setTaskStatus(farmId: number, resTask: any[]): Itasks[] {
   return updatedTasks;
 }
 
-function updateImproveTerritories(territories: Iterritories[]): Iterritories[] {
+const updateImproveTerritories = (territories: Iterritories[]): Iterritories[]  => {
   return territories.map(el => {
     if (el.improve === 2 && (el.type === 2 || el.type === 3 || el.type === 5)) {
       el.improve = 6 
@@ -544,7 +573,7 @@ export default function loadData(response: any): void {
     this.state.userUnicorn = userUnicorn;
     this.state.eventCollectorSettings = basicUnicornCollector;
   }
-
+  
   if (
     this.state.progress.event.type === 2 
     && this.state.progress.event.startTime < 0 
@@ -552,6 +581,9 @@ export default function loadData(response: any): void {
   ) {
     this.state.user.fortuneTutorial = response.data.event;
   }
+  if (this.state.user.clanId) {
+    console.log(this.state.user.clanId)
+    checkUserName(this.state);
+  }
   this.userReady = true;
-
 }

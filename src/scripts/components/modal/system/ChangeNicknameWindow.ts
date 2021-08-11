@@ -137,30 +137,22 @@ export default class ChangeNicknameWindow {
 
   private changeNickname(): void {
     if (!this.change) {
-
       let checkLogin: boolean = true;
       const re: RegExp = /^[a-zA-Z0-9]+$/;
       checkLogin = re.test(this.scene.mainInput.value);
-          
       if (this.scene.mainInput.value.length < 6) checkLogin = false;
-    
       if (checkLogin) {
-    
         this.change = true;
-    
         axios.post(process.env.API + '/newNickname', {
           id: this.scene.state.user.id,
           hash: this.scene.state.user.hash,
           counter: this.scene.state.user.counter,
           login: this.scene.mainInput.value
         }).then((res) => {
-          
           if (res.data.error) window.location.reload();
           else {
             this.change = false;
-    
             if (res.data.success) {
-    
               this.scene.state.user.login = this.scene.mainInput.value;
               if (this.scene.state.platform === 'web') {
                 document.cookie = "farmHASH=" + res.data.hash + "; expires=" + res.data.expires + "; path=/;";
@@ -171,24 +163,18 @@ export default class ChangeNicknameWindow {
               this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
               this.scene.enterKey.destroy();
               this.scene.mainInput.remove();
-              this.scene.scene.stop();
-                  
+              this.scene.scene.stop();  
             } else {
-
               if (!this.nicknameError) this.enterNickname.setY(this.enterNickname.y + 34);
               this.nicknameError = true;
               this.result.setText(this.scene.state.lang.haveAccaunt).setAlpha(1);
-
             }
           }
         });
-    
       } else {
-
         if (!this.nicknameError) this.enterNickname.setY(this.enterNickname.y + 34);
         this.nicknameError = true;
         this.result.setText(this.scene.state.lang.validNickname).setAlpha(1);
-
       }
     }
   }
