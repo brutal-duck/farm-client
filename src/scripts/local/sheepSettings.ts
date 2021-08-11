@@ -5,7 +5,7 @@ const config: Iconfig[] = [
     collectorTimeCost: 0,
     collectorSpeed: 0.1,
     collectorSpeedCost: 0,
-    repositoryCost: 0,
+    repositoryCost: 1,
     repositoryVolume: 27,
     fairCost: 0,
     grassAndWaterTerritoryCost: 500,
