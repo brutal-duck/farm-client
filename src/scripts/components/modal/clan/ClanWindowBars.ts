@@ -157,7 +157,13 @@ export default class ClanTabsWindow {
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = active ? tabActiveTextStyle : tabTextStyle;
     const tab: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(pos.x, pos.y, maxWidth / count, height, texture, slice).setOrigin(0, 1);
     const tabGeom: Phaser.Geom.Rectangle = tab.getBounds();
-    const tabIcon: Phaser.GameObjects.Sprite = this.scene.add.sprite(tabGeom.centerX, tabGeom.centerY - 10, `clan-window-icon-${type}`).setOrigin(0.5);
+    let tabIcon: Phaser.GameObjects.Sprite = this.scene.add.sprite(tabGeom.centerX, tabGeom.centerY - 10, `clan-window-icon-${type}`).setOrigin(0.5);
+    let flag: Phaser.GameObjects.Sprite;
+    if (type === 1) {
+      const mask = new Phaser.Display.Masks.BitmapMask(this.scene, tabIcon);
+      mask.invertAlpha = true;
+      flag = LogoManager.createFlag(this.scene, tabGeom.centerX, tabGeom.centerY - 10 - 2, this.scene.state.clan.avatar).setScale(0.223).setMask(mask);
+    }
     this.modalElements.push(tab, tabIcon);
     if (!active) {
       this.scene.clickButtonUp(tab, (): void => {
@@ -168,7 +174,7 @@ export default class ClanTabsWindow {
         this.removeInput();
         this.scene.scene.stop('Clan');
         this.scene.scene.restart(this.scene.state);
-      }, tabIcon);
+      }, tabIcon, flag);
     }
   }
 
