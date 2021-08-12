@@ -143,11 +143,6 @@ export default class ClanSearch {
         }
       } else {
         if (res.data.result.id) {
-          this.scene.state.modal = {
-            type: 17,
-            clanTabType: 1,
-            message: this.scene.state.lang.clanIsFull,
-          };
           this.scene.state.user.clanId = res.data.result.id;
           this.scene.state.clan = res.data.result;
   
@@ -163,7 +158,7 @@ export default class ClanSearch {
           });
           this.scene.scene.stop('Modal');
           this.scene.scene.stop();
-          this.scene.scene.launch('Modal', this.scene.state);
+          this.scene.scene.launch('ClanFarm');
         }
       }
     });    

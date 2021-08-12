@@ -237,6 +237,7 @@ export default class CreateClanWindow {
             this.scene.enterKey.destroy();
             this.input.remove();
             this.scene.scene.stop();
+            this.scene.scene.launch('ClanFarm');
           }
         });
       } else {

@@ -28,7 +28,6 @@ import SheepWindow from '../../components/modal/system/SheepWindow';
 import ChickenWindow from '../../components/modal/system/ChickenWindow';
 import CowWindow from '../../components/modal/system/CowWindow';
 import ConfirmSaveProgress from './../../components/modal/system/ConfirmSaveProgress';
-import CreateClanWindow from './../../components/modal/system/CreateClanWindow';
 import ConfimExcludeUserWindow from '../../components/modal/system/ConfimExcludeUserWindow';
 import ChangeClanNameWindow from './../../components/modal/system/ChangeClanNameWindow';
 

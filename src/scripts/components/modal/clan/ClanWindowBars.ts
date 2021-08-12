@@ -264,6 +264,7 @@ export default class ClanTabsWindow {
     };
     this.removeInput();
     this.scene.scene.stop('ClanScroll');
+    this.scene.scene.stop('ClanFarm');
     this.scene.scene.restart(this.scene.state);
   }
 
