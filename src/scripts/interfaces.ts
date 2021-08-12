@@ -745,6 +745,7 @@ interface Iconfig {
   repositoryVolume: number;
   fairCost: number;
   grassAndWaterTerritoryCost: number;
+  grassAndWaterRestorePoints: number;
 }
 interface Istate {
   platform: string;

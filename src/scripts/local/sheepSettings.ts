@@ -9,6 +9,7 @@ const config: Iconfig[] = [
     repositoryVolume: 27,
     fairCost: 0,
     grassAndWaterTerritoryCost: 500,
+    grassAndWaterRestorePoints: 13,
   },
   //2
   {
@@ -20,6 +21,7 @@ const config: Iconfig[] = [
     repositoryVolume: 90,
     fairCost: 0,
     grassAndWaterTerritoryCost: 650,
+    grassAndWaterRestorePoints: 13,
   },
   //3
   {
@@ -31,6 +33,7 @@ const config: Iconfig[] = [
     repositoryVolume: 126,
     fairCost: 4300,
     grassAndWaterTerritoryCost: 1720,
+    grassAndWaterRestorePoints: 14,
   },
   //4
   {
@@ -42,6 +45,7 @@ const config: Iconfig[] = [
     repositoryVolume: 216,
     fairCost: 12100,
     grassAndWaterTerritoryCost: 4033,
+    grassAndWaterRestorePoints: 15,
   },
   //5
   {
@@ -53,6 +57,7 @@ const config: Iconfig[] = [
     repositoryVolume: 330,
     fairCost: 42000,
     grassAndWaterTerritoryCost: 12000,
+    grassAndWaterRestorePoints: 16,
   },
   //6
   {
@@ -64,6 +69,7 @@ const config: Iconfig[] = [
     repositoryVolume: 468,
     fairCost: 261200,
     grassAndWaterTerritoryCost: 65300,
+    grassAndWaterRestorePoints: 18,
   },
   //7
   {
@@ -75,6 +81,7 @@ const config: Iconfig[] = [
     repositoryVolume: 720,
     fairCost: 0,
     grassAndWaterTerritoryCost: 249244,
+    grassAndWaterRestorePoints: 21,
   },
   //8
   {
@@ -86,6 +93,7 @@ const config: Iconfig[] = [
     repositoryVolume: 918,
     fairCost: 1720000,
     grassAndWaterTerritoryCost: 344000,
+    grassAndWaterRestorePoints: 23,
   },
   //9
   {
@@ -97,6 +105,7 @@ const config: Iconfig[] = [
     repositoryVolume: 1254,
     fairCost: 0,
     grassAndWaterTerritoryCost: 1067636,
+    grassAndWaterRestorePoints: 28,
   },
   //10
   {
@@ -108,6 +117,7 @@ const config: Iconfig[] = [
     repositoryVolume: 1386,
     fairCost: 8008000,
     grassAndWaterTerritoryCost: 1334667,
+    grassAndWaterRestorePoints: 27,
   },
   //11
   {
@@ -119,6 +129,7 @@ const config: Iconfig[] = [
     repositoryVolume: 1794,
     fairCost: 0,
     grassAndWaterTerritoryCost: 2728369,
+    grassAndWaterRestorePoints: 29,
   },
   //12
   {
@@ -130,6 +141,7 @@ const config: Iconfig[] = [
     repositoryVolume: 1950,
     fairCost: 28662400,
     grassAndWaterTerritoryCost: 4094629,
+    grassAndWaterRestorePoints: 32,
   },
   //13
   {
@@ -141,6 +153,7 @@ const config: Iconfig[] = [
     repositoryVolume: 2430,
     fairCost: 0,
     grassAndWaterTerritoryCost: 8318293,
+    grassAndWaterRestorePoints: 33,
   },
   //14
   {
@@ -152,6 +165,7 @@ const config: Iconfig[] = [
     repositoryVolume: 2610,
     fairCost: 77664000,
     grassAndWaterTerritoryCost: 9708000,
+    grassAndWaterRestorePoints: 36,
   },
   //15
   {
@@ -163,6 +177,7 @@ const config: Iconfig[] = [
     repositoryVolume: 3060,
     fairCost: 0,
     grassAndWaterTerritoryCost: 19648753,
+    grassAndWaterRestorePoints: 41,
   },
   //16
   {
@@ -174,6 +189,7 @@ const config: Iconfig[] = [
     repositoryVolume: 3162,
     fairCost: 391462400,
     grassAndWaterTerritoryCost: 43495822,
+    grassAndWaterRestorePoints: 43,
   },
   //17
   {
@@ -185,6 +201,7 @@ const config: Iconfig[] = [
     repositoryVolume: 3648,
     fairCost: 0,
     grassAndWaterTerritoryCost: 85202189,
+    grassAndWaterRestorePoints: 45,
   },
   //18
   {
@@ -196,6 +213,7 @@ const config: Iconfig[] = [
     repositoryVolume: 3762,
     fairCost: 933401600,
     grassAndWaterTerritoryCost: 93340160,
+    grassAndWaterRestorePoints: 48,
   },
   //19
   {
@@ -207,6 +225,7 @@ const config: Iconfig[] = [
     repositoryVolume: 4284,
     fairCost: 0,
     grassAndWaterTerritoryCost: 183432533,
+    grassAndWaterRestorePoints: 49,
   },
   //20
   {
@@ -218,6 +237,7 @@ const config: Iconfig[] = [
     repositoryVolume: 4830,
     fairCost: 0,
     grassAndWaterTerritoryCost: 208886248,
+    grassAndWaterRestorePoints: 54,
   },
 ]
 

@@ -116,7 +116,7 @@ function interval(): void {
     for (let i in this.territories.children.entries) {
       let territory: SheepTerritory = this.territories.children.entries[i];
       if ((territory.territoryType === 2 || territory.territoryType === 3) && territory.volume < 1000) {
-        let reg: number = this.settings.territoriesSheepSettings.find((item: IterritoriesSheepSettings) => item.improve === territory.improve).regeneration;
+        let reg: number = this.state.config[territory.improve - 1].grassAndWaterRestorePoints
         territory.volume += reg;
         if (territory.volume > 1000) {
           territory.volume = 1000;
