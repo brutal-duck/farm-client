@@ -41,6 +41,7 @@ import HerdBoostUnicornWindow from '../../components/modal/HerdBoostUnicornWindo
 import ProfileWindow from '../../components/modal/ProfileWindow';
 import ChatBars from '../../components/modal/chat/ChatBars';
 import SettingsWindow from './../../components/modal/SettingsWindow';
+import TasksWindowNew from '../../components/modal/TasksWindowNew';
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -118,7 +119,8 @@ class Modal extends Phaser.Scene {
         this.scene.launch('Shop', this.state);
         break;
       case 3: // окно с заданиями
-        new TasksWindow(this)
+        if (this.state.farm === 'Sheep') new TasksWindowNew(this)
+        else new TasksWindow(this)
         break;
       case 4: // ежедневные награды
         new DailyAwardWindow(this);
