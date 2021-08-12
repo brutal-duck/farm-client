@@ -578,11 +578,11 @@ class Profile extends Phaser.Scene {
     const pos: Iposition = {
       x: 385,
       y: 300
-    }
+    };
     const size: Isize = {
       width: 200,
       height: 240
-    }
+    };
     const zone: Phaser.GameObjects.Zone = this.add.zone(pos.x, pos.y, size.width, size.height).setDropZone(undefined, () => {});
       
     // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
