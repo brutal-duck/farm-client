@@ -10,6 +10,7 @@ const config: Iconfig[] = [
     fairCost: 0,
     grassAndWaterTerritoryCost: 500,
     grassAndWaterRestorePoints: 13,
+    territoryColddown: 0,
   },
   //2
   {
@@ -22,6 +23,7 @@ const config: Iconfig[] = [
     fairCost: 0,
     grassAndWaterTerritoryCost: 650,
     grassAndWaterRestorePoints: 13,
+    territoryColddown: 4,
   },
   //3
   {
@@ -34,6 +36,7 @@ const config: Iconfig[] = [
     fairCost: 4300,
     grassAndWaterTerritoryCost: 1720,
     grassAndWaterRestorePoints: 14,
+    territoryColddown: 5,
   },
   //4
   {
@@ -46,6 +49,7 @@ const config: Iconfig[] = [
     fairCost: 12100,
     grassAndWaterTerritoryCost: 4033,
     grassAndWaterRestorePoints: 15,
+    territoryColddown: 7,
   },
   //5
   {
@@ -58,6 +62,7 @@ const config: Iconfig[] = [
     fairCost: 42000,
     grassAndWaterTerritoryCost: 12000,
     grassAndWaterRestorePoints: 16,
+    territoryColddown: 17,
   },
   //6
   {
@@ -70,6 +75,7 @@ const config: Iconfig[] = [
     fairCost: 261200,
     grassAndWaterTerritoryCost: 65300,
     grassAndWaterRestorePoints: 18,
+    territoryColddown: 31,
   },
   //7
   {
@@ -82,6 +88,7 @@ const config: Iconfig[] = [
     fairCost: 0,
     grassAndWaterTerritoryCost: 249244,
     grassAndWaterRestorePoints: 21,
+    territoryColddown: 36,
   },
   //8
   {
@@ -94,6 +101,7 @@ const config: Iconfig[] = [
     fairCost: 1720000,
     grassAndWaterTerritoryCost: 344000,
     grassAndWaterRestorePoints: 23,
+    territoryColddown: 54,
   },
   //9
   {
@@ -106,6 +114,7 @@ const config: Iconfig[] = [
     fairCost: 0,
     grassAndWaterTerritoryCost: 1067636,
     grassAndWaterRestorePoints: 28,
+    territoryColddown: 60,
   },
   //10
   {
@@ -118,6 +127,7 @@ const config: Iconfig[] = [
     fairCost: 8008000,
     grassAndWaterTerritoryCost: 1334667,
     grassAndWaterRestorePoints: 27,
+    territoryColddown: 67,
   },
   //11
   {
@@ -130,6 +140,7 @@ const config: Iconfig[] = [
     fairCost: 0,
     grassAndWaterTerritoryCost: 2728369,
     grassAndWaterRestorePoints: 29,
+    territoryColddown: 92,
   },
   //12
   {
@@ -142,6 +153,7 @@ const config: Iconfig[] = [
     fairCost: 28662400,
     grassAndWaterTerritoryCost: 4094629,
     grassAndWaterRestorePoints: 32,
+    territoryColddown: 100,
   },
   //13
   {
@@ -154,6 +166,7 @@ const config: Iconfig[] = [
     fairCost: 0,
     grassAndWaterTerritoryCost: 8318293,
     grassAndWaterRestorePoints: 33,
+    territoryColddown: 108,
   },
   //14
   {
@@ -166,6 +179,7 @@ const config: Iconfig[] = [
     fairCost: 77664000,
     grassAndWaterTerritoryCost: 9708000,
     grassAndWaterRestorePoints: 36,
+    territoryColddown: 116,
   },
   //15
   {
@@ -178,6 +192,7 @@ const config: Iconfig[] = [
     fairCost: 0,
     grassAndWaterTerritoryCost: 19648753,
     grassAndWaterRestorePoints: 41,
+    territoryColddown: 240,
   },
   //16
   {
@@ -190,6 +205,7 @@ const config: Iconfig[] = [
     fairCost: 391462400,
     grassAndWaterTerritoryCost: 43495822,
     grassAndWaterRestorePoints: 43,
+    territoryColddown: 248,
   },
   //17
   {
@@ -202,6 +218,7 @@ const config: Iconfig[] = [
     fairCost: 0,
     grassAndWaterTerritoryCost: 85202189,
     grassAndWaterRestorePoints: 45,
+    territoryColddown: 256,
   },
   //18
   {
@@ -214,6 +231,7 @@ const config: Iconfig[] = [
     fairCost: 933401600,
     grassAndWaterTerritoryCost: 93340160,
     grassAndWaterRestorePoints: 48,
+    territoryColddown: 264,
   },
   //19
   {
@@ -226,6 +244,7 @@ const config: Iconfig[] = [
     fairCost: 0,
     grassAndWaterTerritoryCost: 183432533,
     grassAndWaterRestorePoints: 49,
+    territoryColddown: 272,
   },
   //20
   {
@@ -238,7 +257,26 @@ const config: Iconfig[] = [
     fairCost: 0,
     grassAndWaterTerritoryCost: 208886248,
     grassAndWaterRestorePoints: 54,
+    territoryColddown: 0,
   },
 ]
 
-export { config }
+// const sheepConfig: ISheepConfig[] = [
+//   { woolPrice: 100, woolGrowthSpeed: 250, eating: 10, drinking: 2, profitPerMinute: 1500, unlockPart: 0 },
+//   { woolPrice: 200, woolGrowthSpeed: 150, eating: 11, drinking: 2, profitPerMinute: 1800, unlockPart: 0 },
+//   { woolPrice: 400, woolGrowthSpeed: 100, eating: 12, drinking: 3, profitPerMinute: 2400, unlockPart: 3 },
+//   { woolPrice: 800, woolGrowthSpeed: 100, eating: 13, drinking: 3, profitPerMinute: 4800, unlockPart: 4 },
+//   { woolPrice: 1600, woolGrowthSpeed: 100, eating: 14, drinking: 3, profitPerMinute: 9600, unlockPart: 5 },
+//   { woolPrice: 3200, woolGrowthSpeed: 100, eating: 16, drinking: 3, profitPerMinute: 19200, unlockPart: 6 },
+//   { woolPrice: 6400, woolGrowthSpeed: 100, eating: 18, drinking: 4, profitPerMinute: 38400, unlockPart: 8 },
+//   { woolPrice: 12800, woolGrowthSpeed: 100, eating: 20, drinking: 4, profitPerMinute: 76800, unlockPart: 10 },
+//   { woolPrice: 25600, woolGrowthSpeed: 100, eating: 24, drinking: 5, profitPerMinute: 153600, unlockPart: 12 },
+//   { woolPrice: 51200, woolGrowthSpeed: 100, eating: 28, drinking: 5, profitPerMinute: 307200, unlockPart: 14 },
+//   { woolPrice: 102400, woolGrowthSpeed: 100, eating: 32, drinking: 6, profitPerMinute: 614400, unlockPart: 16 },
+//   { woolPrice: 204800, woolGrowthSpeed: 100, eating: 36, drinking: 7, profitPerMinute: 1228800, unlockPart: 18 }
+// ]
+
+export {
+  config,
+  // sheepConfig
+}

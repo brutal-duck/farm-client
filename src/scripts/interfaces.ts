@@ -746,7 +746,16 @@ interface Iconfig {
   fairCost: number;
   grassAndWaterTerritoryCost: number;
   grassAndWaterRestorePoints: number;
+  territoryColddown: number;
 }
+// interface ISheepConfig {
+//   woolPrice: number;
+//   woolGrowthSpeed: number;
+//   eating: number;
+//   drinking: number;
+//   profitPerMinute: number;
+//   unlockPart: number;
+// }
 interface Istate {
   platform: string;
   autoSaveSpeed: number;

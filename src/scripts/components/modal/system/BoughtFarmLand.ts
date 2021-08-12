@@ -24,6 +24,9 @@ export default class BoughtFarmLand {
     const repositoryCost = { icon: 'diamond', text: shortNum(this.scene.state.config[this.currentPart].repositoryCost) };
     
     if (farm === 'Sheep' && this.scene.state.userSheep.tutorial < 100) {
+      grassAndWaterCost.text = '0'
+      repositoryCost.text = '0'
+
       if (
         this.scene.state.userSheep.tutorial === 20 &&
         this.scene.state.territory.block === 2 &&
@@ -44,7 +47,6 @@ export default class BoughtFarmLand {
         this.scene.state.territory.position === 1
       ) {
         const button = this.scene.bigButton('orange', 'left', 30, this.scene.state.lang.buildRepository, repositoryCost);
-        this.price = this.scene.state.config[0].repositoryCost
         this.scene.clickModalBtn(button, (): void => { this.setTerritory(5) });
       }
     } else if (farm === 'Cow') {
@@ -91,7 +93,7 @@ export default class BoughtFarmLand {
 
   private setTerritory(type: number) {
     this.price = type === 5 ? this.scene.state.config[this.currentPart].repositoryCost : this.scene.state.config[this.currentPart].grassAndWaterTerritoryCost
-    console.log('setTerritory ~ this.price', this.price)
+    if (this.scene.state.farm === 'Sheep' && this.scene.state.userSheep.tutorial < 100) this.price = 0
 
     if ((type !== 5 && this.scene.state[`user${this.scene.state.farm}`].money >= this.price) || (type === 5 && this.scene.state.user.diamonds >= this.price)) {
       if (type === 5) this.scene.state.user.diamonds - this.price
