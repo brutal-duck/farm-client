@@ -323,23 +323,58 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   }
 
   public exchangeTerritory(): void {
-    const user: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
-    let farm: string = this.scene.state.farm.toLowerCase();
-    const territoriesSettings: IterritoriesCowSettings[] = this.scene.state[`${farm}Settings`][`territories${this.scene.state.farm}Settings`]
+    let farm: string = this.scene.state.farm;
+    const user: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${farm}`];
+    const currentPart: number = user.part
 
-    if (this.scene.state.exchangeTerritory === 2 ||
+    if (
+      this.scene.state.exchangeTerritory === 2 ||
       this.scene.state.exchangeTerritory === 3 ||
       this.scene.state.exchangeTerritory === 5
-    ) {
-      
-      const exchangePrice: number = territoriesSettings.find(data => data.improve === 2).improvePastureMoneyPrice;
+    ) {      
+      const exchangePriceCoins = this.scene.state.config[currentPart - 1].grassAndWaterTerritoryCost
+      const exchangePriceDiamonds = this.scene.state.config[currentPart - 1].repositoryCost
+      console.log('exchangeTerritory ~ exchangePriceCoins', exchangePriceCoins)
+      console.log('exchangeTerritory ~ exchangePriceDiamonds', exchangePriceDiamonds)
   
-      if (this.scene.state.exchangeTerritory === 5) {
-  
+      if (this.territoryType === 5) {
+        if (user.money >= exchangePriceCoins) {
+          const to: string = this.scene.state.exchangeTerritory === 2 ? 'grass' : 'water';
+
+          this.scene.state.amplitude.logAmplitudeEvent('exchange_territory', {
+            block: this.block,
+            position: this.position,
+            from: 'repository',
+            to
+          });
+
+          if (this.repository) {
+            this.sellResource();
+            this.repository.destroy();
+          }
+    
+          this.territoryType = this.scene.state.exchangeTerritory;
+          user.money -= exchangePriceCoins;
+          this.improve = 1;
+          this.volume = 1000;
+          
+          this.scene.tryTask(5, this.scene.state.exchangeTerritory);
+
+          this.scene.time.addEvent({ delay: 500, callback: (): void => {
+            this.changeSprite();
+            Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
+          }, callbackScope: this, loop: false });
+
+        } else {
+          const count: number = exchangePriceCoins - user.money;
+          const diamonds: number = this.scene.convertMoney(count);
+          this.openConvertor(count, diamonds, 1);
+        }
+        
+      } else if (this.scene.state.exchangeTerritory === 5) {
         const check: boolean = this.checkExchangeRepository();
   
         if (!check) {
-  
           let modal: Imodal = {
             type: 1,
             sysType: 3,
@@ -351,24 +386,18 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
           
         } else {
   
-          if (user.money >= exchangePrice) {
-  
-            let from: string;
-            if (this.territoryType === 2) from = 'grass';
-            else if (this.territoryType === 3) from = 'water';
-            else if (this.territoryType === 5) from = 'repository';
-            
-            const to: string = 'repository';
+          if (this.scene.state.user.diamonds >= exchangePriceDiamonds) {
+            const from: string = this.territoryType === 2 ? 'grass' : 'water';
 
             this.scene.state.amplitude.logAmplitudeEvent('exchange_territory', {
               block: this.block,
               position: this.position,
-              from: from,
-              to: to
+              from,
+              to: 'repository'
             });
   
             this.territoryType = this.scene.state.exchangeTerritory;
-            user.money -= exchangePrice;
+            this.scene.state.user.diamonds -= exchangePriceDiamonds;
             this.scene.tryTask(5, this.scene.state.exchangeTerritory);
 
             this.improve = 1;
@@ -377,58 +406,43 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
             this.createRepositorySprite();
             Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
           } else {
-            const count: number = exchangePrice - user.money;
-            const diamonds: number = this.scene.convertMoney(count);
-            this.openConvertor(count, diamonds, 1);
+            let count: number = exchangePriceDiamonds - this.scene.state.user.diamonds
+            let diamonds: number = exchangePriceDiamonds - this.scene.state.user.diamonds
+            this.scene.state.convertor = { fun: 8, count, diamonds, type: 2 }
+            this.scene.state.modal = { type: 1, sysType: 4 };
+            this.scene.scene.stop()
+            this.scene.scene.start('Modal', this.scene.state);
           }
-  
         }
-  
-      } else {
+
+      } else if (user.money >= exchangePriceCoins) {
+
+        const from: string = this.territoryType === 2 ? 'grass' : 'water';
+        const to: string = this.scene.state.exchangeTerritory === 2 ? 'grass' : 'water';
+
+        this.scene.state.amplitude.logAmplitudeEvent('exchange_territory', {
+          block: this.block,
+          position: this.position,
+          from,
+          to
+        });
         
-        if (user.money >= exchangePrice) {
-  
-          let from: string;
-  
-          if (this.territoryType === 2) from = 'grass';
-          else if (this.territoryType === 3) from = 'water';
-          else if (this.territoryType === 5) from = 'repository';
-          
-          let to: string;
-  
-          if (this.scene.state.exchangeTerritory === 2) to = 'grass';
-          else if (this.scene.state.exchangeTerritory === 3) to = 'water';
-          else if (this.scene.state.exchangeTerritory === 5) to = 'repository';
-    
-          this.scene.state.amplitude.logAmplitudeEvent('exchange_territory', {
-            block: this.block,
-            position: this.position,
-            from: from,
-            to: to
-          });
-  
-          if (this.territoryType === 5 && this.repository) {
-            this.sellResource();
-            this.repository.destroy();
-          }
-    
-          this.territoryType = this.scene.state.exchangeTerritory;
-          user.money -= exchangePrice;
-          this.improve = 1;
-          this.volume = 1000;
-          
-          this.scene.tryTask(5, this.scene.state.exchangeTerritory);
-  
-          this.scene.time.addEvent({ delay: 500, callback: (): void => {
-            this.changeSprite();
-            Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
-          }, callbackScope: this, loop: false });
-  
-        } else {
-          const count: number = exchangePrice - user.money;
-          const diamonds: number = this.scene.convertMoney(count);
-          this.openConvertor(count, diamonds, 1);
-        }
+        this.territoryType = this.scene.state.exchangeTerritory;
+        user.money -= exchangePriceCoins;
+        this.improve = 1;
+        this.volume = 1000;
+        
+        this.scene.tryTask(5, this.scene.state.exchangeTerritory);
+
+        this.scene.time.addEvent({ delay: 500, callback: (): void => {
+          this.changeSprite();
+          Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
+        }, callbackScope: this, loop: false });
+
+      } else {
+        const count: number = exchangePriceCoins - user.money;
+        const diamonds: number = this.scene.convertMoney(count);
+        this.openConvertor(count, diamonds, 1);
       }
     }
   }
@@ -632,13 +646,18 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       territoriesSettings = this.scene.state.chickenSettings.territoriesChickenSettings;
       
     } else if (this.scene.state.farm === 'Cow') {
-  
       user = this.scene.state.userCow;
       territoriesSettings = this.scene.state.cowSettings.territoriesCowSettings;
     }
 
-    if (this.scene.state.farm === 'Sheep' && this.territoryType === 5) {
-      this.diamondImprove(this.scene.state.config[this.improve].repositoryCost)
+    const coinPrice = this.scene.state.config[this.improve].grassAndWaterTerritoryCost
+    const diamondPrice = this.scene.state.config[this.improve].repositoryCost
+    console.log('improveTerritory ~ coinPrice', coinPrice)
+    console.log('improveTerritory ~ diamondPrice', diamondPrice)
+
+    if (this.scene.state.farm === 'Sheep') {
+      if (this.territoryType === 5) this.diamondImprove(diamondPrice)
+      else if (this.territoryType === 2 || this.territoryType === 3) this.moneyImprove(user, coinPrice)
 
     } else {
       // Старое улучшение
@@ -666,7 +685,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         }
       }
     }
-  
   }  
 
   private moneyImprove(user: IuserSheep | IuserChicken | IuserCow, price: number) {

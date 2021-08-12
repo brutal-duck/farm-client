@@ -11,19 +11,17 @@ export default class RepositoryExchangeWindow {
   }
 
   private create(): void {
-    const farm: string = this.scene.state.farm.toLowerCase();
-    let repository: string = this.scene.state.lang.repository.replace('$1', this.scene.state.territory.improve);
+    const farm: string = this.scene.state.farm;
+    const currentLevel: number = this.scene.state.territory.improve
+    const currentPart: number = this.scene.state[`user${farm}`].part - 1
+    const repository: string = this.scene.state.lang.repository.replace('$1', String(currentLevel + 1));
     this.scene.textHeader.setText(repository);
 
-    const territoriesSettings: IterritoriesSheepSettings[] | IterritoriesChickenSettings[] | IterritoriesCowSettings[] = this.scene.state[`${farm}Settings`][`territories${this.scene.state.farm}Settings`];
-    const exchangePrice: number = territoriesSettings.find((data: IterritoriesCowSettings) => data.improve === 2).improvePastureMoneyPrice;
+    const exchangePriceCoins = this.scene.state.config[currentPart].grassAndWaterTerritoryCost
+    console.log('create ~ exchangePriceCoins', exchangePriceCoins)
+    const exchangeForCoins: any = { icon: `${farm.toLowerCase()}Coin`, text: shortNum(exchangePriceCoins) };
 
-    const exchange: any = {
-      icon: `${farm}Coin`,
-      text: shortNum(exchangePrice)
-    };;
-
-    const textTitle: string = this.scene.state.lang.exchangeRepositoryTitle.replace('$1', this.scene.state.territory.improve);
+    const textTitle: string = this.scene.state.lang.exchangeRepositoryTitle.replace('$1', String(currentLevel + 1));
 
     this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 100, textTitle, {
       font: '26px Bip',
@@ -32,10 +30,10 @@ export default class RepositoryExchangeWindow {
       wordWrap: { width: 450 },
     }).setOrigin(0.5, 0.5);
 
-    const button1 = this.scene.bigButton('green', 'left', 0, this.scene.state.lang.exchangeGrass, exchange);
+    const button1 = this.scene.bigButton('green', 'left', 0, this.scene.state.lang.exchangeGrass, exchangeForCoins);
     this.scene.clickModalBtn(button1, (): void => { this.exchangeTerritory(2) });
 
-    const button2 = this.scene.bigButton('blue', 'left', 80, this.scene.state.lang.exchangeWater, exchange);
+    const button2 = this.scene.bigButton('blue', 'left', 80, this.scene.state.lang.exchangeWater, exchangeForCoins);
     this.scene.clickModalBtn(button2, (): void => { this.exchangeTerritory(3) });
 
     const button3 = this.scene.bigButton('red', 'center', 160, this.scene.state.lang.cancel);

@@ -1,3 +1,5 @@
+import { config } from "./local/sheepSettings";
+
 let sheepSettings: IsheepSettings;
 let chickenSettings: IchickenSettings;
 let chickenTerritories: Iterritories[];
@@ -171,6 +173,7 @@ let state: Istate = {
   yandexName,
   musicVolume,
   soundVolume,
+  config,
 }
 
 export default state;
