@@ -112,10 +112,8 @@ export default class ClanFarm extends Phaser.Scene {
 
     this.click(zone, () => {
       this.state.modal = {
-        type: 1,
-        sysType: 3,
-        height: 150,
-        message: 'БАНК',
+        type: 19,
+        clanTabType: 1,
       };
       this.scene.launch('Modal', this.state);
     });

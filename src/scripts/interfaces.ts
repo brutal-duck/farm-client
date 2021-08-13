@@ -763,6 +763,22 @@ interface Iclan {
   users: Array<IclanUser>;
   chatMessages: Array<Ichat>;
   avatar: IconfigIcon;
+  sheep: IclanFarm;
+  chicken: IclanFarm;
+  cow: IclanFarm;
+  diamond: Iclan
+}
+interface IclanFarm {
+  money: Number;
+  count?: Number;
+  logs: IclanUserLog[];
+}
+interface IclanUserLog {
+  avatar: string,
+  name: string,
+  count: number,
+  time: Date,
+  status: string,
 }
 interface IclanUser {
   id: string;

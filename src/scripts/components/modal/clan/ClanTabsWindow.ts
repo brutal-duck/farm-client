@@ -1,6 +1,6 @@
 import { shortNum } from '../../../general/basic';
-import Modal from './../../../scenes/Modal/Modal';
-import LogoManager from './../../Utils/LogoManager';
+import Modal from '../../../scenes/Modal/Modal';
+import LogoManager from '../../Utils/LogoManager';
 const KEY: string = '1491f4c9d53dfa6c50d0c4a375f9ba76';
 
 export default class ClanTabsWindow {

@@ -278,9 +278,9 @@ class Preload extends Phaser.Scene {
     this.load.image('shop-tab-active', shopTabActive);
     this.load.image('shop-tab', shopTab);
     this.load.image('shop-window', shopWindow);
-    if (this.state.farm === 'Sheep') this.load.image('icon-shop-sheep', iconShopSheep);
-    if (this.state.farm === 'Chicken') this.load.image('icon-shop-chicken', iconShopChicken);
-    if (this.state.farm === 'Cow') this.load.image('icon-shop-cow', iconShopCow);
+    this.load.image('icon-shop-sheep', iconShopSheep);
+    this.load.image('icon-shop-chicken', iconShopChicken);
+    this.load.image('icon-shop-cow', iconShopCow);
     this.load.image('icon-shop-boosts', iconShopBoosts);
     this.load.image('bank-package', bankPackage);
     this.load.image('stock-tape', stockTape);

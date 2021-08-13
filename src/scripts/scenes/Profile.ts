@@ -180,7 +180,7 @@ class Profile extends Phaser.Scene {
     }
     const text: Phaser.GameObjects.Text = this.add.text(avatarGeom.right + 100, avatarGeom.centerY, login, nameTextStyle).setOrigin(0.5);
     if (text.displayHeight > 100) {
-      const multiply: number = text.displayWidth / 100;
+      const multiply: number = text.displayHeight / 100;
       text.setFontSize(parseInt(text.style.fontSize) / multiply);
     }
     this.diamondsText = this.add.text(110, 75, shortNum(this.state.user.diamonds), {

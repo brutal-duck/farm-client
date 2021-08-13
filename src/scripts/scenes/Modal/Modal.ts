@@ -40,8 +40,9 @@ import HerdBoostUnicornWindow from '../../components/modal/HerdBoostUnicornWindo
 import ProfileWindow from '../../components/modal/ProfileWindow';
 import ChatBars from '../../components/modal/chat/ChatBars';
 import SettingsWindow from './../../components/modal/SettingsWindow';
-import ClanTabsWindow from './../../components/modal/clan/ClanWindowBars';
+import ClanTabsWindow from '../../components/modal/clan/ClanTabsWindow';
 import ClanWindow from '../../components/modal/clan/ClanWindow';
+import ClanBankWindow from './../../components/modal/clan/ClanBankWindow';
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -169,6 +170,9 @@ class Modal extends Phaser.Scene {
         break;
       case 18: 
         new ClanWindow(this);
+        break;
+      case 19: 
+        new ClanBankWindow(this);
         break;
       default:
         this.scene.stop();
