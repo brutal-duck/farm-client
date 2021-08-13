@@ -45,7 +45,6 @@ export default class TasksWindow {
 
     // Определение общей высоты с текстом и позиции 1ой плашки заданий
     for (let i = 0; i < this.scene.state.modal.tasksParams.tasks.length; i++) {
-
       let task: Itasks = this.scene.state.modal.tasksParams.tasks[i];
       let taskData: ItaskData = this.scene.game.scene.keys[this.scene.state.farm].getTaskData(task);
 
@@ -61,7 +60,6 @@ export default class TasksWindow {
 
       textsHeight.push(textForWidth.getBounds().height);
       tasks.push({ task, taskData });
-
     }
 
     tasks = tasks.sort((x1: { task: Itasks, taskData: ItaskData }, x2: { task: Itasks, taskData: ItaskData }) => {
