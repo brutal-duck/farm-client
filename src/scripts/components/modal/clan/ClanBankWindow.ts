@@ -2,6 +2,10 @@ import axios from 'axios';
 import { shortNum } from '../../../general/basic';
 import Modal from './../../../scenes/Modal/Modal';
 import LogoManager from './../../Utils/LogoManager';
+import Sheep from './../../../scenes/Sheep/Main';
+import Chicken from './../../../scenes/Chicken/Main';
+import Cow from './../../../scenes/Cow/Main';
+import Unicorn from './../../../scenes/Event/Unicorns/Main';
 const KEY: string = '1491f4c9d53dfa6c50d0c4a375f9ba76';
 
 export default class ClanBankWindow {
@@ -233,35 +237,82 @@ export default class ClanBankWindow {
     });
   }
 
-  
   private createLogs(): void {
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       color: '#fffdfa',
       fontFamily: 'Shadow',
-      fontSize: '20px',
+      fontSize: '22px',
       align: 'left',
-      wordWrap: { width: 250 },
+      wordWrap: { width: 150, useAdvancedWrap: true },
+    };
+    const timeTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      color: '#fffdfa',
+      fontFamily: 'Shadow',
+      fontSize: '18px',
+      align: 'center',
+      wordWrap: { width: 50 },
     };
     const array: IclanUserLog[] = this.scene.state.clan[this.farm].logs;
     let y: number = this.scene.cameras.main.centerY + 80;
     this.scene.add.nineslice(this.scene.cameras.main.centerX, y + 150, 500, 380, 'modal-square-bg', 10).setOrigin(0.5);
-    const x: number = 180;
+    const x: number = 160;
     this.logElements = this.scene.add.group();
     array.reverse().forEach(el => {
       const avatar = this.scene.add.sprite(x, y, 'farmer').setScale(0.25);
       const name = this.scene.add.text(x + avatar.displayWidth / 2 + 20, y, el.name, textStyle).setOrigin(0, 0.5);
-      const time = this.scene.add.text(x + 300, y - 10, this.getDate(el.time), textStyle).setOrigin(0.5);
-      const count = this.scene.add.text(x + 300, y + 10, shortNum(el.count), textStyle).setOrigin(0.5);
+      if (name.displayHeight > 60) {
+        const multiply: number = name.displayHeight / 60;
+        name.setFontSize(parseInt(name.style.fontSize) / multiply);
+      }
+      const time = this.scene.add.text(x + 400, y, this.getDate(el.time), timeTextStyle).setOrigin(0.5);
+      const count = this.scene.add.text(x + 260, y, shortNum(el.count), textStyle).setOrigin(0, 0.5);
+      const coinTexture: string = this.farm !== 'diamond' ? `${this.farm}Coin` : 'diamond';
+      const coin: Phaser.GameObjects.Sprite = this.scene.add.sprite(count.getBounds().left - 5, count.getBounds().centerY, coinTexture).setScale(0.11).setOrigin(1, 0.5);
       this.logElements.add(avatar);
       this.logElements.add(name);
       this.logElements.add(time);
       this.logElements.add(count);
+      this.logElements.add(coin);
       y += avatar.displayHeight + 10;
     });
   }
 
   private addFarmMoney(): void {
     const count: number = Number(this.packageBtns.find(el => el.btn.state === this.activePackage).text.state);
+    if (this.farm !== 'diamond') {
+      const farmMoney: number = this.scene.state[`user${this.farm[0].toUpperCase() + this.farm.slice(1)}`].money;
+      if (farmMoney >= count) {
+        this.postMoney(count).then(res => {
+          if (!res.data.error) {
+            this.scene.state[`user${this.farm[0].toUpperCase() + this.farm.slice(1)}`].money -= count;
+            const text: string = shortNum(this.scene.state.clan[this.farm].money);
+            this.currentCountText.setText(text);
+            this.logElements.destroy(true);
+            this.createLogs();
+            const mainScene = this.scene.scene.get(this.scene.state.farm) as Sheep | Chicken | Cow | Unicorn;
+            mainScene.autosave();
+          }
+        });
+      }
+    } else {
+      const userDiamonds: number = this.scene.state.user.diamonds;
+      if (userDiamonds >= count) {
+        this.postMoney(count).then(res => {
+          if (!res.data.error) {
+            this.scene.state.user.diamonds -= count;
+            const text: string = shortNum(this.scene.state.clan[`${this.farm}`].count);
+            this.currentCountText.setText(text);
+            this.logElements.destroy(true);
+            this.createLogs();
+            const mainScene = this.scene.scene.get(this.scene.state.farm) as Sheep | Chicken | Cow | Unicorn;
+            mainScene.autosave();
+          }
+        });
+      }
+    } 
+  }
+
+  private postMoney(count: number): Promise<any> {
     let login: string = this.scene.state.user.login;
     if (this.scene.state.platform !== 'web' && this.scene.state.platform !== 'android') login = this.scene.state.name;
     const avatar: string = Number(this.scene.state.user.avatar) > 0 ? this.scene.state.user.avatar : this.scene.state.avatar;
@@ -276,16 +327,8 @@ export default class ClanBankWindow {
       status: this.scene.state.user.status,
     };
 
-    axios.post(process.env.API + '/addFarmMoney', data).then(res => {
-      if (!res.data.error) {
-        const text: string = this.farm !== 'diamond' ? shortNum(this.scene.state.clan[this.farm].money) : shortNum(this.scene.state.clan[`${this.farm}`].count);
-        this.currentCountText.setText(text);
-        this.logElements.destroy(true);
-        this.createLogs();
-      }
-    });
+    return axios.post(process.env.API + '/addFarmMoney', data);
   }
-
   private getDate(data: Date): string {
     const time: Date = new Date(data);
     const year: number = time.getFullYear();
@@ -293,7 +336,7 @@ export default class ClanBankWindow {
     const day: number = time.getDate();
     const hours: number = time.getHours();
     const minutes: string = time.getMinutes() < 10 ? '0' + time.getMinutes() : String(time.getMinutes());
-    const date: string = day + '.' + month + '.' + year + ' ' + hours + ':' + minutes;
+    const date: string =  hours + ':' + minutes + '\n' + day + '.' + month + '.' + year ;
     return date;
   }
 
