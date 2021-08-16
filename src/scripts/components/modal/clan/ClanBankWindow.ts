@@ -9,6 +9,9 @@ import Unicorn from './../../../scenes/Event/Unicorns/Main';
 import BigInteger from './../../../libs/BigInteger';
 const KEY: string = '1491f4c9d53dfa6c50d0c4a375f9ba76';
 
+const FARM_PACKAGE: Array<number> = [1000, 100000, 1000000, 1000000000];
+const DIAMOND_PACKAGE: Array<number> = [1, 10, 100, 1000];
+
 export default class ClanBankWindow {
   private scene: Modal;
   private x: number;
@@ -170,15 +173,7 @@ export default class ClanBankWindow {
         fill: true,
       },
     }
-    const btnTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
-      fontFamily: 'Shadow',
-      wordWrap: { width: 100 },
-      align: 'center',
-      fontSize: '20px',
-      color: '#ffffff',
-      stroke: '#277C03',
-      strokeThickness: 3,
-    };
+
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     LogoManager.createIcon(this.scene, headerGeom.left + 60, headerGeom.centerY, this.scene.state.clan.avatar).setScale(0.35).setDepth(2);
     this.headerText = this.scene.add.text(headerGeom.centerX, headerGeom.centerY, this.scene.state.lang.clanTreasury, this.headerTextStyle).setDepth(2).setOrigin(0.5);
@@ -191,24 +186,34 @@ export default class ClanBankWindow {
     const title1: Phaser.GameObjects.Text = this.scene.add.text(headerGeom.left + 60, headerGeom.bottom + 20, this.scene.state.lang.nowInTreasury, titleTextStyle);
     const coin: Phaser.GameObjects.Sprite = this.scene.add.sprite(title1.getBounds().right + 10, title1.getBounds().centerY, coinTexture).setScale(0.15).setOrigin(0, 0.5);
     this.currentCountText = this.scene.add.text(coin.getBounds().right + 10, title1.getBounds().centerY, titleText, titleTextStyle).setOrigin(0, 0.5);
-    this.createBtns();
-    const donateBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX, headerGeom.bottom + 260, 'done-chapter-button');
-    const donateBtnText: Phaser.GameObjects.Text = this.scene.add.text(donateBtn.x, donateBtn.y - 5, this.scene.state.lang.send, btnTextStyle).setOrigin(0.5);
-    this.scene.clickModalBtn({ btn: donateBtn, title: donateBtnText }, (): void => { this.addFarmMoney(); });
-
+    
+    if (this.farm !== 'diamond') {
+      const farmProgress: IpartProgress = this.scene.state.progress[this.farm];
+      if (farmProgress.open) this.createActiveBtns();
+      else this.createDisableBtns();
+    } else this.createActiveBtns();
     this.createLogs();
   }
 
-  private createBtns(): void {
-    let array: Array<number> = [1000, 100000, 1000000, 1000000000];
-    if (this.farm === 'diamond') array = [1, 10, 100, 1000];
+  private createActiveBtns(): void {
+    let array: Array<number> = FARM_PACKAGE;
+    if (this.farm === 'diamond') array = DIAMOND_PACKAGE;
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Shadow',
       fontSize: '28px',
     };
+    const btnTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      wordWrap: { width: 100 },
+      align: 'center',
+      fontSize: '20px',
+      color: '#ffffff',
+      stroke: '#277C03',
+      strokeThickness: 3,
+    };
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     let x: number = headerGeom.left + 100;
-    const btnTexture: string = this.farm !== 'diamond' ? `${this.farm}-money-package` : 'bank-package';
+    const btnTexture: string = `clan-bank-${this.farm}-package`;
     for (let i: number = 0; i < 4; i += 1) {
       const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(x, headerGeom.bottom + 130, btnTexture).setScale(0.45);
       const text: Phaser.GameObjects.Text = this.scene.add.text(x, headerGeom.bottom + 160, shortNum(array[i]), textStyle).setOrigin(0.5);
@@ -221,6 +226,36 @@ export default class ClanBankWindow {
       x += btn.displayWidth + 20
       if (this.activePackage === i) this.setActive(btn);
     }
+    const donateBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX, headerGeom.bottom + 260, 'done-chapter-button');
+    const donateBtnText: Phaser.GameObjects.Text = this.scene.add.text(donateBtn.x, donateBtn.y - 5, this.scene.state.lang.send, btnTextStyle).setOrigin(0.5);
+    this.scene.clickModalBtn({ btn: donateBtn, title: donateBtnText }, (): void => { this.addFarmMoney(); });
+  }
+
+  private createDisableBtns(): void {
+    const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '28px',
+    };
+    const btnTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      wordWrap: { width: 100 },
+      align: 'center',
+      fontSize: '20px',
+      color: '#ffffff',
+      stroke: '#277C03',
+      strokeThickness: 3,
+    };
+    const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
+    let x: number = headerGeom.left + 100;
+    const btnTexture: string = `clan-bank-${this.farm}-package`;
+    for (let i: number = 0; i < 4; i += 1) {
+      const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(x, headerGeom.bottom + 130, btnTexture).setScale(0.45).setTint(0x777777);
+      this.scene.add.text(x, headerGeom.bottom + 160, shortNum(FARM_PACKAGE[i]), textStyle).setOrigin(0.5).setTint(0x777777);
+      x += btn.displayWidth + 20
+    }
+
+    const donateBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX, headerGeom.bottom + 260, 'done-chapter-button').setTint(0x777777);
+    const donateBtnText: Phaser.GameObjects.Text = this.scene.add.text(donateBtn.x, donateBtn.y - 5, this.scene.state.lang.send, btnTextStyle).setOrigin(0.5).setTint(0x777777);
   }
 
   private setActive(btn: Phaser.GameObjects.Sprite): void {
@@ -279,15 +314,14 @@ export default class ClanBankWindow {
   }
 
   private addFarmMoney(): void {
-    const count: string = String(this.packageBtns.find(el => el.btn.state === this.activePackage).text.state);
+    const packageCount: string = String(this.packageBtns.find(el => el.btn.state === this.activePackage).text.state);
+    const mainScene = this.scene.scene.get(this.scene.state.farm) as Sheep | Chicken | Cow | Unicorn;
     if (this.farm !== 'diamond') {
-      const farmMoney: string = this.scene.state[`user${this.farm[0].toUpperCase() + this.farm.slice(1)}`].money;
-      if (BigInteger.greaterThanOrEqual(farmMoney, count)) {
-        console.log(farmMoney, count)
-
-        this.postMoney(count).then(res => {
+      const farmMoney: string = String(this.scene.state[`user${this.farm[0].toUpperCase() + this.farm.slice(1)}`].money);
+      if (BigInteger.greaterThanOrEqual(farmMoney, packageCount)) {
+        this.postMoney(packageCount).then(res => {
           if (!res.data.error) {
-            this.scene.state[`user${this.farm[0].toUpperCase() + this.farm.slice(1)}`].money -= Number(count);
+            this.scene.state[`user${this.farm[0].toUpperCase() + this.farm.slice(1)}`].money -= Number(packageCount);
             const text: string = shortNum(this.scene.state.clan[this.farm].money);
             this.currentCountText.setText(text);
             this.logElements.destroy(true);
@@ -296,31 +330,58 @@ export default class ClanBankWindow {
             mainScene.autosave();
           }
         });
+      } else if (this.scene.state.farm.toLowerCase() === this.farm) {
+        const count: number = Number(packageCount) - Number(farmMoney);
+        const diamonds: number = mainScene.convertMoney(count);
+        this.openConvertor(count, diamonds, 1);
       } else {
-        console.log(farmMoney, count)
+        this.scene.state.modal = {
+          type: 1,
+          sysType: 3,
+          height: 150,
+          message: 'Тут должен быть переход на другую ферму и открытие (или нет) обменника, но пока я это не сделал'
+        }
+        this.scene.scene.restart(this.scene.state);
       }
     } else {
       const userDiamonds: number = this.scene.state.user.diamonds;
-      if (userDiamonds >= Number(count)) {
-        this.postMoney(Number(count)).then(res => {
+      if (userDiamonds >= Number(packageCount)) {
+        this.postMoney(Number(packageCount)).then(res => {
           if (!res.data.error) {
-            this.scene.state.user.diamonds -= Number(count);
+            this.scene.state.user.diamonds -= Number(packageCount);
             const text: string = shortNum(this.scene.state.clan[`${this.farm}`].count);
             this.currentCountText.setText(text);
             this.logElements.destroy(true);
             this.createLogs();
-            const mainScene = this.scene.scene.get(this.scene.state.farm) as Sheep | Chicken | Cow | Unicorn;
             mainScene.autosave();
           }
         });
+      } else {
+        this.openConvertor(Number(packageCount), Number(packageCount), 2);
       }
     } 
+  }
+
+  private openConvertor(count: number, diamonds: number, type: number): void {
+    this.scene.state.convertor = {
+      fun: 0,
+      count: count,
+      diamonds: diamonds,
+      type: type
+    };
+    this.scene.state.modal = {
+      type: 1,
+      sysType: 4,
+    };
+    this.scene.scene.restart(this.scene.state);
+    this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
   }
 
   private postMoney(count: string | number): Promise<any> {
     let login: string = this.scene.state.user.login;
     if (this.scene.state.platform !== 'web' && this.scene.state.platform !== 'android') login = this.scene.state.name;
     const avatar: string = Number(this.scene.state.user.avatar) > 0 ? this.scene.state.user.avatar : this.scene.state.avatar;
+    const points: number = this.farm !== 'diamond' ? this.convertPoints(Number(count)) : Number(count);
     const data = {
       id: this.scene.state.user.id,
       hash: this.scene.state.user.hash,
@@ -330,6 +391,7 @@ export default class ClanBankWindow {
       name: login,
       avatar: avatar,
       status: this.scene.state.user.status,
+      points: points,
     };
 
     return axios.post(process.env.API + '/addFarmMoney', data);
@@ -343,6 +405,14 @@ export default class ClanBankWindow {
     const minutes: string = time.getMinutes() < 10 ? '0' + time.getMinutes() : String(time.getMinutes());
     const date: string =  hours + ':' + minutes + '\n' + day + '.' + month + '.' + year ;
     return date;
+  }
+
+  private convertPoints(money: number): number {
+    const partsSettings: Ipart[] = this.scene.state[`${this.farm}Settings`][`${this.farm}Parts`];
+    const part: number = this.scene.state[`user${this.farm[0].toUpperCase() + this.farm.slice(1)}`].part;
+  
+    const exchange: number = partsSettings.find((item: Ipart) => item.sort === part).exchange;
+    return Math.ceil(money / exchange);
   }
 
 }

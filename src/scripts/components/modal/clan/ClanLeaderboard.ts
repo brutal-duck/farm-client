@@ -30,7 +30,7 @@ export default class ClanLeaderboard {
       if (this.scene.state.modal.clanTabType === 2) {
         this.loadingText?.destroy();
         const { data } = res;
-        data.forEach((el, id) => {
+        data.forEach((el: Iclan, id: number) => {
           this.createClan(el, id + 1);
         });
       }
@@ -97,7 +97,7 @@ export default class ClanLeaderboard {
     ratePosition === 2 ? 'clan-window-medal-silver' :
     ratePosition === 3 ? 'clan-window-medal-bronze' : 'clan-window-medal';
 
-    const { name, id, avatar } = data;
+    const { name, id, avatar, points } = data;
     
     const medalPos: Iposition = {
       x: ratePosition > 3 ? pos.x : pos.x + 2,
@@ -109,7 +109,7 @@ export default class ClanLeaderboard {
     const avatarSprite = LogoManager.createIcon(this.scene, pos.x + 70, pos.y, avatar).setScale(0.35).setDepth(1)
     const avatarGeom: Phaser.Geom.Rectangle = avatarSprite.getBounds();
     const nameText: Phaser.GameObjects.Text = this.scene.add.text(avatarGeom.right + 20, avatarSprite.y, name, nameTextStyle).setDepth(1).setOrigin(0, 0.5).setCrop(0, 0, 250, 250);
-    const pointsText: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 370, pos.y, shortNum(Phaser.Math.Between(1, 50000)), scoreTextStyle).setDepth(1).setOrigin(0, 0.5);
+    const pointsText: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 370, pos.y, shortNum(points), scoreTextStyle).setDepth(1).setOrigin(0, 0.5);
 
     if (ratePosition === 1) {
       this.scene.add.sprite(avatarGeom.centerX, avatarGeom.bottom + 10, 'clan-window-wreath').setOrigin(0.5, 1).setDepth(1);

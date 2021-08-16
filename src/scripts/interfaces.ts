@@ -766,7 +766,8 @@ interface Iclan {
   sheep: IclanFarm;
   chicken: IclanFarm;
   cow: IclanFarm;
-  diamond: Iclan
+  diamond: Iclan;
+  points: number;
 }
 interface IclanFarm {
   money: string;

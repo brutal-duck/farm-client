@@ -168,6 +168,10 @@ const clanMainFrame: string = require('../../../assets/images/modal/clan/icon/ma
 const iconShopSheep: string = require("../../../assets/images/sheep/icons/icon-shop-sheep.png");
 const iconShopChicken: string = require("../../../assets/images/chicken/icons/icon-shop-chicken.png");
 const iconShopCow: string = require("../../../assets/images/cow/icons/icon-shop-cow.png");
+const clanBankSheepPackage: string = require('../../../assets/images/modal/clan/bank/sheep.png');
+const clanBankChickenPackage: string = require('../../../assets/images/modal/clan/bank/chicken.png');
+const clanBankCowPackage: string = require('../../../assets/images/modal/clan/bank/cow.png');
+const clanBankDiamondPackage: string = require('../../../assets/images/modal/clan/bank/diamond.png');
 
 export default function typePreload(): void {
     switch (this.state.modal.type) {
@@ -405,6 +409,10 @@ export default function typePreload(): void {
       this.load.image('clan-main-frame',clanMainFrame);
       this.load.image('clan-window-search-plate-ns', clanWindowSearchPlate);
       this.load.image('clan-window-leader-plate-ns', clanWindowLeaderPlate);
+      this.load.image('clan-bank-sheep-package', clanBankSheepPackage);
+      this.load.image('clan-bank-chicken-package', clanBankChickenPackage);
+      this.load.image('clan-bank-cow-package', clanBankCowPackage);
+      this.load.image('clan-bank-diamond-package', clanBankDiamondPackage);
         break;
       default:
         break;
