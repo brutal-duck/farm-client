@@ -768,6 +768,7 @@ interface Iclan {
   cow: IclanFarm;
   diamond: Iclan;
   points: number;
+  limit: number;
 }
 interface IclanFarm {
   money: string;

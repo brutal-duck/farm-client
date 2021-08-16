@@ -204,6 +204,8 @@ export default class ClanTabsWindow {
     this.scene.add.nineslice(this.x, this.y + 100, 480, 600, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
     this.createClanBtns();
     this.scene.scene.launch('ClanScroll', this.scene.state);
+    const countText: string = `${this.scene.state.lang.players}${this.scene.state.clan.users.length}/${this.scene.state.clan.limit}`
+    const userCount: Phaser.GameObjects.Text = this.scene.add.text(headerGeom.left  + 40, headerGeom.bottom + 40, countText, this.headerTextStyle).setOrigin(0, 0.5);
   }
 
   private createClanBtns(): void {
