@@ -6,6 +6,7 @@ import Sheep from './../../../scenes/Sheep/Main';
 import Chicken from './../../../scenes/Chicken/Main';
 import Cow from './../../../scenes/Cow/Main';
 import Unicorn from './../../../scenes/Event/Unicorns/Main';
+import BigInteger from './../../../libs/BigInteger';
 const KEY: string = '1491f4c9d53dfa6c50d0c4a375f9ba76';
 
 export default class ClanBankWindow {
@@ -278,13 +279,15 @@ export default class ClanBankWindow {
   }
 
   private addFarmMoney(): void {
-    const count: number = Number(this.packageBtns.find(el => el.btn.state === this.activePackage).text.state);
+    const count: string = String(this.packageBtns.find(el => el.btn.state === this.activePackage).text.state);
     if (this.farm !== 'diamond') {
-      const farmMoney: number = this.scene.state[`user${this.farm[0].toUpperCase() + this.farm.slice(1)}`].money;
-      if (farmMoney >= count) {
+      const farmMoney: string = this.scene.state[`user${this.farm[0].toUpperCase() + this.farm.slice(1)}`].money;
+      if (BigInteger.greaterThanOrEqual(farmMoney, count)) {
+        console.log(farmMoney, count)
+
         this.postMoney(count).then(res => {
           if (!res.data.error) {
-            this.scene.state[`user${this.farm[0].toUpperCase() + this.farm.slice(1)}`].money -= count;
+            this.scene.state[`user${this.farm[0].toUpperCase() + this.farm.slice(1)}`].money -= Number(count);
             const text: string = shortNum(this.scene.state.clan[this.farm].money);
             this.currentCountText.setText(text);
             this.logElements.destroy(true);
@@ -293,13 +296,15 @@ export default class ClanBankWindow {
             mainScene.autosave();
           }
         });
+      } else {
+        console.log(farmMoney, count)
       }
     } else {
       const userDiamonds: number = this.scene.state.user.diamonds;
-      if (userDiamonds >= count) {
-        this.postMoney(count).then(res => {
+      if (userDiamonds >= Number(count)) {
+        this.postMoney(Number(count)).then(res => {
           if (!res.data.error) {
-            this.scene.state.user.diamonds -= count;
+            this.scene.state.user.diamonds -= Number(count);
             const text: string = shortNum(this.scene.state.clan[`${this.farm}`].count);
             this.currentCountText.setText(text);
             this.logElements.destroy(true);
@@ -312,7 +317,7 @@ export default class ClanBankWindow {
     } 
   }
 
-  private postMoney(count: number): Promise<any> {
+  private postMoney(count: string | number): Promise<any> {
     let login: string = this.scene.state.user.login;
     if (this.scene.state.platform !== 'web' && this.scene.state.platform !== 'android') login = this.scene.state.name;
     const avatar: string = Number(this.scene.state.user.avatar) > 0 ? this.scene.state.user.avatar : this.scene.state.avatar;

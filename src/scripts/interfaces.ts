@@ -769,14 +769,14 @@ interface Iclan {
   diamond: Iclan
 }
 interface IclanFarm {
-  money: Number;
-  count?: Number;
+  money: string;
+  count?: string;
   logs: IclanUserLog[];
 }
 interface IclanUserLog {
   avatar: string,
   name: string,
-  count: number,
+  count: string,
   time: Date,
   status: string,
 }
