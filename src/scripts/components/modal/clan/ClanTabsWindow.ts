@@ -193,13 +193,13 @@ export default class ClanTabsWindow {
       },
     };
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
-
+    const { name, avatar, points } = this.scene.state.clan;
     this.headerTextStyle.wordWrap = { width: 270, useAdvancedWrap: true };
-    this.headerText = this.scene.add.text(headerGeom.left + 110, headerGeom.centerY, this.scene.state.clan.name, this.headerTextStyle).setDepth(2).setOrigin(0, 0.5).setFontSize(25);
-    const clanAvatar = LogoManager.createIcon(this.scene, headerGeom.left + 60, headerGeom.centerY, this.scene.state.clan.avatar).setDepth(2).setScale(0.4);
+    this.headerText = this.scene.add.text(headerGeom.left + 110, headerGeom.centerY, name, this.headerTextStyle).setDepth(2).setOrigin(0, 0.5).setFontSize(25);
+    const clanAvatar = LogoManager.createIcon(this.scene, headerGeom.left + 60, headerGeom.centerY, avatar).setDepth(2).setScale(0.4);
     const scoreBg = this.scene.add.sprite(headerGeom.right - 20, headerGeom.centerY, 'clan-window-points-bg').setDepth(2).setOrigin(1, 0.5);
     const scoreBgGeom: Phaser.Geom.Rectangle = scoreBg.getBounds();
-    const text: string = `${this.scene.state.lang.scores}: ${shortNum(Phaser.Math.Between(100, 200000))}`;
+    const text: string = `${this.scene.state.lang.scores}: ${shortNum(points)}`;
     const scoreText = this.scene.add.text(scoreBgGeom.centerX, scoreBgGeom.centerY, text, scoreTextStyle).setDepth(2).setOrigin(0.5);
     this.scene.add.nineslice(this.x, this.y + 100, 480, 600, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
     this.createClanBtns();
