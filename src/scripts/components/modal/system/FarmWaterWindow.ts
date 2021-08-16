@@ -21,8 +21,8 @@ export default class FarmWaterWindow {
     const water: string = this.scene.state.lang.water.replace('$1', String(currentLevel));
     this.scene.textHeader.setText(water);
 
-    const nextLevelPrice = this.config[currentLevel]?.grassAndWaterTerritoryCost
-    const exchangePriceCoins = this.scene.state.config[currentPart].grassAndWaterTerritoryCost
+    const nextLevelPrice = Math.round(this.config[currentLevel]?.grassAndWaterTerritoryCost / 100 * 30)
+    const exchangePriceCoins = Math.round(this.scene.state.config[currentPart].grassAndWaterTerritoryCost / 100 * 30)
     const exchangePriceDiamonds = this.scene.state.config[currentPart].repositoryCost
 
     const exchangeForCoins: any = { icon: `${farm.toLowerCase()}Coin`, text: shortNum(exchangePriceCoins) };
@@ -34,7 +34,7 @@ export default class FarmWaterWindow {
       if (currentLevel - 1 < currentPart) {
         const improve = {
           icon: `${farm.toLowerCase()}Coin`,
-          text: shortNum(this.config[currentLevel].grassAndWaterTerritoryCost)
+          text: shortNum(Math.round(this.config[currentLevel].grassAndWaterTerritoryCost / 100 * 30))
         };
 
         const improveText: string = this.scene.state.lang.improveToLevel.replace('$1', String(currentLevel + 1));

@@ -17,7 +17,7 @@ export default class RepositoryExchangeWindow {
     const repository: string = this.scene.state.lang.repository.replace('$1', String(currentLevel + 1));
     this.scene.textHeader.setText(repository);
 
-    const exchangePriceCoins = this.scene.state.config[currentPart].grassAndWaterTerritoryCost
+    const exchangePriceCoins = Math.round(this.scene.state.config[currentPart].grassAndWaterTerritoryCost / 100 * 30)
     console.log('create ~ exchangePriceCoins', exchangePriceCoins)
     const exchangeForCoins: any = { icon: `${farm.toLowerCase()}Coin`, text: shortNum(exchangePriceCoins) };
 

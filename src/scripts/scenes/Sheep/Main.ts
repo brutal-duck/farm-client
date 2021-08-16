@@ -334,8 +334,8 @@ class Sheep extends Phaser.Scene {
     this.collectorConfig = this.state.config
     this.collectorCD = Math.round(1000 / this.collectorConfig[this.state.userSheep.collectorSpeedLevel].collectorSpeed)
     this.collectorIsReady = false
-    console.log('init ~ this.state', this.state.userSheep)
-    console.log('init ~ this.collectorCD', this.collectorCD)
+    console.log('init ~ this.state', this.state)
+    // console.log('init ~ this.collectorCD', this.collectorCD)
   }
 
 

@@ -81,12 +81,14 @@ function tryTask(type: number, state: number, count: number = 1, currentProgress
 
   let tasks: Itasks[] = this.partTasks();
   let task: Itasks = tasks.find((data: Itasks) => data.type === type);
+  console.log('tryTask ~ task', task, type)
   
-  if (!currentProgress && task?.done === 0 &&
+  if (
+    !currentProgress && task?.done === 0 &&
     task?.progress < task?.count &&
-    (task?.state === state || task?.state === 0 || 
-    ((task?.type === 24 || task?.type === 8 || task?.type === 9 || task?.type === 17) 
-    && task?.state <= state))) {
+    (task?.state === state || task?.state === 0 ||
+    ((task?.type === 24 || task?.type === 8 || task?.type === 9 || task?.type === 17) && task?.state <= state))
+  ) {
     task.progress += count;
     if (task.progress >= task.count) {
       task.done = 1;

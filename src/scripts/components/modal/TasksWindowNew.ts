@@ -182,13 +182,10 @@ export default class TasksWindowNew {
 
   private updateScroll(height: number): void {
     const elementsHeight = this.lastElementBottomY - +this.scene.game.config.height
-    console.log('updateScroll ~ elementsHeight', elementsHeight)
     if (elementsHeight > height) {
       const additionalHeight = elementsHeight - height
-      console.log('updateScroll ~ additionalHeight', additionalHeight)
       this.scrolling.bottom += additionalHeight
     }
-    console.log('updateScroll ~ this.scrolling', this.scrolling)
   }
 
 
@@ -241,7 +238,6 @@ export default class TasksWindowNew {
     const userPart: number = this.scene.state[`user${this.scene.state.farm}`].part;
     
     if (this.scene.state.modal.tasksParams.done && parts.length !== userPart) {
-
       const nextPart = this.scene.add.sprite(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2 + 60), 'big-btn-green').setDisplaySize(412, 64)
       const nextPartText = this.scene.add.text(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2 + 54), this.scene.state.lang.donePart, {
         font: '24px Shadow',
@@ -265,7 +261,6 @@ export default class TasksWindowNew {
         align: 'center',
         wordWrap: { width: 420 }
       }).setOrigin(0.5, 0.5);
-    
     }
   }
 

@@ -11,7 +11,31 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 500,
     grassAndWaterRestorePoints: 13,
     territoryColddown: 0,
-    oneCrystalPrice: 450,
+    oneDiamondToMoney: 450,
+    tasks: [
+      {
+        id: '111',
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        target: 1,
+        progress: 0,
+        text: 'taskName_6',
+        icon: 'sheep-task-icon-1'
+      },
+      {
+        id: '112',
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        target: 2,
+        progress: 0,
+        text: 'taskName_4',
+        icon: 'sheep-task-icon-2'
+      }
+    ],
   },
   //2
   {
@@ -25,7 +49,8 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 650,
     grassAndWaterRestorePoints: 13,
     territoryColddown: 4,
-    oneCrystalPrice: 450,
+    oneDiamondToMoney: 450,
+    tasks: [],
   },
   //3
   {
@@ -39,7 +64,8 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 1720,
     grassAndWaterRestorePoints: 14,
     territoryColddown: 5,
-    oneCrystalPrice: 900,
+    oneDiamondToMoney: 900,
+    tasks: [],
   },
   //4
   {
@@ -53,7 +79,8 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 4033,
     grassAndWaterRestorePoints: 15,
     territoryColddown: 7,
-    oneCrystalPrice: 1800,
+    oneDiamondToMoney: 1800,
+    tasks: [],
   },
   //5
   {
@@ -67,7 +94,8 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 12000,
     grassAndWaterRestorePoints: 16,
     territoryColddown: 17,
-    oneCrystalPrice: 4800,
+    oneDiamondToMoney: 4800,
+    tasks: [],
   },
   //6
   {
@@ -81,7 +109,8 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 65300,
     grassAndWaterRestorePoints: 18,
     territoryColddown: 31,
-    oneCrystalPrice: 12000,
+    oneDiamondToMoney: 12000,
+    tasks: [],
   },
   //7
   {
@@ -95,7 +124,8 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 249244,
     grassAndWaterRestorePoints: 21,
     territoryColddown: 36,
-    oneCrystalPrice: 28800,
+    oneDiamondToMoney: 28800,
+    tasks: [],
   },
   //8
   {
@@ -109,7 +139,8 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 344000,
     grassAndWaterRestorePoints: 23,
     territoryColddown: 54,
-    oneCrystalPrice: 38400,
+    oneDiamondToMoney: 38400,
+    tasks: [],
   },
   //9
   {
@@ -123,7 +154,8 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 1067636,
     grassAndWaterRestorePoints: 28,
     territoryColddown: 60,
-    oneCrystalPrice: 86400,
+    oneDiamondToMoney: 86400,
+    tasks: [],
   },
   //10
   {
@@ -137,7 +169,8 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 1334667,
     grassAndWaterRestorePoints: 27,
     territoryColddown: 67,
-    oneCrystalPrice: 105600,
+    oneDiamondToMoney: 105600,
+    tasks: [],
   },
   //11
   {
@@ -151,7 +184,8 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 2728369,
     grassAndWaterRestorePoints: 29,
     territoryColddown: 92,
-    oneCrystalPrice: 211200,
+    oneDiamondToMoney: 211200,
+    tasks: [],
   },
   //12
   {
@@ -165,7 +199,8 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 4094629,
     grassAndWaterRestorePoints: 32,
     territoryColddown: 100,
-    oneCrystalPrice: 249600,
+    oneDiamondToMoney: 249600,
+    tasks: [],
   },
   //13
   {
@@ -179,7 +214,8 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 8318293,
     grassAndWaterRestorePoints: 33,
     territoryColddown: 108,
-    oneCrystalPrice: 499200,
+    oneDiamondToMoney: 499200,
+    tasks: [],
   },
   //14
   {
@@ -193,7 +229,8 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 9708000,
     grassAndWaterRestorePoints: 36,
     territoryColddown: 116,
-    oneCrystalPrice: 576000,
+    oneDiamondToMoney: 576000,
+    tasks: [],
   },
   //15
   {
@@ -207,7 +244,8 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 19648753,
     grassAndWaterRestorePoints: 41,
     territoryColddown: 240,
-    oneCrystalPrice: 1152000,
+    oneDiamondToMoney: 1152000,
+    tasks: [],
   },
   //16
   {
@@ -221,7 +259,8 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 43495822,
     grassAndWaterRestorePoints: 43,
     territoryColddown: 248,
-    oneCrystalPrice: 1305600,
+    oneDiamondToMoney: 1305600,
+    tasks: [],
   },
   //17
   {
@@ -235,7 +274,8 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 85202189,
     grassAndWaterRestorePoints: 45,
     territoryColddown: 256,
-    oneCrystalPrice: 2611200,
+    oneDiamondToMoney: 2611200,
+    tasks: [],
   },
   //18
   {
@@ -249,7 +289,8 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 93340160,
     grassAndWaterRestorePoints: 48,
     territoryColddown: 264,
-    oneCrystalPrice: 2918400,
+    oneDiamondToMoney: 2918400,
+    tasks: [],
   },
   //19
   {
@@ -263,7 +304,8 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 183432533,
     grassAndWaterRestorePoints: 49,
     territoryColddown: 272,
-    oneCrystalPrice: 5836800,
+    oneDiamondToMoney: 5836800,
+    tasks: [],
   },
   //20
   {
@@ -277,7 +319,8 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 208886248,
     grassAndWaterRestorePoints: 54,
     territoryColddown: 0,
-    oneCrystalPrice: 6451200,
+    oneDiamondToMoney: 6451200,
+    tasks: [],
   },
 ]
 

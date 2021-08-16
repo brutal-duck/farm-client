@@ -747,7 +747,19 @@ interface Iconfig {
   grassAndWaterTerritoryCost: number;
   grassAndWaterRestorePoints: number;
   territoryColddown: number;
-  oneCrystalPrice: number;
+  oneDiamondToMoney: number;
+  tasks: ItaskSheep[]
+}
+interface ItaskSheep {
+  id: string;
+  done: boolean;
+  awardTaken: boolean;
+  awardType: string;
+  award: number;
+  target: number
+  progress: number;
+  text: string;
+  icon: string;
 }
 // interface ISheepConfig {
 //   woolPrice: number;

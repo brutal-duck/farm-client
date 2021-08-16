@@ -21,10 +21,10 @@ export default class BuyFarmTerritoryWindow {
 
     if (this.scene.state[`user${farm}`].part >= settings.unlock || this.scene.state.userUnicorn?.points >= settings.unlock) {
 
-      let price: number;
+      const price: number = farm === 'Unicorn' ? settings.price : Math.round(this.scene.state.config[this.scene.state[`user${farm}`].part - 1].grassAndWaterTerritoryCost / 100 * 70)
       // 70% от суммы покупки
-      if (farm === 'Unicorn') price = settings.price;
-      else price = Math.round((settings.price / 100) * 70);
+      // if (farm === 'Unicorn') price = settings.price;
+      // else price = Math.round((settings.price / 100) * 70);
 
       const right = {
         icon: `${farm.toLowerCase()}Coin`,

@@ -20,7 +20,7 @@ export default class BoughtFarmLand {
     this.currentPart = this.scene.state[`user${farm}`].part - 1
     let height: number = 120;
 
-    const grassAndWaterCost = { icon: `${farm.toLowerCase()}Coin`, text: shortNum(this.scene.state.config[this.currentPart].grassAndWaterTerritoryCost) };
+    const grassAndWaterCost = { icon: `${farm.toLowerCase()}Coin`, text: shortNum(Math.round(this.scene.state.config[this.currentPart].grassAndWaterTerritoryCost / 100 * 30)) };
     const repositoryCost = { icon: 'diamond', text: shortNum(this.scene.state.config[this.currentPart].repositoryCost) };
     
     if (farm === 'Sheep' && this.scene.state.userSheep.tutorial < 100) {
@@ -92,7 +92,7 @@ export default class BoughtFarmLand {
 
 
   private setTerritory(type: number) {
-    this.price = type === 5 ? this.scene.state.config[this.currentPart].repositoryCost : this.scene.state.config[this.currentPart].grassAndWaterTerritoryCost
+    this.price = type === 5 ? this.scene.state.config[this.currentPart].repositoryCost : Math.round(this.scene.state.config[this.currentPart].grassAndWaterTerritoryCost / 100 * 30)
     if (this.scene.state.farm === 'Sheep' && this.scene.state.userSheep.tutorial < 100) this.price = 0
 
     if ((type !== 5 && this.scene.state[`user${this.scene.state.farm}`].money >= this.price) || (type === 5 && this.scene.state.user.diamonds >= this.price)) {

@@ -21,9 +21,9 @@ export default class FarmPastureWindow {
     const pasture: string = this.scene.state.lang.pasture.replace('$1', String(currentLevel));
     this.scene.textHeader.setText(pasture);
     
-    const nextLevelPrice = this.config[currentLevel]?.grassAndWaterTerritoryCost
-    const exchangePriceCoins = this.scene.state.config[currentPart].grassAndWaterTerritoryCost
-    const exchangePriceDiamonds = this.scene.state.config[currentPart].repositoryCost
+    const nextLevelPrice = Math.round(this.config[currentLevel]?.grassAndWaterTerritoryCost / 100 * 30)
+    const exchangePriceCoins = Math.round(this.config[currentPart].grassAndWaterTerritoryCost / 100 * 30)
+    const exchangePriceDiamonds = this.config[currentPart].repositoryCost
 
     const exchangeForCoins: any = { icon: `${farm.toLowerCase()}Coin`, text: shortNum(exchangePriceCoins) };
     const exchangeForDiamonds: any = { icon: 'diamond', text: shortNum(exchangePriceDiamonds) };
@@ -33,7 +33,7 @@ export default class FarmPastureWindow {
       if (currentLevel - 1 < currentPart) {
         const improve = {
           icon: `${farm.toLowerCase()}Coin`,
-          text: shortNum(this.config[currentLevel].grassAndWaterTerritoryCost)
+          text: shortNum(nextLevelPrice)
         };
         
         const improveText: string = this.scene.state.lang.improveToLevel.replace('$1', String(currentLevel + 1));

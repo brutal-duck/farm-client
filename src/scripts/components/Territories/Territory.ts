@@ -238,14 +238,14 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   }
 
   public buyTerritory(): void {
-    const farm: string = this.scene.state.farm.toLowerCase();
-    const user: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
-    const territoriesPrice: IterritoriesPrice[] = this.scene.state[`${farm}Settings`][`territories${this.scene.state.farm}Price`];
+    const farm: string = this.scene.state.farm;
+    const user: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${farm}`];
+    const territoriesPrice: IterritoriesPrice[] = this.scene.state[`${farm.toLowerCase()}Settings`][`territories${farm}Price`];
     const settings: IterritoriesPrice = territoriesPrice.find((data: IterritoriesPrice) => data.block === this.block && data.position === this.position);
 
     if (user.part >= settings.unlock && this.territoryType === 0) {
       // 70% от суммы покупки
-      const price = Math.round((settings.price / 100) * 70);
+      const price = Math.round(this.scene.state.config[this.scene.state[`user${farm}`].part - 1].grassAndWaterTerritoryCost / 100 * 70)
 
       if (user.money >= price) {
         this.scene.state.amplitude.logAmplitudeEvent('buy_territory', {
@@ -329,8 +329,8 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       this.scene.state.exchangeTerritory === 2 ||
       this.scene.state.exchangeTerritory === 3 ||
       this.scene.state.exchangeTerritory === 5
-    ) {      
-      const exchangePriceCoins = this.scene.state.config[currentPart - 1].grassAndWaterTerritoryCost
+    ) {
+      const exchangePriceCoins = Math.round(this.scene.state.config[currentPart - 1].grassAndWaterTerritoryCost / 100 * 30)
       const exchangePriceDiamonds = this.scene.state.config[currentPart - 1].repositoryCost
       console.log('exchangeTerritory ~ exchangePriceCoins', exchangePriceCoins)
       console.log('exchangeTerritory ~ exchangePriceDiamonds', exchangePriceDiamonds)
@@ -648,7 +648,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       territoriesSettings = this.scene.state.cowSettings.territoriesCowSettings;
     }
 
-    const coinPrice = this.scene.state.config[this.improve].grassAndWaterTerritoryCost
+    const coinPrice = Math.round(this.scene.state.config[this.improve].grassAndWaterTerritoryCost / 100 * 30)
     const diamondPrice = this.scene.state.config[this.improve].repositoryCost
     console.log('improveTerritory ~ coinPrice', coinPrice)
     console.log('improveTerritory ~ diamondPrice', diamondPrice)

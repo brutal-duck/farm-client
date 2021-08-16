@@ -372,10 +372,8 @@ function convertDiamonds(diamonds: number): number {
   const farm: string = this.state.farm.toLowerCase();
   const partsSettings: Ipart[] = this.state[`${farm}Settings`][`${farm}Parts`];
   const part: number = this.state[`user${this.state.farm}`].part;
-  console.log('dia');
   
-  let exchange: number = partsSettings.find((item: Ipart) => item.sort === part).exchange;
-  console.log('convertDiamonds ~ exchange', exchange)
+  let exchange: number = this.state.config[part - 1].oneDiamondToMoney
   return exchange *= diamonds;
 }
 
