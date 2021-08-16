@@ -28,7 +28,7 @@ export default class ChangeClanNameWindow {
 
     this.scene.events.once(Phaser.Scenes.Events.SHUTDOWN,() => {
       this.removeInput();
-    })
+    });
   }
 
   private create(): void {

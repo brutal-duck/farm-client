@@ -36,6 +36,10 @@ export default class CreateClanWindow {
     this.y = this.scene.cameras.main.centerY;
     this.change = false;
     this.window.headerText.setText(this.scene.state.lang.clanСreation);
+
+    this.scene.events.once(Phaser.Scenes.Events.SHUTDOWN,() => {
+      this.removeInput();
+    });
   }
 
   private create(): void {
@@ -56,6 +60,7 @@ export default class CreateClanWindow {
     root.append(this.input);
     this.input.setAttribute("id", "clanname");
     this.input.setAttribute("autocomplete", "off");
+    this.input.value = this.scene.state.modal.message || '';
     const height = Number(this.scene.game.config.height) / 12 - 100;
     const startTop: number = 37;
     const startBottom: number = 57;
@@ -66,7 +71,9 @@ export default class CreateClanWindow {
     const inputBg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(pos.x, pos.y - 20, inputWidth, inputHeigth, 'clan-window-search-plate-ns', 5).setDepth(2).setOrigin(0.5);
     const inputBgGeom: Phaser.Geom.Rectangle = inputBg.getBounds();
     // Заголовок и описание
-    this.inputText = this.scene.add.text(inputBgGeom.left + 15, inputBgGeom.centerY, this.scene.state.lang.inputClanName, inputTextStyle).setOrigin(0, 0.5).setDepth(5);
+    const text: string = this.input.value || this.scene.state.lang.inputClanName;
+    const color: string = this.input.value ? '#974f00' : '#8f8f8f';
+    this.inputText = this.scene.add.text(inputBgGeom.left + 15, inputBgGeom.centerY, text, inputTextStyle).setColor(color).setOrigin(0, 0.5).setDepth(5);
 
     // Параметры
     let centered: boolean = true;
@@ -78,10 +85,17 @@ export default class CreateClanWindow {
     const switchBgGeom: Phaser.Geom.Rectangle = this.switchBg.getBounds();
     this.switchTextOpen = this.scene.add.text(pos.x - 90, switchBgGeom.centerY, this.scene.state.lang.clanIsOpen).setOrigin(0.5);
     this.switchTextClose = this.scene.add.text(pos.x + 90, switchBgGeom.centerY, this.scene.state.lang.clanIsClose).setOrigin(0.5);
-    this.switchOpened();
+    this.toggleSwitch();
 
-    this.scene.click(this.switchBg, () => {
-      this.switchOpened();
+    const zoneOpen: Phaser.GameObjects.Zone = this.scene.add.zone(this.switchTextOpen.x, this.switchTextOpen.y, 190, 70);
+    const zoneClose: Phaser.GameObjects.Zone = this.scene.add.zone(this.switchTextClose.x, this.switchTextClose.y, 190, 70);
+
+    this.scene.click(zoneOpen, () => {
+      if (this.clanIsClosed) this.toggleSwitch();
+    });
+
+    this.scene.click(zoneClose, () => {
+      if (!this.clanIsClosed) this.toggleSwitch();
     });
     // Кнопка
     const createClanBtn = this.scene.bigButton('green', 'center', 280, this.scene.state.lang.createClan);
@@ -158,7 +172,7 @@ export default class CreateClanWindow {
     this.createClanFlag();
   }
 
-  private switchOpened(): void {
+  private toggleSwitch(): void {
     const textActiveStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Shadow',
       fontSize: '18px',
@@ -237,7 +251,7 @@ export default class CreateClanWindow {
             this.scene.enterKey.destroy();
             this.input.remove();
             this.scene.scene.stop();
-            this.scene.scene.launch('ClanFarm');
+            this.scene.scene.launch('ClanFarm', this.scene.state);
           }
         });
       } else {
@@ -275,7 +289,7 @@ export default class CreateClanWindow {
     const y: number = tile.getBounds().centerY;
     this.icon = LogoManager.createIcon(this.scene, this.x - 120, y, this.scene.state.clanAvatar).setScale(0.8);
     const geom: Phaser.Geom.Rectangle = this.icon.getBounds();
-    const randomBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(geom.right + 150, geom.centerY - 40, 'profile-window-button-red').setScale(1.1);
+    const randomBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(geom.right + 150, geom.centerY - 40, 'profile-window-button-yellow').setScale(1.1);
     const randomBtnText: Phaser.GameObjects.Text = this.scene.add.text(randomBtn.x, randomBtn.y - 5, 'Случайно', buttonTextStyle).setOrigin(0.5);
 
     const changeBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(geom.right + 150, geom.centerY + 40, 'profile-window-button-green').setScale(1.1);
@@ -291,8 +305,8 @@ export default class CreateClanWindow {
     );
   }
 
-  private initAvatar(): void {
-    if (this.scene.state.clanAvatar) return;
+  private initAvatar(random: boolean = false): void {
+    if (this.scene.state.clanAvatar && !random) return;
     const bgMax: number = Object.keys(this.scene.textures.list).filter(el => el.includes('clan-bg-')).length;
     const frameMax: number = Object.keys(this.scene.textures.list).filter(el => el.includes('clan-frame-')).length;
     const iconMax: number = Object.keys(this.scene.textures.list).filter(el => el.includes('clan-icon-')).length;
@@ -304,12 +318,11 @@ export default class CreateClanWindow {
   }
 
   private getNewIcon(): void {
-    this.initAvatar();
+    this.initAvatar(true);
     const pos: Iposition = {
       x: this.icon.x,
       y: this.icon.y,
     };
-
     this.icon.destroy();
     this.icon = LogoManager.createIcon(this.scene, pos.x, pos.y, this.scene.state.clanAvatar).setScale(0.8);
   }
@@ -318,6 +331,7 @@ export default class CreateClanWindow {
     this.scene.state.modal = {
       type: 18,
       clanWindowType: 2,
+      message: this.input.value,
     };
     this.removeInput();
     this.scene.scene.restart(this.scene.state);

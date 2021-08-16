@@ -112,6 +112,7 @@ export default class EditClanAvatarWindow {
       this.scene.state.modal = {
         type: 18,
         clanWindowType: 1,
+        message: this.scene.state.modal.message,
       };
       this.scene.scene.restart(this.scene.state);
     } else {
