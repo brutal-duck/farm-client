@@ -11,6 +11,7 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 500,
     grassAndWaterRestorePoints: 13,
     territoryColddown: 0,
+    oneCrystalPrice: 450,
   },
   //2
   {
@@ -24,6 +25,7 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 650,
     grassAndWaterRestorePoints: 13,
     territoryColddown: 4,
+    oneCrystalPrice: 450,
   },
   //3
   {
@@ -37,6 +39,7 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 1720,
     grassAndWaterRestorePoints: 14,
     territoryColddown: 5,
+    oneCrystalPrice: 900,
   },
   //4
   {
@@ -50,6 +53,7 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 4033,
     grassAndWaterRestorePoints: 15,
     territoryColddown: 7,
+    oneCrystalPrice: 1800,
   },
   //5
   {
@@ -63,6 +67,7 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 12000,
     grassAndWaterRestorePoints: 16,
     territoryColddown: 17,
+    oneCrystalPrice: 4800,
   },
   //6
   {
@@ -76,6 +81,7 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 65300,
     grassAndWaterRestorePoints: 18,
     territoryColddown: 31,
+    oneCrystalPrice: 12000,
   },
   //7
   {
@@ -89,6 +95,7 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 249244,
     grassAndWaterRestorePoints: 21,
     territoryColddown: 36,
+    oneCrystalPrice: 28800,
   },
   //8
   {
@@ -102,6 +109,7 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 344000,
     grassAndWaterRestorePoints: 23,
     territoryColddown: 54,
+    oneCrystalPrice: 38400,
   },
   //9
   {
@@ -115,6 +123,7 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 1067636,
     grassAndWaterRestorePoints: 28,
     territoryColddown: 60,
+    oneCrystalPrice: 86400,
   },
   //10
   {
@@ -128,6 +137,7 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 1334667,
     grassAndWaterRestorePoints: 27,
     territoryColddown: 67,
+    oneCrystalPrice: 105600,
   },
   //11
   {
@@ -141,6 +151,7 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 2728369,
     grassAndWaterRestorePoints: 29,
     territoryColddown: 92,
+    oneCrystalPrice: 211200,
   },
   //12
   {
@@ -154,6 +165,7 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 4094629,
     grassAndWaterRestorePoints: 32,
     territoryColddown: 100,
+    oneCrystalPrice: 249600,
   },
   //13
   {
@@ -167,6 +179,7 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 8318293,
     grassAndWaterRestorePoints: 33,
     territoryColddown: 108,
+    oneCrystalPrice: 499200,
   },
   //14
   {
@@ -180,6 +193,7 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 9708000,
     grassAndWaterRestorePoints: 36,
     territoryColddown: 116,
+    oneCrystalPrice: 576000,
   },
   //15
   {
@@ -193,6 +207,7 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 19648753,
     grassAndWaterRestorePoints: 41,
     territoryColddown: 240,
+    oneCrystalPrice: 1152000,
   },
   //16
   {
@@ -206,6 +221,7 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 43495822,
     grassAndWaterRestorePoints: 43,
     territoryColddown: 248,
+    oneCrystalPrice: 1305600,
   },
   //17
   {
@@ -219,6 +235,7 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 85202189,
     grassAndWaterRestorePoints: 45,
     territoryColddown: 256,
+    oneCrystalPrice: 2611200,
   },
   //18
   {
@@ -232,6 +249,7 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 93340160,
     grassAndWaterRestorePoints: 48,
     territoryColddown: 264,
+    oneCrystalPrice: 2918400,
   },
   //19
   {
@@ -245,6 +263,7 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 183432533,
     grassAndWaterRestorePoints: 49,
     territoryColddown: 272,
+    oneCrystalPrice: 5836800,
   },
   //20
   {
@@ -258,6 +277,7 @@ const config: Iconfig[] = [
     grassAndWaterTerritoryCost: 208886248,
     grassAndWaterRestorePoints: 54,
     territoryColddown: 0,
+    oneCrystalPrice: 6451200,
   },
 ]
 

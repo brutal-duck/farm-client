@@ -18,7 +18,6 @@ export default class TasksWindowNew {
   private centerY: number;
   private scrolling: Scrolling;
   private lastElementBottomY: number
-  
 
   constructor(scene: Modal) {
     this.scene = scene;
@@ -251,8 +250,7 @@ export default class TasksWindowNew {
 
       this.scene.clickShopBtn({ btn: nextPart, title: nextPartText }, (): void => { this.scene.game.scene.keys[this.scene.state.farm].nextPart() });
 
-    } else if (this.scene.state.modal.tasksParams.done && parts.length === userPart){
-
+    } else if (this.scene.state.modal.tasksParams.done && parts.length === userPart) {
       this.scene.add.text(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2 + 60), this.scene.state.lang[`${this.scene.state.farm.toLowerCase()}CompanyDone`], {
         font: '20px Shadow',
         fill: '#c15e00',
@@ -261,7 +259,6 @@ export default class TasksWindowNew {
       }).setOrigin(0.5, 0.5);
     
     } else if (!this.scene.state.modal.tasksParams.done) {
-
       this.scene.add.text(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2 + 60), this.scene.state.modal.tasksParams.description, {
         font: '20px Shadow',
         fill: '#c15e00',

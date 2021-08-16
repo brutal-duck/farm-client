@@ -747,6 +747,7 @@ interface Iconfig {
   grassAndWaterTerritoryCost: number;
   grassAndWaterRestorePoints: number;
   territoryColddown: number;
+  oneCrystalPrice: number;
 }
 // interface ISheepConfig {
 //   woolPrice: number;
