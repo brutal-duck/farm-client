@@ -36,7 +36,6 @@ export default class ClanChat {
       id: this.scene.state.user.id,
       hash: this.scene.state.user.hash,
       counter: this.scene.state.user.counter,
-      clanId: this.scene.state.user.clanId,
     };
 
     axios.post(process.env.API + "/getClanMessages", data)
