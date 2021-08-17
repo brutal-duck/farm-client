@@ -112,7 +112,7 @@ export default class ClanLeaderboard {
     const pointsText: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 370, pos.y, shortNum(points), scoreTextStyle).setDepth(1).setOrigin(0, 0.5);
 
     if (ratePosition === 1) {
-      this.scene.add.sprite(avatarGeom.centerX, avatarGeom.bottom + 10, 'clan-window-wreath').setOrigin(0.5, 1).setDepth(1);
+      this.scene.add.sprite(avatarGeom.centerX, avatarGeom.bottom + 10, 'clan-window-wreath').setOrigin(0.5, 1).setScale(0.5).setDepth(1);
     }
 
     if (ratePosition > 3) {
