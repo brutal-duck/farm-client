@@ -3,6 +3,7 @@ import { Icon } from "../../Utils/LogoManager";
 import CreateClanWindow from './CreateClanWindow';
 import EditClanAvatarWindow from './EditClanAvatarWindow';
 import ImproveClanWindow from './ImproveClanWindow';
+import ClanConvertorWindow from './ClanConvertorWindow';
 
 export default class ClanWindow {
   public scene: Modal;
@@ -34,6 +35,8 @@ export default class ClanWindow {
       this.height = 435;
     } else if (this.windowType === 3) {
       this.height = 250;
+    } else if (this.windowType === 4) {
+      this.height = 190;
     }
     this.width = 527;
   }
@@ -103,6 +106,9 @@ export default class ClanWindow {
         break;
       case 3: 
         new ImproveClanWindow(this);
+        break;
+      case 4: 
+        new ClanConvertorWindow(this);
         break;
       default:
         break;

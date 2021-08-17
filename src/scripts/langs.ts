@@ -992,6 +992,9 @@ export default {
     players: 'Игроков: ',
     improveClan: 'Улучшить клан',
     clanImprovement: 'Улучшение клана ур.',
+    wantGoTreasury: 'Хотите перейти в казну?',
+    goToTreasury: 'Перейти в казну', 
+    notEnoughForClan: 'В казне не хватает: '
   },
 
   en: {
@@ -1987,5 +1990,8 @@ export default {
     players: 'Игроков: ',
     improveClan: 'Улучшить клан',
     clanImprovement: 'Улучшение клана ур.',
+    wantGoTreasury: 'Хотите перейти в казну?',
+    goToTreasury: 'Перейти в казну', 
+    notEnoughForClan: 'В казне не хватает: '
   },
 }

@@ -769,9 +769,9 @@ interface Iclan {
   diamond: IclanFarm;
   points: number;
   limit: number;
-  mainBuilding: IclanMainBuilding;
+  mainBuilding: IclanBuilding;
 }
-interface IclanMainBuilding {
+interface IclanBuilding {
   level: number;
   cooldown: number;
 }

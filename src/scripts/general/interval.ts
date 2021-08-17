@@ -38,6 +38,12 @@ function progressTerritoryCooldown (territories: Iterritories[], time: number, f
       }
     }
   }
+
+  if (this.state.clan) {
+    if (this.state.clan.mainBuilding.cooldown > 0) {
+      this.state.clan.mainBuilding.cooldown -= time;
+    }
+  }
 }
 
 const getRandomProductId = (settings: IfactorySettings, boost: boolean): number => {
@@ -49,7 +55,7 @@ const getRandomProductId = (settings: IfactorySettings, boost: boolean): number 
     id: number,
     bottom: number,
     top: number
-  }[] = [];
+  } [] = [];
 
   let current: number = 0;
   let previos: number = 0;

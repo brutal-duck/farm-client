@@ -1,6 +1,6 @@
-import Modal from "../../../scenes/Modal/Modal";
+import Modal from '../../../scenes/Modal/Modal';
 import ClanWindow from './ClanWindow';
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse } from 'axios';
 
 export default class ImproveClanWindow {
   private window: ClanWindow;
@@ -65,11 +65,22 @@ export default class ImproveClanWindow {
   }
 
   private handleImprove(): void {
-    if (this.scene.state.clan.diamond.count > this.price) {
+    if (this.scene.state.clan.diamond.count >= this.price) {
       this.postServer().then(res => {
-        console.log(res.data);
         this.scene.scene.stop();
       });
+    } else {
+      this.scene.state.modal = {
+        type: 18,
+        clanWindowType: 4,
+      };
+      this.scene.state.convertor = {
+        fun: 0,
+        count: this.price - this.scene.state.clan.diamond.count,
+        diamonds: this.price - this.scene.state.clan.diamond.count,
+        type: 1,
+      }
+      this.scene.scene.restart(this.scene.state);
     }
   }
 

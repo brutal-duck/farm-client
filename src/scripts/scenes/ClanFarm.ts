@@ -1,17 +1,20 @@
 import LogoManager, { Icon } from "../components/Utils/LogoManager";
-import { click } from "../general/clicks";
+import { click, clickModalBtn } from "../general/clicks";
+import ClanCooldownBuilding from './../components/clan/ClanCooldownBuilding';
 
 export default class ClanFarm extends Phaser.Scene {
   public state: Istate;
   private bg: Phaser.GameObjects.Sprite;
   private nameText: Phaser.GameObjects.Text;
   private icon: Icon;
+  private mainBuildingCooldownSprite: ClanCooldownBuilding;
 
   constructor() {
     super('ClanFarm');
   }
 
   public click = click.bind(this);
+  public clickModalBtn = clickModalBtn.bind(this);
 
   public init(state: Istate): void {
     this.state = state;
@@ -76,14 +79,14 @@ export default class ClanFarm extends Phaser.Scene {
     };
     const zone = this.add.zone(pos.x, pos.y, 200, 200).setDropZone(undefined, () => {});
 
-    const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
-    graphics.lineStyle(5, 0xFFFF00);
-    graphics.strokeRect(
-      zone.x - zone.input.hitArea.width / 2, 
-      zone.y - zone.input.hitArea.height / 2, 
-      zone.input.hitArea.width, 
-      zone.input.hitArea.height
-      );
+    // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
+    // graphics.lineStyle(5, 0xFFFF00);
+    // graphics.strokeRect(
+    //   zone.x - zone.input.hitArea.width / 2, 
+    //   zone.y - zone.input.hitArea.height / 2, 
+    //   zone.input.hitArea.width, 
+    //   zone.input.hitArea.height
+    //   );
 
     this.click(zone, () => {
       this.state.modal = {
@@ -92,6 +95,10 @@ export default class ClanFarm extends Phaser.Scene {
       }
       this.scene.launch('Modal', this.state);
     });
+
+    if (this.state.clan.mainBuilding.cooldown > 0) {
+      this.mainBuildingCooldownSprite = new ClanCooldownBuilding(this, pos, this.state.clan.mainBuilding);
+    }
   }
 
   private createBank(): void {
@@ -249,5 +256,15 @@ export default class ClanFarm extends Phaser.Scene {
       };
       this.scene.launch('Modal', this.state);
     });
+  }
+
+  public update(): void {
+    if (this.state.clan.mainBuilding.cooldown > 0 && !this.mainBuildingCooldownSprite?.active) {
+      const pos: Iposition = {
+        x: 385,
+        y: 300,
+      };
+      this.mainBuildingCooldownSprite = new ClanCooldownBuilding(this, pos, this.state.clan.mainBuilding);
+    }
   }
 };
