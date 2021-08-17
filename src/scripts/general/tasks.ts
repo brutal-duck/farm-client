@@ -4,68 +4,62 @@ import SpeechBubble from '../components/animations/SpeechBuble';
 // список заданий текущей главы
 function partTasks(): Itasks[] {
 
-  let partTasks: Itasks[] = [];
-  let tasks: Itasks[] = [];
-  let user: IuserSheep | IuserChicken | IuserCow;
+  // let partTasks: Itasks[] = [];
+  // let tasks: Itasks[] = [];
+  // let user: IuserSheep | IuserChicken | IuserCow;
 
-  if (this.state.farm === 'Sheep') {
+  // if (this.state.farm === 'Sheep') {
 
-    user = this.state.userSheep;
-    tasks = this.state.sheepTasks;
+  //   user = this.state.userSheep;
+  //   tasks = this.state.sheepTasks;
 
-  } else if (this.state.farm === 'Chicken') {
+  // } else if (this.state.farm === 'Chicken') {
 
-    user = this.state.userChicken;
-    tasks = this.state.chickenTasks;
+  //   user = this.state.userChicken;
+  //   tasks = this.state.chickenTasks;
     
-  } else if (this.state.farm === 'Cow') {
+  // } else if (this.state.farm === 'Cow') {
 
-    user = this.state.userCow;
-    tasks = this.state.cowTasks;
+  //   user = this.state.userCow;
+  //   tasks = this.state.cowTasks;
     
-  }
+  // }
   
-  // костыль (иногда нет заданий у кого-то)
-  if (tasks?.length === 0 || !tasks) {
+  // // костыль (иногда нет заданий у кого-то)
+  // if (tasks?.length === 0 || !tasks) {
+  //   tasks = [];
 
-    tasks = [];
+  //   for (let i in AllTasks) {
+  //     if (AllTasks[i].farm === 1 && this.state.farm === 'Sheep') tasks.push(AllTasks[i]);
+  //     if (AllTasks[i].farm === 2 && this.state.farm === 'Chicken') tasks.push(AllTasks[i]);
+  //     if (AllTasks[i].farm === 3 && this.state.farm === 'Cow') tasks.push(AllTasks[i]);
+  //   }
+  // }
 
-    for (let i in AllTasks) {
+  // for (let i: number = 0; i < tasks.length; i++) {
+  //   if (tasks[i].part === user.part) {
 
-      if (AllTasks[i].farm === 1 && this.state.farm === 'Sheep') tasks.push(AllTasks[i]);
-      if (AllTasks[i].farm === 2 && this.state.farm === 'Chicken') tasks.push(AllTasks[i]);
-      if (AllTasks[i].farm === 3 && this.state.farm === 'Cow') tasks.push(AllTasks[i]);
-
-    }
-
-  }
-
-  for (let i: number = 0; i < tasks.length; i++) {
-
-    if (tasks[i].part === user.part) {
-
-      if (tasks[i].type === 10) {
+  //     if (tasks[i].type === 10) {
         
-        if ((this.state.platform === 'web' &&
-          this.state.user.login === '') || 
-          this.takeRewardRegistration) {
-          partTasks.push(tasks[i]);
-        }
+  //       if ((this.state.platform === 'web' &&
+  //         this.state.user.login === '') || 
+  //         this.takeRewardRegistration) {
+  //         partTasks.push(tasks[i]);
+  //       }
         
-      } else if (tasks[i].type === 16) {
+  //     } else if (tasks[i].type === 16) {
 
-        if (this.state.platform === 'web') {
-          partTasks.push(tasks[i]);
-        }
+  //       if (this.state.platform === 'web') {
+  //         partTasks.push(tasks[i]);
+  //       }
 
-      } else {
-        partTasks.push(tasks[i]);
-      }
+  //     } else {
+  //       partTasks.push(tasks[i]);
+  //     }
 
-    }
-
-  }
-
+  //   }
+  // }
+  let partTasks = this.state.config[this.state[`user${this.state.farm}`].part - 1].tasks
   return partTasks;
   
 }
@@ -73,25 +67,25 @@ function partTasks(): Itasks[] {
 
 // попытка выполнения задания
 function tryTask(type: number, state: number, count: number = 1, currentProgress?: number): void {
-
   let part: number;
   if (this.state.farm === 'Sheep') part = this.state.userSheep.part;
   else if (this.state.farm === 'Chicken') part = this.state.userChicken.part;
   else if (this.state.farm === 'Cow') part = this.state.userCow.part;
 
-  let tasks: Itasks[] = this.partTasks();
-  let task: Itasks = tasks.find((data: Itasks) => data.type === type);
+  // let tasks: Itasks[] = this.partTasks();
+  let tasks: ItaskSheep[] = this.state.config[part - 1].tasks
+  let task: ItaskSheep = tasks.find((data: ItaskSheep) => data.type === type);
   console.log('tryTask ~ task', task, type)
   
   if (
-    !currentProgress && task?.done === 0 &&
+    !currentProgress && !task?.done &&
     task?.progress < task?.count &&
     (task?.state === state || task?.state === 0 ||
     ((task?.type === 24 || task?.type === 8 || task?.type === 9 || task?.type === 17) && task?.state <= state))
   ) {
     task.progress += count;
     if (task.progress >= task.count) {
-      task.done = 1;
+      task.done = true;
       this.state.amplitude.logAmplitudeEvent('task_done', {
         task_id: task.id,
         part: part,
@@ -100,24 +94,14 @@ function tryTask(type: number, state: number, count: number = 1, currentProgress
     this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
   }
 
-  if ((task?.done === 0 && currentProgress)) {
+  if ((task && !task?.done && currentProgress)) {
     task.progress = currentProgress;
-    if (task.progress >= task.count) {
-      task.done = 1;
-      this.state.amplitude.logAmplitudeEvent('task_done', {
-        task_id: task.id,
-        part: part,
-      });
-    }
+    if (task.progress >= task.count) task.done = true;
     this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
   }
 
   if (task?.progress >= task?.count && (task?.type === 21 || task?.type === 22 || task?.type === 3)) {
-    task.done = 1;
-    this.state.amplitude.logAmplitudeEvent('task_done', {
-      task_id: task.id,
-      part: part,
-    });
+    task.done = true;
     this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
   }
 }
@@ -192,98 +176,86 @@ function checkAnimalTask(): void {
   let settings: IchickenPoints[] | IsheepPoints[] = [];
 
   if (this.state.farm === 'Sheep') {
-
     animals = this.sheep.children.entries;
     settings = this.state.sheepSettings.sheepSettings;
 
   } else if (this.state.farm === 'Chicken') {
-
     animals = this.chicken.children.entries;
     settings = this.state.chickenSettings.chickenSettings;
 
   } else if (this.state.farm === 'Cow') {
-
     animals = this.animalGroup.children.entries;
     settings = this.state.cowSettings.cowSettings;
-
   }
+
   if (this.state.farm !== 'Cow') {
     
-    let tasks: Itasks[] = this.partTasks();
-    let task: Itasks = tasks.find((data: Itasks) => data.type === 14);
-    if (task?.state === 0 && task?.count > 0 && task?.done === 0) {
+    let tasks: ItaskSheep[] = this.partTasks();
+    let task: ItaskSheep = tasks.find((data: ItaskSheep) => data.type === 14);
+    if (task?.state === 0 && task?.count > 0 && !task?.done) {
   
       let count: number = animals.length;
       task.progress = count;
   
       if (task.count <= count) {
-        task.done = 1;
+        task.done = true;
         task.progress = count;
       }
       
     } else if (task?.count === 0) {
-  
       let count: number = 0;
   
       for (let i: number = 0; i < settings.length; i++) {
-  
         for (let j = 0; j < animals.length; j++) {
   
           if (settings[i].breed === animals[j].type) {
             count++
             break;
           }
-  
+
         }
-  
       }
   
       task.progress = count;
   
       if (settings.length <= count) {
-  
-        task.done = 1;
+        task.done = true;
         task.progress = count;
-  
       }
   
     } else if (task?.state > 0 && task?.count > 0) {
   
       let count: number = 0;
       for (let i in animals) {
-  
         let chicken = animals[i];
         if (task.state === chicken.type) count++
-  
       }
   
       task.progress = count;
   
       if (task.count <= count) {
         task.progress = count;
-        task.done = 1;
+        task.done = true;
       }
       
     }
   } else {
-    let tasks: Itasks[] = this.partTasks();
-    let task: Itasks = tasks.find((data: Itasks) => data.type === 14);
-    if (task?.state === 0 && task?.count > 0 && task?.done === 0) {
+    let tasks: ItaskSheep[] = this.partTasks();
+    let task: ItaskSheep = tasks.find((data: ItaskSheep) => data.type === 14);
+    if (task?.state === 0 && task?.count > 0 && !task?.done) {
   
       let count: number = animals.length;
       task.progress = count;
   
       if (task.count <= count) {
-        task.done = 1;
+        task.done = true;
         task.progress = count;
       }
       
     } else if (task?.count === 0) {
-  
       let count: number = 0;
   
       for (let i: number = 0; i < settings.length; i++) {
-  
         for (let j = 0; j < animals.length; j++) {
   
           if (settings[i].breed === animals[j].breed) {
@@ -292,33 +264,28 @@ function checkAnimalTask(): void {
           }
   
         }
-  
       }
   
       task.progress = count;
   
       if (settings.length <= count) {
-  
-        task.done = 1;
+        task.done = true;
         task.progress = count;
-  
       }
   
     } else if (task?.state > 0 && task?.count > 0) {
   
       let count: number = 0;
       for (let i in animals) {
-  
         let chicken = animals[i];
         if (task.state === chicken.breed) count++
-  
       }
   
       task.progress = count;
   
       if (task.count <= count) {
         task.progress = count;
-        task.done = 1;
+        task.done = true;
       }
       
     }
@@ -329,7 +296,9 @@ function checkAnimalTask(): void {
 
 // проверка на уже выполненние задания
 function checkDoneTasks(): void {
-  const tasks: Itasks[] = this.partTasks();
+  console.log('check');
+  
+  const tasks: ItaskSheep[] = this.partTasks();
   for (let i in tasks) {
 
     // задания на улучшение земель
@@ -353,7 +322,7 @@ function checkDoneTasks(): void {
 
       if (count >= tasks[i].count) {
         tasks[i].progress = tasks[i].count;
-        tasks[i].done = 1;
+        tasks[i].done = true;
       } else {
         tasks[i].progress = count;
       }
@@ -362,14 +331,14 @@ function checkDoneTasks(): void {
     if (tasks[i]?.type === 23) {
       tasks[i].progress = this.state[`user${this.state.farm}`].collectorLevel;
       if (this.state[`user${this.state.farm}`].collectorLevel >= tasks[i].count) {
-        tasks[i].done = 1;
+        tasks[i].done = true;
       } else {}
     }
   }
   this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
 }
 
-function clickTaskBoard(task: Itasks): void {
+function clickTaskBoard(task: ItaskSheep): void {
   const openTerritoryWindow = (territory: any): void => {
     this.state.territory = territory;
     const modal: Imodal = {

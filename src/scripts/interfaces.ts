@@ -752,14 +752,17 @@ interface Iconfig {
 }
 interface ItaskSheep {
   id: string;
+  type: number;
+  state: number;
   done: boolean;
   awardTaken: boolean;
   awardType: string;
   award: number;
-  target: number
+  count: number
   progress: number;
   text: string;
   icon: string;
+  sort: number;
 }
 // interface ISheepConfig {
 //   woolPrice: number;

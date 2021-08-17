@@ -13,27 +13,65 @@ const config: Iconfig[] = [
     territoryColddown: 0,
     oneDiamondToMoney: 450,
     tasks: [
+      // купи овец
       {
-        id: '111',
-        done: false,
-        awardTaken: false,
-        awardType: 'diamond',
-        award: 1,
-        target: 1,
-        progress: 0,
-        text: 'taskName_6',
-        icon: 'sheep-task-icon-1'
+        id: '111', // id
+        type: 1, // тип
+        state: 1, // $2
+        done: false, // выполенно?
+        awardTaken: false, // награда получена?
+        awardType: 'diamond', // валюта награды
+        award: 1, // размер награды
+        count: 2, // $1
+        progress: 0, // прогресс
+        text: 'taskName_6', // текст в langs
+        icon: 'sheep-task-icon-1', // спрайт иконки
+        sort: 1 // приоритет для сортировки
       },
+      // обменяй
       {
         id: '112',
+        type: 2,
+        state: 2,
         done: false,
         awardTaken: false,
         awardType: 'diamond',
         award: 1,
-        target: 2,
+        count: 1,
         progress: 0,
         text: 'taskName_4',
-        icon: 'sheep-task-icon-2'
+        icon: 'sheep-task-icon-2',
+        sort: 2
+      },
+      // включи собиратель
+      {
+        id: '113',
+        type: 3,
+        state: 0,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        count: 1,
+        progress: 0,
+        text: 'taskName_3',
+        icon: 'sheep-task-icon-16',
+        sort: 3
+      },
+      // продай с хранилища
+      {
+        id: '114',
+        type: 20,
+        state: 0,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        count: 1,
+        progress: 0,
+        text: 'taskName_127',
+        icon: 'sheep-task-icon-31',
+        sort: 4
       }
     ],
   },

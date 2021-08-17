@@ -10,7 +10,8 @@ const tasksReward: string = require("./../../../assets/images/modal/tasks-reward
 export default class TasksWindowNew {
   public scene: Modal;
 
-  private tasks: { task: Itasks, taskData: ItaskData }[]
+  // private tasks: { task: Itasks, taskData: ItaskData }[]
+  private tasks: ItaskSheep[]
   private top: Phaser.GameObjects.Sprite;
   private middle: Phaser.GameObjects.TileSprite;
   private bottom: Phaser.GameObjects.Sprite;
@@ -45,7 +46,7 @@ export default class TasksWindowNew {
     // this.scene.state.amplitude.logAmplitudeEvent('show_tasks_window', {});
 
     let height: number = 760;
-    let countDone: number = this.tasks.filter(el => el.task.done === 1).length;
+    let countDone: number = this.tasks.filter(el => el.done).length;
     
     this.top = this.scene.add.sprite(this.scene.cameras.main.centerX + 3, this.centerY - Math.floor(height / 2), 'tasks-top').setOrigin(0.5, 1);
     this.middle = this.scene.add.tileSprite(this.scene.cameras.main.centerX, this.centerY, 563, height, 'tasks-middle').setOrigin(0.5);
@@ -77,24 +78,26 @@ export default class TasksWindowNew {
     const top = this.scrolling.top
 
     // ДЛЯ ТЕСТА
-    this.tasks = this.tasks.concat(this.tasks)
+    // this.tasks = this.tasks.concat(this.tasks)
     
+    console.log('TasksWindowNew ~ createTasksBars ~ this.tasks.length', this.tasks)
     for (let i = 0; i < this.tasks.length; i++) {
       const y = slots.length ? slots[i - 1].getBottomCenter().y + 4 : top + 6
       let barHeight: number = 140;
       let slot: Phaser.GameObjects.RenderTexture
-      let valutaTexture: string = 'diamond';
-      let award: string = String(this.tasks[i].task.diamonds);
-      let moneyTask = this.scene.game.scene.keys['Sheep'].moneyTasks.find(el => el.id === this.tasks[i].task.id)
+      let valutaTexture: string = this.tasks[i].awardType
+      let award: string = valutaTexture !== 'diamond' ? '' : String(this.tasks[i].award)
+      const taskText: string = this.scene.state.lang[this.tasks[i].text].replace('$1', String(this.tasks[i].count)).replace('$2', String(this.tasks[i].state))
+      // let moneyTask = this.scene.game.scene.keys['Sheep'].moneyTasks.find(el => el.id === this.tasks[i].id)
 
-      if (this.scene.state.farm === 'Sheep' && moneyTask) {     
-        award = '';
-        valutaTexture = 'sheepCoin';
-      }
+      // if (this.scene.state.farm === 'Sheep' && moneyTask) {     
+      //   award = '';
+      //   valutaTexture = 'sheepCoin';
+      // }
 
-      const icon: Phaser.GameObjects.Sprite = this.scene.add.sprite(x, y, this.tasks[i].taskData.icon).setDepth(2).setScale(0.9)
+      const icon: Phaser.GameObjects.Sprite = this.scene.add.sprite(x, y, this.tasks[i].icon).setDepth(2).setScale(0.9)
       const bar: Phaser.GameObjects.Sprite = this.scene.add.sprite(x, y, 'tasks-bar').setOrigin(0, 1).setDepth(2).setVisible(false)
-      const text: Phaser.GameObjects.Text = this.scene.add.text(x, y, this.tasks[i].taskData.name,{
+      const text: Phaser.GameObjects.Text = this.scene.add.text(x, y, taskText,{
         font: '24px Bip',
         color: '#944000',
         align: 'center',
@@ -103,14 +106,14 @@ export default class TasksWindowNew {
       
       if (text.height > 30) barHeight += (text.height - 30) / 2
 
-      if (this.tasks[i].task.done === 1 && this.tasks[i].task.got_awarded === 1) {
+      if (this.tasks[i].done && this.tasks[i].awardTaken) {
         // Задание выполнено, награда получена
         slot = this.scene.add.nineslice(x, y, 460, barHeight, 'tasks-complete', 13).setOrigin(0.5, 0)
         text.setPosition(slot.getCenter().x + 60, slot.getCenter().y).setColor('#494949').setAlpha(0.6)
         icon.setPosition(slot.getLeftCenter().x + 60, slot.getCenter().y - 10).setTint(0x777777).setAlpha(0.5)
         this.scene.add.sprite(icon.x, icon.y, 'completed').setDepth(2).setTint(0xc0c0c0).setAlpha(0.9);
 
-      } else if (this.tasks[i].task.done === 1 && this.tasks[i].task.got_awarded === 0) {
+      } else if (this.tasks[i].done && !this.tasks[i].awardTaken) {
         // Задание выполнено, награда не получена
         slot = this.scene.add.nineslice(x, y, 460, barHeight, 'tasks-reward', 13).setOrigin(0.5, 0)
         bar.setPosition(slot.getBottomCenter().x - 30, slot.getBottomCenter().y - 1).setVisible(true)
@@ -125,7 +128,7 @@ export default class TasksWindowNew {
         this.scene.clickShopBtn({ btn: takeButton, title: takeText, img: false }, (): void => {
           // if (valutaTexture === 'diamond') this.scene.game.scene.keys[this.scene.state.farm + 'Bars'].getCurrency({ x: takeButton.x, y: takeButton.y }, this.tasks[i].task.diamonds, 'diamond');
           // else if (valutaTexture === 'sheepCoin')  this.scene.game.scene.keys[this.scene.state.farm + 'Bars'].plusMoneyAnimation({ x: takeButton.x, y: takeButton.y });
-          this.scene.game.scene.keys[this.scene.state.farm].pickUpTaskReward(this.tasks[i].task.id);
+          this.scene.game.scene.keys[this.scene.state.farm].pickUpTaskReward(this.tasks[i].id); // !
         });
 
       } else {
@@ -133,7 +136,7 @@ export default class TasksWindowNew {
         slot = this.scene.add.nineslice(x, y, 460, barHeight, 'tasks-uncomplete', 13).setOrigin(0.5, 0)
         this.scene.click(slot, (): void => {
           this.scene.scene.stop('Modal');
-          this.scene.clickTaskBoard(this.tasks[i].task);
+          this.scene.clickTaskBoard(this.tasks[i]);
         });
 
         bar.setPosition(slot.getBottomCenter().x - 30, slot.getBottomCenter().y - 1).setVisible(true)
@@ -144,11 +147,11 @@ export default class TasksWindowNew {
         text.setPosition(slot.getCenter().x + 60, slot.getCenter().y - 26)
 
         icon.setPosition(slot.getLeftCenter().x + 60, slot.getCenter().y - 10)
-        let count: number = this.tasks[i].task.type === 14 && this.tasks[i].task.count === 0 ? this.scene.state[`${this.scene.state.farm}Settings`][`${this.scene.state.farm}Settings`].length : this.tasks[i].task.count;
-        const doneText: Phaser.GameObjects.Text = this.scene.add.text(icon.x, icon.getBottomCenter().y + 26, `${shortNum(this.tasks[i].task.progress)}/${shortNum(count)}`, { font: '26px Shadow', color: '#944000' }).setDepth(2).setOrigin(0.5).setShadow(1, 1, 'rgba(0, 0, 0, 0.5)', 2);
+        let count: number = this.tasks[i].type === 14 && this.tasks[i].count === 0 ? this.scene.state[`${this.scene.state.farm}Settings`][`${this.scene.state.farm}Settings`].length : this.tasks[i].count;
+        const doneText: Phaser.GameObjects.Text = this.scene.add.text(icon.x, icon.getBottomCenter().y + 26, `${shortNum(this.tasks[i].progress)}/${shortNum(count)}`, { font: '26px Shadow', color: '#944000' }).setDepth(2).setOrigin(0.5).setShadow(1, 1, 'rgba(0, 0, 0, 0.5)', 2);
         if (doneText.width > 120) doneText.setOrigin(0, 0.5).setX(icon.getLeftCenter().x - 18).setFontSize(24);
 
-        const progress = new RoundedProgress(this.scene, icon.x, icon.y, 1.2).setPercent(Math.round(100 / count * this.tasks[i].task.progress)).setTint(0x70399f)
+        const progress = new RoundedProgress(this.scene, icon.x, icon.y, 1.2).setPercent(Math.round(100 / count * this.tasks[i].progress)).setTint(0x70399f)
         this.scene.add.sprite(progress.rightSegment.x, progress.rightSegment.y, 'circle-outline').setScale(0.95).setTint(0xc09245).setDepth(progress.rightSegment.depth + 1);
         this.scene.add.sprite(progress.rightSegment.x, progress.rightSegment.y, 'circle-outline').setScale(1.2).setTint(0xc09245).setDepth(progress.rightSegment.depth + 1);
       }
@@ -189,17 +192,18 @@ export default class TasksWindowNew {
   }
 
 
-  private getTasks(): { task: Itasks, taskData: ItaskData }[] {
-    let tasks: { task: Itasks, taskData: ItaskData }[] = [];
+  private getTasks(): any[] {
+    // let tasks: { task: Itasks, taskData: ItaskData }[] = [];
 
-    this.scene.state.modal.tasksParams.tasks.forEach(task => {
-      const taskData: ItaskData = this.scene.game.scene.keys[this.scene.state.farm].getTaskData(task)
-      tasks.push({ task, taskData })
-    })
-
-    tasks = tasks.sort((x1: { task: Itasks, taskData: ItaskData }, x2: { task: Itasks, taskData: ItaskData }) => {
-      if (x1.task.sort > x2.task.sort) return 1;
-      if (x1.task.sort < x2.task.sort) return -1;
+    // this.scene.state.modal.tasksParams.tasks.forEach(task => {
+    //   const taskData: ItaskData = this.scene.game.scene.keys[this.scene.state.farm].getTaskData(task)
+    //   tasks.push({ task, taskData })
+    // })
+    
+    let tasks: ItaskSheep[] = this.scene.state.config[this.scene.state[`user${this.scene.state.farm}`].part - 1].tasks
+    tasks = tasks.sort((x1: ItaskSheep, x2: ItaskSheep) => {
+      if (x1.sort > x2.sort) return 1;
+      if (x1.sort < x2.sort) return -1;
       return 0;
     });
 
@@ -209,7 +213,7 @@ export default class TasksWindowNew {
 
   private progressLineAndOtherText(countDone: number, height: number): void {
     // Полоска прогресса
-    let percent: number = countDone / (this.scene.state.modal.tasksParams.tasks.length / 100);
+    let percent: number = countDone / (this.scene.state.config[this.scene.state[`user${this.scene.state.farm}`].part - 1].tasks.length / 100);
     percent = 460 / 100 * percent;
     this.scene.add.tileSprite(132, this.scene.cameras.main.centerY + (height / 2) + 4, percent, 16, 'part-progress').setOrigin(0, 0.5);
 
@@ -237,6 +241,7 @@ export default class TasksWindowNew {
     const parts: Ipart[] = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`${this.scene.state.farm.toLowerCase()}Parts`];
     const userPart: number = this.scene.state[`user${this.scene.state.farm}`].part;
     
+    console.log('TasksWindowNew ~ this.scene.state.modal.tasksParams.done', this.scene.state.modal.tasksParams.done)
     if (this.scene.state.modal.tasksParams.done && parts.length !== userPart) {
       const nextPart = this.scene.add.sprite(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2 + 60), 'big-btn-green').setDisplaySize(412, 64)
       const nextPartText = this.scene.add.text(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2 + 54), this.scene.state.lang.donePart, {
