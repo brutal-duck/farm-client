@@ -192,6 +192,7 @@ const clanWindowLeaderPlate: string = require('../../assets/images/modal/clan/le
 const clanWindowPointsBg: string = require('../../assets/images/modal/clan/points-bg.png');
 const clanWindowSearchPlate: string = require('../../assets/images/modal/clan/search-plate.png');
 const clanWindowWreath: string = require('../../assets/images/modal/clan/wreath.png');
+const clanWindowBgWreath: string = require('../../assets/images/modal/clan/bg-wreath.png');
 const clanWindowIcon1: string = require('../../assets/images/modal/clan/icon-1.png');
 const clanWindowIcon2: string = require('../../assets/images/modal/clan/icon-2.png');
 const clanWindowIcon3: string = require('../../assets/images/modal/clan/icon-3.png');
@@ -481,6 +482,7 @@ class Preload extends Phaser.Scene {
     this.load.image('clan-window-search-plate', clanWindowSearchPlate);
     this.load.image('clan-window-search-plate-ns', clanWindowSearchPlate);
     this.load.image('clan-window-wreath', clanWindowWreath);
+    this.load.image('clan-window-wreath-bg', clanWindowBgWreath);
     this.load.image('clan-window-icon-1', clanWindowIcon1);
     this.load.image('clan-window-icon-2', clanWindowIcon2);
     this.load.image('clan-window-icon-3', clanWindowIcon3);

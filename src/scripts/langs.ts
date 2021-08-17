@@ -991,10 +991,11 @@ export default {
     nowInTreasury: 'Сейчас в казне:',
     players: 'Игроков: ',
     improveClan: 'Улучшить клан',
-    clanImprovement: 'Улучшение клана ур.',
+    clanImprovement: 'Улучшение клана',
     wantGoTreasury: 'Хотите перейти в казну?',
     goToTreasury: 'Перейти в казну', 
-    notEnoughForClan: 'В казне не хватает: '
+    notEnoughForClan: 'В казне не хватает: ',
+    lvl: 'ур.',
   },
 
   en: {
@@ -1989,9 +1990,10 @@ export default {
     nowInTreasury: 'Сейчас в казне:',
     players: 'Игроков: ',
     improveClan: 'Улучшить клан',
-    clanImprovement: 'Улучшение клана ур.',
+    clanImprovement: 'Улучшение клана',
     wantGoTreasury: 'Хотите перейти в казну?',
     goToTreasury: 'Перейти в казну', 
-    notEnoughForClan: 'В казне не хватает: '
+    notEnoughForClan: 'В казне не хватает: ',
+    lvl: 'ур.',
   },
 }

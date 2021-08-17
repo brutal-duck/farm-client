@@ -22,13 +22,13 @@ export default class ImproveClanWindow {
     this.x = this.scene.cameras.main.centerX;
     this.y = this.scene.cameras.main.centerY;
     this.price = 100 * Math.pow(2, this.scene.state.clan.mainBuilding.level - 1);
-    this.window.headerText.setText(`${this.scene.state.lang.clanImprovement}${this.scene.state.clan.mainBuilding.level}`).setFontSize(30);
+    this.window.headerText.setText(this.scene.state.lang.clanImprovement);
   }
 
   private createText(): void {
     const pos: Iposition = {
       x: this.x - 230,
-      y: this.y - 100,
+      y: this.y - 10,
     };
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       color: '#fffdfa',
@@ -44,15 +44,34 @@ export default class ImproveClanWindow {
       },
       wordWrap: { width: 400, useAdvancedWrap: true },
     }
-    const text1: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, 'Максимальное количество игроков сейчас:', textStyle);
-    const count1: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 400, text1.getBounds().centerY, String(this.scene.state.clan.limit), textStyle).setOrigin(0, 0.5);
-    const text2: Phaser.GameObjects.Text = this.scene.add.text(pos.x, text1.getBounds().bottom + 5, 'Максимальное количество игроков при улучшении:', textStyle);
-    const count2: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 400, text2.getBounds().centerY, String(this.scene.state.clan.limit + 1) + '⬆️', textStyle).setColor('#00aa00').setOrigin(0, 0.5);
-    // const incText: Phaser.GameObjects.Text = this.scene.add.text(count2.getBounds().right + 5, count2.y, '(+1)', textStyle).setOrigin(0, 0.5).setColor('#00aa00');
+
+    const levelTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '40px',
+      align: 'center',
+      color: '#fffcf9',
+    };
+
+    const bg: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.x, pos.y - 120, 'clan-window-wreath-bg').setDepth(1);
+    this.scene.add.sprite(bg.x, bg.y + 10, 'clan-window-wreath').setDepth(1);
+    this.scene.add.nineslice(this.x, bg.y, this.window.width, bg.displayHeight + 20, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
+
+    const levelText: Phaser.GameObjects.Text = this.scene.add.text(bg.x, bg.y - 20, String(this.scene.state.clan.mainBuilding.level), levelTextStyle).setDepth(2).setOrigin(0.5);
+    this.scene.add.text(bg.x, levelText.getBounds().bottom, this.scene.state.lang.lvl, levelTextStyle).setDepth(2).setFontSize(30).setColor('#a98dc3').setOrigin(0.5, 0);
+    const text1: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, 'Максимальное количество игроков сейчас:', textStyle).setDepth(1);
+    const count1: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 400, text1.getBounds().centerY, String(this.scene.state.clan.limit), textStyle).setOrigin(0, 0.5).setDepth(1).setFontFamily('Shadow').setFontSize(30);
+    this.scene.add.nineslice(this.x, text1.getBounds().centerY, this.window.width, text1.displayHeight + 20, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
+    const text2: Phaser.GameObjects.Text = this.scene.add.text(pos.x, text1.getBounds().bottom + 40, 'Максимальное количество игроков при улучшении:', textStyle).setDepth(1);
+    const count2: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 400, text2.getBounds().centerY, String(this.scene.state.clan.limit + 1), textStyle).setDepth(1).setColor('#dcff3c').setOrigin(0, 0.5).setFontFamily('Shadow').setFontSize(30);
+    this.scene.add.nineslice(this.x, text2.getBounds().centerY, this.window.width, text2.displayHeight + 20, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
+
+    this.scene.add.sprite(count2.getBounds().right + 25, count2.y - 7, 'chat-arrow').setAngle(90).setScale(0.65);
+    this.scene.add.sprite(count2.getBounds().right + 25, count2.y + 7, 'chat-arrow').setAngle(90).setScale(0.65);
+    
   }
 
   private createBtns(): void {
-    const padding: number = 90;
+    const padding: number = 220;
     const right1 = {
       text: this.price,
       icon: 'diamond'

@@ -34,7 +34,7 @@ export default class ClanWindow {
     if (this.windowType === 2) {
       this.height = 435;
     } else if (this.windowType === 3) {
-      this.height = 250;
+      this.height = 500;
     } else if (this.windowType === 4) {
       this.height = 190;
     }
