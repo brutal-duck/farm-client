@@ -484,5 +484,22 @@ export default class ClanTabsWindow {
       this.scene.scene.stop('ClanScroll');
       this.scene.scene.restart(this.scene.state);
     });
+
+    const right3 = {
+      text: 200,
+      icon: 'diamond'
+    };
+
+    const btn3 = this.scene.bigButton('green', 'left', -40, this.scene.state.lang.improveClan, right3);
+    this.scene.clickModalBtn(btn3, () => {
+      this.scene.state.clanAvatar = this.scene.state.clan.avatar;
+      this.scene.state.modal = {
+        type: 18,
+        clanWindowType: 3,
+      };
+      this.removeInput();
+      this.scene.scene.stop('ClanScroll');
+      this.scene.scene.restart(this.scene.state);
+    });
   }
 }

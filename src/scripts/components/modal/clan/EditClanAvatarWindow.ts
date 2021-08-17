@@ -1,13 +1,12 @@
 import Modal from "../../../scenes/Modal/Modal";
 import ClanWindow from './ClanWindow';
-import LogoManager, { Icon } from '../../Utils/LogoManager';
+import { Icon } from '../../Utils/LogoManager';
 import axios from "axios";
 
 export default class EditClanAvatarWindow {
   private window: ClanWindow;
   private scene: Modal;
 
-  private switchBg: Phaser.GameObjects.Sprite;
   private x: number;
   private y: number;
   private avatar: IconfigIcon;

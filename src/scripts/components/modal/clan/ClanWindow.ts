@@ -2,6 +2,7 @@ import Modal from "../../../scenes/Modal/Modal";
 import { Icon } from "../../Utils/LogoManager";
 import CreateClanWindow from './CreateClanWindow';
 import EditClanAvatarWindow from './EditClanAvatarWindow';
+import ImproveClanWindow from './ImproveClanWindow';
 
 export default class ClanWindow {
   public scene: Modal;
@@ -31,6 +32,8 @@ export default class ClanWindow {
     this.height = 400;
     if (this.windowType === 2) {
       this.height = 435;
+    } else if (this.windowType === 3) {
+      this.height = 250;
     }
     this.width = 527;
   }
@@ -51,11 +54,13 @@ export default class ClanWindow {
       color: '#F3FBD0',
       fontFamily: 'Shadow',
       fontSize: '38px',
+      wordWrap: { width: 400, useAdvancedWrap: true },
+      align: 'center',
     };
     this.header = this.scene.add.sprite(this.x, this.y - this.height / 2 + 10 , 'settings-window-header').setOrigin(0.5, 1);
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
 
-    this.headerText = this.scene.add.text(headerGeom.centerX, headerGeom.centerY - 15, '', headerTextStyle).setOrigin(0.5);
+    this.headerText = this.scene.add.text(headerGeom.centerX - 30, headerGeom.centerY - 15, '', headerTextStyle).setOrigin(0.5);
     this.closeBtn = this.scene.add.sprite(headerGeom.right - 35, headerGeom.top + 35, 'close-window-btn');
 
     this.scene.clickButton(this.closeBtn, () => { this.onCloseBtn(); });
@@ -95,6 +100,9 @@ export default class ClanWindow {
         break;
       case 2: 
         new EditClanAvatarWindow(this);
+        break;
+      case 3: 
+        new ImproveClanWindow(this);
         break;
       default:
         break;

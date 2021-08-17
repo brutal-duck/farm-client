@@ -990,6 +990,8 @@ export default {
     clanTreasury: 'Казна клана',
     nowInTreasury: 'Сейчас в казне:',
     players: 'Игроков: ',
+    improveClan: 'Улучшить клан',
+    clanImprovement: 'Улучшение клана ур.',
   },
 
   en: {
@@ -1983,5 +1985,7 @@ export default {
     clanTreasury: 'Казна клана',
     nowInTreasury: 'Сейчас в казне:',
     players: 'Игроков: ',
+    improveClan: 'Улучшить клан',
+    clanImprovement: 'Улучшение клана ур.',
   },
 }

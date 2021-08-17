@@ -766,13 +766,18 @@ interface Iclan {
   sheep: IclanFarm;
   chicken: IclanFarm;
   cow: IclanFarm;
-  diamond: Iclan;
+  diamond: IclanFarm;
   points: number;
   limit: number;
+  mainBuilding: IclanMainBuilding;
+}
+interface IclanMainBuilding {
+  level: number;
+  cooldown: number;
 }
 interface IclanFarm {
   money: string;
-  count?: string;
+  count?: number;
   logs: IclanUserLog[];
 }
 interface IclanUserLog {
