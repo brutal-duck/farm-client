@@ -996,6 +996,11 @@ export default {
     goToTreasury: 'Перейти в казну', 
     notEnoughForClan: 'В казне не хватает: ',
     lvl: 'ур.',
+    forThisPlayerClanIsNotAccepted: 'Игроку $1 пока недоступны кланы',
+    maxLimitBeforeImprove: 'Максимальное количество игроков сейчас:',
+    maxLimitAfterImprove: 'Максимальное количество игроков при улучшении:',
+    reachChapterOfSheepFarm: 'Дойдите до $1 главы овечьей фермы',
+
   },
 
   en: {
@@ -1995,5 +2000,9 @@ export default {
     goToTreasury: 'Перейти в казну', 
     notEnoughForClan: 'В казне не хватает: ',
     lvl: 'ур.',
+    forThisPlayerClanIsNotAccepted: 'Игроку $1 пока недоступны кланы',
+    maxLimitBeforeImprove: 'Максимальное количество игроков сейчас:',
+    maxLimitAfterImprove: 'Максимальное количество игроков при улучшении:',
+    reachChapterOfSheepFarm: 'Дойдите до $1 главы овечьей фермы',
   },
 }

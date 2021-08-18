@@ -64,7 +64,10 @@ export default class ProfileWindow {
         avatar: 'avatar',
         status: this.scene.state.user.status,
         level: this.scene.state.user.level,
-        clan: this.scene.state.clan
+        clan: this.scene.state.clan,
+        sheepPart: this.scene.state.userSheep.part,
+        chickenPart: this.scene.state.userChicken.part,
+        cowPart: this.scene.state.userCow.part,
       };
       this.profile = profile;
     }
@@ -320,7 +323,7 @@ export default class ProfileWindow {
     this.writeBtn = this.scene.add.sprite(pos1.x, pos1.y, 'profile-window-button-yellow');
     this.writeBtnText = this.scene.add.text(this.writeBtn.x, this.writeBtn.y - 5, this.scene.state.lang.writing, textStyle).setOrigin(0.5);
 
-    if (this.scene.state.clan && this.scene.state.clan?.userStatus === 'owner') {
+    if (this.scene.state.clan && this.scene.state.clan?.ownerId === this.scene.state.user.id) {
       const inviteClanBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos2.x, pos2.y, 'profile-window-button-yellow');
       const inviteClanBtnText: Phaser.GameObjects.Text = this.scene.add.text(inviteClanBtn.x + 2, inviteClanBtn.y - 5, this.scene.state.lang.inviteClan, textStyle)
         .setOrigin(0.5);
@@ -381,11 +384,24 @@ export default class ProfileWindow {
   }
 
   private onInviteClanBtn(): void {
+    if (this.profile.sheepPart >= 7) {
+      this.inviteUser();
+    } else {
+      this.scene.state.modal = {
+        type: 1,
+        sysType: 3,
+        message: this.scene.state.lang.forThisPlayerClanIsNotAccepted.replace('$1', this.profile.name),
+        height: 150,
+      };
+      this.scene.scene.restart(this.scene.state);
+    }
+  }
+  
+  private inviteUser(): void {
     let name: string = this.scene.state.user.login;
     if (this.scene.state.platform === 'ya' 
       || this.scene.state.platform === 'vk' 
       || this.scene.state.platform === 'ok') name = this.scene.state.name;
-
     const data = {
       clanId: this.scene.state.clan.id,
       userId: this.profile.id,
@@ -396,7 +412,7 @@ export default class ProfileWindow {
     this.scene.scene.stop();
     this.scene.state.foreignProfileId = undefined;
   }
-  
+
   private onSupportBtn(): void {
     if (this.scene.state.platform === 'vk') window.open(process.env.VK_SUPPORT_LINK, '_blank');
     else if (this.scene.state.platform === 'ok') window.open(process.env.OK_SUPPORT_LINK, '_blank');
@@ -485,16 +501,28 @@ export default class ProfileWindow {
       if (!this.owner) {
         this.scene.add.text(this.scene.cameras.main.centerX, pos.y, this.scene.state.lang.userHasNotInClan, textStyle).setAlign('center').setDepth(2).setOrigin(0.5);
       } else {
-        const bannerText = this.scene.add.text(pos.x - 20, pos.y, this.scene.state.lang.joinClanBanner, bannerStyle).setDepth(2).setOrigin(0, 0.5);
-        const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(bannerText.getBounds().right + 5, pos.y, 'profile-window-button-yellow').setOrigin(0, 0.5).setDepth(2);
-        const btnText: Phaser.GameObjects.Text = this.scene.add.text(btn.getCenter().x, btn.getCenter().y - 5, this.scene.state.lang.clans, btnTextStyle).setDepth(2).setOrigin(0.5);
-        this.scene.clickModalBtn({ btn: btn, title: btnText }, () => {
-          this.scene.state.modal = {
-            type: 17,
-            clanTabType: 3,
-          };
-          this.scene.scene.restart(this.scene.state);
-        });
+        if (this.scene.state.userSheep.part >= 7) {
+          const bannerText = this.scene.add.text(pos.x - 20, pos.y, this.scene.state.lang.joinClanBanner, bannerStyle).setDepth(2).setOrigin(0, 0.5);
+          const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(bannerText.getBounds().right + 5, pos.y, 'profile-window-button-yellow').setOrigin(0, 0.5).setDepth(2);
+          const btnText: Phaser.GameObjects.Text = this.scene.add.text(btn.getCenter().x, btn.getCenter().y - 5, this.scene.state.lang.clans, btnTextStyle).setDepth(2).setOrigin(0.5);
+          this.scene.clickModalBtn({ btn: btn, title: btnText }, () => {
+            this.scene.state.modal = {
+              type: 17,
+              clanTabType: 3,
+            };
+            this.scene.scene.restart(this.scene.state);
+          });
+        } else {
+          this.scene.add.text(
+            this.scene.cameras.main.centerX, 
+            pos.y, 
+            this.scene.state.lang.reachChapterOfSheepFarm.replace('$1', '7'), 
+            textStyle
+          )
+            .setAlign('center')
+            .setDepth(2)
+            .setOrigin(0.5);
+        }
       }
     }
   }

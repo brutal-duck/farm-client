@@ -156,6 +156,9 @@ interface IprofileData {
   avatar: string;
   avatarType?: number;
   clan?: IclanData;
+  sheepPart: number;
+  chickenPart: number;
+  cowPart: number;
 }
 interface IclanData {
   id: string;

@@ -642,15 +642,25 @@ class Profile extends Phaser.Scene {
     // graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
 
     this.click(zone, (): void => {
-      if (!this.state.user.clanId) {
+      if (this.state.userSheep.part >= 7) {
+        if (!this.state.user.clanId) {
+          this.state.modal = {
+            type: 17,
+            clanTabType: 2,
+          };
+          this.scene.launch('Modal', this.state);
+        } else {
+          this.scene.stop();
+          this.scene.launch('ClanFarm', this.state);
+        }
+      } else {
         this.state.modal = {
-          type: 17,
-          clanTabType: 2,
+          type: 1,
+          sysType: 3,
+          message: this.state.lang.reachChapterOfSheepFarm.replace('$1', '7'),
+          height: 150,
         };
         this.scene.launch('Modal', this.state);
-      } else {
-        this.scene.stop();
-        this.scene.launch('ClanFarm', this.state);
       }
     });
   }
