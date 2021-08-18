@@ -891,4 +891,5 @@ interface Istate {
   searchClan?: string;
   closeModal?: boolean;
   clanAvatar?: IconfigIcon;
+  clanTutor?: boolean;
 }

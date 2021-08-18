@@ -503,14 +503,17 @@ function donePart(): void {
   }, callbackScope: this, loop: false });
 
   this.time.addEvent({ delay: 1500, callback: (): void => {
-    if (!((user.part === 3 && this.state.user.additionalTutorial.cave) || 
-      (user.part === 5 && this.state.user.additionalTutorial.herdBoost) ||
-      (user.part === 6 && this.state.user.additionalTutorial.feedBoost) || 
-      user.part === 4 || user.part === 2 && this.state.farm === 'Cow')) {
+    if (!((user.part === 3 && this.state.user.additionalTutorial.cave && this.state.farm === 'Sheep') || 
+      (user.part === 5 && this.state.user.additionalTutorial.herdBoost && this.state.farm === 'Sheep') ||
+      (user.part === 6 && this.state.user.additionalTutorial.feedBoost && this.state.farm === 'Sheep') || 
+      user.part === 4 || 
+      user.part === 2 && this.state.farm === 'Cow' || 
+      user.part === 7 && this.state.farm === 'Sheep')) {
       if (!this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Profile')) this.showTasks();
     }
+    if (user.part === 7 && this.state.farm === 'Sheep') this.state.clanTutor = true;
   }, callbackScope: this, loop: false });
 
 }

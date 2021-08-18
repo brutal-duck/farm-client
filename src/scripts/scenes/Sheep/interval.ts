@@ -380,7 +380,7 @@ function interval(): void {
         !arrowOnMap && !this.scene.isActive('Modal') &&
         !this.scene.isActive('Tutorial') &&
         !this.scene.isActive('Profile')) {
-        Arrow.generate(this.game.scene.keys[`${this.state.farm}Bars`], 17);
+        arrowOnMap = Arrow.generate(this.game.scene.keys[`${this.state.farm}Bars`], 17);
       }
   
       if ((!this.state.user.fortuneTutorial &&
@@ -394,6 +394,18 @@ function interval(): void {
       }
     }
 
+    if (this.state.clanTutor && 
+      !arrowOnMap && 
+      !this.scene.isActive('Modal') &&
+      !this.scene.isActive('Tutorial') &&
+      !this.scene.isActive('Profile')) {
+      arrowOnMap = Arrow.generate(this.game.scene.keys[`${this.state.farm}Bars`], 20);
+    }
+
+    if (this.state.clanTutor && this.scene.isActive('Profile') && !this.scene.isActive('Tutorial')) {
+      this.showTutorial('clan');
+    }
+    
     this.intervalPorgressCollectorTime();
 
     this.chickenIntervalProgress();

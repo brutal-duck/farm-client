@@ -2,7 +2,6 @@ import Sheep from '../../scenes/Sheep/Main';
 import SheepBars from '../../scenes/Sheep/SheepBars';
 import Tutorial from '../../scenes/Tutorial';
 import Shop from '../../scenes/Modal/Shop/Main';
-import Territory from './../Territories/Territory';
 import CowTerritory from './../Territories/CowTerritory';
 /**
   *  Конструктор принимает:
@@ -27,6 +26,7 @@ import CowTerritory from './../Territories/CowTerritory';
   *17	Тутор стрелка на кнопку карты в барах для начала ивента  
   *18	Стрелка на подстригателя  
   *19 Стрелка на фабрику
+  *20 Стрелка на карту для тутора клана
 */
 
 export default class Arrow extends Phaser.GameObjects.Sprite {
@@ -183,6 +183,12 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
         this.setAngle(90);
         this.verticalAnim();
       break;
+      case 20:
+        this.x = 510;
+        this.y = Number(this.scene.game.config.height) - 70 - 150 - this.height / 2;
+        this.setAngle(90);
+        this.verticalAnim();
+      break;
     }
 
     this.setDepth(this.y * 2);
@@ -229,14 +235,8 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
     switch (this.state) {
       case 9:
       case 10:
-        if ((this.checkModalOpen() || this.checkTutorialOpen()) && this.visible) this.setVisible(false);
-        else if (!this.checkModalOpen() && !this.checkTutorialOpen() && !this.visible) this.setVisible(true);
-      break;
       case 17:
       case 18:
-        if (this.checkModalOpen() && this.visible) this.setVisible(false);
-        else if (!this.checkModalOpen() && !this.visible) this.setVisible(true);
-      break;
       case 19:
         if ((this.checkModalOpen() || this.checkTutorialOpen()) && this.visible) this.setVisible(false);
         else if (!this.checkModalOpen() && !this.checkTutorialOpen() && !this.visible) this.setVisible(true);
@@ -256,34 +256,37 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
     switch (this.state) {
       case 4:
         result = this.scene.state.userSheep.tutorial > 40;
-      break;
+        break;
       case 9:
         result = this.checkTaskDone(127);
-      break;
+        break;
       case 10:
         if (this.scene.state.farm === 'Sheep') {
           result = this.checkTaskDone(5);
         } else if (this.scene.state.farm === 'Cow') {
           result = this.checkTaskDone(137);
         }
-      break;
+        break;
       case 16: 
         result = this.scene.state?.userUnicorn?.tutorial > 30;
-      break;
+        break;
       case 17: 
         if (this.scene.state.progress.event.type === 1) {
           result = this.scene.state.userUnicorn?.tutorial > 0;
         } else if (this.scene.state.progress.event.type === 2) {
           result = this.scene.state.user.fortuneTutorial;
         }
-      break;
+        break;
       case 18: 
         result = this.scene.state[`user${this.scene.state.farm}`].collector > 0;
-      break;
+        break;
       case 19: 
         const factoryTerritory: CowTerritory = this.scene.territories.children.entries.find((data: CowTerritory) => data.territoryType === 8);
         result = factoryTerritory.factory.money <= 0 || factoryTerritory.factory.currentProduction !== undefined;
-      break;
+        break;
+      case 20:
+        result = !this.scene.state.clanTutor;
+        break;
     }
     return result;
   }

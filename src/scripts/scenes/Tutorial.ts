@@ -457,6 +457,25 @@ class Tutorial extends Phaser.Scene {
         this.tailFlipY = false;
         this.pointerTutorial();
 
+      } else if (this.state.tutorial.additional === 'clan') {
+        this.scene.launch('Profile');
+        this.topPosition = true;
+        this.indent = this.height - 620;
+        this.tailX = 500;
+        this.tailFlipX = false;
+        this.tailFlipY = true;
+        this.tutorText = this.state.lang.clanTutor;
+        this.pointerTutorial();
+
+        this.generalClick = (): void => {
+          this.state.modal = {
+            type: 17,
+            clanTabType: 3,
+          };
+          this.state.clanTutor = false;
+          this.scene.stop();
+          this.scene.launch('Modal', this.state);
+        };
       } else {
         this.fail();
       }
