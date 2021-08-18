@@ -586,10 +586,10 @@ class Tutorial extends Phaser.Scene {
           this.tutorText = this.state.lang.sheepTutorial_60;
           this.skipTutorial = true;
 
-          let tasks: Itasks[] = this.game.scene.keys[this.state.farm].partTasks();
-          let task: Itasks = tasks.find((task: Itasks) => task.id === 1);
-          let taskData: ItaskData = this.game.scene.keys[this.state.farm].getTaskData(task);
-          let taskText: Phaser.GameObjects.Text = this.add.text(150, 0, taskData.name, {
+          let tasks: ItaskSheep[] = this.game.scene.keys[this.state.farm].partTasks();
+          // let task: Itasks = tasks.find((task: Itasks) => task.id === 1);
+          // let taskData: ItaskData = this.game.scene.keys[this.state.farm].getTaskData(task);
+          let taskText: Phaser.GameObjects.Text = this.add.text(150, 0, this.state.lang[tasks[0].text], {
             font: '23px Bip',
             color: '#713D1E',
             align: 'left',
@@ -597,7 +597,7 @@ class Tutorial extends Phaser.Scene {
           }).setDepth(this.height).setOrigin(0, 0);
           let taskTextBounds = taskText.getBounds();
           taskText.y = this.height - taskTextBounds.height - 244;
-          let award: Phaser.GameObjects.Text = this.add.text(190, this.height - 220, String(task.diamonds), {
+          let award: Phaser.GameObjects.Text = this.add.text(190, this.height - 220, String(tasks[0].award), {
             font: '20px Bip',
             color: '#FFFFFF'
           }).setDepth(this.height).setOrigin(0, 0.5);
@@ -613,7 +613,7 @@ class Tutorial extends Phaser.Scene {
           let height: number = 70 + taskTextBounds.height;
           if (height < 110) height = 110;
           const taskBoard: Phaser.GameObjects.RenderTexture = this.add.nineslice(30, this.height - 190 - height, 660, height, 'tasks-bar-ns', 15)
-          let taskIcon: Phaser.GameObjects.Image = this.add.image(88, this.height - 190 - height / 2, taskData.icon);
+          let taskIcon: Phaser.GameObjects.Image = this.add.image(88, this.height - 190 - height / 2, tasks[0].icon);
           taskIcon.setTint(0x777777);
           this.add.image(88, this.height - 190 - height / 2, 'completed');
           let done: Phaser.GameObjects.Image = this.add.image(620, this.height - 190 - height / 2, 'little-button').setDepth(this.height);
@@ -622,7 +622,7 @@ class Tutorial extends Phaser.Scene {
             color: '#FFFFFF'
           }).setOrigin(0.5, 0.5).setDepth(this.height);
           this.clickShopBtn({ btn: done, title: takeText, img: false }, (): void => {
-            this.game.scene.keys[this.state.farm + 'Bars'].getCurrency({ x: done.x, y: done.y }, task.diamonds, 'diamond');
+            this.game.scene.keys[this.state.farm + 'Bars'].getCurrency({ x: done.x, y: done.y }, tasks[0].award, 'diamond');
             this.game.scene.keys[this.state.farm].doneTutor_60();
           });
 

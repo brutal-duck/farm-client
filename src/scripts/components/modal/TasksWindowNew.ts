@@ -1,4 +1,4 @@
-import { shortNum } from "../../general/basic";
+import { romanize, shortNum } from "../../general/basic";
 import Modal from "../../scenes/Modal/Modal";
 import RoundedProgress from "../animations/RoundedProgress";
 import Scrolling from '../../libs/Scrolling.js'
@@ -80,8 +80,8 @@ export default class TasksWindowNew {
     // ДЛЯ ТЕСТА
     // this.tasks = this.tasks.concat(this.tasks)
     
-    console.log('TasksWindowNew ~ createTasksBars ~ this.tasks.length', this.tasks)
     for (let i = 0; i < this.tasks.length; i++) {
+      // console.log('createTasksBars ~ this.tasks', this.tasks[i])
       const y = slots.length ? slots[i - 1].getBottomCenter().y + 4 : top + 6
       let barHeight: number = 140;
       let slot: Phaser.GameObjects.RenderTexture
@@ -124,11 +124,12 @@ export default class TasksWindowNew {
         text.setPosition(slot.getCenter().x + 60, slot.getCenter().y - 26)
         icon.setPosition(slot.getLeftCenter().x + 60, slot.getCenter().y - 10).setTint(0x777777)
         this.scene.add.sprite(icon.x, icon.y, 'completed').setDepth(2)
-
+        
+        const id: string = this.tasks[i].id
         this.scene.clickShopBtn({ btn: takeButton, title: takeText, img: false }, (): void => {
-          // if (valutaTexture === 'diamond') this.scene.game.scene.keys[this.scene.state.farm + 'Bars'].getCurrency({ x: takeButton.x, y: takeButton.y }, this.tasks[i].task.diamonds, 'diamond');
-          // else if (valutaTexture === 'sheepCoin')  this.scene.game.scene.keys[this.scene.state.farm + 'Bars'].plusMoneyAnimation({ x: takeButton.x, y: takeButton.y });
-          this.scene.game.scene.keys[this.scene.state.farm].pickUpTaskReward(this.tasks[i].id); // !
+          if (valutaTexture === 'diamond') this.scene.game.scene.keys[this.scene.state.farm + 'Bars'].getCurrency({ x: takeButton.x, y: takeButton.y }, this.tasks[i].award, 'diamond');
+          else this.scene.game.scene.keys[this.scene.state.farm + 'Bars'].plusMoneyAnimation({ x: takeButton.x, y: takeButton.y });
+          this.scene.game.scene.keys[this.scene.state.farm].pickUpTaskReward(id);
         });
 
       } else {
@@ -192,14 +193,7 @@ export default class TasksWindowNew {
   }
 
 
-  private getTasks(): any[] {
-    // let tasks: { task: Itasks, taskData: ItaskData }[] = [];
-
-    // this.scene.state.modal.tasksParams.tasks.forEach(task => {
-    //   const taskData: ItaskData = this.scene.game.scene.keys[this.scene.state.farm].getTaskData(task)
-    //   tasks.push({ task, taskData })
-    // })
-    
+  private getTasks(): ItaskSheep[] {
     let tasks: ItaskSheep[] = this.scene.state.config[this.scene.state[`user${this.scene.state.farm}`].part - 1].tasks
     tasks = tasks.sort((x1: ItaskSheep, x2: ItaskSheep) => {
       if (x1.sort > x2.sort) return 1;
@@ -213,12 +207,20 @@ export default class TasksWindowNew {
 
   private progressLineAndOtherText(countDone: number, height: number): void {
     // Полоска прогресса
-    let percent: number = countDone / (this.scene.state.config[this.scene.state[`user${this.scene.state.farm}`].part - 1].tasks.length / 100);
+    const farm: string = this.scene.state.farm
+    const part: number = this.scene.state[`user${farm}`].part
+    const partName: string = this.scene.state.lang[farm.toLowerCase() + 'NamePart' + part]
+    const description: string = this.scene.state.lang[farm.toLowerCase() + 'PartAward' + part]
+    const farmer: string = this.scene.state.lang[farm.toLowerCase() + 'ProfileName'] + ' ' + romanize(part)
+    let done: boolean = this.scene.state.config[part - 1].tasks.every(task => task.done && task.awardTaken)
+
+    let percent: number = countDone / (this.scene.state.config[part - 1].tasks.length / 100);
     percent = 460 / 100 * percent;
+
     this.scene.add.tileSprite(132, this.scene.cameras.main.centerY + (height / 2) + 4, percent, 16, 'part-progress').setOrigin(0, 0.5);
 
     // Остальной текст
-    this.scene.add.text(this.scene.cameras.main.centerX, this.centerY - Math.floor(height / 2 + 200), this.scene.state.modal.tasksParams.part, {
+    this.scene.add.text(this.scene.cameras.main.centerX, this.centerY - Math.floor(height / 2 + 200), String(part), {
       font: '72px Shadow',
       fill: '#166c00'
     }).setOrigin(0.5, 0.5);
@@ -228,12 +230,12 @@ export default class TasksWindowNew {
       fill: '#166c00'
     }).setOrigin(0.5, 0.5);
 
-    this.scene.add.text(this.scene.cameras.main.centerX, this.centerY - Math.floor(height / 2 + 78), this.scene.state.modal.tasksParams.name, {
+    this.scene.add.text(this.scene.cameras.main.centerX, this.centerY - Math.floor(height / 2 + 78), partName, {
       font: '32px Shadow',
       fill: '#F2DCFF'
     }).setOrigin(0.5, 0.5);
 
-    this.scene.add.text(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2 + 10), this.scene.state.modal.tasksParams.farmer, {
+    this.scene.add.text(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2 + 10), farmer, {
       font: '26px Shadow',
       fill: '#8f3f00'
     }).setOrigin(0.5, 0.5);
@@ -241,8 +243,7 @@ export default class TasksWindowNew {
     const parts: Ipart[] = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`${this.scene.state.farm.toLowerCase()}Parts`];
     const userPart: number = this.scene.state[`user${this.scene.state.farm}`].part;
     
-    console.log('TasksWindowNew ~ this.scene.state.modal.tasksParams.done', this.scene.state.modal.tasksParams.done)
-    if (this.scene.state.modal.tasksParams.done && parts.length !== userPart) {
+    if (done && parts.length !== userPart) {
       const nextPart = this.scene.add.sprite(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2 + 60), 'big-btn-green').setDisplaySize(412, 64)
       const nextPartText = this.scene.add.text(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2 + 54), this.scene.state.lang.donePart, {
         font: '24px Shadow',
@@ -251,7 +252,7 @@ export default class TasksWindowNew {
 
       this.scene.clickShopBtn({ btn: nextPart, title: nextPartText }, (): void => { this.scene.game.scene.keys[this.scene.state.farm].nextPart() });
 
-    } else if (this.scene.state.modal.tasksParams.done && parts.length === userPart) {
+    } else if (done && parts.length === userPart) {
       this.scene.add.text(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2 + 60), this.scene.state.lang[`${this.scene.state.farm.toLowerCase()}CompanyDone`], {
         font: '20px Shadow',
         fill: '#c15e00',
@@ -259,8 +260,8 @@ export default class TasksWindowNew {
         wordWrap: { width: 420 }
       }).setOrigin(0.5, 0.5);
     
-    } else if (!this.scene.state.modal.tasksParams.done) {
-      this.scene.add.text(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2 + 60), this.scene.state.modal.tasksParams.description, {
+    } else if (!done) {
+      this.scene.add.text(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2 + 60), description, {
         font: '20px Shadow',
         fill: '#c15e00',
         align: 'center',

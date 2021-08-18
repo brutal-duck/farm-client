@@ -10,6 +10,7 @@ import chickenCollectorSettings from '../local/chickenCollector';
 import cowCollectorSettings from '../local/cowCollector';
 import getProgress from '../local/progress';
 import ErrorWindow from './../components/Web/ErrorWindow';
+import { config } from '../local/sheepSettings';
 const basicUserCow = userCow;
 const basicUserSheep = userSheep;
 const basicUserChicken = userChicken;
@@ -82,6 +83,20 @@ function setTaskStatus(farmId: number, resTask: any[]): Itasks[] {
     }
   }
   return updatedTasks;
+}
+
+function updateTaskStatus(part: number, userTasksStatus: any[]): ItaskSheep[] {
+  const tasks = config[part - 1].tasks
+  userTasksStatus.forEach(payload => {
+    const task: ItaskSheep = tasks.find(el => el.id === String(payload.task_id))
+    if (task) {
+      task.done = payload.done
+      task.awardTaken = payload.got_awarded
+      task.progress = payload.progress
+    }
+  })
+  
+  return tasks;
 }
 
 function updateImproveTerritories(territories: Iterritories[]): Iterritories[] {
@@ -418,7 +433,7 @@ export default function loadData(response: any): void {
   this.state.userChicken = userChicken;
   this.state.userCow = userCow;
 
-  this.state.sheepTasks = setTaskStatus(1, response.data.user.sheep_tasks);
+  this.state.sheepTasks = updateTaskStatus(response.data.user.sheep_part, response.data.user.sheep_tasks);
   this.state.chickenTasks = setTaskStatus(2, response.data.user.chicken_tasks);;
   this.state.cowTasks = setTaskStatus(3, response.data.user.cow_tasks);;
 

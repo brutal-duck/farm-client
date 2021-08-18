@@ -6,6 +6,7 @@ import CooldownSprite from './CooldownSprite';
 import Chicken from './../../scenes/Chicken/Main';
 import Sheep from './../../scenes/Sheep/Main';
 import FadeOut from './../animations/FadeOut';
+import SheepTerritory from './SheepTerritory';
 
 export default class Territory extends Phaser.Physics.Arcade.Sprite {
   public scene: Cow | Sheep | Chicken;
@@ -730,6 +731,8 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         }, callbackScope: this, loop: false });
 
       }
+
+      this.checkAllTerritoriesIsMaxImproveLvlTask()
     
     } else {
 
@@ -774,12 +777,22 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
           Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
         }, callbackScope: this, loop: false });
       }
+
+      this.checkAllTerritoriesIsMaxImproveLvlTask()
+
     } else {
       let count: number = price - this.scene.state.user.diamonds;
       let diamonds: number = this.scene.convertDiamonds(count);
       this.openConvertor(count, diamonds, 2);
     }
   };
+
+  public checkAllTerritoriesIsMaxImproveLvlTask(): void {
+    let part = this.scene.state[`user${this.scene.state.farm}`].part
+    let availableTerritories: number = part === 20 ? 21 : part + 2
+    let territories = this.scene.territories.children.entries.filter((el: SheepTerritory) => (el.territoryType === 5 || el.territoryType === 2 || el.territoryType === 3) && el.improve === part)
+    this.scene.tryTask(27, availableTerritories, 0, territories.length)
+  }
 
   private createFullStorageAnim(): void {    
     this.repositoryAnim = this.scene.tweens.add({

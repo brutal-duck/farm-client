@@ -1,5 +1,6 @@
 import AllTasks from '../tasks';
 import SpeechBubble from '../components/animations/SpeechBuble';
+import SheepTerritory from '../components/Territories/SheepTerritory';
 
 // список заданий текущей главы
 function partTasks(): Itasks[] {
@@ -75,7 +76,7 @@ function tryTask(type: number, state: number, count: number = 1, currentProgress
   // let tasks: Itasks[] = this.partTasks();
   let tasks: ItaskSheep[] = this.state.config[part - 1].tasks
   let task: ItaskSheep = tasks.find((data: ItaskSheep) => data.type === type);
-  console.log('tryTask ~ task', task, type)
+  // console.log('tryTask ~ task', task, type)
   
   if (
     !currentProgress && !task?.done &&
@@ -299,42 +300,50 @@ function checkDoneTasks(): void {
   console.log('check');
   
   const tasks: ItaskSheep[] = this.partTasks();
-  for (let i in tasks) {
+  tasks.forEach((task: ItaskSheep) => {
+    if (task.type === 27) {
+      let part = this.state[`user${this.state.farm}`].part
+      let availableTerritories: number = part === 20 ? 21 : part + 2
+      let territories = this.territories.children.entries.filter((el: SheepTerritory) => (el.territoryType === 5 || el.territoryType === 2 || el.territoryType === 3) && el.improve === part)
+      this.tryTask(27, availableTerritories, 0, territories.length)
+    }
+  })
 
+  // for (let i in tasks) {
     // задания на улучшение земель
-    if (tasks[i].type === 8
-      || tasks[i].type === 9
-      || tasks[i].type === 17
-      || tasks[i].type === 24) {
+  //   if (tasks[i].type === 8
+  //     || tasks[i].type === 9
+  //     || tasks[i].type === 17
+  //     || tasks[i].type === 24) {
 
-      let count: number = 0;
-      let type: number;
+  //     let count: number = 0;
+  //     let type: number;
 
-      if (tasks[i].type === 8) type = 2;
-      else if (tasks[i].type === 9) type = 3;
-      else if (tasks[i].type === 17) type = 5;
-      else if (tasks[i].type === 24) type = 8
+  //     if (tasks[i].type === 8) type = 2;
+  //     else if (tasks[i].type === 9) type = 3;
+  //     else if (tasks[i].type === 17) type = 5;
+  //     else if (tasks[i].type === 24) type = 8
 
-      for (let j in this.territories.children.entries) {
-        if (type === this.territories.children.entries[j].territoryType &&
-          this.territories.children.entries[j].improve >= tasks[i].state) count++
-      }
+  //     for (let j in this.territories.children.entries) {
+  //       if (type === this.territories.children.entries[j].territoryType &&
+  //         this.territories.children.entries[j].improve >= tasks[i].state) count++
+  //     }
 
-      if (count >= tasks[i].count) {
-        tasks[i].progress = tasks[i].count;
-        tasks[i].done = true;
-      } else {
-        tasks[i].progress = count;
-      }
-    }
+  //     if (count >= tasks[i].count) {
+  //       tasks[i].progress = tasks[i].count;
+  //       tasks[i].done = true;
+  //     } else {
+  //       tasks[i].progress = count;
+  //     }
+  //   }
     
-    if (tasks[i]?.type === 23) {
-      tasks[i].progress = this.state[`user${this.state.farm}`].collectorLevel;
-      if (this.state[`user${this.state.farm}`].collectorLevel >= tasks[i].count) {
-        tasks[i].done = true;
-      } else {}
-    }
-  }
+  //   if (tasks[i]?.type === 23) {
+  //     tasks[i].progress = this.state[`user${this.state.farm}`].collectorLevel;
+  //     if (this.state[`user${this.state.farm}`].collectorLevel >= tasks[i].count) {
+  //       tasks[i].done = true;
+  //     } else {}
+  //   }
+  // }
   this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
 }
 
@@ -590,5 +599,5 @@ export {
   getTaskData,
   checkAnimalTask,
   checkDoneTasks,
-  clickTaskBoard
+  clickTaskBoard,
 }

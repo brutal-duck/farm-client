@@ -159,7 +159,7 @@ interface IdataAutoSave {
   counter: number,
   dailyAwards: boolean[];
   user: IuserAutoSave;
-  sheepTasks: Itasks[];
+  sheepTasks: ItaskSheep[];
   sheepTerritories: Iterritories[];
   sheep: Isheep[];
   chickenTasks: Itasks[];

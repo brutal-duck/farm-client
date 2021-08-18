@@ -17,14 +17,14 @@ const config: Iconfig[] = [
       {
         id: '111', // id
         type: 1, // тип
-        state: 1, // $2
+        state: 1, // $2 / Y
         done: false, // выполенно?
         awardTaken: false, // награда получена?
         awardType: 'diamond', // валюта награды
         award: 1, // размер награды
-        count: 2, // $1
+        count: 2, // $1 / X
         progress: 0, // прогресс
-        text: 'taskName_6', // текст в langs
+        text: 'taskName_0', // текст в langs
         icon: 'sheep-task-icon-1', // спрайт иконки
         sort: 1 // приоритет для сортировки
       },
@@ -39,7 +39,7 @@ const config: Iconfig[] = [
         award: 1,
         count: 1,
         progress: 0,
-        text: 'taskName_4',
+        text: 'taskName_1',
         icon: 'sheep-task-icon-2',
         sort: 2
       },
@@ -54,7 +54,7 @@ const config: Iconfig[] = [
         award: 1,
         count: 1,
         progress: 0,
-        text: 'taskName_3',
+        text: 'taskName_2',
         icon: 'sheep-task-icon-16',
         sort: 3
       },
@@ -69,7 +69,7 @@ const config: Iconfig[] = [
         award: 1,
         count: 1,
         progress: 0,
-        text: 'taskName_127',
+        text: 'taskName_3',
         icon: 'sheep-task-icon-31',
         sort: 4
       }
@@ -88,7 +88,83 @@ const config: Iconfig[] = [
     grassAndWaterRestorePoints: 13,
     territoryColddown: 4,
     oneDiamondToMoney: 450,
-    tasks: [],
+    tasks: [
+      // купи землю
+      {
+        id: '121',
+        type: 5,
+        state: 1,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        count: 1,
+        progress: 0,
+        text: 'taskName_4',
+        icon: 'sheep-task-icon-29',
+        sort: 1
+      },
+      // купи траву
+      {
+        id: '122',
+        type: 5,
+        state: 2,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        count: 1,
+        progress: 0,
+        text: 'taskName_5',
+        icon: 'sheep-task-icon-25',
+        sort: 2
+      },
+      // улучши все территории
+      {
+        id: '123',
+        type: 27,
+        state: 2,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        count: 4,
+        progress: 0,
+        text: 'taskName_6',
+        icon: 'sheep-task-icon-24',
+        sort: 3
+      },
+      // купи овец
+      {
+        id: '124',
+        type: 1,
+        state: 1,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        count: 4,
+        progress: 0,
+        text: 'taskName_0',
+        icon: 'sheep-task-icon-1',
+        sort: 4
+      },
+      // получи овец
+      {
+        id: '124',
+        type: 4,
+        state: 2,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        count: 2,
+        progress: 0,
+        text: 'taskName_9',
+        icon: 'sheep-task-icon-2',
+        sort: 5
+      },
+    ],
   },
   //3
   {

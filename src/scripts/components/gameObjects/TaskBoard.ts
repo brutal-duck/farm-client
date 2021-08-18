@@ -56,6 +56,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
   private listButtondY: number = 0;
   private listTime: number = 0;
   private isMoving: boolean = false;
+  private currentTaskId: string
 
   constructor(scene: SheepBars | ChickenBars | CowBars) {
     super(scene, 0, 0, 0, 0, 'pixel');
@@ -218,13 +219,15 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
 
       // Выполняется
       if (this.status === 1 && task) {
+        this.currentTaskId = task.id
+
         const text: string = this.scene.state.lang[task.text].replace('$1', String(task.count)).replace('$2', String(task.state))
         this.taskText.setText(text).setWordWrapWidth(450);
         
         const taskTextBounds = this.taskText.getBounds();
         this.taskText.setPosition(150, this.scene.height - taskTextBounds.height - 248);
+
         let count: number = task.count;
-  
         if (task.type === 14 && task.count === 0) count = countBreed;
         
         this.doneText.setText(this.scene.state.lang.performed + ' ' + task.progress + ' / ' + count).setPosition(150, this.scene.height - 225);
@@ -252,9 +255,11 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
 
         // Получить награду
       } else if (this.status === 2 && task) {
+        this.currentTaskId = task.id
         
         const text: string = this.scene.state.lang[task.text].replace('$1', String(task.count)).replace('$2', String(task.state))
         this.taskText.setText(text).setWordWrapWidth(390);
+
         const taskTextBounds: Phaser.Geom.Rectangle = this.taskText.getBounds();
         this.taskText.setPosition(150, this.scene.height - taskTextBounds.height - 248);
         
@@ -599,7 +604,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
   }
 
   private createAllTasks(): void {
-    const tasks: ItaskSheep[] = this.scene.game.scene.keys[this.scene.state.farm].partTasks();
+    let tasks: ItaskSheep[] = this.scene.game.scene.keys[this.scene.state.farm].partTasks();
     tasks.sort((x1: ItaskSheep, x2: ItaskSheep) => {
       if (x1.awardTaken > x2.awardTaken) return -1;
       if (x1.awardTaken < x2.awardTaken) return 1;
@@ -610,13 +615,13 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
       return 0;
     });
 
-    // tasks.pop();
+    tasks = tasks.filter(task => task.id !== this.currentTaskId)
 
     if (this.elements.length > 0) this.elements.forEach(el => { el?.destroy() });
     this.elements = [];
     this.aditionalHeight = 0;
     
-    for (let i: number = 0; i < tasks.length - 1; i++) {    
+    for (let i: number = 0; i < tasks.length; i++) {    
       const task: ItaskSheep = tasks[i];
       // const taskData: ItaskData = this.scene.game.scene.keys[this.scene.state.farm].getTaskData(task);
       this.elements = this.elements.concat(this.createTaskListElement(task, i));
@@ -802,4 +807,5 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
   private nineSliceAnimationFix(): void {
     this.scene.add.text(0,0,'').destroy();
   }
+
 }

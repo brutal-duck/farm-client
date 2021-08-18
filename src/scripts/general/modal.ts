@@ -56,11 +56,12 @@ function nextPart(): void {
   }
 
   if (parts.length > user.part) {
-    const tasks: Itasks[] = this.partTasks();
+    const tasks: ItaskSheep[] = this.partTasks();
     let status: boolean = true;
     if (tasks.length === 0) status = false;
     for (let i: number = 0; i < tasks.length; i++) {
-      if ((tasks[i].done !== 1 || tasks[i].got_awarded !== 1) && tasks[i].necessary === 1) {
+      // if ((!tasks[i].done || !tasks[i].awardTaken) && tasks[i].necessary === 1) {
+      if (!tasks[i].done || !tasks[i].awardTaken) {
         status = false;
         break;
       }
@@ -90,39 +91,39 @@ function nextPart(): void {
 }
 
 
-// окно заданий
+// окно заданий // !
 function showTasks(): void {
-  let part: number;
-  if (this.state.farm === 'Sheep') part = this.state.userSheep.part;
-  else if (this.state.farm === 'Chicken') part = this.state.userChicken.part;
-  else if (this.state.farm === 'Cow') part = this.state.userCow.part;
+  // let part: number;
+  // if (this.state.farm === 'Sheep') part = this.state.userSheep.part;
+  // else if (this.state.farm === 'Chicken') part = this.state.userChicken.part;
+  // else if (this.state.farm === 'Cow') part = this.state.userCow.part;
 
-  let done: boolean = true;
-  let tasks: Itasks[] = this.partTasks();
+  // let done: boolean = true;
+  // let tasks: ItaskSheep[] = this.partTasks();
 
-  for (let i in tasks) {
-    if (tasks[i].necessary === 1 && tasks[i].got_awarded === 0) {
-      done = false;
-      break;
-    }
-  }
+  // for (let i in tasks) {
+    // if (tasks[i].necessary === 1 && !tasks[i].awardTaken) {
+  //   if (!tasks[i].awardTaken) {
+  //     done = false;
+  //     break;
+  //   }
+  // }
 
-  const tasksParams: ItasksParams = {
-    part: String(part),
-    name: this.state.lang[this.state.farm.toLowerCase() + 'NamePart' + part],
-    farmer: this.state.lang[this.state.farm.toLowerCase() + 'ProfileName'] + ' ' + romanize(part),
-    done: done,
-    description: this.state.lang[this.state.farm.toLowerCase() + 'PartAward' + part],
-    tasks: tasks
-  }
+  // const tasksParams: ItasksParams = {
+  //   part: String(part),
+  //   name: this.state.lang[this.state.farm.toLowerCase() + 'NamePart' + part],
+  //   farmer: this.state.lang[this.state.farm.toLowerCase() + 'ProfileName'] + ' ' + romanize(part),
+  //   done: done,
+  //   description: this.state.lang[this.state.farm.toLowerCase() + 'PartAward' + part],
+  //   tasks: tasks
+  // }
 
   const modal: Imodal = {
     type: 3,
-    tasksParams: tasksParams
+    // tasksParams: tasksParams
   }
   this.state.modal = modal;
   this.scene.launch('Modal', this.state);
-
 }
 
 

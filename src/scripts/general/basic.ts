@@ -369,8 +369,8 @@ function logout(): void {
 
 
 function convertDiamonds(diamonds: number): number {
-  const farm: string = this.state.farm.toLowerCase();
-  const partsSettings: Ipart[] = this.state[`${farm}Settings`][`${farm}Parts`];
+  // const farm: string = this.state.farm.toLowerCase();
+  // const partsSettings: Ipart[] = this.state[`${farm}Settings`][`${farm}Parts`];
   const part: number = this.state[`user${this.state.farm}`].part;
   
   let exchange: number = this.state.config[part - 1].oneDiamondToMoney
@@ -516,40 +516,30 @@ function donePart(): void {
 
 
 // забрать награду за задание
-function pickUpTaskReward(id: number): void {
+function pickUpTaskReward(id: number | string): void {  
+  let part: number = this.state[`user${this.state.farm}`].part - 1
+  let tasks: ItaskSheep[] = this.state.config[part].tasks
+  let task: ItaskSheep = tasks.find((data: ItaskSheep) => data.id === id);
 
-  let tasks: Itasks[] = [];
+  if (task?.done && !task?.awardTaken) {
 
-  if (this.state.farm === 'Sheep') tasks = this.state.sheepTasks;
-  else if (this.state.farm === 'Chicken') tasks = this.state.chickenTasks;
-  else if (this.state.farm === 'Cow') tasks = this.state.cowTasks;
+    if (task.awardType === 'diamond') this.state.user.diamonds += task.award;
+    else this.state[`user${this.state.farm}`].money += task.award
 
-  let task: Itasks = tasks.find((data: Itasks) => data.id === id);
-  if (task?.done === 1 && task?.got_awarded === 0) {
+    // this.state.amplitude.logAmplitudeEvent('diamonds_get', {
+    //   type: 'task_award',
+    //   count: task.diamonds,
+    // });
 
-    if (this.state.farm === 'Sheep') {     
-      let moneyTask: any = this.moneyTasks.find(el => el.id === task.id);
-      if (moneyTask) this.state.userSheep.money += moneyTask.money;
-      else this.state.user.diamonds += task.diamonds;
-    } else this.state.user.diamonds += task.diamonds;
-
-    this.state.amplitude.logAmplitudeEvent('diamonds_get', {
-      type: 'task_award',
-      count: task.diamonds,
-    });
     this.autosave();
-    this.state.user.xp += task.xp;
-    task.got_awarded = 1;
+    // this.state.user.xp += task.xp;
+    task.awardTaken = true;
 
     if (this.scene.isActive('Modal')) {
-
       this.scene.stop('Modal');
       this.showTasks();
-
     }
-
   }
-
 }
 
 // проверка подключения к интернету
