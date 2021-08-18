@@ -169,10 +169,22 @@ const clanMainFrame: string = require('../../../assets/images/modal/clan/icon/ma
 const iconShopSheep: string = require("../../../assets/images/sheep/icons/icon-shop-sheep.png");
 const iconShopChicken: string = require("../../../assets/images/chicken/icons/icon-shop-chicken.png");
 const iconShopCow: string = require("../../../assets/images/cow/icons/icon-shop-cow.png");
-const clanBankSheepPackage: string = require('../../../assets/images/modal/clan/bank/sheep.png');
-const clanBankChickenPackage: string = require('../../../assets/images/modal/clan/bank/chicken.png');
-const clanBankCowPackage: string = require('../../../assets/images/modal/clan/bank/cow.png');
-const clanBankDiamondPackage: string = require('../../../assets/images/modal/clan/bank/diamond.png');
+const clanBankSheepPackage1: string = require('../../../assets/images/modal/clan/bank/sheep-1.png');
+const clanBankSheepPackage2: string = require('../../../assets/images/modal/clan/bank/sheep-2.png');
+const clanBankSheepPackage3: string = require('../../../assets/images/modal/clan/bank/sheep-3.png');
+const clanBankSheepPackage4: string = require('../../../assets/images/modal/clan/bank/sheep-4.png');
+const clanBankChickenPackage1: string = require('../../../assets/images/modal/clan/bank/chicken-1.png');
+const clanBankChickenPackage2: string = require('../../../assets/images/modal/clan/bank/chicken-2.png');
+const clanBankChickenPackage3: string = require('../../../assets/images/modal/clan/bank/chicken-3.png');
+const clanBankChickenPackage4: string = require('../../../assets/images/modal/clan/bank/chicken-4.png');
+const clanBankCowPackage1: string = require('../../../assets/images/modal/clan/bank/cow-1.png');
+const clanBankCowPackage2: string = require('../../../assets/images/modal/clan/bank/cow-2.png');
+const clanBankCowPackage3: string = require('../../../assets/images/modal/clan/bank/cow-3.png');
+const clanBankCowPackage4: string = require('../../../assets/images/modal/clan/bank/cow-4.png');
+const clanBankDiamondPackage1: string = require('../../../assets/images/modal/clan/bank/diamond-1.png');
+const clanBankDiamondPackage2: string = require('../../../assets/images/modal/clan/bank/diamond-2.png');
+const clanBankDiamondPackage3: string = require('../../../assets/images/modal/clan/bank/diamond-3.png');
+const clanBankDiamondPackage4: string = require('../../../assets/images/modal/clan/bank/diamond-4.png');
 
 export default function typePreload(): void {
     switch (this.state.modal.type) {
@@ -411,10 +423,22 @@ export default function typePreload(): void {
       this.load.image('clan-main-frame',clanMainFrame);
       this.load.image('clan-window-search-plate-ns', clanWindowSearchPlate);
       this.load.image('clan-window-leader-plate-ns', clanWindowLeaderPlate);
-      this.load.image('clan-bank-sheep-package', clanBankSheepPackage);
-      this.load.image('clan-bank-chicken-package', clanBankChickenPackage);
-      this.load.image('clan-bank-cow-package', clanBankCowPackage);
-      this.load.image('clan-bank-diamond-package', clanBankDiamondPackage);
+      this.load.image('clan-bank-sheep-package-1', clanBankSheepPackage1);
+      this.load.image('clan-bank-sheep-package-2', clanBankSheepPackage2);
+      this.load.image('clan-bank-sheep-package-3', clanBankSheepPackage3);
+      this.load.image('clan-bank-sheep-package-4', clanBankSheepPackage4);
+      this.load.image('clan-bank-chicken-package-1', clanBankChickenPackage1);
+      this.load.image('clan-bank-chicken-package-2', clanBankChickenPackage2);
+      this.load.image('clan-bank-chicken-package-3', clanBankChickenPackage3);
+      this.load.image('clan-bank-chicken-package-4', clanBankChickenPackage4);
+      this.load.image('clan-bank-cow-package-1', clanBankCowPackage1);
+      this.load.image('clan-bank-cow-package-2', clanBankCowPackage2);
+      this.load.image('clan-bank-cow-package-3', clanBankCowPackage3);
+      this.load.image('clan-bank-cow-package-4', clanBankCowPackage4);
+      this.load.image('clan-bank-diamond-package-1', clanBankDiamondPackage1);
+      this.load.image('clan-bank-diamond-package-2', clanBankDiamondPackage2);
+      this.load.image('clan-bank-diamond-package-3', clanBankDiamondPackage3);
+      this.load.image('clan-bank-diamond-package-4', clanBankDiamondPackage4);
         break;
       default:
         break;

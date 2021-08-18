@@ -6,22 +6,25 @@ import Sheep from '../../scenes/Sheep/Main';
 import Chicken from '../../scenes/Chicken/Main';
 import Cow from '../../scenes/Cow/Main';
 import Unicorn from '../../scenes/Event/Unicorns/Main';
+import Modal from './../../scenes/Modal/Modal';
 
 export default class MoneyAnimation  {
-  public scene: SheepBars | ChickenBars | CowBars | UnicornBars;
+  public scene: SheepBars | ChickenBars | CowBars | UnicornBars | Modal;
   public position: Iposition;
   public texture: string;
   public money: Phaser.GameObjects.Group;
+  private target: Iposition;
 
-  constructor(scene: SheepBars | ChickenBars | CowBars | UnicornBars, texture: string) {
+  constructor(scene: SheepBars | ChickenBars | CowBars | UnicornBars | Modal, texture: string, target?: Iposition) {
     this.scene = scene;
     this.position = { x: this.scene.cameras.main.centerX, y: this.scene.cameras.main.centerY };
     this.texture  = texture;
+    this.target = target;
     this.init();
   }
 
-  static create(scene: SheepBars | ChickenBars | CowBars | UnicornBars, texture: string = `${scene.state.farm.toLowerCase()}Coin`): MoneyAnimation {
-    return new MoneyAnimation(scene, texture);
+  static create(scene: SheepBars | ChickenBars | CowBars | UnicornBars | Modal, texture: string = `${scene.state.farm.toLowerCase()}Coin`, target?: Iposition): MoneyAnimation {
+    return new MoneyAnimation(scene, texture, target);
   }
 
   private init(): void {
@@ -162,15 +165,16 @@ export default class MoneyAnimation  {
   }
 
   private flyToBar(sprite: Phaser.GameObjects.Sprite): void {
-    let target: Iposition;
-    if (this.texture !== 'diamond') target = { x: 495, y: 120 };
-    else target = { x: 495, y: 30 };
+    if (!this.target) {
+      if (this.texture !== 'diamond') this.target = { x: 495, y: 120 };
+      else this.target = { x: 495, y: 30 };
+    }
     this.scene.tweens.add({
       targets: sprite,
       alpha: { from: 0.8, to: 1 },
       scale: { from: 0.1, to: 0.2},
-      x: target.x,
-      y: target.y,
+      x: this.target.x,
+      y: this.target.y,
       duration: 400,
       onComplete: (): void => {
         sprite.destroy();

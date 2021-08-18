@@ -7,6 +7,8 @@ import Chicken from './../../../scenes/Chicken/Main';
 import Cow from './../../../scenes/Cow/Main';
 import Unicorn from './../../../scenes/Event/Unicorns/Main';
 import BigInteger from './../../../libs/BigInteger';
+import Currency from './../../animations/Currency';
+import MoneyAnimation from './../../animations/MoneyAnimation';
 const KEY: string = '1491f4c9d53dfa6c50d0c4a375f9ba76';
 
 const FARM_PACKAGE: Array<number> = [1000, 100000, 1000000, 1000000000];
@@ -45,6 +47,7 @@ export default class ClanBankWindow {
     wordWrap: { width: 400, useAdvancedWrap: true },
   };
   private activePackage: number = 0;
+  private coinIcon: Phaser.GameObjects.Sprite;
   private currentCountText: Phaser.GameObjects.Text;
   private logElements: Phaser.GameObjects.Group;
 
@@ -58,7 +61,7 @@ export default class ClanBankWindow {
     this.x = this.scene.cameras.main.centerX;
     this.y = this.scene.cameras.main.centerY;
     this.windowType = this.scene.state.modal.clanTabType || 1;
-    this.height = 600;
+    this.height = 620;
     this.width = 527;
   }
 
@@ -162,7 +165,7 @@ export default class ClanBankWindow {
   private createBank(): void {
     const titleTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Shadow',
-      fontSize: '20px',
+      fontSize: '26px',
       color: '#fffdfa',
       align: 'center',
       shadow: {
@@ -182,10 +185,10 @@ export default class ClanBankWindow {
       this.headerText.setFontSize(parseInt(this.headerText.style.fontSize) / multiply);
     }
     const coinTexture: string = this.farm !== 'diamond' ? `${this.farm}Coin` : 'diamond';
-    const titleText: string = this.farm !== 'diamond' ? shortNum(this.scene.state.clan[this.farm].money) : shortNum(this.scene.state.clan[`${this.farm}`].count);
-    const title1: Phaser.GameObjects.Text = this.scene.add.text(headerGeom.left + 60, headerGeom.bottom + 20, this.scene.state.lang.nowInTreasury, titleTextStyle);
-    const coin: Phaser.GameObjects.Sprite = this.scene.add.sprite(title1.getBounds().right + 10, title1.getBounds().centerY, coinTexture).setScale(0.15).setOrigin(0, 0.5);
-    this.currentCountText = this.scene.add.text(coin.getBounds().right + 10, title1.getBounds().centerY, titleText, titleTextStyle).setOrigin(0, 0.5);
+    const titleText: string = this.farm !== 'diamond' ? this.scene.state.clan[this.farm].money : this.scene.state.clan[`${this.farm}`].count;
+    const title1: Phaser.GameObjects.Text = this.scene.add.text(headerGeom.left + 60, headerGeom.bottom + 12, this.scene.state.lang.nowInTreasury, titleTextStyle);
+    this.coinIcon = this.scene.add.sprite(title1.getBounds().right + 10, title1.getBounds().centerY, coinTexture).setScale(0.12).setOrigin(0, 0.5);
+    this.currentCountText = this.scene.add.text(this.coinIcon.getBounds().right + 10, title1.getBounds().centerY, titleText, titleTextStyle).setOrigin(0, 0.5);
     
     if (this.farm !== 'diamond') {
       const farmProgress: IpartProgress = this.scene.state.progress[this.farm];
@@ -214,19 +217,21 @@ export default class ClanBankWindow {
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     let x: number = headerGeom.left + 100;
     const btnTexture: string = `clan-bank-${this.farm}-package`;
+    this.scene.add.nineslice(this.x, headerGeom.bottom + 130, this.width, 150, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
     for (let i: number = 0; i < 4; i += 1) {
-      const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(x, headerGeom.bottom + 130, btnTexture).setScale(0.45);
-      const text: Phaser.GameObjects.Text = this.scene.add.text(x, headerGeom.bottom + 160, shortNum(array[i]), textStyle).setOrigin(0.5);
+      const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(x, headerGeom.bottom + 130, `${btnTexture}-${i + 1}`).setScale(0.81).setTint(0xcccccc);
+      const text: Phaser.GameObjects.Text = this.scene.add.text(x, headerGeom.bottom + 160, shortNum(array[i]), textStyle).setOrigin(0.5).setTint(0xcccccc);
       btn.state = i;
+      btn.type = 'disable';
       text.state = array[i];
       this.scene.click(btn, () => {
-        this.setActive(btn);
+        this.setActive({btn, text});
       });
       this.packageBtns.push({btn, text});
       x += btn.displayWidth + 20
-      if (this.activePackage === i) this.setActive(btn);
+      if (this.activePackage === i) this.setActive({btn, text});
     }
-    const donateBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX, headerGeom.bottom + 260, 'done-chapter-button');
+    const donateBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.x, headerGeom.bottom + 270, 'done-chapter-button');
     const donateBtnText: Phaser.GameObjects.Text = this.scene.add.text(donateBtn.x, donateBtn.y - 5, this.scene.state.lang.send, btnTextStyle).setOrigin(0.5);
     this.scene.clickModalBtn({ btn: donateBtn, title: donateBtnText }, (): void => { this.addFarmMoney(); });
   }
@@ -247,30 +252,80 @@ export default class ClanBankWindow {
     };
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     let x: number = headerGeom.left + 100;
+    this.scene.add.nineslice(this.x, headerGeom.bottom + 130, this.width, 150, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
     const btnTexture: string = `clan-bank-${this.farm}-package`;
     for (let i: number = 0; i < 4; i += 1) {
-      const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(x, headerGeom.bottom + 130, btnTexture).setScale(0.45).setTint(0x777777);
+      const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(x, headerGeom.bottom + 130, `${btnTexture}-${i + 1}`).setScale(0.81).setTint(0x777777);
       this.scene.add.text(x, headerGeom.bottom + 160, shortNum(FARM_PACKAGE[i]), textStyle).setOrigin(0.5).setTint(0x777777);
       x += btn.displayWidth + 20
     }
 
-    const donateBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX, headerGeom.bottom + 260, 'done-chapter-button').setTint(0x777777);
+    const donateBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.x, headerGeom.bottom + 270, 'done-chapter-button').setTint(0x777777);
     const donateBtnText: Phaser.GameObjects.Text = this.scene.add.text(donateBtn.x, donateBtn.y - 5, this.scene.state.lang.send, btnTextStyle).setOrigin(0.5).setTint(0x777777);
   }
 
-  private setActive(btn: Phaser.GameObjects.Sprite): void {
-    if (btn.type === 'active') return;
-    this.activePackage = Number(btn.state);
+  private setActive(el: {
+    btn: Phaser.GameObjects.Sprite, 
+    text: Phaser.GameObjects.Text,
+  }): void {
+    if (el.btn.type === 'active') return;
     this.setDisable();
-    btn.type = 'active';
-    btn.setScale(0.55);
+    el.btn.type = 'active';
+    this.activePackage = Number(el.btn.state);
+    this.animActive(el);
   }
 
   private setDisable(): void {
     this.packageBtns.forEach(el => {
-      el.btn.type = 'disable';
-      el.btn.setScale(0.45);
+      if (el.btn.type !== 'disable') {
+        el.btn.type = 'disable';
+        this.animDisable(el);
+      }
     });
+  }
+
+  private animDisable(el: {
+    btn: Phaser.GameObjects.Sprite, 
+    text: Phaser.GameObjects.Text,
+  }): void {
+    this.scene.add.tween({
+      duration: 70,
+      targets: el.text,
+      y: '-=11',
+      scale: 1,
+    });
+    this.scene.add.tween({
+      duration: 70,
+      targets: el.btn,
+      scale: 0.81,
+      onComplete: (): void => {
+        el.btn.setTint(0xcccccc);
+        el.text.setTint(0xcccccc);
+      }
+    });
+  }
+
+  private animActive(el: {
+    btn: Phaser.GameObjects.Sprite, 
+    text: Phaser.GameObjects.Text,
+  }): void {
+    this.scene.add.tween({
+      duration: 70,
+      targets: el.text,
+      y: '+=11',
+      scale: 1.2,
+    });
+
+    this.scene.add.tween({
+      duration: 70,
+      targets: el.btn,
+      scale: 1,
+      onComplete: (): void => {
+        el.btn.setTint(0xffffff);
+        el.text.setTint(0xffffff);
+      }
+    });
+
   }
 
   private createLogs(): void {
@@ -289,8 +344,8 @@ export default class ClanBankWindow {
       wordWrap: { width: 50 },
     };
     const array: IclanUserLog[] = this.scene.state.clan[this.farm].logs;
-    let y: number = this.scene.cameras.main.centerY + 80;
-    this.scene.add.nineslice(this.scene.cameras.main.centerX, y + 150, 500, 380, 'modal-square-bg', 10).setOrigin(0.5);
+    let y: number = this.scene.cameras.main.centerY + 70;
+    this.scene.add.nineslice(this.x, y + 150, 500, 380, 'modal-square-bg', 10).setOrigin(0.5);
     const x: number = 160;
     this.logElements = this.scene.add.group();
     array.reverse().forEach(el => {
@@ -322,7 +377,15 @@ export default class ClanBankWindow {
         this.postMoney(packageCount).then(res => {
           if (!res.data.error) {
             this.scene.state[`user${this.farm[0].toUpperCase() + this.farm.slice(1)}`].money -= Number(packageCount);
-            const text: string = shortNum(this.scene.state.clan[this.farm].money);
+            const text: string = this.scene.state.clan[this.farm].money;
+            if (Number(packageCount) >= FARM_PACKAGE[2]) {
+              MoneyAnimation.create(this.scene, `${this.farm}Coin`, {
+                x: this.coinIcon.x + this.coinIcon.displayWidth / 2,
+                y: this.coinIcon.y + this.coinIcon.displayHeight / 2,
+              });
+            } else {
+              this.getCurrency({x: this.scene.cameras.main.centerX, y: this.header.getBounds().bottom + 260}, Number(packageCount), `${this.farm}Coin`);
+            }
             this.currentCountText.setText(text);
             this.logElements.destroy(true);
             this.createLogs();
@@ -349,7 +412,15 @@ export default class ClanBankWindow {
         this.postMoney(Number(packageCount)).then(res => {
           if (!res.data.error) {
             this.scene.state.user.diamonds -= Number(packageCount);
-            const text: string = shortNum(this.scene.state.clan[`${this.farm}`].count);
+            const text: string = this.scene.state.clan[`${this.farm}`].count;
+            if (Number(packageCount) >= DIAMOND_PACKAGE[2]) {
+              MoneyAnimation.create(this.scene, 'diamond', {
+                x: this.coinIcon.x + this.coinIcon.displayWidth / 2,
+                y: this.coinIcon.y + this.coinIcon.displayHeight / 2,
+              });
+            } else {
+              this.getCurrency({x: this.scene.cameras.main.centerX, y: this.header.getBounds().bottom + 260}, Number(packageCount), `${this.farm}`);
+            }
             this.currentCountText.setText(text);
             this.logElements.destroy(true);
             this.createLogs();
@@ -357,7 +428,7 @@ export default class ClanBankWindow {
           }
         });
       } else {
-        this.openConvertor(Number(packageCount), Number(packageCount), 2);
+        this.openConvertor(Number(packageCount) - userDiamonds, Number(packageCount) - userDiamonds, 2);
       }
     } 
   }
@@ -396,6 +467,7 @@ export default class ClanBankWindow {
 
     return axios.post(process.env.API + '/addFarmMoney', data);
   }
+
   private getDate(data: Date): string {
     const time: Date = new Date(data);
     const year: number = time.getFullYear();
@@ -415,4 +487,24 @@ export default class ClanBankWindow {
     return Math.ceil(money / exchange);
   }
 
+  private getCurrency(position: Iposition, counter: number = 1, texture: string): void {
+    if (counter > 5) counter = 5;
+    const target: Iposition = {
+      x: this.coinIcon.x + this.coinIcon.displayWidth / 2,
+      y: this.coinIcon.y + this.coinIcon.displayHeight / 2,
+    };
+    this.scene.time.addEvent({ 
+      delay: 100, 
+      callback: (): void => {
+        const pos: Iposition = {
+          x: Phaser.Math.Between(position.x - 30, position.x + 30),
+          y: Phaser.Math.Between(position.y - 30, position.y + 30),
+        }
+        Currency.create(this.scene, pos, target, texture, 350, 0.10, true);
+      }, 
+      callbackScope: this, 
+      repeat: counter - 1,
+    });
+  }
+  
 }
