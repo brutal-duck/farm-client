@@ -484,27 +484,27 @@ export default class ProfileWindow {
       x: geom.left + 60,
       y: geom.centerY + 40,
     };
-    if (this.profile.clan) {
-      const title: Phaser.GameObjects.Text = this.scene.add.text(geom.centerX, geom.centerY, 'В клане', textStyle).setOrigin(0.5).setDepth(2);
-      const avatar: Icon = LogoManager.createIcon(this.scene, pos.x, pos.y, this.profile.clan.avatar).setScale(0.3).setDepth(2);
-      const avatarGeom: Phaser.Geom.Rectangle = avatar.getBounds();
-      const text: Phaser.GameObjects.Text = this.scene.add.text(avatarGeom.right + 10, avatarGeom.centerY, this.profile.clan.name, textStyle).setDepth(2).setOrigin(0, 0.5);
-      if (this.owner) {
-        const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(geom.centerX + 100, pos.y, 'profile-window-button-yellow').setOrigin(0, 0.5).setDepth(2);
-        const btnText: Phaser.GameObjects.Text = this.scene.add.text(btn.getCenter().x, btn.getCenter().y - 5, this.scene.state.lang.clans, btnTextStyle).setDepth(2).setOrigin(0.5);
-        this.scene.clickModalBtn({ btn: btn, title: btnText }, () => {
-          this.scene.scene.stop();
-          this.scene.scene.launch('ClanFarm', this.scene.state);
-        });
-      }
-    } else {
-      if (!this.owner) {
-        this.scene.add.text(this.scene.cameras.main.centerX, pos.y, this.scene.state.lang.userHasNotInClan, textStyle).setAlign('center').setDepth(2).setOrigin(0.5);
-      } else {
-        if (this.scene.state.userSheep.part >= 7) {
-          const bannerText = this.scene.add.text(pos.x - 20, pos.y, this.scene.state.lang.joinClanBanner, bannerStyle).setDepth(2).setOrigin(0, 0.5);
-          const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(bannerText.getBounds().right + 5, pos.y, 'profile-window-button-yellow').setOrigin(0, 0.5).setDepth(2);
+    if (this.scene.state.userSheep.part >= 7) {
+      if (this.profile.clan) {
+        const title: Phaser.GameObjects.Text = this.scene.add.text(geom.centerX, geom.centerY, 'В клане', textStyle).setOrigin(0.5).setDepth(2);
+        const avatar: Icon = LogoManager.createIcon(this.scene, pos.x, pos.y, this.profile.clan.avatar).setScale(0.3).setDepth(2);
+        const avatarGeom: Phaser.Geom.Rectangle = avatar.getBounds();
+        const text: Phaser.GameObjects.Text = this.scene.add.text(avatarGeom.right + 10, avatarGeom.centerY, this.profile.clan.name, textStyle).setDepth(2).setOrigin(0, 0.5);
+        if (this.owner) {
+          const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(geom.centerX + 100, pos.y, 'profile-window-button-yellow').setOrigin(0, 0.5).setDepth(2);
           const btnText: Phaser.GameObjects.Text = this.scene.add.text(btn.getCenter().x, btn.getCenter().y - 5, this.scene.state.lang.clans, btnTextStyle).setDepth(2).setOrigin(0.5);
+          this.scene.clickModalBtn({ btn: btn, title: btnText }, () => {
+            this.scene.scene.stop();
+            this.scene.scene.launch('ClanFarm', this.scene.state);
+          });
+        }
+      } else {
+        if (!this.owner) {
+          this.scene.add.text(this.scene.cameras.main.centerX, pos.y, this.scene.state.lang.userHasNotInClan, textStyle).setAlign('center').setDepth(2).setOrigin(0.5);
+        } else {
+          const bannerText = this.scene.add.text(pos.x - 20, pos.y, this.scene.state.lang.joinClanBanner, bannerStyle).setDepth(2).setOrigin(0, 0.5);
+          const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(bannerText.getBounds().right + 5, pos.y,'profile-window-button-yellow').setOrigin(0, 0.5).setDepth(2);
+          const btnText: Phaser.GameObjects.Text = this.scene.add.text(btn.getCenter().x, btn.getCenter().y - 5, this.scene.state.lang.clans,btnTextStyle).setDepth(2).setOrigin(0.5);
           this.scene.clickModalBtn({ btn: btn, title: btnText }, () => {
             this.scene.state.modal = {
               type: 17,
@@ -512,18 +512,18 @@ export default class ProfileWindow {
             };
             this.scene.scene.restart(this.scene.state);
           });
-        } else {
-          this.scene.add.text(
-            this.scene.cameras.main.centerX, 
-            pos.y, 
-            this.scene.state.lang.reachChapterOfSheepFarm.replace('$1', '7'), 
-            textStyle
-          )
-            .setAlign('center')
-            .setDepth(2)
-            .setOrigin(0.5);
         }
       }
+    } else {
+      this.scene.add.text(
+        this.scene.cameras.main.centerX, 
+        pos.y, 
+        this.scene.state.lang.reachChapterOfSheepFarm.replace('$1', '7'), 
+        textStyle
+      )
+        .setAlign('center')
+        .setDepth(2)
+        .setOrigin(0.5);
     }
   }
 };
