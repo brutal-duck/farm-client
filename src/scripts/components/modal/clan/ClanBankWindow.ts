@@ -291,7 +291,7 @@ export default class ClanBankWindow {
     this.scene.add.tween({
       duration: 70,
       targets: el.text,
-      y: '-=11',
+      y: '-=9',
       scale: 1,
     });
     this.scene.add.tween({
@@ -312,7 +312,7 @@ export default class ClanBankWindow {
     this.scene.add.tween({
       duration: 70,
       targets: el.text,
-      y: '+=11',
+      y: '+=9',
       scale: 1.2,
     });
 
