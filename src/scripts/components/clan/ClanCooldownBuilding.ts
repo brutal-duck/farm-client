@@ -13,9 +13,10 @@ export default class ClanCooldownBuilding extends Phaser.GameObjects.Sprite {
   private btn: Phaser.GameObjects.Sprite;
   private anim: Phaser.Tweens.Tween;
   private price: number;
-  constructor(scene: ClanFarm, position: Iposition, building: IclanBuilding) {
+  constructor(scene: ClanFarm, position: Iposition, building: IclanBuilding, type: string) {
     super(scene, position.x - 30, position.y, 'hammer');
     this.building = building;
+    this.type = type;
     this.price = Math.round(this.building.cooldown / 60) * TIMER_COEFFICIENT;
     this.create();
     this.setHatchAnimation();
@@ -154,7 +155,7 @@ export default class ClanCooldownBuilding extends Phaser.GameObjects.Sprite {
       id: this.scene.state.user.id,
       hash: this.scene.state.user.hash,
       counter: this.scene.state.user.counter,
-      type: 'main',
+      type: this.type,
     };
     return axios.post(process.env.API + '/buyCooldownClanBuilding', data);
   }

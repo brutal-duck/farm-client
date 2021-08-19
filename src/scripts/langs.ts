@@ -992,6 +992,9 @@ export default {
     players: 'Игроков: ',
     improveClan: 'Улучшить клан',
     clanImprovement: 'Улучшение клана',
+    sheepClanFarm: 'Клановая ферма овец',
+    chickenClanFarm: 'Клановая ферма кур',
+    cowClanFarm: 'Клановая ферма коров',
     wantGoTreasury: 'Хотите перейти в казну?',
     goToTreasury: 'Перейти в казну', 
     notEnoughForClan: 'В казне не хватает: ',
@@ -999,8 +1002,11 @@ export default {
     forThisPlayerClanIsNotAccepted: 'Игроку $1 пока недоступны кланы',
     maxLimitBeforeImprove: 'Максимальное количество игроков сейчас:',
     maxLimitAfterImprove: 'Максимальное количество игроков при улучшении:',
+    increasingFarmIncomeNow: 'Увеличение дохода фермы сейчас:',
+    increasingFarmIncomeAfterImprove: 'Увеличение дохода фермы при улучшении:',
     reachChapterOfSheepFarm: 'Дойдите до $1 главы овечьей фермы',
     clanTutor: 'Теперь тебе доступны кланы. Ты можешь подыскать себе по нраву, либо создать свой',
+    improveFarm: 'Улучшить ферму',
   },
 
   en: {
@@ -1996,6 +2002,9 @@ export default {
     players: 'Игроков: ',
     improveClan: 'Улучшить клан',
     clanImprovement: 'Улучшение клана',
+    sheepClanFarm: 'Клановая ферма овец',
+    chickenClanFarm: 'Клановая ферма кур',
+    cowClanFarm: 'Клановая ферма коров',
     wantGoTreasury: 'Хотите перейти в казну?',
     goToTreasury: 'Перейти в казну', 
     notEnoughForClan: 'В казне не хватает: ',
@@ -2003,7 +2012,11 @@ export default {
     forThisPlayerClanIsNotAccepted: 'Игроку $1 пока недоступны кланы',
     maxLimitBeforeImprove: 'Максимальное количество игроков сейчас:',
     maxLimitAfterImprove: 'Максимальное количество игроков при улучшении:',
+    increasingFarmIncomeNow: 'Увеличение дохода фермы сейчас:',
+    increasingFarmIncomeAfterImprove: 'Увеличение дохода фермы при улучшении:',
     reachChapterOfSheepFarm: 'Дойдите до $1 главы овечьей фермы',
     clanTutor: 'Теперь тебе доступны кланы. Ты можешь подыскать себе по нраву, либо создать свой',
+    improveFarm: 'Улучшить ферму',
+
   },
 }

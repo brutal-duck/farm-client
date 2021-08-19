@@ -4,6 +4,7 @@ import CreateClanWindow from './CreateClanWindow';
 import EditClanAvatarWindow from './EditClanAvatarWindow';
 import ImproveClanWindow from './ImproveClanWindow';
 import ClanConvertorWindow from './ClanConvertorWindow';
+import ImproveClanFarmWindow from './ImproveClanFarmWindow';
 
 export default class ClanWindow {
   public scene: Modal;
@@ -37,6 +38,8 @@ export default class ClanWindow {
       this.height = 500;
     } else if (this.windowType === 4) {
       this.height = 190;
+    } else if (this.windowType === 5) {
+      this.height = 520;
     }
     this.width = 527;
   }
@@ -109,6 +112,9 @@ export default class ClanWindow {
         break;
       case 4: 
         new ClanConvertorWindow(this);
+        break;
+      case 5: 
+        new ImproveClanFarmWindow(this);
         break;
       default:
         break;

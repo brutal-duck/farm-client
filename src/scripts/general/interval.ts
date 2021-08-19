@@ -43,6 +43,15 @@ function progressTerritoryCooldown (territories: Iterritories[], time: number, f
     if (this.state.clan.mainBuilding.cooldown > 0) {
       this.state.clan.mainBuilding.cooldown -= time;
     }
+    if (this.state.clan.sheep.cooldown > 0) {
+      this.state.clan.sheep.cooldown -= time;
+    }
+    if (this.state.clan.chicken.cooldown > 0) {
+      this.state.clan.chicken.cooldown -= time;
+    }
+    if (this.state.clan.cow.cooldown > 0) {
+      this.state.clan.cow.cooldown -= time;
+    }
   }
 }
 

@@ -66,11 +66,7 @@ export default class ClanConvertorWindow {
   }
 
   private handleClose(): void { 
-    this.scene.state.modal = {
-      type: 17,
-      clanTabType: 4,
-    };
-    this.scene.scene.restart(this.scene.state);
+    this.scene.scene.stop();
   }
 
 

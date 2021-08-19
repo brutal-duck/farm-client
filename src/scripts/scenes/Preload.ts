@@ -257,6 +257,10 @@ const clanBankDiamondPackage1: string = require('../../assets/images/modal/clan/
 const clanBankDiamondPackage2: string = require('../../assets/images/modal/clan/bank/diamond-2.png');
 const clanBankDiamondPackage3: string = require('../../assets/images/modal/clan/bank/diamond-3.png');
 const clanBankDiamondPackage4: string = require('../../assets/images/modal/clan/bank/diamond-4.png');
+const clanMap: string = require('../../assets/images/clan/map.jpg');
+const clanChickenFarm: string = require('../../assets/images/clan/chicken-farm.png');
+const clanFlagpole: string = require('../../assets/images/clan/flagpole.png');
+
 class Preload extends Phaser.Scene {
   constructor() {
     super('Preload');
@@ -559,6 +563,9 @@ class Preload extends Phaser.Scene {
     this.load.image('clan-bank-diamond-package-2', clanBankDiamondPackage2);
     this.load.image('clan-bank-diamond-package-3', clanBankDiamondPackage3);
     this.load.image('clan-bank-diamond-package-4', clanBankDiamondPackage4);
+    this.load.image('clan-map', clanMap);
+    this.load.image('clan-chicken-farm', clanChickenFarm);
+    this.load.image('clan-flagpole', clanFlagpole);
   }
 
   public create(): void {
