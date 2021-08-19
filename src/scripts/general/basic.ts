@@ -425,7 +425,9 @@ function exchange(ad: boolean = false): void {
     }, callbackScope: this, loop: false });
   } else {
     this.state.user.diamonds -= this.state.convertor.diamonds;
-    user.money += this.convertDiamonds(this.state.convertor.diamonds);
+    let sum: number = this.convertDiamonds(this.state.convertor.diamonds);
+    user.money += sum
+    this.game.scene.keys[`${this.state.farm}`].tryTask(28, 0, sum)    
 
     MoneyAnimation.create(this.game.scene.keys[`${this.state.farm}Bars`]);
     if (!ad) {

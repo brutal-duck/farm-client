@@ -24,7 +24,7 @@ export default class ImproveCollectorWindowNew {
   }
 
   private init(): void {
-    this.farm = this.scene.state.farm.toLowerCase();
+    this.farm = this.scene.state.farm;
     this.config = this.scene.state.config
     this.setLevelConfig()
     this.scene.resizeWindow(300);
@@ -90,7 +90,7 @@ export default class ImproveCollectorWindowNew {
       this.scene.bigButton('grey', 'left', -40, text, timeIcon);
 
     } else {
-      const timeCost = { icon: `${this.farm}Coin`, text: shortNum(this.config[this.scene.state.userSheep.collectorTimeLevel + 1].collectorTimeCost) }
+      const timeCost = { icon: `${this.farm.toLowerCase()}Coin`, text: shortNum(this.config[this.scene.state.userSheep.collectorTimeLevel + 1].collectorTimeCost) }
       const improveTime = this.scene.bigButton('green', 'left', -40, this.scene.state.lang.improveToLevel.replace('$1', String(this.scene.state.userSheep.collectorTimeLevel + 2)), timeCost);
       this.scene.clickModalBtn(improveTime, (): void => { this.improveCollector(improveTime, 'time') });
     }
@@ -139,11 +139,12 @@ export default class ImproveCollectorWindowNew {
       Object.values(btn).forEach(el => { el?.destroy() })
       
       if (improveType === 'time') {
-        this.scene.state.userSheep.collectorTimeLevel++
+        this.scene.state[`user${this.farm}`].collectorTimeLevel++
+        this.scene.game.scene.keys[this.farm].tryTask(23, 0, 0, this.scene.state[`user${this.farm}`].collectorTimeLevel + 1);
         this.setLevelConfig()
         this.createTimeBtn()
       } else if (improveType === 'speed') {
-        this.scene.state.userSheep.collectorSpeedLevel++
+        this.scene.state[`user${this.farm}`].collectorSpeedLevel++
         this.setLevelConfig()
         this.createSpeedBtn()
         console.log('speed CD', Math.round(1000 / this.config[this.scene.state.userSheep.collectorSpeedLevel].collectorSpeed));

@@ -302,6 +302,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
             Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
           }, callbackScope: this, loop: false });
         }
+        this.checkAllTerritoriesIsMaxImproveLvlTask()
       }
     }
   }
@@ -571,7 +572,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         user.money -= cost;
         user.fair++;
         updateAnimalBuy();
-        // this.scene.tryTask(7, user.fair);
+        this.scene.tryTask(7, user.fair);
         // this.scene.tryTask(15, 0, nextFair.price_d);
         this.scene.time.addEvent({ delay: 200, callback: (): void => {
           this.levelText?.setText(String(user.fair));

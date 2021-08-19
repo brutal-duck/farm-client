@@ -1,6 +1,4 @@
-import AllTasks from '../tasks';
 import SpeechBubble from '../components/animations/SpeechBuble';
-import SheepTerritory from '../components/Territories/SheepTerritory';
 
 // список заданий текущей главы
 function partTasks(): Itasks[] {
@@ -76,7 +74,7 @@ function tryTask(type: number, state: number, count: number = 1, currentProgress
   // let tasks: Itasks[] = this.partTasks();
   let tasks: ItaskSheep[] = this.state.config[part - 1].tasks
   let task: ItaskSheep = tasks.find((data: ItaskSheep) => data.type === type);
-  // console.log('tryTask ~ task', task, type)
+  if (task && task.type !== 6) console.log('tryTask ~ task', task, type, state, count, currentProgress)
   
   if (
     !currentProgress && !task?.done &&
@@ -304,7 +302,7 @@ function checkDoneTasks(): void {
     if (task.type === 27) {
       let part = this.state[`user${this.state.farm}`].part
       let availableTerritories: number = part === 20 ? 21 : part + 2
-      let territories = this.territories.children.entries.filter((el: SheepTerritory) => (el.territoryType === 5 || el.territoryType === 2 || el.territoryType === 3) && el.improve === part)
+      let territories = this.territories.children.entries.filter(el => (el.territoryType === 5 || el.territoryType === 2 || el.territoryType === 3) && el.improve === part)
       this.tryTask(27, availableTerritories, 0, territories.length)
     }
   })

@@ -45,7 +45,7 @@ export default class TasksWindowNew {
   private create(): void {
     // this.scene.state.amplitude.logAmplitudeEvent('show_tasks_window', {});
 
-    let height: number = 760;
+    let height: number = 650;
     let countDone: number = this.tasks.filter(el => el.done).length;
     
     this.top = this.scene.add.sprite(this.scene.cameras.main.centerX + 3, this.centerY - Math.floor(height / 2), 'tasks-top').setOrigin(0.5, 1);
@@ -196,8 +196,8 @@ export default class TasksWindowNew {
   private getTasks(): ItaskSheep[] {
     let tasks: ItaskSheep[] = this.scene.state.config[this.scene.state[`user${this.scene.state.farm}`].part - 1].tasks
     tasks = tasks.sort((x1: ItaskSheep, x2: ItaskSheep) => {
-      if (x1.sort > x2.sort) return 1;
-      if (x1.sort < x2.sort) return -1;
+      if (x1.sort > x2.sort || x1.done) return 1;
+      if (x1.sort < x2.sort || !x1.done) return -1;
       return 0;
     });
 
