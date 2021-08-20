@@ -27,6 +27,7 @@ export default class BuyCooldownWindow {
   private farm: string;
   private price: number;
   private building: IclanBuilding;
+  private leftText: Phaser.GameObjects.Text;
   private timer: Phaser.GameObjects.Text;
 
   constructor(window: ClanWindow) {
@@ -62,10 +63,11 @@ export default class BuyCooldownWindow {
       text: shortNum(this.price),
     };
 
-    const text: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, this.scene.state.lang.confirmBuyCooldownImprovmentFarm, textStyle).setOrigin(0.5, 0.5);
-    const str: string = `${this.scene.state.lang.left} ${shortTime(this.building.cooldown, this.scene.state.lang)}`;
+    const text: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, this.scene.state.lang.confirmBuyCooldownImprovmentFarm, textStyle).setOrigin(0.5);
+    const str: string = shortTime(this.building.cooldown, this.scene.state.lang);
+    this.leftText = this.scene.add.text(pos.x, pos.y + 40, this.scene.state.lang.left, textStyle).setOrigin(0.5);
     this.timer = this.scene.add.text(pos.x, pos.y + 40, str, textStyle).setOrigin(0.5).setColor('#DBFC3B'); 
-
+    this.setTextPosition();
     const pay = this.scene.bigButton('green', 'left', padding, this.scene.state.lang.speedUpImprovment, img);
     this.scene.clickModalBtn(pay, (): void => { this.handleAccept(); });
 
@@ -77,6 +79,14 @@ export default class BuyCooldownWindow {
     this.scene.scene.stop();
   }
 
+  private setTextPosition(): void {
+    const leftGeom: Phaser.Geom.Rectangle = this.leftText?.getBounds();
+    const timerGeom: Phaser.Geom.Rectangle = this.timer?.getBounds();
+
+    const width: number = (leftGeom.width + timerGeom.width + 10) / 4;
+    this.leftText?.setX(this.x - width);
+    this.timer?.setX(this.x + width);
+  }
 
   private handleAccept(): void {
     if (this.scene.state.user.diamonds >= this.price) {
@@ -86,6 +96,7 @@ export default class BuyCooldownWindow {
             this.scene.state.user.diamonds -= this.price;
           } else this.scene.state.user.diamonds = 0;
           this.building.cooldown = 0;
+          this.scene.scene.stop();
         }
       });
     } else {
@@ -116,14 +127,21 @@ export default class BuyCooldownWindow {
 
   private update(): void {
     if (this.checkUpdate()) {
-      const str: string = `${this.scene.state.lang.left} ${shortTime(this.building.cooldown, this.scene.state.lang)}`;
-      if (this.timer?.text !== str) this.timer.setText(str);
+      if (this.building.cooldown > 0) {
+        const str: string = shortTime(this.building.cooldown, this.scene.state.lang);
+        if (this.timer?.text !== str) {
+          this.timer.setText(str);
+          this.setTextPosition();
+        }
+      } else this.scene.scene.stop();
     }
   }
 
   private checkUpdate(): boolean {
     return this.scene.scene.isActive() &&
       this.scene.state.modal.type === 18 &&
-      this.scene.state.modal.clanWindowType === 6;
+      this.scene.state.modal.clanWindowType === 6 &&
+      this.timer.active &&
+      this.leftText.active;
   }
 }

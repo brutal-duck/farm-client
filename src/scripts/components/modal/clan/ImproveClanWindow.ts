@@ -86,7 +86,10 @@ export default class ImproveClanWindow {
   private handleImprove(): void {
     if (this.scene.state.clan.diamond.count >= this.price) {
       this.postServer().then(res => {
-        this.scene.scene.stop();
+        if (!res.data.error) {
+          console.log(this.scene.state.clan)
+          this.scene.scene.stop();
+        }
       });
     } else {
       this.scene.state.modal = {
@@ -109,6 +112,7 @@ export default class ImproveClanWindow {
       hash: this.scene.state.user.hash,
       counter: this.scene.state.user.counter,
       type: 'main',
+      price: this.price,
     };
     return axios.post(process.env.API + '/improveClanBuilding', data);
   }

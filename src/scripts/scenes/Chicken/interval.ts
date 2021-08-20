@@ -3,7 +3,7 @@ import Arrow from '../../components/animations/Arrow';
 import Firework from '../../components/animations/Firework';
 import Hearts from '../../components/animations/Hearts';
 import Egg from '../../components/Resource/Egg';
-import { progressTerritoryCooldown } from '../../general/interval';
+import { progressClanCooldown, progressTerritoryCooldown } from '../../general/interval';
 import SpeechBubble from '../../components/animations/SpeechBuble';
 import ChickenTerritory from './../../components/Territories/ChickenTerritory';
 let checkCollector: number = 0;
@@ -425,6 +425,7 @@ function interval(): void {
     this.cowFactoryProgress();
     this.updateProfileNotification();
     this.showFeedBoostSpeechBubble();
+    progressClanCooldown(this.state);
 
     // Звуки
     if (this.chicken?.children.entries.length > 0 && time % 14 === 0) {

@@ -486,24 +486,46 @@ export default class ClanTabsWindow {
       this.scene.scene.restart(this.scene.state);
     });
 
-    const right3 = {
-      text: 100 * Math.pow(2, this.scene.state.clan.main.level - 1),
+    let right3 = {
+      text: String(100 * Math.pow(2, this.scene.state.clan.main.level - 1)),
       icon: 'diamond'
     };
 
-    const btn3 = this.scene.bigButton('green', 'left', -40, this.scene.state.lang.improveClan, right3);
-    this.scene.clickModalBtn(btn3, () => {
-      if (this.scene.state.clan.main.cooldown <= 0) {
+    let callBack = () => {
+      this.scene.state.modal = {
+        type: 18,
+        clanWindowType: 3,
+      };
+      this.removeInput();
+      this.scene.scene.stop('ClanScroll');
+      this.scene.scene.restart(this.scene.state);
+    };
+
+    let text: string = this.scene.state.lang.improveClan;
+
+    if (this.scene.state.clan.main.cooldown > 0) {
+      const estimateCost: number = Math.round(this.scene.state.clan.main.cooldown / 60) * 2;
+      const price: number = estimateCost > 1000 ? 1000 : estimateCost;
+      right3 = {
+        icon: 'diamond',
+        text: shortNum(price),
+      };
+
+      callBack = () => {
         this.scene.state.modal = {
           type: 18,
-          clanWindowType: 3,
+          clanWindowType: 6,
+          message: 'main',
         };
         this.removeInput();
         this.scene.scene.stop('ClanScroll');
         this.scene.scene.restart(this.scene.state);
-      } else {
-        this.scene.scene.stop();
-      }
-    });
+      };
+      
+      text = this.scene.state.lang.speedUpImprovment;
+    }
+
+    const btn3 = this.scene.bigButton('green', 'left', -40, text, right3);
+    this.scene.clickModalBtn(btn3, callBack);
   }
 }

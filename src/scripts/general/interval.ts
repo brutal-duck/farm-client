@@ -38,22 +38,16 @@ function progressTerritoryCooldown (territories: Iterritories[], time: number, f
       }
     }
   }
-
-  if (this.state.clan) {
-    if (this.state.clan.main.cooldown > 0) {
-      this.state.clan.main.cooldown -= time;
-    }
-    if (this.state.clan.sheep.cooldown > 0) {
-      this.state.clan.sheep.cooldown -= time;
-    }
-    if (this.state.clan.chicken.cooldown > 0) {
-      this.state.clan.chicken.cooldown -= time;
-    }
-    if (this.state.clan.cow.cooldown > 0) {
-      this.state.clan.cow.cooldown -= time;
-    }
-  }
 }
+
+const progressClanCooldown = (state: Istate): void => {
+  if (state.clan) {
+    if (state.clan.main.cooldown > 0) state.clan.main.cooldown -= 1;
+    if (state.clan.sheep.cooldown > 0) state.clan.sheep.cooldown -= 1;
+    if (state.clan.chicken.cooldown > 0) state.clan.chicken.cooldown -= 1;
+    if (state.clan.cow.cooldown > 0) state.clan.cow.cooldown -= 1;
+  }
+};
 
 const getRandomProductId = (settings: IfactorySettings, boost: boolean): number => {
   const pull: number[] = [ settings.production1Percent, settings.production2Percent, settings.production3Percent ];
@@ -686,4 +680,5 @@ export {
   intervalCollectorTutorial,
   showFeedBoostSpeechBubble,
   progressTerritoryCooldown,
+  progressClanCooldown,
 }

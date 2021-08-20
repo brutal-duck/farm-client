@@ -2,7 +2,6 @@ import BigInteger from '../libs/BigInteger';
 import Egg from './../components/Resource/Egg';
 import { randomString } from './basic';
 import CowSprite from './../components/Animal/CowSprite';
-import Territory from './../components/Territories/Territory';
 import Factory from './../components/Territories/Factory';
 import CowTerritory from './../components/Territories/CowTerritory';
 import ChickenTerritory from './../components/Territories/ChickenTerritory';
@@ -659,6 +658,7 @@ export default function autoprogress(load: boolean = false): void {
   const sheepAutoprogress = (): void => {
      // время кристаллической овцы
     this.progressTerritoryCooldown(this.territories.children.entries, state.offlineTime, 'Sheep');
+
 
     if (state.userSheep.diamondAnimalTime >= state.offlineTime) state.userSheep.diamondAnimalTime -= state.offlineTime;
     else {

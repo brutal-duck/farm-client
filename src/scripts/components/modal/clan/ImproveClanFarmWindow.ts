@@ -144,6 +144,7 @@ export default class ImproveClanFarmWindow {
       hash: this.scene.state.user.hash,
       counter: this.scene.state.user.counter,
       type: this.farm,
+      price: this.price,
     };
     return axios.post(process.env.API + '/improveClanBuilding', data);
   }
