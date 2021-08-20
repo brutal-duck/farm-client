@@ -540,7 +540,10 @@ function collectWool(sheep: any, manualСollect: boolean = false): void {
       sheep.wool = 0;
       let price: number = this.state.sheepSettings.sheepSettings.find((data: IsheepPoints) => data.breed === sheep.type).long_wool;
       if (this.state.userSheep.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
-      if (this.state.clan) price *= (1 + (this.state.clan.sheep.level / 100)); // если бустер комбикорм активен
+      if (this.state.clan) {
+        const multiply: number = this.state.clan.sheep.cooldown > 0 ? 1 + ((this.state.clan.sheep.level - 1) / 100) : 1 + (this.state.clan.sheep.level / 100);
+        price *= multiply;
+      }
       this.state.userSheep.money += price;
 
       this.game.scene.keys['SheepBars'].plusMoneyAnimation({
@@ -585,7 +588,10 @@ function collectWool(sheep: any, manualСollect: boolean = false): void {
       if (length) {
         let price: number = this.state.sheepSettings.sheepSettings.find((data: IsheepPoints) => data.breed === sheep.type).long_wool;
         if (this.state.userSheep.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
-        if (this.state.clan) price *= (1 + (this.state.clan.sheep.level / 100))
+        if (this.state.clan) {
+          const multiply: number = this.state.clan.sheep.cooldown > 0 ? 1 + ((this.state.clan.sheep.level - 1) / 100) : 1 + (this.state.clan.sheep.level / 100);
+          price *= multiply;
+        }
         repository.volume++;
         repository.money += price;
         Wool.create(this, { x: sheep.x, y: sheep.y - 50 }, sheep.type, path);

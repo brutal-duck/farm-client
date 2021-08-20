@@ -341,7 +341,10 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
       Milk.create(this, { x: cow.x, y: cow.y - 50}, path);
       let price: number = 0;
       if (this.state.userCow.feedBoostTime > 0) milk *= this.feedBoostMultiplier; // если бустер комбикорм активен
-      if (this.state.clan) milk *= (1 + (this.state.clan.cow.level / 100));
+      if (this.state.clan) {
+        const multiply: number = this.state.clan.cow.cooldown > 0 ? 1 + ((this.state.clan.cow.level - 1) / 100) : 1 + (this.state.clan.cow.level / 100);
+        milk *= multiply;
+      }
       
       repository.volume += milk;
       repository.money += price;

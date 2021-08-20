@@ -249,7 +249,10 @@ function sheepCollectorProgress(sheepCollectorVolume: number): number {
                 if (max > territory.volume) {
                   let price: number = sheepPoints.long_wool;
                   if (Scene.state.userSheep.feedBoostTime > 0) price *= this.feedBoostMultiplier;
-                  if (Scene.state.clan) price *= (1 + (Scene.state.clan.sheep.level / 100));
+                  if (Scene.state.clan) {
+                    const multiply: number = Scene.state.clan.sheep.cooldown > 0 ? 1 + ((Scene.state.clan.sheep.level - 1) / 100) : 1 + (Scene.state.clan.sheep.level / 100);
+                    price *= multiply;
+                  }
                   territory.volume += 1;
                   territory.money += price;
                   sheep.wool = 0;
@@ -289,7 +292,10 @@ function chickenCollectorProgress(chickenCollectorVolume: number): number {
                 if (egg) {
                   let price: number = Scene.state.chickenSettings.chickenSettings.find((data: IchickenPoints) => data.breed === egg.type).eggPrice;
                   if (Scene.state.userChicken.feedBoostTime > 0) price *= this.feedBoostMultiplier;
-                  if (Scene.state.clan) price *= (1 + (Scene.state.clan.chicken.level / 100));
+                  if (Scene.state.clan) {
+                    const multiply: number = Scene.state.clan.chicken.cooldown > 0 ? 1 + ((Scene.state.clan.chicken.level - 1) / 100) : 1 + (Scene.state.clan.chicken.level / 100);
+                    price *= multiply;
+                  }
                   territory.volume += 1;
                   territory.money += price;
                 } else break;
