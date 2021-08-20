@@ -50,6 +50,7 @@ export default class ClanBankWindow {
   private coinIcon: Phaser.GameObjects.Sprite;
   private currentCountText: Phaser.GameObjects.Text;
   private logElements: Phaser.GameObjects.Group;
+  private logs: IclanUserLog[];
 
   constructor(scene: Modal) {
     this.scene = scene;
@@ -63,6 +64,9 @@ export default class ClanBankWindow {
     this.windowType = this.scene.state.modal.clanTabType || 1;
     this.height = 620;
     this.width = 527;
+    this.scene.events.on(Phaser.Scenes.Events.UPDATE, () => {
+      this.update();
+    });
   }
 
   private createElements(): void {
@@ -329,6 +333,7 @@ export default class ClanBankWindow {
   }
 
   private createLogs(): void {
+    this.logs = this.scene.state.clan[this.farm].logs;
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       color: '#fffdfa',
       fontFamily: 'Shadow',
@@ -343,12 +348,11 @@ export default class ClanBankWindow {
       align: 'center',
       wordWrap: { width: 50 },
     };
-    const array: IclanUserLog[] = this.scene.state.clan[this.farm].logs;
     let y: number = this.scene.cameras.main.centerY + 70;
     this.scene.add.nineslice(this.x, y + 150, 500, 380, 'modal-square-bg', 10).setOrigin(0.5);
     const x: number = 160;
     this.logElements = this.scene.add.group();
-    array.reverse().forEach(el => {
+    this.logs.reverse().forEach(el => {
       const avatar = this.scene.add.sprite(x, y, 'farmer').setScale(0.25);
       const name = this.scene.add.text(x + avatar.displayWidth / 2 + 20, y, el.name, textStyle).setOrigin(0, 0.5);
       if (name.displayHeight > 60) {
@@ -376,6 +380,7 @@ export default class ClanBankWindow {
       if (BigInteger.greaterThanOrEqual(farmMoney, packageCount)) {
         this.postMoney(packageCount).then(res => {
           if (!res.data.error) {
+            this.scene.state.clan = res.data.clan;
             this.scene.state[`user${this.farm[0].toUpperCase() + this.farm.slice(1)}`].money -= Number(packageCount);
             const text: string = this.scene.state.clan[this.farm].money;
             if (Number(packageCount) >= FARM_PACKAGE[2]) {
@@ -387,8 +392,6 @@ export default class ClanBankWindow {
               this.getCurrency({x: this.scene.cameras.main.centerX, y: this.header.getBounds().bottom + 260}, Number(packageCount), `${this.farm}Coin`);
             }
             this.currentCountText.setText(text);
-            this.logElements.destroy(true);
-            this.createLogs();
             const mainScene = this.scene.scene.get(this.scene.state.farm) as Sheep | Chicken | Cow | Unicorn;
             mainScene.autosave();
           }
@@ -411,6 +414,7 @@ export default class ClanBankWindow {
       if (userDiamonds >= Number(packageCount)) {
         this.postMoney(Number(packageCount)).then(res => {
           if (!res.data.error) {
+            this.scene.state.clan = res.data.clan;
             this.scene.state.user.diamonds -= Number(packageCount);
             const text: string = this.scene.state.clan[`${this.farm}`].count;
             if (Number(packageCount) >= DIAMOND_PACKAGE[2]) {
@@ -422,8 +426,6 @@ export default class ClanBankWindow {
               this.getCurrency({x: this.scene.cameras.main.centerX, y: this.header.getBounds().bottom + 260}, Number(packageCount), `${this.farm}`);
             }
             this.currentCountText.setText(text);
-            this.logElements.destroy(true);
-            this.createLogs();
             mainScene.autosave();
           }
         });
@@ -505,6 +507,15 @@ export default class ClanBankWindow {
       callbackScope: this, 
       repeat: counter - 1,
     });
+  }
+
+  private update(): void {
+    if (this.scene.scene.isActive() && this.scene.state.modal.type === 19) {
+      if (JSON.stringify(this.logs) !== JSON.stringify(this.scene.state.clan[this.farm].logs)) {
+        this.logElements.destroy(true);
+        this.createLogs();
+      }
+    }
   }
   
 }

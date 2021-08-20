@@ -76,8 +76,8 @@ export default class ImproveClanFarmWindow {
     }
 
     this.scene.add.nineslice(this.x, pos.y - 265, this.window.width - 30, 100, 'tasks-bar-ns', 15).setOrigin(0.5);
-    this.scene.add.text(this.x, pos.y - 265, 'Чем выше уровень клановой фермы, тем выше доход на твоей собственной ферме', noteTextStyle).setOrigin(0.5);
-    const bg: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.x, pos.y - 110, `${this.farm}-herd-boost-icon`).setDepth(1);
+    this.scene.add.text(this.x, pos.y - 265, this.scene.state.lang.clanFarmImproveNote, noteTextStyle).setOrigin(0.5);
+    const bg: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.x, pos.y - 110, `icon-clan-${this.farm}`).setDepth(1);
     this.scene.add.sprite(bg.x, bg.y + 10, 'clan-window-wreath').setDepth(1);
     this.scene.add.nineslice(this.x, bg.y, this.window.width, bg.displayHeight + 10, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
 
