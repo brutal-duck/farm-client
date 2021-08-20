@@ -140,6 +140,7 @@ export default function autoprogress(load: boolean = false): void {
     for (let i in wool) {
       let price: number = state.sheepSettings.sheepSettings.find((data: IsheepPoints) => data.breed === wool[i]).long_wool;
       price *= (1 + feedPercent); // коэфф
+      if (state.clan) price *= (1 + (state.clan.sheep.level / 100));
       for (const territory of state.sheepTerritories) {
         if (territory.type === 5) {
           let max: number = state.sheepSettings.territoriesSheepSettings.find((item: IterritoriesSheepSettings) => item.improve === territory.improve).storage;
@@ -335,6 +336,7 @@ export default function autoprogress(load: boolean = false): void {
     for (let i: number = 0; i < length; i++) {
       let price: number = state.chickenSettings.chickenSettings.find((data: IchickenPoints) => String(data.breed) === eggsArr[i].type).eggPrice;
       price *= (1 + feedPercent); // коэфф
+      if (state.clan) price *= (1 + (state.clan.chicken.level / 100));
       for (let j in state.chickenTerritories) {
         if (state.chickenTerritories[j].type === 5) {
           let territory = state.chickenTerritories[j];
@@ -521,6 +523,7 @@ export default function autoprogress(load: boolean = false): void {
     const territories: Iterritories[] = state.cowTerritories;
     for (const milk of milkCollected) {
       milk.count *= (1 + feedPercent); // коэфф
+      if (state.clan) milk.count *= (1 + (state.clan.cow.level / 100));
       for (const territory of territories) {
         if (territory.type === 5) {
           territory.money += 0;
@@ -763,6 +766,7 @@ export default function autoprogress(load: boolean = false): void {
 
       let price: number = state.sheepSettings.sheepSettings.find((data: IsheepPoints) => data.breed === wool[i]).long_wool;
       price *= (1 + feedPercent); // коэфф
+      if (state.clan) price *= (1 + (state.clan.sheep.level / 100));
 
       for (let j in this.territories.children.entries) {
         if (this.territories.children.entries[j].territoryType === 5) {
@@ -965,27 +969,19 @@ export default function autoprogress(load: boolean = false): void {
     if (percent < 100) length = Math.floor(eggsArr.length / 100 * percent);
 
     for (let i: number = 0; i < length; i++) {
-
       let price: number = state.chickenSettings.chickenSettings.find((data: IchickenPoints) => String(data.breed) === eggsArr[i].type).eggPrice;
       price *= (1 + feedPercent); // коэфф
-
+      if (state.clan) price *= (1 + (state.clan.chicken.level / 100));
       for (let j in this.territories.children.entries) {
-
         if (this.territories.children.entries[j].territoryType === 5) {
-
           const territory: ChickenTerritory = this.territories.children.entries[j];
-
-          let max: number = this.settings.territoriesChickenSettings.find((item: IterritoriesChickenSettings) => item.improve === territory.improve).storage;
-
+          const max: number = this.settings.territoriesChickenSettings.find((item: IterritoriesChickenSettings) => item.improve === territory.improve).storage;
           if (territory.volume < max && wasCollector > 0) {
-
-            let egg = eggs.find(data => data.id === eggsArr[i].id);
+            const egg = eggs.find(data => data.id === eggsArr[i].id);
             if (egg.count > 0) egg.count--;
-
             territory.money += price;
             territory.volume++;
             break;
-
           }
         }
       }
@@ -1183,6 +1179,7 @@ export default function autoprogress(load: boolean = false): void {
     const territories: CowTerritory[] = this.territories.children.entries;
     for (const milk of milkCollected) {
       milk.count *= (1 + feedPercent); // коэфф
+      if (state.clan) milk.count *= (1 + (state.clan.cow.level / 100));
       for (const territory of territories) {
         if (territory.territoryType === 5) {
           territory.money += 0;

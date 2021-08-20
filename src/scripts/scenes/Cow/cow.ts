@@ -4,7 +4,7 @@ import MergingCloud from '../../components/animations/MergingCloud';
 import Milk from '../../components/Resource/Milk';
 import SpeechBubble from '../../components/animations/SpeechBuble';
 import CowSprite from '../../components/Animal/CowSprite';
-import Territory from './../../components/Territories/Territory';
+import CowTerritory from './../../components/Territories/CowTerritory';
 
 // телепортация коров на свободные территории
 function teleportation(cow: any): void {
@@ -68,7 +68,7 @@ function teleportation(cow: any): void {
 }
 
 // мерджинг
-function checkMerging(territory: Territory, cow: CowSprite, position: string) {
+function checkMerging(territory: CowTerritory, cow: CowSprite, position: string) {
   cow.merging = true;
   territory.mergingCounter = 1;
   const check = territory.merging.find((data: any) => data._id === cow._id);
@@ -294,7 +294,7 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
 
   let path: Iposition;
   let length: number;
-  let repository: any = false;
+  let repository: CowTerritory;
   let milk: number = 0;
 
   if (cow.breed !== 0) {
@@ -302,7 +302,7 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
       this.tryTask(11, 0);
     }
     for (let i in this.territories.children.entries) {
-      const territory: Territory = this.territories.children.entries[i];
+      const territory: CowTerritory = this.territories.children.entries[i];
       if (territory.territoryType === 5) {
         const max: number = this.state.cowSettings.cowFactorySettings.find((data: IterritoriesCowSettings) => data.improve === territory.improve).lotSize * this.state.storageMultiply;
         if (max > territory.volume + cow.milk) {
@@ -340,9 +340,13 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
     if (length) {
       Milk.create(this, { x: cow.x, y: cow.y - 50}, path);
       let price: number = 0;
-      if (this.state.userCow.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
+      if (this.state.userCow.feedBoostTime > 0) milk *= this.feedBoostMultiplier; // если бустер комбикорм активен
+      if (this.state.clan) milk *= (1 + (this.state.clan.cow.level / 100));
+      
       repository.volume += milk;
       repository.money += price;
+      const max: number = this.state.cowSettings.cowFactorySettings.find((data: IterritoriesCowSettings) => data.improve === repository.improve).lotSize * this.state.storageMultiply;
+      if (repository.volume > max) repository.volume = max;
     } else {
       if (manualСollect) {
         const modal: Imodal = {

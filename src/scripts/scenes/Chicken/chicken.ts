@@ -466,6 +466,7 @@ function collectEgg(egg: Egg, manualСollect: boolean = false): void {
     if (manualСollect) {
       let price: number = this.state.chickenSettings.chickenSettings.find((data: IchickenPoints) => data.breed === egg.animalType).eggPrice;
       if (this.state.userChicken.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
+      if (this.state.clan) price *= (1 + (this.state.clan.chicken.level / 100)); 
       this.state.userChicken.money += price;
       egg.destroy();
       this.game.scene.keys['ChickenBars'].getCurrency({
@@ -499,6 +500,8 @@ function collectEgg(egg: Egg, manualСollect: boolean = false): void {
         length *= 3;
         let price: number = this.state.chickenSettings.chickenSettings.find((data: IchickenPoints) => data.breed === egg.animalType).eggPrice;
         if (this.state.userChicken.feedBoostTime > 0) price *= this.feedBoostMultiplier; // если бустер комбикорм активен
+        if (this.state.clan) price *= (1 + (this.state.clan.chicken.level / 100)); // если бустер комбикорм активен
+        
         repository.volume++;
         repository.money += price;
         egg.flyToPoint(path);
