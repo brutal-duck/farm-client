@@ -310,6 +310,11 @@ export default class ClanFarm extends Phaser.Scene {
   }
 
   public update(): void {
+    this.updateCooldowns();
+    this.updateLevelText();
+  }
+
+  private updateCooldowns(): void {
     if (this.state.clan.main.cooldown > 0 && !this.mainCooldownSprite?.active) {
       const pos: Iposition = { x: 395, y: 450 };
       this.mainCooldownSprite = new ClanCooldownBuilding(this, pos, this.state.clan.main, 'main');
@@ -335,4 +340,24 @@ export default class ClanFarm extends Phaser.Scene {
       this.cowCooldownSprite = new ClanCooldownBuilding(this, pos, this.state.clan.cow, 'cow');
     }
   }
+
+  private updateLevelText(): void {
+    if (this.state.clan.main.cooldown <= 0 && this.clanLevelText?.active) {
+      const text: string = String(this.state.clan.main.level);
+      if (text !== this.clanLevelText.text) this.clanLevelText.setText(text);
+    }
+    if (this.state.clan.sheep.cooldown <= 0 && this.sheepLevelText?.active) {
+      const text: string = String(this.state.clan.sheep.level);
+      if (text !== this.sheepLevelText.text) this.sheepLevelText.setText(text);
+    }
+    if (this.state.clan.chicken.cooldown <= 0 && this.chickenLevelText?.active) {
+      const text: string = String(this.state.clan.chicken.level);
+      if (text !== this.chickenLevelText.text) this.chickenLevelText.setText(text);
+    }
+    if (this.state.clan.cow.cooldown <= 0 && this.cowLevelText?.active) {
+      const text: string = String(this.state.clan.cow.level);
+      if (text !== this.cowLevelText.text) this.cowLevelText.setText(text);
+    }
+  }
 };
+
