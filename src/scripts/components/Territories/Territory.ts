@@ -573,7 +573,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         user.fair++;
         updateAnimalBuy();
         this.scene.tryTask(7, user.fair);
-        // this.scene.tryTask(15, 0, nextFair.price_d);
         this.scene.time.addEvent({ delay: 200, callback: (): void => {
           this.levelText?.setText(String(user.fair));
           Stars.create(this.scene, { x: this.x + 120, y: this.y + 120 });

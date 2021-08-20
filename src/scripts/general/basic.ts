@@ -380,9 +380,9 @@ function convertDiamonds(diamonds: number): number {
 
 function convertMoney(money: number): number {
   const farm: string = this.state.farm.toLowerCase();
-  const partsSettings: Ipart[] = this.state[`${farm}Settings`][`${farm}Parts`];
+  const partsSettings: Ipart[] = this.state[`${farm}Settings`][`${farm}Parts`]
   const part: number = this.state[`user${this.state.farm}`].part;
-  const exchange: number = partsSettings.find((item: Ipart) => item.sort === part).exchange;
+  const exchange: number = part <= 16 ? partsSettings.find((item: Ipart) => item.sort === part).exchange : partsSettings[partsSettings.length - 1].exchange;
   return Math.ceil(money / exchange);
 }
 

@@ -589,7 +589,8 @@ class Tutorial extends Phaser.Scene {
           let tasks: ItaskSheep[] = this.game.scene.keys[this.state.farm].partTasks();
           // let task: Itasks = tasks.find((task: Itasks) => task.id === 1);
           // let taskData: ItaskData = this.game.scene.keys[this.state.farm].getTaskData(task);
-          let taskText: Phaser.GameObjects.Text = this.add.text(150, 0, this.state.lang[tasks[0].text], {
+          let text: string = this.state.lang[tasks[0].text].replace('$1', String(tasks[0].count)).replace('$2', String(tasks[0].state))
+          let taskText: Phaser.GameObjects.Text = this.add.text(150, 0, text, {
             font: '23px Bip',
             color: '#713D1E',
             align: 'left',
@@ -624,6 +625,8 @@ class Tutorial extends Phaser.Scene {
           this.clickShopBtn({ btn: done, title: takeText, img: false }, (): void => {
             this.game.scene.keys[this.state.farm + 'Bars'].getCurrency({ x: done.x, y: done.y }, tasks[0].award, 'diamond');
             this.game.scene.keys[this.state.farm].doneTutor_60();
+            tasks[0].done = true
+            this.game.scene.keys[this.state.farm].pickUpTaskReward(tasks[0].id);
           });
 
           this.topPosition = false;

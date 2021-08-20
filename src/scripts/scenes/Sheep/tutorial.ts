@@ -197,7 +197,6 @@ function doneTutor_70(): void {
   this.time.addEvent({ delay: 1000, callback: (): void => {
     this.showTutorial();
   }, callbackScope: this, loop: false });
-  
 }
 
 

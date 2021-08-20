@@ -96,8 +96,10 @@ export default class BoughtFarmLand {
     if (this.scene.state.farm === 'Sheep' && this.scene.state.userSheep.tutorial < 100) this.price = 0
 
     if ((type !== 5 && this.scene.state[`user${this.scene.state.farm}`].money >= this.price) || (type === 5 && this.scene.state.user.diamonds >= this.price)) {
-      if (type === 5) this.scene.state.user.diamonds - this.price
-      else this.scene.state[`user${this.scene.state.farm}`].money -= this.price;
+      if (type === 5) {
+        this.scene.state.user.diamonds - this.price
+        this.scene.game.scene.keys[this.scene.state.farm].tryTask(15, 0, this.price)
+      } else this.scene.state[`user${this.scene.state.farm}`].money -= this.price;
 
       this.scene.state.territory.bougthType = type;
       this.scene.state.territory.improve = this.currentPart + 1;

@@ -148,7 +148,7 @@ export default class TasksWindowNew {
         text.setPosition(slot.getCenter().x + 60, slot.getCenter().y - 26)
 
         icon.setPosition(slot.getLeftCenter().x + 60, slot.getCenter().y - 10)
-        let count: number = this.tasks[i].type === 14 && this.tasks[i].count === 0 ? this.scene.state[`${this.scene.state.farm}Settings`][`${this.scene.state.farm}Settings`].length : this.tasks[i].count;
+        let count: number = this.tasks[i].type === 14 && this.tasks[i].count === 0 ? this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`${this.scene.state.farm.toLowerCase()}Settings`].length : this.tasks[i].count;
         const doneText: Phaser.GameObjects.Text = this.scene.add.text(icon.x, icon.getBottomCenter().y + 26, `${shortNum(this.tasks[i].progress)}/${shortNum(count)}`, { font: '26px Shadow', color: '#944000' }).setDepth(2).setOrigin(0.5).setShadow(1, 1, 'rgba(0, 0, 0, 0.5)', 2);
         if (doneText.width > 120) doneText.setOrigin(0, 0.5).setX(icon.getLeftCenter().x - 18).setFontSize(24);
 
@@ -240,7 +240,7 @@ export default class TasksWindowNew {
       fill: '#8f3f00'
     }).setOrigin(0.5, 0.5);
     
-    const parts: Ipart[] = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`${this.scene.state.farm.toLowerCase()}Parts`];
+    const parts: Iconfig[] = this.scene.state.config
     const userPart: number = this.scene.state[`user${this.scene.state.farm}`].part;
     
     if (done && parts.length !== userPart) {

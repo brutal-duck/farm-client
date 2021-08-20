@@ -55,7 +55,7 @@ function nextPart(): void {
     parts = this.state.cowSettings.cowParts;
   }
 
-  if (parts.length > user.part) {
+  if (this.state.config.length > user.part) {
     const tasks: ItaskSheep[] = this.partTasks();
     let status: boolean = true;
     if (tasks.length === 0) status = false;
@@ -68,15 +68,12 @@ function nextPart(): void {
     }
 
     if (status) {
-      const thisPart: Ipart = parts.find((data: Ipart) => data.sort === user.part);
       const part: string = this.state.lang.part + ' ' + user.part;
       const namePart: string = this.state.lang[this.state.farm.toLowerCase() + 'NamePart' + user.part];
-      const award: number = thisPart.award;
       const doneText: string = this.state.lang[this.state.farm.toLowerCase() + 'PartDone' + user.part];
       const donePart: IdonePart = {
         part: part,
         name: namePart,
-        award: 'x ' + award,
         doneText: doneText,
         chapter: this.state.farm.toLowerCase() + '-chapter-' + user.part
       }

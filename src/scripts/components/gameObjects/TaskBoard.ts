@@ -208,7 +208,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
       if (!this.taskStatus) this.status = 1;
       else if (this.taskStatus && !task?.awardTaken) this.status = 2;
       else this.status = 3;
-      if (this.status === 3 && task?.done && task?.awardTaken && stateParts.length === userData.part) this.status = 4;
+      if (this.status === 3 && task?.done && task?.awardTaken && userData.part === 20) this.status = 4;
       
       this.animation?.remove();
       if (this.status === 3 || this.status === 2) this.setDoneAnim();
@@ -655,7 +655,8 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
       completed = this.scene.add.sprite(icon.x, icon.y, 'completed').setDepth(this.bg.depth + 2).setTint(0xc0c0c0).setOrigin(0.5).setAlpha(0);
       text.setColor('#6f6f6f').setAlpha(0);
     } else {
-      progress = new RoundedProgress(this.scene, icon.x, icon.y, 1.13).setPercent(Math.round(100 / task.count * task.progress)).setTint(0x70399f).setAlpha(0);
+      let count: number = task.type === 14 && task.count === 0 ? this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`${this.scene.state.farm.toLowerCase()}Settings`].length : task.count
+      progress = new RoundedProgress(this.scene, icon.x, icon.y, 1.13).setPercent(Math.round(100 / count * task.progress)).setTint(0x70399f).setAlpha(0);
       border1 = this.scene.add.sprite(icon.x, icon.y, 'circle-outline').setScale(1.15).setTint(0xc09245).setAlpha(0).setDepth(progress.rightSegment.depth + 1);
       border2 = this.scene.add.sprite(icon.x, icon.y, 'circle-outline').setScale(0.9).setTint(0xc09245).setAlpha(0).setDepth(progress.rightSegment.depth + 1);
     }

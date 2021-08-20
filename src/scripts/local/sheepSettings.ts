@@ -1207,7 +1207,7 @@ const config: Iconfig[] = [
         awardType: 'diamond',
         award: 1,
         progress: 0,
-        text: 'taskName_181',
+        text: 'taskName_191',
         icon: 'sheep-task-icon-7',
         sort: 7
       },
@@ -1226,7 +1226,106 @@ const config: Iconfig[] = [
     grassAndWaterRestorePoints: 32,
     territoryColddown: 100,
     oneDiamondToMoney: 249600,
-    tasks: [],
+    tasks: [
+      {
+        type: 5, // купи землю
+        id: '1121',
+        state: 1, // зелмя
+        count: 1,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_4',
+        icon: 'sheep-task-icon-29',
+        sort: 1
+      },
+      {
+        type: 5, // купи траву
+        id: '1122',
+        state: 2, // трава
+        count: 1,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_5',
+        icon: 'sheep-task-icon-25',
+        sort: 2
+      },
+      {
+        type: 27, // улучши все территории
+        id: '1123',
+        state: 12, // требуемый уровень
+        count: 14, // количество территорий
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_6',
+        icon: 'sheep-task-icon-24',
+        sort: 3
+      },
+      {
+        type: 7, // улучши ярмарку
+        id: '1124',
+        state: 8,
+        count: 1,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_11',
+        icon: 'sheep-task-icon-22',
+        sort: 4
+      },
+      {
+        type: 19, // кристаллы с животных
+        id: '1125',
+        state: 0,
+        count: 2, // количество
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_35',
+        icon: 'sheep-task-icon-14',
+        sort: 5
+      },
+      {
+        type: 23, // улучши собиратель
+        id: '1126',
+        state: 0,
+        count: 12,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_7',
+        icon: 'sheep-task-icon-34',
+        sort: 6
+      },
+      {
+        type: 4, // получи овец
+        id: '1127',
+        state: 9, // порода
+        count: 4, // количество
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_20',
+        icon: 'sheep-task-icon-9',
+        sort: 7
+      },
+    ],
   },
   //13
   {
@@ -1241,7 +1340,106 @@ const config: Iconfig[] = [
     grassAndWaterRestorePoints: 33,
     territoryColddown: 108,
     oneDiamondToMoney: 499200,
-    tasks: [],
+    tasks: [
+      {
+        type: 5, // купи землю
+        id: '1131',
+        state: 1, // зелмя
+        count: 1,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_4',
+        icon: 'sheep-task-icon-29',
+        sort: 1
+      },
+      {
+        type: 5, // купи траву
+        id: '1132',
+        state: 2, // трава
+        count: 1,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_5',
+        icon: 'sheep-task-icon-25',
+        sort: 2
+      },
+      {
+        type: 27, // улучши все территории
+        id: '1133',
+        state: 13, // требуемый уровень
+        count: 15, // количество территорий
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_6',
+        icon: 'sheep-task-icon-24',
+        sort: 3
+      },
+      {
+        type: 22, // переполох
+        id: '1134',
+        state: 0,
+        count: 2,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_36',
+        icon: 'sheep-task-icon-33',
+        sort: 4
+      },
+      {
+        type: 23, // улучши собиратель
+        id: '1135',
+        state: 0,
+        count: 13,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_7',
+        icon: 'sheep-task-icon-34',
+        sort: 5
+      },
+      {
+        type: 21, // выдать комбикорм
+        id: '1136',
+        state: 0,
+        count: 2, // часов
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_26',
+        icon: 'sheep-task-icon-32',
+        sort: 6
+      },
+      {
+        type: 4, // получи овец
+        id: '1137',
+        state: 9, // порода
+        count: 2, // количество
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_201',
+        icon: 'sheep-task-icon-9',
+        sort: 7
+      },
+    ],
   },
   //14
   {
@@ -1256,7 +1454,106 @@ const config: Iconfig[] = [
     grassAndWaterRestorePoints: 36,
     territoryColddown: 116,
     oneDiamondToMoney: 576000,
-    tasks: [],
+    tasks: [
+      {
+        type: 5, // купи землю
+        id: '1141',
+        state: 1, // зелмя
+        count: 1,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_4',
+        icon: 'sheep-task-icon-29',
+        sort: 1
+      },
+      {
+        type: 5, // купи траву
+        id: '1142',
+        state: 2, // трава
+        count: 1,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_5',
+        icon: 'sheep-task-icon-25',
+        sort: 2
+      },
+      {
+        type: 27, // улучши все территории
+        id: '1143',
+        state: 14, // требуемый уровень
+        count: 16, // количество территорий
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_6',
+        icon: 'sheep-task-icon-24',
+        sort: 3
+      },
+      {
+        type: 7, // улучши ярмарку
+        id: '1144',
+        state: 9,
+        count: 1,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_11',
+        icon: 'sheep-task-icon-22',
+        sort: 4
+      },
+      {
+        type: 11, // ручной сбор
+        id: '1145',
+        state: 0,
+        count: 8, // количество
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_28',
+        icon: 'sheep-task-icon-21',
+        sort: 5
+      },
+      {
+        type: 23, // улучши собиратель
+        id: '1146',
+        state: 0,
+        count: 14,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_7',
+        icon: 'sheep-task-icon-34',
+        sort: 6
+      },
+      {
+        type: 4, // получи овец
+        id: '1147',
+        state: 10, // порода
+        count: 4, // количество
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_21',
+        icon: 'sheep-task-icon-10',
+        sort: 7
+      },
+    ],
   },
   //15
   {
@@ -1271,7 +1568,106 @@ const config: Iconfig[] = [
     grassAndWaterRestorePoints: 41,
     territoryColddown: 240,
     oneDiamondToMoney: 1152000,
-    tasks: [],
+    tasks: [
+      {
+        type: 5, // купи землю
+        id: '1151',
+        state: 1, // зелмя
+        count: 1,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_4',
+        icon: 'sheep-task-icon-29',
+        sort: 1
+      },
+      {
+        type: 5, // купи хранилище
+        id: '1152',
+        state: 5, // хранилище
+        count: 1,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_37',
+        icon: 'sheep-task-icon-31',
+        sort: 2
+      },
+      {
+        type: 27, // улучши все территории
+        id: '1153',
+        state: 15, // требуемый уровень
+        count: 17, // количество территорий
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_6',
+        icon: 'sheep-task-icon-24',
+        sort: 3
+      },
+      {
+        type: 15, // потрать кристалы
+        id: '1154',
+        state: 0,
+        count: 25,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_30',
+        icon: 'sheep-task-icon-14',
+        sort: 4
+      },
+      {
+        type: 23, // улучши собиратель
+        id: '1155',
+        state: 0,
+        count: 15,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_7',
+        icon: 'sheep-task-icon-34',
+        sort: 5
+      },
+      {
+        type: 6, // накопи монет
+        id: '1156',
+        state: 0,
+        count: 100_000_000, // количество
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_14',
+        icon: 'sheep-task-icon-15',
+        sort: 6
+      },
+      {
+        type: 4, // получи овец
+        id: '1157',
+        state: 10, // порода
+        count: 2, // количество
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_211',
+        icon: 'sheep-task-icon-10',
+        sort: 7
+      },
+    ],
   },
   //16
   {
@@ -1286,7 +1682,106 @@ const config: Iconfig[] = [
     grassAndWaterRestorePoints: 43,
     territoryColddown: 248,
     oneDiamondToMoney: 1305600,
-    tasks: [],
+    tasks: [
+      {
+        type: 5, // купи землю
+        id: '1161',
+        state: 1, // зелмя
+        count: 1,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_4',
+        icon: 'sheep-task-icon-29',
+        sort: 1
+      },
+      {
+        type: 5, // купи траву
+        id: '1162',
+        state: 2, // трава
+        count: 1,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_5',
+        icon: 'sheep-task-icon-25',
+        sort: 2
+      },
+      {
+        type: 27, // улучши все территории
+        id: '1163',
+        state: 16, // требуемый уровень
+        count: 18, // количество территорий
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_6',
+        icon: 'sheep-task-icon-24',
+        sort: 3
+      },
+      {
+        type: 7, // улучши ярмарку
+        id: '1164',
+        state: 10,
+        count: 1,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_11',
+        icon: 'sheep-task-icon-22',
+        sort: 4
+      },
+      {
+        type: 25, // поймать
+        id: '1165',
+        state: 0,
+        count: 4, // количество
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_32',
+        icon: 'sheep-task-icon-33',
+        sort: 5
+      },
+      {
+        type: 23, // улучши собиратель
+        id: '1166',
+        state: 0,
+        count: 16,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_7',
+        icon: 'sheep-task-icon-34',
+        sort: 6
+      },
+      {
+        type: 4, // получи овец
+        id: '1167',
+        state: 11, // порода
+        count: 4, // количество
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_22',
+        icon: 'sheep-task-icon-11',
+        sort: 7
+      },
+    ],
   },
   //17
   {
@@ -1301,7 +1796,106 @@ const config: Iconfig[] = [
     grassAndWaterRestorePoints: 45,
     territoryColddown: 256,
     oneDiamondToMoney: 2611200,
-    tasks: [],
+    tasks: [
+      {
+        type: 5, // купи землю
+        id: '1171',
+        state: 1, // зелмя
+        count: 1,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_4',
+        icon: 'sheep-task-icon-29',
+        sort: 1
+      },
+      {
+        type: 5, // купи траву
+        id: '1172',
+        state: 2, // трава
+        count: 1,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_5',
+        icon: 'sheep-task-icon-25',
+        sort: 2
+      },
+      {
+        type: 27, // улучши все территории
+        id: '1173',
+        state: 17, // требуемый уровень
+        count: 19, // количество территорий
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_6',
+        icon: 'sheep-task-icon-24',
+        sort: 3
+      },
+      {
+        type: 28, // купи монеты
+        id: '1174',
+        state: 0,
+        count: 100_000_000,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_29',
+        icon: 'sheep-task-icon-15',
+        sort: 4
+      },
+      {
+        type: 23, // улучши собиратель
+        id: '1175',
+        state: 0,
+        count: 17,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_7',
+        icon: 'sheep-task-icon-34',
+        sort: 5
+      },
+      {
+        type: 18, // кристаллическое животное
+        id: '1176',
+        state: 0,
+        count: 2, // количество
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_34',
+        icon: 'sheep-task-icon-14',
+        sort: 6
+      },
+      {
+        type: 4, // получи овец
+        id: '1177',
+        state: 11, // порода
+        count: 2, // количество
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_221',
+        icon: 'sheep-task-icon-11',
+        sort: 7
+      },
+    ],
   },
   //18
   {
@@ -1316,7 +1910,106 @@ const config: Iconfig[] = [
     grassAndWaterRestorePoints: 48,
     territoryColddown: 264,
     oneDiamondToMoney: 2918400,
-    tasks: [],
+    tasks: [
+      {
+        type: 5, // купи землю
+        id: '1181',
+        state: 1, // зелмя
+        count: 1,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_4',
+        icon: 'sheep-task-icon-29',
+        sort: 1
+      },
+      {
+        type: 5, // купи траву
+        id: '1182',
+        state: 2, // трава
+        count: 1,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_5',
+        icon: 'sheep-task-icon-25',
+        sort: 2
+      },
+      {
+        type: 27, // улучши все территории
+        id: '1183',
+        state: 18, // требуемый уровень
+        count: 20, // количество территорий
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_6',
+        icon: 'sheep-task-icon-24',
+        sort: 3
+      },
+      {
+        type: 7, // улучши ярмарку
+        id: '1184',
+        state: 11,
+        count: 1,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_11',
+        icon: 'sheep-task-icon-22',
+        sort: 4
+      },
+      {
+        type: 19, // собрать кристаллы с животного
+        id: '1185',
+        state: 0,
+        count: 3, // количество
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_35',
+        icon: 'sheep-task-icon-14',
+        sort: 5
+      },
+      {
+        type: 23, // улучши собиратель
+        id: '1186',
+        state: 0,
+        count: 18,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_7',
+        icon: 'sheep-task-icon-34',
+        sort: 6
+      },
+      {
+        type: 4, // получи овец
+        id: '1187',
+        state: 12, // порода
+        count: 4, // количество
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_23',
+        icon: 'sheep-task-icon-12',
+        sort: 7
+      },
+    ],
   },
   //19
   {
@@ -1331,7 +2024,106 @@ const config: Iconfig[] = [
     grassAndWaterRestorePoints: 49,
     territoryColddown: 272,
     oneDiamondToMoney: 5836800,
-    tasks: [],
+    tasks: [
+      {
+        type: 5, // купи землю
+        id: '1191',
+        state: 1, // зелмя
+        count: 1,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_4',
+        icon: 'sheep-task-icon-29',
+        sort: 1
+      },
+      {
+        type: 5, // купи траву
+        id: '1192',
+        state: 2, // трава
+        count: 1,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_5',
+        icon: 'sheep-task-icon-25',
+        sort: 2
+      },
+      {
+        type: 27, // улучши все территории
+        id: '1193',
+        state: 19, // требуемый уровень
+        count: 21, // количество территорий
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_6',
+        icon: 'sheep-task-icon-24',
+        sort: 3
+      },
+      {
+        type: 22, // переполох
+        id: '1194',
+        state: 0,
+        count: 2,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_36',
+        icon: 'sheep-task-icon-33',
+        sort: 4
+      },
+      {
+        type: 23, // улучши собиратель
+        id: '1195',
+        state: 0,
+        count: 19,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_7',
+        icon: 'sheep-task-icon-34',
+        sort: 5
+      },
+      {
+        type: 21, // комбикорм
+        id: '1196',
+        state: 0,
+        count: 4, // количество
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_26',
+        icon: 'sheep-task-icon-32',
+        sort: 6
+      },
+      {
+        type: 4, // получи овец
+        id: '1197',
+        state: 12, // порода
+        count: 2, // количество
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_24',
+        icon: 'sheep-task-icon-12',
+        sort: 7
+      },
+    ],
   },
   //20
   {
@@ -1346,7 +2138,78 @@ const config: Iconfig[] = [
     grassAndWaterRestorePoints: 54,
     territoryColddown: 0,
     oneDiamondToMoney: 6451200,
-    tasks: [],
+    tasks: [
+      {
+        type: 27, // улучши все территории
+        id: '1201',
+        state: 20, // требуемый уровень
+        count: 21, // количество территорий
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_6',
+        icon: 'sheep-task-icon-24',
+        sort: 1
+      },
+      {
+        type: 23, // улучши собиратель
+        id: '1202',
+        state: 0,
+        count: 20,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_7',
+        icon: 'sheep-task-icon-34',
+        sort: 2
+      },
+      {
+        type: 4, // получи овец
+        id: '1203',
+        state: 12, // порода
+        count: 4, // количество
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_24',
+        icon: 'sheep-task-icon-12',
+        sort: 3
+      },
+      {
+        type: 25, // поймай овец
+        id: '1204',
+        state: 0, // порода
+        count: 4, // количество
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_32',
+        icon: 'sheep-task-icon-33',
+        sort: 4
+      },
+      {
+        type: 14, // все овцы на поле
+        id: '1205',
+        state: 0,
+        count: 0,
+        done: false,
+        awardTaken: false,
+        awardType: 'diamond',
+        award: 1,
+        progress: 0,
+        text: 'taskName_38',
+        icon: 'sheep-task-icon-33',
+        sort: 5
+      },
+    ],
   },
 ]
 

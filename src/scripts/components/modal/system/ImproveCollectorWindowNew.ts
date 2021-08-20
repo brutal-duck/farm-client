@@ -178,7 +178,9 @@ export default class ImproveCollectorWindowNew {
       this.scene.state.userSheep.money -= this.config[this.scene.state.userSheep.collectorTimeLevel + 1].collectorTimeCost
       return true
     } else if (improveType === 'speed' && this.scene.state.user.diamonds >= this.config[this.scene.state.userSheep.collectorSpeedLevel + 1].collectorSpeedCost) {
-      this.scene.state.user.diamonds -= this.config[this.scene.state.userSheep.collectorSpeedLevel + 1].collectorSpeedCost
+      const price = this.config[this.scene.state.userSheep.collectorSpeedLevel + 1].collectorSpeedCost
+      this.scene.state.user.diamonds -= price
+      this.scene.game.scene.keys[this.scene.state.farm].tryTask(15, 0, price)
       return true
     } else return false
   }

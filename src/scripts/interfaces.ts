@@ -576,7 +576,6 @@ interface Itasks {
 interface IdonePart {
   part: string;
   name: string;
-  award: string;
   doneText: string;
   chapter: string;
 }

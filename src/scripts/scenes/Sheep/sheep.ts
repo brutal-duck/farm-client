@@ -641,12 +641,12 @@ function collectWool(sheep: any, manualСollect: boolean = false): void {
 
 // продать шерсть из хранилища
 function sellWool(): void {
-
   if (this.state.territory) {
 
     if (this.state.territory.territoryType === 5 && this.state.territory.money > 0) {
 
       this.tryTask(20, 0);
+      this.tryTask(29, 0, this.state.territory.volume)
 
       this.state.userSheep.money += this.state.territory.money;
       this.state.territory.money = 0;
@@ -660,7 +660,6 @@ function sellWool(): void {
     }
 
   }
-
 }
 
 // подтверждение продажи овцы

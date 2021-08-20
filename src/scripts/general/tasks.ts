@@ -59,8 +59,19 @@ function partTasks(): Itasks[] {
   //   }
   // }
   let partTasks = this.state.config[this.state[`user${this.state.farm}`].part - 1].tasks
+
+  partTasks.forEach((task: ItaskSheep) => {
+    switch (task.type) {
+      case 23: {
+        task.progress = this.state[`user${this.state.farm}`].collectorTimeLevel + 1
+        break
+      }
+
+      default: break
+    }
+  })
+
   return partTasks;
-  
 }
 
 
@@ -73,7 +84,7 @@ function tryTask(type: number, state: number, count: number = 1, currentProgress
 
   // let tasks: Itasks[] = this.partTasks();
   let tasks: ItaskSheep[] = this.state.config[part - 1].tasks
-  let task: ItaskSheep = tasks.find((data: ItaskSheep) => data.type === type);
+  let task: ItaskSheep = type === 5 ? tasks.find((data: ItaskSheep) => data.type === type && data.state === state) : tasks.find((data: ItaskSheep) => data.type === type);
   if (task && task.type !== 6) console.log('tryTask ~ task', task, type, state, count, currentProgress)
   
   if (
