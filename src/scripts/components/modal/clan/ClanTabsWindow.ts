@@ -204,7 +204,7 @@ export default class ClanTabsWindow {
     this.scene.add.nineslice(this.x, this.y + 100, 480, 600, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
     this.createClanBtns();
     this.scene.scene.launch('ClanScroll', this.scene.state);
-    const limit: number = this.scene.state.clan.mainBuilding.cooldown > 0 ? this.scene.state.clan.limit - 1 : this.scene.state.clan.limit;
+    const limit: number = this.scene.state.clan.main.cooldown > 0 ? this.scene.state.clan.limit - 1 : this.scene.state.clan.limit;
     const countText: string = `${this.scene.state.lang.players}${this.scene.state.clan.users.length}/${limit}`
     const userCount: Phaser.GameObjects.Text = this.scene.add.text(headerGeom.left  + 40, headerGeom.bottom + 40, countText, this.headerTextStyle).setOrigin(0, 0.5);
   }
@@ -487,13 +487,13 @@ export default class ClanTabsWindow {
     });
 
     const right3 = {
-      text: 100 * Math.pow(2, this.scene.state.clan.mainBuilding.level - 1),
+      text: 100 * Math.pow(2, this.scene.state.clan.main.level - 1),
       icon: 'diamond'
     };
 
     const btn3 = this.scene.bigButton('green', 'left', -40, this.scene.state.lang.improveClan, right3);
     this.scene.clickModalBtn(btn3, () => {
-      if (this.scene.state.clan.mainBuilding.cooldown <= 0) {
+      if (this.scene.state.clan.main.cooldown <= 0) {
         this.scene.state.modal = {
           type: 18,
           clanWindowType: 3,
@@ -503,11 +503,6 @@ export default class ClanTabsWindow {
         this.scene.scene.restart(this.scene.state);
       } else {
         this.scene.scene.stop();
-        if (this.scene.scene.isActive('ClanFarm')) {
-          if (this.scene.game.scene.keys['ClanFarm'].mainBuildingCooldownSprite) {
-            this.scene.game.scene.keys['ClanFarm'].mainBuildingCooldownSprite.pulseAnim();
-          }
-        }
       }
     });
   }

@@ -17,7 +17,7 @@ export default class ClanFarm extends Phaser.Scene {
   private bg: Phaser.GameObjects.Sprite;
   private nameText: Phaser.GameObjects.Text;
   private icon: Icon;
-  private mainBuildingCooldownSprite: ClanCooldownBuilding;
+  private mainCooldownSprite: ClanCooldownBuilding;
   private sheepCooldownSprite: ClanCooldownBuilding;
   private chickenCooldownSprite: ClanCooldownBuilding;
   private cowCooldownSprite: ClanCooldownBuilding;
@@ -112,8 +112,8 @@ export default class ClanFarm extends Phaser.Scene {
       y: 300,
     };
     const zone = this.add.zone(pos.x, pos.y, 200, 240).setDropZone(undefined, () => {});
-    const textLevel: string = this.state.clan.mainBuilding.cooldown > 0 ? String(this.state.clan.mainBuilding.level - 1) : String(this.state.clan.mainBuilding.level);
-    this.cowLevelText = this.add.text(pos.x, pos.y + 60, textLevel, levelTextStyle).setOrigin(0.5);
+    const textLevel: string = this.state.clan.main.cooldown > 0 ? String(this.state.clan.main.level - 1) : String(this.state.clan.main.level);
+    this.cowLevelText = this.add.text(pos.x + 4, pos.y + 60, textLevel, levelTextStyle).setOrigin(0.5);
     // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
     // graphics.lineStyle(5, 0xFFFF00);
     // graphics.strokeRect(
@@ -226,8 +226,14 @@ export default class ClanFarm extends Phaser.Scene {
           clanWindowType: 5,
           message: 'sheep',
         };
-        this.scene.launch('Modal', this.state);
+      } else {
+        this.state.modal = {
+          type: 18,
+          clanWindowType: 6,
+          message: 'sheep',
+        };
       }
+      this.scene.launch('Modal', this.state);
     });
   }
 
@@ -243,8 +249,14 @@ export default class ClanFarm extends Phaser.Scene {
           clanWindowType: 5,
           message: 'chicken',
         };
-        this.scene.launch('Modal', this.state);
+      } else {
+        this.state.modal = {
+          type: 18,
+          clanWindowType: 6,
+          message: 'chicken',
+        };
       }
+      this.scene.launch('Modal', this.state);
     });
   }
 
@@ -266,8 +278,14 @@ export default class ClanFarm extends Phaser.Scene {
           clanWindowType: 5,
           message: 'cow',
         };
-        this.scene.launch('Modal', this.state);
+      } else {
+        this.state.modal = {
+          type: 18,
+          clanWindowType: 6,
+          message: 'cow',
+        };
       }
+      this.scene.launch('Modal', this.state);
     });
   }
 
@@ -292,9 +310,17 @@ export default class ClanFarm extends Phaser.Scene {
   }
 
   public update(): void {
-    if (this.state.clan.mainBuilding.cooldown > 0 && !this.mainBuildingCooldownSprite?.active) {
+    if (this.state.clan.main.cooldown > 0 && !this.mainCooldownSprite?.active) {
       const pos: Iposition = { x: 395, y: 450 };
-      this.mainBuildingCooldownSprite = new ClanCooldownBuilding(this, pos, this.state.clan.mainBuilding, 'main');
+      this.mainCooldownSprite = new ClanCooldownBuilding(this, pos, this.state.clan.main, 'main');
+      this.click(this.mainCooldownSprite, () => {
+        this.state.modal = {
+          type: 18,
+          clanWindowType: 6,
+          message: 'main',
+        };
+        this.scene.launch('Modal',  this.state);
+      })
     }
     if (this.state.clan.sheep.cooldown > 0 && !this.sheepCooldownSprite?.active) {
       const pos: Iposition = { x: 100, y: 860 };

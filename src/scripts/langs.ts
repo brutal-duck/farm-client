@@ -289,7 +289,9 @@ export default {
     confirmBuyCooldownForest: 'Хотите ускорить вырубку леса?',
     speedUpForest: 'Ускорить вырубку',
     confirmBuyCooldownBuild: 'Хотите ускорить постройку?',
+    confirmBuyCooldownImprovmentFarm: 'Хотите ускорить улучшение фермы?',
     speedUpBuild: 'Ускорить постройку',
+    speedUpImprovment: 'Ускорить улучшение',
     farmSheep: 'Ферма овец',
     farmChicken: 'Ферма кур',
     farmCow: 'Ферма коров',
@@ -1008,6 +1010,7 @@ export default {
     clanTutor: 'Теперь тебе доступны кланы. Ты можешь подыскать себе по нраву, либо создать свой',
     improveFarm: 'Улучшить ферму',
     clanFarmImproveNote: 'Чем выше уровень клановой фермы, тем выше доход на твоей собственной ферме',
+    left: 'Осталось:',
   },
 
   en: {
@@ -1300,7 +1303,9 @@ export default {
     confirmBuyCooldownForest: 'Хотите ускорить вырубку леса?',
     speedUpForest: 'Ускорить вырубку',
     confirmBuyCooldownBuild: 'Хотите ускорить постройку?',
+    confirmBuyCooldownImprovmentFarm: 'Хотите ускорить улучшение фермы?',
     speedUpBuild: 'Ускорить постройку',
+    speedUpImprovment: 'Ускорить улучшение',
     farmSheep: 'Ферма овец',
     farmChicken: 'Ферма кур',
     farmCow: 'Ферма коров',
@@ -2019,6 +2024,6 @@ export default {
     clanTutor: 'Теперь тебе доступны кланы. Ты можешь подыскать себе по нраву, либо создать свой',
     improveFarm: 'Улучшить ферму',
     clanFarmImproveNote: 'Чем выше уровень клановой фермы, тем выше доход на твоей собственной ферме',
-
+    left: 'Осталось:',
   },
 }

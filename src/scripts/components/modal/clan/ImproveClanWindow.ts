@@ -21,7 +21,7 @@ export default class ImproveClanWindow {
   private init(): void {
     this.x = this.scene.cameras.main.centerX;
     this.y = this.scene.cameras.main.centerY;
-    this.price = 100 * Math.pow(2, this.scene.state.clan.mainBuilding.level - 1);
+    this.price = 100 * Math.pow(2, this.scene.state.clan.main.level - 1);
     this.window.headerText.setText(this.scene.state.lang.clanImprovement);
   }
 
@@ -56,7 +56,7 @@ export default class ImproveClanWindow {
     this.scene.add.sprite(bg.x, bg.y + 10, 'clan-window-wreath').setDepth(1);
     this.scene.add.nineslice(this.x, bg.y, this.window.width, bg.displayHeight + 20, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
 
-    const levelText: Phaser.GameObjects.Text = this.scene.add.text(bg.x, bg.y - 20, String(this.scene.state.clan.mainBuilding.level), levelTextStyle).setDepth(2).setOrigin(0.5);
+    const levelText: Phaser.GameObjects.Text = this.scene.add.text(bg.x, bg.y - 20, String(this.scene.state.clan.main.level), levelTextStyle).setDepth(2).setOrigin(0.5);
     this.scene.add.text(bg.x, levelText.getBounds().bottom, this.scene.state.lang.lvl, levelTextStyle).setDepth(2).setFontSize(30).setColor('#a98dc3').setOrigin(0.5, 0);
     const text1: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, this.scene.state.lang.maxLimitBeforeImprove, textStyle).setDepth(1);
     const count1: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 400, text1.getBounds().centerY, String(this.scene.state.clan.limit), textStyle).setOrigin(0, 0.5).setDepth(1).setFontFamily('Shadow').setFontSize(30);

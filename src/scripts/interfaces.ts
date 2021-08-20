@@ -772,7 +772,7 @@ interface Iclan {
   diamond: IclanDiamonds;
   points: number;
   limit: number;
-  mainBuilding: IclanBuilding;
+  main: IclanBuilding;
 }
 interface IclanBuilding {
   level: number;
