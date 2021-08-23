@@ -85,7 +85,6 @@ function tryTask(type: number, state: number, count: number = 1, currentProgress
   // let tasks: Itasks[] = this.partTasks();
   let tasks: ItaskSheep[] = this.state.config[part - 1].tasks
   let task: ItaskSheep = type === 5 ? tasks.find((data: ItaskSheep) => data.type === type && data.state === state) : tasks.find((data: ItaskSheep) => data.type === type);
-  if (task && task.type !== 6) console.log('tryTask ~ task', task, type, state, count, currentProgress)
   
   if (
     !currentProgress && !task?.done &&

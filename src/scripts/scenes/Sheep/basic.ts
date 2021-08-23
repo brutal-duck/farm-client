@@ -29,8 +29,8 @@ function balance(): Ibalance {
 
   }
 
-  grassConsumption = Math.round(grassConsumption / 2);
-  waterConsumption = Math.round(waterConsumption / 2);
+  // grassConsumption = Math.round(grassConsumption / 2);
+  // waterConsumption = Math.round(waterConsumption / 2);
 
   for (let i in this.territories?.children.entries) {
 

@@ -231,10 +231,10 @@ function interval(): void {
     // стрелки для некоторых заданий
     if (this.state.userSheep.part < 3) {
       
-      let tasks: Itasks[] = this.partTasks();
-      tasks.sort((x1: Itasks, x2: Itasks) => {
-        if (x1.got_awarded < x2.got_awarded) return -1;
-        if (x1.got_awarded > x2.got_awarded) return 1;
+      let tasks: ItaskSheep[] = this.partTasks();
+      tasks.sort((x1: ItaskSheep, x2: ItaskSheep) => {
+        if (x1.awardTaken < x2.awardTaken) return -1;
+        if (x1.awardTaken > x2.awardTaken) return 1;
         if (x1.done < x2.done) return 1;
         if (x1.done > x2.done) return -1;
         if (x1.sort < x2.sort) return -1;
@@ -242,22 +242,19 @@ function interval(): void {
         return 0;
       });
 
-      let task: Itasks = tasks[0];
+      let task: ItaskSheep = tasks[0];
       
       // задание с продажей шерсти из хранилища
-      if (task?.done === 0 && task?.id === 127 && !arrowOnStorage) {
-
+      if (!task?.done && task?.id === '114' && !arrowOnStorage) {
         let territory: any = this.territories.children.entries.find((data: any) => data.territoryType === 5);
         
         if (territory?.volume > 0) {
           arrowOnStorage = Arrow.generate(this, 9, { x: territory.x + 120, y: territory.y + 120 });
         }
-
       }
 
       // задание на покупку территории и установку пастбища
-      if (task?.done === 0 && task?.id === 5 && !arrowOnTerrirory) {
-        
+      if (!task?.done && task?.id === '121' && !arrowOnTerrirory) {
         let territory: any = this.territories.children.entries.find((data: any) => data.block === 3 && data.position === 3);
         arrowOnTerrirory = Arrow.generate(this, 10, { x: territory.x + 120, y: territory.y + 180 });
       }

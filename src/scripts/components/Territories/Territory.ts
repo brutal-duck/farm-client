@@ -269,7 +269,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     const cd = this.scene.state.config[currentPart].territoryColddown * 60
     const time: number = type === 1 ? cd : Math.round(cd / 4);
     console.log('setTerritoryUnlockCooldown ~ time', time)
-    
+    this.scene.tryTask(5, type);
     this.cooldown = time;
     this.boughtType = type;
     this.bought = true;
@@ -278,7 +278,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   
   public unlockTerritory(): void {
     if (this.bought && this.cooldown <= 0) {
-      this.scene.tryTask(5, this.boughtType);
       if (this.territoryType === 0) {
         FadeOut.create(this.scene, this.scene.add.sprite(this.x + 120, this.y + 120, this.scene.state.farm.toLowerCase() + '-for-buying').setDepth(this.forest.depth - 1));
         FadeOut.create(this.scene, this.forest);
@@ -652,8 +651,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
     const coinPrice = Math.round(this.scene.state.config[this.improve].grassAndWaterTerritoryCost / 100 * 30)
     const diamondPrice = this.scene.state.config[this.improve].repositoryCost
-    console.log('improveTerritory ~ coinPrice', coinPrice)
-    console.log('improveTerritory ~ diamondPrice', diamondPrice)
 
     if (this.scene.state.farm === 'Sheep') {
       if (this.territoryType === 5) this.diamondImprove(diamondPrice)
