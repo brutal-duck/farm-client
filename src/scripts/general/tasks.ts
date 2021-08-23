@@ -497,7 +497,7 @@ function clickTaskBoard(task: ItaskSheep): void {
       else {
         territory = findUnlockTerritoryForBuy();
         if (territory) openTerritoryWindow(territory);
-        else SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang[`taskHelp_5_${task.state}`], 3);
+        else SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_5, 3);
         
       }
     }
@@ -528,6 +528,17 @@ function clickTaskBoard(task: ItaskSheep): void {
     const territory = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => el.type === 5 || el.territoryType === 5);
     if (territory) openTerritoryWindow(territory)
     else SpeechBubble.create(this.game.scene.keys[`${this.state.farm}Bars`], this.state.lang.taskHelp_20, 3)
+  }
+
+  const openTerritoryToImprove = (): void => {
+    let territory = this.game.scene.keys[this.state.farm].territories.children.entries.find(el =>
+      (el.territoryType === 5 || el.territoryType === 3 || el.territoryType === 2) && el.improve < this.state[`user${this.state.farm}`].part
+    )
+    if (territory) openTerritoryWindow(territory)
+    else {
+      territory = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => el.territoryType === 1)
+      if (territory) openTerritoryWindow(territory)
+    }
   }
 
   switch (task.type) {
@@ -609,7 +620,7 @@ function clickTaskBoard(task: ItaskSheep): void {
       SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_26, 3);
       break;
     case 27:
-      SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_27, 3);
+      openTerritoryToImprove()
       break;
     case 28:
       openShopCoins()

@@ -460,6 +460,10 @@ class SheepBars extends Phaser.Scene {
 
   // обновить баланс-бары
   public setBalanceBars(balance: Ibalance): void {
+    if (balance.notEnoughGrass && this.state.userSheep.tutorial < 100) {
+      balance.grassPercent = 0
+      balance.notEnoughGrass = false
+    }
 
     if (balance.alarm && this.balanceBg.texture.key === 'green-balance-bg' && this.state.userSheep.tutorial >= 100) {
       this.balanceBg.setTexture('red-balance-bg');
