@@ -780,6 +780,7 @@ interface IclanBuilding {
 }
 interface IclanFarm {
   level: number;
+  money: string;
   cooldown: number;
   count?: number;
   logs: IclanUserLog[];

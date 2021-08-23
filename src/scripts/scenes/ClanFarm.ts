@@ -1,5 +1,6 @@
 import LogoManager, { Icon } from "../components/Utils/LogoManager";
-import { click, clickModalBtn } from "../general/clicks";
+import { shortNum } from "../general/basic";
+import { click, clickButton, clickModalBtn } from "../general/clicks";
 import ClanCooldownBuilding from './../components/clan/ClanCooldownBuilding';
 
 const clanMap: string = require('../../assets/images/clan/map.jpg');
@@ -25,6 +26,11 @@ export default class ClanFarm extends Phaser.Scene {
   private sheepLevelText: Phaser.GameObjects.Text;
   private chickenLevelText: Phaser.GameObjects.Text;
   private cowLevelText: Phaser.GameObjects.Text;
+  private diamondCountText: Phaser.GameObjects.Text;
+  private sheepCountText: Phaser.GameObjects.Text;
+  private chickenCountText: Phaser.GameObjects.Text;
+  private cowCountText: Phaser.GameObjects.Text;
+  private playerCountText: Phaser.GameObjects.Text;
 
   constructor() {
     super('ClanFarm');
@@ -32,6 +38,7 @@ export default class ClanFarm extends Phaser.Scene {
 
   public click = click.bind(this);
   public clickModalBtn = clickModalBtn.bind(this);
+  public clickButton = clickButton.bind(this);
 
   public preload(): void {
     this.load.image('clan-map', clanMap);
@@ -60,22 +67,12 @@ export default class ClanFarm extends Phaser.Scene {
   private createBg(): void {
     this.bg = this.add.sprite(0, 0, 'clan-map').setOrigin(0).setInteractive();
 
-    const pos: Iposition = {
-      x: 630,
-      y: 60,
-    };
-    const zone = this.add.zone(pos.x, pos.y, 50, 50).setDropZone(undefined, () => {});
+    const backBtn: Phaser.GameObjects.Sprite = this.add.sprite(632, 60, 'close-window-btn');
 
-    const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
-    graphics.lineStyle(5, 0xFFFF00);
-    graphics.strokeRect(
-      zone.x - zone.input.hitArea.width / 2, 
-      zone.y - zone.input.hitArea.height / 2, 
-      zone.input.hitArea.width, 
-      zone.input.hitArea.height
-      );
-
-    this.click(zone, () => {
+    this.clickButton(backBtn, () => {
+      this.game.scene.keys[this.state.farm].scrolling.downHandler();
+      this.game.scene.keys[this.state.farm].scrolling.enabled = true;
+      this.game.scene.keys[this.state.farm].scrolling.wheel = true;
       this.scene.stop();
     });
   }
@@ -104,6 +101,31 @@ export default class ClanFarm extends Phaser.Scene {
       const multiply: number = this.nameText.displayWidth / 340;
       this.nameText.setFontSize(parseInt(textStyle.fontSize) / multiply);
     }
+
+    const diamondSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 80, pos.y, 'diamond').setScale(0.10);
+    this.diamondCountText = this.add.text(pos.x + 95, pos.y, shortNum(this.state.clan.diamond.count), textStyle).setOrigin(0, 0.5);
+
+    const sheepSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 80, pos.y + 35, 'sheepCoin').setScale(0.10);
+    this.sheepCountText = this.add.text(pos.x + 95, pos.y + 35, shortNum(this.state.clan.sheep.money), textStyle).setOrigin(0, 0.5);
+
+    const chickenSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 200, pos.y, 'chickenCoin').setScale(0.10);
+    this.chickenCountText = this.add.text(pos.x + 215, pos.y, shortNum(this.state.clan.chicken.money), textStyle).setOrigin(0, 0.5);
+
+    const cowSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 200, pos.y + 35, 'cowCoin').setScale(0.10);
+    this.cowCountText = this.add.text(pos.x + 215, pos.y + 35, shortNum(this.state.clan.cow.money), textStyle).setOrigin(0, 0.5);
+
+    // const diamondSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 80, pos.y, 'diamond').setScale(0.10);
+    // this.diamondCountText = this.add.text(pos.x + 95, pos.y, '100000', textStyle).setOrigin(0, 0.5);
+
+    // const sheepSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 80, pos.y + 35, 'sheepCoin').setScale(0.10);
+    // this.sheepCountText = this.add.text(pos.x + 95, pos.y + 35, shortNum('100000000000000000000000000000000000000000000000000000000000000000000000000000'), textStyle).setOrigin(0, 0.5);
+
+    // const chickenSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 200, pos.y, 'chickenCoin').setScale(0.10);
+    // this.chickenCountText = this.add.text(pos.x + 215, pos.y, shortNum('10000000000000000000000000000000000000000000000000000000000000000000000000000'), textStyle).setOrigin(0, 0.5);
+
+    // const cowSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 200, pos.y + 35, 'cowCoin').setScale(0.10);
+    // this.cowCountText = this.add.text(pos.x + 215, pos.y + 35, shortNum('10000000000000000000000000000000000000000000000000000000000000000000000000000'), textStyle).setOrigin(0, 0.5);
+    
   }
 
   private createMain(): void {
@@ -113,7 +135,7 @@ export default class ClanFarm extends Phaser.Scene {
     };
     const zone = this.add.zone(pos.x, pos.y, 200, 240).setDropZone(undefined, () => {});
     const textLevel: string = this.state.clan.main.cooldown > 0 ? String(this.state.clan.main.level - 1) : String(this.state.clan.main.level);
-    this.cowLevelText = this.add.text(pos.x + 4, pos.y + 60, textLevel, levelTextStyle).setOrigin(0.5);
+    this.clanLevelText = this.add.text(pos.x + 4, pos.y + 60, textLevel, levelTextStyle).setOrigin(0.5);
     // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
     // graphics.lineStyle(5, 0xFFFF00);
     // graphics.strokeRect(
