@@ -117,7 +117,7 @@ const config: Iconfig[] = [
         progress: 0,
         text: 'taskName_5',
         icon: 'sheep-task-icon-25',
-        sort: 55
+        sort: 20
       },
       // улучши все территории
       {
@@ -132,7 +132,7 @@ const config: Iconfig[] = [
         progress: 0,
         text: 'taskName_6',
         icon: 'sheep-task-icon-24',
-        sort: 57
+        sort: 30
       },
       // купи овец
       {
@@ -162,7 +162,7 @@ const config: Iconfig[] = [
         progress: 0,
         text: 'taskName_9',
         icon: 'sheep-task-icon-2',
-        sort: 60
+        sort: 50
       },
       // улучши собиратель
       {
@@ -177,7 +177,7 @@ const config: Iconfig[] = [
         progress: 0,
         text: 'taskName_7',
         icon: 'sheep-task-icon-34',
-        sort: 50
+        sort: 60
       },
     ],
   },

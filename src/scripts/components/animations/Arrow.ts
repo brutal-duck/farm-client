@@ -244,10 +244,10 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
     }
   }
 
-  private checkTaskDone(id: number): boolean {
-    const tasks: Itasks[] = this.scene.partTasks();
-    const task: Itasks = tasks.find((data: Itasks) => (data.id === id));
-    return task.done === 1;
+  private checkTaskDone(id: string): boolean {
+    const tasks: ItaskSheep[] = this.scene.partTasks();
+    const task: ItaskSheep = tasks.find((data: ItaskSheep) => (data.id === id));
+    return task.done === true;
   }
 
   private checkDestroy(): boolean {
@@ -258,14 +258,14 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
         result = this.scene.state.userSheep.tutorial > 40;
       break;
       case 9:
-        result = this.checkTaskDone(127);
+        result = this.checkTaskDone('114');
       break;
       case 10:
-        if (this.scene.state.farm === 'Sheep') {
-          result = this.checkTaskDone(5);
-        } else if (this.scene.state.farm === 'Cow') {
-          result = this.checkTaskDone(137);
-        }
+        // if (this.scene.state.farm === 'Sheep') {
+        //   result = this.checkTaskDone(5);
+        // } else if (this.scene.state.farm === 'Cow') {
+        //   result = this.checkTaskDone(137);
+        // }
       break;
       case 16: 
         result = this.scene.state?.userUnicorn?.tutorial > 30;
