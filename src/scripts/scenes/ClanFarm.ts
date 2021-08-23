@@ -67,7 +67,7 @@ export default class ClanFarm extends Phaser.Scene {
   private createBg(): void {
     this.bg = this.add.sprite(0, 0, 'clan-map').setOrigin(0).setInteractive();
 
-    const backBtn: Phaser.GameObjects.Sprite = this.add.sprite(632, 60, 'close-window-btn');
+    const backBtn: Phaser.GameObjects.Sprite = this.add.sprite(658, 60, 'close-window-btn');
 
     this.clickButton(backBtn, () => {
       this.game.scene.keys[this.state.farm].scrolling.downHandler();
@@ -84,9 +84,9 @@ export default class ClanFarm extends Phaser.Scene {
       fontSize: '24px',
       align: 'left',
       shadow: {
-        offsetX: 1,
-        offsetY: 1, 
-        color: '#96580e',
+        offsetX: 2,
+        offsetY: 2, 
+        color: '#364f7e',
         blur: 2,
         fill: true,
       },
@@ -95,36 +95,29 @@ export default class ClanFarm extends Phaser.Scene {
       x: 70,
       y: 65,
     };
-    this.icon = LogoManager.createIcon(this, pos.x, pos.y, this.state.clan.avatar).setScale(0.41);
-    this.nameText = this.add.text(pos.x + 240, pos.y - 30, this.state.clan.name, textStyle).setOrigin(0.5);
-    if (this.nameText.displayWidth > 340) {
-      const multiply: number = this.nameText.displayWidth / 340;
+    this.icon = LogoManager.createIcon(this, pos.x + 15, pos.y + 7, this.state.clan.avatar).setScale(0.439);
+
+    this.nameText = this.add.text(pos.x + 260, pos.y - 40, this.state.clan.name, textStyle).setOrigin(0.5);
+    if (this.nameText.displayWidth > 380) {
+      const multiply: number = this.nameText.displayWidth / 380;
       this.nameText.setFontSize(parseInt(textStyle.fontSize) / multiply);
     }
 
-    const diamondSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 80, pos.y, 'diamond').setScale(0.10);
-    this.diamondCountText = this.add.text(pos.x + 95, pos.y, shortNum(this.state.clan.diamond.count), textStyle).setOrigin(0, 0.5);
+    const limit: number = this.state.clan.main.cooldown > 0 ? this.state.clan.limit - 1 : this.state.clan.limit;
+    const countText: string = `${this.state.clan.users.length}/${limit}`
+    this.playerCountText = this.add.text(pos.x + 130, pos.y + 18, countText, textStyle).setFontSize(36).setOrigin(0, 0.5);
 
-    const sheepSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 80, pos.y + 35, 'sheepCoin').setScale(0.10);
-    this.sheepCountText = this.add.text(pos.x + 95, pos.y + 35, shortNum(this.state.clan.sheep.money), textStyle).setOrigin(0, 0.5);
+    const diamondSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 270, pos.y + 5, 'diamond').setScale(0.10);
+    this.diamondCountText = this.add.text(pos.x + 285, pos.y + 5, String(this.state.clan.diamond.count), textStyle).setOrigin(0, 0.5);
 
-    const chickenSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 200, pos.y, 'chickenCoin').setScale(0.10);
-    this.chickenCountText = this.add.text(pos.x + 215, pos.y, shortNum(this.state.clan.chicken.money), textStyle).setOrigin(0, 0.5);
+    const sheepSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 270, pos.y + 35, 'sheepCoin').setScale(0.10);
+    this.sheepCountText = this.add.text(pos.x + 285, pos.y + 35, shortNum(this.state.clan.sheep.money), textStyle).setOrigin(0, 0.5);
 
-    const cowSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 200, pos.y + 35, 'cowCoin').setScale(0.10);
-    this.cowCountText = this.add.text(pos.x + 215, pos.y + 35, shortNum(this.state.clan.cow.money), textStyle).setOrigin(0, 0.5);
+    const chickenSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 390, pos.y + 5, 'chickenCoin').setScale(0.10);
+    this.chickenCountText = this.add.text(pos.x + 405, pos.y + 5, shortNum(this.state.clan.chicken.money), textStyle).setOrigin(0, 0.5);
 
-    // const diamondSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 80, pos.y, 'diamond').setScale(0.10);
-    // this.diamondCountText = this.add.text(pos.x + 95, pos.y, '100000', textStyle).setOrigin(0, 0.5);
-
-    // const sheepSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 80, pos.y + 35, 'sheepCoin').setScale(0.10);
-    // this.sheepCountText = this.add.text(pos.x + 95, pos.y + 35, shortNum('100000000000000000000000000000000000000000000000000000000000000000000000000000'), textStyle).setOrigin(0, 0.5);
-
-    // const chickenSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 200, pos.y, 'chickenCoin').setScale(0.10);
-    // this.chickenCountText = this.add.text(pos.x + 215, pos.y, shortNum('10000000000000000000000000000000000000000000000000000000000000000000000000000'), textStyle).setOrigin(0, 0.5);
-
-    // const cowSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 200, pos.y + 35, 'cowCoin').setScale(0.10);
-    // this.cowCountText = this.add.text(pos.x + 215, pos.y + 35, shortNum('10000000000000000000000000000000000000000000000000000000000000000000000000000'), textStyle).setOrigin(0, 0.5);
+    const cowSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 390, pos.y + 35, 'cowCoin').setScale(0.10);
+    this.cowCountText = this.add.text(pos.x + 405, pos.y + 35, shortNum(this.state.clan.cow.money), textStyle).setOrigin(0, 0.5);
     
   }
 
@@ -334,8 +327,9 @@ export default class ClanFarm extends Phaser.Scene {
   public update(): void {
     this.updateCooldowns();
     this.updateLevelText();
-
     this.updateCountsText();
+    this.updatePlayerCount();
+    this.updateClanName();
   }
 
   private updateCountsText(): void {
@@ -396,6 +390,21 @@ export default class ClanFarm extends Phaser.Scene {
     if (this.state.clan.cow.cooldown <= 0 && this.cowLevelText?.active) {
       const text: string = String(this.state.clan.cow.level);
       if (text !== this.cowLevelText.text) this.cowLevelText.setText(text);
+    }
+  }
+  private updatePlayerCount(): void {
+    const limit: number = this.state.clan.main.cooldown > 0 ? this.state.clan.limit - 1 : this.state.clan.limit;
+    const countText: string = `${this.state.clan.users.length}/${limit}`
+    if (countText !== this.playerCountText.text) this.playerCountText.setText(countText);
+  }
+
+  private updateClanName(): void {
+    if (this.nameText.text !== this.state.clan.name) {
+      this.nameText.setText(this.state.clan.name);
+      if (this.nameText.displayWidth > 380) {
+        const multiply: number = this.nameText.displayWidth / 380;
+        this.nameText.setFontSize(parseInt(this.nameText.style.fontSize) / multiply);
+      }
     }
   }
 };
