@@ -898,4 +898,5 @@ interface Istate {
   closeModal?: boolean;
   clanAvatar?: IconfigIcon;
   clanTutor?: boolean;
+  openConvertor?: boolean;
 }

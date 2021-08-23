@@ -6,6 +6,7 @@ import ImproveClanWindow from './ImproveClanWindow';
 import ClanConvertorWindow from './ClanConvertorWindow';
 import ImproveClanFarmWindow from './ImproveClanFarmWindow';
 import BuyCooldownWindow from './BuyCooldownWindow';
+import RedirectFarmWindow from './RedirectFarmWindow';
 
 export default class ClanWindow {
   public scene: Modal;
@@ -42,6 +43,8 @@ export default class ClanWindow {
     } else if (this.windowType === 5) {
       this.height = 520;
     } else if (this.windowType === 6) {
+      this.height = 190;
+    } else if (this.windowType === 7) {
       this.height = 190;
     }
     this.width = 527;
@@ -121,6 +124,9 @@ export default class ClanWindow {
         break;
       case 6: 
         new BuyCooldownWindow(this);
+        break;
+      case 7: 
+        new RedirectFarmWindow(this);
         break;
       default:
         break;

@@ -402,10 +402,9 @@ export default class ClanBankWindow {
         this.openConvertor(count, diamonds, 1);
       } else {
         this.scene.state.modal = {
-          type: 1,
-          sysType: 3,
-          height: 150,
-          message: 'Тут должен быть переход на другую ферму и открытие (или нет) обменника, но пока я это не сделал'
+          type: 18,
+          clanWindowType: 7,
+          message: this.farm,
         }
         this.scene.scene.restart(this.scene.state);
       }
