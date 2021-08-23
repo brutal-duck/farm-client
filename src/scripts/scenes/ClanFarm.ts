@@ -334,6 +334,23 @@ export default class ClanFarm extends Phaser.Scene {
   public update(): void {
     this.updateCooldowns();
     this.updateLevelText();
+
+    this.updateCountsText();
+  }
+
+  private updateCountsText(): void {
+    if (this.diamondCountText.active && this.diamondCountText?.text !== String(this.state.clan.diamond.count)) {
+      this.diamondCountText.setText(String(this.state.clan.diamond.count));
+    }
+    if (this.sheepCountText.active && this.sheepCountText?.text !== shortNum(this.state.clan.sheep.money)) {
+      this.sheepCountText.setText(shortNum(this.state.clan.sheep.money));
+    }
+    if (this.chickenCountText.active && this.chickenCountText?.text !== shortNum(this.state.clan.chicken.money)) {
+      this.chickenCountText.setText(shortNum(this.state.clan.chicken.money));
+    }
+    if (this.cowCountText.active && this.cowCountText?.text !== shortNum(this.state.clan.cow.money)) {
+      this.cowCountText.setText(shortNum(this.state.clan.cow.money));
+    }
   }
 
   private updateCooldowns(): void {

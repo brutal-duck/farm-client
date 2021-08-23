@@ -643,7 +643,7 @@ class Profile extends Phaser.Scene {
     // graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
 
     this.click(zone, (): void => {
-      if (this.state.userSheep.part >= 7) {
+      if (this.state.userSheep.part >= 7 && this.checkAuthUser()) {
         if (!this.state.user.clanId) {
           this.state.modal = {
             type: 17,
@@ -654,7 +654,7 @@ class Profile extends Phaser.Scene {
           this.scene.stop();
           this.scene.launch('ClanFarm', this.state);
         }
-      } else {
+      } else if (this.state.userSheep.part < 7) {
         this.state.modal = {
           type: 1,
           sysType: 3,
@@ -662,10 +662,21 @@ class Profile extends Phaser.Scene {
           height: 150,
         };
         this.scene.launch('Modal', this.state);
+      } else {
+        this.state.modal = {
+          type: 1,
+          sysType: 3,
+          message: this.state.lang.needRegistration,
+          height: 150,
+        };
+        this.scene.launch('Modal', this.state);
       }
     });
   }
 
+  private checkAuthUser(): boolean {
+    return (this.state.user.login || this.state.name) && this.state.platform !== 'ya'|| this.state.yaPlayer && this.state.platform === 'ya';
+  }
   private updatePersonalMessagesNotification(): void {
     if (this.state.updatePersonalMessage) {
       this.state.updatePersonalMessage = false;
@@ -703,7 +714,7 @@ class Profile extends Phaser.Scene {
       (this.state.progress.sheep.part > 4 ||
       this.state.progress.chicken.part >= 1 ||
       this.state.progress.cow.part >= 1) && 
-      (this.state.user.login || this.state.name && this.state.platform !== 'ya' || this.state.yaPlayer && this.state.platform === 'ya') &&
+      this.checkAuthUser() &&
       !this.eventStartText?.visible
     ) {
       this.eventIsland?.setVisible(true);
@@ -728,7 +739,7 @@ class Profile extends Phaser.Scene {
       (this.state.progress.sheep.part > 4 || 
       this.state.progress.chicken.part >= 1 || 
       this.state.progress.cow.part >= 1) && 
-      (this.state.user.login || this.state.name && this.state.platform !== 'ya' || this.state.yaPlayer && this.state.platform === 'ya') &&
+      this.checkAuthUser() &&
       !this.eventMapFarm?.visible
     ) {
       this.eventStartText?.setVisible(false);
@@ -747,7 +758,7 @@ class Profile extends Phaser.Scene {
       this.state.progress.event.type === 2 ||
       this.state.userUnicorn?.tutorial === 0 && 
       this.state.progress.event.type === 1) && 
-      (this.state.user.login || this.state.name && this.state.platform !== 'ya' || this.state.yaPlayer && this.state.platform === 'ya') &&
+      this.checkAuthUser() &&
       (this.state.progress.sheep.part > 4 || 
       this.state.progress.chicken.part >= 1 || 
       this.state.progress.cow.part >= 1) && 
@@ -760,7 +771,7 @@ class Profile extends Phaser.Scene {
     } else if (
       this.state.progress.event.endTime <= 0 &&
       this.state.progress.event.open &&
-      (this.state.user.login || this.state.name && this.state.platform !== 'ya' || this.state.yaPlayer && this.state.platform === 'ya') &&
+      this.checkAuthUser() &&
       (this.state.progress.sheep.part > 4 ||
       this.state.progress.chicken.part >= 1 ||
       this.state.progress.cow.part >= 1) 
@@ -780,8 +791,7 @@ class Profile extends Phaser.Scene {
       this.eventZone?.destroy();
 
     } else if (
-      ((!this.state.user.login && 
-      (!this.state.name && this.state.platform !== 'ya') || !this.state.yaPlayer && this.state.platform === 'ya' || 
+      ((!this.checkAuthUser() || 
       this.state.progress.sheep.part <= 4 && 
       this.state.progress.chicken.part < 1 && 
       this.state.progress.cow.part < 1) || 

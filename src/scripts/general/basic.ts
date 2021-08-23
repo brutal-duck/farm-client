@@ -513,7 +513,11 @@ function donePart(): void {
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Profile')) this.showTasks();
     }
-    if (user.part === 7 && this.state.farm === 'Sheep') this.state.clanTutor = true;
+    if (user.part === 7 && 
+      this.state.farm === 'Sheep' && 
+      (this.state.user.login || this.state.name) && 
+      this.state.platform !== 'ya'|| this.state.yaPlayer && 
+      this.state.platform === 'ya') this.state.clanTutor = true;
   }, callbackScope: this, loop: false });
 
 }
