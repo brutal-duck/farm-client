@@ -532,7 +532,8 @@ class SheepBars extends Phaser.Scene {
   public buySheepStatus(): void {
 
     let breed: number = this.game.scene.keys[this.state.farm].maxBreedForBuy();
-    let price: number = this.game.scene.keys[this.state.farm].sheepPrice(breed).price
+    // let price: number = this.game.scene.keys[this.state.farm].sheepPrice(breed).price
+    let price: number = this.state.sheepSettings.sheepPrice
 
     if ((price > this.state.userSheep.money || this.state.userSheep.tutorial < 100) && this.sheepBuy.tintBottomLeft === 0xFFFFFF) {
       this.sheepBuy.setTint(0x777777);

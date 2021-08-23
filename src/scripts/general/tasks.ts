@@ -488,7 +488,6 @@ function clickTaskBoard(task: ItaskSheep): void {
   }
 
   const openBuyTerritoryWindowForTask = (): void => {
-  
     if (task.state === 1 || task.state === 0) {
       const territory = findUnlockTerritoryForBuy();
       if (territory) openTerritoryWindow(territory);
@@ -518,6 +517,22 @@ function clickTaskBoard(task: ItaskSheep): void {
       } 
     }
   }
+
+  const openShopCoins = (): void => {
+    const modal: Imodal = {
+      type: 2,
+      shopType: 2
+    }
+    this.state.modal = modal;
+    this.scene.manager.keys[this.state.farm].scene.launch('Modal', this.state);
+  }
+
+  const openRepositoryOrSpeechBubble = (): void => {
+    const territory = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => el.type === 5 || el.territoryType === 5);
+    if (territory) openTerritoryWindow(territory)
+    else SpeechBubble.create(this.game.scene.keys[`${this.state.farm}Bars`], this.state.lang.taskHelp_20, 3)
+  }
+
   switch (task.type) {
     case 1: 
       openShopAnimal();
@@ -595,6 +610,15 @@ function clickTaskBoard(task: ItaskSheep): void {
       break;
     case 26: 
       SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_26, 3);
+      break;
+    case 27:
+      SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_27, 3);
+      break;
+    case 28:
+      openShopCoins()
+      break;
+    case 29:
+      openRepositoryOrSpeechBubble()
       break;
     default: 
       break;

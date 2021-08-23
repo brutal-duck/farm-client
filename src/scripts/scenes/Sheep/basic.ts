@@ -119,7 +119,7 @@ function sheepPrice(breed: number) {
     }
 
     insidePrice += price;
-    insideCounter++;
+    // insideCounter++;
   }
 
   return {

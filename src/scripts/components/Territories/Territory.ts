@@ -268,6 +268,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     const currentPart = this.scene.state[`user${this.scene.state.farm}`].part - 1
     const cd = this.scene.state.config[currentPart].territoryColddown * 60
     const time: number = type === 1 ? cd : Math.round(cd / 4);
+    console.log('setTerritoryUnlockCooldown ~ time', time)
     
     this.cooldown = time;
     this.boughtType = type;
