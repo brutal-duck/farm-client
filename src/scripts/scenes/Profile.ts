@@ -19,6 +19,13 @@ const socialBtnVk: string = require('./../../assets/images/profile/social-btn-vk
 const socialBtnOk: string = require('./../../assets/images/profile/social-btn-ok.png');
 const closeWindowBtn: string = require('../../assets/images/modal/close-window-btn.png');
 
+const progressTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+  fontFamily: 'Shadow',
+  fontSize: '28px',
+  color: '#ffe5d7',
+  stroke: '#c85d11',
+  strokeThickness: 3,
+};
 class Profile extends Phaser.Scene {
   constructor() {
     super('Profile');
@@ -135,7 +142,7 @@ class Profile extends Phaser.Scene {
   }
 
   private createElements(): void {
-    this.backBtn = this.add.sprite(630, 62, 'close-window-btn');
+    this.backBtn = this.add.sprite(632, 60, 'close-window-btn');
     this.createProfileInfo();
     this.createFarms();
     this.createShop();
@@ -203,19 +210,17 @@ class Profile extends Phaser.Scene {
   }
 
   private createSheepFarm(): void {
-    const farmPosition: Iposition = { x: 140, y: 800 };
-    const width: number = 260;
-    const height: number = 250;
+    const farmPosition: Iposition = { x: 150, y: 750 };
+    const width: number = 300;
+    const height: number = 240;
     
     const farmZone: Phaser.GameObjects.Zone = this.add.zone(farmPosition.x, farmPosition.y, width, height).setDropZone(undefined, () => {});
     // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
     // graphics.lineStyle(5, 0xFFFF00);
     // graphics.strokeRect(farmZone.x - farmZone.input.hitArea.width / 2, farmZone.y - farmZone.input.hitArea.height / 2, farmZone.input.hitArea.width, farmZone.input.hitArea.height);
-    this.add.text(farmPosition.x + 121, farmPosition.y + 25, `${this.state.progress.sheep.part}/${this.state.progress.sheep.max}`, {
-      font: '28px Shadow',
-      color: '#ffe5d7'
-    }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
-    this.sheepNotificator = new Notificator(this, { x: farmPosition.x + 110, y: farmPosition.y - 125 }, true);
+    const progressText: string = `${this.state.progress.sheep.part}/${this.state.progress.sheep.max}`;
+    this.add.text(farmPosition.x + 155, farmPosition.y + 38, progressText, progressTextStyle).setOrigin(0.5);
+    this.sheepNotificator = new Notificator(this, { x: farmPosition.x + 125, y: farmPosition.y - 85 }, true);
     this.click(farmZone, (): void => {
       if (this.state.farm !== 'Sheep') {
         this.game.scene.keys[this.state.farm].autosave();
@@ -236,11 +241,9 @@ class Profile extends Phaser.Scene {
     const farmPosition: Iposition = { x: 720, y: 1025 };
     if (this.state.progress.chicken.open) {
       const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-chicken-farm').setOrigin(1, 0.5).setDepth(1);
-      this.add.text(farmPosition.x - 212, farmPosition.y - 17, `${this.state.progress.chicken.part}/${this.state.progress.chicken.max}`, {
-        font: '28px Shadow',
-        color: '#ffe5d7'
-      }).setOrigin(0.5, 0.5).setStroke('#522007', 5).setDepth(1);
-      this.chickenNotificator = new Notificator(this, {x: farmPosition.x - 150, y: farmPosition.y - 125 }, true).setDepth(2);
+      const progressText: string = `${this.state.progress.chicken.part}/${this.state.progress.chicken.max}`;
+      this.add.text(farmPosition.x - 245, farmPosition.y + 20, progressText, progressTextStyle).setOrigin(0.5).setDepth(1);
+      this.chickenNotificator = new Notificator(this, { x: farmPosition.x - 200, y: farmPosition.y - 110 }, true).setDepth(2);
       this.click(farmSprite, (): void => {
         if (this.state.farm !== 'Chicken') {
           this.game.scene.keys[this.state.farm].autosave();
@@ -280,17 +283,15 @@ class Profile extends Phaser.Scene {
   }
 
   private createCowFarm(): void {
-    const farmPosition: Iposition = { x: 0, y: 1050 };
+    const farmPosition: Iposition = { x: 0, y: 1020 };
 
     if (this.state.progress.cow.open) {
       const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-cow-farm').setOrigin(0, 0.5);
 
-      this.add.text(farmPosition.x + 290, farmPosition.y + 10, `${this.state.progress.cow.part}/${this.state.progress.cow.max}`, {
-        font: '28px Shadow',
-        color: '#ffe5d7'
-      }).setOrigin(0.5, 0.5).setStroke('#522007', 5);
+      const progressText: string = `${this.state.progress.cow.part}/${this.state.progress.cow.max}`;
+      this.add.text(farmPosition.x + 319, farmPosition.y + 23, progressText, progressTextStyle).setOrigin(0.5);
 
-      this.cowNotificator = new Notificator(this, {x: farmPosition.x + 280, y: farmPosition.y - 100}, true);
+      this.cowNotificator = new Notificator(this, { x: farmPosition.x + 260, y: farmPosition.y - 150 }, true);
       this.click(farmSprite, (): void => {
         if (this.state.farm !== 'Cow') {
           this.game.scene.keys[this.state.farm].autosave();
@@ -524,11 +525,11 @@ class Profile extends Phaser.Scene {
 
   private createShop(): void {
     const pos: Iposition = {
-      x: 280,
+      x: 145,
       y: 530
     }
     const size: Isize = {
-      width: 130,
+      width: 150,
       height: 200
     }
     const zone: Phaser.GameObjects.Zone = this.add.zone(pos.x, pos.y, size.width, size.height).setDropZone(undefined, () => {});
@@ -571,16 +572,16 @@ class Profile extends Phaser.Scene {
     //   });
     // }
 
-    this.shopNotificator = new Notificator(this, { x: pos.x - 55, y: pos.y - 50, });
+    this.shopNotificator = new Notificator(this, { x: pos.x + 55, y: pos.y - 50, });
   }
 
   private createProfile(): void {
     const pos: Iposition = {
-      x: 385,
+      x: 365,
       y: 300
     };
     const size: Isize = {
-      width: 200,
+      width: 190,
       height: 240
     };
     const zone: Phaser.GameObjects.Zone = this.add.zone(pos.x, pos.y, size.width, size.height).setDropZone(undefined, () => {});
@@ -600,12 +601,12 @@ class Profile extends Phaser.Scene {
 
   private createPersonalMessages(): void {
     const pos: Iposition = {
-      x: 465,
-      y: 425
+      x: 475,
+      y: 400
     };
     const size: Isize = {
-      width: 100,
-      height: 120
+      width: 80,
+      height: 110
     };
     const zone: Phaser.GameObjects.Zone = this.add.zone(pos.x, pos.y, size.width, size.height).setDepth(1).setDropZone(undefined, () => {});
       
@@ -622,7 +623,7 @@ class Profile extends Phaser.Scene {
     });
 
     const count: number = this.getPersonalTabCountNotification();
-    this.personalMessageNotificator = new Notificator(this, {x: pos.x + 15, y: pos.y - 25,}, true);
+    this.personalMessageNotificator = new Notificator(this, {x: pos.x + 15, y: pos.y - 40,}, true);
     this.personalMessageNotificator.setCount(count);
   }
 
