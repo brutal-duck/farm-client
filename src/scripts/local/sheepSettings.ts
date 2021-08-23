@@ -86,7 +86,7 @@ const config: Iconfig[] = [
     fairCost: 0,
     grassAndWaterTerritoryCost: 650,
     grassAndWaterRestorePoints: 13,
-    territoryColddown: 0.25,
+    territoryColddown: 0.16,
     oneDiamondToMoney: 450,
     tasks: [
       // купи землю
@@ -312,7 +312,7 @@ const config: Iconfig[] = [
     fairCost: 12100,
     grassAndWaterTerritoryCost: 4033,
     grassAndWaterRestorePoints: 15,
-    territoryColddown: 7,
+    territoryColddown: 1,
     oneDiamondToMoney: 1800,
     tasks: [
       {
@@ -375,7 +375,7 @@ const config: Iconfig[] = [
         type: 6, // накопить монет
         id: '145',
         state: 0,
-        count: 30000, // количество
+        count: 20000, // количество
         done: false,
         awardTaken: false,
         awardType: 'diamond',
@@ -426,7 +426,7 @@ const config: Iconfig[] = [
     fairCost: 42000,
     grassAndWaterTerritoryCost: 12000,
     grassAndWaterRestorePoints: 16,
-    territoryColddown: 17,
+    territoryColddown: 5,
     oneDiamondToMoney: 4800,
     tasks: [
       {
@@ -540,7 +540,7 @@ const config: Iconfig[] = [
     fairCost: 261200,
     grassAndWaterTerritoryCost: 65300,
     grassAndWaterRestorePoints: 18,
-    territoryColddown: 31,
+    territoryColddown: 15,
     oneDiamondToMoney: 12000,
     tasks: [
       {

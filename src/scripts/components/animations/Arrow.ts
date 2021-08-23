@@ -261,11 +261,11 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
         result = this.checkTaskDone('114');
       break;
       case 10:
-        // if (this.scene.state.farm === 'Sheep') {
-        //   result = this.checkTaskDone(5);
+        if (this.scene.state.farm === 'Sheep') {
+          result = this.checkTaskDone('121');
         // } else if (this.scene.state.farm === 'Cow') {
         //   result = this.checkTaskDone(137);
-        // }
+        }
       break;
       case 16: 
         result = this.scene.state?.userUnicorn?.tutorial > 30;

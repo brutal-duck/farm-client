@@ -305,8 +305,6 @@ function checkAnimalTask(): void {
 
 // проверка на уже выполненние задания
 function checkDoneTasks(): void {
-  console.log('check');
-  
   const tasks: ItaskSheep[] = this.partTasks();
   tasks.forEach((task: ItaskSheep) => {
     if (task.type === 27) {
