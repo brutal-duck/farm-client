@@ -60,7 +60,7 @@ export default class SettingsWindow {
     })
   }
   private createBg(): void {
-    this.bg = this.scene.add.tileSprite(this.x, this.y, this.width, this.height, 'white-pixel').setTint(0xFA8F1F);
+    this.bg = this.scene.add.tileSprite(this.x, this.y, this.width, this.height, 'white-pixel').setTint(0xFF9700);
   }
 
   private createHeader(): void {

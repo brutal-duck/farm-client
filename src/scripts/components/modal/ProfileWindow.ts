@@ -453,7 +453,7 @@ export default class ProfileWindow {
       y: this.topBg.getBounds().bottom - 40,
     };
     const width: number = 527;
-    this.bottomBg = this.scene.add.tileSprite(pos.x, pos.y, width, this.bottomHeight, 'white-pixel').setTint(0xFA8F1F).setDepth(-1).setOrigin(0.5, 0);
+    this.bottomBg = this.scene.add.tileSprite(pos.x, pos.y, width, this.bottomHeight, 'white-pixel').setTint(0xFF9700).setDepth(-1).setOrigin(0.5, 0);
     this.scene.add.nineslice(pos.x, pos.y + 40, width - 40, this.bottomHeight , 'clan-window-search-plate-ns', 5).setOrigin(0.5, 0).setDepth(1);
   }
 

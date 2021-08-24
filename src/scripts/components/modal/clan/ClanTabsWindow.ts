@@ -1,4 +1,4 @@
-import { shortNum } from '../../../general/basic';
+import { shortNum, shortTime } from '../../../general/basic';
 import Modal from '../../../scenes/Modal/Modal';
 import LogoManager from '../../Utils/LogoManager';
 const KEY: string = '1491f4c9d53dfa6c50d0c4a375f9ba76';
@@ -34,6 +34,7 @@ export default class ClanTabsWindow {
   private input: HTMLInputElement;
   private enterKey: Phaser.Input.Keyboard.Key;
   private inputText: Phaser.GameObjects.Text;
+  private cooldownTimer: Phaser.GameObjects.Text;
 
   constructor(scene: Modal) {
     this.scene = scene;
@@ -86,7 +87,7 @@ export default class ClanTabsWindow {
   }
 
   private createBg(): void {
-    this.bg = this.scene.add.tileSprite(this.x, this.y, this.width, this.height, 'white-pixel').setTint(0xFA8F1F);
+    this.bg = this.scene.add.tileSprite(this.x, this.y, this.width, this.height, 'white-pixel').setTint(0xFF9700);
     this.modalElements.push(this.bg);
   }
 
@@ -503,6 +504,7 @@ export default class ClanTabsWindow {
 
     let text: string = this.scene.state.lang.improveClan;
 
+    let padding: number = -40;
     if (this.scene.state.clan.main.cooldown > 0) {
       const estimateCost: number = Math.round(this.scene.state.clan.main.cooldown / 60) * 2;
       const price: number = estimateCost > 1000 ? 1000 : estimateCost;
@@ -523,9 +525,20 @@ export default class ClanTabsWindow {
       };
       
       text = this.scene.state.lang.speedUpImprovment;
+      this.cooldownTimer = this.scene.add.text(this.x, this.y - 70, `${this.scene.state.lang.left} ${shortTime(this.scene.state.clan.main.cooldown, this.scene.state.lang)}`, this.headerTextStyle).setOrigin(0.5).setFontSize(25);
+      
+      this.scene.events.on(Phaser.Scenes.Events.UPDATE, () => {
+        if (this.cooldownTimer?.active) {
+          const text: string = `${this.scene.state.lang.left} ${shortTime(this.scene.state.clan.main.cooldown, this.scene.state.lang)}`;
+          if (text !== this.cooldownTimer.text) {
+            this.cooldownTimer.setText(text);
+          }
+        }
+      });
+      padding += 30
     }
 
-    const btn3 = this.scene.bigButton('green', 'left', -40, text, right3);
+    const btn3 = this.scene.bigButton('green', 'left', padding, text, right3);
     this.scene.clickModalBtn(btn3, callBack);
   }
 }
