@@ -38,7 +38,8 @@ function balance(): Ibalance {
 
     if (territory.territoryType === 2 || territory.territoryType === 3) {
       
-      let reg: number = this.settings.territoriesSheepSettings.find(item => item.improve === territory.improve).regeneration;
+      // let reg: number = this.settings.territoriesSheepSettings.find(item => item.improve === territory.improve).regeneration;
+      let reg: number = this.state.config[territory.improve - 1].grassAndWaterRestorePoints
 
       if (territory.territoryType === 2) {
         grassRecovery += reg;

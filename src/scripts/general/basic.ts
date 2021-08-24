@@ -1311,7 +1311,8 @@ function farmBalance(farm: string): Ibalance {
   for (let i in territories) {
     const territory: Iterritories = territories[i];
     if (territory.type === 2 || territory.type === 3) {
-      let reg: number = territoriesSettings.find(item => item.improve === territory.improve).regeneration;
+      // let reg: number = territoriesSettings.find(item => item.improve === territory.improve).regeneration;
+      let reg: number = this.state.config[territory.improve - 1].grassAndWaterRestorePoints;
       if (territory.type === 2) {
         grassRecovery += reg;
       } else {

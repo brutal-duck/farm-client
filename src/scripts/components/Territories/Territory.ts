@@ -268,7 +268,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     const currentPart = this.scene.state[`user${this.scene.state.farm}`].part - 1
     const cd = Math.round(this.scene.state.config[currentPart].territoryColddown * 60)
     const time: number = type === 1 ? cd : Math.round(cd / 4);
-    console.log('setTerritoryUnlockCooldown ~ time', time)
     this.scene.tryTask(5, type);
     this.cooldown = time;
     this.boughtType = type;
@@ -334,8 +333,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     ) {
       const exchangePriceCoins = Math.round(this.scene.state.config[currentPart - 1].grassAndWaterTerritoryCost / 100 * 30)
       const exchangePriceDiamonds = this.scene.state.config[currentPart - 1].repositoryCost
-      console.log('exchangeTerritory ~ exchangePriceCoins', exchangePriceCoins)
-      console.log('exchangeTerritory ~ exchangePriceDiamonds', exchangePriceDiamonds)
   
       if (this.territoryType === 5) {
         if (user.money >= exchangePriceCoins) {

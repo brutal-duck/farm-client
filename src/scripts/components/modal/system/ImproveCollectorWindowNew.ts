@@ -1,5 +1,6 @@
 import { convertMoney, shortNum } from "../../../general/basic";
 import Modal from "../../../scenes/Modal/Modal";
+import Firework from "../../animations/Firework";
 
 export default class ImproveCollectorWindowNew {
   public scene: Modal;
@@ -133,9 +134,7 @@ export default class ImproveCollectorWindowNew {
     },
     improveType: string
   ): void {
-    const success: boolean = this.improveCollectorPayment(improveType)
-
-    if (success) {
+    if (this.improveCollectorPayment(improveType)) {
       Object.values(btn).forEach(el => { el?.destroy() })
       
       if (improveType === 'time') {
@@ -150,8 +149,9 @@ export default class ImproveCollectorWindowNew {
         console.log('speed CD', Math.round(1000 / this.config[this.scene.state.userSheep.collectorSpeedLevel].collectorSpeed));
       }
       
-      this.setCurrentLevelInfoText()
-      this.setNextLevelInfoText()
+      // this.setCurrentLevelInfoText()
+      // this.setNextLevelInfoText()
+      this.closeAndFireworksBlow()
 
     } else {
       if (improveType === 'time') {
@@ -203,5 +203,12 @@ export default class ImproveCollectorWindowNew {
     else this.timeNextText.setText('')
     if (this.nextSpeedLevel) this.speedNextText.setText(`(+${(this.nextSpeedLevel - this.currentSpeedLevel).toFixed(1)})`).setX(this.speedText.getRightCenter().x + 10)
     else this.speedNextText.setText('')
+  }
+
+  private closeAndFireworksBlow(): void {
+    this.scene.scene.stop();
+    this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
+    this.scene.game.scene.keys[this.scene.state.farm].scrolling.scrollY = 0;
+    new Firework(this.scene.game.scene.keys[this.scene.state.farm], { x: this.scene.cameras.main.centerX, y: 340 }, 3)
   }
 }

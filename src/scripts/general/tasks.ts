@@ -490,6 +490,7 @@ function clickTaskBoard(task: ItaskSheep): void {
       if (territory && territory.cooldown === 0) openTerritoryWindow(territory);
       else {
         territory = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => el.territoryType === 1 && el.cooldown !== 0)
+        console.log('openBuyTerritoryWindowForTask ~ territory', territory)
         if (territory) SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_5_1, 3);
         else SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_5, 3);
       }

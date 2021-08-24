@@ -102,7 +102,7 @@ export default class BoughtFarmLand {
       } else this.scene.state[`user${this.scene.state.farm}`].money -= this.price;
 
       this.scene.state.territory.bougthType = type;
-      this.scene.state.territory.improve = this.currentPart + 1;
+      this.scene.state.territory.improve = this.currentPart === 0 ? 1 : this.currentPart;
       this.scene.state.territory.setTerritoryUnlockCooldown(type);
       this.scene.scene.stop();
       this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
