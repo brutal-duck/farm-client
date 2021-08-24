@@ -87,7 +87,7 @@ export default class TasksWindowNew {
       let slot: Phaser.GameObjects.RenderTexture
       let valutaTexture: string = this.tasks[i].awardType
       let award: string = valutaTexture !== 'diamond' ? '' : String(this.tasks[i].award)
-      const taskText: string = this.scene.state.lang[this.tasks[i].text].replace('$1', String(this.tasks[i].count)).replace('$2', String(this.tasks[i].state))
+      const taskText: string = this.scene.state.lang[this.tasks[i]?.text]?.replace('$1', String(this.tasks[i].count))?.replace('$2', String(this.tasks[i].state))
       // let moneyTask = this.scene.game.scene.keys['Sheep'].moneyTasks.find(el => el.id === this.tasks[i].id)
 
       // if (this.scene.state.farm === 'Sheep' && moneyTask) {     

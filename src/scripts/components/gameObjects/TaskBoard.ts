@@ -221,7 +221,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
       if (this.status === 1 && task) {
         this.currentTaskId = task.id
 
-        const text: string = this.scene.state.lang[task.text].replace('$1', String(task.count)).replace('$2', String(task.state))
+        const text: string = this.scene.state.lang[task?.text]?.replace('$1', String(task.count))?.replace('$2', String(task.state))
         this.taskText.setText(text).setWordWrapWidth(450);
         
         const taskTextBounds = this.taskText.getBounds();
@@ -257,7 +257,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
       } else if (this.status === 2 && task) {
         this.currentTaskId = task.id
         
-        const text: string = this.scene.state.lang[task.text].replace('$1', String(task.count)).replace('$2', String(task.state))
+        const text: string = this.scene.state.lang[task?.text]?.replace('$1', String(task.count))?.replace('$2', String(task.state))
         this.taskText.setText(text).setWordWrapWidth(390);
 
         const taskTextBounds: Phaser.Geom.Rectangle = this.taskText.getBounds();
@@ -486,7 +486,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
   private createOldBoard(task: ItaskSheep): void {
     // const taskData: ItaskData = this.scene.game.scene.keys[this.scene.state.farm].getTaskData(task);
     const oldTaskBoard: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(this.bg.x, this.bgY, this.bg.displayWidth, this.bg.displayHeight, 'tasks-bar-ns', 15).setOrigin(0.5, 1).setDepth(this.depth + 10000);
-    const text: string = this.scene.state.lang[task.text].replace('$1', String(task.count)).replace('$2', String(task.state))
+    const text: string = this.scene.state.lang[task?.text]?.replace('$1', String(task.count))?.replace('$2', String(task.state))
     const oldTaskText: Phaser.GameObjects.Text = this.scene.add.text(150, this.positionY - this.taskText.getBounds().height - 244, text, {
       font: '23px Bip',
       color: '#713D1E',
@@ -632,7 +632,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
 
   private createTaskListElement(task: ItaskSheep, i: number): any[] {
     const icon: Phaser.GameObjects.Image = this.scene.add.sprite(88, this.bg.getTopCenter().y - 60 - i * 110, task.icon).setDepth(this.bg.depth + 1).setScale(0.85).setAlpha(0);
-    const taskText: string = this.scene.state.lang[task.text].replace('$1', String(task.count)).replace('$2', String(task.state))
+    const taskText: string = this.scene.state.lang[task?.text]?.replace('$1', String(task.count))?.replace('$2', String(task.state))
     const text: Phaser.GameObjects.Text = this.scene.add.text(icon.getBounds().right + 20, this.bg.getTopCenter().y - 60 - i * 110, taskText, {
       font: '24px Bip',
       color: '#713D1E',
