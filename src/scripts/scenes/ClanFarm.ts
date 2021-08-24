@@ -1,5 +1,5 @@
 import LogoManager, { Icon } from "../components/Utils/LogoManager";
-import { shortNum } from "../general/basic";
+import { shortNum, loadingModal } from "../general/basic";
 import { click, clickButton, clickModalBtn } from "../general/clicks";
 import ClanCooldownBuilding from './../components/clan/ClanCooldownBuilding';
 import ClanFlagPole from './../components/clan/ClanFlagPole';
@@ -41,8 +41,11 @@ export default class ClanFarm extends Phaser.Scene {
   public click = click.bind(this);
   public clickModalBtn = clickModalBtn.bind(this);
   public clickButton = clickButton.bind(this);
+  private loadingModal = loadingModal.bind(this);
 
   public preload(): void {
+    this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)');
+    this.loadingModal();
     this.load.image('clan-map', clanMap);
     this.load.image('clan-chicken-farm', clanChickenFarm);
     this.load.image('clan-flagpole', clanFlagpole);
