@@ -56,10 +56,7 @@ function createBoostAnimal(): void {
 }
 
 function updateNotificationShop(): void {
-  let counter: number = 0;
-  for (let i = 0; i < this.state.shopNotificationCount.length; i++) {
-    counter += this.state.shopNotificationCount[i];
-  }
+  const counter: number = this.state.shopNotificationCount.reduce((a: number, b: number) => a + b);
   
   if ((
     this.scene.isActive('Modal') 
@@ -70,7 +67,10 @@ function updateNotificationShop(): void {
     && this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.visible
   )  {
     this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.setVisible(false);
-  } else if (!this.scene.isActive('Modal') && !this.scene.isActive('Tutorial') && !this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.visible && counter > 0) {
+  } else if (!this.scene.isActive('Modal') && 
+  !this.scene.isActive('Tutorial') && counter > 0 && 
+  (!this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.visible || 
+  this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.count !== counter)) {
     if (this.state.farm === 'Sheep' && this.state.userSheep.tutorial >= 100) {
       this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.setVisible(true);
       this.game.scene.keys[`${this.state.farm}Bars`].shopNotificator.setCount(counter);
