@@ -243,15 +243,8 @@ export default class ClanBankWindow {
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Shadow',
       fontSize: '28px',
-    };
-    const btnTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
-      fontFamily: 'Shadow',
-      wordWrap: { width: 100 },
       align: 'center',
-      fontSize: '20px',
-      color: '#ffffff',
-      stroke: '#277C03',
-      strokeThickness: 3,
+      wordWrap: { width: 400 },
     };
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     let x: number = headerGeom.left + 100;
@@ -263,8 +256,7 @@ export default class ClanBankWindow {
       x += btn.displayWidth + 20
     }
 
-    const donateBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.x, headerGeom.bottom + 270, 'done-chapter-button').setTint(0x777777);
-    const donateBtnText: Phaser.GameObjects.Text = this.scene.add.text(donateBtn.x, donateBtn.y - 5, this.scene.state.lang.send, btnTextStyle).setOrigin(0.5).setTint(0x777777);
+    this.scene.add.text(this.x, headerGeom.bottom + 270, this.scene.state.lang[`open${this.farm[0].toUpperCase() + this.farm.slice(1)}Farm`], textStyle).setOrigin(0.5).setFontSize(25);
   }
 
   private setActive(el: {
