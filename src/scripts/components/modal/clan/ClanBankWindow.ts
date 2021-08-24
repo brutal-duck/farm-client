@@ -149,9 +149,8 @@ export default class ClanBankWindow {
     const texture: string = active ? 'clan-window-tab-active' : 'clan-window-tab-disable';
     const tab: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(pos.x, pos.y, maxWidth / count, height, texture, slice).setOrigin(0, 1);
     const tabGeom: Phaser.Geom.Rectangle = tab.getBounds();
-    const textureIcon: string = type === 1 ? 'diamond' : type === 2 ? 'icon-shop-sheep' : type === 3 ? 'icon-shop-chicken' : 'icon-shop-cow';
-    const tabIcon: Phaser.GameObjects.Sprite = this.scene.add.sprite(tabGeom.centerX, tabGeom.centerY - 10, textureIcon).setOrigin(0.5);
-    if (type === 1) tabIcon.setScale(0.25)
+    const textureIcon: string = type === 1 ? 'diamond' : type === 2 ? 'sheepCoin' : type === 3 ? 'chickenCoin' : 'cowCoin';
+    const tabIcon: Phaser.GameObjects.Sprite = this.scene.add.sprite(tabGeom.centerX, tabGeom.centerY - 10, textureIcon).setScale(0.23);
     
     this.modalElements.push(tab, tabIcon);
     if (!active) {

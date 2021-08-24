@@ -156,6 +156,8 @@ class ShopBars extends Phaser.Scene {
           }
           this.state.modal = modal;
           this.scene.stop();
+          this.scene.stop('ClanFarm');
+          this.scene.stop('Profile');
           this.scene.stop('Shop');
           this.scene.stop('Modal');
           this.scene.launch('Modal', this.state);
@@ -187,6 +189,8 @@ class ShopBars extends Phaser.Scene {
         this.scene.stop();
         this.scene.stop('Shop');
         this.scene.stop('Modal');
+        this.scene.stop('ClanFarm');
+        this.scene.stop('Profile');
         this.scene.launch('Modal', this.state);
 
       }, boostsIcon);
