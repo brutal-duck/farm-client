@@ -2,6 +2,7 @@ import LogoManager, { Icon } from "../components/Utils/LogoManager";
 import { shortNum } from "../general/basic";
 import { click, clickButton, clickModalBtn } from "../general/clicks";
 import ClanCooldownBuilding from './../components/clan/ClanCooldownBuilding';
+import ClanFlagPole from './../components/clan/ClanFlagPole';
 
 const clanMap: string = require('../../assets/images/clan/map.jpg');
 const clanChickenFarm: string = require('../../assets/images/clan/chicken-farm.png');
@@ -31,6 +32,7 @@ export default class ClanFarm extends Phaser.Scene {
   private chickenCountText: Phaser.GameObjects.Text;
   private cowCountText: Phaser.GameObjects.Text;
   private playerCountText: Phaser.GameObjects.Text;
+  private currentIcon: IconfigIcon;
 
   constructor() {
     super('ClanFarm');
@@ -95,7 +97,8 @@ export default class ClanFarm extends Phaser.Scene {
       x: 70,
       y: 65,
     };
-    this.icon = LogoManager.createIcon(this, pos.x + 15, pos.y + 7, this.state.clan.avatar).setScale(0.439);
+    this.currentIcon = this.state.clan.avatar;
+    this.icon = LogoManager.createIcon(this, pos.x + 15, pos.y + 7, this.currentIcon).setScale(0.439);
 
     this.nameText = this.add.text(pos.x + 260, pos.y - 40, this.state.clan.name, textStyle).setOrigin(0.5);
     if (this.nameText.displayWidth > 380) {
@@ -126,9 +129,10 @@ export default class ClanFarm extends Phaser.Scene {
       x: 390,
       y: 300,
     };
-    const zone = this.add.zone(pos.x, pos.y, 200, 240).setDropZone(undefined, () => {});
+    const zone = this.add.zone(pos.x, pos.y, 200, 260).setDropZone(undefined, () => {});
     const textLevel: string = this.state.clan.main.cooldown > 0 ? String(this.state.clan.main.level - 1) : String(this.state.clan.main.level);
     this.clanLevelText = this.add.text(pos.x + 4, pos.y + 60, textLevel, levelTextStyle).setOrigin(0.5);
+    new ClanFlagPole(this, {x: pos.x + 5, y: pos.y - 110}).setDepth(2);
     // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
     // graphics.lineStyle(5, 0xFFFF00);
     // graphics.strokeRect(
@@ -150,7 +154,7 @@ export default class ClanFarm extends Phaser.Scene {
   private createBank(): void {
     const pos: Iposition = {
       x: 595,
-      y: 520,
+      y: 490,
     };
     const zone = this.add.zone(pos.x, pos.y, 160, 200).setDropZone(undefined, () => {});
 
@@ -175,7 +179,7 @@ export default class ClanFarm extends Phaser.Scene {
   private createShop(): void {
     const pos: Iposition = {
       x: 145,
-      y: 530,
+      y: 320,
     };
     const zone = this.add.zone(pos.x, pos.y, 155, 210).setDropZone(undefined, () => {});
 
@@ -199,10 +203,10 @@ export default class ClanFarm extends Phaser.Scene {
 
   private createClanTask(): void {
     const pos: Iposition = {
-      x: 180,
-      y: 320
+      x: 220,
+      y: 530
     };
-    const zone = this.add.zone(pos.x, pos.y, 150, 210).setDropZone(undefined, () => {});
+    const zone = this.add.zone(pos.x, pos.y, 180, 180).setDropZone(undefined, () => {});
 
     // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
     // graphics.lineStyle(5, 0x00FF00);
@@ -234,6 +238,8 @@ export default class ClanFarm extends Phaser.Scene {
     // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
     // graphics.lineStyle(5, 0xFaaf00);
     // graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+    new ClanFlagPole(this, { x: farmPosition.x + 59, y: farmPosition.y - 130 }).setDepth(2);
+
     this.click(zone, () => {
       if (this.state.clan.sheep.cooldown <= 0) {
         this.state.modal = {
@@ -257,6 +263,7 @@ export default class ClanFarm extends Phaser.Scene {
     const sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'clan-chicken-farm');
     const textLevel: string = this.state.clan.chicken.cooldown > 0 ? String(this.state.clan.chicken.level - 1) : String(this.state.clan.chicken.level);
     this.chickenLevelText = this.add.text(farmPosition.x - 106, farmPosition.y + 20, textLevel, levelTextStyle).setOrigin(0.5);
+    new ClanFlagPole(this, { x: farmPosition.x + 2, y: farmPosition.y - 160 }).setDepth(2);
     this.click(sprite, () => {
       if (this.state.clan.chicken.cooldown <= 0) {
         this.state.modal = {
@@ -282,6 +289,8 @@ export default class ClanFarm extends Phaser.Scene {
     
     const textLevel: string = this.state.clan.cow.cooldown > 0 ? String(this.state.clan.cow.level - 1) : String(this.state.clan.cow.level);
     this.cowLevelText = this.add.text(farmPosition.x + 167, farmPosition.y + 32, textLevel, levelTextStyle).setOrigin(0.5);
+    new ClanFlagPole(this, { x: farmPosition.x + 88, y: farmPosition.y - 140 }).setDepth(2);
+
     const zone: Phaser.GameObjects.Zone = this.add.zone(farmPosition.x, farmPosition.y, width, height).setDropZone(undefined, () => {});
     // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
     // graphics.lineStyle(5, 0xFaccdd);
@@ -330,6 +339,7 @@ export default class ClanFarm extends Phaser.Scene {
     this.updateCountsText();
     this.updatePlayerCount();
     this.updateClanName();
+    this.updateClanIcon();
   }
 
   private updateCountsText(): void {
@@ -405,6 +415,18 @@ export default class ClanFarm extends Phaser.Scene {
         const multiply: number = this.nameText.displayWidth / 380;
         this.nameText.setFontSize(parseInt(this.nameText.style.fontSize) / multiply);
       }
+    }
+  }
+
+  private updateClanIcon(): void {
+    if (JSON.stringify(this.currentIcon) !== JSON.stringify(this.state.clan.avatar)) {
+      this.currentIcon = this.state.clan.avatar;
+      this.icon.destroy();
+      const pos: Iposition = {
+        x: 85,
+        y: 72,
+      };
+      this.icon = LogoManager.createIcon(this, pos.x, pos.y, this.currentIcon).setScale(0.439);
     }
   }
 };

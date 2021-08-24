@@ -3,6 +3,7 @@ import { shortNum, getEventRaiting, shortTime, loadingModal, getStatusSettings }
 import { scoreEnding } from './Event/Unicorns/basic';
 import Currency from '../components/animations/Currency';
 import Notificator from './../components/gameObjects/Notificator';
+import ClanFlagPole from './../components/clan/ClanFlagPole';
 
 const background: string = require('./../../assets/images/profile/background.jpg');
 const chickenFarm: string = require('./../../assets/images/profile/chicken-farm.png');
@@ -18,6 +19,7 @@ const fortune: string = require('./../../assets/images/profile/event-fortune.png
 const socialBtnVk: string = require('./../../assets/images/profile/social-btn-vk.png');
 const socialBtnOk: string = require('./../../assets/images/profile/social-btn-ok.png');
 const closeWindowBtn: string = require('../../assets/images/modal/close-window-btn.png');
+const clanFlagpole: string = require('../../assets/images/clan/flagpole.png');
 
 const progressTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
   fontFamily: 'Shadow',
@@ -95,6 +97,7 @@ class Profile extends Phaser.Scene {
     this.load.image('profile-social-btn-vk', socialBtnVk);
     this.load.image('profile-social-btn-ok', socialBtnOk);
     this.load.image('close-window-btn', closeWindowBtn);
+    this.load.image('clan-flagpole', clanFlagpole);
   }
 
 
@@ -634,14 +637,16 @@ class Profile extends Phaser.Scene {
     };
     const size: Isize = {
       width: 150,
-      height: 210
+      height: 230
     };
     const zone: Phaser.GameObjects.Zone = this.add.zone(pos.x, pos.y, size.width, size.height).setDepth(1).setDropZone(undefined, () => {});
       
     // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
     // graphics.lineStyle(5, 0xFFFF00);
     // graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
-
+    if (this.state.clan) {
+      new ClanFlagPole(this, { x: pos.x + 5, y: pos.y - 100 }).setDepth(2);
+    }
     this.click(zone, (): void => {
       if (this.state.userSheep.part >= 7 && this.checkAuthUser()) {
         if (!this.state.user.clanId) {
