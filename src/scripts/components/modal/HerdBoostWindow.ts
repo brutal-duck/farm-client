@@ -20,6 +20,7 @@ export default class HerdBoostWindow {
   private animal: string;
   private mergingArray: any[];
   private animalForBoost: Phaser.Physics.Arcade.Group;
+  private herdBoostTime: number
 
   constructor(scene: Modal) {
     this.scene = scene;
@@ -33,6 +34,7 @@ export default class HerdBoostWindow {
     this.y = 360;
     this.xRoad = 0;
     this.yRoad = 480;
+    this.herdBoostTime = 10;
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.scrollY = 0; // останавливаем скролл
   }
 
@@ -87,12 +89,12 @@ export default class HerdBoostWindow {
     let [timerText, leaves1, leaves2, countdown, text1, text2]: any = this.elements;
     
     // установка новых позиций
-    timerText.setText(this.scene.state.herdBoostTime).setPosition(430, 355);
+    timerText.setText(this.herdBoostTime).setPosition(430, 355);
     countdown.setPosition(430, 360);
     leaves1.setAngle(90).setPosition(455, 420);
     leaves2.setAngle(90).setPosition(455, 290);
     text1.style.wordWrapWidth = 280;
-    text1.setText(this.scene.state.lang[`herdBoostTimer${this.scene.state.farm}_1`] + this.scene.state.herdBoostTime + ' ' + this.scene.state.lang.seconds).setFontSize('26px').setY(1050);
+    text1.setText(this.scene.state.lang[`herdBoostTimer${this.scene.state.farm}_1`] + this.herdBoostTime + ' ' + this.scene.state.lang.seconds).setFontSize('26px').setY(1050);
     text2.setText(this.scene.state.lang[`herdBoostTimer${this.scene.state.farm}_2`]).setY(1100);
 
     this.scene.tweens.add({
@@ -225,7 +227,7 @@ export default class HerdBoostWindow {
   
     // создаю группу для животных
     this.animalForBoost = this.scene.physics.add.group();
-    let currentTime: number = this.scene.state.herdBoostTime;
+    let currentTime: number = this.herdBoostTime;
 
     const timerCreate: Phaser.Time.TimerEvent = this.scene.time.addEvent({
       delay: this.scene.state.herdBoostDelay,
@@ -236,7 +238,7 @@ export default class HerdBoostWindow {
     
     // кристалическая овца
     const timerCreateCrystalAnimal: Phaser.Time.TimerEvent = this.scene.time.addEvent({
-      delay: this.scene.state.herdBoostTime / 3 * 1000,
+      delay: this.herdBoostTime / 3 * 1000,
       loop: true,
       callback: () => {
         if (this.scene.state.farm === 'Unicorn') return;

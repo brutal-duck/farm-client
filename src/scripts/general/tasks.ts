@@ -484,11 +484,15 @@ function clickTaskBoard(task: ItaskSheep): void {
     }
   }
 
-  const openBuyTerritoryWindowForTask = (): void => {
-    if (task.state === 1 || task.state === 0) {
-      const territory = findUnlockTerritoryForBuy();
-      if (territory) openTerritoryWindow(territory);
-      else SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_5, 3);
+  const openBuyTerritoryWindowForTask = (forced: boolean = false): void => {
+    if (task.state === 1 || task.state === 0 || forced) {      
+      let territory = findUnlockTerritoryForBuy();
+      if (territory && territory.cooldown === 0) openTerritoryWindow(territory);
+      else {
+        territory = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => el.territoryType === 1 && el.cooldown !== 0)
+        if (territory) SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_5_1, 3);
+        else SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_5, 3);
+      }
     }
     if (task.state === 2 || task.state === 5 ) {
       let territory: any;
@@ -503,15 +507,11 @@ function clickTaskBoard(task: ItaskSheep): void {
     }
 
     if (this.state.userCow.part < 3 && task.state === 8) {
-      const task: Itasks = this.state.cowTasks.find(el => el.id === 138);
+      const task: ItaskSheep = this.state.cowTasks.find(el => el.id === 138);
       const territory = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => el.block === 3 && el.position === 1);
-      if (task?.done === 1 && task?.got_awarded === 1 && territory.cooldown <= 0) {
-        openTerritoryWindow(territory)
-      } else if (territory.cooldown > 0) {
-        SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_5, 3)
-      } else {
-        SpeechBubble.create(this.game.scene.keys[`${this.state.farm}Bars`], this.state.lang.doneFirstTask, 3);
-      } 
+      if (task?.done && task?.awardTaken && territory.cooldown <= 0) openTerritoryWindow(territory)
+      else if (territory.cooldown > 0) SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_5, 3)
+      else SpeechBubble.create(this.game.scene.keys[`${this.state.farm}Bars`], this.state.lang.doneFirstTask, 3);
     }
   }
 
@@ -537,7 +537,8 @@ function clickTaskBoard(task: ItaskSheep): void {
     if (territory) openTerritoryWindow(territory)
     else {
       territory = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => el.territoryType === 1)
-      if (territory) openTerritoryWindow(territory)
+      if (territory && territory.cooldown === 0) openTerritoryWindow(territory)
+      else openBuyTerritoryWindowForTask(true);
     }
   }
 
