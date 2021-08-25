@@ -154,6 +154,8 @@ function takeDiamondSheep(): void {
       this.state.amplitude.logAmplitudeEvent('take_diamond_animal', {});
 
       this.tryTask(18, 0);
+      this.tryClanTask(8);
+
       this.state.userSheep.diamondAnimalTime = this.state.sheepSettings.sheepDiamondsTime;
       
       let x: number = Phaser.Math.Between(530, 660);

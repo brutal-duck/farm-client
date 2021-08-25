@@ -4,6 +4,8 @@ import Firework from '../components/animations/Firework';
 // получение животного по бусту
 function createBoostAnimal(): void {
   this.tryTask(22, 0);
+  this.tryClanTask(3);
+
   if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0) {
     this.state.user.diamonds -= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost;
     this.state[`user${this.state.farm}`].takenHerdBoost += 1;
@@ -38,7 +40,10 @@ function createBoostAnimal(): void {
         } else {
           this.animalGroup.generate({x, y}, type, id, 0, 0, 0, 7, true);
         }
-        if (type === 0) this.tryTask(18, 0);
+        if (type === 0) {
+          this.tryTask(18, 0);
+          this.tryClanTask(8);
+        }
       }, 
       callbackScope: this, 
       loop: false 
@@ -46,8 +51,11 @@ function createBoostAnimal(): void {
     this.tryTask(2, 0);
     this.tryTask(2, type);
     this.tryTask(4, type);
+    this.tryClanTask(5);
   });
   this.tryTask(25, 0, this.state.herdBoostAnimals.length);
+  this.tryClanTask(12, 0, this.state.herdBoostAnimals.length);
+  this.tryClanTask(13, this.state.herdBoostAnimals.length);
   const COUNT: number = 12;
   if (this.state.herdBoostAnimals.length >= COUNT) {
     sendSocialEvent(this.state, 4, this.state.herdBoostAnimals.length);
@@ -141,6 +149,7 @@ function improveCollector(): void {
   
         this.game.scene.keys['Modal'].improveCollectorAnim({x: this.cameras.main.centerX, y: this.cameras.main.centerY + 10});
         this.game.scene.keys[this.state.farm].tryTask(23, 0, 0, user.collectorLevel);
+        this.scene.tryClanTask(6);
         
         if (!secondNextLevel) {
           this.scene.stop('Modal');
@@ -183,6 +192,8 @@ function improveCollector(): void {
   
         this.game.scene.keys['Modal'].improveCollectorAnim({x: this.cameras.main.centerX, y: this.cameras.main.centerY + 10});
         this.game.scene.keys[this.state.farm].tryTask(23, 0, 0, user.collectorLevel);
+        this.scene.tryClanTask(6);
+
         if (!secondNextLevel) {
           this.scene.stop('Modal');
           this.scene.stop('Shop');
@@ -266,6 +277,7 @@ function freeCollector(type: number = 1): void {
       user.collectorTakenTime = user.collector;
       this.game.scene.keys[this.state.farm + 'Bars'].collector.update();
       this.tryTask(3, 0, minutes);
+      this.tryClanTask(7, 0, minutes);
   
       if (user.tutorial === 90 && this.state.farm === 'Sheep') {
         this.doneTutor_90();
@@ -287,6 +299,7 @@ function freeCollector(type: number = 1): void {
         this.game.scene.keys[this.state.farm + 'Bars'].collector.update();
         this.tryTask(3, 0, minutes);
         this.tryTask(15, 0, doubleTimePrice);
+        this.tryClanTask(7, 0, minutes);
 
         this.state.amplitude.logAmplitudeEvent('collector', {
           type: minutes + ' minutes',
@@ -363,6 +376,7 @@ function buyCollector(type: number): void {
       user.collectorTakenTime = user.collector;
       this.game.scene.keys[this.state.farm + 'Bars'].collector.update();
       this.tryTask(3, 0, hours * 60);
+      this.tryClanTask(7, 0, hours * 60);
 
       this.state.amplitude.logAmplitudeEvent('collector', {
         type: hours + ' hours',
@@ -377,6 +391,7 @@ function buyCollector(type: number): void {
       this.game.scene.keys[this.state.farm + 'Bars'].collector.update();
       this.tryTask(3, 0, hours * 60);
       this.tryTask(15, 0, settings['collectorPrice' + hours]);
+      this.tryClanTask(7, 0, hours * 60);
 
       this.state.amplitude.logAmplitudeEvent('collector', {
         type: hours + ' hours',

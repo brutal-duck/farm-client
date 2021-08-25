@@ -144,6 +144,8 @@ function takeDiamondCow(): void {
       });
 
       this.tryTask(18, 0);
+      this.tryClanTask(8);
+
       this.state.userCow.diamondAnimalTime = this.state.cowSettings.cowDiamondsTime;
       
       let x: number = Phaser.Math.Between(530, 660);

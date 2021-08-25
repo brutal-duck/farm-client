@@ -109,6 +109,7 @@ function adReward(): void {
       }
 
       this.tryTask(18, 0);
+      this.tryClanTask(8);
 
       this.state.amplitude.logAmplitudeEvent('take_diamond_animal', {
         price: 'ad'
@@ -143,6 +144,7 @@ function adReward(): void {
         this.state.userUnicorn.collectorTakenTime = this.state.userUnicorn.collector;
       }
       this.tryTask(3, 0, time);
+      this.tryClanTask(7, 0, time);
 
       this.state.amplitude.logAmplitudeEvent('collector', {
         type: 'free',

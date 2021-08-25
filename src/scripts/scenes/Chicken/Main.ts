@@ -58,6 +58,7 @@ import {
 import {
   partTasks,
   tryTask,
+  tryClanTask,
   getTaskData,
   checkAnimalTask,
   checkDoneTasks
@@ -186,6 +187,7 @@ class Chicken extends Phaser.Scene {
   public partTasks = partTasks.bind(this);
   public pickUpTaskReward = pickUpTaskReward.bind(this);
   public tryTask = tryTask.bind(this);
+  public tryClanTask = tryClanTask.bind(this);
   public getTaskData = getTaskData.bind(this);
   public takeDiamondChicken = takeDiamondChicken.bind(this);
   public checkAnimalTask = checkAnimalTask.bind(this);

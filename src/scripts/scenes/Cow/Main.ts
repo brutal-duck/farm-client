@@ -55,6 +55,7 @@ import {
 import {
   partTasks,
   tryTask,
+  tryClanTask,
   getTaskData,
   checkAnimalTask,
   checkDoneTasks
@@ -118,7 +119,6 @@ import {
   progressTerritoryCooldown,
 } from '../../general/interval';
 import Ads from '../../components/Utils/Ads';
-import RoundedProgress from '../../components/animations/RoundedProgress';
 
 class Cow extends Phaser.Scene {
   constructor() {
@@ -192,6 +192,7 @@ class Cow extends Phaser.Scene {
   public partTasks = partTasks.bind(this);
   public pickUpTaskReward = pickUpTaskReward.bind(this);
   public tryTask = tryTask.bind(this);
+  public tryClanTask = tryClanTask.bind(this);
   public getTaskData = getTaskData.bind(this);
   public takeDiamondCow = takeDiamondCow.bind(this);
   public checkAnimalTask = checkAnimalTask.bind(this);

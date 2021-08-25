@@ -105,6 +105,7 @@ import {
   updateProfileNotification
 } from '../../../general/interval';
 import Ads from '../../../components/Utils/Ads';
+import { tryClanTask } from '../../../general/tasks';
 class Unicorn extends Phaser.Scene {
   constructor() {
     super('Unicorn');
@@ -171,6 +172,7 @@ class Unicorn extends Phaser.Scene {
   public buyAnimal = buyAnimal.bind(this);
   public getAnimal = getAnimal.bind(this);
   public animalPrice = animalPrice.bind(this);
+  public tryClanTask = tryClanTask.bind(this);
   public getFreePosition = getFreePosition.bind(this);
   public drag = drag.bind(this);
   public confirmExpelAnimal = confirmExpelAnimal.bind(this);

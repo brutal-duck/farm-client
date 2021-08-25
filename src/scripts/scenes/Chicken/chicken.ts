@@ -303,6 +303,7 @@ function checkMerging(territory: any, chicken: any, position: string) {
         this.aim(chicken, aimX, aimY);
         this.tryTask(2, type);
         this.tryTask(4, type);
+        this.tryClanTask(5);
         this.checkAnimalTask();
 
       }, callbackScope: this, loop: false });
@@ -402,6 +403,7 @@ function buyChicken(breed: number, shop: boolean = false): boolean {
       this.state.userChicken.countChicken = chickenPrice.countChicken;
       this.game.scene.keys['ChickenBars'].updateChickenPrice();
       this.tryTask(1, breed);
+      this.tryClanTask(1);
       this.tryTask(4, breed);
       this.checkAnimalTask();
 
@@ -477,7 +479,7 @@ function collectEgg(egg: Egg, manualСollect: boolean = false): void {
         y: egg.y - 50
       }, 3, 'chickenCoin');
       this.tryTask(11, 0);
-
+      this.tryClanTask(4);
     } else {
       for (let i in this.territories.children.entries) {
         const territory = this.territories.children.entries[i];
@@ -528,6 +530,7 @@ function collectEgg(egg: Egg, manualСollect: boolean = false): void {
     this.state.user.diamonds++;
     egg.destroy();
     this.tryTask(19, 0);
+    this.tryClanTask(15);
   }
 }
 
@@ -540,6 +543,7 @@ function sellEggs(): void {
     if (this.state.territory.territoryType === 5 && this.state.territory.money > 0) {
 
       this.tryTask(20, 0);
+      this.tryClanTask(2);
 
       this.state.userChicken.money += this.state.territory.money;
       this.state.territory.money = 0;

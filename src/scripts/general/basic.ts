@@ -427,7 +427,7 @@ function exchange(ad: boolean = false): void {
   } else {
     this.state.user.diamonds -= this.state.convertor.diamonds;
     user.money += this.convertDiamonds(this.state.convertor.diamonds);
-
+    this.game.scene.keys[this.state.farm].tryClanTask(10, 0, this.state.convertor.diamonds);
     MoneyAnimation.create(this.game.scene.keys[`${this.state.farm}Bars`]);
     if (!ad) {
 
@@ -500,6 +500,8 @@ function donePart(): void {
   
   this.time.addEvent({ delay: 200, callback: (): void => {
     this.checkDoneTasks();
+    this.tryClanTask(17);
+
   }, callbackScope: this, loop: false });
 
   this.time.addEvent({ delay: 1500, callback: (): void => {
@@ -748,6 +750,7 @@ function getNewbieAward(): void {
         let id: string = 'local_' + randomString(18);
         this.getSheep(id, 0, x, y, 0, 500);
         this.tryTask(18, 0);
+        this.tryClanTask(8);
         if (counter >= 5) timeout.remove(false);
 
       }, callbackScope: this, loop: true });
@@ -772,6 +775,7 @@ function getNewbieAward(): void {
         this.tryTask(2, 0);
         this.tryTask(2, type);
         this.tryTask(4, type);
+        this.tryClanTask(5);
         if (counter >= 3) timeout.remove(false);
 
       }, callbackScope: this, loop: true });
@@ -804,6 +808,7 @@ function getNewbieAward(): void {
       this.state.userSheep.collectorTakenTime = this.state.userSheep.collector;
       this.game.scene.keys[`${this.state.farm}Bars`].collector.update();
       this.tryTask(3, 0, 3 * 60 * 60);
+      this.tryClanTask(7, 0, 3 * 60 * 60);
       break;
     }
 
@@ -823,6 +828,7 @@ function getNewbieAward(): void {
         this.tryTask(2, 0);
         this.tryTask(2, type);
         this.tryTask(4, type);
+        this.tryClanTask(5);
         if (counter >= 3) timeout.remove(false);
       }, callbackScope: this, loop: true });
       this.state.dailyAwards[i] = false;
@@ -837,6 +843,7 @@ function getNewbieAward(): void {
       this.state.userChicken.collectorTakenTime = this.state.userChicken.collector;
       this.game.scene.keys[this.state.farm + 'Bars'].collector.update();
       this.tryTask(3, 0, 3 * 60 * 60);
+      this.tryClanTask(7, 0, 3 * 60 * 60);
       break;
     }
 
@@ -851,6 +858,7 @@ function getNewbieAward(): void {
         let id: string = 'local_' + randomString(18);
         this.getSheep(id, 0, x, y, 0, 500);
         this.tryTask(18, 0);
+        this.tryClanTask(8);
         if (counter >= 10) timeout.remove(false);
       }, callbackScope: this, loop: true });
       this.state.dailyAwards[i] = false;

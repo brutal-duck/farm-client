@@ -556,6 +556,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
             time: 1,
           });
           this.scene.game.scene.keys[this.scene.state.farm].tryTask(21, 0, 1);
+          this.scene.game.scene.keys[this.scene.state.farm].tryClanTask(9, 0, 1);
         } else {
           const time: number = Math.ceil(this.scene.state[`user${this.scene.state.farm}`].feedBoostTime / ONE_HOUR / 2) + 1;
           this.scene.state.amplitude.logAmplitudeEvent('booster_feed_x2', {
@@ -564,6 +565,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
           });
           this.scene.state[`user${this.scene.state.farm}`].feedBoostTime += TWO_HOURS; // прибавить 2часа
           this.scene.game.scene.keys[this.scene.state.farm].tryTask(21, 0, 2);
+          this.scene.game.scene.keys[this.scene.state.farm].tryClanTask(9, 0, 2);
         }
       }
     } else {
@@ -604,6 +606,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
               time: 1,
             });
             this.scene.game.scene.keys[this.scene.state.farm].tryTask(21, 0, 1);
+            this.scene.game.scene.keys[this.scene.state.farm].tryClanTask(9, 0, 2);
           } else {
             const time: number = Math.ceil(this.scene.state[`user${this.scene.state.farm}`].feedBoostTime / ONE_HOUR / 2) + 1;
             this.scene.state.amplitude.logAmplitudeEvent('booster_feed_x2', {
@@ -612,6 +615,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
             });
             this.scene.state[`user${this.scene.state.farm}`].feedBoostTime += TWO_HOURS; // прибавить 2часа
             this.scene.game.scene.keys[this.scene.state.farm].tryTask(21, 0, 2);
+            this.scene.game.scene.keys[this.scene.state.farm].tryClanTask(9, 0, 2);
           }
         }
       } else {

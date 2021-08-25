@@ -237,6 +237,7 @@ function buyAnimal(breed: number, shop: boolean = false, diamond: number = 0): b
           type: 'buy_unicorn',
           count: diamond,
         });
+        this.tryClanTask(1);
       } else {
         if (shop) {
           this.scene.stop('Shop');
@@ -267,6 +268,7 @@ function buyAnimal(breed: number, shop: boolean = false, diamond: number = 0): b
         this.state.userUnicorn.money = BigInteger.subtract(this.state.userUnicorn.money , animalPrice.price);
         this.state.userUnicorn.countAnimal[breed - 1].counter = animalPrice.countAnimal;
         this.game.scene.keys['UnicornBars'].updateAnimalPrice();
+        this.tryClanTask(1);
 
       } else {
           

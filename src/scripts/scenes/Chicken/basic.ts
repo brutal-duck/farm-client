@@ -155,6 +155,8 @@ function takeDiamondChicken(): void {
       });
 
       this.tryTask(18, 0);
+      this.tryClanTask(8);
+      
       this.state.userChicken.diamondAnimalTime = this.state.chickenSettings.chickenDiamondsTime;
       
       let x: number = Phaser.Math.Between(530, 660);

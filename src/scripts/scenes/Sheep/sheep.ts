@@ -345,6 +345,7 @@ function checkMerging(territory: any, sheep: any, position: string) {
         this.aim(sheep, aimX, aimY);
         this.tryTask(2, type);
         this.tryTask(4, type);
+        this.tryClanTask(5);
         this.checkAnimalTask();
 
         if (this.state.userSheep.tutorial === 70) {
@@ -451,6 +452,7 @@ function buySheep(breed: number, shop: boolean = false): boolean {
       this.state.userSheep.countSheep = sheepPrice.countSheep;
       this.game.scene.keys['SheepBars'].updateSheepPrice();
       this.tryTask(1, breed);
+      this.tryClanTask(1);
       this.tryTask(4, breed);
       this.checkAnimalTask();
 
@@ -552,6 +554,7 @@ function collectWool(sheep: any, manualСollect: boolean = false): void {
       });
 
       this.tryTask(11, 1);
+      this.tryClanTask(4);
 
       if (this.state.userSheep.tutorial === 40) {
         this.doneTutor_40();
@@ -610,27 +613,24 @@ function collectWool(sheep: any, manualСollect: boolean = false): void {
       }
     }
   } else {
-
-    let position: Iposition = {
+    const position: Iposition = {
       x: sheep.x,
       y: sheep.y - 50
-    }
+    };
 
     sheep.wool = 0;
     sheep.diamond++;
     this.game.scene.keys['SheepBars'].getCurrency(position, 1, 'diamond');
     this.state.user.diamonds++;
     this.tryTask(19, 0);
+    this.tryClanTask(15);
 
     if (sheep.diamond >= 3) {
-
       if (this.caveTutor) {
-        
         this.time.addEvent({ delay: 2000, callback: (): void => {
           this.showTutorial('cave3');
           this.caveTutor = false;
         }, callbackScope: this, loop: false });
-
       }
  
       Firework.create(this, sheep, 1);
@@ -655,6 +655,7 @@ function sellWool(): void {
     if (this.state.territory.territoryType === 5 && this.state.territory.money > 0) {
 
       this.tryTask(20, 0);
+      this.tryClanTask(2);
 
       this.state.userSheep.money += this.state.territory.money;
       this.state.territory.money = 0;
@@ -819,6 +820,7 @@ function dragSheepMerging(sheep: any): void {
 
     this.tryTask(2, type);
     this.tryTask(4, type);
+    this.tryClanTask(5);
     this.checkAnimalTask();
 
   }

@@ -74,7 +74,6 @@ function partTasks(): Itasks[] {
 
 // попытка выполнения задания
 function tryTask(type: number, state: number, count: number = 1, currentProgress?: number): void {
-
   let part: number;
   if (this.state.farm === 'Sheep') part = this.state.userSheep.part;
   else if (this.state.farm === 'Chicken') part = this.state.userChicken.part;
@@ -91,6 +90,7 @@ function tryTask(type: number, state: number, count: number = 1, currentProgress
     task.progress += count;
     if (task.progress >= task.count) {
       task.done = 1;
+      this.tryClanTask(16);
       this.state.amplitude.logAmplitudeEvent('task_done', {
         task_id: task.id,
         part: part,
@@ -103,6 +103,7 @@ function tryTask(type: number, state: number, count: number = 1, currentProgress
     task.progress = currentProgress;
     if (task.progress >= task.count) {
       task.done = 1;
+      this.tryClanTask(16);
       this.state.amplitude.logAmplitudeEvent('task_done', {
         task_id: task.id,
         part: part,
@@ -113,6 +114,7 @@ function tryTask(type: number, state: number, count: number = 1, currentProgress
 
   if (task?.progress >= task?.count && (task?.type === 21 || task?.type === 22 || task?.type === 3)) {
     task.done = 1;
+    this.tryClanTask(16);
     this.state.amplitude.logAmplitudeEvent('task_done', {
       task_id: task.id,
       part: part,
@@ -217,6 +219,7 @@ function checkAnimalTask(): void {
   
       if (task.count <= count) {
         task.done = 1;
+        this.tryClanTask(16);
         task.progress = count;
       }
       
@@ -240,10 +243,9 @@ function checkAnimalTask(): void {
       task.progress = count;
   
       if (settings.length <= count) {
-  
         task.done = 1;
+        this.tryClanTask(16);
         task.progress = count;
-  
       }
   
     } else if (task?.state > 0 && task?.count > 0) {
@@ -261,6 +263,7 @@ function checkAnimalTask(): void {
       if (task.count <= count) {
         task.progress = count;
         task.done = 1;
+        this.tryClanTask(16);
       }
       
     }
@@ -275,6 +278,7 @@ function checkAnimalTask(): void {
       if (task.count <= count) {
         task.done = 1;
         task.progress = count;
+        this.tryClanTask(16);
       }
       
     } else if (task?.count === 0) {
@@ -297,10 +301,9 @@ function checkAnimalTask(): void {
       task.progress = count;
   
       if (settings.length <= count) {
-  
         task.done = 1;
         task.progress = count;
-  
+        this.tryClanTask(16);
       }
   
     } else if (task?.state > 0 && task?.count > 0) {
@@ -318,11 +321,10 @@ function checkAnimalTask(): void {
       if (task.count <= count) {
         task.progress = count;
         task.done = 1;
+        this.tryClanTask(16);
       }
-      
     }
   }
-
 }
 
 
@@ -353,6 +355,7 @@ function checkDoneTasks(): void {
       if (count >= tasks[i].count) {
         tasks[i].progress = tasks[i].count;
         tasks[i].done = 1;
+        this.tryClanTask(16);
       } else {
         tasks[i].progress = count;
       }
@@ -362,7 +365,7 @@ function checkDoneTasks(): void {
       tasks[i].progress = this.state[`user${this.state.farm}`].collectorLevel;
       if (this.state[`user${this.state.farm}`].collectorLevel >= tasks[i].count) {
         tasks[i].done = 1;
-      } else {}
+      }
     }
   }
   this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
@@ -660,6 +663,32 @@ function checkAvailabilityOfTasks(state: Istate, task: IclanTask): boolean {
   return false;
 }
 
+function tryClanTask(type: number, state: number = 0, count: number = 1, currentProgress?: number): void {
+  let tasks: IclanTask[] = this.state.user.clanTasks;
+  let task: IclanTask = tasks.find((data: IclanTask) => data.type === type);
+  
+  if (!currentProgress && !task?.done &&
+    task?.progress < task?.count &&
+    (task?.state === state || task?.state === 0)) {
+    task.progress += count;
+    if (task.progress >= task.count) {
+      task.done = true;
+      this.state.amplitude.logAmplitudeEvent('clan_task_done', {
+        clan_task_done: task.id,
+      });
+    }
+  } else if (!task?.done && currentProgress) {
+    task.progress = currentProgress;
+    if (task.progress >= task.count) {
+      task.done = true;
+      this.state.amplitude.logAmplitudeEvent('clan_task_done', {
+        clan_task_done: task.id,
+      });
+    }
+  }
+}
+
+
 export {
   partTasks,
   tryTask,
@@ -668,4 +697,5 @@ export {
   checkDoneTasks,
   clickTaskBoard,
   getNewClanTasks,
+  tryClanTask,
 }

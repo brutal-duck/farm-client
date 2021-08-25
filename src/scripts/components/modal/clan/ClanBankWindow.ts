@@ -382,6 +382,7 @@ export default class ClanBankWindow {
             } else {
               this.getCurrency({x: this.scene.cameras.main.centerX, y: this.header.getBounds().bottom + 260}, Number(packageCount), `${this.farm}Coin`);
             }
+            this.scene.game.scene.keys[this.scene.state.farm].tryClanTask(11);
             this.currentCountText.setText(text);
             const mainScene = this.scene.scene.get(this.scene.state.farm) as Sheep | Chicken | Cow | Unicorn;
             mainScene.autosave();
@@ -415,6 +416,7 @@ export default class ClanBankWindow {
             } else {
               this.getCurrency({x: this.scene.cameras.main.centerX, y: this.header.getBounds().bottom + 260}, Number(packageCount), `${this.farm}`);
             }
+            this.scene.game.scene.keys[this.scene.state.farm].tryClanTask(11);
             this.currentCountText.setText(text);
             mainScene.autosave();
           }

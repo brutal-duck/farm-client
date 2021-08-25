@@ -147,6 +147,7 @@ function checkMerging(territory: CowTerritory, cow: CowSprite, position: string)
         cow.setAim(aimX, aimY);
         this.tryTask(2, type);
         this.tryTask(4, type);
+        this.tryClanTask(5);
         this.checkAnimalTask();
       }, callbackScope: this, loop: false });
       territory.merging = [];
@@ -235,6 +236,7 @@ function buyCow(breed: number, shop: boolean = false): boolean {
       this.state.userCow.countCow = cowPrice.countCow;
       this.game.scene.keys['CowBars'].updateCowPrice();
       this.tryTask(1, breed);
+      this.tryClanTask(1);
       this.tryTask(4, breed);
       this.checkAnimalTask();
 
@@ -300,6 +302,7 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
   if (cow.breed !== 0) {
     if (manualСollect) {
       this.tryTask(11, 0);
+      this.tryClanTask(4);
     }
     for (let i in this.territories.children.entries) {
       const territory: CowTerritory = this.territories.children.entries[i];
@@ -374,6 +377,7 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
     this.game.scene.keys['CowBars'].getCurrency(position, 1, 'diamond');
     this.state.user.diamonds++;
     this.tryTask(19, 0);
+    this.tryClanTask(15);
 
 
     if (cow.diamond >= 3) {
@@ -402,6 +406,8 @@ function sellMilk(): void {
         x: this.state.territory.x + 120,
         y: this.state.territory.y + 120
       });
+      this.tryClanTask(2);
+
     }
   }
 }
@@ -455,6 +461,7 @@ function dragCowMerging(cow: CowSprite): void {
     this.animalGroup.generate(position, type, id, 0, newMilk, 0, 7, false);
     this.tryTask(2, type);
     this.tryTask(4, type);
+    this.tryClanTask(5);
     this.checkAnimalTask();
   }
 }

@@ -127,6 +127,7 @@ export default class Ads {
         }
   
         this.scene.tryTask(18, 0);
+        this.scene.tryClanTask(8);
   
         this.scene.state.amplitude.logAmplitudeEvent('take_diamond_animal', {
           price: 'ad'
@@ -161,6 +162,7 @@ export default class Ads {
           this.scene.state.userUnicorn.collectorTakenTime = this.scene.state.userUnicorn.collector;
         }
         this.scene.tryTask(3, 0, time);
+        this.scene.tryClanTask(7, 0, time);
   
         this.scene.state.amplitude.logAmplitudeEvent('collector', {
           type: 'free',

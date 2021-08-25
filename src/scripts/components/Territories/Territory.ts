@@ -255,6 +255,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
         user.money -= price;
         this.setTerritoryUnlockCooldown(1);
+        this.scene.tryClanTask(14);
       } else {
         const count: number = price - user.money;
         const diamonds: number = this.scene.convertMoney(count);
@@ -563,6 +564,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
           user.fair++;
           updateAnimalBuy();
           this.scene.tryTask(7, user.fair);
+          this.scene.tryClanTask(11);
           this.scene.tryTask(15, 0, nextFair.price_d);
           this.scene.time.addEvent({ delay: 200, callback: (): void => {
             this.levelText?.setText(String(user.fair));
@@ -662,6 +664,8 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       this.improve = improve;
       user.money -= price;
 
+      this.scene.tryClanTask(6);
+
       if (this.territoryType === 5) {
         this.scene.tryTask(17, improve);
         this.changeSprite();
@@ -676,7 +680,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         if (this.territoryType === 3) {
           this.scene.tryTask(9, improve);
         }
-
         this.volume = 1000;
 
         this.scene.time.addEvent({ delay: 500, callback: (): void => {
