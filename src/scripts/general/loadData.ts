@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 import AllTasks from '../tasks';
 import basicSheepTerritories from '../local/sheepTerritories';
@@ -190,7 +190,7 @@ function checkDoneTasks(state: Istate): void {
   }
 }
 
-export default function loadData(response: any): void {
+export default function loadData(response: AxiosResponse): void {
   if (this.state.build < response.data.user.build) {
     this.children.destroy();
     new ErrorWindow(this);
@@ -361,6 +361,7 @@ export default function loadData(response: any): void {
     personalMessages: response.data.user.personalMessages,
     avatar: response.data.user.avatar,
     fortuneTutorial: false,
+    clanTasks: response.data.user.clan_tasks,
   };
   this.state.user = user;
 
@@ -582,5 +583,9 @@ export default function loadData(response: any): void {
     this.state.user.fortuneTutorial = response.data.event;
   }
   if (this.state.user.clanId) checkUserName(this.state);
+
+  console.log(new Date(response.data.time * 1000).getDay());
+  console.log(new Date(response.data.user.time * 1000).getDay());
+
   this.userReady = true;
 }

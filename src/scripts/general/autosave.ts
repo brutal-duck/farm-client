@@ -304,6 +304,7 @@ export default function autosave(): void {
     yandexName: state.yandexName,
     avatar: state.user.avatar,
     fortuneTutorial: state.user.fortuneTutorial,
+    clanTasks: state.user.clanTasks,
   }
 
   const data: IdataAutoSave = { 

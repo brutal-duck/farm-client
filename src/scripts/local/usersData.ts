@@ -1,5 +1,4 @@
-
-let userData: Iuser = {
+const userData: Iuser = {
   avatar: '',
   diamonds: 3,
   id: 'local',
@@ -10,6 +9,7 @@ let userData: Iuser = {
   counter: 0,
   mail: '',
   level: 1,
+  clanTasks: [],
   additionalTutorial: {
     balance: false,
     cave: false,
@@ -52,7 +52,7 @@ let userData: Iuser = {
   fortuneTutorial: false,
 }
 
-let userSheep: IuserSheep = {
+const userSheep: IuserSheep = {
   money: 1000,
   fair: 1,
   part: 1,
@@ -68,7 +68,7 @@ let userSheep: IuserSheep = {
   feedBoostTime: 0
 }
 
-let userChicken: IuserChicken = {
+const userChicken: IuserChicken = {
   money: 1000,
   fair: 1,
   part: 1,
@@ -84,7 +84,7 @@ let userChicken: IuserChicken = {
   feedBoostTime: 0
 }
 
-let userCow: IuserCow = {
+const userCow: IuserCow = {
   money: 1000,
   fair: 1,
   part: 1,

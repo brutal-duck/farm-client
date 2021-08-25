@@ -218,6 +218,7 @@ class Boot extends Phaser.Scene {
       status: ' ',
       statuses: [],
       starterpack: false,
+      clanTasks: [],
       boosts: {
         sheep: {
           collector4: 0,
