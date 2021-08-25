@@ -7,6 +7,7 @@ import ClanConvertorWindow from './ClanConvertorWindow';
 import ImproveClanFarmWindow from './ImproveClanFarmWindow';
 import BuyCooldownWindow from './BuyCooldownWindow';
 import RedirectFarmWindow from './RedirectFarmWindow';
+import ClanTasksWindow from './ClanTasksWindow';
 
 export default class ClanWindow {
   public scene: Modal;
@@ -15,7 +16,7 @@ export default class ClanWindow {
   private height: number;
   public width: number;
   public bg: Phaser.GameObjects.TileSprite;
-  private header: Phaser.GameObjects.Sprite;
+  public header: Phaser.GameObjects.Sprite;
   private closeBtn: Phaser.GameObjects.Sprite;
   public headerText: Phaser.GameObjects.Text;
   private footer: Phaser.GameObjects.Sprite;
@@ -46,6 +47,8 @@ export default class ClanWindow {
       this.height = 190;
     } else if (this.windowType === 7) {
       this.height = 190;
+    } else if (this.windowType === 8) {
+      this.height = 520;
     }
     this.width = 527;
   }
@@ -127,6 +130,9 @@ export default class ClanWindow {
         break;
       case 7: 
         new RedirectFarmWindow(this);
+        break;
+      case 8: 
+        new ClanTasksWindow(this);
         break;
       default:
         break;

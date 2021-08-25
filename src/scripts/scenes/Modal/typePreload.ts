@@ -188,6 +188,7 @@ const clanBankDiamondPackage4: string = require('../../../assets/images/modal/cl
 const iconClanSheep: string = require('../../../assets/images/icons/clan-sheep.png');
 const iconClanChicken: string = require('../../../assets/images/icons/clan-chicken.png');
 const iconClanCow: string = require('../../../assets/images/icons/clan-cow.png');
+const headerOrange: string = require('../../../assets/images/modal/header-orange.png');
 
 export default function typePreload(): void {
     switch (this.state.modal.type) {
@@ -445,6 +446,7 @@ export default function typePreload(): void {
       this.load.image('icon-clan-sheep', iconClanSheep);
       this.load.image('icon-clan-chicken', iconClanChicken);
       this.load.image('icon-clan-cow', iconClanCow);
+      this.load.image('modal-header-orange', headerOrange);
         break;
       default:
         break;
