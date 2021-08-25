@@ -12,6 +12,7 @@ import chickenCollectorSettings from '../local/chickenCollector';
 import cowCollectorSettings from '../local/cowCollector';
 import getProgress from '../local/progress';
 import ErrorWindow from './../components/Web/ErrorWindow';
+import { getNewClanTasks } from './tasks';
 const basicUserCow = userCow;
 const basicUserSheep = userSheep;
 const basicUserChicken = userChicken;
@@ -582,10 +583,14 @@ export default function loadData(response: AxiosResponse): void {
   ) {
     this.state.user.fortuneTutorial = response.data.event;
   }
-  if (this.state.user.clanId) checkUserName(this.state);
-
-  console.log(new Date(response.data.time * 1000).getDay());
-  console.log(new Date(response.data.user.time * 1000).getDay());
+  if (this.state.user.clanId) {
+    checkUserName(this.state);
+    const currentDate: Date = new Date(response.data.time * 1000);
+    const autosaveDate: Date = new Date(response.data.user.time * 1000);
+    const currentDay: string = `${currentDate.getDate()}.${currentDate.getMonth()}.${currentDate.getFullYear()}`;
+    const autosaveDay: string = `${autosaveDate.getDate()}.${autosaveDate.getMonth()}.${autosaveDate.getFullYear()}`;
+    if (currentDay !== autosaveDay || this.state.user.clanTasks.length <= 0) this.state.user.clanTasks = getNewClanTasks(this.state);
+  }
 
   this.userReady = true;
 }
