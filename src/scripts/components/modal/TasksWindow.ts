@@ -1,5 +1,4 @@
 import Modal from "../../scenes/Modal/Modal";
-import Scrolling from '../../libs/Scrolling.js'
 import TaskBar from "../gameObjects/TaskBar";
 
 const tasksComplete: string = require("./../../../assets/images/modal/tasks-complete.png");
@@ -16,6 +15,15 @@ export default class TasksWindowNew {
   private close: Phaser.GameObjects.Sprite;
   private centerY: number;
 
+  private line: Phaser.GameObjects.TileSprite;
+  private lineAni: Phaser.Tweens.Tween
+  private nextPart: Phaser.GameObjects.Sprite;
+  private nextPartText: Phaser.GameObjects.Text;
+  private companyDone: Phaser.GameObjects.Text;
+  private partDiscription: Phaser.GameObjects.Text;
+
+  private footerTextStyle: Phaser.Types.GameObjects.Text.TextStyle
+
   constructor(scene: Modal) {
     this.scene = scene;
     this.init();
@@ -27,6 +35,13 @@ export default class TasksWindowNew {
   private init(): void {
     this.centerY = this.scene.cameras.main.centerY + 60;
     this.tasks = this.getTasks();
+    this.footerTextStyle = {
+      fontSize: '20px',
+      fontFamily: 'Shadow',
+      color: '#c15e00',
+      align: 'center',
+      wordWrap: { width: 420 }
+    }
   }
 
 
@@ -66,11 +81,9 @@ export default class TasksWindowNew {
     
     let lastElementBottomY = taskBars[taskBars.length - 1].getBottomCenter().y
     let height: number = lastElementBottomY - this.top.getBottomCenter().y
-    console.log('createTasksBars ~ height', height)
-    let countDone: number = this.tasks.filter(el => el.task.done === 1).length;
 
     this.resizeWindow(height)
-    this.progressLineAndOtherText(countDone, height);
+    this.progressLineAndOtherText();
   }
 
 
@@ -92,61 +105,74 @@ export default class TasksWindowNew {
   }
 
 
-  private progressLineAndOtherText(countDone: number, height: number): void {
-    // Полоска прогресса
-    let percent: number = countDone / (this.scene.state.modal.tasksParams.tasks.length / 100);
-    percent = 460 / 100 * percent;
-    this.scene.add.tileSprite(132, this.scene.cameras.main.centerY + (height / 2) + 4, percent, 16, 'part-progress').setOrigin(0, 0.5);
-
+  private progressLineAndOtherText(): void {
     // Остальной текст
-    this.scene.add.text(this.scene.cameras.main.centerX, this.centerY - Math.floor(height / 2 + 200), this.scene.state.modal.tasksParams.part, {
+    const partNum: Phaser.GameObjects.Text = this.scene.add.text(this.top.getCenter().x, this.top.getTopCenter().y + 60, this.scene.state.modal.tasksParams.part, {
       font: '72px Shadow',
-      fill: '#166c00'
-    }).setOrigin(0.5, 0.5);
+      color: '#166c00'
+    }).setOrigin(0.5);
 
-    this.scene.add.text(this.scene.cameras.main.centerX, this.centerY - Math.floor(height / 2 + 150), this.scene.state.lang.part, {
+    const partText: Phaser.GameObjects.Text = this.scene.add.text(partNum.getBottomCenter().x, partNum.getBottomCenter().y + 14, this.scene.state.lang.part, {
       font: '34px Shadow',
-      fill: '#166c00'
+      color: '#166c00'
     }).setOrigin(0.5, 0.5);
 
-    this.scene.add.text(this.scene.cameras.main.centerX, this.centerY - Math.floor(height / 2 + 78), this.scene.state.modal.tasksParams.name, {
+    this.scene.add.text(partText.getBottomCenter().x, partText.getBottomCenter().y + 50, this.scene.state.modal.tasksParams.name, {
       font: '32px Shadow',
-      fill: '#F2DCFF'
+      color: '#F2DCFF'
     }).setOrigin(0.5, 0.5);
 
-    this.scene.add.text(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2 + 10), this.scene.state.modal.tasksParams.farmer, {
+    this.scene.add.text(this.bottom.getCenter().x, this.bottom.getCenter().y + 8, this.scene.state.modal.tasksParams.farmer, {
       font: '26px Shadow',
-      fill: '#8f3f00'
+      color: '#8f3f00'
     }).setOrigin(0.5, 0.5);
     
+    this.updateProgress();
+  }
+
+
+  private createNextPartButton(): void {
+    this.partDiscription?.destroy();
+
+    this.nextPart = this.scene.add.sprite(this.bottom.getCenter().x, this.bottom.getCenter().y + 60, 'big-btn-green').setDisplaySize(412, 64)
+    this.nextPartText = this.scene.add.text(this.bottom.getCenter().x, this.bottom.getCenter().y + 54, this.scene.state.lang.donePart, {
+      font: '24px Shadow',
+      fill: '#FFFFFF'
+    }).setOrigin(0.5, 0.5);
+
+    this.scene.clickShopBtn({ btn: this.nextPart, title: this.nextPartText }, (): void => { this.scene.game.scene.keys[this.scene.state.farm].nextPart() });
+  }
+
+
+  private createCompanyDoneText(): void {
+    this.partDiscription?.destroy()
+    this.companyDone = this.scene.add.text(this.bottom.getCenter().x, this.bottom.getCenter().y + 60, this.scene.state.lang[`${this.scene.state.farm.toLowerCase()}CompanyDone`], this.footerTextStyle).setOrigin(0.5);
+  }
+
+
+  public updateProgress(): void {
     const parts: Ipart[] = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`${this.scene.state.farm.toLowerCase()}Parts`];
     const userPart: number = this.scene.state[`user${this.scene.state.farm}`].part;
     
-    if (this.scene.state.modal.tasksParams.done && parts.length !== userPart) {
-      const nextPart = this.scene.add.sprite(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2 + 60), 'big-btn-green').setDisplaySize(412, 64)
-      const nextPartText = this.scene.add.text(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2 + 54), this.scene.state.lang.donePart, {
-        font: '24px Shadow',
-        fill: '#FFFFFF'
-      }).setOrigin(0.5, 0.5);
-
-      this.scene.clickShopBtn({ btn: nextPart, title: nextPartText }, (): void => { this.scene.game.scene.keys[this.scene.state.farm].nextPart() });
-
-    } else if (this.scene.state.modal.tasksParams.done && parts.length === userPart) {
-      this.scene.add.text(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2 + 60), this.scene.state.lang[`${this.scene.state.farm.toLowerCase()}CompanyDone`], {
-        font: '20px Shadow',
-        fill: '#c15e00',
-        align: 'center',
-        wordWrap: { width: 420 }
-      }).setOrigin(0.5, 0.5);
-    
-    } else if (!this.scene.state.modal.tasksParams.done) {
-      this.scene.add.text(this.scene.cameras.main.centerX, this.centerY + Math.floor(height / 2 + 60), this.scene.state.modal.tasksParams.description, {
-        font: '20px Shadow',
-        fill: '#c15e00',
-        align: 'center',
-        wordWrap: { width: 420 }
-      }).setOrigin(0.5, 0.5);
+    if (this.scene.state.modal.tasksParams.done && parts.length !== userPart) this.createNextPartButton();
+    else if (this.scene.state.modal.tasksParams.done && parts.length === userPart) this.createCompanyDoneText();
+    else if (!this.scene.state.modal.tasksParams.done) {
+      this.partDiscription = this.scene.add.text(this.bottom.getCenter().x, this.bottom.getCenter().y + 60, this.scene.state.modal.tasksParams.description, this.footerTextStyle).setOrigin(0.5);
     }
+
+    this.lineAni?.remove();
+    this.tasks = this.getTasks();
+    const countDone: number = this.tasks.filter(el => el.task.done === 1).length;
+    const percent: number = 460 / 100 * (countDone / (this.scene.state.modal.tasksParams.tasks.length / 100));
+    const lineWidth: number = this.line ? this.line.getBounds().width : 1;
+    this.line = this.scene.add.tileSprite(this.bottom.getLeftCenter().x + 57, this.bottom.getCenter().y - 56, lineWidth, 16, 'part-progress').setOrigin(0, 0.5);
+
+    this.lineAni = this.scene.tweens.add({
+      targets: this.line,
+      width: percent,
+      duration: 400,
+      ease: 'Power3'
+    })
   }
 
 
