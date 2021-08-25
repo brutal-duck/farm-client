@@ -1021,6 +1021,7 @@ export default {
     goToNoteChicken: 'Перейдите на куриную ферму, чтобы купить монеты.',
     goToNoteCow: 'Перейдите на коровью ферму, чтобы купить монеты.',
     buyingCoins: 'Покупка монет',
+    updatingTasksThrough: 'Обновление заданий через:',
 
   },
 
@@ -2046,5 +2047,6 @@ export default {
     goToNoteChicken: 'Перейдите на куриную ферму, чтобы купить монеты.',
     goToNoteCow: 'Перейдите на коровью ферму, чтобы купить монеты.',
     buyingCoins: 'Покупка монет',
+    updatingTasksThrough: 'Обновление заданий через:',
   },
 }

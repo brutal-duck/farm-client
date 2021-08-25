@@ -41,14 +41,10 @@ export default class ClanTasksWindow {
       y: this.y - 230,
     };
 
-    const title: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, 'Обновление заданий через:', textStyle).setOrigin(0.5);
+    const title: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, this.scene.state.lang.updatingTasksThrough, textStyle).setOrigin(0.5);
     this.timer = this.scene.add.text(pos.x, pos.y + 30, shortTime(this.scene.state.timeToNewDay, this.scene.state.lang), textStyle).setOrigin(0.5).setColor('#ffe1c0');
     
     this.scene.add.nineslice(pos.x, this.y + 90, this.window.width - 40, 520, 'modal-square-bg', 10).setOrigin(0.5);
-  }
-
-  private handleClose(): void {
-    this.scene.scene.stop();
   }
 
   private update(): void {
@@ -61,5 +57,4 @@ export default class ClanTasksWindow {
       }
     }
   }
-
 };
