@@ -123,7 +123,7 @@ interface IuserAutoSave {
   yandexName: string;
   avatar: string;
   fortuneTutorial: boolean;
-  clanTasks: IclanTasks[]
+  clanTasks: IclanTask[]
 }
 interface Imessage {
   _id?: string;
@@ -221,7 +221,7 @@ interface Iuser {
   messages: Imessage[];
   personalMessages: IuserPersonalMessage[];
   fortuneTutorial: boolean;
-  clanTasks: IclanTasks[];
+  clanTasks: IclanTask[];
 }
 interface IuserSheep {
   money: number;
@@ -589,7 +589,7 @@ interface Itasks {
   xp: number;
   farm: number;
 }
-interface IclanTasks {
+interface IclanTask {
   id: number;
   type: number;
   state: number;

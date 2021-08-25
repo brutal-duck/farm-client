@@ -1,5 +1,6 @@
 import AllTasks from '../tasks';
 import SpeechBubble from '../components/animations/SpeechBuble';
+import clanTasks from '../local/tasks/clanTasks';
 
 // список заданий текущей главы
 function partTasks(): Itasks[] {
@@ -612,6 +613,52 @@ function clickTaskBoard(task: Itasks): void {
   }
 }
 
+function getNewClanTasks(state: Istate): IclanTask[] {
+  const tasks: IclanTask[] = [];
+  const MAX_COUNT: number = 4;
+  let count: number = 0;
+  
+  Phaser.Utils.Array.Shuffle(clanTasks).forEach(el => {
+    if (count < MAX_COUNT) {
+      if (tasks.some(task => task.type !== el.type)) {
+        if (el.type !== 14 && el.type !== 16 && el.type !== 17) {
+          tasks.push(el);
+          count += 1;
+        } else {
+          if (checkAvailabilityOfTasks(state, el)) {
+            tasks.push(el);
+            count += 1;
+          }
+        }
+      }
+    }
+  });
+  return tasks;
+}
+
+function checkAvailabilityOfTasks(state: Istate, task: IclanTask): boolean {
+  if (task.type === 14) {
+    let count: number = 0
+    count += state.sheepTerritories.filter(el => el.type === 0 && el.cooldown < 0).length;
+    count += state.chickenTerritories.filter(el => el.type === 0 && el.cooldown < 0).length;
+    count += state.cowTerritories.filter(el => el.type === 0 && el.cooldown < 0).length;
+    if (state.eventTerritories) count += state.eventTerritories.filter(el => el.type === 0).length;
+    return count >= task.count;
+  } else if (task.type === 16) {
+    let count: number = 0;
+    count += state.sheepTasks.filter(el => el.part >= state.userSheep.part && !Boolean(el.done)).length;
+    count += state.chickenTasks.filter(el => el.part >= state.userChicken.part && !Boolean(el.done)).length;
+    count += state.cowTasks.filter(el => el.part >= state.userCow.part && !Boolean(el.done)).length;
+    return count >= task.count;
+  } else if (task.type === 17) {
+    let count: number = 0;
+    count += (state.sheepSettings.sheepParts.length - state.userSheep.part);
+    count += (state.chickenSettings.chickenParts.length - state.userChicken.part);
+    count += (state.cowSettings.cowParts.length - state.userCow.part);
+    return count >= task.count;
+  }
+  return false;
+}
 
 export {
   partTasks,
@@ -619,5 +666,6 @@ export {
   getTaskData,
   checkAnimalTask,
   checkDoneTasks,
-  clickTaskBoard
+  clickTaskBoard,
+  getNewClanTasks,
 }
