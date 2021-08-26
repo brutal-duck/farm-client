@@ -280,7 +280,7 @@ let ratingPrisePlaces: any = require("./../../../../assets/images/event/modal/ra
 let eventTutorMerging: any = require("./../../../../assets/images/event/tutor-merging.png");
 
 let eventTerritoryBtn: any = require("./../../../../assets/images/event/territories/buy-button.png");
-let starterpackIcon: any = require("./../../../../assets/images/icons/starterpack.png");
+let stockIcon: any = require("./../../../../assets/images/icons/stock.png");
 
 const notificationBg: string = require('../../../../assets/images/icons/notificator.png');
 class EventPreload extends Phaser.Scene {
@@ -586,7 +586,7 @@ class EventPreload extends Phaser.Scene {
     this.load.image('rating-places', ratingPrisePlaces);
     this.load.image('event-tutor-merging',eventTutorMerging);
     this.load.image('event-territory-btn', eventTerritoryBtn);
-    this.load.image('starterpack-icon', starterpackIcon);
+    this.load.image('stock-icon', stockIcon);
     this.load.image('firework1', firework1);
     this.load.image('firework2', firework2);
     this.load.image('firework3', firework3);

@@ -265,6 +265,7 @@ const iconClanSheep: string = require('../../assets/images/icons/clan-sheep.png'
 const iconClanChicken: string = require('../../assets/images/icons/clan-chicken.png');
 const iconClanCow: string = require('../../assets/images/icons/clan-cow.png');
 const headerOrange: string = require('../../assets/images/modal/header-orange.png');
+const stock: string = require('../../assets/images/icons/stock.png');
 
 class Preload extends Phaser.Scene {
   constructor() {
@@ -576,6 +577,7 @@ class Preload extends Phaser.Scene {
     this.load.image('icon-clan-chicken', iconClanChicken);
     this.load.image('icon-clan-cow', iconClanCow);
     this.load.image('modal-header-orange', headerOrange);
+    this.load.image('stock-icon', stock);
   }
 
   public create(): void {

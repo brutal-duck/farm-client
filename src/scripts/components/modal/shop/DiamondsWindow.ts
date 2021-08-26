@@ -70,19 +70,19 @@ export default class DiamondsWindow {
     }
 
     if ((packData.diamonds + packData.bonus) >= 750 && this.checkStarterpack()) {
-      const x: number = position.x + 30;
-      const y: number = position.y + this.scene.height + 20;
+      const x: number = position.x + 200;
+      const y: number = position.y + this.scene.height + 200;
       
-      const starterpackIcon: Phaser.GameObjects.Image = this.scene.add.image(x, y, 'starterpack-icon');
-      starterpackIcon.setScale(0.4).setDepth(3);
+      const starterpackIcon: Phaser.GameObjects.Image = this.scene.add.image(x, y, 'stock-icon');
+      starterpackIcon.setScale(0.45).setDepth(3);
       this.scene.tweens.add({
         targets: starterpackIcon,
         delay: 2000,
-        angle: -21,
-        duration: 100,
-        yoyo: true,
-        repeat: 1,
-        loop: -1
+        props: {
+          rotation: { duration: 600, yoyo: false, ease: 'Power2', value: 2 * Math.PI },
+          scale: { value: 0.5, ease: 'Power1', duration: 250, yoyo: true },
+        },
+        loop: -1,
       });
     }
 

@@ -317,7 +317,7 @@ const calendar: string = require("./../../../assets/images/calendar.png");
 const adIcon: string = require("./../../../assets/images/icons/ad-icon.png");
 const bgAd: string = require("./../../../assets/images/icons/bg-ad.png");
 const bigButtonGreen: string = require("./../../../assets/images/modal/btn_lg.png");
-const starterpackIcon: string = require("./../../../assets/images/icons/starterpack.png");
+const stockIcon: string = require("./../../../assets/images/icons/stock.png");
 const firework1: string = require("./../../../assets/images/animations/firework1.png");
 const firework2: string = require("./../../../assets/images/animations/firework2.png");
 const firework3: string = require("./../../../assets/images/animations/firework3.png");
@@ -689,7 +689,7 @@ class SheepPreload extends Phaser.Scene {
     this.load.image('ad-icon', adIcon);
     this.load.image('bg-ad', bgAd);
     this.load.image('big-btn-green', bigButtonGreen);
-    this.load.image('starterpack-icon', starterpackIcon);
+    this.load.image('stock-icon', stockIcon);
     this.load.image('firework1', firework1);
     this.load.image('firework2', firework2);
     this.load.image('firework3', firework3);

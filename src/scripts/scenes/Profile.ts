@@ -551,31 +551,31 @@ class Profile extends Phaser.Scene {
       this.scene.launch('Modal', this.state);
     });
 
-    // if (!this.state.user.starterpack && (this.state.progress.sheep.part > 4 || this.state.progress.chicken.part >= 1)) {
+    if (!this.state.user.starterpack && (this.state.progress.sheep.part > 4 || this.state.progress.chicken.part >= 1)) {
 
-    //   const starterpackIcon: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 60, pos.y - 80, 'starterpack-icon').setScale(0.25)
-    //   this.tweens.add({
-    //     targets: starterpackIcon,
-    //     delay: 2000,
-    //     scale: 0.32,
-    //     duration: 180,
-    //     yoyo: true,
-    //     repeat: 1,
-    //     loop: -1
-    //   });
+      const starterpackIcon: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 55, pos.y - 50, 'stock-icon').setScale(0.45);
+      this.tweens.add({
+        targets: starterpackIcon,
+        delay: 2000,
+        props: {
+          rotation: { duration: 600, yoyo: false, ease: 'Power2', value: 2 * Math.PI },
+          scale: { value: 0.5, ease: 'Power1', duration: 250, yoyo: true },
+        },
+        loop: -1,
+      });
 
-    //   this.click(starterpackIcon, () => {
-    //     const modal: Imodal = {
-    //       type: 2,
-    //       shopType: 1
-    //     }
-    //     this.state.modal = modal;
-    //     this.scene.stop();
-    //     this.scene.launch('Modal', this.state);
-    //   });
-    // }
+      this.click(starterpackIcon, () => {
+        const modal: Imodal = {
+          type: 2,
+          shopType: 1
+        }
+        this.state.modal = modal;
+        this.scene.stop();
+        this.scene.launch('Modal', this.state);
+      });
+    }
 
-    this.shopNotificator = new Notificator(this, { x: pos.x + 55, y: pos.y - 50, });
+    // this.shopNotificator = new Notificator(this, { x: pos.x + 55, y: pos.y - 50, });
   }
 
   private createProfile(): void {
@@ -893,7 +893,7 @@ class Profile extends Phaser.Scene {
   }
 
   private updateShopNotification(): void {
-    this.shopNotificator.setVisible(this.checkFreeDiamondsNotification());
+    this.shopNotificator?.setVisible(this.checkFreeDiamondsNotification());
   }
 
   private checkFreeDiamondsNotification(): boolean {

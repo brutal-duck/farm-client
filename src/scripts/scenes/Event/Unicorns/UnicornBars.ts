@@ -60,7 +60,7 @@ class UnicornBars extends Phaser.Scene {
   public shop: Phaser.GameObjects.Image;
   public map: Phaser.GameObjects.Image;
   public collectorBtn: Phaser.GameObjects.Image;
-  public starterpackIcon: Phaser.GameObjects.Image;
+  public starterpackIcon: Phaser.GameObjects.Sprite;
   public hints: Phaser.GameObjects.Group;
   public shopNotificator: Notificator;
   public mapNotificator: Notificator;
@@ -258,30 +258,27 @@ class UnicornBars extends Phaser.Scene {
       this.animalPriceBubble.setVisible(false);
     }
 
-    // if (!this.state.user.starterpack) {
+    if (!this.state.user.starterpack) {
+      this.starterpackIcon = this.add.sprite(480, 25, 'stock-icon').setScale(0.34);
+      this.click(this.starterpackIcon, (): void => {
+        const modal: Imodal = {
+          type: 2,
+          shopType: 1,
+        }
+        this.state.modal = modal;
+        this.scene.launch('Modal', this.state);
+      });
       
-    //   this.starterpackIcon = this.add.image(490, 45, 'starterpack-icon').setScale(0.2);
-    //   this.click(this.starterpackIcon, ()=>{
-    //     const modal: Imodal = {
-    //       type: 2,
-    //       shopType: 1,
-    //     }
-    //     this.state.modal = modal;
-    //     this.scene.launch('Modal', this.state);
-    //   });
-      
-    //   this.tweens.add({
-    //     targets: this.starterpackIcon,
-    //     duration: 300,
-    //     yoyo: true,
-    //     ease: 'Power2',
-    //     repeat: 2,
-    //     delay: 400,
-    //     scale: 0.3,
-    //     loop: -1,
-    //     loopDelay: 4000,
-    //   });
-    // }
+      this.tweens.add({
+        targets: this.starterpackIcon,
+        delay: 2000,
+        props: {
+          rotation: { duration: 600, yoyo: false, ease: 'Power2', value: 2 * Math.PI },
+          scale: { value: 0.40, ease: 'Power1', duration: 250, yoyo: true },
+        },
+        loop: -1,
+      });
+    }
   }
 
 
