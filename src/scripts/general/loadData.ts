@@ -20,26 +20,28 @@ const basicUserChicken = userChicken;
 const checkUserName = (state: Istate) => {
   const { user, clan, platform, name, avatar } = state;
 
-  const clanUser = clan.users.find(el => el.id === user.id);
+  const clanUser = clan?.users.find(el => el.id === user.id);
 
-  let newName: string = user.login;
-  if (platform !== 'web' && platform !== 'android') newName = name;
-  const newAvatar: string = Number(user.avatar) > 0 ? user.avatar : avatar;
-
-  if (clanUser.name !== newName || clanUser.avatar !== newAvatar) {
-    const data = {
-      id: user.id,
-      hash: user.hash,
-      counter: user.counter,
-      name: newName,
-      avatar: newAvatar,
-    };
-    axios.post(process.env.API + '/updateClanUser', data).then(res => {
-      if (!res.data.error) {
-        clanUser.name = newName;
-        clanUser.avatar = newAvatar;
-      }
-    });
+  if (clanUser) {
+    let newName: string = user.login;
+    if (platform !== 'web' && platform !== 'android') newName = name;
+    const newAvatar: string = Number(user.avatar) > 0 ? user.avatar : avatar;
+  
+    if (clanUser.name !== newName || clanUser.avatar !== newAvatar) {
+      const data = {
+        id: user.id,
+        hash: user.hash,
+        counter: user.counter,
+        name: newName,
+        avatar: newAvatar,
+      };
+      axios.post(process.env.API + '/updateClanUser', data).then(res => {
+        if (!res.data.error) {
+          clanUser.name = newName;
+          clanUser.avatar = newAvatar;
+        }
+      });
+    }
   }
 }
 
