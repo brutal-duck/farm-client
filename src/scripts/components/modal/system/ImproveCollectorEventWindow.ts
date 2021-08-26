@@ -15,7 +15,7 @@ export default class ImproveCollectorEventWindow {
     let thisLevel: IcollectorSettings = this.scene.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userUnicorn.collectorLevel);
     let nextLevel: IcollectorSettings = this.scene.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userUnicorn.collectorLevel + 1);
 
-    let speedText: string = this.scene.state.lang.power + ': ' + thisLevel.speed + ' ' + this.scene.state.lang.unitEvent + '/' + this.scene.state.lang.seconds;
+    let speedText: string = this.scene.state.lang.speed + ': ' + thisLevel.speed + ' ' + this.scene.state.lang.unitEvent + '/' + this.scene.state.lang.seconds;
     const speed: Phaser.GameObjects.Text = this.scene.add.text(125, this.scene.cameras.main.centerY - 80, speedText, {
       font: '30px Bip',
       color: '#925C28'
@@ -103,7 +103,7 @@ export default class ImproveCollectorEventWindow {
     let thisLevel: IcollectorSettings = this.scene.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userUnicorn.collectorLevel);
     let nextLevel: IcollectorSettings = this.scene.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userUnicorn.collectorLevel + 1);
   
-    let speedText: string = this.scene.state.lang.power + ': ' + thisLevel.speed + ' ' + this.scene.state.lang.unitEvent + '/' + this.scene.state.lang.seconds;
+    let speedText: string = this.scene.state.lang.speed + ': ' + thisLevel.speed + ' ' + this.scene.state.lang.unitEvent + '/' + this.scene.state.lang.seconds;
     speed.setText(speedText);
       
     let durationText: string = this.scene.state.lang.duration + ': ' + thisLevel.time + ' ' + this.scene.state.lang.minutes;

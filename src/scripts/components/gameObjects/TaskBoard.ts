@@ -504,6 +504,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
       (this.scene.menu.isOpened ||
       this.scene.scene.isActive('Modal') ||
       this.scene.scene.isActive('Tutorial') ||
+      this.scene.scene.isActive('Block') ||
       this.scene.scene.isActive('Fortune')) &&
       this.isVisibile || !checkSheepTutor && this.isVisibile
     ) {
@@ -513,6 +514,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
     } else if (
       !this.scene.menu.isOpened &&
       !this.scene.scene.isActive('Modal') &&
+      !this.scene.scene.isActive('Block') &&
       !this.scene.scene.isActive('Tutorial') &&
       !this.scene.scene.isActive('Fortune') &&
       !this.isVisibile && checkSheepTutor

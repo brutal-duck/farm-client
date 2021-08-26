@@ -504,7 +504,7 @@ function donePart(): void {
 
   }, callbackScope: this, loop: false });
 
-  this.time.addEvent({ delay: 1500, callback: (): void => {
+  this.time.addEvent({ delay: 0, callback: (): void => {
     if (!((user.part === 3 && this.state.user.additionalTutorial.cave && this.state.farm === 'Sheep') || 
       (user.part === 5 && this.state.user.additionalTutorial.herdBoost && this.state.farm === 'Sheep') ||
       (user.part === 6 && this.state.user.additionalTutorial.feedBoost && this.state.farm === 'Sheep') || 
