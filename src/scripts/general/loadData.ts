@@ -591,7 +591,9 @@ export default function loadData(response: AxiosResponse): void {
     const autosaveDate: Date = new Date(response.data.user.time * 1000);
     const currentDay: string = `${currentDate.getDate()}.${currentDate.getMonth()}.${currentDate.getFullYear()}`;
     const autosaveDay: string = `${autosaveDate.getDate()}.${autosaveDate.getMonth()}.${autosaveDate.getFullYear()}`;
-    if (currentDay !== autosaveDay || this.state.user.clanTasks.length <= 0) this.state.user.clanTasks = getNewClanTasks(this.state);
+    if (currentDay !== autosaveDay || this.state.user.clanTasks?.length <= 0 || !this.state.user.clanTasks){
+       this.state.user.clanTasks = getNewClanTasks(this.state);
+      }
   }
 
   this.userReady = true;

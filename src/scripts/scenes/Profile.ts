@@ -23,7 +23,7 @@ const clanFlagpole: string = require('../../assets/images/clan/flagpole.png');
 
 const progressTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
   fontFamily: 'Shadow',
-  fontSize: '28px',
+  fontSize: '24px',
   color: '#ffe5d7',
   stroke: '#c85d11',
   strokeThickness: 3,
@@ -101,7 +101,7 @@ class Profile extends Phaser.Scene {
   }
 
 
-  public  getCurrency(position: Iposition, counter: number = 1, texture: string): void {
+  public getCurrency(position: Iposition, counter: number = 1, texture: string): void {
     if (counter > 5) counter = 5;
   
     let time: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {

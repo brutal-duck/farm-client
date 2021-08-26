@@ -10,7 +10,7 @@ import RoundedProgress from "../animations/RoundedProgress"
 export default class TaskBar extends Phaser.GameObjects.Sprite {
 
   public scene: Modal;
-  public taskInfo: { task: Itasks, taskData: ItaskData };
+  public taskInfo: { task: Itasks | IclanTask, taskData: ItaskData };
 
   private barHeight: number;
   private valutaTexture: string;
@@ -36,7 +36,7 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
   private currentProgress: number;
   private done: number;
 
-  constructor(x: number, y: number, taskInfo: { task: Itasks, taskData: ItaskData }, scene: Modal) {
+  constructor(x: number, y: number, taskInfo: { task: Itasks | IclanTask, taskData: ItaskData }, scene: Modal) {
     super(scene, x, y, '');
     this.scene = scene;    
     this.taskInfo = taskInfo;
@@ -69,7 +69,7 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
     this.taskCompliteAwardTakenTextColor = '#759534';
 
     this.currentProgress = this.taskInfo.task.progress;
-    this.done = this.taskInfo.task.done;
+    this.done = Number(this.taskInfo.task.done);
 
     this.setOrigin(0.5, 0).setDepth(2);
   }
@@ -175,7 +175,7 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
   }
 
   private setDone(): void {
-    this.done = this.taskInfo.task.done
+    this.done = Number(this.taskInfo.task.done);
     if (this.taskInfo.task.done === 1 && this.taskInfo.task.got_awarded === 0) this.taskCompleteAwardNonTaken();
     else if (this.taskInfo.task.done === 1 && this.taskInfo.task.got_awarded === 1) this.taskComplete();
   }

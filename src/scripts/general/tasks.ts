@@ -193,51 +193,36 @@ function checkAnimalTask(): void {
   let settings: IchickenPoints[] | IsheepPoints[] = [];
 
   if (this.state.farm === 'Sheep') {
-
     animals = this.sheep.children.entries;
     settings = this.state.sheepSettings.sheepSettings;
-
   } else if (this.state.farm === 'Chicken') {
-
     animals = this.chicken.children.entries;
     settings = this.state.chickenSettings.chickenSettings;
-
   } else if (this.state.farm === 'Cow') {
-
     animals = this.animalGroup.children.entries;
     settings = this.state.cowSettings.cowSettings;
-
   }
+
   if (this.state.farm !== 'Cow') {
-    
     let tasks: Itasks[] = this.partTasks();
     let task: Itasks = tasks.find((data: Itasks) => data.type === 14);
     if (task?.state === 0 && task?.count > 0 && task?.done === 0) {
-  
       let count: number = animals.length;
       task.progress = count;
-  
       if (task.count <= count) {
         task.done = 1;
         this.tryClanTask(16);
         task.progress = count;
       }
-      
     } else if (task?.count === 0) {
-  
       let count: number = 0;
-  
       for (let i: number = 0; i < settings.length; i++) {
-  
         for (let j = 0; j < animals.length; j++) {
-  
           if (settings[i].breed === animals[j].type) {
             count++
             break;
           }
-  
         }
-  
       }
   
       task.progress = count;
@@ -249,13 +234,10 @@ function checkAnimalTask(): void {
       }
   
     } else if (task?.state > 0 && task?.count > 0) {
-  
       let count: number = 0;
       for (let i in animals) {
-  
         let chicken = animals[i];
         if (task.state === chicken.type) count++
-  
       }
   
       task.progress = count;
@@ -265,13 +247,11 @@ function checkAnimalTask(): void {
         task.done = 1;
         this.tryClanTask(16);
       }
-      
     }
   } else {
     let tasks: Itasks[] = this.partTasks();
     let task: Itasks = tasks.find((data: Itasks) => data.type === 14);
     if (task?.state === 0 && task?.count > 0 && task?.done === 0) {
-  
       let count: number = animals.length;
       task.progress = count;
   
@@ -282,20 +262,14 @@ function checkAnimalTask(): void {
       }
       
     } else if (task?.count === 0) {
-  
       let count: number = 0;
-  
       for (let i: number = 0; i < settings.length; i++) {
-  
         for (let j = 0; j < animals.length; j++) {
-  
           if (settings[i].breed === animals[j].breed) {
             count++
             break;
           }
-  
         }
-  
       }
   
       task.progress = count;
@@ -307,13 +281,10 @@ function checkAnimalTask(): void {
       }
   
     } else if (task?.state > 0 && task?.count > 0) {
-  
       let count: number = 0;
       for (let i in animals) {
-  
         let chicken = animals[i];
         if (task.state === chicken.breed) count++
-  
       }
   
       task.progress = count;
@@ -620,10 +591,10 @@ function getNewClanTasks(state: Istate): IclanTask[] {
   const tasks: IclanTask[] = [];
   const MAX_COUNT: number = 4;
   let count: number = 0;
-  
-  Phaser.Utils.Array.Shuffle(clanTasks).forEach(el => {
+  const shuffledTasks: IclanTask[] = Phaser.Utils.Array.Shuffle(clanTasks);
+  shuffledTasks.forEach(el => {
     if (count < MAX_COUNT) {
-      if (tasks.some(task => task.type !== el.type)) {
+      if (tasks.some(task => task.type !== el.type) || tasks.length <= 0) {
         if (el.type !== 14 && el.type !== 16 && el.type !== 17) {
           tasks.push(el);
           count += 1;

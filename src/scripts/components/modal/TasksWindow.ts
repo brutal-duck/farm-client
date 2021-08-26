@@ -8,7 +8,7 @@ const tasksReward: string = require("./../../../assets/images/modal/tasks/reward
 export default class TasksWindowNew {
   public scene: Modal;
 
-  private tasks: { task: Itasks, taskData: ItaskData }[]
+  private tasks: { task: Itasks, taskData: ItaskData }[];
   private top: Phaser.GameObjects.Sprite;
   private middle: Phaser.GameObjects.TileSprite;
   private bottom: Phaser.GameObjects.Sprite;
@@ -52,12 +52,10 @@ export default class TasksWindowNew {
 
 
   private create(): void {
-    // this.scene.state.amplitude.logAmplitudeEvent('show_tasks_window', {});
-
-    let height: number = 760;
+    const height: number = 760;
     
     this.top = this.scene.add.sprite(this.scene.cameras.main.centerX + 3, this.centerY - Math.floor(height / 2), 'tasks-top').setOrigin(0.5, 1);
-    this.close = this.scene.add.sprite(606, this.centerY - Math.floor(height / 2 + 114), 'tasks-close').setDepth(2);
+    this.close = this.scene.add.sprite(606, this.centerY - Math.floor(height / 2 + 114), 'close-window-btn').setDepth(2);
 
     this.createTasksBars();
 
@@ -70,16 +68,15 @@ export default class TasksWindowNew {
 
 
   private createTasksBars(): void {
-    let taskBars: TaskBar[] = []
-    
+    const taskBars: TaskBar[] = [];
     for (let i = 0; i < this.tasks.length; i++) {
       const x: number = this.top.getBottomCenter().x;
       const y: number = taskBars.length ? taskBars[i - 1].getBottomCenter().y + 4 : this.top.getBottomCenter().y;
       taskBars.push(new TaskBar(x, y, this.tasks[i], this.scene));
     }
     
-    let lastElementBottomY = taskBars[taskBars.length - 1].getBottomCenter().y;
-    let height: number = lastElementBottomY - this.top.getBottomCenter().y;
+    const lastElementBottomY = taskBars[taskBars.length - 1].getBottomCenter().y;
+    const height: number = lastElementBottomY - this.top.getBottomCenter().y;
 
     this.resizeWindow(height);
     this.progressLineAndOtherText();

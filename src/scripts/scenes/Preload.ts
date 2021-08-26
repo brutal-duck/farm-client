@@ -266,6 +266,27 @@ const iconClanChicken: string = require('../../assets/images/icons/clan-chicken.
 const iconClanCow: string = require('../../assets/images/icons/clan-cow.png');
 const headerOrange: string = require('../../assets/images/modal/header-orange.png');
 const stock: string = require('../../assets/images/icons/stock.png');
+const clanTaskIcon1: string = require('../../assets/images/modal/clan/tasks/task-1.png');
+const clanTaskIcon2: string = require('../../assets/images/modal/clan/tasks/task-2.png');
+const clanTaskIcon3: string = require('../../assets/images/modal/clan/tasks/task-3.png');
+const clanTaskIcon4: string = require('../../assets/images/modal/clan/tasks/task-4.png');
+const clanTaskIcon5: string = require('../../assets/images/modal/clan/tasks/task-5.png');
+const clanTaskIcon6: string = require('../../assets/images/modal/clan/tasks/task-6.png');
+const clanTaskIcon7: string = require('../../assets/images/modal/clan/tasks/task-7.png');
+const clanTaskIcon8: string = require('../../assets/images/modal/clan/tasks/task-8.png');
+const clanTaskIcon9: string = require('../../assets/images/modal/clan/tasks/task-9.png');
+const clanTaskIcon10: string = require('../../assets/images/modal/clan/tasks/task-10.png');
+const clanTaskIcon11: string = require('../../assets/images/modal/clan/tasks/task-11.png');
+const clanTaskIcon12: string = require('../../assets/images/modal/clan/tasks/task-12.png');
+const clanTaskIcon13: string = require('../../assets/images/modal/clan/tasks/task-13.png');
+const clanTaskIcon14: string = require('../../assets/images/modal/clan/tasks/task-14.png');
+const clanTaskIcon15: string = require('../../assets/images/modal/clan/tasks/task-15.png');
+const clanTaskIcon16: string = require('../../assets/images/modal/clan/tasks/task-16.png');
+const clanTaskIcon17: string = require('../../assets/images/modal/clan/tasks/task-17.png');
+const clanTaskIcon18: string = require('../../assets/images/modal/clan/tasks/task-18.png');
+const clanTaskIcon19: string = require('../../assets/images/modal/clan/tasks/task-19.png');
+
+
 
 class Preload extends Phaser.Scene {
   constructor() {
@@ -578,6 +599,26 @@ class Preload extends Phaser.Scene {
     this.load.image('icon-clan-cow', iconClanCow);
     this.load.image('modal-header-orange', headerOrange);
     this.load.image('stock-icon', stock);
+
+    this.load.image('clan-task-icon-1',clanTaskIcon1);
+    this.load.image('clan-task-icon-2',clanTaskIcon2);
+    this.load.image('clan-task-icon-3',clanTaskIcon3);
+    this.load.image('clan-task-icon-4',clanTaskIcon4);
+    this.load.image('clan-task-icon-5',clanTaskIcon5);
+    this.load.image('clan-task-icon-6',clanTaskIcon6);
+    this.load.image('clan-task-icon-7',clanTaskIcon7);
+    this.load.image('clan-task-icon-8',clanTaskIcon8);
+    this.load.image('clan-task-icon-9',clanTaskIcon9);
+    this.load.image('clan-task-icon-10',clanTaskIcon10);
+    this.load.image('clan-task-icon-11',clanTaskIcon11);
+    this.load.image('clan-task-icon-12',clanTaskIcon12);
+    this.load.image('clan-task-icon-13',clanTaskIcon13);
+    this.load.image('clan-task-icon-14',clanTaskIcon14);
+    this.load.image('clan-task-icon-15',clanTaskIcon15);
+    this.load.image('clan-task-icon-16',clanTaskIcon16);
+    this.load.image('clan-task-icon-17',clanTaskIcon17);
+    this.load.image('clan-task-icon-18',clanTaskIcon18);
+    this.load.image('clan-task-icon-19',clanTaskIcon19);
   }
 
   public create(): void {
