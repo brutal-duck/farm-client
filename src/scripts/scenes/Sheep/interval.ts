@@ -28,7 +28,7 @@ function interval(): void {
     let balance: Ibalance = this.balance();
 
     // Подсказка при отрицательном балансе
-    if (balance.notEnoughGrass || balance.notEnoughWater) {
+    if ((balance.notEnoughGrass || balance.notEnoughWater) && this.state.userSheep.tutorial >= 100) {
       balanceCounter++;
       
       if (balanceCounter >= BALANCE_HINT_COUNTDOWN * balanceCounterMultiplier) {
