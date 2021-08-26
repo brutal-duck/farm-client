@@ -17,6 +17,7 @@ function interval(): void {
   let checkRaiting: boolean = false;
   let arrowOnStorage: Phaser.GameObjects.Sprite;
   let arrowOnTerrirory: Phaser.GameObjects.Sprite;
+  let arrowOnFair: Phaser.GameObjects.Sprite;
   let arrowOnMap: Phaser.GameObjects.Sprite;
   let arrowOnCollector: Phaser.GameObjects.Sprite;
   this.time.addEvent({ delay: 1000, callback: (): void => {
@@ -229,7 +230,7 @@ function interval(): void {
     this.dailyAward();
 
     // стрелки для некоторых заданий
-    if (this.state.userSheep.part < 3) {
+    if (this.state.userSheep.part < 4) {
       
       let tasks: ItaskSheep[] = this.partTasks();
       tasks.sort((x1: ItaskSheep, x2: ItaskSheep) => {
@@ -259,6 +260,11 @@ function interval(): void {
         arrowOnTerrirory = Arrow.generate(this, 10, { x: territory.x + 120, y: territory.y + 180 });
       }
 
+      // задание на улучшение ярморки
+      if (!task?.done && task?.id === '134' && !arrowOnFair) {
+        let territory: any = this.territories.children.entries.find((data: any) => data.block === 1 && data.position === 3);
+        arrowOnFair = Arrow.generate(this, 20, { x: territory.x + 120, y: territory.y + 180 });
+      }
     }
 
     this.intervalCollectorTutorial(arrowOnCollector);

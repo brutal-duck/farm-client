@@ -195,7 +195,7 @@ export default class ImproveCollectorWindowNew {
 
   private setCurrentLevelInfoText(): void {
     this.timeText.setText(`${this.scene.state.lang.duration}: ${this.currentTimeLevel} ${this.scene.state.lang.minutes}`)
-    this.speedText.setText(`${this.scene.state.lang.power}: ${this.currentSpeedLevel} ${this.scene.state.lang[`unit${this.scene.state.farm}`]}/${this.scene.state.lang.seconds}`)
+    this.speedText.setText(`${this.scene.state.lang.speed}: ${this.currentSpeedLevel} ${this.scene.state.lang[`unit${this.scene.state.farm}`]}/${this.scene.state.lang.seconds}`)
   }
 
   private setNextLevelInfoText(): void {

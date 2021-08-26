@@ -9,7 +9,7 @@ const config: Iconfig[] = [
     repositoryVolume: 27,
     fairCost: 0,
     grassAndWaterTerritoryCost: 500,
-    grassAndWaterRestorePoints: 13,
+    grassAndWaterRestorePoints: 14,
     territoryColddown: 0,
     oneDiamondToMoney: 450,
     tasks: [
@@ -85,7 +85,7 @@ const config: Iconfig[] = [
     repositoryVolume: 90,
     fairCost: 0,
     grassAndWaterTerritoryCost: 650,
-    grassAndWaterRestorePoints: 13,
+    grassAndWaterRestorePoints: 14,
     territoryColddown: 0.16,
     oneDiamondToMoney: 450,
     tasks: [
@@ -191,7 +191,7 @@ const config: Iconfig[] = [
     repositoryVolume: 126,
     fairCost: 4300,
     grassAndWaterTerritoryCost: 1720,
-    grassAndWaterRestorePoints: 14,
+    grassAndWaterRestorePoints: 15,
     territoryColddown: 0.5,
     oneDiamondToMoney: 900,
     tasks: [
@@ -311,7 +311,7 @@ const config: Iconfig[] = [
     repositoryVolume: 216,
     fairCost: 12100,
     grassAndWaterTerritoryCost: 4033,
-    grassAndWaterRestorePoints: 15,
+    grassAndWaterRestorePoints: 16,
     territoryColddown: 1,
     oneDiamondToMoney: 1800,
     tasks: [
@@ -425,7 +425,7 @@ const config: Iconfig[] = [
     repositoryVolume: 330,
     fairCost: 42000,
     grassAndWaterTerritoryCost: 12000,
-    grassAndWaterRestorePoints: 16,
+    grassAndWaterRestorePoints: 17,
     territoryColddown: 5,
     oneDiamondToMoney: 4800,
     tasks: [
@@ -539,7 +539,7 @@ const config: Iconfig[] = [
     repositoryVolume: 468,
     fairCost: 261200,
     grassAndWaterTerritoryCost: 65300,
-    grassAndWaterRestorePoints: 18,
+    grassAndWaterRestorePoints: 20,
     territoryColddown: 15,
     oneDiamondToMoney: 12000,
     tasks: [
@@ -653,7 +653,7 @@ const config: Iconfig[] = [
     repositoryVolume: 720,
     fairCost: 0,
     grassAndWaterTerritoryCost: 249244,
-    grassAndWaterRestorePoints: 21,
+    grassAndWaterRestorePoints: 22,
     territoryColddown: 36,
     oneDiamondToMoney: 28800,
     tasks: [
@@ -767,7 +767,7 @@ const config: Iconfig[] = [
     repositoryVolume: 918,
     fairCost: 1720000,
     grassAndWaterTerritoryCost: 344000,
-    grassAndWaterRestorePoints: 23,
+    grassAndWaterRestorePoints: 25,
     territoryColddown: 54,
     oneDiamondToMoney: 38400,
     tasks: [
@@ -881,7 +881,7 @@ const config: Iconfig[] = [
     repositoryVolume: 1254,
     fairCost: 0,
     grassAndWaterTerritoryCost: 1067636,
-    grassAndWaterRestorePoints: 28,
+    grassAndWaterRestorePoints: 30,
     territoryColddown: 60,
     oneDiamondToMoney: 86400,
     tasks: [
@@ -995,7 +995,7 @@ const config: Iconfig[] = [
     repositoryVolume: 1386,
     fairCost: 8008000,
     grassAndWaterTerritoryCost: 1334667,
-    grassAndWaterRestorePoints: 27,
+    grassAndWaterRestorePoints: 30,
     territoryColddown: 67,
     oneDiamondToMoney: 105600,
     tasks: [
@@ -1109,7 +1109,7 @@ const config: Iconfig[] = [
     repositoryVolume: 1794,
     fairCost: 0,
     grassAndWaterTerritoryCost: 2728369,
-    grassAndWaterRestorePoints: 29,
+    grassAndWaterRestorePoints: 32,
     territoryColddown: 92,
     oneDiamondToMoney: 211200,
     tasks: [
@@ -1223,7 +1223,7 @@ const config: Iconfig[] = [
     repositoryVolume: 1950,
     fairCost: 28662400,
     grassAndWaterTerritoryCost: 4094629,
-    grassAndWaterRestorePoints: 32,
+    grassAndWaterRestorePoints: 35,
     territoryColddown: 100,
     oneDiamondToMoney: 249600,
     tasks: [
@@ -1337,7 +1337,7 @@ const config: Iconfig[] = [
     repositoryVolume: 2430,
     fairCost: 0,
     grassAndWaterTerritoryCost: 8318293,
-    grassAndWaterRestorePoints: 33,
+    grassAndWaterRestorePoints: 36,
     territoryColddown: 108,
     oneDiamondToMoney: 499200,
     tasks: [
@@ -1451,7 +1451,7 @@ const config: Iconfig[] = [
     repositoryVolume: 2610,
     fairCost: 77664000,
     grassAndWaterTerritoryCost: 9708000,
-    grassAndWaterRestorePoints: 36,
+    grassAndWaterRestorePoints: 39,
     territoryColddown: 116,
     oneDiamondToMoney: 576000,
     tasks: [
@@ -1565,7 +1565,7 @@ const config: Iconfig[] = [
     repositoryVolume: 3060,
     fairCost: 0,
     grassAndWaterTerritoryCost: 19648753,
-    grassAndWaterRestorePoints: 41,
+    grassAndWaterRestorePoints: 44,
     territoryColddown: 240,
     oneDiamondToMoney: 1152000,
     tasks: [
@@ -1679,7 +1679,7 @@ const config: Iconfig[] = [
     repositoryVolume: 3162,
     fairCost: 391462400,
     grassAndWaterTerritoryCost: 43495822,
-    grassAndWaterRestorePoints: 43,
+    grassAndWaterRestorePoints: 47,
     territoryColddown: 248,
     oneDiamondToMoney: 1305600,
     tasks: [
@@ -1793,7 +1793,7 @@ const config: Iconfig[] = [
     repositoryVolume: 3648,
     fairCost: 0,
     grassAndWaterTerritoryCost: 85202189,
-    grassAndWaterRestorePoints: 45,
+    grassAndWaterRestorePoints: 49,
     territoryColddown: 256,
     oneDiamondToMoney: 2611200,
     tasks: [
@@ -1907,7 +1907,7 @@ const config: Iconfig[] = [
     repositoryVolume: 3762,
     fairCost: 933401600,
     grassAndWaterTerritoryCost: 93340160,
-    grassAndWaterRestorePoints: 48,
+    grassAndWaterRestorePoints: 52,
     territoryColddown: 264,
     oneDiamondToMoney: 2918400,
     tasks: [
@@ -2021,7 +2021,7 @@ const config: Iconfig[] = [
     repositoryVolume: 4284,
     fairCost: 0,
     grassAndWaterTerritoryCost: 183432533,
-    grassAndWaterRestorePoints: 49,
+    grassAndWaterRestorePoints: 54,
     territoryColddown: 272,
     oneDiamondToMoney: 5836800,
     tasks: [
@@ -2135,7 +2135,7 @@ const config: Iconfig[] = [
     repositoryVolume: 4830,
     fairCost: 0,
     grassAndWaterTerritoryCost: 208886248,
-    grassAndWaterRestorePoints: 54,
+    grassAndWaterRestorePoints: 59,
     territoryColddown: 0,
     oneDiamondToMoney: 6451200,
     tasks: [

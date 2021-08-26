@@ -182,7 +182,13 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
         this.y = this.position.y - 180 - this.height / 2;
         this.setAngle(90);
         this.verticalAnim();
-      break;
+        break;
+      case 20:
+        this.x = this.position.x;
+        this.y = this.position.y - 180 - this.height / 2;
+        this.setAngle(90);
+        this.verticalAnim();
+        break;
     }
 
     this.setDepth(this.y * 2);
@@ -231,23 +237,27 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
       case 10:
         if ((this.checkModalOpen() || this.checkTutorialOpen()) && this.visible) this.setVisible(false);
         else if (!this.checkModalOpen() && !this.checkTutorialOpen() && !this.visible) this.setVisible(true);
-      break;
+        break;
       case 17:
       case 18:
         if (this.checkModalOpen() && this.visible) this.setVisible(false);
         else if (!this.checkModalOpen() && !this.visible) this.setVisible(true);
-      break;
+        break;
       case 19:
         if ((this.checkModalOpen() || this.checkTutorialOpen()) && this.visible) this.setVisible(false);
         else if (!this.checkModalOpen() && !this.checkTutorialOpen() && !this.visible) this.setVisible(true);
-      break;
+        break;
+      case 20:
+        if ((this.checkModalOpen() || this.checkTutorialOpen()) && this.visible) this.setVisible(false);
+        else if (!this.checkModalOpen() && !this.checkTutorialOpen() && !this.visible) this.setVisible(true);
+        break;
     }
   }
 
   private checkTaskDone(id: string): boolean {
     const tasks: ItaskSheep[] = this.scene.partTasks();
     const task: ItaskSheep = tasks.find((data: ItaskSheep) => (data.id === id));
-    return task.done === true;
+    return task.done;
   }
 
   private checkDestroy(): boolean {
@@ -256,34 +266,37 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
     switch (this.state) {
       case 4:
         result = this.scene.state.userSheep.tutorial > 40;
-      break;
+        break;
       case 9:
         result = this.checkTaskDone('114');
-      break;
+        break;
       case 10:
         if (this.scene.state.farm === 'Sheep') {
           result = this.checkTaskDone('121');
         // } else if (this.scene.state.farm === 'Cow') {
         //   result = this.checkTaskDone(137);
         }
-      break;
+        break;
       case 16: 
         result = this.scene.state?.userUnicorn?.tutorial > 30;
-      break;
+        break;
       case 17: 
         if (this.scene.state.progress.event.type === 1) {
           result = this.scene.state.userUnicorn?.tutorial > 0;
         } else if (this.scene.state.progress.event.type === 2) {
           result = this.scene.state.user.fortuneTutorial;
         }
-      break;
+        break;
       case 18: 
         result = this.scene.state[`user${this.scene.state.farm}`].collector > 0;
-      break;
+        break;
       case 19: 
         const factoryTerritory: CowTerritory = this.scene.territories.children.entries.find((data: CowTerritory) => data.territoryType === 8);
         result = factoryTerritory.factory.money <= 0 || factoryTerritory.factory.currentProduction !== undefined;
-      break;
+        break;
+      case 20:
+        result = this.checkTaskDone('134');
+        break;
     }
     return result;
   }
@@ -302,5 +315,4 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
     if (this.checkDestroy()) this.destroy();
     this.newPosition();
   }
-
 }
