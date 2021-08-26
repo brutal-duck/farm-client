@@ -67,7 +67,7 @@ export default class RoundedProgress {
 
   public setPercent(percent: number, time: number = 0): RoundedProgress {
     if (percent === 100) percent = 99.9
-    const targets = this.mask.bitmapMask as Phaser.GameObjects.TileSprite;
+    const targets = this.mask?.bitmapMask as Phaser.GameObjects.TileSprite;
     const duration = 500;
     let from = this.timeoutAni?.isPlaying() ? this.timeoutAni.data[0].current : 360 / 100 * this.percent;
     let to = 360 / 100 * percent;
@@ -155,12 +155,13 @@ export default class RoundedProgress {
     return this;
   }
 
-  public destroy(): void {
+  public destroy(): null {
     this.rightSegment?.destroy();
     this.leftSegment?.destroy();
     this.mask?.destroy();
     this.timeoutAni?.remove();
     this.setAni?.remove();
+    return null
   }
 
 }
