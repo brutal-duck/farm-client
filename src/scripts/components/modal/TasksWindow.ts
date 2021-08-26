@@ -16,13 +16,12 @@ export default class TasksWindowNew {
   private centerY: number;
 
   private line: Phaser.GameObjects.TileSprite;
-  private lineAni: Phaser.Tweens.Tween
+  private lineAni: Phaser.Tweens.Tween;
   private nextPart: Phaser.GameObjects.Sprite;
   private nextPartText: Phaser.GameObjects.Text;
-  private companyDone: Phaser.GameObjects.Text;
   private partDiscription: Phaser.GameObjects.Text;
 
-  private footerTextStyle: Phaser.Types.GameObjects.Text.TextStyle
+  private footerTextStyle: Phaser.Types.GameObjects.Text.TextStyle;
 
   constructor(scene: Modal) {
     this.scene = scene;
@@ -60,7 +59,7 @@ export default class TasksWindowNew {
     this.top = this.scene.add.sprite(this.scene.cameras.main.centerX + 3, this.centerY - Math.floor(height / 2), 'tasks-top').setOrigin(0.5, 1);
     this.close = this.scene.add.sprite(606, this.centerY - Math.floor(height / 2 + 114), 'tasks-close').setDepth(2);
 
-    this.createTasksBars()
+    this.createTasksBars();
 
     this.scene.clickButton(this.close, (): void => { this.closeWindow(); });
     if (!this.scene.game.scene.keys[this.scene.state.farm].tasksOpened) {
@@ -74,15 +73,15 @@ export default class TasksWindowNew {
     let taskBars: TaskBar[] = []
     
     for (let i = 0; i < this.tasks.length; i++) {
-      const x: number = this.top.getBottomCenter().x
-      const y: number = taskBars.length ? taskBars[i - 1].getBottomCenter().y + 4 : this.top.getBottomCenter().y
-      taskBars.push(new TaskBar(x, y, this.tasks[i], this.scene))
+      const x: number = this.top.getBottomCenter().x;
+      const y: number = taskBars.length ? taskBars[i - 1].getBottomCenter().y + 4 : this.top.getBottomCenter().y;
+      taskBars.push(new TaskBar(x, y, this.tasks[i], this.scene));
     }
     
-    let lastElementBottomY = taskBars[taskBars.length - 1].getBottomCenter().y
-    let height: number = lastElementBottomY - this.top.getBottomCenter().y
+    let lastElementBottomY = taskBars[taskBars.length - 1].getBottomCenter().y;
+    let height: number = lastElementBottomY - this.top.getBottomCenter().y;
 
-    this.resizeWindow(height)
+    this.resizeWindow(height);
     this.progressLineAndOtherText();
   }
 
@@ -91,8 +90,8 @@ export default class TasksWindowNew {
     let tasks: { task: Itasks, taskData: ItaskData }[] = [];
 
     this.scene.state.modal.tasksParams.tasks.forEach(task => {
-      const taskData: ItaskData = this.scene.game.scene.keys[this.scene.state.farm].getTaskData(task)
-      tasks.push({ task, taskData })
+      const taskData: ItaskData = this.scene.game.scene.keys[this.scene.state.farm].getTaskData(task);
+      tasks.push({ task, taskData });
     })
 
     tasks = tasks.sort((x1: { task: Itasks, taskData: ItaskData }, x2: { task: Itasks, taskData: ItaskData }) => {
@@ -101,7 +100,7 @@ export default class TasksWindowNew {
       return 0;
     });
 
-    return tasks
+    return tasks;
   }
 
 
@@ -127,12 +126,17 @@ export default class TasksWindowNew {
       color: '#8f3f00'
     }).setOrigin(0.5, 0.5);
     
+    this.line = this.scene.add.tileSprite(this.bottom.getLeftCenter().x + 55, this.bottom.getCenter().y - 56, 1, 16, 'part-progress');
+    this.partDiscription = this.scene.add.text(this.bottom.getCenter().x, this.bottom.getCenter().y + 60, '', this.footerTextStyle).setOrigin(0.5);
+
     this.updateProgress();
   }
 
 
   private createNextPartButton(): void {
     this.partDiscription?.destroy();
+    this.nextPart?.destroy();
+    this.nextPartText?.destroy();
 
     this.nextPart = this.scene.add.sprite(this.bottom.getCenter().x, this.bottom.getCenter().y + 60, 'big-btn-green').setDisplaySize(412, 64)
     this.nextPartText = this.scene.add.text(this.bottom.getCenter().x, this.bottom.getCenter().y + 54, this.scene.state.lang.donePart, {
@@ -144,34 +148,28 @@ export default class TasksWindowNew {
   }
 
 
-  private createCompanyDoneText(): void {
-    this.partDiscription?.destroy()
-    this.companyDone = this.scene.add.text(this.bottom.getCenter().x, this.bottom.getCenter().y + 60, this.scene.state.lang[`${this.scene.state.farm.toLowerCase()}CompanyDone`], this.footerTextStyle).setOrigin(0.5);
-  }
-
-
   public updateProgress(): void {
+    this.scene.state.modal.tasksParams.done = this.tasks.every(el => (el.task.done === 1 && el.task.got_awarded === 1) || el.task.necessary === 0);
     const parts: Ipart[] = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`${this.scene.state.farm.toLowerCase()}Parts`];
     const userPart: number = this.scene.state[`user${this.scene.state.farm}`].part;
     
-    if (this.scene.state.modal.tasksParams.done && parts.length !== userPart) this.createNextPartButton();
-    else if (this.scene.state.modal.tasksParams.done && parts.length === userPart) this.createCompanyDoneText();
-    else if (!this.scene.state.modal.tasksParams.done) {
-      this.partDiscription = this.scene.add.text(this.bottom.getCenter().x, this.bottom.getCenter().y + 60, this.scene.state.modal.tasksParams.description, this.footerTextStyle).setOrigin(0.5);
-    }
+    if (this.scene.state.modal.tasksParams.done && parts.length === userPart) this.partDiscription?.setText(this.scene.state.lang[`${this.scene.state.farm.toLowerCase()}CompanyDone`]);
+    else if (this.scene.state.modal.tasksParams.done && parts.length !== userPart) this.createNextPartButton();
+    else if (!this.scene.state.modal.tasksParams.done) this.partDiscription?.setText(this.scene.state.modal.tasksParams.description);
 
     this.lineAni?.remove();
     this.tasks = this.getTasks();
     const countDone: number = this.tasks.filter(el => el.task.done === 1).length;
-    const percent: number = 460 / 100 * (countDone / (this.scene.state.modal.tasksParams.tasks.length / 100));
+    const percent: number = 456 / 100 * (countDone / (this.scene.state.modal.tasksParams.tasks.length / 100));
     const lineWidth: number = this.line ? this.line.getBounds().width : 1;
-    this.line = this.scene.add.tileSprite(this.bottom.getLeftCenter().x + 57, this.bottom.getCenter().y - 56, lineWidth, 16, 'part-progress').setOrigin(0, 0.5);
+    this.line?.setSize(lineWidth, 16).setOrigin(0, 0.5);
 
     this.lineAni = this.scene.tweens.add({
       targets: this.line,
       width: percent,
-      duration: 400,
-      ease: 'Power3'
+      duration: 500,
+      delay: 150,
+      ease: 'Cubic.easeOut'
     })
   }
 
