@@ -20,7 +20,7 @@ export default class ImproveCollectorWindow {
     const thisLevel: IcollectorSettings = this.scene.state[`${farm}CollectorSettings`].find((data: IcollectorSettings) => data.level === this.scene.state[`user${this.scene.state.farm}`].collectorLevel);
     const nextLevel: IcollectorSettings = this.scene.state[`${farm}CollectorSettings`].find((data: IcollectorSettings) => data.level === this.scene.state[`user${this.scene.state.farm}`].collectorLevel + 1);
     
-    let speedText: string = `${this.scene.state.lang.power}: ${thisLevel.speed} ${this.scene.state.lang[`unit${this.scene.state.farm}`]}/${this.scene.state.lang.seconds}`;
+    let speedText: string = `${this.scene.state.lang.speed}: ${thisLevel.speed} ${this.scene.state.lang[`unit${this.scene.state.farm}`]}/${this.scene.state.lang.seconds}`;
 
     const speed: Phaser.GameObjects.Text = this.scene.add.text(125, this.scene.cameras.main.centerY - 80, speedText, {
       font: '30px Bip',
@@ -110,7 +110,7 @@ export default class ImproveCollectorWindow {
     const thisLevel: IcollectorSettings = this.scene.state[`${farm}CollectorSettings`].find((data: IcollectorSettings) => data.level === this.scene.state[`user${this.scene.state.farm}`].collectorLevel);
     const nextLevel: IcollectorSettings = this.scene.state[`${farm}CollectorSettings`].find((data: IcollectorSettings) => data.level === this.scene.state[`user${this.scene.state.farm}`].collectorLevel + 1);
   
-    let speedText: string = `${this.scene.state.lang.power}: ${thisLevel.speed} ${this.scene.state.lang[`unit${this.scene.state.farm}`]}/${this.scene.state.lang.seconds}`;
+    let speedText: string = `${this.scene.state.lang.speed}: ${thisLevel.speed} ${this.scene.state.lang[`unit${this.scene.state.farm}`]}/${this.scene.state.lang.seconds}`;
   
     speed.setText(speedText);
   
