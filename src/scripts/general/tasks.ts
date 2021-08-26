@@ -665,7 +665,7 @@ function checkAvailabilityOfTasks(state: Istate, task: IclanTask): boolean {
 
 function tryClanTask(type: number, state: number = 0, count: number = 1, currentProgress?: number): void {
   let tasks: IclanTask[] = this.state.user.clanTasks;
-  let task: IclanTask = tasks.find((data: IclanTask) => data.type === type);
+  let task: IclanTask = tasks?.find((data: IclanTask) => data.type === type);
   
   if (!currentProgress && !task?.done &&
     task?.progress < task?.count &&
