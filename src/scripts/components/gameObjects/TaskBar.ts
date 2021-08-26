@@ -66,7 +66,7 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
     }
 
     this.taskCompliteAwardNonTakenTextColor = '#759534';
-    this.taskCompliteAwardTakenTextColor = '#494949';
+    this.taskCompliteAwardTakenTextColor = '#759534';
 
     this.currentProgress = this.taskInfo.task.progress;
     this.done = this.taskInfo.task.done;
@@ -142,8 +142,9 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
 
   private taskComplete(): void {
     // Задание выполнено, награда получена
-    this.setTexture('tasks-complete').setDisplaySize(460, this.barHeight);
-    this.text.setPosition(this.getCenter().x + 60, this.getCenter().y).setColor(this.taskCompliteAwardTakenTextColor).setAlpha(0.6);
+    this.setTexture('tasks-reward').setDisplaySize(460, this.barHeight);
+    this.icon.setTint(0xc0c0c0).setAlpha(0.9);
+    this.text.setPosition(this.getCenter().x + 60, this.getCenter().y).setColor(this.taskCompliteAwardTakenTextColor);
 
     this.bar?.setVisible(false);
     this.takeButton?.setVisible(false);
