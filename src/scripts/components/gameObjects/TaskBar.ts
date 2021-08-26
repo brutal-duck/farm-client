@@ -2,6 +2,11 @@ import { shortNum } from "../../general/basic";
 import Modal from "../../scenes/Modal/Modal"
 import RoundedProgress from "../animations/RoundedProgress"
 
+/**
+  * Плашка задания
+  * Устанадвивается с OriginXY (0.5, 0)
+*/
+
 export default class TaskBar extends Phaser.GameObjects.Sprite {
 
   public scene: Modal;
