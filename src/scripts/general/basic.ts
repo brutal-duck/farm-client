@@ -527,7 +527,6 @@ function donePart(): void {
 
 // забрать награду за задание
 function pickUpTaskReward(id: number): void {
-
   let tasks: Itasks[] = [];
 
   if (this.state.farm === 'Sheep') tasks = this.state.sheepTasks;
@@ -551,15 +550,11 @@ function pickUpTaskReward(id: number): void {
     this.state.user.xp += task.xp;
     task.got_awarded = 1;
 
-    if (this.scene.isActive('Modal')) {
-
-      this.scene.stop('Modal');
-      this.showTasks();
-
-    }
-
+    // if (this.scene.isActive('Modal')) {
+    //   this.scene.stop('Modal');
+    //   this.showTasks();
+    // }
   }
-
 }
 
 // проверка подключения к интернету
