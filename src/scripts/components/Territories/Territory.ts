@@ -665,7 +665,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       user.money -= price;
 
       this.scene.tryClanTask(6);
-
+      
       if (this.territoryType === 5) {
         this.scene.tryTask(17, improve);
         this.changeSprite();

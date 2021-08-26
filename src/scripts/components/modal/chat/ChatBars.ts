@@ -481,6 +481,7 @@ export default class ChatBars {
       }
       this.scene.mainInput.value = '';
       this.chatText.setText('').setDepth(4).setCrop(0, 0, 280, 100).setAlpha(1);
+      this.scene.game.scene.keys[this.scene.state.farm].tryClanTask(19);
     }
   }
 
