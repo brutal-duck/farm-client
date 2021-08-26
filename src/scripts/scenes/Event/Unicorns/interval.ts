@@ -215,6 +215,8 @@ function interval(): void {
     this.cowFactoryProgress();
     this.updateProfileNotification();
     progressClanCooldown(this.state);
+    this.tryClanTask(18);
+
 
   }, callbackScope: this, loop: true });
 }

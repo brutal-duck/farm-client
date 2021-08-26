@@ -430,6 +430,8 @@ function interval(): void {
       this.playSoundOnce(`sheep-sound-${Phaser.Math.Between(1, 2)}`)
     }
 
+    this.tryClanTask(18);
+
   }, callbackScope: this, loop: true });
   
 

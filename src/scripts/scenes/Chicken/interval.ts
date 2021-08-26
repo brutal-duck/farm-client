@@ -432,6 +432,8 @@ function interval(): void {
       this.playSoundOnce(`chicken-sound-${Phaser.Math.Between(1, 5)}`)
     }
     
+    this.tryClanTask(18);
+
   }, callbackScope: this, loop: true });
 
 }
