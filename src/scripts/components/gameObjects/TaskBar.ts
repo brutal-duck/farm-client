@@ -91,10 +91,15 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
     this.checkIcon = this.scene.add.sprite(this.icon.x, this.icon.y, 'completed').setDepth(4);
     
     let count: number = this.taskInfo.task.type === 14 && this.taskInfo.task.count === 0 ? this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`${this.scene.state.farm.toLowerCase()}Settings`].length : this.taskInfo.task.count;
-    this.progressText = this.scene.add.text(this.icon.x, this.icon.getBottomCenter().y + 26, `${shortNum(this.taskInfo.task.progress)}/${shortNum(count)}`, { font: '26px Shadow', color: '#b65e00' }).setDepth(3).setOrigin(0.5).setShadow(1, 1, 'rgba(0, 0, 0, 0.5)', 2);
+    let progress = this.taskInfo.task.progress;
+    if (this.clanTask && this.taskInfo.task.type === 18) {
+      count = Math.round(count / 60);
+      progress = Math.round(this.taskInfo.task.progress / 60);
+    }
+    this.progressText = this.scene.add.text(this.icon.x, this.icon.getBottomCenter().y + 26, `${shortNum(progress)}/${shortNum(count)}`, { font: '26px Shadow', color: '#b65e00' }).setDepth(3).setOrigin(0.5).setShadow(1, 1, 'rgba(0, 0, 0, 0.5)', 2);
     if (this.progressText.width > 120) this.progressText.setOrigin(0, 0.5).setX(this.icon.getLeftCenter().x - 18).setFontSize(24);
 
-    this.progress = new RoundedProgress(this.scene, this.icon.x, this.icon.y, 1.2).setPercent(Math.round(100 / count * this.taskInfo.task.progress)).setTint(0x70399f);
+    this.progress = new RoundedProgress(this.scene, this.icon.x, this.icon.y, 1.2).setPercent(Math.round(100 / count * progress)).setTint(0x70399f);
     this.ringInner = this.scene.add.sprite(this.progress.rightSegment.x, this.progress.rightSegment.y, 'circle-outline').setScale(0.95).setTint(0xc09245).setDepth(this.progress.rightSegment.depth + 1);
     this.ringOuter = this.scene.add.sprite(this.progress.rightSegment.x, this.progress.rightSegment.y, 'circle-outline').setScale(1.2).setTint(0xc09245).setDepth(this.progress.rightSegment.depth + 1);
 
@@ -190,11 +195,16 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
 
   private setProgress(): void {
     this.currentProgress = this.taskInfo.task.progress;
-    const count: number = this.taskInfo.task.type === 14 && this.taskInfo.task.count === 0 ? this.scene.state[`${this.scene.state.farm}Settings`][`${this.scene.state.farm}Settings`].length : this.taskInfo.task.count;
-    this.progressText?.setText(`${shortNum(this.taskInfo.task.progress)}/${shortNum(count)}`);
+    let count: number = this.taskInfo.task.type === 14 && this.taskInfo.task.count === 0 ? this.scene.state[`${this.scene.state.farm}Settings`][`${this.scene.state.farm}Settings`].length : this.taskInfo.task.count;
+    let progress = this.taskInfo.task.progress;
+    if (this.clanTask && this.taskInfo.task.type === 18) {
+      count = Math.round(count / 60);
+      progress = Math.round(this.taskInfo.task.progress / 60);
+    }
+    this.progressText?.setText(`${shortNum(progress)}/${shortNum(count)}`);
     if (this.progressText?.width > 120) this.progressText.setOrigin(0, 0.5).setX(this.icon.getLeftCenter().x - 18).setFontSize(24);
-    this.progress?.setPercent(Math.round(100 / count * this.taskInfo.task.progress));
-    if (Boolean(this.taskInfo.task.done) || Math.round(100 / count * this.taskInfo.task.progress) === 100) this.taskCompleteAwardNonTaken();
+    this.progress?.setPercent(Math.round(100 / count * progress));
+    if (Boolean(this.taskInfo.task.done) || Math.round(100 / count * progress) === 100) this.taskCompleteAwardNonTaken();
   }
 
   private setDone(): void {

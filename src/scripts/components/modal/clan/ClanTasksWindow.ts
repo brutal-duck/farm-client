@@ -83,8 +83,8 @@ export default class ClanTasksWindow {
     this.scene.state.user.clanTasks.forEach(task => {
       let name: string = this.scene.state.lang['taskClan_' + task.type];
       if (!name) name = this.scene.state.lang.taskName;
-      name = name.replace('$1', String(task.count)).replace('$2', String(task.state));
-
+      if (task.type !== 18) name = name.replace('$1', String(task.count)).replace('$2', String(task.state));
+      else name = name.replace('$1', String(Math.round(task.count / 60))).replace('$2', String(task.state));
       const taskData =  {
         icon: 'clan-task-icon-' + task.type,
         name: name

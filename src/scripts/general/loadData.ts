@@ -593,7 +593,7 @@ export default function loadData(response: AxiosResponse): void {
     const autosaveDay: string = `${autosaveDate.getDate()}.${autosaveDate.getMonth()}.${autosaveDate.getFullYear()}`;
     if (currentDay !== autosaveDay || this.state.user.clanTasks?.length <= 0 || !this.state.user.clanTasks) {
        this.state.user.clanTasks = getNewClanTasks(this.state);
-      }
+    }
   }
 
   this.userReady = true;
