@@ -167,7 +167,7 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
 
   private setProgress(): void {
     this.currentProgress = this.taskInfo.task.progress;
-    const count: number = this.taskInfo.task.type === 14 && this.taskInfo.task.count === 0 ? this.scene.state[`${this.scene.state.farm}Settings`][`${this.scene.state.farm}Settings`].length : this.taskInfo.task.count;
+    const count: number = this.taskInfo.task.type === 14 && this.taskInfo.task.count === 0 ? this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`${this.scene.state.farm.toLowerCase()}Settings`].length : this.taskInfo.task.count;
     this.progressText?.setText(`${shortNum(this.taskInfo.task.progress)}/${shortNum(count)}`);
     if (this.progressText?.width > 120) this.progressText.setOrigin(0, 0.5).setX(this.icon.getLeftCenter().x - 18).setFontSize(24);
     this.progress?.setPercent(Math.round(100 / count * this.taskInfo.task.progress));
