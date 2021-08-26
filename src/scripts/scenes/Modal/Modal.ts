@@ -64,6 +64,7 @@ class Modal extends Phaser.Scene {
   public eventLeftTime: Phaser.GameObjects.Text;
   public socialTakskWindow: SocialTasksWindow;
   public chatBars: ChatBars;
+  public taskWindow: TasksWindow;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -116,7 +117,7 @@ class Modal extends Phaser.Scene {
         this.scene.launch('Shop', this.state);
         break;
       case 3: // окно с заданиями
-        new TasksWindow(this)
+        this.taskWindow = new TasksWindow(this)
         break;
       case 4: // ежедневные награды
         new DailyAwardWindow(this);

@@ -502,7 +502,7 @@ function donePart(): void {
     this.checkDoneTasks();
   }, callbackScope: this, loop: false });
 
-  this.time.addEvent({ delay: 1500, callback: (): void => {
+  this.time.addEvent({ delay: 0, callback: (): void => {
     if (!((user.part === 3 && this.state.user.additionalTutorial.cave) || 
       (user.part === 5 && this.state.user.additionalTutorial.herdBoost) ||
       (user.part === 6 && this.state.user.additionalTutorial.feedBoost) || 
@@ -518,7 +518,6 @@ function donePart(): void {
 
 // забрать награду за задание
 function pickUpTaskReward(id: number): void {
-
   let tasks: Itasks[] = [];
 
   if (this.state.farm === 'Sheep') tasks = this.state.sheepTasks;
@@ -542,15 +541,11 @@ function pickUpTaskReward(id: number): void {
     this.state.user.xp += task.xp;
     task.got_awarded = 1;
 
-    if (this.scene.isActive('Modal')) {
-
-      this.scene.stop('Modal');
-      this.showTasks();
-
-    }
-
+    // if (this.scene.isActive('Modal')) {
+    //   this.scene.stop('Modal');
+    //   this.showTasks();
+    // }
   }
-
 }
 
 // проверка подключения к интернету
