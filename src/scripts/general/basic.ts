@@ -502,7 +502,7 @@ function donePart(): void {
     this.checkDoneTasks();
   }, callbackScope: this, loop: false });
 
-  this.time.addEvent({ delay: 1500, callback: (): void => {
+  this.time.addEvent({ delay: 0, callback: (): void => {
     if (!((user.part === 3 && this.state.user.additionalTutorial.cave) || 
       (user.part === 5 && this.state.user.additionalTutorial.herdBoost) ||
       (user.part === 6 && this.state.user.additionalTutorial.feedBoost) || 
