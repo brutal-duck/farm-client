@@ -549,11 +549,6 @@ function pickUpTaskReward(id: number): void {
     this.autosave();
     this.state.user.xp += task.xp;
     task.got_awarded = 1;
-
-    // if (this.scene.isActive('Modal')) {
-    //   this.scene.stop('Modal');
-    //   this.showTasks();
-    // }
   }
 }
 

@@ -613,6 +613,7 @@ function dragChickenMerging(chicken: any): void {
 
     this.tryTask(2, type);
     this.tryTask(4, type);
+    this.tryClanTask(5);
     this.checkAnimalTask();
 
   }

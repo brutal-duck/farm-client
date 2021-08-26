@@ -36,6 +36,8 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
   private currentProgress: number;
   private done: number;
 
+  private clanTask: boolean = false;
+
   constructor(x: number, y: number, taskInfo: { task: Itasks | IclanTask, taskData: ItaskData }, scene: Modal) {
     super(scene, x, y, '');
     this.scene = scene;    
@@ -47,6 +49,7 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
 
   private init(): void {
     this.barHeight = 140;
+    this.clanTask = typeof this.taskInfo.task.done === 'boolean';
 
     const moneyTask = this.scene.game.scene.keys['Sheep'].moneyTasks.find(el => el.id === this.taskInfo.task.id);
     if (this.scene.state.farm === 'Sheep' && moneyTask) {     
@@ -95,8 +98,8 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
     this.ringInner = this.scene.add.sprite(this.progress.rightSegment.x, this.progress.rightSegment.y, 'circle-outline').setScale(0.95).setTint(0xc09245).setDepth(this.progress.rightSegment.depth + 1);
     this.ringOuter = this.scene.add.sprite(this.progress.rightSegment.x, this.progress.rightSegment.y, 'circle-outline').setScale(1.2).setTint(0xc09245).setDepth(this.progress.rightSegment.depth + 1);
 
-    if (this.taskInfo.task.done === 1 && this.taskInfo.task.got_awarded === 1) this.taskComplete();
-    else if (this.taskInfo.task.done === 1 && this.taskInfo.task.got_awarded === 0) this.taskCompleteAwardNonTaken();
+    if (Boolean(this.taskInfo.task.done) && Boolean(this.taskInfo.task.got_awarded)) this.taskComplete();
+    else if (Boolean(this.taskInfo.task.done) && !Boolean(this.taskInfo.task.got_awarded)) this.taskCompleteAwardNonTaken();
     else this.taskInProgress();
   }
 
@@ -104,10 +107,12 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
   private taskInProgress(): void {
     // Задание выполняется
     this.setTexture('tasks-uncomplete').setDisplaySize(460, this.barHeight);
-    this.scene.click(this, (): void => {
-      this.scene.scene.stop('Modal');
-      this.scene.clickTaskBoard(this.taskInfo.task);
-    });
+    if (!this.clanTask) {
+      this.scene.click(this, (): void => {
+        this.scene.scene.stop('Modal');
+        this.scene.clickTaskBoard(this.taskInfo.task);
+      });
+    }
     
     this.text.setPosition(this.getCenter().x + 60, this.getCenter().y - 26);
     this.bar.setPosition(this.x - 30, this.y + this.getBounds().height - 1);
@@ -129,16 +134,34 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
     this.valutaSum.setPosition(this.valuta.getRightCenter().x + 4, this.valuta.getRightCenter().y);
     this.checkIcon.setVisible(true);
     this.hideProgress();
-    this.scene.taskWindow?.updateProgress();
+    if (!this.clanTask) this.scene.taskWindow?.updateProgress();
 
-    this.scene.clickShopBtn({ btn: this.takeButton, title: this.barText, img: false }, (): void => {
+    this.scene.clickShopBtn({ btn: this.takeButton, title: this.barText, img: false }, (): void => { this.pickUpTaskReward(); });
+  }
+
+  private pickUpTaskReward(): void {
+    if (!this.clanTask) {
       if (this.valutaTexture === 'diamond') this.scene.game.scene.keys[this.scene.state.farm + 'Bars'].getCurrency({ x: this.takeButton.x, y: this.takeButton.y }, this.taskInfo.task.diamonds, 'diamond');
       else this.scene.game.scene.keys[this.scene.state.farm + 'Bars'].plusMoneyAnimation({ x: this.takeButton.x, y: this.takeButton.y });
       this.scene.game.scene.keys[this.scene.state.farm].pickUpTaskReward(this.taskInfo.task.id);
       this.taskComplete();
-    });
+    } else {
+      const task: IclanTask = this.scene.state.user.clanTasks.find((data: IclanTask) => data.type === this.taskInfo.task.type);
+      if (task) {
+        if (task.done && !task.got_awarded) {
+          this.scene.state.user.diamonds += task.diamonds;
+          this.scene.state.amplitude.logAmplitudeEvent('diamonds_get', {
+            type: 'clan_task_award',
+            count: task.diamonds,
+          });
+          this.scene.game.scene.keys[this.scene.state.farm].autosave();
+          task.got_awarded = true;
+          this.taskInfo.task.got_awarded = true;
+          this.taskComplete();
+        }
+      }
+    }
   }
-
 
   private taskComplete(): void {
     // Задание выполнено, награда получена
@@ -153,7 +176,7 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
     this.valutaSum?.setVisible(false);
     this.checkIcon.setVisible(true).setTint(0xc0c0c0).setAlpha(0.9);
     this.hideProgress();
-    this.scene.taskWindow?.updateProgress();
+    if (!this.clanTask) this.scene.taskWindow?.updateProgress();
   }
 
 
@@ -171,18 +194,18 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
     this.progressText?.setText(`${shortNum(this.taskInfo.task.progress)}/${shortNum(count)}`);
     if (this.progressText?.width > 120) this.progressText.setOrigin(0, 0.5).setX(this.icon.getLeftCenter().x - 18).setFontSize(24);
     this.progress?.setPercent(Math.round(100 / count * this.taskInfo.task.progress));
-    if (this.taskInfo.task.done === 1 || Math.round(100 / count * this.taskInfo.task.progress) === 100) this.taskCompleteAwardNonTaken();
+    if (Boolean(this.taskInfo.task.done) || Math.round(100 / count * this.taskInfo.task.progress) === 100) this.taskCompleteAwardNonTaken();
   }
 
   private setDone(): void {
     this.done = Number(this.taskInfo.task.done);
-    if (this.taskInfo.task.done === 1 && this.taskInfo.task.got_awarded === 0) this.taskCompleteAwardNonTaken();
-    else if (this.taskInfo.task.done === 1 && this.taskInfo.task.got_awarded === 1) this.taskComplete();
+    if (Boolean(this.taskInfo.task.done) && !Boolean(this.taskInfo.task.got_awarded)) this.taskCompleteAwardNonTaken();
+    else if (Boolean(this.taskInfo.task.done) && Boolean(this.taskInfo.task.got_awarded)) this.taskComplete();
   }
 
 
   public preUpdate(): void {
     if (this.currentProgress !== this.taskInfo.task.progress) this.setProgress();
-    if (this.done !== this.taskInfo.task.done) this.setDone();
+    if (Boolean(this.done) !== Boolean(this.taskInfo.task.done)) this.setDone();
   }
 }
