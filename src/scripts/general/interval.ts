@@ -513,11 +513,12 @@ function updateMapNotification(): void {
     socialCount = 1;
     this.state.shownSocialTaskWindow = false;
   }
+  const clanCount: number = this.state.user.clanTasks.filter(el => el.done && !el.got_awarded).length;
   if (this.state.userSheep.tutorial < 100 || this.state.shownSocialTaskWindow) socialCount = 0;
-  const count: number = this.state.farm === 'Sheep' ? chickenCount + cowCount + unicornCount + socialCount :
-  this.state.farm === 'Chicken' ? sheepCount + cowCount + unicornCount + socialCount :
-  this.state.farm === 'Cow' ? sheepCount + chickenCount + unicornCount + socialCount :
-  this.state.farm === 'Unicorn' && this.state.userUnicorn.tutorial >= 80 ? sheepCount + chickenCount + cowCount + socialCount : 0;
+  const count: number = this.state.farm === 'Sheep' ? chickenCount + cowCount + unicornCount + socialCount + clanCount:
+  this.state.farm === 'Chicken' ? sheepCount + cowCount + unicornCount + socialCount + clanCount:
+  this.state.farm === 'Cow' ? sheepCount + chickenCount + unicornCount + socialCount + clanCount:
+  this.state.farm === 'Unicorn' && this.state.userUnicorn.tutorial >= 80 ? sheepCount + chickenCount + cowCount + socialCount + clanCount: 0;
 
   this.game.scene.keys[`${this.state.farm}Bars`].mapNotificator.setCount(count);
 }

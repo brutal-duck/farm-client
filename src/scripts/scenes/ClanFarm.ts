@@ -1,3 +1,4 @@
+import Notificator from "../components/gameObjects/Notificator";
 import LogoManager, { Icon } from "../components/Utils/LogoManager";
 import { shortNum, loadingModal } from "../general/basic";
 import { click, clickButton, clickModalBtn } from "../general/clicks";
@@ -33,6 +34,8 @@ export default class ClanFarm extends Phaser.Scene {
   private cowCountText: Phaser.GameObjects.Text;
   private playerCountText: Phaser.GameObjects.Text;
   private currentIcon: IconfigIcon;
+  private taskNotificator: Notificator;
+  private shopNotificator: Notificator;
 
   constructor() {
     super('ClanFarm');
@@ -195,13 +198,39 @@ export default class ClanFarm extends Phaser.Scene {
     //   zone.input.hitArea.height
     // );
 
-    this.click(zone, () => {
+    this.click(zone, (): void => {
       this.state.modal = {
         type: 2,
         shopType: 1,
       };
       this.scene.launch('Modal', this.state);
     });
+
+    this.shopNotificator = new Notificator(this, { x: pos.x + 55, y: pos.y - 50, });
+
+    if (!this.state.user.starterpack && this.state.user.takenFreeDiamonds) {
+
+      const starterpackIcon: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 55, pos.y - 50, 'stock-icon').setScale(0.45);
+      this.tweens.add({
+        targets: starterpackIcon,
+        delay: 2000,
+        props: {
+          rotation: { duration: 600, yoyo: false, ease: 'Power2', value: 2 * Math.PI },
+          scale: { value: 0.5, ease: 'Power1', duration: 250, yoyo: true },
+        },
+        loop: -1,
+      });
+
+      this.click(starterpackIcon, (): void => {
+        const modal: Imodal = {
+          type: 2,
+          shopType: 1
+        }
+        this.state.modal = modal;
+        this.scene.stop();
+        this.scene.launch('Modal', this.state);
+      });
+    }
   }
 
   private createClanTask(): void {
@@ -219,7 +248,7 @@ export default class ClanFarm extends Phaser.Scene {
     //   zone.input.hitArea.width, 
     //   zone.input.hitArea.height
     // );
-
+    this.taskNotificator = new Notificator(this, { x: pos.x + 65, y: pos.y - 70}, true);
     this.click(zone, () => {
       this.state.modal = {
         type: 18,
@@ -341,6 +370,8 @@ export default class ClanFarm extends Phaser.Scene {
     this.updatePlayerCount();
     this.updateClanName();
     this.updateClanIcon();
+    this.updateShopNotification();
+    this.updateTaskNotification();
   }
 
   private updateCountsText(): void {
@@ -380,7 +411,7 @@ export default class ClanFarm extends Phaser.Scene {
       this.chickenCooldownSprite = new ClanCooldownBuilding(this, pos, this.state.clan.chicken, 'chicken');
     }
     if (this.state.clan.cow.cooldown > 0 && !this.cowCooldownSprite?.active) {
-      const pos: Iposition = { x: 120, y: 1160 };
+      const pos: Iposition = { x: 120, y: 1130 };
       this.cowCooldownSprite = new ClanCooldownBuilding(this, pos, this.state.clan.cow, 'cow');
     }
   }
@@ -429,6 +460,22 @@ export default class ClanFarm extends Phaser.Scene {
       };
       this.icon = LogoManager.createIcon(this, pos.x, pos.y, this.currentIcon).setScale(0.439);
     }
+  }
+
+  private updateShopNotification(): void {
+    this.shopNotificator?.setVisible(this.checkFreeDiamondsNotification());
+  }
+
+  private checkFreeDiamondsNotification(): boolean {
+    return !this.state.user.takenFreeDiamonds && 
+    (this.state.userSheep.tutorial >= 100 || 
+    this.state.progress.chicken.part >= 1 || 
+    this.state.progress.cow.part >= 1);
+  }
+
+  private updateTaskNotification(): void {
+    const count = this.state.user.clanTasks.filter(el => el.done && !el.got_awarded).length;
+    this.taskNotificator.setCount(count);
   }
 };
 

@@ -10,6 +10,7 @@ import LocalStorage from './../libs/LocalStorage';
 import ChickenTerritory from './../components/Territories/ChickenTerritory';
 import SheepTerritory from './../components/Territories/SheepTerritory';
 import CowTerritory from './../components/Territories/CowTerritory';
+import { getNewClanTasks } from './tasks';
 
 // рандомное число
 function random(min: number, max: number): number {
@@ -1212,6 +1213,11 @@ function nextDayTimer(): void {
     this.state.userCow.takenHerdBoost = 0;
     this.state.user.takenFreeDiamonds = false;
     this.state.user.takenSocialAward = false;
+    if (this.state.user.clanId) {
+      this.state.user.clanTasks = getNewClanTasks(this.state);
+      this.scene.stop('Modal');
+      this.scene.launch('Modal');
+    }
     axios.post(process.env.API + "/newDay", {    
       id: this.state.user.id,
       hash: this.state.user.hash,

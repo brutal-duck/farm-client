@@ -58,7 +58,8 @@ class Profile extends Phaser.Scene {
   private currentEndTime: string = ' ';
   private currentDiamonds: number;
   private animDiamondsCount: number = 0;
-  private shopNotificator: Notificator 
+  private shopNotificator: Notificator;
+  private clanNotificator: Notificator;
   private personalMessageNotificator: Notificator;
   
   public click = click.bind(this);
@@ -142,6 +143,7 @@ class Profile extends Phaser.Scene {
     this.updateUserDiamonds();
     this.updateShopNotification();
     this.updatePersonalMessagesNotification();
+    this.updateClanNotification();
   }
 
   private createElements(): void {
@@ -528,12 +530,12 @@ class Profile extends Phaser.Scene {
 
   private createShop(): void {
     const pos: Iposition = {
-      x: 145,
-      y: 530
+      x: 215,
+      y: 520
     }
     const size: Isize = {
       width: 150,
-      height: 200
+      height: 210
     }
     const zone: Phaser.GameObjects.Zone = this.add.zone(pos.x, pos.y, size.width, size.height).setDropZone(undefined, () => {});
       
@@ -551,7 +553,9 @@ class Profile extends Phaser.Scene {
       this.scene.launch('Modal', this.state);
     });
 
-    if (!this.state.user.starterpack && (this.state.progress.sheep.part > 4 || this.state.progress.chicken.part >= 1)) {
+    this.shopNotificator = new Notificator(this, { x: pos.x + 55, y: pos.y - 50, });
+
+    if (!this.state.user.starterpack && (this.state.progress.sheep.part > 4 || this.state.progress.chicken.part >= 1) && this.state.user.takenFreeDiamonds) {
 
       const starterpackIcon: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 55, pos.y - 50, 'stock-icon').setScale(0.45);
       this.tweens.add({
@@ -574,8 +578,6 @@ class Profile extends Phaser.Scene {
         this.scene.launch('Modal', this.state);
       });
     }
-
-    // this.shopNotificator = new Notificator(this, { x: pos.x + 55, y: pos.y - 50, });
   }
 
   private createProfile(): void {
@@ -647,6 +649,7 @@ class Profile extends Phaser.Scene {
     if (this.state.clan) {
       new ClanFlagPole(this, { x: pos.x + 5, y: pos.y - 100 }).setDepth(2);
     }
+    this.clanNotificator = new Notificator(this, { x: pos.x + 65, y: pos.y - 80 }, true);
     this.click(zone, (): void => {
       if (this.state.userSheep.part >= 7 && this.checkAuthUser()) {
         if (!this.state.user.clanId) {
@@ -868,6 +871,11 @@ class Profile extends Phaser.Scene {
     } else {
       this.socialTaskNotificator.setCount(count);
     }
+  }
+
+  private updateClanNotification(): void {
+    const count = this.state.user.clanTasks.filter(el => el.done && !el.got_awarded).length;
+    this.clanNotificator.setCount(count);
   }
 
   private updateUserDiamonds(): void {

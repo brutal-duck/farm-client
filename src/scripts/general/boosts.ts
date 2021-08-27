@@ -149,7 +149,7 @@ function improveCollector(): void {
   
         this.game.scene.keys['Modal'].improveCollectorAnim({x: this.cameras.main.centerX, y: this.cameras.main.centerY + 10});
         this.game.scene.keys[this.state.farm].tryTask(23, 0, 0, user.collectorLevel);
-        this.scene.tryClanTask(6);
+        this.tryClanTask(6);
         
         if (!secondNextLevel) {
           this.scene.stop('Modal');
@@ -192,7 +192,7 @@ function improveCollector(): void {
   
         this.game.scene.keys['Modal'].improveCollectorAnim({x: this.cameras.main.centerX, y: this.cameras.main.centerY + 10});
         this.game.scene.keys[this.state.farm].tryTask(23, 0, 0, user.collectorLevel);
-        this.scene.tryClanTask(6);
+        this.tryClanTask(6);
 
         if (!secondNextLevel) {
           this.scene.stop('Modal');

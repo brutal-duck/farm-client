@@ -52,7 +52,7 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
     this.clanTask = typeof this.taskInfo.task.done === 'boolean';
 
     const moneyTask = this.scene.game.scene.keys['Sheep'].moneyTasks.find(el => el.id === this.taskInfo.task.id);
-    if (this.scene.state.farm === 'Sheep' && moneyTask) {     
+    if (this.scene.state.farm === 'Sheep' && moneyTask && !this.clanTask) {     
       this.valutaTexture = 'sheepCoin';
       this.award = '';
     } else {
