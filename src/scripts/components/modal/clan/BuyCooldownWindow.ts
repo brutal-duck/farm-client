@@ -19,11 +19,11 @@ const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
   },
 };
 
-export default class BuyCooldownWindow {
+export default class BuyCooldownWindow extends Phaser.GameObjects.Sprite {
   private window: ClanWindow;
-  private scene: Modal;
-  private x: number;
-  private y: number;
+  public scene: Modal;
+  public x: number;
+  public y: number;
   private farm: string;
   private price: number;
   private building: IclanBuilding;
@@ -31,17 +31,16 @@ export default class BuyCooldownWindow {
   private timer: Phaser.GameObjects.Text;
 
   constructor(window: ClanWindow) {
+    super(window.scene, 0, 0, 'pixel');
     this.window = window;
     this.scene = this.window.scene;
     this.init()
     this.create();
     this.scene.openModal(this.scene.cameras.main);
-    this.scene.events.on(Phaser.Scenes.Events.UPDATE, () => {
-      this.update();
-    });
   }
 
   private init(): void {
+    this.scene.add.existing(this);
     this.x = this.scene.cameras.main.centerX;
     this.y = this.scene.cameras.main.centerY;
     this.farm = this.scene.state.modal.message;
@@ -125,7 +124,7 @@ export default class BuyCooldownWindow {
     return axios.post(process.env.API + '/buyCooldownClanBuilding', data);
   }
 
-  private update(): void {
+  public preUpdate(time: number, delta: number): void {
     if (this.checkUpdate()) {
       if (this.building.cooldown > 0) {
         const str: string = shortTime(this.building.cooldown, this.scene.state.lang);

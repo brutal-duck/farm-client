@@ -87,7 +87,6 @@ export default class ImproveClanWindow {
     if (this.scene.state.clan.diamond.count >= this.price) {
       this.postServer().then(res => {
         if (!res.data.error) {
-          console.log(this.scene.state.clan)
           this.scene.scene.stop();
         }
       });

@@ -1,6 +1,5 @@
 import { shortTime } from '../../general/basic';
 import ClanFarm from './../../scenes/ClanFarm';
-import axios, { AxiosResponse } from 'axios';
 
 export default class ClanCooldownBuilding extends Phaser.GameObjects.Sprite {
   public scene: ClanFarm;
@@ -38,15 +37,15 @@ export default class ClanCooldownBuilding extends Phaser.GameObjects.Sprite {
         this.destroy();
       };
     } else {
-      const time: string = shortTime(this.building.cooldown, this.scene.state.lang);
-      if (this.timer.text !== time) {
-        this.timer.setText(time);
+      const timer: string = shortTime(this.building.cooldown, this.scene.state.lang);
+      if (this.timer.text !== timer) {
+        this.timer.setText(timer);
       }
     }
   }
 
   private checkDestroy(): boolean {  
-    return this.building.cooldown <= 0;
+    return this.scene.state.clan[this.type].cooldown <= 0;
   }
 
   public destroy(): void {

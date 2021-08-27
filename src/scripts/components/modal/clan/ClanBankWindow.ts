@@ -323,8 +323,6 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
   }
 
   private createLogs(): void {
-    console.log(this.farm);
-    console.log(this.logs);
     this.logs = this.scene.state.clan[this.farm].logs;
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       color: '#fffdfa',
