@@ -594,6 +594,8 @@ export default function loadData(response: AxiosResponse): void {
     if (currentDay !== autosaveDay || this.state.user.clanTasks?.length <= 0 || !this.state.user.clanTasks) {
        this.state.user.clanTasks = getNewClanTasks(this.state);
     }
+  } else {
+    this.state.user.clanTasks = [];
   }
 
   this.userReady = true;
