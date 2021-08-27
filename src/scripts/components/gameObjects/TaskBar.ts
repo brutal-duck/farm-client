@@ -50,7 +50,7 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
   private init(): void {
     this.barHeight = 140;
     this.clanTask = typeof this.taskInfo.task.done === 'boolean';
-    if (this.clanTask) this.barHeight = 147;
+    if (this.clanTask) this.barHeight = 150;
 
     const moneyTask = this.scene.game.scene.keys['Sheep'].moneyTasks.find(el => el.id === this.taskInfo.task.id);
     if (this.scene.state.farm === 'Sheep' && moneyTask && !this.clanTask) {     
@@ -83,7 +83,7 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
     this.icon = this.scene.add.sprite(this.x - 170, this.y + 60, this.taskInfo.taskData.icon).setDepth(3).setScale(0.9);
     this.text = this.scene.add.text(this.x, this.y, this.taskInfo.taskData.name, this.taskInProgressTextStyle).setDepth(3).setOrigin(0.5);
     
-    if (this.text.height > 30 && this.clanTask) this.barHeight += (this.text.height - 30) / 2;
+    if (this.text.height > 30 && !this.clanTask) this.barHeight += (this.text.height - 30) / 2;
 
     this.bar = this.scene.add.sprite(this.x, this.y, 'tasks-bar').setOrigin(0, 1).setDepth(3);
     this.barText = this.scene.add.text(this.x, this.y, '', { font: '24px Shadow', color: '#FFFFFF' }).setOrigin(0, 0.5).setDepth(4);
@@ -193,7 +193,7 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
     this.barText?.setVisible(false);
     this.valuta?.setVisible(false);
     this.valutaSum?.setVisible(false);
-    this.checkIcon.setVisible(true).setTint(0xc0c0c0).setAlpha(0.9);
+    this.checkIcon?.setVisible(true).setTint(0xc0c0c0).setY(this.icon.getCenter().y).setAlpha(0.9);
     this.hideProgress();
     if (!this.clanTask) this.scene.taskWindow?.updateProgress();
   }

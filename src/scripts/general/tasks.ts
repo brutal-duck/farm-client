@@ -640,7 +640,7 @@ function tryClanTask(type: number, state: number = 0, count: number = 1, current
   
   if (!currentProgress && !task?.done &&
     task?.progress < task?.count &&
-    (task?.state === state || task?.state === 0)) {
+    (task?.state <= state || task?.state === 0)) {
     task.progress += count;
     if (task.progress >= task.count) {
       task.done = true;

@@ -424,7 +424,7 @@ class Tutorial extends Phaser.Scene {
           this.state[`user${this.state.farm}`].feedBoostTime = 3600;
           Hint.create(this.game.scene.keys[`${this.state.farm}Bars`], -250, `${this.state.lang.feedBoostNotification} ${shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang)}`, 2);
           this.game.scene.keys[this.state.farm].tryTask(21, 0, 1);
-          this.game.scene.keys[this.state.farm].tryClanTask(9, 0, 2);
+          this.game.scene.keys[this.state.farm].tryClanTask(9, 0, 1);
         });
 
       } else if (this.state.tutorial.additional === 'collector') {

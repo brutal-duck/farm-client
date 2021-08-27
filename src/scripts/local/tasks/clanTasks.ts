@@ -122,8 +122,8 @@ export default [
   {
     id: 13,
     type: 13,
-    state: Phaser.Math.Between(2, 4),
-    count: Phaser.Math.Between(5, 10),
+    state: Phaser.Math.Between(5, 10),
+    count: Phaser.Math.Between(2, 4),
     done: false,
     got_awarded: false,
     progress: 0,
