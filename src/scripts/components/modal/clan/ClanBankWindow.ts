@@ -14,12 +14,12 @@ const KEY: string = '1491f4c9d53dfa6c50d0c4a375f9ba76';
 const FARM_PACKAGE: Array<number> = [1000, 100000, 1000000, 1000000000];
 const DIAMOND_PACKAGE: Array<number> = [1, 10, 100, 1000];
 
-export default class ClanBankWindow {
-  private scene: Modal;
-  private x: number;
-  private y: number;
-  private height: number;
-  private width: number;
+export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
+  public scene: Modal;
+  private posx: number;
+  private posy: number;
+  private windowHeight: number;
+  private windowWidth: number;
   private bg: Phaser.GameObjects.TileSprite;
   private header: Phaser.GameObjects.Sprite;
   private closeBtn: Phaser.GameObjects.Sprite;
@@ -50,23 +50,22 @@ export default class ClanBankWindow {
   private coinIcon: Phaser.GameObjects.Sprite;
   private currentCountText: Phaser.GameObjects.Text;
   private logElements: Phaser.GameObjects.Group;
-  private logs: IclanUserLog[];
+  private logs: IclanUserLog[] = [];
 
   constructor(scene: Modal) {
+    super(scene, 0, 0, 'pixel');
     this.scene = scene;
     this.init();
     this.createElements();
   }
   
   private init(): void {
-    this.x = this.scene.cameras.main.centerX;
-    this.y = this.scene.cameras.main.centerY;
+    this.scene.add.existing(this);
+    this.posx = this.scene.cameras.main.centerX;
+    this.posy = this.scene.cameras.main.centerY;
     this.windowType = this.scene.state.modal.clanTabType || 1;
-    this.height = 620;
-    this.width = 527;
-    this.scene.events.on(Phaser.Scenes.Events.UPDATE, () => {
-      this.update();
-    });
+    this.windowHeight = 620;
+    this.windowWidth = 527;
   }
 
   private createElements(): void {
@@ -99,17 +98,17 @@ export default class ClanBankWindow {
   }
 
   private createBg(): void {
-    this.bg = this.scene.add.tileSprite(this.x, this.y, this.width, this.height, 'white-pixel').setTint(0xFF9700);
+    this.bg = this.scene.add.tileSprite(this.posx, this.posy, this.windowWidth, this.windowHeight, 'white-pixel').setTint(0xFF9700);
     this.modalElements.push(this.bg);
   }
 
   private createHeader(): void {
-    this.header = this.scene.add.sprite(this.x, this.y - this.height / 2 + 10 , 'clan-window-header').setDepth(2).setOrigin(0.5, 1);
+    this.header = this.scene.add.sprite(this.posx, this.posy - this.windowHeight / 2 + 10 , 'clan-window-header').setDepth(2).setOrigin(0.5, 1);
     this.modalElements.push(this.header);
   }
 
   private createFooter(): void {
-    this.footer = this.scene.add.sprite(this.x, this.y + this.height / 2, 'profile-window-footer').setOrigin(0.5, 0);
+    this.footer = this.scene.add.sprite(this.posx, this.posy + this.windowHeight / 2, 'profile-window-footer').setOrigin(0.5, 0);
     this.modalElements.push(this.footer);
   }
 
@@ -220,7 +219,7 @@ export default class ClanBankWindow {
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     let x: number = headerGeom.left + 100;
     const btnTexture: string = `clan-bank-${this.farm}-package`;
-    this.scene.add.nineslice(this.x, headerGeom.bottom + 130, this.width, 150, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
+    this.scene.add.nineslice(this.posx, headerGeom.bottom + 130, this.windowWidth, 150, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
     for (let i: number = 0; i < 4; i += 1) {
       const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(x, headerGeom.bottom + 130, `${btnTexture}-${i + 1}`).setScale(0.81).setTint(0xcccccc);
       const text: Phaser.GameObjects.Text = this.scene.add.text(x, headerGeom.bottom + 160, shortNum(array[i]), textStyle).setOrigin(0.5).setTint(0xcccccc);
@@ -228,13 +227,13 @@ export default class ClanBankWindow {
       btn.type = 'disable';
       text.state = array[i];
       this.scene.click(btn, () => {
-        this.setActive({btn, text});
+        this.setActiveBtn({btn, text});
       });
       this.packageBtns.push({btn, text});
       x += btn.displayWidth + 20
-      if (this.activePackage === i) this.setActive({btn, text});
+      if (this.activePackage === i) this.setActiveBtn({btn, text});
     }
-    const donateBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.x, headerGeom.bottom + 270, 'done-chapter-button');
+    const donateBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.posx, headerGeom.bottom + 270, 'done-chapter-button');
     const donateBtnText: Phaser.GameObjects.Text = this.scene.add.text(donateBtn.x, donateBtn.y - 5, this.scene.state.lang.send, btnTextStyle).setOrigin(0.5);
     this.scene.clickModalBtn({ btn: donateBtn, title: donateBtnText }, (): void => { this.addFarmMoney(); });
   }
@@ -248,7 +247,7 @@ export default class ClanBankWindow {
     };
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     let x: number = headerGeom.left + 100;
-    this.scene.add.nineslice(this.x, headerGeom.bottom + 130, this.width, 150, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
+    this.scene.add.nineslice(this.posx, headerGeom.bottom + 130, this.windowWidth, 150, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
     const btnTexture: string = `clan-bank-${this.farm}-package`;
     for (let i: number = 0; i < 4; i += 1) {
       const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(x, headerGeom.bottom + 130, `${btnTexture}-${i + 1}`).setScale(0.81).setTint(0x777777);
@@ -256,10 +255,10 @@ export default class ClanBankWindow {
       x += btn.displayWidth + 20
     }
 
-    this.scene.add.text(this.x, headerGeom.bottom + 270, this.scene.state.lang[`open${this.farm[0].toUpperCase() + this.farm.slice(1)}Farm`], textStyle).setOrigin(0.5).setFontSize(25);
+    this.scene.add.text(this.posx, headerGeom.bottom + 270, this.scene.state.lang[`open${this.farm[0].toUpperCase() + this.farm.slice(1)}Farm`], textStyle).setOrigin(0.5).setFontSize(25);
   }
 
-  private setActive(el: {
+  private setActiveBtn(el: {
     btn: Phaser.GameObjects.Sprite, 
     text: Phaser.GameObjects.Text,
   }): void {
@@ -324,6 +323,8 @@ export default class ClanBankWindow {
   }
 
   private createLogs(): void {
+    console.log(this.farm);
+    console.log(this.logs);
     this.logs = this.scene.state.clan[this.farm].logs;
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       color: '#fffdfa',
@@ -340,7 +341,7 @@ export default class ClanBankWindow {
       wordWrap: { width: 50 },
     };
     let y: number = this.scene.cameras.main.centerY + 70;
-    this.scene.add.nineslice(this.x, y + 150, 500, 380, 'modal-square-bg', 10).setOrigin(0.5);
+    this.scene.add.nineslice(this.posx, y + 150, 500, 380, 'modal-square-bg', 10).setOrigin(0.5);
     const x: number = 160;
     this.logElements = this.scene.add.group();
     this.logs.reverse().forEach(el => {
@@ -380,7 +381,10 @@ export default class ClanBankWindow {
                 y: this.coinIcon.y + this.coinIcon.displayHeight / 2,
               });
             } else {
-              this.getCurrency({x: this.scene.cameras.main.centerX, y: this.header.getBounds().bottom + 260}, Number(packageCount), `${this.farm}Coin`);
+              this.getCurrency({
+                x: this.scene.cameras.main.centerX,
+                y: this.header.getBounds().bottom + 260
+              }, Number(packageCount), `${this.farm}Coin`);
             }
             this.scene.game.scene.keys[this.scene.state.farm].tryClanTask(11);
             this.currentCountText.setText(text);
@@ -501,7 +505,7 @@ export default class ClanBankWindow {
     });
   }
 
-  private update(): void {
+  public preUpdate(time: number, delta: number): void {
     if (this.scene.scene.isActive() && this.scene.state.modal.type === 19) {
       if (JSON.stringify(this.logs) !== JSON.stringify(this.scene.state.clan[this.farm].logs)) {
         this.logElements.destroy(true);
