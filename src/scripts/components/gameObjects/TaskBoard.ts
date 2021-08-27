@@ -17,7 +17,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
 
   public scene: SheepBars | ChickenBars | CowBars;
 
-  private t: any
+  // private t: any
   private bg: Phaser.GameObjects.RenderTexture;
   private bgY: number;
   private bgOriginHeight: number;
@@ -90,10 +90,10 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
 
   private createElements(): void {
     // Тестирование: на пробел выполняется задание
-    this.scene.input.keyboard.addKey('SPACE').on('down', (): void => {
-      this.t.done = true
-      console.log('TaskBoard ~ this.scene.input.keyboard.addKey ~ this.t', this.t.type)
-    })
+    // this.scene.input.keyboard.addKey('SPACE').on('down', (): void => {
+    //   this.t.done = true
+    //   console.log('TaskBoard ~ this.scene.input.keyboard.addKey ~ this.t', this.t.type)
+    // })
     this.bg = this.scene.add.nineslice(this.scene.cameras.main.centerX, this.bgY, 660, 120, 'tasks-bar-ns', 15).setDepth(this.scene.height + 100).setVisible(false).setOrigin(0.5, 1).setInteractive();
     
     this.taskIcon = this.scene.add.sprite(0, 0, ' ').setDepth(this.bg.depth + 1).setVisible(false);
@@ -185,12 +185,12 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
     const task: ItaskSheep = tasks[0];
 
     // Поиск невыполненого задания для тестирования
-    for (let i = tasks.length - 1; i >= 0; i--) {
-      if (!tasks[i].done) {
-        this.t = tasks[i]
-        break
-      }
-    }
+    // for (let i = tasks.length - 1; i >= 0; i--) {
+    //   if (!tasks[i].done) {
+    //     this.t = tasks[i]
+    //     break
+    //   }
+    // }
 
     if (
       this.taskStatus === task?.done && 

@@ -369,7 +369,7 @@ const config: Iconfig[] = [
         progress: 0,
         text: 'taskName_11',
         icon: 'sheep-task-icon-22',
-        sort: 40
+        sort: 50
       },
       {
         type: 6, // накопить монет
@@ -383,7 +383,7 @@ const config: Iconfig[] = [
         progress: 0,
         text: 'taskName_14',
         icon: 'sheep-task-icon-15',
-        sort: 50
+        sort: 40
       },
       {
         type: 23, // улучши собиратель
@@ -703,7 +703,7 @@ const config: Iconfig[] = [
         type: 11, // ручной сбор
         id: '174',
         state: 0,
-        count: 4,
+        count: 15,
         done: false,
         awardTaken: false,
         awardType: 'diamond',

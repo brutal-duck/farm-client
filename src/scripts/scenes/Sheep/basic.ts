@@ -17,13 +17,14 @@ function balance(): Ibalance {
   for (let i in this.sheep?.children.entries) {
 
     let sheep = this.sheep?.children.entries[i];
-
-    let breed: number;
-    if (sheep.type === 0) breed = 1;
-    else breed = sheep.type;
-
+    let breed: number = sheep.type === 0 ? 1 : sheep.type;
     let points: IsheepPoints = this.settings.sheepSettings.find((item: IsheepPoints) => item.breed === breed);
     
+    if (sheep.type === 0) {
+      points.eating = 0
+      points.drinking = 0
+    }
+
     grassConsumption += points.eating;
     waterConsumption += points.drinking;
 

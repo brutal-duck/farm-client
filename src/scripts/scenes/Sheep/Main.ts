@@ -355,15 +355,12 @@ class Sheep extends Phaser.Scene {
     // интервальные функция
     this.interval();
     // this.setCollector();
-    // let cursors = this.input.keyboard.createCursorKeys();
-    // cursors.space.on('down', (): void => {
-    //   // let tasks = this.partTasks();
-    //   // for (let i in tasks) {
-    //   //       tasks[i].done = 1;
-    //   //       // tasks[i].got_awarded = 1;
-    //   // }
-    // });
 
+    // ДЛя теста
+    this.input.keyboard.addKey('SPACE').on('down', (): void => {
+      this.state.offlineTime = 60 * 60;
+      this.autoprogress();
+    })
   }
 
 

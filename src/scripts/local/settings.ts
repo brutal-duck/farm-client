@@ -101,8 +101,8 @@ const sheepSettings: IsheepSettings = {
     { sort: 16, award: 0, improve_territory_2: 350591000, improve_territory_3: 701182000, improve_territory_4: 1402364000, exchange: 12000000 }
   ],
   sheepSettings: [
-    { breed: 1, long_wool: 100, wool_growth: 250, eating: 10, drinking: 2 },
-    { breed: 2, long_wool: 200, wool_growth: 150, eating: 11, drinking: 2 },
+    { breed: 1, long_wool: 100, wool_growth: 250, eating: 8, drinking: 2 },
+    { breed: 2, long_wool: 200, wool_growth: 150, eating: 10, drinking: 2 },
     { breed: 3, long_wool: 400, wool_growth: 100, eating: 12, drinking: 3 },
     { breed: 4, long_wool: 800, wool_growth: 100, eating: 13, drinking: 3 },
     { breed: 5, long_wool: 1600, wool_growth: 100, eating: 14, drinking: 3 },
