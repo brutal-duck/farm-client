@@ -50,6 +50,7 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
   private init(): void {
     this.barHeight = 140;
     this.clanTask = typeof this.taskInfo.task.done === 'boolean';
+    if (this.clanTask) this.barHeight = 147;
 
     const moneyTask = this.scene.game.scene.keys['Sheep'].moneyTasks.find(el => el.id === this.taskInfo.task.id);
     if (this.scene.state.farm === 'Sheep' && moneyTask && !this.clanTask) {     
@@ -82,7 +83,7 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
     this.icon = this.scene.add.sprite(this.x - 170, this.y + 60, this.taskInfo.taskData.icon).setDepth(3).setScale(0.9);
     this.text = this.scene.add.text(this.x, this.y, this.taskInfo.taskData.name, this.taskInProgressTextStyle).setDepth(3).setOrigin(0.5);
     
-    if (this.text.height > 30) this.barHeight += (this.text.height - 30) / 2;
+    if (this.text.height > 30 && this.clanTask) this.barHeight += (this.text.height - 30) / 2;
 
     this.bar = this.scene.add.sprite(this.x, this.y, 'tasks-bar').setOrigin(0, 1).setDepth(3);
     this.barText = this.scene.add.text(this.x, this.y, '', { font: '24px Shadow', color: '#FFFFFF' }).setOrigin(0, 0.5).setDepth(4);
@@ -163,15 +164,28 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
           task.got_awarded = true;
           this.taskInfo.task.got_awarded = true;
           this.taskComplete();
+          this.pickUpAnim();
         }
       }
     }
   }
 
+  private pickUpAnim(): void {
+    const diamond: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.takeButton.x + this.takeButton.width / 2, this.takeButton.y, 'diamond').setScale(0.15).setDepth(10);
+    this.scene.tweens.add({
+      targets: diamond,
+      props: {
+        rotation: { duration: 400, yoyo: false, ease: 'Power2', value: 2 * Math.PI },
+        scale: { value: 0.2, ease: 'Power1', duration: 150, yoyo: true },
+      },
+      onComplete: (): void => { diamond.destroy(); },
+    });
+  }
+
   private taskComplete(): void {
     // Задание выполнено, награда получена
     this.setTexture('tasks-reward').setDisplaySize(460, this.barHeight);
-    this.icon.setTint(0xc0c0c0).setAlpha(0.9);
+    this.icon.setTint(0xc0c0c0).setAlpha(0.9).setY(this.getCenter().y);
     this.text.setPosition(this.getCenter().x + 60, this.getCenter().y).setColor(this.taskCompliteAwardTakenTextColor);
 
     this.bar?.setVisible(false);
