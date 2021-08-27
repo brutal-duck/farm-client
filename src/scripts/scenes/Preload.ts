@@ -68,7 +68,6 @@ const farmer: string = require("./../../assets/images/farmer.png");
 const tasksTop: string = require("./../../assets/images/modal/tasks-top.png");
 const tasksMiddle: string = require("./../../assets/images/modal/tasks-middle.png");
 const tasksBottom: string = require("./../../assets/images/modal/tasks-bottom.png");
-const tasksComplete: string = require("./../../assets/images/modal/tasks-complete.png");
 const tasksUncomplete: string = require("./../../assets/images/modal/tasks-uncomplete.png");
 const tasksReward: string = require("./../../assets/images/modal/tasks-reward.png");
 const tasksBar: string = require("./../../assets/images/modal/tasks-bar.png");
@@ -302,7 +301,6 @@ class Preload extends Phaser.Scene {
     this.load.image('tasks-top', tasksTop);
     this.load.image('tasks-middle', tasksMiddle);
     this.load.image('tasks-bottom', tasksBottom);
-    this.load.image('tasks-complite', tasksComplete);
     this.load.image('tasks-uncomplite', tasksUncomplete);
     this.load.image('tasks-reward', tasksReward);
     this.load.image('tasks-bar', tasksBar);

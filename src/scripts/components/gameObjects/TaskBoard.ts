@@ -17,7 +17,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
 
   public scene: SheepBars | ChickenBars | CowBars;
 
-  private t: any
+  // private t: any
   private bg: Phaser.GameObjects.RenderTexture;
   private bgY: number;
   private bgOriginHeight: number;
@@ -90,7 +90,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
 
   private createElements(): void {
     // Тестирование: на пробел выполняется задание
-    this.scene.input.keyboard.addKey('SPACE').on('down', (): void => { this.t.done = 1 })
+    // this.scene.input.keyboard.addKey('SPACE').on('down', (): void => { this.t.done = 1 })
 
     this.bg = this.scene.add.nineslice(this.scene.cameras.main.centerX, this.bgY, 660, 120, 'tasks-bar-ns', 15).setDepth(this.scene.height + 100).setVisible(false).setOrigin(0.5, 1).setInteractive();
     
@@ -179,14 +179,17 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
     
     let setter: boolean = false;
     const task: Itasks = tasks[0];
-
+        
+    // Определение текущего задание для тестирования
+    // if (this.t !== task) this.t = task
+    
     // Поиск невыполненого задания для тестирования
-    for (let i = tasks.length - 1; i >= 0; i--) {
-      if (!tasks[i].done) {
-        this.t = tasks[i]
-        break
-      }
-    }
+    // for (let i = tasks.length - 1; i >= 0; i--) {
+    //   if (!tasks[i].done) {
+    //     this.t = tasks[i]
+    //     break
+    //   }
+    // }
 
     if (
       this.taskStatus === task?.done && 
@@ -289,10 +292,6 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
         this.taskProgressBorder1.setPosition(this.taskIcon.x, this.scene.height  - 190 - height / 2);
         this.taskProgressBorder2.setPosition(this.taskIcon.x, this.scene.height  - 190 - height / 2);
         
-        console.log('preUpdate ~ setter', setter)
-        if (!setter) this.setProgressAni();
-        // else this.hideProgressElements();
-
         this.done.removeAllListeners();
         this.scene.clickShopBtn({
           btn: this.done,
@@ -310,7 +309,6 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
         // Завершить главу
       } else if (this.status === 3 && task) {
         this.bg.setY(this.bgY).setDisplaySize(660, 110).removeAllListeners();
-        this.hideProgressElements();
 
         this.doneButton.setPosition(this.scene.cameras.main.centerX, this.positionY - 245);
         this.doneButtonText.setPosition(this.scene.cameras.main.centerX, this.positionY - 249);
@@ -360,34 +358,31 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
         !this.scene.scene.isActive('Fortune') &&
         checkSheepTutor
       ) {
-        if (setter) this.flyInMainBoardAnim();
         this.shownElements();
+        if (setter) this.flyInMainBoardAnim();
+        else if (this.status === 2) this.setProgressAni();
       }
     }
   }
 
-  private hideProgressElements(): void {
-    console.log('hide');
-    this.taskProgress.setVisible(false)
-    this.taskProgress.rightSegment.setAlpha(1).setVisible(false)
-    this.taskProgress.leftSegment.setAlpha(1).setVisible(false)
-    this.taskProgressBorder1.setAlpha(1).setVisible(false)
-    this.taskProgressBorder2.setAlpha(1).setVisible(false)
+  private setVisibleProgressElements(isVisible: boolean): void {
+    this.taskProgress?.setVisible(isVisible)
+    this.taskProgressBorder1.setVisible(isVisible)
+    this.taskProgressBorder2.setVisible(isVisible)
   }
 
+
   private setProgressAni(): void {
-    console.log('progress');
-    
+    const duration = 400
+    const delay = 350
+
     this.checkMark.setAlpha(0.5).setScale(0.85)
-    this.takeText.setVisible(true);
-    this.taskProgress?.setPercent(100).setVisible(true);
-    this.taskProgressBorder1.setVisible(true);
-    this.taskProgressBorder2.setVisible(true);
+    this.taskProgress?.setPercent(100, 0, 350)
+    this.setVisibleProgressElements(true)
 
     this.progressAni = this.scene.tweens.add({
+      onStart: (): void => { this.taskProgress.fadeOut(duration) },
       targets: [
-        this.taskProgress.rightSegment,
-        this.taskProgress.leftSegment,
         this.taskProgressBorder1,
         this.taskProgressBorder2,
         this.checkMark
@@ -400,8 +395,8 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
         if (target === this.checkMark) return 1
         else return target.scale
       },
-      delay: 350,
-      duration: 400,
+      delay,
+      duration,
     })
   }
 
@@ -429,7 +424,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
         this.taskProgressBorder1,
         this.taskProgressBorder2,
       ],
-      onStart: (): void => this.hideProgressElements(),
+      onStart: (): void => { this.setVisibleProgressElements(false) },
       delay: 850,
       duration: 250,
       yoyo: true,
@@ -482,12 +477,10 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
 
   private flyInMainBoardAnim(): void {
     if (!this.closingAniIsPlaying) {
-      console.log('flyout');
-      
       this.isMoving = true;
       this.setStartY();
       this.removeButtonsInteractive();
-      if (this.status === 2) this.hideProgressElements();
+      if (this.status === 2) this.setVisibleProgressElements(false);
 
       this.scene.tweens.add({
         duration: 500,
@@ -531,7 +524,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
 
   private createOldBoard(task: Itasks): void {
     if (this.progressAni?.isPlaying()) this.progressAni?.remove();
-    this.hideProgressElements();
+    this.setVisibleProgressElements(false)
 
     const taskData: ItaskData = this.scene.game.scene.keys[this.scene.state.farm].getTaskData(task);
     const oldTaskBoard: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(this.bg.x, this.bgY, this.bg.displayWidth, this.bg.displayHeight, 'tasks-bar-ns', 15).setOrigin(0.5, 1).setDepth(this.depth + 10000);
@@ -593,9 +586,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
     this.doneButton?.setVisible(false);
     this.doneButtonText?.setVisible(false);
     this.lastPart?.setVisible(false);
-    this.taskProgress?.setVisible(false);
-    this.taskProgressBorder1.setVisible(false);
-    this.taskProgressBorder2.setVisible(false);
+    this.setVisibleProgressElements(false);
   }
 
   private hideListButton(): void {
@@ -603,8 +594,6 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
   }
 
   private shownElements(): void {
-    console.log('show');
-    
     this.hideAllElement();
     this.isVisibile = true;
 

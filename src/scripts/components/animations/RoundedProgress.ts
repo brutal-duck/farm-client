@@ -15,6 +15,7 @@ export default class RoundedProgress {
   public mask: Phaser.Display.Masks.BitmapMask;
   private timeoutAni: Phaser.Tweens.Tween;
   private setAni: Phaser.Tweens.Tween;
+  public isVisible: boolean;
 
   constructor(
     scene: Phaser.Scene,
@@ -39,6 +40,7 @@ export default class RoundedProgress {
 
 
   private create(): void {
+    this.isVisible = true
     this.rightSegment = this.scene.add.sprite(this.x, this.y, this.texture).setOrigin(0, 0.5).setTint(this.tint).setScale(this.scale).setDepth(100000);
     this.leftSegment = this.scene.add.sprite(this.x, this.y, this.texture).setOrigin(1, 0.5).setFlipX(true).setTint(this.tint).setScale(this.scale).setDepth(100000);
 
@@ -67,6 +69,7 @@ export default class RoundedProgress {
 
   public setPercent(percent: number, time: number = 0, duration: number = 500): RoundedProgress {
     if (percent === 100) percent = 99.9
+    if (!this.leftSegment.mask) this.leftSegment.setMask(this.mask)
     const targets = this.mask?.bitmapMask as Phaser.GameObjects.TileSprite;
     let from = this.timeoutAni?.isPlaying() ? this.timeoutAni.data[0].current : 360 / 100 * this.percent;
     let to = 360 / 100 * percent;
@@ -104,9 +107,22 @@ export default class RoundedProgress {
       this.leftSegment.setVisible(false);
       this.rightSegment.setMask(this.mask);
     } else if (target.angle < 0 && !this.leftSegment.visible) {
-      this.leftSegment.setVisible(true);
+      this.leftSegment.setVisible(this.isVisible);
       this.rightSegment.clearMask();
     }
+  }
+
+
+  public fadeOut(duration: number = 500, delay: number = 0): void {
+    this.setAlpha(1)
+    this.leftSegment.clearMask()
+
+    this.scene.tweens.add({
+      targets: [ this.leftSegment, this.rightSegment ],
+      alpha: 0,
+      duration,
+      delay,
+    })
   }
 
 
@@ -125,6 +141,7 @@ export default class RoundedProgress {
 
 
   public setVisible(isVisible: boolean): RoundedProgress {
+    this.isVisible = isVisible
     this.rightSegment.setVisible(isVisible);
     this.leftSegment.setVisible(isVisible);
     if (isVisible) this.updateElements();
@@ -162,5 +179,4 @@ export default class RoundedProgress {
     this.setAni?.remove();
     return null
   }
-
 }

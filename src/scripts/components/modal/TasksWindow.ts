@@ -1,7 +1,6 @@
 import Modal from "../../scenes/Modal/Modal";
 import TaskBar from "../gameObjects/TaskBar";
 
-const tasksComplete: string = require("./../../../assets/images/modal/tasks-complete.png");
 const tasksUncomplete: string = require("./../../../assets/images/modal/tasks-uncomplete.png");
 const tasksReward: string = require("./../../../assets/images/modal/tasks-reward.png");
 
@@ -45,7 +44,6 @@ export default class TasksWindowNew {
 
 
   private preload(): void {
-    this.scene.load.image('tasks-complete', tasksComplete);
     this.scene.load.image('tasks-uncomplite', tasksUncomplete);
     this.scene.load.image('tasks-reward', tasksReward);
   }
