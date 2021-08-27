@@ -208,6 +208,7 @@ const clanTaskIcon16: string = require('../../../assets/images/modal/clan/tasks/
 const clanTaskIcon17: string = require('../../../assets/images/modal/clan/tasks/task-17.png');
 const clanTaskIcon18: string = require('../../../assets/images/modal/clan/tasks/task-18.png');
 const clanTaskIcon19: string = require('../../../assets/images/modal/clan/tasks/task-19.png');
+const clanBankBtn: string = require('../../../assets/images/modal/clan/bank-btn.png');
 
 export default function typePreload(): void {
     switch (this.state.modal.type) {
@@ -474,25 +475,26 @@ export default function typePreload(): void {
         this.load.image('tasks-bar', tasksBar);
         this.load.image('close-window-btn', closeWindowBtn);
         this.load.image('part-progress', partProgress);
-        this.load.image('clan-task-icon-1',clanTaskIcon1);
-        this.load.image('clan-task-icon-2',clanTaskIcon2);
-        this.load.image('clan-task-icon-3',clanTaskIcon3);
-        this.load.image('clan-task-icon-4',clanTaskIcon4);
-        this.load.image('clan-task-icon-5',clanTaskIcon5);
-        this.load.image('clan-task-icon-6',clanTaskIcon6);
-        this.load.image('clan-task-icon-7',clanTaskIcon7);
-        this.load.image('clan-task-icon-8',clanTaskIcon8);
-        this.load.image('clan-task-icon-9',clanTaskIcon9);
-        this.load.image('clan-task-icon-10',clanTaskIcon10);
-        this.load.image('clan-task-icon-11',clanTaskIcon11);
-        this.load.image('clan-task-icon-12',clanTaskIcon12);
-        this.load.image('clan-task-icon-13',clanTaskIcon13);
-        this.load.image('clan-task-icon-14',clanTaskIcon14);
-        this.load.image('clan-task-icon-15',clanTaskIcon15);
-        this.load.image('clan-task-icon-16',clanTaskIcon16);
-        this.load.image('clan-task-icon-17',clanTaskIcon17);
-        this.load.image('clan-task-icon-18',clanTaskIcon18);
-        this.load.image('clan-task-icon-19',clanTaskIcon19);
+        this.load.image('clan-task-icon-1', clanTaskIcon1);
+        this.load.image('clan-task-icon-2', clanTaskIcon2);
+        this.load.image('clan-task-icon-3', clanTaskIcon3);
+        this.load.image('clan-task-icon-4', clanTaskIcon4);
+        this.load.image('clan-task-icon-5', clanTaskIcon5);
+        this.load.image('clan-task-icon-6', clanTaskIcon6);
+        this.load.image('clan-task-icon-7', clanTaskIcon7);
+        this.load.image('clan-task-icon-8', clanTaskIcon8);
+        this.load.image('clan-task-icon-9', clanTaskIcon9);
+        this.load.image('clan-task-icon-10', clanTaskIcon10);
+        this.load.image('clan-task-icon-11', clanTaskIcon11);
+        this.load.image('clan-task-icon-12', clanTaskIcon12);
+        this.load.image('clan-task-icon-13', clanTaskIcon13);
+        this.load.image('clan-task-icon-14', clanTaskIcon14);
+        this.load.image('clan-task-icon-15', clanTaskIcon15);
+        this.load.image('clan-task-icon-16', clanTaskIcon16);
+        this.load.image('clan-task-icon-17', clanTaskIcon17);
+        this.load.image('clan-task-icon-18', clanTaskIcon18);
+        this.load.image('clan-task-icon-19', clanTaskIcon19);
+        this.load.image('clan-bank-button', clanBankBtn);
         break;
       default:
         break;

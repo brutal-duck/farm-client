@@ -285,8 +285,7 @@ const clanTaskIcon16: string = require('../../assets/images/modal/clan/tasks/tas
 const clanTaskIcon17: string = require('../../assets/images/modal/clan/tasks/task-17.png');
 const clanTaskIcon18: string = require('../../assets/images/modal/clan/tasks/task-18.png');
 const clanTaskIcon19: string = require('../../assets/images/modal/clan/tasks/task-19.png');
-
-
+const clanBankBtn: string = require('../../assets/images/modal/clan/bank-btn.png');
 
 class Preload extends Phaser.Scene {
   constructor() {
@@ -619,6 +618,8 @@ class Preload extends Phaser.Scene {
     this.load.image('clan-task-icon-17',clanTaskIcon17);
     this.load.image('clan-task-icon-18',clanTaskIcon18);
     this.load.image('clan-task-icon-19',clanTaskIcon19);
+    this.load.image('clan-bank-button', clanBankBtn);
+
   }
 
   public create(): void {
