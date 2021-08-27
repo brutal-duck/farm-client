@@ -1,5 +1,6 @@
 import { shortTime } from '../../general/basic';
 import ClanFarm from './../../scenes/ClanFarm';
+import Firework from './../animations/Firework';
 
 export default class ClanCooldownBuilding extends Phaser.GameObjects.Sprite {
   public scene: ClanFarm;
@@ -34,6 +35,7 @@ export default class ClanCooldownBuilding extends Phaser.GameObjects.Sprite {
     super.preUpdate(time, delta);
     if (this.checkDestroy()) {
       if (this.active) {
+        Firework.create(this.scene, { x: this.x, y: this.y - 50 }, 5);
         this.destroy();
       };
     } else {

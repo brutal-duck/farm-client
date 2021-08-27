@@ -375,7 +375,7 @@ export default class ClanFarm extends Phaser.Scene {
   }
 
   private updateCountsText(): void {
-    if (this.diamondCountText.active && this.diamondCountText?.text !== String(this.state.clan.diamond?.count)) {
+    if (this.diamondCountText.active && this.diamondCountText?.text !== String(this.state.clan.diamond.count)) {
       this.diamondCountText.setText(String(this.state.clan.diamond.count));
     }
     if (this.sheepCountText.active && this.sheepCountText?.text !== shortNum(this.state.clan.sheep?.money)) {
