@@ -80,7 +80,7 @@ export default class ClanUsersList {
       y: avatarSprite.y + avatarSprite.displayHeight / 2 - 15,
     };
 
-    const expelBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(expelBtnPosition.x, expelBtnPosition.y, 'clan-window-exclude-button').setScale(1);
+    const expelBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(expelBtnPosition.x, expelBtnPosition.y, 'clan-window-exclude-button').setDepth(2);
     expelBtn.setVisible(this.scene.state.user.id === this.scene.state.clan?.ownerId);
 
     this.scene.clickButton(expelBtn, (): void => {

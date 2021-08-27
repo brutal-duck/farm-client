@@ -324,11 +324,28 @@ export default class ProfileWindow {
     this.writeBtnText = this.scene.add.text(this.writeBtn.x, this.writeBtn.y - 5, this.scene.state.lang.writing, textStyle).setOrigin(0.5);
 
     if (this.scene.state.clan && this.scene.state.clan?.ownerId === this.scene.state.user.id) {
-      const inviteClanBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos2.x, pos2.y, 'profile-window-button-yellow');
-      const inviteClanBtnText: Phaser.GameObjects.Text = this.scene.add.text(inviteClanBtn.x + 2, inviteClanBtn.y - 5, this.scene.state.lang.inviteClan, textStyle)
-        .setOrigin(0.5);
-  
-      this.scene.clickModalBtn({ btn: inviteClanBtn, title: inviteClanBtnText }, () => { this.onInviteClanBtn(); });
+      if (this.profile.clan.id !== this.scene.state.clan.id) {
+        const inviteClanBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos2.x, pos2.y, 'profile-window-button-yellow');
+        const inviteClanBtnText: Phaser.GameObjects.Text = this.scene.add.text(inviteClanBtn.x + 2, inviteClanBtn.y - 5, this.scene.state.lang.inviteClan, textStyle)
+          .setOrigin(0.5);
+    
+        this.scene.clickModalBtn({ btn: inviteClanBtn, title: inviteClanBtnText }, () => { this.onInviteClanBtn(); });
+      } else {
+        const expelBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos2.x, pos2.y, 'profile-window-button-red');
+        const expelBtnText: Phaser.GameObjects.Text = this.scene.add.text(expelBtn.x + 2, expelBtn.y - 5, this.scene.state.lang.excludeClan, textStyle)
+          .setStroke('#990000', 2)
+          .setOrigin(0.5);
+          
+        this.scene.clickModalBtn({ btn: expelBtn, title: expelBtnText }, (): void => {
+          this.scene.state.modal = {
+            type: 1,
+            sysType: 22,
+            userId: this.profile.id,
+            message: this.profile.name,
+          };
+          this.scene.scene.restart(this.scene.state);
+        });
+      }
     }
 
     
