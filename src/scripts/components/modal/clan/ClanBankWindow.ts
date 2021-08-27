@@ -538,7 +538,6 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
         }
       } else {
         
-        console.log(this.donateBtn.type)
         if (this.donateBtn.type === 'disable') {
           this.donateBtn.setTint(0xffffff);
           this.donateBtnText.setTint(0xffffff);
