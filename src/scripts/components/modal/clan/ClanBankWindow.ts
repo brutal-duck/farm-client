@@ -382,15 +382,16 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
   }
 
   private addFarmMoney(): void {
-    const packageCount: string = String(this.packageBtns.find(el => el.btn.state === this.activePackage).text.state);
+    const packageCount: number = Number(this.packageBtns.find(el => el.btn.state === this.activePackage).text.state);
     const mainScene = this.scene.scene.get(this.scene.state.farm) as Sheep | Chicken | Cow | Unicorn;
+    const farmUser: string = `user${this.farm[0].toUpperCase() + this.farm.slice(1)}`;
     if (this.farm !== 'diamond') {
-      const farmMoney: string = String(this.scene.state[`user${this.farm[0].toUpperCase() + this.farm.slice(1)}`].money);
-      if (BigInteger.greaterThanOrEqual(farmMoney, packageCount)) {
+      const farmMoney: number = Math.round(this.scene.state[farmUser].money);
+      if (farmMoney > packageCount) {
         this.postMoney(packageCount).then(res => {
           if (!res.data.error) {
             this.scene.state.clan = res.data.clan;
-            this.scene.state[`user${this.farm[0].toUpperCase() + this.farm.slice(1)}`].money -= Number(packageCount);
+            this.scene.state[farmUser].money -= Number(packageCount);
             const text: string = this.scene.state.clan[this.farm].money;
             if (Number(packageCount) >= FARM_PACKAGE[2]) {
               MoneyAnimation.create(this.scene, `${this.farm}Coin`, {
@@ -528,21 +529,22 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
         this.logElements.destroy(true);
         this.createLogs();
       }
-      if (this.disableTimer > 0) {
-        this.disableTimer -= delta;
-        this.donateBtn.setTint(0x777777);
-        this.donateBtnText.setTint(0x777777);
-        this.donateBtn.removeInteractive();
-        if (this.donateBtn.type !== 'disable') {
-          this.donateBtn.type = 'disable';
-        }
-      } else {
-        
-        if (this.donateBtn.type === 'disable') {
-          this.donateBtn.setTint(0xffffff);
-          this.donateBtnText.setTint(0xffffff);
-          this.donateBtn.setInteractive();
-          this.donateBtn.type = 'active';
+      if (this.donateBtn) {
+        if (this.disableTimer > 0) {
+          this.disableTimer -= delta;
+          this.donateBtn.setTint(0x777777);
+          this.donateBtnText.setTint(0x777777);
+          this.donateBtn.removeInteractive();
+          if (this.donateBtn.type !== 'disable') {
+            this.donateBtn.type = 'disable';
+          }
+        } else {
+          if (this.donateBtn.type === 'disable') {
+            this.donateBtn.setTint(0xffffff);
+            this.donateBtnText.setTint(0xffffff);
+            this.donateBtn.setInteractive();
+            this.donateBtn.type = 'active';
+          }
         }
       }
     }
