@@ -377,6 +377,11 @@ export default class HerdBoostUnicornWindow {
       this.scene.state[`user${this.scene.state.farm}`].takenHerdBoost++;
       this.scene.scene.stop();
       this.scene.game.scene.keys['Unicorn'].startCreateHerdBoostAnimal = true;
+      this.scene.game.scene.keys['Unicorn'].tryClanTask(3);
+      this.scene.game.scene.keys['Unicorn'].tryClanTask(5, 0, this.scene.state.herdBoostAnimals);
+      this.scene.game.scene.keys['Unicorn'].tryClanTask(12, 0, this.scene.state.herdBoostAnimals.length);
+      this.scene.game.scene.keys['Unicorn'].tryClanTask(13, this.scene.state.herdBoostAnimals.length);
+      
       this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
         type: 'herd',
         count: this.scene.state.herdBoostPrice * this.scene.state[`user${this.scene.state.farm}`].takenHerdBoost,

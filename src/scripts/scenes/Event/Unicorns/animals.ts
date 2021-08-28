@@ -194,9 +194,10 @@ function getResource(data: IeventResource): Phaser.Physics.Arcade.Sprite {
   resource.setAngle(Phaser.Math.Between(0, 360))
 
   this.click(resource, (): void => {
-
-    if (resource.data.values.click) this.collectResource(resource);
-
+    if (resource.data.values.click) {
+      this.tryClanTask(4);
+      this.collectResource(resource);
+    }
   });
   return resource;
 }
@@ -424,7 +425,7 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
         this.time.addEvent({ delay: 100, callback: (): void => {
           this.game.scene.keys['UnicornBars'].updateAnimalPrice();
           MergingCloud.create(this, position);
-
+          this.tryClanTask(5);
           animal1?.data.values.active?.data.values.cloud.destroy();
           animal2?.data.values.active?.data.values.cloud.destroy();
           animal1?.data.values.active.destroy();

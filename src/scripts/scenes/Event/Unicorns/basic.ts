@@ -186,6 +186,8 @@ function freeCollector(type: number = 1): void {
     if (type === 1) {
 
       let collector: number = minutes * 60;
+      this.tryClanTask(7, 0, minutes);
+
       user.collector += collector;
       user.collectorTakenTime = user.collector;
       this.game.scene.keys[this.state.farm + 'Bars'].collector.update();
@@ -193,6 +195,8 @@ function freeCollector(type: number = 1): void {
     } else {
       
       minutes *= 2;
+      this.tryClanTask(7, 0, minutes);
+
       let doubleTimePrice: number = Math.floor(minutes / 60 * doubledСollectorPrice);
 
       if (this.state.user.diamonds >= doubleTimePrice) {
@@ -245,6 +249,8 @@ function buyCollector(type: number): void {
 
       this.state.user.diamonds -= settings['collectorPrice' + hours];
       user.collector += hours * 60 * 60;
+      this.tryClanTask(7, 0, hours * 60);
+
       user.collectorTakenTime = user.collector;
       this.game.scene.keys[this.state.farm + 'Bars'].collector.update();
     } else {
