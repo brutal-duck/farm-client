@@ -7,15 +7,17 @@ import Chicken from '../../scenes/Chicken/Main';
 import Cow from '../../scenes/Cow/Main';
 import Unicorn from '../../scenes/Event/Unicorns/Main';
 import Modal from './../../scenes/Modal/Modal';
+import Profile from './../../scenes/Profile';
+import ClanFarm from './../../scenes/ClanFarm';
 
 export default class MoneyAnimation  {
-  public scene: SheepBars | ChickenBars | CowBars | UnicornBars | Modal;
+  public scene: SheepBars | ChickenBars | CowBars | UnicornBars | Modal | Profile | ClanFarm;
   public position: Iposition;
   public texture: string;
   public money: Phaser.GameObjects.Group;
   private target: Iposition;
 
-  constructor(scene: SheepBars | ChickenBars | CowBars | UnicornBars | Modal, texture: string, target?: Iposition) {
+  constructor(scene: SheepBars | ChickenBars | CowBars | UnicornBars | Modal | Profile | ClanFarm, texture: string, target?: Iposition) {
     this.scene = scene;
     this.position = { x: this.scene.cameras.main.centerX, y: this.scene.cameras.main.centerY };
     this.texture  = texture;
@@ -23,7 +25,7 @@ export default class MoneyAnimation  {
     this.init();
   }
 
-  static create(scene: SheepBars | ChickenBars | CowBars | UnicornBars | Modal, texture: string = `${scene.state.farm.toLowerCase()}Coin`, target?: Iposition): MoneyAnimation {
+  static create(scene: SheepBars | ChickenBars | CowBars | UnicornBars | Modal | Profile | ClanFarm, texture: string = `${scene.state.farm.toLowerCase()}Coin`, target?: Iposition): MoneyAnimation {
     return new MoneyAnimation(scene, texture, target);
   }
 
