@@ -1,12 +1,13 @@
 import ClanWindow from './ClanWindow';
 import Modal from './../../../scenes/Modal/Modal';
+import LogoManager from './../../Utils/LogoManager';
 
 const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
   color: '#fffdfa',
-  fontFamily: 'Bip',
-  fontSize: '24px',
+  fontFamily: 'Shadow',
+  fontSize: '28px',
   align: 'center',
-  wordWrap: { width: 400 }, 
+  wordWrap: { width: 470, useAdvancedWrap: true }, 
   shadow: {
     offsetX: 1,
     offsetY: 1, 
@@ -39,23 +40,19 @@ export default class RedirectClanWindow {
   }
 
   private create(): void {
-    const padding: number = 70;
+    const padding: number = 180;
     const pos: Iposition = {
       x: this.x,
-      y: this.scene.cameras.main.centerY - 30,
+      y: this.scene.cameras.main.centerY - 50,
     };
+    LogoManager.createIcon(this.scene, pos.x, pos.y, this.scene.state.clan.avatar).setScale(0.5);
     const string: string = this.type === 'join' ? this.scene.state.lang.youJoinedClan.replace('$1', this.scene.state.clan?.name) : this.scene.state.lang.youCreatedClan.replace('$1', this.scene.state.clan?.name)
-    const text: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, string, textStyle).setOrigin(0.5);
+    const text: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y + 120, string, textStyle).setOrigin(0.5);
     const go = this.scene.bigButton('green', 'center', padding, this.scene.state.lang.goToClanFarm);
     this.scene.clickModalBtn(go, (): void => { this.handleAccept(); });
 
-    const cancel = this.scene.bigButton('yellow', 'center', padding + 90, this.scene.state.lang.cancel);
-    this.scene.clickModalBtn(cancel, (): void => { this.handleClose(); });
   }
 
-  private handleClose(): void {
-    this.scene.scene.stop('Modal');
-  }
 
   private handleAccept(): void {
     this.scene.scene.stop('Modal');

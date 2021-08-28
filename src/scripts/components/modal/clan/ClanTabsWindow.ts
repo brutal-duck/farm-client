@@ -70,7 +70,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
   private createMainElements(): void {
     switch (this.windowType) {
       case 1:
-        if (this.scene.state.clan) this.createClanInfo();
+        this.createClanInfo();
         break;
       case 2:
         this.createLeaderboard();
@@ -197,21 +197,19 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     };
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     const { name, avatar, points } = this.scene.state.clan;
-    if (name && avatar && points) {
-      this.headerTextStyle.wordWrap = { width: 270, useAdvancedWrap: true };
-      this.headerText = this.scene.add.text(headerGeom.left + 110, headerGeom.centerY, name, this.headerTextStyle).setDepth(2).setOrigin(0, 0.5).setFontSize(25);
-      const clanAvatar = LogoManager.createIcon(this.scene, headerGeom.left + 60, headerGeom.centerY, avatar).setDepth(2).setScale(0.4);
-      const scoreBg = this.scene.add.sprite(headerGeom.right - 20, headerGeom.centerY, 'clan-window-points-bg').setDepth(2).setOrigin(1, 0.5);
-      const scoreBgGeom: Phaser.Geom.Rectangle = scoreBg.getBounds();
-      const text: string = `${this.scene.state.lang.scores}: ${shortNum(points)}`;
-      const scoreText = this.scene.add.text(scoreBgGeom.centerX, scoreBgGeom.centerY, text, scoreTextStyle).setDepth(2).setOrigin(0.5);
-      this.scene.add.nineslice(this.x, this.y + 100, 480, 600, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
-      this.createClanBtns();
-      this.scene.scene.launch('ClanScroll', this.scene.state);
-      const limit: number = this.scene.state.clan.main.cooldown > 0 ? this.scene.state.clan.limit - 1 : this.scene.state.clan.limit;
-      const countText: string = `${this.scene.state.lang.players}${this.scene.state.clan.users.length}/${limit}`
-      const userCount: Phaser.GameObjects.Text = this.scene.add.text(headerGeom.left  + 40, headerGeom.bottom + 40, countText, this.headerTextStyle).setOrigin(0, 0.5);
-    }
+    this.headerTextStyle.wordWrap = { width: 270, useAdvancedWrap: true };
+    this.headerText = this.scene.add.text(headerGeom.left + 110, headerGeom.centerY, name, this.headerTextStyle).setDepth(2).setOrigin(0, 0.5).setFontSize(25);
+    const clanAvatar = LogoManager.createIcon(this.scene, headerGeom.left + 60, headerGeom.centerY, avatar).setDepth(2).setScale(0.4);
+    const scoreBg = this.scene.add.sprite(headerGeom.right - 20, headerGeom.centerY, 'clan-window-points-bg').setDepth(2).setOrigin(1, 0.5);
+    const scoreBgGeom: Phaser.Geom.Rectangle = scoreBg.getBounds();
+    const text: string = `${this.scene.state.lang.scores}: ${shortNum(points)}`;
+    const scoreText = this.scene.add.text(scoreBgGeom.centerX, scoreBgGeom.centerY, text, scoreTextStyle).setDepth(2).setOrigin(0.5);
+    this.scene.add.nineslice(this.x, this.y + 100, 480, 600, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
+    this.createClanBtns();
+    this.scene.scene.launch('ClanScroll', this.scene.state);
+    const limit: number = this.scene.state.clan.main.cooldown > 0 ? this.scene.state.clan.limit - 1 : this.scene.state.clan.limit;
+    const countText: string = `${this.scene.state.lang.players}${this.scene.state.clan.users.length}/${limit}`
+    const userCount: Phaser.GameObjects.Text = this.scene.add.text(headerGeom.left  + 40, headerGeom.bottom + 40, countText, this.headerTextStyle).setOrigin(0, 0.5);
   }
 
   private createClanBtns(): void {
