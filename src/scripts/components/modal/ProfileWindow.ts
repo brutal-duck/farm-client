@@ -324,7 +324,7 @@ export default class ProfileWindow {
     this.writeBtnText = this.scene.add.text(this.writeBtn.x, this.writeBtn.y - 5, this.scene.state.lang.writing, textStyle).setOrigin(0.5);
 
     if (this.scene.state.clan && this.scene.state.clan?.ownerId === this.scene.state.user.id) {
-      if (this.profile.clan.id !== this.scene.state.clan.id) {
+      if (this.profile.clan && this.profile.clan?.id !== this.scene.state.clan.id || !this.profile.clan) {
         const inviteClanBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos2.x, pos2.y, 'profile-window-button-yellow');
         const inviteClanBtnText: Phaser.GameObjects.Text = this.scene.add.text(inviteClanBtn.x + 2, inviteClanBtn.y - 5, this.scene.state.lang.inviteClan, textStyle)
           .setOrigin(0.5);
