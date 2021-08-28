@@ -111,7 +111,7 @@ class Profile extends Phaser.Scene {
         x: Phaser.Math.Between(position.x - 30, position.x + 30),
         y: Phaser.Math.Between(position.y - this.game.scene.keys[this.state.farm].scrolling.scrollY - 30, position.y - this.game.scene.keys[this.state.farm].scrolling.scrollY + 30),
       }
-      let target = { x: 495, y: 30 };
+      let target = { x: 100, y: 30 };
       if (texture !== 'diamond') {
         target = { x: 495, y: 120}
       }
