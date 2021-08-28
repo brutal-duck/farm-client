@@ -1521,7 +1521,20 @@ function getPlatformStorage(key: string): Promise<any> {
   });
 }
 
+function openConvertorForClan(): void {
+  if (this.state.openConvertor) {
+    this.state.openConvertor = false;
+    this.scene.launch('ClanFarm', this.state);
+    this.state.modal = {
+      type: 2,
+      shopType: 2,
+    };
+    this.scene.launch('Modal', this.state);
+  }
+}
+
 export {
+  openConvertorForClan,
   yandexAuth,
   random,
   getRandomBool,

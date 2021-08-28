@@ -33,6 +33,7 @@ import {
   playSoundOnce,
   setPlatformStorage,
   getPlatformStorage,
+  openConvertorForClan,
 } from '../../general/basic';
 import {
   improveCollector,
@@ -255,6 +256,7 @@ class Cow extends Phaser.Scene {
   public playSoundOnce = playSoundOnce.bind(this);
   public setPlatformStorage = setPlatformStorage.bind(this);
   public getPlatformStorage = getPlatformStorage.bind(this);
+  private openConvertorForClan = openConvertorForClan.bind(this);
 
   public init(state: Istate): void {
 
@@ -289,7 +291,7 @@ class Cow extends Phaser.Scene {
     this.setCollector();
 
     this.animations();
-
+    this.openConvertorForClan();
     // Заменить на нормальное открытие
     if (!LocalStorage.get('openCow')) {
       LocalStorage.set('openCow', 'true');

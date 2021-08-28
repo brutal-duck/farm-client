@@ -44,6 +44,7 @@ import {
   playSoundOnce,
   setPlatformStorage,
   getPlatformStorage,
+  openConvertorForClan,
 } from '../../general/basic';
 import {
   confirmExchangeTerritory,
@@ -314,6 +315,7 @@ class Sheep extends Phaser.Scene {
   public playSoundOnce = playSoundOnce.bind(this);
   public setPlatformStorage = setPlatformStorage.bind(this);
   public getPlatformStorage = getPlatformStorage.bind(this);
+  private openConvertorForClan = openConvertorForClan.bind(this);
 
   public init(state: Istate): void {
     this.autoprogressTimer = Math.round(new Date().getTime() / 1000);
@@ -347,6 +349,7 @@ class Sheep extends Phaser.Scene {
     // интервальные функция
     this.interval();
     this.setCollector();
+    this.openConvertorForClan();
     // let cursors = this.input.keyboard.createCursorKeys();
     // cursors.space.on('down', (): void => {
     //   let tasks = this.partTasks();

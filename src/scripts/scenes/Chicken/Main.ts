@@ -36,6 +36,7 @@ import {
   playSoundOnce,
   setPlatformStorage,
   getPlatformStorage,
+  openConvertorForClan,
 } from '../../general/basic';
 import {
   improveCollector,
@@ -243,6 +244,7 @@ class Chicken extends Phaser.Scene {
   public playSoundOnce = playSoundOnce.bind(this);
   public setPlatformStorage = setPlatformStorage.bind(this);
   public getPlatformStorage = getPlatformStorage.bind(this);
+  private openConvertorForClan = openConvertorForClan.bind(this);
 
   public init(state: Istate): void {
     this.autoprogressTimer = Math.round(new Date().getTime() / 1000);
@@ -275,7 +277,7 @@ class Chicken extends Phaser.Scene {
     // интервальные функции
     this.interval();
     this.setCollector();
-
+    this.openConvertorForClan();
     // Заменить на нормальное открытие
     if (!LocalStorage.get('openChicken')) {
       LocalStorage.set('openChicken', 'true');
