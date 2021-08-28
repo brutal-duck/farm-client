@@ -10,6 +10,8 @@ const clanMap: string = require('../../assets/images/clan/map.jpg');
 const clanChickenFarm: string = require('../../assets/images/clan/chicken-farm.png');
 const clanFlagpole: string = require('../../assets/images/clan/flagpole.png');
 const clanCooldownBg: string = require('../../assets/images/clan/cooldown-bg.png');
+const factorySmoke: string = require('../../assets/images/cow/factory-smoke.png');
+
 
 const levelTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
   fontFamily: 'Shadow',
@@ -54,6 +56,7 @@ export default class ClanFarm extends Phaser.Scene {
     this.load.image('clan-chicken-farm', clanChickenFarm);
     this.load.image('clan-flagpole', clanFlagpole);
     this.load.image('clan-cooldown-bg', clanCooldownBg);
+    this.load.image('factory-smoke', factorySmoke);
   }
   
   public init(state: Istate): void {
@@ -400,6 +403,7 @@ export default class ClanFarm extends Phaser.Scene {
   private updateCooldowns(): void {
     if (this.state.clan.main?.cooldown > 0 && !this.mainCooldownSprite?.active) {
       const pos: Iposition = { x: 395, y: 450 };
+      this.createStartCooldownAnimation(pos.x, pos.y - 100);
       this.mainCooldownSprite = new ClanCooldownBuilding(this, pos, this.state.clan.main, 'main');
       this.click(this.mainCooldownSprite, () => {
         this.state.modal = {
@@ -408,7 +412,7 @@ export default class ClanFarm extends Phaser.Scene {
           message: 'main',
         };
         this.scene.launch('Modal',  this.state);
-      })
+      });
     }
     if (this.state.clan.sheep?.cooldown > 0 && !this.sheepCooldownSprite?.active) {
       const pos: Iposition = { x: 100, y: 860 };
@@ -424,6 +428,22 @@ export default class ClanFarm extends Phaser.Scene {
     }
   }
 
+  private createStartCooldownAnimation(x: number, y: number): void {
+    const emitter: Phaser.GameObjects.Particles.ParticleEmitter = this.add.particles('factory-smoke').setDepth(5).createEmitter({
+      x: x,
+      y: y,
+      speed: { min: 50, max: 150 },
+      angle: { min: 0, max: 360 },
+      scale: { start: 0, end: 1, ease: 'Back.easeOut' },
+      alpha: { start: 1, end: 0, ease: 'Quart.easeOut' },
+      blendMode: 'SCREEN',
+      lifespan: 2000
+    });
+    this.time.addEvent({
+      delay: 1500,
+      callback: (): void => { emitter.stop(); }, 
+    });
+  }
   private updateLevelText(): void {
     if (this.state.clan.main.cooldown <= 0 && this.clanLevelText?.active) {
       const text: string = String(this.state.clan.main.level);
