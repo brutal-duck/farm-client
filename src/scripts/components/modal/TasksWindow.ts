@@ -150,9 +150,9 @@ export default class TasksWindowNew {
     const parts: Ipart[] = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`${this.scene.state.farm.toLowerCase()}Parts`];
     const userPart: number = this.scene.state[`user${this.scene.state.farm}`].part;
     
-    if (this.scene.state.modal.tasksParams.done && parts.length === userPart) this.partDiscription?.setText(this.scene.state.lang[`${this.scene.state.farm.toLowerCase()}CompanyDone`]);
+    if (this.scene.state.modal.tasksParams.done && parts.length === userPart && this.partDiscription.active) this.partDiscription?.setText(this.scene.state.lang[`${this.scene.state.farm.toLowerCase()}CompanyDone`]);
     else if (this.scene.state.modal.tasksParams.done && parts.length !== userPart) this.createNextPartButton();
-    else if (!this.scene.state.modal.tasksParams.done) this.partDiscription?.setText(this.scene.state.modal.tasksParams.description);
+    else if (!this.scene.state.modal.tasksParams.done && this.partDiscription.active) this.partDiscription?.setText(this.scene.state.modal.tasksParams.description);
 
     this.lineAni?.remove();
     this.tasks = this.getTasks();

@@ -2,6 +2,7 @@ import Notificator from "../components/gameObjects/Notificator";
 import LogoManager, { Icon } from "../components/Utils/LogoManager";
 import { shortNum, loadingModal } from "../general/basic";
 import { click, clickButton, clickModalBtn } from "../general/clicks";
+import { getNewClanTasks } from "../general/tasks";
 import ClanCooldownBuilding from './../components/clan/ClanCooldownBuilding';
 import ClanFlagPole from './../components/clan/ClanFlagPole';
 
@@ -57,6 +58,7 @@ export default class ClanFarm extends Phaser.Scene {
   
   public init(state: Istate): void {
     this.state = state;
+    if (this.state.user.clanTasks.length <= 0) this.state.user.clanTasks = getNewClanTasks(this.state);
   }
 
   public create(): void {

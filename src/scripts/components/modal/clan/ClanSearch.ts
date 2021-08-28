@@ -158,7 +158,7 @@ export default class ClanSearch {
           });
           this.scene.scene.stop('Modal');
           this.scene.scene.stop();
-          this.scene.scene.launch('ClanFarm');
+          this.scene.scene.launch('ClanFarm', this.scene.state);
         }
       }
     });    
