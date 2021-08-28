@@ -250,8 +250,12 @@ export default class CreateClanWindow {
             this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
             this.scene.enterKey.destroy();
             this.input.remove();
-            this.scene.scene.stop();
-            this.scene.scene.launch('ClanFarm', this.scene.state);
+            this.scene.state.modal = {
+              type: 18,
+              clanWindowType: 9,
+              message: 'create',
+            };
+            this.scene.scene.restart(this.scene.state);
           }
         });
       } else {

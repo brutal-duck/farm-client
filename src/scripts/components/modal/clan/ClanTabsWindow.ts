@@ -3,12 +3,12 @@ import Modal from '../../../scenes/Modal/Modal';
 import LogoManager from '../../Utils/LogoManager';
 const KEY: string = '1491f4c9d53dfa6c50d0c4a375f9ba76';
 
-export default class ClanTabsWindow {
-  private scene: Modal;
-  private x: number;
-  private y: number;
-  private height: number;
-  private width: number;
+export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
+  public scene: Modal;
+  public x: number;
+  public y: number;
+  private windowHeight: number;
+  private windowWidth: number;
   private bg: Phaser.GameObjects.TileSprite;
   private header: Phaser.GameObjects.Sprite;
   private closeBtn: Phaser.GameObjects.Sprite;
@@ -31,23 +31,23 @@ export default class ClanTabsWindow {
     wordWrap: { width: 400, useAdvancedWrap: true },
   };
 
-  private input: HTMLInputElement;
+  private mainInput: HTMLInputElement;
   private enterKey: Phaser.Input.Keyboard.Key;
   private inputText: Phaser.GameObjects.Text;
   private cooldownTimer: Phaser.GameObjects.Text;
 
   constructor(scene: Modal) {
+    super(scene, scene.cameras.main.centerX, scene.cameras.main.centerY, 'pixel');
     this.scene = scene;
     this.init();
     this.createElements();
   }
   
   private init(): void {
-    this.x = this.scene.cameras.main.centerX;
-    this.y = this.scene.cameras.main.centerY;
+    this.scene.add.existing(this);
     this.windowType = this.scene.state.modal.clanTabType || 2;
-    this.height = 600;
-    this.width = 527;
+    this.windowHeight = 600;
+    this.windowWidth = 527;
   }
 
   private createElements(): void {
@@ -55,7 +55,7 @@ export default class ClanTabsWindow {
     this.createHeader();
     this.createFooter();
     this.createCloseTab();
-    if (this.scene.state.user.clanId) {
+    if (this.scene.state.clan) {
       if (this.scene.state.user.id === this.scene.state.clan.ownerId) {
         this.createTabs([1, 2, 4]);
       } else {
@@ -70,7 +70,7 @@ export default class ClanTabsWindow {
   private createMainElements(): void {
     switch (this.windowType) {
       case 1:
-        this.createClanInfo();
+        if (this.scene.state.clan) this.createClanInfo();
         break;
       case 2:
         this.createLeaderboard();
@@ -87,17 +87,17 @@ export default class ClanTabsWindow {
   }
 
   private createBg(): void {
-    this.bg = this.scene.add.tileSprite(this.x, this.y, this.width, this.height, 'white-pixel').setTint(0xFF9700);
+    this.bg = this.scene.add.tileSprite(this.x, this.y, this.windowWidth, this.windowHeight, 'white-pixel').setTint(0xFF9700);
     this.modalElements.push(this.bg);
   }
 
   private createHeader(): void {
-    this.header = this.scene.add.sprite(this.x, this.y - this.height / 2 + 10 , 'clan-window-header').setDepth(2).setOrigin(0.5, 1);
+    this.header = this.scene.add.sprite(this.x, this.y - this.windowHeight / 2 + 10 , 'clan-window-header').setDepth(2).setOrigin(0.5, 1);
     this.modalElements.push(this.header);
   }
 
   private createFooter(): void {
-    this.footer = this.scene.add.sprite(this.x, this.y + this.height / 2, 'profile-window-footer').setOrigin(0.5, 0);
+    this.footer = this.scene.add.sprite(this.x, this.y + this.windowHeight / 2, 'profile-window-footer').setOrigin(0.5, 0);
     this.modalElements.push(this.footer);
   }
 
@@ -163,7 +163,9 @@ export default class ClanTabsWindow {
     if (type === 1) {
       const mask = new Phaser.Display.Masks.BitmapMask(this.scene, tabIcon);
       mask.invertAlpha = true;
-      flag = LogoManager.createFlag(this.scene, tabGeom.centerX + 5, tabGeom.centerY - 10 - 5, this.scene.state.clan.avatar).setScale(0.205).setMask(mask);
+      if (this.scene.state.clan.avatar) {
+        flag = LogoManager.createFlag(this.scene, tabGeom.centerX + 5, tabGeom.centerY - 10 - 5, this.scene.state.clan.avatar).setScale(0.205).setMask(mask);
+      }
     }
     this.modalElements.push(tab, tabIcon);
     if (!active) {
@@ -195,19 +197,21 @@ export default class ClanTabsWindow {
     };
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     const { name, avatar, points } = this.scene.state.clan;
-    this.headerTextStyle.wordWrap = { width: 270, useAdvancedWrap: true };
-    this.headerText = this.scene.add.text(headerGeom.left + 110, headerGeom.centerY, name, this.headerTextStyle).setDepth(2).setOrigin(0, 0.5).setFontSize(25);
-    const clanAvatar = LogoManager.createIcon(this.scene, headerGeom.left + 60, headerGeom.centerY, avatar).setDepth(2).setScale(0.4);
-    const scoreBg = this.scene.add.sprite(headerGeom.right - 20, headerGeom.centerY, 'clan-window-points-bg').setDepth(2).setOrigin(1, 0.5);
-    const scoreBgGeom: Phaser.Geom.Rectangle = scoreBg.getBounds();
-    const text: string = `${this.scene.state.lang.scores}: ${shortNum(points)}`;
-    const scoreText = this.scene.add.text(scoreBgGeom.centerX, scoreBgGeom.centerY, text, scoreTextStyle).setDepth(2).setOrigin(0.5);
-    this.scene.add.nineslice(this.x, this.y + 100, 480, 600, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
-    this.createClanBtns();
-    this.scene.scene.launch('ClanScroll', this.scene.state);
-    const limit: number = this.scene.state.clan.main.cooldown > 0 ? this.scene.state.clan.limit - 1 : this.scene.state.clan.limit;
-    const countText: string = `${this.scene.state.lang.players}${this.scene.state.clan.users.length}/${limit}`
-    const userCount: Phaser.GameObjects.Text = this.scene.add.text(headerGeom.left  + 40, headerGeom.bottom + 40, countText, this.headerTextStyle).setOrigin(0, 0.5);
+    if (name && avatar && points) {
+      this.headerTextStyle.wordWrap = { width: 270, useAdvancedWrap: true };
+      this.headerText = this.scene.add.text(headerGeom.left + 110, headerGeom.centerY, name, this.headerTextStyle).setDepth(2).setOrigin(0, 0.5).setFontSize(25);
+      const clanAvatar = LogoManager.createIcon(this.scene, headerGeom.left + 60, headerGeom.centerY, avatar).setDepth(2).setScale(0.4);
+      const scoreBg = this.scene.add.sprite(headerGeom.right - 20, headerGeom.centerY, 'clan-window-points-bg').setDepth(2).setOrigin(1, 0.5);
+      const scoreBgGeom: Phaser.Geom.Rectangle = scoreBg.getBounds();
+      const text: string = `${this.scene.state.lang.scores}: ${shortNum(points)}`;
+      const scoreText = this.scene.add.text(scoreBgGeom.centerX, scoreBgGeom.centerY, text, scoreTextStyle).setDepth(2).setOrigin(0.5);
+      this.scene.add.nineslice(this.x, this.y + 100, 480, 600, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
+      this.createClanBtns();
+      this.scene.scene.launch('ClanScroll', this.scene.state);
+      const limit: number = this.scene.state.clan.main.cooldown > 0 ? this.scene.state.clan.limit - 1 : this.scene.state.clan.limit;
+      const countText: string = `${this.scene.state.lang.players}${this.scene.state.clan.users.length}/${limit}`
+      const userCount: Phaser.GameObjects.Text = this.scene.add.text(headerGeom.left  + 40, headerGeom.bottom + 40, countText, this.headerTextStyle).setOrigin(0, 0.5);
+    }
   }
 
   private createClanBtns(): void {
@@ -270,6 +274,7 @@ export default class ClanTabsWindow {
     this.scene.scene.stop('ClanScroll');
     this.scene.scene.stop('ClanFarm');
     this.scene.scene.restart(this.scene.state);
+    this.scene.scene.launch('Profile');
   }
 
   private createLeaderboard(): void {
@@ -282,7 +287,7 @@ export default class ClanTabsWindow {
       const bgHeight: number = 590;
       const bgY: number = this.y + 120;
       this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
-      this.scene.add.tileSprite(this.x, headerGeom.bottom - 2, this.width, 100, 'white-pixel').setTint(0xD06900).setOrigin(0.5, 0);
+      this.scene.add.tileSprite(this.x, headerGeom.bottom - 2, this.windowWidth, 100, 'white-pixel').setTint(0xD06900).setOrigin(0.5, 0);
       const right1 = {
         text: 250,
         icon: 'diamond'
@@ -327,7 +332,7 @@ export default class ClanTabsWindow {
     const bgHeight: number = 590;
     const bgY: number = this.y + 120;
     const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
-    const tile: Phaser.GameObjects.TileSprite = this.scene.add.tileSprite(this.x, headerGeom.bottom - 2, this.width, 100, 'white-pixel').setTint(0xD06900).setOrigin(0.5, 0);
+    const tile: Phaser.GameObjects.TileSprite = this.scene.add.tileSprite(this.x, headerGeom.bottom - 2, this.windowWidth, 100, 'white-pixel').setTint(0xD06900).setOrigin(0.5, 0);
     const inputBg: Phaser.GameObjects.Sprite = this.scene.add.sprite(headerGeom.centerX - 45, headerGeom.centerY, 'clan-window-search-plate').setDepth(2);
     const inputBgGeom: Phaser.Geom.Rectangle = inputBg.getBounds();
     const searchBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(inputBgGeom.right + 40, inputBgGeom.centerY + 2, 'profile-window-button-green').setDepth(2).setScale(0.92);
@@ -339,16 +344,16 @@ export default class ClanTabsWindow {
     this.createInput();
 
     this.scene.click(inputBg, () => {
-      this.input.style.display = 'block';
-      this.input.focus();
+      this.mainInput.style.display = 'block';
+      this.mainInput.focus();
       this.inputText.setVisible(false);
     });
     
     this.scene.click(this.header, () => {
-      this.input.style.display = 'none';
-      this.input.blur();
-      const text: string = this.input.value ? this.input.value : this.scene.state.lang.inputClanName;
-      const color: string = this.input.value ? '#974f00' : '#8f8f8f';
+      this.mainInput.style.display = 'none';
+      this.mainInput.blur();
+      const text: string = this.mainInput.value ? this.mainInput.value : this.scene.state.lang.inputClanName;
+      const color: string = this.mainInput.value ? '#974f00' : '#8f8f8f';
       this.inputText.setText(text).setColor(color).setDepth(4).setCrop(0, 0, 280, 100).setVisible(true);
     })
 
@@ -387,15 +392,15 @@ export default class ClanTabsWindow {
 
   private createInput(): void {
     const root: HTMLDivElement = document.querySelector('#root');
-    this.input = document.createElement('input');
-    root.append(this.input);
-    this.input.setAttribute("id", "clan-search");
-    this.input.setAttribute("autocomplete", "off");
+    this.mainInput = document.createElement('input');
+    root.append(this.mainInput);
+    this.mainInput.setAttribute("id", "clan-search");
+    this.mainInput.setAttribute("autocomplete", "off");
     const height = Number(this.scene.game.config.height) / 12 - 100;
     const startTop: number = 19;
     const startBottom: number = 77;
-    this.input.style.top = `${startTop + height / 4}%`;
-    this.input.style.bottom = `${startBottom - height / 4}%`;
+    this.mainInput.style.top = `${startTop + height / 4}%`;
+    this.mainInput.style.bottom = `${startBottom - height / 4}%`;
     this.enterKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
     this.enterKey.on('down', (): void => this.searchClans());
 
@@ -412,8 +417,8 @@ export default class ClanTabsWindow {
           const height = Number(this.scene.game.config.height) / 12 - 100;
           const startTop: number = 9;
           const startBottom: number = 87;
-          this.input.style.top = `${startTop - height / 4}%`;
-          this.input.style.bottom = `${startBottom + height / 4}%`;
+          this.mainInput.style.top = `${startTop - height / 4}%`;
+          this.mainInput.style.bottom = `${startBottom + height / 4}%`;
           this.modalElements.forEach((el) => el?.setY(el.y + padding));
           this.scene.game.scene.keys['Chat'].scrolling.y += padding;
           centered = false;
@@ -421,8 +426,8 @@ export default class ClanTabsWindow {
           const height = Number(this.scene.game.config.height) / 12 - 100;
           const startTop: number = 19;
           const startBottom: number = 77;
-          this.input.style.top = `${startTop - height / 4}%`;
-          this.input.style.bottom = `${startBottom + height / 4}%`;
+          this.mainInput.style.top = `${startTop - height / 4}%`;
+          this.mainInput.style.bottom = `${startBottom + height / 4}%`;
           this.modalElements.forEach((el) => el?.setY(el.y - padding));
           this.scene.game.scene.keys['Chat'].scrolling.y -= padding;
           centered = true;
@@ -432,18 +437,18 @@ export default class ClanTabsWindow {
   }
 
   private removeInput(): void {
-    this.input?.remove();
+    this.mainInput?.remove();
     this.enterKey?.destroy();
   }
 
   private searchClans(): void {
-    if (this.input.value !== '') {
+    if (this.mainInput.value !== '') {
       this.scene.scene.stop('ClanScroll');
-      this.scene.state.searchClan = this.input.value;
+      this.scene.state.searchClan = this.mainInput.value;
       this.scene.scene.launch('ClanScroll', this.scene.state);
-      this.input.value = '';
-      this.input.style.display = 'none';
-      this.input.blur();
+      this.mainInput.value = '';
+      this.mainInput.style.display = 'none';
+      this.mainInput.blur();
       this.inputText.setText(this.scene.state.lang.inputClanName).setDepth(4).setCrop(0, 0, 280, 100).setColor('#8f8f8f').setVisible(true);
     }
   }
@@ -526,19 +531,19 @@ export default class ClanTabsWindow {
       
       text = this.scene.state.lang.speedUpImprovment;
       this.cooldownTimer = this.scene.add.text(this.x, this.y - 70, `${this.scene.state.lang.left} ${shortTime(this.scene.state.clan.main.cooldown, this.scene.state.lang)}`, this.headerTextStyle).setOrigin(0.5).setFontSize(25);
-      
-      this.scene.events.on(Phaser.Scenes.Events.UPDATE, () => {
-        if (this.cooldownTimer?.active) {
-          const text: string = `${this.scene.state.lang.left} ${shortTime(this.scene.state.clan.main.cooldown, this.scene.state.lang)}`;
-          if (text !== this.cooldownTimer.text) {
-            this.cooldownTimer.setText(text);
-          }
-        }
-      });
       padding += 30
     }
 
     const btn3 = this.scene.bigButton('green', 'left', padding, text, right3);
     this.scene.clickModalBtn(btn3, callBack);
+  }
+
+  public preUpdate(): void {
+    if (this.cooldownTimer?.active) {
+      const text: string = `${this.scene.state.lang.left} ${shortTime(this.scene.state.clan.main.cooldown, this.scene.state.lang)}`;
+      if (text !== this.cooldownTimer.text) {
+        this.cooldownTimer.setText(text);
+      }
+    }
   }
 }

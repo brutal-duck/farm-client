@@ -29,15 +29,17 @@ export default class ClanFlagPole extends Phaser.GameObjects.Sprite {
   }
 
   public preUpdate(): void {
-    if (JSON.stringify(this.avatar) !== JSON.stringify(this.scene.state.clan.avatar)) {
+    if (this.scene.state.clan && JSON.stringify(this.avatar) !== JSON.stringify(this.scene.state.clan.avatar)) {
       this.updateFlag();
     }
   }
 
   private updateFlag(): void {
-    this.avatar = this.scene.state.clan.avatar;
-    this.flag.destroy();
-    this.flag = LogoManager.createFlag(this.scene, this.flagPosition.x, this.flagPosition.y, this.avatar).setScale(0.17);
+    if (this.scene.state.clan) {    
+      this.avatar = this.scene.state.clan?.avatar;
+      this.flag.destroy();
+      this.flag = LogoManager.createFlag(this.scene, this.flagPosition.x, this.flagPosition.y, this.avatar).setScale(0.17);
+    }
   }
 
   public setDepth(value: number): this {

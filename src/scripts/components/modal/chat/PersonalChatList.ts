@@ -554,6 +554,11 @@ export default class PersonalChatList {
           });
           this.scene.scene.stop('Modal');
           this.scene.scene.stop();
+          this.scene.state.modal = {
+            type: 18,
+            clanWindowType: 9,
+            message: 'join',
+          };
           this.scene.scene.launch('Modal', this.scene.state);
         }
       }

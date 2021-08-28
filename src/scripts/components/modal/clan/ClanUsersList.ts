@@ -11,7 +11,7 @@ export default class ClanUsersList {
     this.scene = scene;
     this.init();
     this.listLength = this.array?.length || 0;
-    this.clanName = this.scene.state.clan.name;
+    this.clanName = this.scene.state.clan?.name;
     this.clanAvatar = JSON.stringify(this.scene.state.clan.avatar);
     this.array?.forEach(el => {
       this.createUser(el);

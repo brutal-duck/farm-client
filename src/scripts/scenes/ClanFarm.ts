@@ -366,14 +366,20 @@ export default class ClanFarm extends Phaser.Scene {
   }
 
   public update(): void {
-    this.updateCooldowns();
-    this.updateLevelText();
-    this.updateCountsText();
-    this.updatePlayerCount();
-    this.updateClanName();
-    this.updateClanIcon();
-    this.updateShopNotification();
-    this.updateTaskNotification();
+    if (!this.state.clan) {
+      this.scene.stop();
+      this.scene.stop('Modal');
+      this.scene.stop('Clan');
+    } else {
+      this.updateCooldowns();
+      this.updateLevelText();
+      this.updateCountsText();
+      this.updatePlayerCount();
+      this.updateClanName();
+      this.updateClanIcon();
+      this.updateShopNotification();
+      this.updateTaskNotification();
+    }
   }
 
   private updateCountsText(): void {
@@ -392,7 +398,7 @@ export default class ClanFarm extends Phaser.Scene {
   }
 
   private updateCooldowns(): void {
-    if (this.state.clan.main.cooldown > 0 && !this.mainCooldownSprite?.active) {
+    if (this.state.clan.main?.cooldown > 0 && !this.mainCooldownSprite?.active) {
       const pos: Iposition = { x: 395, y: 450 };
       this.mainCooldownSprite = new ClanCooldownBuilding(this, pos, this.state.clan.main, 'main');
       this.click(this.mainCooldownSprite, () => {
@@ -404,15 +410,15 @@ export default class ClanFarm extends Phaser.Scene {
         this.scene.launch('Modal',  this.state);
       })
     }
-    if (this.state.clan.sheep.cooldown > 0 && !this.sheepCooldownSprite?.active) {
+    if (this.state.clan.sheep?.cooldown > 0 && !this.sheepCooldownSprite?.active) {
       const pos: Iposition = { x: 100, y: 860 };
       this.sheepCooldownSprite = new ClanCooldownBuilding(this, pos, this.state.clan.sheep, 'sheep');
     }
-    if (this.state.clan.chicken.cooldown > 0 && !this.chickenCooldownSprite?.active) {
+    if (this.state.clan.chicken?.cooldown > 0 && !this.chickenCooldownSprite?.active) {
       const pos: Iposition = { x: 620, y: 1130 };
       this.chickenCooldownSprite = new ClanCooldownBuilding(this, pos, this.state.clan.chicken, 'chicken');
     }
-    if (this.state.clan.cow.cooldown > 0 && !this.cowCooldownSprite?.active) {
+    if (this.state.clan.cow?.cooldown > 0 && !this.cowCooldownSprite?.active) {
       const pos: Iposition = { x: 120, y: 1130 };
       this.cowCooldownSprite = new ClanCooldownBuilding(this, pos, this.state.clan.cow, 'cow');
     }

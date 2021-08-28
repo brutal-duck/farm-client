@@ -156,9 +156,14 @@ export default class ClanSearch {
             userName: login,
             userStatus: this.scene.state.user.status,
           });
+          this.scene.state.modal = {
+            type: 18,
+            clanWindowType: 9,
+            message: 'join',
+          };
           this.scene.scene.stop('Modal');
           this.scene.scene.stop();
-          this.scene.scene.launch('ClanFarm', this.scene.state);
+          this.scene.scene.launch('Modal', this.scene.state);
         }
       }
     });    

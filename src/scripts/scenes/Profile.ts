@@ -652,7 +652,7 @@ class Profile extends Phaser.Scene {
     this.clanNotificator = new Notificator(this, { x: pos.x + 65, y: pos.y - 80 }, true);
     this.click(zone, (): void => {
       if (this.state.userSheep.part >= 7 && this.checkAuthUser()) {
-        if (!this.state.user.clanId) {
+        if (!this.state.user.clanId || !this.state.clan) {
           this.state.modal = {
             type: 17,
             clanTabType: 2,

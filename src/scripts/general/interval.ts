@@ -55,6 +55,8 @@ const progressClanCooldown = (state: Istate): void => {
     if (state.clan.sheep.cooldown > 0) state.clan.sheep.cooldown -= 1;
     if (state.clan.chicken.cooldown > 0) state.clan.chicken.cooldown -= 1;
     if (state.clan.cow.cooldown > 0) state.clan.cow.cooldown -= 1;
+  } else {
+    if (state.user.clanId) state.user.clanId = '';
   }
 };
 
