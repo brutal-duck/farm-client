@@ -596,17 +596,20 @@ function getNewClanTasks(state: Istate): IclanTask[] {
     if (count < MAX_COUNT) {
       if (tasks.some(task => task.type !== el.type) || tasks.length <= 0) {
         if (el.type !== 14 && el.type !== 16 && el.type !== 17) {
-          tasks.push(el);
+          const cloned = Phaser.Utils.Objects.Clone(el) as IclanTask;
+          tasks.push(cloned);
           count += 1;
         } else {
           if (checkAvailabilityOfTasks(state, el)) {
-            tasks.push(el);
+            const cloned = Phaser.Utils.Objects.Clone(el) as IclanTask;
+            tasks.push(cloned);
             count += 1;
           }
         }
       }
     }
   });
+  console.log(tasks);
   return tasks;
 }
 
