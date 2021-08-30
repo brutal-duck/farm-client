@@ -155,9 +155,9 @@ class Boot extends Phaser.Scene {
   }
 
   private setPlatform(): void {
-    this.platform = 'web';
+    // this.platform = 'web';
     // this.platform = 'ya';
-    // this.platform = 'android';
+    this.platform = 'android';
     this.hash = '';
 
     const search: string = window.location.search;
@@ -404,15 +404,17 @@ class Boot extends Phaser.Scene {
     // @ts-ignore
     const adjustConfig = new AdjustConfig(process.env.ADJUST, AdjustConfig.EnvironmentProduction); // Для продакшена
     window[`Adjust`].create(adjustConfig);
-
-    // @ts-ignore
-    this.state.adjust.firstOpenEvent = new AdjustEvent("odowuy");
-    // @ts-ignore
-    this.state.adjust.tutorialDoneEvent = new AdjustEvent("nalk5e");
-    // @ts-ignore
-    this.state.adjust.shopPurchaseEvent = new AdjustEvent("s1xl3a");
-    // @ts-ignore
-    this.state.adjust.shopPurchaseEvent = new AdjustEvent("2zs7zu");
+    
+    this.state.adjust = {
+      // @ts-ignore
+      firstOpenEvent: new AdjustEvent("odowuy"),
+      // @ts-ignore
+      tutorialDoneEvent: new AdjustEvent("nalk5e"),
+      // @ts-ignore
+      shopPurchaseEvent: new AdjustEvent("s1xl3a"),
+      // @ts-ignore
+      adEvent: new AdjustEvent("2zs7zu")
+    }
   }
 
 
