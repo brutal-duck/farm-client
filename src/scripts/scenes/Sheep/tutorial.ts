@@ -275,10 +275,11 @@ function doneTutor_90(): void {
 
 // закрытие последнего шага туториала
 function doneTutor_100(): void {
-
-  this.state.amplitude.logAmplitudeEvent('tutorial', {
-    step: 100
-  });
+  this.state.amplitude.logAmplitudeEvent('tutorial', { step: 100 });
+  if (this.platform === 'android') {
+    try { window[`Adjust`].trackEvent(this.state.adjust.tutorialDoneEvent) }
+    catch (err) { console.log(err) }
+  }
 
   this.scene.stop('Tutorial');
 }
@@ -425,8 +426,11 @@ function doneTutorCave2(): void {
 
 // отмена всего обучения
 function skipTutorial(): void {
-
   this.state.amplitude.logAmplitudeEvent('skip_tutorial', {});
+  if (this.platform === 'android') {
+    try { window[`Adjust`].trackEvent(this.state.adjust.tutorialDoneEvent) }
+    catch (err) { console.log(err) }
+  }
 
   this.scene.stop('Tutorial');
 

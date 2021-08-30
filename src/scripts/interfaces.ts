@@ -734,6 +734,12 @@ interface IsociaTasks {
   subNotification?: boolean;
   sendPost?:boolean;
 }
+interface Iadjust {
+  firstOpenEvent: any;
+  tutorialDoneEvent: any;
+  shopPurchaseEvent: any;
+  adEvent: any;
+}
 interface Istate {
   platform: string;
   autoSaveSpeed: number;
@@ -824,4 +830,5 @@ interface Istate {
   yandexName?: string;
   musicVolume: number;
   soundVolume: number;
+  adjust: Iadjust;
 }
