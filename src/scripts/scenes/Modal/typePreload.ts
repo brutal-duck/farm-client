@@ -236,7 +236,6 @@ export default function typePreload(): void {
         this.load.image('tasks-top', tasksTop);
         this.load.image('tasks-middle', tasksMiddle);
         this.load.image('tasks-bottom', tasksBottom);
-        this.load.image('tasks-complete', tasksComplete);
         this.load.image('tasks-uncomplete', tasksUncomplete);
         this.load.image('tasks-reward', tasksReward);
         this.load.image('tasks-bar', tasksBar);

@@ -255,6 +255,11 @@ class Boot extends Phaser.Scene {
 
     this.scene.stop();
 
+    if (this.platform === 'android') {
+      try { window[`Adjust`].trackEvent(this.state.adjust.firstOpenEvent) }
+      catch (err) { console.log(err) }
+    }
+   
     if (LocalStorage.get('farm') === 'Sheep' ||
       LocalStorage.get('farm') === 'Chicken' ||
       LocalStorage.get('farm') === 'Cow') {
@@ -368,6 +373,7 @@ class Boot extends Phaser.Scene {
 
     document.addEventListener('deviceready', (): void => {
       this.hash = LocalStorage.get('hash');
+      this.initAndroidAdjust();
       this.initAndroidStore();
       window.screen.orientation.lock('portrait-primary');
       this.initAndroidAd();
@@ -396,6 +402,22 @@ class Boot extends Phaser.Scene {
   }
 
 
+  private initAndroidAdjust(): void {
+    // @ts-ignore
+    const adjustConfig = new AdjustConfig(process.env.ADJUST, AdjustConfig.EnvironmentProduction); // Для продакшена
+    window[`Adjust`].create(adjustConfig);
+
+    // @ts-ignore
+    this.state.adjust.firstOpenEvent = new AdjustEvent("odowuy");
+    // @ts-ignore
+    this.state.adjust.tutorialDoneEvent = new AdjustEvent("nalk5e");
+    // @ts-ignore
+    this.state.adjust.shopPurchaseEvent = new AdjustEvent("s1xl3a");
+    // @ts-ignore
+    this.state.adjust.shopPurchaseEvent = new AdjustEvent("2zs7zu");
+  }
+
+
   private initAndroidAd(): void {
     document.addEventListener('admob.rewardvideo.events.LOAD_FAIL', (): void => {
       // @ts-ignore
@@ -416,6 +438,10 @@ class Boot extends Phaser.Scene {
 
     document.addEventListener('admob.rewardvideo.events.REWARD', (): void => {
       this.game.scene.keys[this.state.farm].ads.adReward();
+      if (this.platform === 'android') {
+        try { window[`Adjust`].trackEvent(this.state.adjust.adEvent) }
+        catch (err) { console.log(err) }
+      }
       // @ts-ignore
       window.admob.rewardvideo.prepare();
       this.state.readyAd = false;
@@ -459,7 +485,14 @@ class Boot extends Phaser.Scene {
             counter: this.state.user.counter,
             pack: p,
           }).then(res => {
-            if (!res.data.error) this.game.scene.keys[this.state.farm].autosave();
+            if (!res.data.error) {
+              try {
+                this.state.adjust.shopPurchaseEvent.setRevenue(pack.price, "RUB");
+                window[`Adjust`].trackEvent(this.state.adjust.shopPurchaseEvent)
+              } catch (err) { console.log(err) }
+
+              this.game.scene.keys[this.state.farm].autosave();
+            }
           });
           p.finish();
         });

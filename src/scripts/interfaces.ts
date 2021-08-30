@@ -815,6 +815,12 @@ interface IclanUser {
   avatar: string;
   status: string;
 }
+interface Iadjust {
+  firstOpenEvent: any;
+  tutorialDoneEvent: any;
+  shopPurchaseEvent: any;
+  adEvent: any;
+}
 interface Istate {
   platform: string;
   autoSaveSpeed: number;
@@ -911,4 +917,5 @@ interface Istate {
   clanAvatar?: IconfigIcon;
   clanTutor?: boolean;
   openConvertor?: boolean;
+  adjust: Iadjust;
 }

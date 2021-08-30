@@ -133,12 +133,12 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
     // Задание выполнено, награда не получена
     this.setTexture('tasks-reward').setDisplaySize(460, this.barHeight);
     this.text.setPosition(this.getCenter().x + 60, this.getCenter().y - 26).setColor(this.taskCompliteAwardNonTakenTextColor);
+    this.checkIcon.setVisible(true);
     this.bar.setPosition(this.x - 30, this.y + this.getBounds().height - 1);
     this.takeButton = this.scene.add.sprite(this.bar.getLeftCenter().x + 18, this.bar.getLeftCenter().y + 3, 'little-button').setOrigin(0, 0.5).setDepth(3).setDisplaySize(134, 48);
     this.barText.setPosition(this.takeButton.getCenter().x, this.takeButton.getCenter().y - 4).setFontSize(22).setText(this.scene.state.lang.pickUp).setOrigin(0.5);
     this.valuta.setPosition(this.barText.getRightCenter().x + (this.award ? 18 : 24), this.barText.getRightCenter().y);
     this.valutaSum.setPosition(this.valuta.getRightCenter().x + 4, this.valuta.getRightCenter().y);
-    this.checkIcon.setVisible(true);
     this.hideProgress();
     if (!this.clanTask) this.scene.taskWindow?.updateProgress();
 
@@ -185,7 +185,9 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
   private taskComplete(): void {
     // Задание выполнено, награда получена
     this.setTexture('tasks-reward').setDisplaySize(460, this.barHeight);
-    this.icon.setTint(0xc0c0c0).setAlpha(0.9).setY(this.getCenter().y);
+    
+    this.icon.setY(this.getCenter().y).setTint(0xc0c0c0).setAlpha(0.9);
+    this.checkIcon.setY(this.icon.y).setVisible(true).setTint(0xc0c0c0).setAlpha(0.9);
     this.text.setPosition(this.getCenter().x + 60, this.getCenter().y).setColor(this.taskCompliteAwardTakenTextColor);
 
     this.bar?.setVisible(false);
@@ -193,7 +195,6 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
     this.barText?.setVisible(false);
     this.valuta?.setVisible(false);
     this.valutaSum?.setVisible(false);
-    this.checkIcon?.setVisible(true).setTint(0xc0c0c0).setY(this.icon.getCenter().y).setAlpha(0.9);
     this.hideProgress();
     if (!this.clanTask) this.scene.taskWindow?.updateProgress();
   }
@@ -209,7 +210,8 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
 
   private setProgress(): void {
     this.currentProgress = this.taskInfo.task.progress;
-    let count: number = this.taskInfo.task.type === 14 && this.taskInfo.task.count === 0 ? this.scene.state[`${this.scene.state.farm}Settings`][`${this.scene.state.farm}Settings`].length : this.taskInfo.task.count;
+    let count: number = this.taskInfo.task.type === 14 && this.taskInfo.task.count === 0 ? 
+    this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`${this.scene.state.farm.toLowerCase()}Settings`].length : this.taskInfo.task.count;
     let progress = this.taskInfo.task.progress;
     if (this.clanTask && this.taskInfo.task.type === 18) {
       count = Math.round(count / 60);

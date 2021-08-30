@@ -383,7 +383,6 @@ class Preload extends Phaser.Scene {
     this.load.image('tasks-top', tasksTop);
     this.load.image('tasks-middle', tasksMiddle);
     this.load.image('tasks-bottom', tasksBottom);
-    this.load.image('tasks-complite', tasksComplete);
     this.load.image('tasks-uncomplite', tasksUncomplete);
     this.load.image('tasks-reward', tasksReward);
     this.load.image('tasks-bar', tasksBar);
