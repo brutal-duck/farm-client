@@ -107,21 +107,33 @@ export default class ClanLeaderboard {
       y: ratePosition > 3 ? pos.y : pos.y + 2,
     };
 
-    const positionSprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(medalPos.x, medalPos.y, positionTexture).setDepth(1);
-    const positionText: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, String(ratePosition), scoreTextStyle).setOrigin(0.5).setDepth(1);
-    const avatarSprite = LogoManager.createIcon(this.scene, pos.x + 70, pos.y, avatar).setScale(0.35).setDepth(1)
+    const positionSprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(medalPos.x, medalPos.y, positionTexture)
+      .setDepth(1);
+    const positionText: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, String(ratePosition), scoreTextStyle)
+      .setOrigin(0.5)
+      .setDepth(1);
+    const avatarSprite = LogoManager.createIcon(this.scene, pos.x + 70, pos.y, avatar)
+      .setScale(0.35)
+      .setDepth(1)
     const avatarGeom: Phaser.Geom.Rectangle = avatarSprite.getBounds();
-    const nameText: Phaser.GameObjects.Text = this.scene.add.text(avatarGeom.right + 20, avatarSprite.y, name, nameTextStyle).setDepth(1).setOrigin(0, 0.5).setCrop(0, 0, 250, 250);
-    const pointsText: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 370, pos.y, shortNum(points), scoreTextStyle).setDepth(1).setOrigin(0, 0.5);
+    const nameText: Phaser.GameObjects.Text = this.scene.add.text(avatarGeom.right + 20, avatarSprite.y, name, nameTextStyle)
+      .setDepth(1)
+      .setOrigin(0, 0.5)
+      .setCrop(0, 0, 250, 250);
+    const pointsText: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 370, pos.y, shortNum(points), scoreTextStyle)
+      .setDepth(1)
+      .setOrigin(0, 0.5);
 
     if (ratePosition === 1) {
-      this.scene.add.sprite(avatarGeom.centerX, avatarGeom.bottom + 10, 'clan-window-wreath').setOrigin(0.5, 1).setScale(0.5).setDepth(1);
+      this.scene.add.sprite(avatarGeom.centerX, avatarGeom.bottom + 10, 'clan-window-wreath')
+        .setOrigin(0.5, 1)
+        .setScale(0.5)
+        .setDepth(1);
     } 
     if (ratePosition > 3) {
-      this.scene.add.sprite(pos.x - avatarGeom.width / 2 + 15, avatarGeom.bottom + 10, 'clan-window-line').setOrigin(0, 0.5);
-    } else {
-      this.scene.add.sprite(pos.x + 210, pos.y, 'clan-window-leader-plate');
-    }
+      this.scene.add.sprite(pos.x - avatarGeom.width / 2 + 15, avatarGeom.bottom + 10, 'clan-window-line')
+        .setOrigin(0, 0.5);
+    } else this.scene.add.sprite(pos.x + 210, pos.y, 'clan-window-leader-plate');
 
     this.scene.scrollHeight += padding + avatarGeom.height + 10;
     this.scene.scrolling.bottom = this.scene.scrollHeight;
@@ -149,13 +161,30 @@ export default class ClanLeaderboard {
 
     const { name, avatar, points } = this.scene.state.clan;
     
-    const positionText: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, String(this.place), scoreTextStyle).setOrigin(0, 0.5).setDepth(2);
-    const positionSprite: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(positionText.getBottomCenter().x, positionText.y, positionText.displayWidth + 15, 32,'clan-window-medal-ns', 15).setOrigin(0.5).setDepth(1);
+    const positionText: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, String(this.place), scoreTextStyle)
+      .setOrigin(0, 0.5)
+      .setDepth(2);
+    const positionSprite: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(
+      positionText.getBottomCenter().x,
+      positionText.y,
+      positionText.displayWidth + 15,
+      32,
+      'clan-window-medal-ns',
+      15,
+    )
+      .setOrigin(0.5)
+      .setDepth(1);
 
-    const avatarSprite = LogoManager.createIcon(this.scene, positionText.getBounds().right + 50, pos.y, avatar).setScale(0.35).setDepth(1)
+    const avatarSprite = LogoManager.createIcon(this.scene, positionText.getBounds().right + 50, pos.y, avatar)
+      .setScale(0.35)
+      .setDepth(1)
     const avatarGeom: Phaser.Geom.Rectangle = avatarSprite.getBounds();
-    const nameText: Phaser.GameObjects.Text = this.scene.add.text(avatarGeom.right + 10, avatarSprite.y, name, nameTextStyle).setDepth(1).setOrigin(0, 0.5).setCrop(0, 0, 250, 250);
-    const pointsText: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 370, pos.y, shortNum(points), scoreTextStyle).setDepth(1).setOrigin(0, 0.5);
+    const nameText: Phaser.GameObjects.Text = this.scene.add.text(avatarGeom.right + 10, avatarSprite.y, name, nameTextStyle)
+      .setDepth(1)
+      .setOrigin(0, 0.5).setCrop(0, 0, 250, 250);
+    const pointsText: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 370, pos.y, shortNum(points), scoreTextStyle)
+      .setDepth(1)
+      .setOrigin(0, 0.5);
     
     this.scene.add.sprite(pos.x + 220, pos.y, 'clan-window-leader-plate');
     this.scene.scrollHeight += padding + avatarGeom.height + 10;
