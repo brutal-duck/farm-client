@@ -917,5 +917,5 @@ interface Istate {
   clanAvatar?: IconfigIcon;
   clanTutor?: boolean;
   openConvertor?: boolean;
-  adjust: Iadjust;
+  adjust?: Iadjust;
 }
