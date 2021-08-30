@@ -830,5 +830,5 @@ interface Istate {
   yandexName?: string;
   musicVolume: number;
   soundVolume: number;
-  adjust: Iadjust;
+  adjust?: Iadjust;
 }
