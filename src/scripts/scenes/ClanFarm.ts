@@ -160,6 +160,19 @@ export default class ClanFarm extends Phaser.Scene {
       }
       this.scene.launch('Modal', this.state);
     });
+
+    if (this.state.clan.main?.cooldown > 0) {
+      const pos: Iposition = { x: 395, y: 450 };
+      this.mainCooldownSprite = new ClanCooldownBuilding(this, pos, this.state.clan.main, 'main');
+      this.click(this.mainCooldownSprite, () => {
+        this.state.modal = {
+          type: 18,
+          clanWindowType: 6,
+          message: 'main',
+        };
+        this.scene.launch('Modal',  this.state);
+      });
+    }
   }
 
   private createBank(): void {
@@ -291,6 +304,11 @@ export default class ClanFarm extends Phaser.Scene {
       }
       this.scene.launch('Modal', this.state);
     });
+
+    if (this.state.clan.sheep?.cooldown > 0) {
+      const pos: Iposition = { x: 100, y: 860 };
+      this.sheepCooldownSprite = new ClanCooldownBuilding(this, pos, this.state.clan.sheep, 'sheep');
+    }
   }
 
   private createChicken(): void {
@@ -315,6 +333,11 @@ export default class ClanFarm extends Phaser.Scene {
       }
       this.scene.launch('Modal', this.state);
     });
+
+    if (this.state.clan.chicken?.cooldown > 0) {
+      const pos: Iposition = { x: 620, y: 1130 };
+      this.chickenCooldownSprite = new ClanCooldownBuilding(this, pos, this.state.clan.chicken, 'chicken');
+    }
   }
 
   private createCow(): void {
@@ -346,6 +369,11 @@ export default class ClanFarm extends Phaser.Scene {
       }
       this.scene.launch('Modal', this.state);
     });
+
+    if (this.state.clan.cow?.cooldown > 0) {
+      const pos: Iposition = { x: 120, y: 1130 };
+      this.cowCooldownSprite = new ClanCooldownBuilding(this, pos, this.state.clan.cow, 'cow');
+    }
   }
 
   private createEvent(): void {
@@ -403,7 +431,7 @@ export default class ClanFarm extends Phaser.Scene {
   private updateCooldowns(): void {
     if (this.state.clan.main?.cooldown > 0 && !this.mainCooldownSprite?.active) {
       const pos: Iposition = { x: 395, y: 450 };
-      this.createStartCooldownAnimation(pos.x, pos.y - 100);
+      this.createStartCooldownAnimation(pos.x, pos.y - 20);
       this.mainCooldownSprite = new ClanCooldownBuilding(this, pos, this.state.clan.main, 'main');
       this.click(this.mainCooldownSprite, () => {
         this.state.modal = {
@@ -416,34 +444,70 @@ export default class ClanFarm extends Phaser.Scene {
     }
     if (this.state.clan.sheep?.cooldown > 0 && !this.sheepCooldownSprite?.active) {
       const pos: Iposition = { x: 100, y: 860 };
+      this.createStartCooldownAnimation(pos.x, pos.y);
       this.sheepCooldownSprite = new ClanCooldownBuilding(this, pos, this.state.clan.sheep, 'sheep');
     }
     if (this.state.clan.chicken?.cooldown > 0 && !this.chickenCooldownSprite?.active) {
       const pos: Iposition = { x: 620, y: 1130 };
+      this.createStartCooldownAnimation(pos.x, pos.y);
       this.chickenCooldownSprite = new ClanCooldownBuilding(this, pos, this.state.clan.chicken, 'chicken');
     }
     if (this.state.clan.cow?.cooldown > 0 && !this.cowCooldownSprite?.active) {
       const pos: Iposition = { x: 120, y: 1130 };
+      this.createStartCooldownAnimation(pos.x, pos.y);
       this.cowCooldownSprite = new ClanCooldownBuilding(this, pos, this.state.clan.cow, 'cow');
     }
   }
 
   private createStartCooldownAnimation(x: number, y: number): void {
-    const emitter: Phaser.GameObjects.Particles.ParticleEmitter = this.add.particles('factory-smoke').setDepth(5).createEmitter({
-      x: x,
+    const emitter1: Phaser.GameObjects.Particles.ParticleEmitter = this.add.particles('factory-smoke').setDepth(5).createEmitter({
+      x: x - 50,
       y: y,
       speed: { min: 50, max: 150 },
-      angle: { min: 0, max: 360 },
+      angle: { min: 0, max: 360},
       scale: { start: 0, end: 1, ease: 'Back.easeOut' },
       alpha: { start: 1, end: 0, ease: 'Quart.easeOut' },
       blendMode: 'SCREEN',
       lifespan: 2000
-    });
+    }).setVisible(false);
+    const emitter2: Phaser.GameObjects.Particles.ParticleEmitter = this.add.particles('factory-smoke').setDepth(5).createEmitter({
+      x: x,
+      y: y - 20,
+      speed: { min: 50, max: 150 },
+      angle: { min: 0, max: 360},
+      scale: { start: 0, end: 1, ease: 'Back.easeOut' },
+      alpha: { start: 1, end: 0, ease: 'Quart.easeOut' },
+      blendMode: 'SCREEN',
+      lifespan: 2000
+    }).setVisible(false);
+    const emitter3: Phaser.GameObjects.Particles.ParticleEmitter = this.add.particles('factory-smoke').setDepth(5).createEmitter({
+      x: x + 50,
+      y: y,
+      speed: { min: 50, max: 150 },
+      angle: { min: 0, max: 360},
+      scale: { start: 0, end: 1, ease: 'Back.easeOut' },
+      alpha: { start: 1, end: 0, ease: 'Quart.easeOut' },
+      blendMode: 'SCREEN',
+      lifespan: 2000
+    }).setVisible(false);
     this.time.addEvent({
-      delay: 1500,
-      callback: (): void => { emitter.stop(); }, 
+      delay: 300,
+      callback: (): void => {
+        emitter1.setVisible(true);
+        emitter2.setVisible(true);
+        emitter3.setVisible(true);
+        this.time.addEvent({
+          delay: 400,
+          callback: (): void => {
+            emitter1.stop();
+            emitter2.stop();
+            emitter3.stop();
+          }, 
+        });
+      }, 
     });
   }
+  
   private updateLevelText(): void {
     if (this.state.clan.main.cooldown <= 0 && this.clanLevelText?.active) {
       const text: string = String(this.state.clan.main.level);
