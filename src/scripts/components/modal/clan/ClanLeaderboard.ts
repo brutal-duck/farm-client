@@ -6,6 +6,7 @@ import LogoManager from './../../Utils/LogoManager';
 export default class ClanLeaderboard {
   private scene: Clan;
   private loadingText: Phaser.GameObjects.Text;
+  private place: number;
   constructor (scene: Clan) {
     this.scene = scene;
     this.init();
@@ -30,9 +31,11 @@ export default class ClanLeaderboard {
       if (this.scene.state.modal.clanTabType === 2) {
         this.loadingText?.destroy();
         const { data } = res;
-        data.forEach((el: Iclan, id: number) => {
+        this.place = data.place;
+        data.raitings.forEach((el: Iclan, id: number) => {
           this.createClan(el, id + 1);
         });
+        if (this.place > data.raitings.length) this.createUserClan();
       }
     });
   }
@@ -73,13 +76,13 @@ export default class ClanLeaderboard {
 
   }
 
-  private createClan(data: Iclan, ratePosition): void {
+  private createClan(data: Iclan, ratePosition: number): void {
     const nameTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       color: '#fffdfa',
       fontFamily: 'Shadow',
       fontSize: '20px',
       align: 'left',
-      wordWrap: { width: 250 },
+      wordWrap: { width: 240, useAdvancedWrap: true },
     };
     const scoreTextStyle = {
       color: '#f3dcc9',
@@ -113,14 +116,48 @@ export default class ClanLeaderboard {
 
     if (ratePosition === 1) {
       this.scene.add.sprite(avatarGeom.centerX, avatarGeom.bottom + 10, 'clan-window-wreath').setOrigin(0.5, 1).setScale(0.5).setDepth(1);
-    }
-
+    } 
     if (ratePosition > 3) {
-      this.scene.add.sprite(pos.x - avatarGeom.width / 2, avatarGeom.bottom + 10, 'clan-window-line').setOrigin(0, 0.5);
+      this.scene.add.sprite(pos.x - avatarGeom.width / 2 + 15, avatarGeom.bottom + 10, 'clan-window-line').setOrigin(0, 0.5);
     } else {
       this.scene.add.sprite(pos.x + 210, pos.y, 'clan-window-leader-plate');
     }
 
+    this.scene.scrollHeight += padding + avatarGeom.height + 10;
+    this.scene.scrolling.bottom = this.scene.scrollHeight;
+  }
+
+  private createUserClan(): void {
+    const nameTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      color: '#fffdfa',
+      fontFamily: 'Shadow',
+      fontSize: '20px',
+      align: 'left',
+      wordWrap: { width: 220, useAdvancedWrap: true },
+    };
+    const scoreTextStyle = {
+      color: '#f3dcc9',
+      fontFamily: 'Shadow',
+      fontSize: '20px',
+      align: 'center',
+    };
+    const padding: number = 10;
+    const pos: Iposition = {
+      x: this.scene.cameras.main.centerX - 340,
+      y: this.scene.windowHeight + this.scene.scrollHeight + padding - 5,
+    };
+
+    const { name, avatar, points } = this.scene.state.clan;
+    
+    const positionText: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, String(this.place), scoreTextStyle).setOrigin(0, 0.5).setDepth(2);
+    const positionSprite: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(positionText.getBottomCenter().x, positionText.y, positionText.displayWidth + 15, 32,'clan-window-medal-ns', 15).setOrigin(0.5).setDepth(1);
+
+    const avatarSprite = LogoManager.createIcon(this.scene, positionText.getBounds().right + 50, pos.y, avatar).setScale(0.35).setDepth(1)
+    const avatarGeom: Phaser.Geom.Rectangle = avatarSprite.getBounds();
+    const nameText: Phaser.GameObjects.Text = this.scene.add.text(avatarGeom.right + 10, avatarSprite.y, name, nameTextStyle).setDepth(1).setOrigin(0, 0.5).setCrop(0, 0, 250, 250);
+    const pointsText: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 370, pos.y, shortNum(points), scoreTextStyle).setDepth(1).setOrigin(0, 0.5);
+    
+    this.scene.add.sprite(pos.x + 220, pos.y, 'clan-window-leader-plate');
     this.scene.scrollHeight += padding + avatarGeom.height + 10;
     this.scene.scrolling.bottom = this.scene.scrollHeight;
   }

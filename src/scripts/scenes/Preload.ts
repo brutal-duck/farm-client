@@ -519,6 +519,7 @@ class Preload extends Phaser.Scene {
     this.load.image('clan-window-medal-gold', clanWindowMedalGold);
     this.load.image('clan-window-medal-silver', clanWindowMedalSilver);
     this.load.image('clan-window-medal', clanWindowMedal);
+    this.load.image('clan-window-medal-ns', clanWindowMedal);
     this.load.image('clan-window-leader-plate', clanWindowLeaderPlate);
     this.load.image('clan-window-points-bg', clanWindowPointsBg);
     this.load.image('clan-window-search-plate', clanWindowSearchPlate);
