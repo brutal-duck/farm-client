@@ -497,6 +497,12 @@ export default function loadData(response: AxiosResponse): void {
       endTime: response.data.progress.event.endTime,
       open: response.data.settings.event.open,
       type: response.data.settings.event.type,
+    },
+    clanEvent: {
+      startTime: response.data.progress.clanEvent.startTime,
+      endTime: response.data.progress.clanEvent.endTime,
+      open: response.data.settings.clanEvent.open,
+      type: response.data.settings.clanEvent.type,
     }
   }
   this.state.progress = progress;

@@ -6,10 +6,8 @@ import Sheep from './../../../scenes/Sheep/Main';
 import Chicken from './../../../scenes/Chicken/Main';
 import Cow from './../../../scenes/Cow/Main';
 import Unicorn from './../../../scenes/Event/Unicorns/Main';
-import BigInteger from './../../../libs/BigInteger';
 import Currency from './../../animations/Currency';
 import MoneyAnimation from './../../animations/MoneyAnimation';
-const KEY: string = '1491f4c9d53dfa6c50d0c4a375f9ba76';
 
 const FARM_PACKAGE: Array<number> = [1000, 100000, 1000000, 1000000000];
 const DIAMOND_PACKAGE: Array<number> = [1, 10, 100, 1000];

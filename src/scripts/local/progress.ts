@@ -55,6 +55,12 @@ export default (): Iprogress => {
       endTime: 0,
       open: false,
       type: 1,
+    },
+    clanEvent: {
+      startTime: 0,
+      endTime: 0,
+      open: false,
+      type: 1,
     }
   }
 

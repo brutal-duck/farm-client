@@ -676,6 +676,7 @@ interface Iprogress {
   chicken: IpartProgress;
   cow: IpartProgress;
   event: IeventProgress;
+  clanEvent: IeventProgress;
 }
 interface IcollectorSettings {
   level: number;
@@ -785,6 +786,18 @@ interface Iclan {
   points: number;
   limit: number;
   main: IclanBuilding;
+}
+interface ItournamentData {
+  clanPoints: number;
+  points: number;
+  place: number;
+  sheep: ItournamentAnimal[];
+  chicken: ItournamentAnimal[];
+  cow: ItournamentAnimal[];
+}
+interface ItournamentAnimal {
+  breed: number;
+  count: number;
 }
 interface IclanBuilding {
   level: number;
@@ -918,4 +931,5 @@ interface Istate {
   clanTutor?: boolean;
   openConvertor?: boolean;
   adjust?: Iadjust;
+  clanTournamentData?: ItournamentData;
 }

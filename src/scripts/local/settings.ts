@@ -1934,11 +1934,62 @@ const unicornSettings: IeventSettings = {
   ]
 }
 
+const clanTournamentSettings = [
+  { 
+    breed: 1, 
+    price: '15000',
+  },
+  { 
+    breed: 2, 
+    price: '48000',
+  },
+  { 
+    breed: 3, 
+    price: '150000',
+  },
+  { 
+    breed: 4, 
+    price: '480000',
+  },
+  { 
+    breed: 5, 
+    price: '1500000',
+  },
+  { 
+    breed: 6, 
+    price: '4800000',
+  },
+  { 
+    breed: 7, 
+    price: '15000000',
+  },
+  { 
+    breed: 8, 
+    price: '48000000',
+  },
+  { 
+    breed: 9, 
+    price: '480000000',
+  },
+  { 
+    breed: 10, 
+    price: '150000000',
+  },
+  { 
+    breed: 11, 
+    price: '1500000000',
+  },
+  { 
+    breed: 12, 
+    price: '4800000000',
+  },
+];
 
 export {
   general,
   sheepSettings,
   chickenSettings,
   cowSettings,
-  unicornSettings
+  unicornSettings,
+  clanTournamentSettings,
 }

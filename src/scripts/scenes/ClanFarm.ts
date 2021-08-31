@@ -395,10 +395,8 @@ export default class ClanFarm extends Phaser.Scene {
     // graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
     this.click(zone, () => {
       this.state.modal = {
-        type: 1,
-        sysType: 3,
-        height: 150,
-        message: 'Ивент типа',
+        type: 20,
+        clanTabType: 1,
       };
       this.scene.launch('Modal', this.state);
     });

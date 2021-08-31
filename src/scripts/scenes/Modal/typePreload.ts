@@ -209,6 +209,13 @@ const clanTaskIcon17: string = require('../../../assets/images/modal/clan/tasks/
 const clanTaskIcon18: string = require('../../../assets/images/modal/clan/tasks/task-18.png');
 const clanTaskIcon19: string = require('../../../assets/images/modal/clan/tasks/task-19.png');
 const clanBankBtn: string = require('../../../assets/images/modal/clan/bank-btn.png');
+const clanTabIconSheep: string = require('../../../assets/images/modal/clan/icon-tab-sheep.png');
+const clanTabIconChicken: string = require('../../../assets/images/modal/clan/icon-tab-chicken.png');
+const clanTabIconCow: string = require('../../../assets/images/modal/clan/icon-tab-cow.png');
+const clanTournamentHeader: string = require('../../../assets/images/modal/clan/tournament/header.png');
+const clanTournamentDecor: string = require('../../../assets/images/modal/clan/tournament/decor.png');
+const clanTournamentAnimalBg: string = require('../../../assets/images/modal/clan/tournament/animal-bg.png');
+const clanTournamentPlateBg: string = require('../../../assets/images/modal/clan/tournament/plate-bg.png');
 
 export default function typePreload(): void {
     switch (this.state.modal.type) {
@@ -378,6 +385,7 @@ export default function typePreload(): void {
       case 17: 
       case 18:
       case 19:
+      case 20:
         this.load.image('icon-shop-sheep', iconShopSheep);
         this.load.image('icon-shop-chicken', iconShopChicken);
         this.load.image('icon-shop-cow', iconShopCow); 
@@ -495,6 +503,13 @@ export default function typePreload(): void {
         this.load.image('clan-task-icon-18', clanTaskIcon18);
         this.load.image('clan-task-icon-19', clanTaskIcon19);
         this.load.image('clan-bank-button', clanBankBtn);
+        this.load.image('clan-tab-icon-sheep', clanTabIconSheep);
+        this.load.image('clan-tab-icon-chicken', clanTabIconChicken);
+        this.load.image('clan-tab-icon-cow', clanTabIconCow);
+        this.load.image('clan-tournament-header', clanTournamentHeader);
+        this.load.image('clan-tournament-decor', clanTournamentDecor);
+        this.load.image('clan-tournament-animal-bg', clanTournamentAnimalBg);
+        this.load.image('clan-tournament-plate-bg', clanTournamentPlateBg);
         break;
       default:
         break;

@@ -10,7 +10,7 @@ function animalPrice(breed: number): {price: string, countAnimal: number} {
   let coefficient: string = String(this.state.unicornSettings.priceCoefficient);
   
   for (let i = 1; i < insideCounter; i++) {
-    insidePrice = BigInteger.add(insidePrice, BigInteger.divide(BigInteger.multiply(insidePrice, coefficient), '100'))
+    insidePrice = BigInteger.add(insidePrice, BigInteger.divide(BigInteger.multiply(insidePrice, coefficient), '100'));
   }
   
   insideCounter++;
