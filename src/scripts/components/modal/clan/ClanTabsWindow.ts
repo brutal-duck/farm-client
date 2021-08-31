@@ -402,34 +402,32 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     this.enterKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
     this.enterKey.on('down', (): void => this.searchClans());
 
-    const padding: number = this.scene.cameras.main.height / 100 * 10;
+    const paddingPercent = 10;
+    const padding: number = this.scene.cameras.main.height / 100 * paddingPercent;
     let centered: boolean = true;
     let tempHeight: number = window.innerHeight;
-    let windowHeight: number = window.innerHeight;
+    const windowHeight: number = window.innerHeight;
 
-    window.onresize = (): void => {    
-      if (window.innerHeight !== tempHeight) {
-        tempHeight = window.innerHeight;
-        if (tempHeight < windowHeight && centered) {
-          root.scrollIntoView(false)
-          const height = Number(this.scene.game.config.height) / 12 - 100;
-          const startTop: number = 9;
-          const startBottom: number = 87;
-          this.mainInput.style.top = `${startTop - height / 4}%`;
-          this.mainInput.style.bottom = `${startBottom + height / 4}%`;
-          this.modalElements.forEach((el) => el?.setY(el.y + padding));
-          this.scene.game.scene.keys['Chat'].scrolling.y += padding;
-          centered = false;
-        } else if (!centered) {
-          const height = Number(this.scene.game.config.height) / 12 - 100;
-          const startTop: number = 19;
-          const startBottom: number = 77;
-          this.mainInput.style.top = `${startTop - height / 4}%`;
-          this.mainInput.style.bottom = `${startBottom + height / 4}%`;
-          this.modalElements.forEach((el) => el?.setY(el.y - padding));
-          this.scene.game.scene.keys['Chat'].scrolling.y -= padding;
-          centered = true;
-        }
+    window.onresize = (): void => {
+      tempHeight = window.innerHeight;
+      if (windowHeight !== tempHeight && centered) {
+        root.scrollIntoView(false)
+        const topNewPosition: number = +this.mainInput.style.top.replace('%', '') + paddingPercent;
+        const bottomNewPosition: number = +this.mainInput.style.bottom.replace('%', '') - paddingPercent;
+        this.mainInput.style.top = `${topNewPosition}%`;
+        this.mainInput.style.bottom = `${bottomNewPosition}%`;
+        this.modalElements.forEach((el) => el?.setY(el.y + padding));
+        this.scene.game.scene.keys['ClanScroll'].scrolling.y += padding;
+        centered = false;
+
+      } else if (windowHeight === tempHeight && !centered) {
+        const topNewPosition: number = +this.mainInput.style.top.replace('%', '') - paddingPercent;
+        const bottomNewPosition: number = +this.mainInput.style.bottom.replace('%', '') + paddingPercent;
+        this.mainInput.style.top = `${topNewPosition}%`;
+        this.mainInput.style.bottom = `${bottomNewPosition}%`;
+        this.modalElements.forEach((el) => el?.setY(el.y - padding));
+        this.scene.game.scene.keys['ClanScroll'].scrolling.y -= padding;
+        centered = true;
       }
     }
   }
@@ -457,83 +455,84 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     this.headerText = this.scene.add.text(headerGeom.left + 110, headerGeom.centerY, this.scene.state.clan.name, this.headerTextStyle).setDepth(2).setOrigin(0, 0.5).setFontSize(30);
     const clanAvatar = LogoManager.createIcon(this.scene, headerGeom.left + 60, headerGeom.centerY, this.scene.state.clan.avatar).setDepth(2).setScale(0.40);
 
-    const right1 = {
-      text: 100,
-      icon: 'diamond'
-    };
+    const clanBoosterBg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(headerGeom.centerX, headerGeom.bottom + 100, 200, 40, 'modal-square-bg', 13).setDepth(2)
+    // const right1 = {
+    //   text: 100,
+    //   icon: 'diamond'
+    // };
 
-    const btn1 = this.scene.bigButton('green', 'left', -220, this.scene.state.lang.changeClanName, right1);
-    this.scene.clickModalBtn(btn1, () => {
-      this.removeInput();
-      this.scene.scene.stop('ClanScroll');
-      this.scene.state.modal = {
-        type: 1,
-        sysType: 21,
-      }
-      this.scene.scene.restart(this.scene.state);
-    });
+    // const btn1 = this.scene.bigButton('green', 'left', -220, this.scene.state.lang.changeClanName, right1);
+    // this.scene.clickModalBtn(btn1, () => {
+    //   this.removeInput();
+    //   this.scene.scene.stop('ClanScroll');
+    //   this.scene.state.modal = {
+    //     type: 18,
+    //     clanWindowType: 10,
+    //   }
+    //   this.scene.scene.restart(this.scene.state);
+    // });
 
-    const right2 = {
-      text: 200,
-      icon: 'diamond'
-    };
+    // const right2 = {
+    //   text: 200,
+    //   icon: 'diamond'
+    // };
 
-    const btn2 = this.scene.bigButton('green', 'left', -130, this.scene.state.lang.changeClanAvatar, right2);
-    this.scene.clickModalBtn(btn2, () => {
-      this.scene.state.clanAvatar = this.scene.state.clan.avatar;
-      this.scene.state.modal = {
-        type: 18,
-        clanWindowType: 2,
-      };
-      this.removeInput();
-      this.scene.scene.stop('ClanScroll');
-      this.scene.scene.restart(this.scene.state);
-    });
+    // const btn2 = this.scene.bigButton('green', 'left', -130, this.scene.state.lang.changeClanAvatar, right2);
+    // this.scene.clickModalBtn(btn2, () => {
+    //   this.scene.state.clanAvatar = this.scene.state.clan.avatar;
+    //   this.scene.state.modal = {
+    //     type: 18,
+    //     clanWindowType: 2,
+    //   };
+    //   this.removeInput();
+    //   this.scene.scene.stop('ClanScroll');
+    //   this.scene.scene.restart(this.scene.state);
+    // });
 
-    let right3 = {
-      text: String(100 * Math.pow(2, this.scene.state.clan.main.level - 1)),
-      icon: 'clan-diamond-coin'
-    };
+    // let right3 = {
+    //   text: String(100 * Math.pow(2, this.scene.state.clan.main.level - 1)),
+    //   icon: 'clan-diamond-coin'
+    // };
 
-    let callBack = () => {
-      this.scene.state.modal = {
-        type: 18,
-        clanWindowType: 3,
-      };
-      this.removeInput();
-      this.scene.scene.stop('ClanScroll');
-      this.scene.scene.restart(this.scene.state);
-    };
+    // let callBack = () => {
+    //   this.scene.state.modal = {
+    //     type: 18,
+    //     clanWindowType: 3,
+    //   };
+    //   this.removeInput();
+    //   this.scene.scene.stop('ClanScroll');
+    //   this.scene.scene.restart(this.scene.state);
+    // };
 
-    let text: string = this.scene.state.lang.improveClan;
+    // let text: string = this.scene.state.lang.improveClan;
 
-    let padding: number = -40;
-    if (this.scene.state.clan.main.cooldown > 0) {
-      const estimateCost: number = Math.round(this.scene.state.clan.main.cooldown / 60) * 2;
-      const price: number = estimateCost > 1000 ? 1000 : estimateCost;
-      right3 = {
-        icon: 'diamond',
-        text: shortNum(price),
-      };
+    // let padding: number = -40;
+    // if (this.scene.state.clan.main.cooldown > 0) {
+    //   const estimateCost: number = Math.round(this.scene.state.clan.main.cooldown / 60) * 2;
+    //   const price: number = estimateCost > 1000 ? 1000 : estimateCost;
+    //   right3 = {
+    //     icon: 'diamond',
+    //     text: shortNum(price),
+    //   };
 
-      callBack = () => {
-        this.scene.state.modal = {
-          type: 18,
-          clanWindowType: 6,
-          message: 'main',
-        };
-        this.removeInput();
-        this.scene.scene.stop('ClanScroll');
-        this.scene.scene.restart(this.scene.state);
-      };
+    //   callBack = () => {
+    //     this.scene.state.modal = {
+    //       type: 18,
+    //       clanWindowType: 6,
+    //       message: 'main',
+    //     };
+    //     this.removeInput();
+    //     this.scene.scene.stop('ClanScroll');
+    //     this.scene.scene.restart(this.scene.state);
+    //   };
       
-      text = this.scene.state.lang.speedUpImprovment;
-      this.cooldownTimer = this.scene.add.text(this.x, this.y - 70, `${this.scene.state.lang.left} ${shortTime(this.scene.state.clan.main.cooldown, this.scene.state.lang)}`, this.headerTextStyle).setOrigin(0.5).setFontSize(25);
-      padding += 30
-    }
+    //   text = this.scene.state.lang.speedUpImprovment;
+    //   this.cooldownTimer = this.scene.add.text(this.x, this.y - 70, `${this.scene.state.lang.left} ${shortTime(this.scene.state.clan.main.cooldown, this.scene.state.lang)}`, this.headerTextStyle).setOrigin(0.5).setFontSize(25);
+    //   padding += 30
+    // }
 
-    const btn3 = this.scene.bigButton('green', 'left', padding, text, right3);
-    this.scene.clickModalBtn(btn3, callBack);
+    // const btn3 = this.scene.bigButton('green', 'left', padding, text, right3);
+    // this.scene.clickModalBtn(btn3, callBack);
   }
 
   public preUpdate(): void {

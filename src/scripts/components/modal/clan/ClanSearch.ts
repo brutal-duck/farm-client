@@ -96,6 +96,7 @@ export default class ClanSearch {
   }
 
   private onClickBtn(clan: Iclan): void {
+    this.scene.game.scene.keys['Modal'].ClanTabsWindow.removeInput();
     if (clan.isClosed) {
       this.askJoinClosedClan(clan);
     } else {

@@ -1,21 +1,24 @@
 import axios from "axios";
 import Modal from "../../../scenes/Modal/Modal";
+import ClanWindow from "./ClanWindow";
 
 export default class ChangeClanNameWindow {
+
   private scene: Modal;
+  private window: ClanWindow;
 
   private result: Phaser.GameObjects.Text;
   private change: boolean;
   private x: number;
   private y: number;
 
-  private modalElements: Array<modalElementType> = [];
   private inputText: Phaser.GameObjects.Text;
   private input: HTMLInputElement;
 
-  constructor(scene: Modal) {
-    this.scene = scene;
-    this.init();
+  constructor(window: ClanWindow) {
+    this.window = window;
+    this.scene = this.window.scene;
+    this.init()
     this.create();
     this.scene.openModal(this.scene.cameras.main);
   }
@@ -24,7 +27,7 @@ export default class ChangeClanNameWindow {
     this.x = this.scene.cameras.main.centerX;
     this.y = this.scene.cameras.main.centerY;
     this.change = false;
-    this.scene.textHeader.setText(this.scene.state.lang.changeClanName);
+    this.window.headerText.setText(this.scene.state.lang.changeClanName);
 
     this.scene.events.once(Phaser.Scenes.Events.SHUTDOWN,() => {
       this.removeInput();
@@ -56,12 +59,13 @@ export default class ChangeClanNameWindow {
     this.input.style.bottom = `${startBottom - height / 4}%`;
     const inputWidth: number = 460;
     const inputHeigth: number = 70;
-    const inputBg = this.scene.add.graphics().fillStyle(0xffffff, 1).fillRoundedRect(pos.x - inputWidth / 2, pos.y - 20 - inputHeigth / 2, inputWidth, inputHeigth, 10);
+    const inputBg = this.scene.add.graphics().fillStyle(0xffffff, 1).fillRoundedRect(pos.x - inputWidth / 2, pos.y - 22 - inputHeigth / 2, inputWidth, inputHeigth, 10);
     const inputBgGeom = {
       left: pos.x - inputWidth / 2,
       centerY: pos.y - 20,
       top: pos.y - 20 - inputHeigth / 2,
     };
+
     const modalZone = this.scene.add.zone(0, 0, this.scene.cameras.main.width, this.scene.cameras.main.height).setDropZone(undefined, () => {}).setOrigin(0);
     const inputZone = this.scene.add.zone(pos.x - inputWidth / 2, pos.y - 20 - inputHeigth / 2, inputWidth, inputHeigth).setDropZone(undefined, () => {}).setOrigin(0);
     // Заголовок и описание
@@ -69,6 +73,7 @@ export default class ChangeClanNameWindow {
 
     // Параметры
     let centered: boolean = true;
+    const paddingPercent: number = 20
     let padding: number;
     let tempHeight: number = window.innerHeight;
     const windowHeight: number = window.innerHeight;
@@ -77,6 +82,7 @@ export default class ChangeClanNameWindow {
       text: 100,
       icon: 'diamond'
     };
+
     const changeNameBtn = this.scene.bigButton('green', 'left', 90, this.scene.state.lang.changeClanName, right1);
     const errorTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Shadow',
@@ -87,13 +93,9 @@ export default class ChangeClanNameWindow {
     };
     this.result = this.scene.add.text(pos.x, inputBgGeom.top - 10, '', errorTextStyle).setOrigin(0.5, 1).setDepth(4).setAlpha(0);
 
-    padding = this.scene.cameras.main.height / 100 * 30;
-    this.modalElements.push(
-      this.scene.header,
-      this.scene.body,
-      this.scene.bottom,
-      this.scene.close,
-      this.scene.textHeader,
+    padding = this.scene.cameras.main.height / 100 * paddingPercent;
+
+    this.window.modalElements.push(
       this.inputText,
       inputZone,
       inputBg,
@@ -102,6 +104,8 @@ export default class ChangeClanNameWindow {
       changeNameBtn.text1,
       changeNameBtn.img1,
       this.result,
+      this.window.headerText,
+      this.window.closeBtn,
     );
 
     window.onresize = (): void => {
@@ -109,21 +113,19 @@ export default class ChangeClanNameWindow {
 
       if (windowHeight !== tempHeight && centered) {
         root.scrollIntoView(false)
-        this.modalElements.forEach((el) => el.setY(el.y + padding));
-        const height = Number(this.scene.game.config.height) / 12 - 100;
-        const startTop: number = 75;
-        const startBottom: number = 19;
-        this.input.style.top = `${startTop + height / 4}%`;
-        this.input.style.bottom = `${startBottom - height / 4}%`;
+        this.window.modalElements.forEach((el) => el?.setY(el.y + padding));
+        const topNewPosition: number = +this.input.style.top.replace('%', '') + paddingPercent;
+        const bottomNewPosition: number = +this.input.style.bottom.replace('%', '') - paddingPercent;
+        this.input.style.top = `${topNewPosition}%`;
+        this.input.style.bottom = `${bottomNewPosition}%`;
         centered = false;
 
       } else if (windowHeight === tempHeight && !centered) {
-        this.modalElements.forEach((el) => el.setY(el.y - padding));
-        const height = Number(this.scene.game.config.height) / 12 - 100;
-        const startTop: number = 45;
-        const startBottom: number = 49;
-        this.input.style.top = `${startTop + height / 4}%`;
-        this.input.style.bottom = `${startBottom - height / 4}%`;
+        this.window.modalElements.forEach((el) => el?.setY(el.y - padding));
+        const topNewPosition: number = +this.input.style.top.replace('%', '') - paddingPercent;
+        const bottomNewPosition: number = +this.input.style.bottom.replace('%', '') + paddingPercent;
+        this.input.style.top = `${topNewPosition}%`;
+        this.input.style.bottom = `${bottomNewPosition}%`;
         centered = true;
       }
     }
@@ -147,7 +149,6 @@ export default class ChangeClanNameWindow {
     this.scene.clickModalBtn(changeNameBtn, (): void => { this.changeClanName(); });
     this.scene.enterKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
     this.scene.enterKey.on('down', (): void => { this.changeClanName(); });
-    this.scene.resizeWindow(220);
   }
 
   private changeClanName(): void {
