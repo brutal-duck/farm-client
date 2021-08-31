@@ -425,6 +425,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
         this.taskProgressBorder2,
       ],
       onStart: (): void => { this.setVisibleProgressElements(false) },
+      onUpdate: (): void => { if (this.taskProgressBorder1.visible || this.taskProgress.rightSegment.visible) this.setVisibleProgressElements(false) },
       delay: 850,
       duration: 250,
       yoyo: true,
