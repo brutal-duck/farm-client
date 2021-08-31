@@ -306,7 +306,7 @@ class Task {
         this.window.setTakeBtnState();
       }).catch(err => console.log(err));
     } else if (this.scene.state.platform === 'ok') {
-      window.open(process.env.OK_SUPPORT_LINK, '_blank');
+      window.open(`https://ok.ru/group/${process.env.OK_GROUP_ID}`);
       this.window.socialTasks.subGroup = true;
       this.setState(true);
       this.window.setTakeBtnState();
