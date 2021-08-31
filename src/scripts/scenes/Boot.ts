@@ -155,9 +155,9 @@ class Boot extends Phaser.Scene {
   }
 
   private setPlatform(): void {
-    // this.platform = 'web';
+    this.platform = 'web';
     // this.platform = 'ya';
-    this.platform = 'android';
+    // this.platform = 'android';
     this.hash = '';
 
     const search: string = window.location.search;
@@ -489,8 +489,8 @@ class Boot extends Phaser.Scene {
             if (!res.data.error) {
               try {
                 this.state.adjust.shopPurchaseEvent.setRevenue(pack.price, "RUB");
-                window[`Adjust`].trackEvent(this.state.adjust.shopPurchaseEvent)
-              } catch (err) { console.log(err) }
+                window[`Adjust`].trackEvent(this.state.adjust.shopPurchaseEvent);
+              } catch (err) { console.log('ADJUST', err) }
 
               this.game.scene.keys[this.state.farm].autosave();
             }
