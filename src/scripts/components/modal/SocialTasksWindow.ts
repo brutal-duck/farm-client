@@ -307,6 +307,9 @@ class Task {
       }).catch(err => console.log(err));
     } else if (this.scene.state.platform === 'ok') {
       window.open(process.env.OK_SUPPORT_LINK, '_blank');
+      this.window.socialTasks.subGroup = true;
+      this.setState(true);
+      this.window.setTakeBtnState();
     }
   }
 
