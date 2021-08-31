@@ -10,6 +10,10 @@ const clanMap: string = require('../../assets/images/clan/map.jpg');
 const clanChickenFarm: string = require('../../assets/images/clan/chicken-farm.png');
 const clanFlagpole: string = require('../../assets/images/clan/flagpole.png');
 const clanCooldownBg: string = require('../../assets/images/clan/cooldown-bg.png');
+const clanSheepCoin: string = require('../../assets/images/clan/coin-sheep.png');
+const clanChickenCoin: string = require('../../assets/images/clan/coin-chicken.png');
+const clanCowCoin: string = require('../../assets/images/clan/coin-cow.png');
+const clanDiamondCoin: string = require('../../assets/images/clan/coin-diamond.png');
 const factorySmoke: string = require('../../assets/images/cow/factory-smoke.png');
 
 
@@ -57,6 +61,10 @@ export default class ClanFarm extends Phaser.Scene {
     this.load.image('clan-flagpole', clanFlagpole);
     this.load.image('clan-cooldown-bg', clanCooldownBg);
     this.load.image('factory-smoke', factorySmoke);
+    this.load.image('clan-sheep-coin', clanSheepCoin);
+    this.load.image('clan-chicken-coin', clanChickenCoin);
+    this.load.image('clan-cow-coin', clanCowCoin);
+    this.load.image('clan-diamond-coin', clanDiamondCoin);
   }
   
   public init(state: Istate): void {
@@ -121,16 +129,16 @@ export default class ClanFarm extends Phaser.Scene {
     const countText: string = `${this.state.clan.users.length}/${limit}`
     this.playerCountText = this.add.text(pos.x + 130, pos.y + 18, countText, textStyle).setFontSize(36).setOrigin(0, 0.5);
 
-    const diamondSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 270, pos.y + 5, 'diamond').setScale(0.10);
+    const diamondSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 270, pos.y + 5, 'clan-diamond-coin').setScale(0.40);
     this.diamondCountText = this.add.text(pos.x + 285, pos.y + 5, String(this.state.clan.diamond.count), textStyle).setOrigin(0, 0.5);
 
-    const sheepSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 270, pos.y + 35, 'sheepCoin').setScale(0.10);
+    const sheepSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 270, pos.y + 35, 'clan-sheep-coin').setScale(0.40);
     this.sheepCountText = this.add.text(pos.x + 285, pos.y + 35, shortNum(this.state.clan.sheep.money), textStyle).setOrigin(0, 0.5);
 
-    const chickenSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 390, pos.y + 5, 'chickenCoin').setScale(0.10);
+    const chickenSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 390, pos.y + 5, 'clan-chicken-coin').setScale(0.40);
     this.chickenCountText = this.add.text(pos.x + 405, pos.y + 5, shortNum(this.state.clan.chicken.money), textStyle).setOrigin(0, 0.5);
 
-    const cowSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 390, pos.y + 35, 'cowCoin').setScale(0.10);
+    const cowSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 390, pos.y + 35, 'clan-cow-coin').setScale(0.40);
     this.cowCountText = this.add.text(pos.x + 405, pos.y + 35, shortNum(this.state.clan.cow.money), textStyle).setOrigin(0, 0.5);
     
   }
@@ -277,11 +285,11 @@ export default class ClanFarm extends Phaser.Scene {
   }
 
   private createSheep(): void {
-    const farmPosition: Iposition = { x: 150, y: 750 };
+    const farmPosition: Iposition = { x: 150, y: 770 };
     const width: number = 300;
     const height: number = 240;
     const textLevel: string = this.state.clan.sheep.cooldown > 0 ? String(this.state.clan.sheep.level - 1) : String(this.state.clan.sheep.level);
-    this.sheepLevelText = this.add.text(farmPosition.x + 155, farmPosition.y + 38, textLevel, levelTextStyle).setOrigin(0.5);
+    this.sheepLevelText = this.add.text(farmPosition.x + 155, farmPosition.y + 33, textLevel, levelTextStyle).setOrigin(0.5);
     const zone: Phaser.GameObjects.Zone = this.add.zone(farmPosition.x, farmPosition.y, width, height).setDropZone(undefined, () => {});
     // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
     // graphics.lineStyle(5, 0xFaaf00);
@@ -341,13 +349,13 @@ export default class ClanFarm extends Phaser.Scene {
   }
 
   private createCow(): void {
-    const farmPosition: Iposition = { x: 150, y: 1000 };
+    const farmPosition: Iposition = { x: 150, y: 1025 };
     const width: number = 300;
-    const height: number = 250;
+    const height: number = 270;
     
     const textLevel: string = this.state.clan.cow.cooldown > 0 ? String(this.state.clan.cow.level - 1) : String(this.state.clan.cow.level);
-    this.cowLevelText = this.add.text(farmPosition.x + 167, farmPosition.y + 32, textLevel, levelTextStyle).setOrigin(0.5);
-    new ClanFlagPole(this, { x: farmPosition.x + 88, y: farmPosition.y - 140 }).setDepth(2);
+    this.cowLevelText = this.add.text(farmPosition.x + 169, farmPosition.y + 25, textLevel, levelTextStyle).setOrigin(0.5);
+    new ClanFlagPole(this, { x: farmPosition.x + 88, y: farmPosition.y - 150 }).setDepth(2);
 
     const zone: Phaser.GameObjects.Zone = this.add.zone(farmPosition.x, farmPosition.y, width, height).setDropZone(undefined, () => {});
     // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();

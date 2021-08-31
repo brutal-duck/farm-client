@@ -492,7 +492,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
 
     let right3 = {
       text: String(100 * Math.pow(2, this.scene.state.clan.main.level - 1)),
-      icon: 'diamond'
+      icon: 'clan-diamond-coin'
     };
 
     let callBack = () => {

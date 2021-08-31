@@ -28,8 +28,12 @@ export default class ImproveClanFarmWindow {
     this.window = window;
     this.scene = window.scene;
     this.init();
-    this.createText();
-    this.createBtns();
+    if (this.price) {
+      this.createLevel();
+      this.createBtns();
+    } else {
+      this.createMaxLevel();
+    }
     this.scene.openModal(this.scene.cameras.main);
   }
 
@@ -41,7 +45,7 @@ export default class ImproveClanFarmWindow {
     this.window.headerText.setText(this.scene.state.lang[`${this.farm}ClanFarm`]).setFontSize(30);
   }
 
-  private createText(): void {
+  private createLevel(): void {
     const pos: Iposition = {
       x: this.x - 230,
       y: this.y + 80,
@@ -92,9 +96,79 @@ export default class ImproveClanFarmWindow {
     const count2: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 400, text2.getBounds().centerY, `${String(this.scene.state.clan[this.farm].level + 1)}%`, textStyle).setDepth(1).setColor('#dcff3c').setOrigin(0, 0.5).setFontFamily('Shadow').setFontSize(30);
     this.scene.add.nineslice(this.x, text2.getBounds().centerY, this.window.width, text2.displayHeight + 20, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
 
-    this.scene.add.sprite(count2.getBounds().right + 25, count2.y - 7, 'chat-arrow').setAngle(90).setScale(0.65);
-    this.scene.add.sprite(count2.getBounds().right + 25, count2.y + 7, 'chat-arrow').setAngle(90).setScale(0.65);
+    this.scene.add.sprite(this.window.bg.getBounds().right - 30, count2.y - 7, 'chat-arrow').setAngle(90).setScale(0.65);
+    this.scene.add.sprite(this.window.bg.getBounds().right - 30, count2.y + 7, 'chat-arrow').setAngle(90).setScale(0.65);
     
+  }
+
+  private createMaxLevel(): void {
+    const pos: Iposition = {
+      x: this.x - 230,
+      y: this.y + 140,
+    };
+    const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      color: '#fffdfa',
+      fontFamily: 'Bip',
+      fontSize: '24px',
+      align: 'left',
+      shadow: {
+        offsetX: 1,
+        offsetY: 1, 
+        color: '#96580e',
+        blur: 2,
+        fill: true,
+      },
+      wordWrap: { width: 400, useAdvancedWrap: true },
+    }
+
+    const levelTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '20px',
+      color: '#92450c'
+    };
+
+    const noteTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      color: '#F19D38',
+      fontFamily: 'Shadow',
+      fontSize: '20px',
+      align: 'center',
+      wordWrap: { width: 450, useAdvancedWrap: true },
+    }
+
+    const maxLevelStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      color: '#dcff3c',
+      fontFamily: 'Bip',
+      fontSize: '30px',
+      align: 'center',
+      shadow: {
+        offsetX: 1,
+        offsetY: 1, 
+        color: '#96580e',
+        blur: 2,
+        fill: true,
+      },
+      wordWrap: { width: 400, useAdvancedWrap: true },
+    }
+
+    this.scene.add.nineslice(this.x, pos.y - 265, this.window.width - 30, 100, 'tasks-bar-ns', 15).setOrigin(0.5);
+    this.scene.add.text(this.x, pos.y - 265, this.scene.state.lang.clanFarmImproveNote, noteTextStyle).setOrigin(0.5);
+    const bg: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.x, pos.y - 110, `icon-clan-${this.farm}`).setDepth(1);
+    this.scene.add.sprite(bg.x, bg.y + 10, 'clan-window-wreath').setDepth(1);
+    this.scene.add.nineslice(this.x, bg.y, this.window.width, bg.displayHeight + 10, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
+
+    const levelPlate: Phaser.GameObjects.Sprite = this.scene.add.sprite(bg.x, bg.y + bg.displayHeight / 2 - 20, 'profile-window-level').setDepth(1);
+
+    const levelText: Phaser.GameObjects.Text = this.scene.add.text(levelPlate.x, levelPlate.y, `${this.scene.state.lang.level} ${this.scene.state.clan[this.farm].level}`, levelTextStyle).setDepth(2).setOrigin(0.5);
+
+    const text1: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, this.scene.state.lang.increasingFarmIncome, textStyle).setDepth(1);
+    const count1: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 400, text1.getBounds().centerY, `${String(this.scene.state.clan[this.farm].level)}%`, textStyle).setOrigin(0, 0.5).setDepth(1).setFontFamily('Shadow').setFontSize(30);
+    this.scene.add.nineslice(this.x, text1.getBounds().centerY, this.window.width, text1.displayHeight + 20, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
+    
+    this.scene.add.text(this.x, pos.y + 100, this.scene.state.lang.maxLevelFarm, maxLevelStyle)
+      .setOrigin(0.5)
+      .setDepth(1)
+
+    this.window.resize(400);
   }
 
   private createBtns(): void {
@@ -107,14 +181,14 @@ export default class ImproveClanFarmWindow {
     const padding: number = 310;
     const right1 = {
       text: shortNum(this.price),
-      icon: `${this.farm}Coin`
+      icon: `clan-${this.farm}-coin`
     };
     if (this.scene.state.clan.ownerId === this.scene.state.user.id) {
       const btn1 = this.scene.bigButton('green', 'left', padding, this.scene.state.lang.improveFarm, right1);  
       this.scene.clickModalBtn(btn1, () => { this.handleImprove(); });
     } else {
       const btn1 = this.scene.bigButton('grey', 'left', padding + 10, this.scene.state.lang.improveFarm, right1);
-      this.scene.add.text(this.x, this.y + padding - 40, 'Действие доступно только для главы клана', textStyle).setOrigin(0.5)
+      this.scene.add.text(this.x, this.y + padding - 40, this.scene.state.lang.actionIsAvailableHead, textStyle).setOrigin(0.5)
     }
   }
 

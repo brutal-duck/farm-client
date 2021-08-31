@@ -151,8 +151,10 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
     const texture: string = active ? 'clan-window-tab-active' : 'clan-window-tab-disable';
     const tab: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(pos.x, pos.y, maxWidth / count, height, texture, slice).setOrigin(0, 1);
     const tabGeom: Phaser.Geom.Rectangle = tab.getBounds();
-    const textureIcon: string = type === 1 ? 'diamond' : type === 2 ? 'sheepCoin' : type === 3 ? 'chickenCoin' : 'cowCoin';
-    const tabIcon: Phaser.GameObjects.Sprite = this.scene.add.sprite(tabGeom.centerX, tabGeom.centerY - 10, textureIcon).setScale(0.23);
+    const textureIcon: string = type === 1 ? 'clan-diamond-coin' : 
+    type === 2 ? 'clan-sheep-coin' :
+    type === 3 ? 'clan-chicken-coin' : 'clan-cow-coin';
+    const tabIcon: Phaser.GameObjects.Sprite = this.scene.add.sprite(tabGeom.centerX, tabGeom.centerY - 10, textureIcon);
     
     this.modalElements.push(tab, tabIcon);
     if (!active) {
@@ -189,10 +191,10 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
       const multiply: number = this.headerText.displayHeight / 100;
       this.headerText.setFontSize(parseInt(this.headerText.style.fontSize) / multiply);
     }
-    const coinTexture: string = this.farm !== 'diamond' ? `${this.farm}Coin` : 'diamond';
+    const coinTexture: string = `clan-${this.farm}-coin`;
     const titleText: string = this.farm !== 'diamond' ? this.scene.state.clan[this.farm].money : this.scene.state.clan[`${this.farm}`].count;
     const title1: Phaser.GameObjects.Text = this.scene.add.text(headerGeom.left + 60, headerGeom.bottom + 12, this.scene.state.lang.nowInTreasury, titleTextStyle);
-    this.coinIcon = this.scene.add.sprite(title1.getBounds().right + 10, title1.getBounds().centerY, coinTexture).setScale(0.12).setOrigin(0, 0.5);
+    this.coinIcon = this.scene.add.sprite(title1.getBounds().right + 10, title1.getBounds().centerY, coinTexture).setScale(0.5).setOrigin(0, 0.5);
     this.currentCountText = this.scene.add.text(this.coinIcon.getBounds().right + 10, title1.getBounds().centerY, titleText, titleTextStyle).setOrigin(0, 0.5);
     
     if (this.farm !== 'diamond') {

@@ -50,8 +50,9 @@ function bigButton(
 
     if (right1.icon !== 'ad-icon') img1.setScale(0.15);
 
-    if (right2) {
+    if (right1.icon.includes('clan')) img1.setScale(0.6)
 
+    if (right2) {
       text2 = this.add.text(525 - text1.displayWidth, this.cameras.main.centerY - 5 + height, right2.text, {
         font: '24px Shadow',
         fill: textColor
@@ -62,9 +63,7 @@ function bigButton(
         this.cameras.main.centerY - 5 + height,
         right2.icon
       ).setOrigin(1, 0.5).setScale(0.15);
-
     }
-
   }
 
   return {

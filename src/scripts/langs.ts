@@ -1027,6 +1027,8 @@ export default {
     maxLimitBeforeImprove: 'Максимальное количество игроков сейчас:',
     maxLimitAfterImprove: 'Максимальное количество игроков при улучшении:',
     increasingFarmIncomeNow: 'Увеличение дохода фермы сейчас:',
+    increasingFarmIncome: 'Увеличение дохода фермы:',
+    maxLevelFarm: 'Достигнут максимальный уровень фермы',
     increasingFarmIncomeAfterImprove: 'Увеличение дохода фермы при улучшении:',
     reachChapterOfSheepFarm: 'Дойдите до $1 главы овечьей фермы',
     clanTutor: 'Теперь тебе доступны кланы. Ты можешь подыскать себе по нраву, либо создать свой',
@@ -1045,7 +1047,7 @@ export default {
     goToClanFarm: 'Перейти на клановую ферму',
     buyingCoins: 'Покупка монет',
     updatingTasksThrough: 'Обновление заданий через:',
-
+    actionIsAvailableHead: 'Действие доступно только для главы клана',
   },
 
   en: {
@@ -2076,6 +2078,8 @@ export default {
     maxLimitBeforeImprove: 'Максимальное количество игроков сейчас:',
     maxLimitAfterImprove: 'Максимальное количество игроков при улучшении:',
     increasingFarmIncomeNow: 'Увеличение дохода фермы сейчас:',
+    increasingFarmIncome: 'Увеличение дохода фермы:',
+    maxLevelFarm: 'Достигнут максимальный уровень фермы',
     increasingFarmIncomeAfterImprove: 'Увеличение дохода фермы при улучшении:',
     reachChapterOfSheepFarm: 'Дойдите до $1 главы овечьей фермы',
     clanTutor: 'Теперь тебе доступны кланы. Ты можешь подыскать себе по нраву, либо создать свой',
@@ -2094,5 +2098,6 @@ export default {
     goToClanFarm: 'Перейти на клановую ферму',
     buyingCoins: 'Покупка монет',
     updatingTasksThrough: 'Обновление заданий через:',
+    actionIsAvailableHead: 'Действие доступно только для главы клана',
   },
 }

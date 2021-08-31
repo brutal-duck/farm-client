@@ -75,7 +75,7 @@ export default class ClanWindow {
       wordWrap: { width: 400, useAdvancedWrap: true },
       align: 'center',
     };
-    this.header = this.scene.add.sprite(this.x, this.y - this.height / 2 + 10 , 'settings-window-header').setOrigin(0.5, 1);
+    this.header = this.scene.add.sprite(this.x, this.y - this.height / 2 + 10, 'settings-window-header').setOrigin(0.5, 1);
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
 
     this.headerText = this.scene.add.text(headerGeom.centerX - 30, headerGeom.centerY - 15, '', headerTextStyle).setOrigin(0.5);
@@ -83,6 +83,17 @@ export default class ClanWindow {
 
     this.scene.clickButton(this.closeBtn, () => { this.onCloseBtn(); });
     this.modalElements.push(this.header);
+  }
+
+  public resize(height: number): void {
+    this.height = height;
+    this.bg.setDisplaySize(this.width, this.height);
+    this.header.setY(this.y - this.height / 2 + 10);
+    this.footer.setY(this.y + this.height / 2);
+
+    const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
+    this.headerText.setY(headerGeom.centerY - 15);
+    this.closeBtn.setY(headerGeom.top + 35);
   }
   
   private onCloseBtn(): void {
