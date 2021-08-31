@@ -257,7 +257,7 @@ class Boot extends Phaser.Scene {
 
     if (this.platform === 'android') {
       try { window[`Adjust`].trackEvent(this.state.adjust.firstOpenEvent) }
-      catch (err) { console.log(err) }
+      catch (err) { console.log('ADJUST', err) }
     }
    
     if (LocalStorage.get('farm') === 'Sheep' ||
@@ -406,15 +406,17 @@ class Boot extends Phaser.Scene {
     // @ts-ignore
     const adjustConfig = new AdjustConfig(process.env.ADJUST, AdjustConfig.EnvironmentProduction); // Для продакшена
     window[`Adjust`].create(adjustConfig);
-
-    // @ts-ignore
-    this.state.adjust.firstOpenEvent = new AdjustEvent("odowuy");
-    // @ts-ignore
-    this.state.adjust.tutorialDoneEvent = new AdjustEvent("nalk5e");
-    // @ts-ignore
-    this.state.adjust.shopPurchaseEvent = new AdjustEvent("s1xl3a");
-    // @ts-ignore
-    this.state.adjust.shopPurchaseEvent = new AdjustEvent("2zs7zu");
+    
+    this.state.adjust = {
+      // @ts-ignore
+      firstOpenEvent: new AdjustEvent("odowuy"),
+      // @ts-ignore
+      tutorialDoneEvent: new AdjustEvent("nalk5e"),
+      // @ts-ignore
+      shopPurchaseEvent: new AdjustEvent("s1xl3a"),
+      // @ts-ignore
+      adEvent: new AdjustEvent("2zs7zu")
+    }
   }
 
 
@@ -456,6 +458,7 @@ class Boot extends Phaser.Scene {
     // @ts-ignore
     window.admob.rewardvideo.prepare();
   }
+
   private initAndroidStore(): void {
     const { packages } = general;
     const store: any = window['store'];
@@ -488,8 +491,8 @@ class Boot extends Phaser.Scene {
             if (!res.data.error) {
               try {
                 this.state.adjust.shopPurchaseEvent.setRevenue(pack.price, "RUB");
-                window[`Adjust`].trackEvent(this.state.adjust.shopPurchaseEvent)
-              } catch (err) { console.log(err) }
+                window[`Adjust`].trackEvent(this.state.adjust.shopPurchaseEvent);
+              } catch (err) { console.log('ADJUST', err) }
 
               this.game.scene.keys[this.state.farm].autosave();
             }

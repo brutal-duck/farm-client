@@ -924,7 +924,7 @@ function loadingScreen(farmType: string): void {
   else if (farmType === 'Unicorn') { for (let i: number = 0; i < event; i++) helpArr.push(this.state.lang['helpEvent_' + String(i + 1)]); }
   else if (farmType === 'Cow') { for (let i: number = 0; i < cow; i++) helpArr.push(this.state.lang['helpCow_' + String(i + 1)]); }
 
-  let helpText: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 100, helpArr[random(0, helpArr.length - 1)], {
+  let helpText: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 90, helpArr[random(0, helpArr.length - 1)], {
     font: '26px Bip',
     color: '#925C28',
     align: 'center',
@@ -932,19 +932,16 @@ function loadingScreen(farmType: string): void {
   }).setOrigin(0.5, 0.5).setDepth(4);
 
   // экран загрузки
-  let padding: number = helpText.height / 2; // Отступ для элементов в зависимости от высоты текста посказки
+  let padding: number = helpText.height / 2 + 20; // Отступ для элементов в зависимости от высоты текста посказки + доп отступ для отображения версии
   let height: number = 200 + helpText.height / 3; // параметр для высоты окна в зависимости от высоты текста посказки
   let text: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 11 - padding, '0%', {
     font: '37px Shadow',
     color: '#1F5B06'
   }).setDepth(1).setOrigin(0.5, 0.5);
 
-  this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - Math.floor(height / 2), 'header-syst')
-    .setOrigin(0.5, 1);
-  this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + Math.floor(height / 2), 'bottom-syst')
-    .setOrigin(0.5, 0);
-  this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY, 614, height + 2, "mid-syst")
-    .setOrigin(0.5, 0.5);
+  this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - Math.floor(height / 2), 'header-syst').setOrigin(0.5, 1);
+  const bot: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + Math.floor(height / 2), 'bottom-syst').setOrigin(0.5, 0);
+  this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY, 614, height + 2, "mid-syst").setOrigin(0.5, 0.5);
   
   this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - Math.floor(height / 2) - 22, loading, {
     font: '37px Shadow',
@@ -955,14 +952,9 @@ function loadingScreen(farmType: string): void {
   this.add.sprite(600, this.cameras.main.centerY + 20 - padding, 'pb-empty-corner').setScale(-1, 1);
   this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY + 20 - padding, 436, 130, 'pb-empty-mid');
   
-  let leftCorner: Phaser.GameObjects.Sprite = this.add.sprite(120, this.cameras.main.centerY + 20 - padding, 'pb-full-corner')
-    .setAlpha(0);
-  let rightCorner: Phaser.GameObjects.Sprite = this.add.sprite(600, this.cameras.main.centerY + 20 - padding, 'pb-full-corner')
-    .setFlip(true, false)
-    .setAlpha(0);
-  let progress: Phaser.GameObjects.TileSprite = this.add.tileSprite(142, this.cameras.main.centerY + 20 - padding, 0, 130, 'pb-full-mid')
-    .setVisible(false)
-    .setOrigin(0, 0.5);
+  let leftCorner: Phaser.GameObjects.Sprite = this.add.sprite(120, this.cameras.main.centerY + 20 - padding, 'pb-full-corner').setAlpha(0);
+  let rightCorner: Phaser.GameObjects.Sprite = this.add.sprite(600, this.cameras.main.centerY + 20 - padding, 'pb-full-corner').setFlip(true, false).setAlpha(0);
+  let progress: Phaser.GameObjects.TileSprite = this.add.tileSprite(142, this.cameras.main.centerY + 20 - padding, 0, 130, 'pb-full-mid').setVisible(false).setOrigin(0, 0.5);
 
   // прогресс загрузки
   this.load.on('progress', (value: number): void => {
@@ -986,6 +978,9 @@ function loadingScreen(farmType: string): void {
     text?.setText(percent + '%');
 
   });
+
+  // Информация о версии
+  this.add.text(bot.getBottomRight().x - 50, bot.getBottomRight().y - 38, `v${this.state.build}`, { font: '18px Shadow', color: '#929DB5' }).setOrigin(1)
 }
 
 function loadingModal(): void {
