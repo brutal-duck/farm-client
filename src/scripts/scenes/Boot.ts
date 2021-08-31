@@ -254,7 +254,7 @@ class Boot extends Phaser.Scene {
 
     if (this.platform === 'android') {
       try { window[`Adjust`].trackEvent(this.state.adjust.firstOpenEvent) }
-      catch (err) { console.log(err) }
+      catch (err) { console.log('ADJUST', err) }
     }
    
     if (LocalStorage.get('farm') === 'Sheep' ||
@@ -456,6 +456,7 @@ class Boot extends Phaser.Scene {
     // @ts-ignore
     window.admob.rewardvideo.prepare();
   }
+
   private initAndroidStore(): void {
     const { packages } = general;
     const store: any = window['store'];
