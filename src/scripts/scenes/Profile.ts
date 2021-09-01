@@ -553,7 +553,7 @@ class Profile extends Phaser.Scene {
       this.scene.launch('Modal', this.state);
     });
 
-    this.shopNotificator = new Notificator(this, { x: pos.x + 55, y: pos.y - 50, });
+    this.shopNotificator = new Notificator(this, { x: pos.x + 60, y: pos.y - 60, });
 
     if (!this.state.user.starterpack && (this.state.progress.sheep.part > 4 || this.state.progress.chicken.part >= 1) && this.state.user.takenFreeDiamonds) {
 

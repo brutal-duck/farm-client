@@ -232,7 +232,7 @@ export default class ClanFarm extends Phaser.Scene {
       this.scene.launch('Modal', this.state);
     });
 
-    this.shopNotificator = new Notificator(this, { x: pos.x + 55, y: pos.y - 50, });
+    this.shopNotificator = new Notificator(this, { x: pos.x + 60, y: pos.y - 60, });
 
     if (!this.state.user.starterpack && this.state.user.takenFreeDiamonds) {
 
