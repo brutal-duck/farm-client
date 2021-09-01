@@ -230,7 +230,18 @@ export default class EventTournamentWindow extends Phaser.GameObjects.Sprite {
       .setDepth(2)
       .setColor('#dcff3c');
 
-    this.scene.add.sprite(this.posx + 170, headerGeom.centerY + 123, 'profile-window-button-yellow').setScale(1.1);
+    const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.posx + 160, headerGeom.centerY + 123, 'profile-window-button-yellow').setScale(1.3, 1.2);
+    const title: Phaser.GameObjects.Text = this.scene.add.text(btn.x, btn.y - 5, this.scene.state.lang.eventRating, textStyle).setFontSize(22).setOrigin(0.5);
+
+    this.scene.clickModalBtn({ btn, title }, () => {
+      this.scene.state.modal = {
+        type: 1,
+        sysType: 3,
+        message: 'Рейтинги, типа',
+        height: 150
+      };
+      this.scene.scene.restart(this.scene.state);
+    });
     this.setUserTextX();
     this.setClanTextX();
     this.setClanPlaceTextX();
