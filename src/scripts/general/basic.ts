@@ -904,7 +904,6 @@ function takeDonate(): void {
 }
 
 function loadingScreen(farmType: string): void {
-
   let loading: string = this.state.lang.loading;
   let general: number = 13; // Количество общих посказок
   let sheep: number = 7; // Количество посказок для овечьей фермы
@@ -932,8 +931,8 @@ function loadingScreen(farmType: string): void {
   }).setOrigin(0.5, 0.5).setDepth(4);
 
   // экран загрузки
-  let padding: number = helpText.height / 2 + 20; // Отступ для элементов в зависимости от высоты текста посказки + доп отступ для отображения версии
-  let height: number = 200 + helpText.height / 3; // параметр для высоты окна в зависимости от высоты текста посказки
+  let padding: number = helpText.height / 2 + 10; // Отступ для элементов в зависимости от высоты текста посказки + доп отступ для отображения версии
+  let height: number = 220 + helpText.height / 3; // параметр для высоты окна в зависимости от высоты текста посказки
   let text: Phaser.GameObjects.Text = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY + 11 - padding, '0%', {
     font: '37px Shadow',
     color: '#1F5B06'
@@ -958,7 +957,6 @@ function loadingScreen(farmType: string): void {
 
   // прогресс загрузки
   this.load.on('progress', (value: number): void => {
-
     let percent: number = Math.round(value * 100);
     if (!progress.active) return;
     if (percent >= 5 && leftCorner?.alpha === 0) leftCorner?.setAlpha(1);
@@ -976,7 +974,6 @@ function loadingScreen(farmType: string): void {
     }
     
     text?.setText(percent + '%');
-
   });
 
   // Информация о версии
