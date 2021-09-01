@@ -1,18 +1,8 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { shortNum } from '../../../general/basic';
 import Modal from './../../../scenes/Modal/Modal';
-import LogoManager from './../../Utils/LogoManager';
-import Sheep from './../../../scenes/Sheep/Main';
-import Chicken from './../../../scenes/Chicken/Main';
-import Cow from './../../../scenes/Cow/Main';
-import Unicorn from './../../../scenes/Event/Unicorns/Main';
-import Currency from './../../animations/Currency';
-import MoneyAnimation from './../../animations/MoneyAnimation';
 import { clanTournamentSettings } from '../../../local/settings';
 import BigInteger from './../../../libs/BigInteger';
-
-const FARM_PACKAGE: Array<number> = [1000, 100000, 1000000, 1000000000];
-const DIAMOND_PACKAGE: Array<number> = [1, 10, 100, 1000];
 
 export default class EventTournamentWindow extends Phaser.GameObjects.Sprite {
   public scene: Modal;
@@ -29,37 +19,25 @@ export default class EventTournamentWindow extends Phaser.GameObjects.Sprite {
   private windowType: number = 1;
   private farm: string;
   private disableTimer: number = 0;
-  private packageBtns: Array<{
-    btn: Phaser.GameObjects.Sprite, 
-    text: Phaser.GameObjects.Text,
-  }> = [];
-  private donateBtn: Phaser.GameObjects.Sprite;
-  private donateBtnText: Phaser.GameObjects.Text;
-  private headerTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
-    color: '#fffdfa',
-    fontFamily: 'Shadow',
-    fontSize: '34px',
-    align: 'center',
-    shadow: {
-      offsetX: 1,
-      offsetY: 1, 
-      color: '#96580e',
-      blur: 2,
-      fill: true,
-    },
-    wordWrap: { width: 400, useAdvancedWrap: true },
-  };
-  private activePackage: number = 0;
-  private coinIcon: Phaser.GameObjects.Sprite;
-  private currentCountText: Phaser.GameObjects.Text;
-  private logElements: Phaser.GameObjects.Group;
-  private logs: IclanUserLog[] = [];
+  private userMoney: Phaser.GameObjects.Text;
+  private userMoneyIcon: Phaser.GameObjects.Sprite;
+  private textUserPoints: Phaser.GameObjects.Text;
+  private countUserPoints: Phaser.GameObjects.Text;
+  private textClanPoints: Phaser.GameObjects.Text;
+  private countClanPoints: Phaser.GameObjects.Text;
+  private textClanPlace: Phaser.GameObjects.Text;
+  private countClanPlace: Phaser.GameObjects.Text;
+  private plates: AnimalPlate[] = [];
+
+  private userPoints: number = 0;
+  private clanPoints: number = 0;
+  private clanPlace: number = 0;
+
 
   constructor(scene: Modal) {
     super(scene, 0, 0, 'pixel');
     this.scene = scene;
     this.init();
-    this.createElements();
   }
   
   private init(): void {
@@ -89,15 +67,17 @@ export default class EventTournamentWindow extends Phaser.GameObjects.Sprite {
     });
   }
 
-
-
   private createElements(): void {
+    this.userPoints = this.scene.state.clanTournamentData.points;
+    this.clanPoints = this.scene.state.clanTournamentData.clanPoints;
+    this.clanPlace = this.scene.state.clanTournamentData.place;
     this.createBg();
     this.createHeader();
     this.createFooter();
     this.createCloseTab();
     this.createTabs([1, 2, 3]);
     this.createMainElements();
+    this.createAnimals();
   }
 
   private createMainElements(): void {
@@ -114,7 +94,7 @@ export default class EventTournamentWindow extends Phaser.GameObjects.Sprite {
       default:
         break;
     }
-    this.createBank();
+    this.createInfo();
   }
 
   private createBg(): void {
@@ -185,10 +165,10 @@ export default class EventTournamentWindow extends Phaser.GameObjects.Sprite {
     }
   }
 
-  private createBank(): void {
-    const titleTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+  private createInfo(): void {
+    const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Shadow',
-      fontSize: '26px',
+      fontSize: '19px',
       color: '#fffdfa',
       align: 'center',
       shadow: {
@@ -198,47 +178,263 @@ export default class EventTournamentWindow extends Phaser.GameObjects.Sprite {
         blur: 2,
         fill: true,
       },
-    }
+    };
 
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     
-    const y = this.posy + 120
-    this.scene.add.nineslice(this.posx, y, 500, 600, 'modal-square-bg', 10).setOrigin(0.5);
+    const y = this.posy + 125;
+    this.scene.add.nineslice(this.posx, y, 490, 590, 'modal-square-bg', 10).setOrigin(0.5);
+    this.scene.add.sprite(this.posx, y - 308, 'clan-tournament-plate-bg');
+    
+    this.userMoney = this.scene.add.text(this.posx + 12, y - 308, shortNum(this.scene.state[`user${this.farm[0].toUpperCase() + this.farm.slice(1)}`].money), textStyle).setOrigin(0.5).setFontSize(24);
+    this.userMoneyIcon = this.scene.add.sprite(this.userMoney.getBounds().left - 5, y - 308, `${this.farm}Coin`).setOrigin(1, 0.5).setScale(0.09);
+
+    this.textUserPoints = this.scene.add.text(0, headerGeom.centerY + 2 - 40, `${this.scene.state.lang.yourContribution}:`, textStyle)
+      .setOrigin(0.5)
+      .setDepth(2);
+
+    this.countUserPoints = this.scene.add.text(0, headerGeom.centerY + 2 - 40, `${this.userPoints}`, textStyle)
+      .setOrigin(0.5)
+      .setDepth(2)
+      .setColor('#dcff3c');
+
+    this.textClanPoints = this.scene.add.text(0, headerGeom.centerY + 35 - 40, `${this.scene.state.lang.clanAnimals}:`, textStyle)
+      .setOrigin(0.5)
+      .setDepth(2);
+
+    this.countClanPoints = this.scene.add.text(0, headerGeom.centerY + 35 - 40, `${shortNum(this.clanPoints)}`, textStyle)
+      .setOrigin(0.5)
+      .setDepth(2)
+      .setColor('#dcff3c');
+
+    this.scene.add.nineslice(this.bg.getBounds().left, headerGeom.centerY + 123, 500, 50, 'clan-window-leader-plate-ns', 5).setOrigin(0, 0.5);
+
+    this.textClanPlace = this.scene.add.text(0, headerGeom.centerY + 123, `${this.scene.state.lang.clanPlace}:`, textStyle)
+      .setOrigin(0.5)
+      .setFontSize(25)
+      .setDepth(2);
+    this.countClanPlace = this.scene.add.text(0, headerGeom.centerY + 123, `${this.clanPlace}`, textStyle)
+      .setOrigin(0.5)
+      .setFontSize(25)
+      .setDepth(2)
+      .setColor('#dcff3c');
+
+    this.setUserTextX();
+    this.setClanTextX();
+    this.setClanPlaceTextX();
   }
 
   public preUpdate(time: number, delta: number): void {
-    if (this.scene.scene.isActive() && this.scene.state.modal.type === 20) {
-      
+    if (this.scene.scene.isActive() && this.scene.state.modal.type === 20 && this.scene.state.clanTournamentData) {
+      if (this.clanPlace !== this.scene.state.clanTournamentData.place) {
+        this.clanPlace = this.scene.state.clanTournamentData.place;
+        this.countClanPlace.setText(String(this.clanPlace));
+        this.setClanPlaceTextX();
+      }
+
+      if (this.clanPoints !== this.scene.state.clanTournamentData.clanPoints) {
+        this.clanPoints = this.scene.state.clanTournamentData.clanPoints;
+        this.countClanPoints.setText(String(this.clanPoints));
+        this.setClanTextX();
+      }
+
+      if (this.userPoints !== this.scene.state.clanTournamentData.points) {
+        this.userPoints = this.scene.state.clanTournamentData.points;
+        this.countUserPoints.setText(String(this.userPoints));
+        this.setUserTextX();
+      }
     }
   }
   
+  private setUserTextX(): void {
+    const x = this.posx + 140;
+    const textGeom: Phaser.Geom.Rectangle = this.textUserPoints.getBounds();
+    const countGeom: Phaser.Geom.Rectangle = this.countUserPoints.getBounds();
+    const width: number = (textGeom.width + countGeom.width) / 4 + 2;
+    this.textUserPoints.setX(x - width);
+    this.countUserPoints.setX(x + width);
+  }
+
+  private setClanTextX(): void {
+    const x = this.posx + 145;
+    const textGeom: Phaser.Geom.Rectangle = this.textClanPoints.getBounds();
+    const countGeom: Phaser.Geom.Rectangle = this.countClanPoints.getBounds();
+    const width: number = (textGeom.width + countGeom.width) / 4 + 2;
+    this.textClanPoints.setX(x - width);
+    this.countClanPoints.setX(x + width);
+  }
+
+  private setClanPlaceTextX(): void {
+    const x = this.posx - 20;
+    const textGeom: Phaser.Geom.Rectangle = this.textClanPlace.getBounds();
+    const countGeom: Phaser.Geom.Rectangle = this.countClanPlace.getBounds();
+    const width: number = (textGeom.width + countGeom.width) / 4 + 2;
+    this.textClanPlace.setX(x - width);
+    this.countClanPlace.setX(x + width);
+  }
+
+  private createAnimals(): void {
+    const startY: number = 540;
+    let x: number = 240;
+    let y: number = startY;
+    clanTournamentSettings.forEach((el, index) => {
+      const sprite = new AnimalPlate(this, x, y, this.farm, index + 1);
+      y += sprite.displayHeight + 10;
+      if (y > 1100) {
+        y = startY;
+        x += sprite.displayWidth + 25;
+      }
+      this.plates.push(sprite);
+    });
+  }
+
+  public updateBtns(): void {
+    this.userMoney.setText(shortNum(this.scene.state[`user${this.farm[0].toUpperCase() + this.farm.slice(1)}`].money));
+    this.userMoneyIcon.setX(this.userMoney.getBounds().left - 5);
+    this.plates.forEach(el => {
+      el.updateBtnState();
+    });
+  }
+
+  public disableBtns(): void {
+    this.plates.forEach(el => {
+      el.disableBtn();
+    });
+  }
 }
 
 class AnimalPlate extends Phaser.GameObjects.Sprite {
   public scene: Modal;
+  private window: EventTournamentWindow;
   private breed: number;
   private price: string;
   private count: number;
   public type: string;
-  constructor(scene: Modal, x: number, y: number, texture: string, type: string, breed: number) {
-    super(scene, x, y, texture);
+  private btn: Phaser.GameObjects.Sprite;
+  private btnText: Phaser.GameObjects.Text;
+  private btnImg: Phaser.GameObjects.Sprite;
+
+  constructor(window: EventTournamentWindow, x: number, y: number, type: string, breed: number) {
+    super(window.scene, x, y, 'clan-tournament-animal-bg');
     this.breed = breed;
+    this.window = window;
+    this.type = type;
     this.init();
     this.create();
   }
+
   private init(): void {
     const animal: ItournamentAnimal = this.scene.state.clanTournamentData[this.type].find((el: ItournamentAnimal) => el.breed === this.breed);
-    this.count = animal ? animal.count : 0;    
+    this.count = animal ? animal.count : 0;
+    this.setPrice();
   }
-  private create(): void {
 
+  private create(): void {
+    const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '16px',
+      color: '#fffdfa',
+      align: 'center',
+      shadow: {
+        offsetX: 1,
+        offsetY: 1, 
+        color: '#96580e',
+        blur: 2,
+        fill: true,
+      },
+    };
+    const btnTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '18px',
+      color: '#fffdfa',
+      align: 'center',
+      shadow: {
+        offsetX: 1,
+        offsetY: 1, 
+        color: '#577f2a',
+        blur: 2,
+        fill: true,
+      },
+    };
+    this.scene.add.existing(this);
+    const mask: Phaser.Display.Masks.BitmapMask = this.createBitmapMask();
+
+    this.scene.add.sprite(this.x - this.width / 2 + 19, this.y + 28, `clan-${this.type}-${this.breed}`).setScale(0.8).setMask(mask);
+    this.scene.add.text(this.x + 35 + 5, this.y - 23, this.scene.state.lang[`${this.type}Breed${this.breed}`], textStyle).setOrigin(0.5);
+    this.btn = this.scene.add.sprite(this.x + 35 + 5, this.y + 17, 'little-button').setScale(0.95, 0.75);
+    this.btnImg = this.scene.add.sprite(this.btn.x - this.btn.displayWidth / 2 + 22, this.btn.y - 5, `${this.type}Coin`).setScale(0.08);
+    this.btnText = this.scene.add.text(this.btnImg.x + this.btnImg.displayWidth / 2 + 5, this.btn.y - 5, shortNum(this.price), btnTextStyle).setOrigin(0, 0.5);
+    this.scene.clickShopBtn({ btn: this.btn, title: this.btnText, img: this.btnImg }, () => {
+      this.onClick();
+    });
+    this.updateBtnState();
   }
+
 
   private setPrice(): void {
     const setting = clanTournamentSettings.find(el => el.breed === this.breed);
     const coefficient = 7;
     if (setting) this.price = setting.price;
 
-    this.price = BigInteger.add(this.price, BigInteger.divide(BigInteger.multiply(this.price, String(coefficient)), '100'));
+    for (let i = 1; i < this.count; i++) {
+      this.price = BigInteger.add(this.price, BigInteger.divide(BigInteger.multiply(this.price, String(coefficient)), '100'));
+    }
+  }
+
+  public updateBtnState(): void {
+    const animal: ItournamentAnimal = this.scene.state.clanTournamentData[this.type].find((el: ItournamentAnimal) => el.breed === this.breed);
+    this.count = animal ? animal.count : 0;
+    this.setPrice();
+    const money = this.scene.state[`user${this.type[0].toUpperCase() + this.type.slice(1)}`].money;
+    if (BigInteger.greaterThanOrEqual(String(Math.round(money)), this.price)) {
+      this.btn.setInteractive();
+      this.btn.setTexture('little-button');
+      this.btnText.setColor('#fffdfa').setShadow(1, 1, '#577f2a', 2, true).setText(shortNum(this.price));
+    } else {
+      this.btn.setTexture('little-button-disable');
+      this.btnText.setColor('#676767').setShadow().setText(shortNum(this.price));
+      this.btn.removeInteractive();
+    }
+  }
+
+  public disableBtn(): void {
+    this.btn.removeInteractive();
+  }
+
+  private onClick(): void {
+    this.window.disableBtns();
+    this.postServer().then(res => {
+      const { error, clan, place } = res.data;
+      if (!error) {
+        console.log(clan);
+        this.scene.state[`user${this.type[0].toUpperCase() + this.type.slice(1)}`].money -= Number(this.price);
+        const user = clan.users.find(el => el.id === this.scene.state.user.id);
+        this.scene.state.clanTournamentData = {
+          clanPoints: clan.points,
+          points: user.points,
+          sheep: user.sheep,
+          chicken: user.chicken,
+          cow: user.cow,
+          place: place,
+        };
+        this.window.updateBtns(); 
+      }
+    });
+  }
+
+  private postServer(): Promise<AxiosResponse<any>> {
+    let login: string = this.scene.state.user.login;;
+    if (this.scene.state.platform !== 'web' && this.scene.state.platform !== 'android') login = this.scene.state.name;
+    const data = {
+      id: this.scene.state.user.id,
+      hash: this.scene.state.user.hash,
+      counter: this.scene.state.user.counter,
+      type: this.type,
+      breed: this.breed,
+      name: login,
+      avatar: this.scene.state.user.avatar,
+      status: this.scene.state.user.status,
+    };
+    return axios.post(process.env.API + '/addAnimalTournament', data);
   }
 }

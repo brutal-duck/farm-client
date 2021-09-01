@@ -146,6 +146,7 @@ const forest8: string = require('./../../../assets/images/cow/territories/forest
 const star: string = require('./../../../assets/images/icons/star.png');
 const completed: string = require('./../../../assets/images/icons/completed.png');
 const littleButton: string = require('./../../../assets/images/modal/little-button.png');
+const littleButtonDisable: string = require('./../../../assets/images/modal/little-button-disable.png');
 const taskIcon1: string = require('./../../../assets/images/cow/tasks/task-icon-1.png');
 const taskIcon2: string = require('./../../../assets/images/cow/tasks/task-icon-2.png');
 const taskIcon3: string = require('./../../../assets/images/cow/tasks/task-icon-3.png');
@@ -407,6 +408,7 @@ class CowPreload extends Phaser.Scene {
     this.load.image('star', star);
     this.load.image('completed', completed);
     this.load.image('little-button', littleButton);
+    this.load.image('little-button-disable', littleButtonDisable);
     this.load.image('cow-task-icon-1', taskIcon1);
     this.load.image('cow-task-icon-2', taskIcon2);
     this.load.image('cow-task-icon-3', taskIcon3);

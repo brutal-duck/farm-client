@@ -151,6 +151,7 @@ const forest8: string = require("./../../../assets/images/sheep/territories/fore
 const star: string = require("./../../../assets/images/icons/star.png");
 const completed: string = require("./../../../assets/images/icons/completed.png");
 const littleButton: string = require("./../../../assets/images/modal/little-button.png");
+const littleButtonDisable: string = require("./../../../assets/images/modal/little-button-disable.png");
 const taskIcon1: string = require("./../../../assets/images/sheep/tasks/task-icon-1.png");
 const taskIcon2: string = require("./../../../assets/images/sheep/tasks/task-icon-2.png");
 const taskIcon3: string = require("./../../../assets/images/sheep/tasks/task-icon-3.png");
@@ -520,6 +521,7 @@ class SheepPreload extends Phaser.Scene {
     this.load.image('star', star);
     this.load.image('completed', completed);
     this.load.image('little-button', littleButton);
+    this.load.image('little-button-disable', littleButtonDisable);
     this.load.image('sheep-task-icon-1', taskIcon1);
     this.load.image('sheep-task-icon-2', taskIcon2);
     this.load.image('sheep-task-icon-3', taskIcon3);
