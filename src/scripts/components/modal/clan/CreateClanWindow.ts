@@ -77,6 +77,7 @@ export default class CreateClanWindow {
 
     // Параметры
     let centered: boolean = true;
+    const paddingPercent = 15;
     let padding: number;
     let tempHeight: number = window.innerHeight;
     const windowHeight: number = window.innerHeight;
@@ -108,7 +109,7 @@ export default class CreateClanWindow {
     };
     this.result = this.scene.add.text(pos.x, inputBgGeom.top - 10, '', errorTextStyle).setOrigin(0.5, 1).setDepth(4).setAlpha(0);
 
-    padding = this.scene.cameras.main.height / 100 * 30;
+    padding = this.scene.cameras.main.height / 100 * paddingPercent;
     this.window.modalElements.push(
       this.scene.header,
       this.scene.body,
@@ -123,6 +124,8 @@ export default class CreateClanWindow {
       createClanBtn.btn,
       createClanBtn.title,
       this.result,
+      this.window.headerText,
+      this.window.closeBtn,
     );
 
     window.onresize = (): void => {
@@ -130,21 +133,19 @@ export default class CreateClanWindow {
 
       if (windowHeight !== tempHeight && centered) {
         root.scrollIntoView(false)
-        this.window.modalElements.forEach((el) => el.setY(el.y + padding));
-        const height = Number(this.scene.game.config.height) / 12 - 100;
-        const startTop: number = 47;
-        const startBottom: number = 47;
-        this.input.style.top = `${startTop + height / 4}%`;
-        this.input.style.bottom = `${startBottom - height / 4}%`;
+        this.window.modalElements.forEach((el) => el?.setY(el.y + padding));
+        const topNewPosition: number = +this.input.style.top.replace('%', '') + paddingPercent;
+        const bottomNewPosition: number = +this.input.style.bottom.replace('%', '') - paddingPercent;
+        this.input.style.top = `${topNewPosition}%`;
+        this.input.style.bottom = `${bottomNewPosition}%`;
         centered = false;
 
       } else if (windowHeight === tempHeight && !centered) {
-        this.window.modalElements.forEach((el) => el.setY(el.y - padding));
-        const height = Number(this.scene.game.config.height) / 12 - 100;
-        const startTop: number = 37;
-        const startBottom: number = 57;
-        this.input.style.top = `${startTop + height / 4}%`;
-        this.input.style.bottom = `${startBottom - height / 4}%`;
+        this.window.modalElements.forEach((el) => el?.setY(el.y - padding));
+        const topNewPosition: number = +this.input.style.top.replace('%', '') - paddingPercent;
+        const bottomNewPosition: number = +this.input.style.bottom.replace('%', '') + paddingPercent;
+        this.input.style.top = `${topNewPosition}%`;
+        this.input.style.bottom = `${bottomNewPosition}%`;
         centered = true;
       }
     }
@@ -301,6 +302,7 @@ export default class CreateClanWindow {
     this.scene.clickModalBtn({ btn: randomBtn, title: randomBtnText }, () => { this.getNewIcon(); });
     this.scene.clickModalBtn({ btn: changeBtn, title: changeBtnText }, () => { this.openChangeWindow(); });
     this.window.modalElements.push(
+      tile,
       randomBtn,
       randomBtnText,
       changeBtn,

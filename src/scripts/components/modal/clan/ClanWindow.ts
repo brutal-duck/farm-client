@@ -9,6 +9,7 @@ import BuyCooldownWindow from './BuyCooldownWindow';
 import RedirectFarmWindow from './RedirectFarmWindow';
 import ClanTasksWindow from './ClanTasksWindow';
 import RedirectClanWindow from './RedicrectClanWindow';
+import ChangeClanNameWindow from "./ChangeClanNameWindow";
 
 export default class ClanWindow {
   public scene: Modal;
@@ -17,8 +18,9 @@ export default class ClanWindow {
   private height: number;
   public width: number;
   public bg: Phaser.GameObjects.TileSprite;
+  public bgExtra: Phaser.GameObjects.TileSprite;
   public header: Phaser.GameObjects.Sprite;
-  private closeBtn: Phaser.GameObjects.Sprite;
+  public closeBtn: Phaser.GameObjects.Sprite;
   public headerText: Phaser.GameObjects.Text;
   private footer: Phaser.GameObjects.Sprite;
   private windowType: number
@@ -52,6 +54,8 @@ export default class ClanWindow {
       this.height = 640;
     } else if (this.windowType === 9) {
       this.height = 260;
+    } else if (this.windowType === 10) {
+      this.height = 190;
     }
     this.width = 527;
   }
@@ -64,7 +68,8 @@ export default class ClanWindow {
 
   private createBg(): void {
     this.bg = this.scene.add.tileSprite(this.x, this.y, this.width, this.height, 'white-pixel').setTint(0xFF9700);
-    this.modalElements.push(this.bg);
+    this.bgExtra = this.scene.add.tileSprite(this.x, this.y, this.width, 1, 'white-pixel').setTint(0xFA8F1F).setOrigin(0.5, 0).setDepth(-1).setVisible(false);
+    this.modalElements.push(this.bg, this.bgExtra);
   }
 
   private createHeader(): void {
@@ -151,6 +156,9 @@ export default class ClanWindow {
       case 9: 
         new RedirectClanWindow(this);
         break;
+      case 10: 
+        new ChangeClanNameWindow(this);
+        break;
       default:
         break;
     }
@@ -160,6 +168,6 @@ export default class ClanWindow {
     this.header.setY(this.header.y - height);
     this.headerText.setY(this.headerText.y - height);
     this.closeBtn.setY(this.closeBtn.y - height);
-    this.scene.add.tileSprite(this.x, this.header.getBounds().bottom - 15, this.width, height + 15, 'white-pixel').setTint(0xFA8F1F).setOrigin(0.5, 0).setDepth(-1);
+    this.bgExtra.setPosition(this.x, this.header.getBounds().bottom - 15).setSize(this.width, height + 15).setVisible(true);
   }
 };

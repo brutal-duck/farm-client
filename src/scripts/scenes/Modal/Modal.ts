@@ -69,6 +69,7 @@ class Modal extends Phaser.Scene {
   public socialTakskWindow: SocialTasksWindow;
   public chatBars: ChatBars;
   public taskWindow: TasksWindow;
+  public ClanTabsWindow: ClanTabsWindow;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -168,7 +169,7 @@ class Modal extends Phaser.Scene {
         this.openModal(this.cameras.main);
         break;
       case 17: 
-        new ClanTabsWindow(this);
+        this.ClanTabsWindow = new ClanTabsWindow(this);
         break;
       case 18: 
         new ClanWindow(this);
