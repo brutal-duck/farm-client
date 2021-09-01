@@ -381,8 +381,10 @@ class AnimalPlate extends Phaser.GameObjects.Sprite {
     this.scene.add.existing(this);
     const mask: Phaser.Display.Masks.BitmapMask = this.createBitmapMask();
 
-    const padding: number = this.type === 'sheep' ? 40 : this.type === 'chicken' ? 60 : 50;
-    this.scene.add.sprite(this.x - this.width / 2 + padding, this.y, `clan-${this.type}-${this.breed}`).setScale(0.8).setMask(mask);
+    const paddingX: number = this.type === 'sheep' ? 40 : this.type === 'chicken' ? 60 : 50;
+    const paddingY: number = this.type === 'cow' ? -10 : 0;
+    const scale: number = this.type === 'cow' ? 0.65 : 0.8
+    this.scene.add.sprite(this.x - this.width / 2 + paddingX, this.y + paddingY, `clan-${this.type}-${this.breed}`).setScale(scale).setMask(mask);
     this.scene.add.text(this.x + 35 + 5, this.y - 23, this.scene.state.lang[`${this.type}Breed${this.breed}`], textStyle).setOrigin(0.5);
     this.btn = this.scene.add.sprite(this.x + 35 + 5, this.y + 17, 'little-button').setScale(0.95, 0.75);
     this.btnImg = this.scene.add.sprite(this.btn.x - this.btn.displayWidth / 2 + 22, this.btn.y - 5, `${this.type}Coin`).setScale(0.08);

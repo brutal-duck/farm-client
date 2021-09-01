@@ -321,7 +321,6 @@ class Sheep extends Phaser.Scene {
     this.autoprogressTimer = Math.round(new Date().getTime() / 1000);
     this.autoSaveTimer = 0;
     this.state = state;
-    console.log('init ~ this.state', this.state)
     this.alarm = false;
     this.settings = state.sheepSettings;
     this.showMergPointer = false;
