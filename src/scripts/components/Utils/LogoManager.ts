@@ -11,10 +11,10 @@ export default class LogoManager {
         height,
       };
 
-      const rt = scene.make.renderTexture(config, false);
-      const spriteBg = scene.make.sprite({ key: `clan-bg-${bg}`, origin: 0.5, scale: 1.05 }, false);
-      const spriteFrame = scene.make.sprite({ key: `clan-frame-${frame}`, origin: 0.5 }, false);
-      const spriteIcon = scene.make.sprite({ key: `clan-icon-${icon}`, origin: 0.5 }, false);
+      const rt: Phaser.GameObjects.RenderTexture = scene.make.renderTexture(config, false);
+      const spriteBg: Phaser.GameObjects.Sprite = scene.make.sprite({ key: `clan-bg-${bg}`, origin: 0.5, scale: 1.05 }, false);
+      const spriteFrame: Phaser.GameObjects.Sprite = scene.make.sprite({ key: `clan-frame-${frame}`, origin: 0.5 }, false);
+      const spriteIcon: Phaser.GameObjects.Sprite = scene.make.sprite({ key: `clan-icon-${icon}`, origin: 0.5 }, false);
 
       rt.draw(spriteBg, width / 2, height / 2);
       rt.draw(spriteFrame,width / 2, height / 2);
@@ -45,9 +45,7 @@ export class Icon {
   private _scale: number;
   private _y: number;
   private _x: number;
-  private _originX: number;
-  private _originY: number;
-  public _mainTexture: string;
+  private _mainTexture: string;
   private _scene: Phaser.Scene;
   private _depth: number;
   private _basicSize: number = 190;
@@ -57,8 +55,6 @@ export class Icon {
     this._y = y;
     this._depth = 1;
     this._scale = 1;
-    this._originX = 0.5;
-    this._originY = 0.5;
     this._mainTexture = texture;
     this.createElements();
   }
@@ -114,6 +110,10 @@ export class Icon {
 
   public get x(): number {
     return this._x;
+  }
+
+  public get texture(): string {
+    return this._mainTexture;
   }
 
   public destroy(): void {

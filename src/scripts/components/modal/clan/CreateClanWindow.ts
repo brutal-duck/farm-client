@@ -330,8 +330,8 @@ export default class CreateClanWindow {
       y: this.icon.y,
     };
     this.icon.destroy();
-    const icon = this.window.modalElements.find((el: Icon) => el?._mainTexture)
-    Phaser.Utils.Array.Remove(this.window.modalElements, icon)
+    const icon = this.window.modalElements.find((el: Icon) => el?.texture);
+    Phaser.Utils.Array.Remove(this.window.modalElements, icon);
     this.icon = LogoManager.createIcon(this.scene, pos.x, pos.y, this.scene.state.clanAvatar).setScale(0.8);
     this.window.modalElements.push(this.icon)
   }
