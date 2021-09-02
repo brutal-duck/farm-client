@@ -208,9 +208,13 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
     this.timer = this.scene.add.text(bgGeom.centerX, bgGeom.centerY, '', textStyle).setOrigin(0.5);
   }
   public preUpdate(): void {
-    if (this.timer && this.timer.active) {
+    if (this.timer && this.timer.active && this.scene.state.progress.clanEvent.endTime > 0) {
       const timerText: string = `${this.scene.state.lang.eventLastTime} ${shortTime(this.scene.state.progress.clanEvent.endTime, this.scene.state.lang)}`;
       if (this.timer.text !== timerText) this.timer.setText(timerText);
+    }
+    if (this.scene.state.progress.clanEvent.endTime <= 0) {
+      this.scene.scene.stop('ClanScroll');
+      this.scene.scene.stop();
     }
   }
 }
