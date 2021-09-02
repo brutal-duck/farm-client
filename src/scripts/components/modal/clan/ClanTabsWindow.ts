@@ -10,6 +10,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
   public scene: Modal;
   public x: number;
   public y: number;
+  public scrollY: number;
   private windowHeight: number;
   private windowWidth: number;
   private bg: Phaser.GameObjects.TileSprite;
@@ -442,6 +443,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
 
   private searchClans(): void {
     if (this.mainInput.value !== '') {
+      this.scrollY = this.scene.game.scene.keys['ClanScroll'].scrolling.y
       this.scene.scene.stop('ClanScroll');
       this.scene.state.searchClan = this.mainInput.value;
       this.scene.scene.launch('ClanScroll', this.scene.state);
@@ -519,15 +521,15 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     this.scene.clickModalBtn({ btn: changeEmblemBtn, title: changeEmblemBtnText }, () => { changeClanEmblem(); });
 
     // Третий слот
-    const changeClanNameBg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(changeEmblemBg.getBottomCenter().x, changeEmblemBg.getBottomCenter().y + 30, 480, 220, 'modal-square-bg', 10).setOrigin(0.5, 0).setDepth(2);
-    const changeClanNameTextBg: Phaser.GameObjects.Sprite = this.scene.add.sprite(changeClanNameBg.getTopCenter().x, changeClanNameBg.getTopCenter().y + 2, 'clan-window-leader-plate-2').setOrigin(0.5, 0).setDisplaySize(479, 45).setDepth(2);
-    const changeClanNameText: Phaser.GameObjects.Text = this.scene.add.text(changeClanNameTextBg.getCenter().x, changeClanNameTextBg.getCenter().y, String(this.scene.state.lang.clanName), this.headerTextStyle).setOrigin(0.5).setDepth(2);
-    const inpitField: Phaser.GameObjects.Sprite = this.scene.add.sprite(changeClanNameBg.getCenter().x, changeClanNameTextBg.getBottomCenter().y + 20, 'clan-window-search-plate').setScale(1.175, 1.15).setOrigin(0.5, 0).setDepth(2).setInteractive();
+    const changeClanNameBg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(changeEmblemBg.getBottomCenter().x, changeEmblemBg.getBottomCenter().y + 30, 480, 220, 'modal-square-bg', 10).setOrigin(0.5, 0).setDepth(3);
+    const changeClanNameTextBg: Phaser.GameObjects.Sprite = this.scene.add.sprite(changeClanNameBg.getTopCenter().x, changeClanNameBg.getTopCenter().y + 2, 'clan-window-leader-plate-2').setOrigin(0.5, 0).setDisplaySize(479, 45).setDepth(3);
+    const changeClanNameText: Phaser.GameObjects.Text = this.scene.add.text(changeClanNameTextBg.getCenter().x, changeClanNameTextBg.getCenter().y, String(this.scene.state.lang.clanName), this.headerTextStyle).setOrigin(0.5).setDepth(3);
+    const inpitField: Phaser.GameObjects.Sprite = this.scene.add.sprite(changeClanNameBg.getCenter().x, changeClanNameTextBg.getBottomCenter().y + 20, 'clan-window-search-plate').setScale(1.175, 1.14).setOrigin(0.5, 0).setDepth(3).setInteractive();
     const inputText: Phaser.GameObjects.Text = this.scene.add.text(inpitField.getLeftCenter().x + 12, inpitField.getCenter().y, this.scene.state.lang.inputClanName, {
       font: '22px Bip',
       color: '#8f8f8f',
-    }).setOrigin(0, 0.5).setDepth(3).setCrop(0, 0, inpitField.getBounds().width - 24, 100);
-    const result: Phaser.GameObjects.Text = this.scene.add.text(changeClanNameBg.getBottomCenter().x, changeClanNameBg.getBottomCenter().y + 16, '', errorTextStyle).setOrigin(0.5, 0).setDepth(2);
+    }).setOrigin(0, 0.5).setDepth(4).setCrop(0, 0, inpitField.getBounds().width - 24, 100);
+    const result: Phaser.GameObjects.Text = this.scene.add.text(changeClanNameBg.getBottomCenter().x, changeClanNameBg.getBottomCenter().y + 16, '', errorTextStyle).setOrigin(0.5, 0).setDepth(3);
 
     const right = {
       text: CHANGE_CLAN_NAME_COST,
@@ -535,10 +537,10 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     };
 
     const changeClanNameBtn = this.scene.bigButton('green', 'left', 260, this.scene.state.lang.changeClanName, right);
-    changeClanNameBtn.btn.setScale(0.9).setDepth(2);
-    changeClanNameBtn.title.setX(changeClanNameBtn.title.x + 20).setDepth(2);
-    changeClanNameBtn.img1.setX(changeClanNameBtn.img1.x - 20).setDepth(2);
-    changeClanNameBtn.text1.setX(changeClanNameBtn.text1.x - 20).setDepth(2);
+    changeClanNameBtn.btn.setScale(0.9).setDepth(3);
+    changeClanNameBtn.title.setX(changeClanNameBtn.title.x + 20).setDepth(3);
+    changeClanNameBtn.img1.setX(changeClanNameBtn.img1.x - 20).setDepth(3);
+    changeClanNameBtn.text1.setX(changeClanNameBtn.text1.x - 20).setDepth(3);
     this.scene.clickModalBtn(changeClanNameBtn, () => { changeClanName(); });
 
     let change: boolean = false
@@ -547,19 +549,16 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     root.append(this.mainInput);
     this.mainInput.setAttribute("id", "clan-change-name");
     this.mainInput.setAttribute("autocomplete", "off");
-    // const height = Number(this.scene.game.config.height) / 12 - 100;
-    // const startTop: number = 19;
-    // const startBottom: number = 77;
-    // this.mainInput.style.top = `${startTop + height / 4}%`;
-    // this.mainInput.style.bottom = `${startBottom - height / 4}%`;
     this.enterKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
-    this.enterKey.on('down', (): void => { changeClanName(); });
+    this.enterKey.on('down', (): void => { changeClanName() });
+    const blurZone: Phaser.GameObjects.TileSprite = this.scene.add.tileSprite(this.header.getBottomCenter().x, this.header.getBottomCenter().y, this.scene.cameras.main.width, this.scene.cameras.main.height - this.header.getBottomCenter().y, 'white-pixel').setOrigin(0.5, 0).setAlpha(0.0001).setVisible(false).setDepth(2).setInteractive()
     this.scene.click(inpitField, (): void => { focus() });
-    this.scene.click(this.bg, (): void => { blur() });
+    this.scene.click(blurZone, (): void => { blur() });
 
     const focus = () => {
       this.mainInput.style.display = 'block';
       this.mainInput.focus();
+      blurZone.setVisible(true)
       inputText.setVisible(false);
     }
 
@@ -568,6 +567,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
       this.mainInput.blur();
       const text: string = this.mainInput.value ? this.mainInput.value : this.scene.state.lang.inputClanName;
       const color: string = this.mainInput.value ? '#974f00' : '#8f8f8f';
+      blurZone.setVisible(false)
       inputText.setText(text).setColor(color).setDepth(4).setCrop(0, 0, inpitField.getBounds().width - 24, 100).setVisible(true);
     }
 

@@ -47,7 +47,7 @@ export class Icon {
   private _x: number;
   private _originX: number;
   private _originY: number;
-  private _mainTexture: string;
+  public _mainTexture: string;
   private _scene: Phaser.Scene;
   private _depth: number;
   private _basicSize: number = 190;
