@@ -189,6 +189,7 @@ const iconClanSheep: string = require('../../../assets/images/icons/clan-sheep.p
 const iconClanChicken: string = require('../../../assets/images/icons/clan-chicken.png');
 const iconClanCow: string = require('../../../assets/images/icons/clan-cow.png');
 const headerOrange: string = require('../../../assets/images/modal/header-orange.png');
+const headerEventEnd: string = require('../../../assets/images/modal/clan/header-event-end.png');
 const clanTaskIcon1: string = require('../../../assets/images/modal/clan/tasks/task-1.png');
 const clanTaskIcon2: string = require('../../../assets/images/modal/clan/tasks/task-2.png');
 const clanTaskIcon3: string = require('../../../assets/images/modal/clan/tasks/task-3.png');
@@ -585,6 +586,13 @@ export default function typePreload(): void {
         this.load.image('clan-cow-12', clanCow12);
         this.load.image('shop-btn', shopBtn);
         this.load.image('shop-btn-disable', shopBtnDisable);
+        break;
+      case 22:
+        this.load.image('modal-header-event-end', headerEventEnd);
+        this.load.image('clan-window-leader-plate-2', clanWindowLeaderPlate);
+        this.load.image('clan-window-line', clanWindowLine);
+        this.load.image('clan-window-crown', clanWindowCrown);
+
         break;
       default:
         break;

@@ -44,6 +44,7 @@ import ClanTabsWindow from '../../components/modal/clan/ClanTabsWindow';
 import ClanWindow from '../../components/modal/clan/ClanWindow';
 import ClanBankWindow from './../../components/modal/clan/ClanBankWindow';
 import EventTournamentWindow from './../../components/modal/clan/EventTournamentWindow';
+import ClanTournamentEndWindow from '../../components/modal/clan/ClanTournamentEndWindow';
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -179,6 +180,9 @@ class Modal extends Phaser.Scene {
         break;
       case 20: 
         new EventTournamentWindow(this);
+        break;
+      case 22: 
+        new ClanTournamentEndWindow(this);
         break;
       default:
         this.scene.stop();

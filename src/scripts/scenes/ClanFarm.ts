@@ -84,6 +84,11 @@ export default class ClanFarm extends Phaser.Scene {
   }
 
   public create(): void {
+    this.input.keyboard.addKey('SPACE').on('down', (): void => {
+      let modal: Imodal = { type: 22 }
+      this.state.modal = modal;
+      this.scene.launch('Modal', this.state);
+    })
     this.createBg();
     this.createClanInfo();
     this.createMain();
