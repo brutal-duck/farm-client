@@ -18,6 +18,7 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
   private closeBtn: Phaser.GameObjects.Sprite;
   private headerText: Phaser.GameObjects.Text;
   private footer: Phaser.GameObjects.Sprite;
+  private timer: Phaser.GameObjects.Text;
   private windowType: number = 1;
   private headerTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
     color: '#fffdfa',
@@ -120,7 +121,7 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
     const texture: string = active ? 'clan-window-tab-active' : 'clan-window-tab-disable';
     const tab: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(pos.x, pos.y, maxWidth / count, height, texture, slice).setOrigin(0, 1);
     const tabGeom: Phaser.Geom.Rectangle = tab.getBounds();
-    const icon: string =  type === 1 ?  `clan-window-icon-2` : type === 2 ?  `clan-window-icon-1` : `clan-window-icon-5`;
+    const icon: string =  type === 1 ?  'clan-window-icon-2' : type === 2 ?  'clan-window-icon-1' : 'clan-window-icon-5';
     let tabIcon: Phaser.GameObjects.Sprite = this.scene.add.sprite(tabGeom.centerX, tabGeom.centerY - 10, icon).setOrigin(0.5);
     let flag: Phaser.GameObjects.Sprite;
     if (type === 2) {
@@ -143,63 +144,73 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
   }
 
   private createClanLeaderboard(): void {
+
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
-    const bgHeight: number = 680;
-    const bgY: number = this.y + 70;
+    const bgHeight: number = 590;
+    const bgY: number = this.y + 20;
     this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
 
     this.headerText = this.scene.add.text(headerGeom.centerX, headerGeom.centerY - 3, this.scene.state.lang.clansLiderboard, this.headerTextStyle).setDepth(2).setOrigin(0.5);
+
+    this.createTimer({
+      x: this.scene.cameras.main.centerX,
+      y: bgY + bgHeight / 2 + 20,
+    });
+
+    this.scene.state.modal.clanTabType = 1;
     this.scene.scene.launch('ClanScroll', this.scene.state);
   }
 
 
   private createUserLeaderboard(): void {
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
-    const bgHeight: number = 680;
-    const bgY: number = this.y + 70;
+    const bgHeight: number = 590;
+    const bgY: number = this.y + 20;
     this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
 
     this.headerText = this.scene.add.text(headerGeom.centerX, headerGeom.centerY - 3, this.scene.state.lang.clansLiderboard, this.headerTextStyle).setDepth(2).setOrigin(0.5);
+    
+    this.createTimer({
+      x: this.scene.cameras.main.centerX,
+      y: bgY + bgHeight / 2 + 20,
+    });
+
     this.scene.scene.launch('ClanScroll', this.scene.state);
   }
 
   private createRules(): void {
-    const buttonTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
-      fontFamily: 'Shadow',
-      wordWrap: { width: 100 },
-      color: '#fffdfa',
-      fontSize: '19px',
-      align: 'center',
-      shadow: {
-        offsetX: 1,
-        offsetY: 1, 
-        color: '#96580e',
-        blur: 2,
-        fill: true,
-      },
-    };
-    const inputTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
-      fontSize: '22px',
-      fontFamily: 'Bip',
-      color: '#8f8f8f',
-    };
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     const bgHeight: number = 590;
-    const bgY: number = this.y + 120;
-    const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
-    const tile: Phaser.GameObjects.TileSprite = this.scene.add.tileSprite(this.x, headerGeom.bottom - 2, this.windowWidth, 100, 'white-pixel').setTint(0xD06900).setOrigin(0.5, 0);
-    const inputBg: Phaser.GameObjects.Sprite = this.scene.add.sprite(headerGeom.centerX - 45, headerGeom.centerY, 'clan-window-search-plate').setDepth(2);
-    const inputBgGeom: Phaser.Geom.Rectangle = inputBg.getBounds();
-    const searchBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(inputBgGeom.right + 40, inputBgGeom.centerY + 2, 'profile-window-button-green').setDepth(2).setScale(0.92);
-    const searchBtnText: Phaser.GameObjects.Text = this.scene.add.text(searchBtn.x, searchBtn.y - 5, this.scene.state.lang.search, buttonTextStyle).setDepth(2).setOrigin(0.5);
+    const bgY: number = this.y + 20;
+    this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
 
-    const right1 = {
-      text: 250,
-      icon: 'diamond'
-    };
+    this.headerText = this.scene.add.text(headerGeom.centerX, headerGeom.centerY - 3, this.scene.state.lang.clansLiderboard, this.headerTextStyle).setDepth(2).setOrigin(0.5);
+    
+    this.createTimer({
+      x: this.scene.cameras.main.centerX,
+      y: bgY + bgHeight / 2 + 20,
+    });
   }
 
-  public preUpdate(): void {
+  private createTimer(pos: Iposition): void {
+    const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      wordWrap: { width: 350 },
+      color: '#DD8842',
+      fontSize: '22px',
+      align: 'center',
+    };
 
+    const bgWidth: number = 460;
+
+    const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(pos.x, pos.y, bgWidth, 60, 'tasks-bar-ns', 15).setOrigin(0.5, 0);
+    const bgGeom: Phaser.Geom.Rectangle = bg.getBounds();
+    this.timer = this.scene.add.text(bgGeom.centerX, bgGeom.centerY, '', textStyle).setOrigin(0.5);
+  }
+  public preUpdate(): void {
+    if (this.timer && this.timer.active) {
+      const timerText: string = `${this.scene.state.lang.eventLastTime} ${shortTime(this.scene.state.progress.clanEvent.endTime, this.scene.state.lang)}`;
+      if (this.timer.text !== timerText) this.timer.setText(timerText);
+    }
   }
 }

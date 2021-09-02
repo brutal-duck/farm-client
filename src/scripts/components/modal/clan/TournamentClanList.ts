@@ -13,7 +13,7 @@ export default class TournamentClanList {
   }
 
   private init(): void {
-    const heightWindow: number = this.scene.state.user.clanId ? 570 : 650;
+    const heightWindow: number = 655;
     this.scene.scrollHeight = Number(this.scene.game.config.height) - 1200 + heightWindow;
     this.scene.scrolling.bottom = 0;
     this.scene.scrolling.scrollY = 0;
@@ -27,9 +27,7 @@ export default class TournamentClanList {
       hash: this.scene.state.user.hash,
       counter: this.scene.state.user.counter,
     };
-    console.log(data)
     axios.post(process.env.API + '/getTournamentRaitings', data).then(res => {
-      console.log(res.data);
       if (this.scene.state.modal.clanTabType === 1) {
         this.loadingText?.destroy();
         const { data } = res;

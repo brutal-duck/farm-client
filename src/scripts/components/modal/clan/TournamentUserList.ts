@@ -11,7 +11,7 @@ export default class TournamentUserList {
   }
 
   private init(): void {
-    const heightWindow: number = this.scene.state.user.clanId ? 570 : 650;
+    const heightWindow: number = 655;
     this.scene.scrollHeight = Number(this.scene.game.config.height) - 1200 + heightWindow;
     this.scene.scrolling.bottom = 0;
     this.scene.scrolling.scrollY = 0;
