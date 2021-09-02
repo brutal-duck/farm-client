@@ -116,6 +116,13 @@ export class Icon {
     return this._mainTexture;
   }
 
+  public setVisible(visible: boolean): this {
+    this._mask.setVisible(visible);
+    this._sprite.setVisible(visible);
+    this._frame.setVisible(visible);
+    return this;
+  }
+
   public destroy(): void {
     this._mask.destroy();
     this._sprite.destroy();

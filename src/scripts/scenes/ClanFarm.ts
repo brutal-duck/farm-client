@@ -1,6 +1,7 @@
+import axios from "axios";
 import Notificator from "../components/gameObjects/Notificator";
 import LogoManager, { Icon } from "../components/Utils/LogoManager";
-import { shortNum, loadingModal } from "../general/basic";
+import { shortNum, loadingModal, shortTime } from "../general/basic";
 import { click, clickButton, clickModalBtn } from "../general/clicks";
 import { getNewClanTasks } from "../general/tasks";
 import ClanCooldownBuilding from './../components/clan/ClanCooldownBuilding';
@@ -48,6 +49,10 @@ export default class ClanFarm extends Phaser.Scene {
   private eventClanIcon: Icon;
   private eventPlace: Phaser.GameObjects.Text;
   private eventTime: Phaser.GameObjects.Text;
+  private eventStartText: Phaser.GameObjects.Text;
+  private eventStartTime: Phaser.GameObjects.Text;
+  private eventStartBg: Phaser.GameObjects.Graphics;
+
 
   constructor() {
     super('ClanFarm');
@@ -417,11 +422,31 @@ export default class ClanFarm extends Phaser.Scene {
     // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
     // graphics.lineStyle(5, 0x7F76F3);
     // graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
-    this.eventSprite = this.add.sprite(pos.x, pos.y, 'clan-map-event');
-    LogoManager.createIcon(this, pos.x + 4, pos.y + 48, this.state.clan.avatar).setScale(0.23);
-    this.eventPlace = this.add.text(pos.x + 4, pos.y + 82, '1200 место', placeTextStyle).setOrigin(0.5);
-    this.eventTime = this.add.text(pos.x + 4, pos.y + 100, 'до конца 9д 15ч', timeTextStyle).setOrigin(0.5);
+    this.eventSprite = this.add.sprite(pos.x, pos.y, 'clan-map-event').setVisible(false);
+    this.eventClanIcon = LogoManager.createIcon(this, pos.x + 4, pos.y + 48, this.state.clan.avatar).setScale(0.23).setVisible(false);
+    this.eventPlace = this.add.text(pos.x + 4, pos.y + 82, '-', placeTextStyle).setOrigin(0.5).setVisible(false);
+    const timeText: string = `${this.state.lang.lastTime} ${shortTime(this.state.progress.clanEvent.endTime, this.state.lang)}`;
+    this.eventTime = this.add.text(pos.x + 4, pos.y + 100, timeText, timeTextStyle).setOrigin(0.5).setVisible(false);
 
+    this.eventStartText = this.add.text(pos.x - 150, pos.y + 30, this.state.lang.eventStart, {
+      fontSize: '16px',
+      color: '#fbd0b9',
+      fontFamily: 'Shadow'
+    }).setOrigin(0.5, 0.5).setDepth(1).setVisible(false);
+    
+    this.eventStartTime = this.add.text(pos.x - 150, pos.y + 40, shortTime(this.state.progress.event.startTime, this.state.lang), {
+      fontSize: '21px',
+      color: '#cbff40',
+      fontFamily: 'Shadow'
+    }).setOrigin(0.5, 0.5).setDepth(2).setVisible(false);
+
+    this.eventStartBg = this.add.graphics({
+      fillStyle: {
+        color: 0x2b3d11,
+        alpha: 0.5
+      },
+    }).fillRoundedRect(this.eventStartText.getBounds().left - 25, this.eventStartText.getBounds().top - 20, this.eventStartText.width + 50, 60).setVisible(false);
+    
     this.click(this.eventSprite, (): void => {
       this.state.modal = {
         type: 20,
@@ -445,8 +470,40 @@ export default class ClanFarm extends Phaser.Scene {
       this.updateClanIcon();
       this.updateShopNotification();
       this.updateTaskNotification();
+      this.updateEventState();
+      this.updateEventText();
     }
   }
+
+  private updateEventState(): void {
+    if (!this.eventSprite.visible && this.state.progress.clanEvent.startTime <= 0 && this.state.progress.clanEvent.endTime > 0) {
+      this.setClanEventPlace();
+      this.eventSprite.setVisible(true);
+      this.eventClanIcon.setVisible(true);
+      this.eventPlace.setVisible(true);
+      this.eventTime.setVisible(true);
+      this.eventStartText.setVisible(false);
+      this.eventStartTime.setVisible(false);
+      this.eventStartBg.setVisible(false);
+    } else if (this.eventSprite.visible && this.state.progress.clanEvent.startTime > 0 && this.state.progress.clanEvent.endTime > 0) {
+      this.eventSprite.setVisible(false);
+      this.eventClanIcon.setVisible(false);
+      this.eventPlace.setVisible(false);
+      this.eventTime.setVisible(false);
+      this.eventStartText.setVisible(true);
+      this.eventStartTime.setVisible(true);
+      this.eventStartBg.setVisible(true);
+    } else if (this.eventSprite.visible && this.state.progress.clanEvent.startTime <= 0 && this.state.progress.clanEvent.endTime < 0) {
+      this.eventSprite.setVisible(false);
+      this.eventClanIcon.setVisible(false);
+      this.eventPlace.setVisible(false);
+      this.eventTime.setVisible(false);
+      this.eventStartText.setVisible(true);
+      this.eventStartTime.setVisible(false);
+      this.eventStartBg.setVisible(true);
+    }
+  }
+
 
   private updateCountsText(): void {
     if (this.diamondCountText.active && this.diamondCountText?.text !== String(this.state.clan.diamond.count)) {
@@ -603,6 +660,38 @@ export default class ClanFarm extends Phaser.Scene {
   private updateTaskNotification(): void {
     const count = this.state.user.clanTasks.filter(el => el.done && !el.got_awarded).length;
     this.taskNotificator.setCount(count);
+  }
+
+  private updateEventText(): void {
+    if (this.eventTime.visible) {
+      const timeText: string = `${this.state.lang.lastTime} ${shortTime(this.state.progress.clanEvent.endTime, this.state.lang)}`;
+      if (this.eventTime.text !== timeText) this.eventTime.setText(timeText);
+    }
+    if (this.eventPlace.visible) {
+      const placeText: string = `${this.state.clanEventPlace} ${this.state.lang.eventPlace}`;
+      if (this.eventPlace.text !== placeText) {
+        this.eventPlace.setText(placeText);
+      }
+    }
+  }
+
+  private setClanEventPlace(): void {
+    const data = {
+      id: this.state.user.id,
+      hash: this.state.user.hash,
+      counter: this.state.user.counter,
+    };
+    axios.post(process.env.API + '/getTournamentClanPlace', data).then(res => {
+      const { error, place } = res.data;
+      if (!error) {
+        if (this.state.clanEventPlace !== place) {
+          this.state.clanEventPlace = place;
+          if (this.eventPlace.visible) {
+            this.eventPlace.setText(`${this.state.clanEventPlace} ${this.state.lang.eventPlace}`);
+          }
+        }
+      }
+    })
   }
 };
 

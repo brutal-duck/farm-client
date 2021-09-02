@@ -932,4 +932,5 @@ interface Istate {
   openConvertor?: boolean;
   adjust?: Iadjust;
   clanTournamentData?: ItournamentData;
+  clanEventPlace?: number;
 }

@@ -70,6 +70,7 @@ export default class EventTournamentWindow extends Phaser.GameObjects.Sprite {
       console.log(data)
       if (!data.error) {
         this.scene.state.clanTournamentData = data.data;
+        this.scene.state.clanEventPlace = data.data.place;
         this.scene.scene.stop('Block');
         animation?.remove();
         loadingSprite?.destroy();
