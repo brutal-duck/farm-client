@@ -129,7 +129,7 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
     this.valuta.setPosition(this.barText.getRightCenter().x + (this.award ? 18 : 24), this.barText.getRightCenter().y);
     this.valutaSum.setPosition(this.valuta.getRightCenter().x + 4, this.valuta.getRightCenter().y);
     this.hideProgress();
-    this.scene.taskWindow?.updateProgress();
+    this.textArtifactsFix();
 
     this.scene.clickShopBtn({ btn: this.takeButton, title: this.barText, img: false }, (): void => {
       if (this.valutaTexture === 'diamond') this.scene.game.scene.keys[this.scene.state.farm + 'Bars'].getCurrency({ x: this.takeButton.x, y: this.takeButton.y }, this.taskInfo.task.diamonds, 'diamond');
@@ -149,12 +149,13 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
     this.text.setPosition(this.getCenter().x + 60, this.getCenter().y).setColor(this.taskCompliteAwardTakenTextColor);
 
     this.bar?.setVisible(false);
-    this.takeButton?.setVisible(false);
-    this.barText?.setVisible(false);
+    this.takeButton?.destroy();
+    this.barText?.destroy();
     this.valuta?.setVisible(false);
     this.valutaSum?.setVisible(false);
     this.hideProgress();
     this.scene.taskWindow?.updateProgress();
+    this.textArtifactsFix();
   }
 
 
@@ -171,7 +172,7 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
     const count: number = this.taskInfo.task.type === 14 && this.taskInfo.task.count === 0 ? this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`${this.scene.state.farm.toLowerCase()}Settings`].length : this.taskInfo.task.count;
     this.progressText?.setText(`${shortNum(this.taskInfo.task.progress)}/${shortNum(count)}`);
     if (this.progressText?.width > 120) this.progressText.setOrigin(0, 0.5).setX(this.icon.getLeftCenter().x - 18).setFontSize(24);
-    this.progress?.setPercent(Math.round(100 / count * this.taskInfo.task.progress));
+    this.progress?.setPercent(Math.round(100 / count * this.taskInfo.task.progress));    
     if (this.taskInfo.task.done === 1 || Math.round(100 / count * this.taskInfo.task.progress) === 100) this.taskCompleteAwardNonTaken();
   }
 
@@ -181,9 +182,13 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
     else if (this.taskInfo.task.done === 1 && this.taskInfo.task.got_awarded === 1) this.taskComplete();
   }
 
+  private textArtifactsFix(): void {
+    this.scene?.add.text(0,0,'').destroy();
+  }
 
   public preUpdate(): void {
     if (this.currentProgress !== this.taskInfo.task.progress) this.setProgress();
     if (this.done !== this.taskInfo.task.done) this.setDone();
+    if (this.taskInfo.task.done && this.taskInfo.task.got_awarded && this.takeButton) this.takeButton.destroy()
   }
 }

@@ -4,7 +4,7 @@ import TaskBar from "../gameObjects/TaskBar";
 const tasksUncomplete: string = require("./../../../assets/images/modal/tasks-uncomplete.png");
 const tasksReward: string = require("./../../../assets/images/modal/tasks-reward.png");
 
-export default class TasksWindowNew {
+export default class TasksWindow {
   public scene: Modal;
 
   private tasks: { task: Itasks, taskData: ItaskData }[]
@@ -153,7 +153,7 @@ export default class TasksWindowNew {
     
     if (this.scene.state.modal.tasksParams.done && parts.length === userPart) this.partDiscription?.setText(this.scene.state.lang[`${this.scene.state.farm.toLowerCase()}CompanyDone`]);
     else if (this.scene.state.modal.tasksParams.done && parts.length !== userPart) this.createNextPartButton();
-    else if (!this.scene.state.modal.tasksParams.done) this.partDiscription?.setText(this.scene.state.modal.tasksParams.description);
+    else if (!this.scene.state.modal.tasksParams.done && this.partDiscription) this.partDiscription?.setText(this.scene.state.modal.tasksParams?.description);
 
     this.lineAni?.remove();
     this.tasks = this.getTasks();
