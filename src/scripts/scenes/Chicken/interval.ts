@@ -3,7 +3,7 @@ import Arrow from '../../components/animations/Arrow';
 import Firework from '../../components/animations/Firework';
 import Hearts from '../../components/animations/Hearts';
 import Egg from '../../components/Resource/Egg';
-import { progressClanCooldown, progressTerritoryCooldown } from '../../general/interval';
+import { progressClanCooldown, progressClanEventTime, progressTerritoryCooldown } from '../../general/interval';
 import SpeechBubble from '../../components/animations/SpeechBuble';
 import ChickenTerritory from './../../components/Territories/ChickenTerritory';
 let checkCollector: number = 0;
@@ -433,6 +433,7 @@ function interval(): void {
     }
     
     this.tryClanTask(18);
+    progressClanEventTime(this.state);
 
   }, callbackScope: this, loop: true });
 

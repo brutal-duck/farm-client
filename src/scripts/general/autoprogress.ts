@@ -6,9 +6,15 @@ import Factory from './../components/Territories/Factory';
 import CowTerritory from './../components/Territories/CowTerritory';
 import ChickenTerritory from './../components/Territories/ChickenTerritory';
 import SheepTerritory from './../components/Territories/SheepTerritory';
+import { progressClanCooldown, progressClanEventTime } from './interval';
 
 export default function autoprogress(load: boolean = false): void {
   const state: Istate = this.state;
+  
+  if (!load) {
+    progressClanCooldown(state, state.offlineTime);
+    progressClanEventTime(state, state.offlineTime);
+  }
   
   const getRandomProductId = (settings: IfactorySettings, boost: boolean): number => {
     const pull: number[] = [ settings.production1Percent, settings.production2Percent, settings.production3Percent ];
@@ -658,7 +664,6 @@ export default function autoprogress(load: boolean = false): void {
   const sheepAutoprogress = (): void => {
      // время кристаллической овцы
     this.progressTerritoryCooldown(this.territories.children.entries, state.offlineTime, 'Sheep');
-
 
     if (state.userSheep.diamondAnimalTime >= state.offlineTime) state.userSheep.diamondAnimalTime -= state.offlineTime;
     else {

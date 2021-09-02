@@ -49,12 +49,12 @@ function progressTerritoryCooldown (territories: Iterritories[], time: number, f
   }
 }
 
-const progressClanCooldown = (state: Istate): void => {
+const progressClanCooldown = (state: Istate, time: number = 1): void => {
   if (state.clan) {
-    if (state.clan.main.cooldown > 0) state.clan.main.cooldown -= 1;
-    if (state.clan.sheep.cooldown > 0) state.clan.sheep.cooldown -= 1;
-    if (state.clan.chicken.cooldown > 0) state.clan.chicken.cooldown -= 1;
-    if (state.clan.cow.cooldown > 0) state.clan.cow.cooldown -= 1;
+    if (state.clan.main.cooldown > 0) state.clan.main.cooldown -= time;
+    if (state.clan.sheep.cooldown > 0) state.clan.sheep.cooldown -= time;
+    if (state.clan.chicken.cooldown > 0) state.clan.chicken.cooldown -= time;
+    if (state.clan.cow.cooldown > 0) state.clan.cow.cooldown -= time;
   } else {
     if (state.user.clanId) state.user.clanId = '';
   }
@@ -679,6 +679,17 @@ function showFeedBoostSpeechBubble(): void {
   }
 }
 
+function progressClanEventTime(state: Istate, time: number = 1): void {
+  if (state.clan) {
+    if (state.progress.clanEvent.endTime > 0) {
+      state.progress.clanEvent.endTime -= time;
+    }
+    if (state.progress.clanEvent.startTime > 0) {
+      state.progress.clanEvent.startTime -= time;
+    }
+  }
+}
+
 export {
   sheepIntervalProgress,
   chickenIntervalProgress,
@@ -693,4 +704,5 @@ export {
   showFeedBoostSpeechBubble,
   progressTerritoryCooldown,
   progressClanCooldown,
+  progressClanEventTime,
 }

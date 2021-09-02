@@ -1,7 +1,7 @@
 import { randomString, shortNum, shortTime } from '../../../general/basic';
 import Hearts from '../../../components/animations/Hearts';
 import BigInteger from '../../../libs/BigInteger';
-import { progressClanCooldown } from '../../../general/interval';
+import { progressClanCooldown, progressClanEventTime } from '../../../general/interval';
 let checkCollector: number = 0;
 let sheepCollectorVolume: number = 0;
 let chickenCollectorVolume: number = 0;
@@ -216,6 +216,7 @@ function interval(): void {
     this.updateProfileNotification();
     progressClanCooldown(this.state);
     this.tryClanTask(18);
+    progressClanEventTime(this.state);
 
 
   }, callbackScope: this, loop: true });

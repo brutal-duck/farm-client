@@ -3,7 +3,7 @@ import Arrow from '../../components/animations/Arrow';
 import Hearts from '../../components/animations/Hearts';
 import SpeechBubble from '../../components/animations/SpeechBuble';
 import SheepTerritory from './../../components/Territories/SheepTerritory';
-import { progressClanCooldown } from '../../general/interval';
+import { progressClanCooldown, progressClanEventTime } from '../../general/interval';
 
 let checkCollector: number = 0;
 const BALANCE_HINT_COUNTDOWN = 20;
@@ -431,7 +431,7 @@ function interval(): void {
     }
 
     this.tryClanTask(18);
-
+    progressClanEventTime(this.state);
   }, callbackScope: this, loop: true });
   
 

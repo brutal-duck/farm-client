@@ -267,6 +267,7 @@ export default class EventTournamentWindow extends Phaser.GameObjects.Sprite {
         this.countUserPoints.setText(String(this.userPoints));
         this.setUserTextX();
       }
+      if (this.scene.state.progress.clanEvent.endTime <= 0) this.scene.scene.stop();
     }
   }
   

@@ -418,6 +418,16 @@ export default class ClanFarm extends Phaser.Scene {
       stroke: '#d0875b',
       strokeThickness: 3,
     };
+    const startTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontSize: '16px',
+      color: '#fbd0b9',
+      fontFamily: 'Shadow',
+    };
+    const startTimeTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontSize: '21px',
+      color: '#cbff40',
+      fontFamily: 'Shadow'
+    };
     // const zone: Phaser.GameObjects.Zone = this.add.zone(pos.x, pos.y, width, height).setDropZone(undefined, () => {});
     // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
     // graphics.lineStyle(5, 0x7F76F3);
@@ -428,24 +438,23 @@ export default class ClanFarm extends Phaser.Scene {
     const timeText: string = `${this.state.lang.lastTime} ${shortTime(this.state.progress.clanEvent.endTime, this.state.lang)}`;
     this.eventTime = this.add.text(pos.x + 4, pos.y + 100, timeText, timeTextStyle).setOrigin(0.5).setVisible(false);
 
-    this.eventStartText = this.add.text(pos.x - 150, pos.y + 30, this.state.lang.eventStart, {
-      fontSize: '16px',
-      color: '#fbd0b9',
-      fontFamily: 'Shadow'
-    }).setOrigin(0.5, 0.5).setDepth(1).setVisible(false);
+    this.eventStartText = this.add.text(pos.x - 10, pos.y + 30, this.state.lang.eventStart, startTextStyle)
+      .setOrigin(0.5)
+      .setDepth(1)
+      .setVisible(false);
     
-    this.eventStartTime = this.add.text(pos.x - 150, pos.y + 40, shortTime(this.state.progress.event.startTime, this.state.lang), {
-      fontSize: '21px',
-      color: '#cbff40',
-      fontFamily: 'Shadow'
-    }).setOrigin(0.5, 0.5).setDepth(2).setVisible(false);
+    this.eventStartTime = this.add.text(pos.x - 10, pos.y + 40, '-', startTimeTextStyle)
+      .setOrigin(0.5)
+      .setDepth(2)
+      .setVisible(false);
 
     this.eventStartBg = this.add.graphics({
       fillStyle: {
         color: 0x2b3d11,
         alpha: 0.5
       },
-    }).fillRoundedRect(this.eventStartText.getBounds().left - 25, this.eventStartText.getBounds().top - 20, this.eventStartText.width + 50, 60).setVisible(false);
+    }).fillRoundedRect(this.eventStartText.getBounds().left - 25, this.eventStartText.getBounds().top - 20, this.eventStartText.width + 50, 60)
+      .setVisible(false);
     
     this.click(this.eventSprite, (): void => {
       this.state.modal = {
@@ -485,25 +494,24 @@ export default class ClanFarm extends Phaser.Scene {
       this.eventStartText.setVisible(false);
       this.eventStartTime.setVisible(false);
       this.eventStartBg.setVisible(false);
-    } else if (this.eventSprite.visible && this.state.progress.clanEvent.startTime > 0 && this.state.progress.clanEvent.endTime > 0) {
+    } else if (!this.eventStartBg.visible && this.state.progress.clanEvent.startTime > 0 && this.state.progress.clanEvent.endTime > 0) {
       this.eventSprite.setVisible(false);
       this.eventClanIcon.setVisible(false);
       this.eventPlace.setVisible(false);
       this.eventTime.setVisible(false);
-      this.eventStartText.setVisible(true);
+      this.eventStartText.setVisible(true).setY(this.eventStartText.y - 10);
       this.eventStartTime.setVisible(true);
       this.eventStartBg.setVisible(true);
-    } else if (this.eventSprite.visible && this.state.progress.clanEvent.startTime <= 0 && this.state.progress.clanEvent.endTime < 0) {
+    } else if (!this.eventStartBg.visible && this.state.progress.clanEvent.endTime <= 0) {
       this.eventSprite.setVisible(false);
       this.eventClanIcon.setVisible(false);
       this.eventPlace.setVisible(false);
       this.eventTime.setVisible(false);
-      this.eventStartText.setVisible(true);
+      this.eventStartText.setVisible(true).setText(this.state.lang.eventEndText);
       this.eventStartTime.setVisible(false);
       this.eventStartBg.setVisible(true);
     }
   }
-
 
   private updateCountsText(): void {
     if (this.diamondCountText.active && this.diamondCountText?.text !== String(this.state.clan.diamond.count)) {
@@ -669,9 +677,11 @@ export default class ClanFarm extends Phaser.Scene {
     }
     if (this.eventPlace.visible) {
       const placeText: string = `${this.state.clanEventPlace} ${this.state.lang.eventPlace}`;
-      if (this.eventPlace.text !== placeText) {
-        this.eventPlace.setText(placeText);
-      }
+      if (this.eventPlace.text !== placeText) this.eventPlace.setText(placeText);
+    }
+    if (this.eventStartTime.visible) {
+      const timeText: string = shortTime(this.state.progress.clanEvent.startTime, this.state.lang);
+      if (this.eventStartTime.text !== timeText) this.eventStartTime.setText(timeText);
     }
   }
 

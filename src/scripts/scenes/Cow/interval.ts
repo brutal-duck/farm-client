@@ -6,7 +6,7 @@ import Territory from './../../components/Territories/Territory';
 import SpeechBubble from '../../components/animations/SpeechBuble';
 import Factory from './../../components/Territories/Factory';
 import CowTerritory from './../../components/Territories/CowTerritory';
-import { progressClanCooldown } from '../../general/interval';
+import { progressClanCooldown, progressClanEventTime } from '../../general/interval';
 
 let checkCollector: number = 0;
 let sheepCollectorVolume: number = 0;
@@ -383,6 +383,8 @@ function interval(): void {
     }
     
     this.tryClanTask(18);
+
+    progressClanEventTime(this.state);
 
   }, callbackScope: this, loop: true });
 }
