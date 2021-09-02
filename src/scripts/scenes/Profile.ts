@@ -647,7 +647,7 @@ class Profile extends Phaser.Scene {
     // graphics.lineStyle(5, 0xFFFF00);
     // graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
     if (this.state.clan) {
-      new ClanFlagPole(this, { x: pos.x + 5, y: pos.y - 100 }).setDepth(2);
+      new ClanFlagPole(this, { x: pos.x, y: pos.y - 100 }).setDepth(2);
     }
     this.clanNotificator = new Notificator(this, { x: pos.x + 65, y: pos.y - 80 }, true);
     this.click(zone, (): void => {

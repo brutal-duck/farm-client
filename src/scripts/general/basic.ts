@@ -430,9 +430,15 @@ function exchange(ad: boolean = false): void {
     user.money += this.convertDiamonds(this.state.convertor.diamonds);
     this.game.scene.keys[this.state.farm].tryClanTask(10, 0, this.state.convertor.diamonds);
     if (this.scene.isActive('ClanFarm')) {
-      MoneyAnimation.create(this.game.scene.keys['ClanFarm'], `${this.state.farm.toLowerCase()}Coin`, { x: 495, y: -30 });
+      MoneyAnimation.create(this.game.scene.keys['ClanFarm'], `${this.state.farm.toLowerCase()}Coin`, {
+        x: this.game.scene.keys['ClanFarm'].cameras.main.centerX,
+        y: this.game.scene.keys['ClanFarm'].cameras.main.centerY, 
+      });
     } else if (this.scene.isActive('Profile')) {
-      MoneyAnimation.create(this.game.scene.keys['Profile'], `${this.state.farm.toLowerCase()}Coin`, { x: 495, y: -30 });
+      MoneyAnimation.create(this.game.scene.keys['Profile'], `${this.state.farm.toLowerCase()}Coin`, {
+        x: this.game.scene.keys['Profile'].cameras.main.centerX,
+        y: this.game.scene.keys['Profile'].cameras.main.centerY, 
+      });
     } else {
       MoneyAnimation.create(this.game.scene.keys[`${this.state.farm}Bars`]);
     }

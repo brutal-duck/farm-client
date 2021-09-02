@@ -171,9 +171,15 @@ export default class MoneyAnimation  {
       if (this.texture !== 'diamond') this.target = { x: 495, y: 120 };
       else this.target = { x: 495, y: 30 };
     }
+    const alpha = { from: 0.8, to: 1 };
+
+    if (this.target.x === this.scene.cameras.main.centerX && this.target.y === this.scene.cameras.main.centerY) {
+      alpha.from = 0.5
+      alpha.to = 0;
+    }
     this.scene.tweens.add({
       targets: sprite,
-      alpha: { from: 0.8, to: 1 },
+      alpha: alpha,
       scale: { from: 0.1, to: 0.2},
       x: this.target.x,
       y: this.target.y,

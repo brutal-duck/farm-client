@@ -18,8 +18,8 @@ export default class ClanFlagPole extends Phaser.GameObjects.Sprite {
   private init(): void {
     this.avatar = this.scene.state.clan.avatar;
     this.flagPosition = {
-      x: this.x + 20, 
-      y: this.y - 17,
+      x: this.x + 24, 
+      y: this.y - 10,
     };
   }
 

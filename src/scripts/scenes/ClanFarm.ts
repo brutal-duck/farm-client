@@ -294,7 +294,7 @@ export default class ClanFarm extends Phaser.Scene {
     // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
     // graphics.lineStyle(5, 0xFaaf00);
     // graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
-    new ClanFlagPole(this, { x: farmPosition.x + 59, y: farmPosition.y - 130 }).setDepth(2);
+    new ClanFlagPole(this, { x: farmPosition.x + 58, y: farmPosition.y - 125 }).setDepth(2);
 
     this.click(zone, () => {
       if (this.state.clan.sheep.cooldown <= 0) {
@@ -320,12 +320,19 @@ export default class ClanFarm extends Phaser.Scene {
   }
 
   private createChicken(): void {
-    const farmPosition: Iposition = { x: 580, y: 990 };
-    const sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'clan-chicken-farm');
+    const farmPosition: Iposition = { x: 580, y: 1050 };
+    const width: number = 300;
+    const height: number = 270;
+    
+    const zone: Phaser.GameObjects.Zone = this.add.zone(farmPosition.x, farmPosition.y, width, height).setDropZone(undefined, () => {});
+    const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
+    graphics.lineStyle(5, 0xFaccdd);
+    graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+
     const textLevel: string = this.state.clan.chicken.cooldown > 0 ? String(this.state.clan.chicken.level - 1) : String(this.state.clan.chicken.level);
-    this.chickenLevelText = this.add.text(farmPosition.x - 106, farmPosition.y + 20, textLevel, levelTextStyle).setOrigin(0.5);
-    new ClanFlagPole(this, { x: farmPosition.x + 2, y: farmPosition.y - 160 }).setDepth(2);
-    this.click(sprite, () => {
+    this.chickenLevelText = this.add.text(farmPosition.x - 106, farmPosition.y + 10, textLevel, levelTextStyle).setOrigin(0.5);
+    new ClanFlagPole(this, { x: farmPosition.x, y: farmPosition.y - 175 }).setDepth(2);
+    this.click(zone, () => {
       if (this.state.clan.chicken.cooldown <= 0) {
         this.state.modal = {
           type: 18,
@@ -354,8 +361,8 @@ export default class ClanFarm extends Phaser.Scene {
     const height: number = 270;
     
     const textLevel: string = this.state.clan.cow.cooldown > 0 ? String(this.state.clan.cow.level - 1) : String(this.state.clan.cow.level);
-    this.cowLevelText = this.add.text(farmPosition.x + 169, farmPosition.y + 25, textLevel, levelTextStyle).setOrigin(0.5);
-    new ClanFlagPole(this, { x: farmPosition.x + 88, y: farmPosition.y - 150 }).setDepth(2);
+    this.cowLevelText = this.add.text(farmPosition.x + 169, farmPosition.y + 23, textLevel, levelTextStyle).setOrigin(0.5);
+    new ClanFlagPole(this, { x: farmPosition.x + 86, y: farmPosition.y - 150 }).setDepth(2);
 
     const zone: Phaser.GameObjects.Zone = this.add.zone(farmPosition.x, farmPosition.y, width, height).setDropZone(undefined, () => {});
     // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
