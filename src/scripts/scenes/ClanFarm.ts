@@ -15,6 +15,7 @@ const clanChickenCoin: string = require('../../assets/images/clan/coin-chicken.p
 const clanCowCoin: string = require('../../assets/images/clan/coin-cow.png');
 const clanDiamondCoin: string = require('../../assets/images/clan/coin-diamond.png');
 const factorySmoke: string = require('../../assets/images/cow/factory-smoke.png');
+const event: string = require('../../assets/images/clan/event.png');
 
 
 const levelTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
@@ -43,6 +44,10 @@ export default class ClanFarm extends Phaser.Scene {
   private currentIcon: IconfigIcon;
   private taskNotificator: Notificator;
   private shopNotificator: Notificator;
+  private eventSprite: Phaser.GameObjects.Sprite;
+  private eventClanIcon: Icon;
+  private eventPlace: Phaser.GameObjects.Text;
+  private eventTime: Phaser.GameObjects.Text;
 
   constructor() {
     super('ClanFarm');
@@ -65,6 +70,7 @@ export default class ClanFarm extends Phaser.Scene {
     this.load.image('clan-chicken-coin', clanChickenCoin);
     this.load.image('clan-cow-coin', clanCowCoin);
     this.load.image('clan-diamond-coin', clanDiamondCoin);
+    this.load.image('clan-map-event', event);
   }
   
   public init(state: Istate): void {
@@ -186,7 +192,7 @@ export default class ClanFarm extends Phaser.Scene {
   private createBank(): void {
     const pos: Iposition = {
       x: 595,
-      y: 490,
+      y: 480,
     };
     const zone = this.add.zone(pos.x, pos.y, 160, 200).setDropZone(undefined, () => {});
 
@@ -325,9 +331,9 @@ export default class ClanFarm extends Phaser.Scene {
     const height: number = 270;
     
     const zone: Phaser.GameObjects.Zone = this.add.zone(farmPosition.x, farmPosition.y, width, height).setDropZone(undefined, () => {});
-    const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
-    graphics.lineStyle(5, 0xFaccdd);
-    graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+    // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
+    // graphics.lineStyle(5, 0xFaccdd);
+    // graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
 
     const textLevel: string = this.state.clan.chicken.cooldown > 0 ? String(this.state.clan.chicken.level - 1) : String(this.state.clan.chicken.level);
     this.chickenLevelText = this.add.text(farmPosition.x - 106, farmPosition.y + 10, textLevel, levelTextStyle).setOrigin(0.5);
@@ -392,15 +398,31 @@ export default class ClanFarm extends Phaser.Scene {
   }
 
   private createEvent(): void {
-    const farmPosition: Iposition = { x: 550, y: 800 };
-    const width: number = 300;
-    const height: number = 250;
-    
-    const zone: Phaser.GameObjects.Zone = this.add.zone(farmPosition.x, farmPosition.y, width, height).setDropZone(undefined, () => {});
+    const pos: Iposition = { x: 580, y: 720 };
+    const width: number = 250;
+    const height: number = 220;
+    const timeTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '17px',
+      color: '#dc6023',
+    };
+    const placeTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '17px',
+      color: '#FEF4E6',
+      stroke: '#d0875b',
+      strokeThickness: 3,
+    };
+    // const zone: Phaser.GameObjects.Zone = this.add.zone(pos.x, pos.y, width, height).setDropZone(undefined, () => {});
     // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
     // graphics.lineStyle(5, 0x7F76F3);
     // graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
-    this.click(zone, () => {
+    this.eventSprite = this.add.sprite(pos.x, pos.y, 'clan-map-event');
+    LogoManager.createIcon(this, pos.x + 4, pos.y + 48, this.state.clan.avatar).setScale(0.23);
+    this.eventPlace = this.add.text(pos.x + 4, pos.y + 82, '1200 место', placeTextStyle).setOrigin(0.5);
+    this.eventTime = this.add.text(pos.x + 4, pos.y + 100, 'до конца 9д 15ч', timeTextStyle).setOrigin(0.5);
+
+    this.click(this.eventSprite, (): void => {
       this.state.modal = {
         type: 20,
         clanTabType: 1,
