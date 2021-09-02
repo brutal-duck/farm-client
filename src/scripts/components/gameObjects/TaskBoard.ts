@@ -115,7 +115,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
     this.takeText = this.scene.add.text(0, 0, this.scene.state.lang.pickUp, {
       font: '20px Shadow',
       color: '#FFFFFF'
-    }).setOrigin(0.5).setDepth(this.bg.depth + 1).setVisible(false);
+    }).setOrigin(0.5, 0.7).setDepth(this.bg.depth + 1).setVisible(false);
 
     this.award = this.scene.add.text(0, 0, ' ', {
       font: '20px Bip',

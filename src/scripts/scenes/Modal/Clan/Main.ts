@@ -55,24 +55,26 @@ class ClanScroll extends Phaser.Scene {
 
   private initScrolling(): void {
     this.height = Number(this.game.config.height);
-    let y: number;
+
+    let y: number = this.game.scene.keys['Modal'].ClanTabsWindow.scrollY ? this.game.scene.keys['Modal'].ClanTabsWindow.scrollY : 0
+
     if (this.windowType === 1) {
-      y = this.cameras.main.centerY - 198;
+      y = y ? y : this.cameras.main.centerY - 198;
       this.windowHeight = 595;
     } else if (this.windowType === 2 && this.state.user.clanId) {
-      y = this.cameras.main.centerY - 267;
+      y = y ? y : this.cameras.main.centerY - 267;
       this.windowHeight = 673;
     } else if (this.windowType === 2) {
-      y = this.cameras.main.centerY - 172;
+      y = y ? y : this.cameras.main.centerY - 172;
       this.windowHeight = 584;
     } else if (this.windowType === 3) {
-      y = this.cameras.main.centerY - 172;
+      y = y ? y : this.cameras.main.centerY - 172;
       this.windowHeight = 584;
     }
 
     const cameraOptions: IScrollingOptions = {
       x: 120,
-      y: y,
+      y,
       width: this.windowWidth,
       height: this.windowHeight,
       wheel: true,
