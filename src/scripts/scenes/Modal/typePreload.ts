@@ -127,6 +127,7 @@ const clanWindowIcon1: string = require('../../../assets/images/modal/clan/icon-
 const clanWindowIcon2: string = require('../../../assets/images/modal/clan/icon-2.png');
 const clanWindowIcon3: string = require('../../../assets/images/modal/clan/icon-3.png');
 const clanWindowIcon4: string = require('../../../assets/images/modal/clan/icon-4.png');
+const clanWindowIcon5: string = require('../../../assets/images/modal/clan/icon-5.png');
 const clanWindowExcludeBtn: string = require('../../../assets/images/modal/clan/exclude-button.png');
 const clanBg1: string = require('../../../assets/images/modal/clan/icon/bg-1.png');
 const clanBg2: string = require('../../../assets/images/modal/clan/icon/bg-2.png');
@@ -448,7 +449,7 @@ export default function typePreload(): void {
         this.load.image('clan-window-icon-2', clanWindowIcon2);
         this.load.image('clan-window-icon-3', clanWindowIcon3);
         this.load.image('clan-window-icon-4', clanWindowIcon4);
-        this.load.image('clan-window-icon-5', clanWindowIcon4);
+        this.load.image('clan-window-icon-5', clanWindowIcon5);
         this.load.image('clan-window-exclude-button', clanWindowExcludeBtn);
         this.load.image('clan-icon-1', clanIcon1);
         this.load.image('clan-icon-2', clanIcon2);

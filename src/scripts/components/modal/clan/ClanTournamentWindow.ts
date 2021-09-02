@@ -1,10 +1,10 @@
 import axios, { AxiosResponse } from 'axios';
 import { shortNum } from '../../../general/basic';
-import Modal from './../../../scenes/Modal/Modal';
+import Modal from '../../../scenes/Modal/Modal';
 import { clanTournamentSettings } from '../../../local/settings';
-import BigInteger from './../../../libs/BigInteger';
+import BigInteger from '../../../libs/BigInteger';
 
-export default class EventTournamentWindow extends Phaser.GameObjects.Sprite {
+export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
   public scene: Modal;
   private posx: number;
   private posy: number;
@@ -18,7 +18,6 @@ export default class EventTournamentWindow extends Phaser.GameObjects.Sprite {
   private modalElements: Array<Phaser.GameObjects.Sprite | Phaser.GameObjects.TileSprite | Phaser.GameObjects.Text | Phaser.GameObjects.RenderTexture> = [];
   private windowType: number = 1;
   private farm: string;
-  private disableTimer: number = 0;
   private userMoney: Phaser.GameObjects.Text;
   private userMoneyIcon: Phaser.GameObjects.Sprite;
   private textUserPoints: Phaser.GameObjects.Text;
@@ -236,10 +235,7 @@ export default class EventTournamentWindow extends Phaser.GameObjects.Sprite {
 
     this.scene.clickModalBtn({ btn, title }, () => {
       this.scene.state.modal = {
-        type: 1,
-        sysType: 3,
-        message: 'Рейтинги, типа',
-        height: 150
+        type: 21,
       };
       this.scene.scene.restart(this.scene.state);
     });
@@ -329,7 +325,7 @@ export default class EventTournamentWindow extends Phaser.GameObjects.Sprite {
 
 class AnimalPlate extends Phaser.GameObjects.Sprite {
   public scene: Modal;
-  private window: EventTournamentWindow;
+  private window: ClanTournamentWindow;
   private breed: number;
   private price: string;
   private count: number;
@@ -338,7 +334,7 @@ class AnimalPlate extends Phaser.GameObjects.Sprite {
   private btnText: Phaser.GameObjects.Text;
   private btnImg: Phaser.GameObjects.Sprite;
 
-  constructor(window: EventTournamentWindow, x: number, y: number, type: string, breed: number) {
+  constructor(window: ClanTournamentWindow, x: number, y: number, type: string, breed: number) {
     super(window.scene, x, y, 'clan-tournament-animal-bg');
     this.breed = breed;
     this.window = window;

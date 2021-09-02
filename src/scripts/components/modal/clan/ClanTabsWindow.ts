@@ -134,32 +134,12 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
   }
 
   private createTab(pos: Iposition, active: boolean, count: number, type: number): void {
-    const tabTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
-      fontFamily: 'Shadow',
-      fontSize: '20px',
-      color: '#ffb27c',
-      align: 'center',
-      stroke: '#602000',
-      strokeThickness: 3,
-      wordWrap: { width: 100 },
-    };
-    const tabActiveTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
-      fontFamily: 'Shadow',
-      fontSize: '20px',
-      color: '#fff2e7',
-      align: 'center',
-      stroke: '#aa6100',
-      strokeThickness: 3,
-      wordWrap: { width: 100 },
-    };
-
     const maxWidth: number = 455;
     const tabHeight: number = 104;
     const activeTabHeight: number = 115;
     const slice: number = 30;
     const height: number = active ? activeTabHeight : tabHeight;
     const texture: string = active ? 'clan-window-tab-active' : 'clan-window-tab-disable';
-    const textStyle: Phaser.Types.GameObjects.Text.TextStyle = active ? tabActiveTextStyle : tabTextStyle;
     const tab: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(pos.x, pos.y, maxWidth / count, height, texture, slice).setOrigin(0, 1);
     const tabGeom: Phaser.Geom.Rectangle = tab.getBounds();
     let tabIcon: Phaser.GameObjects.Sprite = this.scene.add.sprite(tabGeom.centerX, tabGeom.centerY - 10, `clan-window-icon-${type}`).setOrigin(0.5);

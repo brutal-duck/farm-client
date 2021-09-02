@@ -4,6 +4,8 @@ import { click, clickModalBtn, clickButton } from '../../../general/clicks';
 import ClanUsersList from './../../../components/modal/clan/ClanUsersList';
 import ClanLeaderboard from './../../../components/modal/clan/ClanLeaderboard';
 import ClanSearch from './../../../components/modal/clan/ClanSearch';
+import TournamentClanList from '../../../components/modal/clan/TournamentClanList';
+import TournamentUserList from './../../../components/modal/clan/TournamentUserList';
 
 class ClanScroll extends Phaser.Scene {
   constructor() {
@@ -38,38 +40,55 @@ class ClanScroll extends Phaser.Scene {
   }
 
   public create(): void {
-    if (this.state.modal.clanTabType === 1) {
-      this.usersList = new ClanUsersList(this);
-    } else if (this.state.modal.clanTabType === 2) {
-      new ClanLeaderboard(this);
-    } else if (this.state.modal.clanTabType === 3) {
-      new ClanSearch(this);
+    if (this.state.modal.type === 17) {
+      if (this.state.modal.clanTabType === 1) {
+        this.usersList = new ClanUsersList(this);
+      } else if (this.state.modal.clanTabType === 2) {
+        new ClanLeaderboard(this);
+      } else if (this.state.modal.clanTabType === 3) {
+        new ClanSearch(this);
+      }
+    } else if (this.state.modal.type === 21) {
+      if (this.state.modal.clanTabType === 1) {
+        new TournamentClanList(this);
+      } else if (this.state.modal.clanTabType === 2) {
+        new TournamentUserList(this);
+      } else if (this.state.modal.clanTabType === 3) {
+        new ClanSearch(this);
+      }
     }
   }
 
   public update(): void {
-    if (this.state.modal.clanTabType === 1) {
-      this.usersList.update();
-    }    
+    if (this.state.modal.type === 17) {
+      if (this.state.modal.clanTabType === 1) {
+        this.usersList.update();
+      }
+    }
   }
 
   private initScrolling(): void {
     this.height = Number(this.game.config.height);
+    let y: number = 0;
 
-    let y: number = this.game.scene.keys['Modal'].ClanTabsWindow.scrollY ? this.game.scene.keys['Modal'].ClanTabsWindow.scrollY : 0
-
-    if (this.windowType === 1) {
-      y = y ? y : this.cameras.main.centerY - 198;
-      this.windowHeight = 595;
-    } else if (this.windowType === 2 && this.state.user.clanId) {
-      y = y ? y : this.cameras.main.centerY - 267;
+    if (this.state.modal.type === 17) {
+      y = this.game.scene.keys['Modal'].ClanTabsWindow?.scrollY ? this.game.scene.keys['Modal'].ClanTabsWindow.scrollY : 0;
+      if (this.windowType === 1) {
+        y = y ? y : this.cameras.main.centerY - 198;
+        this.windowHeight = 595;
+      } else if (this.windowType === 2 && this.state.user.clanId) {
+        y = y ? y : this.cameras.main.centerY - 267;
+        this.windowHeight = 673;
+      } else if (this.windowType === 2) {
+        y = y ? y : this.cameras.main.centerY - 172;
+        this.windowHeight = 584;
+      } else if (this.windowType === 3) {
+        y = y ? y : this.cameras.main.centerY - 172;
+        this.windowHeight = 584;
+      }
+    } else if (this.state.modal.type === 21) {
+      y = this.cameras.main.centerY - 267;
       this.windowHeight = 673;
-    } else if (this.windowType === 2) {
-      y = y ? y : this.cameras.main.centerY - 172;
-      this.windowHeight = 584;
-    } else if (this.windowType === 3) {
-      y = y ? y : this.cameras.main.centerY - 172;
-      this.windowHeight = 584;
     }
 
     const cameraOptions: IScrollingOptions = {
