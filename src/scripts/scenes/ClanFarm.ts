@@ -676,8 +676,10 @@ export default class ClanFarm extends Phaser.Scene {
       if (this.eventTime.text !== timeText) this.eventTime.setText(timeText);
     }
     if (this.eventPlace.visible) {
-      const placeText: string = `${this.state.clanEventPlace} ${this.state.lang.eventPlace}`;
-      if (this.eventPlace.text !== placeText) this.eventPlace.setText(placeText);
+      if (this.state.clanEventPlace) {
+        const placeText: string = `${this.state.clanEventPlace} ${this.state.lang.eventPlace}`;
+        if (this.eventPlace.text !== placeText) this.eventPlace.setText(placeText);
+      }
     }
     if (this.eventStartTime.visible) {
       const timeText: string = shortTime(this.state.progress.clanEvent.startTime, this.state.lang);
@@ -693,12 +695,10 @@ export default class ClanFarm extends Phaser.Scene {
     };
     axios.post(process.env.API + '/getTournamentClanPlace', data).then(res => {
       const { error, place } = res.data;
+      console.log(res.data);
       if (!error) {
         if (this.state.clanEventPlace !== place) {
           this.state.clanEventPlace = place;
-          if (this.eventPlace.visible) {
-            this.eventPlace.setText(`${this.state.clanEventPlace} ${this.state.lang.eventPlace}`);
-          }
         }
       }
     })
