@@ -690,6 +690,14 @@ export default class ClanFarm extends Phaser.Scene {
       const timeText: string = shortTime(this.state.progress.clanEvent.startTime, this.state.lang);
       if (this.eventStartTime.text !== timeText) this.eventStartTime.setText(timeText);
     }
+    if (this.eventClanIcon.visible) {
+      const { bg, frame, icon } = this.state.clan.avatar;
+      if (this.eventClanIcon.texture !== `clan-texture-${bg}-${frame}-${icon}`) {
+        const pos: Iposition = { x: 580, y: 720 };
+        this.eventClanIcon.destroy();
+        this.eventClanIcon = LogoManager.createIcon(this, pos.x + 4, pos.y + 48, this.state.clan.avatar).setScale(0.23);
+      }
+    }
   }
 
   private setClanEventPlace(): void {

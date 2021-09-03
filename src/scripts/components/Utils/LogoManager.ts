@@ -49,6 +49,7 @@ export class Icon {
   private _scene: Phaser.Scene;
   private _depth: number;
   private _basicSize: number = 190;
+  private _visible: boolean = true;
   constructor(scene: Phaser.Scene, x: number, y: number, texture: string) {
     this._scene = scene;
     this._x = x;
@@ -116,7 +117,12 @@ export class Icon {
     return this._mainTexture;
   }
 
+  public get visible(): boolean {
+    return this._visible
+  }
+
   public setVisible(visible: boolean): this {
+    this._visible = visible;
     this._mask.setVisible(visible);
     this._sprite.setVisible(visible);
     this._frame.setVisible(visible);
