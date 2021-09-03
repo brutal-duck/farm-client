@@ -146,15 +146,15 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
   private createClanLeaderboard(): void {
 
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
-    const bgHeight: number = 590;
-    const bgY: number = this.y + 20;
+    const bgHeight: number = 610;
+    const bgY: number = this.y + 30;
     this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
 
     this.headerText = this.scene.add.text(headerGeom.centerX, headerGeom.centerY - 3, this.scene.state.lang.clansLiderboard, this.headerTextStyle).setDepth(2).setOrigin(0.5);
 
     this.createTimer({
       x: this.scene.cameras.main.centerX,
-      y: bgY + bgHeight / 2 + 20,
+      y: bgY + bgHeight / 2 + 15,
     });
 
     this.scene.state.modal.clanTabType = 1;
@@ -164,15 +164,15 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
 
   private createUserLeaderboard(): void {
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
-    const bgHeight: number = 590;
-    const bgY: number = this.y + 20;
+    const bgHeight: number = 610;
+    const bgY: number = this.y + 30;
     this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
 
     this.headerText = this.scene.add.text(headerGeom.centerX, headerGeom.centerY - 3, this.scene.state.lang.clansLiderboard, this.headerTextStyle).setDepth(2).setOrigin(0.5);
     
     this.createTimer({
       x: this.scene.cameras.main.centerX,
-      y: bgY + bgHeight / 2 + 20,
+      y: bgY + bgHeight / 2 + 15,
     });
 
     this.scene.scene.launch('ClanScroll', this.scene.state);
@@ -180,15 +180,15 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
 
   private createRules(): void {
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
-    const bgHeight: number = 590;
-    const bgY: number = this.y + 20;
+    const bgHeight: number = 610;
+    const bgY: number = this.y + 30;
     this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
 
     this.headerText = this.scene.add.text(headerGeom.centerX, headerGeom.centerY - 3, this.scene.state.lang.clansLiderboard, this.headerTextStyle).setDepth(2).setOrigin(0.5);
     
     this.createTimer({
       x: this.scene.cameras.main.centerX,
-      y: bgY + bgHeight / 2 + 20,
+      y: bgY + bgHeight / 2 + 15,
     });
   }
 
@@ -201,12 +201,13 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
       align: 'center',
     };
 
-    const bgWidth: number = 460;
+    const bgWidth: number = 480;
 
-    const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(pos.x, pos.y, bgWidth, 60, 'tasks-bar-ns', 15).setOrigin(0.5, 0);
+    const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(pos.x, pos.y, bgWidth, 50, 'tasks-bar-ns', 15).setOrigin(0.5, 0);
     const bgGeom: Phaser.Geom.Rectangle = bg.getBounds();
     this.timer = this.scene.add.text(bgGeom.centerX, bgGeom.centerY, '', textStyle).setOrigin(0.5);
   }
+
   public preUpdate(): void {
     if (this.timer && this.timer.active && this.scene.state.progress.clanEvent.endTime > 0) {
       const timerText: string = `${this.scene.state.lang.eventLastTime} ${shortTime(this.scene.state.progress.clanEvent.endTime, this.scene.state.lang)}`;

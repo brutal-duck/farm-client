@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { shortNum } from '../../../general/basic';
+import { shortNum, shortTime } from '../../../general/basic';
 import Modal from '../../../scenes/Modal/Modal';
 import { clanTournamentSettings } from '../../../local/settings';
 import BigInteger from '../../../libs/BigInteger';
@@ -27,6 +27,7 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
   private textClanPlace: Phaser.GameObjects.Text;
   private countClanPlace: Phaser.GameObjects.Text;
   private plates: AnimalPlate[] = [];
+  private timer: Phaser.GameObjects.Text;
 
   private userPoints: number = 0;
   private clanPoints: number = 0;
@@ -44,7 +45,7 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
     this.posx = this.scene.cameras.main.centerX;
     this.posy = this.scene.cameras.main.centerY + 50;
     this.windowType = this.scene.state.modal.clanTabType || 1;
-    this.windowHeight = 650;
+    this.windowHeight = 700;
     this.windowWidth = 527;
     if (!this.scene.state.clanTournamentData) this.getEventData();
     else this.createElements();
@@ -193,13 +194,6 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
 
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     
-    const y = this.posy + 125;
-    this.scene.add.nineslice(this.posx, y, 490, 590, 'modal-square-bg', 10).setOrigin(0.5);
-    this.scene.add.sprite(this.posx, y - 308, 'clan-tournament-plate-bg');
-    
-    this.userMoney = this.scene.add.text(this.posx + 12, y - 308, shortNum(this.scene.state[`user${this.farm[0].toUpperCase() + this.farm.slice(1)}`].money), textStyle).setOrigin(0.5).setFontSize(24).setAlpha(0.65);
-    this.userMoneyIcon = this.scene.add.sprite(this.posx - 60, y - 308, `${this.farm}Coin`).setScale(0.125);
-
     this.textUserPoints = this.scene.add.text(0, headerGeom.centerY + 2 - 40, `${this.scene.state.lang.yourContribution}:`, textStyle)
       .setOrigin(0.5)
       .setDepth(2);
@@ -218,19 +212,19 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
       .setDepth(2)
       .setColor('#dcff3c');
 
-    this.scene.add.nineslice(this.bg.getBounds().left, headerGeom.centerY + 123, 400, 50, 'clan-window-leader-plate-ns', 5).setOrigin(0, 0.5);
+    this.scene.add.nineslice(this.bg.getBounds().left, headerGeom.centerY + 115, 400, 40, 'clan-window-leader-plate-ns', 5).setOrigin(0, 0.5);
 
-    this.textClanPlace = this.scene.add.text(0, headerGeom.centerY + 123, `${this.scene.state.lang.clanPlace}:`, textStyle)
+    this.textClanPlace = this.scene.add.text(0, headerGeom.centerY + 115, `${this.scene.state.lang.clanPlace}:`, textStyle)
       .setOrigin(0.5)
-      .setFontSize(25)
+      .setFontSize(23)
       .setDepth(2);
-    this.countClanPlace = this.scene.add.text(0, headerGeom.centerY + 123, `${this.clanPlace}`, textStyle).setDepth(2)
+    this.countClanPlace = this.scene.add.text(0, headerGeom.centerY + 115, `${this.clanPlace}`, textStyle).setDepth(2)
       .setOrigin(0.5)
-      .setFontSize(25)
+      .setFontSize(23)
       .setDepth(2)
       .setColor('#dcff3c');
 
-    const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.posx + 160, headerGeom.centerY + 123, 'profile-window-button-yellow').setScale(1.3, 1.2);
+    const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.posx + 160, headerGeom.centerY + 115, 'profile-window-button-yellow').setScale(1.2, 1.1);
     const title: Phaser.GameObjects.Text = this.scene.add.text(btn.x, btn.y - 5, this.scene.state.lang.eventRating, textStyle).setFontSize(22).setOrigin(0.5);
 
     this.scene.clickModalBtn({ btn, title }, () => {
@@ -242,6 +236,23 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
     this.setUserTextX();
     this.setClanTextX();
     this.setClanPlaceTextX();
+    this.createTimer({ x: this.posx, y: this.posy + 400 });
+  }
+
+  private createTimer(pos: Iposition): void {
+    const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      wordWrap: { width: 350 },
+      color: '#DD8842',
+      fontSize: '22px',
+      align: 'center',
+    };
+
+    const bgWidth: number = 490;
+
+    const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(pos.x, pos.y, bgWidth, 50, 'tasks-bar-ns', 15).setOrigin(0.5, 0);
+    const bgGeom: Phaser.Geom.Rectangle = bg.getBounds();
+    this.timer = this.scene.add.text(bgGeom.centerX, bgGeom.centerY, '', textStyle).setOrigin(0.5);
   }
 
   public preUpdate(time: number, delta: number): void {
@@ -262,6 +273,10 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
         this.userPoints = this.scene.state.clanTournamentData.points;
         this.countUserPoints.setText(String(this.userPoints));
         this.setUserTextX();
+      }
+      if (this.timer && this.timer.active && this.scene.state.progress.clanEvent.endTime > 0) {
+        const timerText: string = `${this.scene.state.lang.eventLastTime} ${shortTime(this.scene.state.progress.clanEvent.endTime, this.scene.state.lang)}`;
+        if (this.timer.text !== timerText) this.timer.setText(timerText);
       }
       if (this.scene.state.progress.clanEvent.endTime <= 0) this.scene.scene.stop();
     }
@@ -295,13 +310,15 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
   }
 
   private createAnimals(): void {
-    const startY: number = 540;
+    this.createAnimalsBg();
+    const startY: number = 505;
+    const height: number = 540;
     let x: number = 240;
     let y: number = startY;
     clanTournamentSettings.forEach((el, index) => {
       const sprite = new AnimalPlate(this, x, y, this.farm, index + 1);
       y += sprite.displayHeight + 10;
-      if (y > 1100) {
+      if (y > startY + height) {
         y = startY;
         x += sprite.displayWidth + 25;
       }
@@ -309,8 +326,32 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
     });
   }
 
+  private createAnimalsBg(): void {
+    const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '24px',
+      color: '#fffdfa',
+      align: 'center',
+      shadow: {
+        offsetX: 1,
+        offsetY: 1, 
+        color: '#96580e',
+        blur: 2,
+        fill: true,
+      },
+    };
+    const y = this.posy + 90;
+    this.scene.add.nineslice(this.posx, y, 490, 590, 'modal-square-bg', 10).setOrigin(0.5);
+    this.scene.add.sprite(this.posx, y - 308, 'clan-tournament-plate-bg');
+    
+    const moneyText: string = shortNum(this.scene.state[`user${this.farm[0].toUpperCase() + this.farm.slice(1)}`].money);
+    this.userMoney = this.scene.add.text(this.posx + 12, y - 308, moneyText, textStyle).setOrigin(0.5).setAlpha(0.65);
+    this.userMoneyIcon = this.scene.add.sprite(this.posx - 60, y - 308, `${this.farm}Coin`).setScale(0.125);
+  }
+
   public updateBtns(): void {
-    this.userMoney.setText(shortNum(this.scene.state[`user${this.farm[0].toUpperCase() + this.farm.slice(1)}`].money));
+    const moneyText: string = shortNum(this.scene.state[`user${this.farm[0].toUpperCase() + this.farm.slice(1)}`].money);
+    this.userMoney.setText(moneyText);
     this.plates.forEach(el => {
       el.updateBtnState();
     });

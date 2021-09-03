@@ -13,7 +13,7 @@ export default class TournamentClanList {
   }
 
   private init(): void {
-    const heightWindow: number = 655;
+    const heightWindow: number = 640;
     this.scene.scrollHeight = Number(this.scene.game.config.height) - 1200 + heightWindow;
     this.scene.scrolling.bottom = 0;
     this.scene.scrolling.scrollY = 0;

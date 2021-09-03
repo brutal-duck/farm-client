@@ -87,8 +87,8 @@ class ClanScroll extends Phaser.Scene {
         this.windowHeight = 584;
       }
     } else if (this.state.modal.type === 21) {
-      y = this.cameras.main.centerY - 267;
-      this.windowHeight = 575;
+      y = this.cameras.main.centerY - 270;
+      this.windowHeight = 600;
     }
 
     const cameraOptions: IScrollingOptions = {
