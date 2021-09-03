@@ -221,7 +221,7 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
       .setDepth(1);
 
     const pricePlaces: Phaser.GameObjects.Text = this.scene.add.text(startX, priceTopPlaces.getBounds().bottom + 15,
-      `4-10 ${this.scene.state.lang.eventPlace}\n11-100 ${this.scene.state.lang.eventPlace}\n101-500 ${this.scene.state.lang.eventPlace}\n500 ${this.scene.state.lang.eventPlace}`, textStyle).setOrigin(1, 0).setDepth(2);
+      `4-10 ${this.scene.state.lang.eventPlace}\n11-100 ${this.scene.state.lang.eventPlace}\n101-500 ${this.scene.state.lang.eventPlace}\n500+ ${this.scene.state.lang.eventPlace}`, textStyle).setOrigin(1, 0).setDepth(2);
 
     const pricePlacesDiamonds: Phaser.GameObjects.Text = this.scene.add.text(startX + 70, priceTopPlaces.getBounds().bottom + 15,
       '300\n100\n50\n20', textStyle).setOrigin(0, 0).setDepth(2).setAlign('left');

@@ -218,7 +218,18 @@ function interval(): void {
     this.tryClanTask(18);
     progressClanEventTime(this.state);
 
-
+    if (
+      !this.state.clanEventTakenAward &&
+      !this.scene.isActive('Modal') &&
+      !this.scene.isActive('Tutorial') &&
+      !this.scene.isActive('Profile') &&
+      !this.scene.isActive('Fortune')
+    ) {
+      this.state.modal = {
+        type: 21,
+      };
+      this.scene.launch('Modal', this.state);
+    }
   }, callbackScope: this, loop: true });
 }
 

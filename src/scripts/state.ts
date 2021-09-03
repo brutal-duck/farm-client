@@ -82,6 +82,7 @@ let build: number = 0;
 let yandexName: string = '';
 let musicVolume: number = 1;
 let soundVolume: number = 1;
+let clanEventTakenAward: boolean = true;
 
 let state: Istate = {
   // записываемые в localStorage
@@ -171,6 +172,7 @@ let state: Istate = {
   yandexName,
   musicVolume,
   soundVolume,
+  clanEventTakenAward,
 }
 
 export default state;

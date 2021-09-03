@@ -933,4 +933,5 @@ interface Istate {
   adjust?: Iadjust;
   clanTournamentData?: ItournamentData;
   clanEventPlace?: number;
+  clanEventTakenAward: boolean;
 }

@@ -284,7 +284,6 @@ class Chicken extends Phaser.Scene {
       sendSocialEvent(this.state, 2, 100);
       sendAppEventVk(this.state, 3, 100);
     }
-
     // let cursors = this.input.keyboard.createCursorKeys();
     // cursors.space.on('down', (): void => {
     //   // this.state.userChicken.part = 16;

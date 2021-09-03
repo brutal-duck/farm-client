@@ -600,8 +600,18 @@ export default function loadData(response: AxiosResponse): void {
     if (currentDay !== autosaveDay || this.state.user.clanTasks?.length <= 0 || !this.state.user.clanTasks) {
        this.state.user.clanTasks = getNewClanTasks(this.state);
     }
-  } else {
-    this.state.user.clanTasks = [];
+  }
+
+  if (this.state.progress.clanEvent.endTime <= 0 && this.state.user.clanId) {
+    const data = {
+      id: this.state.user.id,
+      hash: this.state.user.hash,
+      counter: this.state.user.counter,
+    };
+    axios.post(process.env.API + '/checkTournamentAward', data).then(res => {
+      const { error, userAward } = res.data;
+      if (!error) this.state.clanEventTakenAward = userAward;
+    });
   }
 
   this.userReady = true;
