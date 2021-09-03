@@ -74,7 +74,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   }
 
   protected createElements(): void {
-    if (this.territoryType === 2 || this.territoryType === 3 || this.territoryType === 5 || this.territoryType === 8) {
+    if (this.territoryType === 2 || this.territoryType === 3 || this.territoryType === 5) {
       this.createImproveText();
     }
     if (this.territoryType === 4) {

@@ -1067,6 +1067,7 @@ export default {
     awardsForClans: 'Награды для кланов',
     awardsForUsersInClan: 'Награды внутри клана',
     clanLeaders: 'Лидеры вашего клана',
+    clanTournamentTakeAwards: 'Забрать награду',
   },
 
   en: {
@@ -2131,5 +2132,6 @@ export default {
     awardsForClans: 'Награды для кланов',
     awardsForUsersInClan: 'Награды внутри клана',
     clanLeaders: 'Лидеры вашего клана',
+    clanTournamentTakeAwards: 'Забрать награду',
   },
 }

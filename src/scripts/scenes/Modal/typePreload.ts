@@ -593,7 +593,7 @@ export default function typePreload(): void {
         this.load.image('clan-window-leader-plate-2', clanWindowLeaderPlate);
         this.load.image('clan-window-line', clanWindowLine);
         this.load.image('clan-window-crown', clanWindowCrown);
-
+        this.load.image('done-chapter-button', doneChapterButton);
         break;
       default:
         break;
