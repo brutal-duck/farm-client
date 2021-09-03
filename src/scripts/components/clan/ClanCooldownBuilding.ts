@@ -46,12 +46,12 @@ export default class ClanCooldownBuilding extends Phaser.GameObjects.Sprite {
     }
   }
 
-  private checkDestroy(): boolean {  
-    return this.scene.state.clan[this.type].cooldown <= 0;
+  private checkDestroy(): boolean {
+    if (this.scene.state.clan) return this.scene.state.clan[this.type].cooldown <= 0;
   }
 
   public destroy(): void {
     super.destroy();
     this.timer?.destroy();
   }
-} 
+}

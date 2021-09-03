@@ -1064,6 +1064,7 @@ export default {
     clanTournamentClanReceived: 'Ваш клан\nполучает в казну',
     clanTournamentYouReceived: 'Вы получаете',
     clanTournamentAwards: 'Награды',
+    clanTournamentTakeAwards: 'Забрать награду',
   },
 
   en: {

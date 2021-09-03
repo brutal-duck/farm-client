@@ -470,7 +470,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     this.cooldownTimer = this.scene.add.text(boosterTextBg.getCenter().x + 60, boosterTextBg.getCenter().y, '', this.headerTextStyle).setOrigin(0.5).setDepth(2);
     const boosterBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(boosterBg.getCenter().x + 20, boosterBg.getCenter().y + 24, 'profile-window-button-green').setScale(1.35, 1.05).setDepth(2);
     const boosterBtnText: Phaser.GameObjects.Text = this.scene.add.text(boosterBtn.getCenter().x, boosterBtn.getCenter().y, '', btnTextStyle).setOrigin(0.5, 0.6).setDepth(2);
-    const boosterValuta: Phaser.GameObjects.Sprite = this.scene.add.sprite(boosterBtn.getRightCenter().x + 30, boosterBtn.y, 'diamond').setScale(0.15).setDepth(2);
+    const boosterValuta: Phaser.GameObjects.Sprite = this.scene.add.sprite(boosterBtn.getRightCenter().x + 30, boosterBtn.y, '').setDepth(2);
     const boosterPriceText: Phaser.GameObjects.Text = this.scene.add.text(boosterValuta.x + 30, boosterValuta.y, '', this.headerTextStyle).setFontSize(28).setOrigin(0, 0.5).setDepth(2);
 
     this.scene.clickModalBtn({ btn: boosterBtn, title: boosterBtnText }, () => { improveOrBoostClanHQ(); });
@@ -478,15 +478,17 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     if (this.scene.state.clan.main.cooldown > 0) {
       this.cooldownTimer.setText(`${this.scene.state.lang.left} ${shortTime(this.scene.state.clan.main.cooldown, this.scene.state.lang)}`);
       boosterBtnText.setText(this.scene.state.lang.speedUpImprovment);
+      boosterValuta.setTexture('diamond').setScale(0.15);
       const estimateCost: number = Math.round(this.scene.state.clan.main.cooldown / 60) * 2;
       price = estimateCost > 1000 ? 1000 : estimateCost;
     } else {
       this.cooldownTimer.setText(`${this.scene.state.lang.hq} ${this.scene.state.lang.lvl} ${this.scene.state.clan.main.level}`);
       boosterBtnText.setText(this.scene.state.lang.improveClan);
+      boosterValuta.setTexture('clan-diamond-coin').setScale(0.7);
       price = 100 * Math.pow(2, this.scene.state.clan.main.level - 1)
     }
 
-    boosterPriceText.setText(String(price))
+    boosterPriceText.setText(String(price < 1000 ? price : shortNum(price))).setFontSize(boosterPriceText.getBounds().width > 70 ? 27 : 28)
 
     // Второй слот
     const changeEmblemBg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(boosterBg.getBottomCenter().x, boosterBg.getBottomCenter().y + 30, 480, 150, 'modal-square-bg', 10).setOrigin(0.5, 0).setDepth(2);
