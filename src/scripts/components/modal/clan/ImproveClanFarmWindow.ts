@@ -89,10 +89,25 @@ export default class ImproveClanFarmWindow {
 
     const levelText: Phaser.GameObjects.Text = this.scene.add.text(levelPlate.x, levelPlate.y, `${this.scene.state.lang.level} ${this.scene.state.clan[this.farm].level}`, levelTextStyle).setDepth(2).setOrigin(0.5);
 
-    const text1: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, this.scene.state.lang.increasingFarmIncomeNow, textStyle).setDepth(1);
+    let nowText: string
+    let nextText: string
+
+    if (this.farm === 'sheep') {
+      nowText = this.scene.state.lang.increasingSheepFarmIncomeNow
+      nextText = this.scene.state.lang.increasingSheepFarmIncomeAfterImprove
+    } else if (this.farm === 'chicken') {
+      nowText = this.scene.state.lang.increasingChickenFarmIncomeNow
+      nextText = this.scene.state.lang.increasingChickenFarmIncomeAfterImprove
+    } else if (this.farm === 'cow') {
+      nowText = this.scene.state.lang.increasingCowFarmIncomeNow
+      nextText = this.scene.state.lang.increasingCowFarmIncomeAfterImprove
+    }
+    
+
+    const text1: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, nowText, textStyle).setDepth(1);
     const count1: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 400, text1.getBounds().centerY, `${String(this.scene.state.clan[this.farm].level)}%`, textStyle).setOrigin(0, 0.5).setDepth(1).setFontFamily('Shadow').setFontSize(30);
     this.scene.add.nineslice(this.x, text1.getBounds().centerY, this.window.width, text1.displayHeight + 20, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
-    const text2: Phaser.GameObjects.Text = this.scene.add.text(pos.x, text1.getBounds().bottom + 30, this.scene.state.lang.increasingFarmIncomeAfterImprove, textStyle).setDepth(1);
+    const text2: Phaser.GameObjects.Text = this.scene.add.text(pos.x, text1.getBounds().bottom + 30, nextText, textStyle).setDepth(1);
     const count2: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 400, text2.getBounds().centerY, `${String(this.scene.state.clan[this.farm].level + 1)}%`, textStyle).setDepth(1).setColor('#dcff3c').setOrigin(0, 0.5).setFontFamily('Shadow').setFontSize(30);
     this.scene.add.nineslice(this.x, text2.getBounds().centerY, this.window.width, text2.displayHeight + 20, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
 
