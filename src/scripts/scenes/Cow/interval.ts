@@ -393,7 +393,7 @@ function interval(): void {
       !this.scene.isActive('Fortune')
     ) {
       this.state.modal = {
-        type: 21,
+        type: 22,
       };
       this.scene.launch('Modal', this.state);
     }
