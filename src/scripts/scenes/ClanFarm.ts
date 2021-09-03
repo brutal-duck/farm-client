@@ -700,13 +700,11 @@ export default class ClanFarm extends Phaser.Scene {
     };
     axios.post(process.env.API + '/getTournamentClanPlace', data).then(res => {
       const { error, place } = res.data;
-      console.log(res.data);
       if (!error) {
         if (this.state.clanEventPlace !== place) {
           this.state.clanEventPlace = place;
         }
       }
-    })
+    });
   }
 };
-

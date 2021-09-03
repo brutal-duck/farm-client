@@ -15,7 +15,6 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
   private closeBtn: Phaser.GameObjects.Sprite;
   private headerText: Phaser.GameObjects.Text;
   private footer: Phaser.GameObjects.Sprite;
-  private modalElements: Array<Phaser.GameObjects.Sprite | Phaser.GameObjects.TileSprite | Phaser.GameObjects.Text | Phaser.GameObjects.RenderTexture> = [];
   private windowType: number = 1;
   private farm: string;
   private userMoney: Phaser.GameObjects.Text;
@@ -67,7 +66,6 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
     });
     axios.post(process.env.API + '/getTournamentUserData', data).then(res => {
       const { data } = res;
-      console.log(data)
       if (!data.error) {
         this.scene.state.clanTournamentData = data.data;
         this.scene.state.clanEventPlace = data.data.place;
@@ -111,17 +109,15 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
 
   private createBg(): void {
     this.bg = this.scene.add.tileSprite(this.posx, this.posy, this.windowWidth, this.windowHeight, 'white-pixel').setTint(0xFF9700);
-    this.modalElements.push(this.bg);
+    this.scene.add.sprite(this.posx - 6, this.posy, 'clan-tournament-decor').setDepth(3);
   }
 
   private createHeader(): void {
     this.header = this.scene.add.sprite(this.posx, this.posy - this.windowHeight / 2 + 45 , 'clan-tournament-header').setDepth(2).setOrigin(0.5, 1);
-    this.modalElements.push(this.header);
   }
 
   private createFooter(): void {
     this.footer = this.scene.add.sprite(this.posx, this.posy + this.windowHeight / 2, 'profile-window-footer').setOrigin(0.5, 0);
-    this.modalElements.push(this.footer);
   }
 
   private onCloseBtn(): void {
@@ -136,7 +132,6 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
     const tabGeom: Phaser.Geom.Rectangle = tab.getBounds();
     const tabIcon: Phaser.GameObjects.Sprite = this.scene.add.sprite(tabGeom.centerX + 5, tabGeom.centerY - 5, 'close-window-btn').setOrigin(0.5).setScale(0.9);
     this.scene.clickButtonUp(tab, (): void => { this.onCloseBtn() }, tabIcon);
-    this.modalElements.push(tab, tabIcon);
   }
 
   private createTabs(types: Array<number>): void {
@@ -164,7 +159,6 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
     type === 2 ? 'clan-tab-icon-chicken' : 'clan-tab-icon-cow';
     const tabIcon: Phaser.GameObjects.Sprite = this.scene.add.sprite(tabGeom.centerX, tabGeom.centerY - 10, textureIcon);
     
-    this.modalElements.push(tab, tabIcon);
     if (!active) {
       this.scene.clickButtonUp(tab, (): void => {
         this.scene.state.modal = {

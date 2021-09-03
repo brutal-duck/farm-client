@@ -25,9 +25,7 @@ export default class TournamentUserList {
       hash: this.scene.state.user.hash,
       counter: this.scene.state.user.counter,
     };
-    console.log(data)
     axios.post(process.env.API + '/getTournamentUserRaitings', data).then(res => {
-      console.log(res.data);
       if (this.scene.state.modal.clanTabType === 2) {
         this.loadingText?.destroy();
         const { data } = res;

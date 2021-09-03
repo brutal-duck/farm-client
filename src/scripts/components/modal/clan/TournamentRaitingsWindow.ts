@@ -1,10 +1,6 @@
-import axios from 'axios';
-import { shortNum, shortTime } from '../../../general/basic';
+import { shortTime } from '../../../general/basic';
 import Modal from '../../../scenes/Modal/Modal';
 import LogoManager from '../../Utils/LogoManager';
-const KEY: string = '1491f4c9d53dfa6c50d0c4a375f9ba76';
-const CHANGE_EMBLEM_COST: number = 200
-const CHANGE_CLAN_NAME_COST: number = 200
 
 export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite {
   public scene: Modal;
@@ -23,8 +19,8 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
   private headerTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
     color: '#fffdfa',
     fontFamily: 'Shadow',
-    fontSize: '23px',
-    align: 'left',
+    fontSize: '26px',
+    align: 'center',
     shadow: {
       offsetX: 1,
       offsetY: 1, 
@@ -32,7 +28,7 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
       blur: 2,
       fill: true,
     },
-    wordWrap: { width: 400, useAdvancedWrap: true },
+    wordWrap: { width: 500, useAdvancedWrap: true },
   };
 
   constructor(scene: Modal) {
@@ -168,7 +164,7 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
     const bgY: number = this.y + 30;
     this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
 
-    this.headerText = this.scene.add.text(headerGeom.centerX, headerGeom.centerY - 3, this.scene.state.lang.clansLiderboard, this.headerTextStyle).setDepth(2).setOrigin(0.5);
+    this.headerText = this.scene.add.text(headerGeom.centerX, headerGeom.centerY - 3, this.scene.state.lang.clanLeaders, this.headerTextStyle).setDepth(2).setOrigin(0.5).setFontSize(28);
     
     this.createTimer({
       x: this.scene.cameras.main.centerX,
@@ -179,82 +175,164 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
   }
 
   private createRules(): void {
+    const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
+    this.headerText = this.scene.add.text(headerGeom.centerX, headerGeom.centerY - 3, this.scene.state.lang.eventPrice, this.headerTextStyle).setDepth(2).setOrigin(0.5).setFontSize(34);
+    this.createClanRules();
+    this.createUsersRules();
+    this.createTimer({
+      x: this.scene.cameras.main.centerX,
+      y: this.y + 340,
+    });
+  }
+
+  private createClanRules(): void {
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Bip',
       fontSize: '21px',
       color: '#FFF7F0',
       align: 'right'
     };
-    const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
-    const bgHeight: number = 610;
-    const bgY: number = this.y + 30;
-    this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
+    const titleTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '24px',
+      color: '#FFF7F0',
+    };
 
-    this.headerText = this.scene.add.text(headerGeom.centerX, headerGeom.centerY - 3, this.scene.state.lang.clansLiderboard, this.headerTextStyle).setDepth(2).setOrigin(0.5);
-    
+    const bgY: number = this.y - 120;
+    this.scene.add.nineslice(this.x, bgY, 480, 310, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
     const startX: number = this.x - 20;
-    const priceTopPlaces: Phaser.GameObjects.Text = this.scene.add.text(startX, this.scene.cameras.main.centerY - 210,
-      '1 ' + this.scene.state.lang.eventPlace + '\n' + '2 ' + this.scene.state.lang.eventPlace + '\n' + '3 ' + this.scene.state.lang.eventPlace, textStyle).setLineSpacing(15).setOrigin(1, 0).setDepth(2);
+    const startY: number = this.y - 210
+    this.scene.add.text(this.x, this.y - 250, this.scene.state.lang.awardsForClans, titleTextStyle).setOrigin(0.5).setDepth(1);
 
-    const priceTopPlacesDiamonds: Phaser.GameObjects.Text = this.scene.add.text(startX + 70, this.scene.cameras.main.centerY - 210,
-      '1000\n' + '700\n' + '400', textStyle).setOrigin(0, 0).setDepth(2).setAlign('left');
+    const topPlacesText: string = `1 ${this.scene.state.lang.eventPlace}\n2 ${this.scene.state.lang.eventPlace}\n3 ${this.scene.state.lang.eventPlace}`;
+    const priceTopPlaces: Phaser.GameObjects.Text = this.scene.add.text(startX, startY, topPlacesText, textStyle)
+      .setLineSpacing(12)
+      .setOrigin(1, 0)
+      .setDepth(2);
+    const priceTopPlacesDiamonds: Phaser.GameObjects.Text = this.scene.add.text(startX + 70, startY, '1000\n700\n400', textStyle)
+      .setOrigin(0)
+      .setLineSpacing(12)
+      .setDepth(2)
+      .setAlign('left');
 
-    const pricePlaces: Phaser.GameObjects.Text = this.scene.add.text(startX, this.scene.cameras.main.centerY - 124,
-      '4-10 ' + this.scene.state.lang.eventPlace + '\n' + '11-100 ' + this.scene.state.lang.eventPlace + '\n' + '101-500 ' + this.scene.state.lang.eventPlace + '\n' + '500+ ' + this.scene.state.lang.eventPlace, textStyle).setOrigin(1, 0).setDepth(2);
+    this.scene.add.nineslice(this.x, priceTopPlaces.getCenter().y, 480, priceTopPlaces.displayHeight + 20,'clan-window-leader-plate-ns', 5)
+      .setOrigin(0.5)
+      .setAlpha(0.8)
+      .setDepth(1);
 
+    const pricePlaces: Phaser.GameObjects.Text = this.scene.add.text(startX, priceTopPlaces.getBounds().bottom + 15,
+      `4-10 ${this.scene.state.lang.eventPlace}\n11-100 ${this.scene.state.lang.eventPlace}\n101-500 ${this.scene.state.lang.eventPlace}\n500 ${this.scene.state.lang.eventPlace}`, textStyle).setOrigin(1, 0).setDepth(2);
 
-
-    const pricePlacesDiamonds: Phaser.GameObjects.Text = this.scene.add.text(startX + 70, this.scene.cameras.main.centerY - 124,
+    const pricePlacesDiamonds: Phaser.GameObjects.Text = this.scene.add.text(startX + 70, priceTopPlaces.getBounds().bottom + 15,
       '300\n100\n50\n20', textStyle).setOrigin(0, 0).setDepth(2).setAlign('left');
 
+    const diamondX: number = this.x + 176;
+    const priceTopCenterY: number = priceTopPlaces.getBounds().centerY;
     // Кучки кристалов
-    this.scene.add.container(this.scene.cameras.main.centerX + 175, this.scene.cameras.main.centerY - 200, [
-      this.scene.add.sprite(13, 4, 'diamond').setScale(0.11).setAngle(45).setTint(0x000000),
-      this.scene.add.sprite(13, 4, 'diamond').setScale(0.1).setAngle(45),
-      this.scene.add.sprite(0, 0, 'diamond').setScale(0.14).setTint(0x000000),
-      this.scene.add.sprite(0, 0, 'diamond').setScale(0.13),
-      this.scene.add.sprite(-10, 9, 'diamond').setScale(0.1).setAngle(-30).setTint(0x000000),
-      this.scene.add.sprite(-10, 9, 'diamond').setScale(0.09).setAngle(-30),
+    this.scene.add.container(diamondX, priceTopCenterY - 40, [
+      this.scene.add.sprite(0, 0, 'clan-diamond-coin').setScale(0.55),
+      this.scene.add.sprite(11, 4, 'diamond').setScale(0.08).setAngle(20),
+      this.scene.add.sprite(-11, 4, 'diamond').setScale(0.08).setAngle(-20),
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.12),
     ]).setDepth(2);
 
-    this.scene.add.container(this.scene.cameras.main.centerX + 180, this.scene.cameras.main.centerY - 169, [
-      this.scene.add.sprite(0, 0, 'diamond').setScale(0.13).setAngle(19).setTint(0x000000),
-      this.scene.add.sprite(0, 0, 'diamond').setScale(0.12).setAngle(19),
-      this.scene.add.sprite(-12, 5, 'diamond').setScale(0.11).setAngle(-12).setTint(0x000000),
-      this.scene.add.sprite(-12, 5, 'diamond').setScale(0.1).setAngle(-12),
-    ]).setDepth(2);
+    this.scene.add.sprite(diamondX, priceTopCenterY, 'clan-diamond-coin')
+      .setScale(0.6)
+      .setDepth(2);
+    this.scene.add.sprite(diamondX, priceTopCenterY + 40, 'clan-diamond-coin')
+      .setScale(0.5)
+      .setDepth(2);
 
-    this.scene.add.container(this.scene.cameras.main.centerX + 178, this.scene.cameras.main.centerY - 139, [
-      this.scene.add.sprite(0, 0, 'diamond').setScale(0.13).setAngle(-19).setTint(0x000000),
-      this.scene.add.sprite(0, 0, 'diamond').setScale(0.12).setAngle(-19),
-    ]).setDepth(2);
+    this.scene.add.sprite(startX - 120, priceTopCenterY - 40, 'clan-window-medal-gold').setDepth(2);
+    this.scene.add.text(startX - 120 - 2, priceTopCenterY - 40 - 2, '1', textStyle).setFontFamily('Shadow').setOrigin(0.5).setDepth(2);
+    this.scene.add.sprite(startX - 120, priceTopCenterY, 'clan-window-medal-silver').setDepth(2);
+    this.scene.add.text(startX - 120 - 1, priceTopCenterY - 2, '2', textStyle).setFontFamily('Shadow').setOrigin(0.5).setDepth(2);
+    this.scene.add.sprite(startX - 120, priceTopCenterY + 40, 'clan-window-medal-bronze').setDepth(2);
+    this.scene.add.text(startX - 120 - 1, priceTopCenterY + 40 - 2, '3', textStyle).setFontFamily('Shadow').setOrigin(0.5).setDepth(2);
 
-    this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 109, [
-      this.scene.add.sprite(0, 0, 'diamond').setScale(0.11).setTint(0x000000),
-      this.scene.add.sprite(0, 0, 'diamond').setScale(0.1),
-    ]).setDepth(2);
+    const diamondPlaceY: number = pricePlacesDiamonds.getBounds().centerY;
 
-    this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 81, [
-      this.scene.add.sprite(0, 0, 'diamond').setScale(0.1).setTint(0x000000),
-      this.scene.add.sprite(0, 0, 'diamond').setScale(0.09),
-    ]).setDepth(2);
-
-    this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 55, [
-      this.scene.add.sprite(0, 0, 'diamond').setScale(0.09).setTint(0x000000),
-      this.scene.add.sprite(0, 0, 'diamond').setScale(0.08),
-    ]).setDepth(2);
-
-    this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 27, [
-      this.scene.add.sprite(0, 0, 'diamond').setScale(0.08).setTint(0x000000),
-      this.scene.add.sprite(0, 0, 'diamond').setScale(0.07),
-    ]).setDepth(2);
-
-    this.createTimer({
-      x: this.scene.cameras.main.centerX,
-      y: bgY + bgHeight / 2 + 15,
-    });
+    this.scene.add.sprite(diamondX, diamondPlaceY - 40, 'clan-diamond-coin').setScale(0.4).setDepth(2);
+    this.scene.add.sprite(diamondX, diamondPlaceY - 10, 'clan-diamond-coin').setScale(0.38).setDepth(2);
+    this.scene.add.sprite(diamondX, diamondPlaceY + 15, 'clan-diamond-coin').setScale(0.35).setDepth(2);
+    this.scene.add.sprite(diamondX, diamondPlaceY + 41, 'clan-diamond-coin').setScale(0.33).setDepth(2);
   }
 
+  private createUsersRules(): void {
+    const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Bip',
+      fontSize: '21px',
+      color: '#FFF7F0',
+      align: 'right'
+    };
+    const titleTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '24px',
+      color: '#FFF7F0',
+    };
+
+    const bgY: number = this.y + 190;
+    this.scene.add.nineslice(this.x, bgY, 480, 250, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
+    const startX: number = this.x - 20;
+    const startY: number = bgY - 60;
+    this.scene.add.text(this.x, startY - 40, this.scene.state.lang.awardsForUsersInClan, titleTextStyle).setOrigin(0.5).setDepth(1);
+
+    const topPlacesText: string = `1 ${this.scene.state.lang.eventPlace}\n2 ${this.scene.state.lang.eventPlace}\n3 ${this.scene.state.lang.eventPlace}`;
+    const priceTopPlaces: Phaser.GameObjects.Text = this.scene.add.text(startX, startY, topPlacesText, textStyle)
+      .setLineSpacing(12)
+      .setOrigin(1, 0)
+      .setDepth(2);
+    const priceTopPlacesDiamonds: Phaser.GameObjects.Text = this.scene.add.text(startX + 70, startY, '100\n70\n40', textStyle)
+      .setOrigin(0)
+      .setLineSpacing(12)
+      .setDepth(2)
+      .setAlign('left');
+
+    this.scene.add.nineslice(this.x, priceTopPlaces.getCenter().y, 480, priceTopPlaces.displayHeight + 20,'clan-window-leader-plate-ns', 5)
+      .setOrigin(0.5)
+      .setAlpha(0.8)
+      .setDepth(1);
+
+    const pricePlaces: Phaser.GameObjects.Text = this.scene.add.text(startX, priceTopPlaces.getBounds().bottom + 15,
+      `4-10 ${this.scene.state.lang.eventPlace}\n10+ ${this.scene.state.lang.eventPlace}`, textStyle).setOrigin(1, 0).setDepth(2);
+
+    const pricePlacesDiamonds: Phaser.GameObjects.Text = this.scene.add.text(startX + 70, priceTopPlaces.getBounds().bottom + 15,
+      '30\n10', textStyle).setOrigin(0, 0).setDepth(2).setAlign('left');
+
+    const diamondX: number = this.x + 176;
+    const priceTopCenterY: number = priceTopPlaces.getBounds().centerY;
+
+    // Кучки кристалов
+    this.scene.add.container(diamondX, priceTopCenterY - 40, [
+      this.scene.add.sprite(11, 4, 'diamond').setScale(0.08).setAngle(20),
+      this.scene.add.sprite(-11, 4, 'diamond').setScale(0.08).setAngle(-20),
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.12),
+    ]).setDepth(2);
+
+    this.scene.add.sprite(diamondX, priceTopCenterY, 'diamond')
+      .setScale(0.11)
+      .setDepth(2);
+    this.scene.add.sprite(diamondX, priceTopCenterY + 40, 'diamond')
+      .setScale(0.1)
+      .setDepth(2);
+
+    this.scene.add.sprite(startX - 120, priceTopCenterY - 40, 'clan-window-medal-gold').setDepth(2);
+    this.scene.add.text(startX - 120 - 2, priceTopCenterY - 40 - 3, '1', textStyle).setFontFamily('Shadow').setOrigin(0.5).setDepth(2);
+    this.scene.add.sprite(startX - 120, priceTopCenterY, 'clan-window-medal-silver').setDepth(2);
+    this.scene.add.text(startX - 120 - 1, priceTopCenterY - 2, '2', textStyle).setFontFamily('Shadow').setOrigin(0.5).setDepth(2);
+    this.scene.add.sprite(startX - 120, priceTopCenterY + 40, 'clan-window-medal-bronze').setDepth(2);
+    this.scene.add.text(startX - 120 - 1, priceTopCenterY + 40 - 2, '3', textStyle).setFontFamily('Shadow').setOrigin(0.5).setDepth(2);
+
+    const diamondPlaceY: number = pricePlacesDiamonds.getBounds().centerY;
+
+    this.scene.add.sprite(diamondX, diamondPlaceY - 15, 'diamond')
+      .setScale(0.09)
+      .setDepth(2);
+    this.scene.add.sprite(diamondX, diamondPlaceY + 15, 'diamond')
+      .setScale(0.08)
+      .setDepth(2);
+  }
+  
   private createTimer(pos: Iposition): void {
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Shadow',

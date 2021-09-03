@@ -1064,6 +1064,9 @@ export default {
     clanTournamentClanReceived: 'Ваш клан\nполучает в казну',
     clanTournamentYouReceived: 'Вы получаете',
     clanTournamentAwards: 'Награды',
+    awardsForClans: 'Награды для кланов',
+    awardsForUsersInClan: 'Награды внутри клана',
+    clanLeaders: 'Лидеры вашего клана',
   },
 
   en: {
@@ -2121,5 +2124,12 @@ export default {
     yourContribution: 'Ваш вклад',
     clanAnimals: 'Животных у клана',
     clanPlace: 'Место клана',
+    clanTournamentEnd: 'Событие завершено',
+    clanTournamentClanReceived: 'Ваш клан\nполучает в казну',
+    clanTournamentYouReceived: 'Вы получаете',
+    clanTournamentAwards: 'Награды',
+    awardsForClans: 'Награды для кланов',
+    awardsForUsersInClan: 'Награды внутри клана',
+    clanLeaders: 'Лидеры вашего клана',
   },
 }
