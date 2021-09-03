@@ -90,7 +90,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
 
   private createElements(): void {
     // Тестирование: на пробел выполняется задание
-    // this.scene.input.keyboard.addKey('SPACE').on('down', (): void => { this.t.done = 1 })
+    // this.scene.input.keyboard.addKey('W').on('down', (): void => { this.t.done = 1 })
 
     this.bg = this.scene.add.nineslice(this.scene.cameras.main.centerX, this.bgY, 660, 120, 'tasks-bar-ns', 15).setDepth(this.scene.height + 100).setVisible(false).setOrigin(0.5, 1).setInteractive();
     
@@ -572,7 +572,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
   private hideAllElement(): void {
     this.isVisibile = false;
     this.hideListButton();
-    this.nineSliceAnimationFix();
+    this.textArtifactsFix();
     this.bg?.setVisible(false);
     this.taskIcon?.setVisible(false);
     this.star?.setVisible(false);
@@ -720,7 +720,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
     let height = this.bgOriginHeight + this.aditionalHeight;
 
     this.scene.tweens.add({
-      onStart: (): void => { this.nineSliceAnimationFix() },
+      onStart: (): void => { this.textArtifactsFix() },
       targets: this.bg,
       height,
       duration: 500,
@@ -731,12 +731,12 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
       },
       onComplete: (): void => {
         this.listButton.setY(this.bg.getTopCenter().y);
-        this.nineSliceAnimationFix();
+        this.textArtifactsFix();
       }
     });
 
     this.scene.tweens.add({
-      onStart: (): void => { this.nineSliceAnimationFix() },
+      onStart: (): void => { this.textArtifactsFix() },
       targets: this.elements,
       alpha: (target): number => {
         if (target.tintTopLeft === parseInt('0x777777', 16)) return 0.6;
@@ -759,7 +759,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
     }
 
     this.scene.tweens.add({
-      onStart: (): void => { this.nineSliceAnimationFix() },
+      onStart: (): void => { this.textArtifactsFix() },
       targets: this.elements,
       alpha: { value: 0, duration: 300 },
       ease: 'Power1',
@@ -780,7 +780,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
         if (this.isVisibile && this.status === 1) this.listButton?.setVisible(true);
         this.elements.forEach(el => { el?.destroy() });
         this.fadeOutListButton();
-        this.nineSliceAnimationFix();
+        this.textArtifactsFix();
         this.closingAniIsPlaying = false;
       }
     });
@@ -848,7 +848,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
     this.listButton.setPosition(this.bg.getTopRight().x, this.bg.getTopRight().y);
   }
 
-  private nineSliceAnimationFix(): void {
+  private textArtifactsFix(): void {
     this.scene.add.text(0,0,'').destroy();
   }
 }

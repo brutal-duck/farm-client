@@ -143,6 +143,7 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
     if (!this.clanTask) this.scene.taskWindow?.updateProgress();
 
     this.scene.clickShopBtn({ btn: this.takeButton, title: this.barText, img: false }, (): void => { this.pickUpTaskReward(); });
+    this.textArtifactsFix();
   }
 
   private pickUpTaskReward(): void {
@@ -191,12 +192,14 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
     this.text.setPosition(this.getCenter().x + 60, this.getCenter().y).setColor(this.taskCompliteAwardTakenTextColor);
 
     this.bar?.setVisible(false);
-    this.takeButton?.setVisible(false);
-    this.barText?.setVisible(false);
+    this.takeButton?.destroy();
+    this.barText?.destroy();
     this.valuta?.setVisible(false);
     this.valutaSum?.setVisible(false);
     this.hideProgress();
     if (!this.clanTask) this.scene.taskWindow?.updateProgress();
+    this.scene.taskWindow?.updateProgress();
+    this.textArtifactsFix();
   }
 
 
@@ -221,6 +224,8 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
     if (this.progressText?.width > 120) this.progressText.setOrigin(0, 0.5).setX(this.icon.getLeftCenter().x - 18).setFontSize(24);
     this.progress?.setPercent(Math.round(100 / count * progress));
     if (Boolean(this.taskInfo.task.done) || Math.round(100 / count * progress) === 100) this.taskCompleteAwardNonTaken();
+    this.progress?.setPercent(Math.round(100 / count * this.taskInfo.task.progress));    
+    if (this.taskInfo.task.done === 1 || Math.round(100 / count * this.taskInfo.task.progress) === 100) this.taskCompleteAwardNonTaken();
   }
 
   private setDone(): void {
@@ -229,9 +234,13 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
     else if (Boolean(this.taskInfo.task.done) && Boolean(this.taskInfo.task.got_awarded)) this.taskComplete();
   }
 
+  private textArtifactsFix(): void {
+    this.scene?.add.text(0,0,'').destroy();
+  }
 
   public preUpdate(): void {
     if (this.currentProgress !== this.taskInfo.task.progress) this.setProgress();
     if (Boolean(this.done) !== Boolean(this.taskInfo.task.done)) this.setDone();
+    if (this.taskInfo.task.done && this.taskInfo.task.got_awarded && this.takeButton) this.takeButton.destroy()
   }
 }
