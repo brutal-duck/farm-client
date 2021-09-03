@@ -179,6 +179,12 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
   }
 
   private createRules(): void {
+    const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Bip',
+      fontSize: '21px',
+      color: '#FFF7F0',
+      align: 'right'
+    };
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     const bgHeight: number = 610;
     const bgY: number = this.y + 30;
@@ -186,6 +192,63 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
 
     this.headerText = this.scene.add.text(headerGeom.centerX, headerGeom.centerY - 3, this.scene.state.lang.clansLiderboard, this.headerTextStyle).setDepth(2).setOrigin(0.5);
     
+    const startX: number = this.x - 20;
+    const priceTopPlaces: Phaser.GameObjects.Text = this.scene.add.text(startX, this.scene.cameras.main.centerY - 210,
+      '1 ' + this.scene.state.lang.eventPlace + '\n' + '2 ' + this.scene.state.lang.eventPlace + '\n' + '3 ' + this.scene.state.lang.eventPlace, textStyle).setLineSpacing(15).setOrigin(1, 0).setDepth(2);
+
+    const priceTopPlacesDiamonds: Phaser.GameObjects.Text = this.scene.add.text(startX + 70, this.scene.cameras.main.centerY - 210,
+      '1000\n' + '700\n' + '400', textStyle).setOrigin(0, 0).setDepth(2).setAlign('left');
+
+    const pricePlaces: Phaser.GameObjects.Text = this.scene.add.text(startX, this.scene.cameras.main.centerY - 124,
+      '4-10 ' + this.scene.state.lang.eventPlace + '\n' + '11-100 ' + this.scene.state.lang.eventPlace + '\n' + '101-500 ' + this.scene.state.lang.eventPlace + '\n' + '500+ ' + this.scene.state.lang.eventPlace, textStyle).setOrigin(1, 0).setDepth(2);
+
+
+
+    const pricePlacesDiamonds: Phaser.GameObjects.Text = this.scene.add.text(startX + 70, this.scene.cameras.main.centerY - 124,
+      '300\n100\n50\n20', textStyle).setOrigin(0, 0).setDepth(2).setAlign('left');
+
+    // Кучки кристалов
+    this.scene.add.container(this.scene.cameras.main.centerX + 175, this.scene.cameras.main.centerY - 200, [
+      this.scene.add.sprite(13, 4, 'diamond').setScale(0.11).setAngle(45).setTint(0x000000),
+      this.scene.add.sprite(13, 4, 'diamond').setScale(0.1).setAngle(45),
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.14).setTint(0x000000),
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.13),
+      this.scene.add.sprite(-10, 9, 'diamond').setScale(0.1).setAngle(-30).setTint(0x000000),
+      this.scene.add.sprite(-10, 9, 'diamond').setScale(0.09).setAngle(-30),
+    ]).setDepth(2);
+
+    this.scene.add.container(this.scene.cameras.main.centerX + 180, this.scene.cameras.main.centerY - 169, [
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.13).setAngle(19).setTint(0x000000),
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.12).setAngle(19),
+      this.scene.add.sprite(-12, 5, 'diamond').setScale(0.11).setAngle(-12).setTint(0x000000),
+      this.scene.add.sprite(-12, 5, 'diamond').setScale(0.1).setAngle(-12),
+    ]).setDepth(2);
+
+    this.scene.add.container(this.scene.cameras.main.centerX + 178, this.scene.cameras.main.centerY - 139, [
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.13).setAngle(-19).setTint(0x000000),
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.12).setAngle(-19),
+    ]).setDepth(2);
+
+    this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 109, [
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.11).setTint(0x000000),
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.1),
+    ]).setDepth(2);
+
+    this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 81, [
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.1).setTint(0x000000),
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.09),
+    ]).setDepth(2);
+
+    this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 55, [
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.09).setTint(0x000000),
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.08),
+    ]).setDepth(2);
+
+    this.scene.add.container(this.scene.cameras.main.centerX + 176, this.scene.cameras.main.centerY - 27, [
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.08).setTint(0x000000),
+      this.scene.add.sprite(0, 0, 'diamond').setScale(0.07),
+    ]).setDepth(2);
+
     this.createTimer({
       x: this.scene.cameras.main.centerX,
       y: bgY + bgHeight / 2 + 15,
