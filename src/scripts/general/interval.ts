@@ -6,6 +6,7 @@ import Profile from './../scenes/Profile';
 import Arrow from './../components/animations/Arrow';
 import SpeechBubble from './../components/animations/SpeechBuble';
 import Factory from './../components/Territories/Factory';
+import axios from 'axios';
 
 function progressTerritoryCooldown (territories: Iterritories[], time: number, farm: string, offline: boolean = false): void {
   for (const territory of territories) {
@@ -683,6 +684,16 @@ function progressClanEventTime(state: Istate, time: number = 1): void {
   if (state.clan) {
     if (state.progress.clanEvent.endTime > 0) {
       state.progress.clanEvent.endTime -= time;
+    } else if (state.progress.clanEvent.endTime === 0) {
+      const data = {
+        id: state.user.id,
+        hash: state.user.hash,
+        counter: state.user.counter,
+      };
+      axios.post(process.env.API + '/checkTournamentAward', data).then(res => {
+        const { error, userAward } = res.data;
+        if (!error) state.clanEventTakenAward = userAward;
+      });
     }
     if (state.progress.clanEvent.startTime > 0) {
       state.progress.clanEvent.startTime -= time;

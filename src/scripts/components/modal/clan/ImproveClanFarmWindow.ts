@@ -3,18 +3,8 @@ import ClanWindow from './ClanWindow';
 import axios, { AxiosResponse } from 'axios';
 import BigInteger from './../../../libs/BigInteger';
 import { shortNum, shortTime } from '../../../general/basic';
+import { improveClanFarm } from '../../../local/settings';
 
-const improveSettings: Array<string> = [
-  '1000000',
-  '10000000',
-  '100000000',
-  '1000000000',
-  '10000000000',
-  '100000000000',
-  '1000000000000',
-  '10000000000000',
-  '100000000000000',
-];
 
 export default class ImproveClanFarmWindow extends Phaser.GameObjects.Sprite{
   private window: ClanWindow;
@@ -47,7 +37,7 @@ export default class ImproveClanFarmWindow extends Phaser.GameObjects.Sprite{
     this.y = this.scene.cameras.main.centerY;
     this.farm = this.scene.state.modal.message;
     this.level = this.scene.state.clan[this.farm].cooldown > 0 ? this.scene.state.clan[this.farm].level - 1 : this.scene.state.clan[this.farm].level;
-    this.price = improveSettings[this.level - 1];
+    this.price = improveClanFarm[this.level - 1];
     this.window.headerText.setText(this.scene.state.lang[`${this.farm}ClanFarm`]).setFontSize(30);
   }
 
