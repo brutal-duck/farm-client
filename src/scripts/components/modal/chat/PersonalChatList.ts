@@ -445,7 +445,7 @@ export default class PersonalChatList {
 
     this.scene.clickModalBtn({ btn: acceptBtn, title: acceptBtnText }, () => { this.onAcceptAsk(data._id); });
     this.scene.clickModalBtn({ btn: declainBtn, title: declainBtnText }, () => { this.onDeclainAsk(data._id); });
-    if (data.status === 0 && this.scene.state.clan && this.scene.state.clan.userStatus === 'owner') {
+    if (data.status === 0 && this.scene.state.clan && this.scene.state.clan.ownerId === this.scene.state.user.id) {
       height = acceptBtnGeom.height;
       acceptBtn.setVisible(true);
       acceptBtnText.setVisible(true);
