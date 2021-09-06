@@ -33,7 +33,14 @@ function bigButton(
   let btn: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + height, btnColor);
   let title: Phaser.GameObjects.Text = this.add.text(textX, this.cameras.main.centerY - 5 + height, text, {
     font: '22px Shadow',
-    fill: textColor
+    color: textColor,
+    shadow: {
+      offsetX: 1,
+      offsetY: 1, 
+      color: '#96580e',
+      blur: 2,
+      fill: true,
+    },
   }).setDepth(1).setOrigin(textOrigin, 0.5);
   let text1: any, text2: any, img1: any, img2: any;
 
@@ -41,7 +48,14 @@ function bigButton(
 
     text1 = this.add.text(575, this.cameras.main.centerY - 5 + height, right1.text, {
       font: '24px Shadow',
-      fill: textColor
+      color: textColor,
+      shadow: {
+        offsetX: 1,
+        offsetY: 1, 
+        color: '#96580e',
+        blur: 2,
+        fill: true,
+      },
     }).setDepth(1).setOrigin(1, 0.5);
 
     img1 = this.add.sprite(570 - text1.displayWidth, this.cameras.main.centerY - 5 + height, right1.icon)
@@ -55,7 +69,14 @@ function bigButton(
     if (right2) {
       text2 = this.add.text(525 - text1.displayWidth, this.cameras.main.centerY - 5 + height, right2.text, {
         font: '24px Shadow',
-        fill: textColor
+        color: textColor,
+        shadow: {
+          offsetX: 1,
+          offsetY: 1, 
+          color: '#96580e',
+          blur: 2,
+          fill: true,
+        },
       }).setDepth(1).setOrigin(1, 0.5);
   
       img2 = this.add.sprite(

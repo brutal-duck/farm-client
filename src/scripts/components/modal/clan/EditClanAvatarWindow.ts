@@ -2,6 +2,7 @@ import Modal from "../../../scenes/Modal/Modal";
 import ClanWindow from './ClanWindow';
 import { Icon } from '../../Utils/LogoManager';
 import axios from "axios";
+const CHANGE_EMBLEM_COST: number = 200;
 
 export default class EditClanAvatarWindow {
   private window: ClanWindow;
@@ -115,26 +116,43 @@ export default class EditClanAvatarWindow {
       };
       this.scene.scene.restart(this.scene.state);
     } else {
-      const data = {
-        clanId: this.scene.state.clan.id,
-        userId: this.scene.state.user.id,
-        hash: this.scene.state.user.hash,
-        counter: this.scene.state.user.counter,
-        avatar: {
-          bg: this.bgScroller.active,
-          frame: this.frameScroller.active,
-          icon: this.iconScroller.active,
-        },
-      }
-      axios.post(process.env.API + '/changeClanAvatar', data).then(data => {
-        if (!data.data.error) {
-          this.scene.state.modal = {
-            type: 17,
-            clanTabType: 4,
-          };
-          this.scene.scene.restart(this.scene.state);
+      if (this.scene.state.user.diamonds >= CHANGE_EMBLEM_COST) {
+        const data = {
+          clanId: this.scene.state.clan.id,
+          userId: this.scene.state.user.id,
+          hash: this.scene.state.user.hash,
+          counter: this.scene.state.user.counter,
+          avatar: {
+            bg: this.bgScroller.active,
+            frame: this.frameScroller.active,
+            icon: this.iconScroller.active,
+          },
         }
-      });
+        axios.post(process.env.API + '/changeClanAvatar', data).then(data => {
+          if (!data.data.error) {
+            this.scene.state.modal = {
+              type: 17,
+              clanTabType: 4,
+            };
+            this.scene.scene.restart(this.scene.state);
+            this.scene.state.user.diamonds -= CHANGE_EMBLEM_COST;
+          }
+        });
+      } else {
+        this.scene.state.convertor = {
+          fun: 0,
+          count: CHANGE_EMBLEM_COST - this.scene.state.user.diamonds,
+          diamonds: CHANGE_EMBLEM_COST - this.scene.state.user.diamonds,
+          type: 2,
+        };
+        this.scene.state.modal = {
+          type: 1,
+          sysType: 4,
+        };
+        this.scene.scene.restart(this.scene.state);
+        this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
+      }
+
     }
   }
 

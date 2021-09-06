@@ -3,8 +3,8 @@ import { shortNum, shortTime } from '../../../general/basic';
 import Modal from '../../../scenes/Modal/Modal';
 import LogoManager from '../../Utils/LogoManager';
 const KEY: string = '1491f4c9d53dfa6c50d0c4a375f9ba76';
-const CHANGE_EMBLEM_COST: number = 200
-const CHANGE_CLAN_NAME_COST: number = 200
+const CHANGE_EMBLEM_COST: number = 200;
+const CHANGE_CLAN_NAME_COST: number = 200;
 
 export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
   public scene: Modal;
@@ -469,7 +469,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     const boosterIcon: Phaser.GameObjects.Sprite = this.scene.add.sprite(boosterBg.getLeftCenter().x + 70, boosterBg.getCenter().y, 'clan-task-icon-6').setScale(1.15).setDepth(2);
     this.cooldownTimer = this.scene.add.text(boosterTextBg.getCenter().x + 60, boosterTextBg.getCenter().y, '', this.headerTextStyle).setOrigin(0.5).setDepth(2);
     const boosterBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(boosterBg.getCenter().x + 20, boosterBg.getCenter().y + 24, 'profile-window-button-green').setScale(1.35, 1.05).setDepth(2);
-    const boosterBtnText: Phaser.GameObjects.Text = this.scene.add.text(boosterBtn.getCenter().x, boosterBtn.getCenter().y - 3, '', btnTextStyle).setOrigin(0.5, 0.6).setDepth(2);
+    const boosterBtnText: Phaser.GameObjects.Text = this.scene.add.text(boosterBtn.getCenter().x, boosterBtn.getCenter().y - 1, '', btnTextStyle).setOrigin(0.5, 0.6).setDepth(2);
     const boosterValuta: Phaser.GameObjects.Sprite = this.scene.add.sprite(boosterBtn.getRightCenter().x + 30, boosterBtn.y - 5, 'clan-diamond-coin').setScale(0.7).setDepth(2);
     const boosterPriceText: Phaser.GameObjects.Text = this.scene.add.text(boosterValuta.x + 30, boosterValuta.y, '', this.headerTextStyle).setFontSize(28).setOrigin(0, 0.5).setDepth(2);
 
@@ -481,7 +481,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
       const estimateCost: number = Math.round(this.scene.state.clan.main.cooldown / 60) * 2;
       price = estimateCost > 1000 ? 1000 : estimateCost;
     } else {
-      this.cooldownTimer.setText(`${this.scene.state.lang.hq} ${this.scene.state.lang.lvl} ${this.scene.state.clan.main.level}`);
+      this.cooldownTimer.setText(`${this.scene.state.lang.headquarters} ${this.scene.state.lang.lvl} ${this.scene.state.clan.main.level}`);
       boosterBtnText.setText(this.scene.state.lang.improveClan);
       price = 100 * Math.pow(2, this.scene.state.clan.main.level - 1);
     }
@@ -494,7 +494,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     const clanEmblem = LogoManager.createIcon(this.scene, changeEmblemBg.getLeftCenter().x + 70, changeEmblemBg.getCenter().y, this.scene.state.clan.avatar).setDepth(2).setScale(0.5);
     const changeEmblemText: Phaser.GameObjects.Text = this.scene.add.text(changeEmblemTextBg.getCenter().x + 60, changeEmblemTextBg.getCenter().y, this.scene.state.lang.emblem, this.headerTextStyle).setOrigin(0.5).setDepth(2);
     const changeEmblemBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(changeEmblemBg.getCenter().x + 20, changeEmblemBg.getCenter().y + 24, 'profile-window-button-green').setScale(1.35, 1.05).setDepth(2);
-    const changeEmblemBtnText: Phaser.GameObjects.Text = this.scene.add.text(changeEmblemBtn.getCenter().x, changeEmblemBtn.getCenter().y - 3, this.scene.state.lang.changeEmblem, btnTextStyle).setOrigin(0.5, 0.6).setDepth(2);
+    const changeEmblemBtnText: Phaser.GameObjects.Text = this.scene.add.text(changeEmblemBtn.getCenter().x, changeEmblemBtn.getCenter().y - 1, this.scene.state.lang.changeEmblem, btnTextStyle).setOrigin(0.5, 0.6).setDepth(2);
     const changeEmblemValuta: Phaser.GameObjects.Sprite = this.scene.add.sprite(changeEmblemBtn.getRightCenter().x + 30, changeEmblemBtn.y - 5, 'diamond').setScale(0.15).setDepth(2);
     const changeEmblemPriceText: Phaser.GameObjects.Text = this.scene.add.text(changeEmblemValuta.x + 30, changeEmblemValuta.y, String(CHANGE_EMBLEM_COST), this.headerTextStyle).setFontSize(28).setOrigin(0, 0.5).setDepth(2);
     
@@ -523,17 +523,35 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     changeClanNameBtn.text1.setX(changeClanNameBtn.text1.x - 20).setDepth(3);
     this.scene.clickModalBtn(changeClanNameBtn, () => { changeClanName(); });
 
-    let change: boolean = false
+    let change: boolean = false;
     const root: HTMLDivElement = document.querySelector('#root');
     this.mainInput = document.createElement('input');
     root.append(this.mainInput);
     this.mainInput.setAttribute("id", "clan-change-name");
     this.mainInput.setAttribute("autocomplete", "off");
     this.enterKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
-    this.enterKey.on('down', (): void => { changeClanName() });
-    const blurZone: Phaser.GameObjects.TileSprite = this.scene.add.tileSprite(this.header.getBottomCenter().x, this.header.getBottomCenter().y, this.scene.cameras.main.width, this.scene.cameras.main.height - this.header.getBottomCenter().y, 'white-pixel').setOrigin(0.5, 0).setAlpha(0.0001).setVisible(false).setDepth(2).setInteractive()
-    this.scene.click(inpitField, (): void => { focus() });
-    this.scene.click(blurZone, (): void => { blur() });
+    this.enterKey.on('down', (): void => {
+      if (this.scene.state.user.diamonds >= CHANGE_CLAN_NAME_COST) {
+        changeClanName(); 
+      } else {
+        this.scene.state.convertor = {
+          fun: 0,
+          count: CHANGE_CLAN_NAME_COST - this.scene.state.user.diamonds,
+          diamonds: CHANGE_CLAN_NAME_COST - this.scene.state.user.diamonds,
+          type: 2
+        };
+        this.scene.state.modal = {
+          type: 1,
+          sysType: 4,
+        };
+        this.removeInput();
+        this.scene.scene.restart(this.scene.state);
+        this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
+      }
+    });
+    const blurZone: Phaser.GameObjects.TileSprite = this.scene.add.tileSprite(this.header.getBottomCenter().x, this.header.getBottomCenter().y, this.scene.cameras.main.width, this.scene.cameras.main.height - this.header.getBottomCenter().y, 'pixel').setOrigin(0.5, 0).setAlpha(0.0001).setVisible(false).setDepth(2).setInteractive()
+    this.scene.click(inpitField, (): void => { focus(); });
+    this.scene.click(blurZone, (): void => { blur(); });
 
     const focus = () => {
       this.mainInput.style.display = 'block';
@@ -553,7 +571,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
 
     const changeClanName = () => {
       if (!change) {
-        blur()
+        blur();
         let checkName: boolean = true;
         const re: RegExp = /[\p{Alpha}\p{M}\p{Nd}\p{Pc}\p{Join_C}]/gu;
         checkName = re.test(this.mainInput.value);
@@ -572,13 +590,13 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
             if (res.data.error) {
               change = false;
               result.setText(this.scene.state.lang.haveClan).setAlpha(1);
-
             } else {          
               this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
               this.enterKey.destroy();
               this.removeInput();
               this.scene.scene.stop('ClanScroll');
               this.scene.scene.restart(this.scene.state);
+              this.scene.state.user.diamonds -= CHANGE_CLAN_NAME_COST;
             }
           });
         } else {
