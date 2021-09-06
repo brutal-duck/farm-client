@@ -157,6 +157,41 @@ export default class ClanFarm extends Phaser.Scene {
     const cowSprite: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 390, pos.y + 35, 'clan-cow-coin').setScale(0.40);
     this.cowCountText = this.add.text(pos.x + 405, pos.y + 35, shortNum(this.state.clan.cow.money), textStyle).setOrigin(0, 0.5);
     
+    const mainZone: Phaser.GameObjects.Zone = this.add.zone(pos.x + 65, pos.y + 5, 270, 140).setDropZone(undefined, () => {});
+    // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
+    // graphics.lineStyle(5, 0xFFFF00);
+    // graphics.strokeRect(
+    //   mainZone.x - mainZone.input.hitArea.width / 2, 
+    //   mainZone.y - mainZone.input.hitArea.height / 2, 
+    //   mainZone.input.hitArea.width, 
+    //   mainZone.input.hitArea.height
+    // );
+
+    const bankZone: Phaser.GameObjects.Zone = this.add.zone(pos.x + 375, pos.y + 20, 260, 70).setDropZone(undefined, () => {});
+    // const bankGraphics: Phaser.GameObjects.Graphics = this.add.graphics();
+    // bankGraphics.lineStyle(5, 0xFFaaff);
+    // bankGraphics.strokeRect(
+    //   bankZone.x - bankZone.input.hitArea.width / 2, 
+    //   bankZone.y - bankZone.input.hitArea.height / 2, 
+    //   bankZone.input.hitArea.width, 
+    //   bankZone.input.hitArea.height
+    // );
+    
+    this.click(mainZone, () => {
+      this.state.modal = {
+        type: 17,
+        clanTabType: 1,
+      }
+      this.scene.launch('Modal', this.state);
+    });
+
+    this.click(bankZone, () => {
+      this.state.modal = {
+        type: 19,
+        clanTabType: 1,
+      };
+      this.scene.launch('Modal', this.state);
+    });
   }
 
   private createMain(): void {

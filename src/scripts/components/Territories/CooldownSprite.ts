@@ -7,7 +7,7 @@ export default class CooldownSprite extends Phaser.GameObjects.Sprite {
   public scene: Sheep;
   public territory: any;
   private timer: Phaser.GameObjects.Text;
-  private timerBg: Phaser.GameObjects.TileSprite;
+  private timerBg: Phaser.GameObjects.Sprite;
   private btnPrice: Phaser.GameObjects.Text;
   private btnDiamond: Phaser.GameObjects.Sprite;
   private btn: Phaser.GameObjects.Sprite;
@@ -16,7 +16,7 @@ export default class CooldownSprite extends Phaser.GameObjects.Sprite {
 
   constructor(territory: any) {
     const texture: string = territory.territoryType === 0 ? 'hatchet' : 'hammer';
-    super(territory.scene, territory.x + 80, territory.y + 80, texture);
+    super(territory.scene, territory.x + 80, territory.y + 70, texture);
     this.territory = territory;
     this.price = Math.round(this.territory.cooldown / 60) * TIMER_COEFFICIENT;
     this.create();
@@ -29,27 +29,33 @@ export default class CooldownSprite extends Phaser.GameObjects.Sprite {
     this.setOrigin(0.2, 0.8);
     this.setScale(1.1)
     this.setDepth(this.territory.depth + 5)
-
-    this.timer = this.scene.add.text(this.territory.x + 120, this.territory.y + 130, shortTime(this.territory.cooldown, this.scene.state.lang), {
+    const timerTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontSize: '28px',
       fontFamily: 'Bip',
-      color: '#823C0F'
-    }).setDepth(this.depth).setOrigin(0.5);
+      color: '#FFF4F7',
+      shadow: {
+        offsetX: 1,
+        offsetY: 1, 
+        color: '#96580e',
+        blur: 2,
+        fill: true,
+      },
+    };
+    this.timer = this.scene.add.text(this.territory.x + 120, this.territory.y + 140, shortTime(this.territory.cooldown, this.scene.state.lang), timerTextStyle).setDepth(this.depth + 240).setOrigin(0.5);
     const textGeom: Phaser.Geom.Rectangle = this.timer.getBounds();
 
-    this.timerBg = this.scene.add.tileSprite(textGeom.centerX, textGeom.centerY, textGeom.width + 10, textGeom.height, 'white-pixel')
-      .setTint(0xF7DFC7)
-      .setDepth(this.depth - 1);
+    this.timerBg = this.scene.add.sprite(textGeom.centerX, textGeom.centerY + 28, 'cooldown-plate')
+      .setDepth(this.depth + 239);
 
-    this.btn = this.scene.add.sprite(textGeom.centerX, textGeom.bottom + 30, 'improve-collector')
+    this.btn = this.scene.add.sprite(textGeom.centerX, textGeom.bottom + 25, 'improve-collector')
       .setDepth(this.depth + 240)
-      .setScale(0.6, 0.7);
+      .setScale(0.6);
 
-    this.btnDiamond = this.scene.add.sprite(textGeom.centerX - 15, textGeom.bottom + 28, 'diamond')
+    this.btnDiamond = this.scene.add.sprite(textGeom.centerX - 15, this.btn.y - 2, 'diamond')
       .setDepth(this.depth + 240)
       .setScale(0.10).setOrigin(0, 0.5);
 
-    this.btnPrice = this.scene.add.text(textGeom.centerX + 15, textGeom.bottom + 28, '1000', {
+    this.btnPrice = this.scene.add.text(textGeom.centerX + 15, this.btn.y - 2, '1000', {
       fontSize: '26px',
       fontFamily: 'Shadow',
       color: '#E4DADD'
@@ -78,10 +84,6 @@ export default class CooldownSprite extends Phaser.GameObjects.Sprite {
       const time: string = shortTime(this.territory.cooldown, this.scene.state.lang);
       if (this.timer.text !== time) {
         this.timer.setText(time);
-        const textGeom: Phaser.Geom.Rectangle = this.timer.getBounds();
-        if (textGeom.width + 10 !== this.timerBg.displayWidth) {
-          this.timerBg.setDisplaySize(textGeom.width + 10, textGeom.height);
-        }
       }
     }
   }
