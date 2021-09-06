@@ -5,7 +5,7 @@ import basicSheepTerritories from '../local/sheepTerritories';
 import basicChickenTerritories from '../local/chickenTerritories';
 import basicCowTerritories from '../local/cowTerritories';
 import basicUnicornCollector from '../local/unicornCollector';
-import { unicornSettings, sheepSettings, chickenSettings, cowSettings, general } from '../local/settings';
+import { unicornSettings, sheepSettings, chickenSettings, cowSettings, general, improveClanFarm } from '../local/settings';
 import { userCow, userData, userSheep, userChicken } from '../local/usersData';
 import sheepCollectorSettings from '../local/sheepCollector';
 import chickenCollectorSettings from '../local/chickenCollector';
@@ -45,6 +45,59 @@ const checkUserName = (state: Istate) => {
   }
 }
 
+const validateClan = (clan: Iclan): Iclan => {
+  const basicClan: Iclan = {
+    isClosed: false,
+    avatar: {
+      bg: 1,
+      frame: 1,
+      icon: 1,
+    },
+    diamond: {
+      count: 0,
+      logs: [],
+    },
+    points: 0,
+    limit: 10,
+    main: {
+      level: 1,
+      cooldown: 0,
+    },
+    chatMessages: [],
+    id: '',
+    ownerId: '',
+    name: '',
+    users: [],
+    sheep: {
+      level: 1,
+      cooldown: 0,
+      money: '0',
+      logs: [],
+    },
+    chicken: {
+      level: 1,
+      cooldown: 0,
+      money: '0',
+      logs: [],
+    },
+    cow: {
+      level: 1,
+      cooldown: 0,
+      money: '0',
+      logs: [],
+    }
+  }
+  const validClan = clan;
+  if (typeof validClan.sheep.level !== 'number' || validClan.sheep.level <= 0 || validClan.sheep.level > improveClanFarm.length) validClan.sheep.level = basicClan.sheep.level;
+  if (typeof validClan.chicken.level !== 'number' || validClan.chicken.level <= 0 || validClan.chicken.level > improveClanFarm.length) validClan.chicken.level = basicClan.chicken.level;
+  if (typeof validClan.cow.level !== 'number' || validClan.cow.level <= 0 || validClan.cow.level > improveClanFarm.length) validClan.cow.level = basicClan.cow.level;
+  if (typeof validClan.main.level !== 'number' || validClan.main.level <= 0) validClan.main.level = basicClan.main.level;
+  if (typeof validClan.diamond.count !== 'number') validClan.diamond.count = basicClan.diamond.count;
+  if (typeof validClan.sheep.money !== 'string' || Number(validClan.sheep.money) <= 0) validClan.sheep.money = basicClan.sheep.money;
+  if (typeof validClan.chicken.money !== 'string' || Number(validClan.chicken.money) <= 0) validClan.chicken.money = basicClan.chicken.money;
+  if (typeof validClan.cow.money !== 'string' || Number(validClan.cow.money) <= 0) validClan.cow.money = basicClan.cow.money;
+  return validClan;
+};
 
 const validateTerritories = (territories: Iterritories[], basicTerritories: Iterritories[]): Iterritories[] => {
   const maxTerritoryType: number = 8;
@@ -368,7 +421,7 @@ export default function loadData(response: AxiosResponse): void {
   };
   this.state.user = user;
 
-  this.state.clan = response.data.clan;
+  this.state.clan = validateClan(response.data.clan);
   if (this.state.name === '' && this.state.platform === 'ya') {
     this.state.name = `yandex_${user.id.substr(0, 4)}`;
   }

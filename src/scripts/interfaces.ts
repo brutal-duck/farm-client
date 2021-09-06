@@ -773,7 +773,6 @@ interface IconfigIcon {
 interface Iclan {
   id: string;
   isClosed: boolean;
-  userStatus: string;
   ownerId: string;
   name: string;
   users: Array<IclanUser>;
