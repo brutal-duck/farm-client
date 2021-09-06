@@ -2,7 +2,6 @@ import Chat from "../../../scenes/Modal/Chat/Main";
 
 export default class PersonalChat {
   private scene: Chat;
-  private ready: boolean;
   private msg: Array<IpersonalMessage>;
   private lastMsgFromUser: string;
   private textWrap: number;

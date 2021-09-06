@@ -263,6 +263,8 @@ const clanCow9: string = require('../../../assets/images/clan/animals/cow-9.png'
 const clanCow10: string = require('../../../assets/images/clan/animals/cow-10.png');
 const clanCow11: string = require('../../../assets/images/clan/animals/cow-11.png');
 const clanCow12: string = require('../../../assets/images/clan/animals/cow-12.png');
+const clanDiamondCoin: string = require('../../../assets/images/clan/coin-diamond.png');
+
 
 export default function typePreload(): void {
     switch (this.state.modal.type) {
@@ -613,6 +615,7 @@ export default function typePreload(): void {
         this.load.image('clan-glow', clanGlow);
         this.load.image('clan-building', clanBuilding);
         this.load.image('circle', circle);
+        this.load.image('circle', clanDiamondCoin);
         break;
       default:
         break;
