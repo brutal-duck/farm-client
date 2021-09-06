@@ -547,12 +547,14 @@ export default class ClanFarm extends Phaser.Scene {
       this.createStartCooldownAnimation(pos.x, pos.y - 20);
       this.mainCooldownSprite = new ClanCooldownBuilding(this, pos, this.state.clan.main, 'main');
       this.click(this.mainCooldownSprite, () => {
-        this.state.modal = {
-          type: 18,
-          clanWindowType: 6,
-          message: 'main',
-        };
-        this.scene.launch('Modal',  this.state);
+        if (this.state.clan.ownerId === this.state.user.id) {
+          this.state.modal = {
+            type: 18,
+            clanWindowType: 6,
+            message: 'main',
+          };
+          this.scene.launch('Modal',  this.state);
+        }
       });
     }
     if (this.state.clan.sheep?.cooldown > 0 && !this.sheepCooldownSprite?.active) {
