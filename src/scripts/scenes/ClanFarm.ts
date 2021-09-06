@@ -17,6 +17,7 @@ const clanCowCoin: string = require('../../assets/images/clan/coin-cow.png');
 const clanDiamondCoin: string = require('../../assets/images/clan/coin-diamond.png');
 const factorySmoke: string = require('../../assets/images/cow/factory-smoke.png');
 const event: string = require('../../assets/images/clan/event.png');
+const clanBuilding: string = require('../../assets/images/clan/clan-building.png');
 
 
 const levelTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
@@ -76,6 +77,7 @@ export default class ClanFarm extends Phaser.Scene {
     this.load.image('clan-cow-coin', clanCowCoin);
     this.load.image('clan-diamond-coin', clanDiamondCoin);
     this.load.image('clan-map-event', event);
+    this.load.image('clan-building', clanBuilding);
   }
   
   public init(state: Istate): void {
@@ -84,11 +86,6 @@ export default class ClanFarm extends Phaser.Scene {
   }
 
   public create(): void {
-    this.input.keyboard.addKey('SPACE').on('down', (): void => {
-      let modal: Imodal = { type: 22 }
-      this.state.modal = modal;
-      this.scene.launch('Modal', this.state);
-    })
     this.createBg();
     this.createClanInfo();
     this.createMain();
