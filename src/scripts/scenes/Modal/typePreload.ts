@@ -196,6 +196,9 @@ const decor1: string = require('../../../assets/images/modal/clan/decor-1.png');
 const decor2: string = require('../../../assets/images/modal/clan/decor-2.png');
 const bigMedal: string = require('../../../assets/images/modal/clan/big-medal-event.png');
 const bigStar: string = require('../../../assets/images/modal/clan/big-star-event.png');
+const clanGlow: string = require('../../../assets/images/modal/clan/glow.png');
+const clanBuilding: string = require('../../../assets/images/clan/clan-building.png');
+const circle: string = require("./../../../assets/images/circle.png");
 const clanTaskIcon1: string = require('../../../assets/images/modal/clan/tasks/task-1.png');
 const clanTaskIcon2: string = require('../../../assets/images/modal/clan/tasks/task-2.png');
 const clanTaskIcon3: string = require('../../../assets/images/modal/clan/tasks/task-3.png');
@@ -597,13 +600,15 @@ export default function typePreload(): void {
         this.load.image('modal-header-event-end', headerEventEnd);
         this.load.image('clan-window-leader-plate-2', clanWindowLeaderPlate);
         this.load.image('clan-window-line', clanWindowLine);
-        this.load.image('clan-window-crown', clanWindowCrown);
         this.load.image('done-chapter-button', doneChapterButton);
-        this.load.image('clan', clanRewardPlate);
+        this.load.image('clan-award-plate', clanRewardPlate);
         this.load.image('decor-left', decor1);
         this.load.image('decor-right', decor2);
         this.load.image('clan-big-medal', bigMedal);
         this.load.image('clan-big-star', bigStar);
+        this.load.image('clan-glow', clanGlow);
+        this.load.image('clan-building', clanBuilding);
+        this.load.image('circle', circle);
         break;
       default:
         break;
