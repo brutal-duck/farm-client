@@ -123,9 +123,9 @@ export default class TournamentUserList {
     const statusSettings: IstatusSettings = this.scene.getStatusSettings(status);
 
     if (statusSettings) {
-      const x: number = avatarSprite.x + 25;
-      const y: number = avatarSprite.y - 25;
-      this.scene.add.sprite(x, y, statusSettings.iconTexture).setVisible(statusSettings.iconVisible).setOrigin(0, 0.5).setScale(0.9);
+      const x: number = avatarSprite.x + 20;
+      const y: number = avatarSprite.y - 20;
+      this.scene.add.sprite(x, y, statusSettings.iconTexture).setVisible(statusSettings.iconVisible).setOrigin(0, 0.5).setDepth(1).setScale(0.9);
     }
 
     if (ratePosition === 1) {

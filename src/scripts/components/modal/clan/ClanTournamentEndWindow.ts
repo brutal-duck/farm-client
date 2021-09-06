@@ -16,8 +16,7 @@ export default class ClanTournamentEndWindow {
 
   constructor(scene: Modal) {
     this.scene = scene;
-    // this.getPlacesInfo();
-    this.init();
+    this.getPlacesInfo();
   }
 
   private init(): void {
@@ -50,8 +49,6 @@ export default class ClanTournamentEndWindow {
       },
     };
 
-    this.clanPlace = 9999;
-    this.playerPlace = 99;
     this.create();
   }
 
@@ -88,10 +85,9 @@ export default class ClanTournamentEndWindow {
     const takeBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(x, bottom.getCenter().y - 12, 'done-chapter-button').setDepth(2);
     const textBtn: Phaser.GameObjects.Text = this.scene.add.text(x, takeBtn.getCenter().y, this.scene.state.lang.clanTournamentTakeAwards, btnStyle).setOrigin(0.5, 0.75).setDepth(2);
     this.scene.clickModalBtn({ btn: takeBtn, title: textBtn }, () => {
-      // this.takeAward();
+      this.takeAward();
     });
   }
-
 
   private createClanAwardInfo(): void {
     const clanBuilding: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.plate.getLeftCenter().x + 96, this.plate.getCenter().y, 'clan-building').setScale(0.72).setDepth(4);
@@ -106,7 +102,6 @@ export default class ClanTournamentEndWindow {
     const diamond: Phaser.GameObjects.Sprite = this.scene.add.sprite(award.getRightCenter().x + 10, award.getRightCenter().y + 6, 'clan-diamond-coin').setOrigin(0, 0.6).setScale(0.7).setDepth(4);
   }
 
-
   private createPlayerAwardInfo(): void {
     const title: Phaser.GameObjects.Text = this.scene.add.text(this.bg.x, this.bg.getTopCenter().y + 96, this.scene.state.lang.clanTournamentInYourClanPlace, this.awardDescriptionStyle).setColor('#FFFDB1').setFontSize(20).setOrigin(0.5, 0).setDepth(2);
     const playerIcon: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.bg.getLeftCenter().x + 66, this.bg.getLeftCenter().y + 28, 'farmer').setScale(0.4).setDepth(2);
@@ -119,34 +114,29 @@ export default class ClanTournamentEndWindow {
     const diamond: Phaser.GameObjects.Sprite = this.scene.add.sprite(award.getRightCenter().x + 10, award.getRightCenter().y + 6, 'diamond').setOrigin(0, 0.6).setScale(0.15).setDepth(3);
   }
 
-
   private getClanAward(): string {
-    let award: number;
+    let award: number = 1000;
 
-    if (this.clanPlace === 1) award = 1000
-    else if (this.clanPlace === 2) award = 700
-    else if (this.clanPlace === 3) award = 400
-    else if (this.clanPlace >= 4 && this.clanPlace <= 10) award = 300
-    else if (this.clanPlace >= 11 && this.clanPlace <= 100) award = 100
-    else if (this.clanPlace >= 101 && this.clanPlace <= 500) award = 50
-    else if (this.clanPlace > 500) award = 20
+    if (this.clanPlace === 2) award = 700;
+    else if (this.clanPlace === 3) award = 400;
+    else if (this.clanPlace >= 4 && this.clanPlace <= 10) award = 300;
+    else if (this.clanPlace >= 11 && this.clanPlace <= 100) award = 100;
+    else if (this.clanPlace >= 101 && this.clanPlace <= 500) award = 50;
+    else if (this.clanPlace > 500) award = 20;
 
-    return String(award)
+    return String(award);
   }
-
 
   private getPlayerAward(): string {
-    let award: number;
+    let award: number = 100;
 
-    if (this.playerPlace === 1) award = 100
-    else if (this.playerPlace === 2) award = 70
-    else if (this.playerPlace === 3) award = 40
-    else if (this.playerPlace >= 4 && this.playerPlace <= 10) award = 30
-    else if (this.playerPlace > 10) award = 10
+    if (this.playerPlace === 2) award = 70;
+    else if (this.playerPlace === 3) award = 40;
+    else if (this.playerPlace >= 4 && this.playerPlace <= 10) award = 30;
+    else if (this.playerPlace > 10) award = 10;
 
-    return String(award)
+    return String(award);
   }
-
 
   private getPlacesInfo(): void {
     this.scene.scene.launch('Block');
@@ -163,12 +153,10 @@ export default class ClanTournamentEndWindow {
       this.getPlayerPlace()
     ]).then(([res1, res2]): void => {
       if (!res1.data.error && !res2.data.error) {
-        this.clanPlace = res1.data.place
-        this.playerPlace = res2.data.place
+        this.clanPlace = res1.data.place;
+        this.playerPlace = res2.data.place;
         this.init();
-
       } else this.scene.scene.stop('Modal');
-      
     }).catch((): void => {
       this.scene.scene.stop('Modal');
     }).finally((): void => {
@@ -177,7 +165,6 @@ export default class ClanTournamentEndWindow {
       loadingSprite?.destroy();
     })
   }
-
 
   private getClanPlace(): Promise<AxiosResponse<any>> {
     const data = {
@@ -188,7 +175,6 @@ export default class ClanTournamentEndWindow {
     return axios.post(process.env.API + '/getTournamentClanPlace', data);
   }
 
-
   private getPlayerPlace(): Promise<AxiosResponse<any>> {
     const data = {
       id: this.scene.state.user.id,
@@ -198,23 +184,22 @@ export default class ClanTournamentEndWindow {
     return axios.post(process.env.API + '/getTournamentUserPlace', data);
   }
 
-
   private takeAward(): void {
-    let data = {
+    const data = {
       id: this.scene.state.user.id,
       hash: this.scene.state.user.hash,
       counter: this.scene.state.user.counter,
-      count: +this.getClanAward() // количество кристаллов клана в зависимости от места
+      count: Number(this.getClanAward()) // количество кристаллов клана в зависимости от места
     }
 
     axios.post(process.env.API +'/takeTournamentAward', data).then((res): void => {
       if (!res.data) {
-        // MoneyAnimation.create(this.scene, 'diamond')
-        this.scene.scene.stop()
+        // MoneyAnimation.create(this.scene, 'diamond');
+        this.scene.state.clanEventTakenAward = true;
+        this.scene.scene.stop();
       }
     });
   }
-
 
   private salute(): void {
     this.scene.time.addEvent({
