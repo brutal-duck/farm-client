@@ -345,19 +345,11 @@ export default class ClanFarm extends Phaser.Scene {
     new ClanFlagPole(this, { x: farmPosition.x + 58, y: farmPosition.y - 125 }).setDepth(2);
 
     this.click(zone, () => {
-      if (this.state.clan.sheep.cooldown <= 0) {
-        this.state.modal = {
-          type: 18,
-          clanWindowType: 5,
-          message: 'sheep',
-        };
-      } else {
-        this.state.modal = {
-          type: 18,
-          clanWindowType: 6,
-          message: 'sheep',
-        };
-      }
+      this.state.modal = {
+        type: 18,
+        clanWindowType: 5,
+        message: 'sheep',
+      };
       this.scene.launch('Modal', this.state);
     });
 
@@ -381,19 +373,11 @@ export default class ClanFarm extends Phaser.Scene {
     this.chickenLevelText = this.add.text(farmPosition.x - 106, farmPosition.y + 10, textLevel, levelTextStyle).setOrigin(0.5);
     new ClanFlagPole(this, { x: farmPosition.x, y: farmPosition.y - 175 }).setDepth(2);
     this.click(zone, () => {
-      if (this.state.clan.chicken.cooldown <= 0) {
-        this.state.modal = {
-          type: 18,
-          clanWindowType: 5,
-          message: 'chicken',
-        };
-      } else {
-        this.state.modal = {
-          type: 18,
-          clanWindowType: 6,
-          message: 'chicken',
-        };
-      }
+      this.state.modal = {
+        type: 18,
+        clanWindowType: 5,
+        message: 'chicken',
+      };
       this.scene.launch('Modal', this.state);
     });
 
@@ -417,19 +401,11 @@ export default class ClanFarm extends Phaser.Scene {
     // graphics.lineStyle(5, 0xFaccdd);
     // graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
     this.click(zone, () => {
-      if (this.state.clan.cow.cooldown <= 0) {
-        this.state.modal = {
-          type: 18,
-          clanWindowType: 5,
-          message: 'cow',
-        };
-      } else {
-        this.state.modal = {
-          type: 18,
-          clanWindowType: 6,
-          message: 'cow',
-        };
-      }
+      this.state.modal = {
+        type: 18,
+        clanWindowType: 5,
+        message: 'cow',
+      };
       this.scene.launch('Modal', this.state);
     });
 

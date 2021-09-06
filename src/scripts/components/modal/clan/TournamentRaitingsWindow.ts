@@ -84,8 +84,12 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
 
   private onCloseBtn(): void {
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-    this.scene.scene.stop();
     this.scene.scene.stop('ClanScroll');
+    this.scene.state.modal = {
+      type: 20,
+      clanTabType: 1,
+    };
+    this.scene.scene.restart(this.scene.state);
   }
 
   private createCloseTab(): void {

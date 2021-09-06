@@ -113,7 +113,12 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
 
   private createBg(): void {
     this.bg = this.scene.add.tileSprite(this.posx, this.posy, this.windowWidth, this.windowHeight, 'white-pixel').setTint(0xFF9700);
-    this.scene.add.sprite(this.posx - 6, this.posy, 'clan-tournament-decor').setDepth(3);
+    // this.scene.add.sprite(this.posx, this.posy, 'clan-tournament-decor');
+    this.scene.add.sprite(this.bg.getLeftCenter().x, this.bg.getLeftCenter().y - 90, 'decor-left').setOrigin(1);
+    this.scene.add.sprite(this.bg.getRightCenter().x, this.bg.getRightCenter().y + 310, 'decor-right').setOrigin(0, 1);
+    this.scene.add.sprite(this.bg.getLeftCenter().x - 10, this.bg.getLeftCenter().y - 220, 'clan-star').setAngle(-15).setDepth(2).setOrigin(0.5);
+    this.scene.add.sprite(this.bg.getRightCenter().x + 15, this.bg.getRightCenter().y + 210, 'clan-star').setAngle(15).setDepth(2).setOrigin(0.5);
+
   }
 
   private createHeader(): void {

@@ -196,6 +196,7 @@ const decor1: string = require('../../../assets/images/modal/clan/decor-1.png');
 const decor2: string = require('../../../assets/images/modal/clan/decor-2.png');
 const bigMedal: string = require('../../../assets/images/modal/clan/big-medal-event.png');
 const bigStar: string = require('../../../assets/images/modal/clan/big-star-event.png');
+const clanStar: string = require('../../../assets/images/modal/clan/star-event.png');
 const clanGlow: string = require('../../../assets/images/modal/clan/glow.png');
 const clanBuilding: string = require('../../../assets/images/clan/clan-building.png');
 const circle: string = require("./../../../assets/images/circle.png");
@@ -595,6 +596,9 @@ export default function typePreload(): void {
         this.load.image('clan-cow-12', clanCow12);
         this.load.image('shop-btn', shopBtn);
         this.load.image('shop-btn-disable', shopBtnDisable);
+        this.load.image('decor-left', decor1);
+        this.load.image('decor-right', decor2);
+        this.load.image('clan-star', clanStar);
         break;
       case 22:
         this.load.image('modal-header-event-end', headerEventEnd);

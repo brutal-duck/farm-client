@@ -2,7 +2,7 @@ import Modal from '../../../scenes/Modal/Modal';
 import ClanWindow from './ClanWindow';
 import axios, { AxiosResponse } from 'axios';
 import BigInteger from './../../../libs/BigInteger';
-import { shortNum } from '../../../general/basic';
+import { shortNum, shortTime } from '../../../general/basic';
 
 const improveSettings: Array<string> = [
   '1000000',
@@ -16,15 +16,19 @@ const improveSettings: Array<string> = [
   '100000000000000',
 ];
 
-export default class ImproveClanFarmWindow {
+export default class ImproveClanFarmWindow extends Phaser.GameObjects.Sprite{
   private window: ClanWindow;
-  private scene: Modal;
+  public scene: Modal;
   private price: string;
-  private x: number;
-  private y: number;
+  public x: number;
+  public y: number;
   private farm: string;
+  private timer: Phaser.GameObjects.Text;
+  private level: number;
+  private leftText: Phaser.GameObjects.Text;
 
   constructor(window: ClanWindow) {
+    super(window.scene, 0, 0, 'pixel');
     this.window = window;
     this.scene = window.scene;
     this.init();
@@ -38,10 +42,12 @@ export default class ImproveClanFarmWindow {
   }
 
   private init(): void {
+    this.scene.add.existing(this);
     this.x = this.scene.cameras.main.centerX;
     this.y = this.scene.cameras.main.centerY;
     this.farm = this.scene.state.modal.message;
-    this.price = improveSettings[this.scene.state.clan[this.farm].level - 1];
+    this.level = this.scene.state.clan[this.farm].cooldown > 0 ? this.scene.state.clan[this.farm].level - 1 : this.scene.state.clan[this.farm].level;
+    this.price = improveSettings[this.level - 1];
     this.window.headerText.setText(this.scene.state.lang[`${this.farm}ClanFarm`]).setFontSize(30);
   }
 
@@ -63,7 +69,7 @@ export default class ImproveClanFarmWindow {
         fill: true,
       },
       wordWrap: { width: 400, useAdvancedWrap: true },
-    }
+    };
 
     const levelTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Shadow',
@@ -76,7 +82,7 @@ export default class ImproveClanFarmWindow {
       fontFamily: 'Shadow',
       fontSize: '20px',
       align: 'center',
-      wordWrap: { width: 450, useAdvancedWrap: true },
+      wordWrap: { width: 400, useAdvancedWrap: true },
     }
 
     this.scene.add.nineslice(this.x, pos.y - 265, this.window.width - 30, 100, 'tasks-bar-ns', 15).setOrigin(0.5);
@@ -87,10 +93,10 @@ export default class ImproveClanFarmWindow {
 
     const levelPlate: Phaser.GameObjects.Sprite = this.scene.add.sprite(bg.x, bg.y + bg.displayHeight / 2 - 20, 'profile-window-level').setDepth(1);
 
-    const levelText: Phaser.GameObjects.Text = this.scene.add.text(levelPlate.x, levelPlate.y, `${this.scene.state.lang.level} ${this.scene.state.clan[this.farm].level}`, levelTextStyle).setDepth(2).setOrigin(0.5);
+    const levelText: Phaser.GameObjects.Text = this.scene.add.text(levelPlate.x, levelPlate.y, `${this.scene.state.lang.level} ${this.level}`, levelTextStyle).setDepth(2).setOrigin(0.5);
 
-    let nowText: string
-    let nextText: string
+    let nowText: string = '';
+    let nextText: string = '';
 
     if (this.farm === 'sheep') {
       nowText = this.scene.state.lang.increasingSheepFarmIncomeNow
@@ -105,10 +111,10 @@ export default class ImproveClanFarmWindow {
     
 
     const text1: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, nowText, textStyle).setDepth(1);
-    const count1: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 400, text1.getBounds().centerY, `${String(this.scene.state.clan[this.farm].level)}%`, textStyle).setOrigin(0, 0.5).setDepth(1).setFontFamily('Shadow').setFontSize(30);
+    const count1: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 400, text1.getBounds().centerY, `${String(this.level)}%`, textStyle).setOrigin(0, 0.5).setDepth(1).setFontFamily('Shadow').setFontSize(30);
     this.scene.add.nineslice(this.x, text1.getBounds().centerY, this.window.width, text1.displayHeight + 20, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
     const text2: Phaser.GameObjects.Text = this.scene.add.text(pos.x, text1.getBounds().bottom + 30, nextText, textStyle).setDepth(1);
-    const count2: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 400, text2.getBounds().centerY, `${String(this.scene.state.clan[this.farm].level + 1)}%`, textStyle).setDepth(1).setColor('#dcff3c').setOrigin(0, 0.5).setFontFamily('Shadow').setFontSize(30);
+    const count2: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 400, text2.getBounds().centerY, `${String(this.level + 1)}%`, textStyle).setDepth(1).setColor('#dcff3c').setOrigin(0, 0.5).setFontFamily('Shadow').setFontSize(30);
     this.scene.add.nineslice(this.x, text2.getBounds().centerY, this.window.width, text2.displayHeight + 20, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
 
     this.scene.add.sprite(this.window.bg.getBounds().right - 30, count2.y - 7, 'chat-arrow').setAngle(90).setScale(0.65);
@@ -173,10 +179,10 @@ export default class ImproveClanFarmWindow {
 
     const levelPlate: Phaser.GameObjects.Sprite = this.scene.add.sprite(bg.x, bg.y + bg.displayHeight / 2 - 20, 'profile-window-level').setDepth(1);
 
-    const levelText: Phaser.GameObjects.Text = this.scene.add.text(levelPlate.x, levelPlate.y, `${this.scene.state.lang.level} ${this.scene.state.clan[this.farm].level}`, levelTextStyle).setDepth(2).setOrigin(0.5);
+    const levelText: Phaser.GameObjects.Text = this.scene.add.text(levelPlate.x, levelPlate.y, `${this.scene.state.lang.level} ${this.level}`, levelTextStyle).setDepth(2).setOrigin(0.5);
 
     const text1: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, this.scene.state.lang.increasingFarmIncome, textStyle).setDepth(1);
-    const count1: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 400, text1.getBounds().centerY, `${String(this.scene.state.clan[this.farm].level)}%`, textStyle).setOrigin(0, 0.5).setDepth(1).setFontFamily('Shadow').setFontSize(30);
+    const count1: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 400, text1.getBounds().centerY, `${String(this.level)}%`, textStyle).setOrigin(0, 0.5).setDepth(1).setFontFamily('Shadow').setFontSize(30);
     this.scene.add.nineslice(this.x, text1.getBounds().centerY, this.window.width, text1.displayHeight + 20, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
     
     this.scene.add.text(this.x, pos.y + 100, this.scene.state.lang.maxLevelFarm, maxLevelStyle)
@@ -190,20 +196,58 @@ export default class ImproveClanFarmWindow {
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       color: '#E73F00',
       fontFamily: 'Shadow',
-      fontSize: '16px',
+      fontSize: '20px',
       align: 'center',
-    }
+    };
+    const ownerTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      color: '#FFFDFA',
+      fontFamily: 'Shadow',
+      fontSize: '22px',
+      align: 'center',
+      shadow: {
+        offsetX: 1,
+        offsetY: 1, 
+        color: '#96580e',
+        blur: 2,
+        fill: true,
+      },
+    };
+
     const padding: number = 310;
     const right1 = {
       text: shortNum(this.price),
       icon: `clan-${this.farm}-coin`
     };
+
+    this.leftText = this.scene.add.text(this.x, this.y + padding - 40, this.scene.state.lang.left, ownerTextStyle).setOrigin(0.5);
+    this.timer = this.scene.add.text(this.x, this.y + padding - 40, '', ownerTextStyle).setColor('#dcff3c').setOrigin(0.5);
+
     if (this.scene.state.clan.ownerId === this.scene.state.user.id) {
-      const btn1 = this.scene.bigButton('green', 'left', padding, this.scene.state.lang.improveFarm, right1);  
-      this.scene.clickModalBtn(btn1, () => { this.handleImprove(); });
+      if (this.scene.state.clan[this.farm].cooldown > 0) {
+        const estimateCost: number = Math.round(this.scene.state.clan.main.cooldown / 60) * 2;
+        right1.text = String(estimateCost > 1000 ? 1000 : estimateCost);
+        right1.icon = 'clan-diamond-coin';
+        const btn1 = this.scene.bigButton('green', 'left', padding + 10, this.scene.state.lang.speedUpImprovment, right1);  
+        this.scene.clickModalBtn(btn1, () => { this.handleSpeedUp(); });
+      } else {
+        const btn1 = this.scene.bigButton('green', 'left', padding, this.scene.state.lang.improveFarm, right1);  
+        this.scene.clickModalBtn(btn1, () => { this.handleImprove(); });
+        this.timer.setVisible(false);
+        this.leftText.setVisible(false);
+      }
     } else {
-      const btn1 = this.scene.bigButton('grey', 'left', padding + 10, this.scene.state.lang.improveFarm, right1);
-      this.scene.add.text(this.x, this.y + padding - 40, this.scene.state.lang.actionIsAvailableHead, textStyle).setOrigin(0.5)
+      this.timer.setVisible(false);
+      this.leftText.setVisible(false);
+      if (this.scene.state.clan[this.farm].cooldown > 0) {
+        const estimateCost: number = Math.round(this.scene.state.clan.main.cooldown / 60) * 2;
+        right1.text = String(estimateCost > 1000 ? 1000 : estimateCost);
+        right1.icon = 'clan-diamond-coin';
+        this.scene.add.text(this.x, this.y + padding - 40, this.scene.state.lang.actionIsAvailableHead, textStyle).setOrigin(0.5);
+        const btn1 = this.scene.bigButton('grey', 'left', padding + 10, this.scene.state.lang.speedUpImprovment, right1);
+      } else {
+        this.scene.add.text(this.x, this.y + padding - 40, this.scene.state.lang.actionIsAvailableHead, textStyle).setOrigin(0.5);
+        const btn1 = this.scene.bigButton('grey', 'left', padding + 10, this.scene.state.lang.improveFarm, right1);
+      }
     }
   }
 
@@ -227,6 +271,15 @@ export default class ImproveClanFarmWindow {
     }
   }
 
+  private handleSpeedUp(): void {
+    this.scene.state.modal = {
+      type: 18,
+      clanWindowType: 6,
+      message: this.farm,
+    };
+    this.scene.scene.restart(this.scene.state);
+  }
+
   private postServer(): Promise<AxiosResponse<any>> {
     const data = {
       id: this.scene.state.user.id,
@@ -236,5 +289,28 @@ export default class ImproveClanFarmWindow {
       price: this.price,
     };
     return axios.post(process.env.API + '/improveClanBuilding', data);
+  }
+
+  private setLeftTimeTextX(): void {
+    const width: number = (this.timer.displayWidth + this.leftText.displayWidth) / 4 + 5;
+    this.timer.setX(this.x + width);
+    this.leftText.setX(this.x - width);
+  }
+
+  public preUpdate(time: number, delta: number) {
+    super.preUpdate(time, delta);
+    if (this.timer) {
+      if (this.scene.state.clan.ownerId === this.scene.state.user.id) {
+        if (this.scene.state.clan[this.farm].cooldown > 0) {
+          const text: string = shortTime(this.scene.state.clan[this.farm].cooldown, this.scene.state.lang);
+          if (this.timer.text !== text) {
+            this.timer.setText(text);
+            this.setLeftTimeTextX();
+          }
+        } else {
+          if (this.timer.visible) this.scene.scene.restart(this.scene.state);
+        }
+      }
+    } 
   }
 };
