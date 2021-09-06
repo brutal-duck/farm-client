@@ -53,10 +53,10 @@ export default class ClanConvertorWindow {
     const border = notEnaugh.getBounds();
 
     this.scene.add.text(border.right + 50, pos.y, count, textStyle).setOrigin(0, 0.5);
-    const texture: string = this.type === 1 ? 'diamond' :
-    this.type === 2 ? 'sheepCoin' :
-    this.type === 3 ? 'chickenCoin' : 'cowCoin';
-    this.scene.add.sprite(border.right + 5, pos.y, texture).setOrigin(0, 0.5).setScale(0.15);
+    const texture: string = this.type === 1 ? 'clan-diamond-coin' :
+    this.type === 2 ? 'clan-sheep-coin' :
+    this.type === 3 ? 'clan-chicken-coin' : 'clan-cow-coin';
+    this.scene.add.sprite(border.right + 5, pos.y, texture).setOrigin(0, 0.5).setScale(0.5);
 
     const pay = this.scene.bigButton('green', 'center', padding, this.scene.state.lang.goToTreasury);
     this.scene.clickModalBtn(pay, (): void => { this.handleAccept(); });

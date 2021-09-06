@@ -58,7 +58,7 @@ export default class BuyCooldownWindow extends Phaser.GameObjects.Sprite {
     };
 
     const img = {
-      icon: 'diamond',
+      icon: 'clan-diamond-coin',
       text: shortNum(this.price),
     };
 
@@ -88,12 +88,9 @@ export default class BuyCooldownWindow extends Phaser.GameObjects.Sprite {
   }
 
   private handleAccept(): void {
-    if (this.scene.state.user.diamonds >= this.price) {
+    if (this.scene.state.clan.diamond.count >= this.price) {
       this.postServer().then(res => {
         if (!res.data.error) {
-          if (this.scene.state.user.diamonds >= this.price) {
-            this.scene.state.user.diamonds -= this.price;
-          } else this.scene.state.user.diamonds = 0;
           this.building.cooldown = 0;
           this.scene.scene.stop();
         }
@@ -101,13 +98,13 @@ export default class BuyCooldownWindow extends Phaser.GameObjects.Sprite {
     } else {
       this.scene.state.convertor = {
         fun: 0,
-        count: this.price - this.scene.state.user.diamonds,
-        diamonds: this.price - this.scene.state.user.diamonds,
-        type: 2
+        count: this.price - this.scene.state.clan.diamond.count,
+        diamonds: this.price - this.scene.state.clan.diamond.count,
+        type: 1
       };
       this.scene.state.modal = {
-        type: 1,
-        sysType: 4,
+        type: 18,
+        clanWindowType: 4,
       };
       this.scene.scene.restart(this.scene.state);
       this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
@@ -120,6 +117,7 @@ export default class BuyCooldownWindow extends Phaser.GameObjects.Sprite {
       hash: this.scene.state.user.hash,
       counter: this.scene.state.user.counter,
       type: this.farm,
+      count: this.price,
     };
     return axios.post(process.env.API + '/buyCooldownClanBuilding', data);
   }
