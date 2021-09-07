@@ -61,7 +61,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     this.createFooter();
     this.createCloseTab();
     if (this.scene.state.clan) {
-      if (this.scene.state.user.id === this.scene.state.clan.ownerId) {
+      if (this.scene.state.user.id === this.scene.state.clan?.ownerId) {
         this.createTabs([1, 2, 4]);
       } else {
         this.createTabs([1, 2]);
@@ -148,8 +148,8 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     if (type === 1) {
       const mask = new Phaser.Display.Masks.BitmapMask(this.scene, tabIcon);
       mask.invertAlpha = true;
-      if (this.scene.state.clan.avatar) {
-        flag = LogoManager.createFlag(this.scene, tabGeom.centerX + 5, tabGeom.centerY - 10 - 5, this.scene.state.clan.avatar).setScale(0.205).setMask(mask);
+      if (this.scene.state.clan?.avatar) {
+        flag = LogoManager.createFlag(this.scene, tabGeom.centerX + 5, tabGeom.centerY - 10 - 5, this.scene.state.clan?.avatar).setScale(0.205).setMask(mask);
       }
     }
     this.modalElements.push(tab, tabIcon);
@@ -181,6 +181,12 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
       },
     };
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
+    if (!this.scene.state.clan) {
+      this.scene.scene.stop()
+      this.scene.scene.stop('ClanScroll');
+      this.scene.scene.stop('ClanFarm');
+      return;
+    }
     const { name, avatar, points } = this.scene.state.clan;
     this.headerTextStyle.wordWrap = { width: 270, useAdvancedWrap: true };
     this.headerText = this.scene.add.text(headerGeom.left + 110, headerGeom.centerY, name, this.headerTextStyle).setDepth(2).setOrigin(0, 0.5).setFontSize(25);
@@ -460,8 +466,8 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
       wordWrap: { width: 480, useAdvancedWrap: true },
     };
 
-    this.headerText = this.scene.add.text(headerGeom.left + 110, headerGeom.centerY, this.scene.state.clan.name, this.headerTextStyle).setDepth(2).setOrigin(0, 0.5).setFontSize(30);
-    const clanAvatar = LogoManager.createIcon(this.scene, headerGeom.left + 60, headerGeom.centerY, this.scene.state.clan.avatar).setDepth(2).setScale(0.40);
+    this.headerText = this.scene.add.text(headerGeom.left + 110, headerGeom.centerY, this.scene.state.clan?.name, this.headerTextStyle).setDepth(2).setOrigin(0, 0.5).setFontSize(30);
+    const clanAvatar = LogoManager.createIcon(this.scene, headerGeom.left + 60, headerGeom.centerY, this.scene.state.clan?.avatar).setDepth(2).setScale(0.40);
     let price: number;
 
     // Первый слот
@@ -476,7 +482,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
 
     this.scene.clickModalBtn({ btn: boosterBtn, title: boosterBtnText }, () => { improveOrBoostClanHQ(); });
 
-    if (this.scene.state.clan.main.cooldown > 0) {
+    if (this.scene.state.clan?.main.cooldown > 0) {
       this.cooldownTimer.setText(`${this.scene.state.lang.left} ${shortTime(this.scene.state.clan.main.cooldown, this.scene.state.lang)}`);
       boosterBtnText.setText(this.scene.state.lang.speedUpImprovment);
       const estimateCost: number = Math.round(this.scene.state.clan.main.cooldown / 60) * 2;
@@ -492,7 +498,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     // Второй слот
     const changeEmblemBg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(boosterBg.getBottomCenter().x, boosterBg.getBottomCenter().y + 30, 480, 150, 'modal-square-bg', 10).setOrigin(0.5, 0).setDepth(2);
     const changeEmblemTextBg: Phaser.GameObjects.Sprite = this.scene.add.sprite(changeEmblemBg.getTopCenter().x, changeEmblemBg.getTopCenter().y + 2, 'clan-window-leader-plate-2').setOrigin(0.5, 0).setDisplaySize(479, 45).setDepth(2);
-    const clanEmblem = LogoManager.createIcon(this.scene, changeEmblemBg.getLeftCenter().x + 70, changeEmblemBg.getCenter().y, this.scene.state.clan.avatar).setDepth(2).setScale(0.5);
+    const clanEmblem = LogoManager.createIcon(this.scene, changeEmblemBg.getLeftCenter().x + 70, changeEmblemBg.getCenter().y, this.scene.state.clan?.avatar).setDepth(2).setScale(0.5);
     const changeEmblemText: Phaser.GameObjects.Text = this.scene.add.text(changeEmblemTextBg.getCenter().x + 60, changeEmblemTextBg.getCenter().y, this.scene.state.lang.emblem, this.headerTextStyle).setOrigin(0.5).setDepth(2);
     const changeEmblemBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(changeEmblemBg.getCenter().x + 20, changeEmblemBg.getCenter().y + 24, 'profile-window-button-green').setScale(1.35, 1.05).setDepth(2);
     const changeEmblemBtnText: Phaser.GameObjects.Text = this.scene.add.text(changeEmblemBtn.getCenter().x, changeEmblemBtn.getCenter().y - 1, this.scene.state.lang.changeEmblem, btnTextStyle).setOrigin(0.5, 0.6).setDepth(2);
@@ -642,7 +648,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
 
   public preUpdate(): void {
     if (this.cooldownTimer?.active && this.scene.state.clan.main.cooldown > 0) {
-      const text: string = `${this.scene.state.lang.left} ${shortTime(this.scene.state.clan.main.cooldown, this.scene.state.lang)}`;
+      const text: string = `${this.scene.state.lang.left} ${shortTime(this.scene.state.clan?.main.cooldown, this.scene.state.lang)}`;
       if (text !== this.cooldownTimer.text) {
         this.cooldownTimer.setText(text);
       }

@@ -52,7 +52,7 @@ export default class ClanSearch {
       fontFamily: 'Shadow',
       fontSize: '20px',
       align: 'left',
-      wordWrap: { width: 210 },
+      wordWrap: { width: 210, useAdvancedWrap: true },
     };
     const buttonTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Shadow',
