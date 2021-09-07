@@ -50,6 +50,7 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
   private activePackage: number = 0;
   private coinIcon: Phaser.GameObjects.Sprite;
   private currentCountText: Phaser.GameObjects.Text;
+  private currentUserCountText: Phaser.GameObjects.Text;
   private logElements: Phaser.GameObjects.Group;
   private logs: IclanUserLog[] = [];
 
@@ -190,10 +191,18 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
       this.headerText.setFontSize(parseInt(this.headerText.style.fontSize) / multiply);
     }
     const coinTexture: string = `clan-${this.farm}-coin`;
-    const titleText: string = this.farm !== 'diamond' ? this.scene.state.clan[this.farm].money : this.scene.state.clan[`${this.farm}`].count;
+    const farmUpperCase: string = this.farm[0].toUpperCase() + this.farm.slice(1);
+    const userCoinTexture: string = this.farm !== 'diamond' ? `${this.farm}Coin` : 'diamond';
+    const title1Text: string = this.farm !== 'diamond' ? this.scene.state.clan[this.farm].money : String(this.scene.state.clan[this.farm].count);
     const title1: Phaser.GameObjects.Text = this.scene.add.text(headerGeom.left + 60, headerGeom.bottom + 12, this.scene.state.lang.nowInTreasury, titleTextStyle);
-    this.coinIcon = this.scene.add.sprite(title1.getBounds().right + 10, title1.getBounds().centerY, coinTexture).setScale(0.5).setOrigin(0, 0.5);
-    this.currentCountText = this.scene.add.text(this.coinIcon.getBounds().right + 10, title1.getBounds().centerY, titleText, titleTextStyle).setOrigin(0, 0.5);
+    this.coinIcon = this.scene.add.sprite(title1.getBounds().right + 7, title1.getBounds().centerY, coinTexture).setScale(0.5).setOrigin(0, 0.5);
+    this.currentCountText = this.scene.add.text(this.coinIcon.getBounds().right + 7, title1.getBounds().centerY, title1Text, titleTextStyle).setOrigin(0, 0.5);
+
+    const title2Text: string = this.farm !== 'diamond' ? String(this.scene.state[`user${farmUpperCase}`].money) : String(this.scene.state.user.diamonds);
+
+    const title2: Phaser.GameObjects.Text = this.scene.add.text(headerGeom.left + 60, headerGeom.bottom + 270 - 5, this.scene.state.lang.atYou, titleTextStyle).setOrigin(0, 0.5);
+    const coin: Phaser.GameObjects.Sprite = this.scene.add.sprite(title2.getBounds().right + 7, title2.getBounds().centerY, userCoinTexture).setScale(0.12).setOrigin(0, 0.5);
+    this.currentUserCountText = this.scene.add.text(coin.getBounds().right + 7, title2.getBounds().centerY, title2Text, titleTextStyle).setOrigin(0, 0.5);
     
     if (this.farm !== 'diamond') {
       const farmProgress: IpartProgress = this.scene.state.progress[this.farm];
@@ -249,7 +258,7 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
       x += btn.displayWidth + 20
       if (this.activePackage === i) this.setActiveBtn({btn, text});
     }
-    this.donateBtn = this.scene.add.sprite(this.posx, headerGeom.bottom + 270, 'clan-bank-button');
+    this.donateBtn = this.scene.add.sprite(this.posx + 130, headerGeom.bottom + 270, 'clan-bank-button').setScale(0.7);
     this.donateBtnText = this.scene.add.text(this.donateBtn.x, this.donateBtn.y - 5, this.scene.state.lang.send, btnTextStyle).setOrigin(0.5);
     this.scene.clickModalBtn({ btn: this.donateBtn, title: this.donateBtnText }, (): void => { 
       this.addFarmMoney(); 
@@ -407,7 +416,6 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
           if (!res.data.error) {
             this.scene.state.clan = res.data.clan;
             this.scene.state[farmUser].money -= Number(packageCount);
-            const text: string = this.scene.state.clan[this.farm].money;
             if (Number(packageCount) >= FARM_PACKAGE[2]) {
               MoneyAnimation.create(this.scene, `${this.farm}Coin`, {
                 x: this.coinIcon.x + this.coinIcon.displayWidth / 2,
@@ -420,7 +428,6 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
               }, Number(packageCount), `${this.farm}Coin`);
             }
             this.scene.game.scene.keys[this.scene.state.farm].tryClanTask(11);
-            this.currentCountText.setText(text);
             const mainScene = this.scene.scene.get(this.scene.state.farm) as Sheep | Chicken | Cow | Unicorn;
             mainScene.autosave();
           }
@@ -561,6 +568,30 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
             this.donateBtn.type = 'active';
           }
         }
+      }
+      if (this.currentCountText.active) {
+        if (this.farm !== 'diamond') {
+          const text: string = this.scene.state.clan[this.farm].money;
+          if (this.currentCountText.text !== text) this.currentCountText.setText(text);
+        } else {
+          const text: string = String(this.scene.state.clan[this.farm].count);
+          if (this.currentCountText.text !== text) this.currentCountText.setText(text);
+        }
+      }
+      if (this.currentUserCountText.active) {
+        const farmUpperCase: string = this.farm[0].toUpperCase() + this.farm.slice(1);
+        const text: string = this.farm !== 'diamond' ? shortNum(this.scene.state[`user${farmUpperCase}`].money) : String(this.scene.state.user.diamonds);
+        const count: number = this.farm !== 'diamond' ? this.scene.state[`user${farmUpperCase}`].money : this.scene.state.user.diamonds;
+        const packageCount: number = Number(this.packageBtns.find(el => el.btn.state === this.activePackage).text.state);
+        const activeColor: string = '#dcff3c';
+        const disableColor: string = '#f32a2a';
+        if (this.currentUserCountText.text !== text) this.currentUserCountText.setText(text);
+        if (count < packageCount) {
+          if (this.currentUserCountText.style.color !== disableColor) this.currentUserCountText.setColor(disableColor);
+        } else {
+          if (this.currentUserCountText.style.color !== activeColor) this.currentUserCountText.setColor(activeColor);
+        }
+        
       }
     }
   }

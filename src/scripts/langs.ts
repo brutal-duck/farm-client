@@ -1004,6 +1004,7 @@ export default {
     leaveClan: 'Выйти из\nклана',
     search: 'Найти',
     clansNotFound: 'По данному запросу кланы не найдены',
+    atYou: 'У вас:',
     exclude: 'Исключить',
     confirmExcludeUser: 'Вы действительно хотите исключить $1 из клана?',
     clanСreation: 'Создание клана',
@@ -2141,5 +2142,7 @@ export default {
     awardsForUsersInClan: 'Награды внутри клана',
     clanLeaders: 'Лидеры вашего клана',
     clanTournamentTakeAwards: 'Забрать награду',
+    atYou: 'У вас:',
+
   },
 }
