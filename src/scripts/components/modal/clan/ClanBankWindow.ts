@@ -564,7 +564,8 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
   }
 
   public preUpdate(time: number, delta: number): void {
-    if (this.scene.scene.isActive() && this.scene.state.modal.type === 19) {
+    super.preUpdate(time, delta);
+    if (this.scene.scene.isActive() && this.scene.state.modal.type === 19 && this.scene.state.clan) {
       if (JSON.stringify(this.logs) !== JSON.stringify(this.scene.state.clan[this.farm].logs)) {
         this.logElements.destroy(true);
         this.createLogs();
@@ -596,7 +597,7 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
           if (this.currentCountText.text !== text) this.currentCountText.setText(text);
         }
       }
-      if (this.currentUserCountText.active) {
+      if (this.currentUserCountText && this.currentUserCountText.active) {
         const farmUpperCase: string = this.farm[0].toUpperCase() + this.farm.slice(1);
         const text: string = this.farm !== 'diamond' ? shortNum(this.scene.state[`user${farmUpperCase}`].money) : String(this.scene.state.user.diamonds);
         const count: number = this.farm !== 'diamond' ? this.scene.state[`user${farmUpperCase}`].money : this.scene.state.user.diamonds;
