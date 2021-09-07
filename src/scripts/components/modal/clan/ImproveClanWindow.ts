@@ -1,6 +1,7 @@
 import Modal from '../../../scenes/Modal/Modal';
 import ClanWindow from './ClanWindow';
 import axios, { AxiosResponse } from 'axios';
+import { shortNum } from '../../../general/basic';
 
 export default class ImproveClanWindow {
   private window: ClanWindow;
@@ -74,7 +75,7 @@ export default class ImproveClanWindow {
     const padding: number = 220;
     const right1 = {
       text: this.price,
-      icon: 'diamond'
+      icon: 'clan-diamond-coin'
     };
     const btn1 = this.scene.bigButton('green', 'left', padding, this.scene.state.lang.improveClan, right1);  
     this.scene.clickModalBtn(btn1, () => { this.handleImprove(); });

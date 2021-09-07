@@ -214,7 +214,7 @@ export default class ImproveClanFarmWindow extends Phaser.GameObjects.Sprite{
 
     if (this.scene.state.clan.ownerId === this.scene.state.user.id) {
       if (this.scene.state.clan[this.farm].cooldown > 0) {
-        const estimateCost: number = Math.round(this.scene.state.clan.main.cooldown / 60) * 2;
+        const estimateCost: number = Math.round(this.scene.state.clan[this.farm].cooldown / 60) * 2;
         right1.text = String(estimateCost > 1000 ? 1000 : estimateCost);
         right1.icon = 'clan-diamond-coin';
         const btn1 = this.scene.bigButton('green', 'left', padding + 10, this.scene.state.lang.speedUpImprovment, right1);  
@@ -229,7 +229,7 @@ export default class ImproveClanFarmWindow extends Phaser.GameObjects.Sprite{
       this.timer.setVisible(false);
       this.leftText.setVisible(false);
       if (this.scene.state.clan[this.farm].cooldown > 0) {
-        const estimateCost: number = Math.round(this.scene.state.clan.main.cooldown / 60) * 2;
+        const estimateCost: number = Math.round(this.scene.state.clan[this.farm].cooldown / 60) * 2;
         right1.text = String(estimateCost > 1000 ? 1000 : estimateCost);
         right1.icon = 'clan-diamond-coin';
         this.scene.add.text(this.x, this.y + padding - 40, this.scene.state.lang.actionIsAvailableHead, textStyle).setOrigin(0.5);

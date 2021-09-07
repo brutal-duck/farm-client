@@ -264,6 +264,21 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
       align: 'center',
       wordWrap: { width: 400 },
     };
+
+    const messageTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Bip',
+      fontSize: '26px',
+      color: '#fffdfa',
+      align: 'center',
+      shadow: {
+        offsetX: 1,
+        offsetY: 1, 
+        color: '#96580e',
+        blur: 2,
+        fill: true,
+      },
+      wordWrap: { width: 400 },
+    };
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     let x: number = headerGeom.left + 100;
     this.scene.add.nineslice(this.posx, headerGeom.bottom + 130, this.windowWidth, 150, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
@@ -274,7 +289,7 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
       x += btn.displayWidth + 20
     }
 
-    this.scene.add.text(this.posx, headerGeom.bottom + 270, this.scene.state.lang[`open${this.farm[0].toUpperCase() + this.farm.slice(1)}Farm`], textStyle).setOrigin(0.5).setFontSize(25);
+    this.scene.add.text(this.posx, headerGeom.bottom + 260, this.scene.state.lang[`open${this.farm[0].toUpperCase() + this.farm.slice(1)}Farm`], messageTextStyle).setOrigin(0.5).setAlpha(0.9);
   }
 
   private setActiveBtn(el: {

@@ -113,12 +113,10 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
 
   private createBg(): void {
     this.bg = this.scene.add.tileSprite(this.posx, this.posy, this.windowWidth, this.windowHeight, 'white-pixel').setTint(0xFF9700);
-    // this.scene.add.sprite(this.posx, this.posy, 'clan-tournament-decor');
     this.scene.add.sprite(this.bg.getLeftCenter().x, this.bg.getLeftCenter().y - 90, 'decor-left').setOrigin(1);
     this.scene.add.sprite(this.bg.getRightCenter().x, this.bg.getRightCenter().y + 310, 'decor-right').setOrigin(0, 1);
     this.scene.add.sprite(this.bg.getLeftCenter().x - 10, this.bg.getLeftCenter().y - 220, 'clan-star').setAngle(-15).setDepth(2).setOrigin(0.5);
     this.scene.add.sprite(this.bg.getRightCenter().x + 15, this.bg.getRightCenter().y + 210, 'clan-star').setAngle(15).setDepth(2).setOrigin(0.5);
-
   }
 
   private createHeader(): void {
@@ -343,13 +341,32 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
         fill: true,
       },
     };
+    const messageTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Bip',
+      fontSize: '20px',
+      color: '#fffdfa',
+      align: 'center',
+      shadow: {
+        offsetX: 1,
+        offsetY: 1, 
+        color: '#96580e',
+        blur: 2,
+        fill: true,
+      },
+    };
     const y = this.posy + 90;
     this.scene.add.nineslice(this.posx, y, 490, 590, 'modal-square-bg', 10).setOrigin(0.5);
-    this.scene.add.sprite(this.posx, y - 308, 'clan-tournament-plate-bg');
-    
+    if (this.scene.state.progress[this.farm].open) {
+      this.scene.add.sprite(this.posx, y - 308, 'clan-tournament-plate-bg');
+    }
     const moneyText: string = shortNum(this.scene.state[`user${this.farm[0].toUpperCase() + this.farm.slice(1)}`].money);
     this.userMoney = this.scene.add.text(this.posx + 12, y - 308, moneyText, textStyle).setOrigin(0.5).setAlpha(0.65);
     this.userMoneyIcon = this.scene.add.sprite(this.posx - 60, y - 308, `${this.farm}Coin`).setScale(0.125);
+    if (!this.scene.state.progress[this.farm].open) {
+      this.userMoney.setVisible(false);
+      this.userMoneyIcon.setVisible(false);
+      this.scene.add.text(this.posx, y - 315, this.scene.state.lang[`open${this.farm[0].toUpperCase() + this.farm.slice(1)}Farm`], messageTextStyle).setAlpha(0.9).setOrigin(0.5);
+    }
   }
 
   public updateBtns(): void {
