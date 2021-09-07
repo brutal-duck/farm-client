@@ -193,16 +193,13 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
     const coinTexture: string = `clan-${this.farm}-coin`;
     const farmUpperCase: string = this.farm[0].toUpperCase() + this.farm.slice(1);
     const userCoinTexture: string = this.farm !== 'diamond' ? `${this.farm}Coin` : 'diamond';
-    const title1Text: string = this.farm !== 'diamond' ? this.scene.state.clan[this.farm].money : String(this.scene.state.clan[this.farm].count);
     const title1: Phaser.GameObjects.Text = this.scene.add.text(headerGeom.left + 60, headerGeom.bottom + 12, this.scene.state.lang.nowInTreasury, titleTextStyle);
     this.coinIcon = this.scene.add.sprite(title1.getBounds().right + 7, title1.getBounds().centerY, coinTexture).setScale(0.5).setOrigin(0, 0.5);
-    this.currentCountText = this.scene.add.text(this.coinIcon.getBounds().right + 7, title1.getBounds().centerY, title1Text, titleTextStyle).setOrigin(0, 0.5);
-
-    const title2Text: string = this.farm !== 'diamond' ? String(this.scene.state[`user${farmUpperCase}`].money) : String(this.scene.state.user.diamonds);
+    this.currentCountText = this.scene.add.text(this.coinIcon.getBounds().right + 7, title1.getBounds().centerY, '', titleTextStyle).setOrigin(0, 0.5);
 
     const title2: Phaser.GameObjects.Text = this.scene.add.text(headerGeom.left + 60, headerGeom.bottom + 270 - 5, this.scene.state.lang.atYou, titleTextStyle).setOrigin(0, 0.5);
     const coin: Phaser.GameObjects.Sprite = this.scene.add.sprite(title2.getBounds().right + 7, title2.getBounds().centerY, userCoinTexture).setScale(0.12).setOrigin(0, 0.5);
-    this.currentUserCountText = this.scene.add.text(coin.getBounds().right + 7, title2.getBounds().centerY, title2Text, titleTextStyle).setOrigin(0, 0.5);
+    this.currentUserCountText = this.scene.add.text(coin.getBounds().right + 7, title2.getBounds().centerY, '', titleTextStyle).setOrigin(0, 0.5);
     
     if (this.farm !== 'diamond') {
       const farmProgress: IpartProgress = this.scene.state.progress[this.farm];
