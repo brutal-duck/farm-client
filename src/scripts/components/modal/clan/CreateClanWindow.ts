@@ -2,6 +2,7 @@ import axios from "axios";
 import Modal from "../../../scenes/Modal/Modal";
 import ClanWindow from './ClanWindow';
 import LogoManager, { Icon } from './../../Utils/LogoManager';
+const CREATE_CLAN_COST: number = 250;
 
 export default class CreateClanWindow {
   private window: ClanWindow;
@@ -98,8 +99,12 @@ export default class CreateClanWindow {
     this.scene.click(zoneClose, () => {
       if (!this.clanIsClosed) this.toggleSwitch();
     });
+    const right1 = {
+      text: CREATE_CLAN_COST,
+      icon: 'diamond'
+    };
     // Кнопка
-    const createClanBtn = this.scene.bigButton('green', 'center', 280, this.scene.state.lang.createClan);
+    const createClanBtn = this.scene.bigButton('green', 'left', 280, this.scene.state.lang.createClan, right1);
     const errorTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Shadow',
       fontSize: '19px',
@@ -209,67 +214,82 @@ export default class CreateClanWindow {
   }
 
   private createClan(): void {
-    if (!this.change) {
-
-      let checkName: boolean = true;
-      const re: RegExp = /[\p{Alpha}\p{M}\p{Nd}\p{Pc}\p{Join_C}]/gu;
-      checkName = re.test(this.input.value);
-          
-      if (this.input.value.length < 6 || this.input.value.length > 20) checkName = false;
-      
-      if (checkName) {
-        let login: string = this.scene.state.user.login;
-        if (this.scene.state.platform !== 'web' && this.scene.state.platform !== 'android') login = this.scene.state.name;
-        const avatar: string = Number(this.scene.state.user.avatar) > 0 ? this.scene.state.user.avatar : this.scene.state.avatar;
-        this.change = true;
-        axios.post(process.env.API + '/createClan', {
-          id: this.scene.state.user.id,
-          hash: this.scene.state.user.hash,
-          counter: this.scene.state.user.counter,
-          name: this.input.value,
-          isClosed: this.clanIsClosed,
-          userName: login,
-          userAvatar: avatar,
-          userStatus: this.scene.state.user.status,
-          avatar: this.scene.state.clanAvatar,
-        }).then((res) => {
-          if (res.data.error) {
-            this.change = false;
-              this.result.setText(this.scene.state.lang.haveClan).setAlpha(1);
-              if (!this.addHeightError && !this.addHeightFounded) {
-                this.addHeightFounded = true;
-                this.window.addWindowHeight(10);
-              } 
-          } else {
-            this.scene.state.user.clanId = res.data.result.id;
-            this.scene.state.clan = res.data.result;
-
-            this.scene.state.socket.io.emit('joinClanRoom', {
-              clanId: this.scene.state.user.clanId,
-            });
+    if (this.scene.state.user.diamonds >= CREATE_CLAN_COST) {
+      if (!this.change) {
+        let checkName: boolean = true;
+        const re: RegExp = /[\p{Alpha}\p{M}\p{Nd}\p{Pc}\p{Join_C}]/gu;
+        checkName = re.test(this.input.value);
             
-            this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-            this.scene.enterKey.destroy();
-            this.input.remove();
-            this.scene.state.modal = {
-              type: 18,
-              clanWindowType: 9,
-              message: 'create',
-            };
-            this.scene.scene.restart(this.scene.state);
+        if (this.input.value.length < 6 || this.input.value.length > 20) checkName = false;
+        
+        if (checkName) {
+          let login: string = this.scene.state.user.login;
+          if (this.scene.state.platform !== 'web' && this.scene.state.platform !== 'android') login = this.scene.state.name;
+          const avatar: string = Number(this.scene.state.user.avatar) > 0 ? this.scene.state.user.avatar : this.scene.state.avatar;
+          this.change = true;
+          axios.post(process.env.API + '/createClan', {
+            id: this.scene.state.user.id,
+            hash: this.scene.state.user.hash,
+            counter: this.scene.state.user.counter,
+            name: this.input.value,
+            isClosed: this.clanIsClosed,
+            userName: login,
+            userAvatar: avatar,
+            userStatus: this.scene.state.user.status,
+            avatar: this.scene.state.clanAvatar,
+          }).then((res) => {
+            if (res.data.error) {
+              this.change = false;
+                this.result.setText(this.scene.state.lang.haveClan).setAlpha(1);
+                if (!this.addHeightError && !this.addHeightFounded) {
+                  this.addHeightFounded = true;
+                  this.window.addWindowHeight(10);
+                } 
+            } else {
+              this.scene.state.user.clanId = res.data.result.id;
+              this.scene.state.clan = res.data.result;
+  
+              this.scene.state.socket.io.emit('joinClanRoom', {
+                clanId: this.scene.state.user.clanId,
+              });
+              
+              this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
+              this.scene.enterKey.destroy();
+              this.input.remove();
+              this.scene.state.user.diamonds -= CREATE_CLAN_COST;
+              this.scene.state.modal = {
+                type: 18,
+                clanWindowType: 9,
+                message: 'create',
+              };
+              this.scene.scene.restart(this.scene.state);
+            }
+          });
+        } else {
+          this.result.setText(this.scene.state.lang.validClanName).setAlpha(1);
+  
+          if (!this.addHeightError && !this.addHeightFounded) {
+            this.addHeightError = true;
+            this.window.addWindowHeight(55);
+          } else if (!this.addHeightError) {
+            this.addHeightError = true;
+            this.window.addWindowHeight(45);
           }
-        });
-      } else {
-        this.result.setText(this.scene.state.lang.validClanName).setAlpha(1);
-
-        if (!this.addHeightError && !this.addHeightFounded) {
-          this.addHeightError = true;
-          this.window.addWindowHeight(55);
-        } else if (!this.addHeightError) {
-          this.addHeightError = true;
-          this.window.addWindowHeight(45);
         }
       }
+    } else {
+      this.scene.state.convertor = {
+        fun: 0,
+        count: CREATE_CLAN_COST - this.scene.state.user.diamonds,
+        diamonds: CREATE_CLAN_COST - this.scene.state.user.diamonds,
+        type: 2
+      };
+      this.scene.state.modal = {
+        type: 1,
+        sysType: 4,
+      };
+      this.scene.scene.restart(this.scene.state);
+      this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
     }
   }
 

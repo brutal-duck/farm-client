@@ -5,6 +5,7 @@ import LogoManager from '../../Utils/LogoManager';
 const KEY: string = '1491f4c9d53dfa6c50d0c4a375f9ba76';
 const CHANGE_EMBLEM_COST: number = 200;
 const CHANGE_CLAN_NAME_COST: number = 200;
+const CREATE_CLAN_COST: number = 250;
 
 export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
   public scene: Modal;
@@ -271,7 +272,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
       this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
       this.scene.add.tileSprite(this.x, headerGeom.bottom - 2, this.windowWidth, 100, 'white-pixel').setTint(0xD06900).setOrigin(0.5, 0);
       const right1 = {
-        text: 250,
+        text: CREATE_CLAN_COST,
         icon: 'diamond'
       };
       const btn = this.scene.bigButton('green', 'left', -240, this.scene.state.lang.createClan, right1);
@@ -340,7 +341,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     })
 
     const right1 = {
-      text: 250,
+      text: CREATE_CLAN_COST,
       icon: 'diamond'
     };
     const btn = this.scene.bigButton('green', 'left', -240, this.scene.state.lang.createClan, right1);
