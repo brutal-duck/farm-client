@@ -13,6 +13,7 @@ let arrowOnCollector: Phaser.GameObjects.Sprite;
 const BALANCE_HINT_COUNTDOWN = 20;
 let balanceCounter: number = 0;
 let balanceCounterMultiplier = 1;
+let openedModal: boolean = false;
 
 function interval(): void {
 
@@ -439,8 +440,10 @@ function interval(): void {
       !this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Profile') &&
-      !this.scene.isActive('Fortune')
+      !this.scene.isActive('Fortune') &&
+      !openedModal
     ) {
+      openedModal = true;
       this.state.modal = {
         type: 22,
       };

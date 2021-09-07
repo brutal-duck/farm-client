@@ -6,6 +6,8 @@ let checkCollector: number = 0;
 let sheepCollectorVolume: number = 0;
 let chickenCollectorVolume: number = 0;
 let cowCollectorVolume: number = 0;
+let openedModal: boolean = false;
+
 function interval(): void {
 
   this.time.addEvent({ delay: 1000, callback: (): void => {
@@ -223,8 +225,10 @@ function interval(): void {
       !this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Profile') &&
-      !this.scene.isActive('Fortune')
+      !this.scene.isActive('Fortune') &&
+      !openedModal
     ) {
+      openedModal = true;
       this.state.modal = {
         type: 22,
       };
