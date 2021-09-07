@@ -579,7 +579,7 @@ export default class PersonalChatList {
       userId: this.scene.state.user.id,
       hash: this.scene.state.user.hash,
       counter: this.scene.state.user.counter,
-      id: this.scene.state.foreignProfileId,
+      id: message.text.split(',')[0],
     };
 
     axios.post(process.env.API +'/getUserInfo', data).then(res => {
