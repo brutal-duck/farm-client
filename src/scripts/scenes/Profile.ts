@@ -61,7 +61,7 @@ class Profile extends Phaser.Scene {
   private shopNotificator: Notificator;
   private clanNotificator: Notificator;
   private personalMessageNotificator: Notificator;
-  
+  private clanFlagPole: ClanFlagPole;
   public click = click.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
   public getEventRaiting = getEventRaiting.bind(this); 
@@ -78,6 +78,7 @@ class Profile extends Phaser.Scene {
       this.socialTasks = this.state.okTask;
     } 
     this.currentDiamonds = this.state.user.diamonds;
+    this.clanFlagPole = null;
   }
 
 
@@ -144,6 +145,7 @@ class Profile extends Phaser.Scene {
     this.updateShopNotification();
     this.updatePersonalMessagesNotification();
     this.updateClanNotification();
+    this.updateClanFlagPole();
   }
 
   private createElements(): void {
@@ -646,10 +648,7 @@ class Profile extends Phaser.Scene {
     // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
     // graphics.lineStyle(5, 0xFFFF00);
     // graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
-    if (this.state.clan) {
-      new ClanFlagPole(this, { x: pos.x, y: pos.y - 100 }).setDepth(2);
-    }
-    this.clanNotificator = new Notificator(this, { x: pos.x + 65, y: pos.y - 80 }, true);
+    this.clanNotificator = new Notificator(this, { x: pos.x + 65, y: pos.y - 80 }, true).setCount(0);
     this.click(zone, (): void => {
       if (this.state.userSheep.part >= 7 && this.checkAuthUser()) {
         if (!this.state.user.clanId || !this.state.clan) {
@@ -874,8 +873,10 @@ class Profile extends Phaser.Scene {
   }
 
   private updateClanNotification(): void {
-    const count = this.state.user.clanTasks.filter(el => el.done && !el.got_awarded).length;
-    this.clanNotificator.setCount(count);
+    if (this.state.clan) {
+      const count = this.state.user.clanTasks.filter(el => el.done && !el.got_awarded).length;
+      this.clanNotificator.setCount(count);
+    }
   }
 
   private updateUserDiamonds(): void {
@@ -909,6 +910,16 @@ class Profile extends Phaser.Scene {
     (this.state.userSheep.tutorial >= 100 || 
     this.state.progress.chicken.part >= 1 || 
     this.state.progress.cow.part >= 1);
+  }
+  
+  private updateClanFlagPole(): void {
+    if (this.state.clan && !this.clanFlagPole) {
+      const pos: Iposition = {
+        x: 610,
+        y: 400
+      };
+      this.clanFlagPole = new ClanFlagPole(this, { x: pos.x, y: pos.y - 100 }).setDepth(2);
+    }
   }
 }
 
