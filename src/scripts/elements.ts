@@ -42,6 +42,7 @@ function bigButton(
       fill: true,
     },
   }).setDepth(1).setOrigin(textOrigin, 0.5);
+  if (color === 'grey') title.setShadow();
   let text1: any, text2: any, img1: any, img2: any;
 
   if (right1) {
@@ -57,6 +58,7 @@ function bigButton(
         fill: true,
       },
     }).setDepth(1).setOrigin(1, 0.5);
+    if (color === 'grey') text1.setShadow();
 
     img1 = this.add.sprite(570 - text1.displayWidth, this.cameras.main.centerY - 5 + height, right1.icon)
       .setOrigin(1, 0.5)
@@ -78,6 +80,7 @@ function bigButton(
           fill: true,
         },
       }).setDepth(1).setOrigin(1, 0.5);
+      if (color === 'grey') text2.setShadow();
   
       img2 = this.add.sprite(
         520 - text1.displayWidth - text2.displayWidth,
