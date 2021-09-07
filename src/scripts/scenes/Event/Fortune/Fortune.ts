@@ -527,6 +527,10 @@ export default class Fortune extends Phaser.Scene {
       this.state.user.boosts.fortune -= 1;
     } else {
       this.state.user.diamonds -= this.price;
+      this.state.amplitude.logAmplitudeEvent('diamonds_spent', {
+        type: 'fortune',
+        count: this.price,
+      });
     }
 
     switch (this.prizeId) {

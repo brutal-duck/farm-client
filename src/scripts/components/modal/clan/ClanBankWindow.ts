@@ -191,16 +191,10 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
       this.headerText.setFontSize(parseInt(this.headerText.style.fontSize) / multiply);
     }
     const coinTexture: string = `clan-${this.farm}-coin`;
-    const farmUpperCase: string = this.farm[0].toUpperCase() + this.farm.slice(1);
-    const userCoinTexture: string = this.farm !== 'diamond' ? `${this.farm}Coin` : 'diamond';
     const title1: Phaser.GameObjects.Text = this.scene.add.text(headerGeom.left + 60, headerGeom.bottom + 12, this.scene.state.lang.nowInTreasury, titleTextStyle);
     this.coinIcon = this.scene.add.sprite(title1.getBounds().right + 7, title1.getBounds().centerY, coinTexture).setScale(0.5).setOrigin(0, 0.5);
     this.currentCountText = this.scene.add.text(this.coinIcon.getBounds().right + 7, title1.getBounds().centerY, '', titleTextStyle).setOrigin(0, 0.5);
 
-    const title2: Phaser.GameObjects.Text = this.scene.add.text(headerGeom.left + 60, headerGeom.bottom + 270 - 5, this.scene.state.lang.atYou, titleTextStyle).setOrigin(0, 0.5);
-    const coin: Phaser.GameObjects.Sprite = this.scene.add.sprite(title2.getBounds().right + 7, title2.getBounds().centerY, userCoinTexture).setScale(0.12).setOrigin(0, 0.5);
-    this.currentUserCountText = this.scene.add.text(coin.getBounds().right + 7, title2.getBounds().centerY, '', titleTextStyle).setOrigin(0, 0.5);
-    
     if (this.farm !== 'diamond') {
       const farmProgress: IpartProgress = this.scene.state.progress[this.farm];
       if (farmProgress.open) this.createActiveBtns();
@@ -255,6 +249,25 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
       x += btn.displayWidth + 20
       if (this.activePackage === i) this.setActiveBtn({btn, text});
     }
+    
+    const userCoinTexture: string = this.farm !== 'diamond' ? `${this.farm}Coin` : 'diamond';
+    const titleTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '26px',
+      color: '#fffdfa',
+      align: 'center',
+      shadow: {
+        offsetX: 1,
+        offsetY: 1, 
+        color: '#96580e',
+        blur: 2,
+        fill: true,
+      },
+    }
+    const title2: Phaser.GameObjects.Text = this.scene.add.text(headerGeom.left + 60, headerGeom.bottom + 270 - 5, this.scene.state.lang.atYou, titleTextStyle).setOrigin(0, 0.5);
+    const coin: Phaser.GameObjects.Sprite = this.scene.add.sprite(title2.getBounds().right + 7, title2.getBounds().centerY, userCoinTexture).setScale(0.12).setOrigin(0, 0.5);
+    this.currentUserCountText = this.scene.add.text(coin.getBounds().right + 7, title2.getBounds().centerY, '', titleTextStyle).setOrigin(0, 0.5);
+
     this.donateBtn = this.scene.add.sprite(this.posx + 130, headerGeom.bottom + 270, 'clan-bank-button').setScale(0.7);
     this.donateBtnText = this.scene.add.text(this.donateBtn.x, this.donateBtn.y - 5, this.scene.state.lang.send, btnTextStyle).setOrigin(0.5);
     this.scene.clickModalBtn({ btn: this.donateBtn, title: this.donateBtnText }, (): void => { 
@@ -448,6 +461,14 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
           if (!res.data.error) {
             this.scene.state.clan = res.data.clan;
             this.scene.state.user.diamonds -= Number(packageCount);
+            this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
+              type: 'donate_clan',
+              count: Number(packageCount),
+            });
+            this.scene.state.amplitude.logAmplitudeEvent('clan_diamonds_get', {
+              type: 'donate',
+              count: Number(packageCount),
+            });
             const text: string = this.scene.state.clan[`${this.farm}`].count;
             if (Number(packageCount) >= DIAMOND_PACKAGE[2]) {
               MoneyAnimation.create(this.scene, 'diamond', {
@@ -588,7 +609,6 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
         } else {
           if (this.currentUserCountText.style.color !== activeColor) this.currentUserCountText.setColor(activeColor);
         }
-        
       }
     }
   }

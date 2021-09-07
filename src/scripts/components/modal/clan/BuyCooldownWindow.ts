@@ -90,7 +90,11 @@ export default class BuyCooldownWindow extends Phaser.GameObjects.Sprite {
   private handleAccept(): void {
     if (this.scene.state.clan.diamond.count >= this.price) {
       this.postServer().then(res => {
-        if (!res.data.error) {
+        if (!res.data) {
+          this.scene.state.amplitude.logAmplitudeEvent('clan_diamonds_spent', {
+            type: 'cooldown',
+            count: this.price,
+          });
           this.building.cooldown = 0;
           this.scene.scene.stop();
         }

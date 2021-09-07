@@ -257,6 +257,10 @@ export default class CreateClanWindow {
               this.scene.enterKey.destroy();
               this.input.remove();
               this.scene.state.user.diamonds -= CREATE_CLAN_COST;
+              this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
+                type: 'create_clan',
+                count: CREATE_CLAN_COST,
+              });
               this.scene.state.modal = {
                 type: 18,
                 clanWindowType: 9,

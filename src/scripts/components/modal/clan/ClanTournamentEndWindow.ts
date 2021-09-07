@@ -185,16 +185,35 @@ export default class ClanTournamentEndWindow {
   }
 
   private takeAward(): void {
+    const clanCount: number = Number(this.getClanAward());
+    const userCount: number = Number(this.getPlayerAward());
     const data = {
       id: this.scene.state.user.id,
       hash: this.scene.state.user.hash,
       counter: this.scene.state.user.counter,
-      count: Number(this.getClanAward()) // количество кристаллов клана в зависимости от места
+      count: clanCount,
     }
 
     axios.post(process.env.API +'/takeTournamentAward', data).then((res): void => {
-      if (!res.data) {
-        // MoneyAnimation.create(this.scene, 'diamond');
+      if (!res.data.error) {
+        if (this.scene.scene.isActive('ClanFarm')) {
+          MoneyAnimation.create(this.scene.game.scene.keys['ClanFarm'], 'diamond', { x: this.scene.cameras.main.centerX, y: this.scene.cameras.main.centerY });
+        } else if (this.scene.scene.isActive('Profile')) {
+          MoneyAnimation.create(this.scene.game.scene.keys['Profile'], 'diamond', { x: this.scene.cameras.main.centerX, y: this.scene.cameras.main.centerY });
+        } else {
+          MoneyAnimation.create(this.scene.game.scene.keys[`${this.scene.state.farm}Bars`], 'diamond');
+        }
+        this.scene.state.user.diamonds += userCount;
+        this.scene.state.amplitude.logAmplitudeEvent('diamonds_get', {
+          type: 'clan_event',
+          count: userCount,
+        });
+        if (res.data.clanAward) {
+          this.scene.state.amplitude.logAmplitudeEvent('clan_diamonds_get', {
+            type: 'clan_event',
+            count: clanCount,
+          });
+        }
         this.scene.state.clanEventTakenAward = true;
         this.scene.scene.stop();
       }
@@ -211,7 +230,7 @@ export default class ClanTournamentEndWindow {
         }
         Firework.create(this.scene, position, 1);
       },
-      repeat: 7
+      repeat: 7,
     });
   }
 }

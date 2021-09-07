@@ -604,6 +604,10 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
               this.scene.scene.stop('ClanScroll');
               this.scene.scene.restart(this.scene.state);
               this.scene.state.user.diamonds -= CHANGE_CLAN_NAME_COST;
+              this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
+                type: 'change_clan_name',
+                count: CHANGE_CLAN_NAME_COST,
+              });
             }
           });
         } else {

@@ -87,7 +87,11 @@ export default class ImproveClanWindow {
   private handleImprove(): void {
     if (this.scene.state.clan.diamond.count >= this.price) {
       this.postServer().then(res => {
-        if (!res.data.error) {
+        if (!res.data) {
+          this.scene.state.amplitude.logAmplitudeEvent('clan_diamonds_spent', {
+            type: 'improve_office',
+            count: this.price,
+          });
           this.scene.scene.stop();
         }
       });

@@ -158,7 +158,7 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
         if (task.done && !task.got_awarded) {
           this.scene.state.user.diamonds += task.diamonds;
           this.scene.state.amplitude.logAmplitudeEvent('diamonds_get', {
-            type: 'clan_task_award',
+            type: 'clan_task',
             count: task.diamonds,
           });
           this.scene.game.scene.keys[this.scene.state.farm].autosave();

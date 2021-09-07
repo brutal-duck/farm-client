@@ -136,6 +136,10 @@ export default class EditClanAvatarWindow {
             };
             this.scene.scene.restart(this.scene.state);
             this.scene.state.user.diamonds -= CHANGE_EMBLEM_COST;
+            this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
+              type: 'change_clan_avatar',
+              count: CHANGE_EMBLEM_COST,
+            });
           }
         });
       } else {
