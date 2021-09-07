@@ -88,14 +88,16 @@ const validateClan = (clan: Iclan): Iclan => {
     }
   }
   const validClan = clan;
-  if (typeof validClan.sheep.level !== 'number' || validClan.sheep.level <= 0 || validClan.sheep.level > improveClanFarm.length) validClan.sheep.level = basicClan.sheep.level;
-  if (typeof validClan.chicken.level !== 'number' || validClan.chicken.level <= 0 || validClan.chicken.level > improveClanFarm.length) validClan.chicken.level = basicClan.chicken.level;
-  if (typeof validClan.cow.level !== 'number' || validClan.cow.level <= 0 || validClan.cow.level > improveClanFarm.length) validClan.cow.level = basicClan.cow.level;
-  if (typeof validClan.main.level !== 'number' || validClan.main.level <= 0) validClan.main.level = basicClan.main.level;
-  if (typeof validClan.diamond.count !== 'number') validClan.diamond.count = basicClan.diamond.count;
-  if (typeof validClan.sheep.money !== 'string' || Number(validClan.sheep.money) <= 0) validClan.sheep.money = basicClan.sheep.money;
-  if (typeof validClan.chicken.money !== 'string' || Number(validClan.chicken.money) <= 0) validClan.chicken.money = basicClan.chicken.money;
-  if (typeof validClan.cow.money !== 'string' || Number(validClan.cow.money) <= 0) validClan.cow.money = basicClan.cow.money;
+  if (validClan) {
+    if (typeof validClan.sheep.level !== 'number' || validClan.sheep.level <= 0 || validClan.sheep.level > improveClanFarm.length) validClan.sheep.level = basicClan.sheep.level;
+    if (typeof validClan.chicken.level !== 'number' || validClan.chicken.level <= 0 || validClan.chicken.level > improveClanFarm.length) validClan.chicken.level = basicClan.chicken.level;
+    if (typeof validClan.cow.level !== 'number' || validClan.cow.level <= 0 || validClan.cow.level > improveClanFarm.length) validClan.cow.level = basicClan.cow.level;
+    if (typeof validClan.main.level !== 'number' || validClan.main.level <= 0) validClan.main.level = basicClan.main.level;
+    if (typeof validClan.diamond.count !== 'number') validClan.diamond.count = basicClan.diamond.count;
+    if (typeof validClan.sheep.money !== 'string' || Number(validClan.sheep.money) <= 0) validClan.sheep.money = basicClan.sheep.money;
+    if (typeof validClan.chicken.money !== 'string' || Number(validClan.chicken.money) <= 0) validClan.chicken.money = basicClan.chicken.money;
+    if (typeof validClan.cow.money !== 'string' || Number(validClan.cow.money) <= 0) validClan.cow.money = basicClan.cow.money;
+  }
   return validClan;
 };
 

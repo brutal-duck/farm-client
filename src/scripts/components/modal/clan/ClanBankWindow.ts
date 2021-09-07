@@ -387,7 +387,7 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
     const farmUser: string = `user${this.farm[0].toUpperCase() + this.farm.slice(1)}`;
     if (this.farm !== 'diamond') {
       const farmMoney: number = Math.round(this.scene.state[farmUser].money);
-      if (farmMoney > packageCount) {
+      if (farmMoney >= packageCount) {
         this.postMoney(packageCount).then(res => {
           if (!res.data.error) {
             this.scene.state.clan = res.data.clan;
