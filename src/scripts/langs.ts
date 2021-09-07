@@ -1069,6 +1069,8 @@ export default {
     awardsForUsersInClan: 'Награды внутри клана',
     clanLeaders: 'Лидеры вашего клана',
     clanTournamentTakeAwards: 'Забрать награду',
+    inviteToJoin: 'Заявка на вступление',
+    inviteToJoinClanSend: 'Заявка отправлена в клан:'
   },
 
   en: {
@@ -2141,5 +2143,7 @@ export default {
     awardsForUsersInClan: 'Награды внутри клана',
     clanLeaders: 'Лидеры вашего клана',
     clanTournamentTakeAwards: 'Забрать награду',
+    inviteToJoin: 'Заявка на вступление',
+    inviteToJoinClanSend: 'Заявка отправлена в клан:'
   },
 }

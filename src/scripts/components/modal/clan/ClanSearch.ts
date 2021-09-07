@@ -113,6 +113,16 @@ export default class ClanSearch {
       login: login,
     };
     this.scene.state.socket.io.emit('askJoinClan', data);
+    
+    this.scene.state.clanAvatar = clan.avatar
+    this.scene.state.modal = {
+      type: 18,
+      clanWindowType: 11,
+      message: clan.name,
+    };
+    this.scene.scene.stop('Modal');
+    this.scene.scene.stop();
+    this.scene.scene.launch('Modal', this.scene.state);
   }
 
   private joinOpenedClan(clan: Iclan): void {
