@@ -16,7 +16,7 @@ export default class CooldownSprite extends Phaser.GameObjects.Sprite {
 
   constructor(territory: any) {
     const texture: string = territory.territoryType === 0 ? 'hatchet' : 'hammer';
-    super(territory.scene, territory.x + 80, territory.y + 70, texture);
+    super(territory.scene, territory.x + 80, territory.y + 65, texture);
     this.territory = territory;
     this.price = Math.round(this.territory.cooldown / 60) * TIMER_COEFFICIENT;
     this.create();
@@ -41,7 +41,7 @@ export default class CooldownSprite extends Phaser.GameObjects.Sprite {
         fill: true,
       },
     };
-    this.timer = this.scene.add.text(this.territory.x + 120, this.territory.y + 140, shortTime(this.territory.cooldown, this.scene.state.lang), timerTextStyle).setDepth(this.depth + 240).setOrigin(0.5);
+    this.timer = this.scene.add.text(this.territory.x + 120, this.territory.y + 120, shortTime(this.territory.cooldown, this.scene.state.lang), timerTextStyle).setDepth(this.depth + 240).setOrigin(0.5);
     const textGeom: Phaser.Geom.Rectangle = this.timer.getBounds();
 
     this.timerBg = this.scene.add.sprite(textGeom.centerX, textGeom.centerY + 28, 'cooldown-plate')
