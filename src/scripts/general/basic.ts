@@ -1219,7 +1219,7 @@ function nextDayTimer(): void {
     if (this.state.user.clanId) {
       this.state.user.clanTasks = getNewClanTasks(this.state);
       this.scene.stop('Modal');
-      this.scene.launch('Modal');
+      this.scene.launch('Modal', this.state);
     }
     axios.post(process.env.API + "/newDay", {    
       id: this.state.user.id,

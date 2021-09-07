@@ -256,7 +256,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     this.scene.scene.stop('ClanScroll');
     this.scene.scene.stop('ClanFarm');
     this.scene.scene.restart(this.scene.state);
-    this.scene.scene.launch('Profile');
+    this.scene.scene.launch('Profile', this.scene.state);
   }
 
   private createLeaderboard(): void {

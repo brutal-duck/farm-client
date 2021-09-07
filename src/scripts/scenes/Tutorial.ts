@@ -459,7 +459,7 @@ class Tutorial extends Phaser.Scene {
         this.pointerTutorial();
 
       } else if (this.state.tutorial.additional === 'clan') {
-        this.scene.launch('Profile');
+        this.scene.launch('Profile', this.state);
         this.topPosition = true;
         this.indent = this.height - 620;
         this.tailX = 500;
