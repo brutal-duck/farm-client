@@ -224,8 +224,8 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
     if (this.progressText?.width > 120) this.progressText.setOrigin(0, 0.5).setX(this.icon.getLeftCenter().x - 18).setFontSize(24);
     this.progress?.setPercent(Math.round(100 / count * progress));
     if (Boolean(this.taskInfo.task.done) || Math.round(100 / count * progress) === 100) this.taskCompleteAwardNonTaken();
-    this.progress?.setPercent(Math.round(100 / count * this.taskInfo.task.progress));    
-    if (this.taskInfo.task.done === 1 || Math.round(100 / count * this.taskInfo.task.progress) === 100) this.taskCompleteAwardNonTaken();
+    this.progress?.setPercent(Math.round(100 / count * progress));    
+    if (this.taskInfo.task.done === 1 || Math.round(100 / count * progress) === 100) this.taskCompleteAwardNonTaken();
   }
 
   private setDone(): void {

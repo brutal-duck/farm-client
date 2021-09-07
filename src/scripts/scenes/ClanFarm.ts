@@ -482,7 +482,7 @@ export default class ClanFarm extends Phaser.Scene {
     if (!this.state.clan) {
       this.scene.stop();
       this.scene.stop('Modal');
-      this.scene.stop('Clan');
+      this.scene.stop('ClanScroll');
     } else {
       this.updateCooldowns();
       this.updateLevelText();

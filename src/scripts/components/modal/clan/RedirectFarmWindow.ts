@@ -66,7 +66,7 @@ export default class RedirectFarmWindow {
     this.scene.state.openConvertor = true;
     this.scene.game.scene.keys[this.scene.state.farm].autosave();
     this.scene.scene.stop('Modal');
-    this.scene.scene.stop('Clan');
+    this.scene.scene.stop('ClanScroll');
     this.scene.scene.stop('ClanFarm');
     this.scene.scene.stop(this.scene.state.farm);
     this.scene.scene.stop(`${this.scene.state.farm}Bars`);
