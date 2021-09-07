@@ -198,7 +198,6 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
     this.valutaSum?.setVisible(false);
     this.hideProgress();
     if (!this.clanTask) this.scene.taskWindow?.updateProgress();
-    this.scene.taskWindow?.updateProgress();
     this.textArtifactsFix();
   }
 
