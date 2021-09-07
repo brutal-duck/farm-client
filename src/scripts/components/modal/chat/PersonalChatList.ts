@@ -415,6 +415,7 @@ export default class PersonalChatList {
     const message: string = `${splitedText[1]} ${this.scene.state.lang.askToJoinInClan}`;
 
     const messageText: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, message, messageTextStyle).setDepth(2).setOrigin(0, 1);
+    this.scene.click(messageText, () => { this.onUserNameClick(splitedText[0]); });
     const messageTextGeom: Phaser.Geom.Rectangle = messageText.getBounds();
     
     let height: number = 0;
@@ -682,5 +683,15 @@ export default class PersonalChatList {
       declainBtn,
       declainBtnText,
     }
+  }
+
+  private onUserNameClick(id: string): void {
+    this.scene.state.foreignProfileId = id;
+    this.scene.state.modal = {
+      type: 15,
+    };
+    this.scene.scene.stop('Chat');
+    this.scene.scene.stop('Modal');
+    this.scene.scene.launch('Modal', this.scene.state);
   }
 };
