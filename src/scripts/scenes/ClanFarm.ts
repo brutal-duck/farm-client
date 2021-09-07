@@ -18,6 +18,7 @@ const clanDiamondCoin: string = require('../../assets/images/clan/coin-diamond.p
 const factorySmoke: string = require('../../assets/images/cow/factory-smoke.png');
 const event: string = require('../../assets/images/clan/event.png');
 const clanBuilding: string = require('../../assets/images/clan/clan-building.png');
+const glow: string = require('../../assets/images/modal/clan/glow.png');
 
 
 const levelTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
@@ -47,6 +48,9 @@ export default class ClanFarm extends Phaser.Scene {
   private taskNotificator: Notificator;
   private shopNotificator: Notificator;
   private eventSprite: Phaser.GameObjects.Sprite;
+  private eventGlowSprite: Phaser.GameObjects.Sprite;
+  private eventGlowAli: Phaser.Tweens.Tween;
+  // private eventGlowAliConfig: Phaser.Types.Tweens.TweenBuilderConfig;
   private eventClanIcon: Icon;
   private eventPlace: Phaser.GameObjects.Text;
   private eventTime: Phaser.GameObjects.Text;
@@ -78,11 +82,18 @@ export default class ClanFarm extends Phaser.Scene {
     this.load.image('clan-diamond-coin', clanDiamondCoin);
     this.load.image('clan-map-event', event);
     this.load.image('clan-building', clanBuilding);
+    this.load.image('clan-glow', glow);
   }
   
   public init(state: Istate): void {
     this.state = state;
     if (this.state.user.clanTasks.length <= 0) this.state.user.clanTasks = getNewClanTasks(this.state);
+    // this.eventGlowAliConfig = {
+    //   targets: this.eventGlowSprite,
+    //   scale: { to: 1, duration: 300 },
+    //   angle: { to: '+=90', duration: 1000 },
+    //   loop: -1,
+    // }
   }
 
   public create(): void {
@@ -445,11 +456,27 @@ export default class ClanFarm extends Phaser.Scene {
     // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
     // graphics.lineStyle(5, 0x7F76F3);
     // graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+    this.eventGlowSprite = this.add.sprite(pos.x - 10, pos.y - 20, 'clan-glow').setAlpha(0.6).setScale(0.1).setVisible(false);
     this.eventSprite = this.add.sprite(pos.x, pos.y, 'clan-map-event').setVisible(false);
     this.eventClanIcon = LogoManager.createIcon(this, pos.x + 4, pos.y + 48, this.state.clan.avatar).setScale(0.23).setVisible(false);
     this.eventPlace = this.add.text(pos.x + 4, pos.y + 82, '-', placeTextStyle).setOrigin(0.5).setVisible(false);
     const timeText: string = `${this.state.lang.lastTime} ${shortTime(this.state.progress.clanEvent.endTime, this.state.lang)}`;
     this.eventTime = this.add.text(pos.x + 4, pos.y + 100, timeText, timeTextStyle).setOrigin(0.5).setVisible(false);
+    this.eventGlowAli = this.tweens.add({
+      onStart: (): void => {
+        this.tweens.add({
+          targets: this.eventGlowSprite,
+          angle: 90,
+          duration: 3000,
+          loop: -1,
+        })
+      },
+      targets: this.eventGlowSprite,
+      scale: 1.2,
+      duration: 1000,
+    })
+
+    this.eventGlowAli.stop()
 
     this.eventStartText = this.add.text(pos.x - 10, pos.y + 30, this.state.lang.eventStart, startTextStyle)
       .setOrigin(0.5)
@@ -501,6 +528,8 @@ export default class ClanFarm extends Phaser.Scene {
     if (!this.eventSprite.visible && this.state.progress.clanEvent.startTime <= 0 && this.state.progress.clanEvent.endTime > 0) {
       this.setClanEventPlace();
       this.eventSprite.setVisible(true);
+      this.eventGlowSprite.setVisible(true);
+      this.eventGlowAli.play();
       this.eventClanIcon.setVisible(true);
       this.eventPlace.setVisible(true);
       this.eventTime.setVisible(true);
@@ -509,6 +538,8 @@ export default class ClanFarm extends Phaser.Scene {
       this.eventStartBg.setVisible(false);
     } else if (!this.eventStartBg.visible && this.state.progress.clanEvent.startTime > 0 && this.state.progress.clanEvent.endTime > 0) {
       this.eventSprite.setVisible(false);
+      this.eventGlowSprite.setVisible(true);
+      this.eventGlowAli.stop();
       this.eventClanIcon.setVisible(false);
       this.eventPlace.setVisible(false);
       this.eventTime.setVisible(false);
@@ -517,6 +548,8 @@ export default class ClanFarm extends Phaser.Scene {
       this.eventStartBg.setVisible(true);
     } else if (!this.eventStartBg.visible && this.state.progress.clanEvent.endTime <= 0) {
       this.eventSprite.setVisible(false);
+      this.eventGlowSprite.setVisible(true);
+      this.eventGlowAli.stop();
       this.eventClanIcon.setVisible(false);
       this.eventPlace.setVisible(false);
       this.eventTime.setVisible(false);

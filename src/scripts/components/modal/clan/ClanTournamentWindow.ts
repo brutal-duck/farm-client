@@ -3,6 +3,7 @@ import { shortNum, shortTime } from '../../../general/basic';
 import Modal from '../../../scenes/Modal/Modal';
 import { clanTournamentSettings } from '../../../local/settings';
 import BigInteger from '../../../libs/BigInteger';
+import FlyAwayStar from '../../animations/FlyAwayStar';
 
 export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
   public scene: Modal;
@@ -486,6 +487,7 @@ class AnimalPlate extends Phaser.GameObjects.Sprite {
   }
 
   private onClick(): void {
+    new FlyAwayStar(this.scene, this.btn.x, this.btn.y - 30, 1)
     this.window.disableBtns();
     this.postServer().then(res => {
       const { error, clan, place } = res.data;
