@@ -615,7 +615,7 @@ export default function typePreload(): void {
         this.load.image('clan-glow', clanGlow);
         this.load.image('clan-building', clanBuilding);
         this.load.image('circle', circle);
-        this.load.image('circle', clanDiamondCoin);
+        this.load.image('clan-diamond-coin', clanDiamondCoin);
         break;
       default:
         break;
