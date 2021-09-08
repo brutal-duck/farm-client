@@ -444,16 +444,10 @@ class SheepBars extends Phaser.Scene {
 
   // актуальный прогресс главы
   public currentPartProgress(): void {
-    
-    let tasks: Itasks[] = this.game.scene.keys[this.state?.farm]?.partTasks();
-    let done: number = 0;
-
-    for (let i in tasks) if (tasks[i].done === 1) done++;
-
-    let text: string = done + '/' + tasks?.length;
-
+    const tasks: Itasks[] = this.game.scene.keys[this.state?.farm]?.partTasks();
+    const done: number = tasks.filter(el => el.done === 1).length;
+    const text: string = done + '/' + tasks?.length;
     if (text !== this.partProgress?.text) this.partProgress?.setText(text);
-
   }
 
 
