@@ -128,6 +128,8 @@ export default class CreateClanWindow {
       inputBg,
       createClanBtn.btn,
       createClanBtn.title,
+      createClanBtn.text1,
+      createClanBtn.img1,
       this.result,
       this.window.headerText,
       this.window.closeBtn,
