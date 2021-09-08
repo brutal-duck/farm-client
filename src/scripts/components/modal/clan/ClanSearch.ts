@@ -167,6 +167,9 @@ export default class ClanSearch {
             userName: login,
             userStatus: this.scene.state.user.status,
           });
+          this.scene.state.amplitude.logAmplitudeEvent('clan', {
+            type: 'open_join',
+          });
           this.scene.state.modal = {
             type: 18,
             clanWindowType: 9,

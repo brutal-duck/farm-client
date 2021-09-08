@@ -263,6 +263,9 @@ export default class CreateClanWindow {
                 type: 'create_clan',
                 count: CREATE_CLAN_COST,
               });
+              this.scene.state.amplitude.logAmplitudeEvent('clan', {
+                type: 'create',
+              });
               this.scene.state.modal = {
                 type: 18,
                 clanWindowType: 9,

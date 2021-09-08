@@ -553,6 +553,9 @@ export default class PersonalChatList {
             userName: login,
             userStatus: this.scene.state.user.status,
           });
+          this.scene.state.amplitude.logAmplitudeEvent('clan', {
+            type: 'invite_join',
+          });
           this.scene.scene.stop('Modal');
           this.scene.scene.stop();
           this.scene.state.modal = {
