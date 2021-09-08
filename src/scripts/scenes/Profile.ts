@@ -20,6 +20,7 @@ const socialBtnVk: string = require('./../../assets/images/profile/social-btn-vk
 const socialBtnOk: string = require('./../../assets/images/profile/social-btn-ok.png');
 const closeWindowBtn: string = require('../../assets/images/modal/close-window-btn.png');
 const clanFlagpole: string = require('../../assets/images/clan/flagpole.png');
+const clanBuilding: string = require('../../assets/images/clan/clan-building.png');
 
 const progressTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
   fontFamily: 'Shadow',
@@ -100,6 +101,7 @@ class Profile extends Phaser.Scene {
     this.load.image('profile-social-btn-ok', socialBtnOk);
     this.load.image('close-window-btn', closeWindowBtn);
     this.load.image('clan-flagpole', clanFlagpole);
+    this.load.image('clan-building', clanBuilding);
   }
 
 
