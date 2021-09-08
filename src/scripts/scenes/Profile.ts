@@ -843,7 +843,7 @@ class Profile extends Phaser.Scene {
   }
   
   private createSocialTaskBtn(): void {
-    const position: Iposition = { x: 70, y: 230 };
+    const position: Iposition = { x: 70, y: 190 };
     if (this.state.userSheep.tutorial >= 100) {
       this.socialTaskBtn = this.add.sprite(position.x, position.y, `profile-social-btn-${this.state.platform}`);
       this.socialTaskNotificator = new Notificator(this, { x: position.x + this.socialTaskBtn.displayWidth / 2 - 10, y: position.y - this.socialTaskBtn.displayHeight / 2 + 5 });
