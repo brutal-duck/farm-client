@@ -26,7 +26,7 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
   private countClanPoints: Phaser.GameObjects.Text;
   private textClanPlace: Phaser.GameObjects.Text;
   private countClanPlace: Phaser.GameObjects.Text;
-  private plates: AnimalPlate[] = [];
+  private plates: AnimalPlate[];
   private timer: Phaser.GameObjects.Text;
 
   private userPoints: number = 0;
@@ -41,6 +41,21 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
   }
   
   private init(): void {
+    this.userMoney = null;
+    this.userMoneyIcon = null;
+    this.textUserPoints = null;
+    this.countUserPoints = null;
+    this.textClanPoints = null;
+    this.countClanPoints = null;
+    this.textClanPlace = null;
+    this.countClanPlace = null;
+    this.timer = null;
+    this.bg = null;
+    this.header = null;
+    this.closeBtn = null;
+    this.headerText = null;
+    this.footer = null;
+    this.plates = [];
     this.scene.add.existing(this);
     this.posx = this.scene.cameras.main.centerX;
     this.posy = this.scene.cameras.main.centerY + 50;
@@ -394,6 +409,9 @@ class AnimalPlate extends Phaser.GameObjects.Sprite {
   private btn: Phaser.GameObjects.Sprite;
   private btnText: Phaser.GameObjects.Text;
   private btnImg: Phaser.GameObjects.Sprite;
+  private animalSprite: Phaser.GameObjects.Sprite;
+  private animalText: Phaser.GameObjects.Text;
+  private animalMask: Phaser.Display.Masks.BitmapMask;
 
   constructor(window: ClanTournamentWindow, x: number, y: number, type: string, breed: number) {
     super(window.scene, x, y, 'clan-tournament-animal-bg');
@@ -405,6 +423,12 @@ class AnimalPlate extends Phaser.GameObjects.Sprite {
   }
 
   private init(): void {
+    this.btn = null;
+    this.btnText = null;
+    this.btnImg = null;
+    this.animalSprite = null;
+    this.animalText = null;
+    this.animalMask = null;
     const animal: ItournamentAnimal = this.scene.state.clanTournamentData[this.type].find((el: ItournamentAnimal) => el.breed === this.breed);
     this.count = animal ? animal.count : 0;
     this.setPrice();
@@ -438,13 +462,13 @@ class AnimalPlate extends Phaser.GameObjects.Sprite {
       },
     };
     this.scene.add.existing(this);
-    const mask: Phaser.Display.Masks.BitmapMask = this.createBitmapMask();
+    this.animalMask = this.createBitmapMask();
 
     const paddingX: number = this.type === 'sheep' ? 40 : this.type === 'chicken' ? 60 : 50;
     const paddingY: number = this.type === 'cow' ? -10 : 0;
     const scale: number = this.type === 'cow' ? 0.65 : 0.8
-    this.scene.add.sprite(this.x - this.width / 2 + paddingX, this.y + paddingY, `clan-${this.type}-${this.breed}`).setScale(scale).setMask(mask);
-    this.scene.add.text(this.x + 35 + 5, this.y - 23, this.scene.state.lang[`${this.type}Breed${this.breed}`], textStyle).setOrigin(0.5);
+    this.animalSprite = this.scene.add.sprite(this.x - this.width / 2 + paddingX, this.y + paddingY, `clan-${this.type}-${this.breed}`).setScale(scale).setMask(this.animalMask);
+    this.animalText = this.scene.add.text(this.x + 35 + 5, this.y - 23, this.scene.state.lang[`${this.type}Breed${this.breed}`], textStyle).setOrigin(0.5);
     this.btn = this.scene.add.sprite(this.x + 35 + 5, this.y + 17, 'little-button').setScale(0.95, 0.75);
     this.btnImg = this.scene.add.sprite(this.btn.x - this.btn.displayWidth / 2 + 22, this.btn.y - 5, `${this.type}Coin`).setScale(0.08);
     this.btnText = this.scene.add.text(this.btnImg.x + this.btnImg.displayWidth / 2 + 5, this.btn.y - 5, shortNum(this.price), btnTextStyle).setOrigin(0, 0.5);
@@ -506,6 +530,16 @@ class AnimalPlate extends Phaser.GameObjects.Sprite {
     }).finally(() => {
       this.window.updateBtns();
     });
+  }
+
+  public destroy(): void {
+    this.btn.destroy();
+    this.btnText.destroy();
+    this.btnImg.destroy();
+    this.animalSprite.destroy();
+    this.animalText.destroy();
+    this.animalMask.destroy();
+    super.destroy();
   }
 
   private postServer(): Promise<AxiosResponse<any>> {
