@@ -1,18 +1,17 @@
 import axios, { AxiosResponse } from 'axios';
 
 import AllTasks from '../tasks';
-import basicSheepTerritories from '../local/sheepTerritories';
-import basicChickenTerritories from '../local/chickenTerritories';
-import basicCowTerritories from '../local/cowTerritories';
+
 import basicUnicornCollector from '../local/unicornCollector';
-import { unicornSettings, sheepSettings, chickenSettings, cowSettings, general, improveClanFarm } from '../local/settings';
-import { userCow, userData, userSheep, userChicken } from '../local/usersData';
+import { unicornSettings, sheepSettings, chickenSettings, cowSettings, general } from '../local/settings';
+import { userCow, userSheep, userChicken } from '../local/usersData';
 import sheepCollectorSettings from '../local/sheepCollector';
 import chickenCollectorSettings from '../local/chickenCollector';
 import cowCollectorSettings from '../local/cowCollector';
 import getProgress from '../local/progress';
 import ErrorWindow from './../components/Web/ErrorWindow';
 import { getNewClanTasks } from './tasks';
+import DataValidator from './../libs/DataValidator';
 const basicUserCow = userCow;
 const basicUserSheep = userSheep;
 const basicUserChicken = userChicken;
@@ -43,132 +42,6 @@ const checkUserName = (state: Istate) => {
       });
     }
   }
-}
-
-const validateClan = (clan: Iclan): Iclan => {
-  const basicClan: Iclan = {
-    isClosed: false,
-    avatar: {
-      bg: 1,
-      frame: 1,
-      icon: 1,
-    },
-    diamond: {
-      count: 0,
-      logs: [],
-    },
-    points: 0,
-    limit: 10,
-    main: {
-      level: 1,
-      cooldown: 0,
-    },
-    chatMessages: [],
-    id: '',
-    ownerId: '',
-    name: '',
-    users: [],
-    sheep: {
-      level: 1,
-      cooldown: 0,
-      money: '0',
-      logs: [],
-    },
-    chicken: {
-      level: 1,
-      cooldown: 0,
-      money: '0',
-      logs: [],
-    },
-    cow: {
-      level: 1,
-      cooldown: 0,
-      money: '0',
-      logs: [],
-    }
-  }
-  const validClan = clan;
-  if (validClan) {
-    if (typeof validClan.sheep.level !== 'number' || validClan.sheep.level <= 0 || validClan.sheep.level > improveClanFarm.length) validClan.sheep.level = basicClan.sheep.level;
-    if (typeof validClan.chicken.level !== 'number' || validClan.chicken.level <= 0 || validClan.chicken.level > improveClanFarm.length) validClan.chicken.level = basicClan.chicken.level;
-    if (typeof validClan.cow.level !== 'number' || validClan.cow.level <= 0 || validClan.cow.level > improveClanFarm.length) validClan.cow.level = basicClan.cow.level;
-    if (typeof validClan.main.level !== 'number' || validClan.main.level <= 0) validClan.main.level = basicClan.main.level;
-    if (typeof validClan.diamond.count !== 'number') validClan.diamond.count = basicClan.diamond.count;
-    if (typeof validClan.sheep.money !== 'string' || Number(validClan.sheep.money) <= 0) validClan.sheep.money = basicClan.sheep.money;
-    if (typeof validClan.chicken.money !== 'string' || Number(validClan.chicken.money) <= 0) validClan.chicken.money = basicClan.chicken.money;
-    if (typeof validClan.cow.money !== 'string' || Number(validClan.cow.money) <= 0) validClan.cow.money = basicClan.cow.money;
-  }
-  return validClan;
-};
-
-const validateTerritories = (territories: Iterritories[], basicTerritories: Iterritories[]): Iterritories[] => {
-  const maxTerritoryType: number = 8;
-  for (let i: number = 0; i < territories.length; i += 1) {
-    const territory: Iterritories = basicTerritories.find((data: Iterritories) => territories[i].position === data.position && territories[i].block === data.block);
-    if (territory) {
-      if (!(territory.type >= 0 && territory.type <= maxTerritoryType
-        && territory.money >= 0
-        && territory.volume >= 0
-        && territory.improve > 0)) {
-        territories[i] = basicTerritories[i];  
-      }
-    } else {
-      territories[i] = basicTerritories[i];
-    }
-  }
-
-  if (territories.length === 0) {
-    for (const territory of basicTerritories) {
-      territories.push({
-        _id: territory._id,
-        block: territory.block,
-        position: territory.position,
-        type: territory.type,
-        volume: territory.volume,
-        improve: territory.improve,
-        money: territory.money, 
-        cooldown: territory.cooldown,
-        boughtType: territory.boughtType,
-      });
-    }
-  }
-  return territories;
-}
-
-const validateBoosts = (boosts: Iboosts): Iboosts => {
-  if (boosts) {
-    const sheepBoostsBasic: IfarmBosts = userData.boosts.sheep;
-    const chickenBoostsBasic: IfarmBosts = userData.boosts.chicken;
-    const cowBoostsBasic: IfarmBosts = userData.boosts.cow;
-    const fortuneBoostsBasic: number = userData.boosts.fortune;
-  
-    for (const key in sheepBoostsBasic) {
-      if (!boosts.sheep[key]) boosts.sheep[key] = sheepBoostsBasic[key];
-    }
-    for (const key in chickenBoostsBasic) {
-      if (!boosts.chicken[key]) boosts.chicken[key] = chickenBoostsBasic[key];
-    }
-    for (const key in cowBoostsBasic) {
-      if (!boosts.cow[key]) boosts.cow[key] = cowBoostsBasic[key];
-    }
-    if (!boosts.fortune) boosts.fortune = fortuneBoostsBasic;
-    return boosts;
-  }
-  return userData.boosts;
-}
-
-const setTaskStatus = (farmId: number, resTask: any[]): Itasks[] => {
-  const updatedTasks: Itasks[] = [];
-  for (const task of AllTasks) if (task.farm === farmId) updatedTasks.push(task);
-  for (const usersTask of resTask) {
-    const task = AllTasks.find((task: Itasks) => task.id === usersTask.task_id);
-    if (task) {
-      task.done = usersTask.done;
-      task.got_awarded = usersTask.got_awarded;
-      task.progress = usersTask.progress;
-    }
-  }
-  return updatedTasks;
 }
 
 const updateImproveTerritories = (territories: Iterritories[]): Iterritories[]  => {
@@ -379,9 +252,9 @@ export default function loadData(response: AxiosResponse): void {
   if (chickenTerritories.length === 0) response.data.user.chicken_money = basicUserCow.money;
   if (cowTerritories.length === 0) response.data.user.cow_money = basicUserChicken.money;
 
-  this.state.sheepTerritories = validateTerritories(sheepTerritories, basicSheepTerritories);
-  this.state.chickenTerritories = validateTerritories(chickenTerritories, basicChickenTerritories);
-  this.state.cowTerritories = validateTerritories(cowTerritories, basicCowTerritories);
+  this.state.sheepTerritories = DataValidator.validateTerritories(sheepTerritories, 1);
+  this.state.chickenTerritories = DataValidator.validateTerritories(chickenTerritories, 2);
+  this.state.cowTerritories = DataValidator.validateTerritories(cowTerritories, 3);
 
   // яйца
   const chickenEggs: IchickenEgg[] = [];
@@ -395,7 +268,7 @@ export default function loadData(response: AxiosResponse): void {
     });
   }
   this.state.chickenEggs = chickenEggs;
-  const boosts: Iboosts = validateBoosts(response.data.user.boosts);
+  const boosts: Iboosts = DataValidator.validateBoosts(response.data.user.boosts);
   const user: Iuser = {
     diamonds: response.data.user.diamonds,
     id: response.data.user._id,
@@ -421,9 +294,9 @@ export default function loadData(response: AxiosResponse): void {
     fortuneTutorial: false,
     clanTasks: response.data.user.clan_tasks || [],
   };
-  this.state.user = user;
+  this.state.user = DataValidator.checkUser(user);
 
-  this.state.clan = validateClan(response.data.clan);
+  this.state.clan = DataValidator.validateClan(response.data.clan);
   if (this.state.name === '' && this.state.platform === 'ya') {
     this.state.name = `yandex_${user.id.substr(0, 4)}`;
   }
@@ -503,13 +376,13 @@ export default function loadData(response: AxiosResponse): void {
     }
   }
 
-  this.state.userSheep = userSheep;
-  this.state.userChicken = userChicken;
-  this.state.userCow = userCow;
+  this.state.userSheep = DataValidator.checkUserSheep(userSheep);
+  this.state.userChicken = DataValidator.checkUserChicken(userChicken);
+  this.state.userCow = DataValidator.checkUserCow(userCow);
 
-  this.state.sheepTasks = setTaskStatus(1, response.data.user.sheep_tasks);
-  this.state.chickenTasks = setTaskStatus(2, response.data.user.chicken_tasks);;
-  this.state.cowTasks = setTaskStatus(3, response.data.user.cow_tasks);;
+  this.state.sheepTasks = DataValidator.setTaskStatus(1, response.data.user.sheep_tasks);
+  this.state.chickenTasks = DataValidator.setTaskStatus(2, response.data.user.chicken_tasks);;
+  this.state.cowTasks = DataValidator.setTaskStatus(3, response.data.user.cow_tasks);;
 
   this.state.sheepCollectorSettings = sheepCollectorSettings;
   this.state.chickenCollectorSettings = chickenCollectorSettings;

@@ -52,6 +52,48 @@ const userData: Iuser = {
   fortuneTutorial: false,
 }
 
+const basicClan: Iclan = {
+  isClosed: false,
+  avatar: {
+    bg: 1,
+    frame: 1,
+    icon: 1,
+  },
+  diamond: {
+    count: 0,
+    logs: [],
+  },
+  points: 0,
+  limit: 10,
+  main: {
+    level: 1,
+    cooldown: 0,
+  },
+  chatMessages: [],
+  id: '',
+  ownerId: '',
+  name: '',
+  users: [],
+  sheep: {
+    level: 1,
+    cooldown: 0,
+    money: '0',
+    logs: [],
+  },
+  chicken: {
+    level: 1,
+    cooldown: 0,
+    money: '0',
+    logs: [],
+  },
+  cow: {
+    level: 1,
+    cooldown: 0,
+    money: '0',
+    logs: [],
+  }
+};
+
 const userSheep: IuserSheep = {
   money: 1000,
   fair: 1,
@@ -114,5 +156,6 @@ export {
   userData,
   userSheep,
   userChicken,
-  userCow
+  userCow,
+  basicClan
 }
