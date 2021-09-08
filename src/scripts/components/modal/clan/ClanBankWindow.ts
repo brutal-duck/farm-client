@@ -181,7 +181,19 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
         blur: 2,
         fill: true,
       },
-    }
+    };
+
+    const y = this.scene.cameras.main.centerY + 219
+    this.scene.add.nineslice(this.posx, y, 500, 385, 'modal-square-bg', 10).setOrigin(0.5);
+    this.scene.add.nineslice(this.posx, y - 150, this.windowWidth - 25, 70,'clan-window-leader-plate-ns', 5)
+      .setOrigin(0.5)
+      .setAlpha(0.5);
+    this.scene.add.nineslice(this.posx, y, this.windowWidth - 25, 70,'clan-window-leader-plate-ns', 5)
+      .setOrigin(0.5)
+      .setAlpha(0.5);
+    this.scene.add.nineslice(this.posx, y + 145, this.windowWidth - 25, 70,'clan-window-leader-plate-ns', 5)
+      .setOrigin(0.5)
+      .setAlpha(0.5);
 
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     LogoManager.createIcon(this.scene, headerGeom.left + 60, headerGeom.centerY, this.scene.state.clan.avatar).setScale(0.35).setDepth(2);
@@ -200,19 +212,6 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
       if (farmProgress.open) this.createActiveBtns();
       else this.createDisableBtns();
     } else this.createActiveBtns();
-
-    const y = this.scene.cameras.main.centerY + 219
-    this.scene.add.nineslice(this.posx, y, 500, 385, 'modal-square-bg', 10).setOrigin(0.5);
-    this.scene.add.nineslice(this.posx, y - 150, this.windowWidth - 25, 70,'clan-window-leader-plate-ns', 5)
-      .setOrigin(0.5)
-      .setAlpha(0.5);
-    this.scene.add.nineslice(this.posx, y, this.windowWidth - 25, 70,'clan-window-leader-plate-ns', 5)
-      .setOrigin(0.5)
-      .setAlpha(0.5);
-    this.scene.add.nineslice(this.posx, y + 145, this.windowWidth - 25, 70,'clan-window-leader-plate-ns', 5)
-      .setOrigin(0.5)
-      .setAlpha(0.5);
-
     this.createLogs();
   }
 
