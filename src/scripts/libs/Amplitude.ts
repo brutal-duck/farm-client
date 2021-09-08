@@ -5,16 +5,20 @@ import Chicken from './../scenes/Chicken/Main';
 import Unicorn from './../scenes/Event/Unicorns/Main';
 import Cow from './../scenes/Cow/Main';
 
+const VK_DEVELOPERS_ID: Array<number> = [41285968, 191781124, 164603032, 23755036];
+
 export default class Amplitude {
   private state: Istate;
   private scene: Boot;
   private active: boolean = false;
   private amplitude: any;
+  private userIsDev: boolean = false;
 
   constructor (scene: Boot) {
     this.scene = scene;
     this.state = scene.state;
     this.amplitude = amplitude;
+    this.userIsDev = VK_DEVELOPERS_ID.some(el => el === this.state.vkId);
   }
 
   public static init(): void {
@@ -63,14 +67,16 @@ export default class Amplitude {
   }
 
   public logAmplitudeEvent(eventName: string, data: IamplitudeData): void {
-    if (this.active) {
+    if (this.active && !this.userIsDev) {
       const eventData: IamplitudeData = this.getEventData(data);
       this.amplitude.getInstance().logEvent(eventName, eventData);
+    } else {
+      console.log('Исключение', eventName);
     }
   }
   
   public logAmplitudeRevenue(productId: string, price: number, type: string = '',  data: IamplitudeData): void {
-    if (this.active) {
+    if (this.active && !this.userIsDev) {
       const revenueData: IamplitudeData = this.getEventData(data);
       const revenue: amplitude.Revenue = new this.amplitude.Revenue()
         .setProductId(productId)
@@ -79,6 +85,8 @@ export default class Amplitude {
     
       if (type) revenue.setRevenueType(type);
       this.amplitude.logRevenueV2(revenue);
+    } else {
+      console.log('Исключение ревеню', productId);
     }
   }
 
