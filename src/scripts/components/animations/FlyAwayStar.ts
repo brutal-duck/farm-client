@@ -29,19 +29,20 @@ export default class FlyAwayStar {
   }
 
   private flyAway(): void {
-    const targets: Array<Phaser.GameObjects.Sprite | Phaser.GameObjects.Text> = [ this.star ]
-    if (this.sum) targets.push(this.text)
-
+    const targets: Array<Phaser.GameObjects.Sprite | Phaser.GameObjects.Text> = [ this.star ];
+    if (this.sum) targets.push(this.text);
     this.flyAwayAni = this.scene.tweens.add({
       targets,
-      y: '-=80',
-      ease: 'Power3',
-      duration: 450,
+      props: {
+        y: { value: { from: '-=0', to: '-=60' }, duration: 250, ease: 'Power3', yoyo: true },
+        scaleX: { value: { from: 1, to: -1 }, duration: 350, yoyo: true, repeat: 2 },
+        alpha: { value: 0, duration: 350, delay: 150 },
+      },
       onComplete: (): void => {
         this.star.destroy();
         this.text?.destroy();
         this.flyAwayAni.remove();
       }
-    })
+    });
   }
 }
