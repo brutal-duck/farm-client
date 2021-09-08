@@ -162,7 +162,6 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
           type: 19,
           clanTabType: type,
         };
-        this.scene.scene.stop('ClanScroll');
         this.scene.scene.restart(this.scene.state);
       }, tabIcon);
     }
