@@ -313,10 +313,15 @@ class Modal extends Phaser.Scene {
       if (this.progressText.text !== volume) this.progressText.setText(volume);
 
       if (this.state[`user${this.state.farm}`].feedBoostTime > 0) {
-        this.feedBoostText?.setText(this.state.lang.feedBoostCounterText + this.shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang));
+        const text = `${this.state.lang.feedBoostTitle}. ${this.state.lang.left} ${this.shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang)}`;
+        if (text !== this.feedBoostText.text) {
+          this.feedBoostText?.setText(text);
+        }
         this.feedBoostText?.setVisible(true);
       } else {
-        this.feedBoostText?.setVisible(false);
+        if (this.feedBoostText?.visible) {
+          this.scene.restart(this.state);
+        }
       }
     }
 
