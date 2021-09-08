@@ -510,13 +510,13 @@ function donePart(): void {
   }
   sendAppEventVk(this.state, 1, this.state.userSheep.part + this.state.userChicken.part + this.state.userCow.part);
   
-  this.time.addEvent({ delay: 200, callback: (): void => {
+  this.time.addEvent({ delay: 100, callback: (): void => {
     this.checkDoneTasks();
     this.tryClanTask(17);
 
   }, callbackScope: this, loop: false });
 
-  this.time.addEvent({ delay: 0, callback: (): void => {
+  this.time.addEvent({ delay: 200, callback: (): void => {
     if (!((user.part === 3 && this.state.user.additionalTutorial.cave && this.state.farm === 'Sheep') || 
       (user.part === 5 && this.state.user.additionalTutorial.herdBoost && this.state.farm === 'Sheep') ||
       (user.part === 6 && this.state.user.additionalTutorial.feedBoost && this.state.farm === 'Sheep') || 

@@ -80,6 +80,7 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
 
 
   private create(): void {
+    console.log(1234)
     this.icon = this.scene.add.sprite(this.x - 170, this.y + 60, this.taskInfo.taskData.icon).setDepth(3).setScale(0.9);
     this.text = this.scene.add.text(this.x, this.y, this.taskInfo.taskData.name, this.taskInProgressTextStyle).setDepth(3).setOrigin(0.5);
     
@@ -223,8 +224,6 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
     if (this.progressText?.width > 120) this.progressText.setOrigin(0, 0.5).setX(this.icon.getLeftCenter().x - 18).setFontSize(24);
     this.progress?.setPercent(Math.round(100 / count * progress));
     if (Boolean(this.taskInfo.task.done) || Math.round(100 / count * progress) === 100) this.taskCompleteAwardNonTaken();
-    this.progress?.setPercent(Math.round(100 / count * progress));    
-    if (this.taskInfo.task.done === 1 || Math.round(100 / count * progress) === 100) this.taskCompleteAwardNonTaken();
   }
 
   private setDone(): void {
@@ -240,6 +239,6 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
   public preUpdate(): void {
     if (this.currentProgress !== this.taskInfo.task.progress) this.setProgress();
     if (Boolean(this.done) !== Boolean(this.taskInfo.task.done)) this.setDone();
-    if (this.taskInfo.task.done && this.taskInfo.task.got_awarded && this.takeButton) this.takeButton.destroy()
+    if (this.taskInfo.task.done && this.taskInfo.task.got_awarded && this.takeButton) this.takeButton.destroy();
   }
 }
