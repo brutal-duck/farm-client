@@ -580,10 +580,11 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
       if (!change) {
         blur();
         let checkName: boolean = true;
-        const re: RegExp = /[\p{Alpha}\p{M}\p{Nd}\p{Pc}\p{Join_C}]/gu;
-        checkName = re.test(this.mainInput.value);
-            
-        if (this.mainInput.value.length < 6 || this.mainInput.value.length > 20) checkName = false;
+        const str: string = this.mainInput.value;
+        const re: RegExp = /[\p{Alpha}\p{Nd}\s]/gu;
+        const matched = str.match(re);
+        checkName = !(!matched || matched.length < str.length);
+        if (str.length < 6 || str.length > 20) checkName = false;
         
         if (checkName) {
           change = true;
@@ -592,7 +593,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
             userId: this.scene.state.user.id,
             hash: this.scene.state.user.hash,
             counter: this.scene.state.user.counter,
-            name: this.mainInput.value,
+            name: str,
           }).then((res) => {
             if (res.data.error) {
               change = false;

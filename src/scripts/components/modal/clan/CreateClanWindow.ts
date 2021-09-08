@@ -219,10 +219,13 @@ export default class CreateClanWindow {
     if (this.scene.state.user.diamonds >= CREATE_CLAN_COST) {
       if (!this.change) {
         let checkName: boolean = true;
-        const re: RegExp = /[\p{Alpha}\p{M}\p{Nd}\p{Pc}\p{Join_C}]/gu;
-        checkName = re.test(this.input.value);
+        const str: string = this.input.value;
+        const re: RegExp = /[\p{Alpha}\p{Nd}\s]/gu;
+        const matched = str.match(re);
+        checkName = !(!matched || matched.length < str.length);
+        if (str.length < 6 || str.length > 20) checkName = false;
             
-        if (this.input.value.length < 6 || this.input.value.length > 20) checkName = false;
+        if (str.length < 6 || str.length > 20) checkName = false;
         
         if (checkName) {
           let login: string = this.scene.state.user.login;
@@ -233,7 +236,7 @@ export default class CreateClanWindow {
             id: this.scene.state.user.id,
             hash: this.scene.state.user.hash,
             counter: this.scene.state.user.counter,
-            name: this.input.value,
+            name: str,
             isClosed: this.clanIsClosed,
             userName: login,
             userAvatar: avatar,
