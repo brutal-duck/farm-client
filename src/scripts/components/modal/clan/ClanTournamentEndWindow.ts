@@ -61,7 +61,8 @@ export default class ClanTournamentEndWindow {
       color: '#fffdfa',
       fontFamily: 'Shadow',
       fontSize: '23px',
-      align: 'left',
+      align: 'center',
+      wordWrap: { width: 230 },
       stroke: '#01B714',
       strokeThickness: 4
     };
