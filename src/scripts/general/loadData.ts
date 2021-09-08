@@ -415,11 +415,11 @@ export default function loadData(response: AxiosResponse): void {
     test: response.data.user.test,
     takenFreeDiamonds: response.data.user.takenFreeDiamonds,
     takenSocialAward: response.data.user.takenSocialAward,
-    messages: response.data.user.messages,
-    personalMessages: response.data.user.personalMessages,
+    messages: response.data.user.messages || [],
+    personalMessages: response.data.user.personalMessages || [],
     avatar: response.data.user.avatar,
     fortuneTutorial: false,
-    clanTasks: response.data.user.clan_tasks,
+    clanTasks: response.data.user.clan_tasks || [],
   };
   this.state.user = user;
 
