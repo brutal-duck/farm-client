@@ -70,6 +70,16 @@ export default class Notificator {
     return this;
   }
 
+  public setPosition(x: number, y: number): Notificator {
+    if (this.position.x !== x || this.position.y !== y) {
+      this.position = {x, y};
+      this.animBg.setPosition(this.position.x, this.position.y);
+      this.bg.setPosition(this.position.x, this.position.y);
+      this.text.setPosition(this.position.x, this.position.y);
+    } 
+    return this;
+  }
+
   public setDepth(depth: number): Notificator {
     this.animBg.setDepth(depth);
     this.bg.setDepth(depth);

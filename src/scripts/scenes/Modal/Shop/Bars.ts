@@ -204,9 +204,8 @@ class ShopBars extends Phaser.Scene {
       this.game.scene.keys['Shop'].cameras.cameras[1])
     }
 
-    this.boostTabNotificator = new Notificator(this, { x: 550, y: this.cameras.main.centerY - 520, });
-    this.diamondTabNotificator = new Notificator(this, { x: 175, y: this.cameras.main.centerY - 520 });
-
+    this.boostTabNotificator = new Notificator(this, { x: 540, y: this.cameras.main.centerY - 520, }).setDepth(2);
+    this.diamondTabNotificator = new Notificator(this, { x: 175, y: this.cameras.main.centerY - 520 }).setDepth(2);
   }
 
   public update(): void {
@@ -215,21 +214,25 @@ class ShopBars extends Phaser.Scene {
   }
 
   public updateNotification(): void {  
-    if (this.state.modal.shopType === 4 || 
-    this.state[`user${this.state.farm}`].part < this.game.scene.keys[this.state.farm].herdBoostLvl ||
-    this.state[`user${this.state.farm}`].takenHerdBoost > 0 ||
-    !this.state.user.additionalTutorial.herdBoost) {
-      this.boostTabNotificator.setVisible(false);
+    
+    if (this.state[`user${this.state.farm}`].part < this.game.scene.keys[this.state.farm].herdBoostLvl ||
+      this.state[`user${this.state.farm}`].takenHerdBoost > 0 ||
+      !this.state.user.additionalTutorial.herdBoost){
+      this.boostTabNotificator.setCount(0);
+    } else if (this.state.modal.shopType === 4) {
+      this.boostTabNotificator.setPosition(560, this.cameras.main.centerY - 540);
     } else if (this.state.modal.shopType !== 4 &&
     this.state[`user${this.state.farm}`].part >= this.game.scene.keys[this.state.farm].herdBoostLvl &&
     this.state[`user${this.state.farm}`].takenHerdBoost <= 0 &&
     this.state.user.additionalTutorial.herdBoost) {
+      this.boostTabNotificator.setPosition(540, this.cameras.main.centerY - 520);
       this.boostTabNotificator.setCount(this.state.shopNotificationCount[3]);
     }
 
     if (this.state.modal.shopType === 1) {
-      this.diamondTabNotificator.setVisible(false);
+      this.diamondTabNotificator.setPosition(195, this.cameras.main.centerY - 540);
     } else if (this.state.modal.shopType !== 1) {
+      this.diamondTabNotificator.setPosition(175, this.cameras.main.centerY - 520);
       this.diamondTabNotificator.setCount(this.state.shopNotificationCount[0]);
     }
   }
