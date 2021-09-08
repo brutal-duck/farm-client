@@ -313,7 +313,7 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
 
   private createAnimals(): void {
     this.createAnimalsBg();
-    const startY: number = 505;
+    const startY: number = this.posy - 146;
     const height: number = 540;
     let x: number = 240;
     let y: number = startY;
