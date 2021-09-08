@@ -415,7 +415,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     this.herdBoostBtn.setDataEnabled();
     this.herdBoostBtnUpdated = false;
     this.herdBoostDiamondBtn = this.scene.add.sprite(xBtn, yBtn - 5, 'diamond').setVisible(true).setScale(0.11);
-    this.herdBoostBtnLeftText = this.scene.add.text(xBtn, yBtn - 5 , this.scene.state.lang.buy, {
+    this.herdBoostBtnLeftText = this.scene.add.text(xBtn, yBtn - 5, this.scene.state.lang.buy, {
       font: '23px Shadow', 
       color: '#FFFFFF'
     }).setOrigin(1, 0.5).setStroke('#3B5367', 4).setDepth(10);
@@ -826,7 +826,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
       
       if (this.scene.state[`user${this.scene.state.farm}`].takenHerdBoost <= 0 && this.herdBoostBtn?.active && !this.herdBoostBtnUpdated) {
         this.herdBoostBtnUpdated = true;
-        this.herdBoostBtnLeftText?.setText(this.scene.state.lang.free).setY(yBtn - 25).setX(xBtn).setOrigin(0.5); 
+        this.herdBoostBtnLeftText?.setText(this.scene.state.lang.free).setY(yBtn - 27).setX(xBtn).setOrigin(0.5); 
         this.herdBoostBtnRightText?.setVisible(false);
         this.herdBoostDiamondBtn?.setVisible(false);
         this.herdBoostBtn?.setY(yBtn - 23);

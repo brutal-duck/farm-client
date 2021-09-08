@@ -81,8 +81,9 @@ export default class RoundedProgress {
       this.setAni?.remove();
     }
     
+
     this.setAni = this.scene.tweens.add({
-      targets,
+      targets: targets || [],
       angle: { from, to },
       duration,
       ease: 'Power2',
