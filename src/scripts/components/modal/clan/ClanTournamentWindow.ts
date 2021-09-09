@@ -85,7 +85,7 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
       if (!data.error) {
         this.scene.state.clanTournamentData = data.data;
         this.scene.state.clanEventPlace = data.data.place;
-
+        this.scene.state.progress.clanEvent.endTime = data.data.endTime;
         this.createElements();
       }
     }).catch((): void =>{
