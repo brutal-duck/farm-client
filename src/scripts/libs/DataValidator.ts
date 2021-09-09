@@ -5,39 +5,58 @@ import {
   userCow,
   basicClan
 } from '../local/usersData';
-
-import { improveClanFarm } from '../local/settings';
+import { improveClanFarm, sheepSettings, chickenSettings, cowSettings } from '../local/settings';
+import sheepCollector from '../local/sheepCollector';
+import chickenCollector from '../local/chickenCollector';
+import cowCollector from '../local/cowCollector';
 import AllTasks from '../tasks';
 import basicSheepTerritories from '../local/sheepTerritories';
 import basicChickenTerritories from '../local/chickenTerritories';
 import basicCowTerritories from '../local/cowTerritories';
 
+
 export default class DataValidator {
-  public static checkUser(data: Iuser): Iuser {
+  public static validateUser(data: Iuser): Iuser {
     for (const key in userData) {
       if (typeof data[key] !== typeof userData[key]) data[key] = userData[key];
     }
+    data.diamonds = data.diamonds <= 0 ? 0 : data.diamonds;
     return data;
   }
 
-  public static checkUserSheep(data: IuserSheep): IuserSheep {
+  public static validateUserSheep(data: IuserSheep): IuserSheep {
     for (const key in userSheep) {
       if (typeof data[key] !== typeof userSheep[key]) data[key] = userSheep[key];
     }
+    data.money = data.money <= 0 ? 0 : Math.round(data.money);
+    if (data.part > sheepSettings.sheepParts.length) data.part = sheepSettings.sheepParts.length;
+    if (data.fair > sheepSettings.sheepFairLevels.length) data.fair = sheepSettings.sheepFairLevels.length;
+    if (data.collectorLevel > sheepCollector.length) data.collectorLevel = sheepCollector.length;
+
     return data;
   }
 
-  public static checkUserChicken(data: IuserChicken): IuserChicken {
+  public static validateUserChicken(data: IuserChicken): IuserChicken {
     for (const key in userChicken) {
       if (typeof data[key] !== typeof userChicken[key]) data[key] = userChicken[key];
     }
+    data.money = data.money <= 0 ? 0 : Math.round(data.money);
+    if (data.part > chickenSettings.chickenParts.length) data.part = chickenSettings.chickenParts.length;
+    if (data.fair > chickenSettings.chickenFairLevels.length) data.fair = chickenSettings.chickenFairLevels.length;
+    if (data.collectorLevel > chickenCollector.length) data.collectorLevel = chickenCollector.length;
+
     return data;
   }
 
-  public static checkUserCow(data: IuserCow): IuserCow {
+  public static validateUserCow(data: IuserCow): IuserCow {
     for (const key in userCow) {
       if (typeof data[key] !== typeof userCow[key]) data[key] = userCow[key];
     }
+    data.money = data.money <= 0 ? 0 : Math.round(data.money);
+    if (data.part > cowSettings.cowParts.length) data.part = cowSettings.cowParts.length;
+    if (data.fair > cowSettings.cowFairLevels.length) data.fair = cowSettings.cowFairLevels.length;
+    if (data.collectorLevel > cowCollector.length) data.collectorLevel = cowCollector.length;
+
     return data;
   }
 
@@ -61,9 +80,12 @@ export default class DataValidator {
     type === 3 ? basicCowTerritories : [];
     const maxTerritoryType: number = 8;
     for (let i: number = 0; i < territories.length; i += 1) {
-      const territory: Iterritories = basicTerritories.find((data: Iterritories) => territories[i].position === data.position && territories[i].block === data.block);
+      const territory: Iterritories = basicTerritories.find((data: Iterritories) => {
+        return territories[i].position === data.position && territories[i].block === data.block;
+      });
       if (territory) {
-        if (!(territory.type >= 0 && territory.type <= maxTerritoryType
+        if (!(territory.type >= 0 
+          && territory.type <= maxTerritoryType
           && territory.money >= 0
           && territory.volume >= 0
           && territory.improve > 0)) {
@@ -72,8 +94,8 @@ export default class DataValidator {
       } else {
         territories[i] = basicTerritories[i];
       }
+      if (territories[i].type === 5 && territories[i].volume > 0 && territories[i].money <= 0) territories[i].money = 10000;
     }
-  
     if (territories.length === 0) {
       for (const territory of basicTerritories) {
         territories.push({

@@ -5,6 +5,8 @@ import CowSprite from './../components/Animal/CowSprite';
 import Factory from './../components/Territories/Factory';
 import SheepTerritory from './../components/Territories/SheepTerritory';
 import ChickenTerritory from './../components/Territories/ChickenTerritory';
+import DataValidator from './../libs/DataValidator';
+import { Data } from 'phaser';
 
 export default function autosave(): void {
   const state: Istate = this.state;
@@ -285,6 +287,8 @@ export default function autosave(): void {
     unicornResource = resources;
   }
   
+  state.user = DataValidator.validateUser(state.user);
+
   const user: IuserAutoSave = {
     diamonds: state.user.diamonds,
     xp: state.user.xp,
@@ -293,9 +297,9 @@ export default function autosave(): void {
     status: state.user.status,
     boosts: state.user.boosts,
     test: state.user.test,
-    userSheep: state.userSheep,    
-    userChicken: state.userChicken,    
-    userCow: state.userCow,   
+    userSheep: DataValidator.validateUserSheep(state.userSheep),    
+    userChicken: DataValidator.validateUserChicken(state.userChicken),    
+    userCow: DataValidator.validateUserCow(state.userCow),   
     userUnicorn: userUnicorn, 
     takenFreeDiamonds: state.user.takenFreeDiamonds,
     takenSocialAward: state.user.takenSocialAward,

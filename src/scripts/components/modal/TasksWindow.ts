@@ -73,7 +73,7 @@ export default class TasksWindow {
       taskBars.push(new TaskBar(x, y, this.tasks[i], this.scene));
     }
     
-    const lastElementBottomY = taskBars[taskBars.length - 1].getBottomCenter().y;
+    const lastElementBottomY = taskBars[taskBars.length - 1]?.getBottomCenter().y;
     const height: number = lastElementBottomY - this.top.getBottomCenter().y;
 
     this.resizeWindow(height);

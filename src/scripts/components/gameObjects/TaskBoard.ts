@@ -191,6 +191,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
     //   }
     // }
 
+    if (!task) return;
     if (
       this.taskStatus === task?.done && 
       this.currentTaskProgress === task?.progress && 

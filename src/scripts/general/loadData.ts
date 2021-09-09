@@ -294,7 +294,7 @@ export default function loadData(response: AxiosResponse): void {
     fortuneTutorial: false,
     clanTasks: response.data.user.clan_tasks || [],
   };
-  this.state.user = DataValidator.checkUser(user);
+  this.state.user = DataValidator.validateUser(user);
 
   this.state.clan = DataValidator.validateClan(response.data.clan);
   if (this.state.name === '' && this.state.platform === 'ya') {
@@ -376,9 +376,9 @@ export default function loadData(response: AxiosResponse): void {
     }
   }
 
-  this.state.userSheep = DataValidator.checkUserSheep(userSheep);
-  this.state.userChicken = DataValidator.checkUserChicken(userChicken);
-  this.state.userCow = DataValidator.checkUserCow(userCow);
+  this.state.userSheep = DataValidator.validateUserSheep(userSheep);
+  this.state.userChicken = DataValidator.validateUserChicken(userChicken);
+  this.state.userCow = DataValidator.validateUserCow(userCow);
 
   this.state.sheepTasks = DataValidator.setTaskStatus(1, response.data.user.sheep_tasks);
   this.state.chickenTasks = DataValidator.setTaskStatus(2, response.data.user.chicken_tasks);;
