@@ -62,7 +62,7 @@ export default class ClanTournamentEndWindow {
       fontFamily: 'Shadow',
       fontSize: '23px',
       align: 'center',
-      wordWrap: { width: 230 },
+      wordWrap: { width: 200, useAdvancedWrap: true },
       stroke: '#01B714',
       strokeThickness: 4
     };
@@ -84,7 +84,7 @@ export default class ClanTournamentEndWindow {
     this.salute();
 
     const takeBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(x, bottom.getCenter().y - 12, 'done-chapter-button').setDepth(2);
-    const textBtn: Phaser.GameObjects.Text = this.scene.add.text(x, takeBtn.getCenter().y, this.scene.state.lang.clanTournamentTakeAwards, btnStyle).setOrigin(0.5, 0.75).setDepth(2);
+    const textBtn: Phaser.GameObjects.Text = this.scene.add.text(x, takeBtn.getCenter().y + 5, this.scene.state.lang.clanTournamentTakeAwards, btnStyle).setOrigin(0.5, 0.75).setDepth(2);
     this.scene.clickModalBtn({ btn: takeBtn, title: textBtn }, () => {
       this.takeAward();
     });

@@ -231,6 +231,7 @@ class ShopBars extends Phaser.Scene {
 
     if (this.state.modal.shopType === 1) {
       this.diamondTabNotificator.setPosition(195, this.cameras.main.centerY - 540);
+      this.diamondTabNotificator.setCount(this.state.shopNotificationCount[0]);
     } else if (this.state.modal.shopType !== 1) {
       this.diamondTabNotificator.setPosition(175, this.cameras.main.centerY - 520);
       this.diamondTabNotificator.setCount(this.state.shopNotificationCount[0]);

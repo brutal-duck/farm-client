@@ -536,7 +536,7 @@ export default class ClanFarm extends Phaser.Scene {
       this.eventStartBg.setVisible(false);
     } else if (!this.eventStartBg.visible && this.state.progress.clanEvent.startTime > 0 && this.state.progress.clanEvent.endTime > 0) {
       this.eventSprite.setVisible(false);
-      this.eventGlowSprite.setVisible(true);
+      this.eventGlowSprite.setVisible(false);
       this.eventGlowAli.stop();
       this.eventClanIcon.setVisible(false);
       this.eventPlace.setVisible(false);
@@ -546,7 +546,7 @@ export default class ClanFarm extends Phaser.Scene {
       this.eventStartBg.setVisible(true);
     } else if (!this.eventStartBg.visible && this.state.progress.clanEvent.endTime <= 0) {
       this.eventSprite.setVisible(false);
-      this.eventGlowSprite.setVisible(true);
+      this.eventGlowSprite.setVisible(false);
       this.eventGlowAli.stop();
       this.eventClanIcon.setVisible(false);
       this.eventPlace.setVisible(false);

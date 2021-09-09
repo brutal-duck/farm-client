@@ -80,7 +80,6 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
 
 
   private create(): void {
-    console.log(1234)
     this.icon = this.scene.add.sprite(this.x - 170, this.y + 60, this.taskInfo.taskData.icon).setDepth(3).setScale(0.9);
     this.text = this.scene.add.text(this.x, this.y, this.taskInfo.taskData.name, this.taskInProgressTextStyle).setDepth(3).setOrigin(0.5);
     
