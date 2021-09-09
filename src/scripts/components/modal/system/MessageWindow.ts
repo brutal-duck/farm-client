@@ -5,9 +5,9 @@ export default class MessageWindow {
 
   constructor(scene: Modal) {
     this.scene = scene;
+    this.scene.state.modal.height = this.scene.state.modal.height || 150;
     this.create();
     this.scene.openModal(this.scene.cameras.main);
-    this.scene.state.modal.height = this.scene.state.modal.height || 150;
   }
 
   private create(): void {
