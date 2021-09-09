@@ -1,4 +1,5 @@
 import * as openSocket from 'socket.io-client';
+import DataValidator from './libs/DataValidator';
 
 export default class Socket {
 
@@ -89,7 +90,7 @@ export default class Socket {
 
     this.io.on('updateClanData', (data: Iclan) => {
       if (this.state.clan) {
-        this.state.clan = data;
+       this.state.clan =  DataValidator.validateClan(data);
       }
     });
   }
