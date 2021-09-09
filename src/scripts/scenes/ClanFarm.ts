@@ -267,7 +267,7 @@ export default class ClanFarm extends Phaser.Scene {
 
   private createShop(): void {
     const pos: Iposition = {
-      x: 145,
+      x: 160,
       y: 320,
     };
     const zone = this.add.zone(pos.x, pos.y, 155, 210).setDropZone(undefined, () => {});
@@ -450,7 +450,7 @@ export default class ClanFarm extends Phaser.Scene {
       color: '#cbff40',
       fontFamily: 'Shadow'
     };
-    // const zone: Phaser.GameObjects.Zone = this.add.zone(pos.x, pos.y, width, height).setDropZone(undefined, () => {});
+    const zone: Phaser.GameObjects.Zone = this.add.zone(pos.x, pos.y, width, height).setDropZone(undefined, () => {});
     // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
     // graphics.lineStyle(5, 0x7F76F3);
     // graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
