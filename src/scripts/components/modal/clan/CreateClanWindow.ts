@@ -327,10 +327,10 @@ export default class CreateClanWindow {
     this.icon = LogoManager.createIcon(this.scene, this.x - 120, y, this.scene.state.clanAvatar).setScale(0.8);
     const geom: Phaser.Geom.Rectangle = this.icon.getBounds();
     const randomBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(geom.right + 150, geom.centerY - 40, 'profile-window-button-yellow').setScale(1.1);
-    const randomBtnText: Phaser.GameObjects.Text = this.scene.add.text(randomBtn.x, randomBtn.y - 5, 'Случайно', buttonTextStyle).setOrigin(0.5);
+    const randomBtnText: Phaser.GameObjects.Text = this.scene.add.text(randomBtn.x, randomBtn.y - 5, this.scene.state.lang.random, buttonTextStyle).setOrigin(0.5);
 
     const changeBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(geom.right + 150, geom.centerY + 40, 'profile-window-button-green').setScale(1.1);
-    const changeBtnText: Phaser.GameObjects.Text = this.scene.add.text(changeBtn.x, changeBtn.y - 5, 'Изменить', buttonTextStyle).setOrigin(0.5);
+    const changeBtnText: Phaser.GameObjects.Text = this.scene.add.text(changeBtn.x, changeBtn.y - 5, this.scene.state.lang.change, buttonTextStyle).setOrigin(0.5);
     this.scene.clickModalBtn({ btn: randomBtn, title: randomBtnText }, () => { this.getNewIcon(); });
     this.scene.clickModalBtn({ btn: changeBtn, title: changeBtnText }, () => { this.openChangeWindow(); });
     this.window.modalElements.push(

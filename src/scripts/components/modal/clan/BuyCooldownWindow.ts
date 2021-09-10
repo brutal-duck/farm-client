@@ -9,7 +9,7 @@ const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
   color: '#fffdfa',
   fontFamily: 'Bip',
   fontSize: '24px',
-  align: 'left',
+  align: 'center',
   shadow: {
     offsetX: 1,
     offsetY: 1, 
@@ -17,6 +17,7 @@ const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
     blur: 2,
     fill: true,
   },
+  wordWrap: { width: 420, useAdvancedWrap: true },
 };
 
 export default class BuyCooldownWindow extends Phaser.GameObjects.Sprite {
@@ -64,8 +65,8 @@ export default class BuyCooldownWindow extends Phaser.GameObjects.Sprite {
 
     const text: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, this.scene.state.lang.confirmBuyCooldownImprovmentFarm, textStyle).setOrigin(0.5);
     const str: string = shortTime(this.building.cooldown, this.scene.state.lang);
-    this.leftText = this.scene.add.text(pos.x, pos.y + 40, this.scene.state.lang.left, textStyle).setOrigin(0.5);
-    this.timer = this.scene.add.text(pos.x, pos.y + 40, str, textStyle).setOrigin(0.5).setColor('#DBFC3B'); 
+    this.leftText = this.scene.add.text(pos.x, pos.y + 45, this.scene.state.lang.left, textStyle).setOrigin(0, 0.5);
+    this.timer = this.scene.add.text(pos.x, pos.y + 45, str, textStyle).setOrigin(0, 0.5).setColor('#DBFC3B'); 
     this.setTextPosition();
     const pay = this.scene.bigButton('green', 'left', padding, this.scene.state.lang.speedUpImprovment, img);
     this.scene.clickModalBtn(pay, (): void => { this.handleAccept(); });
@@ -82,9 +83,9 @@ export default class BuyCooldownWindow extends Phaser.GameObjects.Sprite {
     const leftGeom: Phaser.Geom.Rectangle = this.leftText?.getBounds();
     const timerGeom: Phaser.Geom.Rectangle = this.timer?.getBounds();
 
-    const width: number = (leftGeom.width + timerGeom.width + 10) / 4;
-    this.leftText?.setX(this.x - width);
-    this.timer?.setX(this.x + width);
+    const width: number = (leftGeom.width + timerGeom.width) / 2;
+    this.leftText?.setX(this.x - width - 5);
+    this.timer?.setX(this.leftText?.getBounds().right + 5);
   }
 
   private handleAccept(): void {

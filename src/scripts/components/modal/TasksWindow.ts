@@ -107,7 +107,7 @@ export default class TasksWindow {
     }).setOrigin(0.5);
 
     const partText: Phaser.GameObjects.Text = this.scene.add.text(partNum.getBottomCenter().x, partNum.getBottomCenter().y + 14, this.scene.state.lang.part, {
-      font: '34px Shadow',
+      font: '31px Shadow',
       color: '#166c00'
     }).setOrigin(0.5, 0.5);
 

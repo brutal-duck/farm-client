@@ -124,6 +124,7 @@ export default class ProfileWindow {
         loadingSprite?.destroy();
       });
     } else {
+      this.profile = null;
       this.init();
       this.create();
       this.scene.openModal(this.scene.cameras.main);

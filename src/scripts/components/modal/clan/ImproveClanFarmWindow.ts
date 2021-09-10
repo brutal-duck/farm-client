@@ -129,7 +129,7 @@ export default class ImproveClanFarmWindow extends Phaser.GameObjects.Sprite{
         blur: 2,
         fill: true,
       },
-      wordWrap: { width: 400, useAdvancedWrap: true },
+      wordWrap: { width: 350, useAdvancedWrap: true },
     }
 
     const levelTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
@@ -209,8 +209,8 @@ export default class ImproveClanFarmWindow extends Phaser.GameObjects.Sprite{
       icon: `clan-${this.farm}-coin`
     };
 
-    this.leftText = this.scene.add.text(this.x, this.y + padding - 40, this.scene.state.lang.left, ownerTextStyle).setOrigin(0.5);
-    this.timer = this.scene.add.text(this.x, this.y + padding - 40, '', ownerTextStyle).setColor('#dcff3c').setOrigin(0.5);
+    this.leftText = this.scene.add.text(0, this.y + padding - 40, this.scene.state.lang.left, ownerTextStyle).setOrigin(0, 0.5);
+    this.timer = this.scene.add.text(0, this.y + padding - 40, '', ownerTextStyle).setColor('#dcff3c').setOrigin(0, 0.5);
 
     if (this.scene.state.clan.ownerId === this.scene.state.user.id) {
       if (this.scene.state.clan[this.farm].cooldown > 0) {
@@ -288,9 +288,9 @@ export default class ImproveClanFarmWindow extends Phaser.GameObjects.Sprite{
   }
 
   private setLeftTimeTextX(): void {
-    const width: number = (this.timer.displayWidth + this.leftText.displayWidth) / 4 + 5;
-    this.timer.setX(this.x + width);
-    this.leftText.setX(this.x - width);
+    const width: number = (this.leftText.getBounds().width + this.timer.getBounds().width) / 2;
+    this.leftText.setX(this.x - width - 5);
+    this.timer.setX(this.leftText.getBounds().right + 5);
   }
 
   public preUpdate(time: number, delta: number) {

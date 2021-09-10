@@ -501,8 +501,8 @@ function scoreEnding(score: number, lang: any): string {
     const cases: number[] = [2, 0, 1, 1, 1, 2];
     return scoresWord[(score % 100 > 4 && score % 100 < 20) ? 2 : cases[(score % 10 < 5) ? score % 10 : 5]];  
   } 
-  else if (lang.index === 'en' && score === 1) return 'Score'
-  else if (lang.index === 'en') return 'Scores'
+  else if (lang.index === 'en' && score === 1) return 'point'
+  else if (lang.index === 'en') return 'points'
 }
 
 function buyNextFarm(): void {

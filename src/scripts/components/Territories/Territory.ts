@@ -152,7 +152,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
         this.lock_image = this.scene.add.sprite(this.x + 120, this.y + 120, 'lock-territory').setDepth(this.y + 2);
         this.lock_text = this.scene.add.text(this.x + 120, this.y + 120 - 37, this.scene.state.lang.part + ' ' + unlock, {
-          font: '26px Shadow',
+          font: '23px Shadow',
           color: '#ECDFDF'
         }).setOrigin(0.5, 0.5).setDepth(this.y + 2);
       }

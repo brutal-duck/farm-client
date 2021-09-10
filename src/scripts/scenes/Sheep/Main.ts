@@ -141,7 +141,7 @@ import {
   progressTerritoryCooldown,
 } from '../../general/interval';
 import Ads from '../../components/Utils/Ads';
-import axios from 'axios';
+
 class Sheep extends Phaser.Scene {
   constructor() {
     super('Sheep');
@@ -336,7 +336,7 @@ class Sheep extends Phaser.Scene {
   public create(): void {
     // анимации
     this.animations();
-    
+
     // сторим мир
     this.world();
 

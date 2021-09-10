@@ -3,7 +3,15 @@ import Shop from "../../../scenes/Modal/Shop/Main";
 import Arrow from "../../animations/Arrow";
 
 const ONE_HOUR: number = 3600;
-const TWO_HOURS: number = 7200;
+const TWO_HOURS: number = 7200;    
+
+const btnTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+  fontSize: '23px',
+  fontFamily: 'Shadow',
+  color: '#ffffff',
+  stroke: '#3B5367',
+  strokeThickness: 4,
+};
 export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   public scene: Shop;
   private farm: string;
@@ -166,10 +174,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     if (check) {
       
       this.improve = this.scene.add.sprite(120, 285 + this.scene.height, 'improve-collector');
-      this.improveText = this.scene.add.text(120, 281 + this.scene.height, this.scene.state.lang.improve, {
-        font: '26px Shadow',
-        color: '#FFFFFF'
-      }).setOrigin(0.5, 0.5).setStroke('#3B5367', 4);
+      this.improveText = this.scene.add.text(120, 281 + this.scene.height, this.scene.state.lang.improve, btnTextStyle).setOrigin(0.5, 0.5);
   
       this.scene.clickShopBtn({ btn: this.improve, title: this.improveText }, (): void => { this.scene.game.scene.keys[this.scene.state.farm].showImproveCollector() });
   
@@ -300,7 +305,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     if (this.scene.state.userUnicorn.collectorLevel < this.scene.state.eventCollectorSettings.length) {
       
       this.improve = this.scene.add.sprite(120, 285 + this.scene.height, 'improve-collector');
-      this.improveText = this.scene.add.text(120, 281 + this.scene.height, this.scene.state.lang.improve, { font: '26px Shadow', color: '#FFFFFF' }).setOrigin(0.5, 0.5).setStroke('#3B5367', 4);
+      this.improveText = this.scene.add.text(120, 281 + this.scene.height, this.scene.state.lang.improve, btnTextStyle).setOrigin(0.5);
   
       this.scene.clickShopBtn({ btn: this.improve, title: this.improveText }, (): void => { this.scene.game.scene.keys[this.scene.state.farm].showImproveCollector() });
   
@@ -414,17 +419,18 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     this.herdBoostBtn = this.scene.add.sprite(xBtn, yBtn, 'improve-collector');
     this.herdBoostBtn.setDataEnabled();
     this.herdBoostBtnUpdated = false;
-    this.herdBoostDiamondBtn = this.scene.add.sprite(xBtn, yBtn - 5, 'diamond').setVisible(true).setScale(0.11);
-    this.herdBoostBtnLeftText = this.scene.add.text(xBtn, yBtn - 5, this.scene.state.lang.buy, {
-      font: '23px Shadow', 
-      color: '#FFFFFF'
-    }).setOrigin(1, 0.5).setStroke('#3B5367', 4).setDepth(10);
+
+    this.herdBoostBtnLeftText = this.scene.add.text(xBtn, yBtn - 5, this.scene.state.lang.buy, btnTextStyle).setOrigin(0, 0.5).setDepth(10);
+    this.herdBoostDiamondBtn = this.scene.add.sprite(xBtn, yBtn - 5, 'diamond').setOrigin(0, 0.5).setVisible(true).setScale(0.11);
+
     const price: number = this.scene.state.herdBoostPrice * this.scene.state[`user${this.scene.state.farm}`].takenHerdBoost;
-    this.herdBoostBtnRightText = this.scene.add.text(xBtn, yBtn - 5, String(shortNum(price)), {
-      font: '23px Shadow',
-      color: '#FFFFFF'
-    }).setOrigin(0, 0.5).setStroke('#3B5367', 4).setDepth(10);
+    this.herdBoostBtnRightText = this.scene.add.text(xBtn, yBtn - 5, String(shortNum(price)), btnTextStyle).setOrigin(0, 0.5).setDepth(10);
   
+    const width: number = (this.herdBoostBtnLeftText.displayWidth + this.herdBoostDiamondBtn.displayWidth + this.herdBoostBtnRightText.displayWidth) / 2;
+    this.herdBoostBtnLeftText.setX(xBtn - width);
+    this.herdBoostDiamondBtn.setX(this.herdBoostBtnLeftText.getBounds().right + 2);
+    this.herdBoostBtnRightText.setX(this.herdBoostDiamondBtn.getBounds().right + 2);
+    
     if (this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].herd > 0) {
       this.herdBoostNotification = this.scene.add.text(xBtn + 90, yBtn - 60, this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].herd, {
         font: '28px Shadow',
@@ -436,11 +442,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
       const width: number = textGeom.width + 30 < 60 ? 60 : textGeom.width + 30;
       this.herdBoostNotificationBg.setPosition(textGeom.centerX, textGeom.centerY).setDisplaySize(width, textGeom.height + 20);
     }
-    
-    this.herdBoostDiamondBtn.setX(this.herdBoostBtn.x + this.herdBoostBtnLeftText.width - 25 - this.herdBoostBtnRightText.width);
-    this.herdBoostBtnLeftText.setX(this.herdBoostDiamondBtn.getBounds().left - 2);
-    this.herdBoostBtnRightText.setX(this.herdBoostDiamondBtn.getBounds().right + 1);
-    
+        
     this.herdBoostTimerText = this.scene.add.text(xBtn, yBtn - 60, this.scene.state.lang.stillForBoost + ' ' + shortTime(this.scene.state.timeToNewDay, this.scene.state.lang), {
       font: '20px Shadow',
       color: '#FFFFFF',
@@ -503,15 +505,20 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     let xBtn: number =  330;
     let yBtn: number = y + 135;
     this.feedBoostBtn = this.scene.add.sprite(xBtn, yBtn, 'improve-collector');
-    this.feedBoostDiamondBtn = this.scene.add.sprite(xBtn, yBtn - 5, 'diamond').setVisible(true).setScale(0.11);
+    this.feedBoostDiamondBtn = this.scene.add.sprite(xBtn, yBtn - 5, 'diamond').setVisible(true).setScale(0.11).setOrigin(0, 0.5);
     
-    this.feedBoostBtnLeftText = this.scene.add.text(xBtn, yBtn - 5 , '+1 ' + this.scene.state.lang.hour, { font: '23px Shadow', color: '#FFFFFF' }).setOrigin(1, 0.5).setStroke('#3B5367', 4).setDepth(10);
-    this.feedBoostBtnRightText = this.scene.add.text(xBtn, yBtn - 5 , String(shortNum(this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].feedBoostPrice)), { font: '23px Shadow', color: '#FFFFFF' }).setOrigin(0, 0.5).setStroke('#3B5367', 4).setDepth(10);
+    this.feedBoostBtnLeftText = this.scene.add.text(xBtn, yBtn - 5 , '+1 ' + this.scene.state.lang.hour, btnTextStyle).setOrigin(0, 0.5).setDepth(10);
+    this.feedBoostBtnRightText = this.scene.add.text(xBtn, yBtn - 5 , String(shortNum(this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].feedBoostPrice)), btnTextStyle).setOrigin(0, 0.5).setDepth(10);
+
     this.feedBoostNotification = this.scene.add.text(xBtn + 90, yBtn - 40, this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].feed, { font: '28px Shadow', color: '#FFFFFF' }).setDepth(1).setOrigin(0.5).setVisible(false).setShadow(2, 3, '#724719', 5);
     this.feedBoostNotificationBg = this.scene.add.sprite(this.feedBoostNotification.x, this.feedBoostNotification.y, 'boost-counter-bg');
-    this.feedBoostDiamondBtn.setX(this.feedBoostBtn.x + this.feedBoostBtnLeftText.width - 25 - this.feedBoostBtnRightText.width);
-    this.feedBoostBtnLeftText.setX(this.feedBoostDiamondBtn.getBounds().left - 2);
-    this.feedBoostBtnRightText.setX(this.feedBoostDiamondBtn.getBounds().right + 1);
+
+    const width: number = (this.feedBoostBtnLeftText.displayWidth + this.feedBoostDiamondBtn.displayWidth + this.feedBoostBtnRightText.displayWidth) / 2;
+
+    this.feedBoostBtnLeftText.setX(this.feedBoostBtn.x - width);
+    this.feedBoostDiamondBtn.setX(this.feedBoostBtnLeftText.getBounds().right + 2);
+    this.feedBoostBtnRightText.setX(this.feedBoostDiamondBtn.getBounds().right + 2);
+    
     this.feedProgressBarBg = this.scene.add.sprite(10, y + 230, 'pb-chapter-modal').setOrigin(0, 0.5).setScale(0.92, 1).setVisible(false);
     this.feedProgressBar = this.scene.add.tileSprite(25, y + 230, 0, 16, 'green-progress').setOrigin(0, 0.5).setVisible(false);
     let progress: number = (this.scene.state[`user${this.scene.state.farm}`].feedBoostTime / (ONE_HOUR * this.scene.game.scene.keys[this.scene.state.farm].feedBoostStack)) * this.maxWidth;
@@ -656,17 +663,14 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     this.herdBoostBtn = this.scene.add.sprite(xBtn, yBtn, 'improve-collector');
     this.herdBoostBtnUpdated = false;
   
-    this.herdBoostDiamondBtn = this.scene.add.sprite(xBtn, yBtn - 5, 'diamond').setVisible(true).setScale(0.11);
-    this.herdBoostBtnLeftText = this.scene.add.text(xBtn, yBtn - 5 , this.scene.state.lang.buy, { font: '23px Shadow', color: '#FFFFFF' }).setOrigin(1, 0.5).setStroke('#3B5367', 4).setDepth(10);
-    this.herdBoostBtnRightText = this.scene.add.text(xBtn, yBtn - 5 , String(shortNum(this.scene.state.herdBoostPrice * this.scene.state[`user${this.scene.state.farm}`].takenHerdBoost)), {
-      font: '23px Shadow',
-      color: '#FFFFFF'
-    }).setOrigin(0, 0.5).setStroke('#3B5367', 4).setDepth(10);
+    this.herdBoostDiamondBtn = this.scene.add.sprite(xBtn, yBtn - 5, 'diamond').setVisible(true).setScale(0.11).setOrigin(0, 0.5);
+    this.herdBoostBtnLeftText = this.scene.add.text(xBtn, yBtn - 5 , this.scene.state.lang.buy, btnTextStyle).setOrigin(0, 0.5).setDepth(10);
+    this.herdBoostBtnRightText = this.scene.add.text(xBtn, yBtn - 5 , String(shortNum(this.scene.state.herdBoostPrice * this.scene.state[`user${this.scene.state.farm}`].takenHerdBoost)), btnTextStyle).setOrigin(0, 0.5).setDepth(10);
     
-    this.herdBoostDiamondBtn.setX(this.herdBoostBtn.x + this.herdBoostBtnLeftText.width - 25 - this.herdBoostBtnRightText.width);
-    this.herdBoostBtnLeftText.setX(this.herdBoostDiamondBtn.getBounds().left - 2);
-    this.herdBoostBtnRightText.setX(this.herdBoostDiamondBtn.getBounds().right + 1);
-
+    const width: number = (this.herdBoostBtnLeftText.displayWidth + this.herdBoostDiamondBtn.displayWidth + this.herdBoostBtnRightText.displayWidth) / 2;
+    this.herdBoostBtnLeftText.setX(xBtn - width - 5);
+    this.herdBoostDiamondBtn.setX(this.herdBoostBtnLeftText.getBounds().right + 2);
+    this.herdBoostBtnRightText.setX(this.herdBoostDiamondBtn.getBounds().right + 2);
 
     const modalBtn: any = {
       btn: this.herdBoostBtn,
@@ -718,20 +722,15 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     const xBtn: number =  330;
     const yBtn: number = y + 135;
     this.feedBoostBtn = this.scene.add.sprite(xBtn, yBtn, 'improve-collector');
-    this.feedBoostDiamondBtn = this.scene.add.sprite(xBtn, yBtn - 5, 'diamond').setVisible(true).setScale(0.11);
-    this.feedBoostBtnLeftText = this.scene.add.text(xBtn, yBtn - 5 , '+1 ' + this.scene.state.lang.hour, {
-      font: '23px Shadow',
-      color: '#FFFFFF'
-    }).setOrigin(1, 0.5).setStroke('#3B5367', 4).setDepth(10);
+    this.feedBoostDiamondBtn = this.scene.add.sprite(xBtn, yBtn - 5, 'diamond').setVisible(true).setScale(0.11).setOrigin(0, 0.5);
+    this.feedBoostBtnLeftText = this.scene.add.text(xBtn, yBtn - 5 , '+1 ' + this.scene.state.lang.hour, btnTextStyle).setOrigin(0, 0.5).setDepth(10);
     const price: number = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].feedBoostPrice;
-    this.feedBoostBtnRightText = this.scene.add.text(xBtn, yBtn - 5 , String(shortNum(price)), {
-      font: '23px Shadow',
-      color: '#FFFFFF'
-    }).setOrigin(0, 0.5).setStroke('#3B5367', 4).setDepth(10);
+    this.feedBoostBtnRightText = this.scene.add.text(xBtn, yBtn - 5 , String(shortNum(price)), btnTextStyle).setOrigin(0, 0.5).setDepth(10);
   
-    this.feedBoostDiamondBtn.setX(this.feedBoostBtn.x + this.feedBoostBtnLeftText.width - 25 - this.feedBoostBtnRightText.width);
-    this.feedBoostBtnLeftText.setX(this.feedBoostDiamondBtn.getBounds().left - 2);
-    this.feedBoostBtnRightText.setX(this.feedBoostDiamondBtn.getBounds().right + 1);
+    const width: number = (this.feedBoostBtnLeftText.displayWidth + this.feedBoostDiamondBtn.displayWidth + this.feedBoostBtnRightText.displayWidth) / 2;
+    this.feedBoostBtnLeftText.setX(this.feedBoostBtn.x - width);
+    this.feedBoostDiamondBtn.setX(this.feedBoostBtnLeftText.getBounds().right + 2);
+    this.feedBoostBtnRightText.setX(this.feedBoostDiamondBtn.getBounds().right + 2);
     this.feedProgressBarBg = this.scene.add.sprite(10, y + 230, 'pb-chapter-modal').setOrigin(0, 0.5).setScale(0.92, 1).setVisible(false);
     this.feedProgressBar = this.scene.add.tileSprite(25, y + 230, 0, 16, 'green-progress').setOrigin(0, 0.5).setVisible(false);
 
@@ -741,7 +740,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     this.feedProgressText = this.scene.add.text(240, y + 200, this.scene.state.lang.still + ' ' + shortTime(this.scene.state[`user${this.scene.state.farm}`].feedBoostTime, this.scene.state.lang), {
       font: '21px Shadow',
       color: '#FFFFFF'
-    }).setOrigin(0.5, 0.5).setVisible(false);
+    }).setOrigin(0.5).setVisible(false);
   
     const modalBtn: any = {
       btn: this.feedBoostBtn,
@@ -843,7 +842,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
         this.herdBoostBtn?.active && !this.herdBoostBtnUpdated) {
 
         this.herdBoostBtnUpdated = true;
-        this.herdBoostBtnLeftText?.setText(this.scene.state.lang.pickUp).setX(xBtn).setOrigin(0.5, 0.5);
+        this.herdBoostBtnLeftText?.setText(this.scene.state.lang.pickUp).setX(xBtn).setOrigin(0.5);
         this.herdBoostBtnRightText?.setVisible(false);
         this.herdBoostDiamondBtn?.setVisible(false);
         this.herdBoostNotification?.setY(this.herdBoostNotification.y + 25);
@@ -885,9 +884,10 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
         
         if (this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].feed <= 0) {
           if (this.feedBoostBtnLeftText?.active) this.feedBoostBtnLeftText?.setText('+2 ' + this.scene.state.lang.hours);
-          this.feedBoostDiamondBtn?.setX(this.feedBoostBtn.x + this.feedBoostBtnLeftText?.width - 30 - this.feedBoostBtnRightText?.width);
-          this.feedBoostBtnLeftText?.setX(this.feedBoostDiamondBtn.getBounds().left - 2);
-          this.feedBoostBtnRightText?.setX(this.feedBoostDiamondBtn.getBounds().right + 1); 
+          const width: number = (this.feedBoostBtnLeftText.displayWidth + this.feedBoostDiamondBtn.displayWidth + this.feedBoostBtnRightText.displayWidth) / 2;
+          this.feedBoostBtnLeftText.setX(this.feedBoostBtn.x - width);
+          this.feedBoostDiamondBtn.setX(this.feedBoostBtnLeftText.getBounds().right + 2);
+          this.feedBoostBtnRightText.setX(this.feedBoostDiamondBtn.getBounds().right + 2);
         }
       } else {
         this.feedProgressBar?.setVisible(false);
@@ -896,9 +896,10 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   
         if (this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].feed <= 0) {
           if (this.feedBoostBtnLeftText?.active) this.feedBoostBtnLeftText?.setText('+1 ' + this.scene.state.lang.hour);
-          this.feedBoostDiamondBtn?.setX(this.feedBoostBtn?.x + this.feedBoostBtnLeftText.width - 25 - this.feedBoostBtnRightText.width);
-          this.feedBoostBtnLeftText?.setX(this.feedBoostDiamondBtn?.getBounds().left - 2);
-          this.feedBoostBtnRightText?.setX(this.feedBoostDiamondBtn?.getBounds().right + 1);
+          const width: number = (this.feedBoostBtnLeftText.displayWidth + this.feedBoostDiamondBtn.displayWidth + this.feedBoostBtnRightText.displayWidth) / 2;
+          this.feedBoostBtnLeftText.setX(this.feedBoostBtn.x - width);
+          this.feedBoostDiamondBtn.setX(this.feedBoostBtnLeftText.getBounds().right + 2);
+          this.feedBoostBtnRightText.setX(this.feedBoostDiamondBtn.getBounds().right + 2);
         }
       }
     } 
@@ -925,19 +926,20 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
         this.feedProgressBar?.setVisible(true);
         this.feedProgressBarBg?.setVisible(true);
         if (this.feedBoostBtnLeftText?.active) this.feedBoostBtnLeftText?.setText('+2 ' + this.scene.state.lang.hours);
-    
-        this.feedBoostDiamondBtn?.setX(this.feedBoostBtn.x + this.feedBoostBtnLeftText?.width - 30 - this.feedBoostBtnRightText?.width);
-        if (this.feedBoostBtnLeftText?.active) this.feedBoostBtnLeftText?.setX(this.feedBoostDiamondBtn?.getBounds().left - 2);
-        if (this.feedBoostBtnRightText?.active) this.feedBoostBtnRightText?.setX(this.feedBoostDiamondBtn?.getBounds().right + 1);
+        const width: number = (this.feedBoostBtnLeftText.displayWidth + this.feedBoostDiamondBtn.displayWidth + this.feedBoostBtnRightText.displayWidth) / 2;
+        this.feedBoostBtnLeftText.setX(this.feedBoostBtn.x - width);
+        this.feedBoostDiamondBtn.setX(this.feedBoostBtnLeftText.getBounds().right + 2);
+        this.feedBoostBtnRightText.setX(this.feedBoostDiamondBtn.getBounds().right + 2);
         
       } else {
         if (this.feedProgressBar?.active) this.feedProgressBar?.setVisible(false);
         if (this.feedProgressText?.active) this.feedProgressText?.setVisible(false);
         if (this.feedProgressBarBg?.active) this.feedProgressBarBg?.setVisible(false);
         if (this.feedBoostBtnLeftText?.active) this.feedBoostBtnLeftText?.setText('+1 ' + this.scene.state.lang.hour);
-        if (this.feedBoostDiamondBtn?.active) this.feedBoostDiamondBtn?.setX(this.feedBoostBtn?.x + this.feedBoostBtnLeftText.width - 25 - this.feedBoostBtnRightText.width);
-        if (this.feedBoostBtnLeftText?.active) this.feedBoostBtnLeftText?.setX(this.feedBoostDiamondBtn?.getBounds().left - 2);
-        if (this.feedBoostBtnRightText?.active) this.feedBoostBtnRightText?.setX(this.feedBoostDiamondBtn?.getBounds().right + 1);
+        const width: number = (this.feedBoostBtnLeftText.displayWidth + this.feedBoostDiamondBtn.displayWidth + this.feedBoostBtnRightText.displayWidth) / 2;
+        this.feedBoostBtnLeftText.setX(this.feedBoostBtn.x - width);
+        this.feedBoostDiamondBtn.setX(this.feedBoostBtnLeftText.getBounds().right + 2);
+        this.feedBoostBtnRightText.setX(this.feedBoostDiamondBtn.getBounds().right + 2);
       }
     }
   }

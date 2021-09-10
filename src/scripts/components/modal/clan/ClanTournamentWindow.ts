@@ -211,31 +211,31 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     
     this.textUserPoints = this.scene.add.text(0, headerGeom.centerY + 2 - 40, `${this.scene.state.lang.yourContribution}:`, textStyle)
-      .setOrigin(0.5)
+      .setOrigin(0, 0.5)
       .setDepth(2);
 
     this.countUserPoints = this.scene.add.text(0, headerGeom.centerY + 2 - 40, `${this.userPoints}`, textStyle)
-      .setOrigin(0.5)
+      .setOrigin(0, 0.5)
       .setDepth(2)
       .setColor('#dcff3c');
 
     this.textClanPoints = this.scene.add.text(0, headerGeom.centerY + 35 - 40, `${this.scene.state.lang.clanAnimals}:`, textStyle)
-      .setOrigin(0.5)
+      .setOrigin(0, 0.5)
       .setDepth(2);
 
     this.countClanPoints = this.scene.add.text(0, headerGeom.centerY + 35 - 40, `${shortNum(this.clanPoints)}`, textStyle)
-      .setOrigin(0.5)
+      .setOrigin(0, 0.5)
       .setDepth(2)
       .setColor('#dcff3c');
 
     this.scene.add.nineslice(this.bg.getBounds().left, headerGeom.centerY + 115, 400, 40, 'clan-window-leader-plate-ns', 5).setOrigin(0, 0.5);
 
     this.textClanPlace = this.scene.add.text(0, headerGeom.centerY + 115, `${this.scene.state.lang.clanPlace}:`, textStyle)
-      .setOrigin(0.5)
+      .setOrigin(0, 0.5)
       .setFontSize(23)
       .setDepth(2);
     this.countClanPlace = this.scene.add.text(0, headerGeom.centerY + 115, `${this.clanPlace}`, textStyle).setDepth(2)
-      .setOrigin(0.5)
+      .setOrigin(0, 0.5)
       .setFontSize(23)
       .setDepth(2)
       .setColor('#dcff3c');
@@ -299,30 +299,24 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
   }
   
   private setUserTextX(): void {
-    const x = this.posx + 140;
-    const textGeom: Phaser.Geom.Rectangle = this.textUserPoints.getBounds();
-    const countGeom: Phaser.Geom.Rectangle = this.countUserPoints.getBounds();
-    const width: number = (textGeom.width + countGeom.width) / 4 + 2;
-    this.textUserPoints.setX(x - width);
-    this.countUserPoints.setX(x + width);
+    const x = this.posx + 110;
+    const width: number = (this.textUserPoints.displayWidth + this.countUserPoints.displayWidth) / 2;
+    this.textUserPoints.setX(x - width - 5);
+    this.countUserPoints.setX(this.textUserPoints.getBounds().right + 5);
   }
 
   private setClanTextX(): void {
-    const x = this.posx + 145;
-    const textGeom: Phaser.Geom.Rectangle = this.textClanPoints.getBounds();
-    const countGeom: Phaser.Geom.Rectangle = this.countClanPoints.getBounds();
-    const width: number = (textGeom.width + countGeom.width) / 4 + 2;
-    this.textClanPoints.setX(x - width);
-    this.countClanPoints.setX(x + width);
+    const x = this.posx + 110;
+    const width: number = (this.textClanPoints.displayWidth + this.countUserPoints.displayWidth) / 2;
+    this.textClanPoints.setX(x - width - 5);
+    this.countClanPoints.setX(this.textClanPoints.getBounds().right + 5);
   }
 
   private setClanPlaceTextX(): void {
-    const x = this.posx - 50;
-    const textGeom: Phaser.Geom.Rectangle = this.textClanPlace.getBounds();
-    const countGeom: Phaser.Geom.Rectangle = this.countClanPlace.getBounds();
-    const width: number = (textGeom.width + countGeom.width) / 4 + 2;
-    this.textClanPlace.setX(x - width);
-    this.countClanPlace.setX(x + width);
+    const x = this.posx - 70;
+    const width: number = (this.textClanPlace.displayWidth + this.countUserPoints.displayWidth) / 2;
+    this.textClanPlace.setX(x - width - 5);
+    this.countClanPlace.setX(this.textClanPlace.getBounds().right + 5);
   }
 
   private createAnimals(): void {

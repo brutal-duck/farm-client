@@ -82,13 +82,17 @@ export default class EventRatingsWindow extends Phaser.GameObjects.Sprite {
     }).setOrigin(0.5, 0.5).setDepth(2).setLineSpacing(0.2);
 
     // Времени осталось
-    this.eventLeftText = this.scene.add.text(this.scene.cameras.main.centerX + 100, this.scene.cameras.main.centerY - 25, this.scene.state.lang.eventRulesLeft, {
+    this.eventLeftText = this.scene.add.text(0, this.scene.cameras.main.centerY - 25, this.scene.state.lang.eventRulesLeft, {
       font: '24px Bip',
       color: '#793D0A',
-    }).setOrigin(1, 0.5).setDepth(2);
+    }).setOrigin(0, 0.5).setDepth(2);
     
     // Время
-    this.scene.eventLeftTime = this.scene.add.text(this.scene.cameras.main.centerX + 114, this.scene.cameras.main.centerY - 25, shortTime(this.scene.state.progress.event.endTime, this.scene.state.lang), { font: '24px Bip', color: '#459D1A' }).setOrigin(0, 0.5).setDepth(2);
+    this.scene.eventLeftTime = this.scene.add.text(0, this.scene.cameras.main.centerY - 25, shortTime(this.scene.state.progress.event.endTime, this.scene.state.lang), { font: '24px Bip', color: '#459D1A' }).setOrigin(0, 0.5).setDepth(2);
+    
+    const width: number = (this.eventLeftText.getBounds().width + this.scene.eventLeftTime.getBounds().width) / 2;
+    this.eventLeftText.setX(this.scene.cameras.main.centerX - width - 5);
+    this.scene.eventLeftTime.setX(this.eventLeftText.getBounds().right + 5);
 
     // Призы
     const topPlaces: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX - 140, this.scene.cameras.main.centerY - 170, 'rating-places').setScale(0.9).setVisible(false);

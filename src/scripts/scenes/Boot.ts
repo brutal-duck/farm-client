@@ -64,7 +64,7 @@ class Boot extends Phaser.Scene {
   public init(): void {
     this.build = 4.00;
     console.log('Build ' + this.build);
-    // console.log('y1')
+    // console.log(this.game.device, 'this.game.device');
     this.state = state;
     this.fontsReady = false;
     this.userReady = false;
@@ -73,8 +73,8 @@ class Boot extends Phaser.Scene {
     this.avatar = '';
     this.setAutosaveListener();
     this.checkAbBlock();
-    this.setLangs();
     this.setPlatform();
+    this.setLangs();
     this.initAmplitude();
     this.loadFonts();
     this.checkUser();
@@ -185,14 +185,21 @@ class Boot extends Phaser.Scene {
     });
   }
 
-  private setLangs(): void {
-    let lang: string = window.navigator.language;
-    lang = lang.toLowerCase();
-    let ru: number = lang.indexOf('ru');
-
-    if (ru !== -1) this.lang = 'ru';
-    else this.lang = 'en';
-
+  private setLangs(lang?: string): void {
+    if (lang) {
+      if (lang !== 'ru') lang = 'en';
+      this.lang = lang;
+      this.state.lang = langs[this.lang];
+      return;
+    }
+    if (this.platform !== 'vk' && this.platform !== 'ok') {
+      let lang: string = window.navigator.language;
+      lang = lang.toLowerCase();
+      let ru: number = lang.indexOf('ru');
+  
+      if (ru !== -1) this.lang = 'ru';
+      else this.lang = 'en';
+    } else this.lang = 'ru';
     this.state.lang = langs[this.lang];
   }
 
@@ -345,6 +352,7 @@ class Boot extends Phaser.Scene {
     s.onload = (): void => {
       window['YaGames'].init().then((ysdk: any) => {
         this.state.ysdk = ysdk;
+        this.setLangs(ysdk.environment.i18n.lang);
         this.initYandexUser().catch((err) => {
           this.hash = this.getCookieHash();
           this.postCheckUser(this.hash);

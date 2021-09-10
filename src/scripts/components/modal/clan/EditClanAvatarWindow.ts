@@ -92,9 +92,9 @@ export default class EditClanAvatarWindow {
     };
     
     const saveBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.x - 100, this.y + 285, 'profile-window-button-green').setScale(1.2);
-    const saveBtnText: Phaser.GameObjects.Text = this.scene.add.text(saveBtn.x, saveBtn.y - 5, 'Сохранить', buttonTextStyle).setOrigin(0.5);
+    const saveBtnText: Phaser.GameObjects.Text = this.scene.add.text(saveBtn.x, saveBtn.y - 5, this.scene.state.lang.saveAvatar, buttonTextStyle).setOrigin(0.5);
     const randomBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.x + 100, this.y + 285, 'profile-window-button-red').setScale(1.2);
-    const randomBtnText: Phaser.GameObjects.Text = this.scene.add.text(randomBtn.x, randomBtn.y - 5, 'Случайно', buttonTextStyle).setOrigin(0.5);
+    const randomBtnText: Phaser.GameObjects.Text = this.scene.add.text(randomBtn.x, randomBtn.y - 5, this.scene.state.lang.random, buttonTextStyle).setOrigin(0.5);
 
     this.scene.clickModalBtn({ btn: saveBtn, title: saveBtnText }, () => { this.onSaveBtn(); });
 
