@@ -555,6 +555,7 @@ function clickTaskBoard(task: Itasks): void {
       openStorageToImproveOrSpeechBuble();
       break;
     case 18: 
+      this.game.scene.keys[this.state.farm].scrolling.scrollY = 0;
       this.game.scene.keys[this.state.farm][`takeDiamond${this.state.farm}`]();
       break;
     case 19: 
