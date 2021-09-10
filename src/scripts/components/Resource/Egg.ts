@@ -25,7 +25,7 @@ export default class Egg extends Resource {
   }
 
   public setEventClick(): void {
-    this.scene.click(this, () => {
+    this.scene.click(this.clickZone, () => {
       if (!this.isClicked) {
         this.isClicked = true;
         let manualСollect: boolean = false;
