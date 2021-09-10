@@ -338,6 +338,12 @@ function checkDoneTasks(): void {
         tasks[i].done = 1;
       }
     }
+
+    if (tasks[i]?.type === 21) {
+      if (Math.floor(this.state[`user${this.state.farm}`].feedBoostTime / 60) >= tasks[i].count) {
+        tasks[i].done = 1;
+      }
+    }
   }
   this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
 }
