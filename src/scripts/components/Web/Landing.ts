@@ -27,7 +27,7 @@ export default class Landing {
   private create(): void {
     this.bg = this.scene.add.tileSprite(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 20, 614, 420, 'mid-syst')
 
-    this.btn = this.scene.shopButton(this.bg.x, this.bg.y, this.scene.state.lang.play);
+    this.btn = this.scene.shopButton(this.bg.x, this.bg.y - 30, this.scene.state.lang.play);
     this.btn.btn.setScale(1.5);
     this.btn.title.setFontSize(38);
     this.scene.clickShopBtn(this.btn, (): void => {
@@ -62,9 +62,17 @@ export default class Landing {
 
   
   private enterYourAccountText(): void {
-    this.yourAcc = this.scene.add.text(this.bg.x, this.bg.y + 100, this.scene.state.lang.yourAccaunt, { font: 'Bold 30px Shadow', color: '#925C28', align: 'right', wordWrap: { width: 500 } }).setOrigin(0.5, 0).setLineSpacing(8).setDepth(this.bg.depth + 1);
-    this.enterAcc = this.scene.add.text(this.bg.x - 76, this.bg.y + 100, this.scene.state.lang.enterTo, { font: 'Bold 30px Shadow', color: '#05b23f' }).setOrigin(1, 0).setDepth(this.bg.depth + 1);
-    this.underline = this.scene.add.tileSprite(this.enterAcc.x - 2, this.enterAcc.y + this.enterAcc.getBounds().height - 3, this.enterAcc.width - 2, 2, 'pixel-landing').setOrigin(1, 0).setTint(0x05b23f).setDepth(this.bg.depth + 1);
+    const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '30px',
+      fontStyle: 'Bold',
+      color: '#925C28',
+      align: 'center',
+      wordWrap: { width: 500 },
+    };
+    this.enterAcc = this.scene.add.text(this.bg.x, this.bg.y + 30, this.scene.state.lang.enterTo, textStyle).setOrigin(0.5, 0).setColor('#05b23f').setDepth(this.bg.depth + 1);
+    this.yourAcc = this.scene.add.text(this.bg.x, this.enterAcc.getBounds().bottom + 10, this.scene.state.lang.yourAccaunt, textStyle).setOrigin(0.5, 0).setDepth(this.bg.depth + 1);
+    this.underline = this.scene.add.tileSprite(this.enterAcc.x - 2, this.enterAcc.y + this.enterAcc.getBounds().height - 3, this.enterAcc.width - 2, 2, 'pixel-landing').setOrigin(0.5, 0).setTint(0x05b23f).setDepth(this.bg.depth + 1);
     this.clickZone = this.scene.add.tileSprite(this.enterAcc.x + 5, this.enterAcc.y - 5, this.enterAcc.width + 10, this.enterAcc.height + 10, 'pixel-landing').setAlpha(0.0001).setOrigin(1, 0).setDepth(this.bg.depth + 2).setInteractive();
     
     this.clickZone.on('pointerover', (): void => {
