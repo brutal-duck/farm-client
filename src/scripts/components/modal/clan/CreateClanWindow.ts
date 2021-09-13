@@ -321,9 +321,10 @@ export default class CreateClanWindow {
       },
     };
     
-    const tile: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(this.x, this.switchBg.getBounds().bottom + 20, this.window.width - 50, 200, 'modal-square-bg', 10).setOrigin(0.5, 0);
+    // const tile: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(this.x, this.switchBg.getBounds().bottom + 20, this.window.width - 50, 200, 'modal-square-bg', 10).setOrigin(0.5, 0); ns!
+    const tile: IroundedField = this.scene.add.roundedField(this.x, this.switchBg.getBounds().bottom + 20, this.window.width - 50, 200, 'modal-square-bg').setOriginY( 0);
     this.initAvatar();
-    const y: number = tile.getBounds().centerY;
+    const y: number = tile.getCenter().y;
     this.icon = LogoManager.createIcon(this.scene, this.x - 120, y, this.scene.state.clanAvatar).setScale(0.8);
     const geom: Phaser.Geom.Rectangle = this.icon.getBounds();
     const randomBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(geom.right + 150, geom.centerY - 40, 'profile-window-button-yellow').setScale(1.1);

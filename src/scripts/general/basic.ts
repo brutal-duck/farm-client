@@ -949,14 +949,14 @@ function loadingScreen(farmType: string): void {
     color: '#1F5B06'
   }).setDepth(1).setOrigin(0.5, 0.5);
 
-  this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - Math.floor(height / 2), 'header-syst').setOrigin(0.5, 1);
-  const bot: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY + Math.floor(height / 2), 'bottom-syst').setOrigin(0.5, 0);
-  this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY, 614, height + 2, "mid-syst").setOrigin(0.5, 0.5);
+  const header: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY - Math.floor(height / 2), 'header-syst').setOrigin(0.5, 1).setDepth(2);
+  const mid: Phaser.GameObjects.Sprite = this.add.tileSprite(this.cameras.main.centerX, header.getBottomCenter().y - 12, 614, height + 2, "mid-syst").setOrigin(0.5, 0);
+  const bot: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX - 1, mid.getBottomCenter().y, 'bottom-syst').setOrigin(0.5, 0);
   
-  this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - Math.floor(height / 2) - 22, loading, {
+  this.add.text(this.cameras.main.centerX, header.getCenter().y - 6, loading, {
     font: '37px Shadow',
     color: '#F9D48D'
-  }).setDepth(1).setOrigin(0.5, 1);
+  }).setDepth(1).setOrigin(0.5);
 
   this.add.sprite(120, this.cameras.main.centerY + 20 - padding, 'pb-empty-corner');
   this.add.sprite(600, this.cameras.main.centerY + 20 - padding, 'pb-empty-corner').setScale(-1, 1);

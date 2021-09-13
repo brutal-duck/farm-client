@@ -205,7 +205,8 @@ export default class GeneralChat {
       this.scene.add.sprite(bgX - 12, this.scene.windowHeight + this.scene.scrollHeight + padding, status.iconTexture).setOrigin(1, 0).setScale(0.8);
     }
 
-    const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(bgX, text.y - 10, bgWidth, textHeight + 30, 'chat-user-message-bg', 20).setOrigin(0);
+    // const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(bgX, text.y - 10, bgWidth, textHeight + 30, 'chat-user-message-bg', 20).setOrigin(0); //!
+    const bg: IroundedField = this.scene.add.roundedField(bgX + bgWidth / 2, text.y - 10, bgWidth, textHeight + 30, 'chat-user-message-bg').setOriginY(0);
 
     this.lastMsgFromUser = msgData.login;
     // Добавляем длинну скролла если высота всех сообщений уходит за границу
@@ -277,14 +278,15 @@ export default class GeneralChat {
       this.scene.add.sprite(bgX + bgWidth + 30, this.scene.windowHeight + this.scene.scrollHeight + padding, status.iconTexture).setOrigin(1, 0).setScale(0.8);
     }
   
-    const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(bgX, text.y - 10, bgWidth, textHeight + 30, 'chat-foreign-message-bg', 20).setOrigin(0);
+    // const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(bgX, text.y - 10, bgWidth, textHeight + 30, 'chat-foreign-message-bg', 20).setOrigin(0); //!
+    const bg: IroundedField = this.scene.add.roundedField(bgX + bgWidth / 2, text.y - 10, bgWidth, textHeight + 30, 'chat-foreign-message-bg').setOriginY(0);
   
     this.lastMsgFromUser = msgData.login;
     this.scene.scrollHeight += textHeight + padding + 40;
 
-    this.scene.click(bg, () => {
-      this.onPersonalClick(msgData);
-    });
+    // this.scene.click(bg, () => {
+    //   this.onPersonalClick(msgData);
+    // });
   }
 
   private onPersonalClick(msgData: Ichat): void {

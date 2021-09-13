@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AskBar from '../../gameObjects/AskBar';
 import Chat from './../../../scenes/Modal/Chat/Main';
 import Modal from './../../../scenes/Modal/Modal';
 import Notificator from './../../gameObjects/Notificator';
@@ -142,10 +143,11 @@ export default class PersonalChatList {
     const messageTextGeom: Phaser.Geom.Rectangle = messageText.getBounds();
     
     const bgHeight: number = nameTextGeom.height + messageTextGeom.height + 50;
-    const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(nameTextGeom.left - 20, nameTextGeom.top - 20, bgWidth, bgHeight, 'chat-foreign-message-bg', 20).setOrigin(0);
-    const bgGeom: Phaser.Geom.Rectangle = bg.getBounds();
+    // const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(nameTextGeom.left - 20, nameTextGeom.top - 20, bgWidth, bgHeight, 'chat-foreign-message-bg', 20).setOrigin(0); //!
+    const bg: IroundedField = this.scene.add.roundedField(nameTextGeom.left - 20 + bgWidth / 2, nameTextGeom.top - 20, bgWidth, bgHeight, 'chat-foreign-message-bg').setOriginY(0);
+    // const bgGeom: Phaser.Geom.Rectangle = bg.getBounds();
     const date: string = this.getDate(lastMessage.time);
-    const time: Phaser.GameObjects.Text = this.scene.add.text(bgGeom.left + 15, bgGeom.bottom, date, timeTextStyle).setOrigin(0);
+    const time: Phaser.GameObjects.Text = this.scene.add.text(bg.getLeftCenter().x + 15, bg.getBottomCenter().y, date, timeTextStyle).setOrigin(0);
 
     if (statusSettings) {
       const x: number = nameTextGeom.width > bgWidth - 80 ? nameTextGeom.left + bgWidth - 80 + 5 : nameTextGeom.right + 5;
@@ -155,14 +157,14 @@ export default class PersonalChatList {
     const checkNotification: boolean = messages.some(el => !el.check);
     if (checkNotification) {
       const pos: Iposition = {
-        x: bgGeom.right - 10,
-        y: bgGeom.top + 10,
+        x: bg.getRightCenter().x - 10,
+        y: bg.getTopCenter().y + 10,
       };
       new Notificator(this.scene, pos).setCount(1);
     } else {
       const pos: Iposition = {
-        x: bgGeom.right - 35,
-        y: bgGeom.top + 30,
+        x: bg.getRightCenter().x - 35,
+        y: bg.getTopCenter().y + 30,
       };
       const trash: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos.x, pos.y, 'chat-trash');
       this.scene.clickButton(trash, () => {
@@ -180,7 +182,7 @@ export default class PersonalChatList {
     });
   }
 
-  private onPersonalDelete(userId: string, bg: Phaser.GameObjects.RenderTexture, trash: Phaser.GameObjects.Sprite): void {
+  private onPersonalDelete(userId: string, bg: IroundedField, trash: Phaser.GameObjects.Sprite): void {
     const { acceptBtn, acceptBtnText, declainBtn, declainBtnText } = this.createDeleteBubble(bg, trash);
     
     this.scene.clickModalBtn({ btn: acceptBtn, title: acceptBtnText }, () => {
@@ -193,8 +195,9 @@ export default class PersonalChatList {
     }); 
   }
 
-  private onClanMessageDelete(id: string, bg: Phaser.GameObjects.RenderTexture, trash: Phaser.GameObjects.Sprite): void {
+  private onClanMessageDelete(id: string, bg: IroundedField, trash: Phaser.GameObjects.Sprite): void {
     const { acceptBtn, acceptBtnText, declainBtn, declainBtnText } = this.createDeleteBubble(bg, trash);
+    console.log('onClanMessageDelete ~ acceptBtn', acceptBtn)
     this.scene.clickModalBtn({ btn: acceptBtn, title: acceptBtnText }, () => {
       this.scene.state.user.messages = this.scene.state.user.messages.filter(el => el._id !== id);
       this.scene.state.updatePersonalMessage = true;
@@ -302,14 +305,14 @@ export default class PersonalChatList {
     }
     
     const bgHeight: number = messageTextGeom.height + 50 + height;
-    const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(messageTextGeom.left - 20, messageTextGeom.top - 20, bgWidth, bgHeight, 'chat-clan-message-bg', 20).setOrigin(0);
-    const bgGeom: Phaser.Geom.Rectangle = bg.getBounds();
+    // const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(messageTextGeom.left - 20, messageTextGeom.top - 20, bgWidth, bgHeight, 'chat-clan-message-bg', 20).setOrigin(0); //!
+    const bg: IroundedField = this.scene.add.roundedField(messageTextGeom.left - 20 + bgWidth / 2, messageTextGeom.top - 20, bgWidth, bgHeight, 'chat-clan-message-bg').setOriginY(0);
     const date: string = this.getDate(data.time);
-    const time: Phaser.GameObjects.Text = this.scene.add.text(bgGeom.left + 15, bgGeom.bottom, date, timeTextStyle).setOrigin(0);
+    const time: Phaser.GameObjects.Text = this.scene.add.text(bg.getLeftCenter().x + 15, bg.getBottomCenter().y, date, timeTextStyle).setOrigin(0);
 
     const trashPosition: Iposition = {
-      x: bgGeom.right - 35,
-      y: bgGeom.top + 30,
+      x: bg.getRightCenter().x - 35,
+      y: bg.getTopCenter().y + 30,
     };
     const trash: Phaser.GameObjects.Sprite = this.scene.add.sprite(trashPosition.x, trashPosition.y, 'chat-trash');
     this.scene.clickButton(trash, () => {
@@ -352,14 +355,14 @@ export default class PersonalChatList {
     let height: number = 0;
 
     const bgHeight: number = messageTextGeom.height + 50 + height;
-    const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(messageTextGeom.left - 20, messageTextGeom.top - 20, bgWidth, bgHeight, 'chat-clan-message-bg', 20).setOrigin(0);
-    const bgGeom: Phaser.Geom.Rectangle = bg.getBounds();
+    // const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(messageTextGeom.left - 20, messageTextGeom.top - 20, bgWidth, bgHeight, 'chat-clan-message-bg', 20).setOrigin(0); //!
+    const bg: IroundedField = this.scene.add.roundedField(messageTextGeom.left - 20 + bgWidth / 2, messageTextGeom.top - 20, bgWidth, bgHeight, 'chat-clan-message-bg').setOriginY(0);
     const date: string = this.getDate(data.time);
-    const time: Phaser.GameObjects.Text = this.scene.add.text(bgGeom.left + 15, bgGeom.bottom, date, timeTextStyle).setOrigin(0);
+    const time: Phaser.GameObjects.Text = this.scene.add.text(bg.getLeftCenter().x + 15, bg.getBottomCenter().y, date, timeTextStyle).setOrigin(0);
 
     const trashPosition: Iposition = {
-      x: bgGeom.right - 35,
-      y: bgGeom.top + 30,
+      x: bg.getRightCenter().x - 35,
+      y: bg.getTopCenter().y + 30,
     };
 
     const trash: Phaser.GameObjects.Sprite = this.scene.add.sprite(trashPosition.x, trashPosition.y, 'chat-trash');
@@ -474,14 +477,14 @@ export default class PersonalChatList {
     }
     
     const bgHeight: number = messageTextGeom.height + 50 + height;
-    const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(messageTextGeom.left - 20, messageTextGeom.top - 20, bgWidth, bgHeight, 'chat-clan-message-bg', 20).setOrigin(0);
-    const bgGeom: Phaser.Geom.Rectangle = bg.getBounds();
+    // const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(messageTextGeom.left - 20, messageTextGeom.top - 20, bgWidth, bgHeight, 'chat-clan-message-bg', 20).setOrigin(0); //!
+    const bg: IroundedField = this.scene.add.roundedField(messageTextGeom.left - 20 + bgWidth / 2, messageTextGeom.top - 20, bgWidth, bgHeight, 'chat-clan-message-bg').setOriginY(0);
     const date: string = this.getDate(data.time);
-    const time: Phaser.GameObjects.Text = this.scene.add.text(bgGeom.left + 15, bgGeom.bottom, date, timeTextStyle).setOrigin(0);
+    const time: Phaser.GameObjects.Text = this.scene.add.text(bg.getLeftCenter().x + 15, bg.getBottomCenter().y, date, timeTextStyle).setOrigin(0);
 
     const trashPosition: Iposition = {
-      x: bgGeom.right - 35,
-      y: bgGeom.top + 30,
+      x: bg.getRightCenter().x - 35,
+      y: bg.getTopCenter().y + 30,
     };
     const trash: Phaser.GameObjects.Sprite = this.scene.add.sprite(trashPosition.x, trashPosition.y, 'chat-trash');
     this.scene.clickButton(trash, () => {
@@ -629,7 +632,7 @@ export default class PersonalChatList {
     this.scene.scene.restart(this.scene.state);
   }
 
-  private createDeleteBubble(bgMask: Phaser.GameObjects.RenderTexture, trash: Phaser.GameObjects.Sprite): {
+  private createDeleteBubble(bg: IroundedField, trash: Phaser.GameObjects.Sprite): {
     acceptBtn: Phaser.GameObjects.Sprite;
     acceptBtnText: Phaser.GameObjects.Text;
     declainBtn: Phaser.GameObjects.Sprite;
@@ -639,52 +642,48 @@ export default class PersonalChatList {
       x: trash.x - 50,
       y: trash.y,
     };
-    const btnTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
-      fontFamily: 'Shadow',
-      wordWrap: { width: 100 },
-      align: 'center',
-      fontSize: '12px',
-      color: '#ffe2e2',
-      stroke: '#D78A31',
-      strokeThickness: 1,
-    };
-    const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
-      fontFamily: 'Bip',
-      wordWrap: { width: 100 },
-      align: 'center',
-      fontSize: '16px',
-      color: '#ffebdc',
-      stroke: '#373737',
-      strokeThickness: 1,
-    };
-    const mask: Phaser.Display.Masks.BitmapMask = new Phaser.Display.Masks.BitmapMask(this.scene, bgMask);
-    const bg: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos.x + 200, pos.y, 'chat-delete-bg').setMask(mask).setDepth(2);
-    const text:Phaser.GameObjects.Text = this.scene.add.text(pos.x + 200, pos.y - 15, this.scene.state.lang.delete, textStyle).setOrigin(0.5).setMask(mask).setDepth(2);
-    const acceptBtn = this.scene.add.sprite(pos.x - 35 + 200, pos.y + 14, 'profile-window-button-red').setOrigin(0.5).setScale(0.5).setMask(mask).setDepth(2);
-    const acceptBtnText = this.scene.add.text(pos.x - 35 + 200, pos.y + 10, this.scene.state.lang.yes, btnTextStyle).setOrigin(0.5).setMask(mask).setDepth(2);
-    const declainBtn = this.scene.add.sprite(pos.x + 35 + 200, pos.y + 14, 'profile-window-button-green').setOrigin(0.5).setScale(0.5).setMask(mask).setDepth(2);
-    const declainBtnText = this.scene.add.text(pos.x + 35 + 200, pos.y + 10, this.scene.state.lang.no, btnTextStyle).setOrigin(0.5).setMask(mask).setDepth(2);
+    // const btnTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+    //   fontFamily: 'Shadow',
+    //   wordWrap: { width: 100 },
+    //   align: 'center',
+    //   fontSize: '12px',
+    //   color: '#ffe2e2',
+    //   stroke: '#D78A31',
+    //   strokeThickness: 1,
+    // };
+    // const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+    //   fontFamily: 'Bip',
+    //   wordWrap: { width: 100 },
+    //   align: 'center',
+    //   fontSize: '16px',
+    //   color: '#ffebdc',
+    //   stroke: '#373737',
+    //   strokeThickness: 1,
+    // };
+    // const mask: Phaser.Display.Masks.BitmapMask = new Phaser.Display.Masks.BitmapMask(this.scene, bgMask);
+    // const bg: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos.x + 200, pos.y, 'chat-delete-bg').setMask(mask).setDepth(2);
+    // const text:Phaser.GameObjects.Text = this.scene.add.text(pos.x + 200, pos.y - 15, this.scene.state.lang.delete, textStyle).setOrigin(0.5).setMask(mask).setDepth(2);
+    // const acceptBtn = this.scene.add.sprite(pos.x - 35 + 200, pos.y + 14, 'profile-window-button-red').setOrigin(0.5).setScale(0.5).setMask(mask).setDepth(2);
+    // const acceptBtnText = this.scene.add.text(pos.x - 35 + 200, pos.y + 10, this.scene.state.lang.yes, btnTextStyle).setOrigin(0.5).setMask(mask).setDepth(2);
+    // const declainBtn = this.scene.add.sprite(pos.x + 35 + 200, pos.y + 14, 'profile-window-button-green').setOrigin(0.5).setScale(0.5).setMask(mask).setDepth(2);
+    // const declainBtnText = this.scene.add.text(pos.x + 35 + 200, pos.y + 10, this.scene.state.lang.no, btnTextStyle).setOrigin(0.5).setMask(mask).setDepth(2);
+
+    const askBar = new AskBar(this.scene, pos.x + 201, pos.y)
+    askBar.setGlobalMask(bg.getRightCenter().x - 6, pos.y, { x: 0, y: 0.5 })
+    console.log('createDeleteBubble ~ askBar', askBar)
     
     const tween: Phaser.Tweens.Tween = this.scene.add.tween({
-      targets: [bg,
-        text,
-        acceptBtn,
-        acceptBtnText,
-        declainBtn,
-        declainBtnText,
-      ],
+      targets: askBar.elements,
       ease: 'Power3',
-      onStart: () => {
-        trash.setVisible(false);
-      },
+      onStart: () => { trash.setVisible(false); },
       x: '-=200',
       duration: 400,
     });
     return {
-      acceptBtn,
-      acceptBtnText,
-      declainBtn,
-      declainBtnText,
+      acceptBtn: askBar.acceptBtn,
+      acceptBtnText: askBar.acceptBtnText,
+      declainBtn: askBar.declainBtn,
+      declainBtnText: askBar.declainBtnText,
     }
   }
 

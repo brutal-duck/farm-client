@@ -1,3 +1,5 @@
+import { tabActiveAtlas, tabAtlas } from "../../atlases";
+
 const partProgress: string = require("./../../../assets/images/modal/part-progress.png");
 const newbieBg: string = require("./../../../assets/images/modal/daily/newbie-bg.png");
 const newbieDay0: string = require("./../../../assets/images/modal/daily/newbie-day-0.png");
@@ -349,13 +351,13 @@ export default function typePreload(): void {
         this.load.image('chat-delete-bg', chatDeleteBg);
         this.load.image('chat-trash', chatTrash);
         this.load.image('chat-arrow', chatArrow);
-        this.load.image('chat-tab', chatTab);
+        this.load.atlas('chat-tab', chatTab, tabAtlas);
         this.load.image('chat-foreign-message-bg', chatForeignMessageBg);
         this.load.image('chat-clan-message-bg', chatClanMessageBg);
         this.load.image('chat-admin-message-bg', chatAdminMessageBg);
         this.load.image('chat-user-message-bg', chatUserMessageBg);
         this.load.image('chat-tab-close', chatTabClose);
-        this.load.image('chat-tab-active', chatTabActive);
+        this.load.atlas('chat-tab-active', chatTabActive, tabActiveAtlas);
         this.load.image('chat-input-bg', chatInput);
         this.load.image('chat-send-btn', chatSendBtn);
         this.load.image('chat-emoji-btn', chatEmojiBtn);

@@ -33,14 +33,14 @@ import ConfimExcludeUserWindow from '../../components/modal/system/ConfimExclude
 function systemWindow(): void {
   let height:number = 0;
 
-  this.header = this.add.image(this.cameras.main.centerX - 1, this.cameras.main.centerY - Math.floor(height / 2), 'header-syst').setOrigin(0.5, 1);
-  this.close = this.add.sprite(620, this.cameras.main.centerY - Math.floor(height / 2) - 45, 'header-close').setOrigin(0.5, 0.5).setDepth(1);
-  this.bottom = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY + Math.floor(height / 2), 'bottom-syst').setOrigin(0.5, 0);
-  this.body = this.add.tileSprite(this.cameras.main.centerX, this.cameras.main.centerY, 614, height + 2, 'mid-syst').setOrigin(0.5, 0.5);
-  this.textHeader = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - Math.floor(height / 2) - 25, '', {
+  this.header = this.add.image(this.cameras.main.centerX - 1, this.cameras.main.centerY - Math.floor(height / 2), 'header-syst').setOrigin(0.5, 1).setDepth(1);
+  this.close = this.add.sprite(620, this.header.getCenter().y, 'header-close').setOrigin(0.5).setDepth(2);
+  this.body = this.add.tileSprite(this.cameras.main.centerX, this.header.getBottomCenter().y - 12, 614, height + 2, 'mid-syst').setOrigin(0.5, 0.5);
+  this.bottom = this.add.image(this.cameras.main.centerX - 1, this.body.getBottomCenter().y, 'bottom-syst').setOrigin(0.5, 0);
+  this.textHeader = this.add.text(this.cameras.main.centerX, this.header.getCenter().y - 6, '', {
     font: '37px Shadow',
     fill: '#F9D48D'
-  }).setDepth(1).setOrigin(0.5, 1);
+  }).setDepth(1).setOrigin(0.5);
 
   this.clickButton(this.close, (): void => {
     if (this.state.boughtFeedBoost) {
@@ -334,24 +334,20 @@ function eventTerritory(): void {
 
 // задать размеры
 function resizeWindow(height: number): void {
-
-  this.header.y = this.cameras.main.centerY - Math.floor(height / 2);
-  this.close.y = this.cameras.main.centerY - Math.floor(height / 2) - 45;
-  this.bottom.y = this.cameras.main.centerY + Math.floor(height / 2);
+  this.header.setY(this.cameras.main.centerY - Math.floor(height / 2));
+  this.close.setY(this.header.getCenter().y - 6);
   this.body.height = height + 2;
-  this.textHeader.setPosition(this.textHeader.x, this.cameras.main.centerY - Math.floor(height / 2) - 25);
-
+  this.bottom.setY(this.body.getBottomCenter().y);
+  this.textHeader.setPosition(this.textHeader.x, this.header.getCenter().y - 6);
 }
 
 // Растягивание верхушки окна
 function resizeWindowTop(height: number): void {
-
-  this.textHeader.setY(this.textHeader.y - height)
   this.header.setY(this.header.y - height)
-  this.close.setY(this.close.y - height)
+  this.textHeader.setY(this.header.getCenter().y - 6)
+  this.close.setY(this.header.getCenter().y - 6)
   this.body.setY(this.body.y - height / 2)
   this.body.height += height
-
 }
 
 export {

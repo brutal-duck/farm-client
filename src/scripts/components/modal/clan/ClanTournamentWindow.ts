@@ -364,7 +364,8 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
       },
     };
     const y = this.posy + 90;
-    this.scene.add.nineslice(this.posx, y, 490, 590, 'modal-square-bg', 10).setOrigin(0.5);
+    // this.scene.add.nineslice(this.posx, y, 490, 590, 'modal-square-bg', 10).setOrigin(0.5); ns!
+    this.scene.add.roundedField(this.posx, y, 490, 590, 'modal-square-bg');
     if (this.scene.state.progress[this.farm].open) {
       this.scene.add.sprite(this.posx, y - 308, 'clan-tournament-plate-bg');
     }

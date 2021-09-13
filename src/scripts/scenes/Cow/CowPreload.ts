@@ -222,7 +222,7 @@ const hatchet: string = require("./../../../assets/images/icons/hatchet.png");
 const hammer: string = require("./../../../assets/images/icons/hammer.png");
 const improveCollector: string = require("./../../../assets/images/modal/improve-collector.png");
 const tasksUncomplete: string = require("./../../../assets/images/modal/tasks/uncomplete.png");
-const tasksBarNs: string = require("./../../../assets/images/modal/tasks/bar-ns.png");
+const squareTask: string = require("./../../../assets/images/modal/square-task.png");
 const circle: string = require("./../../../assets/images/circle.png");
 const notificationBg: string = require('../../../assets/images/icons/notificator.png');
 const roundedBarSegment: string = require("./../../../assets/images/rounded-bar-segment.png");
@@ -488,7 +488,8 @@ class CowPreload extends Phaser.Scene {
     this.load.image('hammer', hammer);
     this.load.image('improve-collector', improveCollector);
     this.load.image('tasks-uncomplete-rend', tasksUncomplete);
-    this.load.image('tasks-bar-ns', tasksBarNs);
+    this.load.image('square-task', squareTask);
+
     this.load.image('circle', circle);
     this.load.image('notification-bg', notificationBg);
     this.load.image('rounded-segment', roundedBarSegment);

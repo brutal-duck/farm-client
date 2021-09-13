@@ -14,6 +14,7 @@ import { clickShopBtn, clickModalBtn, click } from './../general/clicks';
 import { shopButton, bigButton } from './../elements';
 import { general } from './../local/settings';
 import { setPlatformStorage, getPlatformStorage } from './../general/basic';
+import RoundedField from '../components/gameObjects/RoundedField';
 
 Amplitude.init();
 
@@ -79,6 +80,7 @@ class Boot extends Phaser.Scene {
     this.loadFonts();
     this.checkUser();
     this.switchingMusic();
+    this.addNewGameObjectsInFactory();
   }
 
   private setAutosaveListener(): void {
@@ -669,6 +671,15 @@ class Boot extends Phaser.Scene {
         music?.pause();
       }
     }, false);
+  }
+
+  private addNewGameObjectsInFactory(): void {
+    Phaser.GameObjects.GameObjectFactory.register(
+      'roundedField',
+      function (this: Phaser.GameObjects.GameObjectFactory, x: number, y: number, width: number, height: number, atlasTexure: string) {
+        return new RoundedField(this.scene, x, y, width, height, atlasTexure)
+      }
+    )
   }
 }
 

@@ -25,7 +25,7 @@ export default class ClanWindow {
   public headerText: Phaser.GameObjects.Text;
   private footer: Phaser.GameObjects.Sprite;
   private windowType: number
-  public modalElements: Array<modalElementType | Icon> = [];
+  public modalElements: Array<modalElementType | Icon | IroundedField> = [];
   
   constructor(scene: Modal) {
     this.scene = scene;

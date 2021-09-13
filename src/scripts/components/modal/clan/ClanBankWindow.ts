@@ -183,7 +183,8 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
     };
 
     const y = this.scene.cameras.main.centerY + 219
-    this.scene.add.nineslice(this.posx, y, 500, 385, 'modal-square-bg', 10).setOrigin(0.5);
+    // this.scene.add.nineslice(this.posx, y, 500, 385, 'modal-square-bg', 10).setOrigin(0.5); // ns!
+    this.scene.add.roundedField(this.posx, y, 500, 385, 'modal-square-bg')
     this.scene.add.nineslice(this.posx, y - 150, this.windowWidth - 25, 70,'clan-window-leader-plate-ns', 5)
       .setOrigin(0.5)
       .setAlpha(0.5);

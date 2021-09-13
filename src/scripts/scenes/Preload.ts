@@ -1,3 +1,5 @@
+import { adminMsgAtlas, clanMsgAtlas, foreignMsgAtlas, squareBgAtlas, tabActiveAtlas, tabAtlas, userMsgAtlas } from "../atlases";
+
 // карта
 const sheepCoin: string = require('./../../assets/images/sheep/icons/money.png');
 const chickenCoin: string = require('./../../assets/images/chicken/icons/money.png');
@@ -437,13 +439,13 @@ class Preload extends Phaser.Scene {
     this.load.image('chat-delete-bg', chatDeleteBg);
     this.load.image('chat-trash', chatTrash);
     this.load.image('chat-arrow', chatArrow);
-    this.load.image('chat-tab', chatTab);
+    this.load.atlas('chat-tab', chatTab, tabAtlas);
     this.load.image('chat-tab-close', chatTabClose);
-    this.load.image('chat-tab-active', chatTabActive);
-    this.load.image('chat-foreign-message-bg', chatForeignMessageBg);
-    this.load.image('chat-clan-message-bg', chatClanMessageBg);
-    this.load.image('chat-admin-message-bg', chatAdminMessageBg);
-    this.load.image('chat-user-message-bg', chatUserMessageBg);
+    this.load.atlas('chat-tab-active', chatTabActive, tabActiveAtlas);
+    this.load.atlas('chat-foreign-message-bg', chatForeignMessageBg, foreignMsgAtlas);
+    this.load.atlas('chat-clan-message-bg', chatClanMessageBg, clanMsgAtlas);
+    this.load.atlas('chat-admin-message-bg', chatAdminMessageBg, adminMsgAtlas);
+    this.load.atlas('chat-user-message-bg', chatUserMessageBg, userMsgAtlas);
     this.load.image('chat-input-bg', chatInput);
     this.load.image('chat-send-btn', chatSendBtn);
     this.load.image('chat-emoji-btn', chatEmojiBtn);
@@ -515,7 +517,7 @@ class Preload extends Phaser.Scene {
     }
 
     this.load.image('sys-switch', sysSwitch);
-    this.load.image('modal-square-bg', squareBg);
+    this.load.atlas('modal-square-bg', squareBg, squareBgAtlas);
     this.load.image('clan-window-header', clanWindowHeader);
     this.load.image('clan-window-tab-active', clanWindowTabActive);
     this.load.image('clan-window-tab-disable', clanWindowTabDisable);

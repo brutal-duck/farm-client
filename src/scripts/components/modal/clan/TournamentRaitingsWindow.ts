@@ -148,7 +148,8 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     const bgHeight: number = 610;
     const bgY: number = this.y + 30;
-    this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
+    // this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5); ns!
+    this.scene.add.roundedField(this.x, bgY, 480, bgHeight, 'modal-square-bg').setDepth(1);
 
     this.headerText = this.scene.add.text(headerGeom.centerX, headerGeom.centerY - 3, this.scene.state.lang.clansLiderboard, this.headerTextStyle).setDepth(2).setOrigin(0.5);
 
@@ -166,7 +167,8 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     const bgHeight: number = 610;
     const bgY: number = this.y + 30;
-    this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
+    // this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5); ns!
+    this.scene.add.roundedField(this.x, bgY, 480, bgHeight, 'modal-square-bg').setDepth(1);
 
     this.headerText = this.scene.add.text(headerGeom.centerX, headerGeom.centerY - 3, this.scene.state.lang.clanLeaders, this.headerTextStyle).setDepth(2).setOrigin(0.5).setFontSize(28);
     
@@ -203,7 +205,8 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
     };
 
     const bgY: number = this.y - 120;
-    this.scene.add.nineslice(this.x, bgY, 480, 310, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
+    // this.scene.add.nineslice(this.x, bgY, 480, 310, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5); ns!
+    this.scene.add.roundedField(this.x, bgY, 480, 310, 'modal-square-bg').setDepth(1);
     const startX: number = this.x - 20;
     const startY: number = this.y - 210
     this.scene.add.text(this.x, this.y - 250, this.scene.state.lang.awardsForClans, titleTextStyle).setOrigin(0.5).setDepth(1);
@@ -276,7 +279,8 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
     };
 
     const bgY: number = this.y + 190;
-    this.scene.add.nineslice(this.x, bgY, 480, 250, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
+    // this.scene.add.nineslice(this.x, bgY, 480, 250, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5); ns!
+    this.scene.add.roundedField(this.x, bgY, 480, 250, 'modal-square-bg').setDepth(1);
     const startX: number = this.x - 20;
     const startY: number = bgY - 60;
     this.scene.add.text(this.x, startY - 40, this.scene.state.lang.awardsForUsersInClan, titleTextStyle).setOrigin(0.5).setDepth(1);

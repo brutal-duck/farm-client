@@ -19,7 +19,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
   private closeBtn: Phaser.GameObjects.Sprite;
   private headerText: Phaser.GameObjects.Text;
   private footer: Phaser.GameObjects.Sprite;
-  private modalElements: Array<Phaser.GameObjects.Sprite | Phaser.GameObjects.TileSprite | Phaser.GameObjects.Text | Phaser.GameObjects.RenderTexture> = [];
+  private modalElements: Array<Phaser.GameObjects.Sprite | Phaser.GameObjects.TileSprite | Phaser.GameObjects.Text | Phaser.GameObjects.RenderTexture | IroundedField> = [];
   private windowType: number = 1;
   private headerTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
     color: '#fffdfa',
@@ -195,7 +195,8 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     const scoreBgGeom: Phaser.Geom.Rectangle = scoreBg.getBounds();
     const text: string = `${this.scene.state.lang.scores}: ${shortNum(points)}`;
     const scoreText = this.scene.add.text(scoreBgGeom.centerX, scoreBgGeom.centerY, text, scoreTextStyle).setDepth(2).setOrigin(0.5);
-    this.scene.add.nineslice(this.x, this.y + 100, 480, 600, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
+    // this.scene.add.nineslice(this.x, this.y + 100, 480, 600, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5); // ns!
+    this.scene.add.roundedField(this.x, this.y + 100, 480, 600, 'modal-square-bg').setDepth(1);
     this.createClanBtns();
     this.scene.scene.launch('ClanScroll', this.scene.state);
     const limit: number = this.scene.state.clan.main.cooldown > 0 ? this.scene.state.clan.limit - 1 : this.scene.state.clan.limit;
@@ -271,11 +272,13 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     if (this.scene.state.user.clanId) {
       const bgHeight: number = 680;
       const bgY: number = this.y + 70;
-      this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
+      // this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5); ns!
+      this.scene.add.roundedField(this.x, bgY, 480, bgHeight, 'modal-square-bg').setDepth(1);
     } else {
       const bgHeight: number = 590;
       const bgY: number = this.y + 120;
-      this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
+      // this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5); ns!
+      this.scene.add.roundedField(this.x, bgY, 480, bgHeight, 'modal-square-bg').setDepth(1);
       this.scene.add.tileSprite(this.x, headerGeom.bottom - 2, this.windowWidth, 100, 'white-pixel').setTint(0xD06900).setOrigin(0.5, 0);
       const right1 = {
         text: CREATE_CLAN_COST,
@@ -320,7 +323,8 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     const bgHeight: number = 590;
     const bgY: number = this.y + 120;
-    const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5);
+    // const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5); ns!
+    const bg: IroundedField = this.scene.add.roundedField(this.x, bgY, 480, bgHeight, 'modal-square-bg').setDepth(1);
     const tile: Phaser.GameObjects.TileSprite = this.scene.add.tileSprite(this.x, headerGeom.bottom - 2, this.windowWidth, 100, 'white-pixel').setTint(0xD06900).setOrigin(0.5, 0);
     const inputBg: Phaser.GameObjects.Sprite = this.scene.add.sprite(headerGeom.centerX - 45, headerGeom.centerY, 'clan-window-search-plate').setDepth(2);
     const inputBgGeom: Phaser.Geom.Rectangle = inputBg.getBounds();
@@ -471,7 +475,8 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     let price: number;
 
     // Первый слот
-    const boosterBg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(headerGeom.centerX, headerGeom.bottom + 20, 480, 150, 'modal-square-bg', 10).setOrigin(0.5, 0).setDepth(2);
+    // const boosterBg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(headerGeom.centerX, headerGeom.bottom + 20, 480, 150, 'modal-square-bg', 10).setOrigin(0.5, 0).setDepth(2); ns!
+    const boosterBg: IroundedField = this.scene.add.roundedField(headerGeom.centerX, headerGeom.bottom + 20, 480, 150, 'modal-square-bg').setOriginY(0).setDepth(2);
     const boosterTextBg: Phaser.GameObjects.Sprite = this.scene.add.sprite(boosterBg.getTopCenter().x, boosterBg.getTopCenter().y + 2, 'clan-window-leader-plate-2').setOrigin(0.5, 0).setDisplaySize(479, 45).setDepth(2);
     const boosterIcon: Phaser.GameObjects.Sprite = this.scene.add.sprite(boosterBg.getLeftCenter().x + 70, boosterBg.getCenter().y, 'clan-task-icon-6').setScale(1.15).setDepth(2);
     this.cooldownTimer = this.scene.add.text(boosterTextBg.getCenter().x + 60, boosterTextBg.getCenter().y, '', this.headerTextStyle).setOrigin(0.5).setDepth(2);
@@ -496,7 +501,8 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     boosterPriceText.setText(String(price < 1000 ? price : shortNum(price))).setFontSize(boosterPriceText.getBounds().width > 70 ? 27 : 28)
 
     // Второй слот
-    const changeEmblemBg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(boosterBg.getBottomCenter().x, boosterBg.getBottomCenter().y + 30, 480, 150, 'modal-square-bg', 10).setOrigin(0.5, 0).setDepth(2);
+    // const changeEmblemBg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(boosterBg.getBottomCenter().x, boosterBg.getBottomCenter().y + 30, 480, 150, 'modal-square-bg', 10).setOrigin(0.5, 0).setDepth(2); ns!
+    const changeEmblemBg: IroundedField = this.scene.add.roundedField(boosterBg.getBottomCenter().x, boosterBg.getBottomCenter().y + 30, 480, 150, 'modal-square-bg').setOriginY(0).setDepth(2);
     const changeEmblemTextBg: Phaser.GameObjects.Sprite = this.scene.add.sprite(changeEmblemBg.getTopCenter().x, changeEmblemBg.getTopCenter().y + 2, 'clan-window-leader-plate-2').setOrigin(0.5, 0).setDisplaySize(479, 45).setDepth(2);
     const clanEmblem = LogoManager.createIcon(this.scene, changeEmblemBg.getLeftCenter().x + 70, changeEmblemBg.getCenter().y, this.scene.state.clan?.avatar).setDepth(2).setScale(0.5);
     const changeEmblemText: Phaser.GameObjects.Text = this.scene.add.text(changeEmblemTextBg.getCenter().x + 60, changeEmblemTextBg.getCenter().y, this.scene.state.lang.emblem, this.headerTextStyle).setOrigin(0.5).setDepth(2);
@@ -508,7 +514,8 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     this.scene.clickModalBtn({ btn: changeEmblemBtn, title: changeEmblemBtnText }, () => { changeClanEmblem(); });
 
     // Третий слот
-    const changeClanNameBg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(changeEmblemBg.getBottomCenter().x, changeEmblemBg.getBottomCenter().y + 30, 480, 220, 'modal-square-bg', 10).setOrigin(0.5, 0).setDepth(3);
+    // const changeClanNameBg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(changeEmblemBg.getBottomCenter().x, changeEmblemBg.getBottomCenter().y + 30, 480, 220, 'modal-square-bg', 10).setOrigin(0.5, 0).setDepth(3); ns!
+    const changeClanNameBg: IroundedField = this.scene.add.roundedField(changeEmblemBg.getBottomCenter().x, changeEmblemBg.getBottomCenter().y + 30, 480, 220, 'modal-square-bg').setOriginY(0).setDepth(3);
     const changeClanNameTextBg: Phaser.GameObjects.Sprite = this.scene.add.sprite(changeClanNameBg.getTopCenter().x, changeClanNameBg.getTopCenter().y + 2, 'clan-window-leader-plate-2').setOrigin(0.5, 0).setDisplaySize(479, 45).setDepth(3);
     const changeClanNameText: Phaser.GameObjects.Text = this.scene.add.text(changeClanNameTextBg.getCenter().x, changeClanNameTextBg.getCenter().y, String(this.scene.state.lang.clanName), this.headerTextStyle).setOrigin(0.5).setDepth(3);
     const inpitField: Phaser.GameObjects.Sprite = this.scene.add.sprite(changeClanNameBg.getCenter().x, changeClanNameTextBg.getBottomCenter().y + 20, 'clan-window-search-plate').setScale(1.175, 1.14).setOrigin(0.5, 0).setDepth(3).setInteractive();
