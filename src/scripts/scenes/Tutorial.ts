@@ -632,7 +632,7 @@ class Tutorial extends Phaser.Scene {
           awardBg.setDepth(this.height - 1);
           let height: number = 70 + taskTextBounds.height;
           if (height < 110) height = 110;
-          // const taskBoard: Phaser.GameObjects.RenderTexture = this.add.nineslice(30, this.height - 190 - height, 660, height, 'tasks-bar-ns', 15) //!
+          const taskBoard: Phaser.GameObjects.RenderTexture = this.add.nineslice(30, this.height - 190 - height, 660, height, 'tasks-bar-ns', 15) //!
           let taskIcon: Phaser.GameObjects.Image = this.add.image(88, this.height - 190 - height / 2, taskData.icon);
           taskIcon.setTint(0x777777);
           this.add.image(88, this.height - 190 - height / 2, 'completed');
