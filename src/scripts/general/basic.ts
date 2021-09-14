@@ -956,7 +956,7 @@ function loadingScreen(farmType: string): void {
   this.add.text(this.cameras.main.centerX, header.getCenter().y - 6, loading, {
     font: '37px Shadow',
     color: '#F9D48D'
-  }).setDepth(1).setOrigin(0.5);
+  }).setDepth(3).setOrigin(0.5);
 
   this.add.sprite(120, this.cameras.main.centerY + 20 - padding, 'pb-empty-corner');
   this.add.sprite(600, this.cameras.main.centerY + 20 - padding, 'pb-empty-corner').setScale(-1, 1);
