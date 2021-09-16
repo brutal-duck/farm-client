@@ -231,7 +231,6 @@ class Unicorn extends Phaser.Scene {
 
   public init(state: Istate): void {
     this.state = state;
-    console.log('Unicorn');
     this.state.farm = 'Unicorn';
     this.collectorTimer = null;
     this.ads = new Ads(this)

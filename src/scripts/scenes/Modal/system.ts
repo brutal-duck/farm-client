@@ -34,7 +34,7 @@ function systemWindow(): void {
   let height:number = 0;
 
   this.header = this.add.image(this.cameras.main.centerX - 1, this.cameras.main.centerY - Math.floor(height / 2), 'header-syst').setOrigin(0.5, 1).setDepth(1);
-  this.close = this.add.sprite(620, this.header.getCenter().y, 'header-close').setOrigin(0.5).setDepth(2);
+  this.close = this.add.sprite(620, this.header.getCenter().y, 'close-window-btn').setOrigin(0.5).setDepth(2);
   this.body = this.add.tileSprite(this.cameras.main.centerX, this.header.getBottomCenter().y - 12, 614, height + 2, 'mid-syst').setOrigin(0.5, 0.5);
   this.bottom = this.add.image(this.cameras.main.centerX - 1, this.body.getBottomCenter().y, 'bottom-syst').setOrigin(0.5, 0);
   this.textHeader = this.add.text(this.cameras.main.centerX, this.header.getCenter().y - 6, '', {
@@ -131,7 +131,7 @@ function systemWindow(): void {
       new LogoutWindow(this)
       break;
 
-    case 9: // окно завершения сессии
+    case 9:
       new DiamondAnimalAd(this)
       break;
 

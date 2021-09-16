@@ -25,20 +25,20 @@ export default class RepositoryExchangeWindow {
 
     const textTitle: string = this.scene.state.lang.exchangeRepositoryTitle.replace('$1', this.scene.state.territory.improve);
 
-    this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 100, textTitle, {
+    this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 110, textTitle, {
       font: '26px Bip',
       color: '#925C28',
       align: 'center',
       wordWrap: { width: 450 },
     }).setOrigin(0.5, 0.5);
 
-    const button1 = this.scene.bigButton('green', 'left', 0, this.scene.state.lang.exchangeGrass, exchange);
+    const button1 = this.scene.bigButton('green', 'left', -10, this.scene.state.lang.exchangeGrass, exchange);
     this.scene.clickModalBtn(button1, (): void => { this.exchangeTerritory(2) });
 
-    const button2 = this.scene.bigButton('blue', 'left', 80, this.scene.state.lang.exchangeWater, exchange);
+    const button2 = this.scene.bigButton('blue', 'left', 70, this.scene.state.lang.exchangeWater, exchange);
     this.scene.clickModalBtn(button2, (): void => { this.exchangeTerritory(3) });
 
-    const button3 = this.scene.bigButton('red', 'center', 160, this.scene.state.lang.cancel);
+    const button3 = this.scene.bigButton('red', 'center', 150, this.scene.state.lang.cancel);
     this.scene.clickModalBtn(button3, (): void => { this.exchangeTerritory() });
 
     this.scene.resizeWindow(310);

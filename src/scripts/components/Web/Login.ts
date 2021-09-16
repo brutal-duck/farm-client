@@ -49,8 +49,8 @@ export default class Login {
     this.bg = this.scene.add.tileSprite(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 20, 614, 440, 'mid-syst').setDepth(2);
     this.bgOriginY = this.bg.y;
     this.bgOriginHeight = this.bg.height;
-    this.bgTop = this.scene.add.sprite(this.bg.getTopCenter().x - 1, this.bg.getTopCenter().y + 1, 'header-syst').setOrigin(0.5, 1).setDepth(this.bg.depth + 1);
-    const bgBottom: Phaser.GameObjects.Sprite =  this.scene.add.sprite(this.bg.getBottomCenter().x, this.bg.getBottomCenter().y - 1, 'bottom-syst').setOrigin(0.5, 0).setDepth(this.bg.depth + 1);
+    this.bgTop = this.scene.add.sprite(this.bg.getTopCenter().x - 1, this.bg.getTopCenter().y + 13, 'header-syst').setOrigin(0.5, 1).setDepth(this.bg.depth + 1);
+    const bgBottom: Phaser.GameObjects.Sprite =  this.scene.add.sprite(this.bg.getBottomCenter().x - 2, this.bg.getBottomCenter().y - 1, 'bottom-syst').setOrigin(0.5, 0).setDepth(this.bg.depth + 1);
     this.title = this.scene.add.text(this.bg.x, this.bg.getTopCenter().y + 26, this.scene.state.lang.authorize, { font: 'Bold 32px Shadow', color: '#925C28' }).setOrigin(0.5, 0).setDepth(this.bg.depth + 1);
 
     // HTML элементы

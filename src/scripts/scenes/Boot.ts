@@ -26,7 +26,6 @@ const pbEmptyMid: string = require('./../../assets/images/modal/pb_empty_mid.png
 const pbFullCorner: string = require('./../../assets/images/modal/pb_full_corner.png');
 const pbFullMid: string = require('./../../assets/images/modal/pb_full_mid.png');
 const modal: string = require('./../../assets/images/modal/modal.png');
-const close: string = require('./../../assets/images/modal/header_close.png');
 const landingBtn: string = require('./../../assets/images/modal/middle-button.png');
 const loginBtnGreen: string = require('./../../assets/images/modal/btn_lg.png');
 const loginBtnRed: string = require('./../../assets/images/modal/btn_lr.png');
@@ -63,7 +62,7 @@ class Boot extends Phaser.Scene {
   public getPlatformStorage = getPlatformStorage.bind(this);
 
   public init(): void {
-    this.build = 4.00;
+    this.build = 4.01;
     console.log('Build ' + this.build);
     // console.log(this.game.device, 'this.game.device');
     this.state = state;
@@ -103,7 +102,6 @@ class Boot extends Phaser.Scene {
     this.load.image('pb-full-corner', pbFullCorner);
     this.load.image('pb-full-mid', pbFullMid);
     this.load.image('modal', modal);
-    this.load.image('header-close', close);
     if (this.platform === 'web') {
       this.load.image('shop-btn', landingBtn);
       this.load.image('big-btn-green', loginBtnGreen);

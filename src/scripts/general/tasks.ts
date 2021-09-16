@@ -616,7 +616,6 @@ function getNewClanTasks(state: Istate): IclanTask[] {
       }
     }
   });
-  console.log(tasks);
   return tasks;
 }
 

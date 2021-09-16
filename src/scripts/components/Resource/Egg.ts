@@ -15,6 +15,7 @@ export default class Egg extends Resource {
     this.type = String(type);
     this._id = _id;
     this.animalType = type;
+    this.setClickZone();
     this.setEventClick();
   }
 
@@ -33,5 +34,11 @@ export default class Egg extends Resource {
         this.scene.collectEgg(this, manualСollect);
       }
     });
+  }
+
+  public destroy(): this {
+    this.clickZone.destroy();
+    super.destroy();
+    return this;
   }
 }

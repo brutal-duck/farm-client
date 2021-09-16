@@ -113,7 +113,7 @@ export default class Landing {
 
   private topAndBottomBgSides(): void {
     this.bgTop = this.scene.add.sprite(this.bg.getTopCenter().x - 2, this.bg.getTopCenter().y + 13, 'header-syst').setOrigin(0.5, 1).setScale(this.bg.scale);
-    this.bgBot = this.scene.add.sprite(this.bg.getBottomCenter().x - 1, this.bg.getBottomCenter().y - 1, 'bottom-syst').setOrigin(0.5, 0).setScale(this.bg.scale);
+    this.bgBot = this.scene.add.sprite(this.bg.getBottomCenter().x - 2, this.bg.getBottomCenter().y - 1, 'bottom-syst').setOrigin(0.5, 0).setScale(this.bg.scale);
   }
 
   

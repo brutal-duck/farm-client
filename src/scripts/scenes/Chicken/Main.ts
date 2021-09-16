@@ -256,7 +256,6 @@ class Chicken extends Phaser.Scene {
     this.counterWithoutCollector = 0;
     this.caveIconsTimer = 0;
     this.ads = new Ads(this)
-    console.log('Chicken');
     this.autoprogress(true);
   }
 

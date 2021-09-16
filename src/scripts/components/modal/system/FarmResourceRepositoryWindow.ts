@@ -102,7 +102,7 @@ export default class FarmResourceRepositoryWindow {
         text: this.scene.state.lang.shortPart + ' ' + this.settings.unlock_improve
       };
       let improveText: string = this.scene.state.lang.improveToLevel.replace('$1', this.scene.state.territory.improve + 1);
-      this.scene.bigButton('grey', 'left', 110 + padding, improveText, improve);
+      this.scene.bigButton('grey', 'left', 110 + padding / 2, improveText, improve);
     }
 
 
@@ -213,7 +213,7 @@ export default class FarmResourceRepositoryWindow {
     let button1 = this.scene.bigButton('red', 'center', 170 + padding, this.scene.state.lang.exchangeRepositoryBtn);
     this.scene.clickModalBtn(button1, (): void => { this.launchExchangeCurrencyModal() });
 
-    this.scene.resizeWindow(350 + padding);
+    this.scene.resizeWindow(370 + padding);
   }
 
   private nonCowRepositoryMaxLevel(): void {

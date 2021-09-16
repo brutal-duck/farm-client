@@ -328,7 +328,6 @@ class Sheep extends Phaser.Scene {
     this.collectorTimer = null;
     this.counterWithoutCollector = 0;
     this.ads = new Ads(this)
-    console.log('Sheep');
     this.autoprogress(true);
   }
 

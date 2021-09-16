@@ -8,8 +8,11 @@ export default abstract class Resource extends Phaser.GameObjects.Sprite {
 
   public init(): void {
     this.scene.add.existing(this);
-    this?.setDepth(this?.y)
-    this.clickZone = this.scene.add.zone(this.x, this.y, 100, 100).setDropZone(undefined, () => null).setDepth(this?.depth);
+    this.setDepth(this.y)
+  }
+
+  public setClickZone(): void {
+    this.clickZone = this.scene.add.zone(this.x, this.y, 100, 100).setDropZone(undefined, () => null).setDepth(this.y);
   }
 
   public flyToPoint(target: Iposition): void {
@@ -17,7 +20,6 @@ export default abstract class Resource extends Phaser.GameObjects.Sprite {
       targets: this,
       duration: 350,
       onStart: (): void => {
-        this?.setDepth(10000);
         this.clickZone?.destroy();
       },
       x: target.x,
