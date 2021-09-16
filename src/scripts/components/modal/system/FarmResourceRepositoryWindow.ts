@@ -253,7 +253,7 @@ export default class FarmResourceRepositoryWindow {
     this.scene.progressButton = this.scene.repositoryBtn(60 + padding, this.scene.state.lang[`sell${this.resource}`], this.money);
     this.scene.clickModalBtn(this.scene.progressButton, (): void => { this.sellResource() });
 
-    let button1 = this.scene.bigButton('red', 'center', 170 + padding, this.scene.state.lang.exchangeRepositoryBtn);
+    let button1 = this.scene.bigButton('red', 'center', 170 + padding / 2, this.scene.state.lang.exchangeRepositoryBtn);
     this.scene.clickModalBtn(button1, (): void => { this.launchExchangeCurrencyModal() });
 
     this.scene.resizeWindow(340 + padding + 10);

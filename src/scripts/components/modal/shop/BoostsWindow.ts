@@ -866,8 +866,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
         this.feedBoostNotificationBg?.setDisplaySize(width, textGeom?.height + 20);
         this.feedBoostBtnRightText?.setVisible(false);
         this.feedBoostDiamondBtn?.setVisible(false);
-        this.feedBoostBtnLeftText?.setX(this.feedBoostBtn.x + this.feedBoostBtnLeftText?.width / 2);
-
+        this.feedBoostBtnLeftText?.setX(this.feedBoostBtn.x - this.feedBoostBtnLeftText?.width / 2);
       } else {        
         if (this.feedBoostNotification?.active) this.feedBoostNotification?.setVisible(false);
         this.feedBoostNotificationBg?.setVisible(false);
