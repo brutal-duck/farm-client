@@ -8,7 +8,7 @@ export default abstract class Resource extends Phaser.GameObjects.Sprite {
 
   public init(): void {
     this.scene.add.existing(this);
-    this.setDepth(this.y)
+    this.setDepth(this.y);
   }
 
   public setClickZone(): void {
@@ -16,6 +16,7 @@ export default abstract class Resource extends Phaser.GameObjects.Sprite {
   }
 
   public flyToPoint(target: Iposition): void {
+    this.setDepth(10000);
     const anim: Phaser.Tweens.Tween = this.scene.tweens.add({
       targets: this,
       duration: 350,
