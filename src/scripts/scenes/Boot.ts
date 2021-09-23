@@ -490,7 +490,7 @@ class Boot extends Phaser.Scene {
           p.verify();
         })
         .verified((p) => {
-          axios.post(process.env.API + '/callbackPayNotification', {
+          axios.post(process.env.API + '/callbackPayAndroid', {
             id: this.state.user.id,
             hash: this.state.user.hash,
             counter: this.state.user.counter,
