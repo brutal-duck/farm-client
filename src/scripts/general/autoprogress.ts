@@ -185,7 +185,7 @@ export default function autoprogress(load: boolean = false): void {
 
   const chickenOfflineProgress = (offlineTime: number = state.progress.chicken.offlineTime): void => {
     // значение отступа для яиц, чтоб не прилегали к краям территории
-    this.progressTerritoryCooldown(state.chickenTerritories, offlineTime, 'Chicken',true);
+    this.progressTerritoryCooldown(state.chickenTerritories, offlineTime, 'Chicken', true);
     let indent: number = 20;
   
     // время кристаллической курочки
@@ -224,18 +224,18 @@ export default function autoprogress(load: boolean = false): void {
     if (feedPercent >= 1 ) feedPercent = 1;
     
     // считаем сколько снесла курица яйцо
-    let balance: Ibalance = this.farmBalance('Chicken');
-    let newEggs: { egg: boolean, id: string, type: number, count: number }[] = [];
+    const balance: Ibalance = this.farmBalance('Chicken');
+    const newEggs: { egg: boolean, id: string, type: number, count: number }[] = [];
   
     for (let i in state.chicken) {
   
-      let chicken = state.chicken[i];
+      const chicken = state.chicken[i];
       let breed: number;
   
       if (chicken.type === 0) breed = 1;
       else breed = chicken.type;
   
-      let points: IchickenPoints = state.chickenSettings.chickenSettings.find((item: IchickenPoints) => item.breed === breed);
+      const points: IchickenPoints = state.chickenSettings.chickenSettings.find((item: IchickenPoints) => item.breed === breed);
   
       let egg: number = points.egg;
   
@@ -261,7 +261,6 @@ export default function autoprogress(load: boolean = false): void {
         count: eggsCollect,
         egg: false
       });
-  
     }
     
     // добавляем в массив яйца, которые могут лежать на поле
@@ -295,13 +294,14 @@ export default function autoprogress(load: boolean = false): void {
             let maxX: number = territory.position * 240 - indent;
             let minY: number = territory.block * 240 + indent;
             let maxY: number = (territory.block + 1) * 240 - indent;
-    
-            if (newEggs[i].count < chicken.diamond) {
-              chicken.diamond -= newEggs[i].count;
-              count = newEggs[i].count;
-            } else {
-              count = 3 - chicken.diamond;
-              state.chicken = state.chicken.filter((el: Ichicken) => el._id !== chicken._id);
+            if (chicken.type === 0) {
+              if (newEggs[i].count < chicken.diamond) {
+                chicken.diamond -= newEggs[i].count;
+                count = newEggs[i].count;
+              } else {
+                count = 3 - chicken.diamond;
+                state.chicken = state.chicken.filter((el: Ichicken) => el._id !== chicken._id);
+              }
             }
             for (let j: number = 0; j < count; j++) {
     
@@ -354,7 +354,7 @@ export default function autoprogress(load: boolean = false): void {
           let max: number = state.chickenSettings.territoriesChickenSettings.find((item: IterritoriesChickenSettings) => item.improve === territory.improve).storage;
           if (territory.volume < max && wasCollector > 0) {
             let egg = eggs.find(data => data.id === eggsArr[i].id);
-            if (egg.count > 0) egg.count--
+            if (egg.count > 0) egg.count--;
             territory.money += price;
             territory.volume++;
             break;
@@ -374,11 +374,10 @@ export default function autoprogress(load: boolean = false): void {
     let remainingEggs: number[] = [];
     for (let i in eggs) {
       for (let j: number = 0; j < eggs[i].count; j++) {
-        if (!eggs[i].egg) {
-          remainingEggs.push(eggs[i].type);
-        }
+        remainingEggs.push(eggs[i].type);
       }
     }
+
     // формируем свободные места на клетках
     let freeSpace: Iposition[] = [];
     for (let i in state.chickenTerritories) {
@@ -401,7 +400,7 @@ export default function autoprogress(load: boolean = false): void {
         }
       }
     }
-    
+
     // ставим оставшиеся яйца на поле
     let index: number = 0;
     state.chickenEggs = state.chickenEggs.filter((data: IchickenEgg) => data.type === 0);
