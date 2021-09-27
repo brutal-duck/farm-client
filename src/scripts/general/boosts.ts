@@ -286,6 +286,7 @@ function freeCollector(type: number = 1): void {
       this.state.amplitude.logAmplitudeEvent('collector', {
         type: 'free',
       });
+      Firework.create(this.game.scene.keys[`${this.state.farm}Bars`], { x: 230, y: this.game.config.height - 90 }, 1);
     } else {
       
       minutes *= 2;
@@ -311,6 +312,7 @@ function freeCollector(type: number = 1): void {
           count: doubleTimePrice,
         });
 
+        Firework.create(this.game.scene.keys[`${this.state.farm}Bars`], { x: 230, y: this.game.config.height - 90 }, 1);
       } else {
 
         let count: number = doubleTimePrice - this.state.user.diamonds;
@@ -383,6 +385,8 @@ function buyCollector(type: number): void {
         price: 'hard',
       });
 
+      Firework.create(this.game.scene.keys[`${this.state.farm}Bars`], { x: 230, y: this.game.config.height - 90 }, 1);
+
     } else if (this.state.user.diamonds >= settings['collectorPrice' + hours]) {
 
       this.state.user.diamonds -= settings['collectorPrice' + hours];
@@ -403,6 +407,8 @@ function buyCollector(type: number): void {
         count: settings['collectorPrice' + hours],
       });
 
+      Firework.create(this.game.scene.keys[`${this.state.farm}Bars`], { x: 230, y: this.game.config.height - 90 }, 1);
+      
     } else {
 
       let count: number = settings['collectorPrice' + hours] - this.state.user.diamonds;
