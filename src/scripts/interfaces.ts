@@ -632,6 +632,8 @@ interface Imodal {
   message?: string;
   tasksParams?: ItasksParams;
   eventParams?: IeventParams;
+  count?: number;
+  callback?: () => void;
 }
 interface Iconvertor {
   fun: number;

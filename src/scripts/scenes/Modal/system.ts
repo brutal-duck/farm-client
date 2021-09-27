@@ -30,6 +30,7 @@ import CowWindow from '../../components/modal/system/CowWindow';
 import ConfirmSaveProgress from './../../components/modal/system/ConfirmSaveProgress';
 import ConfimExcludeUserWindow from '../../components/modal/system/ConfimExcludeUserWindow';
 import ConfirmBuyFarm from './../../components/modal/system/ConfirmByFarm';
+import ConfirmSpentDiamonds from './../../components/modal/system/ConfirmSpentDiamonds';
 
 function systemWindow(): void {
   let height:number = 0;
@@ -192,6 +193,10 @@ function systemWindow(): void {
 
     case 23: 
       new ConfirmBuyFarm(this);
+      break;
+    
+    case 24: 
+      new ConfirmSpentDiamonds(this);
       break;
 
     default:      
