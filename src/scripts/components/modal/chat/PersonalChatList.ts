@@ -498,7 +498,7 @@ export default class PersonalChatList {
   private getDate(data: Date): string {
     const time: Date = new Date(data);
     const year: number = time.getFullYear();
-    const month: number = time.getMonth() + 1;
+    const month: string = time.getMonth() + 1 < 10 ? '0' + time.getMonth() : String(time.getMonth());
     const day: number = time.getDate();
     const hours: number = time.getHours();
     const minutes: string = time.getMinutes() < 10 ? '0' + time.getMinutes() : String(time.getMinutes());

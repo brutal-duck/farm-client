@@ -83,7 +83,7 @@ export default class GeneralChat {
   private getDate(msgData: Ichat): string {
     const time: Date = new Date(Number(msgData.time) * 1000);
     const year: number = time.getFullYear();
-    const month: number = time.getMonth() + 1;
+    const month: string = time.getMonth() + 1 < 10 ? '0' + time.getMonth() : String(time.getMonth());
     const day: number = time.getDate();
     const date: string = day + '.' + month + '.' + year;
     return date;
