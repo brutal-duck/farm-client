@@ -1,6 +1,7 @@
-import { shortNum } from "../../general/basic";
-import Modal from "../../scenes/Modal/Modal"
-import RoundedProgress from "../animations/RoundedProgress"
+import axios  from 'axios';
+import { shortNum } from '../../general/basic';
+import Modal from '../../scenes/Modal/Modal';
+import RoundedProgress from '../animations/RoundedProgress';
 
 /**
   * Плашка задания
@@ -151,11 +152,18 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
       if (this.valutaTexture === 'diamond') this.scene.game.scene.keys[this.scene.state.farm + 'Bars'].getCurrency({ x: this.takeButton.x, y: this.takeButton.y }, this.taskInfo.task.diamonds, 'diamond');
       else this.scene.game.scene.keys[this.scene.state.farm + 'Bars'].plusMoneyAnimation({ x: this.takeButton.x, y: this.takeButton.y });
       this.scene.game.scene.keys[this.scene.state.farm].pickUpTaskReward(this.taskInfo.task.id);
-      this.taskComplete();
     } else {
-      const task: IclanTask = this.scene.state.user.clanTasks.find((data: IclanTask) => data.type === this.taskInfo.task.type);
-      if (task) {
-        if (task.done && !task.got_awarded) {
+      this.takeClanAward();
+    }
+    this.taskComplete();
+  }
+
+  private takeClanAward(): void {
+    const task: IclanTask = this.scene.state.user.clanTasks.find((data: IclanTask) => data.type === this.taskInfo.task.type);
+    if (task) {
+      if (task.done && !task.got_awarded) {
+        this.postClanPoints(task.diamonds).then(res => {
+          this.scene.state.clan = res.data.clan;
           this.scene.state.user.diamonds += task.diamonds;
           this.scene.state.amplitude.logAmplitudeEvent('diamonds_get', {
             type: 'clan_task',
@@ -164,11 +172,21 @@ export default class TaskBar extends Phaser.GameObjects.Sprite {
           this.scene.game.scene.keys[this.scene.state.farm].autosave();
           task.got_awarded = true;
           this.taskInfo.task.got_awarded = true;
-          this.taskComplete();
           this.pickUpAnim();
-        }
+        });
       }
     }
+  }
+
+  private postClanPoints(points: number = 1): Promise<any> {
+    const data = {
+      id: this.scene.state.user.id,
+      hash: this.scene.state.user.hash,
+      counter: this.scene.state.user.counter,
+      points: points,
+    };
+
+    return axios.post(process.env.API + '/addClanPoints', data);
   }
 
   private pickUpAnim(): void {

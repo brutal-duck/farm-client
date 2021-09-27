@@ -3,10 +3,6 @@ import Modal from '../../../scenes/Modal/Modal';
 import { shortTime } from '../../../general/basic';
 import TaskBar from './../../gameObjects/TaskBar';
 
-const tasksComplete: string = require('./../../../../assets/images/modal/tasks/complete.png');
-const tasksUncomplete: string = require('./../../../../assets/images/modal/tasks/uncomplete.png');
-const tasksReward: string = require('./../../../../assets/images/modal/tasks/reward.png');
-
 const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
   color: '#b05b00',
   fontFamily: 'Shadow',
