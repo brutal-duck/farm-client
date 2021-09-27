@@ -47,7 +47,6 @@ import {
   createBoostAnimal,
   getFreeBoostPositions,
   tryTask,
-  buyNextFarm,
 } from './basic';
 import { 
   buyAnimal, 
@@ -188,7 +187,6 @@ class Unicorn extends Phaser.Scene {
   public buyTerritory = buyTerritory.bind(this);
   public setCollector = setCollector.bind(this);
   public convertMoney = convertMoney.bind(this);
-  public buyNextFarm = buyNextFarm.bind(this);
   public getActiveAnimal = getActiveAnimal.bind(this);
   public autosave = autosave.bind(this);
   public flyAnimal = flyAnimal.bind(this);

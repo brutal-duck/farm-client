@@ -19,7 +19,6 @@ import {
   donePart,
   pickUpTaskReward,
   onlineStatus,
-  buyNextFarm,
   getNewbieAward,
   takeDonate,
   random,
@@ -203,7 +202,6 @@ class Chicken extends Phaser.Scene {
   public logout = logout.bind(this);
   public onlineStatus = onlineStatus.bind(this);
   public checkDoneTasks = checkDoneTasks.bind(this);
-  public buyNextFarm = buyNextFarm.bind(this);
   public takeNewbieAward = takeNewbieAward.bind(this);
   public getNewbieAward = getNewbieAward.bind(this);
   public dragChickenMerging = dragChickenMerging.bind(this);

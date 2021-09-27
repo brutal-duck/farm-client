@@ -282,11 +282,11 @@ class Profile extends Phaser.Scene {
       const img: Phaser.GameObjects.Sprite = this.add.sprite(left, title.y, 'sheepCoin').setScale(0.12).setDepth(1);
 
       this.clickShopBtn({ btn: btn, title: title, img: img }, (): void => {
-        this.game.scene.keys[this.state.farm].buyNextFarm();
-        this.game.scene.keys[this.state.farm].scrolling.downHandler();
-        this.game.scene.keys[this.state.farm].scrolling.enabled = true;
-        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-        this.scene.stop();
+        this.state.modal = {
+          type: 1,
+          sysType: 23,
+        };
+        this.scene.launch('Modal', this.state);
       });
     }
   }
@@ -329,11 +329,11 @@ class Profile extends Phaser.Scene {
       const img: Phaser.GameObjects.Sprite = this.add.sprite(left, title.y, 'chickenCoin').setScale(0.12).setDepth(1);
 
       this.clickShopBtn({ btn: btn, title: title, img: img }, (): void => {
-        this.game.scene.keys[this.state.farm].buyNextFarm();
-        this.game.scene.keys[this.state.farm].scrolling.downHandler();
-        this.game.scene.keys[this.state.farm].scrolling.enabled = true;
-        this.game.scene.keys[this.state.farm].scrolling.wheel = true;
-        this.scene.stop();
+        this.state.modal = {
+          type: 1,
+          sysType: 23,
+        };
+        this.scene.launch('Modal', this.state);
       });
     } else {
       this.add.sprite(farmPosition.x, farmPosition.y, 'profile-cow-farm-lock').setOrigin(0, 0.5);

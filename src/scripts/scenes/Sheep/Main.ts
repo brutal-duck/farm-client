@@ -29,7 +29,6 @@ import {
   donePart,
   pickUpTaskReward,
   onlineStatus,
-  buyNextFarm,
   getNewbieAward,
   takeDonate,
   getRandomBool,
@@ -273,7 +272,6 @@ class Sheep extends Phaser.Scene {
   public dragSheep = dragSheep.bind(this);
   public checkDoneTasks = checkDoneTasks.bind(this);
   public collectorTutorial = collectorTutorial.bind(this);
-  public buyNextFarm = buyNextFarm.bind(this);
   public dragSheepMerging = dragSheepMerging.bind(this);
   public takeNewbieAward = takeNewbieAward.bind(this);
   public getNewbieAward = getNewbieAward.bind(this);

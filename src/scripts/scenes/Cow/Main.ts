@@ -87,7 +87,6 @@ import {
   showImproveFactory,
   showFactoryBoost,
   showConfirmSellMilk,
-  buyNextFarm,
 } from './basic';
 import { 
   showTutorial,
@@ -212,7 +211,6 @@ class Cow extends Phaser.Scene {
   public logout = logout.bind(this);
   public onlineStatus = onlineStatus.bind(this);
   public checkDoneTasks = checkDoneTasks.bind(this);
-  public buyNextFarm = buyNextFarm.bind(this);
   public takeNewbieAward = takeNewbieAward.bind(this);
   public getNewbieAward = getNewbieAward.bind(this);
   public dragCowMerging = dragCowMerging.bind(this);

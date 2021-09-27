@@ -1078,6 +1078,10 @@ export default {
     change: 'изменить',
     random: 'случайно',
     saveAvatar: 'Сохранить',
+    chickenFarm: 'Куриная ферма',
+    cowFarm: 'Коровья ферма',
+    confirmBuyChickenFarm: 'Хотите купить куриную ферму?',
+    confirmBuyCowFarm: 'Хотите купить коровью ферму?',
   },
   en: {
     index: 'en',
@@ -2158,5 +2162,9 @@ export default {
     change: 'change',
     random: 'random',
     saveAvatar: 'save',
+    chickenFarm: 'Сhicken Farm',
+    cowFarm: 'Сow Farm',
+    confirmBuyChickenFarm: 'Want to buy Chicken farm?',
+    confirmBuyCowFarm: 'Want to buy Cow farm?',
   },
 }
