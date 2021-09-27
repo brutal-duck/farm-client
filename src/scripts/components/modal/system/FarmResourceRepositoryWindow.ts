@@ -68,14 +68,18 @@ export default class FarmResourceRepositoryWindow {
         bonusHeader.setY(bonusHeader.y - padding / 2);
         textFeed.setY(textFeed.y - padding / 2);
         this.scene.feedBoostText.setY(this.scene.feedBoostText.y - padding / 2);
-        const str: string = `+${this.scene.state.clan[this.scene.state.farm.toLowerCase()].level}%`;
+          const clanFarm: IclanFarm = this.scene.state.clan[this.scene.state.farm.toLowerCase()];
+        const percent: number = clanFarm.cooldown > 0 ? clanFarm.level - 1 : clanFarm.level;
+        const str: string = `+${percent}%`;
         const text: Phaser.GameObjects.Text = this.scene.add.text(160, this.scene.cameras.main.centerY - 60, str, bonusTextStyle).setColor('#57A90E').setOrigin(0, 0.5);
         this.scene.add.text(text.getBounds().right + 5, this.scene.cameras.main.centerY - 60,  this.scene.state.lang.fromClanFarm, bonusTextStyle).setOrigin(0, 0.5);
       }
     } else if (this.scene.state.clan) {
       this.scene.add.text(160, this.scene.cameras.main.centerY - 95, this.scene.state.lang.priceBonus, bonusTextStyle).setOrigin(0, 0.5);
       padding += 20;
-      const str: string = `+${this.scene.state.clan[this.scene.state.farm.toLowerCase()].level}%`;
+        const clanFarm: IclanFarm = this.scene.state.clan[this.scene.state.farm.toLowerCase()];
+        const percent: number = clanFarm.cooldown > 0 ? clanFarm.level - 1 : clanFarm.level;
+        const str: string = `+${percent}%`;
       const text: Phaser.GameObjects.Text = this.scene.add.text(160, this.scene.cameras.main.centerY - 70, str, bonusTextStyle).setColor('#57A90E').setOrigin(0, 0.5);
       this.scene.add.text(text.getBounds().right + 5, this.scene.cameras.main.centerY - 70,  this.scene.state.lang.fromClanFarm, bonusTextStyle).setOrigin(0, 0.5);
     }
@@ -139,14 +143,18 @@ export default class FarmResourceRepositoryWindow {
         bonusHeader.setY(bonusHeader.y - padding);
         textFeed.setY(textFeed.y - padding);
         this.scene.feedBoostText.setY(this.scene.feedBoostText.y - padding);
-        const str: string = `+${this.scene.state.clan[this.scene.state.farm.toLowerCase()].level}%`;
+          const clanFarm: IclanFarm = this.scene.state.clan[this.scene.state.farm.toLowerCase()];
+        const percent: number = clanFarm.cooldown > 0 ? clanFarm.level - 1 : clanFarm.level;
+        const str: string = `+${percent}%`;
         const text: Phaser.GameObjects.Text = this.scene.add.text(160, this.scene.cameras.main.centerY - 60 + 35, str, bonusTextStyle).setColor('#57A90E').setOrigin(0, 0.5);
         this.scene.add.text(text.getBounds().right + 5, this.scene.cameras.main.centerY - 60 + 35,  this.scene.state.lang.fromClanFarm, bonusTextStyle).setOrigin(0, 0.5);
       }
     } else if (this.scene.state.clan) {
       this.scene.add.text(160, this.scene.cameras.main.centerY - 95 + 25, this.scene.state.lang.quantityBonus, bonusTextStyle).setOrigin(0, 0.5);
       padding += 10;
-      const str: string = `+${this.scene.state.clan[this.scene.state.farm.toLowerCase()].level}%`;
+        const clanFarm: IclanFarm = this.scene.state.clan[this.scene.state.farm.toLowerCase()];
+        const percent: number = clanFarm.cooldown > 0 ? clanFarm.level - 1 : clanFarm.level;
+        const str: string = `+${percent}%`;
       const text: Phaser.GameObjects.Text = this.scene.add.text(160, this.scene.cameras.main.centerY - 70 + 25, str, bonusTextStyle).setColor('#57A90E').setOrigin(0, 0.5);
       this.scene.add.text(text.getBounds().right + 5, this.scene.cameras.main.centerY - 70 + 25,  this.scene.state.lang.fromClanFarm, bonusTextStyle).setOrigin(0, 0.5);
     }
@@ -230,14 +238,18 @@ export default class FarmResourceRepositoryWindow {
         textFeed.setY(textFeed.y - padding);
         this.scene.feedBoostText.setY(this.scene.feedBoostText.y - padding);
         padding += 10;
-        const str: string = `+${this.scene.state.clan[this.scene.state.farm.toLowerCase()].level}%`;
+        const clanFarm: IclanFarm = this.scene.state.clan[this.scene.state.farm.toLowerCase()];
+        const percent: number = clanFarm.cooldown > 0 ? clanFarm.level - 1 : clanFarm.level;
+        const str: string = `+${percent}%`;
         const text: Phaser.GameObjects.Text = this.scene.add.text(160, this.scene.cameras.main.centerY - 60 + 55, str, bonusTextStyle).setColor('#57A90E').setOrigin(0, 0.5);
         this.scene.add.text(text.getBounds().right + 5, this.scene.cameras.main.centerY - 60 + 55,  this.scene.state.lang.fromClanFarm, bonusTextStyle).setOrigin(0, 0.5);
       }
     } else if (this.scene.state.clan) {
       this.scene.add.text(160, this.scene.cameras.main.centerY - 95 + 55, this.scene.state.lang.priceBonus, bonusTextStyle).setOrigin(0, 0.5);
       padding += 10;
-      const str: string = `+${this.scene.state.clan[this.scene.state.farm.toLowerCase()].level}%`;
+      const clanFarm: IclanFarm = this.scene.state.clan[this.scene.state.farm.toLowerCase()];
+      const percent: number = clanFarm.cooldown > 0 ? clanFarm.level - 1 : clanFarm.level;
+      const str: string = `+${percent}%`;
       const text: Phaser.GameObjects.Text = this.scene.add.text(160, this.scene.cameras.main.centerY - 70 + 55, str, bonusTextStyle).setColor('#57A90E').setOrigin(0, 0.5);
       this.scene.add.text(text.getBounds().right + 5, this.scene.cameras.main.centerY - 70 + 55,  this.scene.state.lang.fromClanFarm, bonusTextStyle).setOrigin(0, 0.5);
     }
@@ -274,14 +286,18 @@ export default class FarmResourceRepositoryWindow {
         textFeed.setY(textFeed.y - padding);
         this.scene.feedBoostText.setY(this.scene.feedBoostText.y - padding);
         padding += 10;
-        const str: string = `+${this.scene.state.clan[this.scene.state.farm.toLowerCase()].level}%`;
+          const clanFarm: IclanFarm = this.scene.state.clan[this.scene.state.farm.toLowerCase()];
+        const percent: number = clanFarm.cooldown > 0 ? clanFarm.level - 1 : clanFarm.level;
+        const str: string = `+${percent}%`;
         const text: Phaser.GameObjects.Text = this.scene.add.text(160, this.scene.cameras.main.centerY - 60 + 70, str, bonusTextStyle).setColor('#57A90E').setOrigin(0, 0.5);
         this.scene.add.text(text.getBounds().right + 5, this.scene.cameras.main.centerY - 60 + 70,  this.scene.state.lang.fromClanFarm, bonusTextStyle).setOrigin(0, 0.5);
       }
     } else if (this.scene.state.clan) {
       this.scene.add.text(160, this.scene.cameras.main.centerY - 95 + 65, this.scene.state.lang.quantityBonus, bonusTextStyle).setOrigin(0, 0.5);
       padding += 10;
-      const str: string = `+${this.scene.state.clan[this.scene.state.farm.toLowerCase()].level}%`;
+        const clanFarm: IclanFarm = this.scene.state.clan[this.scene.state.farm.toLowerCase()];
+        const percent: number = clanFarm.cooldown > 0 ? clanFarm.level - 1 : clanFarm.level;
+        const str: string = `+${percent}%`;
       const text: Phaser.GameObjects.Text = this.scene.add.text(160, this.scene.cameras.main.centerY - 70 + 65, str, bonusTextStyle).setColor('#57A90E').setOrigin(0, 0.5);
       this.scene.add.text(text.getBounds().right + 5, this.scene.cameras.main.centerY - 70 + 65,  this.scene.state.lang.fromClanFarm, bonusTextStyle).setOrigin(0, 0.5);
     }
