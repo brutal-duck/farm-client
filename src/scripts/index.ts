@@ -1,7 +1,7 @@
 import './interfaces';
 import '../css/style.css';
 import * as Phaser from 'phaser';
-import * as NineSlicePlugin from 'phaser3-nineslice'
+import * as NineSlicePlugin from 'phaser3-nineslice';
 import Boot from './scenes/Boot';
 import Preload from './scenes/Preload';
 import SheepPreload from './scenes/Sheep/SheepPreload';
