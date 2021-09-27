@@ -1082,6 +1082,10 @@ export default {
     cowFarm: 'Коровья ферма',
     confirmBuyChickenFarm: 'Хотите купить куриную ферму?',
     confirmBuyCowFarm: 'Хотите купить коровью ферму?',
+    exchangePastureBtn: 'Сменить пастбище на ...',
+    exchangePastureTitle: 'Ты можешь сменить пастбище $1 уровня на другую постройку',
+    exchangeWaterBtn: 'Сменить поилку на ...',
+    exchangeWaterTitle: 'Ты можешь сменить Поилку $1 уровня на другую постройку',
   },
   en: {
     index: 'en',
@@ -2166,5 +2170,9 @@ export default {
     cowFarm: 'Сow Farm',
     confirmBuyChickenFarm: 'Want to buy Chicken farm?',
     confirmBuyCowFarm: 'Want to buy Cow farm?',
+    exchangePastureBtn: 'Swap the Pasture for ...',
+    exchangePastureTitle: 'You can swap the level $1 Pasture for another building',
+    exchangeWaterBtn: 'Swap the Waterer for ...',
+    exchangeWaterTitle: 'You can swap the level $1 Waterer for another building',
   },
 }

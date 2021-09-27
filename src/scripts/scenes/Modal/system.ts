@@ -8,7 +8,7 @@ import LogoutWindow from '../../components/modal/system/LogoutWindow';
 import DiamondAnimalAd from '../../components/modal/system/DiamondAnimalAd';
 import ImproveCollectorWindow from '../../components/modal/system/ImproveCollectorWindow';
 import ImproveCollectorEventWindow from '../../components/modal/system/ImproveCollectorEventWindow';
-import RepositoryExchangeWindow from '../../components/modal/system/RepositoryExchangeWindow';
+import TerritoryExchangeWindow from '../../components/modal/system/TerritoryExchangeWindow';
 import ChangeNicknameWindow from '../../components/modal/system/ChangeNicknameWindow';
 import AddEmailWindow from '../../components/modal/system/AddEmailWindow';
 import SupportWindow from '../../components/modal/system/SupportWindow';
@@ -144,7 +144,7 @@ function systemWindow(): void {
     
     case 11: //окно смены территории
     
-      if (this.state.farm !== 'Unicorn') new RepositoryExchangeWindow(this)
+      if (this.state.farm !== 'Unicorn') new TerritoryExchangeWindow(this)
       break;
     
     case 12: // Окно смены ника
@@ -193,7 +193,7 @@ function systemWindow(): void {
     case 23: 
       new ConfirmBuyFarm(this);
       break;
-      
+
     default:      
       this.scene.stop();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
@@ -296,7 +296,10 @@ function sheepTerritory(): void {
       break;
 
     case 2: // пастбище
-      new FarmPastureWindow(this);
+      let improve: number = this.state.territory.improve;
+      if (improve < this.state[`${this.state.farm.toLowerCase()}Settings`][`territories${this.state.farm}Settings`].length) {
+        new FarmPastureWindow(this);
+      } else new TerritoryExchangeWindow(this);
       break;
       
     case 3: // поилка
