@@ -365,9 +365,11 @@ class CowBars extends Phaser.Scene {
 
   public currentPartProgress(): void {
     const tasks: Itasks[] = this.game.scene.keys[this.state?.farm]?.partTasks();
-    const done: number = tasks.filter(el => el.done === 1).length;
-    const text: string = done + '/' + tasks?.length;
-    if (text !== this.partProgress?.text) this.partProgress?.setText(text);
+    if (tasks) {
+      const done: number = tasks.filter(el => el.done === 1).length;
+      const text: string = done + '/' + tasks?.length;
+      if (text !== this.partProgress?.text) this.partProgress?.setText(text);
+    }
   }
 
 
