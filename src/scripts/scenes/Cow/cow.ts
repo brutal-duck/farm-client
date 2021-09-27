@@ -76,10 +76,8 @@ function checkMerging(territory: CowTerritory, cow: CowSprite, position: string)
 
     // если на этой позиции уже стоит корова
     if (territory.merging.length === 1 && territory.merging[0].position === position) {
-
       if (position === 'top') position = 'bottom';
       else if (position === 'bottom') position = 'top';
-      console.log('check === undefined')
     }
 
     // запоминаем
@@ -364,7 +362,6 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
         this.state.modal = modal;
         this.scene.launch('Modal', this.state);
       }
-      console.log('have not space for milk');
     }
   } else {
     let position: Iposition = {

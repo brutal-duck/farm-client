@@ -609,7 +609,6 @@ function collectWool(sheep: any, manualСollect: boolean = false): void {
           this.state.modal = modal;
           this.scene.launch('Modal', this.state);
         }
-        // console.log('have not space for wool');
       }
     }
   } else {

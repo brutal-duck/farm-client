@@ -97,8 +97,6 @@ export default class ChangeNicknameWindow {
       tempHeight = window.innerHeight;
 
       if (windowHeight !== tempHeight && centered) {
-        console.log('1');
-
         root.scrollIntoView(false)
         modalElement.forEach((el) => el.setY(el.y + padding))
         this.scene.mainInput.style.top = '80%';
@@ -106,13 +104,10 @@ export default class ChangeNicknameWindow {
         centered = false;
 
       } else if (windowHeight === tempHeight && !centered) {
-        console.log('2');
-        
         modalElement.forEach((el) => el.setY(el.y - padding));
         this.scene.mainInput.style.top = '50%';
         this.scene.mainInput.style.bottom = '44%';
         centered = true;
-
       }
     }
 

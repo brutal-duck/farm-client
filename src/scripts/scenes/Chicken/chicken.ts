@@ -513,7 +513,7 @@ function collectEgg(egg: Egg, manualСollect: boolean = false): void {
         repository.volume++;
         repository.money += price;
         egg.flyToPoint(path);
-      } // else console.log('have not space for eggs');
+      }
     }
   } else {
     const position: Iposition = {
