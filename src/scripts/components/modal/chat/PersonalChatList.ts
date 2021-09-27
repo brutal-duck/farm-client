@@ -197,7 +197,6 @@ export default class PersonalChatList {
 
   private onClanMessageDelete(id: string, bg: IroundedField, trash: Phaser.GameObjects.Sprite): void {
     const { acceptBtn, acceptBtnText, declainBtn, declainBtnText } = this.createDeleteBubble(bg, trash);
-    console.log('onClanMessageDelete ~ acceptBtn', acceptBtn)
     this.scene.clickModalBtn({ btn: acceptBtn, title: acceptBtnText }, () => {
       this.scene.state.user.messages = this.scene.state.user.messages.filter(el => el._id !== id);
       this.scene.state.updatePersonalMessage = true;
@@ -642,35 +641,9 @@ export default class PersonalChatList {
       x: trash.x - 50,
       y: trash.y,
     };
-    // const btnTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
-    //   fontFamily: 'Shadow',
-    //   wordWrap: { width: 100 },
-    //   align: 'center',
-    //   fontSize: '12px',
-    //   color: '#ffe2e2',
-    //   stroke: '#D78A31',
-    //   strokeThickness: 1,
-    // };
-    // const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
-    //   fontFamily: 'Bip',
-    //   wordWrap: { width: 100 },
-    //   align: 'center',
-    //   fontSize: '16px',
-    //   color: '#ffebdc',
-    //   stroke: '#373737',
-    //   strokeThickness: 1,
-    // };
-    // const mask: Phaser.Display.Masks.BitmapMask = new Phaser.Display.Masks.BitmapMask(this.scene, bgMask);
-    // const bg: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos.x + 200, pos.y, 'chat-delete-bg').setMask(mask).setDepth(2);
-    // const text:Phaser.GameObjects.Text = this.scene.add.text(pos.x + 200, pos.y - 15, this.scene.state.lang.delete, textStyle).setOrigin(0.5).setMask(mask).setDepth(2);
-    // const acceptBtn = this.scene.add.sprite(pos.x - 35 + 200, pos.y + 14, 'profile-window-button-red').setOrigin(0.5).setScale(0.5).setMask(mask).setDepth(2);
-    // const acceptBtnText = this.scene.add.text(pos.x - 35 + 200, pos.y + 10, this.scene.state.lang.yes, btnTextStyle).setOrigin(0.5).setMask(mask).setDepth(2);
-    // const declainBtn = this.scene.add.sprite(pos.x + 35 + 200, pos.y + 14, 'profile-window-button-green').setOrigin(0.5).setScale(0.5).setMask(mask).setDepth(2);
-    // const declainBtnText = this.scene.add.text(pos.x + 35 + 200, pos.y + 10, this.scene.state.lang.no, btnTextStyle).setOrigin(0.5).setMask(mask).setDepth(2);
 
-    const askBar = new AskBar(this.scene, pos.x + 201, pos.y)
-    askBar.setGlobalMask(bg.getRightCenter().x - 6, pos.y, { x: 0, y: 0.5 })
-    console.log('createDeleteBubble ~ askBar', askBar)
+    const askBar = new AskBar(this.scene, pos.x + 201, pos.y);
+    askBar.setGlobalMask(bg.getRightCenter().x - 6, pos.y, { x: 0, y: 0.5 });
     
     const tween: Phaser.Tweens.Tween = this.scene.add.tween({
       targets: askBar.elements,

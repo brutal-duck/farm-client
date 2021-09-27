@@ -284,9 +284,9 @@ export default class GeneralChat {
     this.lastMsgFromUser = msgData.login;
     this.scene.scrollHeight += textHeight + padding + 40;
 
-    // this.scene.click(bg, () => {
-    //   this.onPersonalClick(msgData);
-    // });
+    this.scene.click(bg, () => {
+      this.onPersonalClick(msgData);
+    });
   }
 
   private onPersonalClick(msgData: Ichat): void {

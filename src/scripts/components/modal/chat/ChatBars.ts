@@ -193,7 +193,7 @@ export default class ChatBars {
           this.tabPersonalText = this.scene.add.text(this.tabPersonal.getCenter().x, this.tabPersonal.getCenter().y, this.scene.state.lang.personalChat, tabTextStyle).setDepth(2).setOrigin(0.5);
           const notificationPos1: Iposition = {
             x: this.tabPersonal.getRightCenter().x - 10,
-            y: this.tabPersonal.getTopCenter().x + 10,
+            y: this.tabPersonal.getTopCenter().y + 10,
           };
           this.personalTabNotificator = new Notificator(this.scene, notificationPos1);
           this.personalTabNotificator.setDepth(4);
@@ -214,7 +214,7 @@ export default class ChatBars {
           const countNotification: number = this.getPersonalTabCountNotification();
           const notificationPos: Iposition = {
             x: this.tabPersonal.getRightCenter().x - 10,
-            y: this.tabPersonal.getTopCenter().x + 10,
+            y: this.tabPersonal.getTopCenter().y + 10,
           };
           this.personalTabNotificator = new Notificator(this.scene, notificationPos);
           this.personalTabNotificator.setDepth(4);
