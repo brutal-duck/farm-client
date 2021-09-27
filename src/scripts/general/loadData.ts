@@ -122,7 +122,7 @@ function checkDoneTasks(state: Istate): void {
 }
 
 export default function loadData(response: AxiosResponse): void {
-  if (this.state.build < response.data.user.build) {
+  if (this.state.build < response.data.user.build || response.data.user.banned) {
     this.children.destroy();
     new ErrorWindow(this);
     return;
