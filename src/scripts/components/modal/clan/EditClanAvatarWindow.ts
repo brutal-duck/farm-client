@@ -2,7 +2,7 @@ import Modal from "../../../scenes/Modal/Modal";
 import ClanWindow from './ClanWindow';
 import { Icon } from '../../Utils/LogoManager';
 import axios from "axios";
-const CHANGE_EMBLEM_COST: number = 200;
+import { CHANGE_EMBLEM_COST } from '../../../local/settings';
 
 export default class EditClanAvatarWindow {
   private window: ClanWindow;

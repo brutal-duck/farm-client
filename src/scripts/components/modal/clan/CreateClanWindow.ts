@@ -2,7 +2,7 @@ import axios from "axios";
 import Modal from "../../../scenes/Modal/Modal";
 import ClanWindow from './ClanWindow';
 import LogoManager, { Icon } from './../../Utils/LogoManager';
-const CREATE_CLAN_COST: number = 250;
+import { CREATE_CLAN_COST } from '../../../local/settings';
 
 export default class CreateClanWindow {
   private window: ClanWindow;

@@ -1997,6 +1997,10 @@ const improveClanFarm = [
   '100000000000000',
 ];
 
+const CHANGE_EMBLEM_COST: number = 200;
+const CHANGE_CLAN_NAME_COST: number = 200;
+const CREATE_CLAN_COST: number = 250;
+
 export {
   general,
   sheepSettings,
@@ -2005,4 +2009,7 @@ export {
   unicornSettings,
   clanTournamentSettings,
   improveClanFarm,
+  CHANGE_EMBLEM_COST,
+  CHANGE_CLAN_NAME_COST,
+  CREATE_CLAN_COST,
 }

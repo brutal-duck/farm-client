@@ -2,10 +2,9 @@ import axios from 'axios';
 import { shortNum, shortTime } from '../../../general/basic';
 import Modal from '../../../scenes/Modal/Modal';
 import LogoManager from '../../Utils/LogoManager';
+import { CHANGE_EMBLEM_COST, CHANGE_CLAN_NAME_COST, CREATE_CLAN_COST } from '../../../local/settings';
 const KEY: string = '1491f4c9d53dfa6c50d0c4a375f9ba76';
-const CHANGE_EMBLEM_COST: number = 200;
-const CHANGE_CLAN_NAME_COST: number = 200;
-const CREATE_CLAN_COST: number = 250;
+
 
 export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
   public scene: Modal;
