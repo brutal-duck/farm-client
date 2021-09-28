@@ -43,30 +43,23 @@ export default class CowTerritory extends Territory {
     if (nextImprove && this.improve < settings.length) {
       if (user.part >= nextImprove.unlock_improve) {
         if (user.money >= nextImprove.improveMoneyPrice && this.scene.state.user.diamonds >= nextImprove.improveDiamondPrice) {
-          user.money -= nextImprove.improveMoneyPrice;
-          this.scene.state.user.diamonds -= nextImprove.improveDiamondPrice;
-          this.improve += 1;
-          this.factory.improve += 1;
-          this.factory.settings = nextImprove;
-          this.scene.time.addEvent({ delay: 200, callback: (): void => {
-            this.improveText?.setText(String(this.improve));
-            Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 5);
-
-          }, callbackScope: this, loop: false });
-
-          this.scene.state.amplitude.logAmplitudeEvent('factory_up', {
-            level: this.factory.improve,
-          });
-
           if (nextImprove.improveDiamondPrice > 0) {
-            this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
-              type: 'factory',
-              count: nextImprove.improveDiamondPrice,
-            });
-            this.scene.tryTask(15, 0, nextImprove.improveDiamondPrice);
-          }
-          this.scene.game.scene.keys['Modal'].scene.stop();
-          this.scene.tryTask(24, this.factory.improve);
+            const modal: Imodal = {
+              type: 1,
+              sysType: 24,
+              confirmSpendParams: {
+                type: 'ImproveFactory',
+                level: nextImprove.improve,
+                price: nextImprove.improveDiamondPrice,
+                callback: () => {
+                  this.acceptedImproveFactory(nextImprove);
+                }
+              }
+            };
+            this.scene.state.modal = modal;
+            this.scene.scene.stop('Modal');
+            this.scene.scene.launch('Modal', this.scene.state);
+          } else this.acceptedImproveFactory(nextImprove);
         } else {
           if (this.scene.state.user.diamonds < nextImprove.improveDiamondPrice) {
             const count: number = nextImprove.improveDiamondPrice - this.scene.state.user.diamonds;
@@ -81,6 +74,32 @@ export default class CowTerritory extends Territory {
     }
   }
 
+  private acceptedImproveFactory(nextImprove: IfactorySettings): void {
+    this.scene.state.userCow.money -= nextImprove.improveMoneyPrice;
+    this.scene.state.user.diamonds -= nextImprove.improveDiamondPrice;
+    this.improve += 1;
+    this.factory.improve += 1;
+    this.factory.settings = nextImprove;
+    this.scene.time.addEvent({ delay: 200, callback: (): void => {
+      this.improveText?.setText(String(this.improve));
+      Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 5);
+
+    }, callbackScope: this, loop: false });
+
+    this.scene.state.amplitude.logAmplitudeEvent('factory_up', {
+      level: this.factory.improve,
+    });
+
+    if (nextImprove.improveDiamondPrice > 0) {
+      this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
+        type: 'factory',
+        count: nextImprove.improveDiamondPrice,
+      });
+      this.scene.tryTask(15, 0, nextImprove.improveDiamondPrice);
+    }
+    this.scene.game.scene.keys['Modal'].scene.stop();
+    this.scene.tryTask(24, this.factory.improve);
+  }
   public createMergingZone(): void {
     super.createMergingZone();
 
