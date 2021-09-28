@@ -6,6 +6,7 @@ import CooldownSprite from './CooldownSprite';
 import Chicken from './../../scenes/Chicken/Main';
 import Sheep from './../../scenes/Sheep/Main';
 import FadeOut from './../animations/FadeOut';
+import Utils from './../../libs/Utils';
 
 export default class Territory extends Phaser.Physics.Arcade.Sprite {
   public scene: Cow | Sheep | Chicken;
@@ -709,37 +710,52 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       else if (this.territoryType === 3) territory = 'water';
       else if (this.territoryType === 5) territory = 'repository';
 
-      this.scene.state.amplitude.logAmplitudeEvent('improve_territory', {
-        block: this.block,
-        position: this.position,
-        level: improve,
-        type: territory
-      });
+      const modal: Imodal = {
+        type: 1,
+        sysType: 24,
+        confirmSpendParams: {
+          type: `Improve${Utils.ucFirst(territory)}`,
+          level: improve,
+          price: price,
+          callback: () => {
+            this.scene.state.amplitude.logAmplitudeEvent('improve_territory', {
+              block: this.block,
+              position: this.position,
+              level: improve,
+              type: territory
+            });
+      
+            this.improve = improve;
+            this.scene.state.user.diamonds -= price;
+            this.scene.tryTask(15, 0, price);
+            if (this.territoryType === 5) {
+              this.scene.tryTask(17, improve);
+              this.changeSprite();
+              Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
+              this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
+                type: 'storage',
+                count: price,
+              });
+            } else {
+              if (this.territoryType === 2) this.scene.tryTask(8, improve);
+              if (this.territoryType === 3) this.scene.tryTask(9, improve);
+              this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
+                type: territory,
+                count: price,
+              });
+              this.volume = 1000;
+              this.scene.time.addEvent({ delay: 500, callback: (): void => {
+                this.changeSprite();
+                Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
+              }, callbackScope: this, loop: false });
+            }
+          }
+        }
+      };
 
-      this.improve = improve;
-      this.scene.state.user.diamonds -= price;
-      this.scene.tryTask(15, 0, price);
-      if (this.territoryType === 5) {
-        this.scene.tryTask(17, improve);
-        this.changeSprite();
-        Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
-        this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
-          type: 'storage',
-          count: price,
-        });
-      } else {
-        if (this.territoryType === 2) {
-          this.scene.tryTask(8, improve);
-        }
-        if (this.territoryType === 3) {
-          this.scene.tryTask(9, improve);
-        }
-        this.volume = 1000;
-        this.scene.time.addEvent({ delay: 500, callback: (): void => {
-          this.changeSprite();
-          Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
-        }, callbackScope: this, loop: false });
-      }
+      this.scene.state.modal = modal;
+      this.scene.scene.stop('Modal');
+      this.scene.scene.launch('Modal', this.scene.state);
     } else {
       let count: number = price - this.scene.state.user.diamonds;
       let diamonds: number = this.scene.convertDiamonds(count);

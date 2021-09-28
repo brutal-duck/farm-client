@@ -632,8 +632,13 @@ interface Imodal {
   message?: string;
   tasksParams?: ItasksParams;
   eventParams?: IeventParams;
-  count?: number;
-  callback?: () => void;
+  confirmSpendParams?: IconfirmSpendParams;
+}
+interface IconfirmSpendParams {
+  level: number;
+  type: string;
+  price: number;
+  callback: () => void;
 }
 interface Iconvertor {
   fun: number;

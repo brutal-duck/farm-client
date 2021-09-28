@@ -30,7 +30,7 @@ import CowWindow from '../../components/modal/system/CowWindow';
 import ConfirmSaveProgress from './../../components/modal/system/ConfirmSaveProgress';
 import ConfimExcludeUserWindow from '../../components/modal/system/ConfimExcludeUserWindow';
 import ConfirmBuyFarm from './../../components/modal/system/ConfirmByFarm';
-import ConfirmSpentDiamonds from './../../components/modal/system/ConfirmSpentDiamonds';
+import ConfirmSpentDiamonds from '../../components/modal/system/ConfirmSpendDiamonds';
 
 function systemWindow(): void {
   let height:number = 0;

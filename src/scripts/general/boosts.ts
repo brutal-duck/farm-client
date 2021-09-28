@@ -135,36 +135,55 @@ function improveCollector(): void {
     if (nextLevel.diamonds) {
   
       if (this.state.user.diamonds >= nextLevel.price) {
-  
-        this.game.scene.keys[this.state.farm].tryTask(15, 0, nextLevel.price);
-  
-        this.state.amplitude.logAmplitudeEvent('diamonds_spent', {
-          type: 'improve_collector',
-          count: nextLevel.price,
-        });
-
-        this.state.user.diamonds -= nextLevel.price;
-        user.collectorLevel++;
-        this.setCollector();
-  
-        this.game.scene.keys['Modal'].improveCollectorAnim({x: this.cameras.main.centerX, y: this.cameras.main.centerY + 10});
-        this.game.scene.keys[this.state.farm].tryTask(23, 0, 0, user.collectorLevel);
-        this.tryClanTask(6);
-        
-        if (!secondNextLevel) {
-          this.scene.stop('Modal');
-          this.scene.stop('Shop');
-          this.scene.stop('ShopBars');
-      
-          let modal: Imodal = {
-            type: 1,
-            sysType: 3,
-            message: this.state.lang.maxLevelCollector,
-            height: 150
+        const modal: Imodal = {
+          type: 1,
+          sysType: 24,
+          confirmSpendParams: {
+            type: `ImproveCollector${this.state.farm}`,
+            level: nextLevel.level,
+            price: nextLevel.price,
+            callback: () => {
+              this.state.amplitude.logAmplitudeEvent('diamonds_spent', {
+                type: 'improve_collector',
+                count: nextLevel.price,
+              });
+              
+              this.state.user.diamonds -= nextLevel.price;
+              user.collectorLevel++;
+              this.setCollector();
+              
+              this.game.scene.keys[this.state.farm].tryTask(15, 0, nextLevel.price);
+              this.game.scene.keys[this.state.farm].tryTask(23, 0, 0, user.collectorLevel);
+              this.game.scene.keys[this.state.farm].tryClanTask(6);
+              
+              if (!secondNextLevel) {
+                this.scene.stop('Modal');
+                this.scene.stop('Shop');
+                this.scene.stop('ShopBars');
+            
+                const modal: Imodal = {
+                  type: 1,
+                  sysType: 3,
+                  message: this.state.lang.maxLevelCollector,
+                  height: 150
+                };
+                this.state.modal = modal;
+                this.scene.launch('Modal', this.state);
+              } else {
+                const modal: Imodal = {
+                  type: 1,
+                  sysType: 10,
+                };
+                this.state.modal = modal;
+                this.scene.launch('Modal', this.state);
+              }
+            }
           }
-          this.state.modal = modal;
-          this.scene.launch('Modal', this.state);
-        }
+        };
+
+        this.state.modal = modal;
+        this.scene.stop('Modal');
+        this.scene.launch('Modal', this.state);
       } else {
   
         this.state.convertor = {

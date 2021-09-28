@@ -1,24 +1,22 @@
 import { shortNum } from "../../../general/basic";
 import Modal from "../../../scenes/Modal/Modal";
 
-export default class ConfirmSpentDiamonds {
+export default class ConfirmSpendDiamonds {
   public scene: Modal;
-  private callback: () => void;
-  private price: number;
+  private params: IconfirmSpendParams;
 
   constructor(scene: Modal) {
     this.scene = scene;
-    this.callback = this.scene.state.modal.callback;
-    this.price = this.scene.state.modal.count;
+    this.params = this.scene.state.modal.confirmSpendParams;
     this.create();
     this.scene.openModal(this.scene.cameras.main);
   }
 
   private create(): void {
-    const headerText: string = this.scene.state.modal.message;
+    const headerText: string = this.scene.state.lang[`confirm${this.params.type}Header`];
     this.scene.textHeader.setText(headerText);
-
-    const text: string = this.scene.state.modal.message;
+    let text: string = this.scene.state.lang[`confirm${this.params.type}Text`]
+    text = text?.replace('$1', String(this.params.level));
 
     this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 70, text, {
       font: '26px Bip',
@@ -29,17 +27,17 @@ export default class ConfirmSpentDiamonds {
 
     const img = {
       icon: 'diamond',
-      text: shortNum(this.price),
+      text: shortNum(this.params.price),
     };
 
-    const textBtn: string = this.scene.state.lang.buy;
+    const textBtn: string = this.scene.state.lang.improve;
     const confirmBtn = this.scene.bigButton('green', 'left', 20, textBtn, img);
     const redBtn = this.scene.bigButton('red', 'center', 110, this.scene.state.lang.cancel);
 
     this.scene.clickModalBtn(confirmBtn, (): void => {
       this.closeWindow();
-      if (this.scene.state.user.diamonds <= this.price) {
-        this.callback();
+      if (this.scene.state.user.diamonds >= this.params.price) {
+        this.params.callback();
       } else this.openConvertor();
     });
 
@@ -52,8 +50,8 @@ export default class ConfirmSpentDiamonds {
   private openConvertor(): void {
     this.scene.state.convertor = {
       fun: 0,
-      count: this.price,
-      diamonds: this.price,
+      count: this.params.price,
+      diamonds: this.params.price,
       type: 1
     };
     this.scene.game.scene.keys[this.scene.state.farm].exchange();
