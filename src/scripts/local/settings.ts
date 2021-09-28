@@ -1997,9 +1997,9 @@ const improveClanFarm = [
   '100000000000000',
 ];
 
-const CHANGE_EMBLEM_COST: number = 200;
-const CHANGE_CLAN_NAME_COST: number = 200;
-const CREATE_CLAN_COST: number = 250;
+const CHANGE_EMBLEM_COST: number = 100;
+const CHANGE_CLAN_NAME_COST: number = 100;
+const CREATE_CLAN_COST: number = 100;
 
 export {
   general,
