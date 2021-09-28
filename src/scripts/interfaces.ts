@@ -840,6 +840,11 @@ interface Iadjust {
   shopPurchaseEvent: any;
   adEvent: any;
 }
+interface Isale {
+  type: string;
+  endTime: number;
+  startTime: number;
+}
 interface Istate {
   platform: string;
   autoSaveSpeed: number;
@@ -940,4 +945,5 @@ interface Istate {
   clanTournamentData?: ItournamentData;
   clanEventPlace?: number;
   clanEventTakenAward: boolean;
+  sales: Isale[];
 }

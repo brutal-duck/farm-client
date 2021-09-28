@@ -541,6 +541,7 @@ export default function loadData(response: AxiosResponse): void {
       if (!error) this.state.clanEventTakenAward = userAward;
     });
   }
+  this.state.sales = response.data.sales || [];
 
   this.userReady = true;
 }

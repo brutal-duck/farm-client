@@ -47,10 +47,26 @@ export default class DiamondsWindow {
     const pack: Phaser.GameObjects.Sprite = this.scene.add.sprite(position.x, position.y + this.scene.height, 'bank-package').setOrigin(0, 0);
     this.scene.click(pack, (): void => { this.packHandler(packData); });
 
-    this.scene.add.text(position.x + 110, position.y + 145 + this.scene.height, String(packData.diamonds + packData.bonus), {
-      font: '40px Shadow',
-      color: '#FFFFFF'
-    }).setOrigin(0.5, 0.5);
+    if (!this.checkSale()) {
+      this.scene.add.text(position.x + 110, position.y + 145 + this.scene.height, String(packData.diamonds + packData.bonus), {
+        font: '40px Shadow',
+        color: '#FFFFFF'
+      }).setOrigin(0.5);
+    } else {
+      const text1 = this.scene.add.text(position.x + 110, position.y + 145 + this.scene.height, String(packData.diamonds + packData.bonus), {
+        font: '35px Shadow',
+        color: '#ddd',
+      }).setOrigin(0, 0.5).setAlpha(0.9);
+      const text2 = this.scene.add.text(position.x + 110, position.y + 145 + this.scene.height, String(2 * (packData.diamonds + packData.bonus)), {
+        font: '40px Shadow',
+        color: '#FFFFFF',
+      }).setOrigin(0, 0.5);
+
+      const width = (text1.displayWidth + text2.displayWidth + 5) / 2;
+      text1.setX(position.x + 110 - width);
+      text2.setX(text1.getBounds().right + 5);
+      this.scene.add.tileSprite(text1.x + text1.displayWidth / 2, text1.y, text1.displayWidth + 7, 5, 'white-pixel').setTint(0xFF4A2C).setAngle(5).setOrigin(0.5);
+    }
     
     const text: string = this.scene.state.platform === 'ok' ? packData.price + ' ' + 'ОК' : 
     this.scene.state.platform === 'vk' ? packData.voices + ' ' + this.scene.state.lang.voices : 
@@ -89,13 +105,18 @@ export default class DiamondsWindow {
     if (packData.bonus > 0) {
       const x: number = position.x + 110;
       const y: number = position.y + 180 + this.scene.height;
-      const text: string = this.scene.state.lang.benefit + ' ' + '+' + packData.bonus;
+      const text: string = `${this.scene.state.lang.benefit} +${this.checkSale() ? packData.bonus * 2 : packData.bonus}`;
 
       this.scene.add.text(x, y, text, {
         font: '20px Shadow',
         color: '#FFFFFF'
-      }).setOrigin(0.5, 0.5);
+      }).setOrigin(0.5);
     }
+  }
+
+  private checkSale(): boolean {
+    const saleName: string = 'DIAMOND_COUNT';
+    return this.scene.state.sales.some(el => el.type === saleName && el.startTime <= 0 && el.endTime > 0); 
   }
 
   private createFreeDiamonds(): void {
