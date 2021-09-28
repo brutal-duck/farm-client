@@ -61,6 +61,13 @@ const progressClanCooldown = (state: Istate, time: number = 1): void => {
   }
 };
 
+const progressSalesTime = (state: Istate, time: number = 1): void => {
+  state.sales.forEach(el => {
+    if (el.startTime > 0) el.startTime -= time;
+    if (el.endTime > 0) el.endTime -= time;
+  })
+}
+
 const getRandomProductId = (settings: IfactorySettings, boost: boolean): number => {
   const pull: number[] = [ settings.production1Percent, settings.production2Percent, settings.production3Percent ];
   if (boost) pull.push(settings.production4Percent);
@@ -715,5 +722,6 @@ export {
   showFeedBoostSpeechBubble,
   progressTerritoryCooldown,
   progressClanCooldown,
+  progressSalesTime,
   progressClanEventTime,
 }
