@@ -8,6 +8,7 @@ import Cow from './../../../scenes/Cow/Main';
 import Unicorn from './../../../scenes/Event/Unicorns/Main';
 import Currency from './../../animations/Currency';
 import MoneyAnimation from './../../animations/MoneyAnimation';
+import Utils from './../../../libs/Utils';
 
 const FARM_PACKAGE: Array<number> = [1000, 100000, 1000000, 1000000000];
 const DIAMOND_PACKAGE: Array<number> = [1, 10, 100, 1000];
@@ -307,7 +308,7 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
       x += btn.displayWidth + 20
     }
 
-    this.scene.add.text(this.posx, headerGeom.bottom + 260, this.scene.state.lang[`open${this.farm[0].toUpperCase() + this.farm.slice(1)}Farm`], messageTextStyle).setOrigin(0.5).setAlpha(0.9);
+    this.scene.add.text(this.posx, headerGeom.bottom + 260, this.scene.state.lang[`open${Utils.ucFirst(this.farm)}Farm`], messageTextStyle).setOrigin(0.5).setAlpha(0.9);
   }
 
   private setActiveBtn(el: {
@@ -417,7 +418,7 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
   private addFarmMoney(): void {
     const packageCount: number = Number(this.packageBtns.find(el => el.btn.state === this.activePackage).text.state);
     const mainScene = this.scene.scene.get(this.scene.state.farm) as Sheep | Chicken | Cow | Unicorn;
-    const farmUser: string = `user${this.farm[0].toUpperCase() + this.farm.slice(1)}`;
+    const farmUser: string = `user${Utils.ucFirst(this.farm)}`;
     if (this.farm !== 'diamond') {
       const farmMoney: number = Math.round(this.scene.state[farmUser].money);
       if (farmMoney >= packageCount) {
@@ -536,7 +537,7 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
 
   private convertPoints(money: number): number {
     const partsSettings: Ipart[] = this.scene.state[`${this.farm}Settings`][`${this.farm}Parts`];
-    const part: number = this.scene.state[`user${this.farm[0].toUpperCase() + this.farm.slice(1)}`].part;
+    const part: number = this.scene.state[`user${Utils.ucFirst(this.farm)}`].part;
   
     const exchange: number = partsSettings.find((item: Ipart) => item.sort === part).exchange;
     return Math.ceil(money / exchange);
@@ -597,7 +598,7 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
         }
       }
       if (this.currentUserCountText && this.currentUserCountText.active) {
-        const farmUpperCase: string = this.farm[0].toUpperCase() + this.farm.slice(1);
+        const farmUpperCase: string = Utils.ucFirst(this.farm);
         const text: string = this.farm !== 'diamond' ? shortNum(this.scene.state[`user${farmUpperCase}`].money) : String(this.scene.state.user.diamonds);
         const count: number = this.farm !== 'diamond' ? this.scene.state[`user${farmUpperCase}`].money : this.scene.state.user.diamonds;
         const packageCount: number = Number(this.packageBtns.find(el => el.btn.state === this.activePackage).text.state);

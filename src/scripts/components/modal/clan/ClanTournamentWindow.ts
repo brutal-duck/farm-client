@@ -4,6 +4,7 @@ import Modal from '../../../scenes/Modal/Modal';
 import { clanTournamentSettings } from '../../../local/settings';
 import BigInteger from '../../../libs/BigInteger';
 import FlyAwayStar from '../../animations/FlyAwayStar';
+import Utils from './../../../libs/Utils';
 
 export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
   public scene: Modal;
@@ -369,18 +370,19 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
     if (this.scene.state.progress[this.farm].open) {
       this.scene.add.sprite(this.posx, y - 308, 'clan-tournament-plate-bg');
     }
-    const moneyText: string = shortNum(this.scene.state[`user${this.farm[0].toUpperCase() + this.farm.slice(1)}`].money);
+    const moneyText: string = shortNum(this.scene.state[`user${Utils.ucFirst(this.farm)}`].money);
     this.userMoney = this.scene.add.text(this.posx + 12, y - 308, moneyText, textStyle).setOrigin(0.5).setAlpha(0.65);
     this.userMoneyIcon = this.scene.add.sprite(this.posx - 60, y - 308, `${this.farm}Coin`).setScale(0.125);
     if (!this.scene.state.progress[this.farm].open) {
       this.userMoney.setVisible(false);
       this.userMoneyIcon.setVisible(false);
-      this.scene.add.text(this.posx, y - 315, this.scene.state.lang[`open${this.farm[0].toUpperCase() + this.farm.slice(1)}Farm`], messageTextStyle).setAlpha(0.9).setOrigin(0.5);
+      this.scene.add.text(this.posx, y - 315, this.scene.state.lang[`open${Utils.ucFirst(this.farm)
+}Farm`], messageTextStyle).setAlpha(0.9).setOrigin(0.5);
     }
   }
 
   public updateBtns(): void {
-    const moneyText: string = shortNum(this.scene.state[`user${this.farm[0].toUpperCase() + this.farm.slice(1)}`].money);
+    const moneyText: string = shortNum(this.scene.state[`user${Utils.ucFirst(this.farm)}`].money);
     this.userMoney.setText(moneyText);
     this.plates.forEach(el => {
       el.updateBtnState();
@@ -488,7 +490,7 @@ class AnimalPlate extends Phaser.GameObjects.Sprite {
     const animal: ItournamentAnimal = this.scene.state.clanTournamentData[this.type].find((el: ItournamentAnimal) => el.breed === this.breed);
     this.count = animal ? animal.count : 0;
     this.setPrice();
-    const money = this.scene.state[`user${this.type[0].toUpperCase() + this.type.slice(1)}`].money;
+    const money = this.scene.state[`user${Utils.ucFirst(this.type)}`].money;
     if (BigInteger.greaterThanOrEqual(String(Math.round(money)), this.price)) {
       this.btn.setInteractive();
       this.btn.setTexture('little-button');
@@ -510,7 +512,7 @@ class AnimalPlate extends Phaser.GameObjects.Sprite {
     this.postServer().then(res => {
       const { error, clan, place } = res.data;
       if (!error) {
-        this.scene.state[`user${this.type[0].toUpperCase() + this.type.slice(1)}`].money -= Number(this.price);
+        this.scene.state[`user${Utils.ucFirst(this.type)}`].money -= Number(this.price);
         const user = clan.users.find(el => el.id === this.scene.state.user.id);
         this.scene.state.clanTournamentData = {
           clanPoints: clan.points,

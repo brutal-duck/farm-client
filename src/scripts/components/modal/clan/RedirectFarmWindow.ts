@@ -1,5 +1,6 @@
 import ClanWindow from './ClanWindow';
 import Modal from './../../../scenes/Modal/Modal';
+import Utils from './../../../libs/Utils';
 
 const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
   color: '#fffdfa',
@@ -44,7 +45,7 @@ export default class RedirectFarmWindow {
       x: this.x,
       y: this.scene.cameras.main.centerY - 30,
     };
-    const farm: string = this.farm[0].toUpperCase() + this.farm.slice(1);
+    const farm: string = Utils.ucFirst(this.farm);
     const text: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, this.scene.state.lang[`goToNote${farm}`], textStyle).setOrigin(0.5);
     const pay = this.scene.bigButton('green', 'center', padding, this.scene.state.lang[`goTo${farm}Farm`]);
     this.scene.clickModalBtn(pay, (): void => { this.handleAccept(); });
@@ -62,7 +63,7 @@ export default class RedirectFarmWindow {
   }
 
   private handleAccept(): void {
-    const farm: string = this.farm[0].toUpperCase() + this.farm.slice(1);
+    const farm: string = Utils.ucFirst(this.farm);
     this.scene.state.openConvertor = true;
     this.scene.game.scene.keys[this.scene.state.farm].autosave();
     this.scene.scene.stop('Modal');

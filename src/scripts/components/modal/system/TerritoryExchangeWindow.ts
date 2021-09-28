@@ -1,5 +1,6 @@
 import { shortNum } from "../../../general/basic";
 import Modal from "../../../scenes/Modal/Modal";
+import Utils from './../../../libs/Utils';
 
 export default class TerritoryExchangeWindow {
   public scene: Modal;
@@ -30,7 +31,7 @@ export default class TerritoryExchangeWindow {
       text: shortNum(exchangePrice)
     };;
 
-    const textTitle: string = this.scene.state.lang[`exchange${this.type[0].toUpperCase() + this.type.slice(1)}Title`].replace('$1', this.scene.state.territory.improve);
+    const textTitle: string = this.scene.state.lang[`exchange${Utils.ucFirst(this.type)}Title`].replace('$1', this.scene.state.territory.improve);
 
     this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 110, textTitle, {
       font: '26px Bip',
