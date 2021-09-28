@@ -6,7 +6,7 @@ import Factory from './../components/Territories/Factory';
 import CowTerritory from './../components/Territories/CowTerritory';
 import ChickenTerritory from './../components/Territories/ChickenTerritory';
 import SheepTerritory from './../components/Territories/SheepTerritory';
-import { progressClanCooldown, progressClanEventTime } from './interval';
+import { progressClanCooldown, progressClanEventTime, progressSalesTime } from './interval';
 
 export default function autoprogress(load: boolean = false): void {
   const state: Istate = this.state;
@@ -14,6 +14,7 @@ export default function autoprogress(load: boolean = false): void {
   if (!load) {
     progressClanCooldown(state, state.offlineTime);
     progressClanEventTime(state, state.offlineTime);
+    progressSalesTime(state, state.offlineTime);
   }
   
   const getRandomProductId = (settings: IfactorySettings, boost: boolean): number => {

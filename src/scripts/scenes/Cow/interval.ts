@@ -6,7 +6,7 @@ import Territory from './../../components/Territories/Territory';
 import SpeechBubble from '../../components/animations/SpeechBuble';
 import Factory from './../../components/Territories/Factory';
 import CowTerritory from './../../components/Territories/CowTerritory';
-import { progressClanCooldown, progressClanEventTime } from '../../general/interval';
+import { progressClanCooldown, progressClanEventTime, progressSalesTime } from '../../general/interval';
 
 let checkCollector: number = 0;
 let sheepCollectorVolume: number = 0;
@@ -373,6 +373,7 @@ function interval(): void {
     this.updateProfileNotification();
     this.showFeedBoostSpeechBubble();
     progressClanCooldown(this.state);
+    progressSalesTime(this.state);
 
     const volume: number = this.territories.children.entries.find(el => el.territoryType === 5)?.volume;
     this.tryTask(26, 0, 0, Math.round(volume));

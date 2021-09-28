@@ -3,7 +3,7 @@ import Arrow from '../../components/animations/Arrow';
 import Hearts from '../../components/animations/Hearts';
 import SpeechBubble from '../../components/animations/SpeechBuble';
 import SheepTerritory from './../../components/Territories/SheepTerritory';
-import { progressClanCooldown, progressClanEventTime } from '../../general/interval';
+import { progressClanCooldown, progressClanEventTime, progressSalesTime } from '../../general/interval';
 
 let checkCollector: number = 0;
 const BALANCE_HINT_COUNTDOWN = 20;
@@ -423,6 +423,8 @@ function interval(): void {
     }
     this.cowFactoryProgress();
     progressClanCooldown(this.state);
+    progressSalesTime(this.state);
+
     this.updateProfileNotification();
     this.showFeedBoostSpeechBubble();
 
