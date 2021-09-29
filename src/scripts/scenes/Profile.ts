@@ -211,11 +211,11 @@ class Profile extends Phaser.Scene {
     this.createSheepFarm();
     this.createChickenFarm();
     this.createCowFarm();
+    this.createFortuneWheel();
     if (this.state.progress.event.type === 1) {
       this.createUnicornFarm();
-    } else if (this.state.progress.event.type === 2) {
-      this.createFortuneWheel();
     }
+    
   }
 
   private createSheepFarm(): void {
@@ -435,6 +435,7 @@ class Profile extends Phaser.Scene {
   }
 
   private createFortuneWheel(): void {
+    const OPENING_LEVEL = 8;
     const data = {
       name: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
       spending: 0,
@@ -442,57 +443,48 @@ class Profile extends Phaser.Scene {
       jackpot: false,
     }
     this.state.socket.io.emit('fortune-send', data);
-    const farmPosition: Iposition = {
-      x: 720,
-      y: 775
-    }
-    this.eventMapFarm = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-fortune').setOrigin(1, 0.5).setVisible(false);
-    this.eventZone = this.add.zone(570, 790, 300, 170).setDropZone(undefined, () => {});
+    const zoneSettings = {
+      x: 570,
+      y: 580,
+      width: 170,
+      height: 170,
+    };
+    const fortuneZone: Phaser.GameObjects.Zone = this.add.zone(
+      zoneSettings.x, 
+      zoneSettings.y, 
+      zoneSettings.width, 
+      zoneSettings.height,
+    ).setDropZone(undefined, () => {});
 
-    // this.add.graphics()
-    //   .lineStyle(5, 0x00FFFF)
-    //   .strokeRect(
-    //     this.eventZone.x - this.eventZone.input.hitArea.width / 2,
-    //     this.eventZone.y - this.eventZone.input.hitArea.height / 2,
-    //     this.eventZone.width,
-    //     this.eventZone.height
-    //   );  
+    this.add.graphics()
+      .lineStyle(5, 0x00FFFF)
+      .strokeRect(
+        fortuneZone.x - fortuneZone.input.hitArea.width / 2,
+        fortuneZone.y - fortuneZone.input.hitArea.height / 2,
+        fortuneZone.width,
+        fortuneZone.height
+      );  
 
-    this.eventScore = this.add.text(farmPosition.x - 290, farmPosition.y + 20, ` - `, {
-      fontSize: '25px',
-      color: '#ffffff',
-      fontFamily: 'Shadow'
-    }).setOrigin(0.5, 0.5).setVisible(false);
-
-    this.eventEndTime = this.add.text(farmPosition.x - 290, farmPosition.y + 40, `${this.state.lang.lastTime} ${shortTime(this.state.progress.event.endTime, this.state.lang)}`, {
-      fontSize: '12px',
-      color: '#942600',
-      fontFamily: 'Shadow'
-    }).setOrigin(0.5, 0.5).setVisible(false);
-    
-    this.eventIsland = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-event-island').setOrigin(1, 0.5).setVisible(false);
-    this.eventStartText = this.add.text(farmPosition.x - 150, farmPosition.y + 30, this.state.lang.eventStart, {
-      fontSize: '16px',
-      color: '#fbd0b9',
-      fontFamily: 'Shadow'
-    }).setOrigin(0.5, 0.5).setDepth(1).setVisible(false);
-    
-    this.eventStartTime = this.add.text(farmPosition.x - 150, farmPosition.y + 40, shortTime(this.state.progress.event.startTime, this.state.lang), {
-      fontSize: '21px',
-      color: '#cbff40',
-      fontFamily: 'Shadow'
-    }).setOrigin(0.5, 0.5).setDepth(2).setVisible(false);
-
-    this.eventStartBg = this.add.graphics({
-      fillStyle: {
-        color: 0x2b3d11,
-        alpha: 0.5
-      },
-    }).fillRoundedRect(this.eventStartText.getBounds().left - 25, this.eventStartText.getBounds().top - 20, this.eventStartText.width + 50, 60).setVisible(false);
-
-    this.click(this.eventZone, (): void => {
-      this.scene.stop('Profile');
-      this.scene.launch('Fortune', this.state);
+    this.click(fortuneZone, (): void => {
+      if (this.state.userSheep.part >= OPENING_LEVEL && this.checkAuthUser()) {
+        this.scene.launch('Fortune', this.state);
+      } else if (this.state.userSheep.part < OPENING_LEVEL) {
+        this.state.modal = {
+          type: 1,
+          sysType: 3,
+          message: this.state.lang.reachChapterOfSheepFarm.replace('$1', String(OPENING_LEVEL)),
+          height: 150,
+        };
+        this.scene.launch('Modal', this.state);
+      } else {
+        this.state.modal = {
+          type: 1,
+          sysType: 3,
+          message: this.state.lang.needRegistration,
+          height: 150,
+        };
+        this.scene.launch('Modal', this.state);
+      }
     });
   }
 
@@ -716,10 +708,6 @@ class Profile extends Phaser.Scene {
     if (
       this.state.progress.event.startTime > 0 && 
       this.state.progress.event.open && 
-      (!this.state.user.fortuneTutorial && 
-      this.state.progress.event.type === 2 ||
-      // this.state.userUnicorn?.tutorial === 0 &&
-      this.state.progress.event.type === 1) && 
       (this.state.progress.sheep.part > 4 ||
       this.state.progress.chicken.part >= 1 ||
       this.state.progress.cow.part >= 1) && 
@@ -741,8 +729,7 @@ class Profile extends Phaser.Scene {
     } else if (
       this.state.progress.event.startTime <= 0 && 
       this.state.progress.event.open && 
-      (this.state.user.fortuneTutorial &&
-      this.state.progress.event.type === 2 || this.state.userUnicorn?.tutorial > 0 &&
+      (this.state.userUnicorn?.tutorial > 0 &&
       this.state.progress.event.type === 1) &&
       this.state.progress.event.endTime > 0 && 
       (this.state.progress.sheep.part > 4 || 
@@ -763,9 +750,7 @@ class Profile extends Phaser.Scene {
     } else if (
       this.state.progress.event.startTime <= 0 && 
       this.state.progress.event.open && 
-      (!this.state.user.fortuneTutorial && 
-      this.state.progress.event.type === 2 ||
-      this.state.userUnicorn?.tutorial === 0 && 
+      (this.state.userUnicorn?.tutorial === 0 && 
       this.state.progress.event.type === 1) && 
       this.checkAuthUser() &&
       (this.state.progress.sheep.part > 4 || 
@@ -826,19 +811,6 @@ class Profile extends Phaser.Scene {
       this.eventPlace.setText(this.state.unicornRaitings?.user.place + ' ' + this.state.lang.eventPlace);
       this.eventEndTime.setText(shortTime(this.state.progress.event.endTime, this.state.lang));
       this.state.unicornRaitings.updated = false;
-    }
-
-    if (this.state.progress.event.type === 2 && this.state.progress.event.startTime < 0) {
-      if (this.eventScore.text !== String(this.state.fortuneData?.pull)) {
-        this.eventScore.setText(String(this.state.fortuneData?.pull));
-      }
-      
-      const time: string = `${shortTime(this.state.progress.event.endTime, this.state.lang)}`
-      if (this.currentEndTime !== time) {
-        this.currentEndTime = time;
-        const text: string = `${this.state.lang.lastTime} ${this.currentEndTime}`;
-        this.eventEndTime.setText(text);
-      }
     }
   }
   

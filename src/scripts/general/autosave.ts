@@ -307,7 +307,6 @@ export default function autosave(): void {
     personalMessages: state.user.personalMessages,
     yandexName: state.yandexName,
     avatar: state.user.avatar,
-    fortuneTutorial: state.user.fortuneTutorial,
     clanTasks: state.user.clanTasks,
   }
 

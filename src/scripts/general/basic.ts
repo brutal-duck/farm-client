@@ -535,6 +535,11 @@ function donePart(): void {
       (this.state.user.login || this.state.name) && 
       this.state.platform !== 'ya'|| this.state.yaPlayer && 
       this.state.platform === 'ya') this.state.clanTutor = true;
+    if (user.part === 8 && 
+      this.state.farm === 'Sheep' && 
+      (this.state.user.login || this.state.name) && 
+      this.state.platform !== 'ya'|| this.state.yaPlayer && 
+      this.state.platform === 'ya') this.state.fortuneTutor = true;
   }, callbackScope: this, loop: false });
 
 }

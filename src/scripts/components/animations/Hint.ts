@@ -3,7 +3,7 @@ import SheepBars from './../../scenes/Sheep/SheepBars';
 import ChickenBars from './../../scenes/Chicken/ChickenBars';
 import CowBars from './../../scenes/Cow/CowBars';
 import UnicornBars from '../../scenes/Event/Unicorns/UnicornBars';
-import Fortune from './../../scenes/Event/Fortune/Fortune';
+import Fortune from '../../scenes/Fortune';
 /**
   *  Советы в барах сцен    
   * 

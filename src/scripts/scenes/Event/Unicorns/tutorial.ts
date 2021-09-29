@@ -19,12 +19,6 @@ function showEventTutorial(additional: boolean | string = false): void {
       this.game.scene.keys['Unicorn'].mergPointer?.destroy();
     }
 
-  } else if (this.state.progress.event.type === 2) {
-    tutorial = {
-      farm: 4,
-      step: !this.state.user.fortuneTutorial ? 0 : 10,
-      additional: additional
-    };
   }
   this.state.tutorial = tutorial;
   this.scene.launch('Tutorial', this.state);
@@ -47,17 +41,6 @@ function doneEventTutor_0(): void {
     this.scene.stop('Profile');
     this.scene.start('UnicornPreload', this.state);
 
-  } else if (this.state.progress.event.type === 2) {
-
-    this.state.amplitude.logAmplitudeEvent('tutorial', {
-      step: 0,
-      farm_id: 'Fortune'
-    });
-    this.state.user.fortuneTutorial = true;
-    
-    this.scene.stop('Tutorial');
-    this.scene.stop('Profile');
-    this.scene.launch('Fortune', this.state);
   }
 }
 

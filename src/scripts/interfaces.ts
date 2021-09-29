@@ -122,7 +122,6 @@ interface IuserAutoSave {
   personalMessages: IuserPersonalMessage[];
   yandexName: string;
   avatar: string;
-  fortuneTutorial: boolean;
   clanTasks: IclanTask[]
 }
 interface Imessage {
@@ -220,7 +219,6 @@ interface Iuser {
   takenSocialAward: boolean;
   messages: Imessage[];
   personalMessages: IuserPersonalMessage[];
-  fortuneTutorial: boolean;
   clanTasks: IclanTask[];
 }
 interface IuserSheep {
@@ -940,6 +938,7 @@ interface Istate {
   closeModal?: boolean;
   clanAvatar?: IconfigIcon;
   clanTutor?: boolean;
+  fortuneTutor?: boolean;
   openConvertor?: boolean;
   adjust?: Iadjust;
   clanTournamentData?: ItournamentData;

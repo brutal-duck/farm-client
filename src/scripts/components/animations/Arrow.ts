@@ -273,8 +273,6 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
       case 17: 
         if (this.scene.state.progress.event.type === 1) {
           result = this.scene.state.userUnicorn?.tutorial > 0;
-        } else if (this.scene.state.progress.event.type === 2) {
-          result = this.scene.state.user.fortuneTutorial;
         }
         break;
       case 18: 
@@ -285,7 +283,7 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
         result = factoryTerritory.factory.money <= 0 || factoryTerritory.factory.currentProduction !== undefined;
         break;
       case 20:
-        result = !this.scene.state.clanTutor;
+        result = !this.scene.state.clanTutor && !this.scene.state.fortuneTutor;
         break;
     }
     return result;

@@ -21,7 +21,7 @@ import Tutorial from './scenes/Tutorial';
 import UnicornBars from './scenes/Event/Unicorns/UnicornBars';
 import UnicornPreload from './scenes/Event/Unicorns/UnicornPreload';
 import Unicorn from './scenes/Event/Unicorns/Main';
-import Fortune from './scenes/Event/Fortune/Fortune';
+import Fortune from './scenes/Fortune';
 import Block from './scenes/Block';
 import Profile from './scenes/Profile';
 import ClanScroll from './scenes/Modal/Clan/Main';
@@ -83,8 +83,8 @@ window.onload = (): void => {
         ChickenPreload, Chicken, ChickenBars,
         CowPreload, Cow, CowBars,
         UnicornPreload, Unicorn, UnicornBars,
-        Fortune,
         Profile, ClanFarm,
+        Fortune,
         Modal, 
         Block,
         Shop, ShopBars,

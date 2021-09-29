@@ -291,7 +291,6 @@ export default function loadData(response: AxiosResponse): void {
     messages: response.data.user.messages || [],
     personalMessages: response.data.user.personalMessages || [],
     avatar: response.data.user.avatar,
-    fortuneTutorial: false,
     clanTasks: response.data.user.clan_tasks || [],
   };
   this.state.user = DataValidator.validateUser(user);
@@ -511,14 +510,7 @@ export default function loadData(response: AxiosResponse): void {
     this.state.userUnicorn = userUnicorn;
     this.state.eventCollectorSettings = basicUnicornCollector;
   }
-  
-  if (
-    this.state.progress.event.type === 2 
-    && this.state.progress.event.startTime < 0 
-    && this.state.progress.event.open
-  ) {
-    this.state.user.fortuneTutorial = response.data.event;
-  }
+
   if (this.state.user.clanId) {
     checkUserName(this.state);
     const currentDate: Date = new Date(response.data.time * 1000);

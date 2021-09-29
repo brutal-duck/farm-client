@@ -168,14 +168,14 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       this.chatIcon.setVisible(false);
       this.chatNotificator.setVisible(false);
       this.profileIcon.setVisible(false);
-    } else if (this.scene.state.farm === 'Unicorn' && this.scene.state.userUnicorn?.tutorial >= 80 &&  !this.visible) {
+    } else if (this.scene.state.farm === 'Unicorn' && this.scene.state.userUnicorn?.tutorial >= 80 && !this.visible) {
       this.setVisible(true);
       this.profileIcon.setVisible(true);
       this.chatIcon.setVisible(true);
       this.chatNotificator.setCount(this.getMessagesCount());
     }
 
-    if (this.checkFortune()) {
+    if (this.checkFortune() && this.visible) {
       if (this.scene.state.platform === 'web' && this.scene.state.user.login === '' || this.scene.state.platform === 'ya' && !this.scene.state.yaPlayer) {
         this.fortuneIcon.setVisible(false);
       } else {
@@ -187,11 +187,7 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
   }
 
   private checkFortune(): boolean {
-    return this.scene.state.progress.event.type === 2 &&
-      this.scene.state.progress.event.open &&
-      this.scene.state.progress.event.endTime > 0 &&
-      this.scene.state.progress.event.startTime < 0 &&
-      this.scene.state.user.fortuneTutorial;
+    return this.scene.state.userSheep.part >= 8 ;
   }
 
   private tickShowTimerAndSetState(): void {

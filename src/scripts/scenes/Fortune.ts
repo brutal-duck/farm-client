@@ -1,18 +1,18 @@
-import { shortNum, shortTime } from '../../../general/basic';
-import { clickModalBtn, clickButton, click } from '../../../general/clicks';
-import CowSprite from './../../../components/Animal/CowSprite';
-import { loadingModal } from './../../../general/basic';
-import Hint from './../../../components/animations/Hint';
-import Firework from './../../../components/animations/Firework';
-import Currency from './../../../components/animations/Currency';
+import { shortNum, shortTime } from '../general/basic';
+import { clickModalBtn, clickButton, click } from '../general/clicks';
+import CowSprite from '../components/Animal/CowSprite';
+import { loadingModal } from '../general/basic';
+import Hint from '../components/animations/Hint';
+import Firework from '../components/animations/Firework';
+import Currency from '../components/animations/Currency';
 
-const modal: string = require('../../../../assets/images/event/fortune/modal.png');
-const btn: string = require('../../../../assets/images/event/fortune/btn.png');
-const wheel: string = require('../../../../assets/images/event/fortune/wheel.png');
-const pointer: string = require('../../../../assets/images/event/fortune/pointer.png');
-const ticket: string = require('../../../../assets/images/event/fortune/ticket.png');
-const jackpotBg: string = require('../../../../assets/images/event/fortune/jackpot-bg.png');
-const doneChapterButton: string = require('../../../../assets/images/modal/done-chapter-button.png');
+const modal: string = require('../../assets/images/event/fortune/modal.png');
+const btn: string = require('../../assets/images/event/fortune/btn.png');
+const wheel: string = require('../../assets/images/event/fortune/wheel.png');
+const pointer: string = require('../../assets/images/event/fortune/pointer.png');
+const ticket: string = require('../../assets/images/event/fortune/ticket.png');
+const jackpotBg: string = require('../../assets/images/event/fortune/jackpot-bg.png');
+const doneChapterButton: string = require('../../assets/images/modal/done-chapter-button.png');
 
 const JACKPOT: number = 22;
 const DIAMOND: number = 500;
@@ -31,7 +31,6 @@ export default class Fortune extends Phaser.Scene {
 
   public state: Istate;
   public hints: Phaser.GameObjects.Group;
-  public endTimeText: Phaser.GameObjects.Text;
   public btn: Phaser.GameObjects.Sprite;
   public btnText1: Phaser.GameObjects.Text;
   public btnText2: Phaser.GameObjects.Text;
@@ -95,11 +94,7 @@ export default class Fortune extends Phaser.Scene {
   }
 
   public update(): void {
-    if (this.state.progress.event.endTime > 0) {
-      this.updateElements();
-    } else {
-      this.scene.stop();
-    }
+    this.updateElements();
   }
 
   private createElements(): void {
@@ -107,14 +102,9 @@ export default class Fortune extends Phaser.Scene {
     const modalSprite: Phaser.GameObjects.Sprite = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'fortune-modal').setInteractive();
     const modalGeom: Phaser.Geom.Rectangle = modalSprite.getBounds();
 
-    this.add.text(modalGeom.centerX + 20, modalGeom.top + 30, this.state.lang.fortuneWheel, {
+    this.add.text(modalGeom.centerX + 20, modalGeom.top + 50, this.state.lang.fortuneWheel, {
       font: '35px Shadow',
       color: '#edd9fd'
-    }).setOrigin(0.5, 0);
-
-    this.endTimeText = this.add.text(modalGeom.centerX + 20, modalGeom.top + 80, `${this.state.lang.fairClose} ${shortTime(this.state.progress.event.endTime, this.state.lang)}`, {
-      font: '24px Shadow',
-      color: '#66222c'
     }).setOrigin(0.5, 0);
 
     this.btn = this.add.sprite(modalGeom.centerX + 140, modalGeom.centerY - 35, 'fortune-btn');
@@ -196,7 +186,7 @@ export default class Fortune extends Phaser.Scene {
         align: 'left'
       }).setOrigin(0, 0.5);
       
-      startY += 40
+      startY += 40;
 
       this.listElements.push({
         name,
@@ -299,11 +289,6 @@ export default class Fortune extends Phaser.Scene {
         this.destoryListElemets();
         this.creaeteList();
       }
-    }
-
-    const text: string = `${this.state.lang.fairClose} ${shortTime(this.state.progress.event.endTime, this.state.lang)}`;
-    if (this.endTimeText.text !== text) {
-      this.endTimeText.setText(text);
     }
   }
 

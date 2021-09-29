@@ -329,12 +329,6 @@ function interval(): void {
         }
       }
     }
-
-    if (this.state.progress.event.type === 2) {
-      if (this.state.progress.event.endTime > 0) {
-        this.state.progress.event.endTime--;
-      }
-    }
     
     if (this.state.progress.event.endTime <= 0 && 
       !this.state.userUnicorn?.takenAward && 
@@ -375,9 +369,7 @@ function interval(): void {
       this.state.progress.event.startTime <= 0 && 
       this.state.progress.event.endTime > 0 &&
       this.state.progress.event.open) {
-      if ((!this.state.user.fortuneTutorial &&
-        this.state.progress.event.type === 2 ||
-        this.state.userUnicorn?.tutorial === 0 &&
+      if ((this.state.userUnicorn?.tutorial === 0 &&
         this.state.progress.event.type === 1) &&
         !arrowOnMap && !this.scene.isActive('Modal') &&
         !this.scene.isActive('Tutorial') &&
@@ -385,9 +377,7 @@ function interval(): void {
         arrowOnMap = Arrow.generate(this.game.scene.keys[`${this.state.farm}Bars`], 17);
       }
   
-      if ((!this.state.user.fortuneTutorial &&
-        this.state.progress.event.type === 2 ||
-        this.state.userUnicorn?.tutorial === 0 &&
+      if ((this.state.userUnicorn?.tutorial === 0 &&
         this.state.progress.event.type === 1) &&
         !this.scene.isActive('Tutorial') &&
         this.scene.isActive('Profile') &&
@@ -396,7 +386,7 @@ function interval(): void {
       }
     }
 
-    if (this.state.clanTutor && 
+    if ((this.state.clanTutor || this.state.fortuneTutor) && 
       !arrowOnMap && 
       !this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
@@ -406,6 +396,10 @@ function interval(): void {
 
     if (this.state.clanTutor && this.scene.isActive('Profile') && !this.scene.isActive('Tutorial')) {
       this.showTutorial('clan');
+    }
+
+    if (this.state.fortuneTutor && this.scene.isActive('Profile') && !this.scene.isActive('Tutorial')) {
+      this.showTutorial('fortune');
     }
     
     this.intervalPorgressCollectorTime();
