@@ -15,7 +15,7 @@ export default class DiamondsWindow {
 
   private init(): void {
     this.scene.state.amplitude.logAmplitudeEvent('bank_page_viewed', {});
-    this.rows = Math.ceil(this.scene.state.packages.length / 2);
+    this.rows = 2;
     this.setScrolling();
   }
   
@@ -26,8 +26,9 @@ export default class DiamondsWindow {
   }
 
   private createAllPackages(): void {
-    for (let i: number = 0; i < this.rows; i++) {
-      let y: number = i * 270 + 40;
+    const startIndex = this.checkSale('PACKAGE_PRICE') ? 2 : this.checkSale('DIAMOND_COUNT') ? 4 : 0;
+    for (let i: number = startIndex; i < this.rows + startIndex; i++) {
+      let y: number = (i - startIndex) * 270 + 40;
       if (this.checkStarterpack()) y += 238;
       
       const left: Ipackage = this.scene.state.packages[i * 2];
@@ -44,20 +45,22 @@ export default class DiamondsWindow {
   }
 
   private createPack(packData: Ipackage, position: Iposition): void {
-    const pack: Phaser.GameObjects.Sprite = this.scene.add.sprite(position.x, position.y + this.scene.height, 'bank-package').setOrigin(0, 0);
+    const basicId = this.checkSale('PACKAGE_PRICE') ? packData.id - 4 : this.checkSale('DIAMOND_COUNT') ? packData.id - 8 : packData.id;
+    const basicPackage: Ipackage = this.scene.state.packages.find(el => el.id === basicId);
+    const pack: Phaser.GameObjects.Sprite = this.scene.add.sprite(position.x, position.y + this.scene.height, 'bank-package').setOrigin(0);
     this.scene.click(pack, (): void => { this.packHandler(packData); });
 
-    if (!this.checkSale()) {
+    if (!this.checkSale('DIAMOND_COUNT') || this.checkSale('PACKAGE_PRICE')) {
       this.scene.add.text(position.x + 110, position.y + 145 + this.scene.height, String(packData.diamonds + packData.bonus), {
         font: '40px Shadow',
         color: '#FFFFFF'
       }).setOrigin(0.5);
     } else {
-      const text1 = this.scene.add.text(position.x + 110, position.y + 145 + this.scene.height, String(packData.diamonds + packData.bonus), {
+      const text1 = this.scene.add.text(position.x + 110, position.y + 145 + this.scene.height, String(basicPackage.diamonds + basicPackage.bonus), {
         font: '35px Shadow',
         color: '#ddd',
       }).setOrigin(0, 0.5).setAlpha(0.9);
-      const text2 = this.scene.add.text(position.x + 110, position.y + 145 + this.scene.height, String(2 * (packData.diamonds + packData.bonus)), {
+      const text2 = this.scene.add.text(position.x + 110, position.y + 145 + this.scene.height, String(packData.diamonds + packData.bonus), {
         font: '40px Shadow',
         color: '#FFFFFF',
       }).setOrigin(0, 0.5);
@@ -68,12 +71,45 @@ export default class DiamondsWindow {
       this.scene.add.tileSprite(text1.x + text1.displayWidth / 2, text1.y, text1.displayWidth + 7, 5, 'white-pixel').setTint(0xFF4A2C).setAngle(5).setOrigin(0.5);
     }
     
-    const text: string = this.scene.state.platform === 'ok' ? packData.price + ' ' + 'ОК' : 
-    this.scene.state.platform === 'vk' ? packData.voices + ' ' + this.scene.state.lang.voices : 
-    packData.price + ' ' + this.scene.state.lang.ruble;
 
-    const btn = this.scene.shopButton(position.x + 110, position.y + 223 + this.scene.height, text);
-    this.scene.clickShopBtn(btn, (): void => { this.packHandler(packData); });
+    if (!this.checkSale('PACKAGE_PRICE')) {
+      const text: string = this.scene.state.platform === 'ok' ? `${packData.price} ОК` : 
+      this.scene.state.platform === 'vk' ? `${packData.voices} ${this.scene.state.lang.voices}` : 
+      `${packData.price} ${this.scene.state.lang.ruble}`;
+
+      const btn = this.scene.shopButton(position.x + 110, position.y + 223 + this.scene.height, text);
+      this.scene.clickShopBtn(btn, (): void => { this.packHandler(packData); });
+    } else {
+      const str1: string = this.scene.state.platform === 'ok' ? `${basicPackage.price}` : 
+      this.scene.state.platform === 'vk' ? `${basicPackage.voices}` : 
+      `${basicPackage.price}`;
+
+      const str2: string = this.scene.state.platform === 'ok' ? `${packData.price} ОК` : 
+      this.scene.state.platform === 'vk' ? `${packData.voices} ${this.scene.state.lang.voices}` : 
+      `${packData.price} ${this.scene.state.lang.ruble}`;
+
+      const btn = this.scene.add.sprite(position.x + 110, position.y + 223 + this.scene.height, 'shop-btn');
+      const title = this.scene.add.text(0, btn.y - 5, str1, {
+        font: '28px Shadow',
+        color: '#eee'
+      }).setOrigin(0, 0.5);
+
+      const text1 = this.scene.add.text(0, btn.y - 5, str2, {
+        font: '28px Shadow',
+        color: '#FFFFFF'
+      }).setOrigin(0, 0.5);
+
+      const width = (title.displayWidth + text1.displayWidth + 5) / 2;
+      title.setX(btn.x - width);
+      text1.setX(title.getBounds().right + 5);
+
+      const img1 = this.scene.add.tileSprite(title.x + title.displayWidth / 2, title.y, title.displayWidth + 7, 4, 'white-pixel')
+        .setTint(0xFF4A2C)
+        .setAngle(5)
+        .setOrigin(0.5);
+
+      this.scene.clickModalBtn({btn, title: title, text1, img1}, (): void => { this.packHandler(packData); });
+    }
 
     if (packData.stock > 0) {
       const x: number = position.x;
@@ -105,7 +141,7 @@ export default class DiamondsWindow {
     if (packData.bonus > 0) {
       const x: number = position.x + 110;
       const y: number = position.y + 180 + this.scene.height;
-      const text: string = `${this.scene.state.lang.benefit} +${this.checkSale() ? packData.bonus * 2 : packData.bonus}`;
+      const text: string = `${this.scene.state.lang.benefit} +${this.checkSale('DIAMOND_COUNT') && !this.checkSale('PACKAGE_PRICE') ? packData.bonus : basicPackage.bonus}`;
 
       this.scene.add.text(x, y, text, {
         font: '20px Shadow',
@@ -114,8 +150,7 @@ export default class DiamondsWindow {
     }
   }
 
-  private checkSale(): boolean {
-    const saleName: string = 'DIAMOND_COUNT';
+  private checkSale(saleName: string): boolean {
     return this.scene.state.sales.some(el => el.type === saleName && el.startTime <= 0 && el.endTime > 0); 
   }
 
