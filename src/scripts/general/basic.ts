@@ -416,6 +416,12 @@ function exchange(ad: boolean = false): void {
     buyAnimal = (): void => this.buyCow(this.state.convertor.breed);
 
   }
+
+  const checkActiveSale = (): boolean => {
+    const saleName: string = `${this.state.farm.toUpperCase()}_MONEY`; 
+    return this.state.sales.some(el => el.type === saleName && el.startTime <= 0 && el.endTime > 0); 
+  }
+
   if (this.state.convertor.diamonds > this.state.user.diamonds) {
     const countResources = this.state.convertor.diamonds - this.state.user.diamonds;
     
@@ -432,7 +438,8 @@ function exchange(ad: boolean = false): void {
     }, callbackScope: this, loop: false });
   } else {
     this.state.user.diamonds -= this.state.convertor.diamonds;
-    user.money += this.convertDiamonds(this.state.convertor.diamonds);
+    if (checkActiveSale())user.money += this.convertDiamonds(2 * this.state.convertor.diamonds);
+    else user.money += this.convertDiamonds(this.state.convertor.diamonds);
     this.game.scene.keys[this.state.farm].tryClanTask(10, 0, this.state.convertor.diamonds);
     if (this.scene.isActive('ClanFarm')) {
       MoneyAnimation.create(this.game.scene.keys['ClanFarm'], `${this.state.farm.toLowerCase()}Coin`, {
