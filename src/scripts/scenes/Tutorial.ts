@@ -478,6 +478,7 @@ class Tutorial extends Phaser.Scene {
           this.scene.launch('Modal', this.state);
         };
       } else if (this.state.tutorial.additional === 'fortune') {
+        this.scene.launch('Profile', this.state);
         this.add.sprite(720, 775, 'profile-event-island').setOrigin(1, 0.5);
         Firework.create(this, { x: 580, y: 775 }, 5);
         const fortuneSprite: Phaser.GameObjects.Sprite = this.add.sprite(720, 775, 'profile-fortune').setOrigin(1, 0.5).setAlpha(0);
