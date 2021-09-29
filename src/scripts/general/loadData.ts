@@ -541,7 +541,13 @@ export default function loadData(response: AxiosResponse): void {
       if (!error) this.state.clanEventTakenAward = userAward;
     });
   }
+  
   this.state.sales = response.data.sales || [];
+
+  if (this.state.platform === 'ya' || this.state.platform === 'android') {
+    const saleName: string = 'DIAMOND_COUNT';
+    this.state.sales = this.state.sales.filter((el: Isale) => el.type !== saleName);
+  }
 
   this.userReady = true;
 }
