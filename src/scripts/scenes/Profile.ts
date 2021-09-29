@@ -15,12 +15,15 @@ const profileLockIcon: string = require('./../../assets/images/icons/profile-loc
 const eventIsland: string = require('./../../assets/images/profile/event-island.png');
 const btn: string = require('./../../assets/images/profile/btn.png');
 const pointer: string = require('./../../assets/images/profile/pointer.png');
-const fortune: string = require('./../../assets/images/profile/event-fortune.png');
 const socialBtnVk: string = require('./../../assets/images/profile/social-btn-vk.png');
 const socialBtnOk: string = require('./../../assets/images/profile/social-btn-ok.png');
 const closeWindowBtn: string = require('../../assets/images/modal/close-window-btn.png');
 const clanFlagpole: string = require('../../assets/images/clan/flagpole.png');
 const clanBuilding: string = require('../../assets/images/clan/clan-building.png');
+const fortuneBg: string = require('./../../assets/images/profile/fortune-bg.png');
+const fortuneWheel: string = require('./../../assets/images/profile/fortune-wheel.png');
+const fortunePointer: string = require('./../../assets/images/profile/fortune-pointer.png');
+
 
 const progressTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
   fontFamily: 'Shadow',
@@ -56,13 +59,13 @@ class Profile extends Phaser.Scene {
   private socialTaskBtn: Phaser.GameObjects.Sprite;
   private socialTaskNotificator: Notificator;
   private socialTasks: IsociaTasks;
-  private currentEndTime: string = ' ';
   private currentDiamonds: number;
   private animDiamondsCount: number = 0;
   private shopNotificator: Notificator;
   private clanNotificator: Notificator;
   private personalMessageNotificator: Notificator;
   private clanFlagPole: ClanFlagPole;
+  private fortunePool: Phaser.GameObjects.Text;
   public click = click.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
   public getEventRaiting = getEventRaiting.bind(this); 
@@ -94,9 +97,11 @@ class Profile extends Phaser.Scene {
     this.load.image('profile-cow-farm-lock', cowFarmLock);
     this.load.image('profile-lock-icon', profileLockIcon);
     this.load.image('profile-event-island', eventIsland);
+    this.load.image('profile-fortune-bg', fortuneBg);
+    this.load.image('profile-fortune-wheel', fortuneWheel);
+    this.load.image('profile-fortune-pointer', fortunePointer);
     this.load.image('profile-btn', btn);
     this.load.image('profile-pointer', pointer);
-    this.load.image('profile-fortune', fortune);
     this.load.image('profile-social-btn-vk', socialBtnVk);
     this.load.image('profile-social-btn-ok', socialBtnOk);
     this.load.image('close-window-btn', closeWindowBtn);
@@ -219,7 +224,7 @@ class Profile extends Phaser.Scene {
   }
 
   private createSheepFarm(): void {
-    const farmPosition: Iposition = { x: 150, y: 750 };
+    const farmPosition: Iposition = { x: 150, y: 767 };
     const width: number = 300;
     const height: number = 240;
     
@@ -442,28 +447,43 @@ class Profile extends Phaser.Scene {
       prize: 0,
       jackpot: false,
     }
-    this.state.socket.io.emit('fortune-send', data);
-    const zoneSettings = {
-      x: 570,
-      y: 580,
-      width: 170,
+    const pos = {
+      x: 560,
+      y: 560,
+      width: 200,
       height: 170,
     };
+
+    const bg = this.add.sprite(pos.x, pos.y, 'profile-fortune-bg');
+    const wheel = this.add.sprite(pos.x + 31, pos.y - 10, 'profile-fortune-wheel');
+    const pointer = this.add.sprite(pos.x + 32, pos.y - 10, 'profile-fortune-pointer');
+
+    if (this.state.userSheep.part < OPENING_LEVEL || !this.checkAuthUser()) {
+      bg.setTint(0xbbbbbb);
+      wheel.setTint(0xbbbbbb).setAlpha(0.80);
+      pointer.setTint(0xbbbbbb).setAlpha(0.80);
+    } else {
+      this.state.socket.io.emit('fortune-send', data);
+      this.fortunePool = this.add.text(pos.x, pos.y, '123', {
+        
+      });
+    }
+
     const fortuneZone: Phaser.GameObjects.Zone = this.add.zone(
-      zoneSettings.x, 
-      zoneSettings.y, 
-      zoneSettings.width, 
-      zoneSettings.height,
+      pos.x, 
+      pos.y, 
+      pos.width, 
+      pos.height,
     ).setDropZone(undefined, () => {});
 
-    this.add.graphics()
-      .lineStyle(5, 0x00FFFF)
-      .strokeRect(
-        fortuneZone.x - fortuneZone.input.hitArea.width / 2,
-        fortuneZone.y - fortuneZone.input.hitArea.height / 2,
-        fortuneZone.width,
-        fortuneZone.height
-      );  
+    // this.add.graphics()
+    //   .lineStyle(5, 0x00FFFF)
+    //   .strokeRect(
+    //     fortuneZone.x - fortuneZone.input.hitArea.width / 2,
+    //     fortuneZone.y - fortuneZone.input.hitArea.height / 2,
+    //     fortuneZone.width,
+    //     fortuneZone.height
+    //   );  
 
     this.click(fortuneZone, (): void => {
       if (this.state.userSheep.part >= OPENING_LEVEL && this.checkAuthUser()) {
@@ -630,8 +650,8 @@ class Profile extends Phaser.Scene {
 
   private createClan(): void {
     const pos: Iposition = {
-      x: 610,
-      y: 400
+      x: 600,
+      y: 360
     };
     const size: Isize = {
       width: 150,
@@ -889,8 +909,8 @@ class Profile extends Phaser.Scene {
   private updateClanFlagPole(): void {
     if (this.state.clan && !this.clanFlagPole) {
       const pos: Iposition = {
-        x: 610,
-        y: 400
+        x: 605,
+        y: 375
       };
       this.clanFlagPole = new ClanFlagPole(this, { x: pos.x, y: pos.y - 100 }).setDepth(2);
     }
