@@ -48,7 +48,7 @@ export default class TerritoryExchangeWindow {
       this.scene.clickModalBtn(button2, (): void => { this.exchangeTerritory(3) });
 
       const button3 = this.scene.bigButton('red', 'center', 150, this.scene.state.lang.cancel);
-      this.scene.clickModalBtn(button3, (): void => { this.exchangeTerritory() });
+      this.scene.clickModalBtn(button3, (): void => { this.close() });
     } else if (this.scene.state.territory.territoryType === 2) {
       const button1 = this.scene.bigButton('blue', 'left', -10, this.scene.state.lang.exchangeWater, exchange);
       this.scene.clickModalBtn(button1, (): void => { this.exchangeTerritory(3) });
@@ -74,8 +74,6 @@ export default class TerritoryExchangeWindow {
   
 
   private exchangeTerritory(territoryType?: number): void {
-
-
     if (territoryType) this.scene.game.scene.keys[this.scene.state.farm].confirmExchangeTerritory(territoryType);
     else {
       const modal: Imodal = {
