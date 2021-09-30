@@ -49,7 +49,6 @@ const userData: Iuser = {
   takenSocialAward: false,
   messages: [],
   personalMessages: [],
-  fortuneTutorial: false,
 }
 
 const basicClan: Iclan = {
