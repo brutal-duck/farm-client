@@ -281,6 +281,8 @@ let eventTutorMerging: any = require("./../../../../assets/images/event/tutor-me
 
 let eventTerritoryBtn: any = require("./../../../../assets/images/event/territories/buy-button.png");
 let stockIcon: any = require("./../../../../assets/images/icons/stock.png");
+const textSale: string = require("./../../../../assets/images/modal/text-sale.png");
+const saleIcon: string = require('../../../../assets/images/sale-icon.png');
 
 const notificationBg: string = require('../../../../assets/images/icons/notificator.png');
 class EventPreload extends Phaser.Scene {
@@ -592,6 +594,8 @@ class EventPreload extends Phaser.Scene {
     this.load.image('firework3', firework3);
     this.load.image('fireworkBg', fireworkBg);
     this.load.image('notification-bg', notificationBg);
+    this.load.image('text-sale', textSale);
+    this.load.image('icon-sale', saleIcon);
 
   }
 

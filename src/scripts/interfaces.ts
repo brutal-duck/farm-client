@@ -23,8 +23,9 @@ interface Imerging {
   position?: string;
 }
 interface IshopButtons {
-  text: Phaser.GameObjects.Text;
-  img: Phaser.GameObjects.Image;
+  text?: Phaser.GameObjects.Text;
+  img?: Phaser.GameObjects.Image;
+  btn?: any;
   breed: number;
 }
 interface IsheepUserAutoSave {

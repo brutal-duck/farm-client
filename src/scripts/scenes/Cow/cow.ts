@@ -208,13 +208,17 @@ function cancelMerging(territory: any, cow1: CowSprite, cow2: CowSprite) {
 
 // покупка коровы
 function buyCow(breed: number, shop: boolean = false): boolean {
+  
+  const checkSale = (saleName: string): boolean => {
+    return this.state.sales.some((el: Isale) => el.type === saleName && el.startTime <= 0 && el.endTime > 0); 
+  }
 
   let success: boolean = false;
 
   if (this.animalGroup.children.entries.length < 50) {
 
     let cowPrice = this.cowPrice(breed);
-
+    if (checkSale(`${this.state.farm.toUpperCase()}_PRICE`)) cowPrice.price = Math.round(cowPrice.price / 2);
     if (this.state.userCow.money >= cowPrice.price) {
       
       success = true;

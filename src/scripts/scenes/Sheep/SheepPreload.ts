@@ -326,6 +326,7 @@ const fireworkBg: string = require("./../../../assets/images/animations/firework
 const loadingSpinner: string = require('./../../../assets/images/animations/loading-spinner.png');
 const farmer: string = require("./../../../assets/images/farmer.png");
 const whitePixel: string = require("./../../../assets/images/white-pixel.jpg");
+const textSale: string = require("./../../../assets/images/modal/text-sale.png");
 const scrollArrow: string = require("./../../../assets/images/scroll-arrow.png");
 const improveCollector: string = require("./../../../assets/images/modal/improve-collector.png");
 const tasksUncomplete: string = require("./../../../assets/images/modal/tasks/uncomplete.png");
@@ -334,8 +335,7 @@ const notificationBg: string = require('./../../../assets/images/icons/notificat
 const roundedBarSegment: string = require("./../../../assets/images/rounded-bar-segment.png");
 const circleOutline: string = require("./../../../assets/images/circle-outline.png");
 const cooldownPlate: string = require("./../../../assets/images/cooldown-plate.png");
-
-
+const saleIcon: string = require('../../../assets/images/sale-icon.png');
 
 class SheepPreload extends Phaser.Scene {
 
@@ -708,6 +708,8 @@ class SheepPreload extends Phaser.Scene {
     this.load.image('rounded-segment', roundedBarSegment);
     this.load.image('circle-outline', circleOutline);
     this.load.image('cooldown-plate', cooldownPlate);
+    this.load.image('text-sale', textSale);
+    this.load.image('icon-sale', saleIcon);
   }
   
   

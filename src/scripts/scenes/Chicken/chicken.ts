@@ -378,11 +378,16 @@ function cancelMerging(territory: any, chicken1: any, chicken2: any) {
 // покупка курицы
 function buyChicken(breed: number, shop: boolean = false): boolean {
 
+  const checkSale = (saleName: string): boolean => {
+    return this.state.sales.some((el: Isale) => el.type === saleName && el.startTime <= 0 && el.endTime > 0); 
+  }
+
   let success: boolean = false;
 
   if (this.chicken.children.entries.length < 50) {
 
     let chickenPrice = this.chickenPrice(breed);
+    if (checkSale(`${this.state.farm.toUpperCase()}_PRICE`)) chickenPrice.price = Math.round(chickenPrice.price / 2);
 
     if (this.state.userChicken.money >= chickenPrice.price) {
       
@@ -514,6 +519,7 @@ function collectEgg(egg: Egg, manualСollect: boolean = false): void {
         repository.money += price;
         egg.flyToPoint(path);
       }
+
     }
   } else {
     const position: Iposition = {

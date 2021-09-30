@@ -1,5 +1,6 @@
 import { shortNum } from "../../../general/basic";
 import Shop from "../../../scenes/Modal/Shop/Main";
+import ShopButton from './../../Buttons/ShopButton';
 
 export default class AnimalWindow {
   private scene: Shop;
@@ -73,26 +74,29 @@ export default class AnimalWindow {
 
       // кнопка покупки
       let heightBtn: number = 0;
-      let btn: any = false;
+      let btn: ShopButton;
       
-      if (animal.breed <= this.scene.state[`user${this.animal}`].fair - this.scene.state[`${this.animal.toLowerCase()}Settings`][`buyBetterBreed${this.animal}`] || animal.breed === 1) {
-
+      const fairLevel: number = this.scene.state[`user${this.animal}`].fair;
+      const buyBetterBreed: number = this.scene.state[`${this.animal.toLowerCase()}Settings`][`buyBetterBreed${this.animal}`]
+      if (animal.breed <= fairLevel - buyBetterBreed || animal.breed === 1) {
         const price: string = String(shortNum(this.scene[`${this.animal.toLowerCase()}Price`](animal.breed).price));
-        
-        btn = this.scene.shopButton(330, center, price, `${this.animal.toLowerCase()}Coin`);
-        this.scene.clickShopBtn(btn, (): void => {
+        const halfPrice: string = String(shortNum(Math.round(this.scene[`${this.animal.toLowerCase()}Price`](animal.breed).price / 2)))
+        btn = new ShopButton(this.scene, { x: 330, y: center }, (): void => {
           const result: boolean = this.scene.game.scene.keys[this.scene.state.farm][`buy${this.animal}`](animal.breed, true);
           if (result) this.updatePrices();
+        }, { 
+          img: {
+            texture: `${this.animal.toLowerCase()}Coin`,
+            scale: 0.15,
+          }, 
+          text1: price,
+          text2: this.checkSale(`${this.scene.state.farm.toUpperCase()}_PRICE`) ? halfPrice : null,
         });
-
+        heightBtn = btn.height;
         this.buttons.push({
-          text: btn.title,
+          btn: btn,
           breed: animal.breed,
-          img: btn.img
         });
-
-        heightBtn = btn.btn.height;
-
       }
       
       let height: number = heightBtn + boundsName.height + resourceBounds.height + 20;
@@ -101,19 +105,23 @@ export default class AnimalWindow {
       resourcePrice.y = resource.y;
 
       if (btn) {
-        btn.btn.y += height / 2 - (heightBtn / 2);
-        btn.title.y += height / 2 - (heightBtn / 2);
-        btn.img.y += height / 2 - (heightBtn / 2);
+        btn.y += height / 2 - (heightBtn / 2);
       }
 
     }
   }
+  
+  private checkSale(saleName: string): boolean {
+    return this.scene.state.sales.some(el => el.type === saleName && el.startTime <= 0 && el.endTime > 0); 
+  }
 
 
   private updatePrices(): void {
-    for (let i in this.buttons) {
-      this.buttons[i].text.setText(String(shortNum(this.scene[`${this.animal.toLowerCase()}Price`](this.buttons[i].breed).price)));
-      this.buttons[i].img.x = this.buttons[i].text.getBounds().left - 25;
+    for (const btn of this.buttons) {
+      const text1 = String(shortNum(this.scene[`${this.animal.toLowerCase()}Price`](btn.breed).price));
+      const text2 = String(shortNum(Math.round(this.scene[`${this.animal.toLowerCase()}Price`](btn.breed).price / 2)));
+      const shopButton: ShopButton = btn.btn;
+      shopButton.setText(text1, this.checkSale(`${this.scene.state.farm.toUpperCase()}_PRICE`) ? text2 : null);
     }
   }
 

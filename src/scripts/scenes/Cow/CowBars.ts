@@ -62,6 +62,7 @@ class CowBars extends Phaser.Scene {
   public starterpackIcon: Phaser.GameObjects.Sprite;
   public hints: Phaser.GameObjects.Group;
   public taskZone: Phaser.GameObjects.Zone;
+  public saleBuyIcon: Phaser.GameObjects.Sprite;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -100,6 +101,8 @@ class CowBars extends Phaser.Scene {
     
     let cowIcon: string = 'cow-buy-icon-' + this.game.scene.keys[this.state.farm].maxBreedForBuy();
     this.cowBuy = this.add.image(82, this.height - 92, cowIcon);
+    this.saleBuyIcon = this.add.sprite(this.cowBuy.getBounds().left + 30, this.cowBuy.getBounds().top + 30, 'icon-sale').setOrigin(0.5).setAngle(-18);
+
     let collector: Phaser.GameObjects.Image = this.add.image(230, this.height - 90, 'milk-collector');
     let shop: Phaser.GameObjects.Image = this.add.image(370, this.height - 90, 'shop');
     let map: Phaser.GameObjects.Image = this.add.image(510, this.height - 90, 'map-icon');
@@ -229,8 +232,8 @@ class CowBars extends Phaser.Scene {
     // цена быстрой покупки
     let breed: number = this.game.scene.keys[this.state.farm].maxBreedForBuy();
     let price: string = String(shortNum(this.game.scene.keys[this.state.farm].cowPrice(breed).price));
-
-    this.cowPrice = this.add.text(82, this.height - 43, price, {
+    let halfPrice: string = String(shortNum(Math.round(this.game.scene.keys[this.state.farm].cowPrice(breed).price / 2)));
+    this.cowPrice = this.add.text(82, this.height - 43, this.checkSale(`${this.state.farm.toUpperCase()}_PRICE`) ? halfPrice : price, {
       font: '28px Bip',
       color: '#925C28',
       align: 'center'
@@ -345,23 +348,30 @@ class CowBars extends Phaser.Scene {
     this.updateNotificationShop();
 
     if (this.starterpackIcon && this.state.user.starterpack) this.starterpackIcon?.destroy();
-
+    this.updateSale();
   }
 
   // обновление цены покупки коров
   public updateCowPrice(): void {
-    
     let breed: number = this.game.scene.keys['Cow'].maxBreedForBuy();
     let price: string = String(shortNum(this.game.scene.keys['Cow'].cowPrice(breed).price));
-    this.cowPrice.setText(price);
+    let halfPrice: string = String(shortNum(Math.round(this.game.scene.keys['Cow'].cowPrice(breed).price / 2)));
+    this.cowPrice.setText(this.checkSale(`${this.state.farm.toUpperCase()}_PRICE`) ? halfPrice : price);
     let bounds = this.cowPrice.getBounds();
     this.cowPriceBubble.destroy();
     this.cowPriceBubble = this.add.graphics({ x: bounds.left - 15, y: bounds.top });
     this.cowPriceBubble.fillStyle(0xffffff, 1);
     this.cowPriceBubble.fillRoundedRect(0, 0, bounds.width + 30, bounds.height, 8);
-
   }
 
+  private updateSale(): void {
+    const visibility = this.checkSale(`${this.state.farm.toUpperCase()}_PRICE`) && this.cowBuy.visible;
+    if (this.saleBuyIcon.visible !== visibility) this.saleBuyIcon.setVisible(visibility);
+  }
+
+  private checkSale(saleName: string): boolean {
+    return this.state.sales.some(el => el.type === saleName && el.startTime <= 0 && el.endTime > 0); 
+  }
 
   public currentPartProgress(): void {
     const tasks: Itasks[] = this.game.scene.keys[this.state?.farm]?.partTasks();
@@ -438,6 +448,7 @@ class CowBars extends Phaser.Scene {
 
     let breed: number = this.game.scene.keys[this.state.farm].maxBreedForBuy();
     let price: number = this.game.scene.keys[this.state.farm].cowPrice(breed).price
+    if (this.checkSale(`${this.state.farm.toUpperCase()}_PRICE`)) price = Math.round(price / 2);
 
     if (price > this.state.userCow.money && this.cowBuy.tintBottomLeft === 0xFFFFFF) {
       this.cowBuy.setTint(0x777777);
