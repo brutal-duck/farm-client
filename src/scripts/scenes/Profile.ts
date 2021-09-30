@@ -789,7 +789,7 @@ class Profile extends Phaser.Scene {
       this.state.progress.chicken.part >= 1 || 
       this.state.progress.cow.part >= 1) && 
       this.state.progress.event.endTime > 0 &&
-      this.eventZone.active
+      this.eventZone?.active
     ) {
       this.eventIsland?.setVisible(true);
       this.eventZone?.destroy();
@@ -822,7 +822,7 @@ class Profile extends Phaser.Scene {
       this.state.progress.chicken.part < 1 && 
       this.state.progress.cow.part < 1) || 
       !this.state.progress.event.open) && 
-      this.eventZone.active 
+      this.eventZone?.active 
     ) {
       this.eventIsland?.setVisible(false);
       this.eventStartText?.setVisible(false);
