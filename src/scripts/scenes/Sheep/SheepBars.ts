@@ -451,7 +451,7 @@ class SheepBars extends Phaser.Scene {
   }
 
   private checkSale(saleName: string): boolean {
-    return this.state.sales.some(el => el.type === saleName && el.startTime <= 0 && el.endTime > 0); 
+    return this.state.sales.some(el => el.type === saleName && el.startTime <= 0 && el.endTime > 0) && this.state.userSheep.tutorial >= 100; 
   }
 
   // актуальный прогресс главы

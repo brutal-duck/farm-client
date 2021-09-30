@@ -423,7 +423,7 @@ function cancelMerging(territory: any, sheep1: any, sheep2: any) {
 // покупка овцы
 function buySheep(breed: number, shop: boolean = false): boolean {
   const checkSale = (saleName: string): boolean => {
-    return this.state.sales.some((el: Isale) => el.type === saleName && el.startTime <= 0 && el.endTime > 0); 
+    return this.state.sales.some((el: Isale) => el.type === saleName && el.startTime <= 0 && el.endTime > 0) && this.state.userSheep.tutorial >= 100; 
   }
 
   let success: boolean = false;
