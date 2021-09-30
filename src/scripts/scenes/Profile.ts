@@ -65,7 +65,7 @@ class Profile extends Phaser.Scene {
   private clanNotificator: Notificator;
   private personalMessageNotificator: Notificator;
   private clanFlagPole: ClanFlagPole;
-  private fortunePool: Phaser.GameObjects.Text;
+  private fortunePull: Phaser.GameObjects.Text;
   public click = click.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
   public getEventRaiting = getEventRaiting.bind(this); 
@@ -153,6 +153,7 @@ class Profile extends Phaser.Scene {
     this.updatePersonalMessagesNotification();
     this.updateClanNotification();
     this.updateClanFlagPole();
+    this.updateFortunePull();
   }
 
   private createElements(): void {
@@ -439,6 +440,18 @@ class Profile extends Phaser.Scene {
     });
   }
 
+  private createWheelAnim(wheel: Phaser.GameObjects.Sprite): void {
+    wheel.setRotation(Phaser.Math.Between(0, 100) / 100 * Math.PI);
+    this.tweens.add({
+      targets: wheel,
+      duration: 3500,
+      rotation: { from: wheel.rotation, to: wheel.rotation - 6 * Math.PI },
+      ease: 'Power3',
+      repeat: -1,
+      repeatDelay: 1000,
+    });
+  }
+
   private createFortuneWheel(): void {
     const OPENING_LEVEL = 8;
     const data = {
@@ -460,13 +473,12 @@ class Profile extends Phaser.Scene {
 
     if (this.state.userSheep.part < OPENING_LEVEL || !this.checkAuthUser()) {
       bg.setTint(0xbbbbbb);
-      wheel.setTint(0xbbbbbb).setAlpha(0.80);
-      pointer.setTint(0xbbbbbb).setAlpha(0.80);
+      wheel.setTint(0xbbbbbb).setAlpha(0.8);
+      pointer.setTint(0xbbbbbb).setAlpha(0.8);
     } else {
       this.state.socket.io.emit('fortune-send', data);
-      this.fortunePool = this.add.text(pos.x, pos.y, '123', {
-        
-      });
+      this.fortunePull = this.add.text(pos.x - 52, pos.y + 48, '', progressTextStyle).setOrigin(0.5);
+      this.createWheelAnim(wheel);
     }
 
     const fortuneZone: Phaser.GameObjects.Zone = this.add.zone(
@@ -913,6 +925,14 @@ class Profile extends Phaser.Scene {
         y: 375
       };
       this.clanFlagPole = new ClanFlagPole(this, { x: pos.x, y: pos.y - 100 }).setDepth(2);
+    }
+  }
+
+  private updateFortunePull(): void {
+    if (this.state.fortuneData && this.fortunePull) {
+      if (String(this.state.fortuneData.pull) !== this.fortunePull.text) {
+        this.fortunePull.setText(String(this.state.fortuneData.pull));
+      }
     }
   }
 }
