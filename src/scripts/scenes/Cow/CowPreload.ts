@@ -229,8 +229,8 @@ const roundedBarSegment: string = require("./../../../assets/images/rounded-bar-
 const circleOutline: string = require("./../../../assets/images/circle-outline.png");
 const cooldownPlate: string = require("./../../../assets/images/cooldown-plate.png");
 const tasksBarNs: string = require("./../../../assets/images/modal/tasks/bar-ns.png");
-
-
+const textSale: string = require("./../../../assets/images/modal/text-sale.png");
+const saleIcon: string = require('../../../assets/images/sale-icon.png');
 
 class CowPreload extends Phaser.Scene {
 
@@ -498,6 +498,8 @@ class CowPreload extends Phaser.Scene {
     this.load.image('circle-outline', circleOutline);
     this.load.image('cooldown-plate', cooldownPlate);
     this.load.image('tasks-bar-ns', tasksBarNs);
+    this.load.image('text-sale', textSale);
+    this.load.image('icon-sale', saleIcon);
 
   }
 

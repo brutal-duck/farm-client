@@ -422,11 +422,16 @@ function cancelMerging(territory: any, sheep1: any, sheep2: any) {
 
 // покупка овцы
 function buySheep(breed: number, shop: boolean = false): boolean {
+  const checkSale = (saleName: string): boolean => {
+    return this.state.sales.some((el: Isale) => el.type === saleName && el.startTime <= 0 && el.endTime > 0); 
+  }
+
   let success: boolean = false;
 
   if (this.sheep.children.entries.length < 50) {
 
     let sheepPrice = this.sheepPrice(breed);
+    if (checkSale(`${this.state.farm.toUpperCase()}_PRICE`)) sheepPrice.price = Math.round(sheepPrice.price / 2);
 
     if (this.state.userSheep.money >= sheepPrice.price) {
       
