@@ -386,7 +386,10 @@ class ChickenBars extends Phaser.Scene {
 
   private updateSale(): void {
     const visibility = this.checkSale(`${this.state.farm.toUpperCase()}_PRICE`) && this.chickenBuy.visible;
-    if (this.saleBuyIcon.visible !== visibility) this.saleBuyIcon.setVisible(visibility);
+    if (this.saleBuyIcon.visible !== visibility) {
+      this.saleBuyIcon.setVisible(visibility);
+      this.updateChickenPrice();
+    }
   }
 
   private checkSale(saleName: string): boolean {

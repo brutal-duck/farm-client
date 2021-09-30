@@ -366,7 +366,10 @@ class CowBars extends Phaser.Scene {
 
   private updateSale(): void {
     const visibility = this.checkSale(`${this.state.farm.toUpperCase()}_PRICE`) && this.cowBuy.visible;
-    if (this.saleBuyIcon.visible !== visibility) this.saleBuyIcon.setVisible(visibility);
+    if (this.saleBuyIcon.visible !== visibility) {
+      this.saleBuyIcon.setVisible(visibility);
+      this.updateCowPrice();
+    }
   }
 
   private checkSale(saleName: string): boolean {
