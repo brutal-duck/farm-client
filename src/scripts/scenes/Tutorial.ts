@@ -479,22 +479,27 @@ class Tutorial extends Phaser.Scene {
         };
       } else if (this.state.tutorial.additional === 'fortune') {
         this.scene.launch('Profile', this.state);
-        this.add.sprite(720, 775, 'profile-event-island').setOrigin(1, 0.5);
-        Firework.create(this, { x: 580, y: 775 }, 5);
-        const fortuneSprite: Phaser.GameObjects.Sprite = this.add.sprite(720, 775, 'profile-fortune').setOrigin(1, 0.5).setAlpha(0);
+        const pos = {
+          x: 560,
+          y: 560,
+        };
         
-        this.topPosition = false;
-        this.indent = this.height - 600;
+        this.add.sprite(pos.x, pos.y, 'profile-fortune-bg');
+        const wheel = this.add.sprite(pos.x + 31, pos.y - 10, 'profile-fortune-wheel');
+        this.add.sprite(pos.x + 32, pos.y - 10, 'profile-fortune-pointer');
+        Firework.create(this, { x: pos.x, y: pos.y }, 5);
+        
+        this.topPosition = true;
+        this.indent = 700;
         this.tailX = 430;
         this.tailFlipX = false;
-        this.tailFlipY = false;
+        this.tailFlipY = true;
         this.tutorText = this.state.lang.fortuneWelcome;
-        
         this.tweens.add({
-          targets: [ fortuneSprite ],
           delay: 500,
-          alpha: 1,
-          duration: 1200,
+          targets: wheel,
+          duration: 1500,
+          rotation: { from: wheel.rotation, to: wheel.rotation - 4 * Math.PI },
           onComplete: (): void => {
             this.pointerTutorial();
             this.generalClick = (): void => {
@@ -502,7 +507,8 @@ class Tutorial extends Phaser.Scene {
               this.scene.stop('Tutorial');
               this.scene.launch('Fortune', this.state);
             };
-          }
+          },
+          ease: 'Power3',
         });
       } else {
         this.fail();
