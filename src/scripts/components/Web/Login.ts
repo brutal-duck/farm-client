@@ -315,7 +315,7 @@ export default class Login {
       this.currentHeight = height;
       let y = this.centered ? this.bgOriginY : this.bgOriginYNonCentered;
       this.bg.setY(y - height / 2).setSize(this.bg.width, this.bgOriginHeight + height + 6);
-      this.bgTop.setY(this.bg.getTopCenter().y);
+      this.bgTop.setY(this.bg.getTopCenter().y + 15);
       this.title.setY(this.bg.getTopCenter().y + 20);
     }
   }
