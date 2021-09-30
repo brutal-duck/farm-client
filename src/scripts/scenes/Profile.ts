@@ -674,7 +674,7 @@ class Profile extends Phaser.Scene {
     // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
     // graphics.lineStyle(5, 0xFFFF00);
     // graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
-    this.clanNotificator = new Notificator(this, { x: pos.x + 65, y: pos.y - 80 }, true).setCount(0);
+    this.clanNotificator = new Notificator(this, { x: pos.x + 65, y: pos.y - 45 }, true).setCount(0);
     this.click(zone, (): void => {
       if (this.state.userSheep.part >= 7 && this.checkAuthUser()) {
         if (!this.state.user.clanId || !this.state.clan) {

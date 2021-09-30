@@ -461,13 +461,13 @@ class Tutorial extends Phaser.Scene {
       } else if (this.state.tutorial.additional === 'clan') {
         this.scene.launch('Profile', this.state);
         this.topPosition = true;
-        this.indent = 570;
+        this.indent = 530;
         this.tailX = 500;
         this.tailFlipX = false;
         this.tailFlipY = true;
         this.tutorText = this.state.lang.clanTutor;
         this.pointerTutorial();
-        this.add.sprite(610, 410, 'clan-building');
+        this.add.sprite(610, 380, 'clan-building');
         this.generalClick = (): void => {
           this.state.modal = {
             type: 17,
