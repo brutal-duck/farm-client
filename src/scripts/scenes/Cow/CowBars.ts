@@ -24,6 +24,7 @@ import BarsMenu from '../../components/gameObjects/BarsMenu';
 import SpeechBubble from './../../components/animations/SpeechBuble';
 import Notificator from './../../components/gameObjects/Notificator';
 import RoundedProgress from '../../components/animations/RoundedProgress';
+import Utils from './../../libs/Utils';
 class CowBars extends Phaser.Scene {
   constructor() {
     super('CowBars');
@@ -233,7 +234,7 @@ class CowBars extends Phaser.Scene {
     let breed: number = this.game.scene.keys[this.state.farm].maxBreedForBuy();
     let price: string = String(shortNum(this.game.scene.keys[this.state.farm].cowPrice(breed).price));
     let halfPrice: string = String(shortNum(Math.round(this.game.scene.keys[this.state.farm].cowPrice(breed).price / 2)));
-    this.cowPrice = this.add.text(82, this.height - 43, this.checkSale(`${this.state.farm.toUpperCase()}_PRICE`) ? halfPrice : price, {
+    this.cowPrice = this.add.text(82, this.height - 43, Utils.checkSale(this.state.sales, `${this.state.farm.toUpperCase()}_PRICE`) ? halfPrice : price, {
       font: '28px Bip',
       color: '#925C28',
       align: 'center'
@@ -356,7 +357,7 @@ class CowBars extends Phaser.Scene {
     let breed: number = this.game.scene.keys['Cow'].maxBreedForBuy();
     let price: string = String(shortNum(this.game.scene.keys['Cow'].cowPrice(breed).price));
     let halfPrice: string = String(shortNum(Math.round(this.game.scene.keys['Cow'].cowPrice(breed).price / 2)));
-    this.cowPrice.setText(this.checkSale(`${this.state.farm.toUpperCase()}_PRICE`) ? halfPrice : price);
+    this.cowPrice.setText(Utils.checkSale(this.state.sales, `${this.state.farm.toUpperCase()}_PRICE`) ? halfPrice : price);
     let bounds = this.cowPrice.getBounds();
     this.cowPriceBubble.destroy();
     this.cowPriceBubble = this.add.graphics({ x: bounds.left - 15, y: bounds.top });
@@ -365,15 +366,11 @@ class CowBars extends Phaser.Scene {
   }
 
   private updateSale(): void {
-    const visibility = this.checkSale(`${this.state.farm.toUpperCase()}_PRICE`) && this.cowBuy.visible;
+    const visibility = Utils.checkSale(this.state.sales, `${this.state.farm.toUpperCase()}_PRICE`) && this.cowBuy.visible;
     if (this.saleBuyIcon.visible !== visibility) {
       this.saleBuyIcon.setVisible(visibility);
       this.updateCowPrice();
     }
-  }
-
-  private checkSale(saleName: string): boolean {
-    return this.state.sales.some(el => el.type === saleName && el.startTime <= 0 && el.endTime > 0); 
   }
 
   public currentPartProgress(): void {
@@ -451,7 +448,7 @@ class CowBars extends Phaser.Scene {
 
     let breed: number = this.game.scene.keys[this.state.farm].maxBreedForBuy();
     let price: number = this.game.scene.keys[this.state.farm].cowPrice(breed).price
-    if (this.checkSale(`${this.state.farm.toUpperCase()}_PRICE`)) price = Math.round(price / 2);
+    if (Utils.checkSale(this.state.sales,`${this.state.farm.toUpperCase()}_PRICE`)) price = Math.round(price / 2);
 
     if (price > this.state.userCow.money && this.cowBuy.tintBottomLeft === 0xFFFFFF) {
       this.cowBuy.setTint(0x777777);

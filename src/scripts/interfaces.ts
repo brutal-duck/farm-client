@@ -33,6 +33,7 @@ interface IcollectorButtonSetting {
   leftLitleText: string;
   right: string;
   type: string;
+  sale?: string;
 }
 interface IsheepUserAutoSave {
   diamonds: number;

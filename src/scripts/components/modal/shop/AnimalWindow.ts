@@ -1,6 +1,7 @@
 import { shortNum } from "../../../general/basic";
 import Shop from "../../../scenes/Modal/Shop/Main";
 import ShopButton from './../../Buttons/ShopButton';
+import Utils from './../../../libs/Utils';
 
 export default class AnimalWindow {
   private scene: Shop;
@@ -90,7 +91,7 @@ export default class AnimalWindow {
             scale: 0.15,
           }, 
           text1: price,
-          text2: this.checkSale(`${this.scene.state.farm.toUpperCase()}_PRICE`) ? halfPrice : null,
+          text2: Utils.checkSale(this.scene.state.sales,`${this.scene.state.farm.toUpperCase()}_PRICE`) ? halfPrice : null,
         });
         heightBtn = btn.height;
         this.buttons.push({
@@ -111,17 +112,12 @@ export default class AnimalWindow {
     }
   }
   
-  private checkSale(saleName: string): boolean {
-    return this.scene.state.sales.some(el => el.type === saleName && el.startTime <= 0 && el.endTime > 0); 
-  }
-
-
   private updatePrices(): void {
     for (const btn of this.buttons) {
       const text1 = String(shortNum(this.scene[`${this.animal.toLowerCase()}Price`](btn.breed).price));
       const text2 = String(shortNum(Math.round(this.scene[`${this.animal.toLowerCase()}Price`](btn.breed).price / 2)));
       const shopButton: ShopButton = btn.btn;
-      shopButton.setText(text1, this.checkSale(`${this.scene.state.farm.toUpperCase()}_PRICE`) ? text2 : null);
+      shopButton.setText(text1, Utils.checkSale(this.scene.state.sales,`${this.scene.state.farm.toUpperCase()}_PRICE`) ? text2 : null);
     }
   }
 

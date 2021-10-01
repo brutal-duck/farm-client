@@ -121,7 +121,7 @@ class Shop extends Phaser.Scene {
     if (this.state.farm === 'Sheep') this.load.image('shop-sheep-wool-collector', shopWoolCollector);
     if (this.state.farm === 'Chicken') this.load.image('shop-chicken-egg-collector', shopEggCollector);
     if (this.state.farm === 'Cow') this.load.image('shop-cow-milk-collector', shopMilkCollector);
-    if (this.state.farm === 'Unicorn') this.load.image('shop-event-resource-collector', shopResourceCollector);
+    if (this.state.farm === 'Unicorn') this.load.image('shop-unicorn-resource-collector', shopResourceCollector);
     this.load.image('shop-btn-disable', shopBtnDisable);
     this.load.image('boost-btn', boostBtn);
     this.load.image('boost-btn-disable', boostBtnDisable);
