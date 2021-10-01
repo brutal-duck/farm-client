@@ -12,10 +12,11 @@ export default class HerdBoostWindow {
   private xRoad: number;
   private yRoad: number;
   private boostCounterWindow: Phaser.GameObjects.Sprite;
-  private elements: (Phaser.GameObjects.Text | Phaser.GameObjects.Sprite)[];
+  private elements: Array<Phaser.GameObjects.Text | Phaser.GameObjects.Sprite>;
   private animal: string;
   private mergingArray: any[];
   private animalForBoost: Phaser.Physics.Arcade.Group;
+  private currentTime: number;
 
   constructor(scene: Modal) {
     this.scene = scene;
@@ -221,7 +222,7 @@ export default class HerdBoostWindow {
   
     // создаю группу для животных
     this.animalForBoost = this.scene.physics.add.group();
-    let currentTime: number = this.scene.state.herdBoostTime;
+    this.currentTime = this.scene.state.herdBoostTime;
 
     const timerCreate: Phaser.Time.TimerEvent = this.scene.time.addEvent({
       delay: this.scene.state.herdBoostDelay,
@@ -241,29 +242,26 @@ export default class HerdBoostWindow {
       callbackScope: this
     });
   
-    let [timerText]: any = this.elements;
-
+    const [timerText]: any= this.elements  ;
+    this.createSkipBtn();
     // таймер переключающий время
     const timerTickText: Phaser.Time.TimerEvent = this.scene.time.addEvent({
       delay: 1000,
       loop: true,
       callback: () => {
-        --currentTime;
-        timerText.setText(currentTime);
-
-        if (currentTime <= 0) {
+        --this.currentTime;
+        timerText.setText(this.currentTime);
+        if (this.currentTime <= 0) {
           this.animalForBoost.children.entries.forEach((sheep) => { sheep.data.values.woolSprite?.destroy(); });
           this.animalForBoost.destroy(true);
           timerCreate.remove();
           timerTickText.remove();
           timerCreateCrystalAnimal.remove();
-
           this.scene.tweens.add({
             targets: this.elements,
             alpha: 0,
             duration: 800,
             onComplete: (): void => {
-
               this.scene.tweens.add({
                 targets: this.boostCounterWindow,
                 y: 400,
@@ -272,10 +270,9 @@ export default class HerdBoostWindow {
                   this.createScoreText();
                   this.stopBoostScene();
                 }
-              })
-
+              });
             }
-          })
+          });
         }
       },
       callbackScope: this
@@ -283,6 +280,28 @@ export default class HerdBoostWindow {
   }
   
 
+  private createSkipBtn(): void {
+    const skip = this.scene.add.text(710, 30, this.scene.state.lang.skipHerdBoost, {
+      font: '24px Shadow',
+      color: '#868686'
+    }).setOrigin(1, 0.5);
+
+    const geom = skip.getBounds();
+
+    const zone: Phaser.GameObjects.Zone = this.scene.add.zone(
+      geom.x - 10 + geom.width / 2,
+      geom.y + geom.height / 2,
+      geom.width + 30, 
+      geom.height + 30
+    ).setDropZone(undefined, () => {});
+
+    this.scene.click(zone, (): void => {
+      this.currentTime = 1;
+      zone.destroy();
+      skip.destroy();
+    });  
+  }
+  
   private stopBoostScene(): void {
     this.scene.input.on('pointerdown', (): void => {
       this.scene.scene.stop();

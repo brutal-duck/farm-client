@@ -1096,6 +1096,7 @@ export default {
     confirmImproveRepositoryText: 'Хотите улучшить Хранилище до $1 уровня?',
     confirmImproveFactoryHeader: 'Фабрика',
     confirmImproveFactoryText: 'Хотите улучшить Фабрику до $1 уровня?',
+    skipHerdBoost: 'Завершить переполох',
   },
   en: {
     index: 'en',
@@ -2194,5 +2195,6 @@ export default {
     confirmImproveRepositoryText: 'Want to upgrade the Storage to $1 level?',
     confirmImproveFactoryHeader: 'Factory',
     confirmImproveFactoryText: 'Want to upgrade the Factory to $1 level?',
+    skipHerdBoost: 'Skip Ruckus',
   },
 }
