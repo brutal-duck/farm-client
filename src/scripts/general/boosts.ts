@@ -1,5 +1,6 @@
 import { randomString, sendSocialEvent } from "./basic";
 import Firework from '../components/animations/Firework';
+import Utils from './../libs/Utils';
 
 // получение животного по бусту
 function createBoostAnimal(): void {
@@ -312,7 +313,7 @@ function freeCollector(type: number = 1): void {
       let doubleTimePrice: number = Math.floor(minutes / 60 * doubledСollectorPrice);
 
       if (this.state.user.diamonds >= doubleTimePrice) {
-
+        if (Utils.checkSale(this.state.sales, `${this.state.farm.toUpperCase()}_COLLECTOR_PRICE`)) doubleTimePrice = Math.floor(doubleTimePrice / 2);
         this.state.user.diamonds -= doubleTimePrice;
         user.collector += minutes * 60;
         user.collectorTakenTime = user.collector;
@@ -330,10 +331,8 @@ function freeCollector(type: number = 1): void {
           type: 'collector',
           count: doubleTimePrice,
         });
-
         Firework.create(this.game.scene.keys[`${this.state.farm}Bars`], { x: 230, y: this.game.config.height - 90 }, 1);
       } else {
-
         let count: number = doubleTimePrice - this.state.user.diamonds;
         this.state.convertor = {
           fun: 0,
@@ -347,13 +346,9 @@ function freeCollector(type: number = 1): void {
         }
         this.state.modal = modal;
         this.scene.launch('Modal', this.state);
-
       }
-
     }
-
   }
-
 }
 
 
@@ -389,6 +384,9 @@ function buyCollector(type: number): void {
   this.scene.stop('Shop');
   this.scene.stop('ShopBars');
   this.scene.stop('Modal');
+  
+  let price = settings['collectorPrice' + hours];
+  if (Utils.checkSale(this.state.sales, `${this.state.farm.toUpperCase()}_COLLECTOR_PRICE`)) price = Math.floor(price / 2);
 
   if (settings['unlockCollector' + hours] <= user.part) {
     if (this.state.user.boosts[this.state.farm.toLowerCase()][`collector${hours}`] > 0) {
@@ -406,14 +404,13 @@ function buyCollector(type: number): void {
 
       Firework.create(this.game.scene.keys[`${this.state.farm}Bars`], { x: 230, y: this.game.config.height - 90 }, 1);
 
-    } else if (this.state.user.diamonds >= settings['collectorPrice' + hours]) {
-
-      this.state.user.diamonds -= settings['collectorPrice' + hours];
+    } else if (this.state.user.diamonds >= price) {
+      this.state.user.diamonds -= price;
       user.collector += hours * 60 * 60;
       user.collectorTakenTime = user.collector;
       this.game.scene.keys[this.state.farm + 'Bars'].collector.update();
       this.tryTask(3, 0, hours * 60);
-      this.tryTask(15, 0, settings['collectorPrice' + hours]);
+      this.tryTask(15, 0, price);
       this.tryClanTask(7, 0, hours * 60);
 
       this.state.amplitude.logAmplitudeEvent('collector', {
@@ -423,14 +420,14 @@ function buyCollector(type: number): void {
 
       this.state.amplitude.logAmplitudeEvent('diamonds_spent', {
         type: 'collector',
-        count: settings['collectorPrice' + hours],
+        count: price,
       });
 
       Firework.create(this.game.scene.keys[`${this.state.farm}Bars`], { x: 230, y: this.game.config.height - 90 }, 1);
       
     } else {
 
-      let count: number = settings['collectorPrice' + hours] - this.state.user.diamonds;
+      let count: number = price - this.state.user.diamonds;
       this.state.convertor = {
         fun: 0,
         count: count,
