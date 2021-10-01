@@ -23,9 +23,13 @@ import { randomString } from "../../general/basic";
 
 export default class Ads {
   public scene: Sheep | Chicken | Cow | Unicorn
+  private musicVolume: number;
+  private soundVolume: number;
 
   constructor(scene: Sheep | Chicken | Cow | Unicorn) {
     this.scene = scene
+    this.musicVolume = this.scene.state.musicVolume || 0;
+    this.soundVolume = this.scene.state.soundVolume || 0;
   }
 
   public findAd(): void {
@@ -53,6 +57,10 @@ export default class Ads {
   public watchAd(type: number): void {
     this.scene.state.adRewardedType = type;
     this.scene.state.readyAd = false;
+    this.scene.state.musicVolume = 0;
+    this.scene.state.soundVolume = 0;
+    //@ts-ignore
+    this.scene.sound.get('music').volume = this.scene.state.musicVolume;
 
     if (this.scene.state.platform === 'ok') {
       FAPI.UI.showLoadedAd();
@@ -224,8 +232,11 @@ export default class Ads {
   
     this.scene.state.amplitude.logAmplitudeRevenue(type, 0, 'rewarded', properties);
     this.scene.autosave();
+    this.scene.state.musicVolume = this.musicVolume;
+    this.scene.state.soundVolume = this.soundVolume;
+    //@ts-ignore
+    this.scene.sound.get('music').volume = this.scene.state.musicVolume;
   }
-
 
   public VKOnAdsReady(adman: any): void {
     console.log(adman)
