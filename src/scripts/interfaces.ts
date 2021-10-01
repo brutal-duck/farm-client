@@ -28,6 +28,12 @@ interface IshopButtons {
   btn?: any;
   breed: number;
 }
+interface IcollectorButtonSetting {
+  left: string;
+  leftLitleText: string;
+  right: string;
+  type: string;
+}
 interface IsheepUserAutoSave {
   diamonds: number;
   xp: number;
@@ -89,7 +95,7 @@ interface IcowUserAutoSave {
   status: string;
   boosts: Iboosts;
 }
-interface IeventUserAutoSave {
+interface IunicornUserAutoSave {
   diamonds: number;
   xp: number;
   money: string;
@@ -115,7 +121,7 @@ interface IuserAutoSave {
   userSheep: IuserSheep;
   userChicken: IuserChicken;
   userCow: IuserCow;
-  userUnicorn?: IuserEvent;
+  userUnicorn?: IuserUnicorn;
   test: string;
   takenFreeDiamonds: boolean;
   takenSocialAward: boolean;
@@ -184,9 +190,9 @@ interface IdataAutoSave {
   cow: Icow[];
   cowTasks: Itasks[];
   cowTerritories: Iterritories[];
-  unicorn: IeventAnimal[];
-  unicornTerritories: IeventTerritories[];
-  unicornResource: IeventResource[];
+  unicorn: Iunicorn[];
+  unicornTerritories: IunicornTerritories[];
+  unicornResource: IunicornResource[];
   build: number;
 }
 // for state
@@ -283,7 +289,7 @@ interface IuserCow {
   feedBoostTime: number;
   factory: Ifactory;
 }
-interface IuserEvent {
+interface IuserUnicorn {
   money: string;
   countAnimal: { counter: number }[];
   collector: number;
@@ -300,8 +306,8 @@ interface IuserEvent {
   takenAward: boolean;
 }
 interface IunicornRaitingsData {
-  ratings: IeventRaiting[];
-  user: IeventRaiting;
+  ratings: IunicornRaiting[];
+  user: IunicornRaiting;
   updated: boolean;
 }
 interface Iterritories {
@@ -316,7 +322,7 @@ interface Iterritories {
   boughtType: number;
   _id?: any;
 }
-interface IeventTerritories {
+interface IunicornTerritories {
   block: number;
   position: number;
   type: number;
@@ -352,14 +358,14 @@ interface Icow {
   vector: number;
   _id?: string;
 }
-interface IeventAnimal {
+interface Iunicorn {
   type: number;
   x: number;
   y: number;
-  activeAnimal: IactiveEventAnimal;
+  activeAnimal: IactiveUnicorn;
   _id?: string;
 }
-interface IactiveEventAnimal{
+interface IactiveUnicorn{
   x: number;
   y: number;
   working: boolean;
@@ -378,7 +384,7 @@ interface IcowMilk {
   x: number;
   y: number;
 }
-interface IeventResource {
+interface IunicornResource {
   _id?: any;
   type: number;
   x: number;
@@ -407,7 +413,7 @@ interface IcowPoints {
   maxMilkVolume: number;
   id?: any;
 }
-interface IeventPoints {
+interface IunicornPoints {
   breed: number;
   resource: number;
   resourcePrice: string;
@@ -463,7 +469,7 @@ interface IfactorySettings {
   efficiency: number;
   id?: any;
 }
-interface IterritoriesEventSettings {
+interface IterritoriesUnicornSettings {
   improve: number;
   regeneration: number;
   countResources: number;
@@ -480,7 +486,7 @@ interface IterritoriesPrice {
   id?: any;
 }
 
-interface IeventTerritoriesPrice {
+interface IunicornTerritoriesPrice {
   block: number;
   position: number;
   price: number;
@@ -556,10 +562,10 @@ interface IcowSettings {
   feedBoostPrice: number;
   storageMultiply?: number;
 }
-interface IeventSettings {
-  unicornSettings: IeventPoints[]; // нужно попарвить
-  territoriesUnicornPrice: IeventTerritoriesPrice[];
-  territoriesUnicornSettings: IterritoriesEventSettings[];
+interface IunicornSettings {
+  unicornSettings: IunicornPoints[]; // нужно попарвить
+  territoriesUnicornPrice: IunicornTerritoriesPrice[];
+  territoriesUnicornSettings: IterritoriesUnicornSettings[];
   buyBetterBreedAnimal: number;
   doubledСollectorPrice: number;
   collectorPrice4: number;
@@ -613,7 +619,7 @@ interface ItasksParams {
   description: string;
   tasks: Itasks[];
 }
-interface IeventParams {
+interface IunicornParams {
   offlineTime: number;
   offlineProgress: string;
   collectorTime: number;
@@ -630,7 +636,7 @@ interface Imodal {
   height?: number;
   message?: string;
   tasksParams?: ItasksParams;
-  eventParams?: IeventParams;
+  unicornParams?: IunicornParams;
   confirmSpendParams?: IconfirmSpendParams;
 }
 interface IconfirmSpendParams {
@@ -710,7 +716,7 @@ interface IScrollingOptions {
   wheel: boolean;
   top: number;
 }
-interface IeventRaiting {
+interface IunicornRaiting {
   place: number;
   name: string;
   score: string | number;
@@ -858,18 +864,18 @@ interface Istate {
   sheepSettings: IsheepSettings;
   chickenSettings: IchickenSettings;
   cowSettings: IcowSettings;
-  unicornSettings: IeventSettings;
+  unicornSettings: IunicornSettings;
   chickenTerritories: Iterritories[];
   cowTerritories: Iterritories[];
   sheepTerritories: Iterritories[];
-  eventTerritories: IeventTerritories[];
+  unicornTerritories: IunicornTerritories[];
   sheep: Isheep[];
   chicken: Ichicken[];
   cow: Icow[];
-  eventAnimals: IeventAnimal[];
+  unicorn: Iunicorn[];
   chickenEggs: IchickenEgg[];
   cowMilk: IcowMilk[];
-  eventResources: IeventResource[];
+  unicornResources: IunicornResource[];
   lang: { [key: string]: string };
   modal: Imodal;
   animal: any;
@@ -878,7 +884,7 @@ interface Istate {
   userSheep: IuserSheep;
   userChicken: IuserChicken;
   userCow: IuserCow;
-  userUnicorn: IuserEvent;
+  userUnicorn: IuserUnicorn;
   convertor: Iconvertor;
   exchangeTerritory: number;
   farm: string;
@@ -907,7 +913,7 @@ interface Istate {
   sheepCollectorSettings: IcollectorSettings[];
   chickenCollectorSettings: IcollectorSettings[];
   cowCollectorSettings: IcollectorSettings[];
-  eventCollectorSettings: IcollectorSettings[];
+  unicornCollectorSettings: IcollectorSettings[];
   adBlock: boolean;
   adman: any;
   donate: boolean;
@@ -946,4 +952,5 @@ interface Istate {
   clanEventPlace?: number;
   clanEventTakenAward: boolean;
   sales: Isale[];
+  offline?: number;
 }

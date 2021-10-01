@@ -1360,7 +1360,7 @@ export default function autoprogress(load: boolean = false): void {
       let animal = this.animals.children.entries[i];
       let breed: number = animal.data.values.type;
 
-      let points: IeventPoints = state.unicornSettings.unicornSettings.find((item: IeventPoints) => item.breed === breed);
+      let points: IunicornPoints = state.unicornSettings.unicornSettings.find((item: IunicornPoints) => item.breed === breed);
 
       let resource: number = points.resource;
 
@@ -1401,7 +1401,7 @@ export default function autoprogress(load: boolean = false): void {
 
     // скорость сборки
     let percent: number = 100;
-    let speed: number = state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === state.userUnicorn.collectorLevel).speed;
+    let speed: number = state.unicornCollectorSettings.find((data: IcollectorSettings) => data.level === state.userUnicorn.collectorLevel).speed;
 
     if (this.animals.children.entries.length > speed * 10) {
 
@@ -1430,7 +1430,7 @@ export default function autoprogress(load: boolean = false): void {
 
     for (let i: number = 0; i < length; i++) {
 
-      let price: string = state.unicornSettings.unicornSettings.find((data: IeventPoints) => data.breed === resourceArr[i].type).resourcePrice;
+      let price: string = state.unicornSettings.unicornSettings.find((data: IunicornPoints) => data.breed === resourceArr[i].type).resourcePrice;
       price = BigInteger.divide(BigInteger.multiply(price, feedPercent), String(100)); // коэфф
 
 
@@ -1447,7 +1447,7 @@ export default function autoprogress(load: boolean = false): void {
     if (state.offlineTime > 900 && BigInteger.greaterThan(income, '0')) {
       const modal: Imodal = {
         type: 10,
-        eventParams: {
+        unicornParams: {
           offlineTime: state.offlineTime,
           offlineProgress: income,
           collectorTime: wasCollector,

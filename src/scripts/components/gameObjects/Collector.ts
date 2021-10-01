@@ -27,7 +27,7 @@ export default class Collector extends Phaser.GameObjects.Text {
   public percent: number;
   public bubble: Phaser.GameObjects.Graphics;
   public pulseTimer: number = 0;
-  public farmData: IuserSheep | IuserEvent | IuserChicken | IuserCow;
+  public farmData: IuserSheep | IuserUnicorn | IuserChicken | IuserCow;
   private time: number;
   private progress: RoundedProgress;
 

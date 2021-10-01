@@ -1281,7 +1281,7 @@ const cowSettings: IcowSettings = {
   ]
 };
 
-const unicornSettings: IeventSettings = {
+const unicornSettings: IunicornSettings = {
   buyBetterBreedAnimal: 2,
   doubledСollectorPrice: 25,
   feedBoostPrice: 20,

@@ -31,7 +31,7 @@ export default class AnimalUnicornWindow {
       const center = y + 110 + this.scene.height;
       this.scene.add.sprite(0, y + this.scene.height, 'animal-shop-bg').setOrigin(0, 0);
 
-      let animal = this.scene.state.unicornSettings.unicornSettings.find((data: IeventPoints) => data.breed === i + 1);
+      let animal = this.scene.state.unicornSettings.unicornSettings.find((data: IunicornPoints) => data.breed === i + 1);
 
       // иконка
       if (this.scene.state.userUnicorn.points < animal.breed) this.scene.add.sprite(110, y + this.scene.height + 110, 'disable-animal');

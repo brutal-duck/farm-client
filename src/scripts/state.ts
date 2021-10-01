@@ -60,12 +60,12 @@ let adman: any;
 let donate: boolean;
 let boughtFeedBoost: boolean = false;
 let boughtFactoryBoost: boolean = false;
-let unicornSettings: IeventSettings;
-let eventTerritories: IeventTerritories[];
-let eventAnimals: IeventAnimal[];
-let eventResources: IeventResource[];
-let userUnicorn: IuserEvent;
-let eventCollectorSettings: IcollectorSettings[];
+let unicornSettings: IunicornSettings;
+let eventTerritories: IunicornTerritories[];
+let eventAnimals: Iunicorn[];
+let eventResources: IunicornResource[];
+let userUnicorn: IuserUnicorn;
+let unicornCollectorSettings: IcollectorSettings[];
 let chat: Ichat[] = [];
 let starterpack: boolean = false;
 let stock: string = '';
@@ -103,14 +103,14 @@ let state: Istate = {
   chickenTerritories, // юзерский массив сохраненных территорий кур
   cowTerritories, // юзерский массив сохраненных территорий коров
   sheepTerritories, // юзерский массив сохраненных территорий овец
-  eventTerritories, // юзерский массив сохраненных территорий евента
+  unicornTerritories: eventTerritories, // юзерский массив сохраненных территорий евента
   sheep, // юзерский массив сохраненных овец
   chicken, // юзерский массив сохраненных куриц
   cow, // юзерский массив сохраненных коров
-  eventAnimals, // юзерский массив сохраненных евентовых животных
+  unicorn: eventAnimals, // юзерский массив сохраненных евентовых животных
   chickenEggs, // юзерский массив сохраненных куринных яиц
   cowMilk, // юзерский массив сохраненного коровьего молока
-  eventResources, // юзерский массив сохраненных евентовых ресурсов
+  unicornResources: eventResources, // юзерский массив сохраненных евентовых ресурсов
   user, // массив общих данных юзера для всех ферм
   userSheep, // массив данных юзера для овечьей фермы
   userChicken, // массив данных юзера для куринной фермы
@@ -151,7 +151,7 @@ let state: Istate = {
   sheepCollectorSettings, // настройки уровней подстригателя
   chickenCollectorSettings, // настройки уровней собирателя яиц
   cowCollectorSettings, // настройки уровней собирателя яиц
-  eventCollectorSettings, // настройки уровней собирателя яиц
+  unicornCollectorSettings, // настройки уровней собирателя яиц
   adBlock, // состояние блокировщика рекламы
   adman, // объект рекламы вк
   donate, // переменная для показа доната

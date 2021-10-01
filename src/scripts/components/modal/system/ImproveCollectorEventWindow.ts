@@ -12,8 +12,8 @@ export default class ImproveCollectorEventWindow {
   private create(): void {
     this.scene.textHeader.setText(this.scene.state.lang.resourceCollector + ' ' + this.scene.state.userUnicorn.collectorLevel + ' ' + this.scene.state.lang.shortLevel + '.').setDisplaySize(this.scene.header.width - 160, this.scene.textHeader.height);
 
-    let thisLevel: IcollectorSettings = this.scene.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userUnicorn.collectorLevel);
-    let nextLevel: IcollectorSettings = this.scene.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userUnicorn.collectorLevel + 1);
+    let thisLevel: IcollectorSettings = this.scene.state.unicornCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userUnicorn.collectorLevel);
+    let nextLevel: IcollectorSettings = this.scene.state.unicornCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userUnicorn.collectorLevel + 1);
 
     let speedText: string = this.scene.state.lang.speed + ': ' + thisLevel.speed + ' ' + this.scene.state.lang.unitEvent + '/' + this.scene.state.lang.seconds;
     const speed: Phaser.GameObjects.Text = this.scene.add.text(125, this.scene.cameras.main.centerY - 80, speedText, {
@@ -100,8 +100,8 @@ export default class ImproveCollectorEventWindow {
     nextLevelText: Phaser.GameObjects.Text
   ): void {
     this.scene.textHeader.setText(this.scene.state.lang.resourceCollector + ' ' + this.scene.state.userUnicorn.collectorLevel + ' ' + this.scene.state.lang.shortLevel + '.');
-    let thisLevel: IcollectorSettings = this.scene.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userUnicorn.collectorLevel);
-    let nextLevel: IcollectorSettings = this.scene.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userUnicorn.collectorLevel + 1);
+    let thisLevel: IcollectorSettings = this.scene.state.unicornCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userUnicorn.collectorLevel);
+    let nextLevel: IcollectorSettings = this.scene.state.unicornCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userUnicorn.collectorLevel + 1);
   
     let speedText: string = this.scene.state.lang.speed + ': ' + thisLevel.speed + ' ' + this.scene.state.lang.unitEvent + '/' + this.scene.state.lang.seconds;
     speed.setText(speedText);

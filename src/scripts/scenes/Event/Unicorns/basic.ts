@@ -169,8 +169,8 @@ function currentTerritory(x: number, y: number): Phaser.Physics.Arcade.Sprite {
 // бесплатный собиратель
 function freeCollector(type: number = 1): void {
 
-  let user: IuserEvent = this.state.userUnicorn;
-  let settings: IcollectorSettings[] = this.state.eventCollectorSettings;
+  let user: IuserUnicorn = this.state.userUnicorn;
+  let settings: IcollectorSettings[] = this.state.unicornCollectorSettings;
   let doubledСollectorPrice: number = this.state.unicornSettings.doubledСollectorPrice;
 
 
@@ -230,8 +230,8 @@ function freeCollector(type: number = 1): void {
 // покупка собирателя
 function buyCollector(type: number): void {
 
-  let user: IuserEvent = this.state.userUnicorn;
-  let settings: IeventSettings = this.state.unicornSettings;
+  let user: IuserUnicorn = this.state.userUnicorn;
+  let settings: IunicornSettings = this.state.unicornSettings;
 
   let hours: number;
 
@@ -275,10 +275,10 @@ function buyCollector(type: number): void {
 
 function convertDiamonds(diamonds: number): string {
   
-  let breedSettings: IeventPoints[] = this.state.unicornSettings.unicornSettings;
+  let breedSettings: IunicornPoints[] = this.state.unicornSettings.unicornSettings;
   let maxLevel: number = this.state.userUnicorn.points;
   
-  let setting: IeventPoints = breedSettings.find((item: IeventPoints) => item.breed === maxLevel);
+  let setting: IunicornPoints = breedSettings.find((item: IunicornPoints) => item.breed === maxLevel);
   let exchange: string;
 
   if (setting) {
@@ -292,10 +292,10 @@ function convertDiamonds(diamonds: number): string {
 
 function convertMoney(money: string): number {
 
-  let breedSettings: IeventPoints[] = this.state.unicornSettings.unicornSettings;
+  let breedSettings: IunicornPoints[] = this.state.unicornSettings.unicornSettings;
   let maxLevel: number = this.state.userUnicorn.points;
   
-  let setting: IeventPoints = breedSettings.find((item: IeventPoints) => item.breed === maxLevel);
+  let setting: IunicornPoints = breedSettings.find((item: IunicornPoints) => item.breed === maxLevel);
   let exchange: string = setting ? setting.exchange : String(1);
   
   return Number(BigInteger.divide(money, exchange));
@@ -305,8 +305,8 @@ function convertMoney(money: string): number {
 // улучшение собирателей
 function improveCollector(): void {
 
-  let user: IuserEvent = this.state.userUnicorn;
-  let collectorSettings: IcollectorSettings[] = this.state.eventCollectorSettings;
+  let user: IuserUnicorn = this.state.userUnicorn;
+  let collectorSettings: IcollectorSettings[] = this.state.unicornCollectorSettings;
 
 
   let nextLevel: IcollectorSettings = collectorSettings.find((data: IcollectorSettings) => data.level === user.collectorLevel + 1);
@@ -404,7 +404,7 @@ function improveCollector(): void {
 
 function exchange(ad: boolean = false): void {
 
-  let user: IuserEvent  = this.state.userUnicorn;
+  let user: IuserUnicorn  = this.state.userUnicorn;
   let buyAnimal = (): void => this.buyAnimal(this.state.convertor.breed);
 
   if (this.state.convertor.diamonds > this.state.user.diamonds) {

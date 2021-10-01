@@ -6,7 +6,7 @@ import MoneyAnimation from "../animations/MoneyAnimation";
 export default class EventProgressWindow {
   public scene: Modal;
   private doubleProfitPrice: number = 5;
-  private params: IeventParams;
+  private params: IunicornParams;
 
   constructor(scene: Modal) {
     this.scene = scene;
@@ -16,7 +16,7 @@ export default class EventProgressWindow {
   }
 
   private init(): void {
-    this.params = this.scene.state.modal.eventParams;
+    this.params = this.scene.state.modal.unicornParams;
     this.setPrice();
   }
 

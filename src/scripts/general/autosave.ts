@@ -241,9 +241,9 @@ export default function autosave(): void {
     if (typeof state.userUnicorn.autosaveCounter === 'number') state.userUnicorn.autosaveCounter++;
     else state.userUnicorn.autosaveCounter = 0;
     
-    const territories: IeventTerritories[] = [];
-    const animals: IeventAnimal[] = [];
-    const resources: IeventResource[] = [];
+    const territories: IunicornTerritories[] = [];
+    const animals: Iunicorn[] = [];
+    const resources: IunicornResource[] = [];
 
     for (const i in this.territories.children.entries) {
       const territory = this.territories.children.entries[i];

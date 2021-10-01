@@ -3,7 +3,7 @@ import BigInteger from './../../../libs/BigInteger';
 function deleteTerritoriesLocks(): void {
 
   let lvl: number = this.state.userUnicorn.points;
-  let prices: IeventTerritoriesPrice[] = this.state.unicornSettings.territoriesUnicornPrice;
+  let prices: IunicornTerritoriesPrice[] = this.state.unicornSettings.territoriesUnicornPrice;
 
   for (let i in this.territories.children.entries) {
     
@@ -11,7 +11,7 @@ function deleteTerritoriesLocks(): void {
 
     if (territory.data.values.type === 0) {
 
-      let unlock: number = prices.find((data: IeventTerritoriesPrice) => data.block === territory.data.values.block && data.position === territory.data.values.position).unlock;
+      let unlock: number = prices.find((data: IunicornTerritoriesPrice) => data.block === territory.data.values.block && data.position === territory.data.values.position).unlock;
 
       if (lvl >= unlock && territory.data.values.lock_image) {
         
@@ -29,8 +29,8 @@ function deleteTerritoriesLocks(): void {
 
 function buyTerritory(): void {
 
-  let settings: IeventTerritoriesPrice;
-  settings = this.state.unicornSettings.territoriesUnicornPrice.find((data: IeventTerritoriesPrice) => data.block === this.state.territory.data.values.block && data.position === this.state.territory.data.values.position);
+  let settings: IunicornTerritoriesPrice;
+  settings = this.state.unicornSettings.territoriesUnicornPrice.find((data: IunicornTerritoriesPrice) => data.block === this.state.territory.data.values.block && data.position === this.state.territory.data.values.position);
   if (!settings) return;
   if (this.state.territory.data.values.type === 0) {
 

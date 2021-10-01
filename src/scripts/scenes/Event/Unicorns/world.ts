@@ -1,7 +1,7 @@
 import Scrolling from '../../../libs/Scrolling';
 
 function world(): void {
-
+  const state: Istate = this.state;
   this.height = Math.round(Number(this.game.config.width) / 3); // ширина территории
   let worldHeight: number = 6 * this.height; // высота играбельного мира
   let allHeight: number = worldHeight + this.topIndent + this.bottomIndent; // вся высота мира
@@ -26,7 +26,7 @@ function world(): void {
   this.territories = this.physics.add.group(); // группа территорий
 
   let forest: number = 5;
-  this.state.eventTerritories.map((data: IeventTerritories, index: number) => {
+  state.unicornTerritories.map((data: IunicornTerritories, index: number) => {
     let x: number = (data.position - 1) * this.height;
     let y: number = (data.block - 1) * this.height;
     
@@ -103,13 +103,13 @@ function world(): void {
       let x: number = territory.x + 120;
       let y: number = territory.y + 120;
 
-      const unlock: number = this.state.unicornSettings.territoriesUnicornPrice.find((data: IterritoriesPrice) => data.block === territory.data.values.block && data.position === territory.data.values.position).unlock;
+      const unlock: number = state.unicornSettings.territoriesUnicornPrice.find((data: IunicornTerritoriesPrice) => data.block === territory.data.values.block && data.position === territory.data.values.position).unlock;
 
       territory.data.values.forest = this.add.image(territory.x + 120, territory.y + 240, 'event-forest-' + forest)
         .setOrigin(0.5, 1)
         .setDepth(territory.y + 2);
       territory.data.values.btn = this.add.image(x, y,'event-territory-btn').setDepth(territory.y + 3);
-      territory.data.values.btnText = this.add.text(x + 2, y + 2, this.state.lang.buy,  {
+      territory.data.values.btnText = this.add.text(x + 2, y + 2, state.lang.buy,  {
         font: '30px Shadow',
         color: '#e2f5fe',
         align: 'center'
@@ -117,7 +117,7 @@ function world(): void {
       territory.data.values.lock_image = this.add.image(x, y, 'lock-event-territory').setDepth(territory.y + 3).setVisible(false);
 
         // проверка на замок
-      if (unlock > this.state.userUnicorn.points) {
+      if (unlock > state.userUnicorn.points) {
         territory.data.values.btn.setVisible(false);
         territory.data.values.btnText.setVisible(false);
         territory.data.values.lock_image = this.add.image(x, y, 'lock-event-territory').setDepth(territory.y + 3).setVisible(true);
@@ -137,18 +137,18 @@ function world(): void {
 
     
     this.clickTerritory(territory, (): void => {
-      if (this.state.userUnicorn.tutorial > 70) {
+      if (state.userUnicorn.tutorial > 70) {
         const modal: Imodal = {
           type: 1,
           sysType: 2
         }
-        this.state.modal = modal;
-        this.state.territory = territory;
-        this.state.territory.type = territory.data.values.type;
-        this.state.territory.block = territory.data.values.block;
-        this.state.territory.position = territory.data.values.position;
+        state.modal = modal;
+        state.territory = territory;
+        state.territory.type = territory.data.values.type;
+        state.territory.block = territory.data.values.block;
+        state.territory.position = territory.data.values.position;
         if (territory.data.values.type !== 2 && territory.data.values.type !== 4) {
-          this.scene.launch('Modal', this.state);
+          this.scene.launch('Modal', state);
         }
   
         if (territory.data?.values.merging.length > 0) {
@@ -177,21 +177,21 @@ function world(): void {
   });
 
   // подгружаем животных
-  this.state.eventAnimals.map((data: IeventAnimal) => {
+  state.unicorn.map((data: Iunicorn) => {
     this.getAnimal(data._id, data.type, data.x, data.y, data.activeAnimal, true);
   });
   
   // подгружаем ресур
   this.resources = this.physics.add.group();
-  this.state.eventResources.map((data: IeventResource) => {
+  state.unicornResources.map((data: IunicornResource) => {
     this.getResource(data);
   });
 
   // туториал, если нужен
-  if (this.state.userUnicorn.tutorial === 0) this.state.userUnicorn.tutorial = 10;
-  if (this.state.userUnicorn.tutorial > 0 && this.state.userUnicorn.tutorial < 80) this.showEventTutorial();
+  if (state.userUnicorn.tutorial === 0) state.userUnicorn.tutorial = 10;
+  if (state.userUnicorn.tutorial > 0 && state.userUnicorn.tutorial < 80) this.showEventTutorial();
 
-  this.startCreateHerdBoostAnimal = this.state.userUnicorn.herdBoostAnimals.length > 0;
+  this.startCreateHerdBoostAnimal = state.userUnicorn.herdBoostAnimals.length > 0;
   // расчет оффлайн прогресса
   this.autoprogress(true);
   

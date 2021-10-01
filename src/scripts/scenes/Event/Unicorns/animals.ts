@@ -93,7 +93,7 @@ function getAnimal(
   type: number,
   x: number,
   y: number,
-  activeAnimal: IactiveEventAnimal = undefined,
+  activeAnimal: IactiveUnicorn = undefined,
   load: boolean = false): Phaser.Physics.Arcade.Sprite {
 
   let animal: Phaser.Physics.Arcade.Sprite = this.animals.create(x, y, 'animal' + type).setInteractive().setDepth(y).setAlpha(0.55).setTint(0xFFFFFF);
@@ -181,7 +181,7 @@ function getActiveAnimal(
   
 }
 // выдача ресурса и установка на него слушаетля
-function getResource(data: IeventResource): Phaser.Physics.Arcade.Sprite {
+function getResource(data: IunicornResource): Phaser.Physics.Arcade.Sprite {
 
   let resource: Phaser.Physics.Arcade.Sprite = this.resources.create(data.x, data.y, 'event-resource');
   resource.setDataEnabled();
@@ -204,7 +204,7 @@ function getResource(data: IeventResource): Phaser.Physics.Arcade.Sprite {
 
 function collectResource(resource: Phaser.Physics.Arcade.Sprite): void {
   
-  let price: string = this.state.unicornSettings.unicornSettings.find((data: IeventPoints) => data.breed === resource.data.values.type).resourcePrice;
+  let price: string = this.state.unicornSettings.unicornSettings.find((data: IunicornPoints) => data.breed === resource.data.values.type).resourcePrice;
   if (this.state.userUnicorn.feedBoostTime > 0) price = BigInteger.multiply(price, this.feedBoostMultiplier);
   resource.data.values.click = false;
   this.state.userUnicorn.money = BigInteger.add(this.state.userUnicorn.money, price);

@@ -19,7 +19,7 @@ function interval(): void {
 
       const animal: Phaser.Physics.Arcade.Sprite = this.animals.children.entries[i].data.values.active;
       const breed: number = animal.data.values.base.data.values.type;
-      const points: IeventPoints = this.state.unicornSettings.unicornSettings.find((item: IeventPoints) => item.breed === breed);
+      const points: IunicornPoints = this.state.unicornSettings.unicornSettings.find((item: IunicornPoints) => item.breed === breed);
 
       if (animal.data.values.working) {
         // зарождение ресурса
@@ -30,7 +30,7 @@ function interval(): void {
       }
 
       if (animal.data.values.resource === 1000 && this.resources.getLength() <= this.maxCountResource) {
-        const resource: IeventResource = {
+        const resource: IunicornResource = {
           type: animal.data.values.base.data.values.type,
           x: animal.x,
           y: animal.y + animal.height / 2,
@@ -106,7 +106,7 @@ function interval(): void {
     let proceeds: string = String(0);
     this.animals.children.entries.forEach(animal => {
       if (animal.data.values.active.data.values.working) {
-        let price: string = this.state.unicornSettings.unicornSettings.find((data: IeventPoints) => data.breed === animal.data.values.type).resourcePrice;
+        let price: string = this.state.unicornSettings.unicornSettings.find((data: IunicornPoints) => data.breed === animal.data.values.type).resourcePrice;
         proceeds = BigInteger.add(proceeds, price);
       }
     });

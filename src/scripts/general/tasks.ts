@@ -625,7 +625,7 @@ function checkAvailabilityOfTasks(state: Istate, task: IclanTask): boolean {
     count += state.sheepTerritories.filter(el => el.type === 0 && el.cooldown < 0).length;
     count += state.chickenTerritories.filter(el => el.type === 0 && el.cooldown < 0).length;
     count += state.cowTerritories.filter(el => el.type === 0 && el.cooldown < 0).length;
-    if (state.eventTerritories) count += state.eventTerritories.filter(el => el.type === 0).length;
+    if (state.unicornTerritories) count += state.unicornTerritories.filter(el => el.type === 0).length;
     return count >= task.count;
   } else if (task.type === 16) {
     let count: number = 0;

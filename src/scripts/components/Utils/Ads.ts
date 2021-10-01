@@ -165,7 +165,7 @@ export default class Ads {
           this.scene.state.userCow.collectorTakenTime = this.scene.state.userCow.collector;
         } else if (this.scene.state.farm === 'Unicorn') {
           type = 'resource_catcher';
-          time = this.scene.state.eventCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userUnicorn.collectorLevel).time * 2;
+          time = this.scene.state.unicornCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userUnicorn.collectorLevel).time * 2;
           this.scene.state.userUnicorn.collector = time * 60;
           this.scene.state.userUnicorn.collectorTakenTime = this.scene.state.userUnicorn.collector;
         }
@@ -213,7 +213,7 @@ export default class Ads {
         type = 'take_event_animal';
         break;
       case 5:
-        this.scene.state.userUnicorn.money = BigInteger.add(this.scene.state.userUnicorn.money, this.scene.state.modal.eventParams.offlineProgress);
+        this.scene.state.userUnicorn.money = BigInteger.add(this.scene.state.userUnicorn.money, this.scene.state.modal.unicornParams.offlineProgress);
         MoneyAnimation.create(this.scene.game.scene.keys[this.scene.state.farm + 'Bars']);
         this.scene.state.amplitude.logAmplitudeEvent('take_double_profit_event', {
           price: 'ad'

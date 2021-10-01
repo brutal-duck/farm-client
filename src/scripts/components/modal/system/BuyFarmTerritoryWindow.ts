@@ -55,7 +55,7 @@ export default class BuyFarmTerritoryWindow {
   }
 
 
-  private unicornFarmBtns(settings: IeventTerritoriesPrice): void {
+  private unicornFarmBtns(settings: IunicornTerritoriesPrice): void {
     const right1 = {
       icon: 'diamond',
       text: settings.diamond

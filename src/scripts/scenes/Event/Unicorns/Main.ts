@@ -121,7 +121,7 @@ class Unicorn extends Phaser.Scene {
   public bottomIndent: number = 240; // нижний отступ мира (не считая нахлест)
   public height: number; // ширина-высота территории
   public alarm: boolean;
-  public settings: IeventSettings; // настройки
+  public settings: IunicornSettings; // настройки
   public collector: number = 0; // время собирателя в секундах
   public collectorTakenTime: number = 0; // время на сколько брали собирателя
   public autoSaveTimer: number = 0; // таймер для автосохранения

@@ -122,34 +122,35 @@ function checkDoneTasks(state: Istate): void {
 }
 
 export default function loadData(response: AxiosResponse): void {
-  if (this.state.build < response.data.user.build || response.data.user.banned) {
+  const state: Istate = this.state;
+  if (state.build < response.data.user.build || response.data.user.banned) {
     this.children.destroy();
     new ErrorWindow(this);
     return;
   }
 
-  if (this.state.farm === 'Sheep') this.state.offline = response.data.progress.sheepOfflineTime;
-  else if (this.state.farm === 'Chicken') this.state.offline = response.data.progress.chickenOfflineTime;
-  else if (this.state.farm === 'Cow') this.state.offline = response.data.progress.cowOfflineTime;
-  else if (this.state.farm === 'Unicorn') this.state.offline = response.data.progress.eventOfflineTime;
+  if (state.farm === 'Sheep') state.offline = response.data.progress.sheepOfflineTime;
+  else if (state.farm === 'Chicken') state.offline = response.data.progress.chickenOfflineTime;
+  else if (state.farm === 'Cow') state.offline = response.data.progress.cowOfflineTime;
+  else if (state.farm === 'Unicorn') state.offline = response.data.progress.eventOfflineTime;
   // общие настройки
-  this.state.autoSaveSpeed = general.autoSaveSpeed;
-  this.state.maxMerginTime = general.maxMerginTime;
-  this.state.herdBoostSpeedAnimal = general.herdBoostSpeedAnimal;
-  this.state.herdBoostTime = general.herdBoostTime;
-  this.state.herdBoostPrice = general.herdBoostPrice;
-  this.state.herdBoostDelay = general.herdBoostDelay;
-  this.state.packages = general.packages;
+  state.autoSaveSpeed = general.autoSaveSpeed;
+  state.maxMerginTime = general.maxMerginTime;
+  state.herdBoostSpeedAnimal = general.herdBoostSpeedAnimal;
+  state.herdBoostTime = general.herdBoostTime;
+  state.herdBoostPrice = general.herdBoostPrice;
+  state.herdBoostDelay = general.herdBoostDelay;
+  state.packages = general.packages;
 
   // общие данные
-  this.state.dailyAwards = response.data.user.dailyAwards;
-  this.state.newbieTime = response.data.progress.newbieTime;
-  this.state.daily = response.data.progress.daily;
-  this.state.timeToNewDay = response.data.progress.timeToNewDay;
+  state.dailyAwards = response.data.user.dailyAwards;
+  state.newbieTime = response.data.progress.newbieTime;
+  state.daily = response.data.progress.daily;
+  state.timeToNewDay = response.data.progress.timeToNewDay;
 
-  this.state.sheepSettings = sheepSettings;
-  this.state.chickenSettings = chickenSettings;
-  this.state.cowSettings = cowSettings;
+  state.sheepSettings = sheepSettings;
+  state.chickenSettings = chickenSettings;
+  state.cowSettings = cowSettings;
   // животные
   const sheep: Isheep[] = [];
   for (let i in response.data.user.sheep) {    
@@ -196,9 +197,9 @@ export default function loadData(response: AxiosResponse): void {
     });
   };
   
-  this.state.sheep = sheep;
-  this.state.chicken = chicken;
-  this.state.cow = cow;
+  state.sheep = sheep;
+  state.chicken = chicken;
+  state.cow = cow;
 
   //территории для обычных ферм
   const sheepTerritories: Iterritories[] = [];
@@ -252,9 +253,9 @@ export default function loadData(response: AxiosResponse): void {
   if (chickenTerritories.length === 0) response.data.user.chicken_money = basicUserCow.money;
   if (cowTerritories.length === 0) response.data.user.cow_money = basicUserChicken.money;
 
-  this.state.sheepTerritories = DataValidator.validateTerritories(sheepTerritories, 1);
-  this.state.chickenTerritories = DataValidator.validateTerritories(chickenTerritories, 2);
-  this.state.cowTerritories = DataValidator.validateTerritories(cowTerritories, 3);
+  state.sheepTerritories = DataValidator.validateTerritories(sheepTerritories, 1);
+  state.chickenTerritories = DataValidator.validateTerritories(chickenTerritories, 2);
+  state.cowTerritories = DataValidator.validateTerritories(cowTerritories, 3);
 
   // яйца
   const chickenEggs: IchickenEgg[] = [];
@@ -267,7 +268,7 @@ export default function loadData(response: AxiosResponse): void {
       type: egg.type
     });
   }
-  this.state.chickenEggs = chickenEggs;
+  state.chickenEggs = chickenEggs;
   const boosts: Iboosts = DataValidator.validateBoosts(response.data.user.boosts);
   const user: Iuser = {
     diamonds: response.data.user.diamonds,
@@ -293,15 +294,15 @@ export default function loadData(response: AxiosResponse): void {
     avatar: response.data.user.avatar,
     clanTasks: response.data.user.clan_tasks || [],
   };
-  this.state.user = DataValidator.validateUser(user);
+  state.user = DataValidator.validateUser(user);
 
-  this.state.clan = DataValidator.validateClan(response.data.clan);
-  if (this.state.name === '' && this.state.platform === 'ya') {
-    this.state.name = `yandex_${user.id.substr(0, 4)}`;
+  state.clan = DataValidator.validateClan(response.data.clan);
+  if (state.name === '' && state.platform === 'ya') {
+    state.name = `yandex_${user.id.substr(0, 4)}`;
   }
   
-  if (response.data.user.chicken_part === 0 && this.state.farm === 'Chicken') response.data.user.chicken_part = 1;
-  if (response.data.user.cow_part === 0 && this.state.farm === 'Cow') response.data.user.cow_part = 1;
+  if (response.data.user.chicken_part === 0 && state.farm === 'Chicken') response.data.user.chicken_part = 1;
+  if (response.data.user.cow_part === 0 && state.farm === 'Cow') response.data.user.cow_part = 1;
 
   const userSheep: IuserSheep = {
     money: response.data.user.money,
@@ -375,17 +376,17 @@ export default function loadData(response: AxiosResponse): void {
     }
   }
 
-  this.state.userSheep = DataValidator.validateUserSheep(userSheep);
-  this.state.userChicken = DataValidator.validateUserChicken(userChicken);
-  this.state.userCow = DataValidator.validateUserCow(userCow);
+  state.userSheep = DataValidator.validateUserSheep(userSheep);
+  state.userChicken = DataValidator.validateUserChicken(userChicken);
+  state.userCow = DataValidator.validateUserCow(userCow);
 
-  this.state.sheepTasks = DataValidator.setTaskStatus(1, response.data.user.sheep_tasks);
-  this.state.chickenTasks = DataValidator.setTaskStatus(2, response.data.user.chicken_tasks);;
-  this.state.cowTasks = DataValidator.setTaskStatus(3, response.data.user.cow_tasks);;
+  state.sheepTasks = DataValidator.setTaskStatus(1, response.data.user.sheep_tasks);
+  state.chickenTasks = DataValidator.setTaskStatus(2, response.data.user.chicken_tasks);;
+  state.cowTasks = DataValidator.setTaskStatus(3, response.data.user.cow_tasks);;
 
-  this.state.sheepCollectorSettings = sheepCollectorSettings;
-  this.state.chickenCollectorSettings = chickenCollectorSettings;
-  this.state.cowCollectorSettings = cowCollectorSettings;
+  state.sheepCollectorSettings = sheepCollectorSettings;
+  state.chickenCollectorSettings = chickenCollectorSettings;
+  state.cowCollectorSettings = cowCollectorSettings;
 
   const basicProgress: Iprogress = getProgress();
   const progress: Iprogress = {
@@ -432,24 +433,24 @@ export default function loadData(response: AxiosResponse): void {
       type: response.data.settings.clanEvent.type,
     }
   }
-  this.state.progress = progress;
+  state.progress = progress;
   if (response.data.user.build < 3.9) {
-    this.state.sheepTerritories = updateImproveTerritories(this.state.sheepTerritories);
-    this.state.chickenTerritories = updateImproveTerritories(this.state.chickenTerritories);
-    checkDoneTasks(this.state);
+    state.sheepTerritories = updateImproveTerritories(state.sheepTerritories);
+    state.chickenTerritories = updateImproveTerritories(state.chickenTerritories);
+    checkDoneTasks(state);
   }
   
   if (
-    this.state.progress.event.type === 1 
-    && this.state.progress.event.startTime < 0 
-    && this.state.progress.event.open
+    state.progress.event.type === 1 
+    && state.progress.event.startTime < 0 
+    && state.progress.event.open
   ) {
-    this.state.unicornSettings = unicornSettings;
+    state.unicornSettings = unicornSettings;
 
-    const eventAnimals: IeventAnimal[] = []; // IeventAnimal
+    const unicorn: Iunicorn[] = []; // IeventAnimal
     for (let i in response.data.event.animals) {
       let animal = response.data.event.animals[i];
-      eventAnimals.push({
+      unicorn.push({
         _id: animal._id,
         type: animal.type,
         activeAnimal: animal.activeAnimal,
@@ -458,10 +459,10 @@ export default function loadData(response: AxiosResponse): void {
       });
     }
 
-    const eventTerritories: IeventTerritories[] = [];
+    const unicornTerritories: IunicornTerritories[] = [];
     for (let i in response.data.event.territories) {
       let territory = response.data.event.territories[i];
-      eventTerritories.push({
+      unicornTerritories.push({
         _id: territory._id,
         block: territory.block,
         position: territory.position,
@@ -469,10 +470,10 @@ export default function loadData(response: AxiosResponse): void {
       });
     }
 
-    const eventResources: IeventResource[] = []; // IeventResource
+    const unicornResources: IunicornResource[] = []; // IeventResource
     for (let i in response.data.event.resources) {
       let eventResource = response.data.event.resources[i];
-      eventResources.push({
+      unicornResources.push({
         _id: eventResource._id,
         x: eventResource.x,
         y: eventResource.y,
@@ -481,13 +482,13 @@ export default function loadData(response: AxiosResponse): void {
     }
 
     const countAnimal = response.data.event.countAnimal;
-    if (countAnimal.length < this.state.unicornSettings.unicornSettings.length) {
-      let addCounter: number = this.state.unicornSettings.unicornSettings.length - countAnimal.length;
+    if (countAnimal.length < state.unicornSettings.unicornSettings.length) {
+      let addCounter: number = state.unicornSettings.unicornSettings.length - countAnimal.length;
       for (let i = 0; i < addCounter; i++) {
         countAnimal.push({ counter: 1 });
       }
     }
-    const userUnicorn: IuserEvent = {  
+    const userUnicorn: IuserUnicorn = {  
       money: response.data.event.money,
       countAnimal: countAnimal,
       collector: response.data.event.collector,
@@ -504,37 +505,37 @@ export default function loadData(response: AxiosResponse): void {
       takenAward: response.data.event.takenAward,
     };
 
-    this.state.eventTerritories = eventTerritories;
-    this.state.eventAnimals = eventAnimals;
-    this.state.eventResources = eventResources; 
-    this.state.userUnicorn = userUnicorn;
-    this.state.eventCollectorSettings = basicUnicornCollector;
+    state.unicornTerritories = unicornTerritories;
+    state.unicorn = unicorn;
+    state.unicornResources = unicornResources; 
+    state.userUnicorn = userUnicorn;
+    state.unicornCollectorSettings = basicUnicornCollector;
   }
 
-  if (this.state.user.clanId) {
-    checkUserName(this.state);
+  if (state.user.clanId) {
+    checkUserName(state);
     const currentDate: Date = new Date(response.data.time * 1000);
     const autosaveDate: Date = new Date(response.data.user.time * 1000);
     const currentDay: string = `${currentDate.getDate()}.${currentDate.getMonth()}.${currentDate.getFullYear()}`;
     const autosaveDay: string = `${autosaveDate.getDate()}.${autosaveDate.getMonth()}.${autosaveDate.getFullYear()}`;
-    if (currentDay !== autosaveDay || this.state.user.clanTasks?.length <= 0 || !this.state.user.clanTasks) {
-       this.state.user.clanTasks = getNewClanTasks(this.state);
+    if (currentDay !== autosaveDay || state.user.clanTasks?.length <= 0 || !state.user.clanTasks) {
+       state.user.clanTasks = getNewClanTasks(state);
     }
   }
 
-  if (this.state.progress.clanEvent.endTime <= 0 && this.state.user.clanId) {
+  if (state.progress.clanEvent.endTime <= 0 && state.user.clanId) {
     const data = {
-      id: this.state.user.id,
-      hash: this.state.user.hash,
-      counter: this.state.user.counter,
+      id: state.user.id,
+      hash: state.user.hash,
+      counter: state.user.counter,
     };
     axios.post(process.env.API + '/checkTournamentAward', data).then(res => {
       const { error, userAward } = res.data;
-      if (!error) this.state.clanEventTakenAward = userAward;
+      if (!error) state.clanEventTakenAward = userAward;
     });
   }
   
-  this.state.sales = response.data.sales || [];
+  state.sales = response.data.sales || [];
 
   this.userReady = true;
 }
