@@ -15,6 +15,7 @@ export default class HerdBoostUnicornWindow {
   private elements: (Phaser.GameObjects.Text | Phaser.GameObjects.Sprite)[];
   private mergingArray: any[];
   private animalForBoost: Phaser.Physics.Arcade.Group;
+  private currentTime: number;
 
   constructor(scene: Modal) {
     this.scene = scene;
@@ -31,6 +32,27 @@ export default class HerdBoostUnicornWindow {
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.scrollY = 0; // останавливаем скролл
   }
 
+  private createSkipBtn(): void {
+    const skip = this.scene.add.text(710, 30, this.scene.state.lang.skipHerdBoost, {
+      font: '24px Shadow',
+      color: '#868686'
+    }).setOrigin(1, 0.5);
+
+    const geom = skip.getBounds();
+
+    const zone: Phaser.GameObjects.Zone = this.scene.add.zone(
+      geom.x - 10 + geom.width / 2,
+      geom.y + geom.height / 2,
+      geom.width + 30, 
+      geom.height + 30
+    ).setDropZone(undefined, () => {});
+
+    this.scene.click(zone, (): void => {
+      this.currentTime = 1;
+      zone.destroy();
+      skip.destroy();
+    });  
+  }
 
   private create(): void {
     let startCount: number = 5;
@@ -304,7 +326,7 @@ export default class HerdBoostUnicornWindow {
     // создаю группу для животных
     this.animalForBoost = this.scene.physics.add.group();
     this.flyAnimal(); // полет животных
-    let currentTime: number = this.scene.state.herdBoostTime;
+    this.currentTime = this.scene.state.herdBoostTime;
 
     const timerCreate: Phaser.Time.TimerEvent = this.scene.time.addEvent({
       delay: this.scene.state.herdBoostDelay,
@@ -314,15 +336,15 @@ export default class HerdBoostUnicornWindow {
     });
     
     let [timerText]: any = this.elements;
-
+    this.createSkipBtn();
     // таймер переключающий время
     const timerTickText: Phaser.Time.TimerEvent = this.scene.time.addEvent({
       delay: 1000,
       loop: true,
       callback: () => {
-        --currentTime;
-        timerText.setText(currentTime);
-        if (currentTime <= 0) {
+        --this.currentTime;
+        timerText.setText(this.currentTime);
+        if (this.currentTime <= 0) {
           this.animalForBoost.children.entries.forEach((animal) => {
             animal?.data?.values.cloud?.destroy();
           });
