@@ -172,17 +172,18 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
         settings.type = 'free-diamond';
         settings.right = this.scene.state.lang.take;
       }
-      const hours4Action: () => void = (): void => {
+      const action: () => void = (): void => {
         this.scene.game.scene.keys[this.farm].buyCollector(hoursCount === 4 ? 3 : 4);
         this.scene.game.scene.keys[this.farm].autosave();
       };
       if (Utils.checkSale(this.scene.state.sales, `${this.farm.toUpperCase()}_COLLECTOR_PRICE`)) {
-
+        settings.sale = String(Math.ceil(price / 2));
       }
-      const hours4 = new CollectorButton(this.scene, position, hours4Action, settings);
-      this.createCollectorBoostNotificator(hours4, boostCount);
+      const btn = new CollectorButton(this.scene, position, action, settings);
+      this.createCollectorBoostNotificator(btn, boostCount);
     } else {
       settings.type = 'lock';
+      settings.right = `${this.scene.state.lang.lvl} ${unlockCollector}`;
       new CollectorButton(this.scene, position, null, settings);
     }
   }
@@ -257,6 +258,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
       right: '',
       type: 'ad',
     };
+    const sale = Utils.checkSale(this.scene.state.sales, `${this.farm.toUpperCase()}_COLLECTOR_PRICE`)
 
     let action: () => void = null;
 
@@ -275,6 +277,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
           this.scene.game.scene.keys[this.scene.state.farm].autosave();
         };
         settings.right = String(price);
+        settings.sale = sale ? String(Math.ceil(price / 2)) : null;
         settings.type = 'ad-diamond';
       }
 
@@ -283,6 +286,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
         settings.type = 'lock-ad';
       else {
         settings.right = String(price);
+        settings.sale = sale ? String(Math.ceil(price / 2)) : null;
         settings.type = 'lock-ad-diamond';
       }
     }
