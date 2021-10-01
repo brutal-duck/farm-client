@@ -245,9 +245,8 @@ export default class ImproveClanFarmWindow extends Phaser.GameObjects.Sprite{
     if (BigInteger.greaterThanOrEqual(this.scene.state.clan[this.farm].money, this.price)) {
       this.postServer().then(res => {
         if (!res.data) {
-          this.scene.state.amplitude.logAmplitudeEvent('clan_diamonds_spent', {
-            type: `improve_clan_${this.farm}`,
-            count: this.price,
+          this.scene.state.amplitude.logAmplitudeEvent(`clan_${this.farm}_improve`, {
+            level: this.level + 1,
           });
           this.scene.scene.stop();
         }
