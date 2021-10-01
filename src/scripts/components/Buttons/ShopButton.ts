@@ -29,10 +29,7 @@ export default class ShopButton extends Button {
   constructor(scene: scenesType, position: Iposition, action: () => void, elements: IshopButtonElements) {
     super(scene, position, action);
     this.createChildren(elements);
-  }
-
-  protected init(): void {
-    super.init();
+    if (action) this.setClickListener();
   }
 
   private createChildren(elements: IshopButtonElements): void {
@@ -55,11 +52,6 @@ export default class ShopButton extends Button {
     }
     this.add(this.text1);
     this.add(this.img);
-    this.setClickListener();
-  }
-
-  private updateText(): void {
-
   }
 
   public setText(text1: string, text2: string): void {

@@ -139,4 +139,14 @@ export default class Button extends Phaser.GameObjects.Group {
   public get y(): number {
     return this.position.y;
   }
+  
+  public destroy(): void {
+    this.mainSprite.destroy();
+    super.destroy(true);
+  }
+
+  public getBounds(): Phaser.Geom.Rectangle {
+    if (this.mainSprite) return this.mainSprite.getBounds();
+    return null;
+  }
 }
