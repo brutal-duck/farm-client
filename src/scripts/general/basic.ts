@@ -438,7 +438,7 @@ function exchange(ad: boolean = false): void {
     }, callbackScope: this, loop: false });
   } else {
     this.state.user.diamonds -= this.state.convertor.diamonds;
-    if (checkActiveSale())user.money += this.convertDiamonds(2 * this.state.convertor.diamonds);
+    if (checkActiveSale()) user.money += this.convertDiamonds(2 * this.state.convertor.diamonds);
     else user.money += this.convertDiamonds(this.state.convertor.diamonds);
     this.game.scene.keys[this.state.farm].tryClanTask(10, 0, this.state.convertor.diamonds);
     if (this.scene.isActive('ClanFarm')) {
@@ -477,6 +477,7 @@ function exchange(ad: boolean = false): void {
     } else if (this.state.convertor.fun === 8) {
       this.improveCollector();
     }
+    this.autosave();
   }
 }
 
