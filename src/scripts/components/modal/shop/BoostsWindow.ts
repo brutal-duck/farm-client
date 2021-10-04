@@ -303,7 +303,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     const farmUser: IuserSheep | IuserChicken | IuserCow | IuserUnicorn = this.scene.state[`user${this.scene.state.farm}`];
     if (farmUser.collector === 0) {
       if (this.scene.state.farm === 'Sheep' && farmUser.tutorial === 90) Arrow.generate(this.scene, 8);
-      if (this.scene.state.userUnicorn.tutorial === 90) Arrow.generate(this.scene, 8);
+      if (this.scene.state.userUnicorn && this.scene.state.userUnicorn.tutorial === 90) Arrow.generate(this.scene, 8);
 
     }
   }
