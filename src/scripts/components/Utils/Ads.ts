@@ -74,7 +74,12 @@ export default class Ads {
         this.adReward();
         this.scene.scene.stop('Block');
       });
-      this.scene.state.adman.onSkipped((): void => {});      
+      this.scene.state.adman.onSkipped((): void => {
+        this.scene.state.musicVolume = this.musicVolume;
+        this.scene.state.soundVolume = this.soundVolume;
+        //@ts-ignore
+        this.scene.sound.get('music').volume = this.scene.state.musicVolume;
+      });      
       this.scene.state.adman.onClicked((): void => {}); 
       this.scene.state.adman.start('preroll');
     } else if (this.scene.state.platform === 'ya') {
@@ -89,6 +94,10 @@ export default class Ads {
           },
           onClose: (): void => {
             console.log('onClose');
+            this.scene.state.musicVolume = this.musicVolume;
+            this.scene.state.soundVolume = this.soundVolume;
+            //@ts-ignore
+            this.scene.sound.get('music').volume = this.scene.state.musicVolume;
           },
         }
       });

@@ -443,6 +443,10 @@ class Boot extends Phaser.Scene {
       // @ts-ignore
       window.admob.rewardvideo.prepare();
       this.state.readyAd = false;
+      this.state.musicVolume = this.game.scene.keys[this.state.farm].ads.musicVolume;
+      this.state.soundVolume = this.game.scene.keys[this.state.farm].ads.soundVolume;
+      //@ts-ignore
+      this.sound.get('music').volume = this.state.musicVolume;
     });
 
     document.addEventListener('admob.rewardvideo.events.REWARD', (): void => {

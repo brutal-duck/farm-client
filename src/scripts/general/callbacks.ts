@@ -29,6 +29,10 @@ function okCallback(): void {
         // this.game.scene.keys[this.state.farm].adReward();
         this.game.scene.keys[this.state.farm].ads.adReward();
       }
+      this.scene.state.musicVolume = this.musicVolume;
+      this.scene.state.soundVolume = this.soundVolume;
+      //@ts-ignore
+      this.scene.sound.get('music').volume = this.scene.state.musicVolume;
     }
 
     
