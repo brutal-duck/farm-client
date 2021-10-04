@@ -139,6 +139,18 @@ export default class Button extends Phaser.GameObjects.Group {
   public get y(): number {
     return this.position.y;
   }
+
+  public set x(x: number) {
+    this.position.x = x;
+    this.children.iterate((el: childrenType) => {
+      el.x = this.position.x - 5;
+    });
+    this.mainSprite.x = x;
+  }
+
+  public get x(): number {
+    return this.position.x;
+  }
   
   public destroy(): void {
     this.mainSprite.destroy();
