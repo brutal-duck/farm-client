@@ -32,6 +32,7 @@ export default class CowTerritory extends Territory {
   }
 
   public sellResource(): void {
+    super.sellResource();
     this.scene.sellMilk();
   }
 

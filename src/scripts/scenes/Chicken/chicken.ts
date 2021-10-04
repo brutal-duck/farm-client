@@ -543,11 +543,8 @@ function collectEgg(egg: Egg, manualСollect: boolean = false): void {
 
 // продать яйца из хранилища
 function sellEggs(): void {
-
   if (this.state.territory) {
-
     if (this.state.territory.territoryType === 5 && this.state.territory.money > 0) {
-
       this.tryTask(20, 0);
       this.tryClanTask(2);
 
@@ -559,12 +556,11 @@ function sellEggs(): void {
         x: this.state.territory.x + 120,
         y: this.state.territory.y + 120
       });
-
+      this.autosave();
     }
-
   }
-
 }
+
 // подтверждение продажи курицы
 function confirmExpelChicken(): void {
 

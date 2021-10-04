@@ -408,7 +408,7 @@ function sellMilk(): void {
         y: this.state.territory.y + 120
       });
       this.tryClanTask(2);
-
+      this.autosave();
     }
   }
 }

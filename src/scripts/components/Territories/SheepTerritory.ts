@@ -14,6 +14,7 @@ export default class SheepTerritory extends Territory {
   }
 
   public sellResource(): void {
+    super.sellResource();
     this.scene.sellWool();
   }
 
