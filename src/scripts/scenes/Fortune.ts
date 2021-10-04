@@ -77,11 +77,11 @@ export default class Fortune extends Phaser.Scene {
 
   public create(): void {
     const data = {
-      name: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
+      name: this.state.platform !== 'web' && this.state.platform !== 'android' ? this.state.name : this.state.user.login,
       spending: 0,
       prize: 0,
       jackpot: false,
-    }
+    };
     this.state.socket.io.emit('fortune-send', data);
     this.add.tileSprite(0, 0,
       Number(this.game.config.width),
