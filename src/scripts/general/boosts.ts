@@ -7,18 +7,23 @@ function createBoostAnimal(): void {
   this.tryTask(22, 0);
   this.tryClanTask(3);
 
+  let price: number = this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost;
+  if (Utils.checkSale(this.state.sales, `${this.state.farm.toUpperCase()}_HERD`)) {
+    price = Math.floor(price / 2);
+  }
+
   if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0) {
-    this.state.user.diamonds -= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost;
+    this.state.user.diamonds -= price;
     this.state[`user${this.state.farm}`].takenHerdBoost += 1;
   } else if (this.state.user.boosts[this.state.farm.toLowerCase()].herd > 0) {
     this.state.user.boosts[this.state.farm.toLowerCase()].herd -= 1;
     this.state.amplitude.logAmplitudeEvent('herd_boost_spent', {});
   } else if (this.state.user.boosts[this.state.farm.toLowerCase()].herd <= 0) {
-    this.state.user.diamonds -= this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost;
-    this.tryTask(15, 0, this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost);
+    this.state.user.diamonds -= price;
+    this.tryTask(15, 0, price);
     this.state.amplitude.logAmplitudeEvent('diamonds_spent', {
       type: 'herd',
-      count: this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost,
+      count: price,
     });
     this.state[`user${this.state.farm}`].takenHerdBoost += 1;
     this.state.amplitude.logAmplitudeEvent('booster_merge', {

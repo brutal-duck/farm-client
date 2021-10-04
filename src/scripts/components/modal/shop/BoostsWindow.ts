@@ -4,6 +4,10 @@ import Arrow from "../../animations/Arrow";
 import CollectorButton from './../../Buttons/CollectorButton';
 import Utils from './../../../libs/Utils';
 import BoostButton from './../../Buttons/BoostButton';
+import Sheep from './../../../scenes/Sheep/Main';
+import Chicken from './../../../scenes/Chicken/Main';
+import Cow from './../../../scenes/Cow/Main';
+import Unicorn from './../../../scenes/Event/Unicorns/Main';
 
 const ONE_HOUR: number = 3600;
 const TWO_HOURS: number = 7200;    
@@ -18,22 +22,16 @@ const btnTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
 export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   public scene: Shop;
   private farm: string;
-
   private herdBoostTimerText: Phaser.GameObjects.Text;
-  // private herdBoostBtnRightText: Phaser.GameObjects.Text;
-  // private herdBoostBtnLeftText: Phaser.GameObjects.Text;
-  // private herdBoostDiamondBtn: Phaser.GameObjects.Sprite;
   private herdBoostButton: BoostButton;
+  private feedBoostButton: BoostButton;
   private herdBoostBtnUpdated: boolean;
+  private feedBoostBtnUpdated: boolean;
   private feedProgressBar: Phaser.GameObjects.TileSprite;
   private feedProgressText: Phaser.GameObjects.Text;
   private feedProgressBarBg: Phaser.GameObjects.Sprite;
-  private feedBoostBtnRightText: Phaser.GameObjects.Text;
-  private feedBoostBtnLeftText: Phaser.GameObjects.Text;
-  private feedBoostDiamondBtn: Phaser.GameObjects.Sprite;
-  private feedBoostBtn: Phaser.GameObjects.Sprite;
-  private feedBoostNotification: Phaser.GameObjects.Text;
-  private feedBoostNotificationBg: Phaser.GameObjects.Sprite;
+  private feedBoostNotificator: Phaser.GameObjects.Text;
+  private feedBoostNotificatorBg: Phaser.GameObjects.Sprite;
   private herdBoostNotificator: Phaser.GameObjects.Text;
   private herdBoostNotificatorBg: Phaser.GameObjects.Sprite;
   private collectorTimer: Phaser.GameObjects.Text;
@@ -80,7 +78,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
       case 'Unicorn':
         this.collectorBoost();
         if (this.checkEventHerdBoost()) this.herdBoost();
-        if (this.checkEventFeedBoost()) this.eventFeedBoost();
+        if (this.checkEventFeedBoost()) this.feedBoost();
         break;
     }
     this.createTutorialArrow();
@@ -89,8 +87,10 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   public preUpdate(time: number, delta: number): void {
     super.preUpdate(time, delta);
     if (this.collectorIsOn) this.updateCollectorTime();
-    this.updateHerdBoostBtn();
-    this.updateFeedBoostBtn();
+    if (this.scene.state.farm !== 'Unicorn' && this.checkHerdBoost()) this.updateHerdBoostBtn();
+    else if (this.scene.state.farm === 'Unicorn' && this.checkEventHerdBoost()) this.updateHerdBoostBtn();
+    if (this.scene.state.farm !== 'Unicorn' && this.checkFeedBoost()) this.updateFeedBoostBtn();
+    else if (this.scene.state.farm === 'Unicorn' && this.checkEventFeedBoost()) this.updateFeedBoostBtn();
   }
   
   private collectorBoost(): void {
@@ -345,7 +345,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   }
 
   private destroyHerdBoostBtn(): void {
-    this.herdBoostButton?.destroy();
+    this.feedBoostButton?.destroy();
     this.herdBoostNotificator?.destroy();
     this.herdBoostNotificatorBg?.destroy();
   }
@@ -400,45 +400,34 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
 
     this.herdBoostButton = new BoostButton(this.scene, position, action, settings);
 
-    if (freeBoost > 0) this.createHerdBoostNotificator();
+    const { text, bg } = this.createBoostNotificator(this.herdBoostButton, freeBoost);
+    this.herdBoostNotificator = text;
+    this.herdBoostNotificatorBg = bg;
   }
 
-  private createHerdBoostNotificator(): void {
-    const freeBoost: number = this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].herd;
-    this.herdBoostNotificator = this.scene.add.text(this.herdBoostButton.x + 90, this.herdBoostButton.y - 60, String(freeBoost), {
+  private createBoostNotificator(btn: BoostButton, freeBoost: number): { text: Phaser.GameObjects.Text, bg: Phaser.GameObjects.Sprite } {
+    if (freeBoost <= 0) return { text: null, bg: null };
+    const text = this.scene.add.text(btn.x + 90, btn.y - 30, String(freeBoost), {
       font: '28px Shadow',
       color: '#FFFFFF'
     }).setDepth(2).setOrigin(0.5).setShadow(2, 3, '#724719', 5);
 
-    this.herdBoostNotificatorBg = this.scene.add.sprite(0, 0, 'boost-counter-bg').setDepth(1);
-    const textGeom: Phaser.Geom.Rectangle = this.herdBoostNotificator.getBounds();
+    const bg = this.scene.add.sprite(0, 0, 'boost-counter-bg').setDepth(1);
+    const textGeom: Phaser.Geom.Rectangle = text.getBounds();
     const width: number = textGeom.width + 30 < 60 ? 60 : textGeom.width + 30;
-    this.herdBoostNotificatorBg.setPosition(textGeom.centerX, textGeom.centerY).setDisplaySize(width, textGeom.height + 20);
+    bg.setPosition(textGeom.centerX, textGeom.centerY).setDisplaySize(width, textGeom.height + 20);
+    return { text, bg };
   }
   
   private herdBoostBtnHandler(): void {
+    const MainScene = this.scene.game.scene.keys[this.scene.state.farm] as Sheep | Chicken | Cow | Unicorn;
     const price: number = this.scene.state.herdBoostPrice * this.scene.state[`user${this.scene.state.farm}`].takenHerdBoost;
     const farmBoosts: IfarmBoosts = this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()];
     const freeBoost: number =  farmBoosts ? farmBoosts.herd : 0;
-    if (freeBoost > 0) {
-      this.scene.game.scene.keys[this.scene.state.farm].startHerdBoost();
-    } else {
-      if (this.scene.state.user.diamonds >= price) {
-        this.scene.game.scene.keys[this.scene.state.farm].startHerdBoost();
-      } else {
-        // вызывем конвертор
-        this.scene.state.convertor = {
-          fun: 0,
-          count: price,
-          diamonds: price,
-          type: 1
-        };
-        this.scene.game.scene.keys[this.scene.state.farm].exchange();
-        this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-        this.scene.scene.stop();
-        this.scene.scene.stop('ShopBars');
-        this.scene.scene.stop('Modal');
-      }
+    if (freeBoost > 0) MainScene.startHerdBoost();
+    else {
+      if (this.scene.state.user.diamonds >= price) MainScene.startHerdBoost();
+      else this.openDiamondConvertor(price);
     }
   }
 
@@ -461,351 +450,205 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     
     this.scene.add.sprite(40, y + 35, `${this.scene.state.farm.toLocaleLowerCase()}-feed-boost-icon`).setOrigin(0, 0);
   
-    let xBtn: number =  330;
-    let yBtn: number = y + 135;
-    this.feedBoostBtn = this.scene.add.sprite(xBtn, yBtn, 'improve-collector');
-    this.feedBoostDiamondBtn = this.scene.add.sprite(xBtn, yBtn - 5, 'diamond').setVisible(true).setScale(0.11).setOrigin(0, 0.5);
+    this.createFeedBoostBtn();
     
-    this.feedBoostBtnLeftText = this.scene.add.text(xBtn, yBtn - 5 , '+1 ' + this.scene.state.lang.hour, btnTextStyle).setOrigin(0, 0.5).setDepth(10);
-    this.feedBoostBtnRightText = this.scene.add.text(xBtn, yBtn - 5 , String(shortNum(this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].feedBoostPrice)), btnTextStyle).setOrigin(0, 0.5).setDepth(10);
-
-    this.feedBoostNotification = this.scene.add.text(xBtn + 90, yBtn - 40, this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].feed, { font: '28px Shadow', color: '#FFFFFF' }).setDepth(1).setOrigin(0.5).setVisible(false).setShadow(2, 3, '#724719', 5);
-    this.feedBoostNotificationBg = this.scene.add.sprite(this.feedBoostNotification.x, this.feedBoostNotification.y, 'boost-counter-bg');
-
-    const width: number = (this.feedBoostBtnLeftText.displayWidth + this.feedBoostDiamondBtn.displayWidth + this.feedBoostBtnRightText.displayWidth) / 2;
-
-    this.feedBoostBtnLeftText.setX(this.feedBoostBtn.x - width);
-    this.feedBoostDiamondBtn.setX(this.feedBoostBtnLeftText.getBounds().right + 2);
-    this.feedBoostBtnRightText.setX(this.feedBoostDiamondBtn.getBounds().right + 2);
-    
-    this.feedProgressBarBg = this.scene.add.sprite(10, y + 230, 'pb-chapter-modal').setOrigin(0, 0.5).setScale(0.92, 1).setVisible(false);
-    this.feedProgressBar = this.scene.add.tileSprite(25, y + 230, 0, 16, 'green-progress').setOrigin(0, 0.5).setVisible(false);
-    let progress: number = (this.scene.state[`user${this.scene.state.farm}`].feedBoostTime / (ONE_HOUR * this.scene.game.scene.keys[this.scene.state.farm].feedBoostStack)) * this.maxWidth;
+    this.feedProgressBarBg = this.scene.add.sprite(10, y + 230, 'pb-chapter-modal').setOrigin(0, 0.5).setScale(0.92, 1);
+    this.feedProgressBar = this.scene.add.tileSprite(25, y + 230, 0, 16, 'green-progress').setOrigin(0, 0.5);
+    const time: number = this.scene.state[`user${this.scene.state.farm}`].feedBoostTime;
+    const stack: number = this.scene.game.scene.keys[this.scene.state.farm].feedBoostStack;
+    const progress: number = (time / (ONE_HOUR * stack)) * this.maxWidth;
     this.feedProgressBar.setDisplaySize(progress, 16);
-    this.feedProgressText = this.scene.add.text(240, y + 200, this.scene.state.lang.still + ' ' + shortTime(this.scene.state[`user${this.scene.state.farm}`].feedBoostTime, this.scene.state.lang), {
+    this.feedProgressText = this.scene.add.text(240, y + 200, this.scene.state.lang.still + ' ' + shortTime(time, this.scene.state.lang), {
       font: '21px Shadow',
       color: '#FFFFFF'
-    }).setOrigin(0.5, 0.5).setVisible(false);
+    }).setOrigin(0.5, 0.5);
+  }
   
-    const modalBtn: any = {
-      btn: this.feedBoostBtn,
-      title: this.feedBoostBtnLeftText,
-      text1: this.feedBoostBtnRightText,
-      img1: this.feedBoostDiamondBtn
+  private destroyFeedBoostBtn(): void {
+    this.feedBoostButton?.destroy();
+    this.feedBoostNotificator?.destroy();
+    this.feedBoostNotificatorBg?.destroy();
+  }
+
+  private createFeedBoostBtn(): void {
+    this.feedBoostBtnUpdated = true;
+    const y: number = 585 + this.scene.height;
+    const xBtn: number =  330;
+    const yBtn: number = y + 135;
+    const price: number = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].feedBoostPrice;
+    const halfPrice: number = Math.floor(price / 2);
+    const farmBoosts: IfarmBoosts = this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()];
+    const time: number = this.scene.state[`user${this.scene.state.farm}`].feedBoostTime;
+    const freeBoost: number =  farmBoosts ? farmBoosts.feed : 0;
+    const position: Iposition = {
+      x: xBtn, 
+      y: yBtn,
     };
-    this.scene.clickModalBtn(modalBtn, (): void => { this.feedBoostBtnHandler(); });
+
+    const action: () => void = () => {
+      this.feedBoostBtnHandler();
+    };
+
+    const settings: IboostButtonSetting = {
+      left: `+2 ${this.scene.state.lang.hours}`,
+      right: shortNum(price),
+      sale: null,
+    };
+
+    if (time <= 0) settings.left = `+1 ${this.scene.state.lang.hour}`;
+
+    if (Utils.checkSale(this.scene.state.sales, `${this.scene.state.farm.toUpperCase()}_FEED`)) {
+      settings.sale = shortNum(halfPrice);
+    }
+
+    if (freeBoost > 0) {
+      settings.left = this.scene.state.lang.take;
+      settings.right = null;
+      settings.sale = null;
+    }
+    
+    this.feedBoostButton = new BoostButton(this.scene, position, action, settings);
+
+    const { text, bg } = this.createBoostNotificator(this.feedBoostButton, freeBoost);
+    this.feedBoostNotificator = text;
+    this.feedBoostNotificatorBg = bg;
   }
   
   private feedBoostBtnHandler(): void {
-    if (this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].feed > 0) {
-        
-      if (this.scene.state[`user${this.scene.state.farm}`].feedBoostTime + TWO_HOURS > this.scene.game.scene.keys[this.scene.state.farm].feedBoostStack * ONE_HOUR) {
-        this.scene.scene.stop('Shop');
-        this.scene.scene.stop('ShopBars');
-        this.scene.scene.stop('Modal');
-        const modal: Imodal = {
-          type: 1,
-          sysType: 3,
-          height: 150,
-          message: this.scene.state.lang.feedBoostMax
-        };
-        this.scene.state.modal = modal;
-        this.scene.scene.launch('Modal', this.scene.state);
+    const farmUser: IuserSheep | IuserChicken | IuserCow | IuserUnicorn = this.scene.state[`user${this.scene.state.farm}`];
+    const MainScene = this.scene.game.scene.keys[this.scene.state.farm] as Sheep | Chicken | Cow | Unicorn;
+    const farmBoosts: IfarmBoosts = this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()];
+    const freeBoosts: number = farmBoosts ? farmBoosts.feed : 0;
+    if (freeBoosts > 0) {
+      if (farmUser.feedBoostTime + TWO_HOURS > MainScene.feedBoostStack * ONE_HOUR) {
+        this.showMessageMaxFeedBoost();
       } else {
         this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].feed -= 1;
         this.scene.state.amplitude.logAmplitudeEvent('feed_boost_spent', {});
         this.scene.state.boughtFeedBoost = true;
-        if (this.scene.state[`user${this.scene.state.farm}`].feedBoostTime <= 0) {
-          this.scene.state[`user${this.scene.state.farm}`].feedBoostTime += ONE_HOUR; // прибавить час
-          this.scene.state.amplitude.logAmplitudeEvent('booster_feed_x2', {
-            price: 0,
-            time: 1,
-          });
-          this.scene.game.scene.keys[this.scene.state.farm].tryTask(21, 0, 1);
-          this.scene.game.scene.keys[this.scene.state.farm].tryClanTask(9, 0, 1);
-        } else {
-          const time: number = Math.ceil(this.scene.state[`user${this.scene.state.farm}`].feedBoostTime / ONE_HOUR / 2) + 1;
-          this.scene.state.amplitude.logAmplitudeEvent('booster_feed_x2', {
-            price: 0,
-            time: time,
-          });
-          this.scene.state[`user${this.scene.state.farm}`].feedBoostTime += TWO_HOURS; // прибавить 2часа
-          this.scene.game.scene.keys[this.scene.state.farm].tryTask(21, 0, 2);
-          this.scene.game.scene.keys[this.scene.state.farm].tryClanTask(9, 0, 2);
-        }
+        this.addFeedBoostTime();
+        this.feedBoostBtnUpdated = false;
       }
     } else {
-      if (this.scene.state.user.diamonds >= this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].feedBoostPrice) {
-        if (this.scene.state[`user${this.scene.state.farm}`].feedBoostTime + TWO_HOURS > this.scene.game.scene.keys[this.scene.state.farm].feedBoostStack * ONE_HOUR) {
-  
-          this.scene.scene.stop('Shop');
-          this.scene.scene.stop('ShopBars');
-          this.scene.scene.stop('Modal');
-
-          let modal: Imodal = {
-            type: 1,
-            sysType: 3,
-            height: 150,
-            message: this.scene.state.lang.feedBoostMax
-          };
-          
-          this.scene.state.modal = modal;
-          this.scene.scene.launch('Modal', this.scene.state);
-          
+      let price: number = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].feedBoostPrice;
+      if (Utils.checkSale(this.scene.state.sales, `${this.scene.state.farm.toUpperCase()}_FEED`)) {
+        price = Math.floor(price / 2);
+      }
+      if (this.scene.state.user.diamonds >= price) {
+        if (farmUser.feedBoostTime + TWO_HOURS > MainScene.feedBoostStack * ONE_HOUR) {
+          this.showMessageMaxFeedBoost();
         } else {
-  
           this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
             type: 'booster_feed_x2',
-            count: this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].feedBoostPrice,
+            count: price,
           });
   
-          this.scene.state.user.diamonds -= this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].feedBoostPrice;
-  
+          this.scene.state.user.diamonds -= price;
           this.scene.state.boughtFeedBoost = true;
-          this.scene.game.scene.keys[this.scene.state.farm].tryTask(15, 0, this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].feedBoostPrice);
-          
-          if (this.scene.state[`user${this.scene.state.farm}`].feedBoostTime <= 0) {
-            this.scene.state[`user${this.scene.state.farm}`].feedBoostTime += ONE_HOUR; // прибавить час
-  
-            this.scene.state.amplitude.logAmplitudeEvent('booster_feed_x2', {
-              price: this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].feedBoostPrice,
-              time: 1,
-            });
-            this.scene.game.scene.keys[this.scene.state.farm].tryTask(21, 0, 1);
-            this.scene.game.scene.keys[this.scene.state.farm].tryClanTask(9, 0, 1);
-          } else {
-            const time: number = Math.ceil(this.scene.state[`user${this.scene.state.farm}`].feedBoostTime / ONE_HOUR / 2) + 1;
-            this.scene.state.amplitude.logAmplitudeEvent('booster_feed_x2', {
-              price: this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].feedBoostPrice,
-              time: time,
-            });
-            this.scene.state[`user${this.scene.state.farm}`].feedBoostTime += TWO_HOURS; // прибавить 2часа
-            this.scene.game.scene.keys[this.scene.state.farm].tryTask(21, 0, 2);
-            this.scene.game.scene.keys[this.scene.state.farm].tryClanTask(9, 0, 2);
-          }
+          MainScene.tryTask(15, 0, price);
+          this.addFeedBoostTime(price);
+          this.feedBoostBtnUpdated = false;
         }
       } else {
-        // вызывем конвертор
-        this.scene.state.convertor = {
-          fun: 0,
-          count: this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].feedBoostPrice,
-          diamonds: this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].feedBoostPrice,
-          type: 1
-        };
-        this.scene.game.scene.keys[this.scene.state.farm].exchange();
-        this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-        this.scene.scene.stop();
-        this.scene.scene.stop('ShopBars');
-        this.scene.scene.stop('Modal');
+        this.openDiamondConvertor(price);
       }
     }
   }
 
-  
-  private eventFeedBoost(): void {
-    const y: number = 585 + this.scene.height;
-    this.scene.add.tileSprite(0, y, 466, 270, 'boost-bg').setOrigin(0, 0);
-    this.scene.add.text(240, y + 20, this.scene.state.lang.feedBoostTitle, { 
-      font: '28px Shadow',
-      color: '#FFFFFF',
-      wordWrap: { width: 300 },
-      align: 'center'
-    }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
-  
-    this.scene.add.text(330, y + 75, this.scene.state.lang[`feedBoostSubtitle${this.scene.state.farm}`], { 
-      font: '18px Shadow',
-      color: '#FFFFFF',
-      wordWrap: { width: 240 },
-      align: 'center'
-    }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
-    
-    this.scene.add.sprite(40, y + 35, `${this.scene.state.farm.toLocaleLowerCase()}-feed-boost-icon`).setOrigin(0, 0);
-  
-    const xBtn: number =  330;
-    const yBtn: number = y + 135;
-    this.feedBoostBtn = this.scene.add.sprite(xBtn, yBtn, 'improve-collector');
-    this.feedBoostDiamondBtn = this.scene.add.sprite(xBtn, yBtn - 5, 'diamond').setVisible(true).setScale(0.11).setOrigin(0, 0.5);
-    this.feedBoostBtnLeftText = this.scene.add.text(xBtn, yBtn - 5 , '+1 ' + this.scene.state.lang.hour, btnTextStyle).setOrigin(0, 0.5).setDepth(10);
-    const price: number = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].feedBoostPrice;
-    this.feedBoostBtnRightText = this.scene.add.text(xBtn, yBtn - 5 , String(shortNum(price)), btnTextStyle).setOrigin(0, 0.5).setDepth(10);
-  
-    const width: number = (this.feedBoostBtnLeftText.displayWidth + this.feedBoostDiamondBtn.displayWidth + this.feedBoostBtnRightText.displayWidth) / 2;
-    this.feedBoostBtnLeftText.setX(this.feedBoostBtn.x - width);
-    this.feedBoostDiamondBtn.setX(this.feedBoostBtnLeftText.getBounds().right + 2);
-    this.feedBoostBtnRightText.setX(this.feedBoostDiamondBtn.getBounds().right + 2);
-    this.feedProgressBarBg = this.scene.add.sprite(10, y + 230, 'pb-chapter-modal').setOrigin(0, 0.5).setScale(0.92, 1).setVisible(false);
-    this.feedProgressBar = this.scene.add.tileSprite(25, y + 230, 0, 16, 'green-progress').setOrigin(0, 0.5).setVisible(false);
-
-    const percent: number = (this.scene.state[`user${this.scene.state.farm}`].feedBoostTime / (ONE_HOUR * this.scene.game.scene.keys[this.scene.state.farm].feedBoostStack));
-    const progress: number = percent * this.maxWidth;
-    this.feedProgressBar.setDisplaySize(progress, 16);
-    this.feedProgressText = this.scene.add.text(240, y + 200, this.scene.state.lang.still + ' ' + shortTime(this.scene.state[`user${this.scene.state.farm}`].feedBoostTime, this.scene.state.lang), {
-      font: '21px Shadow',
-      color: '#FFFFFF'
-    }).setOrigin(0.5).setVisible(false);
-  
-    const modalBtn: any = {
-      btn: this.feedBoostBtn,
-      title: this.feedBoostBtnLeftText,
-      text1: this.feedBoostBtnRightText,
-      img1: this.feedBoostDiamondBtn
+  private openDiamondConvertor(price: number) {
+    const MainScene = this.scene.game.scene.keys[this.scene.state.farm] as Sheep | Chicken | Cow | Unicorn;
+    this.scene.state.convertor = {
+      fun: 0,
+      count: price,
+      diamonds: price,
+      type: 1
     };
+    MainScene.exchange();
+    MainScene.scrolling.wheel = true;
+    this.scene.scene.stop();
+    this.scene.scene.stop('ShopBars');
+    this.scene.scene.stop('Modal');
+  }
   
-    this.scene.clickModalBtn(modalBtn, (): void => { this.eventFeedBoostBtnHandler(); });
+  private addFeedBoostTime(price: number = 0): void {
+    const farmUser: IuserSheep | IuserChicken | IuserCow | IuserUnicorn = this.scene.state[`user${this.scene.state.farm}`];
+    const MainScene = this.scene.game.scene.keys[this.scene.state.farm] as Sheep | Chicken | Cow | Unicorn;
+    if (farmUser.feedBoostTime <= 0) {
+      farmUser.feedBoostTime += ONE_HOUR; // прибавить час
+
+      this.scene.state.amplitude.logAmplitudeEvent('booster_feed_x2', {
+        price: price,
+        time: 1,
+      });
+      MainScene.tryTask(21, 0, 1);
+      MainScene.tryClanTask(9, 0, 1);
+    } else {
+      const time: number = Math.ceil(farmUser.feedBoostTime / ONE_HOUR / 2) + 1;
+      this.scene.state.amplitude.logAmplitudeEvent('booster_feed_x2', {
+        price: price,
+        time: time,
+      });
+      farmUser.feedBoostTime += TWO_HOURS; // прибавить 2часа
+      MainScene.tryTask(21, 0, 2);
+      MainScene.tryClanTask(9, 0, 2);
+    }
   }
 
-  private eventFeedBoostBtnHandler(): void {
-    const price: number = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].feedBoostPrice;
-    if (this.scene.state.user.diamonds >= price) {
-      this.scene.state.user.diamonds -= price;
-      this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
-        type: 'booster_feed_x2',
-        count: price,
-      });
+  private showMessageMaxFeedBoost(): void {
+    this.scene.scene.stop('Shop');
+    this.scene.scene.stop('ShopBars');
+    this.scene.scene.stop('Modal');
 
-      if (this.scene.state[`user${this.scene.state.farm}`].feedBoostTime + 7200 > this.scene.game.scene.keys[this.scene.state.farm].feedBoostStack * ONE_HOUR) {
+    let modal: Imodal = {
+      type: 1,
+      sysType: 3,
+      height: 150,
+      message: this.scene.state.lang.feedBoostMax
+    };
 
-        this.scene.scene.stop('Shop');
-        this.scene.scene.stop('ShopBars');
-        this.scene.scene.stop('Modal');
-        let modal: Imodal = {
-          type: 1,
-          sysType: 3,
-          height: 150,
-          message: this.scene.state.lang.feedBoostMax
-        }
-        
-        this.scene.state.modal = modal;
-        this.scene.scene.launch('Modal', this.scene.state);
-        
-      } else {
-        
-        this.scene.state.boughtFeedBoost = true;
-        
-        if (this.scene.state[`user${this.scene.state.farm}`].feedBoostTime <= 0) {
-          this.scene.state[`user${this.scene.state.farm}`].feedBoostTime += ONE_HOUR; // прибавить час
-
-          this.scene.state.amplitude.logAmplitudeEvent('booster_feed_x2', {
-            price: price,
-            time: 1,
-          });
-
-        } else {
-          
-          let time: number = Math.ceil(this.scene.state[`user${this.scene.state.farm}`].feedBoostTime / ONE_HOUR / 2) + 1;
-          this.scene.state.amplitude.logAmplitudeEvent('booster_feed_x2', {
-            price: price,
-            time: time,
-          });
-          this.scene.state[`user${this.scene.state.farm}`].feedBoostTime += 7200; // прибавить 2часа
-        }
-      }
-    } else {
-      // вызывем конвертор
-      this.scene.state.convertor = {
-        fun: 0,
-        count: price,
-        diamonds: price,
-        type: 1
-      }
-
-      this.scene.game.scene.keys[this.scene.state.farm].exchange();
-      this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-      this.scene.scene.stop();
-      this.scene.scene.stop('ShopBars');
-      this.scene.scene.stop('Modal');
-    }
+    this.scene.state.modal = modal;
+    this.scene.scene.launch('Modal', this.scene.state);
   }
 
   private updateHerdBoostBtn(): void {
-    if (this.checkHerdBoost()) {     
-      if (this.herdBoostTimerText?.active) this.herdBoostTimerText?.setText(this.scene.state.lang.stillForBoost + ' ' + shortTime(this.scene.state.timeToNewDay, this.scene.state.lang));
-      if (this.scene.state.timeToNewDay <= 0 && this.herdBoostBtnUpdated) this.herdBoostBtnUpdated = false;
-      if (!this.herdBoostBtnUpdated) {
-        this.destroyHerdBoostBtn();
-        this.createHerdBoostBtn();
-      }
+    if (this.herdBoostTimerText?.active) this.herdBoostTimerText?.setText(this.scene.state.lang.stillForBoost + ' ' + shortTime(this.scene.state.timeToNewDay, this.scene.state.lang));
+    if (this.scene.state.timeToNewDay <= 0 && this.herdBoostBtnUpdated) this.herdBoostBtnUpdated = false;
+    if (!this.herdBoostBtnUpdated) {
+      this.destroyHerdBoostBtn();
+      this.createHerdBoostBtn();
     }
   }
 
   private updateFeedBoostBtn(): void {
-    if (this.checkFeedBoost()) {
-      if (this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].feed > 0) {
-        if (this.feedBoostNotification?.active) this.feedBoostNotification?.setText(this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].feed).setVisible(true);
-        if (this.feedBoostBtnLeftText?.active) this.feedBoostBtnLeftText?.setText(this.scene.state.lang.pickUp);
-        this.feedBoostNotificationBg?.setVisible(true);
-        const textGeom: Phaser.Geom.Rectangle = this.feedBoostNotification?.getBounds();
-        const width: number = textGeom?.width + 30 < 60 ? 60 : textGeom?.width + 30;
-  
-        this.feedBoostNotificationBg?.setDisplaySize(width, textGeom?.height + 20);
-        this.feedBoostBtnRightText?.setVisible(false);
-        this.feedBoostDiamondBtn?.setVisible(false);
-        this.feedBoostBtnLeftText?.setX(this.feedBoostBtn.x - this.feedBoostBtnLeftText?.width / 2);
-      } else {        
-        if (this.feedBoostNotification?.active) this.feedBoostNotification?.setVisible(false);
-        this.feedBoostNotificationBg?.setVisible(false);
-        this.feedBoostBtnRightText?.setVisible(true);
-        this.feedBoostDiamondBtn?.setVisible(true);
+    const feedBoostTime: number = this.scene.state[`user${this.scene.state.farm}`].feedBoostTime;
+    const feedBoostStack: number = this.scene.game.scene.keys[this.scene.state.farm].feedBoostStack;
+    if (!this.feedBoostBtnUpdated) {
+      this.destroyFeedBoostBtn();
+      this.createFeedBoostBtn();
+    }
+
+    if (feedBoostTime > 0) {
+      const percent: number = feedBoostTime / (ONE_HOUR * feedBoostStack);
+      const progress: number =  percent * this.maxWidth;
+      if (this.feedProgressBar && this.feedProgressBar.active) {
+        this.feedProgressBar.setDisplaySize(progress, 16);
+        const leftText: string = this.scene.state.lang.still + ' ' + shortTime(feedBoostTime, this.scene.state.lang);
+        if (!this.feedProgressBar?.visible) this.feedBoostBtnUpdated = false;
+        if (!this.feedProgressBar?.visible) this.feedProgressBar?.setVisible(true);
+        if (!this.feedProgressBarBg?.visible) this.feedProgressBarBg?.setVisible(true);
+        if (!this.feedProgressText?.visible)this.feedProgressText?.setVisible(true);
+        if (this.feedProgressText.text !== leftText) this.feedProgressText.setText(leftText);
       }
-      if (this.scene.state[`user${this.scene.state.farm}`].feedBoostTime > 0) {
-        const percent: number = this.scene.state[`user${this.scene.state.farm}`].feedBoostTime / (ONE_HOUR * this.scene.game.scene.keys[this.scene.state.farm].feedBoostStack);
-        const progress: number =  percent * this.maxWidth;
-        this.feedProgressBar?.setDisplaySize(progress, 16);
-        if (this.feedProgressText?.active) this.feedProgressText?.setText(this.scene.state.lang.still + ' ' + shortTime(this.scene.state[`user${this.scene.state.farm}`].feedBoostTime, this.scene.state.lang)).setVisible(true);
-        this.feedProgressBar?.setVisible(true);
-        this.feedProgressBarBg?.setVisible(true);
-        
-        if (this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].feed <= 0) {
-          if (this.feedBoostBtnLeftText?.active) this.feedBoostBtnLeftText?.setText('+2 ' + this.scene.state.lang.hours);
-          const width: number = (this.feedBoostBtnLeftText.displayWidth + this.feedBoostDiamondBtn.displayWidth + this.feedBoostBtnRightText.displayWidth) / 2;
-          this.feedBoostBtnLeftText.setX(this.feedBoostBtn.x - width);
-          this.feedBoostDiamondBtn.setX(this.feedBoostBtnLeftText.getBounds().right + 2);
-          this.feedBoostBtnRightText.setX(this.feedBoostDiamondBtn.getBounds().right + 2);
-        }
-      } else {
+    } else {
+      if (this.feedProgressBar?.visible) {
+        this.feedBoostBtnUpdated = false;
         this.feedProgressBar?.setVisible(false);
         this.feedProgressText?.setVisible(false);
         this.feedProgressBarBg?.setVisible(false);
-  
-        if (this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()].feed <= 0) {
-          if (this.feedBoostBtnLeftText?.active) this.feedBoostBtnLeftText?.setText('+1 ' + this.scene.state.lang.hour);
-          const width: number = (this.feedBoostBtnLeftText.displayWidth + this.feedBoostDiamondBtn.displayWidth + this.feedBoostBtnRightText.displayWidth) / 2;
-          this.feedBoostBtnLeftText.setX(this.feedBoostBtn.x - width);
-          this.feedBoostDiamondBtn.setX(this.feedBoostBtnLeftText.getBounds().right + 2);
-          this.feedBoostBtnRightText.setX(this.feedBoostDiamondBtn.getBounds().right + 2);
-        }
-      }
-    } 
-  }
-  
-  private updateEventFeedBoostBtn(): void {
-    if (this.scene.scene.isActive('Modal') && this.checkEventFeedBoost()) {
-      if (this.scene.state[`user${this.scene.state.farm}`].feedBoostTime > 0) {
-        const percent: number = this.scene.state[`user${this.scene.state.farm}`].feedBoostTime / (ONE_HOUR * this.scene.game.scene.keys[this.scene.state.farm].feedBoostStack);
-        const progress: number = percent * this.maxWidth;
-        this.feedProgressBar?.setDisplaySize(progress, 16);
-        if (this.feedProgressText?.active) this.feedProgressText.setText(this.scene.state.lang.still + ' ' + shortTime(this.scene.state[`user${this.scene.state.farm}`].feedBoostTime, this.scene.state.lang)).setVisible(true)
-        this.feedProgressBar?.setVisible(true);
-        this.feedProgressBarBg?.setVisible(true);
-        if (this.feedBoostBtnLeftText?.active) this.feedBoostBtnLeftText?.setText('+2 ' + this.scene.state.lang.hours);
-        const width: number = (this.feedBoostBtnLeftText.displayWidth + this.feedBoostDiamondBtn.displayWidth + this.feedBoostBtnRightText.displayWidth) / 2;
-        this.feedBoostBtnLeftText.setX(this.feedBoostBtn.x - width);
-        this.feedBoostDiamondBtn.setX(this.feedBoostBtnLeftText.getBounds().right + 2);
-        this.feedBoostBtnRightText.setX(this.feedBoostDiamondBtn.getBounds().right + 2);
-        
-      } else {
-        if (this.feedProgressBar?.active) this.feedProgressBar?.setVisible(false);
-        if (this.feedProgressText?.active) this.feedProgressText?.setVisible(false);
-        if (this.feedProgressBarBg?.active) this.feedProgressBarBg?.setVisible(false);
-        if (this.feedBoostBtnLeftText?.active) this.feedBoostBtnLeftText?.setText('+1 ' + this.scene.state.lang.hour);
-        const width: number = (this.feedBoostBtnLeftText.displayWidth + this.feedBoostDiamondBtn.displayWidth + this.feedBoostBtnRightText.displayWidth) / 2;
-        this.feedBoostBtnLeftText.setX(this.feedBoostBtn.x - width);
-        this.feedBoostDiamondBtn.setX(this.feedBoostBtnLeftText.getBounds().right + 2);
-        this.feedBoostBtnRightText.setX(this.feedBoostDiamondBtn.getBounds().right + 2);
       }
     }
   }
-
+  
   private updateCollectorTime(): void {
     const time = this.scene.state.lang.still + ' ' + shortTime(this.scene.state[`user${this.scene.state.farm}`].collector, this.scene.state.lang);
     if (this.scene.state[`user${this.scene.state.farm}`].collector === 0 && this.scene.state.modal?.shopType === 4) {
