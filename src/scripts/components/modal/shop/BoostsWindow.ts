@@ -170,16 +170,17 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
 
     if (unlockCollector <= farmPart) {
       const boostCount: number = this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()][`collector${hoursCount}`];
-      if (boostCount > 0) {
-        settings.type = 'free-diamond';
-        settings.right = this.scene.state.lang.take;
-      }
       const action: () => void = (): void => {
         this.scene.game.scene.keys[this.farm].buyCollector(hoursCount === 4 ? 3 : 4);
         this.scene.game.scene.keys[this.farm].autosave();
       };
       if (Utils.checkSale(this.scene.state.sales, `${this.farm.toUpperCase()}_COLLECTOR_PRICE`)) {
         settings.sale = String(Math.floor(price / 2));
+      }
+      if (boostCount > 0) {
+        settings.type = 'free-diamond';
+        settings.right = this.scene.state.lang.take;
+        settings.sale = null;
       }
       const btn = new CollectorButton(this.scene, position, action, settings);
       this.createCollectorBoostNotificator(btn, boostCount);
