@@ -35,6 +35,12 @@ interface IcollectorButtonSetting {
   type: string;
   sale?: string;
 }
+
+interface IboostButtonSetting {
+  left: string;
+  right?: string;
+  sale?: string;
+}
 interface IsheepUserAutoSave {
   diamonds: number;
   xp: number;
@@ -729,12 +735,12 @@ interface IstatusSettings {
   iconVisible: boolean;
 }
 interface Iboosts {
-  sheep: IfarmBosts;
-  chicken: IfarmBosts;
-  cow: IfarmBosts;
+  sheep: IfarmBoosts;
+  chicken: IfarmBoosts;
+  cow: IfarmBoosts;
   fortune: number;
 }
-interface IfarmBosts {
+interface IfarmBoosts {
   collector4: number;
   collector12: number;
   herd: number;

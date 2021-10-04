@@ -116,9 +116,9 @@ export default class DataValidator {
 
   public static validateBoosts (boosts: Iboosts): Iboosts {
     if (boosts) {
-      const sheepBoostsBasic: IfarmBosts = userData.boosts.sheep;
-      const chickenBoostsBasic: IfarmBosts = userData.boosts.chicken;
-      const cowBoostsBasic: IfarmBosts = userData.boosts.cow;
+      const sheepBoostsBasic: IfarmBoosts = userData.boosts.sheep;
+      const chickenBoostsBasic: IfarmBoosts = userData.boosts.chicken;
+      const cowBoostsBasic: IfarmBoosts = userData.boosts.cow;
       const fortuneBoostsBasic: number = userData.boosts.fortune;
     
       for (const key in sheepBoostsBasic) {
