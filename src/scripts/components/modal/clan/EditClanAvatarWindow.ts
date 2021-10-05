@@ -3,6 +3,7 @@ import ClanWindow from './ClanWindow';
 import { Icon } from '../../Utils/LogoManager';
 import axios from "axios";
 import { CHANGE_EMBLEM_COST } from '../../../local/settings';
+import Utils from './../../../libs/Utils';
 
 export default class EditClanAvatarWindow {
   private window: ClanWindow;
@@ -102,6 +103,7 @@ export default class EditClanAvatarWindow {
   }
 
   private onSaveBtn(): void {
+    const price = Utils.checkSale(this.scene.state.sales, 'CLAN') ? (Math.floor(CHANGE_EMBLEM_COST / 2)) : CHANGE_EMBLEM_COST;
     if (!this.scene.state.user.clanId) {
       this.avatar = {
         bg: this.bgScroller.active,
@@ -116,7 +118,7 @@ export default class EditClanAvatarWindow {
       };
       this.scene.scene.restart(this.scene.state);
     } else {
-      if (this.scene.state.user.diamonds >= CHANGE_EMBLEM_COST) {
+      if (this.scene.state.user.diamonds >= price) {
         const data = {
           clanId: this.scene.state.clan.id,
           userId: this.scene.state.user.id,
@@ -135,18 +137,18 @@ export default class EditClanAvatarWindow {
               clanTabType: 4,
             };
             this.scene.scene.restart(this.scene.state);
-            this.scene.state.user.diamonds -= CHANGE_EMBLEM_COST;
+            this.scene.state.user.diamonds -= price;
             this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
               type: 'change_clan_avatar',
-              count: CHANGE_EMBLEM_COST,
+              count: price,
             });
           }
         });
       } else {
         this.scene.state.convertor = {
           fun: 0,
-          count: CHANGE_EMBLEM_COST - this.scene.state.user.diamonds,
-          diamonds: CHANGE_EMBLEM_COST - this.scene.state.user.diamonds,
+          count: price - this.scene.state.user.diamonds,
+          diamonds: price - this.scene.state.user.diamonds,
           type: 2,
         };
         this.scene.state.modal = {

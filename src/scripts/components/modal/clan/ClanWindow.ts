@@ -11,6 +11,7 @@ import ClanTasksWindow from './ClanTasksWindow';
 import RedirectClanWindow from './RedicrectClanWindow';
 import ChangeClanNameWindow from "./ChangeClanNameWindow";
 import JoinClanInviteSendWindow from "./JoinClanInviteSendWindow";
+import BigButton from './../../Buttons/BigButton';
 
 export default class ClanWindow {
   public scene: Modal;
@@ -25,7 +26,7 @@ export default class ClanWindow {
   public headerText: Phaser.GameObjects.Text;
   private footer: Phaser.GameObjects.Sprite;
   private windowType: number
-  public modalElements: Array<modalElementType | Icon | IroundedField> = [];
+  public modalElements: Array<modalElementType | Icon | IroundedField | BigButton> = [];
   
   constructor(scene: Modal) {
     this.scene = scene;

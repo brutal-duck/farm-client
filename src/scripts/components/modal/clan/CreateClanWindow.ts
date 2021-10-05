@@ -3,6 +3,8 @@ import Modal from "../../../scenes/Modal/Modal";
 import ClanWindow from './ClanWindow';
 import LogoManager, { Icon } from './../../Utils/LogoManager';
 import { CREATE_CLAN_COST } from '../../../local/settings';
+import BigButton from './../../Buttons/BigButton';
+import Utils from './../../../libs/Utils';
 
 export default class CreateClanWindow {
   private window: ClanWindow;
@@ -99,12 +101,23 @@ export default class CreateClanWindow {
     this.scene.click(zoneClose, () => {
       if (!this.clanIsClosed) this.toggleSwitch();
     });
-    const right1 = {
-      text: CREATE_CLAN_COST,
-      icon: 'diamond'
+    const right1: IbigButtonElementSettings = {
+      text: String(CREATE_CLAN_COST),
+      icon: 'diamond',
+      sale: Utils.checkSale(this.scene.state.sales, 'CLAN') ? String(Math.floor(CREATE_CLAN_COST / 2)) : null,
     };
-    // Кнопка
-    const createClanBtn = this.scene.bigButton('green', 'left', 280, this.scene.state.lang.createClan, right1);
+    
+    const settings: IbigButtonSetting = {
+      color: 'green',
+      textAlign: 'left',
+      text: this.scene.state.lang.createClan,
+      right1: right1,
+    }
+    const action = () => {
+      this.createClan();
+    };
+
+    const createClanBtn = new BigButton(this.scene, 280, action, settings);
     const errorTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Shadow',
       fontSize: '19px',
@@ -126,10 +139,7 @@ export default class CreateClanWindow {
       this.switchTextClose,
       this.inputText,
       inputBg,
-      createClanBtn.btn,
-      createClanBtn.title,
-      createClanBtn.text1,
-      createClanBtn.img1,
+      createClanBtn,
       this.result,
       this.window.headerText,
       this.window.closeBtn,
@@ -173,7 +183,6 @@ export default class CreateClanWindow {
     });
 
     // Кнопка смены ника
-    this.scene.clickModalBtn(createClanBtn, (): void => { this.createClan(); });
     this.scene.enterKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
     this.scene.enterKey.on('down', (): void => { this.createClan(); });
 
@@ -216,7 +225,8 @@ export default class CreateClanWindow {
   }
 
   private createClan(): void {
-    if (this.scene.state.user.diamonds >= CREATE_CLAN_COST) {
+    const price = Utils.checkSale(this.scene.state.sales, 'CLAN') ? Math.floor(CREATE_CLAN_COST / 2) : CREATE_CLAN_COST;
+    if (this.scene.state.user.diamonds >= price) {
       if (!this.change) {
         let checkName: boolean = true;
         const str: string = this.input.value;
@@ -261,10 +271,10 @@ export default class CreateClanWindow {
               this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
               this.scene.enterKey.destroy();
               this.input.remove();
-              this.scene.state.user.diamonds -= CREATE_CLAN_COST;
+              this.scene.state.user.diamonds -= price;
               this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
                 type: 'create_clan',
-                count: CREATE_CLAN_COST,
+                count: price,
               });
               this.scene.state.amplitude.logAmplitudeEvent('clan', {
                 type: 'create',
@@ -292,8 +302,8 @@ export default class CreateClanWindow {
     } else {
       this.scene.state.convertor = {
         fun: 0,
-        count: CREATE_CLAN_COST - this.scene.state.user.diamonds,
-        diamonds: CREATE_CLAN_COST - this.scene.state.user.diamonds,
+        count: price - this.scene.state.user.diamonds,
+        diamonds: price - this.scene.state.user.diamonds,
         type: 2
       };
       this.scene.state.modal = {

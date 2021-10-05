@@ -3,6 +3,8 @@ import { shortNum, shortTime } from '../../../general/basic';
 import Modal from '../../../scenes/Modal/Modal';
 import LogoManager from '../../Utils/LogoManager';
 import { CHANGE_EMBLEM_COST, CHANGE_CLAN_NAME_COST, CREATE_CLAN_COST } from '../../../local/settings';
+import BigButton from './../../Buttons/BigButton';
+import Utils from './../../../libs/Utils';
 const KEY: string = '1491f4c9d53dfa6c50d0c4a375f9ba76';
 
 
@@ -18,7 +20,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
   private closeBtn: Phaser.GameObjects.Sprite;
   private headerText: Phaser.GameObjects.Text;
   private footer: Phaser.GameObjects.Sprite;
-  private modalElements: Array<Phaser.GameObjects.Sprite | Phaser.GameObjects.TileSprite | Phaser.GameObjects.Text | Phaser.GameObjects.RenderTexture | IroundedField> = [];
+  private modalElements: Array<Phaser.GameObjects.Sprite | Phaser.GameObjects.TileSprite | Phaser.GameObjects.Text | Phaser.GameObjects.RenderTexture | IroundedField | BigButton> = [];
   private windowType: number = 1;
   private headerTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
     color: '#fffdfa',
@@ -271,28 +273,35 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     if (this.scene.state.user.clanId) {
       const bgHeight: number = 680;
       const bgY: number = this.y + 70;
-      // this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5); ns!
       this.scene.add.roundedField(this.x, bgY, 480, bgHeight, 'modal-square-bg').setDepth(1);
     } else {
       const bgHeight: number = 590;
       const bgY: number = this.y + 120;
-      // this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5); ns!
       this.scene.add.roundedField(this.x, bgY, 480, bgHeight, 'modal-square-bg').setDepth(1);
       this.scene.add.tileSprite(this.x, headerGeom.bottom - 2, this.windowWidth, 100, 'white-pixel').setTint(0xD06900).setOrigin(0.5, 0);
-      const right1 = {
-        text: CREATE_CLAN_COST,
-        icon: 'diamond'
+      const right1: IbigButtonElementSettings = {
+        text: String(CREATE_CLAN_COST),
+        icon: 'diamond',
+        sale: Utils.checkSale(this.scene.state.sales, 'CLAN') ? String(Math.floor(CREATE_CLAN_COST / 2)) : null,
       };
-      const btn = this.scene.bigButton('green', 'left', -240, this.scene.state.lang.createClan, right1);
-      this.scene.clickModalBtn(btn, () => {
-        this.scene.state.modal = {
-          type: 18,
-          clanWindowType: 1,
-        };
-        this.removeInput();
-        this.scene.scene.stop('ClanScroll');
-        this.scene.scene.restart(this.scene.state);
-      });
+      
+      const settings: IbigButtonSetting = {
+        color: 'green',
+        textAlign: 'left',
+        text: this.scene.state.lang.createClan,
+        right1: right1,
+      }
+      const action = () => {
+          this.scene.state.modal = {
+            type: 18,
+            clanWindowType: 1,
+          };
+          this.removeInput();
+          this.scene.scene.stop('ClanScroll');
+          this.scene.scene.restart(this.scene.state);
+      };
+
+      new BigButton(this.scene, -240, action, settings);
     }
 
     this.headerText = this.scene.add.text(headerGeom.centerX, headerGeom.centerY - 3, this.scene.state.lang.clansLiderboard, this.headerTextStyle).setDepth(2).setOrigin(0.5);
@@ -349,32 +358,36 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
       this.inputText.setText(text).setColor(color).setDepth(4).setCrop(0, 0, 280, 100).setVisible(true);
     })
 
-    const right1 = {
-      text: CREATE_CLAN_COST,
-      icon: 'diamond'
+    const right1: IbigButtonElementSettings = {
+      text: String(CREATE_CLAN_COST),
+      icon: 'diamond',
+      sale: Utils.checkSale(this.scene.state.sales, 'CLAN') ? String(Math.floor(CREATE_CLAN_COST / 2)) : null,
     };
-    const btn = this.scene.bigButton('green', 'left', -240, this.scene.state.lang.createClan, right1);
-    this.scene.clickModalBtn(btn, () => {
-      this.scene.state.modal = {
-        type: 18,
-        clanWindowType: 1,
-      }
-      this.removeInput();
-      this.scene.scene.stop('ClanScroll');
-      this.scene.scene.restart(this.scene.state);
-    });
+    
+    const settings: IbigButtonSetting = {
+      color: 'green',
+      textAlign: 'left',
+      text: this.scene.state.lang.createClan,
+      right1: right1,
+    }
+    const action = () => {
+        this.scene.state.modal = {
+          type: 18,
+          clanWindowType: 1,
+        };
+        this.removeInput();
+        this.scene.scene.stop('ClanScroll');
+        this.scene.scene.restart(this.scene.state);
+    };
+
+    const btn = new BigButton(this.scene, -240, action, settings);
 
     this.modalElements.push(
       inputBg, 
       searchBtn, 
       searchBtnText, 
       this.inputText,
-      btn.btn,
-      btn.title,
-      btn.text1,
-      btn.text2,
-      btn.img1,
-      btn.img2,
+      btn,
       bg,
       tile,
     );
@@ -474,7 +487,6 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     let price: number;
 
     // Первый слот
-    // const boosterBg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(headerGeom.centerX, headerGeom.bottom + 20, 480, 150, 'modal-square-bg', 10).setOrigin(0.5, 0).setDepth(2); ns!
     const boosterBg: IroundedField = this.scene.add.roundedField(headerGeom.centerX, headerGeom.bottom + 20, 480, 150, 'modal-square-bg').setOriginY(0).setDepth(2);
     const boosterTextBg: Phaser.GameObjects.Sprite = this.scene.add.sprite(boosterBg.getTopCenter().x, boosterBg.getTopCenter().y + 2, 'clan-window-leader-plate-2').setOrigin(0.5, 0).setDisplaySize(479, 45).setDepth(2);
     const boosterIcon: Phaser.GameObjects.Sprite = this.scene.add.sprite(boosterBg.getLeftCenter().x + 70, boosterBg.getCenter().y, 'clan-task-icon-6').setScale(1.15).setDepth(2);
@@ -500,20 +512,26 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     boosterPriceText.setText(String(price < 1000 ? price : shortNum(price))).setFontSize(boosterPriceText.getBounds().width > 70 ? 27 : 28)
 
     // Второй слот
-    // const changeEmblemBg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(boosterBg.getBottomCenter().x, boosterBg.getBottomCenter().y + 30, 480, 150, 'modal-square-bg', 10).setOrigin(0.5, 0).setDepth(2); ns!
     const changeEmblemBg: IroundedField = this.scene.add.roundedField(boosterBg.getBottomCenter().x, boosterBg.getBottomCenter().y + 30, 480, 150, 'modal-square-bg').setOriginY(0).setDepth(2);
     const changeEmblemTextBg: Phaser.GameObjects.Sprite = this.scene.add.sprite(changeEmblemBg.getTopCenter().x, changeEmblemBg.getTopCenter().y + 2, 'clan-window-leader-plate-2').setOrigin(0.5, 0).setDisplaySize(479, 45).setDepth(2);
     const clanEmblem = LogoManager.createIcon(this.scene, changeEmblemBg.getLeftCenter().x + 70, changeEmblemBg.getCenter().y, this.scene.state.clan?.avatar).setDepth(2).setScale(0.5);
     const changeEmblemText: Phaser.GameObjects.Text = this.scene.add.text(changeEmblemTextBg.getCenter().x + 60, changeEmblemTextBg.getCenter().y, this.scene.state.lang.emblem, this.headerTextStyle).setOrigin(0.5).setDepth(2);
     const changeEmblemBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(changeEmblemBg.getCenter().x + 20, changeEmblemBg.getCenter().y + 24, 'profile-window-button-green').setScale(1.40, 1.05).setDepth(2);
     const changeEmblemBtnText: Phaser.GameObjects.Text = this.scene.add.text(changeEmblemBtn.getCenter().x, changeEmblemBtn.getCenter().y - 1, this.scene.state.lang.changeEmblem, btnTextStyle).setOrigin(0.5, 0.6).setDepth(2);
-    const changeEmblemValuta: Phaser.GameObjects.Sprite = this.scene.add.sprite(changeEmblemBtn.getRightCenter().x + 30, changeEmblemBtn.y - 5, 'diamond').setScale(0.15).setDepth(2);
-    const changeEmblemPriceText: Phaser.GameObjects.Text = this.scene.add.text(changeEmblemValuta.x + 30, changeEmblemValuta.y, String(CHANGE_EMBLEM_COST), this.headerTextStyle).setFontSize(28).setOrigin(0, 0.5).setDepth(2);
+    
+    if (Utils.checkSale(this.scene.state.sales, 'CLAN')) {
+      const changeEmblemValuta: Phaser.GameObjects.Sprite = this.scene.add.sprite(changeEmblemBtn.getRightCenter().x + 20, changeEmblemBtn.y - 5, 'diamond').setScale(0.15).setDepth(2);
+      const text1 = this.scene.add.text(changeEmblemValuta.x + 25, changeEmblemValuta.y, String(CHANGE_EMBLEM_COST), this.headerTextStyle).setColor('#eeeeee').setFontSize(24).setOrigin(0, 0.5).setDepth(2);
+      this.scene.add.text(text1.getBounds().right + 3, changeEmblemValuta.y, String(Math.floor(CHANGE_EMBLEM_COST / 2)), this.headerTextStyle).setFontSize(28).setOrigin(0, 0.5).setDepth(2);
+      this.scene.add.tileSprite(text1.getCenter().x, text1.y, text1.displayWidth, 4, 'text-sale').setDepth(2).setAngle(5).setOrigin(0.5);
+    } else {
+      const changeEmblemValuta: Phaser.GameObjects.Sprite = this.scene.add.sprite(changeEmblemBtn.getRightCenter().x + 30, changeEmblemBtn.y - 5, 'diamond').setScale(0.15).setDepth(2);
+      this.scene.add.text(changeEmblemValuta.x + 30, changeEmblemValuta.y, String(CHANGE_EMBLEM_COST), this.headerTextStyle).setFontSize(28).setOrigin(0, 0.5).setDepth(2);
+    }
     
     this.scene.clickModalBtn({ btn: changeEmblemBtn, title: changeEmblemBtnText }, () => { changeClanEmblem(); });
 
     // Третий слот
-    // const changeClanNameBg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(changeEmblemBg.getBottomCenter().x, changeEmblemBg.getBottomCenter().y + 30, 480, 220, 'modal-square-bg', 10).setOrigin(0.5, 0).setDepth(3); ns!
     const changeClanNameBg: IroundedField = this.scene.add.roundedField(changeEmblemBg.getBottomCenter().x, changeEmblemBg.getBottomCenter().y + 30, 480, 220, 'modal-square-bg').setOriginY(0).setDepth(3);
     const changeClanNameTextBg: Phaser.GameObjects.Sprite = this.scene.add.sprite(changeClanNameBg.getTopCenter().x, changeClanNameBg.getTopCenter().y + 2, 'clan-window-leader-plate-2').setOrigin(0.5, 0).setDisplaySize(479, 45).setDepth(3);
     const changeClanNameText: Phaser.GameObjects.Text = this.scene.add.text(changeClanNameTextBg.getCenter().x, changeClanNameTextBg.getCenter().y, String(this.scene.state.lang.clanName), this.headerTextStyle).setOrigin(0.5).setDepth(3);
@@ -524,17 +542,24 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     }).setOrigin(0, 0.5).setDepth(4).setCrop(0, 0, inpitField.getBounds().width - 24, 100);
     const result: Phaser.GameObjects.Text = this.scene.add.text(changeClanNameBg.getBottomCenter().x, changeClanNameBg.getBottomCenter().y + 16, '', errorTextStyle).setOrigin(0.5, 0).setDepth(3);
 
-    const right = {
-      text: CHANGE_CLAN_NAME_COST,
-      icon: 'diamond'
+    const right1: IbigButtonElementSettings = {
+      text: String(CHANGE_CLAN_NAME_COST),
+      icon: 'diamond',
+      sale: Utils.checkSale(this.scene.state.sales, 'CLAN') ? String(Math.floor(CHANGE_CLAN_NAME_COST / 2)) : null,
+    };
+    
+    const settings: IbigButtonSetting = {
+      color: 'green',
+      textAlign: 'left',
+      text: this.scene.state.lang.changeClanName,
+      right1: right1,
+    }
+    const action = () => {
+      changeClanName();
     };
 
-    const changeClanNameBtn = this.scene.bigButton('green', 'left', 260, this.scene.state.lang.changeClanName, right);
-    changeClanNameBtn.btn.setScale(0.9).setDepth(3);
-    changeClanNameBtn.title.setX(changeClanNameBtn.title.x + 20).setDepth(3);
-    changeClanNameBtn.img1.setX(changeClanNameBtn.img1.x - 20).setDepth(3);
-    changeClanNameBtn.text1.setX(changeClanNameBtn.text1.x - 20).setDepth(3);
-    this.scene.clickModalBtn(changeClanNameBtn, () => { changeClanName(); });
+    const changeClanNameBtn = new BigButton(this.scene, 260, action, settings, 0.9);
+    changeClanNameBtn.setDepth(3).setScale(0.9);
 
     let change: boolean = false;
     const root: HTMLDivElement = document.querySelector('#root');
@@ -543,25 +568,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     this.mainInput.setAttribute("id", "clan-change-name");
     this.mainInput.setAttribute("autocomplete", "off");
     this.enterKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
-    this.enterKey.on('down', (): void => {
-      if (this.scene.state.user.diamonds >= CHANGE_CLAN_NAME_COST) {
-        changeClanName(); 
-      } else {
-        this.scene.state.convertor = {
-          fun: 0,
-          count: CHANGE_CLAN_NAME_COST - this.scene.state.user.diamonds,
-          diamonds: CHANGE_CLAN_NAME_COST - this.scene.state.user.diamonds,
-          type: 2
-        };
-        this.scene.state.modal = {
-          type: 1,
-          sysType: 4,
-        };
-        this.removeInput();
-        this.scene.scene.restart(this.scene.state);
-        this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-      }
-    });
+    this.enterKey.on('down', (): void => { changeClanName(); });
     const blurZone: Phaser.GameObjects.TileSprite = this.scene.add.tileSprite(this.header.getBottomCenter().x, this.header.getBottomCenter().y, this.scene.cameras.main.width, this.scene.cameras.main.height - this.header.getBottomCenter().y, 'pixel').setOrigin(0.5, 0).setAlpha(0.0001).setVisible(false).setDepth(2).setInteractive()
     this.scene.click(inpitField, (): void => { focus(); });
     this.scene.click(blurZone, (): void => { blur(); });
@@ -583,44 +590,61 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     }
 
     const changeClanName = () => {
-      if (!change) {
-        blur();
-        let checkName: boolean = true;
-        const str: string = this.mainInput.value;
-        const re: RegExp = /[\p{Alpha}\p{Nd}\s]/gu;
-        const matched = str.match(re);
-        checkName = !(!matched || matched.length < str.length);
-        if (str.length < 6 || str.length > 20) checkName = false;
-        
-        if (checkName) {
-          change = true;
-          axios.post(process.env.API + '/changeClanName', {
-            clanId: this.scene.state.clan.id,
-            userId: this.scene.state.user.id,
-            hash: this.scene.state.user.hash,
-            counter: this.scene.state.user.counter,
-            name: str,
-          }).then((res) => {
-            if (res.data.error) {
-              change = false;
-              result.setText(this.scene.state.lang.haveClan).setAlpha(1);
-            } else {          
-              this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-              this.enterKey.destroy();
-              this.removeInput();
-              this.scene.scene.stop('ClanScroll');
-              this.scene.scene.restart(this.scene.state);
-              this.scene.state.user.diamonds -= CHANGE_CLAN_NAME_COST;
-              this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
-                type: 'change_clan_name',
-                count: CHANGE_CLAN_NAME_COST,
-              });
-            }
-          });
-        } else {
-          result.setText(this.scene.state.lang.validClanName).setAlpha(1);
+      if (this.scene.state.user.diamonds >= CHANGE_CLAN_NAME_COST) {
+        if (!change) {
+          blur();
+          let checkName: boolean = true;
+          const str: string = this.mainInput.value;
+          const re: RegExp = /[\p{Alpha}\p{Nd}\s]/gu;
+          const matched = str.match(re);
+          checkName = !(!matched || matched.length < str.length);
+          if (str.length < 6 || str.length > 20) checkName = false;
+          
+          if (checkName) {
+            change = true;
+            axios.post(process.env.API + '/changeClanName', {
+              clanId: this.scene.state.clan.id,
+              userId: this.scene.state.user.id,
+              hash: this.scene.state.user.hash,
+              counter: this.scene.state.user.counter,
+              name: str,
+            }).then((res) => {
+              if (res.data.error) {
+                change = false;
+                result.setText(this.scene.state.lang.haveClan).setAlpha(1);
+              } else {          
+                this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
+                this.enterKey.destroy();
+                this.removeInput();
+                this.scene.scene.stop('ClanScroll');
+                this.scene.scene.restart(this.scene.state);
+                this.scene.state.user.diamonds -= CHANGE_CLAN_NAME_COST;
+                this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
+                  type: 'change_clan_name',
+                  count: CHANGE_CLAN_NAME_COST,
+                });
+              }
+            });
+          } else {
+            result.setText(this.scene.state.lang.validClanName).setAlpha(1);
+          }
         }
+      } else {
+        this.scene.state.convertor = {
+          fun: 0,
+          count: CHANGE_CLAN_NAME_COST - this.scene.state.user.diamonds,
+          diamonds: CHANGE_CLAN_NAME_COST - this.scene.state.user.diamonds,
+          type: 2
+        };
+        this.scene.state.modal = {
+          type: 1,
+          sysType: 4,
+        };
+        this.removeInput();
+        this.scene.scene.restart(this.scene.state);
+        this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
       }
+
     }
 
     const changeClanEmblem = () => {
