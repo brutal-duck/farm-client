@@ -6,6 +6,7 @@ import { checkStorage, loadingScreen } from '../../general/basic';
 import LocalStorage from './../../libs/LocalStorage';
 import Amplitude from './../../libs/Amplitude';
 import { clickShopBtn } from '../../general/clicks';
+import { general } from '../../local/settings';
 
 const pixel: string = require("./../../../assets/images/pixel.png");
 const bg: string = require("./../../../assets/images/scroll-bg.png");
@@ -719,11 +720,8 @@ class SheepPreload extends Phaser.Scene {
 
   
   public update(): void {
-
     if (this.loadingReady && this.userReady) {
-
       if (this.socket) {
-
         let loadTime: number = Math.round(new Date().getTime() / 1000) - this.loadTime;
         let sizes = document.body.clientWidth + ' * ' + document.body.clientHeight;
 
@@ -745,6 +743,7 @@ class SheepPreload extends Phaser.Scene {
         const Amplitude: Amplitude = this.state.amplitude;
         Amplitude.setFarmIdentify();
 
+        if (this.state.platform === 'android') this.initAndroidStore();
       }
 
       this.userReady = false;
@@ -758,9 +757,7 @@ class SheepPreload extends Phaser.Scene {
       this.scene.start('Sheep', this.state); // сцена с овцами
       this.scene.start('SheepBars', this.state); // сцена с барами
       this.scene.start('Preload', this.state); // сцена с подзагрузкой
-
     }
-
   }
   
   public loadUser(): void {
@@ -798,6 +795,55 @@ class SheepPreload extends Phaser.Scene {
     LocalStorage.set('farm', 'Sheep');
   }
   
+  
+  private initAndroidStore(): void {
+    const { packages } = general;
+    const store: any = window['store'];
+    if (!store) {
+      console.log('Store not available');
+      return;
+    }
+
+    for (const pack of packages) {
+      store.register({
+        id: String(pack.id),
+        alias: 'package_' + pack.id,
+        price: pack.price,
+        type: store.CONSUMABLE
+      });
+    }
+
+    for (const pack of packages) {
+      store.when('package_' + pack.id)
+        .approved((p) => {
+          p.verify();
+        })
+        .verified((p) => {
+          axios.post(process.env.API + '/callbackPayAndroid', {
+            id: this.state.user.id,
+            hash: this.state.user.hash,
+            counter: this.state.user.counter,
+            pack: p,
+          }).then(res => {
+            if (!res.data.error) {
+              try {
+                this.state.adjust.shopPurchaseEvent.setRevenue(pack.price, "RUB");
+                window[`Adjust`].trackEvent(this.state.adjust.shopPurchaseEvent);
+              } catch (err) { console.log('ADJUST', err) }
+
+              this.game.scene.keys[this.state.farm].autosave();
+            }
+          });
+          p.finish();
+        });
+    }
+
+    store.error((error) => {
+      console.log('ERROR ' + error.code + ': ' + error.message);
+    });
+    store.applicationUsername = () => this.state.user.id;
+    store.refresh();
+  }
 }
 
 export default SheepPreload;

@@ -381,7 +381,6 @@ class Boot extends Phaser.Scene {
     document.addEventListener('deviceready', (): void => {
       this.hash = LocalStorage.get('hash');
       this.initAndroidAdjust();
-      this.initAndroidStore();
       window.screen.orientation.lock('portrait-primary');
       this.initAndroidAd();
 
@@ -468,55 +467,6 @@ class Boot extends Phaser.Scene {
 
     // @ts-ignore
     window.admob.rewardvideo.prepare();
-  }
-
-  private initAndroidStore(): void {
-    const { packages } = general;
-    const store: any = window['store'];
-    if (!store) {
-      console.log('Store not available');
-      return;
-    }
-
-    for (const pack of packages) {
-      store.register({
-        id: String(pack.id),
-        alias: 'package_' + pack.id,
-        price: pack.price,
-        type: store.CONSUMABLE
-      });
-    }
-
-    for (const pack of packages) {
-      store.when('package_' + pack.id)
-        .approved((p) => {
-          p.verify();
-        })
-        .verified((p) => {
-          axios.post(process.env.API + '/callbackPayAndroid', {
-            id: this.state.user.id,
-            hash: this.state.user.hash,
-            counter: this.state.user.counter,
-            pack: p,
-          }).then(res => {
-            if (!res.data.error) {
-              try {
-                this.state.adjust.shopPurchaseEvent.setRevenue(pack.price, "RUB");
-                window[`Adjust`].trackEvent(this.state.adjust.shopPurchaseEvent);
-              } catch (err) { console.log('ADJUST', err) }
-
-              this.game.scene.keys[this.state.farm].autosave();
-            }
-          });
-          p.finish();
-        });
-    }
-
-    store.error((error) => {
-      console.log('ERROR ' + error.code + ': ' + error.message);
-    });
-
-    store.refresh();
   }
 
   private postCheckUser(id: number | string, auth?: boolean): void {
