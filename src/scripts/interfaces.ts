@@ -35,7 +35,19 @@ interface IcollectorButtonSetting {
   type: string;
   sale?: string;
 }
-
+interface IbigButtonSetting {
+  color: string;
+  textAlign: string;
+  text: string;
+  right1?: IbigButtonElementSettings;
+  right2?: IbigButtonElementSettings;
+  sale?: string;
+}
+interface IbigButtonElementSettings {
+  text: string;
+  icon: string;
+  sale?: string;
+}
 interface IboostButtonSetting {
   left: string;
   right?: string;

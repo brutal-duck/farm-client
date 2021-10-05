@@ -11,7 +11,7 @@ export type scenesType = Modal | Sheep | Chicken | Cow | Profile | Fortune | Sho
 
 export default class Button extends Phaser.GameObjects.Group {
   public scene: scenesType;
-  public mainSprite: Phaser.GameObjects.Sprite;
+  protected mainSprite: Phaser.GameObjects.Sprite;
   private press: boolean;
   private increase: boolean;
   private action: () => void;
@@ -34,6 +34,7 @@ export default class Button extends Phaser.GameObjects.Group {
 
   protected setClickListener(): void {
     if (!this.mainSprite) return;
+    this.mainSprite.setInteractive();
     this.mainSprite.on('pointerdown', this.pointerdownHandler, this);
     this.mainSprite.on('pointerout', this.pointeroutHandler, this);
     this.mainSprite.on('pointerup', this.pointerupHandler, this);
@@ -131,13 +132,24 @@ export default class Button extends Phaser.GameObjects.Group {
   public set y(y: number) {
     this.position.y = y;
     this.children.iterate((el: childrenType) => {
-      el.y = this.position.y - 5;
+      el.setY(this.position.y - 5);
     });
-    this.mainSprite.y = y;
+    this.mainSprite.setY(y);
+  }
+
+  public setDepth(depth: number): this {
+    super.setDepth(depth);
+    this.mainSprite.setDepth(depth);
+    return this;
   }
 
   public get y(): number {
     return this.position.y;
+  }
+
+  public setScale(scale: number): this {
+    this.mainSprite.setScale(scale);
+    return this;
   }
 
   public set x(x: number) {
