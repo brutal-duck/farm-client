@@ -32,6 +32,8 @@ export default class ProfileWindow {
   private licenseBtnText: Phaser.GameObjects.Text;
   private writeBtn: Phaser.GameObjects.Sprite;
   private writeBtnText: Phaser.GameObjects.Text;
+  private exitBtn: Phaser.GameObjects.Sprite;
+  private exitBtnText: Phaser.GameObjects.Text;
   private farmBtn: Phaser.GameObjects.Sprite;
   private farmBtnText: Phaser.GameObjects.Text;
   private blockBtn: Phaser.GameObjects.Sprite;
@@ -279,8 +281,8 @@ export default class ProfileWindow {
         break;
       case 'web':
         this.supportBtn = this.scene.add.sprite(pos1.x, pos1.y, 'profile-window-button-yellow');
-        this.exitProfileBtn = this.scene.add.sprite(pos2.x, pos2.y, 'profile-window-button-red');
         this.supportBtnText = this.scene.add.text(this.supportBtn.x, this.supportBtn.y - 5, this.scene.state.lang.support, textStyle).setOrigin(0.5);
+        this.exitProfileBtn = this.scene.add.sprite(pos2.x, pos2.y, 'profile-window-button-red');
         this.exitProfileBtnText = this.scene.add.text(this.exitProfileBtn.x + 2, this.exitProfileBtn.y - 5, this.scene.state.lang.profileExit, textStyle)
           .setOrigin(0.5)
           .setStroke('#990000', 2);
@@ -289,7 +291,14 @@ export default class ProfileWindow {
           .setStroke('#7a7a7a', 2);
         break;
       case 'ya':
+        this.supportBtn = this.scene.add.sprite(pos1.x, pos1.y, 'profile-window-button-yellow');
+        this.supportBtnText = this.scene.add.text(this.supportBtn.x, this.supportBtn.y - 5, this.scene.state.lang.support, textStyle).setOrigin(0.5);
+        break;
       case 'android':
+        this.exitBtn = this.scene.add.sprite(pos2.x, pos2.y, 'profile-window-button-red');
+        this.exitBtnText = this.scene.add.text(this.exitBtn.x + 2, this.exitBtn.y - 5, this.scene.state.lang.exitGame, textStyle)
+          .setOrigin(0.5)
+          .setStroke('#990000', 2);
         this.supportBtn = this.scene.add.sprite(pos1.x, pos1.y, 'profile-window-button-yellow');
         this.supportBtnText = this.scene.add.text(this.supportBtn.x, this.supportBtn.y - 5, this.scene.state.lang.support, textStyle).setOrigin(0.5);
         break;
@@ -377,6 +386,9 @@ export default class ProfileWindow {
       this.scene.clickModalBtn({ btn: this.writeBtn, title: this.writeBtnText }, () => { this.onWriteBtn(); });
     }
 
+    if (this.exitBtn) {
+      this.scene.clickModalBtn({ btn: this.exitBtn, title: this.exitBtnText }, () => { this.onExitBtn(); });
+    }
     this.scene.clickButton(this.closeBtn, () => { this.onCloseBtn(); } );
   }
 
@@ -443,6 +455,11 @@ export default class ProfileWindow {
     window.location.reload();
   }
 
+  private onExitBtn(): void {
+    //@ts-ignore
+    if (navigator.app) navigator.app.exitApp();
+  }
+
   private onLicenseBtn(): void {
     window.open('https://' + location.hostname + '/agreement', '_blank');
   }
@@ -504,7 +521,7 @@ export default class ProfileWindow {
     };
     if (this.scene.state.userSheep.part >= 7) {
       if (this.profile.clan) {
-        const title: Phaser.GameObjects.Text = this.scene.add.text(geom.centerX, geom.centerY, 'В клане', textStyle).setOrigin(0.5).setDepth(2);
+        const title: Phaser.GameObjects.Text = this.scene.add.text(geom.centerX, geom.centerY, this.scene.state.lang.inClan, textStyle).setOrigin(0.5).setDepth(2);
         const avatar: Icon = LogoManager.createIcon(this.scene, pos.x, pos.y, this.profile.clan.avatar).setScale(0.3).setDepth(2);
         const avatarGeom: Phaser.Geom.Rectangle = avatar.getBounds();
         const text: Phaser.GameObjects.Text = this.scene.add.text(avatarGeom.right + 10, avatarGeom.centerY, this.profile.clan.name, textStyle).setDepth(2).setOrigin(0, 0.5);

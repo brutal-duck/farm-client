@@ -1097,6 +1097,8 @@ export default {
     confirmImproveFactoryHeader: 'Фабрика',
     confirmImproveFactoryText: 'Хотите улучшить Фабрику до $1 уровня?',
     skipHerdBoost: 'Завершить переполох',
+    inClan: 'В клане',
+    exitGame: 'Выйти из игры',
   },
   en: {
     index: 'en',
@@ -2196,5 +2198,7 @@ export default {
     confirmImproveFactoryHeader: 'Factory',
     confirmImproveFactoryText: 'Want to upgrade the Factory to $1 level?',
     skipHerdBoost: 'Skip Ruckus',
+    inClan: 'In clan',
+    exitGame: 'Exit game',
   },
 }
