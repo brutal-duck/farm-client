@@ -137,6 +137,7 @@ export default class ImproveCollectorWindow {
         icon: 'lock',
         text: `${this.scene.state.lang.shortPart} ${this.nextLevel?.chapter}`,
       };
+      settings.color = 'grey';
       settings.right1 = improve;
       action = null;
     }
