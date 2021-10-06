@@ -1,5 +1,7 @@
 import { shortNum } from "../../../general/basic";
 import Modal from "../../../scenes/Modal/Modal";
+import BigButton from './../../Buttons/BigButton';
+import Utils from './../../../libs/Utils';
 
 export default class ImproveFactoryWindow {
   public scene: Modal;
@@ -94,7 +96,6 @@ export default class ImproveFactoryWindow {
     this.scene.add.text(productText.getBounds().right + 10, this.scene.cameras.main.centerY + 60, text, this.improveStyle);
   }
 
-
   private nextLevelProcessingTimeText(): void {
     const position: Iposition = {
       x: this.duration.getBounds().right + 10,
@@ -108,7 +109,6 @@ export default class ImproveFactoryWindow {
     this.scene.add.text(position.x, position.y, text, this.improveStyle);
   }
 
-
   private nextLevelLotSizeText(): void {
     const position: Iposition = {
       x: this.lot.getBounds().right + 10,
@@ -117,7 +117,6 @@ export default class ImproveFactoryWindow {
     const text: string = `(+${shortNum(this.nextLevel.lotSize - this.thisLevel.lotSize)} ${this.scene.state.lang.litres})`;
     this.scene.add.text(position.x, position.y, text, this.improveStyle);
   }
-
 
   private nextLevelEfficiencyText(): void {
     const position: Iposition = {
@@ -128,36 +127,44 @@ export default class ImproveFactoryWindow {
     this.scene.add.text(position.x, position.y, text, this.improveStyle);
   }
 
-
   private improveBtn(nextLevelProductId: number): void {
-    let icon: string;
-    let text: string;
     const btnY: number = nextLevelProductId > 0 ? 150 : 130;
 
-    if (this.scene.state[`user${this.scene.state.farm}`].part >= this.nextLevel.unlock_improve) {
-      if (this.nextLevel.improveDiamondPrice) {
-        icon = 'diamond';
-        text = String(this.nextLevel.improveDiamondPrice);
-      } else {
-        icon = `cowCoin`;
-        text = String(this.nextLevel.improveMoneyPrice);
+    let action = () => {
+      this.scene.state.territory.improveFactory();
+    };
+    const settings: IbigButtonSetting = {
+      color: 'green',
+      right1: {
+        icon: 'cowCoin',
+        text: shortNum(this.nextLevel.improveMoneyPrice),
+      },
+      text: this.scene.state.lang.improve,
+      textAlign: 'left',
+    };
+    const sale = Utils.checkSale(this.scene.state.sales, 'COW_FACTORY_IMPROVE');
+
+    if (sale) settings.right1.sale = shortNum(Math.floor(this.nextLevel.improveMoneyPrice / 2));
+
+    if (this.nextLevel.improveDiamondPrice) {
+      settings.right1.icon = 'diamond';
+      settings.right1.text = String(this.nextLevel.improveDiamondPrice);
+      settings.right1.sale = null;
+      if (sale) {
+        settings.right1.sale = shortNum(Math.floor(this.nextLevel.improveDiamondPrice / 2));
       }
+    }
 
-      const right = {
-        icon: icon,
-        text: shortNum(text)
-      };
-      const improve = this.scene.bigButton('green', 'left', btnY, this.scene.state.lang.improve, right);
-      this.scene.clickModalBtn(improve, (): void => { this.scene.state.territory.improveFactory(); });
 
-    } else {
-
+    if (this.scene.state[`user${this.scene.state.farm}`].part < this.nextLevel.unlock_improve) {
       const improve = {
         icon: 'lock',
         text: `${this.scene.state.lang.shortPart} ${this.nextLevel.unlock_improve}`,
       };
-      this.scene.bigButton('grey', 'left', btnY, this.scene.state.lang.improve, improve);
-      
+      settings.color = 'grey';
+      settings.right1 = improve;
+      action = null;
     }
+    new BigButton(this.scene, btnY, action, settings);
   }
 }

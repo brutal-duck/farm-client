@@ -3,6 +3,7 @@ import Cow from './../../scenes/Cow/Main';
 import Factory from './Factory';
 import Firework from './../animations/Firework';
 import SpeechBubble from './../animations/SpeechBuble';
+import Utils from './../../libs/Utils';
 
 export default class CowTerritory extends Territory {
   public scene: Cow;
@@ -43,15 +44,18 @@ export default class CowTerritory extends Territory {
     const nextImprove = settings.find((item: IfactorySettings) => item.improve === this.improve + 1);
     if (nextImprove && this.improve < settings.length) {
       if (user.part >= nextImprove.unlock_improve) {
-        if (user.money >= nextImprove.improveMoneyPrice && this.scene.state.user.diamonds >= nextImprove.improveDiamondPrice) {
-          if (nextImprove.improveDiamondPrice > 0) {
+        const sale = Utils.checkSale(this.scene.state.sales, 'COW_FACTORY_IMPROVE');
+        const moneyPrice = sale ? Math.floor(nextImprove.improveMoneyPrice / 2) : nextImprove.improveMoneyPrice;
+        const diamondPrice = sale ? Math.floor(nextImprove.improveDiamondPrice / 2) : nextImprove.improveDiamondPrice;
+        if (user.money >= moneyPrice && this.scene.state.user.diamonds >= diamondPrice) {
+          if (diamondPrice > 0) {
             const modal: Imodal = {
               type: 1,
               sysType: 24,
               confirmSpendParams: {
                 type: 'ImproveFactory',
                 level: nextImprove.improve,
-                price: nextImprove.improveDiamondPrice,
+                price: diamondPrice,
                 callback: () => {
                   this.acceptedImproveFactory(nextImprove);
                 }
@@ -62,11 +66,11 @@ export default class CowTerritory extends Territory {
             this.scene.scene.launch('Modal', this.scene.state);
           } else this.acceptedImproveFactory(nextImprove);
         } else {
-          if (this.scene.state.user.diamonds < nextImprove.improveDiamondPrice) {
-            const count: number = nextImprove.improveDiamondPrice - this.scene.state.user.diamonds;
+          if (this.scene.state.user.diamonds < diamondPrice) {
+            const count: number = diamondPrice - this.scene.state.user.diamonds;
             this.openConvertor(count, count, 2);
           } else {
-            const count: number = nextImprove.improveMoneyPrice - user.money;
+            const count: number = moneyPrice - user.money;
             const diamonds: number = this.scene.convertMoney(count);
             this.openConvertor(count, diamonds, 1);
           }
@@ -76,31 +80,34 @@ export default class CowTerritory extends Territory {
   }
 
   private acceptedImproveFactory(nextImprove: IfactorySettings): void {
-    this.scene.state.userCow.money -= nextImprove.improveMoneyPrice;
-    this.scene.state.user.diamonds -= nextImprove.improveDiamondPrice;
+    const sale = Utils.checkSale(this.scene.state.sales, 'COW_FACTORY_IMPROVE');
+    const moneyPrice = sale ? Math.floor(nextImprove.improveMoneyPrice / 2) : nextImprove.improveMoneyPrice;
+    const diamondPrice = sale ? Math.floor(nextImprove.improveDiamondPrice / 2) : nextImprove.improveDiamondPrice;
+    this.scene.state.userCow.money -= moneyPrice;
+    this.scene.state.user.diamonds -= diamondPrice;
     this.improve += 1;
     this.factory.improve += 1;
     this.factory.settings = nextImprove;
     this.scene.time.addEvent({ delay: 200, callback: (): void => {
       this.improveText?.setText(String(this.improve));
       Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 5);
-
     }, callbackScope: this, loop: false });
 
     this.scene.state.amplitude.logAmplitudeEvent('factory_up', {
       level: this.factory.improve,
     });
 
-    if (nextImprove.improveDiamondPrice > 0) {
+    if (diamondPrice > 0) {
       this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
         type: 'factory',
-        count: nextImprove.improveDiamondPrice,
+        count: diamondPrice,
       });
-      this.scene.tryTask(15, 0, nextImprove.improveDiamondPrice);
+      this.scene.tryTask(15, 0, diamondPrice);
     }
     this.scene.game.scene.keys['Modal'].scene.stop();
     this.scene.tryTask(24, this.factory.improve);
   }
+
   public createMergingZone(): void {
     super.createMergingZone();
 
