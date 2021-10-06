@@ -1,6 +1,8 @@
 import { shortNum } from "../../../general/basic";
 import Modal from "../../../scenes/Modal/Modal";
 import SpeechBubble from "../../animations/SpeechBuble";
+import BigButton from './../../Buttons/BigButton';
+import Utils from './../../../libs/Utils';
 const bonusTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
   fontFamily: 'Bip',
   fontSize: '20px',
@@ -14,7 +16,7 @@ export default class FarmResourceRepositoryWindow {
   private settings: IterritoriesSheepSettings | IterritoriesChickenSettings | IterritoriesCowSettings;
   private money: any;
   private territoriesSettings: IterritoriesSheepSettings[] | IterritoriesChickenSettings[] | IterritoriesCowSettings[];
-
+  private padding: number;
   constructor(scene: Modal) {
     this.scene = scene;
     this.init();
@@ -24,6 +26,7 @@ export default class FarmResourceRepositoryWindow {
 
 
   private init(): void {
+    this.padding = 0;
     this.farm = this.scene.state.farm;
     if (this.farm === 'Sheep') this.resource = 'Wool';
     else if (this.farm === 'Chicken') this.resource = 'Eggs';
@@ -56,262 +59,146 @@ export default class FarmResourceRepositoryWindow {
 
 
   private nonCowRepositoryUpgradeAvalable(): void {
-    let padding: number = 0;
-
-    if (this.scene.state[`user${this.farm}`].feedBoostTime > 0) {
-      padding += 20;
-      const bonusHeader: Phaser.GameObjects.Text = this.scene.add.text(160, this.scene.cameras.main.centerY - 100, this.scene.state.lang.priceBonus, bonusTextStyle).setOrigin(0, 0.5);
-      const textFeed: Phaser.GameObjects.Text = this.scene.add.text(160, this.scene.cameras.main.centerY - 70, '+100%', bonusTextStyle).setColor('#57A90E').setOrigin(0, 0.5);
-      this.scene.feedBoostText = this.scene.add.text(textFeed.getBounds().right + 5, this.scene.cameras.main.centerY - 70, ' ', bonusTextStyle).setOrigin(0, 0.5).setVisible(false);
-      if (this.scene.state.clan) {
-        padding += 20;
-        bonusHeader.setY(bonusHeader.y - padding / 2);
-        textFeed.setY(textFeed.y - padding / 2);
-        this.scene.feedBoostText.setY(this.scene.feedBoostText.y - padding / 2);
-          const clanFarm: IclanFarm = this.scene.state.clan[this.scene.state.farm.toLowerCase()];
-        const percent: number = clanFarm.cooldown > 0 ? clanFarm.level - 1 : clanFarm.level;
-        const str: string = `+${percent}%`;
-        const text: Phaser.GameObjects.Text = this.scene.add.text(160, this.scene.cameras.main.centerY - 60, str, bonusTextStyle).setColor('#57A90E').setOrigin(0, 0.5);
-        this.scene.add.text(text.getBounds().right + 5, this.scene.cameras.main.centerY - 60,  this.scene.state.lang.fromClanFarm, bonusTextStyle).setOrigin(0, 0.5);
-      }
-    } else if (this.scene.state.clan) {
-      this.scene.add.text(160, this.scene.cameras.main.centerY - 95, this.scene.state.lang.priceBonus, bonusTextStyle).setOrigin(0, 0.5);
-      padding += 20;
-        const clanFarm: IclanFarm = this.scene.state.clan[this.scene.state.farm.toLowerCase()];
-        const percent: number = clanFarm.cooldown > 0 ? clanFarm.level - 1 : clanFarm.level;
-        const str: string = `+${percent}%`;
-      const text: Phaser.GameObjects.Text = this.scene.add.text(160, this.scene.cameras.main.centerY - 70, str, bonusTextStyle).setColor('#57A90E').setOrigin(0, 0.5);
-      this.scene.add.text(text.getBounds().right + 5, this.scene.cameras.main.centerY - 70,  this.scene.state.lang.fromClanFarm, bonusTextStyle).setOrigin(0, 0.5);
-    }
-
-    if (this.scene.state[`user${this.scene.state.farm}`].part >= this.settings.unlock_improve) {
-      let improve: any;
-      if (this.settings.improveStorageMoneyPrice) {
-        improve = {
-          icon: `${this.scene.state.farm.toLowerCase()}Coin`,
-          text: shortNum(this.settings.improveStorageMoneyPrice)
-        };
-      } else if (this.settings.improveStorageDiamondPrice) {
-        improve = {
-          icon: 'diamond',
-          text: shortNum(this.settings.improveStorageDiamondPrice)
-        };
-      }
-      let improveText: string = this.scene.state.lang.improveToLevel.replace('$1', this.scene.state.territory.improve + 1);
-      const button = this.scene.bigButton('orange', 'left', 110 + padding / 2, improveText, improve);
-      this.scene.clickModalBtn(button, (): void => { this.improveTerritory() });
-    } else {
-      const improve = {
-        icon: 'lock',
-        text: this.scene.state.lang.shortPart + ' ' + this.settings.unlock_improve
-      };
-      let improveText: string = this.scene.state.lang.improveToLevel.replace('$1', this.scene.state.territory.improve + 1);
-      this.scene.bigButton('grey', 'left', 110 + padding / 2, improveText, improve);
-    }
-
-
-    this.scene.progressText = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 160 - padding, '', {
-      font: '26px Bip',
-      color: '#925C28'
-    }).setOrigin(0.5, 0.5);
-
-    this.scene.add.sprite(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 120 - padding, 'pb-chapter-modal');
-    this.scene.progressBar = this.scene.add.tileSprite(136, this.scene.cameras.main.centerY - 120 - padding, 0, 16, 'green-progress').setOrigin(0, 0.5);
-
-    this.scene.progressButton = this.scene.repositoryBtn(10 + padding / 2, this.scene.state.lang[`sell${this.resource}`], this.money);
-    this.scene.clickModalBtn(this.scene.progressButton, (): void => {this.sellResource()});
-    
-
-
-    const button1 = this.scene.bigButton('red', 'center', 200 + padding / 2, this.scene.state.lang.exchangeRepositoryBtn);
-    this.scene.clickModalBtn(button1, (): void => { this.launchExchangeCurrencyModal(); });
-
-    this.scene.resizeWindow(430 + padding);
-  }
-
-
-  private cowRepositoryApgradeAvalable(): void {
-    let padding: number = 0;
-
-    if (this.scene.state[`user${this.farm}`].feedBoostTime > 0) {
-      padding += 10;
-      const bonusHeader: Phaser.GameObjects.Text = this.scene.add.text(160, this.scene.cameras.main.centerY - 100 + 35, this.scene.state.lang.quantityBonus, bonusTextStyle).setOrigin(0, 0.5);
-      const textFeed: Phaser.GameObjects.Text = this.scene.add.text(160, this.scene.cameras.main.centerY - 70 + 35, '+100%', bonusTextStyle).setColor('#57A90E').setOrigin(0, 0.5);
-      this.scene.feedBoostText = this.scene.add.text(textFeed.getBounds().right + 5, this.scene.cameras.main.centerY - 70 + 35, ' ', bonusTextStyle).setOrigin(0, 0.5).setVisible(false);
-      if (this.scene.state.clan) {
-        padding += 10;
-        bonusHeader.setY(bonusHeader.y - padding);
-        textFeed.setY(textFeed.y - padding);
-        this.scene.feedBoostText.setY(this.scene.feedBoostText.y - padding);
-          const clanFarm: IclanFarm = this.scene.state.clan[this.scene.state.farm.toLowerCase()];
-        const percent: number = clanFarm.cooldown > 0 ? clanFarm.level - 1 : clanFarm.level;
-        const str: string = `+${percent}%`;
-        const text: Phaser.GameObjects.Text = this.scene.add.text(160, this.scene.cameras.main.centerY - 60 + 35, str, bonusTextStyle).setColor('#57A90E').setOrigin(0, 0.5);
-        this.scene.add.text(text.getBounds().right + 5, this.scene.cameras.main.centerY - 60 + 35,  this.scene.state.lang.fromClanFarm, bonusTextStyle).setOrigin(0, 0.5);
-      }
-    } else if (this.scene.state.clan) {
-      this.scene.add.text(160, this.scene.cameras.main.centerY - 95 + 25, this.scene.state.lang.quantityBonus, bonusTextStyle).setOrigin(0, 0.5);
-      padding += 10;
-        const clanFarm: IclanFarm = this.scene.state.clan[this.scene.state.farm.toLowerCase()];
-        const percent: number = clanFarm.cooldown > 0 ? clanFarm.level - 1 : clanFarm.level;
-        const str: string = `+${percent}%`;
-      const text: Phaser.GameObjects.Text = this.scene.add.text(160, this.scene.cameras.main.centerY - 70 + 25, str, bonusTextStyle).setColor('#57A90E').setOrigin(0, 0.5);
-      this.scene.add.text(text.getBounds().right + 5, this.scene.cameras.main.centerY - 70 + 25,  this.scene.state.lang.fromClanFarm, bonusTextStyle).setOrigin(0, 0.5);
-    }
-
-    if (this.scene.state.userCow.part >= this.settings.unlock_improve) {
-
-      let improve: any;
-      if (this.settings.improveStorageMoneyPrice) {
-        improve = {
-          icon: `${this.scene.state.farm.toLowerCase()}Coin`,
-          text: shortNum(this.settings.improveStorageMoneyPrice)
-        };
-      } else if (this.settings.improveStorageDiamondPrice) {
-        improve = {
-          icon: 'diamond',
-          text: shortNum(this.settings.improveStorageDiamondPrice)
-        };
-      }
-      let improveText: string = this.scene.state.lang.improveToLevel.replace('$1', this.scene.state.territory.improve + 1);
-      const button = this.scene.bigButton('orange', 'left', 90 + padding, improveText, improve);
-      this.scene.clickModalBtn(button, (): void => { this.improveTerritory() });
-
-    } else {
-      
-      const improve = {
-        icon: 'lock',
-        text: this.scene.state.lang.shortPart + ' ' + this.settings.unlock_improve
-      };
-      let improveText: string = this.scene.state.lang.improveToLevel.replace('$1', this.scene.state.territory.improve + 1);
-      this.scene.bigButton('grey', 'left', 90 + padding, improveText, improve);
-
-    }
-
-    this.scene.progressText = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 140 - padding, '', {
-      font: '26px Bip',
-      color: '#925C28'
-    }).setOrigin(0.5, 0.5);
-
-    this.scene.add.sprite(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 100 - padding, 'pb-chapter-modal');
-    this.scene.progressBar = this.scene.add.tileSprite(136, this.scene.cameras.main.centerY - 100 - padding, 0, 16, 'green-progress').setOrigin(0, 0.5);
-
-    if (this.scene.state.userCow.part === 2 && this.scene.state.userCow.tutorial < 40) {
-      this.scene.progressButton = this.scene.bigButton('grey', 'left', 10 + padding, this.scene.state.lang.sellMilk, this.money);
-      this.scene.clickModalBtn(this.scene.progressButton, (): void => {
-        if (this.scene.state.territory.volume > 0) {
-          this.scene.scene.stop();
-          SpeechBubble.create(this.scene.game.scene.keys[`${this.farm}Bars`], this.scene.state.lang.doneNextTask, 3);
-        }
-      });
-    } else {
-      this.scene.progressButton = this.scene.bigButton('yellow', 'left', 10 + padding, this.scene.state.lang.sellMilk, this.money);
-      this.scene.clickModalBtn(this.scene.progressButton, (): void => {
-        if (this.scene.state.territory.volume > 0) {
-          this.scene.scene.stop();
-          if (this.scene.state.userCow.tutorial >= 40 || this.scene.state.userCow.part >= 3) {
-            this.scene.game.scene.keys[this.farm].showConfirmSellMilk();
-          } else {
-            this.scene.game.scene.keys[this.farm].sellMilk();
-          }
-        }
-      });
-    }
-
-    let button1 = this.scene.bigButton('red', 'center', 170 + padding, this.scene.state.lang.exchangeRepositoryBtn);
-    this.scene.clickModalBtn(button1, (): void => { this.launchExchangeCurrencyModal() });
-
-    this.scene.resizeWindow(370 + padding);
+    this.createBoostInfoAndSetPadding(this.scene.cameras.main.centerY - 100);
+    this.createProgress(this.scene.cameras.main.centerY - 160 - this.padding - 2);
+    this.createSellResourceBtn(this.padding / 2);
+    this.createImproveBtn(100 + this.padding / 2);
+    this.createExchangeBtn(180 + this.padding / 2);
+    this.scene.resizeWindow(430 + this.padding);
   }
 
   private nonCowRepositoryMaxLevel(): void {
-    let padding: number = 0;
+    this.createBoostInfoAndSetPadding(this.scene.cameras.main.centerY - 50);
+    this.createProgress(this.scene.cameras.main.centerY - 120 - this.padding);
+    this.createSellResourceBtn(60 + this.padding / 2);
+    this.createExchangeBtn(160 + this.padding / 2);
+    this.scene.resizeWindow(340 + this.padding + 10);
+  }
 
+  private cowRepositoryApgradeAvalable(): void {
+    this.createBoostInfoAndSetPadding(this.scene.cameras.main.centerY - 80);
+    this.createProgress(this.scene.cameras.main.centerY - 150 - this.padding);
+    this.createSellMilkBtn(this.padding);
+    this.createImproveBtn(80 + this.padding);
+    this.createExchangeBtn(160 + this.padding);
+    this.scene.resizeWindow(370 + this.padding);
+  }
+
+  private cowRepositoryMaxLevel(): void {
+    this.createBoostInfoAndSetPadding(this.scene.cameras.main.centerY - 30);
+    this.createProgress(this.scene.cameras.main.centerY - 100 - this.padding);
+    this.createSellMilkBtn(50 + this.padding);
+    this.createExchangeBtn(130 + this.padding);
+    this.scene.resizeWindow(290 + this.padding);
+  }
+
+  /**
+   * Функция создает информацию по бустам и устанавливает смещение
+   * @param startY Верхняя координата Y
+   */
+  private createBoostInfoAndSetPadding(startY: number): void {
     if (this.scene.state[`user${this.farm}`].feedBoostTime > 0) {
-      padding += 10;
-      const bonusHeader: Phaser.GameObjects.Text = this.scene.add.text(160, this.scene.cameras.main.centerY - 100 + 55, this.scene.state.lang.priceBonus, bonusTextStyle).setOrigin(0, 0.5);
-      const textFeed: Phaser.GameObjects.Text = this.scene.add.text(160, this.scene.cameras.main.centerY - 70 + 55, '+100%', bonusTextStyle).setColor('#57A90E').setOrigin(0, 0.5);
-      this.scene.feedBoostText = this.scene.add.text(textFeed.getBounds().right + 5, this.scene.cameras.main.centerY - 70 + 55, ' ', bonusTextStyle).setOrigin(0, 0.5).setVisible(false);
+      this.padding += 20;
+      const bonusHeader: Phaser.GameObjects.Text = this.scene.add.text(160, startY, this.scene.state.lang.priceBonus, bonusTextStyle).setOrigin(0, 0.5);
+      const textFeed: Phaser.GameObjects.Text = this.scene.add.text(160, startY + 30, '+100%', bonusTextStyle).setColor('#57A90E').setOrigin(0, 0.5);
+      this.scene.feedBoostText = this.scene.add.text(textFeed.getBounds().right + 5, startY + 30, ' ', bonusTextStyle).setOrigin(0, 0.5).setVisible(false);
       if (this.scene.state.clan) {
-        padding += 10;
-        bonusHeader.setY(bonusHeader.y - padding);
-        textFeed.setY(textFeed.y - padding);
-        this.scene.feedBoostText.setY(this.scene.feedBoostText.y - padding);
-        padding += 10;
+        this.padding += 20;
+        bonusHeader.setY(bonusHeader.y - this.padding / 2);
+        textFeed.setY(textFeed.y - this.padding / 2);
+        this.scene.feedBoostText.setY(this.scene.feedBoostText.y - this.padding / 2);
         const clanFarm: IclanFarm = this.scene.state.clan[this.scene.state.farm.toLowerCase()];
         const percent: number = clanFarm.cooldown > 0 ? clanFarm.level - 1 : clanFarm.level;
         const str: string = `+${percent}%`;
-        const text: Phaser.GameObjects.Text = this.scene.add.text(160, this.scene.cameras.main.centerY - 60 + 55, str, bonusTextStyle).setColor('#57A90E').setOrigin(0, 0.5);
-        this.scene.add.text(text.getBounds().right + 5, this.scene.cameras.main.centerY - 60 + 55,  this.scene.state.lang.fromClanFarm, bonusTextStyle).setOrigin(0, 0.5);
+        const text: Phaser.GameObjects.Text = this.scene.add.text(160, startY + 40, str, bonusTextStyle).setColor('#57A90E').setOrigin(0, 0.5);
+        this.scene.add.text(text.getBounds().right + 5, startY + 40, this.scene.state.lang.fromClanFarm, bonusTextStyle).setOrigin(0, 0.5);
       }
     } else if (this.scene.state.clan) {
-      this.scene.add.text(160, this.scene.cameras.main.centerY - 95 + 55, this.scene.state.lang.priceBonus, bonusTextStyle).setOrigin(0, 0.5);
-      padding += 10;
+      this.scene.add.text(160, startY + 5, this.scene.state.lang.priceBonus, bonusTextStyle).setOrigin(0, 0.5);
+      this.padding += 20;
       const clanFarm: IclanFarm = this.scene.state.clan[this.scene.state.farm.toLowerCase()];
       const percent: number = clanFarm.cooldown > 0 ? clanFarm.level - 1 : clanFarm.level;
       const str: string = `+${percent}%`;
-      const text: Phaser.GameObjects.Text = this.scene.add.text(160, this.scene.cameras.main.centerY - 70 + 55, str, bonusTextStyle).setColor('#57A90E').setOrigin(0, 0.5);
-      this.scene.add.text(text.getBounds().right + 5, this.scene.cameras.main.centerY - 70 + 55,  this.scene.state.lang.fromClanFarm, bonusTextStyle).setOrigin(0, 0.5);
+      const text: Phaser.GameObjects.Text = this.scene.add.text(160, startY + 30, str, bonusTextStyle).setColor('#57A90E').setOrigin(0, 0.5);
+      this.scene.add.text(text.getBounds().right + 5, startY + 30, this.scene.state.lang.fromClanFarm, bonusTextStyle).setOrigin(0, 0.5);
     }
-
-    this.scene.progressText = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 120 - padding, '', {
-      font: '26px Bip',
-      color: '#925C28'
-    }).setOrigin(0.5, 0.5);
-
-    this.scene.add.sprite(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 70 - padding, 'pb-chapter-modal');
-    this.scene.progressBar = this.scene.add.tileSprite(136, this.scene.cameras.main.centerY - 70 - padding, 0, 16, 'green-progress').setOrigin(0, 0.5);
-
-    this.scene.progressButton = this.scene.repositoryBtn(60 + padding, this.scene.state.lang[`sell${this.resource}`], this.money);
-    this.scene.clickModalBtn(this.scene.progressButton, (): void => { this.sellResource() });
-
-    let button1 = this.scene.bigButton('red', 'center', 170 + padding / 2, this.scene.state.lang.exchangeRepositoryBtn);
-    this.scene.clickModalBtn(button1, (): void => { this.launchExchangeCurrencyModal() });
-
-    this.scene.resizeWindow(340 + padding + 10);
   }
 
-
-  private cowRepositoryMaxLevel(): void {
-    let padding: number = 0;
-
-    if (this.scene.state[`user${this.farm}`].feedBoostTime > 0) {
-      padding += 10;
-      const bonusHeader: Phaser.GameObjects.Text = this.scene.add.text(160, this.scene.cameras.main.centerY - 100 + 70, this.scene.state.lang.quantityBonus, bonusTextStyle).setOrigin(0, 0.5);
-      const textFeed: Phaser.GameObjects.Text = this.scene.add.text(160, this.scene.cameras.main.centerY - 70 + 70, '+100%', bonusTextStyle).setColor('#57A90E').setOrigin(0, 0.5);
-      this.scene.feedBoostText = this.scene.add.text(textFeed.getBounds().right + 5, this.scene.cameras.main.centerY - 70 + 70, ' ', bonusTextStyle).setOrigin(0, 0.5).setVisible(false);
-      if (this.scene.state.clan) {
-        padding += 10;
-        bonusHeader.setY(bonusHeader.y - padding);
-        textFeed.setY(textFeed.y - padding);
-        this.scene.feedBoostText.setY(this.scene.feedBoostText.y - padding);
-        padding += 10;
-          const clanFarm: IclanFarm = this.scene.state.clan[this.scene.state.farm.toLowerCase()];
-        const percent: number = clanFarm.cooldown > 0 ? clanFarm.level - 1 : clanFarm.level;
-        const str: string = `+${percent}%`;
-        const text: Phaser.GameObjects.Text = this.scene.add.text(160, this.scene.cameras.main.centerY - 60 + 70, str, bonusTextStyle).setColor('#57A90E').setOrigin(0, 0.5);
-        this.scene.add.text(text.getBounds().right + 5, this.scene.cameras.main.centerY - 60 + 70,  this.scene.state.lang.fromClanFarm, bonusTextStyle).setOrigin(0, 0.5);
+  /**
+   * Функция создает кнопку улучшения хранилища
+   * @param y Смещение по Y относительно цетнра
+   */
+  private createImproveBtn(y: number) {
+    const sale = Utils.checkSale(this.scene.state.sales, `${this.scene.state.farm.toUpperCase()}_REPOSITORY_IMPROVE`);
+    let action = (): void => { this.improveTerritory(); };
+    const improveSettings: IbigButtonSetting = {
+      text: this.scene.state.lang.improveToLevel.replace('$1', this.scene.state.territory.improve + 1),
+      color: 'orange',
+      textAlign: 'left',
+      right1: {
+        icon: `${this.scene.state.farm.toLowerCase()}Coin`,
+        text: shortNum(this.settings.improveStorageMoneyPrice),
+        sale: sale ? shortNum(Math.floor(this.settings.improveStorageMoneyPrice / 2)) : null,
       }
-    } else if (this.scene.state.clan) {
-      this.scene.add.text(160, this.scene.cameras.main.centerY - 95 + 65, this.scene.state.lang.quantityBonus, bonusTextStyle).setOrigin(0, 0.5);
-      padding += 10;
-        const clanFarm: IclanFarm = this.scene.state.clan[this.scene.state.farm.toLowerCase()];
-        const percent: number = clanFarm.cooldown > 0 ? clanFarm.level - 1 : clanFarm.level;
-        const str: string = `+${percent}%`;
-      const text: Phaser.GameObjects.Text = this.scene.add.text(160, this.scene.cameras.main.centerY - 70 + 65, str, bonusTextStyle).setColor('#57A90E').setOrigin(0, 0.5);
-      this.scene.add.text(text.getBounds().right + 5, this.scene.cameras.main.centerY - 70 + 65,  this.scene.state.lang.fromClanFarm, bonusTextStyle).setOrigin(0, 0.5);
+    };
+    if (this.settings.improveStorageDiamondPrice) {
+      improveSettings.right1 = {
+        icon: 'diamond',
+        text: shortNum(this.settings.improveStorageDiamondPrice),
+        sale: sale ? shortNum(Math.floor(this.settings.improveStorageDiamondPrice / 2)) : null,
+      };
     }
+    if (this.scene.state[`user${this.scene.state.farm}`].part < this.settings.unlock_improve) {
+      improveSettings.right1 = {
+        icon: 'lock',
+        text: this.scene.state.lang.shortPart + ' ' + this.settings.unlock_improve
+      };
+    }
+    new BigButton(this.scene, y, action, improveSettings);
+  }
 
-    this.scene.progressText = this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 100 - padding, '', {
+  /**
+   * Функция создает кнопку обмена хранилища
+   * @param y Смещение по Y относительно цетнра
+   */
+  private createExchangeBtn(y: number): void {
+    new BigButton(this.scene, y, () => { this.launchExchangeCurrencyModal(); }, {
+      color: 'red',
+      textAlign: 'center',
+      text: this.scene.state.lang.exchangeRepositoryBtn,
+    });
+  }
+  
+  /**
+   * Функция создает на сцене прогресс бар и текст
+   * @param startY Верхняя координата Y
+   */
+  private createProgress(startY: number): void {
+    this.scene.progressText = this.scene.add.text(this.scene.cameras.main.centerX, startY, '', {
       font: '26px Bip',
       color: '#925C28'
     }).setOrigin(0.5, 0.5);
 
-    this.scene.add.sprite(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 60 - padding, 'pb-chapter-modal');
-    this.scene.progressBar = this.scene.add.tileSprite(136, this.scene.cameras.main.centerY - 60 - padding, 0, 16, 'green-progress').setOrigin(0, 0.5);
+    this.scene.add.sprite(this.scene.cameras.main.centerX, startY + 50, 'pb-chapter-modal');
+    this.scene.progressBar = this.scene.add.tileSprite(136, startY + 50, 0, 16, 'green-progress').setOrigin(0, 0.5);
+  }
 
+  /**
+   * Функция создает кнопку для продажи ресурсов
+   * @param y Смещение по Y относительно цетнра
+   */
+  private createSellResourceBtn(y: number): void {
+    this.scene.progressButton = this.scene.repositoryBtn(y, this.scene.state.lang[`sell${this.resource}`], this.money);
+    this.scene.clickModalBtn(this.scene.progressButton, (): void => { this.sellResource(); });
+  }
+
+  /**
+   * Функция создает кнопку продажи молока
+   * @param y Смещение по Y относительно цетнра
+   */
+  private createSellMilkBtn(y: number): void {   
     if (this.scene.state.userCow.part === 2 && this.scene.state.userCow.tutorial < 40) {
-      this.scene.progressButton = this.scene.bigButton('grey', 'left', 50 + padding, this.scene.state.lang.sellMilk, this.money);
+      this.scene.progressButton = this.scene.bigButton('grey', 'left', y, this.scene.state.lang.sellMilk, this.money);
       this.scene.clickModalBtn(this.scene.progressButton, (): void => {
         if (this.scene.state.territory.volume > 0) {
           this.scene.scene.stop();
@@ -319,20 +206,17 @@ export default class FarmResourceRepositoryWindow {
         }
       });
     } else {
-      this.scene.progressButton = this.scene.bigButton('yellow', 'left', 50 + padding, this.scene.state.lang.sellMilk, this.money);
+      this.scene.progressButton = this.scene.bigButton('yellow', 'left', y, this.scene.state.lang.sellMilk, this.money);
       this.scene.clickModalBtn(this.scene.progressButton, (): void => {
         if (this.scene.state.territory.volume > 0) {
           this.scene.scene.stop();
-          if (this.scene.state.userCow.tutorial < 40) this.scene.game.scene.keys[this.farm].sellMilk();
-          else this.scene.game.scene.keys[this.farm].showConfirmSellMilk();
+          if (this.scene.state.userCow.tutorial < 40)
+            this.scene.game.scene.keys[this.farm].sellMilk();
+          else
+            this.scene.game.scene.keys[this.farm].showConfirmSellMilk();
         }
       });
     }
-    
-    const button1 = this.scene.bigButton('red', 'center', 130 + padding, this.scene.state.lang.exchangeRepositoryBtn);
-    this.scene.clickModalBtn(button1, (): void => { this.launchExchangeCurrencyModal(); });
-
-    this.scene.resizeWindow(290 + padding);
   }
 
   private launchExchangeCurrencyModal(): void {
@@ -345,7 +229,6 @@ export default class FarmResourceRepositoryWindow {
     this.scene.state.modal = modal;
     this.scene.scene.start('Modal', this.scene.state);
   }
-
 
   private sellResource(): void {
     if (this.scene.state.territory.money > 0) {

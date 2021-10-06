@@ -619,20 +619,23 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       territoriesSettings = this.scene.state.cowSettings.territoriesCowSettings;
       
     }
-  
+    
     if (this.improve < territoriesSettings.length &&
       (this.territoryType === 2 ||
       this.territoryType === 3 ||
       this.territoryType === 5)) {
-  
-        const settings: IterritoriesCowSettings = territoriesSettings.find((data: any) => data.improve === this.improve + 1);
+      const settings: IterritoriesCowSettings | IterritoriesSheepSettings | IterritoriesChickenSettings = territoriesSettings.find((data: any) => data.improve === this.improve + 1);
+
       
       if (user.part >= settings.unlock_improve) {
         if (this.territoryType === 5) {
-          if (settings.improveStorageMoneyPrice) {
-            this.moneyImprove(user, settings.improveStorageMoneyPrice);
-          } else if (settings.improveStorageDiamondPrice) {
-            this.diamondImprove(settings.improveStorageDiamondPrice);
+          const sale = Utils.checkSale(this.scene.state.sales, `${this.scene.state.farm.toUpperCase()}_REPOSITORY_IMPROVE`);
+          const moneyPrice = sale ? Math.floor(settings.improveStorageMoneyPrice / 2) : settings.improveStorageMoneyPrice;
+          const diamondPrice = sale ? Math.floor(settings.improveStorageDiamondPrice / 2) : settings.improveStorageDiamondPrice;
+          if (moneyPrice) {
+            this.moneyImprove(user, moneyPrice);
+          } else if (diamondPrice) {
+            this.diamondImprove(diamondPrice);
           }
         } else if (this.territoryType === 2 || this.territoryType === 3){
           if (settings.improvePastureMoneyPrice) {
