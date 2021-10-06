@@ -10,12 +10,10 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
   private chatIcon: Phaser.GameObjects.Sprite;
   private authIcon: Phaser.GameObjects.Sprite;
   private offlineIcon: Phaser.GameObjects.Sprite;
-  private fortuneIcon: Phaser.GameObjects.Sprite;
   public isOpened: boolean = false;
   private showTimer: number = 0;
   private profileAnim: Phaser.Tweens.Tween;
   private chatAnim: Phaser.Tweens.Tween;
-  private fortuneAnim: Phaser.Tweens.Tween;
   private chatNotificatorAnim: Phaser.Tweens.Tween;
   private chatNotificator: Notificator;
 
@@ -49,7 +47,6 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
     this.chatNotificator = new Notificator(this.scene, { x: this.x + 35, y: this.y - 50 }).setVisible(false).setDepth(this.y + 3);
     this.chatNotificator.setCount(this.getMessagesCount());
     this.authIcon = this.scene.add.sprite(this.x, this.y, 'profile').setVisible(false).setDepth(this.y + 2);
-    this.fortuneIcon = this.scene.add.sprite(this.x, this.y, 'fortune-icon').setScale(0.8).setVisible(false).setDepth(this.y + 2);
     this.offlineIcon = this.scene.add.sprite(this.x, this.y, 'offline')
       .setInteractive()
       .setDepth(this.y + 4)
@@ -83,12 +80,9 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       this.scene.state.modal = modal;
       this.scene.scene.launch('Modal', this.scene.state);
     });
-    this.scene.clickButton(this.fortuneIcon, (): void => {
-      this.scene.scene.launch('Fortune', this.scene.state);
-    });
     this.scene.clickButton(this, (): void => {
       this.removeAmimation();
-      if (!this.profileAnim && !this.chatAnim && !this.fortuneAnim) {
+      if (!this.profileAnim && !this.chatAnim) {
         this.isOpened = !this.isOpened;
         this.showTimer = 0;
         if (!this.isOpened) {
@@ -107,8 +101,6 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
     this.profileAnim = undefined;
     this.chatAnim?.remove();
     this.chatAnim = undefined;
-    this.fortuneAnim?.remove();
-    this.fortuneAnim = undefined;
     this.chatNotificatorAnim?.remove();
     this.chatNotificatorAnim = undefined;
   }
@@ -174,21 +166,9 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       this.chatIcon.setVisible(true);
       this.chatNotificator.setCount(this.getMessagesCount());
     }
-
-    if (this.checkFortune() && this.visible) {
-      if (this.scene.state.platform === 'web' && this.scene.state.user.login === '' || this.scene.state.platform === 'ya' && !this.scene.state.yaPlayer) {
-        this.fortuneIcon.setVisible(false);
-      } else {
-        this.fortuneIcon.setVisible(true);
-      }
-    } else {
-      this.fortuneIcon.setVisible(false);
-    }
   }
 
-  private checkFortune(): boolean {
-    return this.scene.state.userSheep.part >= 8 ;
-  }
+
 
   private tickShowTimerAndSetState(): void {
     if (this.isOpened) {
@@ -204,13 +184,6 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
   
   private showElements(): void {
     const duration: number = 350;
-    this.fortuneAnim = this.scene.add.tween({
-      targets: this.fortuneIcon,
-      y: { from: this.y, to: this.y - 375 },
-      duration: duration,
-      ease: 'Power1',
-      scale: 1,
-    });
     this.profileAnim = this.scene.add.tween({
       targets: this.profileIcon,
       duration: duration,
@@ -255,13 +228,6 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       onComplete: (): void => {
         this.removeAmimation();
       }
-    });
-    this.fortuneAnim = this.scene.add.tween({
-      targets: this.fortuneIcon,
-      y: { from: this.fortuneIcon.y, to: this.y },
-      duration: duration,
-      ease: 'Power1',
-      scale: 0.8,
     });
     this.chatNotificatorAnim = this.scene.add.tween({
       targets: this.chatNotificator.children,
