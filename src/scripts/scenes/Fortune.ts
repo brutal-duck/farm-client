@@ -5,6 +5,7 @@ import { loadingModal } from '../general/basic';
 import Hint from '../components/animations/Hint';
 import Firework from '../components/animations/Firework';
 import Currency from '../components/animations/Currency';
+import axios from 'axios';
 
 const modal: string = require('../../assets/images/event/fortune/modal.png');
 const btn: string = require('../../assets/images/event/fortune/btn.png');
@@ -13,16 +14,6 @@ const pointer: string = require('../../assets/images/event/fortune/pointer.png')
 const ticket: string = require('../../assets/images/event/fortune/ticket.png');
 const jackpotBg: string = require('../../assets/images/event/fortune/jackpot-bg.png');
 const doneChapterButton: string = require('../../assets/images/modal/done-chapter-button.png');
-
-const JACKPOT: number = 22;
-const DIAMOND: number = 500;
-const MONEY_1: number = 1354;
-const MONEY_2: number = 1354;
-const MONEY_3: number = 1354;
-const HERD_BOOST: number = 1354;
-const FEED_BOOST: number = 1354;
-const TICKET: number = 1354;
-const COLLECTOR: number = 1354;
 
 export default class Fortune extends Phaser.Scene {
   constructor() {
@@ -308,20 +299,11 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private handlerStartBtn(): void {
-
     if (this.state.user.boosts.fortune > 0) {
-      this.removeInteractiveElements();
-      this.getRandomIndexPrize();
-      this.setUpdatedButton();
-      this.whellIsScrolling = true;
-      this.startScrollWheel();
+      this.startFortune();
     } else {
       if (this.state.user.diamonds >= this.price) {
-        this.removeInteractiveElements();
-        this.getRandomIndexPrize();
-        this.setUpdatedButton();
-        this.whellIsScrolling = true;
-        this.startScrollWheel();
+        this.startFortune();
       } else {
         this.state.convertor = {
           fun: 0,
@@ -338,6 +320,26 @@ export default class Fortune extends Phaser.Scene {
         this.scene.launch('Modal', this.state);
       }
     }
+  }
+
+  private startFortune(): void {
+    const data = {
+      id: this.state.user.id,
+      hash: this.state.user.hash,
+      counter: this.state.user.counter,
+    };
+    this.removeInteractiveElements();
+    axios.post(process.env.API + '/getFortunePrize', data).then(res => {
+      const { error, prizeId } = res.data;
+      if (!error) {
+        this.prizeId = prizeId;
+        this.setUpdatedButton();
+        this.whellIsScrolling = true;
+        this.startScrollWheel();
+      }
+    }).catch(() => {
+      this.setInteractiveElements();
+    });
   }
 
   private startScrollWheel(): void {
@@ -450,8 +452,9 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private sendSocket(prize: number = 0): void {
+    const name: string = this.state.platform !== 'web' && this.state.platform !== 'android' ? this.state.name : this.state.user.login;
     let data: any = {
-      name: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
+      name: name,
       spending: 0,
       prize: 0,
       jackpot: false,
@@ -459,41 +462,41 @@ export default class Fortune extends Phaser.Scene {
     if (this.state.user.boosts.fortune >= 1) {
       if (this.prizeId === 1) {
         data = {
-          name: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
+          name: name,
           spending: 0,
           prize: prize,
           jackpot: true,
-        }
+        };
       } else if ( this.prizeId === 2) {
         data = {
-          name: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
+          name: name,
           spending: 0,
           prize: prize,
           jackpot: false,
-        }
+        };
       }
     } else {
       if (this.prizeId === 1) {
         data = {
-          name: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
+          name: name,
           spending: this.price,
           prize: prize,
           jackpot: true,
-        }
+        };
       } else if ( this.prizeId === 2) {
         data = {
-          name: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
+          name: name,
           spending: this.price,
           prize: prize,
           jackpot: false,
-        }
+        };
       } else if ( this.prizeId >= 3 && this.prizeId <= 8) {
         data = {
-          name: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
+          name: name,
           spending: this.price,
           prize: 0,
           jackpot: false,
-        }
+        };
       }
     }
     this.state.socket.io.emit('fortune-send', data);
@@ -894,36 +897,4 @@ export default class Fortune extends Phaser.Scene {
     Hint.create(this, -250, text, 3);
   }
 
-  private getRandomIndexPrize(): void {
-    const pull: number[] = [ JACKPOT, DIAMOND, MONEY_1, MONEY_2, MONEY_3, HERD_BOOST, FEED_BOOST, TICKET, COLLECTOR ];
-
-    const totalCounter: number = pull.reduce((prev, current) => prev += current);
-    const arrRange: {
-      id: number,
-      bottom: number,
-      top: number
-    }[] = [];
-
-    let current: number = 0;
-    let previos: number = 0;
-    for (let i: number = 0; i < pull.length; i += 1) {
-      if (pull[i] !== 0) {
-        current = pull[i] + previos;
-        arrRange.push({
-          id: i + 1, 
-          bottom: previos, 
-          top: current 
-        })
-        previos = current;
-      }
-    }
-
-    const randomIndex: number = Phaser.Math.Between(1, totalCounter);
-
-    for (let i: number = 0; i < arrRange.length; i += 1) {
-      if (arrRange[i].bottom < randomIndex && arrRange[i].top >= randomIndex) {
-        this.prizeId = arrRange[i].id;
-      }
-    }
-  }
 };
