@@ -139,26 +139,27 @@ function improveCollector(): void {
   } else {
 
     if (nextLevel.diamonds) {
-  
-      if (this.state.user.diamonds >= nextLevel.price) {
+      const sale = Utils.checkSale(this.state.sales, `${this.state.farm.toUpperCase()}_COLLECTOR_IMPROVE`);
+      const price = sale ? Math.floor(nextLevel.price / 2) : nextLevel.price;
+      if (this.state.user.diamonds >= price) {
         const modal: Imodal = {
           type: 1,
           sysType: 24,
           confirmSpendParams: {
             type: `ImproveCollector${this.state.farm}`,
             level: nextLevel.level,
-            price: nextLevel.price,
+            price: price,
             callback: () => {
               this.state.amplitude.logAmplitudeEvent('diamonds_spent', {
                 type: 'improve_collector',
-                count: nextLevel.price,
+                count: price,
               });
               
-              this.state.user.diamonds -= nextLevel.price;
+              this.state.user.diamonds -= price;
               user.collectorLevel++;
               this.setCollector();
               
-              this.game.scene.keys[this.state.farm].tryTask(15, 0, nextLevel.price);
+              this.game.scene.keys[this.state.farm].tryTask(15, 0, price);
               this.game.scene.keys[this.state.farm].tryTask(23, 0, 0, user.collectorLevel);
               this.game.scene.keys[this.state.farm].tryClanTask(6);
               
@@ -179,6 +180,7 @@ function improveCollector(): void {
                 const modal: Imodal = {
                   type: 1,
                   sysType: 10,
+                  message: 'improved',
                 };
                 this.state.modal = modal;
                 this.scene.launch('Modal', this.state);

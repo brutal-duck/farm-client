@@ -41,7 +41,6 @@ interface IbigButtonSetting {
   text: string;
   right1?: IbigButtonElementSettings;
   right2?: IbigButtonElementSettings;
-  sale?: string;
 }
 interface IbigButtonElementSettings {
   text: string;

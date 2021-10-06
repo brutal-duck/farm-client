@@ -1,168 +1,145 @@
 import { shortNum } from "../../../general/basic";
 import Modal from "../../../scenes/Modal/Modal";
+import BigButton from './../../Buttons/BigButton';
+import Utils from './../../../libs/Utils';
 
+const basicTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+  fontFamily: 'Bip',
+  fontSize: '30px',
+  color: '#925C28'
+};
+
+const nextLevelTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+  fontFamily: 'Bip',
+  fontSize: '30px',
+  color: '#57A90E'
+};
 export default class ImproveCollectorWindow {
   public scene: Modal;
+  private speed: Phaser.GameObjects.Text;
+  private duration: Phaser.GameObjects.Text;
+  private nextLevelText: Phaser.GameObjects.Text;
+  private currentLevel: IcollectorSettings;
+  private nextLevel: IcollectorSettings;
 
   constructor(scene: Modal) {
     this.scene = scene;
+    this.updateCollectorSettings();
     this.create();
     this.scene.openModal(this.scene.cameras.main);    
   }
 
   private create(): void {
-    const farm: string = this.scene.state.farm.toLowerCase();
     const resource: string = this.scene.state.farm === 'Sheep' ? 'wool' : 
     this.scene.state.farm === 'Chicken' ? 'egg' : 
     this.scene.state.farm === 'Cow' ? 'milk' : '';
     
     this.scene.textHeader.setText(`${this.scene.state.lang[`${resource}Collector`]} ${this.scene.state[`user${this.scene.state.farm}`].collectorLevel} ${this.scene.state.lang.shortLevel}.`);
-    const thisLevel: IcollectorSettings = this.scene.state[`${farm}CollectorSettings`].find((data: IcollectorSettings) => data.level === this.scene.state[`user${this.scene.state.farm}`].collectorLevel);
-    const nextLevel: IcollectorSettings = this.scene.state[`${farm}CollectorSettings`].find((data: IcollectorSettings) => data.level === this.scene.state[`user${this.scene.state.farm}`].collectorLevel + 1);
+    let speedText: string = `${this.scene.state.lang.speed}: ${this.currentLevel.speed} ${this.scene.state.lang[`unit${this.scene.state.farm}`]}/${this.scene.state.lang.seconds}`;
+
+    this.speed = this.scene.add.text(125, this.scene.cameras.main.centerY - 80, speedText, basicTextStyle);
     
-    let speedText: string = `${this.scene.state.lang.speed}: ${thisLevel.speed} ${this.scene.state.lang[`unit${this.scene.state.farm}`]}/${this.scene.state.lang.seconds}`;
+    const durationText: string = `${this.scene.state.lang.duration}: ${this.currentLevel.time} ${this.scene.state.lang.minutes}`;
+    this.duration = this.scene.add.text(125, this.scene.cameras.main.centerY - 25, durationText, basicTextStyle);
 
-    const speed: Phaser.GameObjects.Text = this.scene.add.text(125, this.scene.cameras.main.centerY - 80, speedText, {
-      font: '30px Bip',
-      color: '#925C28'
-    });
-    
-    const durationText: string = `${this.scene.state.lang.duration}: ${thisLevel.time} ${this.scene.state.lang.minutes}`;
-    const duration: Phaser.GameObjects.Text = this.scene.add.text(125, this.scene.cameras.main.centerY - 25, durationText, {
-      font: '30px Bip',
-      color: '#925C28'
-    });
-
-    let icon: string;
-    let nextLevelText: Phaser.GameObjects.Text;
-
-    if (nextLevel.time > thisLevel.time) {
-
+    if (this.nextLevel.time > this.currentLevel.time) {
       const position: Iposition = {
-        x: duration.getBounds().right + 10,
-        y: duration.y
+        x: this.duration.getBounds().right + 10,
+        y: this.duration.y
       };
 
-      const text: string = `(+${(nextLevel.time - thisLevel.time)} ${this.scene.state.lang.shortMinutes})`;
-      nextLevelText = this.scene.add.text(position.x, position.y, text, { font: '30px Bip', color: '#57A90E' });
+      const text: string = `(+${(this.nextLevel.time - this.currentLevel.time)} ${this.scene.state.lang.shortMinutes})`;
+      this.nextLevelText = this.scene.add.text(position.x, position.y, text, { font: '30px Bip', color: '#57A90E' });
       
-    } else if (nextLevel.speed > thisLevel.speed) {
-
+    } else if (this.nextLevel.speed > this.currentLevel.speed) {
       const position: Iposition = {
-        x: speed.getBounds().right + 10,
-        y: speed.y
+        x: this.speed.getBounds().right + 10,
+        y: this.speed.y
       };
 
-      let text: string = `(+${(nextLevel.speed - thisLevel.speed).toFixed(1)})`;
-      nextLevelText = this.scene.add.text(position.x, position.y, text, {
-        font: '30px Bip',
-        color: '#57A90E'
-      });
-
+      let text: string = `(+${(this.nextLevel.speed - this.currentLevel.speed).toFixed(1)})`;
+      this.nextLevelText = this.scene.add.text(position.x, position.y, text, nextLevelTextStyle);
     }
 
-    if (this.scene.state[`user${this.scene.state.farm}`].part >= nextLevel.chapter) {
-      if (nextLevel.diamonds) icon = 'diamond';
-      else icon = `${farm}Coin`;
-
-      const right = { icon: icon, text: shortNum(nextLevel.price) }
-      const improve = this.scene.bigButton('green', 'left', 90, this.scene.state.lang.improve, right);
-      this.scene.clickModalBtn(improve, (): void => {
-        this.scene.game.scene.keys[this.scene.state.farm].improveCollector();
-        this.updateImproveCollector(improve, speed, duration, nextLevelText);  
-      });
-
-    } else {
-
-      const improve = {
-        icon: 'lock',
-        text: `${this.scene.state.lang.shortPart} ${nextLevel.chapter}`,
-      };
-
-      this.scene.bigButton('grey', 'left', 90, this.scene.state.lang.improve, improve);
-
-    }
+    this.createBtn();
 
     this.scene.resizeWindow(250);
+
+    if (this.scene.state.modal.message === 'improved') {
+      this.scene.game.scene.keys['Modal'].improveCollectorAnim({x: this.scene.cameras.main.centerX, y: this.scene.cameras.main.centerY + 10});
+    }
   }
 
+  private updateCollectorSettings(): void {
+    const collectorSettings: IcollectorSettings[] = this.scene.state[`${this.scene.state.farm.toLowerCase()}CollectorSettings`];
+    const farmUser: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
+    this.currentLevel = collectorSettings.find((data: IcollectorSettings) => data.level === farmUser.collectorLevel);
+    this.nextLevel = collectorSettings.find((data: IcollectorSettings) => data.level === farmUser.collectorLevel + 1);
+  }
 
-  private updateImproveCollector(
-    btn: {
-      btn: Phaser.GameObjects.Sprite,
-      img1: Phaser.GameObjects.Sprite,
-      img2: Phaser.GameObjects.Sprite,
-      text1: Phaser.GameObjects.Text
-      text2: Phaser.GameObjects.Text
-      title: Phaser.GameObjects.Text
-    }, 
-    speed: Phaser.GameObjects.Text, 
-    duration: Phaser.GameObjects.Text, 
-    nextLevelText: Phaser.GameObjects.Text
-  ): void {
-    const farm: string = this.scene.state.farm.toLowerCase();
+  private updateImproveCollector(): void {
+    this.updateCollectorSettings();
     const resource: string = this.scene.state.farm === 'Sheep' ? 'wool' : 
     this.scene.state.farm === 'Chicken' ? 'egg' : 
     this.scene.state.farm === 'Cow' ? 'milk' : '';
+
+    const farmUser: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
+
+    const strHeader = `${this.scene.state.lang[`${resource}Collector`]} ${farmUser.collectorLevel} ${this.scene.state.lang.shortLevel}.`;
+    this.scene.textHeader.setText(strHeader);
   
-    this.scene.textHeader.setText(`${this.scene.state.lang[`${resource}Collector`]} ${this.scene.state[`user${this.scene.state.farm}`].collectorLevel} ${this.scene.state.lang.shortLevel}.`);
+    const speedText = `${this.scene.state.lang.speed}: ${this.currentLevel.speed} ${this.scene.state.lang[`unit${this.scene.state.farm}`]}/${this.scene.state.lang.seconds}`;
   
-    const thisLevel: IcollectorSettings = this.scene.state[`${farm}CollectorSettings`].find((data: IcollectorSettings) => data.level === this.scene.state[`user${this.scene.state.farm}`].collectorLevel);
-    const nextLevel: IcollectorSettings = this.scene.state[`${farm}CollectorSettings`].find((data: IcollectorSettings) => data.level === this.scene.state[`user${this.scene.state.farm}`].collectorLevel + 1);
+    this.speed.setText(speedText);
   
-    let speedText: string = `${this.scene.state.lang.speed}: ${thisLevel.speed} ${this.scene.state.lang[`unit${this.scene.state.farm}`]}/${this.scene.state.lang.seconds}`;
-  
-    speed.setText(speedText);
-  
-    const durationText: string = `${this.scene.state.lang.duration}: ${thisLevel.time} ${this.scene.state.lang.minutes}`;
-    duration.setText(durationText);
+    const durationText: string = `${this.scene.state.lang.duration}: ${this.currentLevel.time} ${this.scene.state.lang.minutes}`;
+    this.duration.setText(durationText);
   
     let position: Iposition;
     let text: string;
-    if (nextLevel?.time > thisLevel.time) {
-  
+    if (this.nextLevel?.time > this.currentLevel.time) {
       position = {
-        x: duration.getBounds().right + 10,
-        y: duration.y
+        x: this.duration.getBounds().right + 10,
+        y: this.duration.y
       };
-      text = `(+${(nextLevel.time - thisLevel.time)} ${this.scene.state.lang.shortMinutes})`;
-      
-    } else if (nextLevel?.speed > thisLevel.speed) {
-      
+      text = `(+${(this.nextLevel.time - this.currentLevel.time)} ${this.scene.state.lang.shortMinutes})`;
+    } else if (this.nextLevel?.speed > this.currentLevel.speed) {
       position = {
-        x: speed.getBounds().right + 10,
-        y: speed.y
+        x: this.speed.getBounds().right + 10,
+        y: this.speed.y
       };
-      text =  `(+${(nextLevel.speed - thisLevel.speed).toFixed(1)} ${this.scene.state.lang.seconds})`;
+      text =  `(+${(this.nextLevel.speed - this.currentLevel.speed).toFixed(1)} ${this.scene.state.lang.seconds})`;
     }
+    this.nextLevelText?.setPosition(position?.x, position?.y).setText(text);
+    this.createBtn();
+  }
 
-    nextLevelText?.setPosition(position?.x, position?.y).setText(text);
-    if (this.scene.state[`user${this.scene.state.farm}`].part >= nextLevel?.chapter) {
-      let icon: string;
-      if (nextLevel.diamonds) icon = 'diamond';
-      else icon = `${farm}Coin`;
-  
-      let right = {
-        icon: icon,
-        text: shortNum(nextLevel.price)
-      };
-  
-      btn.text1.setText(right.text);
-      btn.img1.setTexture(right.icon);
-      btn.img1.setX(570 - btn.text1.displayWidth);
-  
-    } else {
-  
-      btn.btn.destroy();
-      btn.img1.destroy();
-      btn.text1.destroy();
-      btn.title.destroy();
-  
-      let improve = {
-        icon: 'lock',
-        text: `${this.scene.state.lang.shortPart} ${nextLevel?.chapter}`,
-      };
-      this.scene.bigButton('grey', 'left', 90, this.scene.state.lang.improve, improve);
+  private createBtn(): void {
+    let icon = this.nextLevel.diamonds ? 'diamond' : `${this.scene.state.farm.toLowerCase()}Coin`;
+    const right = { icon: icon, text: shortNum(this.nextLevel.price) };
+    let btn: BigButton;
+    const settings: IbigButtonSetting = {
+      color: 'green',
+      textAlign: 'left',
+      text: this.scene.state.lang.improve,
+      right1: right,
+    };
+    let action: () => void = () => {
+      btn?.destroy();
+      this.scene.game.scene.keys[this.scene.state.farm].improveCollector();
+      this.updateImproveCollector(); 
+    };
+    if (Utils.checkSale(this.scene.state.sales, `${this.scene.state.farm.toUpperCase()}_COLLECTOR_IMPROVE`)) {
+      settings.right1.sale = shortNum(Math.floor(this.nextLevel.price / 2));
     }
+    if (this.scene.state[`user${this.scene.state.farm}`].part < this.nextLevel?.chapter) {
+      const improve = {
+        icon: 'lock',
+        text: `${this.scene.state.lang.shortPart} ${this.nextLevel?.chapter}`,
+      };
+      settings.right1 = improve;
+      action = null;
+    }
+    btn = new BigButton(this.scene, 90, action, settings);
   }
 }

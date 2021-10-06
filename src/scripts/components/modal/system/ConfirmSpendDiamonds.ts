@@ -1,5 +1,7 @@
 import { shortNum } from "../../../general/basic";
 import Modal from "../../../scenes/Modal/Modal";
+import BigButton from './../../Buttons/BigButton';
+import Utils from './../../../libs/Utils';
 
 export default class ConfirmSpendDiamonds {
   public scene: Modal;
@@ -30,22 +32,30 @@ export default class ConfirmSpendDiamonds {
       text: shortNum(this.params.price),
     };
 
-    const textBtn: string = this.scene.state.lang.improve;
-    const confirmBtn = this.scene.bigButton('green', 'left', 20, textBtn, img);
-    const redBtn = this.scene.bigButton('red', 'center', 110, this.scene.state.lang.cancel);
-
-    this.scene.clickModalBtn(confirmBtn, (): void => {
+    const confirmAction = () => {
       this.closeWindow();
       if (this.scene.state.user.diamonds >= this.params.price) {
         this.params.callback();
       } else this.openConvertor();
-    });
+    };
 
-    this.scene.clickModalBtn(redBtn, (): void => { this.closeWindow(); });
+    const confirmSettings: IbigButtonSetting = {
+      color: 'green',
+      textAlign: 'left',
+      right1: img,
+      text: this.scene.state.lang.improve,
+    };
 
+    const canselSettings: IbigButtonSetting = {
+      color: 'red',
+      textAlign: 'center',
+      text: this.scene.state.lang.cancel,
+    };
+
+    new BigButton(this.scene, 20, confirmAction, confirmSettings);
+    new BigButton(this.scene, 110, this.closeWindow, canselSettings);
     this.scene.resizeWindow(250);
   }
-
 
   private openConvertor(): void {
     this.scene.state.convertor = {
