@@ -1,6 +1,7 @@
 import axios from "axios";
 import Modal from "../../../scenes/Modal/Modal";
 import LocalStorage from './../../../libs/LocalStorage';
+import Hint from './../../animations/Hint';
 
 export default class ChangeNicknameWindow {
   public scene: Modal;
@@ -160,7 +161,10 @@ export default class ChangeNicknameWindow {
               this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
               this.scene.enterKey.destroy();
               this.scene.mainInput.remove();
-              this.scene.scene.stop();  
+              this.scene.scene.stop();
+              const hintStr = `${this.scene.state.lang.newNickname}: ${this.scene.state.user.login}`;
+              Hint.create(this.scene.game.scene.keys[`${this.scene.state.farm}Bars`], -250, hintStr, 3);
+              
             } else {
               if (!this.nicknameError) this.enterNickname.setY(this.enterNickname.y + 34);
               this.nicknameError = true;

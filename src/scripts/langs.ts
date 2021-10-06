@@ -1099,6 +1099,7 @@ export default {
     skipHerdBoost: 'Завершить переполох',
     inClan: 'В клане',
     exitGame: 'Выйти из игры',
+    newNickname: 'Новый никнейм',
   },
   en: {
     index: 'en',
@@ -2200,5 +2201,6 @@ export default {
     skipHerdBoost: 'Skip Ruckus',
     inClan: 'In clan',
     exitGame: 'Exit game',
+    newNickname: 'New nickname',
   },
 }
