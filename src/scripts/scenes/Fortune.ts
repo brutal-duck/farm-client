@@ -603,7 +603,7 @@ export default class Fortune extends Phaser.Scene {
     this.state.socket.io.emit('send', {
       id: this.state.user.id,
       hash: this.state.user.hash,
-      login: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
+      login: this.state.platform !== 'web' && this.state.platform !== 'android' ? this.state.name : this.state.user.login,
       text: `${KEY}_${prize}`,
       type: 1,
       status: this.state.user.status
