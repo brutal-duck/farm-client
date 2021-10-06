@@ -41,19 +41,18 @@ export default class BigButton extends Button {
       fontSize: '22px',
       fontFamily: 'Shadow',
       color: this.textColor,
-      shadow: {
-        offsetX: 1,
-        offsetY: 1, 
-        color: '#96580e',
-        blur: 2,
-        fill: true,
-      },
     };
-    if (this.settings.color === 'grey') textStyle.shadow = null;
+    const shadow: Phaser.Types.GameObjects.Text.TextShadow = {
+      offsetX: 1,
+      offsetY: 1, 
+      color: '#96580e',
+      blur: 2,
+      fill: true,
+    };
+    if (this.settings.color !== 'grey') textStyle.shadow = shadow;
     this.mainSprite = this.scene.add.sprite(this.position.x, this.position.y, this.btnColor).setScale(this.scale);
     const textX = this.settings.textAlign === 'left' ? this.mainSprite.getBounds().left + 30 : this.position.x;
-    const title = this.scene.add.text(textX, this.position.y - 5, this.settings.text, 
-      textStyle).setDepth(1).setOrigin(this.textOrigin, 0.5);
+    const title = this.scene.add.text(textX, this.position.y - 5, this.settings.text, textStyle).setDepth(1).setOrigin(this.textOrigin, 0.5);
     this.add(title);
 
     textStyle.fontSize = '24px';
