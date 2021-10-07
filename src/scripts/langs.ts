@@ -1100,6 +1100,7 @@ export default {
     inClan: 'В клане',
     exitGame: 'Выйти из игры',
     newNickname: 'Новый никнейм',
+    sale: 'Акция',
   },
   en: {
     index: 'en',
@@ -2202,5 +2203,6 @@ export default {
     inClan: 'In clan',
     exitGame: 'Exit game',
     newNickname: 'New nickname',
+    sale: 'Sale',
   },
 }
