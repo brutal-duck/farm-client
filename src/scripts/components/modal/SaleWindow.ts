@@ -173,7 +173,7 @@ export default class SaleWindow {
         }
         Firework.create(this.scene, position, 1);
       },
-      repeat: 7,
+      repeat: 4,
     });
   }
 } 
