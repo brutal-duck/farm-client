@@ -714,8 +714,8 @@ function showSale(scene: Sheep | Chicken | Cow): void {
   && !scene.scene.isActive('Profile')
   && !scene.scene.isActive('Fortune')
   && !scene.scene.isActive('Block');
-
-  if (checkInactiveScenes) {
+  
+  if (checkInactiveScenes && scene.state.userSheep.part > 4) {
     const sale = scene.state.sales.find(el => !el.shown);
     if (sale) {
       sale.shown = true;
