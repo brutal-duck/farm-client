@@ -149,6 +149,8 @@ export default class FarmResourceRepositoryWindow {
       };
     }
     if (this.scene.state[`user${this.scene.state.farm}`].part < this.settings.unlock_improve) {
+      action = null;
+      improveSettings.color = 'grey';
       improveSettings.right1 = {
         icon: 'lock',
         text: this.scene.state.lang.shortPart + ' ' + this.settings.unlock_improve
