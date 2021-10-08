@@ -189,6 +189,7 @@ class Modal extends Phaser.Scene {
         new ClanTournamentEndWindow(this);
         break;
       case 23: 
+        this.openModal(this.cameras.main);
         new SaleWindow(this);
         break;
       default:

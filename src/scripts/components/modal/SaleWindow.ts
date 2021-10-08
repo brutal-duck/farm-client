@@ -107,7 +107,7 @@ export default class SaleWindow {
     const sale = this.checkDoublePrice() ? 'sale-window-double-count' : 'sale-window-half-price';
     const saleIcon = this.scene.add.sprite(icon.getTopRight().x, icon.getTopRight().y, sale).setDepth(1).setOrigin(1, 0);
     const tile = this.scene.add.tileSprite(this.x, icon.getCenter().y, this.bg.width, icon.displayHeight - 30, 'modal-bg-plate');
-    const text = this.scene.add.text(this.x + 90, icon.getCenter().y, this.scene.state.lang[`${this.getText()}Sale`], textStyle).setOrigin(0.5);
+    const text = this.scene.add.text(this.x + 95, icon.getCenter().y, this.scene.state.lang[`${this.getText()}Sale`], textStyle).setOrigin(0.5);
     this.createTimer({ x: this.x, y: tile.getBounds().bottom + 40 });
     if (this.checkBtnHave()) this.createBtn(tile.getBounds().bottom + 150);
   }

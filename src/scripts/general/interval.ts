@@ -708,6 +708,27 @@ function progressClanEventTime(state: Istate, time: number = 1): void {
   }
 }
 
+function showSale(scene: Sheep | Chicken | Cow): void {
+  const checkInactiveScenes = !scene.scene.isActive('Tutorial')
+  && !scene.scene.isActive('Modal')
+  && !scene.scene.isActive('Profile')
+  && !scene.scene.isActive('Fortune')
+  && !scene.scene.isActive('Block');
+
+  if (checkInactiveScenes) {
+    const sale = scene.state.sales.find(el => !el.shown);
+    if (sale) {
+      sale.shown = true;
+      scene.state.modal = {
+        type: 23,
+        message: sale.type,
+      };
+      scene.scene.launch('Modal', scene.state);
+    }
+  }
+
+}
+
 export {
   sheepIntervalProgress,
   chickenIntervalProgress,
@@ -724,4 +745,5 @@ export {
   progressClanCooldown,
   progressSalesTime,
   progressClanEventTime,
+  showSale,
 }

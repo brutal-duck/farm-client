@@ -865,6 +865,7 @@ interface Iadjust {
 }
 interface Isale {
   type: string;
+  shown?: boolean;
   endTime: number;
   startTime: number;
 }

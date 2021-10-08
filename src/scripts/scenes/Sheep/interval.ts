@@ -3,7 +3,7 @@ import Arrow from '../../components/animations/Arrow';
 import Hearts from '../../components/animations/Hearts';
 import SpeechBubble from '../../components/animations/SpeechBuble';
 import SheepTerritory from './../../components/Territories/SheepTerritory';
-import { progressClanCooldown, progressClanEventTime, progressSalesTime } from '../../general/interval';
+import { progressClanCooldown, progressClanEventTime, progressSalesTime, showSale } from '../../general/interval';
 
 let checkCollector: number = 0;
 const BALANCE_HINT_COUNTDOWN = 20;
@@ -444,6 +444,8 @@ function interval(): void {
       };
       this.scene.launch('Modal', this.state);
     }
+    showSale(this);
+
   }, callbackScope: this, loop: true });
   
 

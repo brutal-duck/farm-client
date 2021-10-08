@@ -121,6 +121,33 @@ function checkDoneTasks(state: Istate): void {
   }
 }
 
+const filterSale = (state: Istate, sales: Isale[]): Isale[] => {
+  if (!sales) return [];
+
+  const farms = {
+    sheep: state.progress.sheep,
+    chicken: state.progress.chicken,
+    cow: state.progress.cow,
+  };
+
+  const inactiveFarm = [];
+  const filteredSales = [];
+
+  Object.keys(farms).forEach(key => {
+    if (farms[key].part <= 0) inactiveFarm.push(key.toUpperCase());
+  });
+
+  sales.forEach(sale => {
+    if (!inactiveFarm.some(el => sale.type.includes(el))) filteredSales.push(sale);
+  });
+
+  state.sales.forEach(sale => {
+    sales.find(el => el.type === sale.type).shown = sale.shown;
+  });
+
+  return filteredSales;
+}
+
 export default function loadData(response: AxiosResponse): void {
   const state: Istate = this.state;
   if (state.build < response.data.user.build || response.data.user.banned) {
@@ -535,7 +562,7 @@ export default function loadData(response: AxiosResponse): void {
     });
   }
   
-  state.sales = response.data.sales || [];
+  state.sales = filterSale(state, response.data.sales);
 
   this.userReady = true;
 }

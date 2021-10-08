@@ -3,7 +3,7 @@ import Arrow from '../../components/animations/Arrow';
 import Firework from '../../components/animations/Firework';
 import Hearts from '../../components/animations/Hearts';
 import Egg from '../../components/Resource/Egg';
-import { progressClanCooldown, progressClanEventTime, progressSalesTime } from '../../general/interval';
+import { progressClanCooldown, progressClanEventTime, progressSalesTime, showSale } from '../../general/interval';
 import SpeechBubble from '../../components/animations/SpeechBuble';
 import ChickenTerritory from './../../components/Territories/ChickenTerritory';
 let checkCollector: number = 0;
@@ -440,6 +440,8 @@ function interval(): void {
       };
       this.scene.launch('Modal', this.state);
     }
+
+    showSale(this);
   }, callbackScope: this, loop: true });
 
 }
