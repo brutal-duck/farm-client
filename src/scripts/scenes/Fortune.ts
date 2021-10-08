@@ -68,6 +68,7 @@ export default class Fortune extends Phaser.Scene {
 
   public create(): void {
     const data = {
+      userId: this.state.user.id,
       name: this.state.platform !== 'web' && this.state.platform !== 'android' ? this.state.name : this.state.user.login,
       spending: 0,
       prize: 0,
@@ -454,6 +455,7 @@ export default class Fortune extends Phaser.Scene {
   private sendSocket(prize: number = 0): void {
     const name: string = this.state.platform !== 'web' && this.state.platform !== 'android' ? this.state.name : this.state.user.login;
     let data: any = {
+      userId: this.state.user.id,
       name: name,
       spending: 0,
       prize: 0,
@@ -462,6 +464,7 @@ export default class Fortune extends Phaser.Scene {
     if (this.state.user.boosts.fortune >= 1) {
       if (this.prizeId === 1) {
         data = {
+          userId: this.state.user.id,
           name: name,
           spending: 0,
           prize: prize,
@@ -469,6 +472,7 @@ export default class Fortune extends Phaser.Scene {
         };
       } else if ( this.prizeId === 2) {
         data = {
+          userId: this.state.user.id,
           name: name,
           spending: 0,
           prize: prize,
@@ -478,6 +482,7 @@ export default class Fortune extends Phaser.Scene {
     } else {
       if (this.prizeId === 1) {
         data = {
+          userId: this.state.user.id,
           name: name,
           spending: this.price,
           prize: prize,
@@ -485,6 +490,7 @@ export default class Fortune extends Phaser.Scene {
         };
       } else if ( this.prizeId === 2) {
         data = {
+          userId: this.state.user.id,
           name: name,
           spending: this.price,
           prize: prize,
@@ -492,6 +498,7 @@ export default class Fortune extends Phaser.Scene {
         };
       } else if ( this.prizeId >= 3 && this.prizeId <= 8) {
         data = {
+          userId: this.state.user.id,
           name: name,
           spending: this.price,
           prize: 0,
