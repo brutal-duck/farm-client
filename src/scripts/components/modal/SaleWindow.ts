@@ -1,5 +1,6 @@
 import { shortTime } from '../../general/basic';
 import Modal from './../../scenes/Modal/Modal';
+import Firework from './../animations/Firework';
 
 
 
@@ -21,7 +22,7 @@ export default class SaleWindow {
     this.scene = scene;
     this.init();
     this.createElements();
-
+    this.createFireworks();
   }
 
   private init(): void {
@@ -160,5 +161,19 @@ export default class SaleWindow {
 
   private getLastTime(): number {
     return this.scene.state.sales.find(el => el.type === this.type)?.endTime;
-  }  
+  }
+
+  private createFireworks(): void {
+    this.scene.time.addEvent({
+      delay: 400,
+      callback: (): void => {
+        const position: any = {
+          x: this.scene.cameras.main.centerX + Phaser.Math.RND.pick(Phaser.Math.RND.signs) * Phaser.Math.Between(80, 200),
+          y: this.scene.cameras.main.centerY + Phaser.Math.RND.pick(Phaser.Math.RND.signs) * Phaser.Math.Between(90, 280),
+        }
+        Firework.create(this.scene, position, 1);
+      },
+      repeat: 7,
+    });
+  }
 } 
