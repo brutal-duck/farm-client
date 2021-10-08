@@ -267,6 +267,36 @@ const clanCow11: string = require('../../../assets/images/clan/animals/cow-11.pn
 const clanCow12: string = require('../../../assets/images/clan/animals/cow-12.png');
 const clanDiamondCoin: string = require('../../../assets/images/clan/coin-diamond.png');
 
+const saleWindowHeader: string = require('./../../../assets/images/modal/sale/header.png');
+const saleWindowFlags: string = require('./../../../assets/images/modal/sale/flags.png');
+const saleWindowDoubleCount: string = require('../../../assets/images/modal/sale/sale-2.png');
+const saleWindowHalfPrice: string = require('../../../assets/images/modal/sale/sale-1.png');
+const saleIconChickenCollectorImprove: string = require('../../../assets/images/modal/sale/icons/chicken-collector-improve.png');
+const saleIconChickenCollectorPrice: string = require('../../../assets/images/modal/sale/icons/chicken-collector-price.png');
+const saleIconChickenFeed: string = require('../../../assets/images/modal/sale/icons/chicken-feed.png');
+const saleIconChickenHerd: string = require('../../../assets/images/modal/sale/icons/chicken-herd.png');
+const saleIconChickenMoney: string = require('../../../assets/images/modal/sale/icons/chicken-money.png');
+const saleIconChickenPrice: string = require('../../../assets/images/modal/sale/icons/chicken-price.png');
+const saleIconChickenRepositoryImprove: string = require('../../../assets/images/modal/sale/icons/chicken-repository-improve.png');
+const saleIconClan: string = require('../../../assets/images/modal/sale/icons/clan.png');
+const saleIconCowCollectorImprove: string = require('../../../assets/images/modal/sale/icons/cow-collector-improve.png');
+const saleIconCowCollectorPrice: string = require('../../../assets/images/modal/sale/icons/cow-collector-price.png');
+const saleIconCowFactoryImprove: string = require('../../../assets/images/modal/sale/icons/cow-factory-improve.png');
+const saleIconCowFeed: string = require('../../../assets/images/modal/sale/icons/cow-feed.png');
+const saleIconCowHerd: string = require('../../../assets/images/modal/sale/icons/cow-herd.png');
+const saleIconCowMoney: string = require('../../../assets/images/modal/sale/icons/cow-money.png');
+const saleIconCowPrice: string = require('../../../assets/images/modal/sale/icons/cow-price.png');
+const saleIconCowRepositoryImprove: string = require('../../../assets/images/modal/sale/icons/cow-repository-improve.png');
+const saleIconDiamondCount: string = require('../../../assets/images/modal/sale/icons/diamond-count.png');
+const saleIconPackagePrice: string = require('../../../assets/images/modal/sale/icons/package-price.png');
+const saleIconSheepCollectorImprove: string = require('../../../assets/images/modal/sale/icons/sheep-collector-improve.png');
+const saleIconSheepCollectorPrice: string = require('../../../assets/images/modal/sale/icons/sheep-collector-price.png');
+const saleIconSheepFeed: string = require('../../../assets/images/modal/sale/icons/sheep-feed.png');
+const saleIconSheepHerd: string = require('../../../assets/images/modal/sale/icons/sheep-herd.png');
+const saleIconSheepMoney: string = require('../../../assets/images/modal/sale/icons/sheep-money.png');
+const saleIconSheepPrice: string = require('../../../assets/images/modal/sale/icons/sheep-price.png');
+const saleIconSheepRepositoryImprove: string = require('../../../assets/images/modal/sale/icons/sheep-repository-improve.png');
+const modalBgPlate: string = require('../../../assets/images/modal/bg-plate.png');
 
 export default function typePreload(): void {
     switch (this.state.modal.type) {
@@ -618,6 +648,40 @@ export default function typePreload(): void {
         this.load.image('clan-building', clanBuilding);
         this.load.image('circle', circle);
         this.load.image('clan-diamond-coin', clanDiamondCoin);
+        break;
+      case 23:
+        this.load.image('sale-window-header', saleWindowHeader);
+        this.load.image('sale-window-flags', saleWindowFlags);
+        this.load.image('sale-window-double-count', saleWindowDoubleCount);
+        this.load.image('sale-window-half-price', saleWindowHalfPrice);
+        this.load.image('sale-window-header', settingsWindowHeader);
+        this.load.image('close-window-btn', closeWindowBtn);
+        this.load.image('sale-icon-chicken-collector-improve', saleIconChickenCollectorImprove);
+        this.load.image('sale-icon-chicken-collector-price', saleIconChickenCollectorPrice);
+        this.load.image('sale-icon-chicken-feed', saleIconChickenFeed);
+        this.load.image('sale-icon-chicken-herd', saleIconChickenHerd);
+        this.load.image('sale-icon-chicken-money', saleIconChickenMoney);
+        this.load.image('sale-icon-chicken-price', saleIconChickenPrice);
+        this.load.image('sale-icon-chicken-repository-improve', saleIconChickenRepositoryImprove);
+        this.load.image('sale-icon-clan', saleIconClan);
+        this.load.image('sale-icon-cow-collector-improve', saleIconCowCollectorImprove);
+        this.load.image('sale-icon-cow-collector-price', saleIconCowCollectorPrice);
+        this.load.image('sale-icon-cow-factory-improve', saleIconCowFactoryImprove);
+        this.load.image('sale-icon-cow-feed', saleIconCowFeed);
+        this.load.image('sale-icon-cow-herd', saleIconCowHerd);
+        this.load.image('sale-icon-cow-money', saleIconCowMoney);
+        this.load.image('sale-icon-cow-price', saleIconCowPrice);
+        this.load.image('sale-icon-cow-repository-improve', saleIconCowRepositoryImprove);
+        this.load.image('sale-icon-diamond-count', saleIconDiamondCount);
+        this.load.image('sale-icon-package-price', saleIconPackagePrice);
+        this.load.image('sale-icon-sheep-collector-improve', saleIconSheepCollectorImprove);
+        this.load.image('sale-icon-sheep-collector-price', saleIconSheepCollectorPrice);
+        this.load.image('sale-icon-sheep-feed', saleIconSheepFeed);
+        this.load.image('sale-icon-sheep-herd', saleIconSheepHerd);
+        this.load.image('sale-icon-sheep-money', saleIconSheepMoney);
+        this.load.image('sale-icon-sheep-price', saleIconSheepPrice);
+        this.load.image('sale-icon-sheep-repository-improve', saleIconSheepRepositoryImprove);
+        this.load.image('modal-bg-plate', modalBgPlate);
         break;
       default:
         break;
