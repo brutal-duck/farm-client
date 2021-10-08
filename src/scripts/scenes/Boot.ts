@@ -405,6 +405,17 @@ class Boot extends Phaser.Scene {
       });
 
     }, false);
+
+    const cordova = window['cordova'];
+    try {
+      cordova.plugins.playGamesServices.isSignedIn((result) => {
+        console.log("Is user signed in: " + result.isSignedIn);
+      }, () => {
+        console.log('Auth check could not be done');
+      });
+    } catch (e) {
+      
+    }
   }
 
 
