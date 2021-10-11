@@ -716,7 +716,7 @@ function showSale(scene: Sheep | Chicken | Cow): void {
   && !scene.scene.isActive('Block');
   
   if (checkInactiveScenes && scene.state.userSheep.part > 4) {
-    const sale = scene.state.sales.find(el => !el.shown);
+    const sale = scene.state.sales.find(el => !el.shown && el.startTime <= 0 && el.endTime > 0);
     if (sale) {
       sale.shown = true;
       scene.state.modal = {
