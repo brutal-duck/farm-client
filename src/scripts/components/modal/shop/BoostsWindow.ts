@@ -155,7 +155,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   private createHoursCollectorBtn(hoursCount: number): void {
     const unlockCollector: number = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`unlockCollector${hoursCount}`];
     const price: number = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`collectorPrice${hoursCount}`];
-    const farmPart: number = this.scene.state[`user${this.scene.state.farm}`].part;
+    const farmPart: number = this.scene.state.farm === 'Unicorn' ? this.scene.state.userUnicorn.points : this.scene.state[`user${this.scene.state.farm}`].part;
     const position: Iposition = {
       x: 350,
       y: hoursCount === 4 ? 220 + this.scene.height : 280 + this.scene.height,
@@ -169,7 +169,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     };
 
     if (unlockCollector <= farmPart) {
-      const boostCount: number = this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()][`collector${hoursCount}`];
+      const boostCount: number = this.scene.state.farm === 'Unicorn' ? 0 : this.scene.state.user.boosts[this.scene.state.farm.toLowerCase()][`collector${hoursCount}`];
       const action: () => void = (): void => {
         this.scene.game.scene.keys[this.farm].buyCollector(hoursCount === 4 ? 3 : 4);
         this.scene.game.scene.keys[this.farm].autosave();
