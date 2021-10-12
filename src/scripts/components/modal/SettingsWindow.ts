@@ -200,8 +200,27 @@ export default class SettingsWindow {
   private erudaLaunch(): void {
     console.log('eruda launched');
     const erudaCdn: HTMLScriptElement = document.createElement('script');
-    erudaCdn.src = '//cdn.jsdelivr.net/npm/eruda';
+    erudaCdn.src = this.scene.state.platform === 'android' ? 'eruda.js' : '//cdn.jsdelivr.net/npm/eruda';
     document.body.appendChild(erudaCdn);
-    erudaCdn.onload = (): void => { window['eruda'].init(); };
+    erudaCdn.onload = (): void => {
+      window['eruda'].init();
+
+      const cordova = window['cordova'];
+      cordova.plugins.playGamesServices.isSignedIn((result) => {
+        if (result.isSignedIn === false) {
+          cordova.plugins.playGamesServices.auth(() => {
+            cordova.plugins.playGamesServices.showPlayer((playerData) => {
+              console.log("Authenticated as " + playerData.displayName);
+              console.log(playerData);
+            });
+
+          }, () => {
+              console.log('On not logged in')
+          });
+        }
+      }, () => {
+        console.log('Auth check could not be done');
+      });
+    };
   }
-} 
+}
