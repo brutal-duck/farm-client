@@ -404,18 +404,27 @@ class Boot extends Phaser.Scene {
         this.postCheckUser(this.hash);
       });
 
+      const cordova = window['cordova'];
+      try {
+        cordova.plugins.playGamesServices.isSignedIn((result) => {
+          if (result.isSignedIn === false) {
+            cordova.plugins.playGamesServices.auth(() => {
+                cordova.plugins.playGamesServices.showPlayer((playerData) => {
+                    console.log("Authenticated as " + playerData.displayName);
+                    console.log(playerData);
+                });
+  
+            }, () => {
+                console.log('On not logged in')
+            });
+          }
+        }, () => {
+          console.log('Auth check could not be done');
+        });
+      } catch (e) {
+        
+      }
     }, false);
-
-    const cordova = window['cordova'];
-    try {
-      cordova.plugins.playGamesServices.isSignedIn((result) => {
-        console.log("Is user signed in: " + result.isSignedIn);
-      }, () => {
-        console.log('Auth check could not be done');
-      });
-    } catch (e) {
-      
-    }
   }
 
 
