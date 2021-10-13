@@ -156,7 +156,7 @@ export default [
     chapter: 2,
     time: 18,
     speed: 1.2,
-    price: 40,
+    price: 25,
     diamonds: true
   },
   {
@@ -196,7 +196,7 @@ export default [
     chapter: 3,
     time: 22,
     speed: 1.3,
-    price: 60,
+    price: 35,
     diamonds: true
   },
   {
@@ -236,7 +236,7 @@ export default [
     chapter: 4,
     time: 26,
     speed: 1.4,
-    price: 90,
+    price: 45,
     diamonds: true
   },
   {
