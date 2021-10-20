@@ -206,21 +206,27 @@ export default class SettingsWindow {
       window['eruda'].init();
 
       const cordova = window['cordova'];
-      cordova.plugins.playGamesServices.isSignedIn((result) => {
-        if (result.isSignedIn === false) {
-          cordova.plugins.playGamesServices.auth(() => {
-            cordova.plugins.playGamesServices.showPlayer((playerData) => {
-              console.log("Authenticated as " + playerData.displayName);
-              console.log(playerData);
-            });
-
-          }, () => {
-              console.log('On not logged in')
-          });
-        }
-      }, () => {
-        console.log('Auth check could not be done');
+      
+      cordova.plugins.AppReview.requestReview().catch(() => {
+        return cordova.plugins.AppReview.openStoreScreen();
       });
+
+      // cordova.plugins.playGamesServices.isSignedIn((result) => {
+      //   if (result.isSignedIn === false) {
+      //     cordova.plugins.playGamesServices.auth(() => {
+      //       cordova.plugins.playGamesServices.showPlayer((playerData) => {
+      //         console.log("Authenticated as " + playerData.displayName);
+      //         console.log(playerData);
+      //       });
+
+      //     }, () => {
+      //         console.log('On not logged in')
+      //     });
+      //   }
+      // }, () => {
+      //   console.log('Auth check could not be done');
+      // });
+
     };
   }
 }
