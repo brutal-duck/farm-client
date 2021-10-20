@@ -6,6 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --config webpack/localhost/config.js --open",
     "build-android": "webpack --config webpack/android/build.js",
+    "build-dev": "webpack --config webpack/dev/build.js",
     "build-localhost": "webpack --config webpack/localhost/build.js",
     "build-web": "webpack --config webpack/web/build.js",
     "build-yandex": "webpack --config webpack/yandex/build.js"
