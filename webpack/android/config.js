@@ -3,7 +3,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const dotenv = require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+const dotenv = require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 
 module.exports = {
   devServer: {
@@ -11,7 +11,7 @@ module.exports = {
   },
   entry: './src/scripts/index.ts',
   output: {
-    path: path.resolve(__dirname, '../build'),
+    path: path.resolve(__dirname, '../../build'),
   },
   mode: "development",
   devtool: "eval-source-map",
@@ -47,7 +47,7 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin({
-      root: path.resolve(__dirname, "../")
+      root: path.resolve(__dirname, "../../")
     }),
     new webpack.DefinePlugin({
       CANVAS_RENDERER: JSON.stringify(true),

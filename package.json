@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack/build.js",
-    "start": "webpack-dev-server --config webpack/config.js --open"
+    "start": "webpack-dev-server --config webpack/localhost/config.js --open",
+    "build-android": "webpack --config webpack/android/build.js",
+    "build-localhost": "webpack --config webpack/localhost/build.js",
+    "build-web": "webpack --config webpack/web/build.js",
+    "build-yandex": "webpack --config webpack/yandex/build.js"
   },
   "author": "Aleksandr Skorobogatyi",
   "license": "ISC",

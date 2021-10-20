@@ -155,9 +155,7 @@ class Boot extends Phaser.Scene {
   }
 
   private setPlatform(): void {
-    this.platform = 'web';
-    // this.platform = 'ya';
-    // this.platform = 'android';
+    this.platform = process.env.platform === 'ya' ? 'ya' : process.env.platform === 'android' ? 'android' : 'web';
     this.hash = '';
 
     const search: string = window.location.search;
@@ -169,7 +167,6 @@ class Boot extends Phaser.Scene {
     const ok: string = this.params.get('api_server');
     if (vk === 'https://api.vk.com/api.php') this.platform = 'vk';
     else if (ok === 'https://api.ok.ru/') this.platform = 'ok';
-    // this.platform = 'vk'
     console.log('Platform', this.platform);
   }
 
