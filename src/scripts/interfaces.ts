@@ -212,6 +212,7 @@ interface IdataAutoSave {
   unicornTerritories: IunicornTerritories[];
   unicornResource: IunicornResource[];
   build: number;
+  isUnicornFarm: boolean;
 }
 // for state
 interface IadditionalTutorial {
@@ -313,6 +314,7 @@ interface IuserUnicorn {
   collector: number;
   collectorLevel: number;
   collectorTakenTime: number;
+  collectorNotificationTime: number;
   tutorial: number;
   autosaveCounter: number;
   takenHerdBoost: number;
@@ -973,4 +975,5 @@ interface Istate {
   sales: Isale[];
   offline?: number;
   clanChatNotificationCount: number;
+  dataIsLoaded: boolean;
 }

@@ -472,8 +472,8 @@ function updateNotificationState(): void {
     this.state.progress.chicken.part >= 1 ||
     this.state.progress.cow.part >= 1)
   ) {
-    if (this.state.userUnicorn.collector <= 0 && this.state.unicornNotificationCount[0] !== 1) this.state.unicornNotificationCount[0] = 1;
-    else if (this.state.userUnicorn.collector > 0 && this.state.unicornNotificationCount[0] !== 0) this.state.unicornNotificationCount[0] = 0;
+    if (this.state.userUnicorn.collectorNotificationTime <= 0 && this.state.unicornNotificationCount[0] !== 1) this.state.unicornNotificationCount[0] = 1;
+    else if (this.state.userUnicorn.collectorNotificationTime > 0 && this.state.unicornNotificationCount[0] !== 0) this.state.unicornNotificationCount[0] = 0;
   }
 
 }
@@ -631,12 +631,11 @@ function intervalPorgressCollectorTime(): void {
     this.state.userCow.collector = this.state.progress.cow.collector;
   }
 
-  if (this.state.userUnicorn?.collector > 0 && this.state.farm !== 'Unicorn') this.state.userUnicorn.collector--
+  if (this.state.userUnicorn?.collectorNotificationTime > 0 && this.state.farm !== 'Unicorn') this.state.userUnicorn.collectorNotificationTime--;
 
   if (this.state.userSheep.diamondAnimalTime > 0) this.state.userSheep.diamondAnimalTime--;
   if (this.state.userChicken.diamondAnimalTime > 0) this.state.userChicken.diamondAnimalTime--;
   if (this.state.userCow.diamondAnimalTime > 0) this.state.userCow.diamondAnimalTime--;
-
 }
 
 function intervalCollectorTutorial(arrowOnCollector: Phaser.GameObjects.Sprite): void {

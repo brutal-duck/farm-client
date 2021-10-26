@@ -8,6 +8,16 @@ import ChickenTerritory from './../components/Territories/ChickenTerritory';
 import SheepTerritory from './../components/Territories/SheepTerritory';
 import { progressClanCooldown, progressClanEventTime, progressSalesTime } from './interval';
 
+const updateUnicornCollectorTime = (state: Istate) => {
+  const { userUnicorn, offlineTime } = state;
+  if (userUnicorn) {
+    if (userUnicorn.collectorNotificationTime <= offlineTime) {
+      userUnicorn.collectorNotificationTime = 0;
+    } else {
+      userUnicorn.collectorNotificationTime -= offlineTime;
+    }
+  }
+}
 export default function autoprogress(load: boolean = false): void {
   const state: Istate = this.state;
   
@@ -1519,32 +1529,37 @@ export default function autoprogress(load: boolean = false): void {
     } 
   }
 
-  if (load) {
-    sheepOfflineProgress();
-    if (state.userChicken.part > 0) chickenOfflineProgress();
-    if (state.userCow.part > 0) cowOfflineProgress();
-    if (state.farm === 'Unicorn') unicornAutoprogress();
-  } else {
-    if (state.farm === 'Sheep') {
-      sheepAutoprogress();
-      if (state.userChicken.part > 0) chickenOfflineProgress(state.offlineTime);
-      if (state.userCow.part > 0) cowOfflineProgress(state.offlineTime);
-    } else if (state.farm === 'Chicken') {
-      chickenAutoprogress();
-      sheepOfflineProgress(state.offlineTime);
-      if (state.userCow.part > 0) cowOfflineProgress(state.offlineTime);
-    } else if (state.farm === 'Cow') {
-      cowAutoprogress();
-      sheepOfflineProgress(state.offlineTime);
-      if (state.userChicken.part > 0) {
-        chickenOfflineProgress(state.offlineTime);
-      };
+  if (state.offlineTime > 0) {
+    if (load) {
+      if (state.farm !== 'Unicorn') {
+        sheepOfflineProgress();
+        if (state.userChicken.part > 0) chickenOfflineProgress();
+        if (state.userCow.part > 0) cowOfflineProgress();
+      } else unicornAutoprogress();
     } else {
-      unicornAutoprogress();
-      sheepOfflineProgress(state.offlineTime);
-      if (state.userChicken.part > 0) chickenOfflineProgress(state.offlineTime);
-      if (state.userCow.part > 0) cowOfflineProgress(state.offlineTime);
+      if (state.farm === 'Sheep') {
+        sheepAutoprogress();
+        if (state.userChicken.part > 0) chickenOfflineProgress(state.offlineTime);
+        if (state.userCow.part > 0) cowOfflineProgress(state.offlineTime);
+      } else if (state.farm === 'Chicken') {
+        chickenAutoprogress();
+        sheepOfflineProgress(state.offlineTime);
+        if (state.userCow.part > 0) cowOfflineProgress(state.offlineTime);
+      } else if (state.farm === 'Cow') {
+        cowAutoprogress();
+        sheepOfflineProgress(state.offlineTime);
+        if (state.userChicken.part > 0) {
+          chickenOfflineProgress(state.offlineTime);
+        };
+      } else {
+        unicornAutoprogress();
+        sheepOfflineProgress(state.offlineTime);
+        if (state.userChicken.part > 0) chickenOfflineProgress(state.offlineTime);
+        if (state.userCow.part > 0) cowOfflineProgress(state.offlineTime);
+      }
     }
+    this.autoporgressCollectorTime();
+    updateUnicornCollectorTime(state);
   }
-  this.autoporgressCollectorTime();
+  state.offlineTime = 0;
 }

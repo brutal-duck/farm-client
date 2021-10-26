@@ -51,6 +51,7 @@ function interval(): void {
     if (this.state.userUnicorn.collector > 0) {
       this.state.userUnicorn.collector--;
     } 
+    this.state.userUnicorn.collectorNotificationTime = this.state.userUnicorn.collector;
     
     if (this.startCreateHerdBoostAnimal) {
       const freePositions: Iposition[] = this.getFreeBoostPositions();
@@ -78,8 +79,7 @@ function interval(): void {
 
     // автопрогресс в случае неактивности
     let time: number = Math.round(new Date().getTime() / 1000);
-
-    if (time > this.autoprogressTimer + 5) {
+    if (this.autoprogressTimer && time > this.autoprogressTimer + 5) {
       this.state.offlineTime = time - this.autoprogressTimer;
       this.autoprogress();
     }

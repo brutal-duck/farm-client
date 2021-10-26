@@ -85,6 +85,7 @@ let soundVolume: number = 1;
 let clanEventTakenAward: boolean = true;
 let sales: Isale[] = [];
 let clanChatNotificationCount: number = 0;
+let dataIsLoaded: boolean = false;
 
 let state: Istate = {
   // записываемые в localStorage
@@ -177,6 +178,7 @@ let state: Istate = {
   soundVolume,
   clanEventTakenAward,
   sales,
+  dataIsLoaded,
 }
 
 export default state;

@@ -650,17 +650,20 @@ class UnicornPreload extends Phaser.Scene {
 
   
   public loadUser(): void {
-    axios.post(process.env.API + '/loadData', {
-      hash: this.state.user.hash
-    }).then((response) => {
-      this.state.farm = 'Unicorn';
-      this.loadData(response);
-      this.state.offlineTime = response.data.progress.eventOfflineTime;
-      this.userReady = true;
-      this.state.shopNotificationCount = [0, 0, 0, 0];
-    }).catch(() => {
+    const { id, hash, counter } = this.state.user;
+    axios.post(process.env.API + '/takeUnicornOfflineTime', { id, hash, counter }).then(res => {
+      const { error, value } = res.data;
+      if (!error) {
+        this.state.offlineTime = value;
+        this.userReady = true;
+      } else {
+        this.serverError = true;
+      }
+    }).catch (() => {
       this.serverError = true;
     });
+    this.state.farm = 'Unicorn';
+    this.state.shopNotificationCount = [0, 0, 0, 0];
   }
 }
 

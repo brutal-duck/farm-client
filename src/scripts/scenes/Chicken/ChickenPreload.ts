@@ -547,17 +547,24 @@ class ChickenPreload extends Phaser.Scene {
 
   
   public loadUser(): void {
-    axios
-      .post(process.env.API + '/loadData', { hash: this.state.user.hash })
-      .then((response) => {
-        this.state.farm = 'Chicken';
-        this.loadData(response);
-        this.state.offlineTime = response.data.progress.chickenOfflineTime;
-        this.state.shopNotificationCount = [0, 0, 0, 0];
-      })
-      .catch(() => {
-        this.serverError = true;
-      });
+    if (!this.state.dataIsLoaded) {
+      axios
+        .post(process.env.API + '/loadData', { hash: this.state.user.hash })
+        .then((response) => {
+          this.state.dataIsLoaded = true;
+          this.loadData(response);
+          this.state.offlineTime = response.data.progress.chickenOfflineTime;
+          this.userReady = true;
+        })
+        .catch(() => {
+          this.serverError = true;
+        });
+    } else {
+      this.userReady = true;
+    }
+
+    this.state.farm = 'Chicken';
+    this.state.shopNotificationCount = [0, 0, 0, 0];
     LocalStorage.set('farm', 'Chicken');
   }
 

@@ -553,17 +553,23 @@ class CowPreload extends Phaser.Scene {
   }
 
   public loadUser(): void {
-    axios.post(process.env.API + '/loadData', {
-      hash: this.state.user.hash
-    }).then((response) => {
-        this.state.farm = 'Cow';
+    if (!this.state.dataIsLoaded) {
+      axios.post(process.env.API + '/loadData', {
+        hash: this.state.user.hash
+      }).then((response) => {
+        this.state.dataIsLoaded = true;
         this.loadData(response);
         this.state.offlineTime = response.data.progress.cowOfflineTime;
-        this.state.shopNotificationCount = [0, 0, 0, 0];      
-    }).catch(() => {
-      this.serverError = true;
-    });
+        this.userReady = true;
+      }).catch(() => {
+        this.serverError = true;
+      });
+    } else {
+      this.userReady = true;
+    }
 
+    this.state.farm = 'Cow';
+    this.state.shopNotificationCount = [0, 0, 0, 0];
     LocalStorage.set('farm', 'Cow');
   }
 

@@ -232,7 +232,7 @@ class Unicorn extends Phaser.Scene {
     this.state.farm = 'Unicorn';
     this.collectorTimer = null;
     this.ads = new Ads(this)
-
+    this.autoprogressTimer = null;
     if (this.state.userUnicorn.takenHerdBoost <= 0) this.state.userUnicorn.takenHerdBoost = 1;
   }
 

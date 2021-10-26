@@ -559,6 +559,7 @@ export default function loadData(response: AxiosResponse): void {
       timeToAd: response.data.event.timeToAd,
       points: response.data.event.points,
       takenAward: response.data.event.takenAward,
+      collectorNotificationTime: response.data.event.collector,
     };
 
     state.unicornTerritories = unicornTerritories;
@@ -592,7 +593,4 @@ export default function loadData(response: AxiosResponse): void {
   }
   
   state.sales = filterSale(state, response.data.sales);
-
-  this.userReady = true;
-  console.log('loadData')
-}
+};

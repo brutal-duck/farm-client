@@ -1154,20 +1154,20 @@ function nextDayTimer(): void {
 }
 
 function autoporgressCollectorTime(): void {
-  if (this.state.progress.sheep.collector >= this.state.progress.sheep.offlineTime) {
-    this.state.progress.sheep.collector -= this.state.progress.sheep.offlineTime;
+  if (this.state.progress.sheep.collector >= this.state.offlineTime) {
+    this.state.progress.sheep.collector -= this.state.offlineTime;
   } else {
     this.state.progress.sheep.collector = 0;
   }
 
-  if (this.state.progress.chicken.collector >= this.state.progress.chicken.offlineTime) {
-    this.state.progress.chicken.collector -= this.state.progress.chicken.offlineTime;
+  if (this.state.progress.chicken.collector >= this.state.offlineTime) {
+    this.state.progress.chicken.collector -= this.state.offlineTime;
   } else {
     this.state.progress.chicken.collector = 0;
   }
 
-  if (this.state.progress.cow.collector >= this.state.progress.cow.offlineTime) {
-    this.state.progress.cow.collector -= this.state.progress.cow.offlineTime;
+  if (this.state.progress.cow.collector >= this.state.offlineTime) {
+    this.state.progress.cow.collector -= this.state.offlineTime;
   } else {
     this.state.progress.cow.collector = 0;
   }

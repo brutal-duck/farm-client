@@ -764,19 +764,24 @@ class SheepPreload extends Phaser.Scene {
   }
   
   public loadUser(): void {
-    axios.post(process.env.API + '/loadData', {
-      hash: this.state.user.hash
-    }).then((response) => {
-      this.state.farm = 'Sheep';
-      this.loadData(response);
-      this.state.offlineTime = response.data.progress.sheepOfflineTime;
-      this.state.shopNotificationCount = [0, 0, 0, 0];
-      
-      const Amplitude: Amplitude = this.state.amplitude;
-      if (response.data.user.tutor === 0) Amplitude.logAmplitudeEvent('tutor_before_load', {});
-    }).catch(() => {
-      this.serverError = true;
-    });
+    if (!this.state.dataIsLoaded) {
+      axios.post(process.env.API + '/loadData', {
+        hash: this.state.user.hash
+      }).then((response) => {
+        this.state.dataIsLoaded = true;
+        this.loadData(response);
+        this.state.offlineTime = response.data.progress.sheepOfflineTime;
+        const Amplitude: Amplitude = this.state.amplitude;
+        if (response.data.user.tutor === 0) Amplitude.logAmplitudeEvent('tutor_before_load', {});
+        this.userReady = true;
+      }).catch(() => {
+        this.serverError = true;
+      });
+    } else {
+      this.userReady = true;
+    }
+    this.state.shopNotificationCount = [0, 0, 0, 0];
+    this.state.farm = 'Sheep';
     LocalStorage.set('farm', 'Sheep');
   }
   

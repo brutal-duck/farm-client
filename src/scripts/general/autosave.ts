@@ -334,6 +334,8 @@ export default function autosave(): void {
     unicorn: unicorn,
     unicornResource: unicornResource,
     unicornTerritories : unicornTerritories,
+
+    isUnicornFarm: this.state.farm === 'Unicorn',
   }
 
   axios.post(process.env.API + "/autoSave", data)
@@ -352,7 +354,6 @@ export default function autosave(): void {
           if (res.data.donate) state.donate = true; 
         }
       }
-      console.log(res.data, 'autosave');
     });
 }
 
