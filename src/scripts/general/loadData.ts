@@ -57,11 +57,12 @@ const updateImproveTerritories = (territories: Iterritories[]): Iterritories[]  
   });
 }
 
-
 function checkDoneTasks(state: Istate): void {
   const sheepTasks: Itasks[] = AllTasks.filter(el => el.part === state.userSheep.part && el.farm === 1);
 
   const chickenTasks: Itasks[] = AllTasks.filter(el => el.part === state.userChicken.part && el.farm === 2);
+
+  const cowTasks: Itasks[] = AllTasks.filter(el => el.part === state.userCow.part && el.farm === 3);
 
   for (const task of sheepTasks) {
     // задания на улучшение земель
@@ -107,6 +108,34 @@ function checkDoneTasks(state: Istate): void {
       else if (task.type === 24) type = 8
 
       for (const territory of state.chickenTerritories) {
+        if (type === territory.type &&
+          territory.improve >= task.state) count++
+      }
+
+      if (count >= task.count) {
+        task.progress = task.count;
+        task.done = 1;
+      } else {
+        task.progress = count;
+      }
+    }
+  }
+  for (const task of cowTasks) {
+    // задания на улучшение земель
+    if (task.type === 8
+      || task.type === 9
+      || task.type === 17
+      || task.type === 24) {
+
+      let count: number = 0;
+      let type: number;
+
+      if (task.type === 8) type = 2;
+      else if (task.type === 9) type = 3;
+      else if (task.type === 17) type = 5;
+      else if (task.type === 24) type = 8
+
+      for (const territory of state.cowTerritories) {
         if (type === territory.type &&
           territory.improve >= task.state) count++
       }

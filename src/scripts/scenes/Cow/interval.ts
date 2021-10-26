@@ -392,7 +392,11 @@ function interval(): void {
     }
 
     showSale(this);
-
+    if (this.state.userCow.part === 2) {
+      if (this.territories.children.entries.some(el => el.territoryType === 8)) {
+        this.tryTask(5, 8);
+      }
+    }
   }, callbackScope: this, loop: true });
 }
 
