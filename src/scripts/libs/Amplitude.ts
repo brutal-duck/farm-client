@@ -44,9 +44,10 @@ export default class Amplitude {
         .set('partner', this.state.platform)
         .set('test', this.state.user.test)
         .set(`Catcher${this.state.farm}`, this.state[`user${this.state.farm}`].collectorLevel);
+        
       if (this.state.platform === 'ok' || this.state.platform === 'vk') {
         let refer: string = '';
-        location.search.substr(1).split('&').forEach(function (item) {
+        location.search.substr(1).split('&').forEach(item => {
           const [key, value] = item.split('=');
           if (
             this.state.platform === 'vk' && key === 'referrer' 
