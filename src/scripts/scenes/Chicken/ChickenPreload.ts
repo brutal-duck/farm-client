@@ -7,6 +7,7 @@ import LocalStorage from './../../libs/LocalStorage';
 import Amplitude from './../../libs/Amplitude';
 import { clickShopBtn } from '../../general/clicks';
 import { general } from '../../local/settings';
+import ErrorWindow from './../../components/Web/ErrorWindow';
 
 const pixel: string = require('../../../assets/images/pixel.png');
 const bg: string = require('../../../assets/images/scroll-bg.png');
@@ -241,6 +242,7 @@ class ChickenPreload extends Phaser.Scene {
   public socket: boolean;
   public loadTime: number;
   public startTime: number;
+  private serverError: boolean;
 
   public loadChicken = loadChicken.bind(this);
   public loadingScreen = loadingScreen.bind(this);
@@ -253,10 +255,10 @@ class ChickenPreload extends Phaser.Scene {
 
   
   public init(state: Istate): void {
-
     this.state  = state;
     this.userReady = false;
     this.loadingReady = false;
+    this.serverError = false;
     this.socket = false;
     this.loadUser();
     this.startTime = Math.round(new Date().getTime() / 1000);
@@ -270,9 +272,7 @@ class ChickenPreload extends Phaser.Scene {
   }
   
   public preload(): void {
-
     this.loadingScreen('Chicken');
-    
     this.load.image('bg', bg);
     this.load.image('chicken-top', top);
     this.load.image('chicken-bottom', bottom);
@@ -499,21 +499,15 @@ class ChickenPreload extends Phaser.Scene {
 
   }
 
-  
   public create(): void {
     this.loadingReady = true;
   }
 
-
   public update(): void {
-
     if (this.loadingReady && this.userReady) {
-
       if (this.socket) {
-
         let loadTime: number = Math.round(new Date().getTime() / 1000) - this.loadTime;
         let sizes = document.body.clientWidth + ' * ' + document.body.clientHeight;
-
         this.state.socket.io.emit('updateSession', {
           user_id: this.state.user.id,
           hash: this.state.user.hash,
@@ -526,8 +520,6 @@ class ChickenPreload extends Phaser.Scene {
             clanId: this.state.user.clanId,
           });
         }
-
-        // подрубаем амплитуду
         const Amplitude: Amplitude = this.state.amplitude;
         Amplitude.setFarmIdentify();
         console.log(`Test - ${this.state.user.test}`);
@@ -545,41 +537,27 @@ class ChickenPreload extends Phaser.Scene {
       this.scene.start('Chicken', this.state); // сцена с курицами
       this.scene.start('ChickenBars', this.state); // сцена с барами
       this.scene.start('Preload', this.state); // сцена с подзагрузкой
-
+    } else if (this.loadingReady && this.serverError) {
+      this.loadingReady = false;
+      this.serverError = false;
+      this.children.destroy();
+      new ErrorWindow(this, this.state.lang.checkYourInternet);
     }
-
   }
 
   
   public loadUser(): void {
-
-    axios.post(process.env.API + '/loadData', {
-      hash: this.state.user.hash
-    }).then((response) => {
-
-      // checkStorage(response.data.user.hash);
-
-      // let localSaveCounter: number = 0;
-
-      // if (LocalStorage.get('userChicken')) {
-      //   let user: IuserChicken = JSON.parse(LocalStorage.get('userChicken'));
-      //   if (typeof user.autosaveCounter === 'number') localSaveCounter = user.autosaveCounter;
-      // }
-
-      // if (response.data.user.chickenSaveCounter >= localSaveCounter) {
+    axios
+      .post(process.env.API + '/loadData', { hash: this.state.user.hash })
+      .then((response) => {
         this.state.farm = 'Chicken';
         this.loadData(response);
         this.state.offlineTime = response.data.progress.chickenOfflineTime;
         this.state.shopNotificationCount = [0, 0, 0, 0];
-      // } else {
-      //   this.loadChicken(response.data.user.counter);
-      // }
-      
-    })
-    // .catch(() => {
-    //   this.loadChicken();
-    // });
-
+      })
+      .catch(() => {
+        this.serverError = true;
+      });
     LocalStorage.set('farm', 'Chicken');
   }
 

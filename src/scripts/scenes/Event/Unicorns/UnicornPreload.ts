@@ -3,6 +3,8 @@ import Socket from '../../../Socket';
 import loadData from '../../../general/loadData';
 import { loadingScreen } from '../../../general/basic';
 import Amplitude from './../../../libs/Amplitude';
+import ErrorWindow from './../../../components/Web/ErrorWindow';
+import { clickShopBtn } from '../../../general/clicks';
 
 const pixel: any = require("./../../../../assets/images/pixel.png");
 const bg: any = require("./../../../../assets/images/scroll-bg.png");
@@ -285,17 +287,19 @@ const textSale: string = require("./../../../../assets/images/modal/text-sale.pn
 const saleIcon: string = require('../../../../assets/images/sale-icon.png');
 
 const notificationBg: string = require('../../../../assets/images/icons/notificator.png');
-class EventPreload extends Phaser.Scene {
+class UnicornPreload extends Phaser.Scene {
 
   public lang: string; // индекс языка
   public state: Istate;
   public userReady: boolean;
-  public loadingReady: boolean;
+  public loadingReady: boolean;  
+  private serverError: boolean;
   public socket: boolean;
   public loadTime: number;
   public startTime: number;
   public loadingScreen = loadingScreen.bind(this);
   public loadData = loadData.bind(this);
+  public clickShopBtn = clickShopBtn.bind(this);
 
   constructor() {
     super('UnicornPreload');
@@ -303,10 +307,10 @@ class EventPreload extends Phaser.Scene {
 
   
   public init(state: Istate): void {
-
     this.state  = state;
     this.userReady = false;
     this.loadingReady = false;
+    this.serverError = false;
     this.loadUser();
     this.state.farm = 'Unicorn';
     this.startTime = Math.round(new Date().getTime() / 1000);
@@ -316,7 +320,6 @@ class EventPreload extends Phaser.Scene {
       this.loadTime = Math.round(new Date().getTime() / 1000);
       this.state.socket = new Socket(this.state);
     }
-
   }
   
   public preload(): void {
@@ -606,7 +609,6 @@ class EventPreload extends Phaser.Scene {
 
 
   public update(): void {
-
     if (this.loadingReady && this.userReady) {
       if (this.socket) {
         let loadTime: number = Math.round(new Date().getTime() / 1000) - this.loadTime;
@@ -638,6 +640,11 @@ class EventPreload extends Phaser.Scene {
       this.scene.start('Unicorn', this.state); // сцена с евентом
       this.scene.start('UnicornBars', this.state); // сцена с барами
       this.scene.start('Preload', this.state); // сцена с подзагрузкой
+    } else if (this.loadingReady && this.serverError) {
+      this.loadingReady = false;
+      this.serverError = false;
+      this.children.destroy();
+      new ErrorWindow(this, this.state.lang.checkYourInternet);
     }
   }
 
@@ -651,8 +658,10 @@ class EventPreload extends Phaser.Scene {
       this.state.offlineTime = response.data.progress.eventOfflineTime;
       this.userReady = true;
       this.state.shopNotificationCount = [0, 0, 0, 0];
-    })
+    }).catch(() => {
+      this.serverError = true;
+    });
   }
 }
 
-export default EventPreload;
+export default UnicornPreload;

@@ -1128,6 +1128,9 @@ export default {
     sheepRepositoryImproveSale: 'Цена на улучшение хранилищ на овечьей ферме снижена в ДВА раза! Не упусти шанс, время акции ограничено!',
     saleLastTime: 'До конца осталось',
     goTo: 'перейти',
+    checkYourInternet: 'проверьте ваше интернет соединение',
+    error: 'Ошибка',
+    repeat: 'Повторить',
   },
   en: {
     index: 'en',

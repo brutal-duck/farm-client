@@ -7,6 +7,7 @@ import LocalStorage from './../../libs/LocalStorage';
 import Amplitude from './../../libs/Amplitude';
 import { clickShopBtn } from '../../general/clicks';
 import { general } from '../../local/settings';
+import ErrorWindow from './../../components/Web/ErrorWindow';
 
 const pixel: string = require("./../../../assets/images/pixel.png");
 const bg: string = require("./../../../assets/images/scroll-bg.png");
@@ -343,6 +344,7 @@ class SheepPreload extends Phaser.Scene {
   public lang: string; // индекс языка
   public state: Istate;
   public userReady: boolean;
+  private serverError: boolean;
   public loadingReady: boolean;
   public socket: boolean;
   public loadTime: number;
@@ -359,10 +361,10 @@ class SheepPreload extends Phaser.Scene {
 
   
   public init(state: Istate): void {
-
     this.state  = state;
     this.userReady = false;
     this.loadingReady = false;
+    this.serverError = false;
     this.socket = false;
     this.loadUser();
     this.startTime = Math.round(new Date().getTime() / 1000);
@@ -377,9 +379,7 @@ class SheepPreload extends Phaser.Scene {
   
 
   public preload(): void {
-
     this.loadingScreen('Sheep');
-
     this.load.image('bg', bg);
     this.load.image('sheep-top', top);
     this.load.image('sheep-bottom', bottom);
@@ -713,14 +713,12 @@ class SheepPreload extends Phaser.Scene {
     this.load.image('icon-sale', saleIcon);
   }
   
-  
   public create(): void {
     this.loadingReady = true;
   }
 
-  
   public update(): void {
-    if (this.loadingReady && this.userReady) {
+    if (this.loadingReady && this.userReady && !this.serverError) {
       if (this.socket) {
         let loadTime: number = Math.round(new Date().getTime() / 1000) - this.loadTime;
         let sizes = document.body.clientWidth + ' * ' + document.body.clientHeight;
@@ -757,41 +755,28 @@ class SheepPreload extends Phaser.Scene {
       this.scene.start('Sheep', this.state); // сцена с овцами
       this.scene.start('SheepBars', this.state); // сцена с барами
       this.scene.start('Preload', this.state); // сцена с подзагрузкой
+    } else if (this.loadingReady && this.serverError) {
+      this.loadingReady = false;
+      this.serverError = false;
+      this.children.destroy();
+      new ErrorWindow(this, this.state.lang.checkYourInternet);
     }
   }
   
   public loadUser(): void {
-
     axios.post(process.env.API + '/loadData', {
       hash: this.state.user.hash
     }).then((response) => {
-
-      // checkStorage(response.data.user.hash);
-
-      // let localSaveCounter: number = 0;
-
-      // if (LocalStorage.get('userSheep')) {
-      //   let user: IuserSheep = JSON.parse(LocalStorage.get('userSheep'));
-      //   if (typeof user.autosaveCounter === 'number') localSaveCounter = user.autosaveCounter;
-      // }
-
-      // if (response.data.user.sheepSaveCounter >= localSaveCounter) {
-        this.state.farm = 'Sheep';
-        this.loadData(response);
-        this.state.offlineTime = response.data.progress.sheepOfflineTime;
-        this.state.shopNotificationCount = [0, 0, 0, 0];
-        
-        const Amplitude: Amplitude = this.state.amplitude;
-        if (response.data.user.tutor === 0) Amplitude.logAmplitudeEvent('tutor_before_load', {});
-      // } else {
-      //   this.loadSheep(response.data.user.counter);
-      // }
-
-    })
-    // .catch(() => {
-    //   this.loadSheep();
-    // });
-
+      this.state.farm = 'Sheep';
+      this.loadData(response);
+      this.state.offlineTime = response.data.progress.sheepOfflineTime;
+      this.state.shopNotificationCount = [0, 0, 0, 0];
+      
+      const Amplitude: Amplitude = this.state.amplitude;
+      if (response.data.user.tutor === 0) Amplitude.logAmplitudeEvent('tutor_before_load', {});
+    }).catch(() => {
+      this.serverError = true;
+    });
     LocalStorage.set('farm', 'Sheep');
   }
   
