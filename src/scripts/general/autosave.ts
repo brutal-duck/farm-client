@@ -352,6 +352,7 @@ export default function autosave(): void {
           if (res.data.donate) state.donate = true; 
         }
       }
+      console.log(res.data, 'autosave');
     });
 }
 
