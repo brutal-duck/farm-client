@@ -125,19 +125,15 @@ class Boot extends Phaser.Scene {
   private initVolume(): void {
     if (this.state.platform !== 'ya') {
       this.getPlatformStorage('musicVolume').then(data => {
-        console.log('then musicVolume', data);
         if (data) this.state.musicVolume = Number(data);
-        
         this.getPlatformStorage('soundVolume').then(data => {
-          console.log('then soundVolume', data);
           if (data) this.state.soundVolume = Number(data);
-        }).catch(e => {
-          console.log('catch soundVolume', e);
+        }).catch(() => {
           this.state.soundVolume = 1;
+          this.state.musicVolume = 1;
           this.setPlatformStorage('soundVolume', String(this.state.soundVolume));
         });
-      }).catch(e => {
-        console.log('catch musicVolume', e);
+      }).catch(() => {
         this.state.musicVolume = 1;
         this.setPlatformStorage('musicVolume', String(this.state.musicVolume));
       });
