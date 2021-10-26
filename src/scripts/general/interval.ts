@@ -724,6 +724,7 @@ function showSale(scene: Sheep | Chicken | Cow): void {
         message: sale.type,
       };
       scene.scene.launch('Modal', scene.state);
+      scene.dailyStartCheck = true;
     }
   }
 
