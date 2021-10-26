@@ -2,6 +2,8 @@ import { getRandomBool, randomString } from "../../general/basic";
 import Modal from "../../scenes/Modal/Modal";
 import MergingCloud from "../animations/MergingCloud";
 
+const START_DELAY = 3;
+
 export default class HerdBoostUnicornWindow {
   public scene: Modal;
 
@@ -55,7 +57,7 @@ export default class HerdBoostUnicornWindow {
   }
 
   private create(): void {
-    let startCount: number = 5;
+    let startCount: number = START_DELAY;
 
     this.boostCounterWindow = this.scene.physics.add.sprite(360, 400, 'boost-window-bg').setDepth(1);
   

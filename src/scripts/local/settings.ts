@@ -10,7 +10,7 @@ const general: {
   autoSaveSpeed: 15,
   maxMerginTime: 30,
   herdBoostSpeedAnimal: 150,
-  herdBoostTime: 25,
+  herdBoostTime: 20,
   herdBoostPrice: 20,
   herdBoostDelay: 300,
   packages: [
