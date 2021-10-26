@@ -84,6 +84,7 @@ let musicVolume: number = 1;
 let soundVolume: number = 1;
 let clanEventTakenAward: boolean = true;
 let sales: Isale[] = [];
+let clanChatNotificationCount: number = 0;
 
 let state: Istate = {
   // записываемые в localStorage
@@ -122,6 +123,7 @@ let state: Istate = {
   dailyAwards, // награды новичка
 
   // не записываемые в localStorage
+  clanChatNotificationCount,
   shopNotificationCount: notificationCounter, // счетчик нативов в магазине ['diamonds', 'gold', 'animals', 'booster']
   lang, // массив слов выбранного языка
   modal, // настройки окон

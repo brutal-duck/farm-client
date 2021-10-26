@@ -252,6 +252,7 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
         count += 1;
       }
     }
+    count += this.scene.state.clanChatNotificationCount;
     return count;
   }
 }

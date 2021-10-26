@@ -68,6 +68,7 @@ export default class Socket {
       if (this.state.clan) {
         if (data.id === this.state.clan.id) {
           this.state.clan.chatMessages.push(data);
+          this.state.clanChatNotificationCount += 1;
         }
       }
     });

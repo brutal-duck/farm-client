@@ -972,4 +972,5 @@ interface Istate {
   clanEventTakenAward: boolean;
   sales: Isale[];
   offline?: number;
+  clanChatNotificationCount: number;
 }

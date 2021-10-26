@@ -46,6 +46,7 @@ export default class ClanFarm extends Phaser.Scene {
   private currentIcon: IconfigIcon;
   private taskNotificator: Notificator;
   private shopNotificator: Notificator;
+  private chatNotificator: Notificator;
   private eventSprite: Phaser.GameObjects.Sprite;
   private eventGlowSprite: Phaser.GameObjects.Sprite;
   private eventGlowAli: Phaser.Tweens.Tween;
@@ -218,7 +219,27 @@ export default class ClanFarm extends Phaser.Scene {
     //   zone.input.hitArea.height
     //   );
 
-    this.click(zone, () => {
+    const mailZone: Phaser.GameObjects.Zone = this.add.zone(pos.x + 110, pos.y + 100, 80, 100).setDropZone(undefined, () => {});
+    // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
+    // graphics.lineStyle(5, 0xFAFFA0);
+    // graphics.strokeRect(
+    //   mailZone.x - mailZone.input.hitArea.width / 2, 
+    //   mailZone.y - mailZone.input.hitArea.height / 2, 
+    //   mailZone.input.hitArea.width, 
+    //   mailZone.input.hitArea.height
+    //   );
+
+    this.chatNotificator = new Notificator(this, { x: pos.x + 130, y: pos.y + 65 });
+
+    this.click(mailZone, (): void => {
+      this.state.modal = {
+        type: 9,
+        chatType: 3,
+      };
+      this.scene.launch('Modal', this.state);
+    });
+
+    this.click(zone, (): void => {
       this.state.modal = {
         type: 17,
         clanTabType: 1,
@@ -243,7 +264,7 @@ export default class ClanFarm extends Phaser.Scene {
   private createBank(): void {
     const pos: Iposition = {
       x: 595,
-      y: 480,
+      y: 530,
     };
     const zone = this.add.zone(pos.x, pos.y, 160, 200).setDropZone(undefined, () => {});
 
@@ -519,6 +540,7 @@ export default class ClanFarm extends Phaser.Scene {
       this.updateTaskNotification();
       this.updateEventState();
       this.updateEventText();
+      this.updateClanChatNotification();
     }
   }
 
@@ -716,6 +738,10 @@ export default class ClanFarm extends Phaser.Scene {
     this.taskNotificator.setCount(count);
   }
 
+  private updateClanChatNotification(): void {
+    this.chatNotificator.setCount(this.state.clanChatNotificationCount);
+  }
+  
   private updateEventText(): void {
     if (this.eventTime.visible) {
       const timeText: string = `${this.state.lang.lastTime} ${shortTime(this.state.progress.clanEvent.endTime, this.state.lang)}`;

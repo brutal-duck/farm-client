@@ -19,6 +19,7 @@ export default class ClanChat {
   }
 
   private init(): void {
+    this.scene.state.clanChatNotificationCount = 0;
     this.scene.scrollHeight = Number(this.scene.game.config.height) - 1200 + 562;
     this.scene.scrolling.bottom = 0;
     this.scene.scrolling.scrollY = 0;
@@ -58,6 +59,7 @@ export default class ClanChat {
         this.newMsg(this.scene.state.clan.chatMessages[i]);
       }
     }
+    this.scene.state.clanChatNotificationCount = 0;
   }
 
   private newMsg(msgData: Ichat) {
