@@ -1379,9 +1379,14 @@ function playSoundOnce(soundName: string): void {
 
 function setPlatformStorage(key: string, value: any): void {
   const valueString: string = JSON.stringify(value);
+  console.log('setPlatformStorage', 'key -' + key, 'value -' + value)
   switch (this.state.platform) {
     case 'vk':
-      bridge.send('VKWebAppStorageSet', { key: key, value: valueString });
+      bridge.send('VKWebAppStorageSet', { key: key, value: valueString }).then(data => {
+        console.log('setPlatformStorage then', data)
+      }).catch(e => {
+        console.log('setPlatformStorage catch', e)
+      });
       break;
     case 'ok':
       FAPI.Client.call({ method: 'storage.set', key: key, value: valueString });
@@ -1412,6 +1417,7 @@ function getPlatformStorage(key: string): Promise<any> {
     switch (this.state.platform) {
       case 'vk':
         bridge.send('VKWebAppStorageGet', { keys: [key] }).then(data => {
+          console.log('VKWebAppStorageGet', data);
           const result = data.keys.find(data => data.key === key).value;
           if (isJSON(result)) resolve(JSON.parse(result));
           reject(false);
