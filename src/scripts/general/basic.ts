@@ -1416,6 +1416,7 @@ function getPlatformStorage(key: string): Promise<any> {
   return new Promise((resolve, reject) => {
     switch (this.state.platform) {
       case 'vk':
+        console.log({ keys: [key] }, '{ keys: [key] }');
         bridge.send('VKWebAppStorageGet', { keys: [key] }).then(data => {
           console.log('VKWebAppStorageGet', data);
           const result = data.keys.find(data => data.key === key).value;
