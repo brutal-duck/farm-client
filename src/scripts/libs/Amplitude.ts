@@ -44,7 +44,9 @@ export default class Amplitude {
         .set('partner', this.state.platform)
         .set('test', this.state.user.test)
         .set(`Catcher${this.state.farm}`, this.state[`user${this.state.farm}`].collectorLevel);
-        
+        location.search.substr(1).split('&').forEach(function (item) {
+          console.log(item)
+        })
         this.amplitude.getInstance().identify(identify);
       // this.amplitude.getInstance().logEvent('load_time', {
       //   seconds: loadTime
