@@ -1419,7 +1419,10 @@ function getPlatformStorage(key: string): Promise<any> {
         console.log({ keys: [key] }, '{ keys: [key] }');
         bridge.send('VKWebAppStorageGet', { keys: [key] }).then(data => {
           console.log('VKWebAppStorageGet', data);
-          const result = data.keys.find(data => data.key === key).value;
+          data.keys.forEach(el => {
+            console.log(el);
+          });
+          const result = data.keys[0].value;
           if (isJSON(result)) resolve(JSON.parse(result));
           reject(false);
         });
