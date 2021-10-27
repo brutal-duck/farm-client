@@ -297,6 +297,10 @@ const saleIconSheepMoney: string = require('../../../assets/images/modal/sale/ic
 const saleIconSheepPrice: string = require('../../../assets/images/modal/sale/icons/sheep-price.png');
 const saleIconSheepRepositoryImprove: string = require('../../../assets/images/modal/sale/icons/sheep-repository-improve.png');
 const modalBgPlate: string = require('../../../assets/images/modal/bg-plate.png');
+const reviewBg: string = require('../../../assets/images/modal/review/bg.png');
+const reviewBtnLike: string = require('../../../assets/images/modal/review/btn-like.png');
+const reviewBtnDislike: string = require('../../../assets/images/modal/review/btn-dislike.png');
+
 
 export default function typePreload(): void {
     switch (this.state.modal.type) {
@@ -683,6 +687,10 @@ export default function typePreload(): void {
         this.load.image('sale-icon-sheep-repository-improve', saleIconSheepRepositoryImprove);
         this.load.image('modal-bg-plate', modalBgPlate);
         break;
+      case 24: 
+        this.load.image('review-bg', reviewBg);
+        this.load.image('review-btn-like', reviewBtnLike);
+        this.load.image('review-btn-dislike', reviewBtnDislike);
       default:
         break;
     }

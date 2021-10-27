@@ -1140,6 +1140,7 @@ export default {
     yourRecall: 'Ваш отзыв',
     yourRecallIsSent: 'Ваш отзыв отправлен!',
     recall: 'Отзыв',
+    likeGame: 'Нравится игра?',
   },
   en: {
     index: 'en',
@@ -2282,5 +2283,6 @@ export default {
     yourRecall: 'your feedback',
     yourRecallIsSent: 'Your feedback sent!',
     recall: 'Review',
+    likeGame: 'Like the game?',
   },
 };

@@ -204,12 +204,6 @@ export default class SettingsWindow {
     document.body.appendChild(erudaCdn);
     erudaCdn.onload = (): void => {
       window['eruda'].init();
-
-      const cordova = window['cordova'];
-      
-      cordova.plugins.AppReview.requestReview().catch(() => {
-        return cordova.plugins.AppReview.openStoreScreen();
-      });
     };
   }
 }

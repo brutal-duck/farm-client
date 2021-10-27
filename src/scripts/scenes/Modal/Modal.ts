@@ -47,6 +47,7 @@ import ClanTournamentWindow from '../../components/modal/clan/ClanTournamentWind
 import TournamentRaitingsWindow from './../../components/modal/clan/TournamentRaitingsWindow';
 import ClanTournamentEndWindow from './../../components/modal/clan/ClanTournamentEndWindow';
 import SaleWindow from './../../components/modal/SaleWindow';
+import ReviewWindow from '../../components/modal/ReviewWindow';
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -191,6 +192,10 @@ class Modal extends Phaser.Scene {
       case 23: 
         this.openModal(this.cameras.main);
         new SaleWindow(this);
+        break;
+      case 24: 
+        this.openModal(this.cameras.main);
+        new ReviewWindow(this);
         break;
       default:
         this.scene.stop();
