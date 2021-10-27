@@ -339,7 +339,7 @@ export default {
     yourMessage: 'Ваше сообщение',
     messageError: 'Введите сообщение',
     send: 'Отправить',
-    yourMessageIsSent: 'Ваще сообщение отправлено! Агент техподдержки обязательно ответит вам на почту.',
+    yourMessageIsSent: 'Ваше сообщение отправлено! Агент техподдержки обязательно ответит вам на почту.',
     chat: 'Чат',
     tutorialFail: 'Что же я хотел сказать...',
     sheepTutorial_0: 'Добро пожаловать на ферму! Тебе предстоит разводить овечек.',
@@ -1135,7 +1135,11 @@ export default {
     foundManySave: 'Найдено два сохранения:',
     setAction: 'выберите действие',
     saveAndroidProgress: 'Сохранить',
-
+    recallText: 'Ваше мнение важно для нас!\nОставьте ваш отзыв, чтобы мы смогли сделать игру лучше!',
+    recallBtn: 'Оставить отзыв',
+    yourRecall: 'Ваш отзыв',
+    yourRecallIsSent: 'Ваш отзыв отправлен!',
+    recall: 'Отзыв',
   },
   en: {
     index: 'en',
@@ -2273,5 +2277,10 @@ export default {
     foundManySave: 'Found two saves:',
     setAction: 'choose an action',
     saveAndroidProgress: 'Save',
+    recallText: 'Your opinion is important for us!\nLeave your feedback so that we can make the game better!',
+    recallBtn: 'Leave feedback',
+    yourRecall: 'your feedback',
+    yourRecallIsSent: 'Your feedback sent!',
+    recall: 'Review',
   },
 };

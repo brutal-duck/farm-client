@@ -31,6 +31,7 @@ import ConfirmSaveYandexProgress from '../../components/modal/system/ConfirmSave
 import ConfimExcludeUserWindow from '../../components/modal/system/ConfimExcludeUserWindow';
 import ConfirmBuyFarm from './../../components/modal/system/ConfirmByFarm';
 import ConfirmSpendDiamonds from './../../components/modal/system/ConfirmSpendDiamonds';
+import RecallWindow from './../../components/modal/system/RecallWindow';
 
 function systemWindow(): void {
   let height:number = 0;
@@ -197,6 +198,10 @@ function systemWindow(): void {
     
     case 24: 
       new ConfirmSpendDiamonds(this);
+      break;
+    
+    case 25: 
+      new RecallWindow(this)
       break;
 
     default:      
