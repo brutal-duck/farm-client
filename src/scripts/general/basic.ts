@@ -524,8 +524,14 @@ function donePart(): void {
   this.time.addEvent({ delay: 100, callback: (): void => {
     this.checkDoneTasks();
     this.tryClanTask(17);
-
   }, callbackScope: this, loop: false });
+
+  const checkReview = this.state.platform === 'android' && this.state.playId && this.state.farm === 'Chicken' && user.part === 2;
+
+  if (checkReview) {
+    this.state.modal = { type: 24 };
+    this.scene.launch('Modal', this.state);
+  }
 
   this.time.addEvent({ delay: 200, callback: (): void => {
     if (!((user.part === 3 && this.state.user.additionalTutorial.cave && this.state.farm === 'Sheep') || 
