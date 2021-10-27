@@ -1131,6 +1131,11 @@ export default {
     checkYourInternet: 'проверьте ваше интернет соединение',
     error: 'Ошибка',
     repeat: 'Повторить',
+    androidFoundUser: '$1 глава овечьей фермы - $2',
+    foundManySave: 'Найдено два сохранения:',
+    setAction: 'выберите действие',
+    saveAndroidProgress: 'Сохранить',
+
   },
   en: {
     index: 'en',
@@ -2261,5 +2266,12 @@ export default {
     sheepRepositoryImproveSale: 'The price of improving storage facilities on a sheep farm is reduced twice! Do not miss the chance, the time of stock is limited!',
     saleLastTime: 'To the end remains',
     goTo: 'go to',
+    checkYourInternet: 'Check your Internet connection',
+    error: 'Error',
+    repeat: 'Repeat',
+    androidFoundUser: '$1 Head of Sheep Farm - $2',
+    foundManySave: 'Found two saves:',
+    setAction: 'choose an action',
+    saveAndroidProgress: 'Save',
   },
 };

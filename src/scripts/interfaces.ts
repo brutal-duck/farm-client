@@ -871,6 +871,22 @@ interface Isale {
   endTime: number;
   startTime: number;
 }
+interface IgooglePlayServicesData {
+  displayName: string;
+  playerId: string;
+  title: string;
+  iconImageUrl: string;
+  hiResIconImageUrl: string;
+}
+interface IconfirmAndroidData {
+  hashUser: IcheckAndroidUserData;
+  servicesUser: IcheckAndroidUserData;
+  servicesData: IgooglePlayServicesData;
+}
+interface IcheckAndroidUserData {
+  sheepPart: number;
+  diamonds: number;
+}
 interface Istate {
   platform: string;
   autoSaveSpeed: number;
@@ -931,6 +947,7 @@ interface Istate {
   adRewardedType: number;
   adTimeout: boolean;
   vkId: number;
+  playId: string;
   sheepCollectorSettings: IcollectorSettings[];
   chickenCollectorSettings: IcollectorSettings[];
   cowCollectorSettings: IcollectorSettings[];

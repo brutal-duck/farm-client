@@ -1,7 +1,7 @@
 import axios from "axios";
 import Modal from "../../../scenes/Modal/Modal";
 
-export default class ConfirmSaveProgress {
+export default class ConfirmSaveYandexProgress {
   public scene: Modal;
 
   constructor(scene: Modal) {

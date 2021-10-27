@@ -38,7 +38,7 @@ export default class SettingsWindow {
     this.createSoundsController();
     this.createHeader();
     this.createFooter();
-    if (this.scene.state.platform === 'web' || this.scene.state.platform === 'android') {
+    if (this.scene.state.platform === 'web' || this.scene.state.platform === 'android' && !this.scene.state.playId) {
       this.createChangeNicknameBtn();
     }
     this.setSegmentsState();
@@ -174,7 +174,7 @@ export default class SettingsWindow {
   private onCloseBtn(): void {
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
     this.scene.scene.stop();
-    this.scene.state.foreignProfileId = undefined
+    this.scene.state.foreignProfileId = undefined;
   }
 
   private saveVolume(): void {
@@ -210,23 +210,6 @@ export default class SettingsWindow {
       cordova.plugins.AppReview.requestReview().catch(() => {
         return cordova.plugins.AppReview.openStoreScreen();
       });
-
-      // cordova.plugins.playGamesServices.isSignedIn((result) => {
-      //   if (result.isSignedIn === false) {
-      //     cordova.plugins.playGamesServices.auth(() => {
-      //       cordova.plugins.playGamesServices.showPlayer((playerData) => {
-      //         console.log("Authenticated as " + playerData.displayName);
-      //         console.log(playerData);
-      //       });
-
-      //     }, () => {
-      //         console.log('On not logged in')
-      //     });
-      //   }
-      // }, () => {
-      //   console.log('Auth check could not be done');
-      // });
-
     };
   }
 }

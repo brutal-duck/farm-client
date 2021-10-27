@@ -27,7 +27,7 @@ import FarmResourceRepositoryWindow from '../../components/modal/system/FarmReso
 import SheepWindow from '../../components/modal/system/SheepWindow';
 import ChickenWindow from '../../components/modal/system/ChickenWindow';
 import CowWindow from '../../components/modal/system/CowWindow';
-import ConfirmSaveProgress from './../../components/modal/system/ConfirmSaveProgress';
+import ConfirmSaveYandexProgress from '../../components/modal/system/ConfirmSaveYandexProgress';
 import ConfimExcludeUserWindow from '../../components/modal/system/ConfimExcludeUserWindow';
 import ConfirmBuyFarm from './../../components/modal/system/ConfirmByFarm';
 import ConfirmSpendDiamonds from './../../components/modal/system/ConfirmSpendDiamonds';
@@ -181,7 +181,7 @@ function systemWindow(): void {
       break;
 
     case 20: 
-      new ConfirmSaveProgress(this);
+      new ConfirmSaveYandexProgress(this);
       break;
       
     case 21: 

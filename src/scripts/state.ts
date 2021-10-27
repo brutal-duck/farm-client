@@ -52,6 +52,7 @@ let readyAd: boolean;
 let adRewardedType: number;
 let adTimeout: boolean;
 let vkId: number;
+let playId: string;
 let sheepCollectorSettings: IcollectorSettings[];
 let chickenCollectorSettings: IcollectorSettings[];
 let cowCollectorSettings: IcollectorSettings[];
@@ -179,6 +180,7 @@ let state: Istate = {
   clanEventTakenAward,
   sales,
   dataIsLoaded,
+  playId,
 }
 
 export default state;

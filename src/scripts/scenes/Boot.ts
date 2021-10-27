@@ -1,6 +1,6 @@
 import * as Webfont from '../libs/Webfonts.js';
 import { FAPI } from '../libs/Fapi.js';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import state from '../state';
 import langs from '../langs';
 import bridge, { UserInfo } from '@vkontakte/vk-bridge';
@@ -12,9 +12,9 @@ import Login from '../components/Web/Login';
 import ErrorWindow from '../components/Web/ErrorWindow';
 import { clickShopBtn, clickModalBtn, click } from './../general/clicks';
 import { shopButton, bigButton } from './../elements';
-import { general } from './../local/settings';
 import { setPlatformStorage, getPlatformStorage } from './../general/basic';
 import RoundedField from '../components/gameObjects/RoundedField';
+import ConfirmSaveAndroidProgress from './../components/Web/ConfirmSaveAndroidProgress';
 
 Amplitude.init();
 
@@ -29,7 +29,9 @@ const modal: string = require('./../../assets/images/modal/modal.png');
 const landingBtn: string = require('./../../assets/images/modal/middle-button.png');
 const loginBtnGreen: string = require('./../../assets/images/modal/btn_lg.png');
 const loginBtnRed: string = require('./../../assets/images/modal/btn_lr.png');
+const loginBtnYellow: string = require('./../../assets/images/modal/btn_ly.png');
 const pixelForLanding: string = require('./../../assets/images/white-pixel.jpg');
+const diamondLil: string = require('../../assets/images/icons/diamond-lil.png');
 
 class Boot extends Phaser.Scene {
   constructor() {
@@ -51,7 +53,9 @@ class Boot extends Phaser.Scene {
   private landing: Landing;
   private authorizationWindow: Login;
   private createnLanding: boolean = true;
+  private doubleSave: boolean = false;
   private pushToken: string = '';
+  public androidData: IconfirmAndroidData;
 
   public shopButton = shopButton.bind(this);
   public bigButton = bigButton.bind(this);
@@ -63,7 +67,6 @@ class Boot extends Phaser.Scene {
 
   public init(): void {
     this.build = 4.07;
-    console.log('Build ' + this.build);
     // console.log(this.game.device, 'this.game.device');
     this.state = state;
     this.fontsReady = false;
@@ -102,12 +105,12 @@ class Boot extends Phaser.Scene {
     this.load.image('pb-full-corner', pbFullCorner);
     this.load.image('pb-full-mid', pbFullMid);
     this.load.image('modal', modal);
-    if (this.platform === 'web') {
-      this.load.image('shop-btn', landingBtn);
-      this.load.image('big-btn-green', loginBtnGreen);
-      this.load.image('big-btn-red', loginBtnRed);
-      this.load.image('pixel-landing', pixelForLanding);
-    }
+    this.load.image('diamond-lil', diamondLil);
+    this.load.image('shop-btn', landingBtn);
+    this.load.image('big-btn-green', loginBtnGreen);
+    this.load.image('big-btn-red', loginBtnRed);
+    this.load.image('big-btn-yellow', loginBtnYellow);
+    this.load.image('pixel-landing', pixelForLanding);
   }
 
   public update(): void {
@@ -119,6 +122,10 @@ class Boot extends Phaser.Scene {
     }
     if (!this.createnLanding && this.fontsReady) {
       this.createLanding();
+    }
+    if (this.fontsReady && this.doubleSave) {
+      new ConfirmSaveAndroidProgress(this);
+      this.doubleSave = false;
     }
   }
 
@@ -304,7 +311,7 @@ class Boot extends Phaser.Scene {
     } else if (this.platform === 'ya') {
       this.checkYandexUser();
     } else if (this.platform === 'android') {
-      this.checkAndroidUser();
+      this.initAndroidPlatform();
     }
   }
 
@@ -369,7 +376,7 @@ class Boot extends Phaser.Scene {
     });
   }
 
-  private checkAndroidUser(): void {
+  private initAndroidPlatform(): void {
     const cordovaScript: HTMLScriptElement = document.createElement('script');
     cordovaScript.setAttribute('src', 'cordova.js');
     if (!cordovaScript) return;
@@ -396,13 +403,69 @@ class Boot extends Phaser.Scene {
       });
       push.on('registration', (data) => {
         const { registrationId } = data;
-        console.log(registrationId);
         this.pushToken = registrationId;
-        this.postCheckUser(this.hash);
-      });
-    }, false);
+        const cordova = window['cordova'];
+        cordova.plugins.playGamesServices.isSignedIn((result) => {
+          if (result.isSignedIn === false) {
+            cordova.plugins.playGamesServices.auth(() => {
+              cordova.plugins.playGamesServices.showPlayer((playerData: IgooglePlayServicesData) => {
+                this.checkAuthAndroidUser(playerData);
+              });
+            }, () => {
+                this.postCheckUser(this.hash);
+                console.log('On not logged in')
+            });
+          }
+        }, () => {
+          this.postCheckUser(this.hash);
+          console.log('Auth check could not be done');
+        });
+      }, false);
+    });
   }
 
+
+  private checkAuthAndroidUser(data: IgooglePlayServicesData): void {
+    this.state.playId = data.playerId;
+    if (this.hash) {
+      this.checkOldUser().then(res => {
+        const { hashUser, servicesUser } = res.data;
+        if (hashUser && !servicesUser) {
+          this.updateAndroidUser(data).then(() => {
+            LocalStorage.set('hash', '');
+            this.postCheckUser(data.playerId, true);
+          });
+        } else if (hashUser && servicesUser) {
+          this.androidData = {
+            servicesData: data,
+            hashUser: hashUser,
+            servicesUser: servicesUser,
+          };
+          this.doubleSave = true;
+        } else {
+          this.postCheckUser(data.playerId, true, data.displayName);
+          LocalStorage.set('hash', '');
+        }
+      });
+    } else {
+      this.checkOldUser().then(res => {
+        const { servicesUser } = res.data;
+        if (servicesUser) {
+          this.postCheckUser(data.playerId, true);
+        } else {
+          this.postCheckUser(data.playerId, true, data.displayName);
+        }
+      });
+    }
+  }
+
+  private checkOldUser(): Promise<AxiosResponse<any>> {
+    return axios.post(process.env.API + '/checkAndroidUser', { hash: this.hash, id: this.state.playId });
+  }
+
+  public updateAndroidUser(data: IgooglePlayServicesData): Promise<AxiosResponse<{ error: boolean }>> {
+    return axios.post(process.env.API + '/updateAndroidUser', { hash: this.hash, playId: data.playerId, login: data.displayName });
+  }
 
   private initAndroidAdjust(): void {
     // @ts-ignore
@@ -465,14 +528,15 @@ class Boot extends Phaser.Scene {
     window.admob.rewardvideo.prepare();
   }
 
-  private postCheckUser(id: number | string, auth?: boolean): void {
+  public postCheckUser(id: number | string, auth?: boolean, login?: string): void {
     axios.post(process.env.API + '/checkUser', {
       platform: this.platform,
       data: id,
       auth: auth,
       pushToken: this.pushToken,
+      login: login,
     }).then((response) => {
-      const { hash, error, expires, status } = response.data
+      const { hash, error, expires, status } = response.data;
       if (error === false) {
         if (this.platform === 'web' && status === 'new') {
           this.createnLanding = false;
@@ -481,7 +545,7 @@ class Boot extends Phaser.Scene {
         } else {
           this.userReady = true;
           this.hash = hash;
-          if (this.platform === 'android') {
+          if (this.platform === 'android' && !auth) {
             LocalStorage.set('hash', hash);
           }
         }
