@@ -526,7 +526,7 @@ function donePart(): void {
     this.tryClanTask(17);
   }, callbackScope: this, loop: false });
 
-  const checkReview = this.state.platform === 'android' && this.state.playId && this.state.farm === 'Chicken' && user.part === 2;
+  const checkReview = this.state.platform === 'android' && this.state.farm === 'Chicken' && user.part === 2;
 
   if (checkReview) {
     this.state.modal = { type: 24 };
