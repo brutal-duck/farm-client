@@ -104,7 +104,7 @@ export default class CreateClanWindow {
     const right1: IbigButtonElementSettings = {
       text: String(CREATE_CLAN_COST),
       icon: 'diamond',
-      sale: Utils.checkSale(this.scene.state.sales, 'CLAN') ? String(Math.floor(CREATE_CLAN_COST / 2)) : null,
+      sale: Utils.checkSale(this.scene.state, 'CLAN') ? String(Math.floor(CREATE_CLAN_COST / 2)) : null,
     };
     
     const settings: IbigButtonSetting = {
@@ -225,7 +225,7 @@ export default class CreateClanWindow {
   }
 
   private createClan(): void {
-    const price = Utils.checkSale(this.scene.state.sales, 'CLAN') ? Math.floor(CREATE_CLAN_COST / 2) : CREATE_CLAN_COST;
+    const price = Utils.checkSale(this.scene.state, 'CLAN') ? Math.floor(CREATE_CLAN_COST / 2) : CREATE_CLAN_COST;
     if (this.scene.state.user.diamonds >= price) {
       if (!this.change) {
         let checkName: boolean = true;

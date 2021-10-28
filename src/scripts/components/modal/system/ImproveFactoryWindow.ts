@@ -142,7 +142,7 @@ export default class ImproveFactoryWindow {
       text: this.scene.state.lang.improve,
       textAlign: 'left',
     };
-    const sale = Utils.checkSale(this.scene.state.sales, 'COW_FACTORY_IMPROVE');
+    const sale = Utils.checkSale(this.scene.state, 'COW_FACTORY_IMPROVE');
 
     if (sale) settings.right1.sale = shortNum(Math.floor(this.nextLevel.improveMoneyPrice / 2));
 

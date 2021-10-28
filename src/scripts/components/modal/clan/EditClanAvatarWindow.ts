@@ -103,7 +103,7 @@ export default class EditClanAvatarWindow {
   }
 
   private onSaveBtn(): void {
-    const price = Utils.checkSale(this.scene.state.sales, 'CLAN') ? (Math.floor(CHANGE_EMBLEM_COST / 2)) : CHANGE_EMBLEM_COST;
+    const price = Utils.checkSale(this.scene.state, 'CLAN') ? (Math.floor(CHANGE_EMBLEM_COST / 2)) : CHANGE_EMBLEM_COST;
     if (!this.scene.state.user.clanId) {
       this.avatar = {
         bg: this.bgScroller.active,

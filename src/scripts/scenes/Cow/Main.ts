@@ -117,6 +117,7 @@ import {
   intervalCollectorTutorial,
   showFeedBoostSpeechBubble,
   progressTerritoryCooldown,
+  speedCheckCollector,
 } from '../../general/interval';
 import Ads from '../../components/Utils/Ads';
 
@@ -160,7 +161,8 @@ class Cow extends Phaser.Scene {
   public spaceCount: number = 0;
   public feedBoostRemaindTimer: number = 0;
   public ads: Ads;
-
+  public speedCollectorTimer: number = 0;
+  
   public world = world.bind(this);
   public drag = drag.bind(this);
   public collisions = collisions.bind(this);
@@ -255,6 +257,7 @@ class Cow extends Phaser.Scene {
   public setPlatformStorage = setPlatformStorage.bind(this);
   public getPlatformStorage = getPlatformStorage.bind(this);
   private openConvertorForClan = openConvertorForClan.bind(this);
+  public speedCheckCollector = speedCheckCollector.bind(this);
 
   public init(state: Istate): void {
 

@@ -284,6 +284,7 @@ function interval(): void {
 
     // выдача наград новичка
     if (!this.scene.isActive('Modal') &&
+      !this.scene.get('Modal').load.isLoading() &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Profile')) this.getNewbieAward();
 
@@ -305,6 +306,7 @@ function interval(): void {
 
 
     if (this.state.donate &&
+      !this.scene.get('Modal').load.isLoading() &&
       !this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Profile')) this.showDonate();
@@ -357,6 +359,7 @@ function interval(): void {
         !this.state.userUnicorn?.takenAward && 
         this.state.userUnicorn?.points > 0 &&
         this.state.progress.event.open &&
+        !this.scene.get('Modal').load.isLoading() &&
         !this.scene.isActive('Modal') && 
         !this.scene.isActive('Tutorial') &&
         !this.scene.isActive('Profile') && 
@@ -428,6 +431,7 @@ function interval(): void {
     progressClanEventTime(this.state);
     if (
       !this.state.clanEventTakenAward &&
+      !this.scene.get('Modal').load.isLoading() &&
       !this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Profile') &&
@@ -442,6 +446,8 @@ function interval(): void {
     }
 
     showSale(this);
+    this.speedCheckCollector();
+
   }, callbackScope: this, loop: true });
 
 }

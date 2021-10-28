@@ -1141,6 +1141,9 @@ export default {
     yourRecallIsSent: 'Ваш отзыв отправлен!',
     recall: 'Отзыв',
     likeGame: 'Нравится игра?',
+    speedCollectorNotificationSheep: 'У вас много животных на ферме, подстригатель не успевает за ними. Улучшайте подстригателя, чтобы не терять эффективность.',
+    speedCollectorNotificationChicken: 'У вас много животных на ферме, собиратель не успевает за ними. Улучшайте собиратель яиц, чтобы не терять эффективность.',
+    speedCollectorNotificationCow: 'У вас много животных на ферме, собиратель молока не успевает за ними. Улучшайте собирателя, чтобы не терять эффективность.',
   },
   en: {
     index: 'en',
@@ -2284,5 +2287,8 @@ export default {
     yourRecallIsSent: 'Your feedback sent!',
     recall: 'Review',
     likeGame: 'Like the game?',
+    speedCollectorNotificationSheep: 'You have many animals on the farm, the truncate does not have time for them. Improve the trigger in order not to lose efficiency.',
+    speedCollectorNotificationChicken: 'You have many animals on the farm, the collector does not have time for them. Improve the gathering of the eggs in order not to lose efficiency.',
+    speedCollectorNotificationCow: 'You have many animals on the farm, the collector of milk does not have time for them. Improve the collector not to lose efficiency.',
   },
 };

@@ -8,7 +8,7 @@ function createBoostAnimal(): void {
   this.tryClanTask(3);
 
   let price: number = this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost;
-  if (Utils.checkSale(this.state.sales, `${this.state.farm.toUpperCase()}_HERD`)) {
+  if (Utils.checkSale(this.state, `${this.state.farm.toUpperCase()}_HERD`)) {
     price = Math.floor(price / 2);
   }
 
@@ -139,7 +139,7 @@ function improveCollector(): void {
   } else {
 
     if (nextLevel.diamonds) {
-      const sale = Utils.checkSale(this.state.sales, `${this.state.farm.toUpperCase()}_COLLECTOR_IMPROVE`);
+      const sale = Utils.checkSale(this.state, `${this.state.farm.toUpperCase()}_COLLECTOR_IMPROVE`);
       const price = sale ? Math.floor(nextLevel.price / 2) : nextLevel.price;
       if (this.state.user.diamonds >= price) {
         const modal: Imodal = {
@@ -320,7 +320,7 @@ function freeCollector(type: number = 1): void {
       let doubleTimePrice: number = Math.floor(minutes / 60 * doubledСollectorPrice);
 
       if (this.state.user.diamonds >= doubleTimePrice) {
-        if (Utils.checkSale(this.state.sales, `${this.state.farm.toUpperCase()}_COLLECTOR_PRICE`)) doubleTimePrice = Math.floor(doubleTimePrice / 2);
+        if (Utils.checkSale(this.state, `${this.state.farm.toUpperCase()}_COLLECTOR_PRICE`)) doubleTimePrice = Math.floor(doubleTimePrice / 2);
         this.state.user.diamonds -= doubleTimePrice;
         user.collector += minutes * 60;
         user.collectorTakenTime = user.collector;
@@ -393,7 +393,7 @@ function buyCollector(type: number): void {
   this.scene.stop('Modal');
   
   let price = settings['collectorPrice' + hours];
-  if (Utils.checkSale(this.state.sales, `${this.state.farm.toUpperCase()}_COLLECTOR_PRICE`)) price = Math.floor(price / 2);
+  if (Utils.checkSale(this.state, `${this.state.farm.toUpperCase()}_COLLECTOR_PRICE`)) price = Math.floor(price / 2);
 
   if (settings['unlockCollector' + hours] <= user.part) {
     if (this.state.user.boosts[this.state.farm.toLowerCase()][`collector${hours}`] > 0) {

@@ -138,6 +138,7 @@ import {
   intervalCollectorTutorial,
   showFeedBoostSpeechBubble,
   progressTerritoryCooldown,
+  speedCheckCollector,
 } from '../../general/interval';
 import Ads from '../../components/Utils/Ads';
 
@@ -185,6 +186,7 @@ class Sheep extends Phaser.Scene {
   public dailyStartCheck: boolean = true; // запущено ли открытие окна daily
   public remaindSellTimer: number = 0;
   public feedBoostRemaindTimer: number = 0;
+  public speedCollectorTimer: number = 0;
   public ads: Ads;
 
   public readonly moneyTasks: { id: number, money: number }[] = [
@@ -314,6 +316,7 @@ class Sheep extends Phaser.Scene {
   public setPlatformStorage = setPlatformStorage.bind(this);
   public getPlatformStorage = getPlatformStorage.bind(this);
   private openConvertorForClan = openConvertorForClan.bind(this);
+  public speedCheckCollector = speedCheckCollector.bind(this);
 
   public init(state: Istate): void {
     this.autoprogressTimer = Math.round(new Date().getTime() / 1000);
@@ -349,11 +352,11 @@ class Sheep extends Phaser.Scene {
     this.openConvertorForClan();
     // let cursors = this.input.keyboard.createCursorKeys();
     // cursors.space.on('down', (): void => {
-    //   let tasks = this.partTasks();
-    //   for (let i in tasks) {
-    //         tasks[i].done = 1;
-    //         // tasks[i].got_awarded = 1;
-    //   }
+    //   // let tasks = this.partTasks();
+    //   // for (let i in tasks) {
+    //   //       tasks[i].done = 1;
+    //   //       // tasks[i].got_awarded = 1;
+    //   // }
     // });
   }
 

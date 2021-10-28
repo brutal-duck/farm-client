@@ -629,7 +629,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       
       if (user.part >= settings.unlock_improve) {
         if (this.territoryType === 5) {
-          const sale = Utils.checkSale(this.scene.state.sales, `${this.scene.state.farm.toUpperCase()}_REPOSITORY_IMPROVE`);
+          const sale = Utils.checkSale(this.scene.state, `${this.scene.state.farm.toUpperCase()}_REPOSITORY_IMPROVE`);
           const moneyPrice = sale ? Math.floor(settings.improveStorageMoneyPrice / 2) : settings.improveStorageMoneyPrice;
           const diamondPrice = sale ? Math.floor(settings.improveStorageDiamondPrice / 2) : settings.improveStorageDiamondPrice;
           if (moneyPrice) {

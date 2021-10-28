@@ -11,6 +11,7 @@ import ChickenTerritory from './../components/Territories/ChickenTerritory';
 import SheepTerritory from './../components/Territories/SheepTerritory';
 import CowTerritory from './../components/Territories/CowTerritory';
 import { getNewClanTasks } from './tasks';
+import Utils from './../libs/Utils';
 
 // рандомное число
 function random(min: number, max: number): number {
@@ -417,11 +418,6 @@ function exchange(ad: boolean = false): void {
 
   }
 
-  const checkActiveSale = (): boolean => {
-    const saleName: string = `${this.state.farm.toUpperCase()}_MONEY`; 
-    return this.state.sales.some(el => el.type === saleName && el.startTime <= 0 && el.endTime > 0); 
-  }
-
   if (this.state.convertor.diamonds > this.state.user.diamonds) {
     const countResources = this.state.convertor.diamonds - this.state.user.diamonds;
     
@@ -438,7 +434,7 @@ function exchange(ad: boolean = false): void {
     }, callbackScope: this, loop: false });
   } else {
     this.state.user.diamonds -= this.state.convertor.diamonds;
-    if (checkActiveSale()) user.money += this.convertDiamonds(2 * this.state.convertor.diamonds);
+    if (Utils.checkSale(this.state, `${this.state.farm.toUpperCase()}_MONEY`)) user.money += this.convertDiamonds(2 * this.state.convertor.diamonds);
     else user.money += this.convertDiamonds(this.state.convertor.diamonds);
     this.game.scene.keys[this.state.farm].tryClanTask(10, 0, this.state.convertor.diamonds);
     if (this.scene.isActive('ClanFarm')) {
@@ -541,6 +537,7 @@ function donePart(): void {
       user.part === 2 && this.state.farm === 'Cow' || 
       user.part === 7 && this.state.farm === 'Sheep')) {
       if (!this.scene.isActive('Modal') &&
+      !this.scene.get('Modal').load.isLoading() &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Profile')) this.showTasks();
     }

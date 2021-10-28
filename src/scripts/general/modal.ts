@@ -144,6 +144,7 @@ function dailyAward(): void {
 
   if (check && checkBoost && this.dailyStartCheck &&
     typeof this.state.daily === 'number' &&
+    !this.scene.get('Modal').load.isLoading() &&
     !this.scene.isActive('Modal') &&
     !this.scene.isActive('Tutorial') &&
     !this.scene.isActive('Profile') && 

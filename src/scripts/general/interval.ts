@@ -710,6 +710,7 @@ function progressClanEventTime(state: Istate, time: number = 1): void {
 function showSale(scene: Sheep | Chicken | Cow): void {
   const checkInactiveScenes = !scene.scene.isActive('Tutorial')
   && !scene.scene.isActive('Modal')
+  && !scene.scene.get('Modal').load.isLoading()
   && !scene.scene.isActive('Profile')
   && !scene.scene.isActive('Fortune')
   && !scene.scene.isActive('Block');
@@ -729,6 +730,32 @@ function showSale(scene: Sheep | Chicken | Cow): void {
 
 }
 
+function speedCheckCollector(): void {
+  const scene: Sheep | Chicken | Cow = this;
+  const farm: string = scene.state.farm;
+  const delayFilling: number = 10;
+  const farmUser: IuserSheep | IuserChicken | IuserCow = scene.state[`user${farm}`]
+  const { collectorLevel } = farmUser;
+  const collectorSettings: IcollectorSettings[] = scene.state[`${farm.toLowerCase()}CollectorSettings`];
+  const currentSettings: IcollectorSettings = collectorSettings.find(el => el.level === collectorLevel);
+  let animals: Phaser.GameObjects.Group =  scene[farm.toLowerCase()];
+  if (farm === 'Cow') animals = scene[`animalGroup`];
+  let animalsCount: number = 0;
+  animals.children.iterate((animal: any) => {
+    if (animal.type !== 0 && farm !== 'Cow' || farm === 'Cow' && animal.breed !== 0) {
+      animalsCount += 1;
+    }
+  });
+  if (animalsCount > currentSettings.speed * delayFilling && farmUser.collector > 0) {
+    scene.speedCollectorTimer -= 1;
+    if (scene.speedCollectorTimer <= 0) {
+      const text = scene.state.lang[`speedCollectorNotification${farm}`]
+      scene.speedCollectorTimer = 60;
+      SpeechBubble.create(scene.scene.get(`${farm}Bars`), text, 3);
+    }
+  }
+}
+
 export {
   sheepIntervalProgress,
   chickenIntervalProgress,
@@ -746,4 +773,5 @@ export {
   progressSalesTime,
   progressClanEventTime,
   showSale,
+  speedCheckCollector,
 }

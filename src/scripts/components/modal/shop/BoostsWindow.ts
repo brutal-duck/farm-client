@@ -174,7 +174,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
         this.scene.game.scene.keys[this.farm].buyCollector(hoursCount === 4 ? 3 : 4);
         this.scene.game.scene.keys[this.farm].autosave();
       };
-      if (Utils.checkSale(this.scene.state.sales, `${this.farm.toUpperCase()}_COLLECTOR_PRICE`)) {
+      if (Utils.checkSale(this.scene.state, `${this.farm.toUpperCase()}_COLLECTOR_PRICE`)) {
         settings.sale = String(Math.floor(price / 2));
       }
       if (boostCount > 0) {
@@ -261,7 +261,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
       right: '',
       type: 'ad',
     };
-    const sale = Utils.checkSale(this.scene.state.sales, `${this.farm.toUpperCase()}_COLLECTOR_PRICE`)
+    const sale = Utils.checkSale(this.scene.state, `${this.farm.toUpperCase()}_COLLECTOR_PRICE`)
 
     let action: () => void = null;
 
@@ -376,7 +376,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
       sale: null,
     };
 
-    if (Utils.checkSale(this.scene.state.sales, `${this.scene.state.farm.toUpperCase()}_HERD`)) {
+    if (Utils.checkSale(this.scene.state, `${this.scene.state.farm.toUpperCase()}_HERD`)) {
       settings.sale = String(halfPrice);
     }
 
@@ -498,7 +498,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
 
     if (time <= 0) settings.left = `+1 ${this.scene.state.lang.hour}`;
 
-    if (Utils.checkSale(this.scene.state.sales, `${this.scene.state.farm.toUpperCase()}_FEED`)) {
+    if (Utils.checkSale(this.scene.state, `${this.scene.state.farm.toUpperCase()}_FEED`)) {
       settings.sale = shortNum(halfPrice);
     }
 
@@ -532,7 +532,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
       }
     } else {
       let price: number = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].feedBoostPrice;
-      if (Utils.checkSale(this.scene.state.sales, `${this.scene.state.farm.toUpperCase()}_FEED`)) {
+      if (Utils.checkSale(this.scene.state, `${this.scene.state.farm.toUpperCase()}_FEED`)) {
         price = Math.floor(price / 2);
       }
       if (this.scene.state.user.diamonds >= price) {

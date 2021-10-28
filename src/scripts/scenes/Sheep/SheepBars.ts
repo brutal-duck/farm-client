@@ -252,7 +252,7 @@ class SheepBars extends Phaser.Scene {
     let price: string = String(shortNum(this.game.scene.keys[this.state.farm].sheepPrice(breed).price));
     let halfPrice: string = String(shortNum(Math.round(this.game.scene.keys[this.state.farm].sheepPrice(breed).price / 2)));
 
-    this.sheepPrice = this.add.text(82, this.height - 43, Utils.checkSale(this.state.sales,`${this.state.farm.toUpperCase()}_PRICE`) && this.state.userSheep.tutorial >= 100 ? halfPrice : price, {
+    this.sheepPrice = this.add.text(82, this.height - 43, Utils.checkSale(this.state,`${this.state.farm.toUpperCase()}_PRICE`) && this.state.userSheep.tutorial >= 100 ? halfPrice : price, {
       font: '28px Bip',
       color: '#925C28',
       align: 'center'
@@ -438,7 +438,7 @@ class SheepBars extends Phaser.Scene {
     let breed: number = this.game.scene.keys['Sheep'].maxBreedForBuy();
     let price: string = String(shortNum(this.game.scene.keys['Sheep'].sheepPrice(breed).price));
     let halfPrice: string = String(shortNum(Math.round(this.game.scene.keys['Sheep'].sheepPrice(breed).price) / 2));
-    this.sheepPrice.setText(Utils.checkSale(this.state.sales, `${this.state.farm.toUpperCase()}_PRICE`) && this.state.userSheep.tutorial >= 100 ? halfPrice : price);
+    this.sheepPrice.setText(Utils.checkSale(this.state, `${this.state.farm.toUpperCase()}_PRICE`) && this.state.userSheep.tutorial >= 100 ? halfPrice : price);
     let bounds = this.sheepPrice.getBounds();
     this.sheepPriceBubble.destroy();
     this.sheepPriceBubble = this.add.graphics({ x: bounds.left - 15, y: bounds.top });
@@ -447,7 +447,7 @@ class SheepBars extends Phaser.Scene {
   }
 
   private updateSale(): void {
-    const visibility = Utils.checkSale(this.state.sales, `${this.state.farm.toUpperCase()}_PRICE`) && this.state.userSheep.tutorial >= 100 && this.sheepBuy.visible;
+    const visibility = Utils.checkSale(this.state, `${this.state.farm.toUpperCase()}_PRICE`) && this.state.userSheep.tutorial >= 100 && this.sheepBuy.visible;
     if (this.saleBuyIcon.visible !== visibility) {
       this.saleBuyIcon.setVisible(visibility);
       this.updateSheepPrice();
@@ -540,7 +540,7 @@ class SheepBars extends Phaser.Scene {
 
     let breed: number = this.game.scene.keys[this.state.farm].maxBreedForBuy();
     let price: number = this.game.scene.keys[this.state.farm].sheepPrice(breed).price
-    if (Utils.checkSale(this.state.sales, `${this.state.farm.toUpperCase()}_PRICE`) && this.state.userSheep.tutorial >= 100) price = Math.round(price / 2);
+    if (Utils.checkSale(this.state, `${this.state.farm.toUpperCase()}_PRICE`) && this.state.userSheep.tutorial >= 100) price = Math.round(price / 2);
 
     if ((price > this.state.userSheep.money || this.state.userSheep.tutorial < 100) && this.sheepBuy.tintBottomLeft === 0xFFFFFF) {
       this.sheepBuy.setTint(0x777777);

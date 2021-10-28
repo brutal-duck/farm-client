@@ -129,7 +129,7 @@ export default class FarmResourceRepositoryWindow {
    * @param y Смещение по Y относительно цетнра
    */
   private createImproveBtn(y: number) {
-    const sale = Utils.checkSale(this.scene.state.sales, `${this.scene.state.farm.toUpperCase()}_REPOSITORY_IMPROVE`);
+    const sale = Utils.checkSale(this.scene.state, `${this.scene.state.farm.toUpperCase()}_REPOSITORY_IMPROVE`);
     let action = (): void => { this.improveTerritory(); };
     const improveSettings: IbigButtonSetting = {
       text: this.scene.state.lang.improveToLevel.replace('$1', this.scene.state.territory.improve + 1),

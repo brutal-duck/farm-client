@@ -282,7 +282,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
       const right1: IbigButtonElementSettings = {
         text: String(CREATE_CLAN_COST),
         icon: 'diamond',
-        sale: Utils.checkSale(this.scene.state.sales, 'CLAN') ? String(Math.floor(CREATE_CLAN_COST / 2)) : null,
+        sale: Utils.checkSale(this.scene.state, 'CLAN') ? String(Math.floor(CREATE_CLAN_COST / 2)) : null,
       };
       
       const settings: IbigButtonSetting = {
@@ -361,7 +361,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     const right1: IbigButtonElementSettings = {
       text: String(CREATE_CLAN_COST),
       icon: 'diamond',
-      sale: Utils.checkSale(this.scene.state.sales, 'CLAN') ? String(Math.floor(CREATE_CLAN_COST / 2)) : null,
+      sale: Utils.checkSale(this.scene.state, 'CLAN') ? String(Math.floor(CREATE_CLAN_COST / 2)) : null,
     };
     
     const settings: IbigButtonSetting = {
@@ -519,7 +519,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     const changeEmblemBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(changeEmblemBg.getCenter().x + 20, changeEmblemBg.getCenter().y + 24, 'profile-window-button-green').setScale(1.40, 1.05).setDepth(2);
     const changeEmblemBtnText: Phaser.GameObjects.Text = this.scene.add.text(changeEmblemBtn.getCenter().x, changeEmblemBtn.getCenter().y - 1, this.scene.state.lang.changeEmblem, btnTextStyle).setOrigin(0.5, 0.6).setDepth(2);
     
-    if (Utils.checkSale(this.scene.state.sales, 'CLAN')) {
+    if (Utils.checkSale(this.scene.state, 'CLAN')) {
       const changeEmblemValuta: Phaser.GameObjects.Sprite = this.scene.add.sprite(changeEmblemBtn.getRightCenter().x + 20, changeEmblemBtn.y - 5, 'diamond').setScale(0.15).setDepth(2);
       const text1 = this.scene.add.text(changeEmblemValuta.x + 25, changeEmblemValuta.y, String(CHANGE_EMBLEM_COST), this.headerTextStyle).setColor('#eeeeee').setFontSize(24).setOrigin(0, 0.5).setDepth(2);
       this.scene.add.text(text1.getBounds().right + 3, changeEmblemValuta.y, String(Math.floor(CHANGE_EMBLEM_COST / 2)), this.headerTextStyle).setFontSize(28).setOrigin(0, 0.5).setDepth(2);
@@ -545,7 +545,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     const right1: IbigButtonElementSettings = {
       text: String(CHANGE_CLAN_NAME_COST),
       icon: 'diamond',
-      sale: Utils.checkSale(this.scene.state.sales, 'CLAN') ? String(Math.floor(CHANGE_CLAN_NAME_COST / 2)) : null,
+      sale: Utils.checkSale(this.scene.state, 'CLAN') ? String(Math.floor(CHANGE_CLAN_NAME_COST / 2)) : null,
     };
     
     const settings: IbigButtonSetting = {

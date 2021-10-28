@@ -27,7 +27,7 @@ export default class DiamondsWindow {
   }
 
   private createAllPackages(): void {
-    const startIndex = Utils.checkSale(this.scene.state.sales,'PACKAGE_PRICE') ? 2 : Utils.checkSale(this.scene.state.sales,'DIAMOND_COUNT') ? 4 : 0;
+    const startIndex = Utils.checkSale(this.scene.state,'PACKAGE_PRICE') ? 2 : Utils.checkSale(this.scene.state,'DIAMOND_COUNT') ? 4 : 0;
     for (let i: number = startIndex; i < this.rows + startIndex; i++) {
       let y: number = (i - startIndex) * 270 + 40;
       if (this.checkStarterpack()) y += 238;
@@ -46,12 +46,12 @@ export default class DiamondsWindow {
   }
 
   private createPack(packData: Ipackage, position: Iposition): void {
-    const basicId = Utils.checkSale(this.scene.state.sales,'PACKAGE_PRICE') ? packData.id - 4 : Utils.checkSale(this.scene.state.sales,'DIAMOND_COUNT') ? packData.id - 8 : packData.id;
+    const basicId = Utils.checkSale(this.scene.state,'PACKAGE_PRICE') ? packData.id - 4 : Utils.checkSale(this.scene.state,'DIAMOND_COUNT') ? packData.id - 8 : packData.id;
     const basicPackage: Ipackage = this.scene.state.packages.find(el => el.id === basicId);
     const pack: Phaser.GameObjects.Sprite = this.scene.add.sprite(position.x, position.y + this.scene.height, 'bank-package').setOrigin(0);
     this.scene.click(pack, (): void => { this.packHandler(packData); });
 
-    if (!Utils.checkSale(this.scene.state.sales,'DIAMOND_COUNT') || Utils.checkSale(this.scene.state.sales,'PACKAGE_PRICE')) {
+    if (!Utils.checkSale(this.scene.state,'DIAMOND_COUNT') || Utils.checkSale(this.scene.state,'PACKAGE_PRICE')) {
       this.scene.add.text(position.x + 110, position.y + 145 + this.scene.height, String(packData.diamonds + packData.bonus), {
         font: '40px Shadow',
         color: '#FFFFFF'
@@ -73,7 +73,7 @@ export default class DiamondsWindow {
     }
     
 
-    if (!Utils.checkSale(this.scene.state.sales,'PACKAGE_PRICE')) {
+    if (!Utils.checkSale(this.scene.state,'PACKAGE_PRICE')) {
       const text: string = this.scene.state.platform === 'ok' ? `${packData.price} ОК` : 
       this.scene.state.platform === 'vk' ? `${packData.voices} ${this.scene.state.lang.voices}` : 
       `${packData.price} ${this.scene.state.lang.ruble}`;
@@ -142,7 +142,7 @@ export default class DiamondsWindow {
     if (packData.bonus > 0) {
       const x: number = position.x + 110;
       const y: number = position.y + 180 + this.scene.height;
-      const text: string = `${this.scene.state.lang.benefit} +${Utils.checkSale(this.scene.state.sales,'DIAMOND_COUNT') && !Utils.checkSale(this.scene.state.sales,'PACKAGE_PRICE') ? packData.bonus : basicPackage.bonus}`;
+      const text: string = `${this.scene.state.lang.benefit} +${Utils.checkSale(this.scene.state,'DIAMOND_COUNT') && !Utils.checkSale(this.scene.state,'PACKAGE_PRICE') ? packData.bonus : basicPackage.bonus}`;
 
       this.scene.add.text(x, y, text, {
         font: '20px Shadow',

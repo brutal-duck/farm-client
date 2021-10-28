@@ -113,6 +113,7 @@ import {
   intervalCollectorTutorial,
   showFeedBoostSpeechBubble,
   progressTerritoryCooldown,
+  speedCheckCollector,
 } from '../../general/interval';
 import LocalStorage from './../../libs/LocalStorage';
 import Ads from '../../components/Utils/Ads';
@@ -150,7 +151,8 @@ class Chicken extends Phaser.Scene {
   public dailyStartCheck: boolean = true; // запущено ли открытие окна daily
   public counterWithoutCollector: number = 0;
   public ads: Ads;
-
+  public speedCollectorTimer: number = 0;
+  
   public world = world.bind(this);
   public drag = drag.bind(this);
   public collisions = collisions.bind(this);
@@ -243,6 +245,7 @@ class Chicken extends Phaser.Scene {
   public setPlatformStorage = setPlatformStorage.bind(this);
   public getPlatformStorage = getPlatformStorage.bind(this);
   private openConvertorForClan = openConvertorForClan.bind(this);
+  public speedCheckCollector = speedCheckCollector.bind(this);
 
   public init(state: Istate): void {
     this.autoprogressTimer = Math.round(new Date().getTime() / 1000);

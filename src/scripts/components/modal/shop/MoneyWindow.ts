@@ -1,5 +1,6 @@
 import { shortNum } from "../../../general/basic";
 import Shop from "../../../scenes/Modal/Shop/Main";
+import Utils from './../../../libs/Utils';
 
 const BASIC_DIAMONDS: number[] = [1, 10, 50, 100, 500, 1000];
 export default class MoneyWindow {
@@ -34,7 +35,7 @@ export default class MoneyWindow {
   private createPack(diamonds: number, position: Iposition) {
     const pack: Phaser.GameObjects.Sprite = this.scene.add.sprite(position.x, position.y, `${this.animal}-money-package`).setOrigin(0);
     this.scene.click(pack, (): void => { this.convert(diamonds) });
-    if (this.checkActiveSale()) {
+    if (Utils.checkSale(this.scene.state, `${this.scene.state.farm.toUpperCase()}_MONEY`)) {
       const count1: string = String(shortNum(this.scene.game.scene.keys[this.scene.state.farm].convertDiamonds(diamonds)));
       const count2: string = String(shortNum(this.scene.game.scene.keys[this.scene.state.farm].convertDiamonds(2 * diamonds)));
       const text1 = this.scene.add.text(position.x + 110, position.y + 135, count1, {
@@ -53,11 +54,6 @@ export default class MoneyWindow {
     }
     const btn = this.scene.shopButton(position.x + 110, position.y + 223, diamonds, 'diamond');
     this.scene.clickShopBtn(btn, (): void => { this.convert(diamonds) });
-  }
-
-  private checkActiveSale(): boolean {
-    const saleName: string = `${this.scene.state.farm.toUpperCase()}_MONEY`; 
-    return this.scene.state.sales.some(el => el.type === saleName && el.startTime <= 0 && el.endTime > 0); 
   }
 
   private convert(side: number) {

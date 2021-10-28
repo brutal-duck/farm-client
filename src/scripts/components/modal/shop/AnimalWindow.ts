@@ -91,7 +91,7 @@ export default class AnimalWindow {
             scale: 0.15,
           }, 
           text1: price,
-          text2: Utils.checkSale(this.scene.state.sales,`${this.scene.state.farm.toUpperCase()}_PRICE`) ? halfPrice : null,
+          text2: Utils.checkSale(this.scene.state,`${this.scene.state.farm.toUpperCase()}_PRICE`) ? halfPrice : null,
         });
         heightBtn = btn.height;
         this.buttons.push({
@@ -117,7 +117,7 @@ export default class AnimalWindow {
       const text1 = String(shortNum(this.scene[`${this.animal.toLowerCase()}Price`](btn.breed).price));
       const text2 = String(shortNum(Math.round(this.scene[`${this.animal.toLowerCase()}Price`](btn.breed).price / 2)));
       const shopButton: ShopButton = btn.btn;
-      shopButton.setText(text1, Utils.checkSale(this.scene.state.sales,`${this.scene.state.farm.toUpperCase()}_PRICE`) ? text2 : null);
+      shopButton.setText(text1, Utils.checkSale(this.scene.state,`${this.scene.state.farm.toUpperCase()}_PRICE`) ? text2 : null);
     }
   }
 

@@ -238,7 +238,7 @@ class ChickenBars extends Phaser.Scene {
     let price: string = String(shortNum(this.game.scene.keys[this.state.farm].chickenPrice(breed).price));
     let halfPrice: string = String(shortNum(Math.round(this.game.scene.keys[this.state.farm].chickenPrice(breed).price / 2)));
 
-    this.chickenPrice = this.add.text(82, this.height - 43, Utils.checkSale(this.state.sales, `${this.state.farm.toUpperCase()}_PRICE`) ? halfPrice : price, {
+    this.chickenPrice = this.add.text(82, this.height - 43, Utils.checkSale(this.state, `${this.state.farm.toUpperCase()}_PRICE`) ? halfPrice : price, {
       font: '28px Bip',
       color: '#925C28',
       align: 'center'
@@ -365,7 +365,7 @@ class ChickenBars extends Phaser.Scene {
     let breed: number = this.game.scene.keys['Chicken'].maxBreedForBuy();
     let price: string = String(shortNum(this.game.scene.keys['Chicken'].chickenPrice(breed).price));
     let halfPrice: string = String(shortNum(Math.round(this.game.scene.keys['Chicken'].chickenPrice(breed).price / 2)));
-    this.chickenPrice.setText(Utils.checkSale(this.state.sales,`${this.state.farm.toUpperCase()}_PRICE`) ? halfPrice : price);
+    this.chickenPrice.setText(Utils.checkSale(this.state,`${this.state.farm.toUpperCase()}_PRICE`) ? halfPrice : price);
     let bounds = this.chickenPrice.getBounds();
     this.chickenPriceBubble.destroy();
     this.chickenPriceBubble = this.add.graphics({ x: bounds.left - 15, y: bounds.top });
@@ -386,7 +386,7 @@ class ChickenBars extends Phaser.Scene {
 
 
   private updateSale(): void {
-    const visibility = Utils.checkSale(this.state.sales,`${this.state.farm.toUpperCase()}_PRICE`) && this.chickenBuy.visible;
+    const visibility = Utils.checkSale(this.state,`${this.state.farm.toUpperCase()}_PRICE`) && this.chickenBuy.visible;
     if (this.saleBuyIcon.visible !== visibility) {
       this.saleBuyIcon.setVisible(visibility);
       this.updateChickenPrice();
@@ -458,7 +458,7 @@ class ChickenBars extends Phaser.Scene {
 
     let breed: number = this.game.scene.keys[this.state.farm].maxBreedForBuy();
     let price: number = this.game.scene.keys[this.state.farm].chickenPrice(breed).price;
-    if (Utils.checkSale(this.state.sales,`${this.state.farm.toUpperCase()}_PRICE`)) price = Math.round(price / 2);
+    if (Utils.checkSale(this.state,`${this.state.farm.toUpperCase()}_PRICE`)) price = Math.round(price / 2);
 
     if (price > this.state.userChicken.money && this.chickenBuy.tintBottomLeft === 0xFFFFFF) {
       this.chickenBuy.setTint(0x777777);

@@ -83,6 +83,7 @@ function interval(): void {
     if (this.state.userSheep.part >= 3 &&
       !this.state.user.additionalTutorial.cave &&
       this.state.userSheep.diamondAnimalTime === 0 &&
+      !this.scene.get('Modal').load.isLoading() &&
       !this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Profile') &&
@@ -97,6 +98,7 @@ function interval(): void {
     // тутор про бустер переполох
     if (this.state.userSheep.part >= this.herdBoostLvl &&
     !this.state.user.additionalTutorial.herdBoost &&
+    !this.scene.get('Modal').load.isLoading() &&
     !this.scene.isActive('Modal') &&
     !this.scene.isActive('Tutorial') &&
     !this.scene.isActive('Profile')&&
@@ -107,6 +109,7 @@ function interval(): void {
     // тутор про бустер комбикорм
     if (this.state.userSheep.part >= this.feedBoostLvl &&
       !this.state.user.additionalTutorial.feedBoost &&
+      !this.scene.get('Modal').load.isLoading() &&
       !this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Profile')&&
@@ -272,6 +275,7 @@ function interval(): void {
 
     // выдача наград новичка
     if (!this.scene.isActive('Modal') &&
+      !this.scene.get('Modal').load.isLoading() &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Profile')) this.getNewbieAward();
     
@@ -292,6 +296,7 @@ function interval(): void {
     this.game.scene.keys[`${this.state.farm}Bars`].updateNotificationShop();
 
     if (this.state.donate &&
+      !this.scene.get('Modal').load.isLoading() &&
       !this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Profile')) this.showDonate();
@@ -334,6 +339,7 @@ function interval(): void {
       !this.state.userUnicorn?.takenAward && 
       this.state.userUnicorn?.points > 0 &&
       this.state.progress.event.open &&
+      !this.scene.get('Modal').load.isLoading() &&
       !this.scene.isActive('Modal') && 
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Profile') && 
@@ -388,6 +394,7 @@ function interval(): void {
 
     if ((this.state.clanTutor || this.state.fortuneTutor) && 
       !arrowOnMap && 
+      !this.scene.get('Modal').load.isLoading() &&
       !this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Profile')) {
@@ -432,6 +439,7 @@ function interval(): void {
 
     if (
       !this.state.clanEventTakenAward &&
+      !this.scene.get('Modal').load.isLoading() &&
       !this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Profile') &&
@@ -445,7 +453,7 @@ function interval(): void {
       this.scene.launch('Modal', this.state);
     }
     showSale(this);
-
+    this.speedCheckCollector();
   }, callbackScope: this, loop: true });
   
 

@@ -10,7 +10,7 @@ export default class Utils {
   };
 
   /**
-   * @param sales Массив скидок из стейта
+   * @param state Стейт
    * @param saleName Название акции из списка
    **  PACKAGE_PRICE - 1. -50% к оплате за пакет
    **  DIAMOND_COUNT - 2. x2 бонус к кристаллам 
@@ -39,6 +39,10 @@ export default class Utils {
    **  COW_FACTORY_IMPROVE - 25. -50% к цене улучшения фабрики
    * @returns Возвращает true, если акция сейчас активна, иначе false
    */
-  public static checkSale = (sales: Isale[], saleName: string) => sales.some(el => el.type === saleName && el.startTime <= 0 && el.endTime > 0);
+  public static checkSale = (state: Istate, saleName: string): boolean => {
+    return state.sales 
+    && state.sales.some(el => el.type === saleName && el.startTime <= 0 && el.endTime > 0) 
+    && state.userSheep.part > 4;
+  }
 };
 

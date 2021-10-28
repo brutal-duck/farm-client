@@ -137,6 +137,7 @@ function interval(): void {
     
     
     if (this.state.donate &&
+      !this.scene.get('Modal').load.isLoading() &&
       !this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Profile')) this.showDonate();
@@ -223,6 +224,7 @@ function interval(): void {
 
     if (
       !this.state.clanEventTakenAward &&
+      !this.scene.get('Modal').load.isLoading() &&
       !this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Profile') &&

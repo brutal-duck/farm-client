@@ -44,7 +44,7 @@ export default class CowTerritory extends Territory {
     const nextImprove = settings.find((item: IfactorySettings) => item.improve === this.improve + 1);
     if (nextImprove && this.improve < settings.length) {
       if (user.part >= nextImprove.unlock_improve) {
-        const sale = Utils.checkSale(this.scene.state.sales, 'COW_FACTORY_IMPROVE');
+        const sale = Utils.checkSale(this.scene.state, 'COW_FACTORY_IMPROVE');
         const moneyPrice = sale ? Math.floor(nextImprove.improveMoneyPrice / 2) : nextImprove.improveMoneyPrice;
         const diamondPrice = sale ? Math.floor(nextImprove.improveDiamondPrice / 2) : nextImprove.improveDiamondPrice;
         if (user.money >= moneyPrice && this.scene.state.user.diamonds >= diamondPrice) {
@@ -80,7 +80,7 @@ export default class CowTerritory extends Territory {
   }
 
   private acceptedImproveFactory(nextImprove: IfactorySettings): void {
-    const sale = Utils.checkSale(this.scene.state.sales, 'COW_FACTORY_IMPROVE');
+    const sale = Utils.checkSale(this.scene.state, 'COW_FACTORY_IMPROVE');
     const moneyPrice = sale ? Math.floor(nextImprove.improveMoneyPrice / 2) : nextImprove.improveMoneyPrice;
     const diamondPrice = sale ? Math.floor(nextImprove.improveDiamondPrice / 2) : nextImprove.improveDiamondPrice;
     this.scene.state.userCow.money -= moneyPrice;

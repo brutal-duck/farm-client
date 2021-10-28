@@ -129,7 +129,7 @@ export default class ImproveCollectorWindow {
       this.scene.game.scene.keys[this.scene.state.farm].improveCollector();
       this.updateImproveCollector(); 
     };
-    if (Utils.checkSale(this.scene.state.sales, `${this.scene.state.farm.toUpperCase()}_COLLECTOR_IMPROVE`)) {
+    if (Utils.checkSale(this.scene.state, `${this.scene.state.farm.toUpperCase()}_COLLECTOR_IMPROVE`)) {
       settings.right1.sale = shortNum(Math.floor(this.nextLevel.price / 2));
     }
     if (this.scene.state[`user${this.scene.state.farm}`].part < this.nextLevel?.chapter) {
