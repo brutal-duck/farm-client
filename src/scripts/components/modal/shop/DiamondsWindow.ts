@@ -174,7 +174,7 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
     }).setOrigin(0.5);
     this.scene.add.sprite(diamondCount.getBounds().right + 5, y, 'diamond').setScale(0.23).setOrigin(0, 0.5);
     this.createFreeBtn(this.scene.state.user.takenFreeDiamonds);
-    const str = `${this.scene.state.lang.stillForBoost} ${shortTime(this.scene.state.user.takeFreeDiamondTime, this.scene.state.lang)}`
+    const str = `${this.scene.state.lang.forNextAd} ${shortTime(this.scene.state.user.takeFreeDiamondTime, this.scene.state.lang)}`
     this.freeDiamondTimer = this.scene.add.text(this.scene.cameras.main.centerX - 30, y, str, timerStyle).setVisible(false).setOrigin(0.5);
     this.adButton = this.scene.state.user.takenFreeDiamonds;
   }
@@ -322,7 +322,7 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
     if (this.freeDiamondTimer?.active && this.freeDiamondBtn?.active) {
       if (this.scene.state.user.takenFreeDiamonds) {
         if (this.scene.state.user.takeFreeDiamondTime > 0 && this.freeDiamondTimer.visible) {
-          const str = `${this.scene.state.lang.stillForBoost} ${shortTime(this.scene.state.user.takeFreeDiamondTime, this.scene.state.lang)}`;
+          const str = `${this.scene.state.lang.forNextAd} ${shortTime(this.scene.state.user.takeFreeDiamondTime, this.scene.state.lang)}`;
           if (str !== this.freeDiamondTimer.text) this.freeDiamondTimer.setText(str);
         } else if (this.scene.state.user.takeFreeDiamondTime > 0 && !this.freeDiamondTimer.visible) {
           this.freeDiamondBtn.setVisible(false);
