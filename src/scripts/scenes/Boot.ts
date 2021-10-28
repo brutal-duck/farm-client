@@ -56,6 +56,7 @@ class Boot extends Phaser.Scene {
   private doubleSave: boolean = false;
   private pushToken: string = '';
   public androidData: IconfirmAndroidData;
+  private serverError: boolean;
 
   public shopButton = shopButton.bind(this);
   public bigButton = bigButton.bind(this);
@@ -126,6 +127,12 @@ class Boot extends Phaser.Scene {
     if (this.fontsReady && this.doubleSave) {
       new ConfirmSaveAndroidProgress(this);
       this.doubleSave = false;
+    }
+
+    if (this.fontsReady && this.serverError) {
+      this.serverError = false;
+      this.children.destroy();
+      new ErrorWindow(this, this.state.lang.checkYourInternet); 
     }
   }
 
@@ -434,6 +441,8 @@ class Boot extends Phaser.Scene {
           this.updateAndroidUser(data).then(() => {
             LocalStorage.set('hash', '');
             this.postCheckUser(data.playerId, true);
+          }).catch(e => {
+            this.serverError = true;
           });
         } else if (hashUser && servicesUser) {
           this.androidData = {
@@ -446,6 +455,8 @@ class Boot extends Phaser.Scene {
           this.postCheckUser(data.playerId, true, data.displayName);
           LocalStorage.set('hash', '');
         }
+      }).catch(e => {
+        this.serverError = true;
       });
     } else {
       this.checkOldUser().then(res => {
@@ -455,6 +466,8 @@ class Boot extends Phaser.Scene {
         } else {
           this.postCheckUser(data.playerId, true, data.displayName);
         }
+      }).catch(e => {
+        this.serverError = true;
       });
     }
   }
@@ -551,15 +564,7 @@ class Boot extends Phaser.Scene {
         }
       } else this.createErrorWindow();
     }).catch((): void => {
-      if (this.hash !== '') {
-        this.userReady = true;
-      } else {
-        if (this.platform === 'web') {
-          this.createnLanding = false;
-        } else {
-          this.createLocalUser();
-        }
-      }
+      this.serverError = true;
     });
   }
 
@@ -597,7 +602,7 @@ class Boot extends Phaser.Scene {
           this.state.amplitude.logAmplitudeEvent('landing_login', {});
         } else this.createErrorWindow();
       }).catch(() => {
-        this.createLocalUser();
+        this.serverError = true;
       });
     }
   }
@@ -606,15 +611,6 @@ class Boot extends Phaser.Scene {
     this.destroyLanding();
     this.destroyAuthorizationWindow();
     new ErrorWindow(this);
-  }
-
-  private createLocalUser(): void {
-    console.log('localUser');
-    this.state.amplitude.logAmplitudeEvent('landing_login', {});
-    let expires: Date | string = new Date();
-    expires.setFullYear(expires.getFullYear() + 1);
-    expires = expires.toUTCString();
-    this.setCookieHash('local', expires);
   }
 
   private checkAbBlock(): void {
