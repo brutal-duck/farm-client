@@ -229,7 +229,25 @@ export default class Ads {
         });
         type = 'take_double_profit_event';
         break;
-  
+      case 6: 
+        const FREE_DIAMONDS = 1;
+        this.scene.state.user.diamonds += FREE_DIAMONDS;
+        this.scene.state.user.takeFreeDiamondTime = 60 * 60;
+        this.scene.game.scene.keys[this.scene.state.farm].autosave();
+        this.scene.state.amplitude.logAmplitudeEvent('diamonds_get', {
+          type: 'take_ad_diamond',
+          count: FREE_DIAMONDS,
+        });
+        if (this.scene.scene.isActive('Profile')) this.scene.game.scene.keys['Profile'].getCurrency({
+          x: this.scene.game.scene.keys['Profile'].cameras.main.centerX,
+          y: this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].cameras.main.centerY,
+        }, FREE_DIAMONDS, 'diamond');
+        else this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].getCurrency({
+          x: this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].cameras.main.centerX,
+          y: this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].cameras.main.centerY,
+        }, FREE_DIAMONDS, 'diamond');
+        type = 'take_ad_diamond';
+        break;
       default:
         break;
   

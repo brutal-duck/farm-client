@@ -1,7 +1,7 @@
 import { randomString, shortNum, shortTime } from '../../../general/basic';
 import Hearts from '../../../components/animations/Hearts';
 import BigInteger from '../../../libs/BigInteger';
-import { progressClanCooldown, progressClanEventTime, progressSalesTime } from '../../../general/interval';
+import { decrementAdFreeDiamondTime, progressClanCooldown, progressClanEventTime, progressSalesTime } from '../../../general/interval';
 let checkCollector: number = 0;
 let sheepCollectorVolume: number = 0;
 let chickenCollectorVolume: number = 0;
@@ -237,6 +237,7 @@ function interval(): void {
       };
       this.scene.launch('Modal', this.state);
     }
+    decrementAdFreeDiamondTime(this.state);
   }, callbackScope: this, loop: true });
 }
 

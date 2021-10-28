@@ -756,6 +756,12 @@ function speedCheckCollector(): void {
   }
 }
 
+function decrementAdFreeDiamondTime(state: Istate, count: number = 1): void {
+  if (state.user.takenFreeDiamonds && state.user.takeFreeDiamondTime > 0) {
+    state.user.takeFreeDiamondTime -= count;
+  }
+}
+
 export {
   sheepIntervalProgress,
   chickenIntervalProgress,
@@ -774,4 +780,5 @@ export {
   progressClanEventTime,
   showSale,
   speedCheckCollector,
+  decrementAdFreeDiamondTime,
 }

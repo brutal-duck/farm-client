@@ -712,6 +712,7 @@ export default function autoprogress(load: boolean = false): void {
 
     if (!load) this.game.scene.keys['SheepBars'].collector.update();
     if (!load) state.timeToNewDay -= state.offlineTime;
+    if (!load) state.user.takeFreeDiamondTime -= state.offlineTime;
 
     // считаем сколько раз подстригли овец
     let balance: Ibalance = this.balance();
@@ -863,6 +864,7 @@ export default function autoprogress(load: boolean = false): void {
 
     if (!load) this.game.scene.keys['ChickenBars'].collector.update();
     if (!load) state.timeToNewDay -= state.offlineTime;
+    if (!load) state.user.takeFreeDiamondTime -= state.offlineTime;
 
     // считаем сколько снесла курица яйцо
     let balance: Ibalance = this.balance();
@@ -1135,6 +1137,8 @@ export default function autoprogress(load: boolean = false): void {
 
     if (!load) this.game.scene.keys['CowBars'].collector.update();
     if (!load) state.timeToNewDay -= state.offlineTime;
+    if (!load) state.user.takeFreeDiamondTime -= state.offlineTime;
+
     // процент шерсти под бустом
     let feedPercent: number = 0;
     if (wasFeedBoost > 0) {
@@ -1361,6 +1365,7 @@ export default function autoprogress(load: boolean = false): void {
 
     if (!load) this.game.scene.keys['UnicornBars'].collector.update();
     if (!load) state.timeToNewDay -= state.offlineTime;
+    if (!load) state.user.takeFreeDiamondTime -= state.offlineTime;
 
     // считаем сколько появилось ресурсов
     let newResources: { resource: boolean, id: string, type: number, count: number }[] = [];

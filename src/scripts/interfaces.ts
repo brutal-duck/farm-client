@@ -148,6 +148,7 @@ interface IuserAutoSave {
   yandexName: string;
   avatar: string;
   clanTasks: IclanTask[]
+  takeFreeDiamondTime: number;
 }
 interface Imessage {
   _id?: string;
@@ -246,6 +247,7 @@ interface Iuser {
   messages: Imessage[];
   personalMessages: IuserPersonalMessage[];
   clanTasks: IclanTask[];
+  takeFreeDiamondTime: number;
 }
 interface IuserSheep {
   money: number;
@@ -834,6 +836,15 @@ interface ItournamentAnimal {
   breed: number;
   count: number;
 }
+interface IshopButtonIcon {
+  texture: string;
+  scale: number;
+};
+interface IshopButtonElements {
+  text1?: string;
+  text2?: string;
+  img?: IshopButtonIcon;
+};
 interface IclanBuilding {
   level: number;
   cooldown: number;

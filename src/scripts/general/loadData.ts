@@ -349,6 +349,7 @@ export default function loadData(response: AxiosResponse): void {
     personalMessages: response.data.user.personalMessages || [],
     avatar: response.data.user.avatar,
     clanTasks: response.data.user.clan_tasks || [],
+    takeFreeDiamondTime: response.data.user.takeFreeDiamondTime,
   };
   state.user = DataValidator.validateUser(user);
 

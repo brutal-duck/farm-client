@@ -129,6 +129,16 @@ export default class Button extends Phaser.GameObjects.Group {
     return this.mainSprite.height;
   }
 
+  public get visible(): boolean {
+    return this.mainSprite.visible;
+  }
+
+  public setVisible(visible: boolean): this {
+    super.setVisible(visible);
+    this.mainSprite.setVisible(visible);
+    return this;
+  }
+
   public set y(y: number) {
     this.position.y = y;
     this.children.iterate((el: childrenType) => {

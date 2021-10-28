@@ -1,20 +1,25 @@
-import { payRobokassa, payAndroid } from "../../../general/basic";
+import { payRobokassa, payAndroid, shortNum, shortTime } from "../../../general/basic";
 import Shop from "../../../scenes/Modal/Shop/Main";
 import Utils from './../../../libs/Utils';
+import ShopButton from './../../Buttons/ShopButton';
 
 const FREE_DIAMONDS: number = 1;
 
-export default class DiamondsWindow {
+export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
   public scene: Shop;
   private rows: number;
+  private freeDiamondTimer: Phaser.GameObjects.Text;
+  private freeDiamondBtn: ShopButton;
+  private adButton: boolean;
 
   constructor(scene: Shop) {
-    this.scene = scene;
+    super(scene, 0, 0, 'pixel');
     this.init();
     this.create();
   }
 
   private init(): void {
+    this.scene.add.existing(this);
     this.scene.state.amplitude.logAmplitudeEvent('bank_page_viewed', {});
     this.rows = 2;
     this.setScrolling();
@@ -152,6 +157,13 @@ export default class DiamondsWindow {
   }
 
   private createFreeDiamonds(): void {
+    const timerStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontSize: '20px',
+      fontFamily: 'Shadow',
+      color: '#FFFFFF',
+      wordWrap: { width: 220 },
+      align: 'center'
+    };
     let y: number = (this.rows + 1) * 270 + 50 + this.scene.height - 238;
     if (this.checkStarterpack()) y += 238;
     this.scene.add.sprite(this.scene.cameras.main.centerX - 130, y, 'free-diamonds-bg');
@@ -160,8 +172,19 @@ export default class DiamondsWindow {
       color: '#FFFFFF'
     }).setOrigin(0.5);
     this.scene.add.sprite(diamondCount.getBounds().right + 5, y, 'diamond').setScale(0.23).setOrigin(0, 0.5);
-    const takeBtn: any = this.scene.shopButton(this.scene.cameras.main.centerX - 30, y, '0 ' + this.scene.state.lang.ruble);
-    this.scene.clickShopBtn(takeBtn, (): void => { this.freeDiamondsBtnHandler(); });
+    const elements: IshopButtonElements = { text1: '0 ' + this.scene.state.lang.ruble };
+    if (this.scene.state.user.takenFreeDiamonds) {
+      elements.text1 = this.scene.state.lang.pickUp;
+      elements.img = {
+        texture: 'ad-icon',
+        scale: 0.6,
+      };
+    }
+
+    this.freeDiamondBtn = new ShopButton(this.scene, { x: this.scene.cameras.main.centerX - 30, y: y }, () => {this.freeDiamondsBtnHandler()}, elements).setVisible(false);
+    const str = `${this.scene.state.lang.stillForBoost} ${shortTime(this.scene.state.user.takeFreeDiamondTime, this.scene.state.lang)}`
+    this.freeDiamondTimer = this.scene.add.text(this.scene.cameras.main.centerX - 30, y, str, timerStyle).setVisible(false).setOrigin(0.5);
+    this.adButton = this.scene.state.user.takenFreeDiamonds;
   }
 
   private createStarterpack(): void {
@@ -240,23 +263,31 @@ export default class DiamondsWindow {
   }
 
   private freeDiamondsBtnHandler(): void {
-    this.scene.state.user.takenFreeDiamonds = true;
-    this.scene.state.user.diamonds += FREE_DIAMONDS;
-    this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-    this.closeWindow();
-    if (this.scene.scene.isActive('Profile')) this.scene.game.scene.keys['Profile'].getCurrency({
-      x: this.scene.game.scene.keys['Profile'].cameras.main.centerX,
-      y: this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].cameras.main.centerY,
-    }, FREE_DIAMONDS, 'diamond');
-    else this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].getCurrency({
-      x: this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].cameras.main.centerX,
-      y: this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].cameras.main.centerY,
-    }, FREE_DIAMONDS, 'diamond');
-    this.scene.state.amplitude.logAmplitudeEvent('diamonds_get', {
-      type: 'bank_page',
-      count: FREE_DIAMONDS,
-    });
-    this.scene.game.scene.keys[this.scene.state.farm].autosave();
+    if (!this.scene.state.user.takenFreeDiamonds) {
+      this.scene.state.user.takenFreeDiamonds = true;
+      this.scene.state.user.diamonds += FREE_DIAMONDS;
+      this.scene.game.scene.keys[this.scene.state.farm].autosave();
+      this.scene.state.amplitude.logAmplitudeEvent('diamonds_get', {
+        type: 'bank_page',
+        count: FREE_DIAMONDS,
+      });
+      if (this.scene.state.readyAd) {
+        this.scene.game.scene.keys['ShopBars'].getCurrency({
+          x: this.scene.game.scene.keys['ShopBars'].cameras.main.centerX + 100,
+          y: this.scene.game.scene.keys['ShopBars'].cameras.main.centerY - 300,
+        }, FREE_DIAMONDS, 'diamond');
+      } else {
+        this.closeWindow();
+        if (this.scene.scene.isActive('Profile')) this.scene.game.scene.keys['Profile'].getCurrency({
+          x: this.scene.game.scene.keys['Profile'].cameras.main.centerX,
+          y: this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].cameras.main.centerY,
+        }, FREE_DIAMONDS, 'diamond');
+        else this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].getCurrency({
+          x: this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].cameras.main.centerX,
+          y: this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].cameras.main.centerY,
+        }, FREE_DIAMONDS, 'diamond');
+      }
+    } else this.scene.game.scene.keys[this.scene.state.farm].ads.watchAd(6);
   }
 
   private checkStarterpack(): boolean {
@@ -268,15 +299,45 @@ export default class DiamondsWindow {
   }
 
   private checkFreeDiamonds(): boolean {
-    return !this.scene.state.user.takenFreeDiamonds && 
-    (this.scene.state.userSheep.tutorial >= 100 || 
+    return (this.scene.state.userSheep.tutorial >= 100 || 
     this.scene.state.progress.chicken.part >= 1 || 
-    this.scene.state.progress.cow.part >= 1);
+    this.scene.state.progress.cow.part >= 1) &&
+    (!this.scene.state.user.takenFreeDiamonds || this.scene.state.readyAd);
   }
 
   private closeWindow(): void {
     this.scene.scene.stop();
     this.scene.scene.stop('ShopBars');
     this.scene.scene.stop('Modal');
+  }
+
+  public preUpdate(time: number, delta: number): void {
+    super.preUpdate(time, delta);
+    if (this.freeDiamondTimer?.active && this.freeDiamondBtn?.active) {
+      if (this.scene.state.user.takenFreeDiamonds) {
+        if (this.scene.state.user.takeFreeDiamondTime > 0 && this.freeDiamondTimer.visible) {
+          const str = `${this.scene.state.lang.stillForBoost} ${shortTime(this.scene.state.user.takeFreeDiamondTime, this.scene.state.lang)}`;
+          if (str !== this.freeDiamondTimer.text) this.freeDiamondTimer.setText(str);
+        } else if (this.scene.state.user.takeFreeDiamondTime > 0 && !this.freeDiamondTimer.visible) {
+          this.freeDiamondBtn.setVisible(false);
+          this.freeDiamondTimer.setVisible(true);
+        } else if (this.scene.state.user.takeFreeDiamondTime <= 0 && !this.freeDiamondBtn.visible) {
+          this.freeDiamondBtn.setVisible(true);
+          this.freeDiamondTimer.setVisible(false);
+        }
+      } else {
+        if (this.adButton) {
+          this.freeDiamondBtn.destroy();
+          this.adButton = false;
+          let y: number = (this.rows + 1) * 270 + 50 + this.scene.height - 238;
+          if (this.checkStarterpack()) y += 238;
+          const elements: IshopButtonElements = { text1: '0 ' + this.scene.state.lang.ruble };
+          this.freeDiamondBtn = new ShopButton(this.scene, { x: this.scene.cameras.main.centerX - 30, y }, () => {this.freeDiamondsBtnHandler()}, elements);
+        } else {
+          if (!this.freeDiamondBtn.visible) this.freeDiamondBtn.setVisible(true);
+        }
+        if (this.freeDiamondTimer.visible) this.freeDiamondTimer.setVisible(false);
+      }
+    }
   }
 }

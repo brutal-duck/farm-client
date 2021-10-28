@@ -1135,6 +1135,7 @@ function nextDayTimer(): void {
     this.state.userCow.takenHerdBoost = 0;
     this.state.user.takenFreeDiamonds = false;
     this.state.user.takenSocialAward = false;
+    this.state.user.takeFreeDiamondTime = 0;
     if (this.state.user.clanId) {
       this.state.user.clanTasks = getNewClanTasks(this.state);
       this.scene.stop('Modal');

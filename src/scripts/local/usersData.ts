@@ -1,4 +1,5 @@
 const userData: Iuser = {
+  takeFreeDiamondTime: 0,
   avatar: '',
   diamonds: 3,
   id: 'local',

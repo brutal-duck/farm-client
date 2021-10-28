@@ -3,6 +3,7 @@ import { openShop } from '../../../general/animations';
 import Hint from '../../../components/animations/Hint';
 import { shortTime } from '../../../general/basic';
 import Notificator from './../../../components/gameObjects/Notificator';
+import Currency from './../../../components/animations/Currency';
 
 class ShopBars extends Phaser.Scene {
   
@@ -211,6 +212,25 @@ class ShopBars extends Phaser.Scene {
   public update(): void {
     this.updateNotification();
     // this.updateEventNotification();
+  }
+
+  private getCurrency(position: Iposition, counter: number = 1, texture: string): void {
+
+    if (counter > 5) counter = 5;
+  
+    let time: Phaser.Time.TimerEvent = this.time.addEvent({ delay: 100, callback: (): void => {
+      counter--;
+      const pos: Iposition = {
+        x: Phaser.Math.Between(position.x - 30, position.x + 30),
+        y: Phaser.Math.Between(position.y - this.game.scene.keys[this.state.farm].scrolling.scrollY - 30, position.y - this.game.scene.keys[this.state.farm].scrolling.scrollY + 30),
+      }
+      let target = { x: 495, y: 30 };
+      if (texture !== 'diamond') {
+        target = { x: 495, y: 120}
+      }
+      Currency.create(this, pos, target, texture, 400);
+      if (counter <= 0) time.remove(false);
+    }, callbackScope: this, loop: true });
   }
 
   public updateNotification(): void {  
