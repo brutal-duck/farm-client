@@ -114,7 +114,7 @@ export default class Ads {
       case 'vk':
         bridge.send("VKWebAppShowNativeAds", { ad_format:"interstitial" })
         .then(data => {
-          if (data.result) this.scene.state.amplitude.logAmplitudeRevenue('', 0, 'interstitial', {});
+          if (data.result) this.scene.state.amplitude.logAmplitudeRevenue('interstitial', 0, 'interstitial', {});
         });
         break;
       case 'ok':
@@ -124,7 +124,7 @@ export default class Ads {
         this.scene.state.ysdk?.adv.showFullscreenAdv({
           callbacks: {
             onOpen: () => {
-              this.scene.state.amplitude.logAmplitudeRevenue('', 0, 'interstitial', {});
+              this.scene.state.amplitude.logAmplitudeRevenue('interstitial', 0, 'interstitial', {});
             },
           },
         });

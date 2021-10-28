@@ -50,7 +50,7 @@ function okCallback(): void {
     }
 
     if (method === 'showAd') {
-      this.state.amplitude.logAmplitudeRevenue('', 0, 'interstitial', {});
+      this.state.amplitude.logAmplitudeRevenue('interstitial', 0, 'interstitial', {});
     }
   }
 }
