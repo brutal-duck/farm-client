@@ -9,6 +9,7 @@ import Firework from "../animations/Firework";
 import BigInteger from "../../libs/BigInteger";
 import MoneyAnimation from "../animations/MoneyAnimation";
 import { randomString } from "../../general/basic";
+import Shop from './../../scenes/Modal/Shop/Main';
 
 /**
   * Реклама  
@@ -238,10 +239,8 @@ export default class Ads {
           type: 'take_ad_diamond',
           count: FREE_DIAMONDS,
         });
-        this.scene.game.scene.keys['ShopBars'].getCurrency({
-          x: this.scene.game.scene.keys['ShopBars'].cameras.main.centerX + 100,
-          y: this.scene.game.scene.keys['ShopBars'].cameras.main.centerY - 300,
-        }, FREE_DIAMONDS, 'diamond');
+        const shopScene: Shop = this.scene.game.scene.keys['Shop'];
+        if (shopScene.scene.isActive() && shopScene.diamondsWindow) shopScene.diamondsWindow.pickUpAnim();
         type = 'take_ad_diamond';
         break;
       default:

@@ -67,6 +67,7 @@ const boostCounterBg: string = require('./../../../../assets/images/modal/boost-
 const starterpackIcon: string = require('../../../../assets/images/icons/starterpack.png');
 class Shop extends Phaser.Scene {
   [x: string]: any;
+  public diamondsWindow: DiamondsWindow;
   constructor() {
     super('Shop');
   }
@@ -170,7 +171,7 @@ class Shop extends Phaser.Scene {
       this.scrolling.wheel = true;
     });
 
-    if (this.state.modal.shopType === 1) new DiamondsWindow(this);
+    if (this.state.modal.shopType === 1) this.diamondsWindow = new DiamondsWindow(this);
     else if (this.state.modal.shopType === 2) new MoneyWindow(this);
     else if (this.state.modal.shopType === 3) {
 
