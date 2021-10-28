@@ -214,7 +214,7 @@ class ShopBars extends Phaser.Scene {
     // this.updateEventNotification();
   }
 
-  private getCurrency(position: Iposition, counter: number = 1, texture: string): void {
+  public getCurrency(position: Iposition, counter: number = 1, texture: string): void {
 
     if (counter > 5) counter = 5;
   

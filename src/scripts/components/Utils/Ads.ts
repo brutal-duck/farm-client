@@ -238,13 +238,9 @@ export default class Ads {
           type: 'take_ad_diamond',
           count: FREE_DIAMONDS,
         });
-        if (this.scene.scene.isActive('Profile')) this.scene.game.scene.keys['Profile'].getCurrency({
-          x: this.scene.game.scene.keys['Profile'].cameras.main.centerX,
-          y: this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].cameras.main.centerY,
-        }, FREE_DIAMONDS, 'diamond');
-        else this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].getCurrency({
-          x: this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].cameras.main.centerX,
-          y: this.scene.game.scene.keys[`${this.scene.state.farm}Bars`].cameras.main.centerY,
+        this.scene.game.scene.keys['ShopBars'].getCurrency({
+          x: this.scene.game.scene.keys['ShopBars'].cameras.main.centerX + 100,
+          y: this.scene.game.scene.keys['ShopBars'].cameras.main.centerY - 300,
         }, FREE_DIAMONDS, 'diamond');
         type = 'take_ad_diamond';
         break;

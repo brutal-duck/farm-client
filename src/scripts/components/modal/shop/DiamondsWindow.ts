@@ -2,6 +2,7 @@ import { payRobokassa, payAndroid, shortNum, shortTime } from "../../../general/
 import Shop from "../../../scenes/Modal/Shop/Main";
 import Utils from './../../../libs/Utils';
 import ShopButton from './../../Buttons/ShopButton';
+import ShopBars from './../../../scenes/Modal/Shop/Bars';
 
 const FREE_DIAMONDS: number = 1;
 
@@ -172,16 +173,7 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
       color: '#FFFFFF'
     }).setOrigin(0.5);
     this.scene.add.sprite(diamondCount.getBounds().right + 5, y, 'diamond').setScale(0.23).setOrigin(0, 0.5);
-    const elements: IshopButtonElements = { text1: '0 ' + this.scene.state.lang.ruble };
-    if (this.scene.state.user.takenFreeDiamonds) {
-      elements.text1 = this.scene.state.lang.pickUp;
-      elements.img = {
-        texture: 'ad-icon',
-        scale: 0.6,
-      };
-    }
-
-    this.freeDiamondBtn = new ShopButton(this.scene, { x: this.scene.cameras.main.centerX - 30, y: y }, () => {this.freeDiamondsBtnHandler()}, elements).setVisible(false);
+    this.createFreeBtn(this.scene.state.user.takenFreeDiamonds);
     const str = `${this.scene.state.lang.stillForBoost} ${shortTime(this.scene.state.user.takeFreeDiamondTime, this.scene.state.lang)}`
     this.freeDiamondTimer = this.scene.add.text(this.scene.cameras.main.centerX - 30, y, str, timerStyle).setVisible(false).setOrigin(0.5);
     this.adButton = this.scene.state.user.takenFreeDiamonds;
@@ -272,10 +264,13 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
         count: FREE_DIAMONDS,
       });
       if (this.scene.state.readyAd) {
-        this.scene.game.scene.keys['ShopBars'].getCurrency({
-          x: this.scene.game.scene.keys['ShopBars'].cameras.main.centerX + 100,
-          y: this.scene.game.scene.keys['ShopBars'].cameras.main.centerY - 300,
-        }, FREE_DIAMONDS, 'diamond');
+        const shopBarsScene: ShopBars = this.scene.game.scene.keys['ShopBars']
+        shopBarsScene.getCurrency(
+          { x: shopBarsScene.cameras.main.centerX + 100, y: shopBarsScene.cameras.main.centerY - 300 }, 
+          FREE_DIAMONDS, 
+          'diamond',
+        );
+        this.createFreeBtn(true);
       } else {
         this.closeWindow();
         if (this.scene.scene.isActive('Profile')) this.scene.game.scene.keys['Profile'].getCurrency({
@@ -296,6 +291,22 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
     this.scene.state.userChicken?.part >= 1 ||
     this.scene.state.userUnicorn?.points >= 1 ||
     this.scene.state.userCow?.part >= 1);
+  }
+
+  private createFreeBtn(ad: boolean): void {
+    this.freeDiamondBtn?.destroy();
+    let y: number = (this.rows + 1) * 270 + 50 + this.scene.height - 238;
+    if (this.checkStarterpack()) y += 238;
+    const elements: IshopButtonElements = { text1: '0 ' + this.scene.state.lang.ruble };
+    if (ad) {
+      elements.text1 = this.scene.state.lang.pickUp;
+      elements.img = {
+        texture: 'ad-icon',
+        scale: 0.6,
+      };
+    }
+    this.adButton = ad;
+    this.freeDiamondBtn = new ShopButton(this.scene, { x: this.scene.cameras.main.centerX - 30, y: y }, () => {this.freeDiamondsBtnHandler()}, elements);
   }
 
   private checkFreeDiamonds(): boolean {
@@ -327,12 +338,8 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
         }
       } else {
         if (this.adButton) {
-          this.freeDiamondBtn.destroy();
-          this.adButton = false;
-          let y: number = (this.rows + 1) * 270 + 50 + this.scene.height - 238;
-          if (this.checkStarterpack()) y += 238;
-          const elements: IshopButtonElements = { text1: '0 ' + this.scene.state.lang.ruble };
-          this.freeDiamondBtn = new ShopButton(this.scene, { x: this.scene.cameras.main.centerX - 30, y }, () => {this.freeDiamondsBtnHandler()}, elements);
+          this.createFreeBtn(true);
+          this.freeDiamondBtn.setVisible(true);
         } else {
           if (!this.freeDiamondBtn.visible) this.freeDiamondBtn.setVisible(true);
         }
