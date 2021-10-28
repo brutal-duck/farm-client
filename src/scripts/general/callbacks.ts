@@ -48,6 +48,10 @@ function okCallback(): void {
         FAPI.Client.call({ 'method':'storage.set', 'key': 'sendPost', 'value': JSON.stringify(true) });
       }
     }
+
+    if (method === 'showAd') {
+      this.state.amplitude.logAmplitudeRevenue('', 0, 'interstitial', {});
+    }
   }
 }
 

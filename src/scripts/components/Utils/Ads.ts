@@ -1,3 +1,4 @@
+import bridge from '@vkontakte/vk-bridge';
 import Chicken from "../../scenes/Chicken/Main";
 import { FAPI } from '../../libs/Fapi'
 import * as platform from 'platform';
@@ -105,6 +106,30 @@ export default class Ads {
     } else if (this.scene.state.platform === 'android') {
       // @ts-ignore
       window.admob.rewardvideo.show();
+    }
+  }
+
+  public showInterstitialAd(): void {
+    switch (this.scene.state.platform) {
+      case 'vk':
+        bridge.send("VKWebAppShowNativeAds", { ad_format:"interstitial" })
+        .then(data => {
+          if (data.result) this.scene.state.amplitude.logAmplitudeRevenue('', 0, 'interstitial', {});
+        });
+        break;
+      case 'ok':
+        FAPI.UI.showAd();
+        break;
+      case 'ya':
+        this.scene.state.ysdk?.adv.showFullscreenAdv({
+          callbacks: {
+            onOpen: () => {
+              this.scene.state.amplitude.logAmplitudeRevenue('', 0, 'interstitial', {});
+            },
+          },
+        });
+      default:
+        break;
     }
   }
 
