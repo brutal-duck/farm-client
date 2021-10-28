@@ -4,7 +4,6 @@ import loadCow from '../../local/loadCow';
 import loadData from '../../general/loadData';
 import { loadingScreen, checkStorage } from '../../general/basic';
 import LocalStorage from './../../libs/LocalStorage';
-import Amplitude from './../../libs/Amplitude';
 import { clickShopBtn } from '../../general/clicks';
 import { general } from '../../local/settings';
 import ErrorWindow from './../../components/Web/ErrorWindow';
@@ -527,7 +526,7 @@ class CowPreload extends Phaser.Scene {
           });
         }
 
-        const Amplitude: Amplitude = this.state.amplitude;
+        const Amplitude = this.state.amplitude;
         Amplitude.setFarmIdentify();
         console.log(`Test - ${this.state.user.test}`);
         if (this.state.platform === 'android') this.initAndroidStore();

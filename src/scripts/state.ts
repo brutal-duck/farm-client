@@ -1,4 +1,5 @@
 let sheepSettings: IsheepSettings;
+import Amplitude from './libs/Amplitude';
 let chickenSettings: IchickenSettings;
 let chickenTerritories: Iterritories[];
 let cowSettings: IcowSettings;
@@ -44,7 +45,7 @@ let daily: number | boolean;
 let payDiamonds: number;
 let payId: number;
 let payPrice: number;
-let amplitude: any;
+let amplitude: Amplitude;
 let online: boolean = true;
 let newbieTime: number;
 let dailyAwards: boolean[] = [false, false, false, false, false, false, false, false];

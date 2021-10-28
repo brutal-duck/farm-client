@@ -772,13 +772,17 @@ interface IamplitudeData {
   balanceGrassPercent?: number;
   type?: string;
   count?: number;
-  price?: number;
+  price?: number | string;
   level?: number;
   block?: number;
   position?: number;
   step?: number;
   stock?: boolean;
   test?: string;
+  from?: string;
+  to?: string;
+  screen?: string;
+  time?: number;
 }
 interface IfortuneUser {
   name: string;
@@ -887,6 +891,12 @@ interface IcheckAndroidUserData {
   sheepPart: number;
   diamonds: number;
 }
+interface Iamplitude {
+  startIdentify: () => void;
+  setFarmIdentify: () => void;
+  logAmplitudeEvent: (eventName: string, data: IamplitudeData) => void;
+  logAmplitudeRevenue: (productId: string, price: number, type: string,  data: IamplitudeData) => void;
+}
 interface Istate {
   platform: string;
   autoSaveSpeed: number;
@@ -939,7 +949,7 @@ interface Istate {
   payDiamonds: number;
   payId: number;
   payPrice: number;
-  amplitude: any;
+  amplitude: Iamplitude;
   online: boolean;
   newbieTime: number;
   dailyAwards: boolean[];

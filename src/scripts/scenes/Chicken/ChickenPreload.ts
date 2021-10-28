@@ -4,7 +4,6 @@ import loadChicken from '../../local/loadChicken';
 import loadData from '../../general/loadData';
 import { checkStorage, loadingScreen,  } from '../../general/basic';
 import LocalStorage from './../../libs/LocalStorage';
-import Amplitude from './../../libs/Amplitude';
 import { clickShopBtn } from '../../general/clicks';
 import { general } from '../../local/settings';
 import ErrorWindow from './../../components/Web/ErrorWindow';
@@ -520,7 +519,7 @@ class ChickenPreload extends Phaser.Scene {
             clanId: this.state.user.clanId,
           });
         }
-        const Amplitude: Amplitude = this.state.amplitude;
+        const Amplitude = this.state.amplitude;
         Amplitude.setFarmIdentify();
         console.log(`Test - ${this.state.user.test}`);
         if (this.state.platform === 'android') this.initAndroidStore();

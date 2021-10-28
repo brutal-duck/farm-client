@@ -7,7 +7,7 @@ import Cow from './../scenes/Cow/Main';
 
 const VK_DEVELOPERS_ID: Array<number> = [41285968, 191781124, 164603032, 23755036, 60373258, 3922194];
 
-export default class Amplitude {
+export default class Amplitude implements Iamplitude {
   private state: Istate;
   private scene: Boot;
   private active: boolean = false;

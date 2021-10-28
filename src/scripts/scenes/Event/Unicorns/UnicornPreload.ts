@@ -2,7 +2,6 @@ import axios from 'axios';
 import Socket from '../../../Socket';
 import loadData from '../../../general/loadData';
 import { loadingScreen } from '../../../general/basic';
-import Amplitude from './../../../libs/Amplitude';
 import ErrorWindow from './../../../components/Web/ErrorWindow';
 import { clickShopBtn } from '../../../general/clicks';
 
@@ -626,7 +625,7 @@ class UnicornPreload extends Phaser.Scene {
           });
         }
         
-        const Amplitude:Amplitude = this.state.amplitude;
+        const Amplitude = this.state.amplitude;
         Amplitude.setFarmIdentify();
         console.log(`Test - ${this.state.user.test}`);
       }

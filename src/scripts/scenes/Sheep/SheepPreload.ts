@@ -4,7 +4,6 @@ import loadSheep from '../../local/loadSheep';
 import loadData from '../../general/loadData';
 import { checkStorage, loadingScreen } from '../../general/basic';
 import LocalStorage from './../../libs/LocalStorage';
-import Amplitude from './../../libs/Amplitude';
 import { clickShopBtn } from '../../general/clicks';
 import { general } from '../../local/settings';
 import ErrorWindow from './../../components/Web/ErrorWindow';
@@ -738,7 +737,7 @@ class SheepPreload extends Phaser.Scene {
         
         console.log(`Test - ${this.state.user.test}`);
         // подрубаем амплитуду
-        const Amplitude: Amplitude = this.state.amplitude;
+        const Amplitude = this.state.amplitude;
         Amplitude.setFarmIdentify();
 
         if (this.state.platform === 'android') this.initAndroidStore();
@@ -771,7 +770,7 @@ class SheepPreload extends Phaser.Scene {
         this.state.dataIsLoaded = true;
         this.loadData(response);
         this.state.offlineTime = response.data.progress.sheepOfflineTime;
-        const Amplitude: Amplitude = this.state.amplitude;
+        const Amplitude = this.state.amplitude;
         if (response.data.user.tutor === 0) Amplitude.logAmplitudeEvent('tutor_before_load', {});
         this.userReady = true;
       }).catch(() => {
