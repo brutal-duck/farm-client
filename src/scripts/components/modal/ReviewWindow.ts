@@ -53,6 +53,7 @@ export default class ReviewWindow {
     cordova.plugins.AppReview.requestReview().catch(() => {
       return cordova.plugins.AppReview.openStoreScreen();
     });
+    this.scene.state.amplitude.logAmplitudeEvent('appReview', { type: 'like' });
     this.scene.scene.stop();
   }
 
@@ -62,5 +63,6 @@ export default class ReviewWindow {
       sysType: 25,
     };
     this.scene.scene.restart(this.scene.state);
+    this.scene.state.amplitude.logAmplitudeEvent('appReview', { type: 'dislike' });
   }
 };
