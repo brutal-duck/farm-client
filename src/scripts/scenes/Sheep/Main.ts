@@ -350,15 +350,15 @@ class Sheep extends Phaser.Scene {
     this.interval();
     this.setCollector();
     this.openConvertorForClan();
-    let cursors = this.input.keyboard.createCursorKeys();
-    cursors.space.on('down', (): void => {
-      this.ads.showInterstitialAd();
-      // let tasks = this.partTasks();
-      // for (let i in tasks) {
-      //       tasks[i].done = 1;
-      //       // tasks[i].got_awarded = 1;
-      // }
-    });
+    // let cursors = this.input.keyboard.createCursorKeys();
+    // cursors.space.on('down', (): void => {
+    //   this.ads.showInterstitialAd();
+    //   // let tasks = this.partTasks();
+    //   // for (let i in tasks) {
+    //   //       tasks[i].done = 1;
+    //   //       // tasks[i].got_awarded = 1;
+    //   // }
+    // });
   }
 
 
