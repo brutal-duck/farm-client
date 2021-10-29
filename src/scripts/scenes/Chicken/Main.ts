@@ -260,8 +260,7 @@ class Chicken extends Phaser.Scene {
     this.ads = new Ads(this)
     this.autoprogress(true);
   }
-
-
+  
   public create(): void {
     // анимации
     this.animations();

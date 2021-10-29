@@ -26,10 +26,7 @@ export default class DataValidator {
 
   public static validateUserSheep(data: IuserSheep): IuserSheep {
     for (const key in userSheep) {
-      if (typeof data[key] !== typeof userSheep[key]) {
-        data[key] = userSheep[key]
-        console.log(data[key]);
-      };
+      if (typeof data[key] !== typeof userSheep[key]) data[key] = userSheep[key];
     }
     data.money = data.money <= 0 ? 0 : Math.round(data.money);
     if (data.part > sheepSettings.sheepParts.length) data.part = sheepSettings.sheepParts.length;
@@ -41,10 +38,7 @@ export default class DataValidator {
 
   public static validateUserChicken(data: IuserChicken): IuserChicken {
     for (const key in userChicken) {
-      if (typeof data[key] !== typeof userChicken[key]) {
-        console.log(data[key]);
-        data[key] = userChicken[key];
-      }
+      if (typeof data[key] !== typeof userChicken[key]) data[key] = userChicken[key];
     }
     data.money = data.money <= 0 ? 0 : Math.round(data.money);
     if (data.part > chickenSettings.chickenParts.length) data.part = chickenSettings.chickenParts.length;

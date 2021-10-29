@@ -26,7 +26,7 @@ export default function autoprogress(load: boolean = false): void {
     progressClanEventTime(state, state.offlineTime);
     progressSalesTime(state, state.offlineTime);
   }
-  
+
   const getRandomProductId = (settings: IfactorySettings, boost: boolean): number => {
     const pull: number[] = [ settings.production1Percent, settings.production2Percent, settings.production3Percent ];
     if (boost) pull.push(settings.production4Percent);
@@ -63,8 +63,7 @@ export default function autoprogress(load: boolean = false): void {
     return productId;
   }
 
-  // овцы
-  const sheepOfflineProgress = (offlineTime: number = state.progress.sheep.offlineTime): void => {
+  const sheepOfflineProgress = (offlineTime: number = state.offlineTime): void => {
     this.progressTerritoryCooldown(state.sheepTerritories, offlineTime, 'Sheep', true);
     if (state.userSheep.diamondAnimalTime >= offlineTime) state.userSheep.diamondAnimalTime -= offlineTime;
     else {
@@ -194,7 +193,7 @@ export default function autoprogress(load: boolean = false): void {
     }
   }
 
-  const chickenOfflineProgress = (offlineTime: number = state.progress.chicken.offlineTime): void => {
+  const chickenOfflineProgress = (offlineTime: number = state.offlineTime): void => {
     // значение отступа для яиц, чтоб не прилегали к краям территории
     this.progressTerritoryCooldown(state.chickenTerritories, offlineTime, 'Chicken', true);
     let indent: number = 20;
@@ -432,7 +431,7 @@ export default function autoprogress(load: boolean = false): void {
     }
   } 
 
-  const cowOfflineProgress = (offlineTime: number = state.progress.cow.offlineTime): void => {
+  const cowOfflineProgress = (offlineTime: number = state.offlineTime): void => {
     this.progressTerritoryCooldown(state.cowTerritories, offlineTime, 'Cow', true);
 
     const MILK_DELAY = 10;
@@ -1566,9 +1565,5 @@ export default function autoprogress(load: boolean = false): void {
     this.autoporgressCollectorTime();
     updateUnicornCollectorTime(state);
   }
-  console.log(state.userSheep.diamondAnimalTime, 'userSheep');
-  console.log(state.userChicken.diamondAnimalTime, 'userChicken');
-  console.log(state.userCow.diamondAnimalTime, 'userCow');
-  console.log('state.offlineTime', state.offlineTime);
   state.offlineTime = 0;
 }
