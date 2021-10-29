@@ -764,6 +764,11 @@ function decrementAdFreeDiamondTime(state: Istate, count: number = 1): void {
   }
 }
 
+function incInterstitialAdTimer(state: Istate): void {
+  if (state.interstitialTimer < 0) state.interstitialTimer = 0;
+  else state.interstitialTimer += 1;
+}
+
 export {
   sheepIntervalProgress,
   chickenIntervalProgress,
@@ -783,4 +788,5 @@ export {
   showSale,
   speedCheckCollector,
   decrementAdFreeDiamondTime,
+  incInterstitialAdTimer,
 }

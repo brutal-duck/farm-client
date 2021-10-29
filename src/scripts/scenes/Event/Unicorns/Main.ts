@@ -245,7 +245,7 @@ class Unicorn extends Phaser.Scene {
     this.setCollector();
     this.flyAnimal();
     this.getEventRaiting();
-
+    this.ads.showInterstitialAd();
     // let cursors = this.input.keyboard.createCursorKeys();
     // cursors.space.on('down', (): void => {
     //   // this.state.user.diamonds = 100000;

@@ -363,6 +363,7 @@ export default class DailyNewbieWindow extends Phaser.GameObjects.Sprite {
       this.scene.scene.stop();
       this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
       this.scene.game.scene.keys[this.scene.state.farm].takeNewbieAward();
+      this.scene.game.scene.keys[this.scene.state.farm].ads.showInterstitialAd();
     });
 
     this.scene.click(this, () => {
@@ -372,6 +373,7 @@ export default class DailyNewbieWindow extends Phaser.GameObjects.Sprite {
         this.scene.scene.stop();
         this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
         this.scene.game.scene.keys[this.scene.state.farm].takeNewbieAward();
+      this.scene.game.scene.keys[this.scene.state.farm].ads.showInterstitialAd();
       }
     });
   }

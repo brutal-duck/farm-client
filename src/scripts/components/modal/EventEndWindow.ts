@@ -295,6 +295,7 @@ export default class EventEndWindow {
       axios.post(process.env.API + "/takeAward", data);
       this.scene.scene.stop('Modal');
       MoneyAnimation.create(this.scene.game.scene.keys[this.scene.state.farm + 'Bars'], 'diamond');
+      this.scene.game.scene.keys[this.scene.state.farm].ads.showInterstitialAd();
     });
   }
 

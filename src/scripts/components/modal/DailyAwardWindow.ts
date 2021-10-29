@@ -144,6 +144,7 @@ export default class DailyAwardWindow extends Phaser.GameObjects.Sprite {
       this.scene.state.daily = false;
       this.scene.state.user.takenReward = true;
       this.scene.scene.stop();
+      this.scene.game.scene.keys[this.scene.state.farm].ads.showInterstitialAd();
       
     });
     

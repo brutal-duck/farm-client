@@ -909,6 +909,7 @@ interface Iamplitude {
   logAmplitudeRevenue: (productId: string, price: number, type: string,  data: IamplitudeData) => void;
 }
 interface Istate {
+  interstitialTimer: number;
   platform: string;
   autoSaveSpeed: number;
   maxMerginTime: number;

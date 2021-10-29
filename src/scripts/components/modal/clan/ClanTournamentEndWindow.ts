@@ -218,7 +218,12 @@ export default class ClanTournamentEndWindow {
         }
         this.scene.state.clanEventTakenAward = true;
         this.scene.scene.stop();
+        this.scene.game.scene.keys[this.scene.state.farm].ads.showInterstitialAd();
       }
+    }).catch(() => {
+      this.scene.state.clanEventTakenAward = true;
+      this.scene.scene.stop();
+      this.scene.game.scene.keys[this.scene.state.farm].ads.showInterstitialAd();
     });
   }
 

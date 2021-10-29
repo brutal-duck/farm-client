@@ -32,8 +32,7 @@ function createBoostAnimal(): void {
   }
 
   if (this.state.herdBoostAnimals.length === 0) return;
-  
-  this.state.herdBoostAnimals.forEach(type => {
+  this.state.herdBoostAnimals.forEach((type: number) => {
     this.time.addEvent({ 
       delay: 100, 
       callback: (): void => {
@@ -49,6 +48,8 @@ function createBoostAnimal(): void {
         if (type === 0) {
           this.tryTask(18, 0);
           this.tryClanTask(8);
+          this.ads.showInterstitialAd();
+
         }
       }, 
       callbackScope: this, 

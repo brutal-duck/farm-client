@@ -290,6 +290,7 @@ class Cow extends Phaser.Scene {
 
     this.animations();
     this.openConvertorForClan();
+    this.ads.showInterstitialAd();
 
     // Заменить на нормальное открытие
     if (!LocalStorage.get('openCow')) {

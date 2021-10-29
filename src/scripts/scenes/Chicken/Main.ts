@@ -278,6 +278,7 @@ class Chicken extends Phaser.Scene {
     this.interval();
     this.setCollector();
     this.openConvertorForClan();
+    this.ads.showInterstitialAd();
 
     // Заменить на нормальное открытие
     if (!LocalStorage.get('openChicken')) {

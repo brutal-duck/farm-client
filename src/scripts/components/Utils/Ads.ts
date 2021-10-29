@@ -12,6 +12,7 @@ import MoneyAnimation from "../animations/MoneyAnimation";
 import { randomString } from "../../general/basic";
 import Shop from './../../scenes/Modal/Shop/Main';
 
+const INTERSTITIAL_DELAY = 30;
 /**
   * Реклама  
   * 
@@ -110,6 +111,8 @@ export default class Ads {
   }
 
   public showInterstitialAd(): void {
+    if (!this.checkShowInterstitial()) return;
+    this.scene.state.interstitialTimer = 0;
     switch (this.scene.state.platform) {
       case 'vk':
         bridge.send("VKWebAppShowNativeAds", { ad_format:"interstitial" })
@@ -131,10 +134,21 @@ export default class Ads {
         break;
       case 'android':
         window['admob'].interstitial.prepare();
+        this.scene.state.amplitude.logAmplitudeRevenue('interstitial', 0, 'interstitial', {});
         break;
       default:
         break;
     }
+  }
+
+  private checkShowInterstitial(): boolean {
+    const farm: string = this.scene.state.farm;
+    if (farm === 'Unicorn') {
+      const userFarm: IuserUnicorn = this.scene.state.userUnicorn;
+      return this.scene.state.interstitialTimer >= INTERSTITIAL_DELAY && userFarm.points > 2;
+    }
+    const userFarm: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${farm}`];
+    return this.scene.state.interstitialTimer >= INTERSTITIAL_DELAY && userFarm.part >= 2;
   }
 
   public adReward(): void {
