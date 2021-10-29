@@ -128,6 +128,10 @@ export default class Ads {
             },
           },
         });
+        break;
+      case 'android': 
+        window['admob'].interstitial.show();
+        break;
       default:
         break;
     }

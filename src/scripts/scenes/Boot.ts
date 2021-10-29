@@ -394,7 +394,8 @@ class Boot extends Phaser.Scene {
       this.hash = LocalStorage.get('hash');
       this.initAndroidAdjust();
       window.screen.orientation.lock('portrait-primary');
-      this.initAndroidAd();
+      this.initAndroidRewardedAd();
+      this.initAndroidInterstitialAd();
 
       const PushNotification = window['PushNotification'];
       const push = PushNotification.init({
@@ -499,7 +500,7 @@ class Boot extends Phaser.Scene {
   }
 
 
-  private initAndroidAd(): void {
+  private initAndroidRewardedAd(): void {
     document.addEventListener('admob.rewardvideo.events.LOAD_FAIL', (): void => {
       // @ts-ignore
       window.admob.rewardvideo.prepare();
@@ -540,6 +541,45 @@ class Boot extends Phaser.Scene {
 
     // @ts-ignore
     window.admob.rewardvideo.prepare();
+  }
+
+  private initAndroidInterstitialAd(): void {
+    const admob = window['admob'];
+    document.addEventListener('admob.interstitial.events.LOAD_FAIL', (): void => {
+      admob.interstitial.prepare();
+      this.state.readyInterstitialAd = false;
+    });
+
+    document.addEventListener('admob.interstitial.events.LOAD', (): void => {
+      console.log('Android ad ready!');
+      this.state.readyInterstitialAd = true;
+    });
+
+    document.addEventListener('admob.interstitial.events.CLOSE', (): void => {
+      admob.interstitial.prepare();
+      this.state.readyInterstitialAd = false;
+      this.state.musicVolume = this.game.scene.keys[this.state.farm].ads.musicVolume;
+      this.state.soundVolume = this.game.scene.keys[this.state.farm].ads.soundVolume;
+      //@ts-ignore
+      this.sound.get('music').volume = this.state.musicVolume;
+    });
+
+    document.addEventListener('admob.interstitial.events.OPEN', (): void => {
+      this.state.amplitude.logAmplitudeRevenue('interstitial', 0, 'interstitial', {});      
+      if (this.platform === 'android') {
+        try { window[`Adjust`].trackEvent(this.state.adjust.adEvent) }
+        catch (err) { console.log(err) }
+      }
+      admob.interstitial.prepare();
+      this.state.readyInterstitialAd = false;
+    });
+
+    admob.interstitial.config({
+      id: process.env.ADMOB_INTERSTITIAL_ID,
+      isTesting: true,
+    });
+
+    admob.interstitial.prepare();
   }
 
   public postCheckUser(id: number | string, auth?: boolean, login?: string): void {

@@ -88,6 +88,7 @@ let clanEventTakenAward: boolean = true;
 let sales: Isale[] = [];
 let clanChatNotificationCount: number = 0;
 let dataIsLoaded: boolean = false;
+let readyInterstitialAd: boolean = false;
 
 let state: Istate = {
   // записываемые в localStorage
@@ -182,6 +183,7 @@ let state: Istate = {
   sales,
   dataIsLoaded,
   playId,
+  readyInterstitialAd,
 }
 
 export default state;
