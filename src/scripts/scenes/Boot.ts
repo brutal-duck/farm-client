@@ -545,41 +545,10 @@ class Boot extends Phaser.Scene {
 
   private initAndroidInterstitialAd(): void {
     const admob = window['admob'];
-    document.addEventListener('admob.interstitial.events.LOAD_FAIL', (): void => {
-      admob.interstitial.prepare();
-      this.state.readyInterstitialAd = false;
-    });
-
-    document.addEventListener('admob.interstitial.events.LOAD', (): void => {
-      console.log('Android ad ready!');
-      this.state.readyInterstitialAd = true;
-    });
-
-    document.addEventListener('admob.interstitial.events.CLOSE', (): void => {
-      admob.interstitial.prepare();
-      this.state.readyInterstitialAd = false;
-      this.state.musicVolume = this.game.scene.keys[this.state.farm].ads.musicVolume;
-      this.state.soundVolume = this.game.scene.keys[this.state.farm].ads.soundVolume;
-      //@ts-ignore
-      this.sound.get('music').volume = this.state.musicVolume;
-    });
-
-    document.addEventListener('admob.interstitial.events.OPEN', (): void => {
-      this.state.amplitude.logAmplitudeRevenue('interstitial', 0, 'interstitial', {});      
-      if (this.platform === 'android') {
-        try { window[`Adjust`].trackEvent(this.state.adjust.adEvent) }
-        catch (err) { console.log(err) }
-      }
-      admob.interstitial.prepare();
-      this.state.readyInterstitialAd = false;
-    });
-
     admob.interstitial.config({
       id: process.env.ADMOB_INTERSTITIAL_ID,
-      isTesting: true,
+      isTesting: false,
     });
-
-    admob.interstitial.prepare();
   }
 
   public postCheckUser(id: number | string, auth?: boolean, login?: string): void {

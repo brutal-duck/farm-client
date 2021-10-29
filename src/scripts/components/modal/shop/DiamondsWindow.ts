@@ -30,7 +30,7 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
     this.createAllPackages();
     if (this.checkStarterpack()) this.createStarterpack();
     if (this.checkFreeDiamonds()) this.createFreeDiamonds();
-    this.scene.scene.key[this.scene.state.farm].ads.showInterstitialAd();
+    this.scene.game.scene.keys[this.scene.state.farm].ads.showInterstitialAd();
   }
 
   private createAllPackages(): void {

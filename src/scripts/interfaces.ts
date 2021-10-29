@@ -965,7 +965,6 @@ interface Istate {
   newbieTime: number;
   dailyAwards: boolean[];
   readyAd: boolean;
-  readyInterstitialAd: boolean;
   adRewardedType: number;
   adTimeout: boolean;
   vkId: number;

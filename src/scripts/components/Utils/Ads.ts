@@ -129,8 +129,8 @@ export default class Ads {
           },
         });
         break;
-      case 'android': 
-        window['admob'].interstitial.show();
+      case 'android':
+        window['admob'].interstitial.prepare();
         break;
       default:
         break;
