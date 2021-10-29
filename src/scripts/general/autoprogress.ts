@@ -1569,6 +1569,6 @@ export default function autoprogress(load: boolean = false): void {
   console.log(state.userSheep.diamondAnimalTime, 'userSheep');
   console.log(state.userChicken.diamondAnimalTime, 'userChicken');
   console.log(state.userCow.diamondAnimalTime, 'userCow');
-  
+  console.log('state.offlineTime', state.offlineTime);
   state.offlineTime = 0;
 }
