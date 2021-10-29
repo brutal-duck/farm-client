@@ -345,20 +345,27 @@ class Sheep extends Phaser.Scene {
 
     // коллизии
     this.collisions();
-
+    console.log(this.state.userSheep.diamondAnimalTime, 'userSheep');
+    console.log(this.state.userChicken.diamondAnimalTime, 'userChicken');
+    console.log(this.state.userCow.diamondAnimalTime, 'userCow');
+    this.state.userChicken.money = 300_000_000;
+    console.log(this.state)
     // интервальные функция
     this.interval();
     this.setCollector();
     this.openConvertorForClan();
-    // let cursors = this.input.keyboard.createCursorKeys();
-    // cursors.space.on('down', (): void => {
-    //   this.ads.showInterstitialAd();
-    //   // let tasks = this.partTasks();
-    //   // for (let i in tasks) {
-    //   //       tasks[i].done = 1;
-    //   //       // tasks[i].got_awarded = 1;
-    //   // }
-    // });
+    let cursors = this.input.keyboard.createCursorKeys();
+    cursors.space.on('down', (): void => {
+      this.state.userSheep.diamondAnimalTime = 0;
+      this.state.userChicken.diamondAnimalTime = 0;
+      this.state.userCow.diamondAnimalTime = 0;
+      // this.ads.showInterstitialAd();
+      // let tasks = this.partTasks();
+      // for (let i in tasks) {
+      //       tasks[i].done = 1;
+      //       // tasks[i].got_awarded = 1;
+      // }
+    });
   }
 
 
