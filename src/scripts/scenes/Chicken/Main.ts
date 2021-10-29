@@ -260,7 +260,7 @@ class Chicken extends Phaser.Scene {
     this.ads = new Ads(this)
     this.autoprogress(true);
   }
-  
+
   public create(): void {
     // анимации
     this.animations();
@@ -278,9 +278,7 @@ class Chicken extends Phaser.Scene {
     this.interval();
     this.setCollector();
     this.openConvertorForClan();
-    console.log(this.state.userSheep.diamondAnimalTime, 'userSheep');
-    console.log(this.state.userChicken.diamondAnimalTime, 'userChicken');
-    console.log(this.state.userCow.diamondAnimalTime, 'userCow');
+
     // Заменить на нормальное открытие
     if (!LocalStorage.get('openChicken')) {
       LocalStorage.set('openChicken', 'true');
