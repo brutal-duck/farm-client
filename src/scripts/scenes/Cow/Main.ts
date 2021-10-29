@@ -260,10 +260,10 @@ class Cow extends Phaser.Scene {
   public speedCheckCollector = speedCheckCollector.bind(this);
 
   public init(state: Istate): void {
-
     this.autoprogressTimer = Math.round(new Date().getTime() / 1000);
     this.autoSaveTimer = 0;
     this.state = state;
+    this.state.userCow.part = this.state.userCow.part || 1; 
     this.alarm = false;
     this.collectorTimer = null;
     this.settings = state.cowSettings;

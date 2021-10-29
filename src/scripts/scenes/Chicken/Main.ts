@@ -251,6 +251,7 @@ class Chicken extends Phaser.Scene {
     this.autoprogressTimer = Math.round(new Date().getTime() / 1000);
     this.autoSaveTimer = 0;
     this.state = state;
+    this.state.userChicken.part = this.state.userChicken.part || 1; 
     this.alarm = false;
     this.collectorTimer = null;
     this.settings = state.chickenSettings;
