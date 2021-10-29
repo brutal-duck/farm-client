@@ -7,7 +7,8 @@ import {
 import {
   shortNum,
   shortTime,
-  createTaskZone
+  createTaskZone,
+  createСleanButton,
 } from '../../general/basic';
 import { updateNotificationShop } from './../../general/boosts';
 
@@ -88,7 +89,8 @@ class SheepBars extends Phaser.Scene {
   public clickTaskBoard = clickTaskBoard.bind(this);
   public plusMoneyAnimation = plusMoneyAnimation.bind(this);
   public createTaskZone = createTaskZone.bind(this);
-  
+  public createСleanButton = createСleanButton.bind(this);
+
   public init(state: Istate): void {
     
     this.state = state;
@@ -105,6 +107,7 @@ class SheepBars extends Phaser.Scene {
   public create(): void {
     this.add.sprite(0, 0, 'topbar').setOrigin(0, 0).setInteractive();
     this.add.sprite(0, this.height + 10, 'tabbar').setInteractive().setOrigin(0, 1);
+    this.createСleanButton();
     
     let sheepIcon: string = 'sheep-buy-icon-' + this.game.scene.keys[this.state.farm].maxBreedForBuy();
     this.sheepBuy = this.add.image(82, this.height - 92, sheepIcon);

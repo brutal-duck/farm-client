@@ -662,7 +662,7 @@ interface Imodal {
   confirmSpendParams?: IconfirmSpendParams;
 }
 interface IconfirmSpendParams {
-  level: number;
+  level?: number;
   type: string;
   price: number;
   callback: () => void;

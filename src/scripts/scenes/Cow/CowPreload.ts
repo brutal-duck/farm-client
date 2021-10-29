@@ -232,6 +232,7 @@ const cooldownPlate: string = require("./../../../assets/images/cooldown-plate.p
 const tasksBarNs: string = require("./../../../assets/images/modal/tasks/bar-ns.png");
 const textSale: string = require("./../../../assets/images/modal/text-sale.png");
 const saleIcon: string = require('../../../assets/images/sale-icon.png');
+const btnClean: string = require('../../../assets/images/icons/btn-clean.png');
 
 class CowPreload extends Phaser.Scene {
 
@@ -500,6 +501,7 @@ class CowPreload extends Phaser.Scene {
     this.load.image('tasks-bar-ns', tasksBarNs);
     this.load.image('text-sale', textSale);
     this.load.image('icon-sale', saleIcon);
+    this.load.image('btn-clean', btnClean);
 
   }
 

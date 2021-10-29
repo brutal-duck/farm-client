@@ -1,7 +1,6 @@
 import { shortNum } from "../../../general/basic";
 import Modal from "../../../scenes/Modal/Modal";
 import BigButton from './../../Buttons/BigButton';
-import Utils from './../../../libs/Utils';
 
 export default class ConfirmSpendDiamonds {
   public scene: Modal;

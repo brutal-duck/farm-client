@@ -12,6 +12,14 @@ import SheepTerritory from './../components/Territories/SheepTerritory';
 import CowTerritory from './../components/Territories/CowTerritory';
 import { getNewClanTasks } from './tasks';
 import Utils from './../libs/Utils';
+import SheepBars from './../scenes/Sheep/SheepBars';
+import ChickenBars from './../scenes/Chicken/ChickenBars';
+import CowBars from './../scenes/Cow/CowBars';
+import Chicken from './../scenes/Chicken/Main';
+import Sheep from './../scenes/Sheep/Main';
+import Cow from './../scenes/Cow/Main';
+import Territory from './../components/Territories/Territory';
+import Factory from './../components/Territories/Factory';
 
 // рандомное число
 function random(min: number, max: number): number {
@@ -1456,7 +1464,103 @@ function openConvertorForClan(): void {
   }
 }
 
+function createСleanButton(): void {
+  const barsScene: SheepBars | ChickenBars | CowBars = this;
+
+  const actionSheep = (): void => {
+    const mainScene: Sheep = barsScene.game.scene.keys[barsScene.state.farm];
+    mainScene.sheep.children.iterate(el => {
+      mainScene.collectWool(el, true);
+    });
+    mainScene.territories.children.iterate((el: Territory) => {
+      if (el.territoryType === 2 || el.territoryType === 3) {
+        el.volume = 1000;
+      } else if (el.territoryType === 5) {
+        mainScene.state.territory = el;
+        mainScene.sellWool();
+        mainScene.state.territory = null;
+      }
+    });
+    mainScene.freeCollector();
+  };
+
+  const actionChicken = (): void => {
+    const mainScene: Chicken = barsScene.game.scene.keys['Chicken'];
+    mainScene.eggs.children.iterate(el => {
+      mainScene.collectEgg(el, true);
+    });
+    mainScene.territories.children.iterate((el: Territory) => {
+      if (el.territoryType === 2 || el.territoryType === 3) el.volume = 1000;
+      else if (el.territoryType === 5) {
+        mainScene.state.territory = el;
+        mainScene.sellEggs();
+        mainScene.state.territory = null;
+      }
+    });
+    mainScene.freeCollector();
+  };
+
+  const actionCow = (): void => {
+    const mainScene: Cow = barsScene.game.scene.keys['Cow'];
+    mainScene.animalGroup.children.iterate(el => {
+      mainScene.collectMilk(el, true);
+    });
+    mainScene.territories.children.iterate((el: CowTerritory) => {
+      if (el.territoryType === 2 || el.territoryType === 3) el.volume = 1000;
+      else if (el.territoryType === 8) el.factory.sellProducts();
+    });
+    mainScene.freeCollector();
+  };
+
+  const farmUser: IuserSheep | IuserChicken | IuserCow = barsScene.state[`user${barsScene.state.farm}`];
+  let check = false;
+  if (barsScene.state.farm === 'Sheep') {
+    const mainScene: Sheep = barsScene.game.scene.keys[barsScene.state.farm];
+    mainScene.territories.children.iterate((ter: Territory) => {
+      if (ter.territoryType === 5) {
+        const terSettings: IterritoriesSheepSettings = mainScene.state.sheepSettings.territoriesSheepSettings.find(el => ter.improve === el.improve);
+        check = Math.round(terSettings.storage / 2) < ter.volume;
+      }
+    });
+  } else if (barsScene.state.farm === 'Chicken') {
+    const mainScene: Chicken = barsScene.game.scene.keys[barsScene.state.farm];
+    mainScene.territories.children.iterate((ter: Territory) => {
+      if (ter.territoryType === 5) {
+        const terSettings: IterritoriesChickenSettings = mainScene.state.chickenSettings.territoriesChickenSettings.find(el => ter.improve === el.improve);
+        check = Math.round(terSettings.storage / 2) < ter.volume;
+      }
+    });
+  } else if (barsScene.state.farm === 'Cow') {
+    const mainScene: Cow = barsScene.game.scene.keys[barsScene.state.farm];
+    const factoryTerritory = mainScene.territories.children.entries.find((ter: CowTerritory) => ter.territoryType === 8) as CowTerritory;
+    check = factoryTerritory && factoryTerritory.factory.money > 0;
+  }
+
+  if (farmUser.collector <= 0 && check && barsScene.state.userSheep.part > 8) {
+    const btn = barsScene.add.sprite(barsScene.cameras.main.width - 42, 185, 'btn-clean');
+  
+    barsScene.clickButton(btn, (): void => {
+      barsScene.state.modal = {
+        type: 1,
+        sysType: 24,
+        confirmSpendParams: {
+          type: 'CleanUp',
+          price: 1,
+          callback: (): void => {
+            if (barsScene.state.farm === 'Sheep') actionSheep();
+            else if (barsScene.state.farm === 'Chicken') actionChicken();
+            else if (barsScene.state.farm === 'Cow') actionCow();
+            btn?.destroy();
+          }
+        }
+      };
+      barsScene.scene.launch('Modal', barsScene.state);
+    });
+  }
+}
+
 export {
+  createСleanButton,
   openConvertorForClan,
   yandexAuth,
   random,

@@ -1,7 +1,8 @@
 import {
   shortNum,
   shortTime,
-  createTaskZone
+  createTaskZone,
+  createСleanButton,
 } from '../../general/basic';
 import {
   click,
@@ -78,6 +79,7 @@ class CowBars extends Phaser.Scene {
   public plusMoneyAnimation = plusMoneyAnimation.bind(this);
   public getCurrency = getCurrency.bind(this);
   public createTaskZone = createTaskZone.bind(this);
+  public createСleanButton = createСleanButton.bind(this);
 
   public init(state: Istate): void {
     
@@ -99,7 +101,8 @@ class CowBars extends Phaser.Scene {
     this.add.sprite(0, this.height + 10, 'tabbar')
       .setInteractive()
       .setOrigin(0, 1);
-    
+      
+    this.createСleanButton();
     let cowIcon: string = 'cow-buy-icon-' + this.game.scene.keys[this.state.farm].maxBreedForBuy();
     this.cowBuy = this.add.image(82, this.height - 92, cowIcon);
     this.saleBuyIcon = this.add.sprite(this.cowBuy.getBounds().left + 30, this.cowBuy.getBounds().top + 30, 'icon-sale').setOrigin(0.5).setAngle(-18);

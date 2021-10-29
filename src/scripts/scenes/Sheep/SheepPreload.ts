@@ -337,7 +337,7 @@ const roundedBarSegment: string = require("./../../../assets/images/rounded-bar-
 const circleOutline: string = require("./../../../assets/images/circle-outline.png");
 const cooldownPlate: string = require("./../../../assets/images/cooldown-plate.png");
 const saleIcon: string = require('../../../assets/images/sale-icon.png');
-
+const btnClean: string = require('../../../assets/images/icons/btn-clean.png');
 class SheepPreload extends Phaser.Scene {
 
   public lang: string; // индекс языка
@@ -710,6 +710,7 @@ class SheepPreload extends Phaser.Scene {
     this.load.image('cooldown-plate', cooldownPlate);
     this.load.image('text-sale', textSale);
     this.load.image('icon-sale', saleIcon);
+    this.load.image('btn-clean', btnClean);
   }
   
   public create(): void {
