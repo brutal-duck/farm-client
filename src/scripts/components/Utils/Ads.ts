@@ -124,13 +124,17 @@ export default class Ads {
         FAPI.UI.showAd();
         break;
       case 'ya':
-        this.scene.state.ysdk?.adv.showFullscreenAdv({
-          callbacks: {
-            onOpen: () => {
-              this.scene.state.amplitude.logAmplitudeRevenue('interstitial', 0, 'interstitial', {});
+        try {
+          this.scene.state.ysdk?.adv.showFullscreenAdv({
+            callbacks: {
+              onOpen: () => {
+                this.scene.state.amplitude.logAmplitudeRevenue('interstitial', 0, 'interstitial', {});
+              },
             },
-          },
-        });
+          });
+        } catch (e) {
+          console.log(e);
+        }
         break;
       case 'android':
         window['admob'].interstitial.prepare();
