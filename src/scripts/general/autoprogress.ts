@@ -1566,5 +1566,9 @@ export default function autoprogress(load: boolean = false): void {
     this.autoporgressCollectorTime();
     updateUnicornCollectorTime(state);
   }
+  console.log(state.userSheep.diamondAnimalTime, 'userSheep');
+  console.log(state.userChicken.diamondAnimalTime, 'userChicken');
+  console.log(state.userCow.diamondAnimalTime, 'userCow');
+  
   state.offlineTime = 0;
 }

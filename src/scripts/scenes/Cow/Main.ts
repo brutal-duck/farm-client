@@ -292,6 +292,9 @@ class Cow extends Phaser.Scene {
     this.animations();
     this.openConvertorForClan();
     // Заменить на нормальное открытие
+    console.log(this.state.userSheep.diamondAnimalTime, 'userSheep');
+    console.log(this.state.userChicken.diamondAnimalTime, 'userChicken');
+    console.log(this.state.userCow.diamondAnimalTime, 'userCow');
     if (!LocalStorage.get('openCow')) {
       LocalStorage.set('openCow', 'true');
       sendSocialEvent(this.state, 3, 100);
