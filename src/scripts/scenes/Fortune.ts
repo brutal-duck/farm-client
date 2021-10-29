@@ -676,7 +676,7 @@ export default class Fortune extends Phaser.Scene {
       title: btnText,
     }
 
-    this.clickModalBtn(btn, (): void => {
+    const action = (): void => {
       timer?.remove();
       bg?.destroy();
       modal?.destroy();
@@ -686,18 +686,11 @@ export default class Fortune extends Phaser.Scene {
       button?.destroy();
       btnText?.destroy();
       this.getCurrency({ x: this.cameras.main.centerX, y: this.cameras.main.centerY }, prize, 'diamond');
-    });
-    this.click(bg, (): void => {
-      timer?.remove();
-      bg?.destroy();
-      modal?.destroy();
-      text?.destroy();
-      count?.destroy();
-      diamond?.destroy();
-      button?.destroy();
-      btnText?.destroy();
-      this.getCurrency({ x: this.cameras.main.centerX, y: this.cameras.main.centerY }, prize, 'diamond');
-    });
+      this.game.scene.keys[this.state.farm].ads.showInterstitialAd();
+    };
+
+    this.clickModalBtn(btn, (): void => { action(); });
+    this.click(bg, (): void => { action(); });
   }
 
   private getCurrency(position: Iposition, counter: number = 1, texture: string): void {

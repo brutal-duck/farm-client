@@ -147,12 +147,16 @@ export default class Ads {
 
   private checkShowInterstitial(): boolean {
     const farm: string = this.scene.state.farm;
+    let result: boolean;
     if (farm === 'Unicorn') {
       const userFarm: IuserUnicorn = this.scene.state.userUnicorn;
-      return this.scene.state.interstitialTimer >= INTERSTITIAL_DELAY && userFarm.points > 2;
+      result = this.scene.state.interstitialTimer >= INTERSTITIAL_DELAY && userFarm.points > 2;
+    } else {
+      const userFarm: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${farm}`];
+      result = this.scene.state.interstitialTimer >= INTERSTITIAL_DELAY && userFarm.part >= 2;
     }
-    const userFarm: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${farm}`];
-    return this.scene.state.interstitialTimer >= INTERSTITIAL_DELAY && userFarm.part >= 2;
+
+    return result && (this.scene.state.newbieTime <= 0 || this.scene.state.userChicken.part > 0);
   }
 
   public adReward(): void {
