@@ -79,6 +79,7 @@ class SheepBars extends Phaser.Scene {
   public boostCount: Phaser.GameObjects.Text;
   public boostText: Phaser.GameObjects.Text;
   public cloudSprite: Phaser.GameObjects.Sprite;
+  public feedRound: RoundedProgress;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -390,6 +391,11 @@ class SheepBars extends Phaser.Scene {
     const farmUser: IuserSheep | IuserChicken | IuserCow = this.state[`user${this.state.farm}`];
     const plate = this.add.sprite(centerX - 95, 40, 'plate-feed');
     const icon = this.add.sprite(centerX - 170, 40, 'feed-sheep-balance');
+
+    const maxStack = this.game.scene.keys[this.state.farm].feedBoostStack;
+    const percent = Math.round((farmUser.feedBoostTime / (60 * 60 * maxStack)) * 100);
+    this.feedRound = new RoundedProgress(this, icon.x, icon.y, 0.7, 0x89DE3D, percent);
+    
     this.feedBoostTimer = this.add.text(plate.x, plate.y, shortTime(farmUser.feedBoostTime,this.state.lang), textStyle).setOrigin(0.5);
 
     const countStyle: Phaser.Types.GameObjects.Text.TextStyle = {
@@ -412,6 +418,7 @@ class SheepBars extends Phaser.Scene {
     this.boostText = this.add.text(centerX - 130, 85, this.state.lang.bonus + ':', style).setOrigin(0.5);
     this.boostCount = this.add.text(centerX - 130, this.boostText.getBounds().bottom, `+${bonusCount}%`, countStyle).setOrigin(0.5, 0);
     this.cloudSprite = this.add.sprite(this.boostCount.getBounds().right, this.boostCount.getBounds().centerY, 'cloud-info').setOrigin(0, 0.5);
+
   }
 
   public updateFeedBoostTimer(): void {
@@ -432,6 +439,10 @@ class SheepBars extends Phaser.Scene {
       const timeStr = shortTime(farmUser.feedBoostTime,this.state.lang);
       if (timeStr !== this.feedBoostTimer.text) {
         this.feedBoostTimer.setText(timeStr);
+        const maxStack = this.game.scene.keys[this.state.farm].feedBoostStack;
+        const percent = Math.round((farmUser.feedBoostTime / (60 * 60 * maxStack)) * 100);
+        console.log(percent)
+        this.feedRound.setPercent(percent);
       }
     } else if (farmUser.part >= 6) {
       this.destroyBalanceBoard();
