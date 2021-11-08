@@ -182,42 +182,31 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
   private createStarterpack(): void {
     this.scene.scrolling.bottom += 350;
     const y: number = this.scene.height + 140;
-    const starterpackBg: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX - 130, y, 'starterpack-bg');
-    const starterpackIconShadow: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX - 265, y + 70, 'starterpack-shadow');
-    const starterpackIcon: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX - 270, y, 'starterpack-icon');
-    const text1: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 90, y - 40, this.scene.state.lang.buyFrom, {
-      font: '26px Shadow',
-      color: '#FBCB64'
-    }).setOrigin(0.5, 0.5);
-
-    const text2: Phaser.GameObjects.Text = this.scene.add.text(text1.getBounds().right + 10, text1.y, '750', {
-      font: '26px Shadow',
-      color: '#ffffff'
-    }).setOrigin(0, 0.5);
-
-    const diamond1: Phaser.GameObjects.Image = this.scene.add.image(text2.getBounds().right + 5, text1.y, 'diamond').setScale(0.1).setOrigin(0, 0.5);
-
-    const text3: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 50, text1.getBounds().bottom + 5, this.scene.state.lang.getGift,  {
-      font: '26px Shadow',
-      color: '#FBCB64'
-    }).setOrigin(0.5, 0);
-
-    const text4: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 90, text3.getBounds().bottom + 5, this.scene.state.lang.more, {
-      font: '26px Shadow',
-      color: '#FBCB64'
-    }).setOrigin(0.5, 0);
-    
-    const text5: Phaser.GameObjects.Text = this.scene.add.text(text4.getBounds().right + 5, text3.getBounds().bottom + 5, '+750', {
-      font: '26px Shadow',
-      color: '#FFFFFF'
-    }).setOrigin(0, 0);
-
-    const diamond2: Phaser.GameObjects.Image = this.scene.add.image(text5.getBounds().right + 5, text5.y, 'diamond').setScale(0.10).setOrigin(0);
-
-    const text6: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 50, text4.getBounds().bottom + 5, this.scene.state.lang.dontMissChanse, {
-      font: '26px Shadow',
-      color: '#FFFFFF'
-    }).setOrigin(0.5, 0);
+    const { centerX } = this.scene.cameras.main;
+    const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '26px',
+      color: '#FBCB64',
+      shadow: {
+        offsetX: 3,
+        offsetY: 3, 
+        color: 'rgba(0, 0, 0, 0.3)',
+        blur: 2,
+        fill: true,
+      },
+      align: 'center',
+    };
+    const starterpackBg = this.scene.add.sprite(centerX - 130, y, 'starterpack-bg');
+    const starterpackIconShadow = this.scene.add.sprite(centerX - 265, y + 70, 'starterpack-shadow');
+    const starterpackIcon = this.scene.add.sprite(centerX - 270, y, 'starterpack-icon');
+    const text1 = this.scene.add.text(centerX - 90, y - 60, this.scene.state.lang.buyFrom, textStyle).setColor('#FFFFFF').setOrigin(0.5, 0.5);
+    const text2 = this.scene.add.text(text1.getBounds().right + 10, text1.y, '750', textStyle).setOrigin(0, 0.5);
+    const diamond1 = this.scene.add.sprite(text2.getBounds().right + 5, text1.y, 'diamond').setScale(0.1).setOrigin(0, 0.5);
+    const text3 = this.scene.add.text(centerX - 50, text1.getBounds().bottom + 5, this.scene.state.lang.getGift, textStyle).setColor('#FFFFFF').setOrigin(0.5, 0);
+    const text4 = this.scene.add.text(centerX - 90, text3.getBounds().bottom + 5, this.scene.state.lang.more, textStyle).setColor('#FFFFFF').setOrigin(0.5, 0);
+    const text5 = this.scene.add.text(text4.getBounds().right + 5, text3.getBounds().bottom + 5, '+750', textStyle).setOrigin(0, 0);
+    const diamond2 = this.scene.add.sprite(text5.getBounds().right + 5, text5.y, 'diamond').setScale(0.10).setOrigin(0);
+    this.scene.add.text(centerX - 50, text5.getBounds().bottom + 15, this.scene.state.lang.noInterstitial, textStyle).setOrigin(0.5, 0).setFontSize(20);
 
     this.scene.tweens.add({
       targets: starterpackIcon,

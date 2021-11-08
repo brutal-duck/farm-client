@@ -1148,6 +1148,8 @@ export default {
     confirmCleanUpText: 'Хотите привести ферму в порядок?',
     confirmCleanUpHeader: 'Уборка',
     cleanUp: 'Убраться',
+    bonus: 'Бонус',
+    noInterstitial: 'отключение автовоспр.\nрекламы навсегда!'
   },
   en: {
     index: 'en',
@@ -2298,5 +2300,7 @@ export default {
     confirmCleanUpText: 'Want to put a farm in order?',
     confirmCleanUpHeader: 'Cleaning',
     cleanUp: 'clean up',
+    bonus: 'Bonus',
+    noInterstitial: 'Turning off autoospree.\nAdvertising forever!'
   },
 };
