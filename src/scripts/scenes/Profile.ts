@@ -254,9 +254,9 @@ class Profile extends Phaser.Scene {
   
   private createChickenFarm(): void {
     const farmPosition: Iposition = { x: 720, y: 1025 };
-    if (this.state.progress.chicken.open) {
+    if (this.state.userChicken.part > 0) {
       const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-chicken-farm').setOrigin(1, 0.5).setDepth(1);
-      const progressText: string = `${this.state.progress.chicken.part}/${this.state.progress.chicken.max}`;
+      const progressText: string = `${this.state.userChicken.part}/${this.state.progress.chicken.max}`;
       this.add.text(farmPosition.x - 245, farmPosition.y + 20, progressText, progressTextStyle).setOrigin(0.5).setDepth(1);
       this.chickenNotificator = new Notificator(this, { x: farmPosition.x - 200, y: farmPosition.y - 110 }, true).setDepth(2);
       this.click(farmSprite, (): void => {
@@ -300,10 +300,10 @@ class Profile extends Phaser.Scene {
   private createCowFarm(): void {
     const farmPosition: Iposition = { x: 0, y: 1020 };
 
-    if (this.state.progress.cow.open) {
+    if (this.state.userCow.part > 0) {
       const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-cow-farm').setOrigin(0, 0.5);
 
-      const progressText: string = `${this.state.progress.cow.part}/${this.state.progress.cow.max}`;
+      const progressText: string = `${this.state.userCow.part}/${this.state.progress.cow.max}`;
       this.add.text(farmPosition.x + 319, farmPosition.y + 23, progressText, progressTextStyle).setOrigin(0.5);
 
       this.cowNotificator = new Notificator(this, { x: farmPosition.x + 260, y: farmPosition.y - 150 }, true);
@@ -321,7 +321,7 @@ class Profile extends Phaser.Scene {
           this.scene.stop();
         }
       }, 8);
-    } else if (this.state.progress.chicken.part > 0) {
+    } else if (this.state.userChicken.part > 0) {
       this.add.sprite(farmPosition.x, farmPosition.y, 'profile-cow-farm').setOrigin(0, 0.5);
       this.add.sprite(farmPosition.x + 30, farmPosition.y, 'profile-sticker').setOrigin(0, 0.5).setDepth(1)
       const btn: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x + 145, farmPosition.y, 'profile-btn').setDepth(1);
