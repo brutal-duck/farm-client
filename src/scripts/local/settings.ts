@@ -2079,7 +2079,7 @@ const improveClanFarm = [
 
 const CHANGE_EMBLEM_COST: number = 100;
 const CHANGE_CLAN_NAME_COST: number = 100;
-const CREATE_CLAN_COST: number = 100;
+const CREATE_CLAN_COST: number = 10;
 
 export {
   general,
