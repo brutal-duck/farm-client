@@ -1511,6 +1511,35 @@ function createСleanButton(): void {
     });
     mainScene.freeCollector();
   };
+  if (barsScene.checkCleanUpBtn()) {
+    barsScene.cleanUpBtn = barsScene.add.sprite(barsScene.cameras.main.width - 42, 185, 'btn-clean');
+
+    barsScene.clickButton(barsScene.cleanUpBtn, (): void => {
+      barsScene.state.modal = {
+        type: 1,
+        sysType: 24,
+        confirmSpendParams: {
+          type: 'CleanUp',
+          price: 1,
+          callback: (): void => {
+            if (barsScene.state.farm === 'Sheep') actionSheep();
+            else if (barsScene.state.farm === 'Chicken') actionChicken();
+            else if (barsScene.state.farm === 'Cow') actionCow();
+            barsScene.cleanUpBtn?.destroy();
+            barsScene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
+              type: 'cleaning',
+              count: 1,
+            });
+          }
+        }
+      };
+      barsScene.scene.launch('Modal', barsScene.state);
+    });
+  }
+}
+
+function checkCleanUpBtn():  boolean {
+  const barsScene: SheepBars | ChickenBars | CowBars = this;
 
   const farmUser: IuserSheep | IuserChicken | IuserCow = barsScene.state[`user${barsScene.state.farm}`];
   let check = false;
@@ -1536,27 +1565,7 @@ function createСleanButton(): void {
     check = factoryTerritory && factoryTerritory.factory.money > 0;
   }
 
-  if (farmUser.collector <= 0 && check && barsScene.state.userSheep.part > 8) {
-    const btn = barsScene.add.sprite(barsScene.cameras.main.width - 42, 185, 'btn-clean');
-  
-    barsScene.clickButton(btn, (): void => {
-      barsScene.state.modal = {
-        type: 1,
-        sysType: 24,
-        confirmSpendParams: {
-          type: 'CleanUp',
-          price: 1,
-          callback: (): void => {
-            if (barsScene.state.farm === 'Sheep') actionSheep();
-            else if (barsScene.state.farm === 'Chicken') actionChicken();
-            else if (barsScene.state.farm === 'Cow') actionCow();
-            btn?.destroy();
-          }
-        }
-      };
-      barsScene.scene.launch('Modal', barsScene.state);
-    });
-  }
+  return farmUser.collector <= 0 && check && barsScene.state.userSheep.part > 8;
 }
 
 export {
@@ -1601,4 +1610,5 @@ export {
   playSoundOnce,
   setPlatformStorage,
   getPlatformStorage,
+  checkCleanUpBtn,
 }

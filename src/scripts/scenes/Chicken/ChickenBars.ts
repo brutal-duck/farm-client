@@ -3,6 +3,7 @@ import {
   shortTime,
   createTaskZone,
   createСleanButton,
+  checkCleanUpBtn,
 } from '../../general/basic';
 import {
   click,
@@ -66,6 +67,7 @@ class ChickenBars extends Phaser.Scene {
   public hints: Phaser.GameObjects.Group;
   public taskZone: Phaser.GameObjects.Zone;
   public saleBuyIcon: Phaser.GameObjects.Sprite;
+  public cleanUpBtn: Phaser.GameObjects.Sprite;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -81,7 +83,7 @@ class ChickenBars extends Phaser.Scene {
   public plusMoneyAnimation = plusMoneyAnimation.bind(this);
   public createTaskZone = createTaskZone.bind(this);
   public createСleanButton = createСleanButton.bind(this);
-
+  public checkCleanUpBtn = checkCleanUpBtn.bind(this);
 
   public init(state: Istate): void {
     
@@ -359,6 +361,9 @@ class ChickenBars extends Phaser.Scene {
 
     if (this.starterpackIcon && this.state.user.starterpack) this.starterpackIcon?.destroy();
     this.updateSale();
+    if (this.cleanUpBtn?.active) {
+      if (!this.checkCleanUpBtn()) this.cleanUpBtn?.destroy();
+    }
   }
 
   // обновление цены покупки кур

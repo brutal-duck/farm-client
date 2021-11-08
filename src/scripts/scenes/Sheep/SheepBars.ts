@@ -9,6 +9,7 @@ import {
   shortTime,
   createTaskZone,
   createСleanButton,
+  checkCleanUpBtn,
 } from '../../general/basic';
 import { updateNotificationShop } from './../../general/boosts';
 
@@ -75,6 +76,7 @@ class SheepBars extends Phaser.Scene {
   public hints: Phaser.GameObjects.Group;
   public taskZone: Phaser.GameObjects.Zone;
   public saleBuyIcon: Phaser.GameObjects.Sprite;
+  public cleanUpBtn: Phaser.GameObjects.Sprite;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -90,6 +92,7 @@ class SheepBars extends Phaser.Scene {
   public plusMoneyAnimation = plusMoneyAnimation.bind(this);
   public createTaskZone = createTaskZone.bind(this);
   public createСleanButton = createСleanButton.bind(this);
+  public checkCleanUpBtn = checkCleanUpBtn.bind(this);
 
   public init(state: Istate): void {
     
@@ -434,6 +437,10 @@ class SheepBars extends Phaser.Scene {
     else if (this.starterpackIcon && !this.starterpackIcon.visible && this.state.userSheep.tutorial >= 70 && this.state.userSheep?.part > 4) this.starterpackIcon.setVisible(true);
 
     this.updateSale();
+
+    if (this.cleanUpBtn?.active) {
+      if (!this.checkCleanUpBtn()) this.cleanUpBtn?.destroy();
+    }
   }
 
   // обновление цены покупки овцы
