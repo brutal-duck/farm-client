@@ -67,7 +67,7 @@ class Boot extends Phaser.Scene {
   public getPlatformStorage = getPlatformStorage.bind(this);
 
   public init(): void {
-    this.build = 4.10;
+    this.build = 4.11;
     // console.log(this.game.device, 'this.game.device');
     this.state = state;
     this.fontsReady = false;
