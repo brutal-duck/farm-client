@@ -1147,6 +1147,7 @@ export default {
     forNextAd: 'До следующей рекламы',
     confirmCleanUpText: 'Хотите привести ферму в порядок?',
     confirmCleanUpHeader: 'Уборка',
+    cleanUp: 'Убраться',
   },
   en: {
     index: 'en',
@@ -2294,7 +2295,8 @@ export default {
     speedCollectorNotificationChicken: 'You have many animals on the farm, the collector does not have time for them. Improve the gathering of the eggs in order not to lose efficiency.',
     speedCollectorNotificationCow: 'You have many animals on the farm, the collector of milk does not have time for them. Improve the collector not to lose efficiency.',
     forNextAd: 'Until next advertising',
-    confirmCleanUpText: 'Хотите привести ферму в порядок?',
-    confirmCleanUpHeader: 'Уборка',
+    confirmCleanUpText: 'Want to put a farm in order?',
+    confirmCleanUpHeader: 'Cleaning',
+    cleanUp: 'clean up',
   },
 };

@@ -1470,7 +1470,7 @@ function createСleanButton(): void {
   const actionSheep = (): void => {
     const mainScene: Sheep = barsScene.game.scene.keys[barsScene.state.farm];
     mainScene.sheep.children.iterate(el => {
-      mainScene.collectWool(el, true);
+      mainScene.collectWool(el, true, false);
     });
     mainScene.territories.children.iterate((el: Territory) => {
       if (el.territoryType === 2 || el.territoryType === 3) {
@@ -1487,7 +1487,7 @@ function createСleanButton(): void {
   const actionChicken = (): void => {
     const mainScene: Chicken = barsScene.game.scene.keys['Chicken'];
     mainScene.eggs.children.iterate(el => {
-      mainScene.collectEgg(el, true);
+      if (el) mainScene.collectEgg(el, true, false);
     });
     mainScene.territories.children.iterate((el: Territory) => {
       if (el.territoryType === 2 || el.territoryType === 3) el.volume = 1000;

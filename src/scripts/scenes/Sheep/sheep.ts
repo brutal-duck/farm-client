@@ -534,7 +534,7 @@ function buySheep(breed: number, shop: boolean = false): boolean {
 
 
 // подстригатель
-function collectWool(sheep: any, manualСollect: boolean = false): void {
+function collectWool(sheep: any, manualСollect: boolean = false, anim: boolean = true): void {
 
   let path: Iposition;
   let length: number;
@@ -553,7 +553,7 @@ function collectWool(sheep: any, manualСollect: boolean = false): void {
       }
       this.state.userSheep.money += price;
 
-      this.game.scene.keys['SheepBars'].plusMoneyAnimation({
+      if (anim) this.game.scene.keys['SheepBars'].plusMoneyAnimation({
         x: sheep.x,
         y: sheep.y
       });

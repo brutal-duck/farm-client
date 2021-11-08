@@ -42,7 +42,7 @@ export default class ConfirmSpendDiamonds {
       color: 'green',
       textAlign: 'left',
       right1: img,
-      text: this.scene.state.lang.improve,
+      text: this.params.type !== 'CleanUp' ? this.scene.state.lang.improve : this.scene.state.lang.cleanUp,
     };
 
     const canselSettings: IbigButtonSetting = {

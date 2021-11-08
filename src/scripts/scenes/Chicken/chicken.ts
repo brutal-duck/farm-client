@@ -464,7 +464,7 @@ function buyChicken(breed: number, shop: boolean = false): boolean {
 
 
 // собиратель яиц
-function collectEgg(egg: Egg, manualСollect: boolean = false): void {
+function collectEgg(egg: Egg, manualСollect: boolean = false, anim: boolean = true): void {
   let path: Iposition;
   let length: number;
   let repository: any = false;
@@ -479,7 +479,7 @@ function collectEgg(egg: Egg, manualСollect: boolean = false): void {
       }
       this.state.userChicken.money += price;
       egg.destroy();
-      this.game.scene.keys['ChickenBars'].getCurrency({
+      if (anim) this.game.scene.keys['ChickenBars'].getCurrency({
         x: egg.x,
         y: egg.y - 50
       }, 3, 'chickenCoin');
