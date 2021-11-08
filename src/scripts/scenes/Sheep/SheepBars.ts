@@ -46,9 +46,7 @@ class SheepBars extends Phaser.Scene {
   public sheepPrice: Phaser.GameObjects.Text;
   public sheepPriceBubble: Phaser.GameObjects.Graphics;
   public partProgress: Phaser.GameObjects.Text;
-  public balanceBg: Phaser.GameObjects.Image;
-  public waterBg: Phaser.GameObjects.Image;
-  public grassBg: Phaser.GameObjects.Image;
+  public balanceBg: Phaser.GameObjects.Sprite;
   public textWater: any;
   public textGrass: any;
   public waterBar: RoundedProgress;
@@ -60,8 +58,8 @@ class SheepBars extends Phaser.Scene {
   public shop: Phaser.GameObjects.Image;
   public map: Phaser.GameObjects.Image;
   public collectorBtn: Phaser.GameObjects.Image;
-  public waterBalance: Phaser.GameObjects.Image;
-  public grassBalance: Phaser.GameObjects.Image;
+  public waterBalance: Phaser.GameObjects.Sprite;
+  public grassBalance: Phaser.GameObjects.Sprite;
   public timeout: Phaser.Time.TimerEvent; // таймаут пульсации алмазов
   public increaseAnimation: boolean; // метка занятости анимации пульсации алмазов
   public countIncrease: number; // колличество пульсаций
@@ -77,6 +75,10 @@ class SheepBars extends Phaser.Scene {
   public taskZone: Phaser.GameObjects.Zone;
   public saleBuyIcon: Phaser.GameObjects.Sprite;
   public cleanUpBtn: Phaser.GameObjects.Sprite;
+  public feedBoostTimer: Phaser.GameObjects.Text;
+  public boostCount: Phaser.GameObjects.Text;
+  public boostText: Phaser.GameObjects.Text;
+  public cloudSprite: Phaser.GameObjects.Sprite;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -186,14 +188,17 @@ class SheepBars extends Phaser.Scene {
       font: '32px Shadow',
       color: '#7B3B0D'
     }).setDepth(1).setOrigin(0.5, 0.5);
-    this.part = this.add.text(this.cameras.main.centerX, 60, '', {
+
+    this.part = this.add.text(82, 55, '', {
       font: '44px Shadow',
       color: '#124C03'
     }).setDepth(1).setOrigin(0.5, 0.5);
-    this.partProgress = this.add.text(this.cameras.main.centerX, 120, '', {
+    this.partProgress = this.add.text(82, 120, '', {
       font: '32px Shadow',
-      color: '#7B3B0D'
+      color: '#CA6200'
     }).setDepth(1).setOrigin(0.5, 0.5);
+    this.add.sprite(70, 0, 'sheep-leaves').setOrigin(0.5, 0);
+
     this.currentPartProgress();
 
     this.add.sprite(498, 100, 'sheepCoin').setScale(0.22);
@@ -220,34 +225,11 @@ class SheepBars extends Phaser.Scene {
       this.scene.launch('Modal', this.state);
     });
 
-    this.add.sprite(352, 0, 'sheep-leaves').setOrigin(0.5, 0);
-
-    this.balanceBg = this.add.image(0, 0, 'green-balance-bg').setOrigin(0, 0);
-
-    this.click(this.balanceBg, (): void => {
-      if (this.state.userSheep.tutorial >= 100)  {
-        SpeechBubble.create(this, this.state.lang.remainderBalance, 4);
-      }
-    });
-
-    this.waterBalance = this.add.image(70, 10, 'water-balance').setOrigin(0.5, 0).setDepth(2);
-    this.grassBalance = this.add.image(170, 10, 'grass-balance').setOrigin(0.5, 0).setDepth(2);
-    this.waterBg = this.add.image(70, 10, 'resource-enough').setOrigin(0.5, 0).setDepth(1);
-    this.grassBg = this.add.image(170, 10, 'resource-enough').setOrigin(0.5, 0).setDepth(1);
-
-    this.textWater = this.add.text(70, 98, '0%', {
-      font: '26px Shadow',
-      color: '#FFFFFF'
-    }).setDepth(2).setOrigin(0.5, 0.5);
-    this.textGrass = this.add.text(170, 98, '0%', {
-      font: '26px Shadow',
-      color: '#FFFFFF'
-    }).setDepth(2).setOrigin(0.5, 0.5);
-    this.textWater.pulseTimer = 0;
-    this.textGrass.pulseTimer = 0;
-    this.grassBar = new RoundedProgress(this, 170, 47, 0.9);
-    this.waterBar = new RoundedProgress(this, 70, 47, 0.9);
-    this.setBalanceBars(this.game.scene.keys[this.state.farm].balance());
+    this.createBalanceBoard();
+    
+    // this.grassBar = new RoundedProgress(this, 170, 47, 0.9);
+    // this.waterBar = new RoundedProgress(this, 70, 47, 0.9);
+    // this.setBalanceBars(this.game.scene.keys[this.state.farm].balance());
 
     
     // круглый бар собирателя
@@ -293,27 +275,23 @@ class SheepBars extends Phaser.Scene {
 
     if (this.state.userSheep.tutorial < 30) {
       this.textGrass.setVisible(false);
-      this.grassBg.setVisible(false);
       this.grassBalance.setVisible(false);
-      this.grassBar.setVisible(false);
     }
 
     if (this.state.userSheep.tutorial < 40) {
       this.textWater.setVisible(false);
-      this.waterBg.setVisible(false);
       this.waterBalance.setVisible(false);
-      this.waterBar.setVisible(false);
     }
 
     // иконка ежедневных наград для новичков
     if (this.state.newbieTime > 0) {
       
-      this.calendar = this.add.sprite(283, 77, 'calendar').setDepth(2);
+      this.calendar = this.add.sprite(140, 115, 'calendar').setDepth(2);
       this.calendar.counter = 0;
-      this.calendarText = this.add.text(285, 85, String(Number(this.state.daily)), {
+      this.calendarText = this.add.text(this.calendar.x + 2, this.calendar.y + 8, String(Number(this.state.daily)), {
         font: '25px Bip',
         color: '#285881'
-      }).setOrigin(0.5, 0.5).setDepth(2);
+      }).setOrigin(0.5).setDepth(2);
 
       this.click(this.calendar, (): void => {
 
@@ -359,6 +337,107 @@ class SheepBars extends Phaser.Scene {
     }
   }
 
+  private createBalanceBoard(): void {
+    const farmUser: IuserSheep | IuserChicken | IuserCow = this.state[`user${this.state.farm}`];
+    const bgTexture: string = farmUser.part >= 6 ? 'green-balance-bg' : 'green-balance-bg-big';
+    const bgX: number = farmUser.part >= 6 ? this.cameras.main.centerX + 20 : this.cameras.main.centerX - 35;
+    this.balanceBg = this.add.sprite(bgX, 3, bgTexture).setOrigin(0.5, 0);
+
+    this.click(this.balanceBg, (): void => {
+      if (this.state.userSheep.tutorial >= 100)  {
+        SpeechBubble.create(this, this.state.lang.remainderBalance, 4);
+      }
+    });
+
+    const balanceGeom = this.balanceBg.getBounds();
+    const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontSize: '26px',
+      fontFamily: 'Shadow',
+      color: '#ffffff',
+      shadow: {
+        fill: true,
+        offsetX: 3,
+        offsetY: 1,
+        color: 'rgba(0, 0, 0, 0.2)',
+      }
+    };
+    this.grassBalance = this.add.sprite(balanceGeom.left + 10, balanceGeom.centerY - 25, 'grass-balance').setOrigin(0, 0.5).setDepth(2);
+    this.waterBalance = this.add.sprite(balanceGeom.left + 10, balanceGeom.centerY + 30, 'water-balance').setOrigin(0, 0.5).setDepth(2);
+    const grassSpriteGeom = this.grassBalance.getBounds();
+    const waterSpriteGeom = this.waterBalance.getBounds();
+    this.textGrass = this.add.text(balanceGeom.centerX + 20, grassSpriteGeom.centerY, '0%', textStyle).setDepth(2).setOrigin(0.5);
+    this.textWater = this.add.text(balanceGeom.centerX + 20, waterSpriteGeom.centerY, '0%', textStyle).setDepth(2).setOrigin(0.5);
+    this.textWater.pulseTimer = 0;
+    this.textGrass.pulseTimer = 0;
+    if (farmUser.part >= 6) this.createBoostInfo();
+  }
+
+  private destroyBalanceBoard(): void {
+    this.balanceBg?.destroy();
+    this.grassBalance?.destroy();
+    this.waterBalance?.destroy();
+    this.textGrass?.destroy();
+    this.textWater?.destroy();
+  }
+
+  private createBoostInfo(): void {
+    const { centerX } = this.cameras.main;
+    const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '24px',
+      color: '#FEFBFC',
+    };
+    const farmUser: IuserSheep | IuserChicken | IuserCow = this.state[`user${this.state.farm}`];
+    const plate = this.add.sprite(centerX - 95, 40, 'plate-feed');
+    const icon = this.add.sprite(centerX - 170, 40, 'feed-sheep-balance');
+    this.feedBoostTimer = this.add.text(plate.x, plate.y, shortTime(farmUser.feedBoostTime,this.state.lang), textStyle).setOrigin(0.5);
+
+    const countStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '24px',
+      color: '#FCE2AC',
+    };
+    const style: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '20px',
+      color: '#FCD079',
+    };
+    let bonusCount: number = 0;
+    if (farmUser.feedBoostTime > 0) bonusCount += 100;
+    if (this.state.clan) {
+      const clanFarm: IclanFarm = this.state.clan[this.state.farm.toLowerCase()];
+      bonusCount += clanFarm.level;
+      if (clanFarm.cooldown > 0) bonusCount -= 1;
+    }
+    this.boostText = this.add.text(centerX - 130, 85, this.state.lang.bonus + ':', style).setOrigin(0.5);
+    this.boostCount = this.add.text(centerX - 130, this.boostText.getBounds().bottom, `+${bonusCount}%`, countStyle).setOrigin(0.5, 0);
+    this.cloudSprite = this.add.sprite(this.boostCount.getBounds().right, this.boostCount.getBounds().centerY, 'cloud-info').setOrigin(0, 0.5);
+  }
+
+  public updateFeedBoostTimer(): void {
+    const farmUser: IuserSheep | IuserChicken | IuserCow = this.state[`user${this.state.farm}`];
+    if (farmUser.part >= 6 && this.feedBoostTimer?.active) {
+      let bonusCount: number = 0;
+      if (farmUser.feedBoostTime > 0) bonusCount += 100;
+      if (this.state.clan) {
+        const clanFarm: IclanFarm = this.state.clan[this.state.farm.toLowerCase()];
+        bonusCount += clanFarm.level;
+        if (clanFarm.cooldown > 0) bonusCount -= 1;
+      }
+      const str = `+${bonusCount}%`;
+      if (str !== this.boostCount.text) {
+        this.boostCount.setText(str);
+        this.cloudSprite.setX(this.boostCount.getBounds().right);
+      }
+      const timeStr = shortTime(farmUser.feedBoostTime,this.state.lang);
+      if (timeStr !== this.feedBoostTimer.text) {
+        this.feedBoostTimer.setText(timeStr);
+      }
+    } else if (farmUser.part >= 6) {
+      this.destroyBalanceBoard();
+      this.createBalanceBoard();
+    }
+  }
 
   public update(): void {
 
@@ -441,6 +520,7 @@ class SheepBars extends Phaser.Scene {
     if (this.cleanUpBtn?.active) {
       if (!this.checkCleanUpBtn()) this.cleanUpBtn?.destroy();
     }
+    this.updateFeedBoostTimer();
   }
 
   // обновление цены покупки овцы
@@ -484,18 +564,6 @@ class SheepBars extends Phaser.Scene {
       this.balanceBg.setTexture('green-balance-bg');
     }
 
-    if (balance.notEnoughWater && this.waterBg.texture.key === 'resource-enough' && this.state.userSheep.tutorial >= 100) {
-      this.waterBg.setTexture('resource-problem');
-    } else if (!balance.notEnoughWater && this.waterBg.texture.key === 'resource-problem' && this.state.userSheep.tutorial >= 100) {
-      this.waterBg.setTexture('resource-enough');
-    }
-
-    if (balance.notEnoughGrass && this.grassBg.texture.key === 'resource-enough' && this.state.userSheep.tutorial >= 100) {
-      this.grassBg.setTexture('resource-problem');
-    } else if (!balance.notEnoughGrass && this.grassBg.texture.key === 'resource-problem' && this.state.userSheep.tutorial >= 100) {
-      this.grassBg.setTexture('resource-enough');
-    }
-
     let waterPercent: string = balance.waterPercent + '%';
     let waterColor: number = 0x96D005;
 
@@ -510,10 +578,10 @@ class SheepBars extends Phaser.Scene {
     if (this.textWater.text !== waterPercent && this.state.userSheep.tutorial >= 40) {
 
       if (this.state.userSheep.tutorial === 40 && waterPercent !== '-100%') {
-        this.waterBar.setPercent(balance.waterPercent).setTint(waterColor);
+        // this.waterBar.setPercent(balance.waterPercent).setTint(waterColor);
         this.textWater.setText(waterPercent);
       } else if (this.state.userSheep.tutorial > 40) {
-        this.waterBar.setPercent(balance.waterPercent).setTint(waterColor);
+        // this.waterBar.setPercent(balance.waterPercent).setTint(waterColor);
         this.textWater.setText(waterPercent);
       }
       
@@ -533,10 +601,10 @@ class SheepBars extends Phaser.Scene {
     if (this.textGrass.text !== grassPercent && this.state.userSheep.tutorial >= 30) {
 
       if (this.state.userSheep.tutorial === 30 && grassPercent !== '-100%') {
-        this.grassBar.setPercent(balance.grassPercent).setTint(grassColor);
+        // this.grassBar.setPercent(balance.grassPercent).setTint(grassColor);
         this.textGrass.setText(grassPercent);
       } else if (this.state.userSheep.tutorial > 30) {
-        this.grassBar.setPercent(balance.grassPercent).setTint(grassColor);
+        // this.grassBar.setPercent(balance.grassPercent).setTint(grassColor);
         this.textGrass.setText(grassPercent);
       }
 

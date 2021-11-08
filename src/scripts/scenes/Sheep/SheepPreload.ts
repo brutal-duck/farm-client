@@ -192,6 +192,8 @@ const plus: string = require("./../../../assets/images/icons/plus.png");
 const sheepLeaves: string = require("./../../../assets/images/sheep/sheep-leaves.png");
 const greenBalanceBg: string = require("./../../../assets/images/balance/green-balance-bg.png");
 const redBalanceBg: string = require("./../../../assets/images/balance/red-balance-bg.png");
+const greenBalanceBgBig: string = require("./../../../assets/images/balance/green-balance-bg-big.png");
+const redBalanceBgBig: string = require("./../../../assets/images/balance/red-balance-bg-big.png");
 const resourceEnough: string = require("./../../../assets/images/balance/resource-enough.png");
 const resourceProblem: string = require("./../../../assets/images/balance/resource-problem.png");
 const grassBalance: string = require("./../../../assets/images/balance/grass-balance.png");
@@ -339,6 +341,9 @@ const circleOutline: string = require("./../../../assets/images/circle-outline.p
 const cooldownPlate: string = require("./../../../assets/images/cooldown-plate.png");
 const saleIcon: string = require('../../../assets/images/sale-icon.png');
 const btnClean: string = require('../../../assets/images/icons/btn-clean.png');
+const feedSheepBalance: string = require('../../../assets/images/balance/feed-sheep-balance.png');
+const plateFeed: string = require('../../../assets/images/balance/plate-feed.png');
+const cloudInfo: string = require('../../../assets/images/balance/cloud-info.png');
 class SheepPreload extends Phaser.Scene {
 
   public lang: string; // индекс языка
@@ -561,7 +566,9 @@ class SheepPreload extends Phaser.Scene {
     this.load.image('plus', plus);
     this.load.image('sheep-leaves', sheepLeaves);
     this.load.image('green-balance-bg', greenBalanceBg);
+    this.load.image('green-balance-bg-big', greenBalanceBgBig);
     this.load.image('red-balance-bg', redBalanceBg);
+    this.load.image('red-balance-bg-big', redBalanceBgBig);
     this.load.image('resource-enough', resourceEnough);
     this.load.image('resource-problem', resourceProblem);
     this.load.image('grass-balance', grassBalance);
@@ -712,6 +719,9 @@ class SheepPreload extends Phaser.Scene {
     this.load.image('text-sale', textSale);
     this.load.image('icon-sale', saleIcon);
     this.load.image('btn-clean', btnClean);
+    this.load.image('feed-sheep-balance', feedSheepBalance);
+    this.load.image('plate-feed', plateFeed);
+    this.load.image('cloud-info', cloudInfo);
   }
   
   public create(): void {

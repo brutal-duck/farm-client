@@ -1213,7 +1213,7 @@ function remainderSellResource(): void {
 }
 
 function createTaskZone(): void {
-  this.taskZone = this.add.zone(this.cameras.main.centerX, 75, 200, 150).setDepth(1).setDropZone(undefined, () => {});
+  this.taskZone = this.add.zone(80, 75, 160, 150).setDepth(1).setDropZone(undefined, () => {});
 
   // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
   // graphics

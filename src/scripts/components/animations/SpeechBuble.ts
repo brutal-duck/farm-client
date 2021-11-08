@@ -82,8 +82,8 @@ export default class SpeechBubble {
       this.bubbleFarmer.setPosition(this.scene.cameras.main.width - 20, this.y + this.triangleCoords.point2Y).setOrigin(1, 0.5).setVisible(true);
     } 
     if (this.type === 4) {
-      this.y = 160;
-      this.x = 20;
+      this.y = 150;
+      this.x = 300;
       this.triangleCoords.point1Y = -15;
       this.triangleCoords.point2Y = 0;
       this.triangleCoords.point3Y = 0;
