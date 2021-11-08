@@ -156,7 +156,9 @@ export default class Ads {
       result = this.scene.state.interstitialTimer >= INTERSTITIAL_DELAY && userFarm.part >= 2;
     }
 
-    return result && (this.scene.state.newbieTime <= 0 || this.scene.state.userChicken.part > 0);
+    return result 
+    && (this.scene.state.newbieTime <= 0 || this.scene.state.userChicken.part > 0) 
+    && !this.scene.state.user.starterpack;
   }
 
   public adReward(): void {
