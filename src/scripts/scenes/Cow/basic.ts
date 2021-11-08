@@ -16,9 +16,9 @@ function balance(): Ibalance {
   let notEnoughGrass: boolean = false;
   let notEnoughWater: boolean = false;
 
-  for (let i in this.animalGroup.children.entries) {
+  for (let i in this.animalGroup?.children.entries) {
 
-    let cow: CowSprite = this.animalGroup.children.entries[i];
+    let cow: CowSprite = this.animalGroup?.children.entries[i];
     grassConsumption += cow.settings.eating;
     waterConsumption += cow.settings.drinking;
   }
@@ -26,9 +26,9 @@ function balance(): Ibalance {
   grassConsumption = Math.round(grassConsumption / 2);
   waterConsumption = Math.round(waterConsumption / 2);
 
-  for (let i in this.territories.children.entries) {
+  for (let i in this.territories?.children.entries) {
 
-    const territory: Territory = this.territories.children.entries[i];
+    const territory: Territory = this.territories?.children.entries[i];
 
     if (territory.territoryType === 2 || territory.territoryType === 3) {
       const reg: number = this.settings.territoriesCowSettings.find(item => item.improve === territory.improve).regeneration;

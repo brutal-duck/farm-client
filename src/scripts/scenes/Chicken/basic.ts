@@ -14,9 +14,9 @@ function balance(): Ibalance {
   let notEnoughGrass: boolean = false;
   let notEnoughWater: boolean = false;
 
-  for (let i in this.chicken.children.entries) {
+  for (let i in this.chicken?.children.entries) {
 
-    let chicken = this.chicken.children.entries[i];
+    let chicken = this.chicken?.children.entries[i];
 
     let breed: number;
     if (chicken.type === 0) breed = 1;
@@ -32,9 +32,9 @@ function balance(): Ibalance {
   grassConsumption = Math.round(grassConsumption / 2);
   waterConsumption = Math.round(waterConsumption / 2);
 
-  for (let i in this.territories.children.entries) {
+  for (let i in this.territories?.children.entries) {
 
-    let territory = this.territories.children.entries[i];
+    let territory = this.territories?.children.entries[i];
 
     if (territory.territoryType === 2 || territory.territoryType === 3) {
       
