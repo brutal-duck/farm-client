@@ -320,6 +320,7 @@ class UnicornPreload extends Phaser.Scene {
       this.loadTime = Math.round(new Date().getTime() / 1000);
       this.state.socket = new Socket(this.state);
     }
+    Ads.showInterstitialOnPreload(this.state);
   }
   
   public preload(): void {
@@ -645,10 +646,6 @@ class UnicornPreload extends Phaser.Scene {
       this.serverError = false;
       this.children.destroy();
       new ErrorWindow(this, this.state.lang.checkYourInternet);
-    }
-
-    if (this.userReady) {
-      Ads.showInterstitialOnPreload(this.state);
     }
   }
 
