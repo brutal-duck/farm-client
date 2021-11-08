@@ -11,6 +11,10 @@ import BigInteger from "../../libs/BigInteger";
 import MoneyAnimation from "../animations/MoneyAnimation";
 import { randomString } from "../../general/basic";
 import Shop from './../../scenes/Modal/Shop/Main';
+import SheepPreload from './../../scenes/Sheep/SheepPreload';
+import ChickenPreload from './../../scenes/Chicken/ChickenPreload';
+import CowPreload from './../../scenes/Cow/CowPreload';
+import UnicornPreload from './../../scenes/Event/Unicorns/UnicornPreload';
 
 const INTERSTITIAL_DELAY = 30;
 /**
@@ -25,12 +29,12 @@ const INTERSTITIAL_DELAY = 30;
 */
 
 export default class Ads {
-  public scene: Sheep | Chicken | Cow | Unicorn
+  public scene: Sheep | Chicken | Cow | Unicorn;
   private musicVolume: number;
   private soundVolume: number;
 
   constructor(scene: Sheep | Chicken | Cow | Unicorn) {
-    this.scene = scene
+    this.scene = scene;
     this.musicVolume = this.scene.state.musicVolume || 0;
     this.soundVolume = this.scene.state.soundVolume || 0;
   }
@@ -111,7 +115,7 @@ export default class Ads {
   }
 
   public showInterstitialAd(): void {
-    if (!this.checkShowInterstitial()) return;
+    if (!Ads.checkShowInterstitial(this.scene.state)) return;
     this.scene.state.interstitialTimer = 0;
     switch (this.scene.state.platform) {
       case 'vk':
@@ -145,20 +149,55 @@ export default class Ads {
     }
   }
 
-  private checkShowInterstitial(): boolean {
-    const farm: string = this.scene.state.farm;
+  public static checkShowInterstitial(state: Istate): boolean {
+    const farm: string = state.farm;
     let result: boolean;
     if (farm === 'Unicorn') {
-      const userFarm: IuserUnicorn = this.scene.state.userUnicorn;
-      result = this.scene.state.interstitialTimer >= INTERSTITIAL_DELAY && userFarm.points > 2;
+      const userFarm: IuserUnicorn = state.userUnicorn;
+      result = state.interstitialTimer >= INTERSTITIAL_DELAY && userFarm.points > 2;
     } else {
-      const userFarm: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${farm}`];
-      result = this.scene.state.interstitialTimer >= INTERSTITIAL_DELAY && userFarm.part >= 2;
+      const userFarm: IuserSheep | IuserChicken | IuserCow = state[`user${farm}`];
+      result = state.interstitialTimer >= INTERSTITIAL_DELAY && userFarm.part >= 2;
     }
 
     return result 
-    && (this.scene.state.newbieTime <= 0 || this.scene.state.userChicken.part > 0) 
-    && !this.scene.state.user.starterpack;
+    && (state.newbieTime <= 0 || state.userChicken.part > 0) 
+    && !state.user.starterpack;
+  }
+
+  public static showInterstitialOnPreload(state: Istate): void {
+    if (!Ads.checkShowInterstitial(state)) return;
+    state.interstitialTimer = 0;
+    switch (state.platform) {
+      case 'vk':
+        bridge.send("VKWebAppShowNativeAds", { ad_format:"interstitial" })
+        .then(data => {
+          if (data.result) state.amplitude.logAmplitudeRevenue('interstitial', 0, 'interstitial', {});
+        });
+        break;
+      case 'ok':
+        FAPI.UI.showAd();
+        break;
+      case 'ya':
+        try {
+          state.ysdk?.adv.showFullscreenAdv({
+            callbacks: {
+              onOpen: () => {
+                state.amplitude.logAmplitudeRevenue('interstitial', 0, 'interstitial', {});
+              },
+            },
+          });
+        } catch (e) {
+          console.log(e);
+        }
+        break;
+      case 'android':
+        window['admob'].interstitial.prepare();
+        state.amplitude.logAmplitudeRevenue('interstitial', 0, 'interstitial', {});
+        break;
+      default:
+        break;
+    }
   }
 
   public adReward(): void {

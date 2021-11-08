@@ -4,6 +4,7 @@ import loadData from '../../../general/loadData';
 import { loadingScreen } from '../../../general/basic';
 import ErrorWindow from './../../../components/Web/ErrorWindow';
 import { clickShopBtn } from '../../../general/clicks';
+import Ads from './../../../components/Utils/Ads';
 
 const pixel: any = require("./../../../../assets/images/pixel.png");
 const bg: any = require("./../../../../assets/images/scroll-bg.png");
@@ -644,6 +645,10 @@ class UnicornPreload extends Phaser.Scene {
       this.serverError = false;
       this.children.destroy();
       new ErrorWindow(this, this.state.lang.checkYourInternet);
+    }
+
+    if (this.userReady) {
+      Ads.showInterstitialOnPreload(this.state);
     }
   }
 

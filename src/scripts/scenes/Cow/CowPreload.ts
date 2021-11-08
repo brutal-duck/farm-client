@@ -7,6 +7,7 @@ import LocalStorage from './../../libs/LocalStorage';
 import { clickShopBtn } from '../../general/clicks';
 import { general } from '../../local/settings';
 import ErrorWindow from './../../components/Web/ErrorWindow';
+import Ads from './../../components/Utils/Ads';
 
 const pixel: string = require('./../../../assets/images/pixel.png');
 const bg: string = require('./../../../assets/images/scroll-bg.png');
@@ -549,6 +550,10 @@ class CowPreload extends Phaser.Scene {
       this.serverError = false;
       this.children.destroy();
       new ErrorWindow(this, this.state.lang.checkYourInternet);
+    }
+
+    if (this.userReady) {
+      Ads.showInterstitialOnPreload(this.state);
     }
 
   }
