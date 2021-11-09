@@ -17,6 +17,7 @@ interface ItriangleCoords {
   *2.	Указывает на пещеру;   
   *3.	Вызывается в барах, в верхнем правом углу, под монетами;   
   *4. Вызывается в барах, указывает на баланс бар.  
+  *5. Вызывается в барах, указывает на комбикормовый бонус.
 */
 export default class SpeechBubble {
   private text: string;
@@ -84,6 +85,16 @@ export default class SpeechBubble {
     if (this.type === 4) {
       this.y = 150;
       this.x = 300;
+      this.triangleCoords.point1Y = -15;
+      this.triangleCoords.point2Y = 0;
+      this.triangleCoords.point3Y = 0;
+      this.triangleCoords.point1X = 80;
+      this.triangleCoords.point2X = 65;
+      this.triangleCoords.point3X = 95;
+    }
+    if (this.type === 5) {
+      this.y = 150;
+      this.x = 170;
       this.triangleCoords.point1Y = -15;
       this.triangleCoords.point2Y = 0;
       this.triangleCoords.point3Y = 0;

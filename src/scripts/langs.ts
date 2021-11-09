@@ -1149,7 +1149,8 @@ export default {
     confirmCleanUpHeader: 'Уборка',
     cleanUp: 'Убраться',
     bonus: 'Бонус',
-    noInterstitial: 'отключение автовоспр.\nрекламы навсегда!'
+    noInterstitial: 'отключение автовоспр.\nрекламы навсегда!',
+    turnOnFeedBoost: 'Включите комбикорм, чтобы вдвое увеличить доход',
   },
   en: {
     index: 'en',
@@ -2301,6 +2302,7 @@ export default {
     confirmCleanUpHeader: 'Cleaning',
     cleanUp: 'clean up',
     bonus: 'Bonus',
-    noInterstitial: 'Turning off autoospree.\nAdvertising forever!'
+    noInterstitial: 'Turning off autoospree.\nAdvertising forever!',
+    turnOnFeedBoost: 'Turn on the feed to double income',
   },
 };

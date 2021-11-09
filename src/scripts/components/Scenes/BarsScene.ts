@@ -140,12 +140,12 @@ export default class BarsScene extends Phaser.Scene {
     }
   }
 
-  private createBottomBar() {
+  private createBottomBar(): void {
     this.add.sprite(0, this.height + 10, 'tabbar').setInteractive().setOrigin(0, 1);
     this.createBtns();
   }
 
-  private createTopBar() {
+  private createTopBar(): void {
     this.add.sprite(0, 0, 'topbar').setOrigin(0, 0).setInteractive();
     this.createPartProgress();
     this.createBalanceInfo();
@@ -154,7 +154,7 @@ export default class BarsScene extends Phaser.Scene {
     this.createCalendarIcon();
   }
 
-  private createPartProgress() {
+  private createPartProgress(): void {
     const currentPartStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontSize: '44px',
       fontFamily: 'Shadow',
@@ -173,7 +173,7 @@ export default class BarsScene extends Phaser.Scene {
     this.setCurrentPartProgress();
   }
 
-  private createCalendarIcon() {
+  private createCalendarIcon(): void {
     if (this.state.newbieTime <= 0) return;
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Bip',
@@ -188,7 +188,7 @@ export default class BarsScene extends Phaser.Scene {
     this.calendarText = this.add.text(x + 2, y + 8, str, textStyle).setOrigin(0.5).setDepth(2);
   }
 
-  private createMoneyInfo() {
+  private createMoneyInfo(): void {
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontSize: '32px',
       fontFamily: 'Shadow',
@@ -205,7 +205,7 @@ export default class BarsScene extends Phaser.Scene {
     this.clickButton(this.addMoney, (): void => { this.openModal({ type: 2, shopType: 2 }); });
   }
 
-  private createStarterpackIcon() {
+  private createStarterpackIcon(): void {
     if (!this.state.user.starterpack) {
       this.starterpackIcon = this.add.sprite(480, 25, 'stock-icon').setScale(0.34).setVisible(false);
       this.click(this.starterpackIcon, (): void => { this.openModal({ type: 2, shopType: 1 }); });
@@ -256,7 +256,7 @@ export default class BarsScene extends Phaser.Scene {
     }
   }
   
-  private createBtns() {
+  private createBtns(): void {
     this.createAnimalBuyBtn();  
     this.createCollectorBtn();
     this.createShopBtn();
@@ -412,6 +412,10 @@ export default class BarsScene extends Phaser.Scene {
     this.boostCount = this.add.text(centerX - 130, this.boostText.getBounds().bottom, `+${bonusCount}%`, countStyle).setOrigin(0.5, 0);
     this.cloudSprite = this.add.sprite(this.boostCount.getBounds().right, this.boostCount.getBounds().centerY, 'cloud-info').setOrigin(0, 0.5);
 
+    const feedBoostZone = this.add.zone(centerX - 125, 35, 150, 70).setDropZone(undefined, () => null);
+    const cloudZone = this.add.zone(centerX - 125, 105, 150, 70).setDropZone(undefined, () => null);
+    this.click(feedBoostZone, (): void => { this.openModal({ type: 2, shopType: 4 }); });
+    this.click(cloudZone, (): void => { this.clickOnCloud(); });
   }
 
   private updateFeedBoostTimer(): void {
@@ -441,10 +445,25 @@ export default class BarsScene extends Phaser.Scene {
     }
   }
 
-  private updatePartProgress() {
+  private updatePartProgress(): void {
     if (this.part.text !== String(shortNum(this.farmUser.part))) {
       this.part.setText(String(this.farmUser.part));
     }
+  }
+
+  private clickOnCloud(): void {
+    let str = this.state.lang.turnOnFeedBoost;
+    if (this.farmUser.feedBoostTime > 0) {
+      str = `${this.state.lang.priceBonus}\n+100% ${this.state.lang.feedBoostTitle}`;
+      if (this.state.clan) {
+        const level: number = this.state.clan[this.state.farm.toLowerCase()].level;
+        str += `\n+${level}% ${this.state.lang.fromClanFarm}`;
+      }
+    } else if (this.state.clan) {
+      const level: number = this.state.clan[this.state.farm.toLowerCase()].level;
+      str = `${this.state.lang.priceBonus}\n+${level}% ${this.state.lang.fromClanFarm}`;
+    }
+    SpeechBubble.create(this, str, 5);
   }
 
   private updateMoneyInfo(): void {
@@ -487,7 +506,7 @@ export default class BarsScene extends Phaser.Scene {
     }
   }
 
-  private updateStarterpackIcon() {
+  private updateStarterpackIcon(): void {
     const check = Utils.checkStarterpack(this.state);
     if (this.starterpackIcon && this.state.user.starterpack)
       this.starterpackIcon?.destroy();
