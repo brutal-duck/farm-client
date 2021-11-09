@@ -10,6 +10,7 @@ import Arrow from '../components/animations/Arrow';
 import Hint from '../components/animations/Hint';
 import Firework from './../components/animations/Firework';
 import RoundedProgress from '../components/animations/RoundedProgress';
+import SheepBars from './Sheep/SheepBars';
 
 
 class Tutorial extends Phaser.Scene {
@@ -426,8 +427,8 @@ class Tutorial extends Phaser.Scene {
         });
 
       } else if (this.state.tutorial.additional === 'collector') {
-        
-        this.game.scene.keys['SheepBars'].collectorBtn.setVisible(false);
+        const barsScene = this.game.scene.getScene('SheepBars') as SheepBars;
+        barsScene.collectorBtn.setVisible(false);
         this.tutorText = this.state.lang.addTutorialCollector;
         let button: Phaser.GameObjects.Sprite = this.add.sprite(230, this.height - 90, 'wool-collector');
 
@@ -613,10 +614,11 @@ class Tutorial extends Phaser.Scene {
           this.showSheepMoney();
 
           Arrow.generate(this, 5);
-
-          this.game.scene.keys['SheepBars'].sheepBuy.setVisible(false);
-          this.game.scene.keys['SheepBars'].sheepPrice.setVisible(false);
-          this.game.scene.keys['SheepBars'].sheepPriceBubble.setVisible(false);
+          
+          const barsScene = this.game.scene.getScene('SheepBars') as SheepBars;
+          barsScene.animalBuy.setVisible(false);
+          barsScene.animalPrice.setVisible(false);
+          barsScene.animalPriceBubble.setVisible(false);
 
           this.tutorText = this.state.lang.sheepTutorial_50;
           this.skipTutorial = true;

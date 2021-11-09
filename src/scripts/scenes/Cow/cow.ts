@@ -236,7 +236,7 @@ function buyCow(breed: number, shop: boolean = false): boolean {
       this.animalGroup.generate({ x, y }, breed, id, 0, 0, 0, 7, true);
       this.state.userCow.money -= cowPrice.price;
       this.state.userCow.countCow = cowPrice.countCow;
-      this.game.scene.keys['CowBars'].updateCowPrice();
+      this.game.scene.keys['CowBars'].updateAnimalPrice();
       this.tryTask(1, breed);
       this.tryClanTask(1);
       this.tryTask(4, breed);

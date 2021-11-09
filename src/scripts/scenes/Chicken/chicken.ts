@@ -406,7 +406,7 @@ function buyChicken(breed: number, shop: boolean = false): boolean {
       this.getChicken(id, breed, x, y);
       this.state.userChicken.money -= chickenPrice.price;
       this.state.userChicken.countChicken = chickenPrice.countChicken;
-      this.game.scene.keys['ChickenBars'].updateChickenPrice();
+      this.game.scene.keys['ChickenBars'].updateAnimalPrice();
       this.tryTask(1, breed);
       this.tryClanTask(1);
       this.tryTask(4, breed);

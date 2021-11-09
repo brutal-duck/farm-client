@@ -7,6 +7,8 @@ import Chicken from './../../scenes/Chicken/Main';
 import Sheep from './../../scenes/Sheep/Main';
 import FadeOut from './../animations/FadeOut';
 import Utils from './../../libs/Utils';
+import SheepBars from './../../scenes/Sheep/SheepBars';
+import BarsScene from '../Scenes/BarsScene';
 
 export default class Territory extends Phaser.Physics.Arcade.Sprite {
   public scene: Cow | Sheep | Chicken;
@@ -534,27 +536,14 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   }
 
   public fairLevelUp(): void {
-
-    const fairs: IfairLevel[] = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`${this.scene.state.farm.toLowerCase()}FairLevels`];
+    const farm = this.scene.state.farm.toLowerCase();
+    const fairs: IfairLevel[] = this.scene.state[`${farm}Settings`][`${farm}FairLevels`];
     const user: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
-    let updateAnimalBuy: () => void;
-
-    if (this.scene.state.farm === 'Sheep') {
-      updateAnimalBuy = (): void => {
-        this.scene.game.scene.keys['SheepBars'].sheepBuy.setTexture('sheep-buy-icon-' + this.scene.maxBreedForBuy());
-        this.scene.game.scene.keys['SheepBars'].updateAnimalPrice();
-      }
-    } else if (this.scene.state.farm === 'Chicken') {
-      updateAnimalBuy = (): void => {
-        this.scene.game.scene.keys['ChickenBars'].chickenBuy.setTexture('chicken-buy-icon-' + this.scene.maxBreedForBuy());
-        this.scene.game.scene.keys['ChickenBars'].updateChickenPrice();
-      }
-    } else if (this.scene.state.farm === 'Cow') {
-      updateAnimalBuy = (): void => {
-        this.scene.game.scene.keys['CowBars'].cowBuy.setTexture('cow-buy-icon-' + this.scene.maxBreedForBuy());
-        this.scene.game.scene.keys['CowBars'].updateCowPrice();
-      }
-    }
+    const updateAnimalBuy = (): void => {
+      const barsScene = this.scene.game.scene.getScene(`${this.scene.state.farm}Bars`) as BarsScene;
+      barsScene.animalBuy.setTexture(`${farm}-buy-icon-${this.scene.maxBreedForBuy()}`);
+      barsScene.updateAnimalPrice();
+    };
 
     const nextFair = fairs.find((item: IfairLevel) => item.level === user.fair + 1);
     if (nextFair && user.fair < fairs.length) {
