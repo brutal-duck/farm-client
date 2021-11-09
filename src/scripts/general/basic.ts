@@ -1486,7 +1486,8 @@ function createСleanButton(): void {
 
   const actionChicken = (): void => {
     const mainScene: Chicken = barsScene.game.scene.keys['Chicken'];
-    mainScene.eggs.children.iterate(el => {
+    const eggs = [...mainScene.eggs.children.entries];
+    eggs.forEach(el => {
       if (el) mainScene.collectEgg(el, true, false);
     });
     mainScene.territories.children.iterate((el: Territory) => {
