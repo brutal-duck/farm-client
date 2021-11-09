@@ -88,7 +88,6 @@ class Modal extends Phaser.Scene {
   public bigButton = bigButton.bind(this);
   public repositoryBtn = repositoryBtn.bind(this);
   public shopButton = shopButton.bind(this);
-  public shortTime = shortTime.bind(this);
   public shortNum = shortNum.bind(this);
   public eventTerritory = eventTerritory.bind(this);
   public improveCollectorAnim = improveCollectorAnim.bind(this);
@@ -323,7 +322,7 @@ class Modal extends Phaser.Scene {
       if (this.progressText.text !== volume) this.progressText.setText(volume);
 
       if (this.state[`user${this.state.farm}`].feedBoostTime > 0) {
-        const text = `${this.state.lang.feedBoostTitle}. ${this.state.lang.left} ${this.shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang)}`;
+        const text = `${this.state.lang.feedBoostTitle}. ${this.state.lang.left} ${shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang)}`;
         if (text !== this.feedBoostText.text) {
           this.feedBoostText?.setText(text);
         }
@@ -363,7 +362,7 @@ class Modal extends Phaser.Scene {
       if (this.progressText.text !== volume) this.progressText.setText(volume);
 
       if (this.state[`user${this.state.farm}`].feedBoostTime > 0) {
-        this.feedBoostText?.setText(this.state.lang.feedBoostCounterText + this.shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang));
+        this.feedBoostText?.setText(this.state.lang.feedBoostCounterText + shortTime(this.state[`user${this.state.farm}`].feedBoostTime, this.state.lang));
         this.feedBoostText?.setVisible(true);
       } else {
         this.feedBoostText?.setVisible(false);

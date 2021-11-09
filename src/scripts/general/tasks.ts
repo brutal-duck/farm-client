@@ -96,7 +96,7 @@ function tryTask(type: number, state: number, count: number = 1, currentProgress
         part: part,
       });
     }
-    this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
+    this.game.scene.keys[this.state.farm + 'Bars'].setCurrentPartProgress();
   }
 
   if ((task?.done === 0 && currentProgress)) {
@@ -109,7 +109,7 @@ function tryTask(type: number, state: number, count: number = 1, currentProgress
         part: part,
       });
     }
-    this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
+    this.game.scene.keys[this.state.farm + 'Bars'].setCurrentPartProgress();
   }
 
   if (task?.progress >= task?.count && (task?.type === 21 || task?.type === 22 || task?.type === 3)) {
@@ -119,7 +119,7 @@ function tryTask(type: number, state: number, count: number = 1, currentProgress
       task_id: task.id,
       part: part,
     });
-    this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
+    this.game.scene.keys[this.state.farm + 'Bars'].setCurrentPartProgress();
   }
 }
 
@@ -345,7 +345,7 @@ function checkDoneTasks(): void {
       }
     }
   }
-  this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
+  this.game.scene.keys[this.state.farm + 'Bars'].setCurrentPartProgress();
 }
 
 function clickTaskBoard(task: Itasks): void {

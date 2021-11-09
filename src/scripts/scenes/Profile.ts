@@ -4,6 +4,7 @@ import { scoreEnding } from './Event/Unicorns/basic';
 import Currency from '../components/animations/Currency';
 import Notificator from './../components/gameObjects/Notificator';
 import ClanFlagPole from './../components/clan/ClanFlagPole';
+import Utils from './../libs/Utils';
 
 const background: string = require('./../../assets/images/profile/background.jpg');
 const chickenFarm: string = require('./../../assets/images/profile/chicken-farm.png');
@@ -583,7 +584,7 @@ class Profile extends Phaser.Scene {
 
     this.shopNotificator = new Notificator(this, { x: pos.x + 60, y: pos.y - 60, });
 
-    if (!this.state.user.starterpack && (this.state.progress.sheep.part > 4 || this.state.progress.chicken.part >= 1) && this.state.user.takenFreeDiamonds) {
+    if (Utils.checkStarterpack(this.state) && this.state.user.takenFreeDiamonds) {
 
       const starterpackIcon: Phaser.GameObjects.Sprite = this.add.sprite(pos.x + 55, pos.y - 50, 'stock-icon').setScale(0.45);
       this.tweens.add({

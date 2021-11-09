@@ -44,5 +44,19 @@ export default class Utils {
     && state.sales.some(el => el.type === saleName && el.startTime <= 0 && el.endTime > 0) 
     && state.userSheep.part > 4;
   }
+
+  /**
+   * 
+   * @param state
+   * @returns возвращает true, если стартерпак доступен игроку, иначе false
+   */
+  public static checkStarterpack = (state: Istate): boolean => {
+    return !state.user.starterpack &&
+    state.userSheep.tutorial >= 100 &&
+    (state.userSheep?.part > 4 ||
+    state.userChicken?.part >= 1 ||
+    state.userUnicorn?.points >= 1 ||
+    state.userCow?.part >= 1);
+  }
 };
 

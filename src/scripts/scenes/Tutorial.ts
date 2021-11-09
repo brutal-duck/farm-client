@@ -142,55 +142,53 @@ class Tutorial extends Phaser.Scene {
         this.showContinue = true;
         this.generalClick = (): void => {
           this.scene.stop();
-          waterBar?.destroy();
-          grassBar?.destroy();
         }
 
-        let balance: Ibalance = this.game.scene.keys[this.state.farm].balance();
+        const balance: Ibalance = this.game.scene.keys[this.state.farm].balance();
 
         let waterPercent: string = balance.waterPercent + '%';
         let grassPercent: string = balance.grassPercent + '%';
-        let waterColor: number = 0x96D005;
-        let grassColor: number = 0x96D005;
-
-        this.add.image(0, 0, 'red-balance-bg').setOrigin(0, 0);
-
-        let waterBg: string = 'resource-enough';
-        let grassBg: string = 'resource-enough';
+        let waterColor: string = '#FFFFFF';
+        let grassColor: string = '#FFFFFF';
 
         if (balance.notEnoughWater) {
-          waterBg = 'resource-problem';
           waterPercent = '-' + waterPercent;
-          waterColor = 0xF07D58;
+          waterColor = '#82261c';
         }
 
         if (balance.notEnoughGrass) {
-          grassBg = 'resource-problem';
           grassPercent = '-' + grassPercent;
-          grassColor = 0xF07D58;
+          grassColor = '#82261c';
         }
 
-        this.add.image(70, 10, waterBg).setOrigin(0.5, 0);
-        this.add.image(170, 10, grassBg).setOrigin(0.5, 0);
+        const farmUser: IuserSheep | IuserChicken | IuserCow = this.state[`user${this.state.farm}`];
+        const bgTexture: string = farmUser.part >= 6 ? 'red-balance-bg' : 'red-balance-bg-big';
+        const bgX: number = farmUser.part >= 6 ? this.cameras.main.centerX + 25 : this.cameras.main.centerX - 35;
+        const balanceBg = this.add.sprite(bgX, 3, bgTexture).setOrigin(0.5, 0);
+        const balanceGeom = balanceBg.getBounds();
 
-        this.add.image(70, 10, 'water-balance').setOrigin(0.5, 0);
-        this.add.image(170, 10, 'grass-balance').setOrigin(0.5, 0);
-
-        this.add.text(70, 98, waterPercent, {
-          font: '26px Shadow',
-          color: '#FFFFFF'
-        }).setOrigin(0.5, 0.5);
-        this.add.text(170, 98, grassPercent, {
-          font: '26px Shadow',
-          color: '#FFFFFF'
-        }).setOrigin(0.5, 0.5);
-
-        const waterBar = new RoundedProgress(this, 70, 47, 0.9).setPercent(balance.waterPercent).setTint(waterColor);
-        const grassBar = new RoundedProgress(this, 170, 47, 0.9).setPercent(balance.grassPercent).setTint(grassColor);
+        const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+          fontSize: '26px',
+          fontFamily: 'Shadow',
+          color: '#ffffff',
+          shadow: {
+            fill: true,
+            offsetX: 3,
+            offsetY: 1,
+            color: 'rgba(0, 0, 0, 0.2)',
+          }
+        };
+    
+        const grassBalance = this.add.sprite(balanceGeom.left + 10, balanceGeom.centerY - 25, 'grass-balance').setOrigin(0, 0.5).setDepth(2);
+        const waterBalance = this.add.sprite(balanceGeom.left + 10, balanceGeom.centerY + 30, 'water-balance').setOrigin(0, 0.5).setDepth(2);
+        const grassSpriteGeom = grassBalance.getBounds();
+        const waterSpriteGeom = waterBalance.getBounds();
+        this.add.text(balanceGeom.centerX + 20, grassSpriteGeom.centerY, grassPercent, textStyle).setColor(grassColor).setDepth(2).setOrigin(0.5);
+        this.add.text(balanceGeom.centerX + 20, waterSpriteGeom.centerY, waterPercent, textStyle).setColor(waterColor).setDepth(2).setOrigin(0.5);
 
         this.topPosition = true;
-        this.indent = 170;
-        this.tailX = 320;
+        this.indent = 190;
+        this.tailX = 390;
         this.tailFlipX = true;
         this.tailFlipY = true;
         this.pointerTutorial();

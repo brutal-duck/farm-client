@@ -1,9 +1,7 @@
 import { shortTime } from "../../general/basic";
-import SheepBars from '../../scenes/Sheep/SheepBars';
-import ChickenBars from '../../scenes/Chicken/ChickenBars';
 import UnicornBars from '../../scenes/Event/Unicorns/UnicornBars';
-import CowBars from '../../scenes/Cow/CowBars';
 import RoundedProgress from "../animations/RoundedProgress";
+import BarsScene from "../Scenes/BarsScene";
 
 /**
   *  Круговой бар собирателя    
@@ -23,7 +21,7 @@ export default class Collector extends Phaser.GameObjects.Text {
   public endAngle: number;
   public color: number;
   public weight: number;
-  public scene: SheepBars | ChickenBars | UnicornBars | CowBars;
+  public scene: UnicornBars | BarsScene;
   public percent: number;
   public bubble: Phaser.GameObjects.Graphics;
   public pulseTimer: number = 0;
@@ -32,7 +30,7 @@ export default class Collector extends Phaser.GameObjects.Text {
   private progress: RoundedProgress;
 
   constructor(
-    scene: SheepBars | ChickenBars | UnicornBars | CowBars,
+    scene: UnicornBars | BarsScene,
     x: number,
     y: number,
     radius: number,
@@ -53,7 +51,7 @@ export default class Collector extends Phaser.GameObjects.Text {
     this.init();
   }
 
-  static create(scene: SheepBars | ChickenBars | UnicornBars | CowBars, x: number = 400, y: number = 300, radius: number = 40): Collector {
+  static create(scene: UnicornBars | BarsScene, x: number = 400, y: number = 300, radius: number = 40): Collector {
     return new Collector(scene, x, y, radius);
   }
 

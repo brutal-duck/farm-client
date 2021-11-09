@@ -1,27 +1,25 @@
 // включение туториала
 import SheepTerritory from './../../components/Territories/SheepTerritory';
+import SheepBars from './SheepBars';
 function showTutorial(additional: boolean | string = false): void {
-  
   if (this.scene.isActive('Modal')) this.scene.stop('Modal');
   if (this.scene.isActive('Tutorial')) this.scene.stop('Tutorial');
   if (this.scene.isActive('Profile')) this.scene.stop('Profile');
   if (this.scene.isActive('Shop')) this.scene.stop('Shop');
   if (this.scene.isActive('ShopBars')) this.scene.stop('ShopBars');
 
-  let tutorial: Itutorial = {
+  const tutorial: Itutorial = {
     farm: 1,
     step: this.state.userSheep.tutorial,
     additional: additional
   }
   this.state.tutorial = tutorial;
   this.scene.launch('Tutorial', this.state);
-
 }
 
 
 // завершение первого шага (приветствие)
 function doneTutor_0(): void {
-
   this.state.amplitude.logAmplitudeEvent('tutorial', {
     step: 0
   });
@@ -32,12 +30,12 @@ function doneTutor_0(): void {
   this.time.addEvent({ delay: 1000, callback: (): void => {
     this.showTutorial();
   }, callbackScope: this, loop: false });
-  
 }
 
 
 // завершение второго шага (покупка овцы)
 function doneTutor_10(): void {
+  const barsScene = this.game.scene.getScene('SheepBars') as SheepBars;
 
   this.state.amplitude.logAmplitudeEvent('tutorial', {
     step: 10,
@@ -46,9 +44,9 @@ function doneTutor_10(): void {
   this.state.userSheep.tutorial = 20;
   this.scene.stop('Tutorial');
 
-  this.game.scene.keys['SheepBars'].sheepBuy.setVisible(true);
-  this.game.scene.keys['SheepBars'].sheepPrice.setVisible(true);
-  this.game.scene.keys['SheepBars'].sheepPriceBubble.setVisible(true);
+  barsScene.animalBuy.setVisible(true);
+  barsScene.animalPrice.setVisible(true);
+  barsScene.animalPriceBubble.setVisible(true);
 
   this.buySheep(1);
 
@@ -61,7 +59,7 @@ function doneTutor_10(): void {
 
 // завершение третьего шага (установка пастбища)
 function doneTutor_20(): void {
-
+  const barsScene = this.game.scene.getScene('SheepBars') as SheepBars;
   this.state.amplitude.logAmplitudeEvent('tutorial', {
     step: 20
   });
@@ -76,13 +74,11 @@ function doneTutor_20(): void {
   this.aim(sheep, 600, 600);
 
   this.state.userSheep.tutorial = 30;
-  
-  this.game.scene.keys['SheepBars'].setBalanceBars(this.balance());
-  this.game.scene.keys['SheepBars'].grassBar.setVisible(true);
+  barsScene.setBalanceBars(this.balance());
   const elements = [
-    this.game.scene.keys['SheepBars'].textGrass.setVisible(true).setAlpha(0),
-    this.game.scene.keys['SheepBars'].grassBg.setVisible(true).setAlpha(0),
-    this.game.scene.keys['SheepBars'].grassBalance.setVisible(true).setAlpha(0),
+    barsScene.textGrass.setVisible(true).setAlpha(0),
+    barsScene.grassBalance.setVisible(true).setAlpha(0),
+    barsScene.balanceBg.setVisible(true).setAlpha(0),
   ]
 
   this.tweens.add({
@@ -94,24 +90,22 @@ function doneTutor_20(): void {
   this.time.addEvent({ delay: 3000, callback: (): void => {
     this.showTutorial();
   }, callbackScope: this, loop: false });
-  
 }
 
 
 // завершение четвертого шага (установка поилки)
 function doneTutor_30(): void {
+  const barsScene = this.game.scene.getScene('SheepBars') as SheepBars;
   
   this.state.amplitude.logAmplitudeEvent('tutorial', {
     step: 30
   });
   this.state.userSheep.tutorial = 40;
 
-  this.game.scene.keys['SheepBars'].setBalanceBars(this.balance());
-  this.game.scene.keys['SheepBars'].waterBar.setVisible(true);
+  barsScene.setBalanceBars(this.balance());
   const elements = [
-    this.game.scene.keys['SheepBars'].textWater.setVisible(true),
-    this.game.scene.keys['SheepBars'].waterBg.setVisible(true),
-    this.game.scene.keys['SheepBars'].waterBalance.setVisible(true),
+    barsScene.textWater.setVisible(true),
+    barsScene.waterBalance.setVisible(true),
   ]
 
   this.tweens.add({
@@ -123,13 +117,11 @@ function doneTutor_30(): void {
   this.time.addEvent({ delay: 1000, callback: (): void => {
     this.showTutorial();
   }, callbackScope: this, loop: false });
-  
 }
 
 
 // завершение пятого шага (стрижка)
 function doneTutor_40(): void {
-  
   this.state.amplitude.logAmplitudeEvent('tutorial', {
     step: 40
   });
@@ -139,12 +131,13 @@ function doneTutor_40(): void {
   this.time.addEvent({ delay: 1000, callback: (): void => {
     this.showTutorial();
   }, callbackScope: this, loop: false });
-  
 }
 
 
 // завершение шестого шага (покупка второй овцы)
 function doneTutor_50(): void {
+  const barsScene = this.game.scene.getScene('SheepBars') as SheepBars;
+
   this.state.amplitude.logAmplitudeEvent('tutorial', {
     step: 50
   });
@@ -152,16 +145,15 @@ function doneTutor_50(): void {
   this.state.userSheep.tutorial = 60;
   this.scene.stop('Tutorial');
 
-  this.game.scene.keys['SheepBars'].sheepBuy.setVisible(true);
-  this.game.scene.keys['SheepBars'].sheepPrice.setVisible(true);
-  this.game.scene.keys['SheepBars'].sheepPriceBubble.setVisible(true);
+  barsScene.animalBuy.setVisible(true);
+  barsScene.animalPrice.setVisible(true);
+  barsScene.animalPriceBubble.setVisible(true);
 
   this.buySheep(1);
 
   this.time.addEvent({ delay: 1000, callback: (): void => {
     this.showTutorial();
   }, callbackScope: this, loop: false });
-  
 }
 
 
@@ -179,7 +171,6 @@ function doneTutor_60(): void {
   this.time.addEvent({ delay: 1000, callback: (): void => {
     this.showTutorial();
   }, callbackScope: this, loop: false });
-  
 }
 
 
@@ -197,7 +188,6 @@ function doneTutor_70(): void {
   this.time.addEvent({ delay: 1000, callback: (): void => {
     this.showTutorial();
   }, callbackScope: this, loop: false });
-  
 }
 
 
@@ -235,7 +225,6 @@ function doneTutor_75(): void {
 
 // завершение девятого шага (установка хранилища)
 function doneTutor_80(): void {
-
   this.state.amplitude.logAmplitudeEvent('tutorial', {
     step: 80
   });
@@ -245,12 +234,12 @@ function doneTutor_80(): void {
   this.time.addEvent({ delay: 1000, callback: (): void => {
     this.showTutorial();
   }, callbackScope: this, loop: false });
-  
 }
 
 
 // завершение десятого шага (подстригатель)
 function doneTutor_90(): void {
+  const barsScene = this.game.scene.getScene('SheepBars') as SheepBars;
 
   this.state.amplitude.logAmplitudeEvent('tutorial', {
     step: 90
@@ -258,14 +247,14 @@ function doneTutor_90(): void {
   
   this.state.userSheep.tutorial = 100;
 
-  this.game.scene.keys['SheepBars'].taskZone.setVisible(true);
-  this.game.scene.keys['SheepBars'].addDiamonds.setVisible(true);
-  this.game.scene.keys['SheepBars'].addMoney.setVisible(true);
-  this.game.scene.keys['SheepBars'].shop.setVisible(true);
-  this.game.scene.keys['SheepBars'].map.setVisible(true);
-  this.game.scene.keys['SheepBars'].collectorBtn.setVisible(true);
-  this.game.scene.keys['SheepBars'].collector.setVisible(true);
-  this.game.scene.keys['SheepBars'].collector.bubble.setVisible(true);
+  barsScene.taskZone.setVisible(true);
+  barsScene.addDiamonds.setVisible(true);
+  barsScene.addMoney.setVisible(true);
+  barsScene.shop.setVisible(true);
+  barsScene.map.setVisible(true);
+  barsScene.collectorBtn.setVisible(true);
+  barsScene.collector.setVisible(true);
+  barsScene.collector.bubble.setVisible(true);
   this.time.addEvent({ delay: 1000, callback: (): void => {
     this.showTutorial();
   }, callbackScope: this, loop: false });
@@ -287,7 +276,6 @@ function doneTutor_100(): void {
 
 // действие третьего шага (установка пастбища)
 function progressTutor_20(): void {
-  
   this.scene.stop('Tutorial');
 
   const territory: SheepTerritory = this.territories.children.entries.find((data: any) => data.block === 2 && data.position === 3);
@@ -298,30 +286,26 @@ function progressTutor_20(): void {
   this.state.modal = modal;
   this.state.territory = territory;
   this.scene.launch('Modal', this.state);
-  
 }
 
 
 // действие четвертого шага (установка поилки)
 function progressTutor_30(): void {
-  
   this.scene.stop('Tutorial');
 
   const territory: SheepTerritory = this.territories.children.entries.find((data: any) => data.block === 2 && data.position === 2);
-  let modal: Imodal = {
+  const modal: Imodal = {
     type: 1,
     sysType: 2
   }
   this.state.modal = modal;
   this.state.territory = territory;
   this.scene.launch('Modal', this.state);
-  
 }
 
 
 // действие пятого шага (рост шерсти овцы)
 function progressTutor_40(): void {
-  
   this.scene.stop('Tutorial');
 
   for (let i in this.sheep.children.entries) {
@@ -338,59 +322,50 @@ function progressTutor_40(): void {
     this.sheep.children.entries[i].anims.play('sheep-stay-left1', true);
     this.sheep.children.entries[i].woolSprite.setTexture('sheep-left-1-1');
   }
-  
 }
 
 
 // выключение тутора для мерджинга овец
 function progressTutor_70() {
-
   this.mergTutor = 0;
   this.mergPointer = this.physics.add.sprite(480, 520, 'tutor-merging').setDepth(Number(this.game.config.width));
   this.mergPointer.first = true;
   this.showMergPointer = true;
   this.scene.stop('Tutorial');
-
 }
 
 
 // выключение тутора и включение окна хранилища
 function progressTutor_80() {
-
   this.scene.stop('Tutorial');
 
-  let territory = this.territories.children.entries.find((data: any) => data.block === 2 && data.position === 1);
-  let modal: Imodal = {
+  const territory = this.territories.children.entries.find((data: any) => data.block === 2 && data.position === 1);
+  const modal: Imodal = {
     type: 1,
     sysType: 2
   }
   this.state.modal = modal;
   this.state.territory = territory;
   this.scene.launch('Modal', this.state);
-
 }
 
 
 // выключение тутора и показ окна подстригателя
 function progressTutor_90(): void {
-  
-  this.game.scene.keys['SheepBars'].collectorBtn.setVisible(true);
-
+  const barsScene = this.game.scene.getScene('SheepBars') as SheepBars;
+  barsScene.collectorBtn.setVisible(true);
   this.scene.stop('Tutorial');
-
-  let modal: Imodal = {
+  const modal: Imodal = {
     type: 2,
     shopType: 4
   }
   this.state.modal = modal;
   this.scene.launch('Modal', this.state);
-
 }
 
 
 // тутор первого шага про пещеру
 function doneTutorCave1(): void {
-
   this.state.user.additionalTutorial.cave = true;
   this.scene.stop('Tutorial');
   this.takeDiamondSheep();
@@ -398,15 +373,13 @@ function doneTutorCave1(): void {
   this.time.addEvent({ delay: 1000, callback: (): void => {
     this.showTutorial('cave2');
   }, callbackScope: this, loop: false });
-
 }
 
 
 // тутор второго шага про пещеру
 function doneTutorCave2(): void {
-
   this.scene.stop('Tutorial');
-  let sheep = this.sheep.children.entries.find((data: any) => data.type === 0);
+  const sheep = this.sheep.children.entries.find((data: any) => data.type === 0);
 
   sheep.setVisible(true);
   sheep.woolSprite.setVisible(true);
@@ -421,17 +394,17 @@ function doneTutorCave2(): void {
   sheep.vector = 8;
   sheep.anims.play('sheep-stay-left0', true);
   sheep.woolSprite.setTexture('sheep-left-0-4');
-
 }
 
 // отмена всего обучения
 function skipTutorial(): void {
+  const barsScene = this.game.scene.getScene('SheepBars') as SheepBars;
+
   this.state.amplitude.logAmplitudeEvent('skip_tutorial', {});
   if (this.state.platform === 'android') {
     try { window[`Adjust`].trackEvent(this.state.adjust.tutorialDoneEvent); }
     catch (err) { console.log('ADJUST', err) }
   }
-
   this.scene.stop('Tutorial');
 
   this.state.userSheep.tutorial = 100;
@@ -448,34 +421,33 @@ function skipTutorial(): void {
     sheep.drag = false
   }
 
-  this.game.scene.keys['SheepBars'].taskZone.setVisible(true);
-  this.game.scene.keys['SheepBars'].sheepBuy.setVisible(true);
-  this.game.scene.keys['SheepBars'].sheepPrice.setVisible(true);
-  this.game.scene.keys['SheepBars'].sheepPriceBubble.setVisible(true);
-  this.game.scene.keys['SheepBars'].addDiamonds.setVisible(true);
-  this.game.scene.keys['SheepBars'].addMoney.setVisible(true);
-  this.game.scene.keys['SheepBars'].shop.setVisible(true);
-  this.game.scene.keys['SheepBars'].map.setVisible(true);
-  this.game.scene.keys['SheepBars'].collectorBtn.setVisible(true);
-  this.game.scene.keys['SheepBars'].collector.setVisible(true);
-  this.game.scene.keys['SheepBars'].collector.bubble.setVisible(true);
+  barsScene.balanceBg.setVisible(true);
+  barsScene.taskZone.setVisible(true);
+  barsScene.animalBuy.setVisible(true);
+  barsScene.animalPrice.setVisible(true);
+  barsScene.animalPriceBubble.setVisible(true);
+  barsScene.addDiamonds.setVisible(true);
+  barsScene.addMoney.setVisible(true);
+  barsScene.shop.setVisible(true);
+  barsScene.map.setVisible(true);
+  barsScene.collectorBtn.setVisible(true);
+  barsScene.collector.setVisible(true);
+  barsScene.collector.bubble.setVisible(true);
 }
 
 
 // выключение тутора и показ окна подстригателя
 function collectorTutorial(): void {
-
   this.game.scene.keys['SheepBars'].collectorBtn.setVisible(true);
   this.state.amplitude.logAmplitudeEvent('tutorial_collector', {});
   this.scene.stop('Tutorial');
 
-  let modal: Imodal = {
+  const modal: Imodal = {
     type: 2,
     shopType: 4
   }
   this.state.modal = modal;
   this.scene.launch('Modal', this.state);
-
 }
 
 

@@ -221,9 +221,11 @@ class Sheep extends Phaser.Scene {
   public convertMoney = convertMoney.bind(this);
   public exchange = exchange.bind(this);
   public sheepPrice = sheepPrice.bind(this);
+  public animalPrice = sheepPrice.bind(this);
   public checkMerging = checkMerging.bind(this);
   public cancelMerging = cancelMerging.bind(this);
   public buySheep = buySheep.bind(this);
+  public buyAnimal = buySheep.bind(this);
   public collectWool = collectWool.bind(this);
   public sellWool = sellWool.bind(this);
   public confirmExpelSheep = confirmExpelSheep.bind(this);

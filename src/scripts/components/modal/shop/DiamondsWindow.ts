@@ -12,6 +12,7 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
   private freeDiamondTimer: Phaser.GameObjects.Text;
   private freeDiamondBtn: ShopButton;
   private adButton: boolean;
+  private hasStarterpack: boolean;
 
   constructor(scene: Shop) {
     super(scene, 0, 0, 'pixel');
@@ -24,11 +25,13 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
     this.scene.state.amplitude.logAmplitudeEvent('bank_page_viewed', {});
     this.rows = 2;
     this.setScrolling();
+    this.hasStarterpack = Utils.checkStarterpack(this.scene.state);
+
   }
   
   private create(): void {
     this.createAllPackages();
-    if (this.checkStarterpack()) this.createStarterpack();
+    if (this.hasStarterpack) this.createStarterpack();
     if (this.checkFreeDiamonds()) this.createFreeDiamonds();
   }
 
@@ -36,7 +39,7 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
     const startIndex = Utils.checkSale(this.scene.state,'PACKAGE_PRICE') ? 2 : Utils.checkSale(this.scene.state,'DIAMOND_COUNT') ? 4 : 0;
     for (let i: number = startIndex; i < this.rows + startIndex; i++) {
       let y: number = (i - startIndex) * 270 + 40;
-      if (this.checkStarterpack()) y += 238;
+      if (this.hasStarterpack) y += 238;
       
       const left: Ipackage = this.scene.state.packages[i * 2];
       const right: Ipackage = this.scene.state.packages[i * 2 + 1];
@@ -128,7 +131,7 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
       }).setOrigin(0.5, 0.5).setRotation(0.55);
     }
 
-    if ((packData.diamonds + packData.bonus) >= 750 && this.checkStarterpack()) {
+    if ((packData.diamonds + packData.bonus) >= 750 && this.hasStarterpack) {
       const x: number = position.x + 200;
       const y: number = position.y + this.scene.height + 200;
       
@@ -166,7 +169,7 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
       align: 'center'
     };
     let y: number = (this.rows + 1) * 270 + 50 + this.scene.height - 238;
-    if (this.checkStarterpack()) y += 238;
+    if (this.hasStarterpack) y += 238;
     this.scene.add.sprite(this.scene.cameras.main.centerX - 130, y, 'free-diamonds-bg');
     const diamondCount: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 300, y, `+${FREE_DIAMONDS}`, {
       font: '34px Shadow',
@@ -269,18 +272,10 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
     } else this.scene.game.scene.keys[this.scene.state.farm].ads.watchAd(6);
   }
 
-  private checkStarterpack(): boolean {
-    return !this.scene.state.user.starterpack && 
-    (this.scene.state.userSheep?.part > 4 ||
-    this.scene.state.userChicken?.part >= 1 ||
-    this.scene.state.userUnicorn?.points >= 1 ||
-    this.scene.state.userCow?.part >= 1);
-  }
-
   private createFreeBtn(ad: boolean): void {
     this.freeDiamondBtn?.destroy();
     let y: number = (this.rows + 1) * 270 + 50 + this.scene.height - 238;
-    if (this.checkStarterpack()) y += 238;
+    if (this.hasStarterpack) y += 238;
     const elements: IshopButtonElements = { text1: '0 ' + this.scene.state.lang.ruble };
     if (ad) {
       elements.text1 = this.scene.state.lang.pickUp;

@@ -1,11 +1,9 @@
-import SheepBars from '../../scenes/Sheep/SheepBars';
-import ChickenBars from '../../scenes/Chicken/ChickenBars';
-import CowBars from '../../scenes/Cow/CowBars';
 import UnicornBars from '../../scenes/Event/Unicorns/UnicornBars';
 import Notificator from './Notificator';
+import BarsScene from '../Scenes/BarsScene';
 
 export default class BarsMenu extends Phaser.GameObjects.Sprite {
-  public scene: SheepBars | ChickenBars | CowBars | UnicornBars; 
+  public scene: UnicornBars | BarsScene; 
   private profileIcon: Phaser.GameObjects.Sprite;
   private chatIcon: Phaser.GameObjects.Sprite;
   private authIcon: Phaser.GameObjects.Sprite;
@@ -17,11 +15,11 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
   private chatNotificatorAnim: Phaser.Tweens.Tween;
   private chatNotificator: Notificator;
 
-  constructor(scene: SheepBars | ChickenBars | CowBars | UnicornBars) {
+  constructor(scene: UnicornBars | BarsScene) {
     super(scene, 650, scene.height - 90, 'sandwich');
     this.init();
   }
-  static create(scene: SheepBars | ChickenBars | CowBars | UnicornBars): BarsMenu {
+  static create(scene: UnicornBars | BarsScene): BarsMenu {
     return new BarsMenu(scene);
   }
 

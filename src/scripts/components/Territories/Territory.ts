@@ -542,7 +542,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     if (this.scene.state.farm === 'Sheep') {
       updateAnimalBuy = (): void => {
         this.scene.game.scene.keys['SheepBars'].sheepBuy.setTexture('sheep-buy-icon-' + this.scene.maxBreedForBuy());
-        this.scene.game.scene.keys['SheepBars'].updateSheepPrice();
+        this.scene.game.scene.keys['SheepBars'].updateAnimalPrice();
       }
     } else if (this.scene.state.farm === 'Chicken') {
       updateAnimalBuy = (): void => {

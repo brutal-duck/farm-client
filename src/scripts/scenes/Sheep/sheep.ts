@@ -455,7 +455,7 @@ function buySheep(breed: number, shop: boolean = false): boolean {
       let sheep = this.getSheep(id, breed, x, y);
       this.state.userSheep.money -= sheepPrice.price;
       this.state.userSheep.countSheep = sheepPrice.countSheep;
-      this.game.scene.keys['SheepBars'].updateSheepPrice();
+      this.game.scene.keys['SheepBars'].updateAnimalPrice();
       this.tryTask(1, breed);
       this.tryClanTask(1);
       this.tryTask(4, breed);

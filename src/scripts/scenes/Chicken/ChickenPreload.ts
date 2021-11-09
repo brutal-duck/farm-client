@@ -232,7 +232,11 @@ const tasksBarNs: string = require("./../../../assets/images/modal/tasks/bar-ns.
 const textSale: string = require("./../../../assets/images/modal/text-sale.png");
 const saleIcon: string = require('../../../assets/images/sale-icon.png');
 const btnClean: string = require('../../../assets/images/icons/btn-clean.png');
-
+const feedChickenBalance: string = require('../../../assets/images/balance/feed-chicken-balance.png');
+const plateFeed: string = require('../../../assets/images/balance/plate-feed.png');
+const cloudInfo: string = require('../../../assets/images/balance/cloud-info.png');
+const greenBalanceBgBig: string = require("./../../../assets/images/balance/green-balance-bg-big.png");
+const redBalanceBgBig: string = require("./../../../assets/images/balance/red-balance-bg-big.png");
 
 class ChickenPreload extends Phaser.Scene {
 
@@ -498,7 +502,11 @@ class ChickenPreload extends Phaser.Scene {
     this.load.image('text-sale', textSale);
     this.load.image('icon-sale', saleIcon);
     this.load.image('btn-clean', btnClean);
-
+    this.load.image('feed-chicken-balance', feedChickenBalance);
+    this.load.image('plate-feed', plateFeed);
+    this.load.image('cloud-info', cloudInfo);
+    this.load.image('green-balance-bg-big', greenBalanceBgBig);
+    this.load.image('red-balance-bg-big', redBalanceBgBig);
   }
 
   public create(): void {

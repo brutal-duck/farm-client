@@ -1,9 +1,7 @@
-import SheepBars from '../../scenes/Sheep/SheepBars';
-import ChickenBars from '../../scenes/Chicken/ChickenBars';
-import CowBars from '../../scenes/Cow/CowBars';
 import { sendAppEventVk } from '../../general/basic';
 import LocalStorage from './../../libs/LocalStorage';
 import RoundedProgress from '../animations/RoundedProgress';
+import BarsScene from '../Scenes/BarsScene';
 
 /**
   *  Планка заданий в барах сцен    
@@ -15,7 +13,7 @@ import RoundedProgress from '../animations/RoundedProgress';
 // плашка заданий
 export default class TaskBoard extends Phaser.GameObjects.TileSprite {
 
-  public scene: SheepBars | ChickenBars | CowBars;
+  public scene: BarsScene;
 
   // private t: any
   private bg: Phaser.GameObjects.RenderTexture;
@@ -58,14 +56,14 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
   private listTime: number = 0;
   private isMoving: boolean = false;
 
-  constructor(scene: SheepBars | ChickenBars | CowBars) {
+  constructor(scene: BarsScene) {
     super(scene, 0, 0, 0, 0, 'pixel');
     this.scene = scene;
     this.isVisibile = false;
     this.init();
   }
 
-  static create(scene: SheepBars | ChickenBars | CowBars): TaskBoard {
+  static create(scene: BarsScene): TaskBoard {
     return new TaskBoard(scene);
   }
 

@@ -89,7 +89,6 @@ class Shop extends Phaser.Scene {
   public payOdnoklassniki = payOdnoklassniki.bind(this);
   public payVK = payVK.bind(this);
   public payYandex = payYandex.bind(this);
-  public shortTime = shortTime.bind(this);
   public animalPrice = animalPrice.bind(this);
   public loadingModal = loadingModal.bind(this);
 

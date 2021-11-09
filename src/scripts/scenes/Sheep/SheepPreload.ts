@@ -566,9 +566,7 @@ class SheepPreload extends Phaser.Scene {
     this.load.image('plus', plus);
     this.load.image('sheep-leaves', sheepLeaves);
     this.load.image('green-balance-bg', greenBalanceBg);
-    this.load.image('green-balance-bg-big', greenBalanceBgBig);
     this.load.image('red-balance-bg', redBalanceBg);
-    this.load.image('red-balance-bg-big', redBalanceBgBig);
     this.load.image('resource-enough', resourceEnough);
     this.load.image('resource-problem', resourceProblem);
     this.load.image('grass-balance', grassBalance);
@@ -722,6 +720,8 @@ class SheepPreload extends Phaser.Scene {
     this.load.image('feed-sheep-balance', feedSheepBalance);
     this.load.image('plate-feed', plateFeed);
     this.load.image('cloud-info', cloudInfo);
+    this.load.image('green-balance-bg-big', greenBalanceBgBig);
+    this.load.image('red-balance-bg-big', redBalanceBgBig);
   }
   
   public create(): void {

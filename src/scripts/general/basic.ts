@@ -512,7 +512,7 @@ function donePart(): void {
   this.state.progress[this.state.farm.toLowerCase()].part = user.part;
   
   this.deleteTerritoriesLocks();
-  this.game.scene.keys[this.state.farm + 'Bars'].currentPartProgress();
+  this.game.scene.keys[this.state.farm + 'Bars'].setCurrentPartProgress();
 
   this.state.amplitude.logAmplitudeEvent('chapter_done', {
     chapter: user.part - 1

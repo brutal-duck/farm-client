@@ -174,9 +174,11 @@ class Chicken extends Phaser.Scene {
   public convertMoney = convertMoney.bind(this);
   public exchange = exchange.bind(this);
   public chickenPrice = chickenPrice.bind(this);
+  public animalPrice = chickenPrice.bind(this);
   public checkMerging = checkMerging.bind(this);
   public cancelMerging = cancelMerging.bind(this);
   public buyChicken = buyChicken.bind(this);
+  public buyAnimal = buyChicken.bind(this);
   public collectEgg = collectEgg.bind(this);
   public sellEggs = sellEggs.bind(this);
   public confirmExpelChicken = confirmExpelChicken.bind(this);

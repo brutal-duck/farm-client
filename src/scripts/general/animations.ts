@@ -2,35 +2,31 @@ import Currency from './../components/animations/Currency';
 
 // пульсация баланс-баров
 function pulseBalance(): void {
+  const textWater: Phaser.GameObjects.Text = this.textWater;
+  const textGrass: Phaser.GameObjects.Text = this.textGrass;
 
   if (this.waterProblem && this.state.userSheep.tutorial >= 100) {
+    let pulseTimer = textWater.getData('pulseTimer');
+    pulseTimer += 1;
+    textWater.setData('pulseTimer', pulseTimer);
 
-    this.textWater.pulseTimer++;
-
-    if (this.textWater.pulseTimer === 20) this.textWater.setColor('#521400');
-    else if (this.textWater.pulseTimer === 40) {
-      this.textWater.pulseTimer = 0;
-      this.textWater.setColor('#FFFFFF');
+    if (pulseTimer === 20) textWater.setColor('#82261c');
+    else if (pulseTimer === 40) {
+      textWater.setData('pulseTimer', 0);
+      textWater.setColor('#FFFFFF');
     }
-
-  } else if (!this.waterProblem && this.textWater.style.color === '#521400') {
-    this.textWater.setColor('#FFFFFF');
-  }
-
+  } else if (!this.waterProblem && textWater.style.color === '#82261c') textWater.setColor('#FFFFFF');
   if (this.grassProblem && this.state.userSheep.tutorial >= 100) {
+    let pulseTimer = textGrass.getData('pulseTimer');
+    pulseTimer += 1;
+    textGrass.setData('pulseTimer', pulseTimer);
 
-    this.textGrass.pulseTimer++;
-
-    if (this.textGrass.pulseTimer === 20) this.textGrass.setColor('#521400');
-    else if (this.textGrass.pulseTimer === 40) {
-      this.textGrass.pulseTimer = 0;
-      this.textGrass.setColor('#FFFFFF');
+    if (pulseTimer === 20) textGrass.setColor('#82261c');
+    else if (pulseTimer === 40) {
+      textGrass.setData('pulseTimer', 0);
+      textGrass.setColor('#FFFFFF');
     }
-
-  } else if (!this.grassProblem && this.textGrass.style.color === '#521400') {
-    this.textGrass.setColor('#FFFFFF');
-  }
-
+  } else if (!this.grassProblem && textGrass.style.color === '#82261c') textGrass.setColor('#FFFFFF');
 }
 
 // анимация прибавления кристаллов
