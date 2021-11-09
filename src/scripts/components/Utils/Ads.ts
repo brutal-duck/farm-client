@@ -16,7 +16,7 @@ import ChickenPreload from './../../scenes/Chicken/ChickenPreload';
 import CowPreload from './../../scenes/Cow/CowPreload';
 import UnicornPreload from './../../scenes/Event/Unicorns/UnicornPreload';
 
-const INTERSTITIAL_DELAY = 30;
+const INTERSTITIAL_DELAY = 60;
 /**
   * Реклама  
   * 
