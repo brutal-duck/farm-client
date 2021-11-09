@@ -39,10 +39,9 @@ export default class BarsScene extends Phaser.Scene {
   
   public state: Istate;
   public height: number;
-  public money: any;
-  public diamonds: any;
-  public part: any;
-  public cursors: any;
+  public money: Phaser.GameObjects.Text;
+  public diamonds: Phaser.GameObjects.Text;
+  public part: Phaser.GameObjects.Text;
   public collector: Collector;
   public menu: BarsMenu;
   public animalBuy: Phaser.GameObjects.Sprite;
@@ -61,10 +60,10 @@ export default class BarsScene extends Phaser.Scene {
   public collectorBtn: Phaser.GameObjects.Sprite;
   public waterBalance: Phaser.GameObjects.Sprite;
   public grassBalance: Phaser.GameObjects.Sprite;
-  public timeout: Phaser.Time.TimerEvent; // таймаут пульсации алмазов
-  public increaseAnimation: boolean; // метка занятости анимации пульсации алмазов
-  public countIncrease: number; // колличество пульсаций
-  public userDiamonds: number; // промежуточные кристаллы
+  public timeout: Phaser.Time.TimerEvent;
+  public increaseAnimation: boolean;
+  public countIncrease: number;
+  public userDiamonds: number;
   public stepsDiamonds: number[] = [];
   public offline: Phaser.GameObjects.Sprite;
   public calendarText: Phaser.GameObjects.Text;
@@ -129,6 +128,7 @@ export default class BarsScene extends Phaser.Scene {
     this.updateSale();
     this.updateCleanUpBtn();
     this.updateFeedBoostTimer();
+    this.updatePulseFeedBoostTimer();
   }
 
   public setCurrentPartProgress(): void {
@@ -400,6 +400,8 @@ export default class BarsScene extends Phaser.Scene {
     this.feedRound.setPercent(0);
 
     this.feedBoostTimer = this.add.text(plate.x, plate.y, shortTime(0, this.state.lang), timerStyle).setOrigin(0.5);
+    this.feedBoostTimer.setDataEnabled();
+    this.feedBoostTimer.setData('pulseTimer', 0);
 
     let bonusCount: number = 0;
     if (this.farmUser.feedBoostTime > 0) bonusCount += 100;
@@ -449,6 +451,20 @@ export default class BarsScene extends Phaser.Scene {
     if (this.part.text !== String(shortNum(this.farmUser.part))) {
       this.part.setText(String(this.farmUser.part));
     }
+  }
+
+  private updatePulseFeedBoostTimer(): void {
+    if (this.farmUser.feedBoostTime <= 0) {
+      let pulseTimer = this.feedBoostTimer.getData('pulseTimer');
+      pulseTimer += 1;
+      this.feedBoostTimer.setData('pulseTimer', pulseTimer);
+  
+      if (pulseTimer === 100) this.feedBoostTimer.setColor('#82261c');
+      else if (pulseTimer === 180) {
+        this.feedBoostTimer.setData('pulseTimer', 0);
+        this.feedBoostTimer.setColor('#FEFBFC');
+      }
+    } else if (this.farmUser.feedBoostTime > 0 && this.feedBoostTimer.style.color !== '#FEFBFC') this.feedBoostTimer.setColor('#FEFBFC');
   }
 
   private clickOnCloud(): void {
