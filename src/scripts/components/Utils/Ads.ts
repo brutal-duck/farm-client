@@ -11,10 +11,6 @@ import BigInteger from "../../libs/BigInteger";
 import MoneyAnimation from "../animations/MoneyAnimation";
 import { randomString } from "../../general/basic";
 import Shop from './../../scenes/Modal/Shop/Main';
-import SheepPreload from './../../scenes/Sheep/SheepPreload';
-import ChickenPreload from './../../scenes/Chicken/ChickenPreload';
-import CowPreload from './../../scenes/Cow/CowPreload';
-import UnicornPreload from './../../scenes/Event/Unicorns/UnicornPreload';
 
 const INTERSTITIAL_DELAY = 60;
 /**
