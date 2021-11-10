@@ -147,6 +147,7 @@ interface IuserAutoSave {
   personalMessages: IuserPersonalMessage[];
   yandexName: string;
   avatar: string;
+  boughtAvatars: number[];
   clanTasks: IclanTask[]
   takeFreeDiamondTime: number;
 }
@@ -230,6 +231,7 @@ interface Iuser {
   clanId: string;
   xp: number;
   avatar: string;
+  boughtAvatars: number[];
   hash: string;
   login: string;
   counter: number;

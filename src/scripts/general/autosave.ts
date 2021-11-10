@@ -307,9 +307,10 @@ export default function autosave(): void {
     personalMessages: state.user.personalMessages,
     yandexName: state.yandexName,
     avatar: state.user.avatar,
+    boughtAvatars: state.user.boughtAvatars,
     clanTasks: state.user.clanTasks,
     takeFreeDiamondTime: state.user.takeFreeDiamondTime,
-  }
+  };
 
   const data: IdataAutoSave = { 
     id: state.user.id,
@@ -337,7 +338,7 @@ export default function autosave(): void {
     unicornTerritories : unicornTerritories,
 
     isUnicornFarm: this.state.farm === 'Unicorn',
-  }
+  };
 
   axios.post(process.env.API + "/autoSave", data)
     .then((res) => {

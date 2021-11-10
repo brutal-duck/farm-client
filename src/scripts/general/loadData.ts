@@ -348,6 +348,7 @@ export default function loadData(response: AxiosResponse): void {
     messages: response.data.user.messages || [],
     personalMessages: response.data.user.personalMessages || [],
     avatar: response.data.user.avatar,
+    boughtAvatars: response.data.user.boughtAvatars || [],
     clanTasks: response.data.user.clan_tasks || [],
     takeFreeDiamondTime: response.data.user.takeFreeDiamondTime,
   };

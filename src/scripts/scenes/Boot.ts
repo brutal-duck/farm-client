@@ -224,6 +224,7 @@ class Boot extends Phaser.Scene {
       takeFreeDiamondTime: 0,
       diamonds: 0,
       avatar: '',
+      boughtAvatars: [],
       id: '',
       clanId: '',
       xp: 0,
