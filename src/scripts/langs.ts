@@ -1151,6 +1151,9 @@ export default {
     bonus: 'Бонус',
     noInterstitial: 'отключение автовоспр.\nрекламы навсегда!',
     turnOnFeedBoost: 'Включите комбикорм, чтобы вдвое увеличить доход',
+    avatarSettings: 'Выбор аватара',
+    select: 'выбрать',
+    selected: 'выбрано',
   },
   en: {
     index: 'en',
@@ -2304,5 +2307,7 @@ export default {
     bonus: 'Bonus',
     noInterstitial: 'Turning off autoospree.\nAdvertising forever!',
     turnOnFeedBoost: 'Turn on the feed to double income',
+    avatarSettings: 'Выбор аватара',
+
   },
 };

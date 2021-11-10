@@ -173,7 +173,10 @@ export default class ProfileWindow {
       x: 220,
       y: this.y - 60,
     };
-    this.avatar = this.scene.add.sprite(pos.x, pos.y, 'farmer').setScale(0.53).setDepth(1);
+    const avatarType = Number(this.scene.state.user.avatar);
+    console.log(avatarType)
+    const texture: string = isNaN(avatarType) ? 'avatar-1' : `avatar-${avatarType}`;
+    this.avatar = this.scene.add.sprite(pos.x, pos.y, texture).setDepth(1);
     // if (this.scene.state.platform === 'vk') this.avatar = this.scene.add.sprite(pos.x, pos.y, `avatar${this.profile.id}`).setScale(0.8).setDepth(1);
     // else if (this.scene.state.platform === 'ok') this.avatar = this.scene.add.sprite(pos.x, pos.y, `avatar${this.profile.id}`).setScale(1.1).setDepth(1);
     // else if (this.scene.state.platform === 'ya') this.avatar = this.scene.add.sprite(pos.x, pos.y, `avatar${this.profile.id}`).setDepth(1);
@@ -184,6 +187,16 @@ export default class ProfileWindow {
     //   const mask: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos.x, pos.y, 'farmer').setScale(0.53).setVisible(false);
     //   this.avatar.mask = new Phaser.Display.Masks.BitmapMask(this.scene, mask);
     // }
+    const posBtn = this.avatar.getTopRight();
+    const edit = this.scene.add.sprite(posBtn.x - 20, posBtn.y + 20, 'profile-window-edit-avatar-btn').setScale(0.7).setDepth(1);
+    this.scene.click(this.avatar, (): void => {
+      this.scene.state.modal = { type: 25 };
+      this.scene.scene.restart(this.scene.state);
+    });
+    this.scene.click(edit, (): void => {
+      this.scene.state.modal = { type: 25 };
+      this.scene.scene.restart(this.scene.state);
+    });
   }
 
   private createProfileInfo(): void {

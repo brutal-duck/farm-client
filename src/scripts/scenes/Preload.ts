@@ -326,6 +326,17 @@ const saleIconSheepMoney: string = require('../../assets/images/modal/sale/icons
 const saleIconSheepPrice: string = require('../../assets/images/modal/sale/icons/sheep-price.png');
 const saleIconSheepRepositoryImprove: string = require('../../assets/images/modal/sale/icons/sheep-repository-improve.png');
 const modalBgPlate: string = require('../../assets/images/modal/bg-plate.png');
+const avatar1: string = require('../../assets/images/avatars/avatar-1.png');
+const avatar2: string = require('../../assets/images/avatars/avatar-2.png');
+const avatar3: string = require('../../assets/images/avatars/avatar-3.png');
+const avatar4: string = require('../../assets/images/avatars/avatar-4.png');
+const avatar5: string = require('../../assets/images/avatars/avatar-5.png');
+const avatar6: string = require('../../assets/images/avatars/avatar-6.png');
+const avatar7: string = require('../../assets/images/avatars/avatar-7.png');
+const avatar8: string = require('../../assets/images/avatars/avatar-8.png');
+const buyPlate: string = require('../../assets/images/modal/buy-plate.png');
+const profileWindoweEitAvataBtn: string = require('../../assets/images/modal/profile/edit-avatar-btn.png');
+const avatarFrame: string = require('../../assets/images/modal/avatar-frame.png');
 
 class Preload extends Phaser.Scene {
   constructor() {
@@ -700,6 +711,17 @@ class Preload extends Phaser.Scene {
     this.load.image('sale-icon-sheep-price', saleIconSheepPrice);
     this.load.image('sale-icon-sheep-repository-improve', saleIconSheepRepositoryImprove);
     this.load.image('modal-bg-plate', modalBgPlate);
+    this.load.image('avatar-1', avatar1);
+    this.load.image('avatar-2', avatar2);
+    this.load.image('avatar-3', avatar3);
+    this.load.image('avatar-4', avatar4);
+    this.load.image('avatar-5', avatar5);
+    this.load.image('avatar-6', avatar6);
+    this.load.image('avatar-7', avatar7);
+    this.load.image('avatar-8', avatar8);
+    this.load.image('buy-avatar-plate', buyPlate);
+    this.load.image('profile-window-edit-avatar-btn', profileWindoweEitAvataBtn);
+    this.load.image('avatar-frame', avatarFrame);
 
   }
 

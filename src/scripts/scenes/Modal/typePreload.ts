@@ -98,6 +98,7 @@ const factoryProductionSlotDisable4: string = require('./../../../assets/images/
 const profileWindowBtnYellow: string = require('./../../../assets/images/modal/profile/button-yellow.png');
 const profileWindowBtnRed: string = require('./../../../assets/images/modal/profile/button-red.png');
 const profileWindowBtnGreen: string = require('./../../../assets/images/modal/profile/button-green.png');
+const profileWindoweEitAvataBtn: string = require('../../../assets/images/modal/profile/edit-avatar-btn.png');
 const profileWindowSettingsBtn: string = require('./../../../assets/images/modal/profile/settings-btn.png');
 const profileWindowFooter: string = require('./../../../assets/images/modal/profile/footer.png');
 const profileWindowHeader: string = require('./../../../assets/images/modal/profile/header.png');
@@ -300,7 +301,16 @@ const modalBgPlate: string = require('../../../assets/images/modal/bg-plate.png'
 const reviewBg: string = require('../../../assets/images/modal/review/bg.png');
 const reviewBtnLike: string = require('../../../assets/images/modal/review/btn-like.png');
 const reviewBtnDislike: string = require('../../../assets/images/modal/review/btn-dislike.png');
-
+const avatar1: string = require('../../../assets/images/avatars/avatar-1.png');
+const avatar2: string = require('../../../assets/images/avatars/avatar-2.png');
+const avatar3: string = require('../../../assets/images/avatars/avatar-3.png');
+const avatar4: string = require('../../../assets/images/avatars/avatar-4.png');
+const avatar5: string = require('../../../assets/images/avatars/avatar-5.png');
+const avatar6: string = require('../../../assets/images/avatars/avatar-6.png');
+const avatar7: string = require('../../../assets/images/avatars/avatar-7.png');
+const avatar8: string = require('../../../assets/images/avatars/avatar-8.png');
+const buyPlate: string = require('../../../assets/images/modal/buy-plate.png');
+const avatarFrame: string = require('../../../assets/images/modal/avatar-frame.png');
 
 export default function typePreload(): void {
     switch (this.state.modal.type) {
@@ -455,8 +465,15 @@ export default function typePreload(): void {
         this.load.image('profile-window-button-yellow', profileWindowBtnYellow);
         this.load.image('profile-window-button-red', profileWindowBtnRed);
         this.load.image('profile-window-button-green', profileWindowBtnGreen);
+        this.load.image('profile-window-edit-avatar-btn', profileWindoweEitAvataBtn);
         this.load.image('clan-window-search-plate-ns', clanWindowSearchPlate);
         this.load.image('close-window-btn', closeWindowBtn);
+        this.load.image('avatar-1', avatar1);
+        this.load.image('avatar-2', avatar2);
+        this.load.image('avatar-3', avatar3);
+        this.load.image('avatar-4', avatar4);
+        this.load.image('avatar-5', avatar5);
+        this.load.image('avatar-6', avatar6);
         break;
       case 16: 
         this.load.image('settings-window-header', settingsWindowHeader);
@@ -471,6 +488,14 @@ export default function typePreload(): void {
       case 18:
       case 19:
       case 20:
+        this.load.image('avatar-1', avatar1);
+        this.load.image('avatar-2', avatar2);
+        this.load.image('avatar-3', avatar3);
+        this.load.image('avatar-4', avatar4);
+        this.load.image('avatar-5', avatar5);
+        this.load.image('avatar-6', avatar6);
+        this.load.image('avatar-7', avatar7);
+        this.load.image('avatar-8', avatar8);
         this.load.image('icon-shop-sheep', iconShopSheep);
         this.load.image('icon-shop-chicken', iconShopChicken);
         this.load.image('icon-shop-cow', iconShopCow); 
@@ -687,10 +712,26 @@ export default function typePreload(): void {
         this.load.image('sale-icon-sheep-repository-improve', saleIconSheepRepositoryImprove);
         this.load.image('modal-bg-plate', modalBgPlate);
         break;
-      case 24: 
+      case 24:
         this.load.image('review-bg', reviewBg);
         this.load.image('review-btn-like', reviewBtnLike);
         this.load.image('review-btn-dislike', reviewBtnDislike);
+        break;
+      case 25:
+        this.load.image('profile-window-header', profileWindowHeader);
+        this.load.image('profile-window-bg', profileWindowBg);
+        this.load.image('profile-window-level', profileWindowBg);
+        this.load.image('avatar-1', avatar1);
+        this.load.image('avatar-2', avatar2);
+        this.load.image('avatar-3', avatar3);
+        this.load.image('avatar-4', avatar4);
+        this.load.image('avatar-5', avatar5);
+        this.load.image('avatar-6', avatar6);
+        this.load.image('avatar-7', avatar7);
+        this.load.image('avatar-8', avatar8);
+        this.load.image('buy-avatar-plate', buyPlate);
+        this.load.image('avatar-frame', avatarFrame);
+        break;
       default:
         break;
     }

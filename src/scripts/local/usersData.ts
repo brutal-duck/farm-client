@@ -1,6 +1,7 @@
 const userData: Iuser = {
   takeFreeDiamondTime: 0,
   avatar: '',
+  boughtAvatars: [],
   diamonds: 3,
   id: 'local',
   clanId: '',

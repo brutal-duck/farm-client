@@ -73,7 +73,7 @@ export default class ClanUsersList {
     };
     const { name, status, points, avatar, id } = data;
 
-    const avatarSprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos.x, pos.y, 'farmer').setScale(0.35);
+    const avatarSprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos.x, pos.y, `avatar-${avatar}`).setScale(0.8);
 
     const expelBtnPosition: Iposition = {
       x: avatarSprite.x + avatarSprite.displayWidth / 2 - 9,

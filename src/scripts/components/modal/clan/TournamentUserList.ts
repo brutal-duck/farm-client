@@ -109,7 +109,7 @@ export default class TournamentUserList {
       .setOrigin(0.5)
       .setDepth(1);
       
-    const avatarSprite = this.scene.add.sprite(positionText.getBounds().right + 65, pos.y, 'farmer').setScale(0.29).setDepth(1);
+    const avatarSprite = this.scene.add.sprite(positionText.getBounds().right + 65, pos.y, `avatar-${avatar}`).setScale(0.63).setDepth(1);
     const avatarGeom: Phaser.Geom.Rectangle = avatarSprite.getBounds();
     const nameText: Phaser.GameObjects.Text = this.scene.add.text(avatarGeom.right + 20, avatarSprite.y, name, nameTextStyle)
       .setDepth(1)

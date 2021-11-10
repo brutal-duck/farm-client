@@ -234,7 +234,7 @@ class Profile extends Phaser.Scene {
     // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
     // graphics.lineStyle(5, 0xFFFF00);
     // graphics.strokeRect(farmZone.x - farmZone.input.hitArea.width / 2, farmZone.y - farmZone.input.hitArea.height / 2, farmZone.input.hitArea.width, farmZone.input.hitArea.height);
-    const progressText: string = `${this.state.progress.sheep.part}/${this.state.progress.sheep.max}`;
+    const progressText: string = `${this.state.userSheep.part}/${this.state.progress.sheep.max}`;
     this.add.text(farmPosition.x + 155, farmPosition.y + 38, progressText, progressTextStyle).setOrigin(0.5);
     this.sheepNotificator = new Notificator(this, { x: farmPosition.x + 125, y: farmPosition.y - 85 }, true);
     this.click(farmZone, (): void => {
@@ -741,9 +741,9 @@ class Profile extends Phaser.Scene {
     if (
       this.state.progress.event.startTime > 0 && 
       this.state.progress.event.open && 
-      (this.state.progress.sheep.part > 4 ||
-      this.state.progress.chicken.part >= 1 ||
-      this.state.progress.cow.part >= 1) && 
+      (this.state.userSheep.part > 4 ||
+      this.state.userChicken.part >= 1 ||
+      this.state.userCow.part >= 1) && 
       this.checkAuthUser() &&
       !this.eventStartText?.visible
     ) {
@@ -765,9 +765,9 @@ class Profile extends Phaser.Scene {
       (this.state.userUnicorn?.tutorial > 0 &&
       this.state.progress.event.type === 1) &&
       this.state.progress.event.endTime > 0 && 
-      (this.state.progress.sheep.part > 4 || 
-      this.state.progress.chicken.part >= 1 || 
-      this.state.progress.cow.part >= 1) && 
+      (this.state.userSheep.part > 4 || 
+      this.state.userChicken.part >= 1 || 
+      this.state.userCow.part >= 1) && 
       this.checkAuthUser() &&
       !this.eventMapFarm?.visible
     ) {
@@ -786,9 +786,9 @@ class Profile extends Phaser.Scene {
       (this.state.userUnicorn?.tutorial === 0 && 
       this.state.progress.event.type === 1) && 
       this.checkAuthUser() &&
-      (this.state.progress.sheep.part > 4 || 
-      this.state.progress.chicken.part >= 1 || 
-      this.state.progress.cow.part >= 1) && 
+      (this.state.userSheep.part > 4 || 
+      this.state.userChicken.part >= 1 || 
+      this.state.userCow.part >= 1) && 
       this.state.progress.event.endTime > 0 &&
       this.eventZone?.active
     ) {
@@ -799,9 +799,9 @@ class Profile extends Phaser.Scene {
       this.state.progress.event.endTime <= 0 &&
       this.state.progress.event.open &&
       this.checkAuthUser() &&
-      (this.state.progress.sheep.part > 4 ||
-      this.state.progress.chicken.part >= 1 ||
-      this.state.progress.cow.part >= 1) 
+      (this.state.userSheep.part > 4 ||
+      this.state.userChicken.part >= 1 ||
+      this.state.userCow.part >= 1) 
       && !this.eventStartText?.visible
     ) {
       this.eventIsland?.setVisible(false);
@@ -819,9 +819,9 @@ class Profile extends Phaser.Scene {
 
     } else if (
       ((!this.checkAuthUser() || 
-      this.state.progress.sheep.part <= 4 && 
-      this.state.progress.chicken.part < 1 && 
-      this.state.progress.cow.part < 1) || 
+      this.state.userSheep.part <= 4 && 
+      this.state.userChicken.part < 1 && 
+      this.state.userCow.part < 1) || 
       !this.state.progress.event.open) && 
       this.eventZone?.active 
     ) {
@@ -915,8 +915,8 @@ class Profile extends Phaser.Scene {
   private checkFreeDiamondsNotification(): boolean {
     return !this.state.user.takenFreeDiamonds && 
     (this.state.userSheep.tutorial >= 100 || 
-    this.state.progress.chicken.part >= 1 || 
-    this.state.progress.cow.part >= 1);
+    this.state.userChicken.part >= 1 || 
+    this.state.userCow.part >= 1);
   }
   
   private updateClanFlagPole(): void {
