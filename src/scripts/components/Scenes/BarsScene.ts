@@ -454,6 +454,7 @@ export default class BarsScene extends Phaser.Scene {
   }
 
   private updatePulseFeedBoostTimer(): void {
+    if (this.farmUser.part < 6) return;
     if (this.farmUser.feedBoostTime <= 0) {
       let pulseTimer = this.feedBoostTimer.getData('pulseTimer');
       pulseTimer += 1;
