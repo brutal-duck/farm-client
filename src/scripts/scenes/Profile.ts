@@ -170,24 +170,20 @@ class Profile extends Phaser.Scene {
   }
 
   private createProfileInfo(): void {
-    const farmer: Phaser.GameObjects.Sprite = this.add.sprite(280, 75, 'farmer').setScale(0.3).setVisible(false);
-    let avatar: Phaser.GameObjects.Sprite;
-    avatar = farmer;
-    avatar.setVisible(true);
-    // if (this.state.platform === 'web' || this.state.platform === 'android' ) {
-    //   avatar = farmer;
-    //   avatar.setVisible(true);
-    // } else {
-    //   avatar = this.add.sprite(farmer.x, farmer.y, 'avatar');
-    //   if (this.state.platform === 'vk') {
-    //     avatar.setScale(0.6);
-    //   }
-    //   avatar.setMask(new Phaser.Display.Masks.BitmapMask(this, farmer));
-    //   if (avatar.texture.key === '__MISSING') {
-    //     avatar.setTexture('farmer');
-    //   }
-    // }
-    const avatarGeom: Phaser.Geom.Rectangle = farmer.getBounds();
+    const pos: Iposition = { x: 280, y: 70 };
+
+    const avatarType = Number(this.state.user.avatar);
+    const texture: string = isNaN(avatarType) ? `avatar-${this.state.user.id}` : `avatar-${avatarType}`;
+    const checkTexture = this.textures.exists(texture);
+    const maskSprite = this.add.sprite(pos.x, pos.y, 'avatar-0').setScale(0.8).setVisible(false);
+    const mask = new Phaser.Display.Masks.BitmapMask(this, maskSprite);
+    const avatar = this.add.sprite(pos.x, pos.y, texture).setMask(mask);
+    if (!checkTexture) avatar.setTexture('avatar-0');
+    const scaleX = maskSprite.displayWidth / avatar.displayWidth;
+    const scaleY = maskSprite.displayHeight / avatar.displayHeight;
+    avatar.setScale(scaleX, scaleY);
+
+    const avatarGeom: Phaser.Geom.Rectangle = avatar.getBounds();
     const status: IstatusSettings = this.getStatusSettings(this.state.user.status);
     if (status) {
       this.add.sprite(avatarGeom.right - 5, avatarGeom.top + 5, status.iconTexture).setVisible(status.iconVisible);

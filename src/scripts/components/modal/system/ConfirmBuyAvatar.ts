@@ -4,6 +4,7 @@ import BigButton from '../../Buttons/BigButton';
 import Sheep from './../../../scenes/Sheep/Main';
 import Chicken from './../../../scenes/Chicken/Main';
 import Cow from './../../../scenes/Cow/Main';
+import Unicorn from './../../../scenes/Event/Unicorns/Main';
 
 export default class ConfirmBuyAvatar {
   public scene: Modal;
@@ -48,8 +49,9 @@ export default class ConfirmBuyAvatar {
         this.scene.state.user.diamonds -= this.avatar.price;
         this.scene.state.user.boughtAvatars.push(this.avatar.type);
         this.scene.state.user.avatar = this.avatar.type !== 0 ? String(this.avatar.type) : this.scene.state.avatar;
-        const mainScene = this.scene.game.scene.getScene(this.scene.state.farm) as Sheep | Chicken | Cow;
+        const mainScene = this.scene.game.scene.getScene(this.scene.state.farm) as Sheep | Chicken | Cow | Unicorn;
         mainScene.tryTask(15, this.avatar.price);
+        mainScene.autosave();
         this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
           type: 'avatar',
           count: this.avatar.price,

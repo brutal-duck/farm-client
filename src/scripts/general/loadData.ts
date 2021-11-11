@@ -596,3 +596,5 @@ export default function loadData(response: AxiosResponse): void {
   
   state.sales = filterSale(state, response.data.sales);
 };
+
+export { checkUserName };

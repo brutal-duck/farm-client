@@ -1,5 +1,5 @@
 import Modal from './../../scenes/Modal/Modal';
-
+import { checkUserName } from '../../general/loadData';
 const AVATARS: Array<Iavatar> = [
   {
     type: 1,
@@ -65,7 +65,8 @@ export default class AvatarsWindow {
   private init(): void {
     this.x = this.scene.cameras.main.centerX;
     this.y = this.scene.cameras.main.centerY;
-    this.height = this.checkSocialPlatform() ? 580 : 450;
+
+    this.height = this.checkSocialAvatarAvalible() ? 580 : 450;
     this.width = 527;
     this.currentType = isNaN(Number(this.scene.state.user.avatar)) ? 0 : Number(this.scene.state.user.avatar);
   }
@@ -111,7 +112,7 @@ export default class AvatarsWindow {
       this.createAvatar(el, position);
     });
 
-    if (this.checkSocialPlatform()) this.createSocialAvatar()
+    if (this.checkSocialAvatarAvalible()) this.createSocialAvatar()
   }
 
   private createAvatar(
@@ -181,15 +182,18 @@ export default class AvatarsWindow {
     return this.scene.state.user.boughtAvatars.some(el => el === type);
   }
 
-  private checkSocialPlatform(): boolean {
-    const { platform } = this.scene.state;
-    return platform === 'vk' || platform === 'ok' || platform === 'ya';
+  private checkSocialAvatarAvalible(): boolean {
+    const { platform, user } = this.scene.state;
+    const avatarTexture = `avatar-${user.id}`;
+    const avalible = this.scene.textures.exists(avatarTexture) || user.boughtAvatars.some(el => el === 0);
+    return (platform === 'vk' || platform === 'ok' || platform === 'ya') && avalible;
   }
 
   private onCloseBtn(): void {
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
     this.scene.state.modal = { type: 15 };
     this.scene.scene.restart(this.scene.state);
+    checkUserName(this.scene.state);
   }
 
   private createSocialAvatar(): void {
@@ -208,7 +212,7 @@ export default class AvatarsWindow {
     const isOwned = this.ownCheck(avatar.type);
     const btnTexture = isOwned ? 'profile-window-level' : 'buy-avatar-plate';
     
-    const avatarTexture = `avatar-${this.scene.state.user.id}`
+    const avatarTexture = `avatar-${this.scene.state.user.id}`;
     const checkTexture = this.scene.textures.exists(avatarTexture);
     const maskSprite = this.scene.add.sprite(position.x, position.y, 'avatar-0').setVisible(false);
     const mask = new Phaser.Display.Masks.BitmapMask(this.scene, maskSprite);

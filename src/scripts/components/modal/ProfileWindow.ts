@@ -172,7 +172,7 @@ export default class ProfileWindow {
       x: 220,
       y: this.y - 60,
     };
-    console.log(this.profile.avatar)
+
     const avatarType = Number(this.profile.avatar);
     const texture: string = isNaN(avatarType) ? `avatar-${this.profile.id}` : `avatar-${avatarType}`;
     const checkTexture = this.scene.textures.exists(texture);
