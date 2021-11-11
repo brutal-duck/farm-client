@@ -1156,6 +1156,9 @@ export default {
     selected: 'выбрано',
     buyingAvatar: 'покупка аватара',
     confirmBuyAvatar: 'Хотите купить этот аватар?',
+    multiplyIcomeHeader: 'Увелить доход',
+    multiplyIcomeText: 'Хотите утроить доход с продажи?',
+    triple: 'утроить',
   },
   en: {
     index: 'en',
@@ -2314,5 +2317,8 @@ export default {
     selected: 'Selected',
     buyingAvatar: 'Buying avatar',
     confirmBuyAvatar: 'Want to buy this avatar?',
+    multiplyIcomeHeader: 'increase income',
+    multiplyIcomeText: 'Do you want to triple income from sale?',
+    triple: 'triple',
   },
 };

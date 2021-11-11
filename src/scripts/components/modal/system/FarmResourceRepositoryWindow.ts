@@ -234,9 +234,17 @@ export default class FarmResourceRepositoryWindow {
 
   private sellResource(): void {
     if (this.scene.state.territory.money > 0) {
-      this.scene.scene.stop();
-      this.scene.game.scene.keys[this.farm].scrolling.wheel = true;
-      this.scene.state.territory.sellResource();
+      const settignsArray: Array<IterritoriesSheepSettings | IterritoriesChickenSettings> = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`territories${this.scene.state.farm}Settings`];
+      const settings = settignsArray.find(el => el.improve === this.scene.state.territory.improve);
+      const half = Math.round(settings.storage / 2);
+      if (this.scene.state.territory.volume >= half && this.scene.state.farm !== 'Cow' && this.scene.state.readyAd) {
+        this.scene.state.modal = { type: 1, sysType: 27 };
+        this.scene.scene.restart(this.scene.state);
+      } else {
+        this.scene.scene.stop();
+        this.scene.game.scene.keys[this.farm].scrolling.wheel = true;
+        this.scene.state.territory.sellResource();
+      }
     }
   }
 

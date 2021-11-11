@@ -202,9 +202,14 @@ export default class FactoryWindow extends Phaser.GameObjects.Sprite {
     this.sellButton = this.scene.repositoryBtn(370, this.scene.state.lang.sellProduct, milkMoney);
     this.scene.clickModalBtn(this.sellButton, (): void => {
       if (factory.money > 0) {
-        this.scene.scene.stop();
-        this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-        this.scene.state.territory.factory.sellProducts();
+        if (this.scene.state.readyAd) {
+          this.scene.state.modal = { type: 1, sysType: 27 };
+          this.scene.scene.restart(this.scene.state);
+        } else {
+          this.scene.scene.stop();
+          this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
+          this.scene.state.territory.factory.sellProducts();
+        }
       }
     }); 
   }

@@ -331,6 +331,17 @@ export default class Ads {
         if (shopScene.scene.isActive() && shopScene.diamondsWindow) shopScene.diamondsWindow.pickUpAnim();
         type = 'take_ad_diamond';
         break;
+      case 7:
+        const farmUser: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
+        if (this.scene.state.farm !== 'Cow') {
+          farmUser.money += this.scene.state.territory.money * 2;
+          this.scene.state.territory.sellResource();
+        } else {
+          farmUser.money += this.scene.state.territory.factory.money * 2;
+          this.scene.state.territory.factory?.sellProducts();
+        }
+        type = 'take_ad_multiply';
+        break;
       default:
         break;
   

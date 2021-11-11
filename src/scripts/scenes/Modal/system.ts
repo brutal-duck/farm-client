@@ -33,6 +33,7 @@ import ConfirmBuyFarm from './../../components/modal/system/ConfirmByFarm';
 import ConfirmSpendDiamonds from './../../components/modal/system/ConfirmSpendDiamonds';
 import RecallWindow from './../../components/modal/system/RecallWindow';
 import ConfirmBuyAvatar from '../../components/modal/system/ConfirmBuyAvatar';
+import MultiplyIncomeAd from './../../components/modal/system/MultiplyIncomeAd';
 
 function systemWindow(): void {
   let height:number = 0;
@@ -76,6 +77,10 @@ function systemWindow(): void {
       }
       this.state.modal = modal;
       this.scene.restart(this.state);
+    }
+    if (this.state.modal.sysType === 27) {
+      if (this.state.farm !== 'Cow') this.state.territory?.sellResource();
+      else this.scene.state.territory?.factory?.sellProducts();
     }
   });
 
@@ -208,6 +213,11 @@ function systemWindow(): void {
     case 26: 
       new ConfirmBuyAvatar(this);
       break;
+
+    case 27:
+      new MultiplyIncomeAd(this);
+      break;
+    
     default:      
       this.scene.stop();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;
