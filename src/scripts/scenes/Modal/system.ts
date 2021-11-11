@@ -80,7 +80,7 @@ function systemWindow(): void {
     }
     if (this.state.modal.sysType === 27) {
       if (this.state.farm !== 'Cow') this.state.territory?.sellResource();
-      else this.scene.state.territory?.factory?.sellProducts();
+      else this.state.territory?.factory?.sellProducts();
     }
   });
 

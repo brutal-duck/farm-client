@@ -21,7 +21,7 @@ export default class MultiplyIncomeAd {
       fontSize: '35px',
       fontFamily: 'Shadow',
       color: '#ffffff',
-      stroke: '#C44002',
+      stroke: this.scene.state.farm !== 'Chicken' ? '#C44002' : '#645F55',
       strokeThickness: 7,
     };
 
