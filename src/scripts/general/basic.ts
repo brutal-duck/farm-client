@@ -1527,6 +1527,8 @@ function createСleanButton(): void {
             else if (barsScene.state.farm === 'Chicken') actionChicken();
             else if (barsScene.state.farm === 'Cow') actionCow();
             barsScene.cleanUpBtn?.destroy();
+            barsScene.game.scene.keys[barsScene.state.farm].tryTask(15, 1);
+
             barsScene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
               type: 'cleaning',
               count: 1,
