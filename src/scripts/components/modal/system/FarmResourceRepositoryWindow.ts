@@ -237,7 +237,7 @@ export default class FarmResourceRepositoryWindow {
       const settignsArray: Array<IterritoriesSheepSettings | IterritoriesChickenSettings> = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`territories${this.scene.state.farm}Settings`];
       const settings = settignsArray.find(el => el.improve === this.scene.state.territory.improve);
       const half = Math.round(settings.storage / 2);
-      if (this.scene.state.territory.volume >= half && this.scene.state.farm !== 'Cow' && this.scene.state.readyAd) {
+      if (this.scene.state.territory.volume >= half && this.scene.state.userSheep.part >= 4 && this.scene.state.farm !== 'Cow' && this.scene.state.readyAd) {
         this.scene.state.modal = { type: 1, sysType: 27 };
         this.scene.scene.restart(this.scene.state);
       } else {
