@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { shortNum } from '../../../general/basic';
 import Clan from '../../../scenes/Modal/Clan/Main';
 
@@ -25,13 +25,29 @@ export default class TournamentUserList {
       hash: this.scene.state.user.hash,
       counter: this.scene.state.user.counter,
     };
-    axios.post(process.env.API + '/getTournamentUserRaitings', data).then(res => {
+    axios.post(process.env.API + '/getTournamentUserRaitings', data).then((res: AxiosResponse<{ raitings: Array<IclanUser> }>) => {
       if (this.scene.state.modal.clanTabType === 2) {
         this.loadingText?.destroy();
         const { data } = res;
-        data.raitings.forEach((el: IclanUser, index: number) => {
-          this.createUser(el, index + 1);
+        this.loadingAvatars(data.raitings).then(() => {
+          data.raitings.forEach((el, index) => {
+            this.createUser(el, index + 1);
+          });
+        })
+      }
+    });
+  }
+
+  private loadingAvatars(array: IclanUser[]): Promise<boolean> {
+    return new Promise(resolve => {
+      if (array) {
+        array.forEach(el => {
+          if (isNaN(Number(el.avatar))) this.scene.load.image(`avatar-${el.id}`, el.avatar);
         });
+        this.scene.load.once(Phaser.Loader.Events.COMPLETE, () => {
+          resolve(true)
+        });
+        this.scene.load.start();
       }
     });
   }
@@ -108,8 +124,18 @@ export default class TournamentUserList {
     const positionText: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, String(ratePosition), scoreTextStyle)
       .setOrigin(0.5)
       .setDepth(1);
-      
-    const avatarSprite = this.scene.add.sprite(positionText.getBounds().right + 65, pos.y, `avatar-${avatar}`).setScale(0.63).setDepth(1);
+    
+    const avatarType = Number(avatar);
+    const avatarTexture: string = isNaN(avatarType) ? `avatar-${id}` : `avatar-${avatarType}`;
+    const checkTexture = this.scene.textures.exists(avatarTexture);
+    const maskSprite = this.scene.add.sprite(positionText.getBounds().right + 65, pos.y, 'avatar-0').setScale(0.63).setVisible(false);
+    const mask = new Phaser.Display.Masks.BitmapMask(this.scene, maskSprite);
+    const avatarSprite = this.scene.add.sprite(maskSprite.x, maskSprite.y, avatarTexture).setMask(mask).setDepth(1);
+    if (!checkTexture) avatarSprite.setTexture('avatar-0');
+    const scaleX = maskSprite.displayWidth / avatarSprite.displayWidth;
+    const scaleY = maskSprite.displayHeight / avatarSprite.displayHeight;
+    avatarSprite.setScale(scaleX, scaleY);
+
     const avatarGeom: Phaser.Geom.Rectangle = avatarSprite.getBounds();
     const nameText: Phaser.GameObjects.Text = this.scene.add.text(avatarGeom.right + 20, avatarSprite.y, name, nameTextStyle)
       .setDepth(1)

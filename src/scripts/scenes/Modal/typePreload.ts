@@ -475,7 +475,7 @@ export default function typePreload(): void {
         this.load.image('avatar-4', avatar4);
         this.load.image('avatar-5', avatar5);
         this.load.image('avatar-6', avatar6);
-        if ((this.state.platform === 'vk' || this.state.platform === 'ok' || this.state.platform === 'ya' || this.state.platform === 'web') && this.state.avatar !== '') {
+        if ((this.state.platform === 'vk' || this.state.platform === 'ok' || this.state.platform === 'ya') && this.state.avatar !== '') {
           this.load.image(`avatar-${this.state.user.id}`, this.state.avatar);
         }
         break;
@@ -492,7 +492,7 @@ export default function typePreload(): void {
       case 18:
       case 19:
       case 20:
-        if ((this.state.platform === 'vk' || this.state.platform === 'ok' || this.state.platform === 'ya' || this.state.platform === 'web') && this.state.avatar !== '') {
+        if ((this.state.platform === 'vk' || this.state.platform === 'ok' || this.state.platform === 'ya') && this.state.avatar !== '') {
           this.load.image(`avatar-${this.state.user.id}`, this.state.avatar);
         }
         this.load.image('avatar-0', avatar0);

@@ -13,8 +13,10 @@ export default class ClanUsersList {
     this.listLength = this.array?.length || 0;
     this.clanName = this.scene.state.clan?.name;
     this.clanAvatar = JSON.stringify(this.scene.state.clan.avatar);
-    this.array?.forEach(el => {
-      this.createUser(el);
+    this.loadingAvatars().then(() => {
+      this.array?.forEach(el => {
+        this.createUser(el);
+      });
     });
   }
 
@@ -37,6 +39,20 @@ export default class ClanUsersList {
     this.array = this.scene.state.clan?.users.sort((a, b) => b.points - a.points);
   }
 
+  private loadingAvatars(): Promise<boolean> {
+    return new Promise(resolve => {
+      if (this.array) {
+        this.array.forEach(el => {
+          if (isNaN(Number(el.avatar))) this.scene.load.image(`avatar-${el.id}`, el.avatar);
+        });
+        this.scene.load.once(Phaser.Loader.Events.COMPLETE, () => {
+          resolve(true)
+        });
+        this.scene.load.start();
+      }
+    });
+  }
+
   private createUser(data: IclanUser): void {
     const nameTextStyle: Phaser.Types.GameObjects.Text.TextStyle  = {
       color: '#fffdfa',
@@ -51,20 +67,7 @@ export default class ClanUsersList {
       fontSize: '20px',
       align: 'center',
     };
-    const btnTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
-      fontFamily: 'Shadow',
-      wordWrap: { width: 100 },
-      align: 'center',
-      fontSize: '13px',
-      color: '#ffffff',
-      shadow: {
-        offsetX: 1,
-        offsetY: 1, 
-        color: '#96580e',
-        blur: 2,
-        fill: true,
-      },
-    };
+
     const padding: number = 10;
     const bgWidth: number = 460;
     const pos: Iposition = {
@@ -73,7 +76,16 @@ export default class ClanUsersList {
     };
     const { name, status, points, avatar, id } = data;
 
-    const avatarSprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos.x, pos.y, `avatar-${avatar}`).setScale(0.8);
+    const avatarType = Number(avatar);
+    const avatarTexture: string = isNaN(avatarType) ? `avatar-${id}` : `avatar-${avatarType}`;
+    const checkTexture = this.scene.textures.exists(avatarTexture);
+    const maskSprite = this.scene.add.sprite(pos.x, pos.y, 'avatar-0').setScale(0.8).setVisible(false);
+    const mask = new Phaser.Display.Masks.BitmapMask(this.scene, maskSprite);
+    const avatarSprite = this.scene.add.sprite(pos.x, pos.y, avatarTexture).setMask(mask);
+    if (!checkTexture) avatarSprite.setTexture('avatar-0');
+    const scaleX = maskSprite.displayWidth / avatarSprite.displayWidth;
+    const scaleY = maskSprite.displayHeight / avatarSprite.displayHeight;
+    avatarSprite.setScale(scaleX, scaleY);
 
     const expelBtnPosition: Iposition = {
       x: avatarSprite.x + avatarSprite.displayWidth / 2 - 9,

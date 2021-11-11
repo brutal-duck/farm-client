@@ -597,7 +597,7 @@ export default class PersonalChatList {
           hash: this.scene.state.user.hash,
           counter: this.scene.state.user.counter,
           userName: result.name,
-          userAvatar: result.avatarType > 0 ? String(result.avatarType) : result.avatar,
+          userAvatar: result.avatar,
           userStatus: result.status,
         };
         axios.post(process.env.API +'/acceptAskJoinClan', data).then((res): void => {
