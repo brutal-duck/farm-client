@@ -183,7 +183,7 @@ export default class AvatarsWindow {
 
   private checkSocialPlatform(): boolean {
     const { platform } = this.scene.state;
-    return platform === 'vk' || platform === 'ok' || platform === 'ya' || platform === 'web';
+    return platform === 'vk' || platform === 'ok' || platform === 'ya';
   }
 
   private onCloseBtn(): void {
