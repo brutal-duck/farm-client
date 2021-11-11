@@ -874,6 +874,7 @@ interface IclanUserLog {
   count: string,
   time: Date,
   status: string,
+  id: string;
 }
 interface IclanUser {
   id: string;

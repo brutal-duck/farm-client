@@ -63,6 +63,7 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
   }
   
   private init(): void {
+
     this.scene.add.existing(this);
     this.posx = this.scene.cameras.main.centerX;
     this.posy = this.scene.cameras.main.centerY;
@@ -377,6 +378,32 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
 
   private createLogs(): void {
     this.logs = this.scene.state.clan[this.farm].logs;
+
+    let y: number = this.scene.cameras.main.centerY + 70;
+    const x: number = 160;
+    this.logElements = this.scene.add.group();
+    if (this.checkTextures()) {
+      this.logs.reverse().forEach(el => {
+        y = this.createLog(el, x, y);
+      });
+    } else {
+      this.loadingAvatars().then(() => {
+        this.logs.reverse().forEach(el => {
+          y = this.createLog(el, x, y);
+        });
+      });
+    }
+  }
+
+  private checkTextures(): boolean {
+    return this.logs.every(el => {
+      const avatarType = Number(el.avatar);
+      const avatarTexture = isNaN(avatarType) ? `avatar-${el.id}` : `avatar-${avatarType}`;
+      return this.scene.textures.exists(avatarTexture);
+    });
+  }
+
+  private createLog(el: IclanUserLog, x: number, y: number) {
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       color: '#fffdfa',
       fontFamily: 'Shadow',
@@ -391,27 +418,48 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
       align: 'center',
       wordWrap: { width: 50 },
     };
-    let y: number = this.scene.cameras.main.centerY + 70;
-    const x: number = 160;
-    this.logElements = this.scene.add.group();
-    this.logs.reverse().forEach((el: IclanUserLog, index: number) => {
-      const avatar = this.scene.add.sprite(x, y, 'farmer').setScale(0.25).setDepth(2);
-      const name = this.scene.add.text(x + avatar.displayWidth / 2 + 20, y, el.name, textStyle).setOrigin(0, 0.5).setDepth(2);
-      if (name.displayHeight > 60) {
-        const multiply: number = name.displayHeight / 60;
-        name.setFontSize(parseInt(name.style.fontSize) / multiply);
+    const avatarType = Number(el.avatar);
+    const avatarTexture = isNaN(avatarType) ? `avatar-${el.id}` : `avatar-${avatarType}`;
+    const checkTexture = this.scene.textures.exists(avatarTexture);
+    const maskSprite = this.scene.add.sprite(x, y, 'avatar-0').setVisible(false).setScale(0.5).setDepth(2);
+    const mask = new Phaser.Display.Masks.BitmapMask(this.scene, maskSprite);
+    const avatar = this.scene.add.sprite(x, y, avatarTexture).setMask(mask);
+    if (!checkTexture)
+      avatar.setTexture('avatar-0');
+    const scaleX = maskSprite.displayWidth / avatar.displayWidth;
+    const scaleY = maskSprite.displayHeight / avatar.displayHeight;
+    avatar.setScale(scaleX, scaleY);
+
+    const name = this.scene.add.text(x + avatar.displayWidth / 2 + 20, y, el.name, textStyle).setOrigin(0, 0.5).setDepth(2);
+    if (name.displayHeight > 60) {
+      const multiply: number = name.displayHeight / 60;
+      name.setFontSize(parseInt(name.style.fontSize) / multiply);
+    }
+    const time = this.scene.add.text(x + 400, y, this.getDate(el.time), timeTextStyle).setOrigin(0.5).setDepth(2);
+    const count = this.scene.add.text(x + 260, y, shortNum(el.count), textStyle).setOrigin(0, 0.5).setDepth(2);
+    const coinTexture: string = this.farm !== 'diamond' ? `${this.farm}Coin` : 'diamond';
+    const coin: Phaser.GameObjects.Sprite = this.scene.add.sprite(count.getBounds().left - 5, count.getBounds().centerY, coinTexture).setScale(0.11).setOrigin(1, 0.5).setDepth(2);
+
+    this.logElements.add(avatar);
+    this.logElements.add(name);
+    this.logElements.add(time);
+    this.logElements.add(count);
+    this.logElements.add(coin);
+    y += avatar.displayHeight + 14;
+    return y;
+  }
+
+  private loadingAvatars(): Promise<boolean> {
+    return new Promise(resolve => {
+      if (this.logs) {
+        this.logs.forEach(el => {
+          if (isNaN(Number(el.avatar))) this.scene.load.image(`avatar-${el.id}`, el.avatar);
+        });
+        this.scene.load.once(Phaser.Loader.Events.COMPLETE, () => {
+          resolve(true)
+        });
+        this.scene.load.start();
       }
-      const time = this.scene.add.text(x + 400, y, this.getDate(el.time), timeTextStyle).setOrigin(0.5).setDepth(2);
-      const count = this.scene.add.text(x + 260, y, shortNum(el.count), textStyle).setOrigin(0, 0.5).setDepth(2);
-      const coinTexture: string = this.farm !== 'diamond' ? `${this.farm}Coin` : 'diamond';
-      const coin: Phaser.GameObjects.Sprite = this.scene.add.sprite(count.getBounds().left - 5, count.getBounds().centerY, coinTexture).setScale(0.11).setOrigin(1, 0.5).setDepth(2);
-      
-      this.logElements.add(avatar);
-      this.logElements.add(name);
-      this.logElements.add(time);
-      this.logElements.add(count);
-      this.logElements.add(coin);
-      y += avatar.displayHeight + 10;
     });
   }
 
