@@ -108,6 +108,9 @@ class Profile extends Phaser.Scene {
     this.load.image('close-window-btn', closeWindowBtn);
     this.load.image('clan-flagpole', clanFlagpole);
     this.load.image('clan-building', clanBuilding);
+    if ((this.state.platform === 'vk' || this.state.platform === 'ok' || this.state.platform === 'ya') && this.state.avatar !== '') {
+      this.load.image(`avatar-${this.state.user.id}`, this.state.avatar);
+    }
   }
 
 
