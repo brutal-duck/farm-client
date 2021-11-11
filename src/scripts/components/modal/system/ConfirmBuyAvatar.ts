@@ -55,6 +55,7 @@ export default class ConfirmBuyAvatar {
         this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
           type: 'avatar',
           count: this.avatar.price,
+          avatarType: this.avatar.type,
         });
         this.scene.state.modal = { type: 25 };
         this.scene.scene.restart(this.scene.state);

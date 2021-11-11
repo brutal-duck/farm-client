@@ -792,6 +792,7 @@ interface IamplitudeData {
   to?: string;
   screen?: string;
   time?: number;
+  avatarType?: number;
 }
 interface IfortuneUser {
   name: string;
