@@ -1,11 +1,5 @@
 import Modal from './../../scenes/Modal/Modal';
 
-interface Iavatar {
-  type: number;
-  price: number;
-  desc: string;
-};
-
 const AVATARS: Array<Iavatar> = [
   {
     type: 1,
@@ -175,12 +169,8 @@ export default class AvatarsWindow {
       this.scene.state.user.avatar = String(avatar.type);
       this.scene.scene.restart(this.scene.state);
     } else {
-      if (avatar.price <= this.scene.state.user.diamonds) {
-        this.scene.state.user.diamonds -= avatar.price;
-        this.scene.state.user.boughtAvatars.push(avatar.type);
-        this.scene.state.user.avatar = String(avatar.type);
-        this.scene.scene.restart(this.scene.state);
-      } else console.log('не хватило кристаллов: ', avatar.price - this.scene.state.user.diamonds);
+      this.scene.state.modal = { type: 1, sysType: 26, avatarParams: avatar };
+      this.scene.scene.restart(this.scene.state);
     }
   }
 
@@ -190,6 +180,7 @@ export default class AvatarsWindow {
 
   private onCloseBtn(): void {
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-    this.scene.scene.stop();
+    this.scene.state.modal = { type: 15 };
+    this.scene.scene.restart(this.scene.state);
   }
 }

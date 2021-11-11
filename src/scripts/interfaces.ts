@@ -662,7 +662,13 @@ interface Imodal {
   tasksParams?: ItasksParams;
   unicornParams?: IunicornParams;
   confirmSpendParams?: IconfirmSpendParams;
+  avatarParams?: Iavatar;
 }
+interface Iavatar {
+  type: number;
+  price: number;
+  desc: string;
+};
 interface IconfirmSpendParams {
   level?: number;
   type: string;

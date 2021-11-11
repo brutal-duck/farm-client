@@ -32,6 +32,7 @@ import ConfimExcludeUserWindow from '../../components/modal/system/ConfimExclude
 import ConfirmBuyFarm from './../../components/modal/system/ConfirmByFarm';
 import ConfirmSpendDiamonds from './../../components/modal/system/ConfirmSpendDiamonds';
 import RecallWindow from './../../components/modal/system/RecallWindow';
+import ConfirmBuyAvatar from '../../components/modal/system/ConfirmBuyAvatar';
 
 function systemWindow(): void {
   let height:number = 0;
@@ -204,6 +205,9 @@ function systemWindow(): void {
       new RecallWindow(this)
       break;
 
+    case 26: 
+      new ConfirmBuyAvatar(this);
+      break;
     default:      
       this.scene.stop();
       this.game.scene.keys[this.state.farm].scrolling.wheel = true;

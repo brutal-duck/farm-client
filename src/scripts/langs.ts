@@ -1154,6 +1154,8 @@ export default {
     avatarSettings: 'Выбор аватара',
     select: 'выбрать',
     selected: 'выбрано',
+    buyingAvatar: 'покупка аватара',
+    confirmBuyAvatar: 'Хотите купить этот аватар?',
   },
   en: {
     index: 'en',
@@ -2307,7 +2309,10 @@ export default {
     bonus: 'Bonus',
     noInterstitial: 'Turning off autoospree.\nAdvertising forever!',
     turnOnFeedBoost: 'Turn on the feed to double income',
-    avatarSettings: 'Выбор аватара',
-
+    avatarSettings: 'Select avatar',
+    select: 'select',
+    selected: 'Selected',
+    buyingAvatar: 'Buying avatar',
+    confirmBuyAvatar: 'Want to buy this avatar?',
   },
 };

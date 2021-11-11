@@ -75,6 +75,7 @@ class Modal extends Phaser.Scene {
   public chatBars: ChatBars;
   public taskWindow: TasksWindow;
   public ClanTabsWindow: ClanTabsWindow;
+  public oldType: number = 0;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -115,6 +116,8 @@ class Modal extends Phaser.Scene {
       Number(this.game.config.height),
       'modal'
     ).setOrigin(0).setInteractive();
+    const avatarWinAnim = this.oldType !== this.state.modal.type;
+    this.oldType = this.state.modal.type;
     // тип окна
     switch (this.state.modal.type) {
       case 1: // системное окно
@@ -198,7 +201,7 @@ class Modal extends Phaser.Scene {
         new ReviewWindow(this);
         break;
       case 25: 
-        this.openModal(this.cameras.main);
+        if (avatarWinAnim) this.openModal(this.cameras.main);
         new AvatarsWindow(this);
         break;
       default:
