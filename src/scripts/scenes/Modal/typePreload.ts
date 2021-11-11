@@ -301,6 +301,7 @@ const modalBgPlate: string = require('../../../assets/images/modal/bg-plate.png'
 const reviewBg: string = require('../../../assets/images/modal/review/bg.png');
 const reviewBtnLike: string = require('../../../assets/images/modal/review/btn-like.png');
 const reviewBtnDislike: string = require('../../../assets/images/modal/review/btn-dislike.png');
+const avatar0: string = require('../../../assets/images/avatars/avatar-0.png');
 const avatar1: string = require('../../../assets/images/avatars/avatar-1.png');
 const avatar2: string = require('../../../assets/images/avatars/avatar-2.png');
 const avatar3: string = require('../../../assets/images/avatars/avatar-3.png');
@@ -474,6 +475,9 @@ export default function typePreload(): void {
         this.load.image('avatar-4', avatar4);
         this.load.image('avatar-5', avatar5);
         this.load.image('avatar-6', avatar6);
+        if ((this.state.platform === 'vk' || this.state.platform === 'ok' || this.state.platform === 'ya' || this.state.platform === 'web') && this.state.avatar !== '') {
+          this.load.image(`avatar-${this.state.user.id}`, this.state.avatar);
+        }
         break;
       case 16: 
         this.load.image('settings-window-header', settingsWindowHeader);
@@ -488,6 +492,10 @@ export default function typePreload(): void {
       case 18:
       case 19:
       case 20:
+        if ((this.state.platform === 'vk' || this.state.platform === 'ok' || this.state.platform === 'ya' || this.state.platform === 'web') && this.state.avatar !== '') {
+          this.load.image(`avatar-${this.state.user.id}`, this.state.avatar);
+        }
+        this.load.image('avatar-0', avatar0);
         this.load.image('avatar-1', avatar1);
         this.load.image('avatar-2', avatar2);
         this.load.image('avatar-3', avatar3);
@@ -721,6 +729,7 @@ export default function typePreload(): void {
         this.load.image('profile-window-header', profileWindowHeader);
         this.load.image('profile-window-bg', profileWindowBg);
         this.load.image('profile-window-level', profileWindowBg);
+        this.load.image('avatar-0', avatar0);
         this.load.image('avatar-1', avatar1);
         this.load.image('avatar-2', avatar2);
         this.load.image('avatar-3', avatar3);

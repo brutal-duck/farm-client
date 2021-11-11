@@ -19,7 +19,17 @@ export default class ConfirmBuyAvatar {
   private create(): void {
     const { centerX, centerY } = this.scene.cameras.main;
     this.scene.textHeader.setText(this.scene.state.lang.buyingAvatar);
-    this.scene.add.sprite(centerX, centerY - 90, `avatar-${this.avatar.type}`);
+    
+    const avatarTexture = this.avatar.type !== 0 ? `avatar-${this.avatar.type}`: `avatar-${this.scene.state.user.id}`;
+    const checkTexture = this.scene.textures.exists(avatarTexture);
+    const maskSprite = this.scene.add.sprite(centerX, centerY - 90, 'avatar-0').setVisible(false);
+    const mask = new Phaser.Display.Masks.BitmapMask(this.scene, maskSprite);
+    const sprite = this.scene.add.sprite(centerX, centerY - 90, avatarTexture).setMask(mask);
+    if (!checkTexture) sprite.setTexture('avatar-0');
+    const scaleX = maskSprite.width / sprite.width;
+    const scaleY = maskSprite.height / sprite.height;
+    sprite.setScale(scaleX, scaleY);
+    
     this.scene.add.text(centerX, centerY - 10, this.scene.state.lang.confirmBuyAvatar, {
       font: '26px Bip',
       color: '#925C28',
@@ -37,7 +47,7 @@ export default class ConfirmBuyAvatar {
       if (this.scene.state.user.diamonds >= this.avatar.price) {
         this.scene.state.user.diamonds -= this.avatar.price;
         this.scene.state.user.boughtAvatars.push(this.avatar.type);
-        this.scene.state.user.avatar = String(this.avatar.type);
+        this.scene.state.user.avatar = this.avatar.type !== 0 ? String(this.avatar.type) : this.scene.state.avatar;
         const mainScene = this.scene.game.scene.getScene(this.scene.state.farm) as Sheep | Chicken | Cow;
         mainScene.tryTask(15, this.avatar.price);
         this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {

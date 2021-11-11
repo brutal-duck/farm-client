@@ -63,7 +63,7 @@ export default class ProfileWindow {
       const profile: IprofileData = {
         id: this.scene.state.user.id,
         name: nameText,
-        avatar: 'avatar',
+        avatar: this.scene.state.user.avatar,
         status: this.scene.state.user.status,
         level: this.scene.state.user.level,
         clan: this.scene.state.clan,
@@ -95,7 +95,7 @@ export default class ProfileWindow {
         const { result, error }: { result: IprofileData, error: boolean }  = res.data;
         if (!error) {
           if (result.avatar) {
-            this.scene.load.image(`avatar${result.id}`, result.avatar);
+            this.scene.load.image(`avatar-${result.id}`, result.avatar);
             this.scene.load.once(Phaser.Loader.Events.COMPLETE, () => {
               this.scene.scene.stop('Block');
               animation?.remove();
@@ -105,7 +105,6 @@ export default class ProfileWindow {
               this.create();
             });
             this.scene.load.start();
-
           } else {
             this.profile = result;
             this.init();
@@ -173,30 +172,30 @@ export default class ProfileWindow {
       x: 220,
       y: this.y - 60,
     };
-    const avatarType = Number(this.scene.state.user.avatar);
-    console.log(avatarType)
-    const texture: string = isNaN(avatarType) ? 'avatar-1' : `avatar-${avatarType}`;
-    this.avatar = this.scene.add.sprite(pos.x, pos.y, texture).setDepth(1);
-    // if (this.scene.state.platform === 'vk') this.avatar = this.scene.add.sprite(pos.x, pos.y, `avatar${this.profile.id}`).setScale(0.8).setDepth(1);
-    // else if (this.scene.state.platform === 'ok') this.avatar = this.scene.add.sprite(pos.x, pos.y, `avatar${this.profile.id}`).setScale(1.1).setDepth(1);
-    // else if (this.scene.state.platform === 'ya') this.avatar = this.scene.add.sprite(pos.x, pos.y, `avatar${this.profile.id}`).setDepth(1);
-    // else this.avatar = this.scene.add.sprite(pos.x, pos.y, 'farmer').setScale(0.53).setDepth(1);
-    // if (this.avatar.texture.key === '__MISSING') this.avatar.setTexture('farmer').setScale(0.53);
-    
-    // if (this.scene.state.platform !== 'web') {
-    //   const mask: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos.x, pos.y, 'farmer').setScale(0.53).setVisible(false);
-    //   this.avatar.mask = new Phaser.Display.Masks.BitmapMask(this.scene, mask);
-    // }
-    const posBtn = this.avatar.getTopRight();
-    const edit = this.scene.add.sprite(posBtn.x - 20, posBtn.y + 20, 'profile-window-edit-avatar-btn').setScale(0.7).setDepth(1);
-    this.scene.click(this.avatar, (): void => {
-      this.scene.state.modal = { type: 25 };
-      this.scene.scene.restart(this.scene.state);
-    });
-    this.scene.click(edit, (): void => {
-      this.scene.state.modal = { type: 25 };
-      this.scene.scene.restart(this.scene.state);
-    });
+    console.log(this.profile.avatar)
+    const avatarType = Number(this.profile.avatar);
+    const texture: string = isNaN(avatarType) ? `avatar-${this.profile.id}` : `avatar-${avatarType}`;
+    const checkTexture = this.scene.textures.exists(texture);
+    const maskSprite = this.scene.add.sprite(pos.x, pos.y, 'avatar-0').setVisible(false);
+    const mask = new Phaser.Display.Masks.BitmapMask(this.scene, maskSprite);
+    this.avatar = this.scene.add.sprite(pos.x, pos.y, texture).setMask(mask);
+    if (!checkTexture) this.avatar.setTexture('avatar-0');
+    const scaleX = maskSprite.width / this.avatar.width;
+    const scaleY = maskSprite.height / this.avatar.height;
+    this.avatar.setScale(scaleX, scaleY);
+
+    if (this.owner) {
+      const posBtn = this.avatar.getTopRight();
+      const edit = this.scene.add.sprite(posBtn.x - 20, posBtn.y + 20, 'profile-window-edit-avatar-btn').setScale(0.7).setDepth(1);
+      this.scene.click(this.avatar, (): void => {
+        this.scene.state.modal = { type: 25 };
+        this.scene.scene.restart(this.scene.state);
+      });
+      this.scene.click(edit, (): void => {
+        this.scene.state.modal = { type: 25 };
+        this.scene.scene.restart(this.scene.state);
+      });
+    }
   }
 
   private createProfileInfo(): void {

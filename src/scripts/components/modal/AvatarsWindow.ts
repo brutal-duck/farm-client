@@ -41,7 +41,7 @@ const AVATARS: Array<Iavatar> = [
     price: 100,
     desc: '8',
   },
-]; 
+];
 
 export default class AvatarsWindow {
   private scene: Modal;
@@ -54,6 +54,7 @@ export default class AvatarsWindow {
   private bg: Phaser.GameObjects.TileSprite;
   private x: number;
   private y: number;
+  private currentType: number;
 
   constructor(scene: Modal) {
     this.scene = scene;
@@ -64,8 +65,9 @@ export default class AvatarsWindow {
   private init(): void {
     this.x = this.scene.cameras.main.centerX;
     this.y = this.scene.cameras.main.centerY;
-    this.height = 450;
+    this.height = this.checkSocialPlatform() ? 580 : 450;
     this.width = 527;
+    this.currentType = isNaN(Number(this.scene.state.user.avatar)) ? 0 : Number(this.scene.state.user.avatar);
   }
 
   private createElements(): void {
@@ -108,13 +110,14 @@ export default class AvatarsWindow {
     AVATARS.forEach(el => {
       this.createAvatar(el, position);
     });
+
+    if (this.checkSocialPlatform()) this.createSocialAvatar()
   }
 
   private createAvatar(
     avatar: { type: number, price: number, desc: string }, 
     position: Iposition,
   ): void {
-    const currentType = Number(this.scene.state.user.avatar);
     const bgGeom = this.bg.getBounds();
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Shadow',
@@ -132,7 +135,7 @@ export default class AvatarsWindow {
         const diamond = this.scene.add.sprite(text.getBounds().right + 2, text.y, 'diamond').setScale(0.1).setOrigin(0, 0.5);
       } else {
         const text = this.scene.add.text(btn.x, btn.y - 3, this.scene.state.lang.select, textStyle).setOrigin(0.5);
-        if (currentType === avatar.type) {
+        if (this.currentType === avatar.type) {
           this.scene.add.sprite(sprite.x + 3, sprite.y + 3, 'avatar-frame');
           btn.setVisible(false);
           text.setVisible(false);
@@ -156,7 +159,7 @@ export default class AvatarsWindow {
       this.scene.click(sprite, (): void => { this.avatarHandler(avatar); });
       this.scene.click(btn, (): void => { this.avatarHandler(avatar); });
       const text = this.scene.add.text(btn.x, btn.y - 1, this.scene.state.lang.select, textStyle).setOrigin(0.5);
-      if (currentType === avatar.type) {
+      if (this.currentType === avatar.type) {
         this.scene.add.sprite(sprite.x + 3, sprite.y + 3, 'avatar-frame');
         btn.setVisible(false);
         text.setVisible(false);
@@ -166,7 +169,7 @@ export default class AvatarsWindow {
 
   private avatarHandler(avatar: Iavatar): void {
     if (this.ownCheck(avatar.type) || avatar.type === 1 || avatar.type === 2) {
-      this.scene.state.user.avatar = String(avatar.type);
+      this.scene.state.user.avatar = avatar.type !== 0 ? String(avatar.type) : this.scene.state.avatar;
       this.scene.scene.restart(this.scene.state);
     } else {
       this.scene.state.modal = { type: 1, sysType: 26, avatarParams: avatar };
@@ -178,9 +181,57 @@ export default class AvatarsWindow {
     return this.scene.state.user.boughtAvatars.some(el => el === type);
   }
 
+  private checkSocialPlatform(): boolean {
+    const { platform } = this.scene.state;
+    return platform === 'vk' || platform === 'ok' || platform === 'ya' || platform === 'web';
+  }
+
   private onCloseBtn(): void {
     this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
     this.scene.state.modal = { type: 15 };
     this.scene.scene.restart(this.scene.state);
+  }
+
+  private createSocialAvatar(): void {
+    const bottomGeom = this.footer.getBounds();
+    const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '22px',
+      color: '#7A3D10',
+    };
+    const avatar: Iavatar = {
+      type: 0,
+      price: 1000,
+      desc: '123',
+    };
+    const position: Iposition = { x: bottomGeom.centerX, y: bottomGeom.bottom - 150 };
+    const isOwned = this.ownCheck(avatar.type);
+    const btnTexture = isOwned ? 'profile-window-level' : 'buy-avatar-plate';
+    
+    const avatarTexture = `avatar-${this.scene.state.user.id}`
+    const checkTexture = this.scene.textures.exists(avatarTexture);
+    const maskSprite = this.scene.add.sprite(position.x, position.y, 'avatar-0').setVisible(false);
+    const mask = new Phaser.Display.Masks.BitmapMask(this.scene, maskSprite);
+    const sprite = this.scene.add.sprite(position.x, position.y, avatarTexture).setMask(mask);
+    if (!checkTexture) sprite.setTexture('avatar-0');
+    const scaleX = maskSprite.width / sprite.width;
+    const scaleY = maskSprite.height / sprite.height;
+    sprite.setScale(scaleX, scaleY);
+
+    const btn = this.scene.add.sprite(sprite.x, sprite.y + 60, btnTexture);
+    if (!isOwned) {
+      const text = this.scene.add.text(btn.x - 10, btn.y - 1, String(avatar.price), textStyle).setOrigin(0.5).setColor('#ffffff');
+      const diamond = this.scene.add.sprite(text.getBounds().right + 2, text.y, 'diamond').setScale(0.1).setOrigin(0, 0.5);
+    } else {
+      const text = this.scene.add.text(btn.x, btn.y - 3, this.scene.state.lang.select, textStyle).setOrigin(0.5);
+      if (this.currentType === avatar.type) {
+        this.scene.add.sprite(sprite.x + 3, sprite.y + 3, 'avatar-frame');
+        btn.setVisible(false);
+        text.setVisible(false);
+      }
+    }
+
+    this.scene.click(sprite, (): void => { this.avatarHandler(avatar); });
+    this.scene.click(btn, (): void => { this.avatarHandler(avatar); });
   }
 }

@@ -326,6 +326,7 @@ const saleIconSheepMoney: string = require('../../assets/images/modal/sale/icons
 const saleIconSheepPrice: string = require('../../assets/images/modal/sale/icons/sheep-price.png');
 const saleIconSheepRepositoryImprove: string = require('../../assets/images/modal/sale/icons/sheep-repository-improve.png');
 const modalBgPlate: string = require('../../assets/images/modal/bg-plate.png');
+const avatar0: string = require('../../assets/images/avatars/avatar-0.png');
 const avatar1: string = require('../../assets/images/avatars/avatar-1.png');
 const avatar2: string = require('../../assets/images/avatars/avatar-2.png');
 const avatar3: string = require('../../assets/images/avatars/avatar-3.png');
@@ -447,8 +448,8 @@ class Preload extends Phaser.Scene {
     this.load.image('big-btn-yellow', bigButtonYellow);
     this.load.image('repository-sell-btn', repositorySellBtn);
 
-    if ((this.state.platform === 'vk' || this.state.platform === 'ok' || this.state.platform === 'ya') && this.state.avatar !== '') {
-      this.load.image('avatar', this.state.avatar);
+    if ((this.state.platform === 'vk' || this.state.platform === 'ok' || this.state.platform === 'ya' || this.state.platform === 'web') && this.state.avatar !== '') {
+      this.load.image(`avatar-${this.state.user.id}`, this.state.avatar);
     }
 
     // буст 'стадо'
@@ -711,6 +712,7 @@ class Preload extends Phaser.Scene {
     this.load.image('sale-icon-sheep-price', saleIconSheepPrice);
     this.load.image('sale-icon-sheep-repository-improve', saleIconSheepRepositoryImprove);
     this.load.image('modal-bg-plate', modalBgPlate);
+    this.load.image('avatar-0', avatar0);
     this.load.image('avatar-1', avatar1);
     this.load.image('avatar-2', avatar2);
     this.load.image('avatar-3', avatar3);

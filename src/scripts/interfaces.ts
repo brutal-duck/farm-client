@@ -181,7 +181,6 @@ interface IprofileData {
   status: string;
   level: number;
   avatar: string;
-  avatarType?: number;
   clan?: IclanData;
   sheepPart: number;
   chickenPart: number;
