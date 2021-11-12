@@ -143,6 +143,7 @@ interface IuserAutoSave {
   test: string;
   takenFreeDiamonds: boolean;
   takenSocialAward: boolean;
+  fortuneTimeAd: number;
   messages: Imessage[];
   personalMessages: IuserPersonalMessage[];
   yandexName: string;

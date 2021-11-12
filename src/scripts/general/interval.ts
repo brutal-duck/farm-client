@@ -769,8 +769,14 @@ function incInterstitialAdTimer(state: Istate): void {
   else state.interstitialTimer += 1;
 }
 
-function incFortuneAdTimer(state: Istate): void {
-  state.user.fortuneTimeAd += 1;
+function incFortuneAdTimer(state: Istate, count: number = 1): void {
+  const maxTime = 3 * 60 * 60;
+  const minTime = 0;
+  if (state.user.fortuneTimeAd < maxTime || count < 0) {
+    state.user.fortuneTimeAd += count;
+  }
+  if (state.user.fortuneTimeAd < minTime) state.user.fortuneTimeAd = minTime;
+  if (state.user.fortuneTimeAd > maxTime) state.user.fortuneTimeAd = maxTime;
 }
 
 export {

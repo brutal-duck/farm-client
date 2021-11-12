@@ -222,7 +222,7 @@ class Boot extends Phaser.Scene {
   private setStartState(): void {
     this.state.user = {
       takeFreeDiamondTime: 0,
-      fortuneTimeAd: 0,
+      fortuneTimeAd: 3600 * 3,
       diamonds: 0,
       avatar: '',
       boughtAvatars: [],

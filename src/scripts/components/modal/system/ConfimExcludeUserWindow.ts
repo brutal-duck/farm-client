@@ -46,6 +46,7 @@ export default class ConfimExcludeUserWindow {
     const data = {
       userId: this.scene.state.modal.userId, 
       ownerName: this.scene.state.modal.message,
+      ownerClanId: this.scene.state.user.clanId,
     };
     this.scene.state.socket.io.emit('excludeUserClan', data);
     this.scene.state.socket.io.emit('sendClanMessage', {

@@ -1,6 +1,6 @@
 const userData: Iuser = {
   takeFreeDiamondTime: 0,
-  fortuneTimeAd: 0,
+  fortuneTimeAd: 3600 * 3,
   avatar: '',
   boughtAvatars: [],
   diamonds: 3,

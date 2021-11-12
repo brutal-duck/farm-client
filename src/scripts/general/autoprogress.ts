@@ -6,7 +6,7 @@ import Factory from './../components/Territories/Factory';
 import CowTerritory from './../components/Territories/CowTerritory';
 import ChickenTerritory from './../components/Territories/ChickenTerritory';
 import SheepTerritory from './../components/Territories/SheepTerritory';
-import { progressClanCooldown, progressClanEventTime, progressSalesTime } from './interval';
+import { incFortuneAdTimer, progressClanCooldown, progressClanEventTime, progressSalesTime } from './interval';
 
 const updateUnicornCollectorTime = (state: Istate) => {
   const { userUnicorn, offlineTime } = state;
@@ -1564,6 +1564,7 @@ export default function autoprogress(load: boolean = false): void {
     }
     this.autoporgressCollectorTime();
     updateUnicornCollectorTime(state);
+    incFortuneAdTimer(state, state.offlineTime);
   }
   state.offlineTime = 0;
 }

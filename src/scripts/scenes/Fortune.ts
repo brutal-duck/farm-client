@@ -1,4 +1,4 @@
-import { shortNum, shortTime } from '../general/basic';
+import { shortNum, shortTime, timer } from '../general/basic';
 import { clickModalBtn, clickButton, click } from '../general/clicks';
 import CowSprite from '../components/Animal/CowSprite';
 import { loadingModal } from '../general/basic';
@@ -14,7 +14,10 @@ const pointer: string = require('../../assets/images/event/fortune/pointer.png')
 const ticket: string = require('../../assets/images/event/fortune/ticket.png');
 const jackpotBg: string = require('../../assets/images/event/fortune/jackpot-bg.png');
 const doneChapterButton: string = require('../../assets/images/modal/done-chapter-button.png');
+const bgTimerAd: string = require('../../assets/images/icons/bg-timer-ad.png');
+const adFortuneIcon: string = require('../../assets/images/icons/ad-fortune-icon.png');
 
+const ONE_HOUR = 3600;
 export default class Fortune extends Phaser.Scene {
   constructor() {
     super('Fortune');
@@ -41,7 +44,12 @@ export default class Fortune extends Phaser.Scene {
   public jackpotText: Phaser.GameObjects.Text;
   public jackpotCount: Phaser.GameObjects.Text;
   public jackpotDiamond: Phaser.GameObjects.Sprite;
+  private adTimer: Phaser.GameObjects.Text;
+  private adIcon: Phaser.GameObjects.Sprite;
+  private adTimerBg: Phaser.GameObjects.Sprite;
+  private adTileZone: Phaser.GameObjects.TileSprite;
 
+  private adStart: boolean = false;
   public listElements: any[] = [];
 
   public clickModalBtn = clickModalBtn.bind(this);
@@ -63,6 +71,8 @@ export default class Fortune extends Phaser.Scene {
     this.load.image('fortune-ticket', ticket);
     this.load.image('fortune-jackpot-bg', jackpotBg);
     this.load.image('done-chapter-button', doneChapterButton);
+    this.load.image('bg-timer-ad', bgTimerAd);
+    this.load.image('ad-fortune-icon', adFortuneIcon);
 
   }
 
@@ -83,10 +93,12 @@ export default class Fortune extends Phaser.Scene {
     this.createElements();
     this.creaeteList();
     this.setListeners();
+    if (!this.state.readyAd) this.createAdBtn();
   }
 
   public update(): void {
     this.updateElements();
+    this.updateAdBtn();
   }
 
   private createElements(): void {
@@ -343,6 +355,11 @@ export default class Fortune extends Phaser.Scene {
     });
   }
 
+  public adStartFortune(): void {
+    this.adStart = true;
+    this.startFortune();
+  }
+
   private startScrollWheel(): void {
     const endAngle: number = this.prizeId === 1 ? -340 :
     this.prizeId === 2 ? -140 :
@@ -518,15 +535,17 @@ export default class Fortune extends Phaser.Scene {
     }
     this.sendSocket(prize);
 
-    if (this.state.user.boosts.fortune > 0) {
-      this.state.user.boosts.fortune -= 1;
-    } else {
-      this.state.user.diamonds -= this.price;
-      this.state.amplitude.logAmplitudeEvent('diamonds_spent', {
-        type: 'fortune',
-        count: this.price,
-      });
-    }
+    if (!this.adStart) {
+      if (this.state.user.boosts.fortune > 0) {
+        this.state.user.boosts.fortune -= 1;
+      } else {
+        this.state.user.diamonds -= this.price;
+        this.state.amplitude.logAmplitudeEvent('diamonds_spent', {
+          type: 'fortune',
+          count: this.price,
+        });
+      }
+    } else this.adStart = false;
 
     switch (this.prizeId) {
       case 1:
@@ -895,6 +914,53 @@ export default class Fortune extends Phaser.Scene {
     const text: string = income > 0 ? this.state.lang.fortuneHint_3.replace('$1', shortNum(income * time)) : this.state.lang.fortuneHint_3.replace('$1', '1000');
 
     Hint.create(this, -250, text, 3);
+  }
+
+  private createAdBtn(): void {
+    const wheelPos = this.wheel.getBottomRight();
+    const pos: Iposition = { x: wheelPos.x - 55, y: wheelPos.y - 15};
+    const timerStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '16px',
+      color: '#ffffff',
+      stroke: '#737373',
+      strokeThickness: 3,
+    };
+    this.adTimer = this.add.text(pos.x, pos.y, '', timerStyle).setOrigin(0.5);
+    this.adTimerBg = this.add.sprite(pos.x, pos.y, 'bg-timer-ad');
+    this.adIcon = this.add.sprite(pos.x, pos.y, 'ad-fortune-icon');
+    this.adTileZone = this.add.tileSprite(pos.x, pos.y, this.adIcon.width + 10, this.adIcon.height + 10, 'pixel');
+
+    this.click(this.adTileZone, (): void => { this.game.scene.keys[this.state.farm].watchAd(10); });
+    this.tweens.add({
+      targets: [this.adIcon],
+      delay: 5000,
+      props: {
+        scale: { value: 1.25, duration: 250, ease: 'Power2', yoyo: true },
+        angle: { value: -5, duration: 250, ease: 'Power2', yoyo: true },
+        y: { value: '-=25', duration: 250, ease: 'Power2', yoyo: true },
+      },
+      loop: -1,
+    });
+  }
+
+  private updateAdBtn(): void {
+    const lastTime = this.state.user.fortuneTimeAd - ONE_HOUR;
+    const checkLastTime = lastTime >= ONE_HOUR;
+    if (this.adTimer?.active && this.adIcon?.active && this.adTimerBg?.active) {
+      if (this.adTimer.visible !== !checkLastTime) {
+        this.adTimer.setVisible(!checkLastTime);
+        this.adTimerBg.setVisible(this.adTimer.visible);
+      }
+      if (this.adIcon.visible !== checkLastTime) {
+        this.adIcon.setVisible(checkLastTime);
+        this.adTileZone.setVisible(this.adIcon.visible)
+      }
+      if (!checkLastTime) {
+        const str = timer(lastTime);
+        if (this.adTimer.text !== str) this.adTimer.setText(str);
+      }
+    }
   }
 
 };

@@ -297,6 +297,7 @@ export default function autosave(): void {
     status: state.user.status,
     boosts: state.user.boosts,
     test: state.user.test,
+    fortuneTimeAd: state.user.fortuneTimeAd,
     userSheep: DataValidator.validateUserSheep(state.userSheep),    
     userChicken: DataValidator.validateUserChicken(state.userChicken),    
     userCow: DataValidator.validateUserCow(state.userCow),   

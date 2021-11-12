@@ -11,10 +11,13 @@ import BigInteger from "../../libs/BigInteger";
 import MoneyAnimation from "../animations/MoneyAnimation";
 import { randomString } from "../../general/basic";
 import Shop from './../../scenes/Modal/Shop/Main';
+import { incFortuneAdTimer } from '../../general/interval';
+import Fortune from './../../scenes/Fortune';
 
 const INTERSTITIAL_DELAY = 60;
 const ONE_HOUR = 3600;
-const TWO_HOURS = 7200;   
+const TWO_HOURS = 7200;
+const THREE_HOURS = 3 * 3600;
 /**
   * Реклама  
   * 
@@ -363,7 +366,9 @@ export default class Ads {
         type = 'take_ad_feed_boost';
         break;
       case 10:
-
+        const fortuneScene = this.scene.game.scene.getScene('Fortune') as Fortune;
+        fortuneScene.adStartFortune();
+        incFortuneAdTimer(this.scene.state, -ONE_HOUR);
         type = 'take_ad_fortune';
         break;
       default:
