@@ -480,7 +480,10 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
       && farmUser.feedBoostAd
       && farmUser.feedBoostTime + TWO_HOURS <= MainScene.feedBoostStack * ONE_HOUR
     ) {
-      this.feedAdBtn = this.createAdBtn(icon, () => { this.scene.game.scene.keys[this.scene.state.farm].ads.watchAd(9); });
+      this.feedAdBtn = this.createAdBtn(icon, () => { 
+        this.scene.game.scene.keys[this.scene.state.farm].ads.watchAd(9);
+        this.hideFeedBoostAdBtn();
+      });
     }
     
     this.createFeedBoostBtn();
