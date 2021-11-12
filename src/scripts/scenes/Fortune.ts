@@ -961,7 +961,7 @@ export default class Fortune extends Phaser.Scene {
         this.adTileZone.setVisible(this.adIcon.visible)
       }
       if (!checkLastTime) {
-        const timerTime = ONE_HOUR + lastTime;
+        const timerTime = ONE_HOUR - this.state.user.fortuneTimeAd;
         const str = timer(timerTime);
         if (this.adTimer.text !== str) this.adTimer.setText(str);
       }
