@@ -6,6 +6,7 @@ import Hint from '../components/animations/Hint';
 import Firework from '../components/animations/Firework';
 import Currency from '../components/animations/Currency';
 import axios from 'axios';
+import { incFortuneAdTimer } from '../general/interval';
 
 const modal: string = require('../../assets/images/event/fortune/modal.png');
 const btn: string = require('../../assets/images/event/fortune/btn.png');
@@ -93,7 +94,8 @@ export default class Fortune extends Phaser.Scene {
     this.createElements();
     this.creaeteList();
     this.setListeners();
-    if (this.state.readyAd) this.createAdBtn();
+    // if (this.state.readyAd) this.createAdBtn();
+    this.createAdBtn();
   }
 
   public update(): void {
@@ -933,7 +935,11 @@ export default class Fortune extends Phaser.Scene {
     this.adIcon = this.add.sprite(pos.x, pos.y, 'ad-fortune-icon');
     this.adTileZone = this.add.tileSprite(pos.x, pos.y, this.adIcon.width + 10, this.adIcon.height + 10, 'pixel');
 
-    this.click(this.adTileZone, (): void => { this.game.scene.keys[this.state.farm].ads.watchAd(10); });
+    // this.click(this.adTileZone, (): void => { this.game.scene.keys[this.state.farm].ads.watchAd(10); });
+    this.click(this.adTileZone, (): void => { 
+      this.adStartFortune();
+      incFortuneAdTimer(this.state, -ONE_HOUR);
+     });
     this.tweens.add({
       targets: [this.adIcon],
       delay: 5000,
@@ -948,7 +954,7 @@ export default class Fortune extends Phaser.Scene {
 
   private updateAdBtn(): void {
     const lastTime = this.state.user.fortuneTimeAd - ONE_HOUR;
-    const checkLastTime = lastTime >= ONE_HOUR;
+    const checkLastTime = lastTime >= 0;
     if (this.adTimer?.active && this.adIcon?.active && this.adTimerBg?.active) {
       if (this.adTimer.visible !== !checkLastTime) {
         this.adTimer.setVisible(!checkLastTime);
@@ -959,7 +965,7 @@ export default class Fortune extends Phaser.Scene {
         this.adTileZone.setVisible(this.adIcon.visible)
       }
       if (!checkLastTime) {
-        const timerTime = ONE_HOUR - lastTime;
+        const timerTime = ONE_HOUR + lastTime;
         const str = timer(timerTime);
         if (this.adTimer.text !== str) this.adTimer.setText(str);
       }
