@@ -94,8 +94,7 @@ export default class Fortune extends Phaser.Scene {
     this.createElements();
     this.creaeteList();
     this.setListeners();
-    // if (this.state.readyAd) this.createAdBtn();
-    this.createAdBtn();
+    if (this.state.readyAd) this.createAdBtn();
   }
 
   public update(): void {
@@ -935,11 +934,8 @@ export default class Fortune extends Phaser.Scene {
     this.adIcon = this.add.sprite(pos.x, pos.y, 'ad-fortune-icon');
     this.adTileZone = this.add.tileSprite(pos.x, pos.y, this.adIcon.width + 10, this.adIcon.height + 10, 'pixel');
 
-    // this.click(this.adTileZone, (): void => { this.game.scene.keys[this.state.farm].ads.watchAd(10); });
-    this.click(this.adTileZone, (): void => { 
-      this.adStartFortune();
-      incFortuneAdTimer(this.state, -ONE_HOUR);
-     });
+    this.click(this.adTileZone, (): void => { this.game.scene.keys[this.state.farm].ads.watchAd(10); });
+
     this.tweens.add({
       targets: [this.adIcon],
       delay: 5000,
