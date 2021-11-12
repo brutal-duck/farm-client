@@ -12,7 +12,7 @@ function createBoostAnimal(): void {
     price = Math.floor(price / 2);
   }
 
-  if (this.state.adRewardedType === 10) {
+  if (this.state.adRewardedType !== 10) {
     if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0) {
       this.state.user.diamonds -= price;
       this.state[`user${this.state.farm}`].takenHerdBoost += 1;
