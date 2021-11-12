@@ -928,8 +928,8 @@ export default class Fortune extends Phaser.Scene {
       stroke: '#737373',
       strokeThickness: 3,
     };
-    this.adTimer = this.add.text(pos.x, pos.y, '', timerStyle).setOrigin(0.5);
     this.adTimerBg = this.add.sprite(pos.x, pos.y, 'bg-timer-ad');
+    this.adTimer = this.add.text(pos.x, pos.y, '', timerStyle).setOrigin(0.5);
     this.adIcon = this.add.sprite(pos.x, pos.y, 'ad-fortune-icon');
     this.adTileZone = this.add.tileSprite(pos.x, pos.y, this.adIcon.width + 10, this.adIcon.height + 10, 'pixel');
 
