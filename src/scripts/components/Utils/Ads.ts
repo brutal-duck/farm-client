@@ -368,7 +368,6 @@ export default class Ads {
       case 10:
         const fortuneScene = this.scene.game.scene.getScene('Fortune') as Fortune;
         fortuneScene.adStartFortune();
-        console.log(fortuneScene)
         incFortuneAdTimer(this.scene.state, -ONE_HOUR);
         type = 'take_ad_fortune';
         break;

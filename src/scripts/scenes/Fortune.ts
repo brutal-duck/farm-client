@@ -360,7 +360,6 @@ export default class Fortune extends Phaser.Scene {
   public adStartFortune(): void {
     this.adStart = true;
     this.startFortune();
-    console.log('startFortune');
   }
 
   private startScrollWheel(): void {
@@ -934,7 +933,7 @@ export default class Fortune extends Phaser.Scene {
     this.adIcon = this.add.sprite(pos.x, pos.y, 'ad-fortune-icon');
     this.adTileZone = this.add.tileSprite(pos.x, pos.y, this.adIcon.width + 10, this.adIcon.height + 10, 'pixel');
 
-    this.click(this.adTileZone, (): void => { this.game.scene.keys[this.state.farm].watchAd(10); });
+    this.click(this.adTileZone, (): void => { this.game.scene.keys[this.state.farm].ads.watchAd(10); });
     this.tweens.add({
       targets: [this.adIcon],
       delay: 5000,
