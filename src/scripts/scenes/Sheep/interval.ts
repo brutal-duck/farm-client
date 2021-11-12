@@ -11,7 +11,6 @@ let balanceCounter: number = 0;
 let balanceCounterMultiplier = 1;
 let chickenCollectorVolume: number = 0;
 let cowCollectorVolume: number = 0;
-let openedModal: boolean = false;
 
 function interval(): void {
   
@@ -443,13 +442,9 @@ function interval(): void {
       !this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Profile') &&
-      !this.scene.isActive('Fortune') && 
-      !openedModal
+      !this.scene.isActive('Fortune')
     ) {
-      openedModal = true;
-      this.state.modal = {
-        type: 22,
-      };
+      this.state.modal = { type: 22 };
       this.scene.launch('Modal', this.state);
     }
     showSale(this);
