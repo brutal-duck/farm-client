@@ -216,6 +216,7 @@ export default class Fortune extends Phaser.Scene {
   private removeInteractiveElements(): void {
     this.closeBtn.removeInteractive();
     this.btn.removeInteractive();
+    this.adTileZone?.removeInteractive();
     this.closeBtn.setTint(0xC0C0C0);
     this.btn.setTint(0xC0C0C0);
   }
@@ -223,6 +224,7 @@ export default class Fortune extends Phaser.Scene {
   private setInteractiveElements(): void {
     this.closeBtn.setInteractive();
     this.btn.setInteractive();
+    this.adTileZone?.setInteractive();
     this.closeBtn.setTint(0xffffff);
     this.btn.setTint(0xffffff);
     this.whellIsScrolling = false;
@@ -358,6 +360,7 @@ export default class Fortune extends Phaser.Scene {
   public adStartFortune(): void {
     this.adStart = true;
     this.startFortune();
+    console.log('startFortune');
   }
 
   private startScrollWheel(): void {

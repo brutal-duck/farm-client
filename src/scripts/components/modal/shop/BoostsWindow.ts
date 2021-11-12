@@ -312,6 +312,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   }
   
   private herdBoost(): void {
+    const farmUser: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
     if (this.scene.state.farm === 'Unicorn' && this.scene.state.userUnicorn.takenHerdBoost <= 0) this.scene.state.userUnicorn.takenHerdBoost = 1;
     const y: number = 335 + this.scene.height;
     this.scene.add.tileSprite(0, y, 466, 235, 'boost-bg').setOrigin(0, 0);
@@ -324,7 +325,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     
     const icon = this.scene.add.sprite(25, y + 70, `${this.scene.state.farm.toLocaleLowerCase()}-herd-boost-icon`).setOrigin(0, 0);
 
-    if (this.scene.state.readyAd && this.scene.state[`user${this.scene.state.farm}`].herdBoostAd) {
+    if (this.scene.state.readyAd && farmUser.herdBoostAd && farmUser.takenHerdBoost > 0) {
       this.createAdBtn(icon, () => { this.scene.game.scene.keys[this.scene.state.farm].ads.watchAd(8); });
     }
 
@@ -476,8 +477,8 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
 
     if (
       this.scene.state.readyAd 
-      && this.scene.state[`user${this.scene.state.farm}`].feedBoostAd
-      && farmUser.feedBoostTime + TWO_HOURS > MainScene.feedBoostStack * ONE_HOUR
+      && farmUser.feedBoostAd
+      && farmUser.feedBoostTime + TWO_HOURS <= MainScene.feedBoostStack * ONE_HOUR
     ) {
       this.feedAdBtn = this.createAdBtn(icon, () => { this.scene.game.scene.keys[this.scene.state.farm].ads.watchAd(9); });
     }
@@ -486,7 +487,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     
     this.feedProgressBarBg = this.scene.add.sprite(10, y + 230, 'pb-chapter-modal').setOrigin(0, 0.5).setScale(0.92, 1);
     this.feedProgressBar = this.scene.add.tileSprite(25, y + 230, 0, 16, 'green-progress').setOrigin(0, 0.5);
-    const time: number = this.scene.state[`user${this.scene.state.farm}`].feedBoostTime;
+    const time: number = farmUser.feedBoostTime;
     const stack: number = this.scene.game.scene.keys[this.scene.state.farm].feedBoostStack;
     const progress: number = (time / (ONE_HOUR * stack)) * this.maxWidth;
     this.feedProgressBar.setDisplaySize(progress, 16);

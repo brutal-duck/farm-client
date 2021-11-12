@@ -12,24 +12,27 @@ function createBoostAnimal(): void {
     price = Math.floor(price / 2);
   }
 
-  if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0) {
-    this.state.user.diamonds -= price;
-    this.state[`user${this.state.farm}`].takenHerdBoost += 1;
-  } else if (this.state.user.boosts[this.state.farm.toLowerCase()].herd > 0) {
-    this.state.user.boosts[this.state.farm.toLowerCase()].herd -= 1;
-    this.state.amplitude.logAmplitudeEvent('herd_boost_spent', {});
-  } else if (this.state.user.boosts[this.state.farm.toLowerCase()].herd <= 0) {
-    this.state.user.diamonds -= price;
-    this.tryTask(15, 0, price);
-    this.state.amplitude.logAmplitudeEvent('diamonds_spent', {
-      type: 'herd',
-      count: price,
-    });
-    this.state[`user${this.state.farm}`].takenHerdBoost += 1;
-    this.state.amplitude.logAmplitudeEvent('booster_merge', {
-      count: this.state[`user${this.state.farm}`].takenHerdBoost,
-    });
-  }
+  if (this.state.adRewardedType === 10) {
+    if (this.state[`user${this.state.farm}`].takenHerdBoost <= 0) {
+      this.state.user.diamonds -= price;
+      this.state[`user${this.state.farm}`].takenHerdBoost += 1;
+    } else if (this.state.user.boosts[this.state.farm.toLowerCase()].herd > 0) {
+      this.state.user.boosts[this.state.farm.toLowerCase()].herd -= 1;
+      this.state.amplitude.logAmplitudeEvent('herd_boost_spent', {});
+    } else if (this.state.user.boosts[this.state.farm.toLowerCase()].herd <= 0) {
+      this.state.user.diamonds -= price;
+      this.tryTask(15, 0, price);
+      this.state.amplitude.logAmplitudeEvent('diamonds_spent', {
+        type: 'herd',
+        count: price,
+      });
+      this.state[`user${this.state.farm}`].takenHerdBoost += 1;
+      this.state.amplitude.logAmplitudeEvent('booster_merge', {
+        count: this.state[`user${this.state.farm}`].takenHerdBoost,
+      });
+    } 
+  } else this.state.adRewardedType = 0;
+  
 
   if (this.state.herdBoostAnimals.length === 0) return;
   this.state.herdBoostAnimals.forEach((type: number) => {
