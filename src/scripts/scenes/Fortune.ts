@@ -93,7 +93,7 @@ export default class Fortune extends Phaser.Scene {
     this.createElements();
     this.creaeteList();
     this.setListeners();
-    if (!this.state.readyAd) this.createAdBtn();
+    if (this.state.readyAd) this.createAdBtn();
   }
 
   public update(): void {
