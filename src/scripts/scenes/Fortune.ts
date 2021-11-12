@@ -923,7 +923,7 @@ export default class Fortune extends Phaser.Scene {
     const pos: Iposition = { x: wheelPos.x - 55, y: wheelPos.y - 15};
     const timerStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Shadow',
-      fontSize: '16px',
+      fontSize: '20px',
       color: '#ffffff',
       stroke: '#737373',
       strokeThickness: 3,
