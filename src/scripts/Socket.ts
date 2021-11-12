@@ -93,6 +93,7 @@ export default class Socket {
       if (this.state.clan) {
        this.state.clan =  DataValidator.validateClan(data);
       }
+      if (!data) this.state.clanChatNotificationCount = 0;
     });
   }
 }

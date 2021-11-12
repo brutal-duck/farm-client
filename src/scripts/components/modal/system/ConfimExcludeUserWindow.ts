@@ -43,9 +43,12 @@ export default class ConfimExcludeUserWindow {
 
 
   private excludeClanUser(): void {
+    let login: string = this.scene.state.user.login;;
+      if (this.scene.state.platform !== 'web' && this.scene.state.platform !== 'android') login = this.scene.state.name;
+
     const data = {
       userId: this.scene.state.modal.userId, 
-      ownerName: this.scene.state.modal.message,
+      ownerName: login,
       ownerClanId: this.scene.state.user.clanId,
     };
     this.scene.state.socket.io.emit('excludeUserClan', data);
