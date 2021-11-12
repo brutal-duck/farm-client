@@ -1,5 +1,6 @@
 const userData: Iuser = {
   takeFreeDiamondTime: 0,
+  fortuneTimeAd: 0,
   avatar: '',
   boughtAvatars: [],
   diamonds: 3,
@@ -108,7 +109,9 @@ const userSheep: IuserSheep = {
   autosaveCounter: 0,
   diamondAnimalAd: true,
   takenHerdBoost: 0,
-  feedBoostTime: 0
+  feedBoostTime: 0,
+  herdBoostAd: true,
+  feedBoostAd: true,
 }
 
 const userChicken: IuserChicken = {
@@ -124,7 +127,9 @@ const userChicken: IuserChicken = {
   autosaveCounter: 0,
   diamondAnimalAd: true,
   takenHerdBoost: 0,
-  feedBoostTime: 0
+  feedBoostTime: 0,
+  herdBoostAd: true,
+  feedBoostAd: true,
 }
 
 const userCow: IuserCow = {
@@ -141,6 +146,8 @@ const userCow: IuserCow = {
   diamondAnimalAd: true,
   takenHerdBoost: 0,
   feedBoostTime: 0,
+  herdBoostAd: true,
+  feedBoostAd: true,
   factory: {
     currentProduction: 0,
     productionTimer: 0,

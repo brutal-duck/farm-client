@@ -750,7 +750,7 @@ function speedCheckCollector(): void {
     if (animalsCount > currentSettings.speed * delayFilling && farmUser.collector > 0) {
       scene.speedCollectorTimer -= 1;
       if (scene.speedCollectorTimer <= 0) {
-        const text = scene.state.lang[`speedCollectorNotification${farm}`]
+        const text = scene.state.lang[`speedCollectorNotification${farm}`];
         scene.speedCollectorTimer = 60;
         SpeechBubble.create(scene.scene.get(`${farm}Bars`), text, 3);
       }
@@ -767,6 +767,10 @@ function decrementAdFreeDiamondTime(state: Istate, count: number = 1): void {
 function incInterstitialAdTimer(state: Istate): void {
   if (state.interstitialTimer < 0) state.interstitialTimer = 0;
   else state.interstitialTimer += 1;
+}
+
+function incFortuneAdTimer(state: Istate): void {
+  state.user.fortuneTimeAd += 1;
 }
 
 export {
@@ -789,4 +793,5 @@ export {
   speedCheckCollector,
   decrementAdFreeDiamondTime,
   incInterstitialAdTimer,
+  incFortuneAdTimer,
 }

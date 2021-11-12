@@ -12,13 +12,6 @@ import Unicorn from './../../../scenes/Event/Unicorns/Main';
 const ONE_HOUR: number = 3600;
 const TWO_HOURS: number = 7200;    
 
-const btnTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
-  fontSize: '23px',
-  fontFamily: 'Shadow',
-  color: '#ffffff',
-  stroke: '#3B5367',
-  strokeThickness: 4,
-};
 export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   public scene: Shop;
   private farm: string;
@@ -41,6 +34,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   private adBtn: CollectorButton;
   private improve: BoostButton;
   private maxWidth: number;
+  private feedAdBtn: Array<Phaser.GameObjects.Sprite | Phaser.GameObjects.TileSprite>;
 
   constructor(scene: Shop) {
     super(scene, 0, 0, 'pixel');
@@ -328,7 +322,12 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
       align: 'center'
     }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
     
-    this.scene.add.sprite(40, y + 70, `${this.scene.state.farm.toLocaleLowerCase()}-herd-boost-icon`).setOrigin(0, 0);
+    const icon = this.scene.add.sprite(25, y + 70, `${this.scene.state.farm.toLocaleLowerCase()}-herd-boost-icon`).setOrigin(0, 0);
+
+    if (this.scene.state.readyAd && this.scene.state[`user${this.scene.state.farm}`].herdBoostAd) {
+      this.createAdBtn(icon, () => { this.scene.game.scene.keys[this.scene.state.farm].ads.watchAd(8); });
+    }
+
     this.scene.add.sprite(0, y, 'flags').setOrigin(0, 0).setFlipX(true);
     this.scene.add.sprite(466, y, 'flags').setOrigin(1, 0);
     // кнопка
@@ -343,6 +342,27 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     }).setOrigin(0.5);
 
     this.createHerdBoostBtn();
+  }
+
+  private createAdBtn(icon: Phaser.GameObjects.Sprite, action: () => void):  Array<Phaser.GameObjects.Sprite | Phaser.GameObjects.TileSprite>{
+    const iconGeom = icon.getBounds();
+    const ad = this.scene.add.sprite(iconGeom.right - 10, iconGeom.centerY + 20, 'ad-icon').setDepth(2);
+    const bgAd = this.scene.add.sprite(ad.x, ad.y, 'bg-ad').setDepth(1);
+    const zone = this.scene.add.tileSprite(ad.x, ad.y, ad.width + 20, ad.height + 20, 'pixel').setOrigin(0.5);
+
+    this.scene.click(zone, action);
+
+    this.scene.tweens.add({
+      targets: [bgAd, ad],
+      delay: 5000,
+      props: {
+        scale: { value: 1.25, duration: 250, ease: 'Power2', yoyo: true },
+        angle: { value: -5, duration: 250, ease: 'Power2', yoyo: true },
+        y: { value: '-=25', duration: 250, ease: 'Power2', yoyo: true },
+      },
+      loop: -1,
+    });
+    return [ ad, bgAd, zone ];
   }
 
   private destroyHerdBoostBtn(): void {
@@ -433,6 +453,9 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   }
 
   private feedBoost(): void {
+    const MainScene = this.scene.game.scene.keys[this.scene.state.farm] as Sheep | Chicken | Cow | Unicorn;
+    const farmUser: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
+
     const y: number = 585 + this.scene.height;
     this.scene.add.tileSprite(0, y, 466, 270, 'boost-bg').setOrigin(0, 0);
     this.scene.add.text(240, y + 20, this.scene.state.lang.feedBoostTitle, { 
@@ -449,8 +472,16 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
       align: 'center'
     }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
     
-    this.scene.add.sprite(40, y + 35, `${this.scene.state.farm.toLocaleLowerCase()}-feed-boost-icon`).setOrigin(0, 0);
-  
+    const icon = this.scene.add.sprite(25, y + 35, `${this.scene.state.farm.toLocaleLowerCase()}-feed-boost-icon`).setOrigin(0, 0);
+
+    if (
+      this.scene.state.readyAd 
+      && this.scene.state[`user${this.scene.state.farm}`].feedBoostAd
+      && farmUser.feedBoostTime + TWO_HOURS > MainScene.feedBoostStack * ONE_HOUR
+    ) {
+      this.feedAdBtn = this.createAdBtn(icon, () => { this.scene.game.scene.keys[this.scene.state.farm].ads.watchAd(9); });
+    }
+    
     this.createFeedBoostBtn();
     
     this.feedProgressBarBg = this.scene.add.sprite(10, y + 230, 'pb-chapter-modal').setOrigin(0, 0.5).setScale(0.92, 1);
@@ -469,6 +500,10 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     this.feedBoostButton?.destroy();
     this.feedBoostNotificator?.destroy();
     this.feedBoostNotificatorBg?.destroy();
+  }
+
+  private hideFeedBoostAdBtn(): void {
+    this.feedAdBtn.forEach(el => el.destroy());
   }
 
   private createFeedBoostBtn(): void {
@@ -529,6 +564,9 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
         this.scene.state.boughtFeedBoost = true;
         this.addFeedBoostTime();
         this.feedBoostBtnUpdated = false;
+        if (farmUser.feedBoostTime + TWO_HOURS > MainScene.feedBoostStack * ONE_HOUR) {
+          this.hideFeedBoostAdBtn();
+        }
       }
     } else {
       let price: number = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].feedBoostPrice;
@@ -577,18 +615,18 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     if (farmUser.feedBoostTime <= 0) {
       farmUser.feedBoostTime += ONE_HOUR; // прибавить час
 
-      this.scene.state.amplitude.logAmplitudeEvent('booster_feed_x2', {
-        price: price,
-        time: 1,
-      });
+      // this.scene.state.amplitude.logAmplitudeEvent('booster_feed_x2', {
+      //   price: price,
+      //   time: 1,
+      // });
       MainScene.tryTask(21, 0, 1);
       MainScene.tryClanTask(9, 0, 1);
     } else {
       const time: number = Math.ceil(farmUser.feedBoostTime / ONE_HOUR / 2) + 1;
-      this.scene.state.amplitude.logAmplitudeEvent('booster_feed_x2', {
-        price: price,
-        time: time,
-      });
+      // this.scene.state.amplitude.logAmplitudeEvent('booster_feed_x2', {
+      //   price: price,
+      //   time: time,
+      // });
       farmUser.feedBoostTime += TWO_HOURS; // прибавить 2часа
       MainScene.tryTask(21, 0, 2);
       MainScene.tryClanTask(9, 0, 2);

@@ -236,6 +236,7 @@ interface Iuser {
   counter: number;
   mail: string;
   level: number;
+  fortuneTimeAd: number;
   additionalTutorial: IadditionalTutorial;
   takenReward: boolean;
   status: string;
@@ -264,6 +265,8 @@ interface IuserSheep {
   diamondAnimalAd: boolean;
   takenHerdBoost: number;
   feedBoostTime: number;
+  herdBoostAd: boolean;
+  feedBoostAd: boolean;
 }
 interface IuserChicken {
   money: number;
@@ -279,6 +282,8 @@ interface IuserChicken {
   diamondAnimalAd: boolean;
   takenHerdBoost: number;
   feedBoostTime: number;
+  herdBoostAd: boolean;
+  feedBoostAd: boolean;
 }
 interface Ifactory {
   currentProduction: number;
@@ -310,6 +315,8 @@ interface IuserCow {
   takenHerdBoost: number;
   feedBoostTime: number;
   factory: Ifactory;
+  herdBoostAd: boolean;
+  feedBoostAd: boolean;
 }
 interface IuserUnicorn {
   money: string;

@@ -336,6 +336,7 @@ export default function loadData(response: AxiosResponse): void {
     counter: response.data.user.counter,
     mail: response.data.user.mail,
     level: response.data.user.level,
+    fortuneTimeAd: response.data.user.fortuneTimeAd,
     additionalTutorial: response.data.user.additional_tutorial,
     takenReward: response.data.user.taken_reward,
     status: response.data.user.status,
@@ -376,6 +377,8 @@ export default function loadData(response: AxiosResponse): void {
     diamondAnimalAd: response.data.user.diamonds_sheep_ad,
     takenHerdBoost: response.data.user.takenHerdBoostSheep,
     feedBoostTime: response.data.user.feedBoostTimeSheep,
+    herdBoostAd: response.data.user.herdBoostSheepAd,
+    feedBoostAd: response.data.user.feedBoostSheepAd,
   }
 
   const userChicken: IuserChicken = {
@@ -392,6 +395,8 @@ export default function loadData(response: AxiosResponse): void {
     diamondAnimalAd: response.data.user.diamonds_chicken_ad,
     takenHerdBoost: response.data.user.takenHerdBoostChicken,
     feedBoostTime: response.data.user.feedBoostTimeChicken,
+    herdBoostAd: response.data.user.herdBoostChickenAd,
+    feedBoostAd: response.data.user.feedBoostChickenAd,
   }
 
   let cowFactory: Ifactory = response.data.user.cowFactory;
@@ -417,6 +422,8 @@ export default function loadData(response: AxiosResponse): void {
     diamondAnimalAd: response.data.user.diamonds_cow_ad,
     takenHerdBoost: response.data.user.takenHerdBoostCow,
     feedBoostTime: response.data.user.feedBoostTimeCow,
+    herdBoostAd: response.data.user.herdBoostCowAd,
+    feedBoostAd: response.data.user.feedBoostCowAd,
     factory: {
       currentProduction: cowFactory.currentProduction,
       productionTimer: cowFactory.productionTimer,

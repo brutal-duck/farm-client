@@ -3,7 +3,7 @@ import Arrow from '../../components/animations/Arrow';
 import Hearts from '../../components/animations/Hearts';
 import SpeechBubble from '../../components/animations/SpeechBuble';
 import SheepTerritory from './../../components/Territories/SheepTerritory';
-import { decrementAdFreeDiamondTime, incInterstitialAdTimer, progressClanCooldown, progressClanEventTime, progressSalesTime, showSale } from '../../general/interval';
+import { decrementAdFreeDiamondTime, incFortuneAdTimer, incInterstitialAdTimer, progressClanCooldown, progressClanEventTime, progressSalesTime, showSale } from '../../general/interval';
 
 let checkCollector: number = 0;
 const BALANCE_HINT_COUNTDOWN = 20;
@@ -456,7 +456,7 @@ function interval(): void {
     this.speedCheckCollector();
     decrementAdFreeDiamondTime(this.state);
     incInterstitialAdTimer(this.state);
-
+    incFortuneAdTimer(this.state);
   }, callbackScope: this, loop: true });
   
 

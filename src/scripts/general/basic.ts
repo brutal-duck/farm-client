@@ -1143,6 +1143,12 @@ function nextDayTimer(): void {
     this.state.userCow.takenHerdBoost = 0;
     this.state.user.takenFreeDiamonds = false;
     this.state.user.takenSocialAward = false;
+    this.state.userSheep.herdBoostAd = true;
+    this.state.userSheep.feedBoostAd = true;
+    this.state.userChicken.herdBoostAd = true;
+    this.state.userChicken.feedBoostAd = true;
+    this.state.userCow.herdBoostAd = true;
+    this.state.userCow.feedBoostAd = true;
     this.state.user.takeFreeDiamondTime = 0;
     if (this.state.user.clanId) {
       this.state.user.clanTasks = getNewClanTasks(this.state);

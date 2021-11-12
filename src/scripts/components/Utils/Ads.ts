@@ -13,6 +13,8 @@ import { randomString } from "../../general/basic";
 import Shop from './../../scenes/Modal/Shop/Main';
 
 const INTERSTITIAL_DELAY = 60;
+const ONE_HOUR = 3600;
+const TWO_HOURS = 7200;   
 /**
   * Реклама  
   * 
@@ -198,7 +200,8 @@ export default class Ads {
 
   public adReward(): void {
     let type: string;
-  
+    const farmUser: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
+    const MainScene: Sheep | Chicken | Cow | Unicorn = this.scene.game.scene.keys[this.scene.state.farm];
     switch(this.scene.state.adRewardedType) {
   
       case 1: // доп.софта для обмена
@@ -332,7 +335,6 @@ export default class Ads {
         type = 'take_ad_diamond';
         break;
       case 7:
-        const farmUser: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
         if (this.scene.state.farm !== 'Cow') {
           farmUser.money += this.scene.state.territory.money * 2;
           this.scene.state.territory.sellResource();
@@ -341,6 +343,28 @@ export default class Ads {
           this.scene.state.territory.factory?.sellProducts();
         }
         type = 'take_ad_multiply';
+        break;
+      case 8:
+        MainScene.startHerdBoost();
+        farmUser.herdBoostAd = false;
+        type = 'take_ad_herd_boost';
+        break;
+      case 9:
+        if (farmUser.feedBoostTime <= 0) {
+          farmUser.feedBoostTime += ONE_HOUR;
+          MainScene.tryTask(21, 0, 1);
+          MainScene.tryClanTask(9, 0, 1);
+        } else {
+          farmUser.feedBoostTime += TWO_HOURS;
+          MainScene.tryTask(21, 0, 2);
+          MainScene.tryClanTask(9, 0, 2);
+        }
+        farmUser.feedBoostAd = false;
+        type = 'take_ad_feed_boost';
+        break;
+      case 10:
+
+        type = 'take_ad_fortune';
         break;
       default:
         break;

@@ -6,7 +6,7 @@ import Territory from './../../components/Territories/Territory';
 import SpeechBubble from '../../components/animations/SpeechBuble';
 import Factory from './../../components/Territories/Factory';
 import CowTerritory from './../../components/Territories/CowTerritory';
-import { decrementAdFreeDiamondTime, incInterstitialAdTimer, progressClanCooldown, progressClanEventTime, progressSalesTime, showSale } from '../../general/interval';
+import { decrementAdFreeDiamondTime, incFortuneAdTimer, incInterstitialAdTimer, progressClanCooldown, progressClanEventTime, progressSalesTime, showSale } from '../../general/interval';
 
 let checkCollector: number = 0;
 let sheepCollectorVolume: number = 0;
@@ -398,6 +398,8 @@ function interval(): void {
     this.speedCheckCollector();
     decrementAdFreeDiamondTime(this.state);
     incInterstitialAdTimer(this.state);
+    incFortuneAdTimer(this.state);
+
     if (this.state.userCow.part === 2) {
       if (this.territories.children.entries.some(el => el.territoryType === 8)) {
         this.tryTask(5, 8);
