@@ -311,6 +311,7 @@ export default function autosave(): void {
     boughtAvatars: state.user.boughtAvatars,
     clanTasks: state.user.clanTasks,
     takeFreeDiamondTime: state.user.takeFreeDiamondTime,
+    achievements: state.user.achievements,
   };
 
   const data: IdataAutoSave = { 

@@ -186,6 +186,10 @@ function getTaskData(task: Itasks): ItaskData {
 
 }
 
+function tryAchievement(type: number, state: number, count: number): void {
+  
+
+}
 
 // проверка задания "животные на поле"
 function checkAnimalTask(): void {

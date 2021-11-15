@@ -151,6 +151,7 @@ interface IuserAutoSave {
   boughtAvatars: number[];
   clanTasks: IclanTask[]
   takeFreeDiamondTime: number;
+  achievements: Iachievement[];
 }
 interface Imessage {
   _id?: string;
@@ -251,6 +252,7 @@ interface Iuser {
   personalMessages: IuserPersonalMessage[];
   clanTasks: IclanTask[];
   takeFreeDiamondTime: number;
+  achievements: Iachievement[];
 }
 interface IuserSheep {
   money: number;
@@ -624,6 +626,14 @@ interface Itasks {
   type: number;
   xp: number;
   farm: number;
+}
+interface Iachievement {
+  id: number;
+  type: number;
+  state: number;
+  count: number;
+  progress: number;
+  points: number;
 }
 interface IclanTask {
   id: number;

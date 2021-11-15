@@ -120,6 +120,7 @@ import {
   speedCheckCollector,
 } from '../../general/interval';
 import Ads from '../../components/Utils/Ads';
+import Achievement from './../../components/Utils/Achievement';
 
 class Cow extends Phaser.Scene {
   constructor() {
@@ -162,6 +163,7 @@ class Cow extends Phaser.Scene {
   public feedBoostRemaindTimer: number = 0;
   public ads: Ads;
   public speedCollectorTimer: number = 0;
+  public achievement: Achievement;
   
   public world = world.bind(this);
   public drag = drag.bind(this);
@@ -272,6 +274,7 @@ class Cow extends Phaser.Scene {
     this.caveIconsTimer = 0;
     this.counterWithoutCollector = 0;
     this.ads = new Ads(this);
+    this.achievement = new Achievement(this);
     this.autoprogress(true);
   }
   

@@ -13,6 +13,7 @@ import AllTasks from '../tasks';
 import basicSheepTerritories from '../local/sheepTerritories';
 import basicChickenTerritories from '../local/chickenTerritories';
 import basicCowTerritories from '../local/cowTerritories';
+import achievements from './../local/tasks/achievements';
 
 
 export default class DataValidator {
@@ -72,6 +73,13 @@ export default class DataValidator {
       }
     }
     return updatedTasks;
+  }
+
+  public static setAchievementsStatus(resAchievemets: { id: number; progress: number }[]): Iachievement[] {
+    achievements.forEach(el => {
+      el.progress = resAchievemets.find(resEl => resEl.id === el.id).progress;
+    });
+    return achievements;
   }
 
   public static validateTerritories (territories: Iterritories[], type: number): Iterritories[] {

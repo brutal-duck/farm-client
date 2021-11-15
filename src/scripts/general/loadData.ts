@@ -326,6 +326,7 @@ export default function loadData(response: AxiosResponse): void {
   }
   state.chickenEggs = chickenEggs;
   const boosts: Iboosts = DataValidator.validateBoosts(response.data.user.boosts);
+  const achievements = DataValidator.setAchievementsStatus(response.data.user.achievements);
   const user: Iuser = {
     diamonds: response.data.user.diamonds,
     id: response.data.user._id,
@@ -352,6 +353,7 @@ export default function loadData(response: AxiosResponse): void {
     boughtAvatars: response.data.user.boughtAvatars || [],
     clanTasks: response.data.user.clan_tasks || [],
     takeFreeDiamondTime: response.data.user.takeFreeDiamondTime,
+    achievements: achievements,
   };
   state.user = DataValidator.validateUser(user);
 

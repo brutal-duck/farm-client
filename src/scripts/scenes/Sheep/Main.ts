@@ -141,6 +141,7 @@ import {
   speedCheckCollector,
 } from '../../general/interval';
 import Ads from '../../components/Utils/Ads';
+import Achievement from './../../components/Utils/Achievement';
 
 class Sheep extends Phaser.Scene {
   constructor() {
@@ -188,6 +189,7 @@ class Sheep extends Phaser.Scene {
   public feedBoostRemaindTimer: number = 0;
   public speedCollectorTimer: number = 0;
   public ads: Ads;
+  public achievement: Achievement;
 
   public readonly moneyTasks: { id: number, money: number }[] = [
     {
@@ -332,6 +334,7 @@ class Sheep extends Phaser.Scene {
     this.counterWithoutCollector = 0;
     this.ads = new Ads(this)
     this.autoprogress(true);
+    this.achievement = new Achievement(this);
   }
   
   public create(): void {

@@ -1,3 +1,5 @@
+import achievements from "./tasks/achievements";
+
 const userData: Iuser = {
   takeFreeDiamondTime: 0,
   fortuneTimeAd: 3600 * 3,
@@ -52,7 +54,8 @@ const userData: Iuser = {
   takenSocialAward: false,
   messages: [],
   personalMessages: [],
-}
+  achievements: achievements,
+};
 
 const basicClan: Iclan = {
   isClosed: false,

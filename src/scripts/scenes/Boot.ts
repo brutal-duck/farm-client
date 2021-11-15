@@ -15,6 +15,7 @@ import { shopButton, bigButton } from './../elements';
 import { setPlatformStorage, getPlatformStorage } from './../general/basic';
 import RoundedField from '../components/gameObjects/RoundedField';
 import ConfirmSaveAndroidProgress from './../components/Web/ConfirmSaveAndroidProgress';
+import achievements from './../local/tasks/achievements';
 
 Amplitude.init();
 
@@ -67,7 +68,7 @@ class Boot extends Phaser.Scene {
   public getPlatformStorage = getPlatformStorage.bind(this);
 
   public init(): void {
-    this.build = 4.13;
+    this.build = 4.14;
     // console.log(this.game.device, 'this.game.device');
     this.state = state;
     this.fontsReady = false;
@@ -223,6 +224,7 @@ class Boot extends Phaser.Scene {
     this.state.user = {
       takeFreeDiamondTime: 0,
       fortuneTimeAd: 3600 * 3,
+      achievements: achievements,
       diamonds: 0,
       avatar: '',
       boughtAvatars: [],

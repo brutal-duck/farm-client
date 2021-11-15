@@ -117,6 +117,7 @@ import {
 } from '../../general/interval';
 import LocalStorage from './../../libs/LocalStorage';
 import Ads from '../../components/Utils/Ads';
+import Achievement from './../../components/Utils/Achievement';
 
 class Chicken extends Phaser.Scene {
   constructor() {
@@ -152,7 +153,8 @@ class Chicken extends Phaser.Scene {
   public counterWithoutCollector: number = 0;
   public ads: Ads;
   public speedCollectorTimer: number = 0;
-  
+  public achievement: Achievement;
+
   public world = world.bind(this);
   public drag = drag.bind(this);
   public collisions = collisions.bind(this);
@@ -259,8 +261,10 @@ class Chicken extends Phaser.Scene {
     this.settings = state.chickenSettings;
     this.counterWithoutCollector = 0;
     this.caveIconsTimer = 0;
-    this.ads = new Ads(this)
+    this.ads = new Ads(this);
     this.autoprogress(true);
+    this.achievement = new Achievement(this);
+
   }
 
   public create(): void {

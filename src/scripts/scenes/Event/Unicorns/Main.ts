@@ -105,6 +105,7 @@ import {
 } from '../../../general/interval';
 import Ads from '../../../components/Utils/Ads';
 import { tryClanTask } from '../../../general/tasks';
+import Achievement from './../../../components/Utils/Achievement';
 class Unicorn extends Phaser.Scene {
   constructor() {
     super('Unicorn');
@@ -140,6 +141,7 @@ class Unicorn extends Phaser.Scene {
   public mergPointer: any; // спрайт пальца с перетаскиванием
   public scrollPoint: number;
   public ads: Ads;
+  public achievement: Achievement;
 
   public collisions = collisions.bind(this);
   public click = click.bind(this);
@@ -231,7 +233,8 @@ class Unicorn extends Phaser.Scene {
     this.state = state;
     this.state.farm = 'Unicorn';
     this.collectorTimer = null;
-    this.ads = new Ads(this)
+    this.ads = new Ads(this);
+    this.achievement = new Achievement(this);
     this.autoprogressTimer = null;
     if (this.state.userUnicorn.takenHerdBoost <= 0) this.state.userUnicorn.takenHerdBoost = 1;
   }
