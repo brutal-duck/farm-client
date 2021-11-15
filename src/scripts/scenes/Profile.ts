@@ -211,6 +211,18 @@ class Profile extends Phaser.Scene {
       align: 'center',
       wordWrap: { width: 220 },
     }).setOrigin(0.5);
+
+    const zone = this.add.zone(this.cameras.main.centerX + 10, 70, 320, 140).setDropZone(undefined, () => null);
+    this.click(zone, (): void => {
+      this.state.modal = { type: 15 };
+      this.scene.launch('Modal', this.state);
+    });
+  }
+
+  private createZoneGraphic(zone: Phaser.GameObjects.Zone, color: number): void {
+    const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
+    graphics.lineStyle(5, color);
+    graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
   }
 
   private createFarms(): void {
