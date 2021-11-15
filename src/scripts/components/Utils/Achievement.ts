@@ -14,15 +14,20 @@ export default class Achievement {
 
   public tryId(id: number, count: number = 1): void {
     const achievement = this.state.user.achievements.find(ach => ach.id === id && ach.count > ach.progress);
-    if (achievement) achievement.progress += count;
+    if (achievement) {
+      achievement.progress += count;
+      if (achievement.progress >= achievement.count) console.log(this.state.lang[`achievemetText${achievement.id}`]);
+    }
   }
   
   public tryType(type: number, achState: number = 0, count: number = 1): void {
     const filteredAchievements: Iachievement[] = this.state.user.achievements.filter(ach => ach.type === type && ach.count > ach.progress);
     filteredAchievements.forEach(ach => {
       if (ach.state === achState) ach.progress += count;
+      if (ach.progress >= ach.count) console.log(this.state.lang[`achievemetText${ach.id}`]);
     });
     if (type === 2) this.checkDoneFarm();
+    
   }
 
   /**

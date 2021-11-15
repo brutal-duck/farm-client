@@ -76,10 +76,12 @@ export default class DataValidator {
   }
 
   public static setAchievementsStatus(resAchievemets: { id: number; progress: number }[]): Iachievement[] {
-    achievements.forEach(el => {
-      el.progress = resAchievemets.find(resEl => resEl.id === el.id).progress;
+    const result = [...achievements];
+    result.forEach(el => {
+      const newProgress = resAchievemets.find(resEl => resEl.id === el.id);
+      if (newProgress) el.progress = newProgress.progress;
     });
-    return achievements;
+    return result;
   }
 
   public static validateTerritories (territories: Iterritories[], type: number): Iterritories[] {
