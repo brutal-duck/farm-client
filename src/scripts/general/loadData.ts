@@ -12,6 +12,7 @@ import getProgress from '../local/progress';
 import ErrorWindow from './../components/Web/ErrorWindow';
 import { getNewClanTasks } from './tasks';
 import DataValidator from './../libs/DataValidator';
+import Achievement from './../components/Utils/Achievement';
 const basicUserCow = userCow;
 const basicUserSheep = userSheep;
 const basicUserChicken = userChicken;
@@ -147,6 +148,105 @@ function checkDoneTasks(state: Istate): void {
         task.progress = count;
       }
     }
+  }
+}
+
+const checkDoneAchievement = (state: Istate): void => {
+  const sheepDoneTaskCount = state.sheepTasks.filter(el => el.done).length;
+  const chickenDoneTaskCount = state.chickenTasks.filter(el => el.done).length;
+  const cowDoneTaskCount = state.cowTasks.filter(el => el.done).length;
+  const taskCount = sheepDoneTaskCount + chickenDoneTaskCount + cowDoneTaskCount;
+  Achievement.setCurrentProgress(state, taskCount, 0, 2, 0);
+
+  if (state.userSheep.tutorial >= 100) Achievement.setCurrentProgress(state, 1, 1);
+
+  if (state.userSheep.collectorLevel >= state.sheepCollectorSettings.length) Achievement.setCurrentProgress(state, 1, 27);
+  if (state.userChicken.collectorLevel >= state.chickenCollectorSettings.length) Achievement.setCurrentProgress(state, 1, 30);
+  if (state.userCow.collectorLevel >= state.cowCollectorSettings.length) Achievement.setCurrentProgress(state, 1, 33);
+
+  if (state.sheepTerritories.every(el => el.type !== 0)) Achievement.setCurrentProgress(state, 1, 35);
+  if (state.chickenTerritories.every(el => el.type !== 0)) Achievement.setCurrentProgress(state, 1, 36);
+  if (state.cowTerritories.every(el => el.type !== 0)) Achievement.setCurrentProgress(state, 1, 37);
+
+  const sheepRepositories = state.sheepTerritories.filter(el => el.type === 5);
+  const maxSheepTerritoryLevel = state.sheepSettings.territoriesSheepSettings.length;
+  if (sheepRepositories.some(el => el.improve >= maxSheepTerritoryLevel)) Achievement.setCurrentProgress(state, 1, 16);
+
+  const chickenRepositories = state.chickenTerritories.filter(el => el.type === 5);
+  const maxChickenTerritoryLevel = state.chickenSettings.territoriesChickenSettings.length;
+  if (chickenRepositories.some(el => el.improve >= maxChickenTerritoryLevel)) Achievement.setCurrentProgress(state, 1, 20);
+
+  const cowRepositories = state.cowTerritories.filter(el => el.type === 5);
+  const maxCowTerritoryLevel = state.cowSettings.territoriesCowSettings.length;
+  if (cowRepositories.some(el => el.improve >= maxCowTerritoryLevel)) Achievement.setCurrentProgress(state, 1, 22);
+  let improveCount = 0;
+
+  const sheepPasture = state.sheepTerritories.filter(el => el.type === 2);
+  const chickenPasture = state.chickenTerritories.filter(el => el.type === 2);
+  const cowPasture = state.cowTerritories.filter(el => el.type === 2);
+
+  sheepPasture.forEach(el => {
+    improveCount += el.improve - 1;
+  });
+  chickenPasture.forEach(el => {
+    improveCount += el.improve - 1;
+  });
+  cowPasture.forEach(el => {
+    improveCount += el.improve - 1;
+  });
+
+  const sheepWater = state.sheepTerritories.filter(el => el.type === 3);
+  const chickenWater = state.chickenTerritories.filter(el => el.type === 3);
+  const cowWater = state.cowTerritories.filter(el => el.type === 3);
+
+  sheepWater.forEach(el => {
+    improveCount += el.improve - 1;
+  });
+  chickenWater.forEach(el => {
+    improveCount += el.improve - 1;
+  });
+  cowWater.forEach(el => {
+    improveCount += el.improve - 1;
+  });
+
+  if (sheepPasture.some(el => el.improve >= maxSheepTerritoryLevel)) Achievement.setCurrentProgress(state, 1, 17);
+  if (chickenPasture.some(el => el.improve >= maxChickenTerritoryLevel)) Achievement.setCurrentProgress(state, 1, 17);
+  if (cowPasture.some(el => el.improve >= maxCowTerritoryLevel)) Achievement.setCurrentProgress(state, 1, 17);
+
+  if (sheepWater.some(el => el.improve >= maxSheepTerritoryLevel)) Achievement.setCurrentProgress(state, 1, 18);
+  if (chickenWater.some(el => el.improve >= maxChickenTerritoryLevel)) Achievement.setCurrentProgress(state, 1, 18);
+  if (cowWater.some(el => el.improve >= maxCowTerritoryLevel)) Achievement.setCurrentProgress(state, 1, 18);
+
+  const fairSheepLevel = state.userSheep.fair;
+  const maxFairSheepLevel = state.sheepSettings.sheepFairLevels.length;
+  if (fairSheepLevel >= maxFairSheepLevel) Achievement.setCurrentProgress(state, 1, 19);
+
+  const fairChickenLevel = state.userChicken.fair;
+  const maxFairChickenLevel = state.chickenSettings.chickenFairLevels.length;
+  if (fairChickenLevel >= maxFairChickenLevel) Achievement.setCurrentProgress(state, 1, 21);
+
+  const fairCowLevel = state.userCow.fair;
+  const maxFairCowLevel = state.cowSettings.cowFairLevels.length;
+  if (fairCowLevel >= maxFairCowLevel) Achievement.setCurrentProgress(state, 1, 23);
+
+  improveCount += fairSheepLevel;
+  improveCount += fairChickenLevel;
+  improveCount += fairCowLevel;
+
+  const factoryTerritory = state.cowTerritories.find(el => el.type === 8);
+  if (factoryTerritory) {
+    const factoryLevel = factoryTerritory.improve;
+    const maxFactoryLevel = state.cowSettings.cowFactorySettings.length;
+    if (factoryLevel >= maxFactoryLevel) Achievement.setCurrentProgress(state, 1, 24);
+
+    improveCount += factoryLevel;
+  }
+
+  Achievement.setCurrentProgress(state, improveCount, 0, 11);
+
+  if (state.user.statuses.some(el => el === 'unicorn')) {
+    Achievement.setCurrentProgress(state, 1, 41);
+    Achievement.setCurrentProgress(state, 1, 42);
   }
 }
 
@@ -507,6 +607,10 @@ export default function loadData(response: AxiosResponse): void {
     checkDoneTasks(state);
   }
   
+  if (response.data.user.build < 4.14) {
+    checkDoneAchievement(state);
+  }
+
   if (
     state.progress.event.type === 1 
     && state.progress.event.startTime < 0 

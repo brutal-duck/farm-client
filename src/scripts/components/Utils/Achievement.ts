@@ -37,12 +37,12 @@ export default class Achievement {
    * @param type Если нужно установить прогресс для ачивки с типом
    * @param achState Если нужно установить прогресс для ачивки с типом и стейтом
    */
-  public setCurrentProgress(currProgress: number, id: number = 0, type: number = 0, achState: number = 0): void {
+  public static setCurrentProgress(state: Istate, currProgress: number, id: number = 0, type: number = 0, achState: number = 0): void {
     if (id !== 0) {
-      const achievement = this.state.user.achievements.find(ach => ach.id === id && ach.count > ach.progress);
+      const achievement = state.user.achievements.find(ach => ach.id === id && ach.count > ach.progress);
       if (achievement) achievement.progress = currProgress;
     } else {
-      const filteredAchievements: Iachievement[] = this.state.user.achievements.filter(ach => ach.type === type && ach.count > ach.progress);
+      const filteredAchievements: Iachievement[] = state.user.achievements.filter(ach => ach.type === type && ach.count > ach.progress);
       filteredAchievements.forEach(ach => {
         if (ach.state === achState) ach.progress = currProgress;
       });
