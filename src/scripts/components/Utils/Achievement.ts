@@ -22,6 +22,7 @@ export default class Achievement {
     filteredAchievements.forEach(ach => {
       if (ach.state === achState) ach.progress += count;
     });
+    if (type === 2) this.checkDoneFarm();
   }
 
   /**
@@ -47,5 +48,15 @@ export default class Achievement {
     this.tryType(12);
     if (type !== 6 && type !== 14 && type !== 16 && type !== 17 && type !== 19) this.tryType(type + 12);
     else if (type === 19) this.tryId(275);
+  }
+
+  public checkDoneFarm(): void {
+    const mainScene = this.scene as Sheep | Chicken | Cow;
+    const maxPart: number = this.state[`${this.state.farm.toLowerCase()}Settings`][`${this.state.farm.toLowerCase()}Parts`].length;
+    if (this.state[`user${this.state.farm}`].part === maxPart) {
+      const partTask: Itasks[] = mainScene.partTasks();
+      const check = partTask.every(el => el.done === 1 && el.got_awarded);
+      if (check) this.tryId(40);
+    }
   }
 };
