@@ -333,6 +333,7 @@ function checkMerging(animal: Phaser.Physics.Arcade.Sprite): void {
       this.state.userUnicorn.points = animal.data.values.base.data.values.type;
       this.deleteTerritoriesLocks();
       this.getEventRaiting();
+      if (this.state.userUnicorn.points === 10) this.achievement.tryId(43);
     }
     
     if (check === undefined) {

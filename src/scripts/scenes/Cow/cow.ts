@@ -285,6 +285,7 @@ function buyCow(breed: number, shop: boolean = false): boolean {
     }
     this.state.modal = modal;
     this.scene.launch('Modal', this.state);
+    this.achievement.tryId(8);
 
   }
 

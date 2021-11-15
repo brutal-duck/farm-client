@@ -554,7 +554,13 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
           user.fair++;
           updateAnimalBuy();
           this.scene.tryTask(7, user.fair);
-          this.scene.tryClanTask(11);
+          this.scene.tryClanTask(6);
+          this.scene.achievement.tryType(11);
+          if (user.fair === fairs.length) {
+            if (this.scene.state.farm === 'Sheep') this.scene.achievement.tryId(19);
+            else if (this.scene.state.farm === 'Chicken') this.scene.achievement.tryId(21);
+            else if (this.scene.state.farm === 'Cow') this.scene.achievement.tryId(23);
+          }
           this.scene.tryTask(15, 0, nextFair.price_d);
           this.scene.time.addEvent({ delay: 200, callback: (): void => {
             this.levelText?.setText(String(user.fair));
@@ -658,20 +664,31 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       user.money -= price;
 
       this.scene.tryClanTask(6);
+      this.scene.achievement.tryType(11);
       
       if (this.territoryType === 5) {
         this.scene.tryTask(17, improve);
         this.changeSprite();
         Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
-
+        if (this.improve >= this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`territories${this.scene.state.farm}Settings`].length) {
+          if (this.scene.state.farm === 'Sheep') this.scene.achievement.tryId(16);
+          else if (this.scene.state.farm === 'Chicken') this.scene.achievement.tryId(20);
+          else if (this.scene.state.farm === 'Cow') this.scene.achievement.tryId(22);
+        }
       } else {
 
         if (this.territoryType === 2) {
           this.scene.tryTask(8, improve);
+          if (this.improve >= this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`territories${this.scene.state.farm}Settings`].length) {
+            this.scene.achievement.tryId(17);
+          }
         }
 
         if (this.territoryType === 3) {
           this.scene.tryTask(9, improve);
+          if (this.improve >= this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`territories${this.scene.state.farm}Settings`].length) {
+            this.scene.achievement.tryId(18);
+          }
         }
         this.volume = 1000;
 
@@ -720,6 +737,9 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
             this.improve = improve;
             this.scene.state.user.diamonds -= price;
             this.scene.tryTask(15, 0, price);
+            this.scene.tryClanTask(6);
+            this.scene.achievement.tryType(11);
+
             if (this.territoryType === 5) {
               this.scene.tryTask(17, improve);
               this.changeSprite();

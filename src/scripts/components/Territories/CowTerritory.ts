@@ -106,6 +106,9 @@ export default class CowTerritory extends Territory {
     }
     this.scene.game.scene.keys['Modal'].scene.stop();
     this.scene.tryTask(24, this.factory.improve);
+    this.scene.tryClanTask(6);
+    this.scene.achievement.tryType(11);
+    if (nextImprove.improve >= this.scene.state.cowSettings.cowFactorySettings.length) this.scene.achievement.tryId(24);
   }
 
   public createMergingZone(): void {

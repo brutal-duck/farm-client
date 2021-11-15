@@ -238,6 +238,9 @@ function interval(): void {
       this.scene.launch('Modal', this.state);
     }
     decrementAdFreeDiamondTime(this.state);
+    if (this.state.user.clanTasks.length > 0 && this.state.user.clanTasks.every((el: IclanTask) => el.done)) {
+      this.achievement.tryId(122);
+    }
   }, callbackScope: this, loop: true });
 }
 

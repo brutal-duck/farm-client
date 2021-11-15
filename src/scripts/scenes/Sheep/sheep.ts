@@ -522,7 +522,8 @@ function buySheep(breed: number, shop: boolean = false): boolean {
       sysType: 3,
       height: 150,
       message: this.state.lang.maxSheepCount
-    }
+    };
+    this.achievement.tryId(8);
     this.state.modal = modal;
     this.scene.launch('Modal', this.state);
 

@@ -70,74 +70,57 @@ function interval(): void {
 
     statusBalance = balance.alarm;
 
+    let checkTerritory = true;
     // восстановаление территорий
     for (let i in this.territories.children.entries) {
-
       let territory = this.territories.children.entries[i];
-
       if ((territory.territoryType === 2 || territory.territoryType === 3) && territory.volume < 1000) {
-
         let reg: number = this.settings.territoriesChickenSettings.find((item: IterritoriesChickenSettings) => item.improve === territory.improve).regeneration;
         territory.volume += reg;
-  
         if (territory.volume > 1000) {
           territory.volume = 1000;
         }
-  
       }
-
+      checkTerritory = checkTerritory && territory.territoryType !== 0;
     }
+
+    if (checkTerritory) this.achievement.tryId(36);
+
     
+    let diamondAnimalCount = 0;
     // поедание территорий курицами
     for (let i in this.chicken.children.entries) {
-
-      let chicken = this.chicken.children.entries[i];
-      
+      const chicken = this.chicken.children.entries[i];
+      if (chicken.type === 0) diamondAnimalCount += 1;
       let breed: number;
 
       if (chicken.type === 0) breed = 1;
       else breed = chicken.type;
       
       let points: IchickenPoints = this.settings.chickenSettings.find((item: IchickenPoints) => item.breed === breed);
-
-      // зарождение яйца
       if (chicken.egg < 1000) {
-
         let egg: number = points.egg;
-
         if (balance.alarm) {
           egg = Math.round(egg / 100 * this.settings.chickenBadPercent);
           if (egg < 1) egg = 1;
         }
-
         chicken.egg += egg;
         if (chicken.egg > 1000) chicken.egg = 1000;
-
       }
 
       if (chicken.egg === 1000) {
-
         let territory = this.currentTerritory(chicken.x, chicken.y);
-
         if (territory) {
-          
           let countEggs: number = this.settings.territoriesChickenSettings.find((item: IterritoriesChickenSettings) => item.improve === territory.improve).countEggs;
-
           let eggs: number = 0;
-
           for (let i in this.eggs.children.entries) {
-
             let egg = this.eggs.children.entries[i];
             let ter = this.currentTerritory(egg.x, egg.y);
-
             if (ter?.block === territory.block && ter?.position === territory.position) eggs++;
-
           }
 
           if (eggs < countEggs && !chicken.drag && (territory.territoryType === 2 || territory.territoryType === 3)) {
-
             chicken.egg = 0;
-
             // рандом разброса яиц
             let minX: number = chicken.x - indent;
             let maxX: number = chicken.x + indent;
@@ -170,12 +153,11 @@ function interval(): void {
               Firework.create(this, chicken, 1)
               chicken.destroy();
             }
-
           }
-
         }
-
       }
+
+      if (diamondAnimalCount >= 5) this.achievement.tryId(9);
 
       // отнимаем очки у территории
       let territory = this.currentTerritory(chicken.x, chicken.y);
@@ -445,7 +427,9 @@ function interval(): void {
     decrementAdFreeDiamondTime(this.state);
     incInterstitialAdTimer(this.state);
     incFortuneAdTimer(this.state);
-
+    if (this.state.user.clanTasks.length > 0 && this.state.user.clanTasks.every((el: IclanTask) => el.done)) {
+      this.achievement.tryId(122);
+    }
   }, callbackScope: this, loop: true });
 
 }

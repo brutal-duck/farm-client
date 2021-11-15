@@ -49,6 +49,8 @@ export default class ExpelAnimalWindow {
     }
   
     this.scene.state.animal.destroy();
+    this.scene.game.scene.keys[this.scene.state.farm].achievement.tryId(15);
+
   }
 
 

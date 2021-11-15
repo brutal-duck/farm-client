@@ -31,8 +31,6 @@ function interval(): void {
 
     let balance: Ibalance = this.balance();
 
-    
-
     // Подсказка при отрицательном балансе
     if (balance.notEnoughGrass || balance.notEnoughWater) {
       balanceCounter++;
@@ -72,6 +70,7 @@ function interval(): void {
 
     statusBalance = balance.alarm;
 
+    let checkTerritory = true;
     // восстановаление территорий
     for (let i in this.territories.children.entries) {
       const territory: Territory = this.territories.children.entries[i];
@@ -82,11 +81,16 @@ function interval(): void {
           territory.volume = 1000;
         }
       }
+      checkTerritory = checkTerritory && territory.territoryType !== 0;
     }
+
+    if (checkTerritory) this.achievement.tryId(37);
     
+    let diamondAnimalCount = 0;
     // поедание территорий коровами
     for (let i in this.animalGroup.children.entries) {
       const cow: CowSprite = this.animalGroup.children.entries[i];
+      if (cow.breed === 0) diamondAnimalCount += 1;
       // зарождение яйца
       if (cow.milk < cow.settings.maxMilkVolume) {
         let milk: number = cow.settings.maxMilkVolume / MILK_DELAY;
@@ -114,6 +118,7 @@ function interval(): void {
         }
       }
     }
+    if (diamondAnimalCount >= 5) this.achievement.tryId(9);
 
     // меняем спрайты территорий, если нужно
     for (let i in this.territories.children.entries) {
@@ -400,6 +405,9 @@ function interval(): void {
       if (this.territories.children.entries.some(el => el.territoryType === 8)) {
         this.tryTask(5, 8);
       }
+    }
+    if (this.state.user.clanTasks.length > 0 && this.state.user.clanTasks.every((el: IclanTask) => el.done)) {
+      this.achievement.tryId(122);
     }
   }, callbackScope: this, loop: true });
 }

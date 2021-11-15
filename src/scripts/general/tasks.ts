@@ -91,6 +91,7 @@ function tryTask(type: number, state: number, count: number = 1, currentProgress
     if (task.progress >= task.count) {
       task.done = 1;
       this.tryClanTask(16);
+      this.achievement.tryType(2);
       this.state.amplitude.logAmplitudeEvent('task_done', {
         task_id: task.id,
         part: part,
@@ -104,6 +105,7 @@ function tryTask(type: number, state: number, count: number = 1, currentProgress
     if (task.progress >= task.count) {
       task.done = 1;
       this.tryClanTask(16);
+      this.achievement.tryType(2);
       this.state.amplitude.logAmplitudeEvent('task_done', {
         task_id: task.id,
         part: part,
@@ -115,6 +117,7 @@ function tryTask(type: number, state: number, count: number = 1, currentProgress
   if (task?.progress >= task?.count && (task?.type === 21 || task?.type === 22 || task?.type === 3)) {
     task.done = 1;
     this.tryClanTask(16);
+    this.achievement.tryType(2);
     this.state.amplitude.logAmplitudeEvent('task_done', {
       task_id: task.id,
       part: part,
@@ -186,11 +189,6 @@ function getTaskData(task: Itasks): ItaskData {
 
 }
 
-function tryAchievement(type: number, state: number, count: number): void {
-  
-
-}
-
 // проверка задания "животные на поле"
 function checkAnimalTask(): void {
   let animals: any;
@@ -216,6 +214,7 @@ function checkAnimalTask(): void {
       if (task.count <= count) {
         task.done = 1;
         this.tryClanTask(16);
+        this.achievement.tryType(2);
         task.progress = count;
       }
     } else if (task?.count === 0) {
@@ -234,6 +233,7 @@ function checkAnimalTask(): void {
       if (settings.length <= count) {
         task.done = 1;
         this.tryClanTask(16);
+        this.achievement.tryType(2);
         task.progress = count;
       }
   
@@ -250,6 +250,7 @@ function checkAnimalTask(): void {
         task.progress = count;
         task.done = 1;
         this.tryClanTask(16);
+        this.achievement.tryType(2);
       }
     }
   } else {
@@ -263,6 +264,7 @@ function checkAnimalTask(): void {
         task.done = 1;
         task.progress = count;
         this.tryClanTask(16);
+        this.achievement.tryType(2);
       }
       
     } else if (task?.count === 0) {
@@ -282,6 +284,7 @@ function checkAnimalTask(): void {
         task.done = 1;
         task.progress = count;
         this.tryClanTask(16);
+        this.achievement.tryType(2);
       }
   
     } else if (task?.state > 0 && task?.count > 0) {
@@ -297,6 +300,7 @@ function checkAnimalTask(): void {
         task.progress = count;
         task.done = 1;
         this.tryClanTask(16);
+        this.achievement.tryType(2);
       }
     }
   }
@@ -331,6 +335,7 @@ function checkDoneTasks(): void {
         tasks[i].progress = tasks[i].count;
         tasks[i].done = 1;
         this.tryClanTask(16);
+        this.achievement.tryType(2);
       } else {
         tasks[i].progress = count;
       }
@@ -657,6 +662,7 @@ function tryClanTask(type: number, state: number = 0, count: number = 1, current
     task.progress += count;
     if (task.progress >= task.count) {
       task.done = true;
+      this.achievement.tryClanTypes(task.type);
       this.state.amplitude.logAmplitudeEvent('clan_task_done', {
         clan_task_done: task.id,
       });
@@ -665,13 +671,13 @@ function tryClanTask(type: number, state: number = 0, count: number = 1, current
     task.progress = currentProgress;
     if (task.progress >= task.count) {
       task.done = true;
+      this.achievement.tryClanTypes(task.type);
       this.state.amplitude.logAmplitudeEvent('clan_task_done', {
         clan_task_done: task.id,
       });
     }
   }
 }
-
 
 export {
   partTasks,

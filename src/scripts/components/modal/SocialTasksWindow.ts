@@ -1,6 +1,10 @@
 import Modal from './../../scenes/Modal/Modal';
 import bridge from '@vkontakte/vk-bridge';
 import { FAPI } from '../../libs/Fapi.js';
+import Sheep from './../../scenes/Sheep/Main';
+import Chicken from './../../scenes/Chicken/Main';
+import Cow from './../../scenes/Cow/Main';
+import Unicorn from './../../scenes/Event/Unicorns/Main';
 
 const LANGS: { [key: string]: string } = {
   joinGroupVK: 'Вступи в группу',
@@ -177,7 +181,8 @@ export default class SocialTasksWindow {
     this.takeBtnText.setPosition(this.takeBtn.x, this.takeBtn.y - 3);
   }  
   private onBtnPickUpHandler(): void {
-    this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
+    const mainScene: Sheep | Chicken | Cow | Unicorn = this.scene.game.scene.keys[this.scene.state.farm];
+    mainScene.scrolling.wheel = true;
 
     const centerPosition: Iposition = { x: this.scene.cameras.main.centerX, y: this.scene.cameras.main.centerY };
     if (this.scene.scene.isActive('Profile')) this.scene.game.scene.keys['Profile'].getCurrency(centerPosition, this.award, 'diamond');
@@ -187,11 +192,12 @@ export default class SocialTasksWindow {
     this.scene.state.user.takenSocialAward = true;
     if (this.scene.scene.isActive('Profile')) this.scene.game.scene.keys['Profile'].updateSocialTaskNotification();
     this.scene.scene.stop();
-    this.scene.game.scene.keys[this.scene.state.farm].autosave();
+    mainScene.autosave();
     this.scene.state.amplitude.logAmplitudeEvent('diamonds_get', {
       type: 'virality',
       count: this.award,
     });
+    mainScene.achievement.tryId(2);
   }
 }
 

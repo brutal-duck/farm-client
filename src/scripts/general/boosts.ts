@@ -6,6 +6,7 @@ import Utils from './../libs/Utils';
 function createBoostAnimal(): void {
   this.tryTask(22, 0);
   this.tryClanTask(3);
+  this.achievement.tryType(10);
 
   let price: number = this.state.herdBoostPrice * this.state[`user${this.state.farm}`].takenHerdBoost;
   if (Utils.checkSale(this.state, `${this.state.farm.toUpperCase()}_HERD`)) {
@@ -66,6 +67,7 @@ function createBoostAnimal(): void {
   this.tryTask(25, 0, this.state.herdBoostAnimals.length);
   this.tryClanTask(12, 0, this.state.herdBoostAnimals.length);
   this.tryClanTask(13, this.state.herdBoostAnimals.length);
+  this.achievement.tryType(1, this.state.herdBoostAnimals.length);
   const COUNT: number = 12;
   if (this.state.herdBoostAnimals.length >= COUNT) {
     sendSocialEvent(this.state, 4, this.state.herdBoostAnimals.length);
@@ -140,6 +142,9 @@ function improveCollector(): void {
     }
     this.state.modal = modal;
     this.scene.launch('Modal', this.state);
+    if (this.state.farm === 'Sheep') this.achievement.tryId(27);
+    else if (this.state.farm === 'Chicken') this.achievement.tryId(30);
+    else if (this.state.farm === 'Cow') this.achievement.tryId(33);
   } else {
 
     if (nextLevel.diamonds) {

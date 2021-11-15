@@ -274,8 +274,8 @@ export default class EventEndWindow {
           counter: this.scene.state.user.counter,
           status: this.scene.state.user.status
         };
-        axios.post(process.env.API + "/newStatus", data)
-          .then(res => {});
+        axios.post(process.env.API + "/newStatus", data);
+        this.scene.game.scene.keys[this.scene.state.farm].achievement.tryId(41);
       }
       this.scene.state.userUnicorn.takenAward = true;
 

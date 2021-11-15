@@ -116,6 +116,7 @@ function interval(): void {
       this.showTutorial('feedBoost1');
       }
 
+    let checkTerritory = true;
     // восстановаление территорий
     for (let i in this.territories.children.entries) {
       let territory: SheepTerritory = this.territories.children.entries[i];
@@ -126,11 +127,15 @@ function interval(): void {
           territory.volume = 1000;
         }
       }
+      checkTerritory = checkTerritory && territory.territoryType !== 0;
     }
-    
+    if (checkTerritory) this.achievement.tryId(35);
+
+    let diamondAnimalCount = 0;
     // поедание территорий животным
     for (let i in this.sheep.children.entries) {
       let sheep = this.sheep.children.entries[i];
+      if (sheep.type === 0) diamondAnimalCount += 1;
       let breed: number;
       if (sheep.type === 0) breed = 1;
       else breed = sheep.type;
@@ -159,6 +164,7 @@ function interval(): void {
       }
     }
 
+    if (diamondAnimalCount >= 5) this.achievement.tryId(9);
     // меняем спрайты территорий, если нужно
     for (let i in this.territories.children.entries) {
       const territory: SheepTerritory = this.territories.children.entries[i];
@@ -452,6 +458,10 @@ function interval(): void {
     decrementAdFreeDiamondTime(this.state);
     incInterstitialAdTimer(this.state);
     incFortuneAdTimer(this.state);
+    if (this.state.user.clanTasks.length > 0 && this.state.user.clanTasks.every((el: IclanTask) => el.done)) {
+      this.achievement.tryId(122);
+    }
+
   }, callbackScope: this, loop: true });
   
 

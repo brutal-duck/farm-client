@@ -244,6 +244,8 @@ export default class FarmResourceRepositoryWindow {
         this.scene.scene.stop();
         this.scene.game.scene.keys[this.farm].scrolling.wheel = true;
         this.scene.state.territory.sellResource();
+        this.scene.game.scene.keys[this.scene.state.farm].achievement.tryType(9);
+        if (this.scene.state.farm === 'Cow') this.scene.game.scene.keys[this.scene.state.farm].achievement.tryId(38);
       }
     }
   }

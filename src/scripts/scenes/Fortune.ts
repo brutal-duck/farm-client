@@ -339,6 +339,7 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private startFortune(): void {
+    this.game.scene.keys[this.state.farm].achievement.tryId(44);
     const data = {
       id: this.state.user.id,
       hash: this.state.user.hash,
@@ -602,6 +603,7 @@ export default class Fortune extends Phaser.Scene {
 
   private getFreeDiamonds(prize: number): void {
     this.state.user.diamonds += prize;
+    this.game.scene.keys[this.state.farm].achievement.tryId(49);
 
     this.state.amplitude.logAmplitudeEvent('diamonds_get', {
       type: 'fortune',
@@ -611,6 +613,7 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private getJackpot(prize: number): void {
+    this.game.scene.keys[this.state.farm].achievement.tryId(45);
     this.getFreeDiamonds(prize);
     this.sendChatMassage(prize);
     this.showJackpotWindow(prize);
@@ -741,10 +744,11 @@ export default class Fortune extends Phaser.Scene {
     this.state.user.boosts.fortune += count;
     const text: string = this.state.lang.fortuneHint_6.replace('$1', String(count));
     Hint.create(this, -250, text, 3);
+    this.game.scene.keys[this.state.farm].achievement.tryId(50);
   }
 
   private getFreeFeedBoost(): void {
-    if (this.state.progress.chicken.open && this.state.progress.cow.open) {
+    if (this.state.userChicken.part > 0 && this.state.userCow.part > 0) {
       const randomIndex: number = Phaser.Math.Between(1, 3);
       if (randomIndex === 1) {
         this.state.user.boosts.sheep.feed += 1;
@@ -765,7 +769,7 @@ export default class Fortune extends Phaser.Scene {
           type: 'Cow'
         });
       }
-    } else if (this.state.progress.chicken.open) {
+    } else if (this.state.userChicken.part > 0) {
       const randomIndex: number = Phaser.Math.Between(1, 2);
       if (randomIndex === 1) {
         this.state.user.boosts.sheep.feed += 1;
@@ -787,10 +791,11 @@ export default class Fortune extends Phaser.Scene {
         type: 'Sheep'
       });
     }
+    this.game.scene.keys[this.state.farm].achievement.tryId(47);
   }
 
   private getFreeHerdBoost(): void {
-    if (this.state.progress.chicken.open && this.state.progress.cow.open) {
+    if (this.state.userChicken.part > 0 && this.state.userCow.part > 0) {
       const randomIndex: number = Phaser.Math.Between(1, 3);
       if (randomIndex === 1) {
         this.state.user.boosts.sheep.herd += 1;
@@ -811,7 +816,7 @@ export default class Fortune extends Phaser.Scene {
           type: 'Cow'
         });
       }
-    } else if (this.state.progress.chicken.open) {
+    } else if (this.state.userChicken.part > 0) {
       const randomIndex: number = Phaser.Math.Between(1, 2);
       if (randomIndex === 1) {
         this.state.user.boosts.sheep.herd += 1;
@@ -833,10 +838,11 @@ export default class Fortune extends Phaser.Scene {
         type: 'Sheep'
       });
     }
+    this.game.scene.keys[this.state.farm].achievement.tryId(46);
   }
 
   private getFreeCollector(): void {
-    if (this.state.progress.chicken.open && this.state.progress.cow.open) {
+    if (this.state.userChicken.part > 0 && this.state.userCow.part > 0) {
       const randomIndex: number = Phaser.Math.Between(1, 3);
       if (randomIndex === 1) {
         this.state.user.boosts.sheep.collector4 += 1;
@@ -857,7 +863,7 @@ export default class Fortune extends Phaser.Scene {
           type: 'Cow'
         });
       }
-    } else if (this.state.progress.chicken.open) {
+    } else if (this.state.userChicken.part > 0) {
       const randomIndex: number = Phaser.Math.Between(1, 2);
       if (randomIndex === 1) {
         this.state.user.boosts.sheep.collector4 += 1;
@@ -917,6 +923,7 @@ export default class Fortune extends Phaser.Scene {
     const text: string = income > 0 ? this.state.lang.fortuneHint_3.replace('$1', shortNum(income * time)) : this.state.lang.fortuneHint_3.replace('$1', '1000');
 
     Hint.create(this, -250, text, 3);
+    this.game.scene.keys[this.state.farm].achievement.tryId(48);
   }
 
   private createAdBtn(): void {

@@ -42,4 +42,10 @@ export default class Achievement {
       });
     }
   }
+
+  public tryClanTypes(type: number): void {
+    this.tryType(12);
+    if (type !== 6 && type !== 14 && type !== 16 && type !== 17 && type !== 19) this.tryType(type + 12);
+    else if (type === 19) this.tryId(275);
+  }
 };

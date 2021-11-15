@@ -445,6 +445,7 @@ function exchange(ad: boolean = false): void {
     if (Utils.checkSale(this.state, `${this.state.farm.toUpperCase()}_MONEY`)) user.money += this.convertDiamonds(2 * this.state.convertor.diamonds);
     else user.money += this.convertDiamonds(this.state.convertor.diamonds);
     this.game.scene.keys[this.state.farm].tryClanTask(10, 0, this.state.convertor.diamonds);
+    this.game.scene.keys[this.state.farm].achievement.tryId(39);
     if (this.scene.isActive('ClanFarm')) {
       MoneyAnimation.create(this.game.scene.keys['ClanFarm'], `${this.state.farm.toLowerCase()}Coin`, {
         x: this.game.scene.keys['ClanFarm'].cameras.main.centerX,
@@ -483,6 +484,7 @@ function exchange(ad: boolean = false): void {
     }
     this.autosave();
   }
+
 }
 
 // завершение главы
@@ -560,7 +562,6 @@ function donePart(): void {
       this.state.platform !== 'ya'|| this.state.yaPlayer && 
       this.state.platform === 'ya') this.state.fortuneTutor = true;
   }, callbackScope: this, loop: false });
-
 }
 
 

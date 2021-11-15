@@ -3,6 +3,10 @@ import Shop from "../../../scenes/Modal/Shop/Main";
 import Utils from './../../../libs/Utils';
 import ShopButton from './../../Buttons/ShopButton';
 import ShopBars from './../../../scenes/Modal/Shop/Bars';
+import Sheep from './../../../scenes/Sheep/Main';
+import Chicken from './../../../scenes/Chicken/Main';
+import Cow from './../../../scenes/Cow/Main';
+import Unicorn from './../../../scenes/Event/Unicorns/Main';
 
 const FREE_DIAMONDS: number = 1;
 
@@ -248,9 +252,12 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
 
   private freeDiamondsBtnHandler(): void {
     if (!this.scene.state.user.takenFreeDiamonds) {
+      const mainScene: Sheep | Chicken | Cow | Unicorn = this.scene.game.scene.keys[this.scene.state.farm];
+
       this.scene.state.user.takenFreeDiamonds = true;
       this.scene.state.user.diamonds += FREE_DIAMONDS;
-      this.scene.game.scene.keys[this.scene.state.farm].autosave();
+      mainScene.autosave();
+      mainScene.achievement.tryId(3);
       this.scene.state.amplitude.logAmplitudeEvent('diamonds_get', {
         type: 'bank_page',
         count: FREE_DIAMONDS,

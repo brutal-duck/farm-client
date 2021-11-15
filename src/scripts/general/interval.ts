@@ -25,6 +25,7 @@ function progressTerritoryCooldown (territories: Iterritories[], time: number, f
             if (sheepTask.count <= sheepTask.progress) {
               sheepTask.done = 1;
               this.tryClanTask(16);
+              this.achievement.tryType(2);
             }
           }
           if (chickenTask && farm === 'Chicken') {
@@ -32,6 +33,7 @@ function progressTerritoryCooldown (territories: Iterritories[], time: number, f
             if (chickenTask.count <= chickenTask.progress) {
               chickenTask.done = 1;
               this.tryClanTask(16);
+              this.achievement.tryType(2);
             }
           }
           if (cowTask && farm === 'Cow') {
@@ -39,6 +41,7 @@ function progressTerritoryCooldown (territories: Iterritories[], time: number, f
             if (cowTask.count <= cowTask.progress) {
               cowTask.done = 1;
               this.tryClanTask(16);
+              this.achievement.tryType(2);
             }
           }
         }

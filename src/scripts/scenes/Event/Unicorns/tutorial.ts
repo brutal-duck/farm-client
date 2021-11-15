@@ -35,6 +35,8 @@ function doneEventTutor_0(): void {
     });
     this.state.userUnicorn.tutorial = 10;
     
+    this.achievement.tryId(42);
+
     this.scene.stop('Tutorial');
     this.scene.stop(this.state.farm);
     this.scene.stop(this.state.farm + 'Bars');
