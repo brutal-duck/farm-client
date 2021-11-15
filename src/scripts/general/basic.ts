@@ -1476,7 +1476,7 @@ function createСleanButton(): void {
   const actionSheep = (): void => {
     const mainScene: Sheep = barsScene.game.scene.keys[barsScene.state.farm];
     mainScene.sheep.children.iterate(el => {
-      mainScene.collectWool(el, true, false);
+      if (el) mainScene.collectWool(el, true, false);
     });
     mainScene.territories.children.iterate((el: Territory) => {
       if (el.territoryType === 2 || el.territoryType === 3) {
@@ -1510,7 +1510,7 @@ function createСleanButton(): void {
   const actionCow = (): void => {
     const mainScene: Cow = barsScene.game.scene.keys['Cow'];
     mainScene.animalGroup.children.iterate(el => {
-      mainScene.collectMilk(el, true);
+      if (el) mainScene.collectMilk(el, true);
     });
     mainScene.territories.children.iterate((el: CowTerritory) => {
       if (el.territoryType === 2 || el.territoryType === 3) el.volume = 1000;
