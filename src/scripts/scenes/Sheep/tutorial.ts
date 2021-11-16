@@ -8,7 +8,9 @@ function showTutorial(additional: boolean | string = false): void {
   if (this.scene.isActive('Profile')) this.scene.stop('Profile');
   if (this.scene.isActive('Shop')) this.scene.stop('Shop');
   if (this.scene.isActive('ShopBars')) this.scene.stop('ShopBars');
-
+  if (this.scene.isActive('ClanScroll')) this.scene.stop('ClanScroll');
+  if (this.scene.isActive('Achievements')) this.scene.stop('Achievements');
+  
   const tutorial: Itutorial = {
     farm: 1,
     step: this.state.userSheep.tutorial,

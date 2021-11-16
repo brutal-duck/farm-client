@@ -185,6 +185,8 @@ function interval(): void {
          this.scene.stop('Unicorn');
          this.scene.stop('UnicornBars');
          this.scene.stop('Modal');
+         this.scene.stop('ClanScroll');
+         this.scene.stop('Achievements');
          this.scene.start('SheepPreload', this.state);
        }
    

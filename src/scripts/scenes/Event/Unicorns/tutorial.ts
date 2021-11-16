@@ -3,6 +3,8 @@ function showEventTutorial(additional: boolean | string = false): void {
   
   if (this.scene.isActive('Modal')) this.scene.stop('Modal');
   if (this.scene.isActive('Tutorial')) this.scene.stop('Tutorial');
+  if (this.scene.isActive('ClanScroll')) this.scene.stop('ClanScroll');
+  if (this.scene.isActive('Achievements')) this.scene.stop('Achievements');
   if (this.state.userUnicorn?.tutorial > 0) {
     if (this.scene.isActive('Profile')) this.scene.stop('Profile');
   }
