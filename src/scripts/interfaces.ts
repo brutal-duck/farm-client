@@ -151,6 +151,7 @@ interface IuserAutoSave {
   boughtAvatars: number[];
   clanTasks: IclanTask[]
   takeFreeDiamondTime: number;
+  statuses: string[];
   achievements: Iachievement[];
 }
 interface Imessage {

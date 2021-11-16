@@ -1,3 +1,4 @@
+import { click } from '../../../general/clicks';
 import Scrolling from '../../../libs/Scrolling';
 
 export default class Achievements extends Phaser.Scene {
@@ -7,7 +8,9 @@ export default class Achievements extends Phaser.Scene {
   public windowHeight: number;
   public windowWidth: number;
   public scrolling: Scrolling;
+  private activeIcon: Phaser.GameObjects.Sprite;
 
+  public click = click.bind(this);
   constructor() {
     super('Achievements');
   }
@@ -47,6 +50,7 @@ export default class Achievements extends Phaser.Scene {
     const { achievements } = this.state.user;
     const sortedAchievements = [...achievements].sort((a, b) => b.progress / b.count - a.progress / a.count);
     this.createAchievements(sortedAchievements);
+    console.log(this.scrolling.scrollY);
   }
 
   private createAchievements(achievements: Iachievement[]): void {
@@ -69,20 +73,55 @@ export default class Achievements extends Phaser.Scene {
     };
 
     const { id, progress, count } = data;
-    const done = progress > count;
-    const progressStr = done ? `${count} / ${count}` : `${progress} / ${count}`;
+
     const titleStr = this.state.lang[`achievemetText${id}`];
     const texture = `achievement-${id}`;
     const padding = 20;
     const x = this.cameras.main.centerX - 300;
     const y = this.windowHeight + this.scrollHeight + padding;
+    const statusStr = id === 41 ? 'unicorn' : `ach${id}`;
 
     const iconSprite = this.add.sprite(x, y, texture);
+    const checkSprite = this.add.sprite(x, y, 'completed').setVisible(false);
+    iconSprite.setDataEnabled();
+    iconSprite.setData('check', checkSprite);
     const iconGeom = iconSprite.getBounds();
     const titleText = this.add.text(iconGeom.right + 20, y, titleStr, titleStyle).setOrigin(0, 0.5);
-    const progressText = this.add.text(iconGeom.right + 30, titleText.getBounds().bottom, progressStr, progressStyle);
+    if ((progress || progress === 0) && (count || count === 0)) {
+      const done = progress >= count;
+      const progressStr = done ? `${count} / ${count}` : `${progress} / ${count}`;
+      const progressText = this.add.text(iconGeom.right + 30, titleText.getBounds().bottom, progressStr, progressStyle);
+      if (this.state.user.status === statusStr) {
+        this.scrolling.scrollY = this.scrollHeight + this.windowHeight - 30;
+        this.activeIcon = iconSprite;
+        checkSprite.setVisible(true);
+      }
+      if (done) {
+        this.click(iconSprite, () => {
+          if (this.state.user.status !== statusStr) {
+            this.setStatus(id);
+            this.updateActiveIcon(iconSprite);
+          }
+        });
+      }
+    }
 
     this.scrollHeight += iconGeom.height + padding;
     this.scrolling.bottom = this.scrollHeight;
+  }
+
+  private setStatus(id: number): void {
+    const statusStr = id === 41 ? 'unicorn' : `ach${id}`;
+    this.state.user.status = statusStr;
+  }
+
+  private updateActiveIcon(newIcon: Phaser.GameObjects.Sprite): void {
+    const newCheckSprite = newIcon.getData('check');
+    if (this.activeIcon) {
+      const oldCheckSprite = this.activeIcon.getData('check');
+      if (oldCheckSprite) oldCheckSprite.setVisible(false);
+    }
+    this.activeIcon = newIcon;
+    newCheckSprite?.setVisible(true);
   }
 }

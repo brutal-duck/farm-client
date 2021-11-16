@@ -295,6 +295,7 @@ export default function autosave(): void {
     takenReward: state.user.takenReward,
     additionalTutorial: state.user.additionalTutorial,
     status: state.user.status,
+    statuses: state.user.statuses,
     boosts: state.user.boosts,
     test: state.user.test,
     fortuneTimeAd: state.user.fortuneTimeAd,

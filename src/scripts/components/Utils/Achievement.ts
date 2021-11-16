@@ -2,6 +2,8 @@ import Sheep from './../../scenes/Sheep/Main';
 import Chicken from './../../scenes/Chicken/Main';
 import Cow from './../../scenes/Cow/Main';
 import Unicorn from './../../scenes/Event/Unicorns/Main';
+import BarsScene from './../Scenes/BarsScene';
+import Hint from './../animations/Hint';
 
 export default class Achievement {
   public scene: Sheep | Chicken | Cow | Unicorn;
@@ -16,7 +18,7 @@ export default class Achievement {
     const achievement = this.state.user.achievements.find(ach => ach.id === id && ach.count > ach.progress);
     if (achievement) {
       achievement.progress += count;
-      if (achievement.progress >= achievement.count) console.log(this.state.lang[`achievemetText${achievement.id}`]);
+      if (achievement.progress >= achievement.count) this.setDone(achievement);
     }
   }
   
@@ -24,10 +26,20 @@ export default class Achievement {
     const filteredAchievements: Iachievement[] = this.state.user.achievements.filter(ach => ach.type === type && ach.count > ach.progress);
     filteredAchievements.forEach(ach => {
       if (ach.state === achState) ach.progress += count;
-      if (ach.progress >= ach.count) console.log(this.state.lang[`achievemetText${ach.id}`]);
+      if (ach.progress >= ach.count) this.setDone(ach);
     });
     if (type === 2) this.checkDoneFarm();
     
+  }
+
+  private setDone(ach: Iachievement): void {
+    console.log(this.state.lang[`achievemetText${ach.id}`]);
+    const barsScene = this.scene.game.scene.getScene(`${this.scene.state.farm}Bars`) as BarsScene;
+    Hint.create(barsScene, -250, this.state.lang[`achievemetText${ach.id}`], 2);
+    const status = ach.id === 41 ? 'unicorn' : `ach${ach.id}`;
+    const checkStatus = this.state.user.statuses.some(el => el === status);
+    if (!checkStatus) this.state.user.statuses.push(status);
+    if (!this.state.user.status) this.state.user.status = status;
   }
 
   /**
@@ -45,6 +57,12 @@ export default class Achievement {
       const filteredAchievements: Iachievement[] = state.user.achievements.filter(ach => ach.type === type && ach.count > ach.progress);
       filteredAchievements.forEach(ach => {
         if (ach.state === achState) ach.progress = currProgress;
+        if (ach.progress >= ach.count) {
+          const status = ach.id === 41 ? 'unicorn' : `ach${ach.id}`;
+          const checkStatus = state.user.statuses.some(el => el === status);
+          if (!checkStatus) state.user.statuses.push(status);
+          if (!state.user.status) state.user.status = status;
+        }
       });
     }
   }

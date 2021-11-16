@@ -270,8 +270,7 @@ function doneTutor_100(): void {
     try { window[`Adjust`].trackEvent(this.state.adjust.tutorialDoneEvent) }
     catch (err) { console.log('ADJUST', err) }
   }
-  const achievement: Achievement = this.achievement;
-  achievement.tryId(1);
+  this.achievement.tryId(1);
   this.scene.stop('Tutorial');
 }
 
@@ -401,6 +400,7 @@ function doneTutorCave2(): void {
 // отмена всего обучения
 function skipTutorial(): void {
   const barsScene = this.game.scene.getScene('SheepBars') as SheepBars;
+  this.achievement.tryId(1);
 
   this.state.amplitude.logAmplitudeEvent('skip_tutorial', {});
   if (this.state.platform === 'android') {
