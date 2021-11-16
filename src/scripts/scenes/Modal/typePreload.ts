@@ -744,7 +744,7 @@ export default function typePreload(): void {
         break;
       case 26:
         for (let i = 1; i <= 275; i += 1) {
-          this.load.image(`achievement-${i}`, achievementIcon1);
+          this.load.image(`ach${i}-status`, achievementIcon1);
         }
         break;
       default:

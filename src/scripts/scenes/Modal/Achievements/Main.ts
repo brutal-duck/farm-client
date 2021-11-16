@@ -50,7 +50,6 @@ export default class Achievements extends Phaser.Scene {
     const { achievements } = this.state.user;
     const sortedAchievements = [...achievements].sort((a, b) => b.progress / b.count - a.progress / a.count);
     this.createAchievements(sortedAchievements);
-    console.log(this.scrolling.scrollY);
   }
 
   private createAchievements(achievements: Iachievement[]): void {
@@ -75,7 +74,7 @@ export default class Achievements extends Phaser.Scene {
     const { id, progress, count } = data;
 
     const titleStr = this.state.lang[`achievemetText${id}`];
-    const texture = `achievement-${id}`;
+    const texture = `ach${id}-status`;
     const padding = 20;
     const x = this.cameras.main.centerX - 300;
     const y = this.windowHeight + this.scrollHeight + padding;
