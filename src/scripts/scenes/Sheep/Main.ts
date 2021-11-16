@@ -364,6 +364,8 @@ class Sheep extends Phaser.Scene {
     //   //       tasks[i].done = 1;
     //   //       // tasks[i].got_awarded = 1;
     //   // }
+    //   this.state.modal = { type: 26 };
+    //   this.scene.launch('Modal', this.state);
     // });
   }
 

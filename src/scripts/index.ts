@@ -26,6 +26,7 @@ import Block from './scenes/Block';
 import Profile from './scenes/Profile';
 import ClanScroll from './scenes/Modal/Clan/Main';
 import ClanFarm from './scenes/ClanFarm';
+import Achievements from './scenes/Modal/Achievements/Main';
 
 const gcd = (num1: number, num2: number): number => {
   while (num1 && num2) num1 > num2 ? num1 %= num2 : num2 %= num1;
@@ -89,6 +90,7 @@ window.onload = (): void => {
         Block,
         Shop, ShopBars,
         ClanScroll,
+        Achievements,
         Chat,
         Tutorial,
       ],

@@ -1,7 +1,45 @@
-class Scroll extends Phaser.Cameras.Scene2D.Camera {
+interface IscrollConfig {
+	x?: number;
+	y?: number;
+	width?: number;
+	height?: number;
+	top?: number;
+	bottom?: number;
+	wheel?: boolean;
+	drag?: number
+	minSpeed?: number
+	snap?: boolean;
+	snapConfig?: IsnapConfig;
+}
 
+interface IsnapConfig {
+	topMargin?: number;
+	padding?: number;
+	deadZone?: number;
+};
+
+class Scroll extends Phaser.Cameras.Scene2D.Camera {
+	public scene: Phaser.Scene
+	public top: number;
+	public bottom: number;
+	public wheel: boolean;
+	public drag: number;
+	public minSpeed: number;
+	public snap: boolean;
+	public snapGrid: IsnapConfig;
+	public moving: boolean;
+	public enabled: boolean;
+	public startY: number;
+	public speed: number;
+
+	private _rectangle: Phaser.Geom.Rectangle;
+	private _speed: number;
+	private _startY: number;
+	private _endY: number;
+	private _startTime: number;
+	private _endTime: number;
 	constructor(
-		scene,
+		scene: Phaser.Scene,
 		{
 			x = 0,
 			y = 0,
@@ -14,14 +52,14 @@ class Scroll extends Phaser.Cameras.Scene2D.Camera {
 			minSpeed = 4,
 			snap = false,
 			snapConfig = {}
-		}
+		}: IscrollConfig
 	) {
 		super(x, y, width, height);
 		this.scene = scene;
 		this.x = x;
 		this.y = y;
-		this.width = width || this.scene.game.config.width;
-		this.height = height || this.scene.game.config.height;
+		this.width = width || Number(this.scene.game.config.width);
+		this.height = height || Number(this.scene.game.config.height);
 		this.top = top;
 		this.bottom = bottom - this.height;
 		this.wheel = wheel;
@@ -37,7 +75,7 @@ class Scroll extends Phaser.Cameras.Scene2D.Camera {
 		this.init();
 	}
 
-	init() {
+	private init() {
 		this.scrollY = this.top || this.y;
 		this._rectangle = new Phaser.Geom.Rectangle(this.x, this.y, this.width, this.height);
 		this._speed = 0;
@@ -53,11 +91,11 @@ class Scroll extends Phaser.Cameras.Scene2D.Camera {
 		this.scene.cameras.addExisting(this);
 	}
 
-	resetMoving() {
+	private resetMoving() {
 		this.moving = false;
 	}
 
-	setSpeed(speed) {
+	private setSpeed(speed?: number) {
 		let t = this;
 		if (typeof speed != 'number') {
 			let distance = t._endY - t._startY;
@@ -68,23 +106,23 @@ class Scroll extends Phaser.Cameras.Scene2D.Camera {
 		}
 	}
 
-	setDragEvent() {
+	private setDragEvent() {
 		this.scene.input.on('pointermove', this.dragHandler, this);
 		this.scene.input.on('pointerup', this.upHandler, this);
 		this.scene.input.on('pointerdown', this.downHandler, this);
 	}
 
-	setWheelEvent() {
+	private setWheelEvent() {
 		window.addEventListener('wheel', this.wheelHandler.bind(this));
 	}
 
-	downHandler() {
+	public downHandler() {
 		this._speed = 0;
 		this._startY = this.scrollY;
 		this._startTime = performance.now();
 	}
 
-	dragHandler(pointer) {
+	private dragHandler(pointer) {
 		if (pointer.isDown && this.isOver(pointer) && this.enabled) {
 			this.startY = this.scrollY;
 			this.scrollY -= (pointer.position.y - pointer.prevPosition.y);
@@ -92,7 +130,7 @@ class Scroll extends Phaser.Cameras.Scene2D.Camera {
 		}
 	}
 
-	upHandler() {
+	private upHandler() {
 		this._endY = this.scrollY;
 		this._endTime = performance.now();
 		this.speed = 0;
@@ -101,22 +139,22 @@ class Scroll extends Phaser.Cameras.Scene2D.Camera {
 		}
 	}
 
-	wheelHandler(event) {
+	private wheelHandler(event) {
 		if (this.isOver(this.scene.input.activePointer) && this.wheel) {
 			this.scrollY += event.deltaY;
 		}
 	}
 
-	isOver(pointer) {
+	private isOver(pointer: Phaser.Input.Pointer) {
 		return this._rectangle.contains(pointer.x, pointer.y);
 	}
 
-	clampScroll() {
+	private clampScroll() {
 		this.scrollY = Phaser.Math.Clamp(this.scrollY, this.top, this.bottom);
 		this._endY = this.scrollY;
 	}
 
-	update(time, delta) {
+	public update(time: number, delta: number) {
 		this.scrollY += this._speed * (delta / 1000);
 		this._speed *= this.drag;
 		if (Math.abs(this._speed) < this.minSpeed) {
@@ -136,7 +174,7 @@ class Scroll extends Phaser.Cameras.Scene2D.Camera {
 
 	}
 
-	destroy() {
+	public destroy() {
 		// this.emit(Events.DESTROY, this);
 		// window.removeEventListener('wheel', this.wheelHandler);
 		// this.removeAllListeners();
@@ -154,3 +192,5 @@ class Scroll extends Phaser.Cameras.Scene2D.Camera {
 }
 
 export default Scroll;
+
+export { IscrollConfig, IsnapConfig };

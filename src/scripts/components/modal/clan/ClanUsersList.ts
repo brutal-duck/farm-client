@@ -1,13 +1,13 @@
 import { shortNum } from '../../../general/basic';
-import Clan from './../../../scenes/Modal/Clan/Main';
+import ClanScroll from './../../../scenes/Modal/Clan/Main';
 
 export default class ClanUsersList {
-  private scene: Clan;
+  private scene: ClanScroll;
   private array: Array<IclanUser>;
   private listLength: number;
   private clanName: string;
   private clanAvatar: string;
-  constructor (scene: Clan) {
+  constructor (scene: ClanScroll) {
     this.scene = scene;
     this.init();
     this.listLength = this.array?.length || 0;

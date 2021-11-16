@@ -312,6 +312,7 @@ const avatar7: string = require('../../../assets/images/avatars/avatar-7.png');
 const avatar8: string = require('../../../assets/images/avatars/avatar-8.png');
 const buyPlate: string = require('../../../assets/images/modal/buy-plate.png');
 const avatarFrame: string = require('../../../assets/images/modal/avatar-frame.png');
+const achievementIcon1: string = require('../../../assets/images/achievements/icon-1.png');
 
 export default function typePreload(): void {
     switch (this.state.modal.type) {
@@ -740,6 +741,11 @@ export default function typePreload(): void {
         this.load.image('avatar-8', avatar8);
         this.load.image('buy-avatar-plate', buyPlate);
         this.load.image('avatar-frame', avatarFrame);
+        break;
+      case 26:
+        for (let i = 1; i <= 275; i += 1) {
+          this.load.image(`achievement-${i}`, achievementIcon1);
+        }
         break;
       default:
         break;
