@@ -179,35 +179,15 @@ const checkDoneAchievement = (state: Istate): void => {
   const cowRepositories = state.cowTerritories.filter(el => el.type === 5);
   const maxCowTerritoryLevel = state.cowSettings.territoriesCowSettings.length;
   if (cowRepositories.some(el => el.improve >= maxCowTerritoryLevel)) Achievement.setCurrentProgress(state, 1, 22);
-  let improveCount = 0;
+
 
   const sheepPasture = state.sheepTerritories.filter(el => el.type === 2);
   const chickenPasture = state.chickenTerritories.filter(el => el.type === 2);
   const cowPasture = state.cowTerritories.filter(el => el.type === 2);
 
-  sheepPasture.forEach(el => {
-    improveCount += el.improve - 1;
-  });
-  chickenPasture.forEach(el => {
-    improveCount += el.improve - 1;
-  });
-  cowPasture.forEach(el => {
-    improveCount += el.improve - 1;
-  });
-
   const sheepWater = state.sheepTerritories.filter(el => el.type === 3);
   const chickenWater = state.chickenTerritories.filter(el => el.type === 3);
   const cowWater = state.cowTerritories.filter(el => el.type === 3);
-
-  sheepWater.forEach(el => {
-    improveCount += el.improve - 1;
-  });
-  chickenWater.forEach(el => {
-    improveCount += el.improve - 1;
-  });
-  cowWater.forEach(el => {
-    improveCount += el.improve - 1;
-  });
 
   if (sheepPasture.some(el => el.improve >= maxSheepTerritoryLevel)) Achievement.setCurrentProgress(state, 1, 17);
   if (chickenPasture.some(el => el.improve >= maxChickenTerritoryLevel)) Achievement.setCurrentProgress(state, 1, 17);
@@ -229,6 +209,13 @@ const checkDoneAchievement = (state: Istate): void => {
   const maxFairCowLevel = state.cowSettings.cowFairLevels.length;
   if (fairCowLevel >= maxFairCowLevel) Achievement.setCurrentProgress(state, 1, 23);
 
+  let improveCount = 0;
+  sheepPasture.forEach(el => { improveCount += el.improve - 1; });
+  chickenPasture.forEach(el => { improveCount += el.improve - 1; });
+  cowPasture.forEach(el => { improveCount += el.improve - 1; });
+  sheepWater.forEach(el => { improveCount += el.improve - 1; });
+  chickenWater.forEach(el => { improveCount += el.improve - 1; });
+  cowWater.forEach(el => { improveCount += el.improve - 1; });
   improveCount += fairSheepLevel;
   improveCount += fairChickenLevel;
   improveCount += fairCowLevel;
