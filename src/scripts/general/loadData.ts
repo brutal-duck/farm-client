@@ -34,6 +34,7 @@ const checkUserName = (state: Istate) => {
         counter: user.counter,
         name: newName,
         avatar: newAvatar,
+        status: user.status,
       };
       axios.post(process.env.API + '/updateClanUser', data).then(res => {
         if (!res.data.error) {

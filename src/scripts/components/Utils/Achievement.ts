@@ -4,6 +4,7 @@ import Cow from './../../scenes/Cow/Main';
 import Unicorn from './../../scenes/Event/Unicorns/Main';
 import BarsScene from './../Scenes/BarsScene';
 import Hint from './../animations/Hint';
+import Utils from './../../libs/Utils';
 
 enum iconsUrl {
   ach1 = require('../../../assets/images/achievements/icon-1.png'),
@@ -312,10 +313,10 @@ export default class Achievement {
   }
 
   private setDone(ach: Iachievement): void {
-    console.log(this.state.lang[`achievemetText${ach.id}`]);
     const barsScene = this.scene.game.scene.getScene(`${this.scene.state.farm}Bars`) as BarsScene;
-    Hint.create(barsScene, -250, this.state.lang[`achievemetText${ach.id}`], 2);
     const status = ach.id === 41 ? 'unicorn' : `ach${ach.id}`;
+    const hintStr = `${Utils.ucFirst(this.state.lang.achievementUnlock)}: ${Utils.ucFirst(this.state.lang[`${status}Status`])}`;
+    Hint.create(barsScene, -250, hintStr, 2);
     const checkStatus = this.state.user.statuses.some(el => el === status);
     if (!checkStatus) this.state.user.statuses.push(status);
     if (!this.state.user.status) this.state.user.status = status;

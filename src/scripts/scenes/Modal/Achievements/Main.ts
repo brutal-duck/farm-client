@@ -18,7 +18,7 @@ export default class Achievements extends Phaser.Scene {
   public init(state: Istate): void {
     this.state = state;
     this.scrollHeight = Number(this.game.config.height);
-    this.windowHeight = 680;
+    this.windowHeight = 640;
     this.windowWidth = 500;
     this.initScrolling();
   }
@@ -140,6 +140,7 @@ export default class Achievements extends Phaser.Scene {
         const x = bg.x + 130;
         const progressText = this.add.text(x, y, progressStr, progressStyle).setOrigin(0.5);
         const pointsText = this.add.text(bg.x + 210, y, String(points), pointsStyle).setOrigin(0.5);
+        iconSprite.setTint(0x000000).setAlpha(0.7);
       }
     } else {
       const bg = this.add.sprite(this.cameras.main.centerX - 107, y, 'achievement-bg-complete');
