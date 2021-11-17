@@ -252,9 +252,13 @@ export default class ProfileWindow {
       const onlineGeom: Phaser.Geom.Rectangle = this.onlineStatus.getBounds();
       const statusY: number = onlineGeom.bottom;
       this.status = this.scene.add.text(pos.x, statusY, statusSettings.text, statusTextStyle).setOrigin(0);
-      this.statusIcon = this.scene.add.sprite(this.status.getBounds().right, this.status.getBounds().centerY, statusSettings.iconTexture)
-        .setVisible(statusSettings.iconVisible)
-        .setOrigin(0, 0.5);
+      const x = this.status.getBounds().right;
+      const y = this.status.getBounds().centerY;
+      this.scene.game.scene.keys[this.scene.state.farm].achievement.lazyLoading(this.profile.status).then(() => {
+        this.scene.add.sprite(x, y, statusSettings.iconTexture)
+        .setOrigin(0, 0.5)
+        .setVisible(statusSettings.iconVisible);
+      });
     }
 
   }

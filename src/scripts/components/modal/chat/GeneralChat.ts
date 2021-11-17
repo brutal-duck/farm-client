@@ -1,6 +1,10 @@
 import Chat from './../../../scenes/Modal/Chat/Main';
 import axios from 'axios';
 import Modal from './../../../scenes/Modal/Modal';
+import Sheep from './../../../scenes/Sheep/Main';
+import Chicken from './../../../scenes/Chicken/Main';
+import Cow from './../../../scenes/Cow/Main';
+import Unicorn from './../../../scenes/Event/Unicorns/Main';
 const KEY: string = 
 `6307b55e185c4058b9c12d9d076ddae6
     26cd32b7a7d1d6096528ae647c235d6f
@@ -202,7 +206,11 @@ export default class GeneralChat {
     
     const status: IstatusSettings = this.scene.getStatusSettings(msgData.status);
     if (status) {
-      this.scene.add.sprite(bgX - 12, this.scene.windowHeight + this.scene.scrollHeight + padding, status.iconTexture).setOrigin(1, 0).setScale(0.8);
+      const y = this.scene.windowHeight + this.scene.scrollHeight + padding;
+      const mainScene = this.scene.game.scene.getScene(this.scene.state.farm) as Sheep | Chicken | Cow | Unicorn;
+      mainScene.achievement.lazyLoading(msgData.status).then(() => {
+        this.scene.add.sprite(bgX - 12, y, status.iconTexture).setOrigin(1, 0).setScale(0.8);
+      });
     }
 
     // const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(bgX, text.y - 10, bgWidth, textHeight + 30, 'chat-user-message-bg', 20).setOrigin(0); //!
@@ -275,7 +283,10 @@ export default class GeneralChat {
     
     const status: IstatusSettings = this.scene.getStatusSettings(msgData.status);
     if (status) {
-      this.scene.add.sprite(bgX + bgWidth + 30, this.scene.windowHeight + this.scene.scrollHeight + padding, status.iconTexture).setOrigin(1, 0).setScale(0.8);
+      const y = this.scene.windowHeight + this.scene.scrollHeight + padding;
+      this.scene.game.scene.keys[this.scene.state.farm].achievement.lazyLoading(msgData.status).then(() => {
+        this.scene.add.sprite(bgX + bgWidth + 30, y, status.iconTexture).setOrigin(1, 0).setScale(0.8);
+      });
     }
   
     // const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(bgX, text.y - 10, bgWidth, textHeight + 30, 'chat-foreign-message-bg', 20).setOrigin(0); //!

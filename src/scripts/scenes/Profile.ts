@@ -189,7 +189,9 @@ class Profile extends Phaser.Scene {
     const avatarGeom: Phaser.Geom.Rectangle = avatar.getBounds();
     const status: IstatusSettings = this.getStatusSettings(this.state.user.status);
     if (status) {
-      this.add.sprite(avatarGeom.right - 5, avatarGeom.top + 5, status.iconTexture).setVisible(status.iconVisible);
+      this.game.scene.keys[this.state.farm].achievement.lazyLoading(this.state.user.status).then(() => {
+        this.add.sprite(avatarGeom.right - 5, avatarGeom.top + 5, status.iconTexture).setScale(0.8).setVisible(status.iconVisible);
+      });
     }
     let login: string = this.state.platform === 'web' || this.state.platform === 'android'? this.state.user.login : this.state.name;
     if (!login) login = this.state.lang.unknownFarmer;

@@ -1126,7 +1126,7 @@ function getStatusSettings(string: string): IstatusSettings {
   if (string && this.state.lang[string + 'Status']) {
     return {
       textColor: '#459D1A',
-      text: this.state.lang[string + 'Status'],
+      text: Utils.ucFirst(this.state.lang[string + 'Status']),
       iconTexture: `${string}-status`,
       iconVisible: true,
     }

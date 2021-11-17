@@ -118,7 +118,9 @@ export default class ClanUsersList {
     if (statusSettings) {
       const x: number = avatarSprite.x + 25;
       const y: number = avatarSprite.y - 25;
-      this.scene.add.sprite(x, y, statusSettings.iconTexture).setVisible(statusSettings.iconVisible).setOrigin(0, 0.5).setScale(0.9);
+      this.scene.game.scene.keys[this.scene.state.farm].achievement.lazyLoading(status).then(() => {
+        this.scene.add.sprite(x, y, statusSettings.iconTexture).setOrigin(0, 0.5).setScale(0.9);
+      });
     }
 
     const bgZone = this.scene.add.zone(pos.x - 50, pos.y, bgWidth, avatarSprite.displayHeight).setOrigin(0, 0.5).setDropZone(undefined, () => {});

@@ -134,7 +134,10 @@ export default class PersonalChat {
     
     const status: IstatusSettings = this.scene.getStatusSettings(this.scene.state.user.status);
     if (status) {
-      this.scene.add.sprite(bgX - 12, this.scene.windowHeight + this.scene.scrollHeight + padding, status.iconTexture).setOrigin(1, 0).setScale(0.8);
+      const y = this.scene.windowHeight + this.scene.scrollHeight + padding;
+      this.scene.game.scene.keys[this.scene.state.farm].achievement.lazyLoading(msgData.status).then(() => {
+        this.scene.add.sprite(bgX - 12, y, status.iconTexture).setOrigin(1, 0).setScale(0.8);
+      });
     }
 
     // const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(bgX, text.y - 10, bgWidth, textHeight + 30, 'chat-user-message-bg', 20).setOrigin(0); //!
@@ -207,7 +210,10 @@ export default class PersonalChat {
 
     const status: IstatusSettings = this.scene.getStatusSettings(this.userMsg.status);
     if (status) {
-      this.scene.add.sprite(bgX + bgWidth + 30, this.scene.windowHeight + this.scene.scrollHeight + padding, status.iconTexture).setOrigin(1, 0).setScale(0.8);
+      const y = this.scene.windowHeight + this.scene.scrollHeight + padding;
+      this.scene.game.scene.keys[this.scene.state.farm].achievement.lazyLoading(msgData.status).then(() => {
+        this.scene.add.sprite(bgX + bgWidth + 30, y, status.iconTexture).setOrigin(1, 0).setScale(0.8);
+      });
     }
   
     // const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(bgX, text.y - 10, bgWidth, textHeight + 30, 'chat-foreign-message-bg', 20).setOrigin(0); //!

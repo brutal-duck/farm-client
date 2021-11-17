@@ -1,6 +1,10 @@
 import Chat from './../../../scenes/Modal/Chat/Main';
 import axios from 'axios';
 import Modal from './../../../scenes/Modal/Modal';
+import Sheep from './../../../scenes/Sheep/Main';
+import Chicken from './../../../scenes/Chicken/Main';
+import Cow from './../../../scenes/Cow/Main';
+import Unicorn from './../../../scenes/Event/Unicorns/Main';
 
 const JOIN_KEY = '196ea80e3d8a8ef81b09c965d6658b7f';
 const LEAVE_KEY = '1491f4c9d53dfa6c50d0c4a375f9ba76';
@@ -160,7 +164,10 @@ export default class ClanChat {
     
     const status: IstatusSettings = this.scene.getStatusSettings(msgData.status);
     if (status) {
-      this.scene.add.sprite(bgX - 12, this.scene.windowHeight + this.scene.scrollHeight + padding, status.iconTexture).setOrigin(1, 0).setScale(0.8);
+      const y = this.scene.windowHeight + this.scene.scrollHeight + padding;
+      this.scene.game.scene.keys[this.scene.state.farm].achievement.lazyLoading(msgData.status).then(() => {
+        this.scene.add.sprite(bgX - 12, y, status.iconTexture).setOrigin(1, 0).setScale(0.8);
+      });
     }
 
     // const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(bgX, text.y - 10, bgWidth, textHeight + 30, 'chat-user-message-bg', 20).setOrigin(0); //!
@@ -233,7 +240,10 @@ export default class ClanChat {
     
     const status: IstatusSettings = this.scene.getStatusSettings(msgData.status);
     if (status) {
-      this.scene.add.sprite(bgX + bgWidth + 30, this.scene.windowHeight + this.scene.scrollHeight + padding, status.iconTexture).setOrigin(1, 0).setScale(0.8);
+      const y = this.scene.windowHeight + this.scene.scrollHeight + padding;
+      this.scene.game.scene.keys[this.scene.state.farm].achievement.lazyLoading(msgData.status).then(() => {
+        this.scene.add.sprite(bgX + bgWidth + 30, y, status.iconTexture).setOrigin(1, 0).setScale(0.8);
+      });
     }
   
     // const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(bgX, text.y - 10, bgWidth, textHeight + 30, 'chat-foreign-message-bg', 20).setOrigin(0); //!

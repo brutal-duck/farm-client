@@ -73,7 +73,7 @@ export default class Achievements extends Phaser.Scene {
 
     const { id, progress, count } = data;
 
-    const titleStr = this.state.lang[`achievemetText${id}`];
+    const titleStr = this.state.lang[`achievementText${id}`];
     const texture = `ach${id}-status`;
     const padding = 20;
     const x = this.cameras.main.centerX - 300;
