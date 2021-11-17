@@ -54,7 +54,7 @@ export default class Achievements extends Phaser.Scene {
 
   private createAchievements(achievements: Iachievement[]): void {
     achievements.forEach(el => {
-      this.createAchievement(el);
+      if (el.id !== 2 || el.id == 2 && (this.state.platform === 'vk' || this.state.platform === 'ok')) this.createAchievement(el);
     });
   }
 
