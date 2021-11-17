@@ -38,11 +38,11 @@ export default class AchievementsBars {
       wordWrap: { width: 400, useAdvancedWrap: true },
       align: 'center',
     };
-    this.header = this.scene.add.sprite(this.x, this.y - this.height / 2 + 10, 'settings-window-header').setOrigin(0.5, 1);
+    this.header = this.scene.add.sprite(this.x, this.y - this.height / 2 + 25, 'achievement-window-header').setOrigin(0.5, 1);
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
 
-    this.scene.add.text(headerGeom.centerX - 30, headerGeom.centerY - 15, this.scene.state.lang.achievements, headerTextStyle).setOrigin(0.5);
-    const closeBtn = this.scene.add.sprite(headerGeom.right - 35, headerGeom.top + 35, 'close-window-btn');
+    this.scene.add.text(headerGeom.centerX - 15, headerGeom.bottom - 70, this.scene.state.lang.achievements, headerTextStyle).setOrigin(0.5);
+    const closeBtn = this.scene.add.sprite(headerGeom.right - 35, headerGeom.bottom - 95, 'close-window-btn');
 
     this.scene.clickButton(closeBtn, () => { this.onCloseBtn(); });
   }

@@ -1,4 +1,5 @@
 import { tabActiveAtlas, tabAtlas } from "../../atlases";
+import { iconsUrl } from "../../components/Utils/Achievement";
 
 const partProgress: string = require("./../../../assets/images/modal/part-progress.png");
 const newbieBg: string = require("./../../../assets/images/modal/daily/newbie-bg.png");
@@ -312,7 +313,11 @@ const avatar7: string = require('../../../assets/images/avatars/avatar-7.png');
 const avatar8: string = require('../../../assets/images/avatars/avatar-8.png');
 const buyPlate: string = require('../../../assets/images/modal/buy-plate.png');
 const avatarFrame: string = require('../../../assets/images/modal/avatar-frame.png');
-const achievementIcon1: string = require('../../../assets/images/achievements/icon-1.png');
+const achievementBg: string = require('../../../assets/images/modal/achievements/bg.png');
+const achievementBgComplete: string = require('../../../assets/images/modal/achievements/bg-complete.png');
+const achievementFrame: string = require('../../../assets/images/modal/achievements/frame.png');
+const achievementHeader: string = require('../../../assets/images/modal/achievements/header.png');
+
 
 export default function typePreload(): void {
     switch (this.state.modal.type) {
@@ -743,9 +748,13 @@ export default function typePreload(): void {
         this.load.image('avatar-frame', avatarFrame);
         break;
       case 26:
-        for (let i = 1; i <= 275; i += 1) {
-          this.load.image(`ach${i}-status`, achievementIcon1);
-        }
+        this.load.image('achievement-bg', achievementBg);
+        this.load.image('achievement-bg-complete', achievementBgComplete);
+        this.load.image('achievement-frame', achievementFrame);
+        this.load.image('achievement-window-header', achievementHeader);
+        Object.keys(iconsUrl).forEach(key => {
+          this.load.image(`${key}-status`, iconsUrl[key]);
+        });
         break;
       default:
         break;

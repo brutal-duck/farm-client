@@ -283,6 +283,7 @@ enum iconsUrl {
   ach275 = require('../../../assets/images/achievements/icon-1.png'),
 }
 
+export { iconsUrl };
 export default class Achievement {
   public scene: Sheep | Chicken | Cow | Unicorn;
   private state: Istate;

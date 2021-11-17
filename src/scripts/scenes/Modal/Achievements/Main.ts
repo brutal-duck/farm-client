@@ -19,7 +19,7 @@ export default class Achievements extends Phaser.Scene {
     this.state = state;
     this.scrollHeight = Number(this.game.config.height);
     this.windowHeight = 680;
-    this.windowWidth = 479;
+    this.windowWidth = 500;
     this.initScrolling();
   }
 
@@ -27,7 +27,7 @@ export default class Achievements extends Phaser.Scene {
     this.height = this.scrollHeight + this.windowHeight - 30;
     let y: number = this.cameras.main.centerY - 270;
     const cameraOptions: IScrollingOptions = {
-      x: 120,
+      x: 110,
       y: y,
       width: this.windowWidth,
       height: this.windowHeight,
@@ -63,46 +63,89 @@ export default class Achievements extends Phaser.Scene {
       fontFamily: 'Shadow',
       fontSize: '20px',
       color: '#ffffff',
-      wordWrap: { width: 350 },
+      shadow: {
+        fill: true,
+        offsetX: 2,
+        offsetY: 2,
+        color: 'rgba(0, 0, 0, 0.2)',
+        blur: 3
+      },
+    };
+    const noteStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Bip',
+      fontSize: '12px',
+      color: '#FDDBA8',
+      wordWrap: { width: 220, useAdvancedWrap: true },
     };
     const progressStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Shadow',
-      fontSize: '20px',
+      fontSize: '19px',
+      color: '#F9DEB3',
+    };
+    const pointsStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '30px',
       color: '#ffffff',
+      shadow: {
+        fill: true,
+        offsetX: 2,
+        offsetY: 2,
+        color: 'rgba(0, 0, 0, 0.2)',
+        blur: 3,
+      },
     };
 
-    const { id, progress, count } = data;
+    const { id, progress, count, points } = data;
 
-    const titleStr = this.state.lang[`achievementText${id}`];
     const texture = `ach${id}-status`;
-    const padding = 20;
-    const x = this.cameras.main.centerX - 300;
+    const padding = 35;
+    const x = this.cameras.main.centerX - 307;
     const y = this.windowHeight + this.scrollHeight + padding;
     const statusStr = id === 41 ? 'unicorn' : `ach${id}`;
 
-    const iconSprite = this.add.sprite(x, y, texture);
-    const checkSprite = this.add.sprite(x, y, 'completed').setVisible(false);
-    iconSprite.setDataEnabled();
-    iconSprite.setData('check', checkSprite);
+    const iconSprite = this.add.sprite(x, y, texture).setDepth(1);
     const iconGeom = iconSprite.getBounds();
-    const titleText = this.add.text(iconGeom.right + 20, y, titleStr, titleStyle).setOrigin(0, 0.5);
     if ((progress || progress === 0) && (count || count === 0)) {
       const done = progress >= count;
-      const progressStr = done ? `${count} / ${count}` : `${progress} / ${count}`;
-      const progressText = this.add.text(iconGeom.right + 30, titleText.getBounds().bottom, progressStr, progressStyle);
-      if (this.state.user.status === statusStr) {
-        this.scrolling.scrollY = this.scrollHeight + this.windowHeight - 30;
-        this.activeIcon = iconSprite;
-        checkSprite.setVisible(true);
-      }
       if (done) {
-        this.click(iconSprite, () => {
+        const bg = this.add.sprite(this.cameras.main.centerX - 107, y, 'achievement-bg-complete');
+        const bgGeom = bg.getBounds();
+        const titleText = this.add.text(bgGeom.centerX + iconGeom.width / 2 + 10, y - 30, this.state.lang[`${statusStr}Status`], titleStyle).setOrigin(0.5, 0);
+        const noteText = this.add.text(bgGeom.centerX + iconGeom.width / 2 + 10, y + 10, this.state.lang.achievementUnlock, noteStyle).setOrigin(0.5).setFontSize(18);
+        const checkSprite = this.add.sprite(bg.x, bg.y, 'achievement-frame').setVisible(false).setDepth(1);
+        iconSprite.setDataEnabled();
+        iconSprite.setData('check', checkSprite);
+        if (this.state.user.status === statusStr) {
+          this.scrolling.scrollY = this.scrollHeight + this.windowHeight - 30;
+          this.activeIcon = iconSprite;
+          checkSprite.setVisible(true);
+        }
+        this.click(bg, () => {
           if (this.state.user.status !== statusStr) {
             this.setStatus(id);
             this.updateActiveIcon(iconSprite);
           }
         });
+      } else {
+        const bg = this.add.sprite(this.cameras.main.centerX - 107, y, 'achievement-bg');
+        const titleText = this.add.text(iconGeom.right + 15, y - 27, this.state.lang[`${statusStr}Status`], titleStyle).setOrigin(0, 0.5);
+        const maxWidth = 200;
+        if (titleText.width > maxWidth) {
+          const scale = maxWidth / titleText.width ;
+          titleText.setFontSize(Math.round(parseInt(titleStyle.fontSize) * scale))
+        }
+        const noteStr = this.state.lang[`achievementText${id}`];
+        const noteText = this.add.text(iconGeom.right + 15, y + 10, noteStr, noteStyle).setOrigin(0, 0.5);
+        const progressStr = `${progress}/${count}`;
+        const x = bg.x + 130;
+        const progressText = this.add.text(x, y, progressStr, progressStyle).setOrigin(0.5);
+        const pointsText = this.add.text(bg.x + 210, y, String(points), pointsStyle).setOrigin(0.5);
       }
+    } else {
+      const bg = this.add.sprite(this.cameras.main.centerX - 107, y, 'achievement-bg-complete');
+      const bgGeom = bg.getBounds();
+      const titleText = this.add.text(bgGeom.centerX + iconGeom.width / 2 + 10, y - 30, this.state.lang[`${statusStr}Status`], titleStyle).setOrigin(0.5, 0);
+      const noteText = this.add.text(bgGeom.centerX + iconGeom.width / 2 + 10, y + 10, this.state.lang.achievementUnlock, noteStyle).setOrigin(0.5).setFontSize(18);
     }
 
     this.scrollHeight += iconGeom.height + padding;

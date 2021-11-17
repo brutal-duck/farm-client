@@ -47,14 +47,14 @@ const achievements: Iachievement[] = [
     points: 30,
     progress: 0,
   },
-  {
-    id: 7,
-    type: 0,
-    state: 0,
-    count: 1,
-    points: 30,
-    progress: 0,
-  },
+  // {
+  //   id: 7,
+  //   type: 0,
+  //   state: 0,
+  //   count: 1,
+  //   points: 30,
+  //   progress: 0,
+  // },
   {
     id: 8,
     type: 0,

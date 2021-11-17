@@ -1710,6 +1710,7 @@ export default {
     ach273Status: 'умный смотритель',
     ach274Status: 'гениальный смотритель',
     ach275Status: 'писатель',
+    achievementUnlock: 'достижение получено',
   },
   en: {
     index: 'en',
@@ -3422,5 +3423,6 @@ export default {
     ach273Status: 'Smart caretaker',
     ach274Status: 'Brilliant caretaker',
     ach275Status: 'Writer',
+    achievementUnlock: 'achievement unlock',
   },
 };
