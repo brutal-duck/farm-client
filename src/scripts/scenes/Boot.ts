@@ -396,42 +396,72 @@ class Boot extends Phaser.Scene {
       this.hash = LocalStorage.get('hash');
       this.initAndroidAdjust();
       window.screen.orientation.lock('portrait-primary');
-      this.initAndroidRewardedAd();
-      this.initAndroidInterstitialAd();
+      // this.initAndroidRewardedAd();
+      // this.initAndroidInterstitialAd();
+      
+      this.pushToken = '';
+      const cordova = window['cordova'];
+      
+      
+      // cordova.plugins.playGamesServices.isSignedIn((result) => {
+      //   console.log('result', result);
+      //   if (result.isSignedIn === false) {
+      //     cordova.plugins.playGamesServices.auth(() => {
+      //       cordova.plugins.playGamesServices.showPlayer((playerData: IgooglePlayServicesData) => {
+      //         console.log('this.checkAuthAndroidUser(playerData)');
+      //         this.checkAuthAndroidUser(playerData);
+      //       });
+      //     }, () => {
+      //         this.postCheckUser(this.hash);
+      //         console.log('On not logged in')
+      //     });
+      //   }
+      // }, () => {
+      //   this.postCheckUser(this.hash);
+      //   console.log('Auth check could not be done');
+      // });
 
-      const PushNotification = window['PushNotification'];
-      const push = PushNotification.init({
-        android: {},
-        browser: {
-          pushServiceURL: 'https://fcm.googleapis.com/fcm/send'
-        },
-        ios: {
-          alert: 'true',
-          badge: 'true',
-          sound: 'true'
-        },
-        windows: {}
-      });
-      push.on('registration', (data) => {
-        const { registrationId } = data;
-        this.pushToken = registrationId;
-        const cordova = window['cordova'];
-        cordova.plugins.playGamesServices.isSignedIn((result) => {
-          if (result.isSignedIn === false) {
-            cordova.plugins.playGamesServices.auth(() => {
-              cordova.plugins.playGamesServices.showPlayer((playerData: IgooglePlayServicesData) => {
-                this.checkAuthAndroidUser(playerData);
-              });
-            }, () => {
-                this.postCheckUser(this.hash);
-                console.log('On not logged in')
-            });
-          }
-        }, () => {
+      let login: boolean = false;
+      document.addEventListener("play.SILENT_SIGNED_IN_FAILED",  () => {
+        if (!login) {
+          login = true;
           this.postCheckUser(this.hash);
-          console.log('Auth check could not be done');
-        });
-      }, false);
+        }
+      });
+      document.addEventListener("play.SIGN_IN_FAILED",  () => {
+        if (!login) {
+          login = true;
+          this.postCheckUser(this.hash);
+        }
+      });
+      document.addEventListener("play.PLAYER_INFO",  (data: any) => {
+        if (!login) {
+          login = true;
+          this.checkAuthAndroidUser(data);
+        }
+      });
+      cordova.plugins.playGamesServices.initialize();
+
+
+      // const PushNotification = window['PushNotification'];
+      // const push = PushNotification.init({
+      //   android: {},
+      //   browser: {
+      //     pushServiceURL: 'https://fcm.googleapis.com/fcm/send'
+      //   },
+      //   ios: {
+      //     alert: 'true',
+      //     badge: 'true',
+      //     sound: 'true'
+      //   },
+      //   windows: {}
+      // });
+      // push.on('registration', (data) => {
+      //   const { registrationId } = data;
+      //   this.pushToken = registrationId;
+
+      // }, false);
+
     });
   }
 
