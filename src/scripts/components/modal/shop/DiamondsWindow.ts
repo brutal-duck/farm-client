@@ -110,20 +110,12 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
     
 
     if (!Utils.checkSale(this.scene.state,'PACKAGE_PRICE')) {
-      const text: string = this.scene.state.platform === 'ok' ? `${packData.price} ОК` : 
-      this.scene.state.platform === 'vk' ? `${packData.voices} ${this.scene.state.lang.voices}` : 
-      `${packData.price} ${this.scene.state.lang.ruble}`;
-
+      const text: string = this.getPlatformPrice(packData);
       const btn = this.scene.shopButton(position.x + 110, position.y + 223 + this.scene.height, text);
       this.scene.clickShopBtn(btn, (): void => { this.packHandler(packData); });
     } else {
-      const str1: string = this.scene.state.platform === 'ok' ? `${basicPackage.price}` : 
-      this.scene.state.platform === 'vk' ? `${basicPackage.voices}` : 
-      `${basicPackage.price}`;
-
-      const str2: string = this.scene.state.platform === 'ok' ? `${packData.price} ОК` : 
-      this.scene.state.platform === 'vk' ? `${packData.voices} ${this.scene.state.lang.voices}` : 
-      `${packData.price} ${this.scene.state.lang.ruble}`;
+      const str1: string = this.getPlatformPrice(basicPackage);
+      const str2: string = this.getPlatformPrice(packData);
 
       const btn = this.scene.add.sprite(position.x + 110, position.y + 223 + this.scene.height, 'shop-btn');
       const title = this.scene.add.text(0, btn.y - 5, str1, {
@@ -185,6 +177,18 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
         color: '#FFFFFF'
       }).setOrigin(0.5);
     }
+  }
+
+  private getPlatformPrice(packData: Pick<Ipackage, 'price' | 'voices'> ): string {
+    const { voices, ruble, yan, ok } = this.scene.state.lang;
+    const { platform } = this.scene.state;
+
+    const prefix = platform === 'vk' ? packData.voices : packData.price;
+    let postfix = ruble;
+    if (platform === 'vk') postfix = voices;
+    else if (platform === 'ok') postfix = ok;
+    else if (platform === 'ya') postfix = yan;
+    return `${prefix} ${postfix}`;
   }
 
   private createFreeDiamonds(): void {
@@ -308,7 +312,8 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
     let y: number = (this.rows + 1) * 270 + 50 + this.scene.height - 238;
     if (this.hasStarterpack && !this.iOSplatform) y += 238;
     else if (this.iOSplatform) y += 320;
-    const elements: IshopButtonElements = { text1: '0 ' + this.scene.state.lang.ruble };
+    const price = this.getPlatformPrice({ voices: 0, price: 0 });
+    const elements: IshopButtonElements = { text1: price };
     if (ad) {
       elements.text1 = this.scene.state.lang.pickUp;
       elements.img = {
