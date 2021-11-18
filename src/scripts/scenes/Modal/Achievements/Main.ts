@@ -1,5 +1,6 @@
 import { click } from '../../../general/clicks';
 import Scrolling from '../../../libs/Scrolling';
+import Utils from './../../../libs/Utils';
 
 export default class Achievements extends Phaser.Scene {
   public state: Istate;
@@ -48,13 +49,14 @@ export default class Achievements extends Phaser.Scene {
 
   public create(): void {
     const { achievements } = this.state.user;
-    const sortedAchievements = [...achievements].sort((a, b) => b.progress / b.count - a.progress / a.count);
+    const foreignAchievements = this.state.modal.achievements;
+    const sortedAchievements = foreignAchievements || [...achievements].sort((a, b) => b.progress / b.count - a.progress / a.count);
     this.createAchievements(sortedAchievements);
   }
 
   private createAchievements(achievements: Iachievement[]): void {
     achievements.forEach(el => {
-      if (el.id !== 2 || el.id == 2 && (this.state.platform === 'vk' || this.state.platform === 'ok')) this.createAchievement(el);
+      if (el.id !== 2 || el.id == 2 && (Utils.checkSocialPlatform(this.state.platform))) this.createAchievement(el);
     });
   }
 

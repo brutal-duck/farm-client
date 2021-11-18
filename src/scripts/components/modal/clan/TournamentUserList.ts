@@ -152,7 +152,7 @@ export default class TournamentUserList {
       const x: number = avatarSprite.x + 20;
       const y: number = avatarSprite.y - 20;
       this.scene.game.scene.keys[this.scene.state.farm].achievement.lazyLoading(status).then(() => {
-        this.scene.add.sprite(x, y, statusSettings.iconTexture).setOrigin(0, 0.5).setScale(0.9);
+        this.scene.add.sprite(x, y, statusSettings.iconTexture).setDepth(2).setOrigin(0, 0.5).setScale(0.35);
       });
     }
 

@@ -152,8 +152,11 @@ export default class PersonalChatList {
     if (statusSettings) {
       const x: number = nameTextGeom.width > bgWidth - 80 ? nameTextGeom.left + bgWidth - 80 + 5 : nameTextGeom.right + 5;
       const y: number = nameTextGeom.centerY;
-      this.scene.add.sprite(x, y, statusSettings.iconTexture).setVisible(statusSettings.iconVisible).setOrigin(0, 0.5).setScale(0.7);
+      this.scene.game.scene.keys[this.scene.state.farm].achievement.lazyLoading(status).then(() => {
+        this.scene.add.sprite(x, y, statusSettings.iconTexture).setOrigin(0, 0.5).setScale(0.4);
+      });
     }
+
     const checkNotification: boolean = messages.some(el => !el.check);
     if (checkNotification) {
       const pos: Iposition = {

@@ -99,7 +99,9 @@ const factoryProductionSlotDisable4: string = require('./../../../assets/images/
 const profileWindowBtnYellow: string = require('./../../../assets/images/modal/profile/button-yellow.png');
 const profileWindowBtnRed: string = require('./../../../assets/images/modal/profile/button-red.png');
 const profileWindowBtnGreen: string = require('./../../../assets/images/modal/profile/button-green.png');
-const profileWindoweEitAvataBtn: string = require('../../../assets/images/modal/profile/edit-avatar-btn.png');
+const profileWindowBtnBlue: string = require('./../../../assets/images/modal/profile/button-blue.png');
+const profileWindowEitAvatarBtn: string = require('../../../assets/images/modal/profile/edit-avatar-btn.png');
+const profileWindowLine: string = require('../../../assets/images/modal/profile/line.png');
 const profileWindowSettingsBtn: string = require('./../../../assets/images/modal/profile/settings-btn.png');
 const profileWindowFooter: string = require('./../../../assets/images/modal/profile/footer.png');
 const profileWindowHeader: string = require('./../../../assets/images/modal/profile/header.png');
@@ -472,8 +474,10 @@ export default function typePreload(): void {
         this.load.image('profile-window-button-yellow', profileWindowBtnYellow);
         this.load.image('profile-window-button-red', profileWindowBtnRed);
         this.load.image('profile-window-button-green', profileWindowBtnGreen);
-        this.load.image('profile-window-edit-avatar-btn', profileWindoweEitAvataBtn);
+        this.load.image('profile-window-button-blue', profileWindowBtnBlue);
+        this.load.image('profile-window-edit-avatar-btn', profileWindowEitAvatarBtn);
         this.load.image('clan-window-search-plate-ns', clanWindowSearchPlate);
+        this.load.image('profile-window-line', profileWindowLine);
         this.load.image('close-window-btn', closeWindowBtn);
         this.load.image('avatar-1', avatar1);
         this.load.image('avatar-2', avatar2);

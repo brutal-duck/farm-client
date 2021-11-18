@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Modal from '../../../scenes/Modal/Modal';
 import Notificator from './../../gameObjects/Notificator';
+import Utils from './../../../libs/Utils';
 const SMILES: string[] = ['😊', '😟', '😝', '😍', '😎', '😭', '😘', '😳', '😱'];
 const SMILE_HEIGHT: number = 52;
 
@@ -422,15 +423,13 @@ export default class ChatBars {
     if (this.scene.mainInput.value !== '') {
       if (this.smilePanelElements[0].visible) this.toggleSmilePannel();
       
-      let login: string = this.scene.state.user.login;;
-      if (this.scene.state.platform !== 'web' && this.scene.state.platform !== 'android') login = this.scene.state.name;
       this.scene.state.amplitude.logAmplitudeEvent('chat_send', {});
   
       if (this.scene.state.modal.chatType === 1) {
         this.scene.state.socket.io.emit('send', {
           id: this.scene.state.user.id,
           hash: this.scene.state.user.hash,
-          login: login,
+          login: Utils.getUserName(this.scene.state),
           text: this.scene.mainInput.value,
           type: 1,
           status: this.scene.state.user.status
@@ -441,7 +440,7 @@ export default class ChatBars {
           id: this.scene.state.user.id,
           toId: user.userId,
           message: this.scene.mainInput.value,
-          userName: login,
+          userName: Utils.getUserName(this.scene.state),
           userStatus: this.scene.state.user.status,
         });
       } else if (this.scene.state.modal.chatType === 3) {
@@ -449,7 +448,7 @@ export default class ChatBars {
           id: this.scene.state.user.id,
           clanId: this.scene.state.user.clanId,
           message: this.scene.mainInput.value,
-          userName: login,
+          userName: Utils.getUserName(this.scene.state),
           userStatus: this.scene.state.user.status,
         });
         this.scene.game.scene.keys[this.scene.state.farm].tryClanTask(19);

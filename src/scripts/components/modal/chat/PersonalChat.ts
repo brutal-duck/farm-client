@@ -132,16 +132,17 @@ export default class PersonalChat {
       timeText.setX(this.scene.windowWidth - 14);
     }
     
+    const bg: IroundedField = this.scene.add.roundedField(bgX + bgWidth / 2, text.y - 10, bgWidth, textHeight + 30, 'chat-user-message-bg').setOriginY(0);
+
     const status: IstatusSettings = this.scene.getStatusSettings(this.scene.state.user.status);
     if (status) {
-      const y = this.scene.windowHeight + this.scene.scrollHeight + padding;
+      const y = bg.y + bg.height / 2;
       this.scene.game.scene.keys[this.scene.state.farm].achievement.lazyLoading(msgData.status).then(() => {
-        this.scene.add.sprite(bgX - 12, y, status.iconTexture).setOrigin(1, 0).setScale(0.8);
+        this.scene.add.sprite(bgX - 5, y, status.iconTexture).setOrigin(1, 0.5).setScale(0.5);
       });
     }
 
-    // const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(bgX, text.y - 10, bgWidth, textHeight + 30, 'chat-user-message-bg', 20).setOrigin(0); //!
-    const bg: IroundedField = this.scene.add.roundedField(bgX + bgWidth / 2, text.y - 10, bgWidth, textHeight + 30, 'chat-user-message-bg').setOriginY(0);
+
 
     this.lastMsgFromUser = login;
     // Добавляем длинну скролла если высота всех сообщений уходит за границу
@@ -208,16 +209,15 @@ export default class PersonalChat {
     if (textWidth > 364) bgWidth = 364;
     if (textWidth < timeWidth - 10) timeText.setX(14);
 
+    const bg: IroundedField = this.scene.add.roundedField(bgX + bgWidth / 2, text.y - 10, bgWidth, textHeight + 30, 'chat-foreign-message-bg').setOriginY(0);
+
     const status: IstatusSettings = this.scene.getStatusSettings(this.userMsg.status);
     if (status) {
-      const y = this.scene.windowHeight + this.scene.scrollHeight + padding;
+      const y = bg.y + bg.height / 2;
       this.scene.game.scene.keys[this.scene.state.farm].achievement.lazyLoading(msgData.status).then(() => {
-        this.scene.add.sprite(bgX + bgWidth + 30, y, status.iconTexture).setOrigin(1, 0).setScale(0.8);
+        this.scene.add.sprite(bgX + bgWidth + 5, y, status.iconTexture).setOrigin(0, 0.5).setScale(0.4);
       });
     }
-  
-    // const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(bgX, text.y - 10, bgWidth, textHeight + 30, 'chat-foreign-message-bg', 20).setOrigin(0); //!
-    const bg: IroundedField = this.scene.add.roundedField(bgX + bgWidth / 2, text.y - 10, bgWidth, textHeight + 30, 'chat-foreign-message-bg').setOriginY(0);
   
     this.lastMsgFromUser = this.userMsg.name;
     this.scene.scrollHeight += textHeight + padding + 40;

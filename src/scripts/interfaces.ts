@@ -188,6 +188,7 @@ interface IprofileData {
   sheepPart: number;
   chickenPart: number;
   cowPart: number;
+  achievements: Iachievement[];
 }
 interface IclanData {
   id: string;
@@ -681,6 +682,7 @@ interface Imodal {
   unicornParams?: IunicornParams;
   confirmSpendParams?: IconfirmSpendParams;
   avatarParams?: Iavatar;
+  achievements?: Iachievement[];
 }
 interface Iavatar {
   type: number;

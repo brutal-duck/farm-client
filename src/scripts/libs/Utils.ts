@@ -10,6 +10,47 @@ export default class Utils {
   };
 
   /**
+   * 
+   * @param state объект стейта
+   * @returns Вовзращает имя пользователя согласно платформе
+   */
+  public static getUserName = (state: Istate): string => {
+    let name = state.user.login;
+    if (Utils.checkHasNamePlatform(state.platform)) name = state.name;
+    return name;
+  }
+
+  /**
+   * 
+   * @param platform ключ платформы
+   * @returns Возвращает true, если на платформе есть имя пользователя, иначе false
+   */
+  public static checkHasNamePlatform = (platform: string): boolean =>  {
+    return  platform === 'ya' || platform === 'vk' || platform === 'ok';
+  }
+
+  /**
+   * 
+   * @param platform ключ платформы
+   * @returns Возвращает true, если платформа является социальной сетью
+   */
+  public static checkSocialPlatform = (platform: string): boolean =>  {
+    return  platform === 'vk' || platform === 'ok';
+  }
+
+  /**
+   * 
+   * @param platform ключ платформы
+   * @returns Возвращает true, если на платформе есть аватар пользователя, иначе false
+   */
+  public static checkHasAvatarPlatform = (platform: string): boolean => {
+    return platform === 'ya' 
+    || platform === 'vk' 
+    || platform === 'ok' 
+    || platform === 'android';
+  }
+
+  /**
    * @param state Стейт
    * @param saleName Название акции из списка
    **  PACKAGE_PRICE - 1. -50% к оплате за пакет

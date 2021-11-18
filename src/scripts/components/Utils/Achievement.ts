@@ -365,11 +365,10 @@ export default class Achievement {
 
   public lazyLoading(status: string): Promise<Boolean> {
     return new Promise((resolve) => {
-      if (this.scene.textures.exists(`${status}-status`)) resolve(true);
+      if (!status) return resolve(true);
+      if (this.scene.textures.exists(`${status}-status`)) return resolve(true);
       this.scene.load.image(`${status}-status`, iconsUrl[status]);
-      this.scene.load.on('complete', () => {
-        resolve(true);
-      });
+      this.scene.load.on('complete', () => resolve(true));
       this.scene.load.start();
     });
   }

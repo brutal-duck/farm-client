@@ -3,6 +3,8 @@ import Modal from "../../scenes/Modal/Modal";
 import LocalStorage from '../../libs/LocalStorage';
 import { Icon } from "../Utils/LogoManager";
 import LogoManager from './../Utils/LogoManager';
+import Utils from './../../libs/Utils';
+import achievements from "../../local/tasks/achievements";
 
 export default class ProfileWindow {
   public scene: Modal;
@@ -41,97 +43,111 @@ export default class ProfileWindow {
   private height: number;
   private profile: IprofileData;
   private owner: boolean = false;
-
-  private bottomHeight: number = 150;
+  private loadingSprite: Phaser.GameObjects.Sprite;
+  private loadAnim: Phaser.Tweens.Tween;
+  private bottomHeight: number = 220;
 
   constructor(scene: Modal) {
     this.scene = scene;
-    this.getUserInfo();
+    this.init();
+    if (this.scene.state.foreignProfileId) {
+      this.owner = false;
+      this.createLoadingAnim();
+      this.loadForeignProfile();
+    } else {
+      this.owner = true;
+      this.startCreateUserProfile();
+    }
   }
 
   private init(): void {
-    this.x = this.scene.cameras.main.centerX;
-    this.y = this.scene.cameras.main.centerY - this.bottomHeight / 2;
-    if (this.profile) {
-      this.owner = false;
-    } else {
-      this.owner = true;
-      let nameText: string = this.scene.state.user.login;
-      if (this.scene.state.platform === 'ya' 
-        || this.scene.state.platform === 'vk' 
-        || this.scene.state.platform === 'ok') nameText = this.scene.state.name;
-      const profile: IprofileData = {
-        id: this.scene.state.user.id,
-        name: nameText,
-        avatar: this.scene.state.user.avatar,
-        status: this.scene.state.user.status,
-        level: this.scene.state.user.level,
-        clan: this.scene.state.clan,
-        sheepPart: this.scene.state.userSheep.part,
-        chickenPart: this.scene.state.userChicken.part,
-        cowPart: this.scene.state.userCow.part,
-      };
-      this.profile = profile;
-    }
+    const { cameras } = this.scene;
+    this.x = cameras.main.centerX;
+    this.y = cameras.main.centerY - this.bottomHeight / 2;
   }
 
-  private getUserInfo(): void {
-    if (this.scene.state.foreignProfileId) {
-      const data = {
-        userId: this.scene.state.user.id,
-        hash: this.scene.state.user.hash,
-        counter: this.scene.state.user.counter,
-        id: this.scene.state.foreignProfileId,
-      };
-      this.scene.scene.launch('Block');
-      const loadingSprite:Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY, 'loading-spinner');
-      const animation:Phaser.Tweens.Tween = this.scene.tweens.add({
-        targets: loadingSprite,
-        rotation: 2 * Math.PI,
-        duration: 700,
-        repeat: -1,
-      });
-      axios.post(process.env.API +'/getUserInfo', data).then((res): void => {
-        const { result, error }: { result: IprofileData, error: boolean }  = res.data;
-        if (!error) {
-          if (result.avatar) {
-            this.scene.load.image(`avatar-${result.id}`, result.avatar);
-            this.scene.load.once(Phaser.Loader.Events.COMPLETE, () => {
-              this.scene.scene.stop('Block');
-              animation?.remove();
-              loadingSprite?.destroy();
-              this.profile = result;
-              this.init();
-              this.create();
-            });
-            this.scene.load.start();
-          } else {
-            this.profile = result;
-            this.init();
-            this.create();
-            this.scene.scene.stop('Block');
-            animation?.remove();
-            loadingSprite?.destroy();
-          }
-        } else {
-          this.scene.scene.stop('Modal');
-          this.scene.scene.stop('Block');
-          animation?.remove();
-          loadingSprite?.destroy();
-        }
-      }).catch(() => {
-        this.scene.scene.stop('Block');
-        animation?.remove();
-        loadingSprite?.destroy();
-      });
-    } else {
-      this.profile = null;
-      this.init();
-      this.create();
-      this.scene.openModal(this.scene.cameras.main);
-    }
+  private getUserProfileInfo(): IprofileData {
+    const { state } = this.scene;
+    let nameText: string = Utils.getUserName(state)
+    return {
+      id: state.user.id,
+      name: nameText,
+      avatar: state.user.avatar,
+      status: state.user.status,
+      level: state.user.level,
+      clan: state.clan,
+      sheepPart: state.userSheep.part,
+      chickenPart: state.userChicken.part,
+      cowPart: state.userCow.part,
+      achievements: state.user.achievements,
+    };
   }
-  
+
+  private startCreateUserProfile(): void {
+    this.profile = this.getUserProfileInfo();
+    this.create();
+  }
+
+  private loadForeignProfile(): void {
+    const data = {
+      userId: this.scene.state.user.id,
+      hash: this.scene.state.user.hash,
+      counter: this.scene.state.user.counter,
+      id: this.scene.state.foreignProfileId,
+    };
+    axios.post(process.env.API + '/getUserInfo', data).then((res): void => {
+      const { result, error }: { result: IprofileData; error: boolean; } = res.data;
+      if (!error) {
+        if (result.avatar) {
+          this.loadAvatarAsset(result).then((res) => { 
+            this.startCreateForeignProfile(res);
+          });
+        } else this.startCreateForeignProfile(result);
+      } else this.stopLoading();
+    }).catch(() => {
+      this.stopLoading();
+    });
+  }
+
+  private createLoadingAnim(): void {
+    this.scene.scene.launch('Block');
+    const { centerX, centerY } = this.scene.cameras.main;
+    this.loadingSprite = this.scene.add.sprite(centerX, centerY, 'loading-spinner');
+    this.loadAnim = this.scene.tweens.add({
+      targets: this.loadingSprite,
+      rotation: 2 * Math.PI,
+      duration: 700,
+      repeat: -1,
+    });
+  }
+
+  private stopLoading(): void {
+    this.scene.scene.stop('Modal');
+    this.scene.scene.stop('Block');
+    this.loadAnim?.remove();
+    this.loadingSprite?.destroy();
+  }
+
+  private startCreateForeignProfile(result: IprofileData): void {
+    this.profile = result;
+    this.scene.scene.stop('Block');
+    this.loadAnim?.remove();
+    this.loadingSprite?.destroy();
+    this.create();
+  }
+
+  private loadAvatarAsset(data: IprofileData): Promise<IprofileData> {
+    return new Promise(resolve => {
+      const { id, avatar } = data;
+      const avatarIsLink = isNaN(Number(avatar));
+      const key = `avatar-${id}`;
+      if (this.scene.textures.exists(key) || !avatarIsLink) return resolve(data);
+      this.scene.load.image(key, avatar);
+      this.scene.load.once(Phaser.Loader.Events.COMPLETE, () => resolve(data));
+      this.scene.load.start();
+    });
+  }
+
   private create(): void {
     this.createMainElements();
     this.createAvatar();
@@ -139,6 +155,7 @@ export default class ProfileWindow {
     if (this.owner) this.createOwnerBtns();
     else this.createForeignBtns();
     this.setListeners();
+    this.createAchievementsInfo();
     this.createClanInfo();
   }
 
@@ -254,13 +271,14 @@ export default class ProfileWindow {
       this.status = this.scene.add.text(pos.x, statusY, statusSettings.text, statusTextStyle).setOrigin(0);
       const x = this.status.getBounds().right;
       const y = this.status.getBounds().centerY;
-      this.scene.game.scene.keys[this.scene.state.farm].achievement.lazyLoading(this.profile.status).then(() => {
-        this.scene.add.sprite(x, y, statusSettings.iconTexture)
-        .setOrigin(0, 0.5)
-        .setVisible(statusSettings.iconVisible);
-      });
+      this.scene.game.scene.keys[this.scene.state.farm].achievement
+        .lazyLoading(this.profile.status).then(() => {
+          this.statusIcon = this.scene.add.sprite(x, y, statusSettings.iconTexture)
+            .setOrigin(0, 0.5)
+            .setScale(0.4)
+            .setVisible(statusSettings.iconVisible);
+        });
     }
-
   }
 
   private createOwnerBtns(): void {
@@ -351,13 +369,13 @@ export default class ProfileWindow {
 
     if (this.scene.state.clan && this.scene.state.clan?.ownerId === this.scene.state.user.id) {
       if (this.profile.clan && this.profile.clan?.id !== this.scene.state.clan.id || !this.profile.clan) {
-        const inviteClanBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos2.x, pos2.y, 'profile-window-button-yellow');
+        const inviteClanBtn = this.scene.add.sprite(pos2.x, pos2.y, 'profile-window-button-yellow');
         const inviteClanBtnText: Phaser.GameObjects.Text = this.scene.add.text(inviteClanBtn.x + 2, inviteClanBtn.y - 5, this.scene.state.lang.inviteClan, textStyle)
           .setOrigin(0.5);
     
         this.scene.clickModalBtn({ btn: inviteClanBtn, title: inviteClanBtnText }, () => { this.onInviteClanBtn(); });
       } else {
-        const expelBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(pos2.x, pos2.y, 'profile-window-button-red');
+        const expelBtn = this.scene.add.sprite(pos2.x, pos2.y, 'profile-window-button-red');
         const expelBtnText: Phaser.GameObjects.Text = this.scene.add.text(expelBtn.x + 2, expelBtn.y - 5, this.scene.state.lang.excludeClan, textStyle)
           .setStroke('#990000', 2)
           .setOrigin(0.5);
@@ -532,17 +550,17 @@ export default class ProfileWindow {
     };
     const geom: Phaser.Geom.Rectangle = this.bottomBg.getBounds();
     const pos: Iposition = {
-      x: geom.left + 60,
-      y: geom.centerY + 40,
+      x: geom.left + 70,
+      y: geom.bottom - 20,
     };
     if (this.scene.state.userSheep.part >= 7) {
       if (this.profile.clan) {
-        const title: Phaser.GameObjects.Text = this.scene.add.text(geom.centerX, geom.centerY, this.scene.state.lang.inClan, textStyle).setOrigin(0.5).setDepth(2);
+        const title: Phaser.GameObjects.Text = this.scene.add.text(geom.centerX, pos.y - 35, this.scene.state.lang.inClan, textStyle).setOrigin(0.5).setDepth(2);
         const avatar: Icon = LogoManager.createIcon(this.scene, pos.x, pos.y, this.profile.clan.avatar).setScale(0.3).setDepth(2);
         const avatarGeom: Phaser.Geom.Rectangle = avatar.getBounds();
         const text: Phaser.GameObjects.Text = this.scene.add.text(avatarGeom.right + 10, avatarGeom.centerY, this.profile.clan.name, textStyle).setDepth(2).setOrigin(0, 0.5);
         if (this.owner) {
-          const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(geom.centerX + 100, pos.y, 'profile-window-button-yellow').setOrigin(0, 0.5).setDepth(2);
+          const btn = this.scene.add.sprite(geom.centerX + 100, pos.y, 'profile-window-button-yellow').setOrigin(0, 0.5).setDepth(2);
           const btnText: Phaser.GameObjects.Text = this.scene.add.text(btn.getCenter().x, btn.getCenter().y - 5, this.scene.state.lang.clan, btnTextStyle).setDepth(2).setOrigin(0.5);
           this.scene.clickModalBtn({ btn: btn, title: btnText }, () => {
             this.scene.scene.stop();
@@ -554,8 +572,8 @@ export default class ProfileWindow {
           this.scene.add.text(this.scene.cameras.main.centerX, pos.y, this.scene.state.lang.userHasNotInClan, textStyle).setAlign('center').setDepth(2).setOrigin(0.5);
         } else {
           const bannerText = this.scene.add.text(pos.x - 20, pos.y, this.scene.state.lang.joinClanBanner, bannerStyle).setDepth(2).setOrigin(0, 0.5);
-          const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(bannerText.getBounds().right + 5, pos.y,'profile-window-button-yellow').setOrigin(0, 0.5).setDepth(2);
-          const btnText: Phaser.GameObjects.Text = this.scene.add.text(btn.getCenter().x, btn.getCenter().y - 5, this.scene.state.lang.clans,btnTextStyle).setDepth(2).setOrigin(0.5);
+          const btn = this.scene.add.sprite(pos.x + 300, pos.y,'profile-window-button-yellow').setOrigin(0, 0.5).setDepth(2);
+          const btnText= this.scene.add.text(btn.getCenter().x, btn.getCenter().y - 5, this.scene.state.lang.clans,btnTextStyle).setDepth(2).setOrigin(0.5);
           this.scene.clickModalBtn({ btn: btn, title: btnText }, () => {
             this.scene.state.modal = {
               type: 17,
@@ -576,5 +594,74 @@ export default class ProfileWindow {
         .setDepth(2)
         .setOrigin(0.5);
     }
+  }
+
+  private createAchievementsInfo(): void {
+    const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '20px',
+      color: '#954F00',
+      wordWrap: { width: 350, useAdvancedWrap: true },
+    };
+    const btnTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      wordWrap: { width: 100 },
+      align: 'center',
+      fontSize: '16px',
+      color: '#ffe2e2',
+      stroke: '#4268d7',
+      strokeThickness: 3,
+    };
+    const geom: Phaser.Geom.Rectangle = this.bottomBg.getBounds();
+    const pos: Iposition = {
+      x: geom.left + 50,
+      y: geom.top + 80,
+    };
+
+    let points = 0;
+    let done = 0;
+
+    this.profile.achievements.forEach(el => {
+      if (el.progress >= el.count && this.owner) {
+        points += el.points;
+        done += 1;
+      } else if (!this.owner){
+        const achievement = achievements.find(ach => ach.id === el.id);
+        if (achievement) {
+          points += achievement.points;
+          done += 1;
+        }
+      }
+    });
+
+    const doneStr = String(Math.round((done / achievements.length) * 100));
+
+    const { achievementsPoints, achievementsDone } = this.scene.state.lang;
+
+    const pointsText = this.scene.add.text(pos.x, pos.y - 5, achievementsPoints, textStyle)
+      .setOrigin(0, 0.5)
+      .setDepth(1);
+    const pointsCount = this.scene.add.text(pointsText.getBounds().right + 5, pos.y - 5, String(points), textStyle)
+      .setColor('#8EB508')
+      .setOrigin(0, 0.5)
+      .setDepth(1);
+
+    const doneText = this.scene.add.text(pos.x, pos.y + 25, achievementsDone, textStyle)
+      .setOrigin(0, 0.5)
+      .setDepth(1);
+    const doneCount = this.scene.add.text(doneText.getBounds().right + 5, pos.y + 25, `${doneStr}%`, textStyle)
+      .setColor('#8EB508')
+      .setOrigin(0, 0.5)
+      .setDepth(1);
+
+    this.scene.add.sprite(geom.centerX, pos.y + 55, 'profile-window-line').setDepth(2);
+
+    const btn = this.scene.add.sprite(pos.x + 375, pos.y + 10,'profile-window-button-blue').setScale(1.15).setDepth(2);
+    const btnText= this.scene.add.text(btn.getCenter().x, btn.getCenter().y - 5, this.scene.state.lang.achievements, btnTextStyle).setDepth(2).setOrigin(0.5);
+    this.scene.clickModalBtn({ btn: btn, title: btnText }, () => {
+      this.scene.state.modal = { type: 26 };
+      if (!this.owner) this.scene.state.modal.achievements = this.profile.achievements;
+      this.scene.scene.restart(this.scene.state);
+    });
   }
 };

@@ -148,6 +148,7 @@ class Profile extends Phaser.Scene {
     this.createElements();
     this.setListeners();
     this.game.scene.keys[this.state.farm].updateProfileNotification(true);
+    // this.createDebugZone();
   }
 
   public update(): void {
@@ -190,10 +191,10 @@ class Profile extends Phaser.Scene {
     const status: IstatusSettings = this.getStatusSettings(this.state.user.status);
     if (status) {
       this.game.scene.keys[this.state.farm].achievement.lazyLoading(this.state.user.status).then(() => {
-        this.add.sprite(avatarGeom.right - 5, avatarGeom.top + 5, status.iconTexture).setScale(0.8).setVisible(status.iconVisible);
+        this.add.sprite(avatarGeom.right - 10, avatarGeom.top + 10, status.iconTexture).setScale(0.6).setVisible(status.iconVisible);
       });
     }
-    let login: string = this.state.platform === 'web' || this.state.platform === 'android'? this.state.user.login : this.state.name;
+    let login = Utils.getUserName(this.state);
     if (!login) login = this.state.lang.unknownFarmer;
     const nameTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontSize: '32px',
@@ -221,10 +222,23 @@ class Profile extends Phaser.Scene {
     });
   }
 
-  private createZoneGraphic(zone: Phaser.GameObjects.Zone, color: number): void {
+  private createDebugZone(): void {
+    let color = 0x000000;
+    this.children.list.forEach(el => {
+      if (el.type === 'Zone') {
+        const zone = el as Phaser.GameObjects.Zone;
+        this.createZoneGraphics(zone, color);
+        color += 0x000050;
+      }
+    })
+  }
+
+  private createZoneGraphics(zone: Phaser.GameObjects.Zone, color: number): void {
+    const { height, width } = zone.input.hitArea;
+    const { x, y } = zone;
     const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
     graphics.lineStyle(5, color);
-    graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+    graphics.strokeRect(x - width / 2, y - height / 2, width, height);
   }
 
   private createFarms(): void {
@@ -243,13 +257,28 @@ class Profile extends Phaser.Scene {
     const width: number = 300;
     const height: number = 240;
     
-    const farmZone: Phaser.GameObjects.Zone = this.add.zone(farmPosition.x, farmPosition.y, width, height).setDropZone(undefined, () => {});
-    // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
-    // graphics.lineStyle(5, 0xFFFF00);
-    // graphics.strokeRect(farmZone.x - farmZone.input.hitArea.width / 2, farmZone.y - farmZone.input.hitArea.height / 2, farmZone.input.hitArea.width, farmZone.input.hitArea.height);
-    const progressText: string = `${this.state.userSheep.part}/${this.state.progress.sheep.max}`;
-    this.add.text(farmPosition.x + 155, farmPosition.y + 38, progressText, progressTextStyle).setOrigin(0.5);
-    this.sheepNotificator = new Notificator(this, { x: farmPosition.x + 125, y: farmPosition.y - 85 }, true);
+    const farmZone = this.add.zone(
+      farmPosition.x,
+      farmPosition.y,
+      width,
+      height
+    ).setDropZone(undefined, () => {});
+    const { part } = this.state.userSheep;
+    const { max } = this.state.progress.sheep; 
+    const progressText = `${part}/${max}`;
+    this.add.text(
+      farmPosition.x + 155,
+      farmPosition.y + 38,
+      progressText,
+      progressTextStyle
+    ).setOrigin(0.5);
+
+    this.sheepNotificator = new Notificator(
+      this,
+      { x: farmPosition.x + 125, y: farmPosition.y - 85 },
+      true,
+    );
+
     this.click(farmZone, (): void => {
       if (this.state.farm !== 'Sheep') {
         this.game.scene.keys[this.state.farm].autosave();
@@ -269,7 +298,13 @@ class Profile extends Phaser.Scene {
   private createChickenFarm(): void {
     const farmPosition: Iposition = { x: 720, y: 1025 };
     if (this.state.userChicken.part > 0) {
-      const farmSprite: Phaser.GameObjects.Sprite = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-chicken-farm').setOrigin(1, 0.5).setDepth(1);
+      const farmSprite = this.add.sprite(
+        farmPosition.x,
+        farmPosition.y,
+        'profile-chicken-farm'
+      )
+        .setOrigin(1, 0.5)
+        .setDepth(1);
       const progressText: string = `${this.state.userChicken.part}/${this.state.progress.chicken.max}`;
       this.add.text(farmPosition.x - 245, farmPosition.y + 20, progressText, progressTextStyle).setOrigin(0.5).setDepth(1);
       this.chickenNotificator = new Notificator(this, { x: farmPosition.x - 200, y: farmPosition.y - 110 }, true).setDepth(2);
@@ -380,15 +415,6 @@ class Profile extends Phaser.Scene {
     this.eventMapFarm = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-event-farm').setOrigin(1, 0.5).setVisible(false);
     this.eventZone = this.add.zone(570, 790, 300, 170).setDropZone(undefined, () => {});
 
-    // this.add.graphics()
-    //   .lineStyle(5, 0x00FFFF)
-    //   .strokeRect(
-    //     this.eventZone.x - this.eventZone.input.hitArea.width / 2,
-    //     this.eventZone.y - this.eventZone.input.hitArea.height / 2,
-    //     this.eventZone.width,
-    //     this.eventZone.height
-    //   );  
-
     this.eventScore = this.add.text(farmPosition.x - 122, farmPosition.y - 58, `- ${this.state.lang.eventScores}`, {
       fontSize: '21px',
       color: '#6e00c7',
@@ -469,7 +495,7 @@ class Profile extends Phaser.Scene {
   private createFortuneWheel(): void {
     const OPENING_LEVEL = 8;
     const data = {
-      name: this.state.platform !== 'web' ? this.state.name : this.state.user.login,
+      name: Utils.getUserName(this.state),
       spending: 0,
       prize: 0,
       jackpot: false,
@@ -501,15 +527,6 @@ class Profile extends Phaser.Scene {
       pos.width, 
       pos.height,
     ).setDropZone(undefined, () => {});
-
-    // this.add.graphics()
-    //   .lineStyle(5, 0x00FFFF)
-    //   .strokeRect(
-    //     fortuneZone.x - fortuneZone.input.hitArea.width / 2,
-    //     fortuneZone.y - fortuneZone.input.hitArea.height / 2,
-    //     fortuneZone.width,
-    //     fortuneZone.height
-    //   );  
 
     this.click(fortuneZone, (): void => {
       if (this.state.userSheep.part >= OPENING_LEVEL && this.checkAuthUser()) {
@@ -580,10 +597,6 @@ class Profile extends Phaser.Scene {
       height: 210
     }
     const zone: Phaser.GameObjects.Zone = this.add.zone(pos.x, pos.y, size.width, size.height).setDropZone(undefined, () => {});
-      
-    // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
-    // graphics.lineStyle(5, 0xFF0000);
-    // graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
 
     this.click(zone, (): void => {
       const modal: Imodal = {
@@ -632,10 +645,6 @@ class Profile extends Phaser.Scene {
       height: 240
     };
     const zone: Phaser.GameObjects.Zone = this.add.zone(pos.x, pos.y, size.width, size.height).setDropZone(undefined, () => {});
-      
-    // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
-    // graphics.lineStyle(5, 0xFF0000);
-    // graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
 
     this.click(zone, (): void => {
       const modal: Imodal = {
@@ -656,10 +665,6 @@ class Profile extends Phaser.Scene {
       height: 110
     };
     const zone: Phaser.GameObjects.Zone = this.add.zone(pos.x, pos.y, size.width, size.height).setDepth(1).setDropZone(undefined, () => {});
-      
-    // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
-    // graphics.lineStyle(5, 0xFFFF00);
-    // graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
 
     this.click(zone, (): void => {
       const modal: Imodal = {
@@ -684,10 +689,7 @@ class Profile extends Phaser.Scene {
       height: 230
     };
     const zone: Phaser.GameObjects.Zone = this.add.zone(pos.x, pos.y, size.width, size.height).setDepth(1).setDropZone(undefined, () => {});
-      
-    // const graphics: Phaser.GameObjects.Graphics = this.add.graphics();
-    // graphics.lineStyle(5, 0xFFFF00);
-    // graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+
     this.clanNotificator = new Notificator(this, { x: pos.x + 65, y: pos.y - 45 }, true).setCount(0);
     this.click(zone, (): void => {
       if (this.state.userSheep.part >= 7 && this.checkAuthUser()) {

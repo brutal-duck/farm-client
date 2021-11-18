@@ -116,10 +116,10 @@ export default class ClanUsersList {
     const statusSettings: IstatusSettings = this.scene.getStatusSettings(status);
 
     if (statusSettings) {
-      const x: number = avatarSprite.x + 25;
+      const x: number = avatarSprite.x + 20;
       const y: number = avatarSprite.y - 25;
       this.scene.game.scene.keys[this.scene.state.farm].achievement.lazyLoading(status).then(() => {
-        this.scene.add.sprite(x, y, statusSettings.iconTexture).setOrigin(0, 0.5).setScale(0.9);
+        this.scene.add.sprite(x, y, statusSettings.iconTexture).setOrigin(0, 0.5).setScale(0.5);
       });
     }
 
