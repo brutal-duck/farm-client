@@ -203,7 +203,7 @@ export default class RegistrationWindow {
     
     // Выход
     this.scene.clickModalBtn(logoutBtn, (): void => {
-      document.cookie = "farmHASH=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      LocalStorage.set('hash', '');
       LocalStorage.set('farm', '');
       window.location.reload();
     });
@@ -288,7 +288,7 @@ export default class RegistrationWindow {
               }
 
               this.scene.state.user.login = this.scene.mainInput.value;
-              document.cookie = "farmHASH=" + res.data.hash + "; expires=" + res.data.expires + "; path=/;";
+              LocalStorage.set('hash', res.data.hash);
               this.scene.state.user.hash = res.data.hash;
               this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
               this.scene.enterKey.destroy();

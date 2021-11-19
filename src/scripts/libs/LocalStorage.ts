@@ -1,11 +1,11 @@
 export default class LocalStorage {
   public static get(key: string): string {
     try {
-      return window?.localStorage.getItem(key);
+      return window?.localStorage.getItem(key) || '';
     } catch (e) {
       console.log(e);
+      return '';
     } 
-    return;
   }
 
   public static set(key: string, value: string): void {

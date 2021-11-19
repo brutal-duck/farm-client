@@ -287,7 +287,7 @@ export default class Login {
             this.enterKey.destroy();
             this.secondInput.remove();
             this.mainInput.remove();
-            this.scene.setCookieHash(response.data.hash, response.data.expires);
+            this.scene.setLocalStorageHash(response.data.hash);
           } else {
             this.result.setText(this.scene.state.lang.wrongLoginPass).setAlpha(1);
             this.resizeWindow(16);

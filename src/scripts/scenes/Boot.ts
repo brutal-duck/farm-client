@@ -353,7 +353,7 @@ class Boot extends Phaser.Scene {
   }
 
   private checkWebUser(): void {
-    this.hash = this.getCookieHash();
+    this.hash = LocalStorage.get('hash');
     this.postCheckUser(this.hash);
   }
 
@@ -369,7 +369,7 @@ class Boot extends Phaser.Scene {
         this.state.ysdk = ysdk;
         this.setLangs(ysdk.environment.i18n.lang);
         this.initYandexUser().catch((err) => {
-          this.hash = this.getCookieHash();
+          this.hash = LocalStorage.get('hash');
           this.postCheckUser(this.hash);
         });
       });
@@ -597,19 +597,26 @@ class Boot extends Phaser.Scene {
       if (error === false) {
         if (this.platform === 'web' && status === 'new') {
           this.createnLanding = false;
-        } else if (this.platform === 'web' || this.platform === 'ya' && expires) {
-          this.setCookieHash(hash, expires);
+        } else if (
+          this.platform === 'web' 
+          || (this.platform === 'android' 
+          || this.platform === 'ya') && !auth
+        ) {
+          this.setLocalStorageHash(hash);
         } else {
           this.userReady = true;
           this.hash = hash;
-          if (this.platform === 'android' && !auth) {
-            LocalStorage.set('hash', hash);
-          }
         }
       } else this.createErrorWindow();
     }).catch((): void => {
       this.serverError = true;
     });
+  }
+
+  public setLocalStorageHash(hash: string): void {
+    this.userReady = true;
+    this.hash = hash;
+    LocalStorage.set('hash', hash);
   }
 
   public createLanding(): void {
@@ -642,7 +649,7 @@ class Boot extends Phaser.Scene {
         platform: 'webNew',
       }).then((response) => {
         if (response.data.error === false) {
-          this.setCookieHash(response.data.hash, response.data.expires);
+          this.setLocalStorageHash(response.data.hash);
           this.state.amplitude.logAmplitudeEvent('landing_login', {});
         } else this.createErrorWindow();
       }).catch(() => {
