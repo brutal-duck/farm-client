@@ -7,6 +7,7 @@ import SheepTerritory from './../components/Territories/SheepTerritory';
 import ChickenTerritory from './../components/Territories/ChickenTerritory';
 import DataValidator from './../libs/DataValidator';
 import { Data } from 'phaser';
+import LocalStorage from './../libs/LocalStorage';
 
 export default function autosave(): void {
   const state: Istate = this.state;
@@ -351,7 +352,7 @@ export default function autosave(): void {
             state.user.hash = res.data.newUser.hash;
             state.user.counter = res.data.newUser.counter;
             if (state.platform === 'web') {
-              document.cookie = "farmHASH=" + state.user.hash + "; expires=" + res.data.expires + "; path=/;";
+              LocalStorage.set('hash', res.data.hash);
             }
           }
           if (res.data.donate) state.donate = true; 

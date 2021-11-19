@@ -462,7 +462,7 @@ export default class ProfileWindow {
   }
 
   private onExitProfileBtn(): void {
-    document.cookie = "farmHASH=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    LocalStorage.set('hash', '');
     LocalStorage.set('farm', '');
     window.location.reload();
   }
