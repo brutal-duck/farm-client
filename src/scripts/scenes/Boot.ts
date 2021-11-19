@@ -396,72 +396,64 @@ class Boot extends Phaser.Scene {
       this.hash = LocalStorage.get('hash');
       this.initAndroidAdjust();
       window.screen.orientation.lock('portrait-primary');
-      // this.initAndroidRewardedAd();
-      // this.initAndroidInterstitialAd();
+
+      const admob = window['admob'];
+      admob.start().then(() => {
+        this.initAndroidRewardedAd();
+        this.initAndroidInterstitialAd();
+      });
       
       this.pushToken = '';
-      const cordova = window['cordova'];
-      
-      
-      // cordova.plugins.playGamesServices.isSignedIn((result) => {
-      //   console.log('result', result);
-      //   if (result.isSignedIn === false) {
-      //     cordova.plugins.playGamesServices.auth(() => {
-      //       cordova.plugins.playGamesServices.showPlayer((playerData: IgooglePlayServicesData) => {
-      //         console.log('this.checkAuthAndroidUser(playerData)');
-      //         this.checkAuthAndroidUser(playerData);
-      //       });
-      //     }, () => {
-      //         this.postCheckUser(this.hash);
-      //         console.log('On not logged in')
-      //     });
-      //   }
-      // }, () => {
-      //   this.postCheckUser(this.hash);
-      //   console.log('Auth check could not be done');
-      // });
-
+      let userData: IgooglePlayServicesData | string = this.hash;
+      let token: boolean = false;
       let login: boolean = false;
-      document.addEventListener("play.SILENT_SIGNED_IN_FAILED",  () => {
+
+      const checkUser = (): void => {
+        if (token && login) {
+          if (userData !== this.hash) {
+            const data: IgooglePlayServicesData = userData as IgooglePlayServicesData;
+            this.checkAuthAndroidUser(data);
+          } else {
+            this.postCheckUser(userData);
+          }
+        }
+      }
+
+      const pushNotification = window['pushNotification'];
+      pushNotification.registration(
+        (data: string): void => {
+          token = true;
+          this.pushToken = data;
+          checkUser();
+        },
+        (): void => {
+          token = true;
+          checkUser();
+        }
+      );
+
+      document.addEventListener("play.SILENT_SIGNED_IN_FAILED",  (): void => {
         if (!login) {
           login = true;
-          this.postCheckUser(this.hash);
+          checkUser();
         }
       });
-      document.addEventListener("play.SIGN_IN_FAILED",  () => {
+      document.addEventListener("play.SIGN_IN_FAILED",  (): void => {
         if (!login) {
           login = true;
-          this.postCheckUser(this.hash);
+          checkUser();
         }
       });
-      document.addEventListener("play.PLAYER_INFO",  (data: any) => {
+      document.addEventListener("play.PLAYER_INFO",  (data: any): void => {
         if (!login) {
           login = true;
-          this.checkAuthAndroidUser(data);
+          userData = data;
+          checkUser();
         }
       });
+      
+      const cordova = window['cordova'];
       cordova.plugins.playGamesServices.initialize();
-
-
-      // const PushNotification = window['PushNotification'];
-      // const push = PushNotification.init({
-      //   android: {},
-      //   browser: {
-      //     pushServiceURL: 'https://fcm.googleapis.com/fcm/send'
-      //   },
-      //   ios: {
-      //     alert: 'true',
-      //     badge: 'true',
-      //     sound: 'true'
-      //   },
-      //   windows: {}
-      // });
-      // push.on('registration', (data) => {
-      //   const { registrationId } = data;
-      //   this.pushToken = registrationId;
-
-      // }, false);
-
     });
   }
 
@@ -531,55 +523,52 @@ class Boot extends Phaser.Scene {
     }
   }
 
-
   private initAndroidRewardedAd(): void {
-    document.addEventListener('admob.rewardvideo.events.LOAD_FAIL', (): void => {
-      // @ts-ignore
-      window.admob.rewardvideo.prepare();
-      this.state.readyAd = false;
+    const admob = window['admob'];
+    this.state.admob.rewarded = new admob.RewardedAd({
+      // adUnitId: 'ca-app-pub-3940256099942544/5224354917',
+      adUnitId: process.env.ADMOB_REWARDED_ID,
     });
-
-    document.addEventListener('admob.rewardvideo.events.LOAD', (): void => {
-      console.log('Android ad ready!');
+    this.state.admob.rewarded.on('loadfail', (): void => {
+      this.state.readyAd = false;
+      this.state.admob.rewarded.load();
+    });
+    this.state.admob.rewarded.on('load', (): void => {
       this.state.readyAd = true;
     });
-
-    document.addEventListener('admob.rewardvideo.events.CLOSE', (): void => {
-      // @ts-ignore
-      window.admob.rewardvideo.prepare();
-      this.state.readyAd = false;
+    this.state.admob.rewarded.on('show', (): void => {
+      this.state.admob.rewarded.load();
+    });
+    this.state.admob.rewarded.on('showfail', (): void => {
+      this.state.admob.rewarded.load();
+    });
+    this.state.admob.rewarded.on('dismiss', (): void => {
       this.state.musicVolume = this.game.scene.keys[this.state.farm].ads.musicVolume;
       this.state.soundVolume = this.game.scene.keys[this.state.farm].ads.soundVolume;
-      //@ts-ignore
+      // @ts-ignore
       this.sound.get('music').volume = this.state.musicVolume;
     });
-
-    document.addEventListener('admob.rewardvideo.events.REWARD', (): void => {
+    this.state.admob.rewarded.on('reward', (): void => {
       this.game.scene.keys[this.state.farm].ads.adReward();
       if (this.platform === 'android') {
         try { window[`Adjust`].trackEvent(this.state.adjust.adEvent) }
         catch (err) { console.log(err) }
       }
-      // @ts-ignore
-      window.admob.rewardvideo.prepare();
-      this.state.readyAd = false;
     });
-
-    // @ts-ignore
-    window.admob.rewardvideo.config({
-      id: process.env.ADMOB_REWARDED_ID,
-      isTesting: false,
-    });
-
-    // @ts-ignore
-    window.admob.rewardvideo.prepare();
+    this.state.admob.rewarded.load();
   }
 
   private initAndroidInterstitialAd(): void {
     const admob = window['admob'];
-    admob.interstitial.config({
-      id: process.env.ADMOB_INTERSTITIAL_ID,
-      isTesting: false,
+    this.state.admob.interstitial = new admob.InterstitialAd({
+      // adUnitId: 'ca-app-pub-3940256099942544/1033173712',
+      adUnitId: process.env.ADMOB_INTERSTITIAL_ID,
+    });
+    this.state.admob.interstitial.on('load', (): void => {
+      this.state.admob.interstitial.show();
+    });
+    this.state.admob.interstitial.on('show', (): void => {
+      this.state.amplitude.logAmplitudeRevenue('interstitial', 0, 'interstitial', {});
     });
   }
 
