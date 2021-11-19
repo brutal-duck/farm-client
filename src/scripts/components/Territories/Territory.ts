@@ -748,9 +748,24 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
                 type: 'storage',
                 count: price,
               });
+              if (this.improve >= this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`territories${this.scene.state.farm}Settings`].length) {
+                if (this.scene.state.farm === 'Sheep') this.scene.achievement.tryId(16);
+                else if (this.scene.state.farm === 'Chicken') this.scene.achievement.tryId(20);
+                else if (this.scene.state.farm === 'Cow') this.scene.achievement.tryId(22);
+              }
             } else {
-              if (this.territoryType === 2) this.scene.tryTask(8, improve);
-              if (this.territoryType === 3) this.scene.tryTask(9, improve);
+              if (this.territoryType === 2) {
+                this.scene.tryTask(8, improve);
+                if (this.improve >= this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`territories${this.scene.state.farm}Settings`].length) {
+                  this.scene.achievement.tryId(17);
+                }
+              }
+              if (this.territoryType === 3) {
+                this.scene.tryTask(9, improve);
+                if (this.improve >= this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`territories${this.scene.state.farm}Settings`].length) {
+                  this.scene.achievement.tryId(18);
+                }
+              }
               this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
                 type: territory,
                 count: price,

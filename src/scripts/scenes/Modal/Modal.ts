@@ -77,6 +77,7 @@ class Modal extends Phaser.Scene {
   public taskWindow: TasksWindow;
   public ClanTabsWindow: ClanTabsWindow;
   public oldType: number = 0;
+  public hints: Phaser.GameObjects.Group;
 
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
@@ -103,6 +104,7 @@ class Modal extends Phaser.Scene {
 
   public init(state: Istate): void {
     this.state = state;
+    this.hints = this.add.group();
   }
 
   public preload(): void {

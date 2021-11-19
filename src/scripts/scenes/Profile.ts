@@ -67,6 +67,8 @@ class Profile extends Phaser.Scene {
   private personalMessageNotificator: Notificator;
   private clanFlagPole: ClanFlagPole;
   private fortunePull: Phaser.GameObjects.Text;
+  public hints: Phaser.GameObjects.Group;
+
   public click = click.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
   public getEventRaiting = getEventRaiting.bind(this); 
@@ -84,6 +86,7 @@ class Profile extends Phaser.Scene {
     } 
     this.currentDiamonds = this.state.user.diamonds;
     this.clanFlagPole = null;
+    this.hints = this.add.group();
   }
 
 

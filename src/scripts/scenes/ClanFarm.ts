@@ -57,7 +57,7 @@ export default class ClanFarm extends Phaser.Scene {
   private eventStartText: Phaser.GameObjects.Text;
   private eventStartTime: Phaser.GameObjects.Text;
   private eventStartBg: Phaser.GameObjects.Graphics;
-
+  public hints: Phaser.GameObjects.Group;
 
   constructor() {
     super('ClanFarm');
@@ -87,6 +87,7 @@ export default class ClanFarm extends Phaser.Scene {
   public init(state: Istate): void {
     this.state = state;
     if (this.state.user.clanTasks.length <= 0) this.state.user.clanTasks = getNewClanTasks(this.state);
+    this.hints = this.add.group();
     // this.eventGlowAliConfig = {
     //   targets: this.eventGlowSprite,
     //   scale: { to: 1, duration: 300 },

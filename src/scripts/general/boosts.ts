@@ -185,6 +185,9 @@ function improveCollector(): void {
                 };
                 this.state.modal = modal;
                 this.scene.launch('Modal', this.state);
+                if (this.state.farm === 'Sheep') this.achievement.tryId(27);
+                else if (this.state.farm === 'Chicken') this.achievement.tryId(30);
+                else if (this.state.farm === 'Cow') this.achievement.tryId(33);
               } else {
                 const modal: Imodal = {
                   type: 1,
@@ -243,6 +246,9 @@ function improveCollector(): void {
           }
           this.state.modal = modal;
           this.scene.launch('Modal', this.state);
+          if (this.state.farm === 'Sheep') this.achievement.tryId(27);
+          else if (this.state.farm === 'Chicken') this.achievement.tryId(30);
+          else if (this.state.farm === 'Cow') this.achievement.tryId(33);
         }
       } else {
   

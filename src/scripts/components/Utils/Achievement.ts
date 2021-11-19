@@ -3,8 +3,12 @@ import Chicken from './../../scenes/Chicken/Main';
 import Cow from './../../scenes/Cow/Main';
 import Unicorn from './../../scenes/Event/Unicorns/Main';
 import BarsScene from './../Scenes/BarsScene';
-import Hint from './../animations/Hint';
+import Hint, { hintScene } from './../animations/Hint';
 import Utils from './../../libs/Utils';
+import Fortune from './../../scenes/Fortune';
+import Modal from './../../scenes/Modal/Modal';
+import Profile from './../../scenes/Profile';
+import ClanFarm from './../../scenes/ClanFarm';
 
 enum iconsUrl {
   ach1 = require('../../../assets/images/achievements/icon-1.png'),
@@ -313,9 +317,19 @@ export default class Achievement {
 
   private setDone(ach: Iachievement): void {
     const barsScene = this.scene.game.scene.getScene(`${this.scene.state.farm}Bars`) as BarsScene;
+    const fortuneScene = this.scene.game.scene.getScene('Fortune') as Fortune;
+    const modalScene = this.scene.game.scene.getScene('Modal') as Modal;
+    const profileScene = this.scene.game.scene.getScene('Profile') as Profile;
+    const clanScene = this.scene.game.scene.getScene('ClanFarm') as ClanFarm;
+    let currentScene: hintScene = barsScene;
+    if (this.scene.scene.isActive('Fortune')) currentScene = fortuneScene;
+    // else if (this.scene.scene.isActive('Modal')) currentScene = modalScene;
+    else if (this.scene.scene.isActive('Profile')) currentScene = profileScene;
+    else if (this.scene.scene.isActive('ClanFarm')) currentScene = clanScene;
+    
     const status = ach.id === 41 ? 'unicorn' : `ach${ach.id}`;
-    const hintStr = `${Utils.ucFirst(this.state.lang.achievementUnlock)}: ${Utils.ucFirst(this.state.lang[`${status}Status`])}`;
-    Hint.create(barsScene, -250, hintStr, 2);
+    const hintStr = `${Utils.ucFirst(this.state.lang.achievementUnlock)}\n${Utils.ucFirst(this.state.lang[`${status}Status`])}`;
+    Hint.create(currentScene, -250, hintStr, 2);
     const checkStatus = this.state.user.statuses.some(el => el === status);
     if (!checkStatus) this.state.user.statuses.push(status);
     if (!this.state.user.status) this.state.user.status = status;
