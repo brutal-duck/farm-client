@@ -655,13 +655,15 @@ export default class ProfileWindow {
       .setDepth(1);
 
     this.scene.add.sprite(geom.centerX, pos.y + 55, 'profile-window-line').setDepth(2);
-
-    const btn = this.scene.add.sprite(pos.x + 375, pos.y + 10,'profile-window-button-blue').setScale(1.15).setDepth(2);
-    const btnText= this.scene.add.text(btn.getCenter().x, btn.getCenter().y - 5, this.scene.state.lang.achievements, btnTextStyle).setDepth(2).setOrigin(0.5);
-    this.scene.clickModalBtn({ btn: btn, title: btnText }, () => {
-      this.scene.state.modal = { type: 26 };
-      if (!this.owner) this.scene.state.modal.achievements = this.profile.achievements;
-      this.scene.scene.restart(this.scene.state);
-    });
+    
+    if (points > 0 || this.owner) {
+      const btn = this.scene.add.sprite(pos.x + 375, pos.y + 10,'profile-window-button-blue').setScale(1.15).setDepth(2);
+      const btnText= this.scene.add.text(btn.getCenter().x, btn.getCenter().y - 5, this.scene.state.lang.achievements, btnTextStyle).setDepth(2).setOrigin(0.5);
+      this.scene.clickModalBtn({ btn: btn, title: btnText }, () => {
+        this.scene.state.modal = { type: 26 };
+        if (!this.owner) this.scene.state.modal.achievements = this.profile.achievements;
+        this.scene.scene.restart(this.scene.state);
+      });
+    }
   }
 };

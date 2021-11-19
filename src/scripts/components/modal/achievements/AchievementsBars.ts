@@ -48,8 +48,9 @@ export default class AchievementsBars {
   }
 
   private onCloseBtn(): void {
-    this.scene.scene.stop();
     this.scene.scene.stop('Achievements');
+    this.scene.state.modal = { type: 15 };
+    this.scene.scene.restart(this.scene.state);
   }
 
   private startScrollScene(): void {

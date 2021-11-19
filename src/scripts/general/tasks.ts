@@ -82,6 +82,8 @@ function tryTask(type: number, state: number, count: number = 1, currentProgress
   let tasks: Itasks[] = this.partTasks();
   let task: Itasks = tasks.find((data: Itasks) => data.type === type);
   
+  if (task?.done === 1) return;
+
   if (!currentProgress && task?.done === 0 &&
     task?.progress < task?.count &&
     (task?.state === state || task?.state === 0 || 
@@ -114,7 +116,7 @@ function tryTask(type: number, state: number, count: number = 1, currentProgress
     this.game.scene.keys[this.state.farm + 'Bars'].setCurrentPartProgress();
   }
 
-  if (task?.progress >= task?.count && (task?.type === 21 || task?.type === 22 || task?.type === 3)) {
+  if (task?.progress >= task?.count && task?.done === 0 && (task?.type === 21 || task?.type === 22 || task?.type === 3)) {
     task.done = 1;
     this.tryClanTask(16);
     this.achievement.tryType(2);

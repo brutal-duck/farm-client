@@ -309,7 +309,6 @@ export default class Achievement {
       if (ach.progress >= ach.count) this.setDone(ach);
     });
     if (type === 2) this.checkDoneFarm();
-    
   }
 
   private setDone(ach: Iachievement): void {
@@ -358,7 +357,7 @@ export default class Achievement {
     const maxPart: number = this.state[`${this.state.farm.toLowerCase()}Settings`][`${this.state.farm.toLowerCase()}Parts`].length;
     if (this.state[`user${this.state.farm}`].part === maxPart) {
       const partTask: Itasks[] = mainScene.partTasks();
-      const check = partTask.every(el => el.done === 1 && el.got_awarded);
+      const check = partTask.every(el => el.done === 1);
       if (check) this.tryId(40);
     }
   }
