@@ -236,6 +236,21 @@ const checkDoneAchievement = (state: Istate): void => {
     Achievement.setCurrentProgress(state, 1, 41);
     Achievement.setCurrentProgress(state, 1, 42);
   }
+
+  let farmDoneCount = 0;
+  if (userSheep.part === state.sheepSettings.sheepParts.length) {
+    const sheepTasks = state.sheepTasks.filter(el => el.id === userSheep.part);
+    if (sheepTasks.every(el => el.done === 1)) farmDoneCount;
+  }
+  if (userChicken.part === state.chickenSettings.chickenParts.length) {
+    const chickenTasks = state.chickenTasks.filter(el => el.id === userChicken.part);
+    if (chickenTasks.every(el => el.done === 1)) farmDoneCount;
+  }  
+  if (userCow.part === state.chickenSettings.chickenParts.length) {
+    const chickenTasks = state.chickenTasks.filter(el => el.id === userCow.part);
+    if (chickenTasks.every(el => el.done === 1)) farmDoneCount;
+  }
+  if (farmDoneCount > 0) Achievement.setCurrentProgress(state, farmDoneCount, 40);
 }
 
 const filterSale = (state: Istate, sales: Isale[]): Isale[] => {
