@@ -938,6 +938,10 @@ interface Iamplitude {
   logAmplitudeEvent: (eventName: string, data: IamplitudeData) => void;
   logAmplitudeRevenue: (productId: string, price: number, type: string,  data: IamplitudeData) => void;
 }
+interface Iadmob {
+  interstitial: any;
+  rewarded: any;
+}
 interface Istate {
   interstitialTimer: number;
   platform: string;
@@ -1045,4 +1049,5 @@ interface Istate {
   offline?: number;
   clanChatNotificationCount: number;
   dataIsLoaded: boolean;
+  admob: Iadmob;
 }

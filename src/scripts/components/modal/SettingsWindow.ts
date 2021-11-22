@@ -204,6 +204,7 @@ export default class SettingsWindow {
     document.body.appendChild(erudaCdn);
     erudaCdn.onload = (): void => {
       window['eruda'].init();
+      this.scene.game.scene.keys[this.scene.state.farm].ads.showInterstitialAd();
     };
   }
 }

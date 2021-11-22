@@ -89,6 +89,10 @@ let sales: Isale[] = [];
 let clanChatNotificationCount: number = 0;
 let dataIsLoaded: boolean = false;
 let interstitialTimer: number = 0;
+let admob: Iadmob = {
+  interstitial: null,
+  rewarded: null
+};
 
 let state: Istate = {
   // записываемые в localStorage
@@ -184,6 +188,7 @@ let state: Istate = {
   dataIsLoaded,
   playId,
   interstitialTimer,
+  admob,
 }
 
 export default state;

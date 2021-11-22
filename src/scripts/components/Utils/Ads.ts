@@ -110,8 +110,7 @@ export default class Ads {
         }
       });
     } else if (this.scene.state.platform === 'android') {
-      // @ts-ignore
-      window.admob.rewardvideo.show();
+      this.scene.state.admob.rewarded.show();
     }
   }
 
@@ -142,8 +141,7 @@ export default class Ads {
         }
         break;
       case 'android':
-        window['admob'].interstitial.prepare();
-        this.scene.state.amplitude.logAmplitudeRevenue('interstitial', 0, 'interstitial', {});
+        this.scene.state.admob.interstitial.show();
         break;
       default:
         break;
