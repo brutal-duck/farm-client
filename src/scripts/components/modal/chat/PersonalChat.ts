@@ -6,10 +6,12 @@ export default class PersonalChat {
   private lastMsgFromUser: string;
   private textWrap: number;
   private userMsg: IuserPersonalMessage;
+  private lastMsgTime: Date;
 
   constructor (scene: Chat) {
     this.scene = scene;
     this.init();
+    this.create();
   }
 
   private init(): void {
@@ -20,19 +22,30 @@ export default class PersonalChat {
     this.textWrap = 340;
     this.userMsg = this.scene.state.user.personalMessages.find(el => el.userId === this.scene.state.modal.userId);
     this.scene.state.updatePersonalMessage = true;
+    this.lastMsgTime = new Date(0);
   }
 
   public update(): void {
     this.printNewChatMessages();
   }
 
+  private create(): void {
+    this.userMsg?.messages.forEach(el => {
+      this.newMsg(el);
+      this.lastMsgTime = new Date(el.time);
+    });
+  }
+
   private printNewChatMessages(): void {
-    if (this.userMsg?.messages.length > this.msg.length) {
-      const index: number = this.userMsg.messages.length - (this.userMsg.messages.length - this.msg.length); // Индекс ненапечатанного сообщения
-      for (let i: number = index; i < this.userMsg.messages.length; i++) {
-        this.msg.push(this.userMsg.messages[i]);
-        this.newMsg(this.userMsg.messages[i]);
-      }
+    if (
+      this.userMsg?.messages && this.userMsg?.messages.length > 0 
+      && new Date(this.userMsg?.messages[this.userMsg?.messages?.length - 1]?.time).getTime() !== this.lastMsgTime.getTime()) {
+      this.userMsg?.messages.forEach(el => {
+        if (new Date(el.time).getTime() > this.lastMsgTime.getTime()) {
+          this.newMsg(el);
+          this.lastMsgTime = new Date(el.time);
+        }
+      });
     }
   }
 

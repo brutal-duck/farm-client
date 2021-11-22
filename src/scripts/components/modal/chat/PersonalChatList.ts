@@ -50,20 +50,30 @@ export default class PersonalChatList {
         time: el.time,
         messages: [],
       });
-    })
+    });
 
     for (let i = 0; i < personal.length; i += 1) {
       this.messages.push({
         name: personal[i].name,
         userId: personal[i].userId,
         type: 0,
-        text: personal[i].messages[personal[i].messages.length - 1].text,
+        text: personal[i].messages[personal[i].messages.length - 1]?.text || '',
         status: personal[i].status,
-        check: personal[i].messages[personal[i].messages.length - 1].check,
-        time: personal[i].messages[personal[i].messages.length - 1].time,
+        check: personal[i].messages[personal[i].messages.length - 1]?.check || true,
+        time: personal[i].messages[personal[i].messages.length - 1]?.time || new Date(0),
         messages: personal[i].messages,
-      })
+      });
     }
+  }
+
+  private filterMassages(): void {
+    this.scene.state.user.personalMessages = this.scene.state.user.personalMessages.filter(el => {
+      return this.messages.some(mes => mes.userId === el.userId);
+    });
+
+    this.scene.state.user.messages = this.scene.state.user.messages.filter(el => {
+      return this.messages.some(mes => mes._id === el._id);
+    });
   }
 
   public update(): void {
@@ -84,7 +94,10 @@ export default class PersonalChatList {
       const timeA: number = new Date(a?.time).getTime();
       const timeB: number = new Date(b?.time).getTime();
       return timeB - timeA;
-    })
+    });
+    this.messages = this.messages.slice(0, 29);
+    this.filterMassages();
+    this.scene.game.scene.keys[this.scene.state.farm].autosave();
     this.messages.forEach(el => {
       if (el.type === 0) {
         this.createPersonal(el);

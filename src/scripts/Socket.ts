@@ -44,6 +44,7 @@ export default class Socket {
         const user: IuserPersonalMessage = this.state.user.personalMessages.find(el => el.userId === data.toId);
         if (user) {
           user.messages.push(message);
+          user.messages = user.messages.slice(-30);
         }
       } else {
         this.state.updatePersonalMessage = true;
@@ -52,6 +53,7 @@ export default class Socket {
           if (user.name !== data.name) user.name = data.name;
           if (user.status !== data.status) user.status = data.status;
           user.messages.push(message);
+          user.messages = user.messages.slice(-30);
         } else {
           const createnUser: IuserPersonalMessage = {
             name: data.name,
