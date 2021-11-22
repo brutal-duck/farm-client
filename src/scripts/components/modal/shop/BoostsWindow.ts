@@ -55,17 +55,23 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   private create(): void {
     switch (this.scene.state.farm) {
       case 'Sheep':
-        this.collectorBoost();
+        if (this.scene.state.user.test !== 'B') this.collectorBoost();
+        else this.collectorBoostTestB();
+        
         if (this.checkHerdBoost()) this.herdBoost();
         if (this.checkFeedBoost()) this.feedBoost();
         break;
       case 'Chicken':
-        this.collectorBoost();
+        if (this.scene.state.user.test !== 'B') this.collectorBoost();
+        else this.collectorBoostTestB();
+
         if (this.checkHerdBoost()) this.herdBoost();
         if (this.checkFeedBoost()) this.feedBoost();
         break;
       case 'Cow':
-        this.collectorBoost();
+        if (this.scene.state.user.test !== 'B') this.collectorBoost();
+        else this.collectorBoostTestB();
+
         if (this.checkHerdBoost()) this.herdBoost();
         if (this.checkFeedBoost()) this.feedBoost();
         break;
@@ -146,6 +152,71 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     }
   }
 
+  private collectorBoostTestB(): void {
+    const headerTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '28px',
+      color: '#ffffff',
+      stroke: '#8B4A84',
+      strokeThickness: 2,
+    };
+    const timerTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontFamily: 'Shadow',
+      fontSize: '20px',
+      color: '#FFFFFF',
+    };
+
+    // собиратель шерсти
+    let resource: string;
+    if (this.scene.state.farm === 'Sheep') resource = 'wool';
+    else if (this.scene.state.farm === 'Chicken') resource = 'egg';
+    else if (this.scene.state.farm === 'Cow') resource = 'milk';
+    else if (this.scene.state.farm === 'Unicorn') resource = 'resource';
+
+    this.scene.add.sprite(0, 20 + this.scene.height, 'boost-bg').setOrigin(0);
+
+    const header: string = this.scene.state.lang[`${resource}Collector`];
+    this.scene.add.text(225, 40 + this.scene.height, header, headerTextStyle).setOrigin(0.5);
+
+    const texture = `shop-${this.scene.state.farm.toLowerCase()}-${resource}-collector`;
+    const collectorSprite = this.scene.add.sprite(40, 65 + this.scene.height, texture).setOrigin(0);
+
+    if (this.scene.state[`user${this.scene.state.farm}`].collector > 0) {
+      const time = shortTime(this.scene.state[`user${this.scene.state.farm}`].collector, this.scene.state.lang);
+      const str = this.scene.state.lang.still + ' ' + time;
+      this.collectorTimer = this.scene.add.text(120, 235 + this.scene.height, str, timerTextStyle).setOrigin(0.5);
+    }
+    
+    this.createFreeCollectorBtns();
+    this.createHoursCollectorBtn(4);
+    this.createHoursCollectorBtn(12);
+      
+    // кнопка улучшения
+    if (this.checkImproveCollectorTestB()) {
+      const position: Iposition = {
+        x: 120, 
+        y: 285 + this.scene.height,
+      };
+      const action = () => {
+        this.scene.game.scene.keys[this.scene.state.farm].showImproveCollector() 
+      };
+      const settings: IboostButtonSetting = {
+        left: this.scene.state.lang.improve
+      };
+      this.improve = new BoostButton(this.scene, position, action, settings);
+      if (this.scene.state[`user${this.scene.state.farm}`].collector === 0) {
+        this.improve.y -= 15;
+      }
+    } else {
+      if (this.scene.state[`user${this.scene.state.farm}`].collector > 0) {
+        this.collectorTimer.y += 45;
+        collectorSprite.y += 25;
+      } else {
+        collectorSprite.y += 35;
+      }
+    }
+  }
+
   private createHoursCollectorBtn(hoursCount: number): void {
     const unlockCollector: number = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`unlockCollector${hoursCount}`];
     const price: number = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`collectorPrice${hoursCount}`];
@@ -203,6 +274,12 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     const maxLevel: number = this.scene.state[`${this.scene.state.farm.toLowerCase()}CollectorSettings`].length;
     if (this.scene.state.farm === 'Sheep') return farmUser.collectorLevel < maxLevel && farmUser.tutorial >= 100;
     return farmUser.collectorLevel < maxLevel;
+  }
+
+  private checkImproveCollectorTestB(): boolean {
+    const farmUser: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
+    const maxLevel: number = this.scene.state.sheepSettings.partSettings.length;
+    return farmUser.collectorLevel < maxLevel || farmUser.collectorTimeLevel < maxLevel;
   }
 
   private createFreeCollectorBtns(): void {
@@ -589,7 +666,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
           this.scene.state.user.diamonds -= price;
           this.scene.state.boughtFeedBoost = true;
           MainScene.tryTask(15, 0, price);
-          this.addFeedBoostTime(price);
+          this.addFeedBoostTime();
           this.feedBoostBtnUpdated = false;
         }
       } else {
@@ -613,27 +690,17 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     this.scene.scene.stop('Modal');
   }
   
-  private addFeedBoostTime(price: number = 0): void {
+  private addFeedBoostTime(): void {
     const farmUser: IuserSheep | IuserChicken | IuserCow | IuserUnicorn = this.scene.state[`user${this.scene.state.farm}`];
-    const MainScene = this.scene.game.scene.keys[this.scene.state.farm] as Sheep | Chicken | Cow | Unicorn;
+    const MainScene = this.scene.game.scene.keys[this.scene.state.farm] as Sheep | Chicken | Cow;
     if (farmUser.feedBoostTime <= 0) {
       farmUser.feedBoostTime += ONE_HOUR; // прибавить час
-
-      // this.scene.state.amplitude.logAmplitudeEvent('booster_feed_x2', {
-      //   price: price,
-      //   time: 1,
-      // });
       MainScene.tryTask(21, 0, 1);
-      MainScene.tryClanTask(9, 0, 1);
+      if (this.scene.state.farm !== 'Unicorn') MainScene.tryClanTask(9, 0, 1);
     } else {
-      const time: number = Math.ceil(farmUser.feedBoostTime / ONE_HOUR / 2) + 1;
-      // this.scene.state.amplitude.logAmplitudeEvent('booster_feed_x2', {
-      //   price: price,
-      //   time: time,
-      // });
       farmUser.feedBoostTime += TWO_HOURS; // прибавить 2часа
       MainScene.tryTask(21, 0, 2);
-      MainScene.tryClanTask(9, 0, 2);
+      if (this.scene.state.farm !== 'Unicorn') MainScene.tryClanTask(9, 0, 2);
     }
   }
 

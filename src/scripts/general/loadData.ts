@@ -12,6 +12,7 @@ import getProgress from '../local/progress';
 import ErrorWindow from './../components/Web/ErrorWindow';
 import { getNewClanTasks } from './tasks';
 import DataValidator from './../libs/DataValidator';
+import sheepPartSettings from '../local/sheepPartSettings';
 const basicUserCow = userCow;
 const basicUserSheep = userSheep;
 const basicUserChicken = userChicken;
@@ -207,6 +208,13 @@ export default function loadData(response: AxiosResponse): void {
   state.sheepSettings = sheepSettings;
   state.chickenSettings = chickenSettings;
   state.cowSettings = cowSettings;
+
+  if (state.user.test === 'B') {
+    state.sheepSettings.partSettings = sheepPartSettings;
+    // state.chickenSettings.partSettings = chickenSettings;
+    // state.cowSettings.partSettings = cowSettings;
+  }
+
   // животные
   const sheep: Isheep[] = [];
   for (let i in response.data.user.sheep) {    
@@ -370,6 +378,7 @@ export default function loadData(response: AxiosResponse): void {
     countSheep: response.data.user.count_sheep,
     collector: response.data.user.shaver_time,
     collectorLevel: response.data.user.sheepCollectorLevel,
+    collectorTimeLevel: response.data.user.sheepCollectorTimeLevel,
     collectorTakenTime: response.data.user.shaver_time,
     diamondAnimalTime: response.data.user.diamonds_sheep_time,
     tutorial: response.data.user.tutor,
@@ -388,6 +397,7 @@ export default function loadData(response: AxiosResponse): void {
     countChicken: response.data.user.count_chicken,
     collector: response.data.user.chicken_collector,
     collectorLevel: response.data.user.chickenCollectorLevel,
+    collectorTimeLevel: response.data.user.chickenCollectorTimeLevel,
     collectorTakenTime: response.data.user.chicken_collector,
     diamondAnimalTime: response.data.user.diamonds_chicken_time,
     tutorial: response.data.user.chicken_tutor,
@@ -415,6 +425,7 @@ export default function loadData(response: AxiosResponse): void {
     countCow: response.data.user.count_cow,
     collector: response.data.user.cow_collector,
     collectorLevel: response.data.user.cowCollectorLevel,
+    collectorTimeLevel: response.data.user.cowCollectorTimelevel,
     collectorTakenTime: response.data.user.cow_collector,
     diamondAnimalTime: response.data.user.diamonds_cow_time,
     tutorial: response.data.user.cow_tutor,

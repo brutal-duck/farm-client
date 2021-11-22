@@ -112,6 +112,7 @@ const userSheep: IuserSheep = {
   feedBoostTime: 0,
   herdBoostAd: true,
   feedBoostAd: true,
+  collectorTimeLevel: 1,
 }
 
 const userChicken: IuserChicken = {
@@ -130,6 +131,7 @@ const userChicken: IuserChicken = {
   feedBoostTime: 0,
   herdBoostAd: true,
   feedBoostAd: true,
+  collectorTimeLevel: 1,
 }
 
 const userCow: IuserCow = {
@@ -148,6 +150,7 @@ const userCow: IuserCow = {
   feedBoostTime: 0,
   herdBoostAd: true,
   feedBoostAd: true,
+  collectorTimeLevel: 1,
   factory: {
     currentProduction: 0,
     productionTimer: 0,

@@ -259,6 +259,7 @@ interface IuserSheep {
   countSheep: number;
   collector: number;
   collectorLevel: number;
+  collectorTimeLevel: number;
   collectorTakenTime: number;
   diamondAnimalTime: number;
   tutorial: number;
@@ -276,6 +277,7 @@ interface IuserChicken {
   countChicken: number;
   collector: number;
   collectorLevel: number;
+  collectorTimeLevel: number;
   collectorTakenTime: number;
   diamondAnimalTime: number;
   tutorial: number;
@@ -315,6 +317,7 @@ interface IuserCow {
   diamondAnimalAd: boolean;
   takenHerdBoost: number;
   feedBoostTime: number;
+  collectorTimeLevel: number;
   factory: Ifactory;
   herdBoostAd: boolean;
   feedBoostAd: boolean;
@@ -556,6 +559,24 @@ interface IsheepSettings {
   unlockCollector12: number;
   sheepDiamondsTime: number;
   feedBoostPrice: number;
+  partSettings?: IpartSettings[];
+}
+interface IpartSettings {
+  collector: {
+    time: number;
+    improveTimePrice: number;
+    speed: number;
+    imporveSpeedPrice: number;
+  };
+  territory: {
+    improveRepositoryPrice: number;
+    improveTerritoryPrice: number;
+    improveFairPrice: number;
+    regeneration: number;
+    cooldown: number;
+    maxRepositoryVolume: number
+  };
+  exchange: number;
 }
 interface IchickenSettings {
   chickenBadPercent: number;
@@ -573,6 +594,7 @@ interface IchickenSettings {
   unlockCollector12: number;
   chickenDiamondsTime: number;
   feedBoostPrice: number;
+  partSettings?: IpartSettings[];
 }
 interface IcowSettings {
   cowBadPercent: number;
@@ -592,6 +614,7 @@ interface IcowSettings {
   cowDiamondsTime: number;
   feedBoostPrice: number;
   storageMultiply?: number;
+  partSettings?: IpartSettings[];
 }
 interface IunicornSettings {
   unicornSettings: IunicornPoints[]; // нужно попарвить

@@ -32,6 +32,7 @@ export default class DataValidator {
     if (data.part > sheepSettings.sheepParts.length) data.part = sheepSettings.sheepParts.length;
     if (data.fair > sheepSettings.sheepFairLevels.length) data.fair = sheepSettings.sheepFairLevels.length;
     if (data.collectorLevel > sheepCollector.length) data.collectorLevel = sheepCollector.length;
+    if (data.collectorTimeLevel > sheepCollector.length) data.collectorTimeLevel = sheepCollector.length;
 
     return data;
   }
@@ -44,6 +45,7 @@ export default class DataValidator {
     if (data.part > chickenSettings.chickenParts.length) data.part = chickenSettings.chickenParts.length;
     if (data.fair > chickenSettings.chickenFairLevels.length) data.fair = chickenSettings.chickenFairLevels.length;
     if (data.collectorLevel > chickenCollector.length) data.collectorLevel = chickenCollector.length;
+    if (data.collectorTimeLevel > chickenCollector.length) data.collectorTimeLevel = chickenCollector.length;
 
     return data;
   }
@@ -56,6 +58,7 @@ export default class DataValidator {
     if (data.part > cowSettings.cowParts.length) data.part = cowSettings.cowParts.length;
     if (data.fair > cowSettings.cowFairLevels.length) data.fair = cowSettings.cowFairLevels.length;
     if (data.collectorLevel > cowCollector.length) data.collectorLevel = cowCollector.length;
+    if (data.collectorTimeLevel > cowCollector.length) data.collectorTimeLevel = cowCollector.length;
 
     return data;
   }

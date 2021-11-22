@@ -34,6 +34,7 @@ import ConfirmSpendDiamonds from './../../components/modal/system/ConfirmSpendDi
 import RecallWindow from './../../components/modal/system/RecallWindow';
 import ConfirmBuyAvatar from '../../components/modal/system/ConfirmBuyAvatar';
 import MultiplyIncomeAd from './../../components/modal/system/MultiplyIncomeAd';
+import ImproveCollectorWindowNew from './../../components/modal/system/ImproveCollectorWindowNew';
 
 function systemWindow(): void {
   let height:number = 0;
@@ -146,7 +147,10 @@ function systemWindow(): void {
 
     case 10: // окно улучшения собирателя
       
-      if (this.state.farm !== 'Unicorn') new ImproveCollectorWindow(this);
+      if (this.state.farm !== 'Unicorn') {
+        if (this.state.user.test !== 'B') new ImproveCollectorWindow(this);
+        else new ImproveCollectorWindowNew(this);
+      }
       else new ImproveCollectorEventWindow(this)
       break;
     
