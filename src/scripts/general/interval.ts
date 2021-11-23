@@ -545,14 +545,18 @@ function checkStorageSheep(): boolean {
   if (this.state.farm === 'Sheep') {
     for (const territory of this.territories.children.entries) {
       if (territory.territoryType === 5) {
-        const max: number = this.state.sheepSettings.territoriesSheepSettings.find(el => el.improve === territory.improve).storage;
+        let max: number = this.state.sheepSettings.territoriesSheepSettings.find(el => el.improve === territory.improve).storage;
+        if (Utils.checkTestB(this.state)) max = this.state.sheepSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
+
         check.push(territory.volume >= max); 
       }
     }
   } else {
     for (const territory of this.state.sheepTerritories) {
       if (territory.type === 5) {
-        const max: number = this.state.sheepSettings.territoriesSheepSettings.find(el => el.improve === territory.improve).storage;
+        let max: number = this.state.sheepSettings.territoriesSheepSettings.find(el => el.improve === territory.improve).storage;
+        if (Utils.checkTestB(this.state)) max = this.state.sheepSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
+
         check.push(territory.volume >= max); 
       }
     }
@@ -565,14 +569,18 @@ function checkStorageChicken(): boolean {
   if (this.state.farm === 'Chicken') {
     for (const territory of this.territories.children.entries) {
       if (territory.territoryType === 5) {
-        const max: number = this.state.chickenSettings.territoriesChickenSettings.find(el => el.improve === territory.improve).storage;
+        let max: number = this.state.chickenSettings.territoriesChickenSettings.find(el => el.improve === territory.improve).storage;
+        if (Utils.checkTestB(this.state)) max = this.state.chickenSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
+
         check.push(territory.volume >= max); 
       }
     }
   } else {
     for (const territory of this.state.chickenTerritories) {
       if (territory.type === 5) {
-        const max: number = this.state.chickenSettings.territoriesChickenSettings.find(el => el.improve === territory.improve).storage;
+        let max: number = this.state.chickenSettings.territoriesChickenSettings.find(el => el.improve === territory.improve).storage;
+        if (Utils.checkTestB(this.state)) max = this.state.chickenSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
+
         check.push(territory.volume >= max); 
       }
     }

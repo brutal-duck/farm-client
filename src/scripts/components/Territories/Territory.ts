@@ -168,6 +168,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   }
 
   public createRepositorySprite(): void {
+    if (Utils.checkTestB(this.scene.state)) return this.createRepositorySpriteTestB();
     if (!this.improveText) {
       this.createImproveText();
     }
@@ -192,6 +193,57 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       max = this.scene.state.sheepSettings.territoriesSheepSettings[this.improve - 1].storage;
     } else if (this.scene.state.farm === 'Chicken') {
       max = this.scene.state.chickenSettings.territoriesChickenSettings[this.improve - 1].storage;
+    } else if (this.scene.state.farm === 'Cow') {
+      max = this.scene.state.cowSettings.cowFactorySettings[this.improve - 1].lotSize * this.scene.state.storageMultiply;
+    }
+
+    let type: string = `${farm}-repository-${stage}-`;
+
+    if (this.volume > 0) {
+      percent = this.volume / (max / 100);
+    }
+    if (percent < 25) {
+      type += 1;
+    } else if (percent >= 25 && percent < 50) {
+      type += 2;
+    } else if (percent >= 50 && percent < 75) {
+      type += 3;
+    } else {
+      type += 4;
+    }
+
+    this.repository = this.scene.add.sprite(this.x + 120, this.y + 240, type)
+      .setDepth(this.y + 1)
+      .setOrigin(0.5, 1);
+    
+    this.setPositionImproveText();
+  }
+
+  private createRepositorySpriteTestB(): void {
+    if (!this.improveText) {
+      this.createImproveText();
+    }
+    const farm: string = this.scene.state.farm.toLowerCase();
+    this.setTexture(`${farm}-repository`);
+
+    let stage: number = 1;
+    if (this.improve >= 5) {
+      stage = 2;
+      if (this.improve >= 10) {
+        stage = 3
+        if (this.improve >= 15) {
+          stage = 4
+        }
+      }
+    }
+      
+    let percent: number = 0;
+    let max: number;   
+
+    if (this.scene.state.farm === 'Sheep') {
+      max = this.scene.state.sheepSettings.partSettings[this.improve - 1].territory.maxRepositoryVolume;
+    } else if (this.scene.state.farm === 'Chicken') {
+      max = this.scene.state.chickenSettings.partSettings[this.improve - 1].territory.maxRepositoryVolume;
     } else if (this.scene.state.farm === 'Cow') {
       max = this.scene.state.cowSettings.cowFactorySettings[this.improve - 1].lotSize * this.scene.state.storageMultiply;
     }
@@ -448,6 +500,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   }
 
   public changeSprite(): void {
+    if (Utils.checkTestB(this.scene.state)) return this.changeSpriteTestB();
     let farm: string = this.scene.state.farm.toLowerCase();
     if ((this.territoryType === 2 || this.territoryType === 3 || this.territoryType === 5) && !this.improveText) {
       this.createImproveText();
@@ -535,7 +588,97 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     
   }
 
+  private changeSpriteTestB(): void {
+    let farm: string = this.scene.state.farm.toLowerCase();
+    if ((this.territoryType === 2 || this.territoryType === 3 || this.territoryType === 5) && !this.improveText) {
+      this.createImproveText();
+    }
+
+    this.setPositionImproveText();
+
+    if (this.improveText?.text !== String(this.improve)) {
+      this.improveText?.setText(String(this.improve));
+    }
+  
+    let sprite: string = this.texture.key;
+    let stage: number = 1;
+    if (this.improve >= 5) {
+      stage = 2;
+      if (this.improve >= 10) {
+        stage = 3
+        if (this.improve >= 15) {
+          stage = 4
+        }
+      }
+    }
+  
+    if (this.territoryType === 2) {
+      sprite = `${farm}-grass${stage}-`
+
+      if (this.volume < 250) {
+        sprite += 1;
+      } else if (this.volume >= 250 && this.volume < 500) {
+        sprite += 2;
+      } else if (this.volume >= 500 && this.volume < 750) {
+        sprite += 3;
+      } else if (this.volume >= 750) {
+        sprite += 4;
+      }
+    }
+  
+    if (this.territoryType === 3) {
+      sprite = `${farm}-water${stage}-`
+  
+      if (this.volume < 250) {
+        sprite += 1;
+      } else if (this.volume >= 250 && this.volume < 500) {
+        sprite += 2;
+      } else if (this.volume >= 500 && this.volume < 750) {
+        sprite += 3;
+      } else if (this.volume >= 750) {
+        sprite += 4;
+      }
+    }
+  
+    if (this.territoryType === 5) {
+      
+      let max: number;
+      
+      if (this.scene.state.farm === 'Sheep') {
+        max = this.scene.state.sheepSettings.partSettings[this.improve - 1].territory.maxRepositoryVolume;
+      } else if (this.scene.state.farm === 'Chicken') {
+        max = this.scene.state.chickenSettings.partSettings[this.improve - 1].territory.maxRepositoryVolume;
+      } else if (this.scene.state.farm === 'Cow') {
+        max = this.scene.state.cowSettings.cowFactorySettings[this.improve - 1].lotSize * this.scene.state.storageMultiply;
+      }
+      
+      const percent: number = this.volume > 0 ? this.volume / (max / 100) : 0;
+      sprite = `${farm}-repository-${stage}-`;
+
+      if (percent < 25) {
+        sprite += 1;
+      } else if (percent >= 25 && percent < 50) {
+        sprite += 2;
+      } else if (percent >= 50 && percent < 75) {
+        sprite += 3;
+      } else {
+        sprite += 4;
+      }
+      if (this.repository?.texture?.key !== sprite) {
+        this.repository?.setTexture(sprite);
+      }
+    }
+    
+    if (this.texture?.key !== sprite && this.territoryType !== 5) {
+      this.setTexture(sprite);
+    } 
+
+    
+  }
+
   public fairLevelUp(): void {
+    if (Utils.checkTestB(this.scene.state)) return this.fairLevelUpTestB();
+
     const farm = this.scene.state.farm.toLowerCase();
     const fairs: IfairLevel[] = this.scene.state[`${farm}Settings`][`${farm}FairLevels`];
     const user: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
@@ -583,6 +726,41 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
             this.openConvertor(count, diamonds, 1);
           }
         }
+      }
+    }
+  }
+  
+  private fairLevelUpTestB(): void {
+    const farm = this.scene.state.farm;
+    const farmUser: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${farm}`];
+    const updateAnimalBuy = (): void => {
+      const barsScene = this.scene.game.scene.getScene(`${farm}Bars`) as BarsScene;
+      barsScene.animalBuy.setTexture(`${farm}-buy-icon-${this.scene.maxBreedForBuy()}`);
+      barsScene.updateAnimalPrice();
+    };
+    const fairLevel: number = farmUser.fair;
+    const partSettings: IpartSettings[] = this.scene.state[`${farm.toLowerCase()}Settings`].partSettings;
+    const nextFair: IpartSettings = partSettings[fairLevel];
+
+    if (nextFair && farmUser.fair < partSettings.length) {
+      if (farmUser.money >= nextFair.territory.improveFairPrice) {
+        farmUser.money -= nextFair.territory.improveFairPrice;
+        farmUser.fair++;
+        updateAnimalBuy();
+        this.scene.tryTask(7, farmUser.fair);
+        this.scene.tryClanTask(11);
+        this.scene.time.addEvent({ delay: 200, callback: (): void => {
+          this.levelText?.setText(String(farmUser.fair));
+          Stars.create(this.scene, { x: this.x + 120, y: this.y + 120 });
+        }, callbackScope: this, loop: false });
+
+        this.scene.state.amplitude.logAmplitudeEvent('fair_up', {
+          level: farmUser.fair,
+        });
+      } else {
+        const count: number = nextFair.territory.improveFairPrice - farmUser.money;
+        const diamonds: number = this.scene.convertMoney(count);
+        this.openConvertor(count, diamonds, 1);
       }
     }
   }
@@ -789,9 +967,26 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   }
 
   private checkAndSetRepositoryAnim(): void {
+    if (Utils.checkTestB(this.scene.state)) return this.checkAndSetRepositoryAnimTestB();
     if (this.territoryType === 5) {
       let max: number = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`territories${this.scene.state.farm}Settings`]
         .find(data => data.improve === this.improve).storage;
+      if (this.scene.state.farm === 'Cow') {
+        max = this.scene.state.cowSettings.cowFactorySettings.find(data => data.improve === this.improve).lotSize * this.scene.state.storageMultiply;
+      }
+      if (this.volume >= max && !this.repositoryAnim) {
+        this.createFullStorageAnim();
+      } else if (this.volume < max && this.repositoryAnim) {
+        this.repository.setPosition(this.x + 120, this.y + 240);
+        this.repositoryAnim.remove();
+        this.repositoryAnim = null;
+      }
+    }
+  }
+ 
+  private checkAndSetRepositoryAnimTestB(): void {
+    if (this.territoryType === 5) {
+      let max: number = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].partSettings[this.improve - 1].territory.maxRepositoryVolume;
       if (this.scene.state.farm === 'Cow') {
         max = this.scene.state.cowSettings.cowFactorySettings.find(data => data.improve === this.improve).lotSize * this.scene.state.storageMultiply;
       }

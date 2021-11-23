@@ -30,7 +30,7 @@ export default class FarmWaterWindowNew {
       };
       
       const improveText: string = this.scene.state.lang.improveToLevel.replace('$1', this.scene.state.territory.improve + 1);
-      const button = this.scene.bigButton('green', 'left', -30, improveText, right);
+      const button = this.scene.bigButton('blue', 'left', -30, improveText, right);
       this.scene.clickModalBtn(button, (): void => {
         this.scene.scene.stop();
         this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;

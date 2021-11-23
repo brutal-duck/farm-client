@@ -39,6 +39,7 @@ import ImproveCollectorWindowNew from './../../components/modal/system/ImproveCo
 import Utils from './../../libs/Utils';
 import FarmPastureWindowNew from './../../components/modal/system/FarmPastureWindowNew';
 import FarmWaterWindowNew from './../../components/modal/system/FarmWaterWindowNew';
+import FarmFairWindowNew from './../../components/modal/system/FarmFairWindowNew';
 
 function systemWindow(): void {
   let height:number = 0;
@@ -267,7 +268,8 @@ function chickenTerritory(): void {
       break;
 
     case 4: // ярмарка
-      new FarmFairWindow(this);
+      if (Utils.checkTestB(this.state)) new FarmFairWindowNew(this);
+      else new FarmFairWindow(this);
       break;
 
     case 5: // хранилище яиц
@@ -315,7 +317,8 @@ function cowTerritory(): void {
       break;
 
     case 4: // ярмарка
-      new FarmFairWindow(this);
+      if (Utils.checkTestB(this.state)) new FarmFairWindowNew(this);
+      else new FarmFairWindow(this);
       break;
 
     case 5: // хранилище яиц
@@ -367,7 +370,8 @@ function sheepTerritory(): void {
       break;
 
     case 4: // ярмарка
-      new FarmFairWindow(this);
+      if (Utils.checkTestB(this.state)) new FarmFairWindowNew(this);
+      else new FarmFairWindow(this);
       break;
 
     case 5: // хранилище шерсти

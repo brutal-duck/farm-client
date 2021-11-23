@@ -164,6 +164,7 @@ export default function autoprogress(load: boolean = false): void {
       for (const territory of state.sheepTerritories) {
         if (territory.type === 5) {
           let max: number = state.sheepSettings.territoriesSheepSettings.find((item: IterritoriesSheepSettings) => item.improve === territory.improve).storage;
+          if (Utils.checkTestB(state)) max = state.sheepSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
           if (territory.volume < max) {
             let sheep = sheepWoolcuts.find(data => data.type === wool[i] && data.count > 0);
             if (sheep?.count > 0) sheep.count--;
@@ -188,6 +189,8 @@ export default function autoprogress(load: boolean = false): void {
     for (const territory of state.sheepTerritories) {
       if (territory.type === 5) {
         let max: number = state.sheepSettings.territoriesSheepSettings.find((item: IterritoriesSheepSettings) => item.improve === territory.improve).storage;
+        if (Utils.checkTestB(state)) max = state.sheepSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
+
         if (territory.volume > max) {
           territory.volume = max
         }
@@ -365,6 +368,8 @@ export default function autoprogress(load: boolean = false): void {
         if (state.chickenTerritories[j].type === 5) {
           let territory = state.chickenTerritories[j];
           let max: number = state.chickenSettings.territoriesChickenSettings.find((item: IterritoriesChickenSettings) => item.improve === territory.improve).storage;
+          if (Utils.checkTestB(state)) max = state.chickenSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
+
           if (territory.volume < max && wasCollector > 0) {
             let egg = eggs.find(data => data.id === eggsArr[i].id);
             if (egg.count > 0) egg.count--;
@@ -803,6 +808,8 @@ export default function autoprogress(load: boolean = false): void {
           const territory: SheepTerritory = this.territories.children.entries[j];
           let max: number = this.settings.territoriesSheepSettings.find((item: IterritoriesSheepSettings) => item.improve === territory.improve).storage;
 
+          if (Utils.checkTestB(state)) max = state.sheepSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
+
           if (territory.volume < max) {
 
             let sheep = sheepWoolcuts.find(data => data.type === wool[i] && data.count > 0);
@@ -1009,7 +1016,9 @@ export default function autoprogress(load: boolean = false): void {
       for (let j in this.territories.children.entries) {
         if (this.territories.children.entries[j].territoryType === 5) {
           const territory: ChickenTerritory = this.territories.children.entries[j];
-          const max: number = this.settings.territoriesChickenSettings.find((item: IterritoriesChickenSettings) => item.improve === territory.improve).storage;
+          let max: number = this.settings.territoriesChickenSettings.find((item: IterritoriesChickenSettings) => item.improve === territory.improve).storage;
+          if (Utils.checkTestB(state)) max = state.chickenSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
+
           if (territory.volume < max && wasCollector > 0) {
             const egg = eggs.find(data => data.id === eggsArr[i].id);
             if (egg.count > 0) egg.count--;
