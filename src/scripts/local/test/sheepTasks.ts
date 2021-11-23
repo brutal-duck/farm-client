@@ -1,6 +1,6 @@
-import { TaskType, Task, TerritoryType } from "./types";
+import { TaskType, Task, TerritoryType } from "../tasks/types";
 
-const sheepTasks: Task[] = [
+const testSheepTasks: Task[] = [
   {
     id: '1-1',
     type: TaskType['BUY_ANIMAL'],
@@ -1611,4 +1611,4 @@ const sheepTasks: Task[] = [
   },
 ];
 
-export default sheepTasks;
+export default testSheepTasks;

@@ -13,6 +13,7 @@ import AllTasks from '../tasks';
 import basicSheepTerritories from '../local/sheepTerritories';
 import basicChickenTerritories from '../local/chickenTerritories';
 import basicCowTerritories from '../local/cowTerritories';
+import { Task } from '../local/tasks/types';
 
 
 export default class DataValidator {
@@ -63,7 +64,7 @@ export default class DataValidator {
     return data;
   }
 
-  public static setTaskStatus (farmId: number, resTask: any[]): Itasks[] {
+  public static setTaskStatus(farmId: number, resTask: any[]): Itasks[] {
     const updatedTasks: Itasks[] = [];
     for (const task of AllTasks) if (task.farm === farmId) updatedTasks.push(task);
     for (const usersTask of resTask) {
@@ -71,6 +72,19 @@ export default class DataValidator {
       if (task) {
         task.done = usersTask.done;
         task.got_awarded = usersTask.got_awarded;
+        task.progress = usersTask.progress;
+      }
+    }
+    return updatedTasks;
+  }
+
+  public static setTaskStatusTest(tasks: Task[], resTask: any[]): Itasks[] {
+    const updatedTasks: Itasks[] = [];
+    for (const usersTask of resTask) {
+      const task = tasks.find((task: Task) => task.id === usersTask.task_id);
+      if (task) {
+        task.done = usersTask.done;
+        task.awardTaken = usersTask.got_awarded;
         task.progress = usersTask.progress;
       }
     }

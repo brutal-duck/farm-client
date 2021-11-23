@@ -1,6 +1,7 @@
 import AllTasks from '../tasks';
 import SpeechBubble from '../components/animations/SpeechBuble';
 import clanTasks from '../local/tasks/clanTasks';
+import { Task } from '../local/tasks/types';
 
 // список заданий текущей главы
 function partTasks(): Itasks[] {
@@ -70,6 +71,29 @@ function partTasks(): Itasks[] {
   return partTasks;
   
 }
+
+// function partTasksTestB(): Task[] {
+//   let partTasks: Itasks[] = [];
+//   let tasks: Task[] = [];
+//   let user: IuserSheep | IuserChicken | IuserCow;
+
+//   if (this.state.farm === 'Sheep') {
+
+//     user = this.state.userSheep;
+//     tasks = this.state.sheepTasks;
+
+//   } else if (this.state.farm === 'Chicken') {
+
+//     user = this.state.userChicken;
+//     tasks = this.state.chickenTasks;
+    
+//   } else if (this.state.farm === 'Cow') {
+
+//     user = this.state.userCow;
+//     tasks = this.state.cowTasks;
+    
+//   }
+// }
 
 
 // попытка выполнения задания
