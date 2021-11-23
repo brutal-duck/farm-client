@@ -114,7 +114,7 @@ export default class ImproveCollectorWindowNew {
       const settings: IbigButtonSetting = {
         color: 'green',
         textAlign: 'left',
-        text: String(this.farmUser.collectorTimeLevel + 1),
+        text: this.scene.state.lang.improveToLevel.replace('$1', String(this.farmUser.collectorTimeLevel + 1)),
         right1: timeCost,
       };
       if (Utils.checkSale(this.scene.state, `${this.scene.state.farm.toUpperCase()}_COLLECTOR_IMPROVE`)) {
@@ -148,7 +148,7 @@ export default class ImproveCollectorWindowNew {
       const settings: IbigButtonSetting = {
         color: 'green',
         textAlign: 'left',
-        text: String(this.farmUser.collectorLevel + 1),
+        text: this.scene.state.lang.improveToLevel.replace('$1',String(this.farmUser.collectorLevel + 1)),
         right1: speedCost,
       };
       if (Utils.checkSale(this.scene.state, `${this.scene.state.farm.toUpperCase()}_COLLECTOR_IMPROVE`)) {

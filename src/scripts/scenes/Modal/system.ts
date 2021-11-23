@@ -9,6 +9,7 @@ import DiamondAnimalAd from '../../components/modal/system/DiamondAnimalAd';
 import ImproveCollectorWindow from '../../components/modal/system/ImproveCollectorWindow';
 import ImproveCollectorEventWindow from '../../components/modal/system/ImproveCollectorEventWindow';
 import TerritoryExchangeWindow from '../../components/modal/system/TerritoryExchangeWindow';
+import TerritoryExchangeWindowNew from '../../components/modal/system/TerritoryExchangeWindowNew';
 import ChangeNicknameWindow from '../../components/modal/system/ChangeNicknameWindow';
 import AddEmailWindow from '../../components/modal/system/AddEmailWindow';
 import SupportWindow from '../../components/modal/system/SupportWindow';
@@ -20,6 +21,7 @@ import ImproveFactoryWindow from '../../components/modal/system/ImproveFactoryWi
 import ConfirmSellMilk from '../../components/modal/system/ConfirmSellMilk';
 import ConfirmBuyCooldown from '../../components/modal/system/ConfirmBuyCooldown';
 import BoughtFarmLand from '../../components/modal/system/BoughtFarmLand';
+import BoughtFarmLandNew from '../../components/modal/system/BoughtFarmLandNew';
 import FarmPastureWindow from '../../components/modal/system/FarmPastureWindow';
 import FarmWaterWindow from '../../components/modal/system/FarmWaterWindow';
 import FarmFairWindow from '../../components/modal/system/FarmFairWindow';
@@ -161,7 +163,10 @@ function systemWindow(): void {
     
     case 11: //окно смены территории
     
-      if (this.state.farm !== 'Unicorn') new TerritoryExchangeWindow(this)
+      if (this.state.farm !== 'Unicorn') {
+        if (Utils.checkTestB(this.state)) new TerritoryExchangeWindowNew(this);
+        else new TerritoryExchangeWindow(this);
+      }
       break;
     
     case 12: // Окно смены ника
@@ -249,22 +254,28 @@ function chickenTerritory(): void {
       break;
 
     case 1: // купленная земля
-      new BoughtFarmLand(this);
+      if (Utils.checkTestB(this.state)) new BoughtFarmLandNew(this);
+      else new BoughtFarmLand(this);
       break;
 
     case 2: // пастбище
       if (checkImprove) {
         if (Utils.checkTestB(this.state)) new FarmPastureWindowNew(this);
         else new FarmPastureWindow(this);
-      } else new TerritoryExchangeWindow(this);
+      } else {
+        if (Utils.checkTestB(this.state)) new TerritoryExchangeWindowNew(this);
+        else new TerritoryExchangeWindow(this);
+      }
       break;
       
     case 3: // поилка
       if (checkImprove) {
         if (Utils.checkTestB(this.state)) new FarmWaterWindowNew(this);
         else new FarmWaterWindow(this);
+      } else {
+        if (Utils.checkTestB(this.state)) new TerritoryExchangeWindowNew(this);
+        else new TerritoryExchangeWindow(this);
       }
-      else new TerritoryExchangeWindow(this);
       break;
 
     case 4: // ярмарка
@@ -298,22 +309,28 @@ function cowTerritory(): void {
       break;
 
     case 1: // купленная земля
-      new BoughtFarmLand(this);
+      if (Utils.checkTestB(this.state)) new BoughtFarmLandNew(this);
+      else new BoughtFarmLand(this);
       break;
 
     case 2: // пастбище
       if (checkImprove) {
         if (Utils.checkTestB(this.state)) new FarmPastureWindowNew(this);
         else new FarmPastureWindow(this);
-      } else new TerritoryExchangeWindow(this);
+      } else {
+        if (Utils.checkTestB(this.state)) new TerritoryExchangeWindowNew(this);
+        else new TerritoryExchangeWindow(this);
+      }
       break;
       
     case 3: // поилка
       if (checkImprove) {
         if (Utils.checkTestB(this.state)) new FarmWaterWindowNew(this);
         else new FarmWaterWindow(this);
+      } else {
+        if (Utils.checkTestB(this.state)) new TerritoryExchangeWindowNew(this);
+        else new TerritoryExchangeWindow(this);
       }
-      else new TerritoryExchangeWindow(this);
       break;
 
     case 4: // ярмарка
@@ -347,26 +364,32 @@ function sheepTerritory(): void {
   switch (this.state.territory.territoryType) {
 
     case 0: // территория для покупки
-      new BuyFarmTerritoryWindow(this)
+      new BuyFarmTerritoryWindow(this);
       break;
 
     case 1: // купленная земля
-      new BoughtFarmLand(this)
+      if (Utils.checkTestB(this.state)) new BoughtFarmLandNew(this);
+      else new BoughtFarmLand(this);
       break;
 
     case 2: // пастбище
       if (checkImprove) {
         if (Utils.checkTestB(this.state)) new FarmPastureWindowNew(this);
         else new FarmPastureWindow(this);
-      } else new TerritoryExchangeWindow(this);
+      } else {
+        if (Utils.checkTestB(this.state)) new TerritoryExchangeWindowNew(this);
+        else new TerritoryExchangeWindow(this);
+      }
       break;
       
     case 3: // поилка
       if (checkImprove) {
         if (Utils.checkTestB(this.state)) new FarmWaterWindowNew(this);
         else new FarmWaterWindow(this);
+      } else {
+        if (Utils.checkTestB(this.state)) new TerritoryExchangeWindowNew(this);
+        else new TerritoryExchangeWindow(this);
       }
-      else new TerritoryExchangeWindow(this);
       break;
 
     case 4: // ярмарка

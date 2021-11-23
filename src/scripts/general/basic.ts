@@ -389,6 +389,10 @@ function convertDiamonds(diamonds: number): number {
   const part: number = this.state[`user${this.state.farm}`].part;
   
   let exchange: number = partsSettings.find((item: Ipart) => item.sort === part).exchange;
+  if (Utils.checkTestB(this.state)) {
+    const partSettings: IpartSettings[] = this.state[`${farm}Settings`].partSettings;
+    exchange = partSettings[part - 1].exchange;
+  }
   return exchange *= diamonds;
 }
 
