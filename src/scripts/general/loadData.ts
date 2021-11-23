@@ -209,7 +209,7 @@ export default function loadData(response: AxiosResponse): void {
   state.chickenSettings = chickenSettings;
   state.cowSettings = cowSettings;
 
-  if (state.user.test === 'B') {
+  if (response.data.user.test === 'B') {
     state.sheepSettings.partSettings = sheepPartSettings;
     // state.chickenSettings.partSettings = chickenSettings;
     // state.cowSettings.partSettings = cowSettings;

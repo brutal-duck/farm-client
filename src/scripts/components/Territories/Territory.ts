@@ -589,6 +589,8 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
 
   public improveTerritory(): void {
 
+    if (Utils.checkTestB(this.scene.state)) return this.improveTerritoryTestB();
+
     let user: IuserSheep | IuserChicken | IuserCow;
     let territoriesSettings: any = [];
   
@@ -632,6 +634,27 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
           } else if (settings.improvePastureDiamondPrice) {
             this.diamondImprove(settings.improvePastureDiamondPrice);
           }
+        }
+      }
+    }
+  }
+
+  public improveTerritoryTestB(): void {
+    const user: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
+    const partSettings: IpartSettings[] = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].partSettings;
+    
+    if (this.improve < partSettings.length &&
+      (this.territoryType === 2 ||
+      this.territoryType === 3 ||
+      this.territoryType === 5)) {
+      const settings: IterritoriesPartSettings = partSettings[this.improve].territory;
+      if (user.part >= this.improve) {
+        if (this.territoryType === 5) {
+          const sale = Utils.checkSale(this.scene.state, `${this.scene.state.farm.toUpperCase()}_REPOSITORY_IMPROVE`);
+          const diamondPrice = sale ? Math.floor(settings.improveRepositoryPrice / 2) : settings.improveRepositoryPrice;
+          this.diamondImprove(diamondPrice);
+        } else if (this.territoryType === 2 || this.territoryType === 3) {
+          this.moneyImprove(user, settings.improveTerritoryPrice);
         }
       }
     }

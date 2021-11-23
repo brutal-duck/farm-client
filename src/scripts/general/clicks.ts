@@ -233,7 +233,7 @@ function clickBoostBtn(btn: any, action: any) {
 }
 
 // нажатие на территорию
-function clickTerritory(object: any, action: any): void {
+function clickTerritory(object: any, action: () => void): void {
 
   object.setInteractive();
   let moveCounter: number = 0;
@@ -273,7 +273,7 @@ function clickTerritory(object: any, action: any): void {
 }
 
 // функция нажатия на кнопку с затемнением
-function clickModalBtn(arr: any, action: any) {
+function clickModalBtn(arr: any, action: () => void): void {
 
   let button = arr.btn;
   let title = arr.title;
@@ -549,7 +549,7 @@ function doubleClick(object: any, action: any, maxMoveCounter: number = 3): void
 
 
 // функция нажатия
-function click(object: any, action: any, maxMoveCounter: number = 3): void {
+function click(object: any, action: () => void, maxMoveCounter: number = 3): void {
 
   object.setInteractive();
   let moveCounter: number = 0;

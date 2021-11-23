@@ -55,7 +55,7 @@ export default class Ads {
           app_id: process.env.VK_APP_ID,
           mobile: mobile,
           type: 'rewarded'
-        }, this.scene.VKOnAdsReady, this.scene.VKNoAds);
+        }, this.VKOnAdsReady, this.VKNoAds);
       } else if (this.scene.state.platform === 'ya') {
         this.scene.state.readyAd = true;
       }

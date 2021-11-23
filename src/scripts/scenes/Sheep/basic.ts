@@ -1,5 +1,6 @@
 import { randomString } from '../../general/basic';
 import SpeechBubble from '../../components/animations/SpeechBuble';
+import Utils from './../../libs/Utils';
 
 // расчет баланса фермы
 function balance(): Ibalance {
@@ -119,7 +120,7 @@ function sheepPrice(breed: number) {
     }
 
     insidePrice += price;
-    insideCounter++;
+    if (!Utils.checkTestB(this.state)) insideCounter++;
   }
 
   return {

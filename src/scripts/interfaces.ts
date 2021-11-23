@@ -561,21 +561,23 @@ interface IsheepSettings {
   feedBoostPrice: number;
   partSettings?: IpartSettings[];
 }
+interface IcollectorPartSettings {
+  time: number;
+  improveTimePrice: number;
+  speed: number;
+  imporveSpeedPrice: number;
+}
+interface IterritoriesPartSettings {
+  improveRepositoryPrice: number;
+  improveTerritoryPrice: number;
+  improveFairPrice: number;
+  regeneration: number;
+  cooldown: number;
+  maxRepositoryVolume: number
+};
 interface IpartSettings {
-  collector: {
-    time: number;
-    improveTimePrice: number;
-    speed: number;
-    imporveSpeedPrice: number;
-  };
-  territory: {
-    improveRepositoryPrice: number;
-    improveTerritoryPrice: number;
-    improveFairPrice: number;
-    regeneration: number;
-    cooldown: number;
-    maxRepositoryVolume: number
-  };
+  collector: IcollectorPartSettings;
+  territory: IterritoriesPartSettings;
   exchange: number;
 }
 interface IchickenSettings {

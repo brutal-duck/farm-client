@@ -49,6 +49,7 @@ import ClanTournamentEndWindow from './../../components/modal/clan/ClanTournamen
 import SaleWindow from './../../components/modal/SaleWindow';
 import ReviewWindow from '../../components/modal/ReviewWindow';
 import AvatarsWindow from './../../components/modal/AvatarsWindow';
+import Utils from './../../libs/Utils';
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -289,22 +290,36 @@ class Modal extends Phaser.Scene {
 
       let max: number, count: string, percent: number = 0;
 
-      if (this.state.farm === 'Sheep') {
-
-        max = this.state.sheepSettings.territoriesSheepSettings.find((data: IterritoriesSheepSettings) => data.improve === this.state.territory.improve).storage;
-        count = this.state.lang.countWool;
-
-      } else if (this.state.farm === 'Chicken') {
-
-        max = this.state.chickenSettings.territoriesChickenSettings.find((data: IterritoriesChickenSettings) => data.improve === this.state.territory.improve).storage;
-        count = this.state.lang.countEggs;
-
-      } else if (this.state.farm === 'Cow') {
-
-        max = this.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === this.state.territory.improve).lotSize * this.state.storageMultiply;
-        count = this.state.lang.countMilk;
-
+      if (Utils.checkTestB(this.state)) {
+        if (this.state.farm === 'Sheep') {
+          max = this.state.sheepSettings.partSettings[this.state.territory?.improve - 1].territory.maxRepositoryVolume;
+          count = this.state.lang.countWool;
+        } else if (this.state.farm === 'Chicken') {
+          max = this.state.chickenSettings.partSettings[this.state.territory?.improve - 1].territory.maxRepositoryVolume;
+          count = this.state.lang.countEggs;
+        } else if (this.state.farm === 'Cow') {
+          max = this.state.cowSettings.partSettings[this.state.territory?.improve - 1].territory.maxRepositoryVolume;
+          count = this.state.lang.countMilk;
+        }
+      } else {
+        if (this.state.farm === 'Sheep') {
+  
+          max = this.state.sheepSettings.territoriesSheepSettings.find((data: IterritoriesSheepSettings) => data.improve === this.state.territory.improve).storage;
+          count = this.state.lang.countWool;
+  
+        } else if (this.state.farm === 'Chicken') {
+  
+          max = this.state.chickenSettings.territoriesChickenSettings.find((data: IterritoriesChickenSettings) => data.improve === this.state.territory.improve).storage;
+          count = this.state.lang.countEggs;
+  
+        } else if (this.state.farm === 'Cow') {
+  
+          max = this.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === this.state.territory.improve).lotSize * this.state.storageMultiply;
+          count = this.state.lang.countMilk;
+  
+        }
       }
+
       if (this.state.territory.volume > 0) {
         percent = this.state.territory.volume / (max / 100);
       }

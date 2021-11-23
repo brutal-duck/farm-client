@@ -7,6 +7,7 @@ import Arrow from './../components/animations/Arrow';
 import SpeechBubble from './../components/animations/SpeechBuble';
 import Factory from './../components/Territories/Factory';
 import axios from 'axios';
+import Utils from './../libs/Utils';
 
 function progressTerritoryCooldown (territories: Iterritories[], time: number, farm: string, offline: boolean = false): void {
   for (const territory of territories) {
@@ -253,7 +254,10 @@ function sheepCollectorProgress(sheepCollectorVolume: number): number {
       for (let i in Scene.state.sheepTerritories) {
         const territory: Iterritories = Scene.state.sheepTerritories[i];
         if (territory.type === 5) {
-          const max: number = Scene.state.sheepSettings.territoriesSheepSettings.find((data: IterritoriesSheepSettings) => data.improve === territory.improve).storage;
+          let max: number = Scene.state.sheepSettings.territoriesSheepSettings.find((data: IterritoriesSheepSettings) => data.improve === territory.improve).storage;
+          if (Utils.checkTestB(Scene.state)) {
+            max = Scene.state.sheepSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
+          }
           for (let i: number = 0; i < collectedWool; i += 1) {
             for (let i in Scene.state.sheep) {
               const sheep: Isheep = Scene.state.sheep[i];
@@ -296,7 +300,10 @@ function chickenCollectorProgress(chickenCollectorVolume: number): number {
       for (let i in Scene.state.chickenTerritories) {
         const territory: Iterritories = Scene.state.chickenTerritories[i];
         if (territory.type === 5) {
-          const max: number = Scene.state.chickenSettings.territoriesChickenSettings.find((data: IterritoriesChickenSettings) => data.improve === territory.improve).storage;
+          let max: number = Scene.state.chickenSettings.territoriesChickenSettings.find((data: IterritoriesChickenSettings) => data.improve === territory.improve).storage;
+          if (Utils.checkTestB(Scene.state)) {
+            max = Scene.state.chickenSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
+          }
           if (max > territory.volume) {
             const eggArray: IchickenEgg[] = Scene.state.chickenEggs.filter((el: IchickenEgg) => el.type !== 0);
             if (eggArray.length > 0) {

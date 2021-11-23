@@ -1161,6 +1161,8 @@ export default {
     multiplyIcomeHeader: 'Увелить доход',
     multiplyIcomeText: 'Хотите утроить доход с продажи?',
     triple: 'утроить',
+    maxCollectortTimeLevel: 'Достигнут максимальный уровень времени собирателя',
+    maxCollectorSpeedLevel: 'Достигнут максимальный уровень мощности собирателя',
   },
   en: {
     index: 'en',
@@ -2324,5 +2326,7 @@ export default {
     multiplyIcomeHeader: 'increase income',
     multiplyIcomeText: 'Do you want to triple income from sale?',
     triple: 'triple',
+    maxCollectortTimeLevel: 'Достигнут максимальный уровень времени собирателя',
+    maxCollectorSpeedLevel: 'Достигнут максимальный уровень мощности собирателя',
   },
 };

@@ -24,6 +24,7 @@ import FarmPastureWindow from '../../components/modal/system/FarmPastureWindow';
 import FarmWaterWindow from '../../components/modal/system/FarmWaterWindow';
 import FarmFairWindow from '../../components/modal/system/FarmFairWindow';
 import FarmResourceRepositoryWindow from '../../components/modal/system/FarmResourceRepositoryWindow';
+import FarmResourceRepositoryWindowNew from '../../components/modal/system/FarmResourceRepositoryWindowNew';
 import SheepWindow from '../../components/modal/system/SheepWindow';
 import ChickenWindow from '../../components/modal/system/ChickenWindow';
 import CowWindow from '../../components/modal/system/CowWindow';
@@ -35,6 +36,9 @@ import RecallWindow from './../../components/modal/system/RecallWindow';
 import ConfirmBuyAvatar from '../../components/modal/system/ConfirmBuyAvatar';
 import MultiplyIncomeAd from './../../components/modal/system/MultiplyIncomeAd';
 import ImproveCollectorWindowNew from './../../components/modal/system/ImproveCollectorWindowNew';
+import Utils from './../../libs/Utils';
+import FarmPastureWindowNew from './../../components/modal/system/FarmPastureWindowNew';
+import FarmWaterWindowNew from './../../components/modal/system/FarmWaterWindowNew';
 
 function systemWindow(): void {
   let height:number = 0;
@@ -148,7 +152,7 @@ function systemWindow(): void {
     case 10: // окно улучшения собирателя
       
       if (this.state.farm !== 'Unicorn') {
-        if (this.state.user.test !== 'B') new ImproveCollectorWindow(this);
+        if (!Utils.checkTestB(this.state)) new ImproveCollectorWindow(this);
         else new ImproveCollectorWindowNew(this);
       }
       else new ImproveCollectorEventWindow(this)
@@ -234,7 +238,9 @@ function systemWindow(): void {
 // окно куриной территории
 function chickenTerritory(): void {
   const improve: number = this.state.territory.improve;
-  const checkImprove: boolean = improve < this.state[`${this.state.farm.toLowerCase()}Settings`][`territories${this.state.farm}Settings`].length;
+  let checkImprove: boolean = improve < this.state[`${this.state.farm.toLowerCase()}Settings`][`territories${this.state.farm}Settings`].length;
+  if (Utils.checkTestB(this.state)) checkImprove = improve < this.state[`${this.state.farm.toLowerCase()}Settings`].partSettings.length;
+
   switch (this.state.territory.territoryType) {
 
     case 0: // территория для покупки
@@ -246,12 +252,17 @@ function chickenTerritory(): void {
       break;
 
     case 2: // пастбище
-      if (checkImprove) new FarmPastureWindow(this);
-      else new TerritoryExchangeWindow(this);
+      if (checkImprove) {
+        if (Utils.checkTestB(this.state)) new FarmPastureWindowNew(this);
+        else new FarmPastureWindow(this);
+      } else new TerritoryExchangeWindow(this);
       break;
       
     case 3: // поилка
-      if (checkImprove) new FarmWaterWindow(this);
+      if (checkImprove) {
+        if (Utils.checkTestB(this.state)) new FarmWaterWindowNew(this);
+        else new FarmWaterWindow(this);
+      }
       else new TerritoryExchangeWindow(this);
       break;
 
@@ -260,7 +271,8 @@ function chickenTerritory(): void {
       break;
 
     case 5: // хранилище яиц
-      new FarmResourceRepositoryWindow(this)
+      if (Utils.checkTestB(this.state)) new FarmResourceRepositoryWindowNew(this);
+      else new FarmResourceRepositoryWindow(this);
       break;
 
     default:
@@ -274,7 +286,9 @@ function chickenTerritory(): void {
 // окно коровьей территории
 function cowTerritory(): void {
   const improve: number = this.state.territory.improve;
-  const checkImprove: boolean = improve < this.state[`${this.state.farm.toLowerCase()}Settings`][`territories${this.state.farm}Settings`].length;
+  let checkImprove: boolean = improve < this.state[`${this.state.farm.toLowerCase()}Settings`][`territories${this.state.farm}Settings`].length;
+  if (Utils.checkTestB(this.state)) checkImprove = improve < this.state[`${this.state.farm.toLowerCase()}Settings`].partSettings.length;
+
   switch (this.state.territory.territoryType) {
 
     case 0: // территория для покупки
@@ -286,12 +300,17 @@ function cowTerritory(): void {
       break;
 
     case 2: // пастбище
-      if (checkImprove) new FarmPastureWindow(this);
-      else new TerritoryExchangeWindow(this);
+      if (checkImprove) {
+        if (Utils.checkTestB(this.state)) new FarmPastureWindowNew(this);
+        else new FarmPastureWindow(this);
+      } else new TerritoryExchangeWindow(this);
       break;
       
     case 3: // поилка
-      if (checkImprove) new FarmWaterWindow(this);
+      if (checkImprove) {
+        if (Utils.checkTestB(this.state)) new FarmWaterWindowNew(this);
+        else new FarmWaterWindow(this);
+      }
       else new TerritoryExchangeWindow(this);
       break;
 
@@ -300,7 +319,8 @@ function cowTerritory(): void {
       break;
 
     case 5: // хранилище яиц
-      new FarmResourceRepositoryWindow(this)
+      if (Utils.checkTestB(this.state)) new FarmResourceRepositoryWindowNew(this);
+      else new FarmResourceRepositoryWindow(this);
       break;
 
     case 8: // хранилище яиц
@@ -319,7 +339,8 @@ function cowTerritory(): void {
 // окно овечей территории
 function sheepTerritory(): void {
   const improve: number = this.state.territory.improve;
-  const checkImprove: boolean = improve < this.state[`${this.state.farm.toLowerCase()}Settings`][`territories${this.state.farm}Settings`].length;
+  let checkImprove: boolean = improve < this.state[`${this.state.farm.toLowerCase()}Settings`][`territories${this.state.farm}Settings`].length;
+  if (Utils.checkTestB(this.state)) checkImprove = improve < this.state[`${this.state.farm.toLowerCase()}Settings`].partSettings.length;
   switch (this.state.territory.territoryType) {
 
     case 0: // территория для покупки
@@ -331,12 +352,17 @@ function sheepTerritory(): void {
       break;
 
     case 2: // пастбище
-      if (checkImprove) new FarmPastureWindow(this);
-      else new TerritoryExchangeWindow(this);
+      if (checkImprove) {
+        if (Utils.checkTestB(this.state)) new FarmPastureWindowNew(this);
+        else new FarmPastureWindow(this);
+      } else new TerritoryExchangeWindow(this);
       break;
       
     case 3: // поилка
-      if (checkImprove) new FarmWaterWindow(this);
+      if (checkImprove) {
+        if (Utils.checkTestB(this.state)) new FarmWaterWindowNew(this);
+        else new FarmWaterWindow(this);
+      }
       else new TerritoryExchangeWindow(this);
       break;
 
@@ -345,7 +371,8 @@ function sheepTerritory(): void {
       break;
 
     case 5: // хранилище шерсти
-      new FarmResourceRepositoryWindow(this);
+      if (Utils.checkTestB(this.state)) new FarmResourceRepositoryWindowNew(this);
+      else new FarmResourceRepositoryWindow(this);
       break;
 
     default:

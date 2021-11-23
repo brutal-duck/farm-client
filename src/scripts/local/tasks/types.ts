@@ -34,10 +34,10 @@ enum TerritoryType {
   WATER = 3,
   REPOSITORY = 5,
   FACTORY = 8,
-}
+};
 
 type Task = {
-  id: `${number}-${number}`;
+  id: string;
   type: TaskType; 
   state: number;
   done: 0 | 1;

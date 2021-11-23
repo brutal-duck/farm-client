@@ -268,6 +268,8 @@ function improveCollector(): void {
 // бесплатный собиратель
 function freeCollector(type: number = 1): void {
 
+  if (Utils.checkTestB(this.state)) return freeCollectorTestB.bind(this)(type);
+  
   let user: IuserSheep | IuserChicken | IuserCow;
   let settings: IcollectorSettings[];
   let doubledСollectorPrice: number;
