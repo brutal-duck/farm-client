@@ -78,15 +78,20 @@ export default class DataValidator {
     return updatedTasks;
   }
 
-  public static setTaskStatusTest(tasks: Task[], resTask: any[]): Itasks[] {
-    const updatedTasks: Itasks[] = [];
-    for (const usersTask of resTask) {
-      const task = tasks.find((task: Task) => task.id === usersTask.task_id);
-      if (task) {
-        task.done = usersTask.done;
-        task.awardTaken = usersTask.got_awarded;
-        task.progress = usersTask.progress;
+  public static setTaskStatusTest(tasks: Task[], resTask: any[]): Task[] {
+    let updatedTasks: Task[] = [];
+    if (resTask.length > 0) {
+      for (const usersTask of resTask) {
+        const task = tasks.find((task: Task) => task.id === usersTask.task_id);
+        if (task) {
+          task.done = usersTask.done;
+          task.awardTaken = usersTask.got_awarded;
+          task.progress = usersTask.progress;
+        }
+        updatedTasks.push(task);
       }
+    } else {
+      updatedTasks = tasks;
     }
     return updatedTasks;
   }

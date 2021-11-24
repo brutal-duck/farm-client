@@ -463,7 +463,7 @@ export default function loadData(response: AxiosResponse): void {
   state.userCow = DataValidator.validateUserCow(userCow);
 
   if (Utils.checkTestB(state)) {
-    state.sheepTasks = DataValidator.setTaskStatusTest(testSheepTasks, response.data.user.sheep_tasks);
+    state.sheepTasks = DataValidator.setTaskStatusTest(testSheepTasks, response.data.user.sheep_tasks) as unknown as Itasks[];
     state.chickenTasks = DataValidator.setTaskStatus(2, response.data.user.chicken_tasks);
     state.cowTasks = DataValidator.setTaskStatus(3, response.data.user.cow_tasks);
   } else {

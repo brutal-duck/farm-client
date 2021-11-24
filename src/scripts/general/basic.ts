@@ -20,6 +20,7 @@ import Sheep from './../scenes/Sheep/Main';
 import Cow from './../scenes/Cow/Main';
 import Territory from './../components/Territories/Territory';
 import Factory from './../components/Territories/Factory';
+import { Task } from '../local/tasks/types.js';
 
 // рандомное число
 function random(min: number, max: number): number {
@@ -570,6 +571,7 @@ function donePart(): void {
 
 // забрать награду за задание
 function pickUpTaskReward(id: number): void {
+  if (Utils.checkTestB(this.state)) return pickUpTaskRewardTestB.bind(this)(String(id));
   let tasks: Itasks[] = [];
 
   if (this.state.farm === 'Sheep') tasks = this.state.sheepTasks;
@@ -593,6 +595,25 @@ function pickUpTaskReward(id: number): void {
     this.state.user.xp += task.xp;
     task.got_awarded = 1;
   }
+}
+
+function pickUpTaskRewardTestB(id: string): void {
+  const tasks: Task[] = this.state[`${this.state.farm.toLowerCase()}Tasks`];
+  const task = tasks.find((data) => data.id === id);
+  if (!task || task.done === 0 || task.awardTaken === 1) return;
+
+  if (task.awardType === 'diamond') {
+    this.state.user.diamonds += task.award;
+    this.state.amplitude.logAmplitudeEvent('diamonds_get', {
+      type: 'task_award',
+      count: task.award,
+    });
+  } else {
+    this.state.userSheep.money += task.award;
+  }
+
+  task.awardTaken = 1;
+  this.autosave();
 }
 
 // проверка подключения к интернету

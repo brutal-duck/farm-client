@@ -649,6 +649,7 @@ interface Itasks {
   type: number;
   xp: number;
   farm: number;
+  award?: number;
 }
 interface IclanTask {
   id: number;

@@ -132,7 +132,7 @@ export default class BoughtFarmLand {
         this.scene.scene.restart(this.scene.state);
       }
     } else {
-      let price = territorySettings.improveTerritoryPrice;
+      let price = Math.round(territorySettings.improveTerritoryPrice / 100 * 30);
       if (this.scene.state.farm === 'Sheep' && farmUser.tutorial < 100) {
         price = 0;
       }

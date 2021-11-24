@@ -6,6 +6,7 @@ import Wool from '../../components/Resource/Wool';
 import SpeechBubble from '../../components/animations/SpeechBuble';
 import Utils from './../../libs/Utils';
 import SheepTerritory from './../../components/Territories/SheepTerritory';
+import { TaskType } from '../../local/tasks/types';
 
 
 // телепортация овец на свободные территории
@@ -656,7 +657,7 @@ function collectWool(sheep: any, manualСollect: boolean = false, anim: boolean 
 function sellWool(): void {
   if (this.state.territory) {
     if (this.state.territory.territoryType === 5 && this.state.territory.money > 0) {
-      this.tryTask(20, 0);
+      this.tryTask(TaskType['SELL_RESOURCE'], 0, this.state.territory.volume);
       this.tryClanTask(2);
 
       this.state.userSheep.money += this.state.territory.money;

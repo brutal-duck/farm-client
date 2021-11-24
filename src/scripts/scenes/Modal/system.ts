@@ -17,6 +17,7 @@ import RegistrationWindow from '../../components/modal/system/RegistrationWindow
 import CurrencyConvertorWindow from '../../components/modal/system/CurrencyConvertorWindow';
 import MessageWindow from '../../components/modal/system/MessageWindow';
 import BuyFarmTerritoryWindow from '../../components/modal/system/BuyFarmTerritoryWindow';
+import BuyFarmTerritoryWindowNew from '../../components/modal/system/BuyFarmTerritoryWindowNew';
 import ImproveFactoryWindow from '../../components/modal/system/ImproveFactoryWindow';
 import ConfirmSellMilk from '../../components/modal/system/ConfirmSellMilk';
 import ConfirmBuyCooldown from '../../components/modal/system/ConfirmBuyCooldown';
@@ -250,7 +251,8 @@ function chickenTerritory(): void {
   switch (this.state.territory.territoryType) {
 
     case 0: // территория для покупки
-      new BuyFarmTerritoryWindow(this)  
+      if (Utils.checkTestB(this.state)) new BuyFarmTerritoryWindowNew(this);
+      else new BuyFarmTerritoryWindow(this); 
       break;
 
     case 1: // купленная земля
@@ -305,7 +307,8 @@ function cowTerritory(): void {
   switch (this.state.territory.territoryType) {
 
     case 0: // территория для покупки
-      new BuyFarmTerritoryWindow(this)
+      if (Utils.checkTestB(this.state)) new BuyFarmTerritoryWindowNew(this);
+      else new BuyFarmTerritoryWindow(this); 
       break;
 
     case 1: // купленная земля
@@ -364,7 +367,8 @@ function sheepTerritory(): void {
   switch (this.state.territory.territoryType) {
 
     case 0: // территория для покупки
-      new BuyFarmTerritoryWindow(this);
+      if (Utils.checkTestB(this.state)) new BuyFarmTerritoryWindowNew(this);
+      else new BuyFarmTerritoryWindow(this); 
       break;
 
     case 1: // купленная земля

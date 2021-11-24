@@ -9,6 +9,7 @@ import FadeOut from './../animations/FadeOut';
 import Utils from './../../libs/Utils';
 import SheepBars from './../../scenes/Sheep/SheepBars';
 import BarsScene from '../Scenes/BarsScene';
+import { TaskType } from '../../local/tasks/types';
 
 export default class Territory extends Phaser.Physics.Arcade.Sprite {
   public scene: Cow | Sheep | Chicken;
@@ -293,6 +294,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   }
 
   public buyTerritory(): void {
+    if (Utils.checkTestB(this.scene.state)) return this.buyTerritoryTestB();
     const farm: string = this.scene.state.farm.toLowerCase();
     const user: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
     const territoriesPrice: IterritoriesPrice[] = this.scene.state[`${farm}Settings`][`territories${this.scene.state.farm}Price`];
@@ -319,6 +321,35 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
+  public buyTerritoryTestB(): void {
+    const farm: string = this.scene.state.farm.toLowerCase();
+    const farmUser: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
+    const territoriesPrice: IterritoriesPrice[] = this.scene.state[`${farm}Settings`][`territories${this.scene.state.farm}Price`];
+    const settings: IterritoriesPrice = territoriesPrice.find((data: IterritoriesPrice) => data.block === this.block && data.position === this.position);
+
+    if (farmUser.part >= settings.unlock && this.territoryType === 0) {
+      // 70% от суммы покупки
+      const partSettings: IpartSettings[] = this.scene.state[`${farm}Settings`].partSettings;
+      const terrSettings: IterritoriesPartSettings = partSettings[farmUser.part - 1].territory;
+      const price = Math.round((terrSettings.improveTerritoryPrice / 100) * 70);
+
+      if (farmUser.money >= price) {
+        this.scene.state.amplitude.logAmplitudeEvent('buy_territory', {
+          block: this.block,
+          position: this.position,
+        });
+
+        farmUser.money -= price;
+        this.setTerritoryUnlockCooldown(1);
+        this.scene.tryClanTask(14);
+      } else {
+        const count: number = price - farmUser.money;
+        const diamonds: number = this.scene.convertMoney(count);
+        this.openConvertor(count, diamonds, 1);
+      }
+    }
+  }
+
   public setTerritoryUnlockCooldown(type: number): void {
     if (Utils.checkTestB(this.scene.state)) return this.setTerritoryUnlockCooldownTestB(type);
     const settings: IterritoriesPrice[] = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`territories${this.scene.state.farm}Price`];
@@ -337,11 +368,12 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     const settings: IpartSettings[] = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].partSettings;
     const farmUser: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
     const foundSettings: IterritoriesPartSettings = settings[farmUser.part - 1].territory;
-    const cooldown = foundSettings.cooldown * 60;
+    const cooldown = Math.round(foundSettings.cooldown * 60);
     const time = type === 1 ? cooldown : Math.round(cooldown / 4);
     this.cooldown = time;
     this.boughtType = type;
     this.bought = true;
+    if (type === 1) this.scene.tryTask(5, 1);
     this.cooldownSprite = new CooldownSprite(this);
   }
 
@@ -468,7 +500,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       this.scene.state.exchangeTerritory === 3 ||
       this.scene.state.exchangeTerritory === 5
     ) {
-
       const exchangePriceCoins = Math.round(currentPartSettings.territory.improveTerritoryPrice / 100 * 30);
       const exchangePriceDiamonds = currentPartSettings.territory.improveRepositoryPrice;
   
@@ -891,8 +922,10 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
           const sale = Utils.checkSale(this.scene.state, `${this.scene.state.farm.toUpperCase()}_REPOSITORY_IMPROVE`);
           const diamondPrice = sale ? Math.floor(settings.improveRepositoryPrice / 2) : settings.improveRepositoryPrice;
           this.diamondImprove(diamondPrice);
+          this.checkAllTerritoriesIsMaxImproveLvlTask();
         } else if (this.territoryType === 2 || this.territoryType === 3) {
           this.moneyImprove(user, settings.improveTerritoryPrice);
+          this.checkAllTerritoriesIsMaxImproveLvlTask();
         }
       }
     }
@@ -1015,6 +1048,14 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       this.openConvertor(count, diamonds, 2);
     }
   };
+
+  private checkAllTerritoriesIsMaxImproveLvlTask(): void {
+    let part = this.scene.state[`user${this.scene.state.farm}`].part
+    let availableTerritories: number = part === 20 ? 21 : part + 2;
+    const farmTerritories = this.scene.territories.children.entries as Territory[];
+    const territories: Territory[] = farmTerritories.filter((el: Territory) => (el.territoryType === 5 || el.territoryType === 2 || el.territoryType === 3) && el.improve === part)
+    this.scene.tryTask(TaskType['IMPROVE_ALL_TERRITORY'], availableTerritories, 0, territories.length);
+  }
 
   private createFullStorageAnim(): void {
     this.repositoryAnim = this.scene.tweens.add({

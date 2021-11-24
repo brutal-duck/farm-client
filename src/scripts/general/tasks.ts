@@ -1,10 +1,14 @@
 import AllTasks from '../tasks';
 import SpeechBubble from '../components/animations/SpeechBuble';
 import clanTasks from '../local/tasks/clanTasks';
-import { Task } from '../local/tasks/types';
+import { Task, TaskType, TerritoryType } from '../local/tasks/types';
+import Territory from './../components/Territories/Territory';
+import BarsScene from './../components/Scenes/BarsScene';
+import Utils from './../libs/Utils';
 
 // список заданий текущей главы
 function partTasks(): Itasks[] {
+  if (Utils.checkTestB(this.state))return partTasksTestB.bind(this)();
 
   let partTasks: Itasks[] = [];
   let tasks: Itasks[] = [];
@@ -72,32 +76,26 @@ function partTasks(): Itasks[] {
   
 }
 
-// function partTasksTestB(): Task[] {
-//   let partTasks: Itasks[] = [];
-//   let tasks: Task[] = [];
-//   let user: IuserSheep | IuserChicken | IuserCow;
+function partTasksTestB(): Task[] {
+  const partTasks: Task[] = [];
+  const tasks: Task[] = this.state[`${this.state.farm.toLowerCase()}Tasks`];
+  const farmUser: IuserSheep | IuserChicken | IuserCow = this.state[`user${this.state.farm}`];
+  const { part, collectorTimeLevel } = farmUser;
 
-//   if (this.state.farm === 'Sheep') {
+  tasks.forEach(task => {
+    const [ taskPart ] = task.id.split('-').map(el => Number(el));
+    if (task.type === TaskType['IMPROVE_COLLECTOR']) task.progress = collectorTimeLevel;
+    if (part === taskPart) partTasks.push(task);
+  });
 
-//     user = this.state.userSheep;
-//     tasks = this.state.sheepTasks;
-
-//   } else if (this.state.farm === 'Chicken') {
-
-//     user = this.state.userChicken;
-//     tasks = this.state.chickenTasks;
-    
-//   } else if (this.state.farm === 'Cow') {
-
-//     user = this.state.userCow;
-//     tasks = this.state.cowTasks;
-    
-//   }
-// }
+  return partTasks;
+}
 
 
 // попытка выполнения задания
 function tryTask(type: number, state: number, count: number = 1, currentProgress?: number): void {
+  if (Utils.checkTestB(this.state)) return tryTaskTestB.bind(this)(type, state, count, currentProgress);
+
   let part: number;
   if (this.state.farm === 'Sheep') part = this.state.userSheep.part;
   else if (this.state.farm === 'Chicken') part = this.state.userChicken.part;
@@ -147,10 +145,52 @@ function tryTask(type: number, state: number, count: number = 1, currentProgress
   }
 }
 
+function tryTaskTestB(type: number, state: number, count: number = 1, currentProgress?: number): void {
+  const part: number = this.state[`user${this.state.farm}`].part;
+
+  const tasks: Task[] = this.partTasks();
+  const task: Task = tasks.find(data => data.type === type);
+  
+  if (!task || task.done === 1) return;
+
+  const checkDoneTask = (): void => {
+    if (task.progress >= task.count) {
+      task.done = 1;
+      this.tryClanTask(16);
+      this.state.amplitude.logAmplitudeEvent('task_done', {
+        task_id: task.id,
+        part: part,
+      });
+    }
+    this.game.scene.keys[this.state.farm + 'Bars'].setCurrentPartProgress();
+  }
+
+  const isImproveTerritoryTask = task.type === TaskType['IMPROVE_FACTORY'] 
+    || task.type === TaskType['IMPROVE_PASTURE'] 
+    || task.type === TaskType['IMPROVE_WATER'] 
+    || task.type === TaskType['IMPROVE_REPOSITORY'];
+    if (!currentProgress) {
+      const isNullState = task.state === 0;
+      const checkState = task.state === state || isNullState || (isImproveTerritoryTask && task.state <= state);
+    if (task.progress < task.count && checkState) {
+      task.progress += count;
+      checkDoneTask()
+    }
+  } else {
+    task.progress = currentProgress;
+    checkDoneTask();
+  }
+
+  const isCountTask = task.type === TaskType['TAKE_COLLECTOR']
+  || task.type === TaskType['TAKE_FEED_BOOST']
+  || task.type === TaskType['TAKE_HERD_BOOST'];
+  if (isCountTask) checkDoneTask();
+}
 
 // имя и иконка задания
 function getTaskData(task: Itasks): ItaskData {
-  
+  if (Utils.checkTestB(this.state)) return getTaskDataTestB.bind(this)(task);
+  if (!task) return;
   let num: number;
 
   switch (task.type) {
@@ -210,9 +250,74 @@ function getTaskData(task: Itasks): ItaskData {
 
 }
 
+function getTaskDataTestB(task: Task): ItaskData {
+  if (!task) return;
+  
+  let num: number;
+
+  switch (task.type) {
+    case TaskType['BUY_ANIMAL']:
+      if (task.state === 0) num = 17;
+      else num = task.state;
+      break;
+    case TaskType['MERGE_ANIMAL']:
+      if (task.state === 0) num = 20;
+      else num = task.state;
+      break;
+    case TaskType['TAKE_COLLECOTR']: num = 16; break;
+    case TaskType['GET_ANIMAL']:
+      if (task.state === 0) num = 17;
+      else num = task.state;
+      break;
+    case TaskType['BUY_TERRITORY']:
+      if (task.state === TerritoryType['PASTURE']) num = 25;
+      else if (task.state === TerritoryType['WATER']) num = 26;
+      else if (task.state === TerritoryType['RESPOSITORY']) num = 27;
+      else if (task.state === TerritoryType['FACTORY']) num = 37;
+      else num = 29;
+      break;
+    case TaskType['COLLECT_MONEY']: num = 15; break;
+    case TaskType['IMPROVE_FAIR']: num = 22; break;
+    case TaskType['IMPROVE_PASTURE']: num = 24; break;
+    case TaskType['IMPROVE_WATER']: num = 23; break;
+    case TaskType['SAVE_PROGRESS']: num = 19; break;
+    case TaskType['HAND_COLLECT']: num = 21; break;
+    case TaskType['ANIMAL_ON_FARM']: num = 17; break;
+    case TaskType['SPEND_DIAMONDS']: num = 14; break;
+    case TaskType['ADD_EMAIL']: num = 30; break;
+    case TaskType['IMPROVE_REPOSITORY']: num = 28; break;
+    case TaskType['TAKE_DIAMOND_ANIMAL']: num = 13; break;
+    case TaskType['COLLECT_DIAMONDS_FROM_ANIMAL']: num = 13; break;
+    case TaskType['SELL_RESOURCE']: num = 31; break;
+    case TaskType['TAKE_FEED_BOOST']: num = 32; break; 
+    case TaskType['TAKE_HERD_BOOST']: num = 33; break;
+    case TaskType['IMPROVE_COLLECTOR']: num = 34; break;
+    case TaskType['IMPROVE_FACTORY']: num = 35; break;
+    case TaskType['TAKE_ANIMAL_FROM_HERD']: num = 33; break;
+    case TaskType['SAVE_MILK']: num = 36; break;
+    case TaskType['IMPROVE_ALL_TERRITORY']: num = 29; break;
+    case TaskType['EXCHANGE_DIAMOND']: num = 14; break;
+    default: num = 21; break;
+  }
+
+  const newId = task.id.replace('-', '_');
+  let name: string = this.state.lang[`taskName${this.state.farm}_${newId}`];
+
+  if (!name) {
+    name = this.state.lang.taskName;
+  }
+  name = name.replace('$1', String(task.count));
+  name = name.replace('$2', String(task.state));
+  return {
+    icon: this.state.farm.toLowerCase() + '-task-icon-' + num,
+    name: name
+  }
+
+}
 
 // проверка задания "животные на поле"
 function checkAnimalTask(): void {
+  if (Utils.checkTestB(this.state)) return checkAnimalTaskTestB.bind(this)();
   let animals: any;
   let settings: IchickenPoints[] | IsheepPoints[] = [];
 
@@ -322,9 +427,61 @@ function checkAnimalTask(): void {
   }
 }
 
+function checkAnimalTaskTestB(): void {
+  let animals: any;
+  let settings: IchickenPoints[] | IsheepPoints[] | IcowPoints[] = [];
+
+  if (this.state.farm === 'Sheep') {
+    animals = this.sheep.children.entries;
+    settings = this.state.sheepSettings.sheepSettings;
+  } else if (this.state.farm === 'Chicken') {
+    animals = this.chicken.children.entries;
+    settings = this.state.chickenSettings.chickenSettings;
+  } else if (this.state.farm === 'Cow') {
+    animals = this.animalGroup.children.entries;
+    settings = this.state.cowSettings.cowSettings;
+  }
+
+  const setDoneTask = (task: Task, count: number) => {
+    task.done = 1;
+    this.tryClanTask(16);
+    task.progress = count;
+  }
+
+  const tasks: Task[] = this.partTasks();
+  const task = tasks.find(data => data.type === 14);
+  if (!task || task.done === 1) return;
+
+  if (task.state === 0 && task.count > 0) {
+    let count: number = animals.length;
+    task.progress = count;
+    if (task.count <= count) setDoneTask(task, count)
+  } else if (task.count === 0) {
+    let count: number = 0;
+    for (let i: number = 0; i < settings.length; i++) {
+      for (let j = 0; j < animals.length; j++) {
+        if (settings[i].breed === animals[j].type || settings[i].breed === animals[j].breed) {
+          count++;
+          break;
+        }
+      }
+    }
+    task.progress = count;
+    if (settings.length <= count) setDoneTask(task, count);
+  } else if (task.state > 0 && task.count > 0) {
+    let count: number = 0;
+    for (let i in animals) {
+      let animal = animals[i];
+      if (task.state === animal.type || task.state === animal.breed) count++
+    }
+    task.progress = count;
+    if (task.count <= count) setDoneTask(task, count)
+  }
+}
 
 // проверка на уже выполненние задания
 function checkDoneTasks(): void {
+  if (Utils.checkTestB(this.state)) return checkDoneTasksTestB.bind(this)();
   const tasks: Itasks[] = this.partTasks();
   for (let i in tasks) {
 
@@ -372,33 +529,48 @@ function checkDoneTasks(): void {
   this.game.scene.keys[this.state.farm + 'Bars'].setCurrentPartProgress();
 }
 
+function checkDoneTasksTestB(): void {
+  const tasks: Task[] = this.partTasks();
+  tasks.forEach(task => {
+    if (task.type === TaskType['IMPROVE_ALL_TERRITORY']) {
+      const part = this.state[`user${this.state.farm}`].part;
+      const availableTerritories: number = part === 20 ? 21 : part + 2;
+      const territories: Territory[] = this.territories.children.entries;
+      const filteredTer = territories.filter(el => (el.territoryType === TerritoryType['REPOSITORY'] 
+        || el.territoryType === TerritoryType['PASTURE'] 
+        || el.territoryType === TerritoryType['WATER']) 
+        && el.improve === part
+      );
+
+      this.tryTask(27, availableTerritories, 0, filteredTer.length)
+    }
+  });
+  this.game.scene.keys[this.state.farm + 'Bars'].setCurrentPartProgress();
+}
+
 function clickTaskBoard(task: Itasks): void {
+  if (Utils.checkTestB(this.state)) return clickTaskBoardTestB.bind(this)(task);
+  if (!task) return;
+  const farmTerritories: Territory[] = this.game.scene.keys[this.state.farm].territories.children.entries;
+  const barsScene: BarsScene = this.game.scene.keys[`${this.state.farm}Bars`];
+
   const openTerritoryWindow = (territory: any): void => {
     this.state.territory = territory;
-    const modal: Imodal = {
-      type: 1,
-      sysType: 2
-    }
+    const modal: Imodal = { type: 1, sysType: 2 };
     this.state.modal = modal;
-    this.scene.manager.keys[this.state.farm].scene.launch('Modal', this.state);
-  }
+    this.scene.launch('Modal', this.state);
+  };
   
   const openRegisterWindow = (): void => {
-    const modal: Imodal = {
-      type: 1,
-      sysType: 15
-    }
+    const modal: Imodal = { type: 1, sysType: 15 };
     this.state.modal = modal;
-    this.scene.manager.keys[this.state.farm].scene.launch('Modal', this.state);
+    this.scene.launch('Modal', this.state);
   }
   
   const openShopAnimal = (): void => {
-    const modal: Imodal = {
-      type: 2,
-      shopType: 3
-    }
+    const modal: Imodal = { type: 2, shopType: 3 };
     this.state.modal = modal;
-    this.scene.manager.keys[this.state.farm].scene.launch('Modal', this.state);
+    this.scene.launch('Modal', this.state);
   }
   
   const mergeAnimalBubble = (): void => {
@@ -407,12 +579,9 @@ function clickTaskBoard(task: Itasks): void {
   }
   
   const openShopBoosters = (): void => {
-    const modal: Imodal = {
-      type: 2,
-      shopType: 4
-    }
+    const modal: Imodal = { type: 2, shopType: 4 };
     this.state.modal = modal;
-    this.scene.manager.keys[this.state.farm].scene.launch('Modal', this.state);
+    this.scene.launch('Modal', this.state);
   }
   
   const takeAnimalBubble = (): void => {
@@ -421,114 +590,102 @@ function clickTaskBoard(task: Itasks): void {
   }
   
   const openMerg = (): void => {
-    const merg: any = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => (el.type === 4 || el.territoryType === 4));
+    const merg: Territory = farmTerritories.find(el => (el.territoryType === 4));
     openTerritoryWindow(merg);
   }
   
-  const openPastureOrSpeechBuble = (): void => {
-    this.state.territory = undefined;
-    let territory: any;
+  const findTerritoryToImproveFromType = (type: number): Territory => {
+    let territory: Territory;
     for (let i = 1; i < 20; i++) {
-      territory = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => (el.type === 2 || el.territoryType === 2) && el.improve === task.state - i);
+      territory = farmTerritories.find(el => (el.territoryType === type) && el.improve === task.state - i);
       if (territory) break;
     }
-  
+    return territory;
+  }  
+
+  const openPastureOrSpeechBuble = (): void => {
+    this.state.territory = undefined;
+    const territory = findTerritoryToImproveFromType(2);
     if (territory) openTerritoryWindow(territory);
-    else SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_8, 3);
+    else SpeechBubble.create(barsScene, this.state.lang.taskHelp_8, 3);
   }
   
   const openDrinkerOrSpeechBuble = (): void => {
     this.state.territory = undefined;
-    let territory: any;
-    for (let i = 1; i < 20; i++) {
-      territory = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => (el.type === 3 || el.territoryType === 3) && el.improve === task.state - i);
-      if (territory) break;
-    }
+    const territory = findTerritoryToImproveFromType(3);
     if (territory) openTerritoryWindow(territory);
-    else SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_9, 3);
+    else SpeechBubble.create(barsScene, this.state.lang.taskHelp_9, 3);
   }
   
   const openStorageToImproveOrSpeechBuble = (): void => {
     this.state.territory = undefined;
-    let territory: any;
-    for (let i = 1; i < 20; i++) {
-      territory = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => (el.type === 5 || el.territoryType === 5) && el.improve === task.state - i);
-      if (territory) break;
-    }
+    const territory = findTerritoryToImproveFromType(5);
     if (territory) openTerritoryWindow(territory);
-    else SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_17, 3);
+    else SpeechBubble.create(barsScene, this.state.lang.taskHelp_17, 3);
   }
   
   const openNotFreeStorageOrSpeechBubble = (): void => {
-    let storage: any = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => (el.type === 5 || el.territoryType === 5) && el.money > 0);
+    let storage: Territory = farmTerritories.find(el => (el.territoryType === 5) && el.money > 0);
     this.state.territory = undefined;
     if (storage) openTerritoryWindow(storage);
-    else SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_6, 3);
+    else SpeechBubble.create(barsScene, this.state.lang.taskHelp_6, 3);
   }
   
   const openStorageOrSpeechBuble = (): void => {
-    let storage: any = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => (el.type === 5 || el.territoryType === 5));
+    let storage: Territory = farmTerritories.find(el => (el.territoryType === 5));
     this.state.territory = undefined;
     if (storage) openTerritoryWindow(storage); 
-    else SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_20, 3);
+    else SpeechBubble.create(barsScene, this.state.lang.taskHelp_20, 3);
   }
   
   const openFactory = (): void => {
-    let factory: any = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => (el.type === 8 || el.territoryType === 8));
+    let factory: Territory = farmTerritories.find(el => (el.territoryType === 8));
     this.state.territory = factory;
     if (factory) {
-      const modal: Imodal = {
-        type: 13,
-      }
+      const modal: Imodal = { type: 13 };
       this.state.modal = modal;
       this.scene.launch('Modal', this.state);
     }; 
   }
 
   const openImproveFactory = (): void => {
-    let factory: any = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => (el.type === 8 || el.territoryType === 8));
+    let factory: Territory = farmTerritories.find(el => (el.territoryType === 8));
     this.state.territory = factory;
-    if (factory) {
-      this.game.scene.keys[this.state.farm].showImproveFactory();
-    };
+    if (factory) this.game.scene.keys[this.state.farm].showImproveFactory();
   }
   
-  const findUnlockTerritoryForBuy = (): any => {
-    let farmTerritories: any = this.game.scene.keys[this.state.farm].territories.children.entries;
+  const findUnlockTerritoryForBuy = (): Territory => {
     let settings: IterritoriesPrice[] = this.state[`${this.state.farm.toLowerCase()}Settings`][`territories${this.state.farm}Price`];
     let unlockTerritories: IterritoriesPrice[] = settings.filter(el => el.unlock <= this.state[`user${this.state.farm}`].part);
     for (const territoryPrice of unlockTerritories) {
-      let findTerr = farmTerritories.find(el => (el.type === 0 || el.territoryType === 0) && el.block === territoryPrice.block && el.position === territoryPrice.position && el.cooldown <= 0);
+      let findTerr = farmTerritories.find(el => (el.territoryType === 0) && el.block === territoryPrice.block && el.position === territoryPrice.position && el.cooldown <= 0);
       if (findTerr) return findTerr;
     }
   }
 
   const openBuyTerritoryWindowForTask = (): void => {
-  
     if (task.state === 1 || task.state === 0) {
       const territory = findUnlockTerritoryForBuy();
       if (territory) openTerritoryWindow(territory);
-      else SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_5, 3);
+      else SpeechBubble.create(barsScene, this.state.lang.taskHelp_5, 3);
     }
     if (task.state === 2 || task.state === 5 ) {
-      let territory: any;
-      territory = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => el.type === 1 || el.territoryType === 1);
+      const territory = farmTerritories.find(el => el.territoryType === 1);
       if (territory) openTerritoryWindow(territory);
       else {
-        territory = findUnlockTerritoryForBuy();
-        if (territory) openTerritoryWindow(territory);
-        else SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang[`taskHelp_5_${task.state}`], 3);
-        
+        const unlockTerritory = findUnlockTerritoryForBuy();
+        if (unlockTerritory) openTerritoryWindow(unlockTerritory);
+        else SpeechBubble.create(barsScene, this.state.lang[`taskHelp_5_${task.state}`], 3);
       }
-    }
+    };
 
     if (this.state.userCow.part < 3 && task.state === 8) {
       const task: Itasks = this.state.cowTasks.find(el => el.id === 138);
-      const territory = this.game.scene.keys[this.state.farm].territories.children.entries.find(el => el.block === 3 && el.position === 1);
+      const territory = farmTerritories.find(el => el.block === 3 && el.position === 1);
       if (task?.done === 1 && task?.got_awarded === 1 && territory.cooldown <= 0) {
         openTerritoryWindow(territory)
       } else if (territory.cooldown > 0) {
-        SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_5, 3)
+        SpeechBubble.create(barsScene, this.state.lang.taskHelp_5, 3)
       } else {
         SpeechBubble.create(this.game.scene.keys[`${this.state.farm}Bars`], this.state.lang.doneFirstTask, 3);
       } 
@@ -612,6 +769,220 @@ function clickTaskBoard(task: Itasks): void {
       break;
     case 26: 
       SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_26, 3);
+      break;
+    default: 
+      break;
+  }
+}
+
+function clickTaskBoardTestB(task: Task): void {
+  if (!task) return;
+  const farmTerritories: Territory[] = this.game.scene.keys[this.state.farm].territories.children.entries;
+  const barsScene: BarsScene = this.game.scene.keys[`${this.state.farm}Bars`];
+
+  const openTerritoryWindow = (territory: any): void => {
+    this.state.territory = territory;
+    const modal: Imodal = { type: 1, sysType: 2 };
+    this.state.modal = modal;
+    this.scene.launch('Modal', this.state);
+  };
+  
+  const openRegisterWindow = (): void => {
+    const modal: Imodal = { type: 1, sysType: 15 };
+    this.state.modal = modal;
+    this.scene.launch('Modal', this.state);
+  }
+  
+  const openShopAnimal = (): void => {
+    const modal: Imodal = { type: 2, shopType: 3 };
+    this.state.modal = modal;
+    this.scene.launch('Modal', this.state);
+  }
+  
+  const mergeAnimalBubble = (): void => {
+    this.game.scene.keys[this.state.farm].scrolling.scrollY = 0; 
+    SpeechBubble.create(this.game.scene.keys[this.state.farm], this.state.lang.taskHelp_2, 1);
+  }
+  
+  const openShopBoosters = (): void => {
+    const modal: Imodal = { type: 2, shopType: 4 };
+    this.state.modal = modal;
+    this.scene.launch('Modal', this.state);
+  }
+  
+  const takeAnimalBubble = (): void => {
+    this.game.scene.keys[this.state.farm].scrolling.scrollY = 0; 
+    SpeechBubble.create(this.game.scene.keys[this.state.farm], this.state.lang.taskHelp_4, 1);
+  }
+  
+  const openMerg = (): void => {
+    const merg: Territory = farmTerritories.find(el => (el.territoryType === 4));
+    openTerritoryWindow(merg);
+  }
+  
+  const findTerritoryToImproveFromType = (type: number): Territory => {
+    let territory: Territory;
+    for (let i = 1; i < 20; i++) {
+      territory = farmTerritories.find(el => (el.territoryType === type) && el.improve === task.state - i);
+      if (territory) break;
+    }
+    return territory
+  }  
+
+  const openPastureOrSpeechBuble = (): void => {
+    this.state.territory = undefined;
+    const territory = findTerritoryToImproveFromType(2);
+    if (territory) openTerritoryWindow(territory);
+    else SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_8, 3);
+  }
+  
+  const openDrinkerOrSpeechBuble = (): void => {
+    this.state.territory = undefined;
+    const territory = findTerritoryToImproveFromType(3);
+    if (territory) openTerritoryWindow(territory);
+    else SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_9, 3);
+  }
+  
+  const openStorageToImproveOrSpeechBuble = (): void => {
+    this.state.territory = undefined;
+    const territory = findTerritoryToImproveFromType(5);
+    if (territory) openTerritoryWindow(territory);
+    else SpeechBubble.create(barsScene, this.state.lang.taskHelp_17, 3);
+  }
+  
+  const openNotFreeStorageOrSpeechBubble = (): void => {
+    let storage: Territory = farmTerritories.find(el => (el.territoryType === 5) && el.money > 0);
+    this.state.territory = undefined;
+    if (storage) openTerritoryWindow(storage);
+    else SpeechBubble.create(barsScene, this.state.lang.taskHelp_6, 3);
+  }
+  
+  const openStorageOrSpeechBuble = (): void => {
+    let storage: Territory = farmTerritories.find(el => (el.territoryType === 5));
+    this.state.territory = undefined;
+    if (storage) openTerritoryWindow(storage); 
+    else SpeechBubble.create(barsScene, this.state.lang.taskHelp_20, 3);
+  }
+  
+  const openFactory = (): void => {
+    let factory: Territory = farmTerritories.find(el => (el.territoryType === 8));
+    this.state.territory = factory;
+    if (factory) {
+      const modal: Imodal = { type: 13 };
+      this.state.modal = modal;
+      this.scene.launch('Modal', this.state);
+    }; 
+  }
+
+  const openImproveFactory = (): void => {
+    let factory: Territory = farmTerritories.find(el => (el.territoryType === 8));
+    this.state.territory = factory;
+    if (factory) this.game.scene.keys[this.state.farm].showImproveFactory();
+  }
+  
+  const findUnlockTerritoryForBuy = (): Territory => {
+    let settings: IterritoriesPrice[] = this.state[`${this.state.farm.toLowerCase()}Settings`][`territories${this.state.farm}Price`];
+    let unlockTerritories: IterritoriesPrice[] = settings.filter(el => el.unlock <= this.state[`user${this.state.farm}`].part);
+    for (const territoryPrice of unlockTerritories) {
+      let findTerr = farmTerritories.find(el => (el.territoryType === 0) && el.block === territoryPrice.block && el.position === territoryPrice.position && el.cooldown <= 0);
+      if (findTerr) return findTerr;
+    }
+  }
+
+  const openBuyTerritoryWindowForTask = (forced: boolean = false): void => {
+    if (task.state === 1 || task.state === 0 || forced) {
+      const territory = findUnlockTerritoryForBuy();
+      if (territory) openTerritoryWindow(territory);
+      else SpeechBubble.create(barsScene, this.state.lang.taskHelp_5, 3);
+    }
+    if (task.state === 2 || task.state === 5 ) {
+      const territory = farmTerritories.find(el => el.territoryType === 1);
+      if (territory) openTerritoryWindow(territory);
+      else {
+        const unlockTerritory = findUnlockTerritoryForBuy();
+        if (unlockTerritory) openTerritoryWindow(unlockTerritory);
+        else SpeechBubble.create(barsScene, this.state.lang[`taskHelp_5_${task.state}`], 3);
+      }
+    };
+
+    if (this.state.userCow.part < 3 && task.state === 8) {
+      const task: Itasks = this.state.cowTasks.find(el => el.id === 138);
+      const territory = farmTerritories.find(el => el.block === 3 && el.position === 1);
+      if (task?.done === 1 && task?.got_awarded === 1 && territory.cooldown <= 0) {
+        openTerritoryWindow(territory)
+      } else if (territory.cooldown > 0) {
+        SpeechBubble.create(barsScene, this.state.lang.taskHelp_5, 3)
+      } else {
+        SpeechBubble.create(this.game.scene.keys[`${this.state.farm}Bars`], this.state.lang.doneFirstTask, 3);
+      } 
+    }
+  }
+
+  const openShopCoins = (): void => {
+    const modal: Imodal = { type: 2, shopType: 2 };
+    this.state.modal = modal;
+    this.scene.launch('Modal', this.state);
+  };
+
+  const openTerritoryToImprove = (): void => {
+    let territory = farmTerritories.find(el =>
+      (el.territoryType === 5 || el.territoryType === 3 || el.territoryType === 2) && el.improve < this.state[`user${this.state.farm}`].part
+    )
+    if (territory) openTerritoryWindow(territory);
+    else {
+      territory = farmTerritories.find(el => el.territoryType === 1);
+      if (territory && territory.cooldown === 0) openTerritoryWindow(territory);
+      else openBuyTerritoryWindowForTask(true);
+    }
+  }
+
+  switch (task.type) {
+    case TaskType['BUY_ANIMAL']: openShopAnimal(); break;
+    case TaskType['MERGE_ANIMAL']: mergeAnimalBubble(); break;
+    case TaskType['TAKE_COLLECTOR']: openShopBoosters(); break;
+    case TaskType['GET_ANIMAL']: takeAnimalBubble(); break;
+    case TaskType['BUY_TERRITORY']: openBuyTerritoryWindowForTask(); break;
+    case TaskType['COLLECT_MONEY']: openNotFreeStorageOrSpeechBubble(); break;
+    case TaskType['IMPROVE_FAIR']: openMerg(); break;
+    case TaskType['IMPROVE_PASTURE']: openPastureOrSpeechBuble(); break;
+    case TaskType['IMPROVE_WATER']: openDrinkerOrSpeechBuble(); break;
+    case TaskType['SAVE_PROGRESS']: openRegisterWindow(); break;
+    case TaskType['HAND_COLLECT']: 
+      SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang[`taskHelp${this.state.farm}_11`], 3);
+      break;
+    case TaskType['CREATE_CLAN']: break;
+    case TaskType['ANIMAL_ON_FARM']: openShopAnimal(); break;
+    case TaskType['SPEND_DIAMONDS']: openShopBoosters(); break;
+    case TaskType['ADD_EMAIL']: 
+      this.game.scene.keys['Sheep'].openEmailWindow(); // задание на почту
+      break;
+    case TaskType['IMPROVE_REPOSITORY']: openStorageToImproveOrSpeechBuble(); break;
+    case TaskType['TAKE_DIAMOND_ANIMAL']: 
+      this.game.scene.keys[this.state.farm].scrolling.scrollY = 0;
+      this.game.scene.keys[this.state.farm][`takeDiamond${this.state.farm}`]();
+      break;
+    case TaskType['COLLECT_DIAMONDS_FROM_ANIMAL']: 
+      SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang[`taskHelp${this.state.farm}_19`], 3);
+      break;
+    case TaskType['SELL_RESOURCE']: 
+      if (this.state.farm !== 'Cow') openStorageOrSpeechBuble();
+      else openFactory();
+      break;
+    case TaskType['TAKE_FEED_BOOST']: openShopBoosters(); break;
+    case TaskType['TAKE_HERD_BOOST']: openShopBoosters(); break;
+    case TaskType['IMPROVE_COLLECTOR']: 
+      this.game.scene.keys[this.state.farm].showImproveCollector();
+      break;
+    case TaskType['IMPROVE_FACTORY']: openImproveFactory(); break;
+    case TaskType['TAKE_ANIMAL_FROM_HERD']: openShopBoosters(); break;
+    case TaskType['SAVE_MILK']: 
+      SpeechBubble.create(this.game.scene.keys[this.state.farm + 'Bars'], this.state.lang.taskHelp_26, 3);
+      break;
+    case 27:
+      openTerritoryToImprove()
+      break;
+    case 28:
+      openShopCoins()
       break;
     default: 
       break;
