@@ -392,6 +392,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         }, callbackScope: this, loop: false });
       } else if (this.territoryType === 1) {
         this.territoryType = this.boughtType;
+        if (Utils.checkTestB(this.scene.state)) this.improve = this.scene.state[`user${this.scene.state.farm}`].part - 1 || 1
         if (this.territoryType === 5) {
           this.volume = 0;
           this.money = 0;
@@ -916,7 +917,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       (this.territoryType === 2 ||
       this.territoryType === 3 ||
       this.territoryType === 5)) {
-      const settings: IterritoriesPartSettings = partSettings[this.improve].territory;
+      const settings: IterritoriesPartSettings = partSettings[this.improve - 1].territory;
       if (user.part >= this.improve) {
         if (this.territoryType === 5) {
           const sale = Utils.checkSale(this.scene.state, `${this.scene.state.farm.toUpperCase()}_REPOSITORY_IMPROVE`);

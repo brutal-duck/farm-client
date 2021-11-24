@@ -50,6 +50,7 @@ import SaleWindow from './../../components/modal/SaleWindow';
 import ReviewWindow from '../../components/modal/ReviewWindow';
 import AvatarsWindow from './../../components/modal/AvatarsWindow';
 import Utils from './../../libs/Utils';
+import TasksWindowNew from '../../components/modal/TasksWindowNew';
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -75,6 +76,7 @@ class Modal extends Phaser.Scene {
   public socialTakskWindow: SocialTasksWindow;
   public chatBars: ChatBars;
   public taskWindow: TasksWindow;
+  public taskWindowNew: TasksWindowNew;
   public ClanTabsWindow: ClanTabsWindow;
   public oldType: number = 0;
 
@@ -128,7 +130,8 @@ class Modal extends Phaser.Scene {
         this.scene.launch('Shop', this.state);
         break;
       case 3: // окно с заданиями
-        this.taskWindow = new TasksWindow(this)
+        if (Utils.checkTestB(this.state)) this.taskWindowNew = new TasksWindowNew(this);
+        else this.taskWindow = new TasksWindow(this);
         break;
       case 4: // ежедневные награды
         new DailyAwardWindow(this);

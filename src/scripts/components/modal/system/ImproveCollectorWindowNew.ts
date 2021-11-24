@@ -188,8 +188,7 @@ export default class ImproveCollectorWindowNew {
         this.scene.state.modal = { type: 1, sysType: 4 };
       }
 
-      this.scene.scene.stop()
-      this.scene.scene.launch('Modal', this.scene.state);
+      this.scene.scene.restart(this.scene.state);
     }
   }
 

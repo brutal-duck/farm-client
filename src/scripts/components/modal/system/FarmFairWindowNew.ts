@@ -19,7 +19,7 @@ export default class FarmFairWindowNew {
     const fairLevel: number = farmUser.fair;
 
     const partSettings: IpartSettings[] = this.scene.state[`${farm.toLowerCase()}Settings`].partSettings;
-    const nextFair: IpartSettings = partSettings[fairLevel];
+    const nextFair: IpartSettings = partSettings[farmUser.part - 1];
     
     if (nextFair) {
       const text: string = this.scene.state.lang.improveFair.replace('$1', String(fairLevel + 1));
@@ -30,10 +30,13 @@ export default class FarmFairWindowNew {
         wordWrap: { width: 400 }
       }).setDepth(1).setOrigin(0.5, 0);
 
-      if (nextFair.territory.improveFairPrice > 0 && fairLevel < farmUser.part) {
+      const price = nextFair.territory.improveFairPrice;
+      const index = partSettings.filter(el => el.territory.improveFairPrice).findIndex(el => el.territory.improveFairPrice === price);
+      
+      if (price > 0 && index + 2 !== fairLevel) {
           const right = {
             icon: `${farm.toLowerCase()}Coin`,
-            text: nextFair.territory.improveFairPrice
+            text: price
           };
           const button = this.scene.bigButton('green', 'left', 90, text, right);
           this.scene.clickModalBtn(button, (): void => { this.upgradeFair() });

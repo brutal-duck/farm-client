@@ -674,7 +674,7 @@ interface ItasksParams {
   farmer: string;
   done: boolean;
   description: string;
-  tasks: Itasks[];
+  tasks: Itasks[] | any;
 }
 interface IunicornParams {
   offlineTime: number;
