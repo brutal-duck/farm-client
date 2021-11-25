@@ -1,6 +1,7 @@
 import Modal from './../../scenes/Modal/Modal';
 import bridge from '@vkontakte/vk-bridge';
 import { FAPI } from '../../libs/Fapi.js';
+import Utils from './../../libs/Utils';
 
 const LANGS: { [key: string]: string } = {
   joinGroupVK: 'Вступи в группу',
@@ -346,7 +347,8 @@ class Task {
     const farm: string = this.scene.state.farm;
     if (farm === 'Unicorn') return LANGS.postUnicorn;
     const user: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${farm}`];
-    const partsCount: number = this.scene.state[`${farm.toLowerCase()}Settings`][`${farm.toLowerCase()}Parts`].length;
+    let partsCount: number = this.scene.state[`${farm.toLowerCase()}Settings`][`${farm.toLowerCase()}Parts`].length;
+    if (Utils.checkTestB(this.scene.state)) partsCount = this.scene.state[`${farm.toLowerCase()}Settings`].partSettings.length;
     if (user.part < partsCount) return LANGS[`postPart${farm}`].replace('$1', String(user.part));
     else if (user.part === partsCount) {
       const tasks: Itasks[] = this.scene.game.scene.keys[farm].partTasks();

@@ -8,6 +8,7 @@ import SpeechBubble from './../components/animations/SpeechBuble';
 import Factory from './../components/Territories/Factory';
 import axios from 'axios';
 import Utils from './../libs/Utils';
+import { Task } from '../local/tasks/types';
 
 function progressTerritoryCooldown (territories: Iterritories[], time: number, farm: string, offline: boolean = false): void {
   for (const territory of territories) {

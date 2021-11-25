@@ -135,7 +135,7 @@ export default function autoprogress(load: boolean = false): void {
   
     // скорость сборки
     let speed: number = state.sheepCollectorSettings.find((data: IcollectorSettings) => data.level === state.userSheep.collectorLevel).speed;
-    if (Utils.checkTestB(state)) speed = state.sheepSettings.partSettings[state.userSheep.collectorLevel].collector.speed;
+    if (Utils.checkTestB(state)) speed = state.sheepSettings.partSettings[state.userSheep.collectorLevel - 1].collector.speed;
     
     if (state.sheep.length > speed * 10) {
       let excess: number = 100 / (speed * 10) * state.sheep.length;
@@ -336,7 +336,7 @@ export default function autoprogress(load: boolean = false): void {
     // скорость сборки
     let percent: number = 100;
     let speed: number = state.chickenCollectorSettings.find((data: IcollectorSettings) => data.level === state.userChicken.collectorLevel).speed;
-    if (Utils.checkTestB(state)) speed = state.chickenSettings.partSettings[state.userChicken.collectorLevel].collector.speed;
+    if (Utils.checkTestB(state)) speed = state.chickenSettings.partSettings[state.userChicken.collectorLevel - 1].collector.speed;
   
     if (state.chicken.length > speed * 10) {
       let excess: number = 100 / (speed * 10) * state.chicken.length;
@@ -537,7 +537,7 @@ export default function autoprogress(load: boolean = false): void {
 
     // скорость сборки
     let speed: number = state.cowCollectorSettings.find((data: IcollectorSettings) => data.level === state.userCow.collectorLevel).speed;
-    if (Utils.checkTestB(state)) speed = state.cowSettings.partSettings[state.userCow.collectorLevel].collector.speed;
+    if (Utils.checkTestB(state)) speed = state.cowSettings.partSettings[state.userCow.collectorLevel - 1].collector.speed;
   
     if (state.cow.length > speed * MILK_DELAY) {
       const excess: number = 100 / (speed * MILK_DELAY) * state.cow.length;
@@ -772,7 +772,7 @@ export default function autoprogress(load: boolean = false): void {
 
     // скорость сборки
     let speed: number = state.sheepCollectorSettings.find((data: IcollectorSettings) => data.level === state.userSheep.collectorLevel).speed;
-    if (Utils.checkTestB(state)) speed = state.sheepSettings.partSettings[state.userSheep.collectorLevel].collector.speed;
+    if (Utils.checkTestB(state)) speed = state.sheepSettings.partSettings[state.userSheep.collectorLevel - 1].collector.speed;
 
     if (this.sheep.children.entries.length > speed * 10) {
 
@@ -983,7 +983,7 @@ export default function autoprogress(load: boolean = false): void {
     // скорость сборки
     let percent: number = 100;
     let speed: number = state.chickenCollectorSettings.find((data: IcollectorSettings) => data.level === state.userChicken.collectorLevel).speed;
-    if (Utils.checkTestB(state)) speed = state.chickenSettings.partSettings[state.userChicken.collectorLevel].collector.speed;
+    if (Utils.checkTestB(state)) speed = state.chickenSettings.partSettings[state.userChicken.collectorLevel - 1].collector.speed;
 
     if (this.chicken.children.entries.length > speed * 10) {
       let excess: number = 100 / (speed * 10) * this.chicken.children.entries.length;
@@ -1210,7 +1210,7 @@ export default function autoprogress(load: boolean = false): void {
     }
     // скорость сборки
     let speed: number = state.cowCollectorSettings.find((data: IcollectorSettings) => data.level === state.userCow.collectorLevel).speed;
-    if (Utils.checkTestB(state)) speed = state.cowSettings.partSettings[state.userCow.collectorLevel].collector.speed;
+    if (Utils.checkTestB(state)) speed = state.cowSettings.partSettings[state.userCow.collectorLevel - 1].collector.speed;
   
     if (cowGroup.length > speed * MILK_DELAY) {
       const excess: number = 100 / (speed * MILK_DELAY) * cowGroup.length;

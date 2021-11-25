@@ -44,6 +44,7 @@ function showBank(): void {
 
 // окно завершения текущей главы
 function nextPart(): void {
+  if (Utils.checkTestB(this.state)) return nextPartTestB.bind(this)();
   let user: IuserSheep | IuserChicken | IuserCow;
   let parts: Ipart[];
   if (this.state.farm === 'Sheep') {
@@ -73,6 +74,53 @@ function nextPart(): void {
       const part: string = this.state.lang.part + ' ' + user.part;
       const namePart: string = this.state.lang[this.state.farm.toLowerCase() + 'NamePart' + user.part];
       const award: number = thisPart.award;
+      const doneText: string = this.state.lang[this.state.farm.toLowerCase() + 'PartDone' + user.part];
+      const donePart: IdonePart = {
+        part: part,
+        name: namePart,
+        award: 'x ' + award,
+        doneText: doneText,
+        chapter: this.state.farm.toLowerCase() + '-chapter-' + user.part
+      }
+      const modal: Imodal = {
+        type: 5,
+        donePart: donePart
+      }
+      this.state.modal = modal;
+      this.scene.launch('Modal', this.state);
+    }
+  }
+}
+
+function nextPartTestB(): void {
+  let user: IuserSheep | IuserChicken | IuserCow;
+  let parts: IpartSettings[];
+  if (this.state.farm === 'Sheep') {
+    user = this.state.userSheep;
+    parts = this.state.sheepSettings.partSettings;
+  } else if (this.state.farm === 'Chicken') {
+    user = this.state.userChicken;
+    parts = this.state.chickenSettings.partSettings;
+  } else if (this.state.farm === 'Cow') {
+    user = this.state.userCow;
+    parts = this.state.cowSettings.partSettings;
+  }
+
+  if (parts.length > user.part) {
+    const tasks: Task[] = this.partTasks();
+    let status: boolean = true;
+    if (tasks.length === 0) status = false;
+    for (let i: number = 0; i < tasks.length; i++) {
+      if (tasks[i].done !== 1 || tasks[i].awardTaken !== 1) {
+        status = false;
+        break;
+      }
+    }
+
+    if (status) {
+      const part: string = this.state.lang.part + ' ' + user.part;
+      const namePart: string = this.state.lang[this.state.farm.toLowerCase() + 'NamePart' + user.part];
+      const award: number = 0;
       const doneText: string = this.state.lang[this.state.farm.toLowerCase() + 'PartDone' + user.part];
       const donePart: IdonePart = {
         part: part,

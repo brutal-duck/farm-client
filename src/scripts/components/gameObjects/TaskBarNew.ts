@@ -132,7 +132,7 @@ export default class TaskBarNew extends Phaser.GameObjects.Sprite {
     this.valuta.setPosition(this.barText.getRightCenter().x + (this.award ? 18 : 24), this.barText.getRightCenter().y);
     this.valutaSum.setPosition(this.valuta.getRightCenter().x + 4, this.valuta.getRightCenter().y);
     this.hideProgress();
-    this.scene.taskWindow?.updateProgress();
+    this.scene.taskWindowNew?.updateProgress();
 
     this.scene.clickShopBtn({ btn: this.takeButton, title: this.barText, img: false }, (): void => { this.pickUpTaskReward(); });
     this.textArtifactsFix();
@@ -159,7 +159,7 @@ export default class TaskBarNew extends Phaser.GameObjects.Sprite {
     this.valuta?.setVisible(false);
     this.valutaSum?.setVisible(false);
     this.hideProgress();
-    this.scene.taskWindow?.updateProgress();
+    this.scene.taskWindowNew?.updateProgress();
     this.textArtifactsFix();
   }
 

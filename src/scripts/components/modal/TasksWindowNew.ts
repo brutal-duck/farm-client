@@ -171,7 +171,7 @@ export default class TasksWindowNew {
 
   public updateProgress(): void {
     this.scene.state.modal.tasksParams.done = this.tasks.every(el => el.task.done === 1 && el.task.awardTaken === 1);
-    const parts: Ipart[] = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`${this.scene.state.farm.toLowerCase()}Parts`];
+    const parts: IpartSettings[] = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].partSettings;
     const userPart: number = this.scene.state[`user${this.scene.state.farm}`].part;
     
     if (this.scene.state.modal.tasksParams.done && parts.length === userPart && this.partDiscription.active) this.partDiscription?.setText(this.scene.state.lang[`${this.scene.state.farm.toLowerCase()}CompanyDone`]);

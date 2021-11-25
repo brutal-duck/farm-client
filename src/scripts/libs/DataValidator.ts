@@ -14,6 +14,7 @@ import basicSheepTerritories from '../local/sheepTerritories';
 import basicChickenTerritories from '../local/chickenTerritories';
 import basicCowTerritories from '../local/cowTerritories';
 import { Task } from '../local/tasks/types';
+import sheepPartSettings from './../local/test/sheepPartSettings';
 
 
 export default class DataValidator {
@@ -38,6 +39,19 @@ export default class DataValidator {
     return data;
   }
 
+  public static validateUserSheepTestB(data: IuserSheep): IuserSheep {
+    for (const key in userSheep) {
+      if (typeof data[key] !== typeof userSheep[key]) data[key] = userSheep[key];
+    }
+    data.money = data.money <= 0 ? 0 : Math.round(data.money);
+    if (data.part > sheepPartSettings.length) data.part = sheepPartSettings.length;
+    if (data.fair > sheepSettings.sheepFairLevels.length) data.fair = sheepSettings.sheepFairLevels.length;
+    if (data.collectorLevel > sheepCollector.length) data.collectorLevel = sheepCollector.length;
+    if (data.collectorTimeLevel > sheepCollector.length) data.collectorTimeLevel = sheepCollector.length;
+
+    return data;
+  }
+
   public static validateUserChicken(data: IuserChicken): IuserChicken {
     for (const key in userChicken) {
       if (typeof data[key] !== typeof userChicken[key]) data[key] = userChicken[key];
@@ -51,7 +65,33 @@ export default class DataValidator {
     return data;
   }
 
+  public static validateUserChickenTestB(data: IuserChicken): IuserChicken {
+    for (const key in userChicken) {
+      if (typeof data[key] !== typeof userChicken[key]) data[key] = userChicken[key];
+    }
+    data.money = data.money <= 0 ? 0 : Math.round(data.money);
+    if (data.part > chickenSettings.chickenParts.length) data.part = chickenSettings.chickenParts.length;
+    if (data.fair > chickenSettings.chickenFairLevels.length) data.fair = chickenSettings.chickenFairLevels.length;
+    if (data.collectorLevel > chickenCollector.length) data.collectorLevel = chickenCollector.length;
+    if (data.collectorTimeLevel > chickenCollector.length) data.collectorTimeLevel = chickenCollector.length;
+
+    return data;
+  }
+
   public static validateUserCow(data: IuserCow): IuserCow {
+    for (const key in userCow) {
+      if (typeof data[key] !== typeof userCow[key]) data[key] = userCow[key];
+    }
+    data.money = data.money <= 0 ? 0 : Math.round(data.money);
+    if (data.part > cowSettings.cowParts.length) data.part = cowSettings.cowParts.length;
+    if (data.fair > cowSettings.cowFairLevels.length) data.fair = cowSettings.cowFairLevels.length;
+    if (data.collectorLevel > cowCollector.length) data.collectorLevel = cowCollector.length;
+    if (data.collectorTimeLevel > cowCollector.length) data.collectorTimeLevel = cowCollector.length;
+
+    return data;
+  }
+
+  public static validateUserCowTestB(data: IuserCow): IuserCow {
     for (const key in userCow) {
       if (typeof data[key] !== typeof userCow[key]) data[key] = userCow[key];
     }

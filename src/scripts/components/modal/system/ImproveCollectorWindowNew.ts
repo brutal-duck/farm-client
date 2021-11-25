@@ -171,6 +171,10 @@ export default class ImproveCollectorWindowNew {
         const price = this.nextSpeedSettings.imporveSpeedPrice;
         this.scene.state.user.diamonds -= price;
         this.scene.game.scene.keys[this.scene.state.farm].tryTask(15, 0, price);
+        this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
+          type: 'improve_collector',
+          count: price,
+        });
       }
       this.closeAndFireworksBlow();
 

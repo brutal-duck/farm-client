@@ -458,9 +458,17 @@ export default function loadData(response: AxiosResponse): void {
     }
   }
 
-  state.userSheep = DataValidator.validateUserSheep(userSheep);
-  state.userChicken = DataValidator.validateUserChicken(userChicken);
-  state.userCow = DataValidator.validateUserCow(userCow);
+  state.userSheep = Utils.checkTestB(state) 
+    ? DataValidator.validateUserSheepTestB(userSheep) 
+    : DataValidator.validateUserSheep(userSheep);
+
+  state.userChicken = Utils.checkTestB(state) 
+    ? DataValidator.validateUserChickenTestB(userChicken) 
+    : DataValidator.validateUserChicken(userChicken);
+
+  state.userCow = Utils.checkTestB(state)
+    ? DataValidator.validateUserCowTestB(userCow)
+    : DataValidator.validateUserCow(userCow);
 
   if (Utils.checkTestB(state)) {
     state.sheepTasks = DataValidator.setTaskStatusTest(testSheepTasks, response.data.user.sheep_tasks) as unknown as Itasks[];
