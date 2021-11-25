@@ -6,7 +6,6 @@ import Factory from './../components/Territories/Factory';
 import SheepTerritory from './../components/Territories/SheepTerritory';
 import ChickenTerritory from './../components/Territories/ChickenTerritory';
 import DataValidator from './../libs/DataValidator';
-import { Data } from 'phaser';
 import LocalStorage from './../libs/LocalStorage';
 
 export default function autosave(): void {

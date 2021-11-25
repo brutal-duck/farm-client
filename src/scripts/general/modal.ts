@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { romanize, shortNum } from './basic';
 import { FAPI } from '../libs/Fapi.js';
+import { Task } from '../local/tasks/types';
+import Utils from './../libs/Utils';
 
 // окно подтверждения смены территории
 function confirmExchangeTerritory(type: number): void {
@@ -92,6 +94,7 @@ function nextPart(): void {
 
 // окно заданий
 function showTasks(): void {
+  if (Utils.checkTestB(this.state)) return showTasksTestB.bind(this)();
   let part: number;
   if (this.state.farm === 'Sheep') part = this.state.userSheep.part;
   else if (this.state.farm === 'Chicken') part = this.state.userChicken.part;
@@ -112,6 +115,32 @@ function showTasks(): void {
     name: this.state.lang[this.state.farm.toLowerCase() + 'NamePart' + part],
     farmer: this.state.lang[this.state.farm.toLowerCase() + 'ProfileName'] + ' ' + romanize(part),
     done: done,
+    description: this.state.lang[this.state.farm.toLowerCase() + 'PartAward' + part],
+    tasks: tasks
+  }
+
+  const modal: Imodal = {
+    type: 3,
+    tasksParams: tasksParams
+  }
+  this.state.modal = modal;
+  this.scene.launch('Modal', this.state);
+
+}
+
+function showTasksTestB(): void {
+  let part: number;
+  if (this.state.farm === 'Sheep') part = this.state.userSheep.part;
+  else if (this.state.farm === 'Chicken') part = this.state.userChicken.part;
+  else if (this.state.farm === 'Cow') part = this.state.userCow.part;
+
+  let tasks: Task[] = this.partTasks();
+
+  const tasksParams: ItasksParams = {
+    part: String(part),
+    name: this.state.lang[this.state.farm.toLowerCase() + 'NamePart' + part],
+    farmer: this.state.lang[this.state.farm.toLowerCase() + 'ProfileName'] + ' ' + romanize(part),
+    done: false,
     description: this.state.lang[this.state.farm.toLowerCase() + 'PartAward' + part],
     tasks: tasks
   }
