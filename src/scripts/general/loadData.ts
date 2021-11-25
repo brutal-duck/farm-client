@@ -217,6 +217,8 @@ export default function loadData(response: AxiosResponse): void {
 
   if (response.data.user.test === 'B') {
     state.sheepSettings = testSheepSettings;
+    state.chickenSettings = testChickenSettings;
+    state.cowSettings = testCowSettings;
     state.herdBoostTime = testGeneral.herdBoostTime;
     state.sheepSettings.partSettings = sheepPartSettings;
     state.chickenSettings.partSettings = chickenPartSettings;

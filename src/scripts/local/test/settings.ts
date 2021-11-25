@@ -500,12 +500,12 @@ const chickenSettings: IchickenSettings = {
     { block: 6, position: 1, unlockCooldown: 43200, price: 50885000, unlock: 13 },
     { block: 6, position: 2, unlockCooldown: 32400, price: 20408000, unlock: 12 },
     { block: 6, position: 3, unlockCooldown: 21600, price: 20408000, unlock: 11 },
-    { block: 7, position: 1, unlockCooldown: 172800, price: 304232000, unlock: 15 },
-    { block: 7, position: 2, unlockCooldown: 86400, price: 304232000, unlock: 14 },
-    { block: 7, position: 3, unlockCooldown: 43200, price: 125117000, unlock: 13 },
-    { block: 8, position: 1, unlockCooldown: 259200, price: 1752955000, unlock: 16 },
-    { block: 8, position: 2, unlockCooldown: 259200, price: 1752955000, unlock: 16 },
-    { block: 8, position: 3, unlockCooldown: 259200, price: 733054000, unlock: 16 },
+    { block: 7, position: 1, unlockCooldown: 172800, price: 304232000, unlock: 16 },
+    { block: 7, position: 2, unlockCooldown: 86400, price: 304232000, unlock: 15 },
+    { block: 7, position: 3, unlockCooldown: 43200, price: 125117000, unlock: 14 },
+    { block: 8, position: 1, unlockCooldown: 259200, price: 1752955000, unlock: 19 },
+    { block: 8, position: 2, unlockCooldown: 259200, price: 1752955000, unlock: 18 },
+    { block: 8, position: 3, unlockCooldown: 259200, price: 733054000, unlock: 17 },
   ],
   territoriesChickenSettings: [
     { 

@@ -923,7 +923,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
           const sale = Utils.checkSale(this.scene.state, `${this.scene.state.farm.toUpperCase()}_REPOSITORY_IMPROVE`);
           const diamondPrice = sale ? Math.floor(settings.improveRepositoryPrice / 2) : settings.improveRepositoryPrice;
           this.diamondImprove(diamondPrice);
-          this.checkAllTerritoriesIsMaxImproveLvlTask();
         } else if (this.territoryType === 2 || this.territoryType === 3) {
           this.moneyImprove(user, settings.improveTerritoryPrice);
           this.checkAllTerritoriesIsMaxImproveLvlTask();
@@ -1036,6 +1035,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
                 Firework.create(this.scene, { x: this.x + 120, y: this.y + 120 }, 3);
               }, callbackScope: this, loop: false });
             }
+            this.checkAllTerritoriesIsMaxImproveLvlTask();
           }
         }
       };
