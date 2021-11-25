@@ -3,6 +3,8 @@ import Firework from '../../components/animations/Firework';
 import MergingCloud from '../../components/animations/MergingCloud';
 import Egg from '../../components/Resource/Egg';
 import SpeechBubble from '../../components/animations/SpeechBuble';
+import Utils from './../../libs/Utils';
+import { TaskType } from '../../local/tasks/types';
 
 // телепортация куриц на свободные территории
 function teleportation(chicken: any): void {
@@ -489,8 +491,10 @@ function collectEgg(egg: Egg, manualСollect: boolean = false, anim: boolean = t
       for (let i in this.territories.children.entries) {
         const territory = this.territories.children.entries[i];
         if (territory.territoryType === 5) {
-          const max: number = this.state.chickenSettings.territoriesChickenSettings.find((data: IterritoriesChickenSettings) => data.improve === territory.improve).storage;
-
+          let max: number = this.state.chickenSettings.territoriesChickenSettings.find((data: IterritoriesChickenSettings) => data.improve === territory.improve).storage;
+          if (Utils.checkTestB(this.state)) {
+            max = this.state.chickenSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
+          }
           if (max > territory.volume) {
             const position: Iposition = {
               x: territory.x + 120,
@@ -545,7 +549,7 @@ function collectEgg(egg: Egg, manualСollect: boolean = false, anim: boolean = t
 function sellEggs(): void {
   if (this.state.territory) {
     if (this.state.territory.territoryType === 5 && this.state.territory.money > 0) {
-      this.tryTask(20, 0);
+      this.tryTask(TaskType['SELL_RESOURCE'], 0, this.state.territory.volume);
       this.tryClanTask(2);
 
       this.state.userChicken.money += this.state.territory.money;

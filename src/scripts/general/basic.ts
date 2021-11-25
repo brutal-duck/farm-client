@@ -555,7 +555,6 @@ function donePart(): void {
   });
   this.autosave();
   
-  console.log(user.part);
   this.state.user.level += 1;
   if (((user.part / 4) ^ 0) === user.part / 4) {
     sendSocialEvent(this.state, 5, user.part);

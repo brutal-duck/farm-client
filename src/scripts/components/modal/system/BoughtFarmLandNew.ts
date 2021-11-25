@@ -111,8 +111,11 @@ export default class BoughtFarmLand {
     const territorySettings: IterritoriesPartSettings = partSettings[farmUser.part - 1].territory;
 
     if (type === 5) {
-      const price = territorySettings.improveRepositoryPrice;
+      let price = territorySettings.improveRepositoryPrice;
       const { user } = this.scene.state;
+      if (this.scene.state.farm === 'Sheep' && farmUser.tutorial < 100) {
+        price = 0;
+      }
       if (price <= user.diamonds) {
         user.diamonds -= price;
         this.scene.state.territory.bougthType = type;

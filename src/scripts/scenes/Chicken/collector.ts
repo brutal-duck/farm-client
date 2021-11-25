@@ -34,4 +34,24 @@ function setCollector(): void {
 
 }
 
+export function updateCollector(delta: number): void {
+  if (this.collectorCD <= 0) {
+    this.collectorIsReady = true;
+
+    if (this.state.userChicken.collector > 0) {
+      for (let i in this.eggs.children.entries) {
+        let egg = this.eggs.children.entries[i];
+        if (egg.timeout > 2 && egg.animalType !== 0) {
+          this.collectEgg(egg);
+          this.collectorIsReady = false;
+          const speed = this.state.chickenSettings.partSettings[this.state.userChicken.collectorLevel - 1].collector.speed;
+          this.collectorCD = Math.round(1000 / speed);
+          break;
+        }
+      
+      }
+    }
+  } else if (!this.collectorIsReady) this.collectorCD -= delta;
+}
+
 export default setCollector;

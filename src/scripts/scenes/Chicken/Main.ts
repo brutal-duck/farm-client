@@ -117,6 +117,8 @@ import {
 } from '../../general/interval';
 import LocalStorage from './../../libs/LocalStorage';
 import Ads from '../../components/Utils/Ads';
+import { updateCollector } from './collector';
+import Utils from './../../libs/Utils';
 
 class Chicken extends Phaser.Scene {
   constructor() {
@@ -152,7 +154,9 @@ class Chicken extends Phaser.Scene {
   public counterWithoutCollector: number = 0;
   public ads: Ads;
   public speedCollectorTimer: number = 0;
-  
+  public collectorCD: number;
+  public collectorIsReady: boolean;
+
   public world = world.bind(this);
   public drag = drag.bind(this);
   public collisions = collisions.bind(this);
@@ -248,6 +252,7 @@ class Chicken extends Phaser.Scene {
   public getPlatformStorage = getPlatformStorage.bind(this);
   private openConvertorForClan = openConvertorForClan.bind(this);
   public speedCheckCollector = speedCheckCollector.bind(this);
+  public updateCollector: (delta: number) => void = updateCollector.bind(this);
 
   public init(state: Istate): void {
     this.autoprogressTimer = Math.round(new Date().getTime() / 1000);
@@ -261,6 +266,11 @@ class Chicken extends Phaser.Scene {
     this.caveIconsTimer = 0;
     this.ads = new Ads(this)
     this.autoprogress(true);
+    if (Utils.checkTestB(this.state)) {
+      const speed = this.state.sheepSettings.partSettings[this.state.userSheep.collectorLevel - 1].collector.speed;
+      this.collectorCD = Math.round(1000 / speed);
+      this.collectorIsReady = false;
+    }
   }
 
   public create(): void {
@@ -278,7 +288,7 @@ class Chicken extends Phaser.Scene {
 
     // интервальные функции
     this.interval();
-    this.setCollector();
+    if (!Utils.checkTestB(this.state)) this.setCollector();
     this.openConvertorForClan();
     this.ads.showInterstitialAd();
 
@@ -302,9 +312,11 @@ class Chicken extends Phaser.Scene {
   }
 
 
-  public update(): void {
+  public update(time: number, delta: number): void {
     // мозг куриц
     this.chickenBrain();
+    if (Utils.checkTestB(this.state)) this.updateCollector(delta);
+
   }
 }
 

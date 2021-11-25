@@ -1054,7 +1054,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     let part = this.scene.state[`user${this.scene.state.farm}`].part
     let availableTerritories: number = part === 20 ? 21 : part + 2;
     const farmTerritories = this.scene.territories.children.entries as Territory[];
-    const territories: Territory[] = farmTerritories.filter((el: Territory) => (el.territoryType === 5 || el.territoryType === 2 || el.territoryType === 3) && el.improve === part)
+    const territories: Territory[] = farmTerritories.filter((el: Territory) => (el.territoryType === 5 || el.territoryType === 2 || el.territoryType === 3) && el.improve === part);
     this.scene.tryTask(TaskType['IMPROVE_ALL_TERRITORY'], availableTerritories, 0, territories.length);
   }
 

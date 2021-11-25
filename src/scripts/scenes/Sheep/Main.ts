@@ -190,8 +190,8 @@ class Sheep extends Phaser.Scene {
   public feedBoostRemaindTimer: number = 0;
   public speedCollectorTimer: number = 0;
   public ads: Ads;
-  public collectorCD: number
-  public collectorIsReady: boolean
+  public collectorCD: number;
+  public collectorIsReady: boolean;
 
   public readonly moneyTasks: { id: number, money: number }[] = [
     {
@@ -363,18 +363,18 @@ class Sheep extends Phaser.Scene {
     this.ads.showInterstitialAd();
 
     if (!Utils.checkTestB(this.state)) this.setCollector();
-    console.log(this.state)
-    let cursors = this.input.keyboard.createCursorKeys();
-    cursors.space.on('down', (): void => {
-      // this.ads.showInterstitialAd();
-      // let tasks = this.partTasks();
-      // for (let i in tasks) {
-      //       tasks[i].done = 1;
-      //       // tasks[i].got_awarded = 1;
-      // }
-      this.state.offlineTime = 60 * 60
-      this.autoprogress()
-    });
+    // console.log(this.state)
+    // let cursors = this.input.keyboard.createCursorKeys();
+    // cursors.space.on('down', (): void => {
+    //   // this.ads.showInterstitialAd();
+    //   // let tasks = this.partTasks();
+    //   // for (let i in tasks) {
+    //         // tasks[i].done = 1;
+    //         // tasks[i].got_awarded = 1;
+    //   // }
+    //   // this.state.offlineTime = 60 * 60
+    //   // this.autoprogress()
+    // });
   }
 
 
