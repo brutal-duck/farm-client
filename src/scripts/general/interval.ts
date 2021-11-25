@@ -132,6 +132,7 @@ function sheepIntervalProgress(): void {
 
 function chickenIntervalProgress(): void {
   const Scene: Sheep | Cow | Unicorn = this;
+  if (Scene.state.userChicken.part <= 0) return;
   const INDENT: number = 20;
   const chickenBalance: Ibalance = Scene.farmBalance('Chicken');
   const chickenSettings: IchickenSettings = Scene.state.chickenSettings;
@@ -213,6 +214,7 @@ function chickenIntervalProgress(): void {
 
 function cowIntervalProgress(): void {
   const Scene: Sheep | Chicken | Unicorn = this;
+  if (Scene.state.userCow.part <= 0) return;
   const MILK_DELAY: number = 10;
   const cowBalance: Ibalance = Scene.farmBalance('Cow');
   const cowSettings: IcowSettings = Scene.state.cowSettings;

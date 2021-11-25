@@ -64,6 +64,6 @@ export default class Utils {
    * @param state 
    * @returns Возвращает true, если пользователь имеет тест В, иначе false
    */
-  public static checkTestB = (state: Istate): boolean => state.user.test === 'B';
+  public static checkTestB = (state: Istate): boolean => state && state.user.test === 'B';
 };
 

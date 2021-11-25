@@ -1407,8 +1407,8 @@ function farmBalanceTestB(farm: string): Ibalance {
 
   const territories: Iterritories[] = this.state[`${farm.toLowerCase()}Territories`];
   for (let territory of territories) {
-    const partSettings: IpartSettings[] = this.settings.partSettings;
     if (territory.type === 2 || territory.type === 3) {
+      const partSettings: IpartSettings[] = this.state[`${farm.toLowerCase()}Settings`].partSettings;
       const reg: number = partSettings[territory.improve - 1].territory.regeneration;
       if (territory.type === 2) grassRecovery += reg;
       else waterRecovery += reg;
