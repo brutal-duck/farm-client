@@ -746,6 +746,7 @@ function showSale(scene: Sheep | Chicken | Cow): void {
 }
 
 function speedCheckCollector(): void {
+  if (Utils.checkTestB(this.state)) speedCheckCollectorTestB.bind(this)()
   const scene: Sheep | Chicken | Cow = this;
   const farm: string = scene.state.farm;
   const delayFilling: number = 10;
@@ -754,6 +755,34 @@ function speedCheckCollector(): void {
   const collectorSettings: IcollectorSettings[] = scene.state[`${farm.toLowerCase()}CollectorSettings`];
   const currentSettings: IcollectorSettings = collectorSettings.find(el => el.level === collectorLevel);
   if (currentSettings.level < collectorSettings.length) {
+    let animals: Phaser.GameObjects.Group =  scene[farm.toLowerCase()];
+    if (farm === 'Cow') animals = scene[`animalGroup`];
+    let animalsCount: number = 0;
+    animals.children.iterate((animal: any) => {
+      if (animal.type !== 0 && farm !== 'Cow' || farm === 'Cow' && animal.breed !== 0) {
+        animalsCount += 1;
+      }
+    });
+    if (animalsCount > currentSettings.speed * delayFilling && farmUser.collector > 0) {
+      scene.speedCollectorTimer -= 1;
+      if (scene.speedCollectorTimer <= 0) {
+        const text = scene.state.lang[`speedCollectorNotification${farm}`];
+        scene.speedCollectorTimer = 60;
+        SpeechBubble.create(scene.scene.get(`${farm}Bars`), text, 3);
+      }
+    }
+  }
+}
+
+function speedCheckCollectorTestB(): void {
+  const scene: Sheep | Chicken | Cow = this;
+  const farm: string = scene.state.farm;
+  const delayFilling: number = 10;
+  const farmUser: IuserSheep | IuserChicken | IuserCow = scene.state[`user${farm}`]
+  const { collectorLevel } = farmUser;
+  const collectorSettings: IpartSettings[] = scene.state[`${farm.toLowerCase()}Settings`].partSettings;
+  const currentSettings: IcollectorPartSettings = collectorSettings[collectorLevel - 1].collector;
+  if (collectorLevel !== farmUser.part) {
     let animals: Phaser.GameObjects.Group =  scene[farm.toLowerCase()];
     if (farm === 'Cow') animals = scene[`animalGroup`];
     let animalsCount: number = 0;

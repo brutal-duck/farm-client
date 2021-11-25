@@ -20,7 +20,7 @@ import Sheep from './../scenes/Sheep/Main';
 import Cow from './../scenes/Cow/Main';
 import Territory from './../components/Territories/Territory';
 import Factory from './../components/Territories/Factory';
-import { Task } from '../local/tasks/types.js';
+import { Task, TaskType } from '../local/tasks/types';
 
 // рандомное число
 function random(min: number, max: number): number {
@@ -447,8 +447,15 @@ function exchange(ad: boolean = false): void {
     }, callbackScope: this, loop: false });
   } else {
     this.state.user.diamonds -= this.state.convertor.diamonds;
-    if (Utils.checkSale(this.state, `${this.state.farm.toUpperCase()}_MONEY`)) user.money += this.convertDiamonds(2 * this.state.convertor.diamonds);
-    else user.money += this.convertDiamonds(this.state.convertor.diamonds);
+    const addedMoney = this.convertDiamonds(this.state.convertor.diamonds);
+    const doubledMoney = this.convertDiamonds(2 * this.state.convertor.diamonds);
+    if (Utils.checkSale(this.state, `${this.state.farm.toUpperCase()}_MONEY`)){
+      user.money += doubledMoney;
+      this.tryTask(TaskType['EXCHANGE_DIAMOND'], 0, doubledMoney);
+    } else {
+      user.money += addedMoney;
+      this.tryTask(TaskType['EXCHANGE_DIAMOND'], 0, addedMoney);
+    }
     this.game.scene.keys[this.state.farm].tryClanTask(10, 0, this.state.convertor.diamonds);
     if (this.scene.isActive('ClanFarm')) {
       MoneyAnimation.create(this.game.scene.keys['ClanFarm'], `${this.state.farm.toLowerCase()}Coin`, {

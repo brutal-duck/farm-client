@@ -273,7 +273,7 @@ class Sheep extends Phaser.Scene {
   public doneTutorCave1: () => void = doneTutorCave1.bind(this);
   public doneTutorCave2: () => void = doneTutorCave2.bind(this);
   public skipTutorial: () => void = skipTutorial.bind(this);
-  public autoprogress: (load: boolean) => void = autoprogress.bind(this);
+  public autoprogress: (load?: boolean) => void = autoprogress.bind(this);
   public dailyAward = dailyAward.bind(this);
   public logout = logout.bind(this);
   public onlineStatus = onlineStatus.bind(this);
@@ -337,9 +337,11 @@ class Sheep extends Phaser.Scene {
     this.counterWithoutCollector = 0;
     this.ads = new Ads(this)
     this.autoprogress(true);
-    const speed = this.state.sheepSettings.partSettings[this.state.userSheep.collectorLevel - 1].collector.speed;
-    this.collectorCD = Math.round(1000 / speed);
-    this.collectorIsReady = false;
+    if (Utils.checkTestB(this.state)) {
+      const speed = this.state.sheepSettings.partSettings[this.state.userSheep.collectorLevel - 1].collector.speed;
+      this.collectorCD = Math.round(1000 / speed);
+      this.collectorIsReady = false;
+    }
   }
   
   public create(): void {
@@ -361,16 +363,18 @@ class Sheep extends Phaser.Scene {
     this.ads.showInterstitialAd();
 
     if (!Utils.checkTestB(this.state)) this.setCollector();
-    // console.log(this.state)
-    // let cursors = this.input.keyboard.createCursorKeys();
-    // cursors.space.on('down', (): void => {
-    //   // this.ads.showInterstitialAd();
-    //   // let tasks = this.partTasks();
-    //   // for (let i in tasks) {
-    //   //       tasks[i].done = 1;
-    //   //       // tasks[i].got_awarded = 1;
-    //   // }
-    // });
+    console.log(this.state)
+    let cursors = this.input.keyboard.createCursorKeys();
+    cursors.space.on('down', (): void => {
+      // this.ads.showInterstitialAd();
+      // let tasks = this.partTasks();
+      // for (let i in tasks) {
+      //       tasks[i].done = 1;
+      //       // tasks[i].got_awarded = 1;
+      // }
+      this.state.offlineTime = 60 * 60
+      this.autoprogress()
+    });
   }
 
 

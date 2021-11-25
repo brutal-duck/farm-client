@@ -36,7 +36,7 @@ export default class FarmFairWindowNew {
       if (price > 0 && index + 2 !== fairLevel) {
           const right = {
             icon: `${farm.toLowerCase()}Coin`,
-            text: price
+            text: shortNum(price)
           };
           const button = this.scene.bigButton('green', 'left', 90, text, right);
           this.scene.clickModalBtn(button, (): void => { this.upgradeFair() });
