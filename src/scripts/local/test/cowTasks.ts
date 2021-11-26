@@ -1,6 +1,6 @@
 import { TaskType, Task, TerritoryType } from "../tasks/types";
 
-const testSheepTasks: Task[] = [
+const testCowTasks: Task[] = [
   {
     id: '1-1',
     type: TaskType['BUY_ANIMAL'],
@@ -39,8 +39,8 @@ const testSheepTasks: Task[] = [
   },
   {
     id: '1-4',
-    type: TaskType['SELL_RESOURCE'],
-    state: 0,
+    type: TaskType['BUY_TERRITORY'],
+    state: TerritoryType['REPOSITORY'],
     done: 0,
     awardTaken: 0,
     awardType: 'diamond',
@@ -51,6 +51,18 @@ const testSheepTasks: Task[] = [
   },
   {
     id: '2-1',
+    type: TaskType['SAVE_MILK'],
+    state: 0,
+    done: 0,
+    awardTaken: 0,
+    awardType: 'diamond',
+    award: 1,
+    count: 500,
+    progress: 0,
+    sort: 10
+  },
+  {
+    id: '2-2',
     type: TaskType['BUY_TERRITORY'],
     state: TerritoryType['BOUGHT'],
     done: 0,
@@ -59,46 +71,46 @@ const testSheepTasks: Task[] = [
     award: 1,
     count: 1,
     progress: 0,
-    sort: 10
-  },
-  {
-    id: '2-2',
-    type: TaskType['BUY_TERRITORY'],
-    state: TerritoryType['PASTURE'],
-    done: 0,
-    awardTaken: 0,
-    awardType: 'coin',
-    award: 3000,
-    count: 1,
-    progress: 0,
     sort: 20
   },
   {
     id: '2-3',
+    type: TaskType['BUY_TERRITORY'],
+    state: TerritoryType['FACTORY'],
+    done: 0,
+    awardTaken: 0,
+    awardType: 'diamond',
+    award: 1,
+    count: 1,
+    progress: 0,
+    sort: 30
+  },
+  {
+    id: '2-4',
     type: TaskType['IMPROVE_ALL_TERRITORY'],
     state: 2,
     done: 0,
     awardTaken: 0,
     awardType: 'diamond',
     award: 1,
-    count: 4,
-    progress: 0,
-    sort: 30
-  },
-  {
-    id: '2-4',
-    type: TaskType['BUY_ANIMAL'],
-    state: 1,
-    done: 0,
-    awardTaken: 0,
-    awardType: 'coin',
-    award: 3000,
-    count: 2,
+    count: 6,
     progress: 0,
     sort: 40
   },
   {
     id: '2-5',
+    type: TaskType['BUY_ANIMAL'],
+    state: 1,
+    done: 0,
+    awardTaken: 0,
+    awardType: 'diamond',
+    award: 1,
+    count: 2,
+    progress: 0,
+    sort: 50
+  },
+  {
+    id: '2-6',
     type: TaskType['GET_ANIMAL'],
     state: 2,
     count: 1,
@@ -107,10 +119,10 @@ const testSheepTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 50
+    sort: 60
   },
   {
-    id: '2-6',
+    id: '2-7',
     type: TaskType['IMPROVE_COLLECTOR'],
     state: 0,
     count: 2,
@@ -119,7 +131,7 @@ const testSheepTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 60
+    sort: 70
   },
   {
     id: '3-1',
@@ -149,7 +161,7 @@ const testSheepTasks: Task[] = [
     id: '3-3',
     type: TaskType['IMPROVE_ALL_TERRITORY'],
     state: 3,
-    count: 5,
+    count: 6,
     done: 0,
     awardTaken: 0,
     awardType: 'diamond',
@@ -1611,4 +1623,4 @@ const testSheepTasks: Task[] = [
   },
 ];
 
-export default testSheepTasks;
+export default testCowTasks;

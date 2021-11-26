@@ -96,14 +96,7 @@ import {
   doneTutor_30,
   doneTutor_40,
 } from './tutorial';
-import {
-  findAd,
-  watchAd,
-  adReward,
-  VKOnAdsReady,
-  VKNoAds
-} from '../../general/ads';
-import setCollector from './collector';
+import setCollector, { updateCollector } from './collector';
 import { showEventTutorial, doneEventTutor_0 } from '../Event/Unicorns/tutorial';
 import CowGroup from '../../components/AnimalGroup/CowGroup';
 import LocalStorage from './../../libs/LocalStorage';
@@ -121,6 +114,7 @@ import {
 } from '../../general/interval';
 import Ads from '../../components/Utils/Ads';
 import Achievement from './../../components/Utils/Achievement';
+import Utils from './../../libs/Utils';
 
 class Cow extends Phaser.Scene {
   constructor() {
@@ -164,7 +158,9 @@ class Cow extends Phaser.Scene {
   public ads: Ads;
   public speedCollectorTimer: number = 0;
   public achievement: Achievement;
-  
+  public collectorCD: number;
+  public collectorIsReady: boolean;
+
   public world = world.bind(this);
   public drag = drag.bind(this);
   public collisions = collisions.bind(this);
@@ -220,11 +216,11 @@ class Cow extends Phaser.Scene {
   public takeNewbieAward = takeNewbieAward.bind(this);
   public getNewbieAward = getNewbieAward.bind(this);
   public dragCowMerging = dragCowMerging.bind(this);
-  public findAd = findAd.bind(this);
-  public watchAd = watchAd.bind(this);
-  public adReward = adReward.bind(this);
-  public VKOnAdsReady = VKOnAdsReady.bind(this);
-  public VKNoAds = VKNoAds.bind(this);
+  // public findAd = findAd.bind(this);
+  // public watchAd = watchAd.bind(this);
+  // public adReward = adReward.bind(this);
+  // public VKOnAdsReady = VKOnAdsReady.bind(this);
+  // public VKNoAds = VKNoAds.bind(this);
   public showDonate = showDonate.bind(this);
   public takeDonate = takeDonate.bind(this);
   public setCollector = setCollector.bind(this);
@@ -262,7 +258,8 @@ class Cow extends Phaser.Scene {
   public getPlatformStorage = getPlatformStorage.bind(this);
   private openConvertorForClan = openConvertorForClan.bind(this);
   public speedCheckCollector = speedCheckCollector.bind(this);
-
+  public updateCollector: (delta: number) => void = updateCollector.bind(this);
+  
   public init(state: Istate): void {
     this.autoprogressTimer = Math.round(new Date().getTime() / 1000);
     this.autoSaveTimer = 0;
@@ -276,6 +273,11 @@ class Cow extends Phaser.Scene {
     this.ads = new Ads(this);
     this.achievement = new Achievement(this);
     this.autoprogress(true);
+    if (Utils.checkTestB(this.state)) {
+      const speed = this.state.cowSettings.partSettings[this.state.userCow.collectorLevel - 1].collector.speed;
+      this.collectorCD = Math.round(1000 / speed);
+      this.collectorIsReady = false;
+    }
   }
   
   public create(): void {
@@ -291,7 +293,7 @@ class Cow extends Phaser.Scene {
 
     // интервальные функции
     this.interval();
-    this.setCollector();
+    if (!Utils.checkTestB(this.state)) this.setCollector();
 
     this.animations();
     this.openConvertorForClan();
@@ -336,7 +338,8 @@ class Cow extends Phaser.Scene {
   }
 
 
-  public update(): void {
+  public update(time: number, delta: number): void {
+    if (Utils.checkTestB(this.state)) this.updateCollector(delta);
 
   }
 

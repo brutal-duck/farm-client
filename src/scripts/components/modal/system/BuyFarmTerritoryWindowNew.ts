@@ -23,8 +23,8 @@ export default class BuyFarmTerritoryWindowNew {
     if (farmUser.part >= settings.unlock) {
       const partSettings: IpartSettings[] = this.scene.state[`${farm}Settings`].partSettings;
       const terrSettings: IterritoriesPartSettings = partSettings[farmUser.part - 1].territory;
-      const price = Math.round((terrSettings.improveTerritoryPrice / 100) * 70);
-
+      let price = Math.round((terrSettings.improveTerritoryPrice / 100) * 70);
+      if (this.scene.state.farm === 'Cow' && farmUser.part === 2) price = 0;
       const right = {
         icon: `${farm.toLowerCase()}Coin`,
         text: shortNum(price)

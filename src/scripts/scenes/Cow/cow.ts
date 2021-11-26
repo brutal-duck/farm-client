@@ -5,6 +5,7 @@ import Milk from '../../components/Resource/Milk';
 import SpeechBubble from '../../components/animations/SpeechBuble';
 import CowSprite from '../../components/Animal/CowSprite';
 import CowTerritory from './../../components/Territories/CowTerritory';
+import Utils from './../../libs/Utils';
 
 // телепортация коров на свободные территории
 function teleportation(cow: any): void {
@@ -310,7 +311,8 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
     for (let i in this.territories.children.entries) {
       const territory: CowTerritory = this.territories.children.entries[i];
       if (territory.territoryType === 5) {
-        const max: number = this.state.cowSettings.cowFactorySettings.find((data: IterritoriesCowSettings) => data.improve === territory.improve).lotSize * this.state.storageMultiply;
+        let max: number = this.state.cowSettings.cowFactorySettings.find((data: IterritoriesCowSettings) => data.improve === territory.improve).lotSize * this.state.storageMultiply;
+        if (Utils.checkTestB(this.state)) max = this.state.cowSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
         if (max > territory.volume + cow.milk) {
           milk = cow.milk;
           cow.milk = 0;
@@ -354,7 +356,8 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
       
       repository.volume += milk;
       repository.money += price;
-      const max: number = this.state.cowSettings.cowFactorySettings.find((data: IterritoriesCowSettings) => data.improve === repository.improve).lotSize * this.state.storageMultiply;
+      let max: number = this.state.cowSettings.cowFactorySettings.find((data: IterritoriesCowSettings) => data.improve === repository.improve).lotSize * this.state.storageMultiply;
+      if (Utils.checkTestB(this.state)) max = this.state.cowSettings.partSettings[repository.improve - 1].territory.maxRepositoryVolume;
       if (repository.volume > max) repository.volume = max;
     } else {
       if (manualСollect) {

@@ -246,7 +246,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     } else if (this.scene.state.farm === 'Chicken') {
       max = this.scene.state.chickenSettings.partSettings[this.improve - 1].territory.maxRepositoryVolume;
     } else if (this.scene.state.farm === 'Cow') {
-      max = this.scene.state.cowSettings.cowFactorySettings[this.improve - 1].lotSize * this.scene.state.storageMultiply;
+      max = this.scene.state.cowSettings.partSettings[this.improve - 1].territory.maxRepositoryVolume;
     }
 
     let type: string = `${farm}-repository-${stage}-`;
@@ -331,8 +331,8 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       // 70% от суммы покупки
       const partSettings: IpartSettings[] = this.scene.state[`${farm}Settings`].partSettings;
       const terrSettings: IterritoriesPartSettings = partSettings[farmUser.part - 1].territory;
-      const price = Math.round((terrSettings.improveTerritoryPrice / 100) * 70);
-
+      let price = Math.round((terrSettings.improveTerritoryPrice / 100) * 70);
+      if (farm === 'cow' && farmUser.part === 2) price = 0;
       if (farmUser.money >= price) {
         this.scene.state.amplitude.logAmplitudeEvent('buy_territory', {
           block: this.block,
@@ -741,7 +741,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       } else if (this.scene.state.farm === 'Chicken') {
         max = this.scene.state.chickenSettings.partSettings[this.improve - 1].territory.maxRepositoryVolume;
       } else if (this.scene.state.farm === 'Cow') {
-        max = this.scene.state.cowSettings.cowFactorySettings[this.improve - 1].lotSize * this.scene.state.storageMultiply;
+        max = this.scene.state.cowSettings.partSettings[this.improve - 1].territory.maxRepositoryVolume;
       }
       
       const percent: number = this.volume > 0 ? this.volume / (max / 100) : 0;
@@ -1094,6 +1094,9 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   private checkAllTerritoriesIsMaxImproveLvlTask(): void {
     let part = this.scene.state[`user${this.scene.state.farm}`].part
     let availableTerritories: number = part === 20 ? 21 : part + 2;
+    if (this.scene.state.farm === 'Cow') {
+      if (part === 2 || part === 3 || part === 4) availableTerritories = 6;
+    }
     const farmTerritories = this.scene.territories.children.entries as Territory[];
     const territories: Territory[] = farmTerritories.filter((el: Territory) => (el.territoryType === 5 || el.territoryType === 2 || el.territoryType === 3) && el.improve === part);
     this.scene.tryTask(TaskType['IMPROVE_ALL_TERRITORY'], availableTerritories, 0, territories.length);
@@ -1130,9 +1133,6 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
   private checkAndSetRepositoryAnimTestB(): void {
     if (this.territoryType === 5) {
       let max: number = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].partSettings[this.improve - 1].territory.maxRepositoryVolume;
-      if (this.scene.state.farm === 'Cow') {
-        max = this.scene.state.cowSettings.cowFactorySettings.find(data => data.improve === this.improve).lotSize * this.scene.state.storageMultiply;
-      }
       if (this.volume >= max && !this.repositoryAnim) {
         this.createFullStorageAnim();
       } else if (this.volume < max && this.repositoryAnim) {

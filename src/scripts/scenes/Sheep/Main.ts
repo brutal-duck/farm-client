@@ -118,13 +118,6 @@ import {
   skipTutorial,
   collectorTutorial
 } from './tutorial';
-import {
-  findAd,
-  watchAd,
-  adReward,
-  VKOnAdsReady,
-  VKNoAds
-} from '../../general/ads';
 import setCollector, { updateCollector } from './collector';
 import { showEventTutorial, doneEventTutor_0 } from './../Event/Unicorns/tutorial';
 import {
@@ -285,11 +278,6 @@ class Sheep extends Phaser.Scene {
   public dragSheepMerging = dragSheepMerging.bind(this);
   public takeNewbieAward = takeNewbieAward.bind(this);
   public getNewbieAward = getNewbieAward.bind(this);
-  // public findAd = findAd.bind(this);
-  // public watchAd = watchAd.bind(this);
-  // public adReward = adReward.bind(this);
-  // public VKOnAdsReady = VKOnAdsReady.bind(this);
-  // public VKNoAds = VKNoAds.bind(this);
   public showDonate = showDonate.bind(this);
   public takeDonate = takeDonate.bind(this);
   public setCollector = setCollector.bind(this);
@@ -370,13 +358,11 @@ class Sheep extends Phaser.Scene {
     // let cursors = this.input.keyboard.createCursorKeys();
     // cursors.space.on('down', (): void => {
     //   // this.ads.showInterstitialAd();
-    //   // let tasks = this.partTasks();
-    //   // for (let i in tasks) {
-    //         // tasks[i].done = 1;
-    //         // tasks[i].got_awarded = 1;
-    //   // }
-    //   this.state.modal = { type: 26 };
-    //   this.scene.launch('Modal', this.state);
+    //   let tasks = this.partTasks();
+    //   for (let i in tasks) {
+    //         tasks[i].done = 1;
+    //         tasks[i].awardTaken = 1;
+    //   }
     //   // this.state.offlineTime = 60 * 60
     //   // this.autoprogress()
     // });

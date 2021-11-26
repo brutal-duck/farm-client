@@ -352,7 +352,7 @@ const chickenPartSettings: IpartSettings[] = [
     territory: {
       improveRepositoryPrice: 10,
       maxRepositoryVolume: 4830,
-      improveFairPrice: 0,
+      improveFairPrice: 4177822480,
       improveTerritoryPrice: 417782248,
       regeneration: 54,
       cooldown: 0,

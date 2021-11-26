@@ -20,8 +20,7 @@ export default class FarmFairWindowNew {
 
     const partSettings: IpartSettings[] = this.scene.state[`${farm.toLowerCase()}Settings`].partSettings;
     const nextFair: IpartSettings = partSettings[farmUser.part - 1];
-    
-    if (nextFair) {
+    if (nextFair && fairLevel < this.scene.state[`${farm.toLowerCase()}Settings`][`${farm.toLowerCase()}FairLevels`].length) {
       const text: string = this.scene.state.lang.improveFair.replace('$1', String(fairLevel + 1));
       this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 80, this.scene.state.lang[`improve${farm}Fair`], {
         font: '26px Shadow',
@@ -32,8 +31,7 @@ export default class FarmFairWindowNew {
 
       const price = nextFair.territory.improveFairPrice;
       const index = partSettings.filter(el => el.territory.improveFairPrice).findIndex(el => el.territory.improveFairPrice === price);
-      
-      if (price > 0 && index + 2 !== fairLevel) {
+      if (price > 0 && index + 2 > fairLevel) {
           const right = {
             icon: `${farm.toLowerCase()}Coin`,
             text: shortNum(price)

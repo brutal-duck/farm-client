@@ -575,7 +575,9 @@ export default function autoprogress(load: boolean = false): void {
           const factSettings: IfactorySettings = state.cowSettings.cowFactorySettings
             .find((data: IfactorySettings) => territory.improve === data.improve);
             
-          const storage: number = factSettings.lotSize * state.storageMultiply;
+          let storage: number = factSettings.lotSize * state.storageMultiply;
+          if (Utils.checkTestB(state)) storage = state.cowSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
+
           maxStorageVolume += storage;
         } 
       }
@@ -650,7 +652,9 @@ export default function autoprogress(load: boolean = false): void {
             const factSettings: IfactorySettings = state.cowSettings.cowFactorySettings
               .find((data: IfactorySettings) => territory.improve === data.improve);
               
-            const storage: number = factSettings.lotSize * this.state.storageMultiply;
+            let storage: number = factSettings.lotSize * this.state.storageMultiply;
+            if (Utils.checkTestB(state)) storage = state.cowSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
+
             if (haveMilk > 0) {
               if (haveMilk >= storage) {
                 territory.volume = storage;
@@ -673,7 +677,8 @@ export default function autoprogress(load: boolean = false): void {
         const factSettings: IfactorySettings = state.cowSettings.cowFactorySettings
           .find((data: IfactorySettings) => territory.improve === data.improve);
           
-        const storage: number = factSettings.lotSize * state.storageMultiply;
+        let storage: number = factSettings.lotSize * state.storageMultiply;
+        if (Utils.checkTestB(state)) storage = state.cowSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
         if (territory.volume > storage) territory.volume = storage;
       } 
     }
@@ -1248,7 +1253,8 @@ export default function autoprogress(load: boolean = false): void {
           const factSettings: IfactorySettings = state.cowSettings.cowFactorySettings
             .find((data: IfactorySettings) => territory.improve === data.improve);
             
-          const storage: number = factSettings.lotSize * state.storageMultiply;
+          let storage: number = factSettings.lotSize * state.storageMultiply;
+          if (Utils.checkTestB(state)) storage = state.cowSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
           maxStorageVolume += storage;
         } 
       }
@@ -1316,7 +1322,9 @@ export default function autoprogress(load: boolean = false): void {
             const factSettings: IfactorySettings = state.cowSettings.cowFactorySettings
               .find((data: IfactorySettings) => territory.improve === data.improve);
               
-            const storage: number = factSettings.lotSize * this.state.storageMultiply;
+            let storage: number = factSettings.lotSize * this.state.storageMultiply;
+            if (Utils.checkTestB(state)) storage = state.cowSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
+
             if (haveMilk > 0) {
               if (haveMilk >= storage) {
                 territory.volume = storage;
@@ -1339,7 +1347,9 @@ export default function autoprogress(load: boolean = false): void {
         const factSettings: IfactorySettings = state.cowSettings.cowFactorySettings
           .find((data: IfactorySettings) => territory.improve === data.improve);
         
-        const storage: number = factSettings.lotSize * this.state.storageMultiply;
+        let storage: number = factSettings.lotSize * this.state.storageMultiply;
+        if (Utils.checkTestB(state)) storage = state.cowSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
+
         if (territory.volume > storage) territory.volume = storage;
       } 
     }

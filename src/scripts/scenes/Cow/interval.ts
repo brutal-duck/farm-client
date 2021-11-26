@@ -7,6 +7,8 @@ import SpeechBubble from '../../components/animations/SpeechBuble';
 import Factory from './../../components/Territories/Factory';
 import CowTerritory from './../../components/Territories/CowTerritory';
 import { decrementAdFreeDiamondTime, incFortuneAdTimer, incInterstitialAdTimer, progressClanCooldown, progressClanEventTime, progressSalesTime, showSale } from '../../general/interval';
+import { Task } from '../../local/tasks/types';
+import Utils from './../../libs/Utils';
 
 let checkCollector: number = 0;
 let sheepCollectorVolume: number = 0;
@@ -174,8 +176,14 @@ function interval(): void {
       }
 
       const factory: CowTerritory = this.territories.children.entries.find((el: CowTerritory) => el.territoryType === 8)
-      const milkTask: Itasks = tasks.find(el => el.id === 138);
-      const factoryTask: Itasks = tasks.find(el => el.id === 137);
+      let milkTask: Itasks | Task = tasks.find(el => el.id === 138);
+      let factoryTask: Itasks | Task = tasks.find(el => el.id === 137);
+      
+      if (Utils.checkTestB(this.state)) {
+        const tasks: Task[] = this.partTasks();
+        milkTask = tasks.find(el => el.id === '2-1');
+        factoryTask = tasks.find(el => el.id === '2-3');
+      }
       if (milkTask?.done === 1 && (factoryTask?.done === 1 || factory)
         && !this.scene.isActive('Tutorial')
         && !this.scene.isActive('Modal')

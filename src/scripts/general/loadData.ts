@@ -20,6 +20,8 @@ import sheepPartSettings from '../local/test/sheepPartSettings';
 import chickenPartSettings from '../local/test/chickenPartSettings';
 import Utils from './../libs/Utils';
 import testChickenTasks from './../local/test/chickenTasks';
+import testCowTasks from './../local/test/cowTasks';
+import cowPartSettings from './../local/test/cowPartSettings';
 const basicUserCow = userCow;
 const basicUserSheep = userSheep;
 const basicUserChicken = userChicken;
@@ -325,7 +327,7 @@ export default function loadData(response: AxiosResponse): void {
     state.herdBoostTime = testGeneral.herdBoostTime;
     state.sheepSettings.partSettings = sheepPartSettings;
     state.chickenSettings.partSettings = chickenPartSettings;
-    // state.cowSettings.partSettings = cowSettings;
+    state.cowSettings.partSettings = cowPartSettings;
   }
 
   // животные
@@ -582,7 +584,7 @@ export default function loadData(response: AxiosResponse): void {
   if (Utils.checkTestB(state)) {
     state.sheepTasks = DataValidator.setTaskStatusTest(testSheepTasks, response.data.user.sheep_tasks) as unknown as Itasks[];
     state.chickenTasks = DataValidator.setTaskStatusTest(testChickenTasks, response.data.user.chicken_tasks) as unknown as Itasks[];
-    state.cowTasks = DataValidator.setTaskStatus(3, response.data.user.cow_tasks);
+    state.cowTasks = DataValidator.setTaskStatusTest(testCowTasks, response.data.user.cow_tasks) as unknown as Itasks[];
   } else {
     state.sheepTasks = DataValidator.setTaskStatus(1, response.data.user.sheep_tasks);
     state.chickenTasks = DataValidator.setTaskStatus(2, response.data.user.chicken_tasks);

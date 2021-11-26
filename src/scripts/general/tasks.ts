@@ -302,8 +302,8 @@ function getTaskDataTestB(task: Task): ItaskData {
     case TaskType['IMPROVE_FACTORY']: num = 35; break;
     case TaskType['TAKE_ANIMAL_FROM_HERD']: num = 33; break;
     case TaskType['SAVE_MILK']: num = 36; break;
-    case TaskType['IMPROVE_ALL_TERRITORY']: num = 29; break;
-    case TaskType['EXCHANGE_DIAMOND']: num = 14; break;
+    case TaskType['IMPROVE_ALL_TERRITORY']: num = 39; break;
+    case TaskType['EXCHANGE_DIAMOND']: num = 38; break;
     default: num = 21; break;
   }
 

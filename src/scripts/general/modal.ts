@@ -119,9 +119,9 @@ function nextPartTestB(): void {
 
     if (status) {
       const part: string = this.state.lang.part + ' ' + user.part;
-      const namePart: string = this.state.lang[this.state.farm.toLowerCase() + 'NamePart' + user.part];
+      const namePart: string = this.state.lang[this.state.farm.toLowerCase() + 'NamePart' + user.part + 'testB'];
       const award: number = 0;
-      const doneText: string = this.state.lang[this.state.farm.toLowerCase() + 'PartDone' + user.part];
+      const doneText: string = this.state.lang[this.state.farm.toLowerCase() + 'PartDone' + user.part + 'testB'];
       const donePart: IdonePart = {
         part: part,
         name: namePart,
@@ -186,10 +186,10 @@ function showTasksTestB(): void {
 
   const tasksParams: ItasksParams = {
     part: String(part),
-    name: this.state.lang[this.state.farm.toLowerCase() + 'NamePart' + part],
+    name: this.state.lang[this.state.farm.toLowerCase() + 'NamePart' + part + 'testB'],
     farmer: this.state.lang[this.state.farm.toLowerCase() + 'ProfileName'] + ' ' + romanize(part),
     done: false,
-    description: this.state.lang[this.state.farm.toLowerCase() + 'PartAward' + part],
+    description: this.state.lang[this.state.farm.toLowerCase() + 'PartAward' + part + 'testB'],
     tasks: tasks
   }
 

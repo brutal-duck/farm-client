@@ -93,13 +93,6 @@ import {
   showTutorial,
   doneTutor_0
 } from './tutorial';
-import {
-  findAd,
-  watchAd,
-  adReward,
-  VKOnAdsReady,
-  VKNoAds
-} from '../../general/ads';
 import setCollector from './collector';
 import { showEventTutorial, doneEventTutor_0 } from '../Event/Unicorns/tutorial';
 import {
@@ -215,11 +208,6 @@ class Chicken extends Phaser.Scene {
   public takeNewbieAward = takeNewbieAward.bind(this);
   public getNewbieAward = getNewbieAward.bind(this);
   public dragChickenMerging = dragChickenMerging.bind(this);
-  public findAd = findAd.bind(this);
-  public watchAd = watchAd.bind(this);
-  public adReward = adReward.bind(this);
-  public VKOnAdsReady = VKOnAdsReady.bind(this);
-  public VKNoAds = VKNoAds.bind(this);
   public showDonate = showDonate.bind(this);
   public takeDonate = takeDonate.bind(this);
   public setCollector = setCollector.bind(this);
@@ -271,7 +259,7 @@ class Chicken extends Phaser.Scene {
     this.achievement = new Achievement(this);
 
     if (Utils.checkTestB(this.state)) {
-      const speed = this.state.sheepSettings.partSettings[this.state.userSheep.collectorLevel - 1].collector.speed;
+      const speed = this.settings.partSettings[this.state.userChicken.collectorLevel - 1].collector.speed;
       this.collectorCD = Math.round(1000 / speed);
       this.collectorIsReady = false;
     }

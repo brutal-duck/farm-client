@@ -85,6 +85,7 @@ export default class BoughtFarmLand {
 
   private createCowWindow(moneyPrice: IbigButtonElementSettings, diamondPrice: IbigButtonElementSettings) {
     if (this.scene.state.territory.block === 3 && this.scene.state.territory.position === 1 && this.scene.state.territory.territoryType === 1) {
+      moneyPrice.text = '0';
       const button = this.scene.bigButton('orange', 'left', 30, this.scene.state.lang.buildFactory, moneyPrice);
       this.scene.clickModalBtn(button, (): void => { this.setTerritory(8); });
       this.height = 100;
@@ -136,7 +137,7 @@ export default class BoughtFarmLand {
       }
     } else {
       let price = Math.round(territorySettings.improveTerritoryPrice / 100 * 30);
-      if (this.scene.state.farm === 'Sheep' && farmUser.tutorial < 100) {
+      if (this.scene.state.farm === 'Sheep' && farmUser.tutorial < 100 || type === 8) {
         price = 0;
       }
       if (farmUser.money >= price) {

@@ -4,6 +4,7 @@ import Factory from './Factory';
 import Firework from './../animations/Firework';
 import SpeechBubble from './../animations/SpeechBuble';
 import Utils from './../../libs/Utils';
+import { Task } from '../../local/tasks/types';
 
 export default class CowTerritory extends Territory {
   public scene: Cow;
@@ -149,19 +150,35 @@ export default class CowTerritory extends Territory {
       return;
     };
     if (this.scene.state.userCow.part < 3) {
-      const task: Itasks = this.scene.state.cowTasks.find(el => el.id === 138);
-      if (this.block === 3 && this.position === 1 && this.territoryType === 0 && task.done === 1 && task.got_awarded === 1) {
-        const modal: Imodal = {
-          type: 1,
-          sysType: 2
+      if (Utils.checkTestB(this.scene.state)) {
+        const task: Task = this.scene.state.cowTasks.find((el: Itasks) => String(el.id) === '2-1') as unknown as Task;
+        if (this.block === 3 && this.position === 1 && this.territoryType === 0 && task.done === 1 && task.awardTaken === 1) {
+          const modal: Imodal = {
+            type: 1,
+            sysType: 2
+          }
+          this.scene.state.modal = modal;
+          this.scene.state.territory = this;
+          this.scene.scene.launch('Modal', this.scene.state);
+        } else if (this.block === 3 && this.position === 1 && this.territoryType === 0) {
+          SpeechBubble.create(this.scene.game.scene.keys[`${this.scene.state.farm}Bars`], this.scene.state.lang.doneFirstTask, 3);
+          return;
         }
-        this.scene.state.modal = modal;
-        this.scene.state.territory = this;
-        this.scene.scene.launch('Modal', this.scene.state);
-      } else if (this.block === 3 && this.position === 1 && this.territoryType === 0) {
-        SpeechBubble.create(this.scene.game.scene.keys[`${this.scene.state.farm}Bars`], this.scene.state.lang.doneFirstTask, 3);
-        return;
-      } 
+      } else {
+        const task: Itasks = this.scene.state.cowTasks.find(el => el.id === 138);
+        if (this.block === 3 && this.position === 1 && this.territoryType === 0 && task.done === 1 && task.got_awarded === 1) {
+          const modal: Imodal = {
+            type: 1,
+            sysType: 2
+          }
+          this.scene.state.modal = modal;
+          this.scene.state.territory = this;
+          this.scene.scene.launch('Modal', this.scene.state);
+        } else if (this.block === 3 && this.position === 1 && this.territoryType === 0) {
+          SpeechBubble.create(this.scene.game.scene.keys[`${this.scene.state.farm}Bars`], this.scene.state.lang.doneFirstTask, 3);
+          return;
+        }
+      }
     }
     if (this.territoryType !== 6 && this.territoryType !== 7 && this.territoryType !== 8) {
       const modal: Imodal = {

@@ -350,8 +350,10 @@ function cowCollectorProgress(cowCollectorVolume: number): number {
       for (let i in Scene.state.cowTerritories) {
         const territory: Iterritories = Scene.state.cowTerritories[i];
         if (territory.type === 5) {
-          const max: number = Scene.state.cowSettings.cowFactorySettings
+          let max: number = Scene.state.cowSettings.cowFactorySettings
             .find((data: IfactorySettings) => data.improve === territory.improve).lotSize * this.state.storageMultiply;
+          if (Utils.checkTestB(this.state)) max = this.state.cowSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
+
           if (territory.volume >= max) territory.volume = max;
           for (let i: number = 0; i < collectedMilk; i += 1) {
             for (const cow of Scene.state.cow) {
@@ -599,14 +601,16 @@ function checkStorageCow(): boolean {
   if (this.state.farm === 'Cow') {
     for (const territory of this.territories.children.entries) {
       if (territory.territoryType === 5) {
-        const max: number = this.state.cowSettings.cowFactorySettings.find(el => el.improve === territory.improve).lotSize * this.state.storageMultiply;
+        let max: number = this.state.cowSettings.cowFactorySettings.find(el => el.improve === territory.improve).lotSize * this.state.storageMultiply;
+        if (Utils.checkTestB(this.state)) max = this.state.cowSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
         check.push(territory.volume >= max); 
       }
     }
   } else {
     for (const territory of this.state.cowTerritories) {
       if (territory.type === 5) {
-        const max: number = this.state.cowSettings.cowFactorySettings.find(el => el.improve === territory.improve).lotSize * this.state.storageMultiply;
+        let max: number = this.state.cowSettings.cowFactorySettings.find(el => el.improve === territory.improve).lotSize * this.state.storageMultiply;
+        if (Utils.checkTestB(this.state)) max = this.state.cowSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
         check.push(territory.volume >= max); 
       }
     }

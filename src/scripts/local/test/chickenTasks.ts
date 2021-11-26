@@ -39,8 +39,8 @@ const testChickenTasks: Task[] = [
   },
   {
     id: '1-4',
-    type: TaskType['SELL_RESOURCE'],
-    state: 0,
+    type: TaskType['BUY_TERRITORY'],
+    state: TerritoryType['REPOSITORY'],
     done: 0,
     awardTaken: 0,
     awardType: 'diamond',
@@ -67,8 +67,8 @@ const testChickenTasks: Task[] = [
     state: TerritoryType['PASTURE'],
     done: 0,
     awardTaken: 0,
-    awardType: 'coin',
-    award: 3000,
+    awardType: 'diamond',
+    award: 1,
     count: 1,
     progress: 0,
     sort: 20
@@ -80,7 +80,7 @@ const testChickenTasks: Task[] = [
     done: 0,
     awardTaken: 0,
     awardType: 'diamond',
-    award: 2,
+    award: 1,
     count: 4,
     progress: 0,
     sort: 30
@@ -91,8 +91,8 @@ const testChickenTasks: Task[] = [
     state: 1,
     done: 0,
     awardTaken: 0,
-    awardType: 'coin',
-    award: 3000,
+    awardType: 'diamond',
+    award: 1,
     count: 2,
     progress: 0,
     sort: 40
@@ -105,7 +105,7 @@ const testChickenTasks: Task[] = [
     done: 0,
     awardTaken: 0,
     awardType: 'diamond',
-    award: 2,
+    award: 1,
     progress: 0,
     sort: 50
   },
