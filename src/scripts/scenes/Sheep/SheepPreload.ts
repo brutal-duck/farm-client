@@ -188,6 +188,8 @@ const taskIcon31: string = require('./../../../assets/images/sheep/tasks/task-ic
 const taskIcon32: string = require('./../../../assets/images/sheep/tasks/task-icon-32.png');
 const taskIcon33: string = require('./../../../assets/images/sheep/tasks/task-icon-33.png');
 const taskIcon34: string = require('./../../../assets/images/sheep/tasks/task-icon-34.png');
+const taskIcon38: string = require('./../../../assets/images/sheep/tasks/task-icon-38.png');
+const taskIcon39: string = require('./../../../assets/images/sheep/tasks/task-icon-39.png');
 const plus: string = require('./../../../assets/images/icons/plus.png');
 const sheepLeaves: string = require('./../../../assets/images/sheep/sheep-leaves.png');
 const greenBalanceBg: string = require('./../../../assets/images/balance/green-balance-bg.png');
@@ -563,6 +565,8 @@ class SheepPreload extends Phaser.Scene {
     this.load.image('sheep-task-icon-32', taskIcon32);
     this.load.image('sheep-task-icon-33', taskIcon33);
     this.load.image('sheep-task-icon-34', taskIcon34);
+    this.load.image('sheep-task-icon-38', taskIcon38);
+    this.load.image('sheep-task-icon-39', taskIcon39);
     this.load.image('plus', plus);
     this.load.image('sheep-leaves', sheepLeaves);
     this.load.image('green-balance-bg', greenBalanceBg);
