@@ -631,8 +631,8 @@ function pickUpTaskReward(id: number): void {
 
 function pickUpTaskRewardTestB(id: string): void {
   const tasks: Task[] = this.state[`${this.state.farm.toLowerCase()}Tasks`];
-  const task = tasks.find((data) => data.id === id && task.done === 1 && task.awardTaken === 0);
-  if (!task) return;
+  const task = tasks.find((data) => data.id === id);
+  if (!task || task.done === 0 || task.awardTaken === 1) return;
 
   if (task.awardType === 'diamond') {
     this.state.user.diamonds += task.award;
