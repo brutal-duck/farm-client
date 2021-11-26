@@ -6,6 +6,7 @@ import Egg from '../../components/Resource/Egg';
 import { decrementAdFreeDiamondTime, incFortuneAdTimer, incInterstitialAdTimer, progressClanCooldown, progressClanEventTime, progressSalesTime, showSale } from '../../general/interval';
 import SpeechBubble from '../../components/animations/SpeechBuble';
 import ChickenTerritory from './../../components/Territories/ChickenTerritory';
+import Utils from './../../libs/Utils';
 let checkCollector: number = 0;
 let sheepCollectorVolume: number = 0;
 let cowCollectorVolume: number = 0;
@@ -76,6 +77,7 @@ function interval(): void {
       let territory = this.territories.children.entries[i];
       if ((territory.territoryType === 2 || territory.territoryType === 3) && territory.volume < 1000) {
         let reg: number = this.settings.territoriesChickenSettings.find((item: IterritoriesChickenSettings) => item.improve === territory.improve).regeneration;
+        if (Utils.checkTestB(this.state)) reg = this.state.sheepSettings.partSettings[territory.improve - 1].territory.regeneration;
         territory.volume += reg;
         if (territory.volume > 1000) {
           territory.volume = 1000;

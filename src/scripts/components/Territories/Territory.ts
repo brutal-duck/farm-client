@@ -846,7 +846,13 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         farmUser.fair++;
         updateAnimalBuy();
         this.scene.tryTask(7, farmUser.fair);
-        this.scene.tryClanTask(11);
+        this.scene.tryClanTask(6);
+        this.scene.achievement.tryType(11);
+        if (farmUser.fair === partSettings.length) {
+          if (this.scene.state.farm === 'Sheep') this.scene.achievement.tryId(19);
+          else if (this.scene.state.farm === 'Chicken') this.scene.achievement.tryId(21);
+          else if (this.scene.state.farm === 'Cow') this.scene.achievement.tryId(23);
+        }
         this.scene.time.addEvent({ delay: 200, callback: (): void => {
           this.levelText?.setText(String(farmUser.fair));
           Stars.create(this.scene, { x: this.x + 120, y: this.y + 120 });

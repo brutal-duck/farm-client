@@ -163,6 +163,7 @@ function tryTaskTestB(type: number, state: number, count: number = 1, currentPro
     if (task.progress >= task.count) {
       task.done = 1;
       this.tryClanTask(16);
+      this.achievement.tryType(2);
       this.state.amplitude.logAmplitudeEvent('task_done', {
         task_id: task.id,
         part: part,
@@ -458,6 +459,7 @@ function checkAnimalTaskTestB(): void {
     task.done = 1;
     this.tryClanTask(16);
     task.progress = count;
+    this.achievement.tryType(2);
   }
 
   const tasks: Task[] = this.partTasks();
