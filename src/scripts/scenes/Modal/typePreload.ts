@@ -1,5 +1,6 @@
 import { tabActiveAtlas, tabAtlas } from "../../atlases";
 import { iconsUrl } from "../../components/Utils/Achievement";
+import Utils from './../../libs/Utils';
 
 const partProgress: string = require("./../../../assets/images/modal/part-progress.png");
 const newbieBg: string = require("./../../../assets/images/modal/daily/newbie-bg.png");
@@ -319,7 +320,24 @@ const achievementBg: string = require('../../../assets/images/modal/achievements
 const achievementBgComplete: string = require('../../../assets/images/modal/achievements/bg-complete.png');
 const achievementFrame: string = require('../../../assets/images/modal/achievements/frame.png');
 const achievementHeader: string = require('../../../assets/images/modal/achievements/header.png');
-
+// const sheepChapter1: string = require('../../../assets/images/sheep/chapters/test/chapter-1.png');
+// const sheepChapter2: string = require('../../../assets/images/sheep/chapters/test/chapter-2.png');
+// const sheepChapter3: string = require('../../../assets/images/sheep/chapters/test/chapter-3.png');
+// const sheepChapter4: string = require('../../../assets/images/sheep/chapters/test/chapter-4.png');
+// const sheepChapter5: string = require('../../../assets/images/sheep/chapters/test/chapter-5.png');
+// const sheepChapter6: string = require('../../../assets/images/sheep/chapters/test/chapter-6.png');
+// const chickenChapter1: string = require('../../../assets/images/chicken/chapters/test/chapter-1.png');
+// const chickenChapter2: string = require('../../../assets/images/chicken/chapters/test/chapter-2.png');
+// const chickenChapter3: string = require('../../../assets/images/chicken/chapters/test/chapter-3.png');
+// const chickenChapter4: string = require('../../../assets/images/chicken/chapters/test/chapter-4.png');
+// const chickenChapter5: string = require('../../../assets/images/chicken/chapters/test/chapter-5.png');
+// const chickenChapter6: string = require('../../../assets/images/chicken/chapters/test/chapter-6.png');
+const cowChapter1: string = require('../../../assets/images/cow/chapters/test/chapter-1.png');
+const cowChapter2: string = require('../../../assets/images/cow/chapters/test/chapter-2.png');
+const cowChapter3: string = require('../../../assets/images/cow/chapters/test/chapter-3.png');
+const cowChapter4: string = require('../../../assets/images/cow/chapters/test/chapter-4.png');
+const cowChapter5: string = require('../../../assets/images/cow/chapters/test/chapter-5.png');
+const cowChapter6: string = require('../../../assets/images/cow/chapters/test/chapter-6.png');
 
 export default function typePreload(): void {
     switch (this.state.modal.type) {
@@ -366,7 +384,27 @@ export default function typePreload(): void {
       case 5: // следующая глава +
         this.load.image('done-chapter', doneChapter);
         this.load.image('done-chapter-button', doneChapterButton);
-
+        if (this.state.farm === 'Cow' && Utils.checkTestB(this.state)) {
+          this.load.image('cow-chapter-1', cowChapter1);
+          this.load.image('cow-chapter-2', cowChapter2);
+          this.load.image('cow-chapter-3', cowChapter3);
+          this.load.image('cow-chapter-4', cowChapter4);
+          this.load.image('cow-chapter-5', cowChapter5);
+          this.load.image('cow-chapter-6', cowChapter1);
+          this.load.image('cow-chapter-7', cowChapter6);
+          this.load.image('cow-chapter-8', cowChapter1);
+          this.load.image('cow-chapter-9', cowChapter3);
+          this.load.image('cow-chapter-10', cowChapter1);
+          this.load.image('cow-chapter-11', cowChapter3);
+          this.load.image('cow-chapter-12', cowChapter1);
+          this.load.image('cow-chapter-13', cowChapter3);
+          this.load.image('cow-chapter-14', cowChapter1);
+          this.load.image('cow-chapter-15', cowChapter3);
+          this.load.image('cow-chapter-16', cowChapter1);
+          this.load.image('cow-chapter-17', cowChapter3);
+          this.load.image('cow-chapter-18', cowChapter1);
+          this.load.image('cow-chapter-19', cowChapter3);
+        }
         break;
       case 6: // ежедневные награды новичков +
         this.load.image('newbie-bg', newbieBg);
