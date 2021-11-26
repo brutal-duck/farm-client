@@ -135,30 +135,6 @@ const testCowTasks: Task[] = [
   },
   {
     id: '3-1',
-    type: TaskType['BUY_TERRITORY'],
-    state: TerritoryType['BOUGHT'],
-    count: 1,
-    done: 0,
-    awardTaken: 0,
-    awardType: 'diamond',
-    award: 1,
-    progress: 0,
-    sort: 10
-  },
-  {
-    id: '3-2',
-    type: TaskType['BUY_TERRITORY'],
-    state: TerritoryType['PASTURE'],
-    count: 1,
-    done: 0,
-    awardTaken: 0,
-    awardType: 'diamond',
-    award: 1,
-    progress: 0,
-    sort: 55
-  },
-  {
-    id: '3-3',
     type: TaskType['IMPROVE_ALL_TERRITORY'],
     state: 3,
     count: 6,
@@ -170,7 +146,7 @@ const testCowTasks: Task[] = [
     sort: 57
   },
   {
-    id: '3-4',
+    id: '3-2',
     type: TaskType['IMPROVE_FAIR'],
     state: 2,
     count: 1,
@@ -182,7 +158,7 @@ const testCowTasks: Task[] = [
     sort: 40
   },
   {
-    id: '3-5',
+    id: '3-3',
     type: TaskType['IMPROVE_COLLECTOR'],
     state: 0,
     count: 3,
@@ -194,7 +170,7 @@ const testCowTasks: Task[] = [
     sort: 50
   },
   {
-    id: '3-6',
+    id: '3-4',
     type: TaskType['GET_ANIMAL'],
     state: 3,
     count: 2,
@@ -206,7 +182,7 @@ const testCowTasks: Task[] = [
     sort: 60
   },
   {
-    id: '3-7',
+    id: '3-5',
     type: TaskType['TAKE_DIAMOND_ANIMAL'],
     state: 0,
     count: 1,
@@ -219,30 +195,6 @@ const testCowTasks: Task[] = [
   },
   {
     id: '4-1',
-    type: TaskType['BUY_TERRITORY'],
-    state: TerritoryType['BOUGHT'],
-    count: 1,
-    done: 0,
-    awardTaken: 0,
-    awardType: 'diamond',
-    award: 1,
-    progress: 0,
-    sort: 10
-  },
-  {
-    id: '4-2',
-    type: TaskType['BUY_TERRITORY'],
-    state: TerritoryType['PASTURE'],
-    count: 1,
-    done: 0,
-    awardTaken: 0,
-    awardType: 'diamond',
-    award: 1,
-    progress: 0,
-    sort: 65
-  },
-  {
-    id: '4-3',
     type: TaskType['IMPROVE_ALL_TERRITORY'],
     state: 4,
     count: 6,
@@ -254,7 +206,7 @@ const testCowTasks: Task[] = [
     sort: 67
   },
   {
-    id: '4-4',
+    id: '4-2',
     type: TaskType['IMPROVE_FAIR'],
     state: 3,
     count: 1,
@@ -266,7 +218,7 @@ const testCowTasks: Task[] = [
     sort: 50
   },
   {
-    id: '4-5',
+    id: '4-3',
     type: TaskType['COLLECT_MONEY'],
     state: 0,
     count: 20000,
@@ -278,7 +230,7 @@ const testCowTasks: Task[] = [
     sort: 40
   },
   {
-    id: '4-6',
+    id: '4-4',
     type: TaskType['IMPROVE_COLLECTOR'],
     state: 0,
     count: 4,
@@ -290,7 +242,7 @@ const testCowTasks: Task[] = [
     sort: 60
   },
   {
-    id: '4-7',
+    id: '4-5',
     type: TaskType['GET_ANIMAL'],
     state: 4,
     count: 4,

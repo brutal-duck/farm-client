@@ -97,6 +97,7 @@ export default class CowTerritory extends Territory {
     this.scene.state.amplitude.logAmplitudeEvent('factory_up', {
       level: this.factory.improve,
     });
+    this.checkAllTerritoriesIsMaxImproveLvlTask();
 
     if (diamondPrice > 0) {
       this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
@@ -260,6 +261,7 @@ export default class CowTerritory extends Territory {
         }, callbackScope: this, loop: false });
       } else if (this.territoryType === 1) {
         this.territoryType = this.boughtType;
+        if (Utils.checkTestB(this.scene.state)) this.improve = this.scene.state[`user${this.scene.state.farm}`].part - 1 || 1;
         if (this.territoryType === 5) {
           this.volume = 0;
           this.money = 0;

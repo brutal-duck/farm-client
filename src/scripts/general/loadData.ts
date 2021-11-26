@@ -542,7 +542,7 @@ export default function loadData(response: AxiosResponse): void {
     countCow: response.data.user.count_cow,
     collector: response.data.user.cow_collector,
     collectorLevel: response.data.user.cowCollectorLevel,
-    collectorTimeLevel: response.data.user.cowCollectorTimelevel,
+    collectorTimeLevel: response.data.user.cowCollectorTimeLevel,
     collectorTakenTime: response.data.user.cow_collector,
     diamondAnimalTime: response.data.user.diamonds_cow_time,
     tutorial: response.data.user.cow_tutor,

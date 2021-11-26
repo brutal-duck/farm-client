@@ -976,9 +976,10 @@ function clickTaskBoardTestB(task: Task): void {
 
   const openTerritoryToImprove = (): void => {
     let territory = farmTerritories.find(el =>
-      (el.territoryType === 5 || el.territoryType === 3 || el.territoryType === 2) && el.improve < this.state[`user${this.state.farm}`].part
+      (el.territoryType === 5 || el.territoryType === 3 || el.territoryType === 2 || el.territoryType === 8) && el.improve < this.state[`user${this.state.farm}`].part
     )
-    if (territory) openTerritoryWindow(territory);
+    if (territory && territory.territoryType !== 8) openTerritoryWindow(territory);
+    else if (territory && territory.territoryType === 8) openFactory();
     else {
       territory = farmTerritories.find(el => el.territoryType === 1);
       if (territory && territory.cooldown === 0) openTerritoryWindow(territory);

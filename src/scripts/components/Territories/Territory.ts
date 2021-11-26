@@ -392,7 +392,7 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
         }, callbackScope: this, loop: false });
       } else if (this.territoryType === 1) {
         this.territoryType = this.boughtType;
-        if (Utils.checkTestB(this.scene.state)) this.improve = this.scene.state[`user${this.scene.state.farm}`].part - 1 || 1
+        if (Utils.checkTestB(this.scene.state)) this.improve = this.scene.state[`user${this.scene.state.farm}`].part - 1 || 1;
         if (this.territoryType === 5) {
           this.volume = 0;
           this.money = 0;
@@ -1091,14 +1091,14 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
     }
   };
 
-  private checkAllTerritoriesIsMaxImproveLvlTask(): void {
+  protected checkAllTerritoriesIsMaxImproveLvlTask(): void {
     let part = this.scene.state[`user${this.scene.state.farm}`].part
     let availableTerritories: number = part === 20 ? 21 : part + 2;
     if (this.scene.state.farm === 'Cow') {
       if (part === 2 || part === 3 || part === 4) availableTerritories = 6;
     }
     const farmTerritories = this.scene.territories.children.entries as Territory[];
-    const territories: Territory[] = farmTerritories.filter((el: Territory) => (el.territoryType === 5 || el.territoryType === 2 || el.territoryType === 3) && el.improve === part);
+    const territories: Territory[] = farmTerritories.filter((el: Territory) => (el.territoryType === 5 || el.territoryType === 2 || el.territoryType === 3 || el.territoryType === 8) && el.improve === part);
     this.scene.tryTask(TaskType['IMPROVE_ALL_TERRITORY'], availableTerritories, 0, territories.length);
   }
 
