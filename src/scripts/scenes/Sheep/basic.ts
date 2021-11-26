@@ -1,9 +1,11 @@
 import { randomString } from '../../general/basic';
 import SpeechBubble from '../../components/animations/SpeechBuble';
+import Utils from './../../libs/Utils';
+import Territory from './../../components/Territories/Territory';
 
 // расчет баланса фермы
 function balance(): Ibalance {
-
+  if (Utils.checkTestB(this.state)) return balanceTestB.bind(this)();
   let waterConsumption: number = 0;
   let grassConsumption: number = 0;
   let waterRecovery: number = 0;
@@ -103,6 +105,87 @@ function balance(): Ibalance {
 
 }
 
+function balanceTestB(): Ibalance {
+  let waterConsumption: number = 0;
+  let grassConsumption: number = 0;
+  let waterRecovery: number = 0;
+  let grassRecovery: number = 0;
+  let waterPercent: number = 0;
+  let grassPercent: number = 0;
+  let alarm: boolean = false;
+  let notEnoughGrass: boolean = false;
+  let notEnoughWater: boolean = false;
+
+  for (const sheep of this.sheep?.children.entries) {
+    if (sheep.type !== 0) {
+      const points: IsheepPoints =  this.settings.sheepSettings.find((item: IsheepPoints) => item.breed === sheep.type);
+      grassConsumption += points.eating;
+      waterConsumption += points.drinking;
+    }
+  }
+
+  const territories: Territory[] = this.territories?.children.entries;
+  for (const territory of territories) {
+    const partSettings: IpartSettings[] = this.settings.partSettings;
+    if (territory.territoryType === 2 || territory.territoryType === 3) {
+      const reg: number = partSettings[territory.improve - 1].territory.regeneration;
+      if (territory.territoryType === 2) grassRecovery += reg;
+      else waterRecovery += reg;
+    }
+  }
+
+  if (waterRecovery > 0) {
+    waterPercent = Math.round((waterRecovery - waterConsumption) / (waterRecovery / 100));
+  } else waterPercent = -100;
+  
+  if (grassRecovery > 0) {
+    grassPercent = Math.round((grassRecovery - grassConsumption) / (grassRecovery / 100));
+  } else grassPercent = -100;
+  
+  if (grassRecovery < grassConsumption || waterRecovery < waterConsumption) {
+
+    if (grassRecovery < grassConsumption) {
+      notEnoughGrass = true;
+
+      if (grassConsumption / 2 > grassRecovery) {
+        grassPercent = 100;
+      } else {
+        grassPercent = Math.round((grassConsumption - grassRecovery) / (grassRecovery / 100));
+      }
+    }
+
+    if (waterRecovery < waterConsumption) {
+      notEnoughWater = true;
+      
+      if (waterConsumption / 2 > waterRecovery) {
+        waterPercent = 100;
+      } else {
+        waterPercent = Math.round((waterConsumption - waterRecovery) / (waterRecovery / 100));
+      }
+    }
+
+    alarm = true;
+
+  }
+
+  if (waterPercent > 100) waterPercent = 100;
+  if (waterPercent < 0) waterPercent = 0;
+  if (grassPercent > 100) grassPercent = 100;
+  if (grassPercent < 0) grassPercent = 0;
+
+  return {
+    alarm: alarm,
+    waterPercent: waterPercent,
+    grassPercent: grassPercent,
+    grassConsumption: grassConsumption,
+    waterConsumption: waterConsumption,
+    grassRecovery: grassRecovery,
+    waterRecovery: waterRecovery,    
+    notEnoughGrass: notEnoughGrass,
+    notEnoughWater: notEnoughWater
+  }
+
+}
 
 // цена овцы
 function sheepPrice(breed: number) {
@@ -119,7 +202,7 @@ function sheepPrice(breed: number) {
     }
 
     insidePrice += price;
-    insideCounter++;
+    if (!Utils.checkTestB(this.state)) insideCounter++;
   }
 
   return {

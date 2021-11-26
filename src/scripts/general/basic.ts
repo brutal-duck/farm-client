@@ -20,6 +20,7 @@ import Sheep from './../scenes/Sheep/Main';
 import Cow from './../scenes/Cow/Main';
 import Territory from './../components/Territories/Territory';
 import Factory from './../components/Territories/Factory';
+import { Task, TaskType } from '../local/tasks/types';
 
 // рандомное число
 function random(min: number, max: number): number {
@@ -384,21 +385,49 @@ function logout(): void {
 
 
 function convertDiamonds(diamonds: number): number {
+  if (Utils.checkTestB(this.state)) return convertDiamondsTestB.bind(this)(diamonds);
   const farm: string = this.state.farm.toLowerCase();
   const partsSettings: Ipart[] = this.state[`${farm}Settings`][`${farm}Parts`];
   const part: number = this.state[`user${this.state.farm}`].part;
   
   let exchange: number = partsSettings.find((item: Ipart) => item.sort === part).exchange;
+  if (Utils.checkTestB(this.state)) {
+    const partSettings: IpartSettings[] = this.state[`${farm}Settings`].partSettings;
+    exchange = partSettings[part - 1].exchange;
+  }
+  return exchange *= diamonds;
+}
+
+function convertDiamondsTestB(diamonds: number): number {
+  const farm: string = this.state.farm.toLowerCase();
+  const partSettings: IpartSettings[] = this.state[`${farm}Settings`].partSettings;
+  const part: number = this.state[`user${this.state.farm}`].part;
+  
+  let exchange: number = partSettings[part - 1].exchange;
+  if (Utils.checkTestB(this.state)) {
+    const partSettings: IpartSettings[] = this.state[`${farm}Settings`].partSettings;
+    exchange = partSettings[part - 1].exchange;
+  }
   return exchange *= diamonds;
 }
 
 
 function convertMoney(money: number): number {
+  if (Utils.checkTestB(this.state)) return convertMoneyTestB.bind(this)(money);
   const farm: string = this.state.farm.toLowerCase();
   const partsSettings: Ipart[] = this.state[`${farm}Settings`][`${farm}Parts`];
   const part: number = this.state[`user${this.state.farm}`].part;
 
   const exchange: number = partsSettings.find((item: Ipart) => item.sort === part).exchange;
+  return Math.ceil(money / exchange);
+}
+
+function convertMoneyTestB(money: number): number {
+  const farm: string = this.state.farm.toLowerCase();
+  const partsSettings: IpartSettings[] = this.state[`${farm}Settings`].partSettings;
+  const part: number = this.state[`user${this.state.farm}`].part;
+
+  const exchange: number = partsSettings[part - 1].exchange;
   return Math.ceil(money / exchange);
 }
 
@@ -442,8 +471,15 @@ function exchange(ad: boolean = false): void {
     }, callbackScope: this, loop: false });
   } else {
     this.state.user.diamonds -= this.state.convertor.diamonds;
-    if (Utils.checkSale(this.state, `${this.state.farm.toUpperCase()}_MONEY`)) user.money += this.convertDiamonds(2 * this.state.convertor.diamonds);
-    else user.money += this.convertDiamonds(this.state.convertor.diamonds);
+    const addedMoney = this.convertDiamonds(this.state.convertor.diamonds);
+    const doubledMoney = this.convertDiamonds(2 * this.state.convertor.diamonds);
+    if (Utils.checkSale(this.state, `${this.state.farm.toUpperCase()}_MONEY`)){
+      user.money += doubledMoney;
+      this.tryTask(TaskType['EXCHANGE_DIAMOND'], 0, doubledMoney);
+    } else {
+      user.money += addedMoney;
+      this.tryTask(TaskType['EXCHANGE_DIAMOND'], 0, addedMoney);
+    }
     this.game.scene.keys[this.state.farm].tryClanTask(10, 0, this.state.convertor.diamonds);
     this.game.scene.keys[this.state.farm].achievement.tryId(39);
     if (this.scene.isActive('ClanFarm')) {
@@ -567,6 +603,7 @@ function donePart(): void {
 
 // забрать награду за задание
 function pickUpTaskReward(id: number): void {
+  if (Utils.checkTestB(this.state)) return pickUpTaskRewardTestB.bind(this)(String(id));
   let tasks: Itasks[] = [];
 
   if (this.state.farm === 'Sheep') tasks = this.state.sheepTasks;
@@ -590,6 +627,25 @@ function pickUpTaskReward(id: number): void {
     this.state.user.xp += task.xp;
     task.got_awarded = 1;
   }
+}
+
+function pickUpTaskRewardTestB(id: string): void {
+  const tasks: Task[] = this.state[`${this.state.farm.toLowerCase()}Tasks`];
+  const task = tasks.find((data) => data.id === id);
+  if (!task || task.done === 0 || task.awardTaken === 1) return;
+
+  if (task.awardType === 'diamond') {
+    this.state.user.diamonds += task.award;
+    this.state.amplitude.logAmplitudeEvent('diamonds_get', {
+      type: 'task_award',
+      count: task.award,
+    });
+  } else {
+    this.state.userSheep.money += task.award;
+  }
+
+  task.awardTaken = 1;
+  this.autosave();
 }
 
 // проверка подключения к интернету
@@ -1239,7 +1295,7 @@ function createTaskZone(): void {
 }
 
 function farmBalance(farm: string): Ibalance {
-
+  if (Utils.checkTestB(this.state)) farmBalanceTestB.bind(this)(farm);
   let waterConsumption: number = 0;
   let grassConsumption: number = 0;
   let waterRecovery: number = 0;
@@ -1275,6 +1331,87 @@ function farmBalance(farm: string): Ibalance {
       } else {
         waterRecovery += reg;
       }
+    }
+  }
+
+  if (waterRecovery > 0) {
+    waterPercent = Math.round((waterRecovery - waterConsumption) / (waterRecovery / 100));
+  } else waterPercent = -100;
+  
+  if (grassRecovery > 0) {
+    grassPercent = Math.round((grassRecovery - grassConsumption) / (grassRecovery / 100));
+  } else grassPercent = -100;
+  
+  if (grassRecovery < grassConsumption || waterRecovery < waterConsumption) {
+
+    if (grassRecovery < grassConsumption) {
+      notEnoughGrass = true;
+      if (grassConsumption / 2 > grassRecovery) {
+        grassPercent = 100;
+      } else {
+        grassPercent = Math.round((grassConsumption - grassRecovery) / (grassRecovery / 100));
+      }
+    }
+
+    if (waterRecovery < waterConsumption) {
+      notEnoughWater = true;
+      if (waterConsumption / 2 > waterRecovery) {
+        waterPercent = 100;
+      } else {
+        waterPercent = Math.round((waterConsumption - waterRecovery) / (waterRecovery / 100));
+      }
+    }
+    alarm = true;
+  }
+
+  if (waterPercent > 100) waterPercent = 100;
+  if (waterPercent < 0) waterPercent = 0;
+  if (grassPercent > 100) grassPercent = 100;
+  if (grassPercent < 0) grassPercent = 0;
+
+  return {
+    alarm: alarm,
+    waterPercent: waterPercent,
+    grassPercent: grassPercent,
+    grassConsumption: grassConsumption,
+    waterConsumption: waterConsumption,
+    grassRecovery: grassRecovery,
+    waterRecovery: waterRecovery,    
+    notEnoughGrass: notEnoughGrass,
+    notEnoughWater: notEnoughWater
+  }
+}
+
+function farmBalanceTestB(farm: string): Ibalance {
+  let waterConsumption: number = 0;
+  let grassConsumption: number = 0;
+  let waterRecovery: number = 0;
+  let grassRecovery: number = 0;
+  let waterPercent: number = 0;
+  let grassPercent: number = 0;
+  let alarm: boolean = false;
+  let notEnoughGrass: boolean = false;
+  let notEnoughWater: boolean = false;
+
+  const animals = this.state[farm.toLowerCase()];
+  const settings = this.state[`${farm.toLowerCase()}Settings`][`${farm.toLowerCase()}Settings`];
+  for (let i in animals) {
+    const animal = animals[i];
+    let breed: number;
+    if (animal.type === 0) breed = 1;
+    else breed = animal.type;
+    const points: IsheepPoints | IchickenPoints | IcowPoints = settings.find((item) => item.breed === breed);
+    grassConsumption += points.eating;
+    waterConsumption += points.drinking;
+  }
+
+  const territories: Iterritories[] = this.state[`${farm.toLowerCase()}Territories`];
+  for (let territory of territories) {
+    if (territory.type === 2 || territory.type === 3) {
+      const partSettings: IpartSettings[] = this.state[`${farm.toLowerCase()}Settings`].partSettings;
+      const reg: number = partSettings[territory.improve - 1].territory.regeneration;
+      if (territory.type === 2) grassRecovery += reg;
+      else waterRecovery += reg;
     }
   }
 

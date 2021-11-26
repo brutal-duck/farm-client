@@ -11,6 +11,8 @@ import Hint from '../components/animations/Hint';
 import Firework from './../components/animations/Firework';
 import RoundedProgress from '../components/animations/RoundedProgress';
 import SheepBars from './Sheep/SheepBars';
+import Utils from './../libs/Utils';
+import { Task } from '../local/tasks/types';
 
 
 class Tutorial extends Phaser.Scene {
@@ -641,6 +643,9 @@ class Tutorial extends Phaser.Scene {
 
           let tasks: Itasks[] = this.game.scene.keys[this.state.farm].partTasks();
           let task: Itasks = tasks.find((task: Itasks) => task.id === 1);
+          if (Utils.checkTestB(this.state)) {
+            task = tasks.find((el: any) => el.id === '1-1');
+          }
           let taskData: ItaskData = this.game.scene.keys[this.state.farm].getTaskData(task);
           let taskText: Phaser.GameObjects.Text = this.add.text(150, 0, taskData.name, {
             font: '23px Bip',
@@ -650,7 +655,8 @@ class Tutorial extends Phaser.Scene {
           }).setDepth(this.height).setOrigin(0, 0);
           let taskTextBounds = taskText.getBounds();
           taskText.y = this.height - taskTextBounds.height - 244;
-          let award: Phaser.GameObjects.Text = this.add.text(190, this.height - 220, String(task.diamonds), {
+          const count = Utils.checkTestB(this.state) ? task.award : task.diamonds;
+          let award: Phaser.GameObjects.Text = this.add.text(190, this.height - 220, String(count), {
             font: '20px Bip',
             color: '#FFFFFF'
           }).setDepth(this.height).setOrigin(0, 0.5);
@@ -675,7 +681,7 @@ class Tutorial extends Phaser.Scene {
             color: '#FFFFFF'
           }).setOrigin(0.5, 0.5).setDepth(this.height);
           this.clickShopBtn({ btn: done, title: takeText, img: false }, (): void => {
-            this.game.scene.keys[this.state.farm + 'Bars'].getCurrency({ x: done.x, y: done.y }, task.diamonds, 'diamond');
+            this.game.scene.keys[this.state.farm + 'Bars'].getCurrency({ x: done.x, y: done.y }, count, 'diamond');
             this.game.scene.keys[this.state.farm].doneTutor_60();
           });
 

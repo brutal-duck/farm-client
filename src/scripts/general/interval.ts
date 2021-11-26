@@ -7,6 +7,8 @@ import Arrow from './../components/animations/Arrow';
 import SpeechBubble from './../components/animations/SpeechBuble';
 import Factory from './../components/Territories/Factory';
 import axios from 'axios';
+import Utils from './../libs/Utils';
+import { Task } from '../local/tasks/types';
 
 function progressTerritoryCooldown (territories: Iterritories[], time: number, farm: string, offline: boolean = false): void {
   for (const territory of territories) {
@@ -133,6 +135,7 @@ function sheepIntervalProgress(): void {
 
 function chickenIntervalProgress(): void {
   const Scene: Sheep | Cow | Unicorn = this;
+  if (Scene.state.userChicken.part <= 0) return;
   const INDENT: number = 20;
   const chickenBalance: Ibalance = Scene.farmBalance('Chicken');
   const chickenSettings: IchickenSettings = Scene.state.chickenSettings;
@@ -214,6 +217,7 @@ function chickenIntervalProgress(): void {
 
 function cowIntervalProgress(): void {
   const Scene: Sheep | Chicken | Unicorn = this;
+  if (Scene.state.userCow.part <= 0) return;
   const MILK_DELAY: number = 10;
   const cowBalance: Ibalance = Scene.farmBalance('Cow');
   const cowSettings: IcowSettings = Scene.state.cowSettings;
@@ -256,7 +260,10 @@ function sheepCollectorProgress(sheepCollectorVolume: number): number {
       for (let i in Scene.state.sheepTerritories) {
         const territory: Iterritories = Scene.state.sheepTerritories[i];
         if (territory.type === 5) {
-          const max: number = Scene.state.sheepSettings.territoriesSheepSettings.find((data: IterritoriesSheepSettings) => data.improve === territory.improve).storage;
+          let max: number = Scene.state.sheepSettings.territoriesSheepSettings.find((data: IterritoriesSheepSettings) => data.improve === territory.improve).storage;
+          if (Utils.checkTestB(Scene.state)) {
+            max = Scene.state.sheepSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
+          }
           for (let i: number = 0; i < collectedWool; i += 1) {
             for (let i in Scene.state.sheep) {
               const sheep: Isheep = Scene.state.sheep[i];
@@ -299,7 +306,10 @@ function chickenCollectorProgress(chickenCollectorVolume: number): number {
       for (let i in Scene.state.chickenTerritories) {
         const territory: Iterritories = Scene.state.chickenTerritories[i];
         if (territory.type === 5) {
-          const max: number = Scene.state.chickenSettings.territoriesChickenSettings.find((data: IterritoriesChickenSettings) => data.improve === territory.improve).storage;
+          let max: number = Scene.state.chickenSettings.territoriesChickenSettings.find((data: IterritoriesChickenSettings) => data.improve === territory.improve).storage;
+          if (Utils.checkTestB(Scene.state)) {
+            max = Scene.state.chickenSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
+          }
           if (max > territory.volume) {
             const eggArray: IchickenEgg[] = Scene.state.chickenEggs.filter((el: IchickenEgg) => el.type !== 0);
             if (eggArray.length > 0) {
@@ -541,14 +551,18 @@ function checkStorageSheep(): boolean {
   if (this.state.farm === 'Sheep') {
     for (const territory of this.territories.children.entries) {
       if (territory.territoryType === 5) {
-        const max: number = this.state.sheepSettings.territoriesSheepSettings.find(el => el.improve === territory.improve).storage;
+        let max: number = this.state.sheepSettings.territoriesSheepSettings.find(el => el.improve === territory.improve).storage;
+        if (Utils.checkTestB(this.state)) max = this.state.sheepSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
+
         check.push(territory.volume >= max); 
       }
     }
   } else {
     for (const territory of this.state.sheepTerritories) {
       if (territory.type === 5) {
-        const max: number = this.state.sheepSettings.territoriesSheepSettings.find(el => el.improve === territory.improve).storage;
+        let max: number = this.state.sheepSettings.territoriesSheepSettings.find(el => el.improve === territory.improve).storage;
+        if (Utils.checkTestB(this.state)) max = this.state.sheepSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
+
         check.push(territory.volume >= max); 
       }
     }
@@ -561,14 +575,18 @@ function checkStorageChicken(): boolean {
   if (this.state.farm === 'Chicken') {
     for (const territory of this.territories.children.entries) {
       if (territory.territoryType === 5) {
-        const max: number = this.state.chickenSettings.territoriesChickenSettings.find(el => el.improve === territory.improve).storage;
+        let max: number = this.state.chickenSettings.territoriesChickenSettings.find(el => el.improve === territory.improve).storage;
+        if (Utils.checkTestB(this.state)) max = this.state.chickenSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
+
         check.push(territory.volume >= max); 
       }
     }
   } else {
     for (const territory of this.state.chickenTerritories) {
       if (territory.type === 5) {
-        const max: number = this.state.chickenSettings.territoriesChickenSettings.find(el => el.improve === territory.improve).storage;
+        let max: number = this.state.chickenSettings.territoriesChickenSettings.find(el => el.improve === territory.improve).storage;
+        if (Utils.checkTestB(this.state)) max = this.state.chickenSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
+
         check.push(territory.volume >= max); 
       }
     }
@@ -734,6 +752,7 @@ function showSale(scene: Sheep | Chicken | Cow): void {
 }
 
 function speedCheckCollector(): void {
+  if (Utils.checkTestB(this.state)) speedCheckCollectorTestB.bind(this)()
   const scene: Sheep | Chicken | Cow = this;
   const farm: string = scene.state.farm;
   const delayFilling: number = 10;
@@ -742,6 +761,34 @@ function speedCheckCollector(): void {
   const collectorSettings: IcollectorSettings[] = scene.state[`${farm.toLowerCase()}CollectorSettings`];
   const currentSettings: IcollectorSettings = collectorSettings.find(el => el.level === collectorLevel);
   if (currentSettings.level < collectorSettings.length) {
+    let animals: Phaser.GameObjects.Group =  scene[farm.toLowerCase()];
+    if (farm === 'Cow') animals = scene[`animalGroup`];
+    let animalsCount: number = 0;
+    animals.children.iterate((animal: any) => {
+      if (animal.type !== 0 && farm !== 'Cow' || farm === 'Cow' && animal.breed !== 0) {
+        animalsCount += 1;
+      }
+    });
+    if (animalsCount > currentSettings.speed * delayFilling && farmUser.collector > 0) {
+      scene.speedCollectorTimer -= 1;
+      if (scene.speedCollectorTimer <= 0) {
+        const text = scene.state.lang[`speedCollectorNotification${farm}`];
+        scene.speedCollectorTimer = 60;
+        SpeechBubble.create(scene.scene.get(`${farm}Bars`), text, 3);
+      }
+    }
+  }
+}
+
+function speedCheckCollectorTestB(): void {
+  const scene: Sheep | Chicken | Cow = this;
+  const farm: string = scene.state.farm;
+  const delayFilling: number = 10;
+  const farmUser: IuserSheep | IuserChicken | IuserCow = scene.state[`user${farm}`]
+  const { collectorLevel } = farmUser;
+  const collectorSettings: IpartSettings[] = scene.state[`${farm.toLowerCase()}Settings`].partSettings;
+  const currentSettings: IcollectorPartSettings = collectorSettings[collectorLevel - 1].collector;
+  if (collectorLevel !== farmUser.part) {
     let animals: Phaser.GameObjects.Group =  scene[farm.toLowerCase()];
     if (farm === 'Cow') animals = scene[`animalGroup`];
     let animalsCount: number = 0;

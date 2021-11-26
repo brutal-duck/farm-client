@@ -4,6 +4,9 @@ import AllTasks from '../tasks';
 
 import basicUnicornCollector from '../local/unicornCollector';
 import { unicornSettings, sheepSettings, chickenSettings, cowSettings, general } from '../local/settings';
+import { testSheepSettings, testChickenSettings, testCowSettings, testGeneral } from '../local/test/settings';
+import testSheepTasks from '../local/test/sheepTasks';
+
 import { userCow, userSheep, userChicken } from '../local/usersData';
 import sheepCollectorSettings from '../local/sheepCollector';
 import chickenCollectorSettings from '../local/chickenCollector';
@@ -13,6 +16,10 @@ import ErrorWindow from './../components/Web/ErrorWindow';
 import { getNewClanTasks } from './tasks';
 import DataValidator from './../libs/DataValidator';
 import Achievement from './../components/Utils/Achievement';
+import sheepPartSettings from '../local/test/sheepPartSettings';
+import chickenPartSettings from '../local/test/chickenPartSettings';
+import Utils from './../libs/Utils';
+import testChickenTasks from './../local/test/chickenTasks';
 const basicUserCow = userCow;
 const basicUserSheep = userSheep;
 const basicUserChicken = userChicken;
@@ -310,6 +317,17 @@ export default function loadData(response: AxiosResponse): void {
   state.sheepSettings = sheepSettings;
   state.chickenSettings = chickenSettings;
   state.cowSettings = cowSettings;
+
+  if (response.data.user.test === 'B') {
+    state.sheepSettings = testSheepSettings;
+    state.chickenSettings = testChickenSettings;
+    state.cowSettings = testCowSettings;
+    state.herdBoostTime = testGeneral.herdBoostTime;
+    state.sheepSettings.partSettings = sheepPartSettings;
+    state.chickenSettings.partSettings = chickenPartSettings;
+    // state.cowSettings.partSettings = cowSettings;
+  }
+
   // животные
   const sheep: Isheep[] = [];
   for (let i in response.data.user.sheep) {    
@@ -475,6 +493,7 @@ export default function loadData(response: AxiosResponse): void {
     countSheep: response.data.user.count_sheep,
     collector: response.data.user.shaver_time,
     collectorLevel: response.data.user.sheepCollectorLevel,
+    collectorTimeLevel: response.data.user.sheepCollectorTimeLevel,
     collectorTakenTime: response.data.user.shaver_time,
     diamondAnimalTime: response.data.user.diamonds_sheep_time,
     tutorial: response.data.user.tutor,
@@ -493,6 +512,7 @@ export default function loadData(response: AxiosResponse): void {
     countChicken: response.data.user.count_chicken,
     collector: response.data.user.chicken_collector,
     collectorLevel: response.data.user.chickenCollectorLevel,
+    collectorTimeLevel: response.data.user.chickenCollectorTimeLevel,
     collectorTakenTime: response.data.user.chicken_collector,
     diamondAnimalTime: response.data.user.diamonds_chicken_time,
     tutorial: response.data.user.chicken_tutor,
@@ -520,6 +540,7 @@ export default function loadData(response: AxiosResponse): void {
     countCow: response.data.user.count_cow,
     collector: response.data.user.cow_collector,
     collectorLevel: response.data.user.cowCollectorLevel,
+    collectorTimeLevel: response.data.user.cowCollectorTimelevel,
     collectorTakenTime: response.data.user.cow_collector,
     diamondAnimalTime: response.data.user.diamonds_cow_time,
     tutorial: response.data.user.cow_tutor,
@@ -546,19 +567,33 @@ export default function loadData(response: AxiosResponse): void {
     }
   }
 
-  state.userSheep = DataValidator.validateUserSheep(userSheep);
-  state.userChicken = DataValidator.validateUserChicken(userChicken);
-  state.userCow = DataValidator.validateUserCow(userCow);
+  state.userSheep = Utils.checkTestB(state) 
+    ? DataValidator.validateUserSheepTestB(userSheep) 
+    : DataValidator.validateUserSheep(userSheep);
 
-  state.sheepTasks = DataValidator.setTaskStatus(1, response.data.user.sheep_tasks);
-  state.chickenTasks = DataValidator.setTaskStatus(2, response.data.user.chicken_tasks);;
-  state.cowTasks = DataValidator.setTaskStatus(3, response.data.user.cow_tasks);;
+  state.userChicken = Utils.checkTestB(state) 
+    ? DataValidator.validateUserChickenTestB(userChicken) 
+    : DataValidator.validateUserChicken(userChicken);
+
+  state.userCow = Utils.checkTestB(state)
+    ? DataValidator.validateUserCowTestB(userCow)
+    : DataValidator.validateUserCow(userCow);
+
+  if (Utils.checkTestB(state)) {
+    state.sheepTasks = DataValidator.setTaskStatusTest(testSheepTasks, response.data.user.sheep_tasks) as unknown as Itasks[];
+    state.chickenTasks = DataValidator.setTaskStatusTest(testChickenTasks, response.data.user.chicken_tasks) as unknown as Itasks[];
+    state.cowTasks = DataValidator.setTaskStatus(3, response.data.user.cow_tasks);
+  } else {
+    state.sheepTasks = DataValidator.setTaskStatus(1, response.data.user.sheep_tasks);
+    state.chickenTasks = DataValidator.setTaskStatus(2, response.data.user.chicken_tasks);
+    state.cowTasks = DataValidator.setTaskStatus(3, response.data.user.cow_tasks);
+  }
 
   state.sheepCollectorSettings = sheepCollectorSettings;
   state.chickenCollectorSettings = chickenCollectorSettings;
   state.cowCollectorSettings = cowCollectorSettings;
 
-  const basicProgress: Iprogress = getProgress();
+  const basicProgress: Iprogress = getProgress(response.data.user.test === 'B');
   const progress: Iprogress = {
     sheep: {
       part: response.data.user.sheep_part,

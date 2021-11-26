@@ -7,6 +7,7 @@ import CowTerritory from './../components/Territories/CowTerritory';
 import ChickenTerritory from './../components/Territories/ChickenTerritory';
 import SheepTerritory from './../components/Territories/SheepTerritory';
 import { incFortuneAdTimer, progressClanCooldown, progressClanEventTime, progressSalesTime } from './interval';
+import Utils from './../libs/Utils';
 
 const updateUnicornCollectorTime = (state: Istate) => {
   const { userUnicorn, offlineTime } = state;
@@ -134,7 +135,8 @@ export default function autoprogress(load: boolean = false): void {
   
     // скорость сборки
     let speed: number = state.sheepCollectorSettings.find((data: IcollectorSettings) => data.level === state.userSheep.collectorLevel).speed;
-  
+    if (Utils.checkTestB(state)) speed = state.sheepSettings.partSettings[state.userSheep.collectorLevel - 1].collector.speed;
+    
     if (state.sheep.length > speed * 10) {
       let excess: number = 100 / (speed * 10) * state.sheep.length;
       let percent: number = 100 / (excess / 100);
@@ -162,6 +164,7 @@ export default function autoprogress(load: boolean = false): void {
       for (const territory of state.sheepTerritories) {
         if (territory.type === 5) {
           let max: number = state.sheepSettings.territoriesSheepSettings.find((item: IterritoriesSheepSettings) => item.improve === territory.improve).storage;
+          if (Utils.checkTestB(state)) max = state.sheepSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
           if (territory.volume < max) {
             let sheep = sheepWoolcuts.find(data => data.type === wool[i] && data.count > 0);
             if (sheep?.count > 0) sheep.count--;
@@ -186,6 +189,8 @@ export default function autoprogress(load: boolean = false): void {
     for (const territory of state.sheepTerritories) {
       if (territory.type === 5) {
         let max: number = state.sheepSettings.territoriesSheepSettings.find((item: IterritoriesSheepSettings) => item.improve === territory.improve).storage;
+        if (Utils.checkTestB(state)) max = state.sheepSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
+
         if (territory.volume > max) {
           territory.volume = max
         }
@@ -331,6 +336,7 @@ export default function autoprogress(load: boolean = false): void {
     // скорость сборки
     let percent: number = 100;
     let speed: number = state.chickenCollectorSettings.find((data: IcollectorSettings) => data.level === state.userChicken.collectorLevel).speed;
+    if (Utils.checkTestB(state)) speed = state.chickenSettings.partSettings[state.userChicken.collectorLevel - 1].collector.speed;
   
     if (state.chicken.length > speed * 10) {
       let excess: number = 100 / (speed * 10) * state.chicken.length;
@@ -362,6 +368,8 @@ export default function autoprogress(load: boolean = false): void {
         if (state.chickenTerritories[j].type === 5) {
           let territory = state.chickenTerritories[j];
           let max: number = state.chickenSettings.territoriesChickenSettings.find((item: IterritoriesChickenSettings) => item.improve === territory.improve).storage;
+          if (Utils.checkTestB(state)) max = state.chickenSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
+
           if (territory.volume < max && wasCollector > 0) {
             let egg = eggs.find(data => data.id === eggsArr[i].id);
             if (egg.count > 0) egg.count--;
@@ -528,7 +536,8 @@ export default function autoprogress(load: boolean = false): void {
     }
 
     // скорость сборки
-    const speed: number = state.cowCollectorSettings.find((data: IcollectorSettings) => data.level === state.userCow.collectorLevel).speed;
+    let speed: number = state.cowCollectorSettings.find((data: IcollectorSettings) => data.level === state.userCow.collectorLevel).speed;
+    if (Utils.checkTestB(state)) speed = state.cowSettings.partSettings[state.userCow.collectorLevel - 1].collector.speed;
   
     if (state.cow.length > speed * MILK_DELAY) {
       const excess: number = 100 / (speed * MILK_DELAY) * state.cow.length;
@@ -763,6 +772,7 @@ export default function autoprogress(load: boolean = false): void {
 
     // скорость сборки
     let speed: number = state.sheepCollectorSettings.find((data: IcollectorSettings) => data.level === state.userSheep.collectorLevel).speed;
+    if (Utils.checkTestB(state)) speed = state.sheepSettings.partSettings[state.userSheep.collectorLevel - 1].collector.speed;
 
     if (this.sheep.children.entries.length > speed * 10) {
 
@@ -797,6 +807,8 @@ export default function autoprogress(load: boolean = false): void {
 
           const territory: SheepTerritory = this.territories.children.entries[j];
           let max: number = this.settings.territoriesSheepSettings.find((item: IterritoriesSheepSettings) => item.improve === territory.improve).storage;
+
+          if (Utils.checkTestB(state)) max = state.sheepSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
 
           if (territory.volume < max) {
 
@@ -971,6 +983,7 @@ export default function autoprogress(load: boolean = false): void {
     // скорость сборки
     let percent: number = 100;
     let speed: number = state.chickenCollectorSettings.find((data: IcollectorSettings) => data.level === state.userChicken.collectorLevel).speed;
+    if (Utils.checkTestB(state)) speed = state.chickenSettings.partSettings[state.userChicken.collectorLevel - 1].collector.speed;
 
     if (this.chicken.children.entries.length > speed * 10) {
       let excess: number = 100 / (speed * 10) * this.chicken.children.entries.length;
@@ -1003,7 +1016,9 @@ export default function autoprogress(load: boolean = false): void {
       for (let j in this.territories.children.entries) {
         if (this.territories.children.entries[j].territoryType === 5) {
           const territory: ChickenTerritory = this.territories.children.entries[j];
-          const max: number = this.settings.territoriesChickenSettings.find((item: IterritoriesChickenSettings) => item.improve === territory.improve).storage;
+          let max: number = this.settings.territoriesChickenSettings.find((item: IterritoriesChickenSettings) => item.improve === territory.improve).storage;
+          if (Utils.checkTestB(state)) max = state.chickenSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
+
           if (territory.volume < max && wasCollector > 0) {
             const egg = eggs.find(data => data.id === eggsArr[i].id);
             if (egg.count > 0) egg.count--;
@@ -1194,7 +1209,8 @@ export default function autoprogress(load: boolean = false): void {
       }
     }
     // скорость сборки
-    const speed: number = state.cowCollectorSettings.find((data: IcollectorSettings) => data.level === state.userCow.collectorLevel).speed;
+    let speed: number = state.cowCollectorSettings.find((data: IcollectorSettings) => data.level === state.userCow.collectorLevel).speed;
+    if (Utils.checkTestB(state)) speed = state.cowSettings.partSettings[state.userCow.collectorLevel - 1].collector.speed;
   
     if (cowGroup.length > speed * MILK_DELAY) {
       const excess: number = 100 / (speed * MILK_DELAY) * cowGroup.length;

@@ -584,10 +584,19 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
   }
 
   private convertPoints(money: number): number {
+    if (Utils.checkTestB(this.scene.state)) return this.convertPointsTestB.bind(this)(money);
     const partsSettings: Ipart[] = this.scene.state[`${this.farm}Settings`][`${this.farm}Parts`];
     const part: number = this.scene.state[`user${Utils.ucFirst(this.farm)}`].part;
   
     const exchange: number = partsSettings.find((item: Ipart) => item.sort === part).exchange;
+    return Math.ceil(money / exchange);
+  }
+
+  private convertPointsTestB(money: number): number {
+    const partsSettings: IpartSettings[] = this.scene.state[`${this.farm}Settings`].partSettings;
+    const part: number = this.scene.state[`user${Utils.ucFirst(this.farm)}`].part;
+  
+    const exchange: number = partsSettings[part - 1].exchange;
     return Math.ceil(money / exchange);
   }
 

@@ -6,8 +6,8 @@ import Factory from './../components/Territories/Factory';
 import SheepTerritory from './../components/Territories/SheepTerritory';
 import ChickenTerritory from './../components/Territories/ChickenTerritory';
 import DataValidator from './../libs/DataValidator';
-import { Data } from 'phaser';
 import LocalStorage from './../libs/LocalStorage';
+import Utils from './../libs/Utils';
 
 export default function autosave(): void {
   const state: Istate = this.state;
@@ -300,9 +300,9 @@ export default function autosave(): void {
     boosts: state.user.boosts,
     test: state.user.test,
     fortuneTimeAd: state.user.fortuneTimeAd,
-    userSheep: DataValidator.validateUserSheep(state.userSheep),    
-    userChicken: DataValidator.validateUserChicken(state.userChicken),    
-    userCow: DataValidator.validateUserCow(state.userCow),   
+    userSheep: Utils.checkTestB(state) ? DataValidator.validateUserSheepTestB(state.userSheep) : DataValidator.validateUserSheep(state.userSheep),    
+    userChicken: Utils.checkTestB(state) ? DataValidator.validateUserChickenTestB(state.userChicken) : DataValidator.validateUserChicken(state.userChicken),    
+    userCow: Utils.checkTestB(state) ? DataValidator.validateUserCowTestB(state.userCow) : DataValidator.validateUserCow(state.userCow),   
     userUnicorn: userUnicorn, 
     takenFreeDiamonds: state.user.takenFreeDiamonds,
     takenSocialAward: state.user.takenSocialAward,

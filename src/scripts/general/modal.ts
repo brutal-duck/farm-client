@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { romanize, shortNum } from './basic';
 import { FAPI } from '../libs/Fapi.js';
+import { Task } from '../local/tasks/types';
+import Utils from './../libs/Utils';
 
 // окно подтверждения смены территории
 function confirmExchangeTerritory(type: number): void {
@@ -42,6 +44,7 @@ function showBank(): void {
 
 // окно завершения текущей главы
 function nextPart(): void {
+  if (Utils.checkTestB(this.state)) return nextPartTestB.bind(this)();
   let user: IuserSheep | IuserChicken | IuserCow;
   let parts: Ipart[];
   if (this.state.farm === 'Sheep') {
@@ -89,9 +92,57 @@ function nextPart(): void {
   }
 }
 
+function nextPartTestB(): void {
+  let user: IuserSheep | IuserChicken | IuserCow;
+  let parts: IpartSettings[];
+  if (this.state.farm === 'Sheep') {
+    user = this.state.userSheep;
+    parts = this.state.sheepSettings.partSettings;
+  } else if (this.state.farm === 'Chicken') {
+    user = this.state.userChicken;
+    parts = this.state.chickenSettings.partSettings;
+  } else if (this.state.farm === 'Cow') {
+    user = this.state.userCow;
+    parts = this.state.cowSettings.partSettings;
+  }
+
+  if (parts.length > user.part) {
+    const tasks: Task[] = this.partTasks();
+    let status: boolean = true;
+    if (tasks.length === 0) status = false;
+    for (let i: number = 0; i < tasks.length; i++) {
+      if (tasks[i].done !== 1 || tasks[i].awardTaken !== 1) {
+        status = false;
+        break;
+      }
+    }
+
+    if (status) {
+      const part: string = this.state.lang.part + ' ' + user.part;
+      const namePart: string = this.state.lang[this.state.farm.toLowerCase() + 'NamePart' + user.part];
+      const award: number = 0;
+      const doneText: string = this.state.lang[this.state.farm.toLowerCase() + 'PartDone' + user.part];
+      const donePart: IdonePart = {
+        part: part,
+        name: namePart,
+        award: 'x ' + award,
+        doneText: doneText,
+        chapter: this.state.farm.toLowerCase() + '-chapter-' + user.part
+      }
+      const modal: Imodal = {
+        type: 5,
+        donePart: donePart
+      }
+      this.state.modal = modal;
+      this.scene.launch('Modal', this.state);
+    }
+  }
+}
+
 
 // окно заданий
 function showTasks(): void {
+  if (Utils.checkTestB(this.state)) return showTasksTestB.bind(this)();
   let part: number;
   if (this.state.farm === 'Sheep') part = this.state.userSheep.part;
   else if (this.state.farm === 'Chicken') part = this.state.userChicken.part;
@@ -112,6 +163,32 @@ function showTasks(): void {
     name: this.state.lang[this.state.farm.toLowerCase() + 'NamePart' + part],
     farmer: this.state.lang[this.state.farm.toLowerCase() + 'ProfileName'] + ' ' + romanize(part),
     done: done,
+    description: this.state.lang[this.state.farm.toLowerCase() + 'PartAward' + part],
+    tasks: tasks
+  }
+
+  const modal: Imodal = {
+    type: 3,
+    tasksParams: tasksParams
+  }
+  this.state.modal = modal;
+  this.scene.launch('Modal', this.state);
+
+}
+
+function showTasksTestB(): void {
+  let part: number;
+  if (this.state.farm === 'Sheep') part = this.state.userSheep.part;
+  else if (this.state.farm === 'Chicken') part = this.state.userChicken.part;
+  else if (this.state.farm === 'Cow') part = this.state.userCow.part;
+
+  let tasks: Task[] = this.partTasks();
+
+  const tasksParams: ItasksParams = {
+    part: String(part),
+    name: this.state.lang[this.state.farm.toLowerCase() + 'NamePart' + part],
+    farmer: this.state.lang[this.state.farm.toLowerCase() + 'ProfileName'] + ' ' + romanize(part),
+    done: false,
     description: this.state.lang[this.state.farm.toLowerCase() + 'PartAward' + part],
     tasks: tasks
   }

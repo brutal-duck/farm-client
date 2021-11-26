@@ -99,5 +99,12 @@ export default class Utils {
     state.userUnicorn?.points >= 1 ||
     state.userCow?.part >= 1);
   }
+
+  /**
+   * 
+   * @param state 
+   * @returns Возвращает true, если пользователь имеет тест В, иначе false
+   */
+  public static checkTestB = (state: Istate): boolean => state && state.user.test === 'B';
 };
 

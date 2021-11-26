@@ -4,6 +4,9 @@ import Firework from '../../components/animations/Firework';
 import MergingCloud from '../../components/animations/MergingCloud';
 import Wool from '../../components/Resource/Wool';
 import SpeechBubble from '../../components/animations/SpeechBuble';
+import Utils from './../../libs/Utils';
+import SheepTerritory from './../../components/Territories/SheepTerritory';
+import { TaskType } from '../../local/tasks/types';
 
 
 // телепортация овец на свободные территории
@@ -569,23 +572,22 @@ function collectWool(sheep: any, manualСollect: boolean = false, anim: boolean 
     } else {
 
       for (let i in this.territories.children.entries) {
-
-        let territory = this.territories.children.entries[i];
+        let territory: SheepTerritory = this.territories.children.entries[i];
 
         if (territory.territoryType === 5) {
-          
           let max: number = this.state.sheepSettings.territoriesSheepSettings.find((data: IterritoriesSheepSettings) => data.improve === territory.improve).storage;
 
+          if (Utils.checkTestB(this.state)) {
+            max = this.state.sheepSettings.partSettings[territory.improve - 1].territory.maxRepositoryVolume;
+          }
+
           if (max > territory.volume) {
-
             sheep.wool = 0;
-
-            let position: Iposition = {
+            const position: Iposition = {
               x: territory.x + 120,
               y: territory.y + 120
             }
-            let distance: number = Phaser.Math.Distance.Between(sheep.x, sheep.y - 50, position.x, position.y);
-            
+            const distance: number = Phaser.Math.Distance.Between(sheep.x, sheep.y - 50, position.x, position.y);
             if (length === undefined || distance < length) {
               length = distance;
               path = position;
@@ -656,7 +658,7 @@ function collectWool(sheep: any, manualСollect: boolean = false, anim: boolean 
 function sellWool(): void {
   if (this.state.territory) {
     if (this.state.territory.territoryType === 5 && this.state.territory.money > 0) {
-      this.tryTask(20, 0);
+      this.tryTask(TaskType['SELL_RESOURCE'], 0, this.state.territory.volume);
       this.tryClanTask(2);
 
       this.state.userSheep.money += this.state.territory.money;

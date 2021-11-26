@@ -4,6 +4,7 @@ import Hearts from '../../components/animations/Hearts';
 import SpeechBubble from '../../components/animations/SpeechBuble';
 import SheepTerritory from './../../components/Territories/SheepTerritory';
 import { decrementAdFreeDiamondTime, incFortuneAdTimer, incInterstitialAdTimer, progressClanCooldown, progressClanEventTime, progressSalesTime, showSale } from '../../general/interval';
+import Utils from './../../libs/Utils';
 
 let checkCollector: number = 0;
 const BALANCE_HINT_COUNTDOWN = 20;
@@ -122,6 +123,7 @@ function interval(): void {
       let territory: SheepTerritory = this.territories.children.entries[i];
       if ((territory.territoryType === 2 || territory.territoryType === 3) && territory.volume < 1000) {
         let reg: number = this.settings.territoriesSheepSettings.find((item: IterritoriesSheepSettings) => item.improve === territory.improve).regeneration;
+        if (Utils.checkTestB(this.state)) reg = this.state.sheepSettings.partSettings[territory.improve - 1].territory.regeneration;
         territory.volume += reg;
         if (territory.volume > 1000) {
           territory.volume = 1000;

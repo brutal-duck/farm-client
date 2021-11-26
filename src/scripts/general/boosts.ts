@@ -279,6 +279,8 @@ function improveCollector(): void {
 // бесплатный собиратель
 function freeCollector(type: number = 1): void {
 
+  if (Utils.checkTestB(this.state)) return freeCollectorTestB.bind(this)(type);
+  
   let user: IuserSheep | IuserChicken | IuserCow;
   let settings: IcollectorSettings[];
   let doubledСollectorPrice: number;
@@ -373,6 +375,74 @@ function freeCollector(type: number = 1): void {
   }
 }
 
+function freeCollectorTestB(type: number = 1): void {
+  const user: IuserSheep | IuserChicken | IuserCow = this.state[`user${this.state.farm}`];
+  const settings: IsheepSettings | IchickenSettings | IcowSettings = this.state[`${this.state.farm.toLowerCase()}Settings`];
+  const doubledСollectorPrice: number = settings.doubledСollectorPrice;
+
+  this.scrolling.wheel = true;
+  this.scene.stop('Shop');
+  this.scene.stop('ShopBars');
+  this.scene.stop('Modal');
+
+  if (user.collector === 0) {
+    const minutes = settings.partSettings[user.collectorTimeLevel - 1].collector.time;
+
+    if (type === 1) {
+      const collector: number = minutes * 60;
+      user.collector += collector;
+      user.collectorTakenTime = user.collector;
+      this.game.scene.keys[this.state.farm + 'Bars'].collector.update();
+      this.tryTask(3, 0, minutes);
+      this.tryClanTask(7, 0, minutes);
+  
+      if (user.tutorial === 90 && this.state.farm === 'Sheep') {
+        this.doneTutor_90();
+      }
+  
+      this.state.amplitude.logAmplitudeEvent('collector', {
+        type: 'free',
+      });
+      Firework.create(this.game.scene.keys[`${this.state.farm}Bars`], { x: 230, y: this.game.config.height - 90 }, 1);
+    } else {
+      const doubleMinutes = minutes * 2;
+      let doubleTimePrice: number = Math.floor(doubleMinutes / 60 * doubledСollectorPrice);
+
+      if (this.state.user.diamonds >= doubleTimePrice) {
+        if (Utils.checkSale(this.state, `${this.state.farm.toUpperCase()}_COLLECTOR_PRICE`)) doubleTimePrice = Math.floor(doubleTimePrice / 2);
+        this.state.user.diamonds -= doubleTimePrice;
+        user.collector += doubleMinutes * 60;
+        user.collectorTakenTime = user.collector;
+        this.game.scene.keys[this.state.farm + 'Bars'].collector.update();
+        this.tryTask(3, 0, doubleMinutes);
+        this.tryTask(15, 0, doubleTimePrice);
+        this.tryClanTask(7, 0, doubleMinutes);
+
+        this.state.amplitude.logAmplitudeEvent('collector', {
+          type: doubleMinutes + ' minutes',
+          price: 'hard',
+        });
+
+        this.state.amplitude.logAmplitudeEvent('diamonds_spent', {
+          type: 'collector',
+          count: doubleTimePrice,
+        });
+        Firework.create(this.game.scene.keys[`${this.state.farm}Bars`], { x: 230, y: this.game.config.height - 90 }, 1);
+      } else {
+        const count: number = doubleTimePrice - this.state.user.diamonds;
+        this.state.convertor = {
+          fun: 0,
+          count: count,
+          diamonds: count,
+          type: 2
+        };
+        const modal: Imodal = { type: 1, sysType: 4 };
+        this.state.modal = modal;
+        this.scene.launch('Modal', this.state);
+      }
+    }
+  }
+}
 
 // покупка собирателя
 function buyCollector(type: number): void {

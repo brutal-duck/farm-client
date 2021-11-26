@@ -263,6 +263,7 @@ interface IuserSheep {
   countSheep: number;
   collector: number;
   collectorLevel: number;
+  collectorTimeLevel: number;
   collectorTakenTime: number;
   diamondAnimalTime: number;
   tutorial: number;
@@ -280,6 +281,7 @@ interface IuserChicken {
   countChicken: number;
   collector: number;
   collectorLevel: number;
+  collectorTimeLevel: number;
   collectorTakenTime: number;
   diamondAnimalTime: number;
   tutorial: number;
@@ -319,6 +321,7 @@ interface IuserCow {
   diamondAnimalAd: boolean;
   takenHerdBoost: number;
   feedBoostTime: number;
+  collectorTimeLevel: number;
   factory: Ifactory;
   herdBoostAd: boolean;
   feedBoostAd: boolean;
@@ -560,6 +563,26 @@ interface IsheepSettings {
   unlockCollector12: number;
   sheepDiamondsTime: number;
   feedBoostPrice: number;
+  partSettings?: IpartSettings[];
+}
+interface IcollectorPartSettings {
+  time: number;
+  improveTimePrice: number;
+  speed: number;
+  imporveSpeedPrice: number;
+}
+interface IterritoriesPartSettings {
+  improveRepositoryPrice: number;
+  improveTerritoryPrice: number;
+  improveFairPrice: number;
+  regeneration: number;
+  cooldown: number;
+  maxRepositoryVolume: number
+};
+interface IpartSettings {
+  collector: IcollectorPartSettings;
+  territory: IterritoriesPartSettings;
+  exchange: number;
 }
 interface IchickenSettings {
   chickenBadPercent: number;
@@ -577,6 +600,7 @@ interface IchickenSettings {
   unlockCollector12: number;
   chickenDiamondsTime: number;
   feedBoostPrice: number;
+  partSettings?: IpartSettings[];
 }
 interface IcowSettings {
   cowBadPercent: number;
@@ -596,6 +620,7 @@ interface IcowSettings {
   cowDiamondsTime: number;
   feedBoostPrice: number;
   storageMultiply?: number;
+  partSettings?: IpartSettings[];
 }
 interface IunicornSettings {
   unicornSettings: IunicornPoints[]; // нужно попарвить
@@ -628,6 +653,7 @@ interface Itasks {
   type: number;
   xp: number;
   farm: number;
+  award?: number;
 }
 interface Iachievement {
   id: number;
@@ -660,7 +686,7 @@ interface ItasksParams {
   farmer: string;
   done: boolean;
   description: string;
-  tasks: Itasks[];
+  tasks: Itasks[] | any;
 }
 interface IunicornParams {
   offlineTime: number;

@@ -1,9 +1,8 @@
 import { sendAppEventVk } from '../../general/basic';
-import LocalStorage from './../../libs/LocalStorage';
+import LocalStorage from '../../libs/LocalStorage';
+import { Task } from '../../local/tasks/types';
 import RoundedProgress from '../animations/RoundedProgress';
 import BarsScene from '../Scenes/BarsScene';
-import Utils from './../../libs/Utils';
-import TaskBoardNew from './TaskBoardNew';
 
 /**
   *  Планка заданий в барах сцен    
@@ -13,7 +12,7 @@ import TaskBoardNew from './TaskBoardNew';
 */
 
 // плашка заданий
-export default class TaskBoard extends Phaser.GameObjects.TileSprite {
+export default class TaskBoardNew extends Phaser.GameObjects.TileSprite {
 
   public scene: BarsScene;
 
@@ -50,7 +49,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
   private animation: Phaser.Tweens.Tween;
   private progressAni: Phaser.Tweens.Tween 
   private isUpdated: boolean = false;
-  private taskId: number;
+  private taskId: string;
   private gotAward: number;
   private listButton: Phaser.GameObjects.Sprite;
   private listIsOpen: boolean = false;
@@ -65,9 +64,8 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
     this.init();
   }
 
-  static create(scene: BarsScene): any {
-    if (Utils.checkTestB(scene.state)) return TaskBoardNew.create(scene);
-    return new TaskBoard(scene);
+  static create(scene: BarsScene): TaskBoardNew {
+    return new TaskBoardNew(scene);
   }
 
   private init(): void {
@@ -163,14 +161,14 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
   public preUpdate(): void {
     this.checkVisibility();
     const farm = this.scene.state.farm;
-    let stateParts: Ipart[] = this.scene.state[`${farm.toLowerCase()}Settings`][`${farm.toLowerCase()}Parts`];
+    let stateParts: IpartSettings[] = this.scene.state[`${farm.toLowerCase()}Settings`].partSettings;
     let userData: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${farm}`];
     let countBreed: number = this.scene.state[`${farm.toLowerCase()}Settings`][`${farm.toLowerCase()}Settings`].length;
     
-    const tasks: Itasks[] = this.scene.game.scene.keys[this.scene.state.farm].partTasks();
-    tasks.sort((x1: Itasks, x2: Itasks) => {
-      if (x1.got_awarded < x2.got_awarded) return -1;
-      if (x1.got_awarded > x2.got_awarded) return 1;
+    const tasks: Task[] = this.scene.game.scene.keys[this.scene.state.farm].partTasks();
+    tasks.sort((x1: Task, x2: Task) => {
+      if (x1.awardTaken < x2.awardTaken) return -1;
+      if (x1.awardTaken > x2.awardTaken) return 1;
       if (x1.done < x2.done) return 1;
       if (x1.done > x2.done) return -1;
       if (x1.sort < x2.sort) return -1;
@@ -179,7 +177,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
     });
     
     let setter: boolean = false;
-    const task: Itasks = tasks[0];
+    const task: Task = tasks[0];
         
     // Определение текущего задание для тестирования
     // if (this.t !== task) this.t = task
@@ -197,21 +195,21 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
       this.taskStatus === task?.done && 
       this.currentTaskProgress === task?.progress && 
       this.taskId === task?.id && 
-      this.gotAward === task?.got_awarded ||
+      this.gotAward === task?.awardTaken ||
       this.isMoving) return;
     else {
       if (this.taskId !== task?.id) setter = true;
 
       this.currentTaskProgress = task.progress;
-      this.gotAward = task.got_awarded;
+      this.gotAward = task.awardTaken;
       this.taskStatus = task.done;
       this.taskId = task.id;
       if (this.taskStatus === 0) this.status = 1;
-      else if (this.taskStatus === 1 && task?.got_awarded === 0) this.status = 2;
+      else if (this.taskStatus === 1 && task?.awardTaken === 0) this.status = 2;
       else this.status = 3;
       if (this.status === 3
         && task?.done === 1
-        && task?.got_awarded === 1
+        && task?.awardTaken === 1
         && stateParts.length === userData.part
       ) this.status = 4;
       
@@ -264,21 +262,15 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
         const taskTextBounds: Phaser.Geom.Rectangle = this.taskText.getBounds();
         this.taskText.setPosition(150, this.scene.height - taskTextBounds.height - 248);
         
-        let icon: string = 'diamond';
-        let award: number = task.diamonds;
+        const icon: string = task.awardType === 'diamond' ? 'diamond' : `${this.scene.state.farm.toLowerCase()}Coin`;
+        const award: number = task.award;
         
         this.award.setText(String(award)).setPosition(190, this.positionY - 220);
         this.diamond.setTexture(icon).setPosition(160, this.positionY - 220);
 
-        if (this.scene.state.farm === 'Sheep') {
-          let moneyTask: any = this.scene.game.scene.keys['Sheep'].moneyTasks.find(el => el.id === task.id);
-          if (moneyTask) {
-            award = moneyTask.money;
-            this.award.setText(String(award));
-            this.diamond.setTexture('sheepCoin');
-            this.awardBg.setSize(this.diamond.getBounds().width + this.award.getBounds().width + 26, this.awardBg.height);
-          } else this.awardBg.setSize(60, 40);
-        }
+        if (icon !== 'diamond') {
+          this.awardBg.setSize(this.diamond.getBounds().width + this.award.getBounds().width + 26, this.awardBg.height);
+        } else this.awardBg.setSize(60, 40);
 
         const bounds = this.award.getBounds();
         this.awardBg.setPosition(bounds.left - 40, bounds.top - 3);
@@ -301,8 +293,8 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
           img: false
         }, (): void => {
           if (!this.closingAniIsPlaying) {
-            if (icon === 'diamond') this.scene.getCurrency({ x: this.done.x, y: this.done.y }, task.diamonds, 'diamond');
-            else if (icon === 'sheepCoin') this.scene.plusMoneyAnimation({ x: this.done.x, y: this.done.y });
+            if (icon === 'diamond') this.scene.getCurrency({ x: this.done.x, y: this.done.y }, task.award, 'diamond');
+            else this.scene.plusMoneyAnimation({ x: this.done.x, y: this.done.y });
             this.scene.game.scene.keys[this.scene.state.farm].pickUpTaskReward(task.id);
             this.createOldBoard(task);
           }
@@ -525,7 +517,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
     }
   }
 
-  private createOldBoard(task: Itasks): void {
+  private createOldBoard(task: Task): void {
     if (this.progressAni?.isPlaying()) this.progressAni?.remove();
     this.setVisibleProgressElements(false)
 
@@ -651,10 +643,10 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
   }
 
   private createAllTasks(): void {
-    const tasksParams: Itasks[] = this.scene.game.scene.keys[this.scene.state.farm].partTasks();
-    tasksParams.sort((x1: Itasks, x2: Itasks) => {
-      if (x1.got_awarded > x2.got_awarded) return -1;
-      if (x1.got_awarded < x2.got_awarded) return 1;
+    const tasksParams: Task[] = this.scene.game.scene.keys[this.scene.state.farm].partTasks();
+    tasksParams.sort((x1: Task, x2: Task) => {
+      if (x1.awardTaken > x2.awardTaken) return -1;
+      if (x1.awardTaken < x2.awardTaken) return 1;
       if (x1.done > x2.done) return 1;
       if (x1.done < x2.done) return -1;
       if (x1.sort > x2.sort) return -1;
@@ -669,7 +661,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
     this.aditionalHeight = 0;
     
     for (let i: number = 0; i < tasksParams.length; i++) {    
-      const task: Itasks = tasksParams[i];
+      const task: Task = tasksParams[i];
       const taskData: ItaskData = this.scene.game.scene.keys[this.scene.state.farm].getTaskData(task);
       this.elements = this.elements.concat(this.createTaskListElement(task, taskData, i));
     }
@@ -677,7 +669,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
     if (!this.closingAniIsPlaying) this.openTaskListAnimation();
   }
 
-  private createTaskListElement(task: Itasks, taskData: ItaskData, i: number): any[] {
+  private createTaskListElement(task: Task, taskData: ItaskData, i: number): any[] {
     const icon: Phaser.GameObjects.Image = this.scene.add.sprite(88, this.bg.getTopCenter().y - 60 - i * 110, taskData.icon).setDepth(this.bg.depth + 1).setScale(0.85).setAlpha(0);
     const text: Phaser.GameObjects.Text = this.scene.add.text(icon.getBounds().right + 20, this.bg.getTopCenter().y - 60 - i * 110, taskData.name, {
       font: '24px Bip',
@@ -696,7 +688,7 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
     let progress: RoundedProgress = null;
     let border1: Phaser.GameObjects.Sprite = null;
     let border2: Phaser.GameObjects.Sprite = null;
-    if (task.done === 1 && task.got_awarded === 1) {
+    if (task.done === 1 && task.awardTaken === 1) {
       icon.setTint(0x777777).setAlpha(0);
       completed = this.scene.add.sprite(icon.x, icon.y, 'completed').setDepth(this.bg.depth + 2).setTint(0xc0c0c0).setOrigin(0.5).setAlpha(0);
       text.setColor('#6f6f6f').setAlpha(0);

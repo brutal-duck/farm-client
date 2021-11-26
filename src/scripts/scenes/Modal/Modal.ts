@@ -50,6 +50,8 @@ import SaleWindow from './../../components/modal/SaleWindow';
 import ReviewWindow from '../../components/modal/ReviewWindow';
 import AvatarsWindow from './../../components/modal/AvatarsWindow';
 import AchievementsBars from '../../components/modal/achievements/AchievementsBars';
+import Utils from './../../libs/Utils';
+import TasksWindowNew from '../../components/modal/TasksWindowNew';
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -75,6 +77,7 @@ class Modal extends Phaser.Scene {
   public socialTakskWindow: SocialTasksWindow;
   public chatBars: ChatBars;
   public taskWindow: TasksWindow;
+  public taskWindowNew: TasksWindowNew;
   public ClanTabsWindow: ClanTabsWindow;
   public oldType: number = 0;
   public hints: Phaser.GameObjects.Group;
@@ -130,7 +133,8 @@ class Modal extends Phaser.Scene {
         this.scene.launch('Shop', this.state);
         break;
       case 3: // окно с заданиями
-        this.taskWindow = new TasksWindow(this)
+        if (Utils.checkTestB(this.state)) this.taskWindowNew = new TasksWindowNew(this);
+        else this.taskWindow = new TasksWindow(this);
         break;
       case 4: // ежедневные награды
         new DailyAwardWindow(this);
@@ -295,22 +299,36 @@ class Modal extends Phaser.Scene {
 
       let max: number, count: string, percent: number = 0;
 
-      if (this.state.farm === 'Sheep') {
-
-        max = this.state.sheepSettings.territoriesSheepSettings.find((data: IterritoriesSheepSettings) => data.improve === this.state.territory.improve).storage;
-        count = this.state.lang.countWool;
-
-      } else if (this.state.farm === 'Chicken') {
-
-        max = this.state.chickenSettings.territoriesChickenSettings.find((data: IterritoriesChickenSettings) => data.improve === this.state.territory.improve).storage;
-        count = this.state.lang.countEggs;
-
-      } else if (this.state.farm === 'Cow') {
-
-        max = this.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === this.state.territory.improve).lotSize * this.state.storageMultiply;
-        count = this.state.lang.countMilk;
-
+      if (Utils.checkTestB(this.state)) {
+        if (this.state.farm === 'Sheep') {
+          max = this.state.sheepSettings.partSettings[this.state.territory?.improve - 1].territory.maxRepositoryVolume;
+          count = this.state.lang.countWool;
+        } else if (this.state.farm === 'Chicken') {
+          max = this.state.chickenSettings.partSettings[this.state.territory?.improve - 1].territory.maxRepositoryVolume;
+          count = this.state.lang.countEggs;
+        } else if (this.state.farm === 'Cow') {
+          max = this.state.cowSettings.partSettings[this.state.territory?.improve - 1].territory.maxRepositoryVolume;
+          count = this.state.lang.countMilk;
+        }
+      } else {
+        if (this.state.farm === 'Sheep') {
+  
+          max = this.state.sheepSettings.territoriesSheepSettings.find((data: IterritoriesSheepSettings) => data.improve === this.state.territory.improve).storage;
+          count = this.state.lang.countWool;
+  
+        } else if (this.state.farm === 'Chicken') {
+  
+          max = this.state.chickenSettings.territoriesChickenSettings.find((data: IterritoriesChickenSettings) => data.improve === this.state.territory.improve).storage;
+          count = this.state.lang.countEggs;
+  
+        } else if (this.state.farm === 'Cow') {
+  
+          max = this.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === this.state.territory.improve).lotSize * this.state.storageMultiply;
+          count = this.state.lang.countMilk;
+  
+        }
       }
+
       if (this.state.territory.volume > 0) {
         percent = this.state.territory.volume / (max / 100);
       }

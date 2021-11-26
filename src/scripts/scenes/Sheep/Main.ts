@@ -125,7 +125,7 @@ import {
   VKOnAdsReady,
   VKNoAds
 } from '../../general/ads';
-import setCollector from './collector';
+import setCollector, { updateCollector } from './collector';
 import { showEventTutorial, doneEventTutor_0 } from './../Event/Unicorns/tutorial';
 import {
   chickenIntervalProgress,
@@ -142,6 +142,8 @@ import {
 } from '../../general/interval';
 import Ads from '../../components/Utils/Ads';
 import Achievement from './../../components/Utils/Achievement';
+import Utils from './../../libs/Utils';
+import SheepTerritory from '../../components/Territories/SheepTerritory';
 
 class Sheep extends Phaser.Scene {
   constructor() {
@@ -190,6 +192,8 @@ class Sheep extends Phaser.Scene {
   public speedCollectorTimer: number = 0;
   public ads: Ads;
   public achievement: Achievement;
+  public collectorCD: number;
+  public collectorIsReady: boolean;
 
   public readonly moneyTasks: { id: number, money: number }[] = [
     {
@@ -202,26 +206,26 @@ class Sheep extends Phaser.Scene {
     }
   ];
 
-  public world = world.bind(this);
-  public drag = drag.bind(this);
-  public collisions = collisions.bind(this);
-  public sheepBrain = sheepBrain.bind(this);
-  public interval = interval.bind(this);
-  public click = click.bind(this);
-  public clickTerritory = clickTerritory.bind(this);
-  public clickModalBtn = clickModalBtn.bind(this);
-  public animations = animations.bind(this);
-  public teleportation = teleportation.bind(this);
-  public reverse = reverse.bind(this);
+  public world: () => void = world.bind(this);
+  public drag: () => void = drag.bind(this);
+  public collisions: () => void = collisions.bind(this);
+  public sheepBrain: () => void = sheepBrain.bind(this);
+  public interval: () => void = interval.bind(this);
+  public click: (object: any, action: () => void, maxMoveCounter: number) => void = click.bind(this);
+  public clickTerritory: (object: any, action: () => void) => void = clickTerritory.bind(this);
+  public clickModalBtn: (arr: any, action: () => void) => void = clickModalBtn.bind(this);
+  public animations: () => void = animations.bind(this);
+  public teleportation: (sheep: any) => void = teleportation.bind(this);
+  public reverse: (sheep: any) => void = reverse.bind(this);
   public aim = aim.bind(this);
   public getSheep = getSheep.bind(this);
-  public currentTerritory = currentTerritory.bind(this);
-  public confirmExchangeTerritory = confirmExchangeTerritory.bind(this);
-  public deleteTerritoriesLocks = deleteTerritoriesLocks.bind(this);
-  public balance = balance.bind(this);
-  public convertDiamonds = convertDiamonds.bind(this);
-  public convertMoney = convertMoney.bind(this);
-  public exchange = exchange.bind(this);
+  public currentTerritory: (x: number, y: number) => SheepTerritory = currentTerritory.bind(this);
+  public confirmExchangeTerritory: (type: number) => void = confirmExchangeTerritory.bind(this);
+  public deleteTerritoriesLocks: () => void = deleteTerritoriesLocks.bind(this);
+  public balance: () => Ibalance = balance.bind(this);
+  public convertDiamonds: (diamonds: number) => number = convertDiamonds.bind(this);
+  public convertMoney: (money: number) => number = convertMoney.bind(this);
+  public exchange: (ad?: boolean) => void = exchange.bind(this);
   public sheepPrice = sheepPrice.bind(this);
   public animalPrice = sheepPrice.bind(this);
   public checkMerging = checkMerging.bind(this);
@@ -250,28 +254,28 @@ class Sheep extends Phaser.Scene {
   public autosave = autosave.bind(this);
   public buildBorders = buildBorders.bind(this);
   public showTutorial = showTutorial.bind(this);
-  public doneTutor_0 = doneTutor_0.bind(this);
-  public doneTutor_10 = doneTutor_10.bind(this);
-  public doneTutor_20 = doneTutor_20.bind(this);
-  public doneTutor_30 = doneTutor_30.bind(this);
-  public doneTutor_40 = doneTutor_40.bind(this);
-  public doneTutor_50 = doneTutor_50.bind(this);
-  public doneTutor_60 = doneTutor_60.bind(this);
-  public doneTutor_70 = doneTutor_70.bind(this);
-  public doneTutor_75 = doneTutor_75.bind(this);
-  public doneTutor_80 = doneTutor_80.bind(this);
-  public doneTutor_90 = doneTutor_90.bind(this);
-  public doneTutor_100 = doneTutor_100.bind(this);
-  public progressTutor_20 = progressTutor_20.bind(this);
-  public progressTutor_30 = progressTutor_30.bind(this);
-  public progressTutor_40 = progressTutor_40.bind(this);
-  public progressTutor_70 = progressTutor_70.bind(this);
-  public progressTutor_80 = progressTutor_80.bind(this);
-  public progressTutor_90 = progressTutor_90.bind(this);
-  public doneTutorCave1 = doneTutorCave1.bind(this);
-  public doneTutorCave2 = doneTutorCave2.bind(this);
-  public skipTutorial = skipTutorial.bind(this);
-  public autoprogress = autoprogress.bind(this);
+  public doneTutor_0: () => void = doneTutor_0.bind(this);
+  public doneTutor_10: () => void = doneTutor_10.bind(this);
+  public doneTutor_20: () => void = doneTutor_20.bind(this);
+  public doneTutor_30: () => void = doneTutor_30.bind(this);
+  public doneTutor_40: () => void = doneTutor_40.bind(this);
+  public doneTutor_50: () => void = doneTutor_50.bind(this);
+  public doneTutor_60: () => void = doneTutor_60.bind(this);
+  public doneTutor_70: () => void = doneTutor_70.bind(this);
+  public doneTutor_75: () => void = doneTutor_75.bind(this);
+  public doneTutor_80: () => void = doneTutor_80.bind(this);
+  public doneTutor_90: () => void = doneTutor_90.bind(this);
+  public doneTutor_100: () => void = doneTutor_100.bind(this);
+  public progressTutor_20: () => void = progressTutor_20.bind(this);
+  public progressTutor_30: () => void = progressTutor_30.bind(this);
+  public progressTutor_40: () => void = progressTutor_40.bind(this);
+  public progressTutor_70: () => void = progressTutor_70.bind(this);
+  public progressTutor_80: () => void = progressTutor_80.bind(this);
+  public progressTutor_90: () => void = progressTutor_90.bind(this);
+  public doneTutorCave1: () => void = doneTutorCave1.bind(this);
+  public doneTutorCave2: () => void = doneTutorCave2.bind(this);
+  public skipTutorial: () => void = skipTutorial.bind(this);
+  public autoprogress: (load?: boolean) => void = autoprogress.bind(this);
   public dailyAward = dailyAward.bind(this);
   public logout = logout.bind(this);
   public onlineStatus = onlineStatus.bind(this);
@@ -281,11 +285,11 @@ class Sheep extends Phaser.Scene {
   public dragSheepMerging = dragSheepMerging.bind(this);
   public takeNewbieAward = takeNewbieAward.bind(this);
   public getNewbieAward = getNewbieAward.bind(this);
-  public findAd = findAd.bind(this);
-  public watchAd = watchAd.bind(this);
-  public adReward = adReward.bind(this);
-  public VKOnAdsReady = VKOnAdsReady.bind(this);
-  public VKNoAds = VKNoAds.bind(this);
+  // public findAd = findAd.bind(this);
+  // public watchAd = watchAd.bind(this);
+  // public adReward = adReward.bind(this);
+  // public VKOnAdsReady = VKOnAdsReady.bind(this);
+  // public VKNoAds = VKNoAds.bind(this);
   public showDonate = showDonate.bind(this);
   public takeDonate = takeDonate.bind(this);
   public setCollector = setCollector.bind(this);
@@ -315,12 +319,13 @@ class Sheep extends Phaser.Scene {
   public intervalCollectorTutorial = intervalCollectorTutorial.bind(this);
   public showFeedBoostSpeechBubble = showFeedBoostSpeechBubble.bind(this);
   public progressTerritoryCooldown = progressTerritoryCooldown.bind(this);
-  public yandexAuth = yandexAuth.bind(this);
-  public playSoundOnce = playSoundOnce.bind(this);
-  public setPlatformStorage = setPlatformStorage.bind(this);
-  public getPlatformStorage = getPlatformStorage.bind(this);
-  private openConvertorForClan = openConvertorForClan.bind(this);
-  public speedCheckCollector = speedCheckCollector.bind(this);
+  public yandexAuth: () => Promise<void>  = yandexAuth.bind(this);
+  public playSoundOnce: (soundName: string) => void = playSoundOnce.bind(this);
+  public setPlatformStorage: (key: string, value: any) => void = setPlatformStorage.bind(this);
+  public getPlatformStorage: (key: string) => Promise<any> = getPlatformStorage.bind(this);
+  private openConvertorForClan: () => void = openConvertorForClan.bind(this);
+  public speedCheckCollector: () => void = speedCheckCollector.bind(this);
+  public updateCollector: (delta: number) => void = updateCollector.bind(this);
 
   public init(state: Istate): void {
     this.autoprogressTimer = Math.round(new Date().getTime() / 1000);
@@ -335,6 +340,11 @@ class Sheep extends Phaser.Scene {
     this.ads = new Ads(this)
     this.autoprogress(true);
     this.achievement = new Achievement(this);
+    if (Utils.checkTestB(this.state)) {
+      const speed = this.state.sheepSettings.partSettings[this.state.userSheep.collectorLevel - 1].collector.speed;
+      this.collectorCD = Math.round(1000 / speed);
+      this.collectorIsReady = false;
+    }
   }
   
   public create(): void {
@@ -352,29 +362,34 @@ class Sheep extends Phaser.Scene {
 
     // интервальные функция
     this.interval();
-    this.setCollector();
     this.openConvertorForClan();
     this.ads.showInterstitialAd();
+
+    if (!Utils.checkTestB(this.state)) this.setCollector();
     // console.log(this.state)
     // let cursors = this.input.keyboard.createCursorKeys();
     // cursors.space.on('down', (): void => {
     //   // this.ads.showInterstitialAd();
     //   // let tasks = this.partTasks();
     //   // for (let i in tasks) {
-    //   //       tasks[i].done = 1;
-    //   //       // tasks[i].got_awarded = 1;
+    //         // tasks[i].done = 1;
+    //         // tasks[i].got_awarded = 1;
     //   // }
     //   this.state.modal = { type: 26 };
     //   this.scene.launch('Modal', this.state);
+    //   // this.state.offlineTime = 60 * 60
+    //   // this.autoprogress()
     // });
   }
 
 
-  public update(): void {
+  public update(time: number, delta: number): void {
     // мозг овец
     this.sheepBrain();
     // перетаскивание овец
     this.dragSheep(true);
+
+    if (Utils.checkTestB(this.state)) this.updateCollector(delta);
   }
 }
 
