@@ -16,6 +16,8 @@ import basicCowTerritories from '../local/cowTerritories';
 import achievements from './../local/tasks/achievements';
 import { Task } from '../local/tasks/types';
 import sheepPartSettings from './../local/test/sheepPartSettings';
+import chickenPartSettings from '../local/test/chickenPartSettings';
+import cowPartSettings from '../local/test/cowPartSettings';
 
 
 export default class DataValidator {
@@ -47,8 +49,8 @@ export default class DataValidator {
     data.money = data.money <= 0 ? 0 : Math.round(data.money);
     if (data.part > sheepPartSettings.length) data.part = sheepPartSettings.length;
     if (data.fair > sheepSettings.sheepFairLevels.length) data.fair = sheepSettings.sheepFairLevels.length;
-    if (data.collectorLevel > sheepCollector.length) data.collectorLevel = sheepCollector.length;
-    if (data.collectorTimeLevel > sheepCollector.length) data.collectorTimeLevel = sheepCollector.length;
+    if (data.collectorLevel > sheepPartSettings.length) data.collectorLevel = sheepPartSettings.length;
+    if (data.collectorTimeLevel > sheepPartSettings.length) data.collectorTimeLevel = sheepPartSettings.length;
 
     return data;
   }
@@ -71,10 +73,10 @@ export default class DataValidator {
       if (typeof data[key] !== typeof userChicken[key]) data[key] = userChicken[key];
     }
     data.money = data.money <= 0 ? 0 : Math.round(data.money);
-    if (data.part > chickenSettings.chickenParts.length) data.part = chickenSettings.chickenParts.length;
+    if (data.part > chickenPartSettings.length) data.part = chickenPartSettings.length;
     if (data.fair > chickenSettings.chickenFairLevels.length) data.fair = chickenSettings.chickenFairLevels.length;
-    if (data.collectorLevel > chickenCollector.length) data.collectorLevel = chickenCollector.length;
-    if (data.collectorTimeLevel > chickenCollector.length) data.collectorTimeLevel = chickenCollector.length;
+    if (data.collectorLevel > chickenPartSettings.length) data.collectorLevel = chickenPartSettings.length;
+    if (data.collectorTimeLevel > chickenPartSettings.length) data.collectorTimeLevel = chickenPartSettings.length;
 
     return data;
   }
@@ -97,10 +99,10 @@ export default class DataValidator {
       if (typeof data[key] !== typeof userCow[key]) data[key] = userCow[key];
     }
     data.money = data.money <= 0 ? 0 : Math.round(data.money);
-    if (data.part > cowSettings.cowParts.length) data.part = cowSettings.cowParts.length;
+    if (data.part > cowPartSettings.length) data.part = cowPartSettings.length;
     if (data.fair > cowSettings.cowFairLevels.length) data.fair = cowSettings.cowFairLevels.length;
-    if (data.collectorLevel > cowCollector.length) data.collectorLevel = cowCollector.length;
-    if (data.collectorTimeLevel > cowCollector.length) data.collectorTimeLevel = cowCollector.length;
+    if (data.collectorLevel > cowPartSettings.length) data.collectorLevel = cowPartSettings.length;
+    if (data.collectorTimeLevel > cowPartSettings.length) data.collectorTimeLevel = cowPartSettings.length;
 
     return data;
   }

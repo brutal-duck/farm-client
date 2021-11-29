@@ -39,7 +39,7 @@ export default class FarmResourceRepositoryWindowNew {
     this.partSettings = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].partSettings;
 
     this.currentSettings = this.partSettings[this.scene.state.territory.improve - 1].territory;
-    this.nextSettings = this.partSettings[this.scene.state.territory.improve].territory;
+    this.nextSettings = this.partSettings[this.scene.state.territory.improve]?.territory || null;
     this.money = {
       icon: `${this.farm.toLowerCase()}Coin`,
       text: shortNum(this.scene.state.territory.money)

@@ -2,9 +2,9 @@ import { Task } from "../../local/tasks/types";
 import Modal from "../../scenes/Modal/Modal";
 import TaskBarNew from './../gameObjects/TaskBarNew';
 import Scrolling from '../../libs/Scrolling';
-
-const tasksUncomplete: string = require("./../../../assets/images/modal/tasks/uncomplete.png");
-const tasksReward: string = require("./../../../assets/images/modal/tasks/reward.png");
+import Sheep from './../../scenes/Sheep/Main';
+import Chicken from './../../scenes/Chicken/Main';
+import Cow from './../../scenes/Cow/Main';
 
 export default class TasksWindowNew {
   public scene: Modal;
@@ -129,23 +129,25 @@ export default class TasksWindowNew {
     // Остальной текст
     const partNum: Phaser.GameObjects.Text = this.scene.add.text(this.top.getCenter().x, this.top.getTopCenter().y + 60, this.scene.state.modal.tasksParams.part, {
       font: '72px Shadow',
-      color: '#166c00'
+      color: '#166c00',
     }).setOrigin(0.5);
 
     const partText: Phaser.GameObjects.Text = this.scene.add.text(partNum.getBottomCenter().x, partNum.getBottomCenter().y + 14, this.scene.state.lang.part, {
       font: '31px Shadow',
       color: '#166c00'
-    }).setOrigin(0.5, 0.5);
+    }).setOrigin(0.5);
 
-    this.scene.add.text(partText.getBottomCenter().x, partText.getBottomCenter().y + 50, this.scene.state.modal.tasksParams.name, {
+    this.scene.add.text(partText.getBottomCenter().x, partText.getBottomCenter().y + 55, this.scene.state.modal.tasksParams.name, {
       font: '32px Shadow',
-      color: '#F2DCFF'
-    }).setOrigin(0.5, 0.5);
+      color: '#F2DCFF',
+      wordWrap: { width: this.top.width - 60},
+      align: 'center'
+    }).setOrigin(0.5);
 
     this.scene.add.text(this.bottom.getCenter().x, this.bottom.getCenter().y + 8, this.scene.state.modal.tasksParams.farmer, {
       font: '26px Shadow',
       color: '#8f3f00'
-    }).setOrigin(0.5, 0.5);
+    }).setOrigin(0.5);
     
     this.line = this.scene.add.tileSprite(this.bottom.getLeftCenter().x + 55, this.bottom.getCenter().y - 56, 1, 16, 'part-progress');
     this.partDiscription = this.scene.add.text(this.bottom.getCenter().x, this.bottom.getCenter().y + 60, '', this.footerTextStyle).setOrigin(0.5);
@@ -163,13 +165,14 @@ export default class TasksWindowNew {
     this.nextPartText = this.scene.add.text(this.bottom.getCenter().x, this.bottom.getCenter().y + 54, this.scene.state.lang.donePart, {
       font: '24px Shadow',
       fill: '#FFFFFF'
-    }).setOrigin(0.5, 0.5);
+    }).setOrigin(0.5);
 
     this.scene.clickShopBtn({ btn: this.nextPart, title: this.nextPartText }, (): void => { this.scene.game.scene.keys[this.scene.state.farm].nextPart() });
   }
 
 
   public updateProgress(): void {
+    this.tasks = this.getTasks();
     this.scene.state.modal.tasksParams.done = this.tasks.every(el => el.task.done === 1 && el.task.awardTaken === 1);
     const parts: IpartSettings[] = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`].partSettings;
     const userPart: number = this.scene.state[`user${this.scene.state.farm}`].part;
@@ -179,7 +182,6 @@ export default class TasksWindowNew {
     else if (!this.scene.state.modal.tasksParams.done && this.partDiscription?.active) this.partDiscription?.setText(this.scene.state.modal.tasksParams.description);
 
     this.lineAni?.remove();
-    this.tasks = this.getTasks();
     const countDone: number = this.tasks.filter(el => el.task.done === 1).length;
     const percent: number = 456 / 100 * (countDone / (this.scene.state.modal.tasksParams.tasks.length / 100));
     const lineWidth: number = this.line ? this.line.getBounds().width : 1;
