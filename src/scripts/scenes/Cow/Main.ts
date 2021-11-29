@@ -306,52 +306,17 @@ class Cow extends Phaser.Scene {
       sendAppEventVk(this.state, 4, 100);
     }
 
-    // let cursors = this.input.keyboard.createCursorKeys();
-    // cursors.space.on('down', (): void => {
-      // Firework.create(this, { x: 360, y: 360 }, 3)
-      // console.log(this.state);
-      
-      //@ts-ignore
-      // this.territories.children.entries.find((el) => el.territoryType === 8).improve = 0
-      // this.state.userCow.factory.boostTime = 0;
-      // this.state.userCow.diamondAnimalTime = 0
-      // this.state.newbieTime = 0
-      // this.state.daily = Number(this.state.daily) + 1
-      // this.state.dailyAwards = [false, false, false, false, false, false, false, false]
-      // this.state.user.diamonds = 10000;
-      // let modal: Imodal = {
-      //   type: 4,
-      // }
-      // this.state.userCow.part = 6
-      // this.state.modal = modal;
-      // this.scene.launch('Modal', this.state);
-      // this.state.userSheep.feedBoostTimer = 10
-      // this.scene.launch('Modal', this.state);
-      // let tasks = this.partTasks();
-      // for (let i in tasks) {
-      //   tasks[i].done = 1;
-        // tasks[i].got_awarded = 1;
-      // }
-      // this.offlineTestProgress();
-    // });
+    this.input.keyboard.createCursorKeys().space.on('down', (): void => {
+      this.state.offlineTime = 60 * 60
+      this.autoprogress()
+    });
     
   }
-
 
   public update(time: number, delta: number): void {
     if (Utils.checkTestB(this.state)) this.updateCollector(delta);
 
   }
-
-  
-  private offlineTestProgress(): void {
-    if (this.spaceCount > 10) console.clear();
-    this.spaceCount += 1;
-    console.log(this.spaceCount);
-    this.state.offlineTime = 60 * 60;
-    this.autoprogress();
-  }
-
 }
 
 export default Cow;
