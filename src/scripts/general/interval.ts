@@ -756,7 +756,7 @@ function showSale(scene: Sheep | Chicken | Cow): void {
 }
 
 function speedCheckCollector(): void {
-  if (Utils.checkTestB(this.state)) speedCheckCollectorTestB.bind(this)()
+  if (Utils.checkTestB(this.state)) return speedCheckCollectorTestB.bind(this)();
   const scene: Sheep | Chicken | Cow = this;
   const farm: string = scene.state.farm;
   const delayFilling: number = 10;
@@ -805,7 +805,7 @@ function speedCheckCollectorTestB(): void {
       scene.speedCollectorTimer -= 1;
       if (scene.speedCollectorTimer <= 0) {
         const text = scene.state.lang[`speedCollectorNotification${farm}`];
-        scene.speedCollectorTimer = 60;
+        scene.speedCollectorTimer = 90;
         SpeechBubble.create(scene.scene.get(`${farm}Bars`), text, 3);
       }
     }
