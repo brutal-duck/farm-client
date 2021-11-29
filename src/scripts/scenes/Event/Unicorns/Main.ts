@@ -25,13 +25,6 @@ import {
   showImproveCollector,
   startHerdBoost
 } from '../../../general/modal';
-import {
-  findAd,
-  watchAd,
-  adReward,
-  VKOnAdsReady,
-  VKNoAds
-} from '../../../general/ads';
 import world from './world';
 import { 
   maxBreedForBuy, 
@@ -157,11 +150,6 @@ class Unicorn extends Phaser.Scene {
   public buildBorders = buildBorders.bind(this);
   public logout = logout.bind(this);
   public onlineStatus = onlineStatus.bind(this);
-  public findAd = findAd.bind(this);
-  public watchAd = watchAd.bind(this);
-  public adReward = adReward.bind(this);
-  public VKOnAdsReady = VKOnAdsReady.bind(this);
-  public VKNoAds = VKNoAds.bind(this);
   public showDonate = showDonate.bind(this);
   public takeDonate = takeDonate.bind(this);
   public showImproveCollector = showImproveCollector.bind(this);

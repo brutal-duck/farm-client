@@ -58,7 +58,6 @@ let sheepCollectorSettings: IcollectorSettings[];
 let chickenCollectorSettings: IcollectorSettings[];
 let cowCollectorSettings: IcollectorSettings[];
 let adBlock: boolean;
-let adman: any;
 let donate: boolean;
 let boughtFeedBoost: boolean = false;
 let boughtFactoryBoost: boolean = false;
@@ -163,7 +162,6 @@ let state: Istate = {
   cowCollectorSettings, // настройки уровней собирателя яиц
   unicornCollectorSettings, // настройки уровней собирателя яиц
   adBlock, // состояние блокировщика рекламы
-  adman, // объект рекламы вк
   donate, // переменная для показа доната
   boughtFeedBoost, // куплен ли буст
   chat, // сообщения в чат

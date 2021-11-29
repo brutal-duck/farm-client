@@ -1,7 +1,6 @@
 import bridge from '@vkontakte/vk-bridge';
 import Chicken from "../../scenes/Chicken/Main";
 import { FAPI } from '../../libs/Fapi'
-import * as platform from 'platform';
 import Cow from "../../scenes/Cow/Main";
 import Unicorn from "../../scenes/Event/Unicorns/Main";
 import Sheep from "../../scenes/Sheep/Main";
@@ -17,7 +16,6 @@ import Fortune from './../../scenes/Fortune';
 const INTERSTITIAL_DELAY = 60;
 const ONE_HOUR = 3600;
 const TWO_HOURS = 7200;
-const THREE_HOURS = 3 * 3600;
 /**
   * Реклама  
   * 
@@ -25,8 +23,6 @@ const THREE_HOURS = 3 * 3600;
   ** findAd - поиск рекламы
   ** watchAd - просмотр рекламы
   ** adReward - получение награды за просмотр
-  ** VKOnAdsReady - готовность рекламы
-  ** VKNoAds - реклама не найдена
 */
 
 export default class Ads {
@@ -45,17 +41,8 @@ export default class Ads {
       if (this.scene.state.platform === 'ok' && !this.scene.state.adTimeout) {
         this.scene.state.adTimeout = true;
         FAPI.UI.loadAd();
-      } else if (this.scene.state.platform === 'vk' && !this.scene.state.adTimeout) {
-        this.scene.state.adTimeout = true;
-        let win: any = window;
-        let mobile: boolean = false; 
-        if (platform.os.family === 'Android' || platform.os.family === 'iOS') mobile = true;
-        win.admanInit({
-          user_id: this.scene.state.vkId,
-          app_id: process.env.VK_APP_ID,
-          mobile: mobile,
-          type: 'rewarded'
-        }, this.VKOnAdsReady, this.VKNoAds);
+      } else if (this.scene.state.platform === 'vk') {
+        this.scene.state.readyAd = true;
       } else if (this.scene.state.platform === 'ya') {
         this.scene.state.readyAd = true;
       }
@@ -73,23 +60,19 @@ export default class Ads {
     if (this.scene.state.platform === 'ok') {
       FAPI.UI.showLoadedAd();
     } else if (this.scene.state.platform === 'vk') {
-      this.scene.state.adTimeout = false;
-      
-      this.scene.state.adman.onStarted((): void => {
-        this.scene.scene.launch('Block');
-      });
-      this.scene.state.adman.onCompleted((): void => {
-        this.adReward();
-        this.scene.scene.stop('Block');
-      });
-      this.scene.state.adman.onSkipped((): void => {
-        this.scene.state.musicVolume = this.musicVolume;
-        this.scene.state.soundVolume = this.soundVolume;
-        //@ts-ignore
-        this.scene.sound.get('music').volume = this.scene.state.musicVolume;
-      });      
-      this.scene.state.adman.onClicked((): void => {}); 
-      this.scene.state.adman.start('preroll');
+      this.scene.scene.launch('Block');
+      bridge
+        .send('VKWebAppShowNativeAds', { ad_format:'reward' })
+        .then(data => {
+          if (data.result) this.adReward();
+        })
+        .finally(() => {
+          this.scene.state.musicVolume = this.musicVolume;
+          this.scene.state.soundVolume = this.soundVolume;
+          //@ts-ignore
+          this.scene.sound.get('music').volume = this.scene.state.musicVolume;
+          this.scene.scene.stop('Block');
+        });
     } else if (this.scene.state.platform === 'ya') {
       this.scene.state.ysdk.adv.showRewardedVideo({
         callbacks: {
@@ -384,18 +367,5 @@ export default class Ads {
     this.scene.state.soundVolume = this.soundVolume;
     //@ts-ignore
     this.scene.sound.get('music').volume = this.scene.state.musicVolume;
-  }
-
-  public VKOnAdsReady(adman: any): void {
-    console.log(adman)
-    this.scene.state.adman = adman;
-    this.scene.state.readyAd = true;
-  }
-
-
-  public VKNoAds(): void {
-    console.log('noAds');
-    this.scene.state.readyAd = false;
-    this.scene.state.adTimeout = false;
   }
 }

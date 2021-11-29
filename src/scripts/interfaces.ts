@@ -1035,7 +1035,6 @@ interface Istate {
   cowCollectorSettings: IcollectorSettings[];
   unicornCollectorSettings: IcollectorSettings[];
   adBlock: boolean;
-  adman: any;
   donate: boolean;
   boughtFeedBoost: boolean;
   boughtFactoryBoost: boolean;
