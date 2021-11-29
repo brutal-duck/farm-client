@@ -423,10 +423,10 @@ class ChickenPreload extends Phaser.Scene {
     this.load.image('chicken-task-icon-28', taskIcon28);
     this.load.image('chicken-task-icon-29', taskIcon29);
     this.load.image('chicken-task-icon-29', taskIcon29);
+    this.load.image('chicken-task-icon-31', taskIcon31);
     this.load.image('chicken-task-icon-32', taskIcon32);
     this.load.image('chicken-task-icon-33', taskIcon33);
     this.load.image('chicken-task-icon-34', taskIcon34);
-    this.load.image('chicken-task-icon-33', taskIcon31);
     this.load.image('chicken-task-icon-38', taskIcon38);
     this.load.image('chicken-task-icon-39', taskIcon39);
     this.load.image('plus', plus);
