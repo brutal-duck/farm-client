@@ -84,7 +84,6 @@ function partTasksTestB(): Task[] {
 
   tasks.forEach(task => {
     const [ taskPart ] = task.id.split('-').map(el => Number(el));
-    if (task.type === TaskType['IMPROVE_COLLECTOR']) task.progress = collectorTimeLevel;
     if (part === taskPart) partTasks.push(task);
   });
 
@@ -798,7 +797,6 @@ function clickTaskBoardTestB(task: Task): void {
   if (!task) return;
   const farmTerritories: Territory[] = this.game.scene.keys[this.state.farm].territories.children.entries;
   const barsScene: BarsScene = this.game.scene.keys[`${this.state.farm}Bars`];
-  console.log(task)
   const openTerritoryWindow = (territory: Territory): void => {
     this.state.territory = territory;
     const modal: Imodal = { type: 1, sysType: 2 };
@@ -944,7 +942,6 @@ function clickTaskBoardTestB(task: Task): void {
       if (territory) openTerritoryWindow(territory);
       else {
         const unlockTerritory = findUnlockTerritoryForBuy();
-        console.log(unlockTerritory)
         if (unlockTerritory) openTerritoryWindow(unlockTerritory);
         else {
           this.scene.stop('Modal');

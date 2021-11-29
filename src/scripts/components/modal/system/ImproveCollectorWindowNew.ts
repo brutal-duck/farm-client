@@ -3,6 +3,7 @@ import Modal from "../../../scenes/Modal/Modal";
 import Firework from "../../animations/Firework";
 import BigButton from './../../Buttons/BigButton';
 import Utils from './../../../libs/Utils';
+import { TaskType } from "../../../local/tasks/types";
 
 export default class ImproveCollectorWindowNew {
   public scene: Modal;
@@ -164,7 +165,7 @@ export default class ImproveCollectorWindowNew {
     if (this.checkImprove(improveType)) {
       if (improveType === 'time') {
         this.scene.state[`user${this.farm}`].collectorTimeLevel++;
-        this.scene.game.scene.keys[this.farm].tryTask(23, 0, 0, this.scene.state[`user${this.farm}`].collectorTimeLevel + 1);
+        this.scene.game.scene.keys[this.farm].tryTask(TaskType.IMPROVE_COLLECTOR);
         this.farmUser.money -= this.nextTimeSettings.improveTimePrice;
       } else if (improveType === 'speed') {
         this.scene.state[`user${this.farm}`].collectorLevel++;
