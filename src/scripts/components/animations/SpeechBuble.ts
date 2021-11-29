@@ -22,20 +22,20 @@ interface ItriangleCoords {
 export default class SpeechBubble {
   private text: string;
   private type: number;
-  private x: number = 120;
+  private x: number = 80;
   private y: number = 360;
-  private width: number = 340;
+  private width: number = 380;
   private scene: Phaser.Scene;
   private bubble: Phaser.GameObjects.Graphics;
   private bubbleText: Phaser.GameObjects.Text;
   private bubbleFarmer: Phaser.GameObjects.Image;
   private bubbleBg: Phaser.GameObjects.Graphics;
   private triangleCoords: ItriangleCoords = {
-    point1X: 340,
+    point1X: 380,
     point1Y: 40,
-    point2X: 340,
+    point2X: 380,
     point2Y: 10,
-    point3X: 380,
+    point3X: 420,
     point3Y: 20,
   };
   constructor(scene: Phaser.Scene, text: string, type: number = 1) {
@@ -76,7 +76,7 @@ export default class SpeechBubble {
     } 
     if (this.type === 3) {
       this.y = 165;
-      this.x = 205;
+      this.x = 165;
       this.triangleCoords.point1Y = bubleTextHeight / 2 - 15;
       this.triangleCoords.point2Y = bubleTextHeight / 2 + 15;
       this.triangleCoords.point3Y = bubleTextHeight / 2 + 25;

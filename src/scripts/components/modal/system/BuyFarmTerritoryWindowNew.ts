@@ -14,6 +14,8 @@ export default class BuyFarmTerritoryWindowNew {
 
   private create(): void {
     this.height = 130;
+    this.scene.textHeader.setText(this.scene.state.lang.buyTerritory);
+
     const farm: string = this.scene.state.farm.toLowerCase();
     const farmUser: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
     const territoriesPrice: IterritoriesPrice[] = this.scene.state[`${farm}Settings`][`territories${this.scene.state.farm}Price`];

@@ -689,7 +689,7 @@ function clickTaskBoard(task: Itasks): void {
       else SpeechBubble.create(barsScene, this.state.lang.taskHelp_5, 3);
     }
     if (task.state === 2 || task.state === 5 ) {
-      const territory = farmTerritories.find(el => el.territoryType === 1);
+      const territory = farmTerritories.find(el => el.territoryType === 1 && el.cooldown <= 0);
       if (territory) openTerritoryWindow(territory);
       else {
         const unlockTerritory = findUnlockTerritoryForBuy();
@@ -798,7 +798,7 @@ function clickTaskBoardTestB(task: Task): void {
   if (!task) return;
   const farmTerritories: Territory[] = this.game.scene.keys[this.state.farm].territories.children.entries;
   const barsScene: BarsScene = this.game.scene.keys[`${this.state.farm}Bars`];
-
+  console.log(task)
   const openTerritoryWindow = (territory: Territory): void => {
     this.state.territory = territory;
     const modal: Imodal = { type: 1, sysType: 2 };
@@ -940,10 +940,11 @@ function clickTaskBoardTestB(task: Task): void {
       }
     }
     if (task.state === 2 || task.state === 5 ) {
-      const territory = farmTerritories.find(el => el.territoryType === 1);
+      const territory = farmTerritories.find(el => el.territoryType === 1 && el.cooldown <= 0);
       if (territory) openTerritoryWindow(territory);
       else {
         const unlockTerritory = findUnlockTerritoryForBuy();
+        console.log(unlockTerritory)
         if (unlockTerritory) openTerritoryWindow(unlockTerritory);
         else {
           this.scene.stop('Modal');
@@ -953,9 +954,9 @@ function clickTaskBoardTestB(task: Task): void {
     };
 
     if (this.state.userCow.part < 3 && task.state === 8) {
-      const task: Itasks = this.state.cowTasks.find(el => el.id === 138);
+      const task: Task = this.state.cowTasks.find(el => el.id === 138);
       const territory = farmTerritories.find(el => el.block === 3 && el.position === 1);
-      if (task?.done === 1 && task?.got_awarded === 1 && territory.cooldown <= 0) {
+      if (task?.done === 1 && task?.awardTaken === 1 && territory.cooldown <= 0) {
         openTerritoryWindow(territory)
       } else if (territory.cooldown > 0) {
         this.scene.stop('Modal');
@@ -982,7 +983,7 @@ function clickTaskBoardTestB(task: Task): void {
     else if (territory && territory.territoryType === 8) openFactory();
     else {
       territory = farmTerritories.find(el => el.territoryType === 1);
-      if (territory && territory.cooldown === 0) openTerritoryWindow(territory);
+      if (territory && territory.cooldown <= 0) openTerritoryWindow(territory);
       else openBuyTerritoryWindowForTask(true);
     }
   }
