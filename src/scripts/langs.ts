@@ -2302,6 +2302,7 @@ export default {
     confirmImproveCollectorSpeedSheepText: 'Хотите улучшить Скорость подстригателя до $1 уровня?',
     confirmImproveCollectorSpeedChickenText: 'Хотите улучшить Скорость собирателя до $1 уровня?',
     confirmImproveCollectorSpeedCowText: 'Хотите улучшить Скорость собирателя до $1 уровня?',
+    taskHelp_5_1: 'Дождись установки территории или ускорь ее за кристаллы',
   },
   en: {
     index: 'en',
@@ -4610,5 +4611,6 @@ export default {
     confirmImproveCollectorSpeedSheepText: 'Want to improve the protrigator speed up to $ 1 level?',
     confirmImproveCollectorSpeedChickenText: 'Want to improve the rate of collector to $ 1 level?',
     confirmImproveCollectorSpeedCowText: 'Want to improve the rate of collector to $ 1 level?',
+    taskHelp_5_1: 'Wait for the installation of the territory or speeding it for diamonds',
   },
 };

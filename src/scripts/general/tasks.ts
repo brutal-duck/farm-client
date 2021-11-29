@@ -936,22 +936,24 @@ function clickTaskBoardTestB(task: Task): void {
         this.scene.stop('Modal');
         SpeechBubble.create(barsScene, this.state.lang.taskHelp_5, 3);
       }
-    }
-    if (task.state === 2 || task.state === 5 ) {
+    } else if (task.state === 2 || task.state === 3 || task.state === 5) {
       const territory = farmTerritories.find(el => el.territoryType === 1 && el.cooldown <= 0);
       if (territory) openTerritoryWindow(territory);
       else {
         const unlockTerritory = findUnlockTerritoryForBuy();
         if (unlockTerritory) openTerritoryWindow(unlockTerritory);
         else {
-          this.scene.stop('Modal');
-          SpeechBubble.create(barsScene, this.state.lang[`taskHelp_5_${task.state}`], 3);
-        }
+          const territory = farmTerritories.find(el => el.territoryType === 1 && el.cooldown > 0);
+          if (territory) {
+            SpeechBubble.create(barsScene, this.state.lang[`taskHelp_5_1`], 3);
+          } else {
+            this.scene.stop('Modal');
+            SpeechBubble.create(barsScene, this.state.lang[`taskHelp_5_8`], 3);
+          }
+        } 
       }
-    };
-
-    if (this.state.userCow.part < 3 && task.state === 8) {
-      const task: Task = this.state.cowTasks.find(el => el.id === 138);
+    } else if (this.state.farm === 'Cow' && this.state.userCow.part < 3 && task.state === 8) {
+      const task: Task = this.state.cowTasks.find((el: Task) => el.id === '2-3');
       const territory = farmTerritories.find(el => el.block === 3 && el.position === 1);
       if (task?.done === 1 && task?.awardTaken === 1 && territory.cooldown <= 0) {
         openTerritoryWindow(territory)

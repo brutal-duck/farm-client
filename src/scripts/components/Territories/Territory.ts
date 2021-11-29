@@ -836,9 +836,8 @@ export default class Territory extends Phaser.Physics.Arcade.Sprite {
       barsScene.animalBuy.setTexture(`${farm.toLowerCase()}-buy-icon-${this.scene.maxBreedForBuy()}`);
       barsScene.updateAnimalPrice();
     };
-    const fairLevel: number = farmUser.fair;
     const partSettings: IpartSettings[] = this.scene.state[`${farm.toLowerCase()}Settings`].partSettings;
-    const nextFair: IpartSettings = partSettings[fairLevel];
+    const nextFair: IpartSettings = partSettings[farmUser.part - 1];
 
     if (nextFair && farmUser.fair < partSettings.length) {
       if (farmUser.money >= nextFair.territory.improveFairPrice) {
