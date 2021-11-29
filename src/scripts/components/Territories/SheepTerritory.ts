@@ -2,6 +2,7 @@ import Territory from './Territory';
 import Factory from './Factory';
 import Sheep from './../../scenes/Sheep/Main';
 import SpeechBubble from './../animations/SpeechBuble';
+import Utils from './../../libs/Utils';
 
 export default class SheepTerritory extends Territory {
   public scene: Sheep;
@@ -45,6 +46,7 @@ export default class SheepTerritory extends Territory {
   }
 
   public onTerritoryClick(): void {
+    if (Utils.checkTestB(this.scene.state)) return this.onTerritoryClickTestB();
     super.onTerritoryClick();
     if (this.cooldown > 0) {
       const modal: Imodal = {
@@ -68,6 +70,41 @@ export default class SheepTerritory extends Territory {
         this.scene.scene.launch('Modal', this.scene.state);
       } else if (this.territoryType === 6) {
         if (this.scene.state.userSheep.collectorLevel < this.scene.state.sheepCollectorSettings.length) {
+          this.scene.showImproveCollector();
+        } else {
+          SpeechBubble.create(this.scene.game.scene.keys[`SheepBars`], this.scene.state.lang.maxCollectorLevel, 3);
+        }
+      } else if (this.territoryType === 7) {
+        this.takeDiamondAnimal();
+      }
+    }
+  }
+
+  private onTerritoryClickTestB(): void {
+    super.onTerritoryClick();
+    if (this.cooldown > 0) {
+      const modal: Imodal = {
+        type: 1,
+        sysType: 19,
+      }
+      this.scene.state.territory = this;
+      this.scene.state.modal = modal;
+      this.scene.scene.launch('Modal', this.scene.state);
+      return;
+    };
+    if (this.scene.state.userSheep.tutorial >= 100) {
+        
+      if (this.territoryType !== 6 && this.territoryType !== 7) {
+        const modal: Imodal = {
+          type: 1,
+          sysType: 2
+        }
+        this.scene.state.modal = modal;
+        this.scene.state.territory = this;
+        this.scene.scene.launch('Modal', this.scene.state);
+      } else if (this.territoryType === 6) {
+        if (this.scene.state.userSheep.collectorLevel < this.scene.state.sheepSettings.partSettings.length && 
+          this.scene.state.userSheep.collectorTimeLevel < this.scene.state.sheepSettings.partSettings.length) {
           this.scene.showImproveCollector();
         } else {
           SpeechBubble.create(this.scene.game.scene.keys[`SheepBars`], this.scene.state.lang.maxCollectorLevel, 3);

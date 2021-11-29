@@ -230,8 +230,8 @@ export default class ImproveCollectorWindowNew {
     const farmSettings: IsheepSettings | IchickenSettings | IcowSettings = this.scene.state[`${this.farm.toLowerCase()}Settings`];
     this.currentSpeedSettings = farmSettings.partSettings[this.farmUser.collectorLevel - 1].collector;
     this.currentTimeSettings = farmSettings.partSettings[this.farmUser.collectorTimeLevel - 1].collector;
-    this.nextSpeedSettings = farmSettings.partSettings[this.farmUser.collectorLevel].collector;
-    this.nextTimeSettings = farmSettings.partSettings[this.farmUser.collectorTimeLevel].collector;
+    this.nextSpeedSettings = farmSettings.partSettings[this.farmUser.collectorLevel]?.collector || null;
+    this.nextTimeSettings = farmSettings.partSettings[this.farmUser.collectorTimeLevel]?.collector || null;
     
     this.currentTime = this.currentTimeSettings.time;
     this.currentSpeed = this.currentSpeedSettings.speed;

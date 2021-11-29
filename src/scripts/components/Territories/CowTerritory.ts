@@ -139,6 +139,8 @@ export default class CowTerritory extends Territory {
   }
 
   public onTerritoryClick(): void {
+    if (Utils.checkTestB(this.scene.state)) return this.onTerritoryClickTestB();
+
     super.onTerritoryClick();
     if (this.cooldown > 0) {
       let modal: Imodal = {
@@ -191,6 +193,76 @@ export default class CowTerritory extends Territory {
       this.scene.scene.launch('Modal', this.scene.state);
     } else if (this.territoryType === 6) {
       if (this.scene.state[`user${this.scene.state.farm}`].collectorLevel < this.scene.state[`${this.scene.state.farm.toLowerCase()}CollectorSettings`].length) {
+        this.scene.showImproveCollector();
+      } else {
+        SpeechBubble.create(this.scene.game.scene.keys[`${this.scene.state.farm}Bars`], this.scene.state.lang.maxCollectorLevel, 3);
+      }
+    } else if (this.territoryType === 7) {
+      this.scene.takeDiamondCow();
+    } else if (this.territoryType === 8) {
+      const modal: Imodal = {
+        type: 13,
+      }
+      this.scene.state.modal = modal;
+      this.scene.state.territory = this;
+      this.scene.scene.launch('Modal', this.scene.state);
+    }
+  }
+
+  private onTerritoryClickTestB(): void {
+    super.onTerritoryClick();
+    if (this.cooldown > 0) {
+      let modal: Imodal = {
+        type: 1,
+        sysType: 19,
+      }
+      this.scene.state.territory = this;
+      this.scene.state.modal = modal;
+      this.scene.scene.launch('Modal', this.scene.state);
+      return;
+    };
+    if (this.scene.state.userCow.part < 3) {
+      if (Utils.checkTestB(this.scene.state)) {
+        const task: Task = this.scene.state.cowTasks.find((el: Itasks) => String(el.id) === '2-1') as unknown as Task;
+        if (this.block === 3 && this.position === 1 && this.territoryType === 0 && task.done === 1 && task.awardTaken === 1) {
+          const modal: Imodal = {
+            type: 1,
+            sysType: 2
+          }
+          this.scene.state.modal = modal;
+          this.scene.state.territory = this;
+          this.scene.scene.launch('Modal', this.scene.state);
+        } else if (this.block === 3 && this.position === 1 && this.territoryType === 0) {
+          SpeechBubble.create(this.scene.game.scene.keys[`${this.scene.state.farm}Bars`], this.scene.state.lang.doneFirstTask, 3);
+          return;
+        }
+      } else {
+        const task: Itasks = this.scene.state.cowTasks.find(el => el.id === 138);
+        if (this.block === 3 && this.position === 1 && this.territoryType === 0 && task.done === 1 && task.got_awarded === 1) {
+          const modal: Imodal = {
+            type: 1,
+            sysType: 2
+          }
+          this.scene.state.modal = modal;
+          this.scene.state.territory = this;
+          this.scene.scene.launch('Modal', this.scene.state);
+        } else if (this.block === 3 && this.position === 1 && this.territoryType === 0) {
+          SpeechBubble.create(this.scene.game.scene.keys[`${this.scene.state.farm}Bars`], this.scene.state.lang.doneFirstTask, 3);
+          return;
+        }
+      }
+    }
+    if (this.territoryType !== 6 && this.territoryType !== 7 && this.territoryType !== 8) {
+      const modal: Imodal = {
+        type: 1,
+        sysType: 2
+      }
+      this.scene.state.modal = modal;
+      this.scene.state.territory = this;
+      this.scene.scene.launch('Modal', this.scene.state);
+    } else if (this.territoryType === 6) {
+      if (this.scene.state.userCow.collectorLevel < this.scene.state.cowSettings.partSettings.length 
+        && this.scene.state.userCow.collectorTimeLevel < this.scene.state.cowSettings.partSettings.length) {
         this.scene.showImproveCollector();
       } else {
         SpeechBubble.create(this.scene.game.scene.keys[`${this.scene.state.farm}Bars`], this.scene.state.lang.maxCollectorLevel, 3);
