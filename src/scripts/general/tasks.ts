@@ -271,7 +271,7 @@ function getTaskDataTestB(task: Task): ItaskData {
       if (task.state === 0) num = 20;
       else num = task.state;
       break;
-    case TaskType['TAKE_COLLECOTR']: num = 16; break;
+    case TaskType['TAKE_COLLECTOR']: num = 16; break;
     case TaskType['GET_ANIMAL']:
       if (task.state === 0) num = 17;
       else num = task.state;
