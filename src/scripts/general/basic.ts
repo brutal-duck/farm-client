@@ -545,7 +545,9 @@ function donePart(): void {
   //   type: 'part_award',
   //   count: award,
   // });
-
+  if (this.state.farm === 'Sheep' && this.caveTutor) {
+    this.caveTutor = !this.caveTutor;
+  }
   user.part++;
   this.state.progress[this.state.farm.toLowerCase()].part = user.part;
   

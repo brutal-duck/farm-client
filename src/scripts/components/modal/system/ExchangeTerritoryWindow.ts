@@ -13,16 +13,7 @@ export default class ExchangeTerritoryWindow {
     this.scene.textHeader.setText(this.scene.state.lang.exchangeTerritory);
     this.scene.resizeWindow(250);
 
-    let repository: string = '';
-    let resurce: string = '';
-
-    if (this.scene.state.farm === 'Sheep') resurce = 'wool';
-    else if (this.scene.state.farm === 'Chicken') resurce = 'eggs';
-    else if (this.scene.state.farm === 'Cow') resurce = 'milk';
-
-    if (this.scene.state.territory.territoryType === 5) repository = ' ' + this.scene.state.lang[`${resurce}WillBeSold`];
-
-    this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 60, this.scene.state.lang.sureExchange + repository, {
+    this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY - 60, this.scene.state.lang.sureExchange, {
       font: '26px Bip',
       color: '#925C28',
       align: 'center',

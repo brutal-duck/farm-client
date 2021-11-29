@@ -11,7 +11,7 @@ export default class ConfirmBuyCooldown {
   }
 
   private create(): void {
-    const headerText: string = this.scene.state.territory.territoryType === 0 ? this.scene.state.lang.buyTerritory : this.scene.state.lang.boughtLand;
+    const headerText: string = this.scene.state.territory.territoryType === 0 ? this.scene.state.lang.speedUpForest : this.scene.state.lang.boughtLand;
     this.scene.textHeader.setText(headerText);
     const price: number = this.scene.state.territory.cooldownSprite.price;
 
