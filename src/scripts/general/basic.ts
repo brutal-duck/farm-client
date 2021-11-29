@@ -995,7 +995,7 @@ function loadingModal(): void {
 
 // Перераспределние животных на поле
 function spreadAnimals(): void {
-
+  if (Utils.checkTestB(this.state)) return;
   const animal: string = this.state.farm === 'Cow' ? 'animalGroup' : this.state.farm.toLowerCase();
   let localSpread: boolean = false; // Локальная метка на передвижение
   const allTerritories = []; // Все территории

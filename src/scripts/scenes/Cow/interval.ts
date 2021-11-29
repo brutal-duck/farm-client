@@ -158,19 +158,31 @@ function interval(): void {
 
     if (this.state.userCow.part <= 2) {
       
-      let tasks: Itasks[] = this.partTasks();
-      tasks.sort((x1: Itasks, x2: Itasks) => {
-        if (x1.got_awarded < x2.got_awarded) return -1;
-        if (x1.got_awarded > x2.got_awarded) return 1;
-        if (x1.done < x2.done) return 1;
-        if (x1.done > x2.done) return -1;
-        if (x1.sort < x2.sort) return -1;
-        if (x1.sort > x2.sort) return 1;
-        return 0;
-      });
-      let task: Itasks = tasks[0];
+      let tasks = this.partTasks();
+      if (Utils.checkTestB(this.state)) {
+        tasks.sort((x1: Task, x2: Task) => {
+          if (x1.awardTaken < x2.awardTaken) return -1;
+          if (x1.awardTaken > x2.awardTaken) return 1;
+          if (x1.done < x2.done) return 1;
+          if (x1.done > x2.done) return -1;
+          if (x1.sort < x2.sort) return -1;
+          if (x1.sort > x2.sort) return 1;
+          return 0;
+        });
+      } else {
+        tasks.sort((x1: Itasks, x2: Itasks) => {
+          if (x1.got_awarded < x2.got_awarded) return -1;
+          if (x1.got_awarded > x2.got_awarded) return 1;
+          if (x1.done < x2.done) return 1;
+          if (x1.done > x2.done) return -1;
+          if (x1.sort < x2.sort) return -1;
+          if (x1.sort > x2.sort) return 1;
+          return 0;
+        });
+      }
+      let task = tasks[0];
       // задание на покупку территории и установку пастбища
-      if (task?.done === 0 && task?.id === 137 && !arrowOnTerrirory) {
+      if (task?.done === 0 && (task?.id === 137 || task.id === '2-2' || task.id === '2-1') && !arrowOnTerrirory) {
         let territory: any = this.territories.children.entries.find((data: Territory) => data.block === 3 && data.position === 1);
         arrowOnTerrirory = Arrow.generate(this, 10, { x: territory.x + 120, y: territory.y + 180 });
       }

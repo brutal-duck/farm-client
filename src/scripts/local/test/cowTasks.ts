@@ -167,7 +167,7 @@ const testCowTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 50
+    sort: 80
   },
   {
     id: '3-4',
@@ -239,7 +239,7 @@ const testCowTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 60
+    sort: 80
   },
   {
     id: '4-5',
@@ -323,7 +323,7 @@ const testCowTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 60
+    sort: 80
   },
   {
     id: '5-7',
@@ -407,7 +407,7 @@ const testCowTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 60
+    sort: 80
   },
   {
     id: '6-7',
@@ -479,7 +479,7 @@ const testCowTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 50
+    sort: 80
   },
   {
     id: '7-6',
@@ -575,7 +575,7 @@ const testCowTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 60
+    sort: 80
   },
   {
     id: '8-7',
@@ -647,7 +647,7 @@ const testCowTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 50
+    sort: 80
   },
   {
     id: '9-6',
@@ -743,7 +743,7 @@ const testCowTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 60
+    sort: 80
   },
   {
     id: '10-7',
@@ -815,7 +815,7 @@ const testCowTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 50
+    sort: 80
   },
   {
     id: '11-6',
@@ -911,7 +911,7 @@ const testCowTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 60
+    sort: 80
   },
   {
     id: '12-7',
@@ -983,7 +983,7 @@ const testCowTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 50
+    sort: 80
   },
   {
     id: '13-6',
@@ -1079,7 +1079,7 @@ const testCowTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 60
+    sort: 80
   },
   {
     id: '14-7',
@@ -1151,7 +1151,7 @@ const testCowTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 50
+    sort: 80
   },
   {
     id: '15-6',
@@ -1247,7 +1247,7 @@ const testCowTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 60
+    sort: 80
   },
   {
     id: '16-7',
@@ -1319,7 +1319,7 @@ const testCowTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 50
+    sort: 80
   },
   {
     id: '17-6',
@@ -1415,7 +1415,7 @@ const testCowTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 60
+    sort: 80
   },
   {
     id: '18-7',
@@ -1487,7 +1487,7 @@ const testCowTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 50
+    sort: 80
   },
   {
     id: '19-6',
@@ -1535,7 +1535,7 @@ const testCowTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 20
+    sort: 80
   },
   {
     id: '20-3',

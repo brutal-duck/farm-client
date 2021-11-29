@@ -5,6 +5,8 @@ import SpeechBubble from '../../components/animations/SpeechBuble';
 import SheepTerritory from './../../components/Territories/SheepTerritory';
 import { decrementAdFreeDiamondTime, incFortuneAdTimer, incInterstitialAdTimer, progressClanCooldown, progressClanEventTime, progressSalesTime, showSale } from '../../general/interval';
 import Utils from './../../libs/Utils';
+import Territory from './../../components/Territories/Territory';
+import { Task } from '../../local/tasks/types';
 
 let checkCollector: number = 0;
 const BALANCE_HINT_COUNTDOWN = 20;
@@ -243,24 +245,34 @@ function interval(): void {
     // стрелки для некоторых заданий
     if (this.state.userSheep.part < 3) {
       
-      let tasks: Itasks[] = this.partTasks();
-      tasks.sort((x1: Itasks, x2: Itasks) => {
-        if (x1.got_awarded < x2.got_awarded) return -1;
-        if (x1.got_awarded > x2.got_awarded) return 1;
-        if (x1.done < x2.done) return 1;
-        if (x1.done > x2.done) return -1;
-        if (x1.sort < x2.sort) return -1;
-        if (x1.sort > x2.sort) return 1;
-        return 0;
-      });
+      let tasks = this.partTasks();
+      if (Utils.checkTestB(this.state)) {
+        tasks.sort((x1: Task, x2: Task) => {
+          if (x1.awardTaken < x2.awardTaken) return -1;
+          if (x1.awardTaken > x2.awardTaken) return 1;
+          if (x1.done < x2.done) return 1;
+          if (x1.done > x2.done) return -1;
+          if (x1.sort < x2.sort) return -1;
+          if (x1.sort > x2.sort) return 1;
+          return 0;
+        });
+      } else {
+        tasks.sort((x1: Itasks, x2: Itasks) => {
+          if (x1.got_awarded < x2.got_awarded) return -1;
+          if (x1.got_awarded > x2.got_awarded) return 1;
+          if (x1.done < x2.done) return 1;
+          if (x1.done > x2.done) return -1;
+          if (x1.sort < x2.sort) return -1;
+          if (x1.sort > x2.sort) return 1;
+          return 0;
+        });
+      }
 
-      let task: Itasks = tasks[0];
+      let task = tasks[0];
       
       // задание с продажей шерсти из хранилища
-      if (task?.done === 0 && task?.id === 127 && !arrowOnStorage) {
-
+      if (task?.done === 0 && (task?.id === 127 || task?.id === '1-4') && !arrowOnStorage) {
         let territory: any = this.territories.children.entries.find((data: any) => data.territoryType === 5);
-        
         if (territory?.volume > 0) {
           arrowOnStorage = Arrow.generate(this, 9, { x: territory.x + 120, y: territory.y + 120 });
         }
@@ -268,9 +280,8 @@ function interval(): void {
       }
 
       // задание на покупку территории и установку пастбища
-      if (task?.done === 0 && task?.id === 5 && !arrowOnTerrirory) {
-        
-        let territory: any = this.territories.children.entries.find((data: any) => data.block === 3 && data.position === 3);
+      if (task?.done === 0 && (task?.id === 5 || task?.id === '2-1' || task?.id === '2-2') && !arrowOnTerrirory) {
+        let territory: Territory = this.territories.children.entries.find((data: any) => data.block === 3 && data.position === 3);
         arrowOnTerrirory = Arrow.generate(this, 10, { x: territory.x + 120, y: territory.y + 180 });
       }
 

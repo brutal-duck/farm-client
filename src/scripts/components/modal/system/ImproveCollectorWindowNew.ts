@@ -155,21 +155,38 @@ export default class ImproveCollectorWindowNew {
       if (Utils.checkSale(this.scene.state, `${this.scene.state.farm.toUpperCase()}_COLLECTOR_IMPROVE`)) {
         settings.right1.sale = shortNum(Math.floor(this.nextTimeSettings.improveTimePrice / 2));
       }
-      const action = () => this.improveCollector('speed');
+      const action = () => {
+        const modal: Imodal = {
+          type: 1,
+          sysType: 24,
+          confirmSpendParams: {
+            type: `ImproveCollectorSpeed${this.scene.state.farm}`,
+            level: this.farmUser.collectorLevel + 1,
+            price: this.nextSpeedSettings.imporveSpeedPrice, 
+            callback: () => this.improveCollector('speed'),
+          }
+        }
+        this.scene.state.modal = modal;
+        this.scene.scene.restart(this.scene.state);
+      }
       new BigButton(this.scene, 140, action, settings);
     }
   }
 
 
   private improveCollector(improveType: string): void {
+    const sale = Utils.checkSale(this.scene.state, `${this.scene.state.farm.toUpperCase()}_COLLECTOR_IMPROVE`);
+    const speedPrice = sale ? Math.round(this.nextSpeedSettings.imporveSpeedPrice / 2) : this.nextSpeedSettings.imporveSpeedPrice;
+    const timePrice = sale ? Math.round(this.nextSpeedSettings.improveTimePrice / 2) : this.nextSpeedSettings.improveTimePrice;
+
     if (this.checkImprove(improveType)) {
       if (improveType === 'time') {
         this.scene.state[`user${this.farm}`].collectorTimeLevel++;
         this.scene.game.scene.keys[this.farm].tryTask(TaskType.IMPROVE_COLLECTOR);
-        this.farmUser.money -= this.nextTimeSettings.improveTimePrice;
+        this.farmUser.money -= timePrice;
       } else if (improveType === 'speed') {
         this.scene.state[`user${this.farm}`].collectorLevel++;
-        const price = this.nextSpeedSettings.imporveSpeedPrice;
+        const price = speedPrice;
         this.scene.state.user.diamonds -= price;
         this.scene.game.scene.keys[this.scene.state.farm].tryTask(15, 0, price);
         this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
@@ -181,14 +198,14 @@ export default class ImproveCollectorWindowNew {
 
     } else {
       if (improveType === 'time') {
-        let count: number = this.nextTimeSettings.improveTimePrice - this.farmUser.money;
+        let count: number = timePrice - this.farmUser.money;
         let diamonds: number = this.scene.game.scene.keys[this.scene.state.farm].convertMoney(count);
         this.scene.state.convertor = { fun: 8, count, diamonds, type: 1 }
         this.scene.state.modal = { type: 1, sysType: 4 };
 
       } else if (improveType === 'speed') {
-        let count: number = this.nextSpeedSettings.imporveSpeedPrice - this.scene.state.user.diamonds
-        let diamonds: number = this.nextSpeedSettings.imporveSpeedPrice - this.scene.state.user.diamonds
+        let count: number = speedPrice - this.scene.state.user.diamonds
+        let diamonds: number = speedPrice - this.scene.state.user.diamonds
         this.scene.state.convertor = { fun: 8, count, diamonds, type: 2 }
         this.scene.state.modal = { type: 1, sysType: 4 };
       }
@@ -199,10 +216,13 @@ export default class ImproveCollectorWindowNew {
 
 
   private checkImprove(improveType: string): boolean {
+    const sale = Utils.checkSale(this.scene.state, `${this.scene.state.farm.toUpperCase()}_COLLECTOR_IMPROVE`);
+    const speedPrice = sale ? Math.round(this.nextSpeedSettings.imporveSpeedPrice / 2) : this.nextSpeedSettings.imporveSpeedPrice;
+    const timePrice = sale ? Math.round(this.nextSpeedSettings.improveTimePrice / 2) : this.nextSpeedSettings.improveTimePrice;
     return improveType === 'time' 
-    && this.farmUser.money >= this.nextTimeSettings.improveTimePrice 
+    && this.farmUser.money >= timePrice 
     || improveType === 'speed' 
-    && this.scene.state.user.diamonds >= this.nextSpeedSettings.imporveSpeedPrice;
+    && this.scene.state.user.diamonds >= speedPrice;
   }
 
 

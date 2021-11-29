@@ -3,6 +3,8 @@ import SheepBars from '../../scenes/Sheep/SheepBars';
 import Tutorial from '../../scenes/Tutorial';
 import Shop from '../../scenes/Modal/Shop/Main';
 import CowTerritory from './../Territories/CowTerritory';
+import { Task } from '../../local/tasks/types';
+import Utils from './../../libs/Utils';
 /**
   *  Конструктор принимает:
   ** Объект сцены, состояние(номер типа) и необязательный параметр позиции.
@@ -250,6 +252,12 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
     return task.done === 1;
   }
 
+  private checkTaskDoneTestB(id: string): boolean {
+    const tasks: Task[] = this.scene.partTasks();
+    const task: Task = tasks.find(data => data.id === id);
+    return task.done === 1;
+  }
+
   private checkDestroy(): boolean {
     let result: boolean = false 
 
@@ -258,13 +266,25 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
         result = this.scene.state.userSheep.tutorial > 40;
         break;
       case 9:
-        result = this.checkTaskDone(127);
+        if (Utils.checkTestB(this.scene.state)) {
+          result = this.checkTaskDoneTestB('1-4');
+        } else {
+          result = this.checkTaskDone(127);
+        }
         break;
       case 10:
-        if (this.scene.state.farm === 'Sheep') {
-          result = this.checkTaskDone(5);
-        } else if (this.scene.state.farm === 'Cow') {
-          result = this.checkTaskDone(137);
+        if (Utils.checkTestB(this.scene.state)) {
+          if (this.scene.state.farm === 'Sheep') {
+            result = this.checkTaskDoneTestB('2-2');
+          } else if (this.scene.state.farm === 'Cow') {
+            result = this.checkTaskDoneTestB('2-3');
+          }
+        } else {
+          if (this.scene.state.farm === 'Sheep') {
+            result = this.checkTaskDone(5);
+          } else if (this.scene.state.farm === 'Cow') {
+            result = this.checkTaskDone(137);
+          }
         }
         break;
       case 16: 

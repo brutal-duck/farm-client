@@ -179,7 +179,7 @@ const testSheepTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 50
+    sort: 80
   },
   {
     id: '3-6',
@@ -275,7 +275,7 @@ const testSheepTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 60
+    sort: 80
   },
   {
     id: '4-7',
@@ -359,7 +359,7 @@ const testSheepTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 60
+    sort: 80
   },
   {
     id: '5-7',
@@ -443,7 +443,7 @@ const testSheepTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 60
+    sort: 80
   },
   {
     id: '6-7',
@@ -515,7 +515,7 @@ const testSheepTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 50
+    sort: 80
   },
   {
     id: '7-6',
@@ -611,7 +611,7 @@ const testSheepTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 60
+    sort: 80
   },
   {
     id: '8-7',
@@ -665,7 +665,7 @@ const testSheepTasks: Task[] = [
     id: '9-4',
     type: TaskType['COLLECT_MONEY'],
     state: 0,
-    count: 10_000_000,
+    count: 5_000_000,
     done: 0,
     awardTaken: 0,
     awardType: 'diamond',
@@ -683,7 +683,7 @@ const testSheepTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 50
+    sort: 80
   },
   {
     id: '9-6',
@@ -779,7 +779,7 @@ const testSheepTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 60
+    sort: 80
   },
   {
     id: '10-7',
@@ -851,7 +851,7 @@ const testSheepTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 50
+    sort: 80
   },
   {
     id: '11-6',
@@ -947,7 +947,7 @@ const testSheepTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 60
+    sort: 80
   },
   {
     id: '12-7',
@@ -1019,7 +1019,7 @@ const testSheepTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 50
+    sort: 80
   },
   {
     id: '13-6',
@@ -1097,7 +1097,7 @@ const testSheepTasks: Task[] = [
     id: '14-5',
     type: TaskType['HAND_COLLECT'],
     state: 0,
-    count: 8,
+    count: 30,
     done: 0,
     awardTaken: 0,
     awardType: 'diamond',
@@ -1115,7 +1115,7 @@ const testSheepTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 60
+    sort: 80
   },
   {
     id: '14-7',
@@ -1187,7 +1187,7 @@ const testSheepTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 50
+    sort: 80
   },
   {
     id: '15-6',
@@ -1265,7 +1265,7 @@ const testSheepTasks: Task[] = [
     id: '16-5',
     type: TaskType['TAKE_ANIMAL_FROM_HERD'],
     state: 0,
-    count: 4,
+    count: 6,
     done: 0,
     awardTaken: 0,
     awardType: 'diamond',
@@ -1283,7 +1283,7 @@ const testSheepTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 60
+    sort: 80
   },
   {
     id: '16-7',
@@ -1355,7 +1355,7 @@ const testSheepTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 50
+    sort: 80
   },
   {
     id: '17-6',
@@ -1451,7 +1451,7 @@ const testSheepTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 60
+    sort: 80
   },
   {
     id: '18-7',
@@ -1523,7 +1523,7 @@ const testSheepTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 50
+    sort: 80
   },
   {
     id: '19-6',
@@ -1571,7 +1571,7 @@ const testSheepTasks: Task[] = [
     awardType: 'diamond',
     award: 1,
     progress: 0,
-    sort: 20
+    sort: 60
   },
   {
     id: '20-3',
@@ -1589,7 +1589,7 @@ const testSheepTasks: Task[] = [
     id: '20-4',
     type: TaskType['TAKE_ANIMAL_FROM_HERD'],
     state: 0,
-    count: 4,
+    count: 8,
     done: 0,
     awardTaken: 0,
     awardType: 'diamond',
