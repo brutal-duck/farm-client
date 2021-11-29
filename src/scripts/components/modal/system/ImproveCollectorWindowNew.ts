@@ -224,9 +224,9 @@ export default class ImproveCollectorWindowNew {
   }
 
   private setNextLevelInfoText(): void {
-    if (this.nextTime) this.timeNextText.setText(`(+${this.nextTime - this.currentTime})`).setX(this.timeText.getRightCenter().x + 10)
+    if (this.nextTime) this.timeNextText.setText(`+${this.nextTime - this.currentTime}`).setX(this.timeText.getRightCenter().x + 10)
     else this.timeNextText.setText('')
-    if (this.nextSpeed) this.speedNextText.setText(`(+${(this.nextSpeed - this.currentSpeed).toFixed(1)})`).setX(this.speedText.getRightCenter().x + 10)
+    if (this.nextSpeed) this.speedNextText.setText(`+${(this.nextSpeed - this.currentSpeed).toFixed(1)}`).setX(this.speedText.getRightCenter().x + 10)
     else this.speedNextText.setText('')
   }
 

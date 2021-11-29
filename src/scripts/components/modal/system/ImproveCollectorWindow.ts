@@ -48,7 +48,7 @@ export default class ImproveCollectorWindow {
         y: this.duration.y
       };
 
-      const text: string = `(+${(this.nextLevel.time - this.currentLevel.time)} ${this.scene.state.lang.shortMinutes})`;
+      const text: string = `+${(this.nextLevel.time - this.currentLevel.time)} ${this.scene.state.lang.shortMinutes}`;
       this.nextLevelText = this.scene.add.text(position.x, position.y, text, { font: '30px Bip', color: '#57A90E' });
       
     } else if (this.nextLevel.speed > this.currentLevel.speed) {
@@ -57,7 +57,7 @@ export default class ImproveCollectorWindow {
         y: this.speed.y
       };
 
-      let text: string = `(+${(this.nextLevel.speed - this.currentLevel.speed).toFixed(1)})`;
+      let text: string = `+${(this.nextLevel.speed - this.currentLevel.speed).toFixed(1)}`;
       this.nextLevelText = this.scene.add.text(position.x, position.y, text, nextLevelTextStyle);
     }
 
@@ -102,13 +102,13 @@ export default class ImproveCollectorWindow {
         x: this.duration.getBounds().right + 10,
         y: this.duration.y
       };
-      text = `(+${(this.nextLevel.time - this.currentLevel.time)} ${this.scene.state.lang.shortMinutes})`;
+      text = `+${(this.nextLevel.time - this.currentLevel.time)} ${this.scene.state.lang.shortMinutes}`;
     } else if (this.nextLevel?.speed > this.currentLevel.speed) {
       position = {
         x: this.speed.getBounds().right + 10,
         y: this.speed.y
       };
-      text =  `(+${(this.nextLevel.speed - this.currentLevel.speed).toFixed(1)} ${this.scene.state.lang.seconds})`;
+      text =  `+${(this.nextLevel.speed - this.currentLevel.speed).toFixed(1)} ${this.scene.state.lang.seconds}`;
     }
     this.nextLevelText?.setPosition(position?.x, position?.y).setText(text);
     this.createBtn();
