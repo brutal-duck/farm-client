@@ -764,7 +764,7 @@ function speedCheckCollector(): void {
   const { collectorLevel } = farmUser;
   const collectorSettings: IcollectorSettings[] = scene.state[`${farm.toLowerCase()}CollectorSettings`];
   const currentSettings: IcollectorSettings = collectorSettings.find(el => el.level === collectorLevel);
-  if (currentSettings.level < collectorSettings.length) {
+  if (currentSettings.level < collectorSettings.length && farmUser.part >= 4) {
     let animals: Phaser.GameObjects.Group =  scene[farm.toLowerCase()];
     if (farm === 'Cow') animals = scene[`animalGroup`];
     let animalsCount: number = 0;
@@ -792,7 +792,7 @@ function speedCheckCollectorTestB(): void {
   const { collectorLevel } = farmUser;
   const collectorSettings: IpartSettings[] = scene.state[`${farm.toLowerCase()}Settings`].partSettings;
   const currentSettings: IcollectorPartSettings = collectorSettings[collectorLevel - 1].collector;
-  if (collectorLevel !== farmUser.part) {
+  if (collectorLevel !== farmUser.part && farmUser.part >= 4) {
     let animals: Phaser.GameObjects.Group =  scene[farm.toLowerCase()];
     if (farm === 'Cow') animals = scene[`animalGroup`];
     let animalsCount: number = 0;
