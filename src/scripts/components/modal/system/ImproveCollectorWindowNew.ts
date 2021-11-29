@@ -145,6 +145,7 @@ export default class ImproveCollectorWindowNew {
       this.scene.bigButton('grey', 'left', 140, text, timeIcon);
 
     } else {
+      const sale = Utils.checkSale(this.scene.state, `${this.scene.state.farm.toUpperCase()}_COLLECTOR_IMPROVE`);
       const speedCost = { icon: 'diamond', text: shortNum(this.nextSpeedSettings.imporveSpeedPrice) }
       const settings: IbigButtonSetting = {
         color: 'green',
@@ -152,8 +153,8 @@ export default class ImproveCollectorWindowNew {
         text: this.scene.state.lang.improveToLevel.replace('$1',String(this.farmUser.collectorLevel + 1)),
         right1: speedCost,
       };
-      if (Utils.checkSale(this.scene.state, `${this.scene.state.farm.toUpperCase()}_COLLECTOR_IMPROVE`)) {
-        settings.right1.sale = shortNum(Math.floor(this.nextTimeSettings.improveTimePrice / 2));
+      if (sale) {
+        settings.right1.sale = shortNum(Math.floor(this.nextTimeSettings.imporveSpeedPrice / 2));
       }
       const action = () => {
         const modal: Imodal = {
@@ -162,7 +163,7 @@ export default class ImproveCollectorWindowNew {
           confirmSpendParams: {
             type: `ImproveCollectorSpeed${this.scene.state.farm}`,
             level: this.farmUser.collectorLevel + 1,
-            price: this.nextSpeedSettings.imporveSpeedPrice, 
+            price: sale ? Math.floor(this.nextTimeSettings.imporveSpeedPrice / 2) : this.nextSpeedSettings.imporveSpeedPrice, 
             callback: () => this.improveCollector('speed'),
           }
         }
