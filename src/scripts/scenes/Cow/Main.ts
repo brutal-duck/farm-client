@@ -156,7 +156,7 @@ class Cow extends Phaser.Scene {
   public spaceCount: number = 0;
   public feedBoostRemaindTimer: number = 0;
   public ads: Ads;
-  public speedCollectorTimer: number = 0;
+  public speedCollectorTimer: number = 30;
   public achievement: Achievement;
   public collectorCD: number;
   public collectorIsReady: boolean;

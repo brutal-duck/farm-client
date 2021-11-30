@@ -9,7 +9,7 @@ import Territory from './../../components/Territories/Territory';
 import { Task } from '../../local/tasks/types';
 
 let checkCollector: number = 0;
-const BALANCE_HINT_COUNTDOWN = 20;
+const BALANCE_HINT_COUNTDOWN = 30;
 let balanceCounter: number = 0;
 let balanceCounterMultiplier = 1;
 let chickenCollectorVolume: number = 0;

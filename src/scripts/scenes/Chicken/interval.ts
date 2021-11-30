@@ -11,7 +11,7 @@ let checkCollector: number = 0;
 let sheepCollectorVolume: number = 0;
 let cowCollectorVolume: number = 0;
 let arrowOnCollector: Phaser.GameObjects.Sprite;
-const BALANCE_HINT_COUNTDOWN = 20;
+const BALANCE_HINT_COUNTDOWN = 30;
 let balanceCounter: number = 0;
 let balanceCounterMultiplier = 1;
 

@@ -805,7 +805,7 @@ function speedCheckCollectorTestB(): void {
       scene.speedCollectorTimer -= 1;
       if (scene.speedCollectorTimer <= 0) {
         const text = scene.state.lang[`speedCollectorNotification${farm}`];
-        scene.speedCollectorTimer = 90;
+        scene.speedCollectorTimer = 60;
         SpeechBubble.create(scene.scene.get(`${farm}Bars`), text, 3);
       }
     }

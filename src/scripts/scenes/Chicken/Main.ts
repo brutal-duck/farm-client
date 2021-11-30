@@ -147,7 +147,7 @@ class Chicken extends Phaser.Scene {
   public dailyStartCheck: boolean = true; // запущено ли открытие окна daily
   public counterWithoutCollector: number = 0;
   public ads: Ads;
-  public speedCollectorTimer: number = 0;
+  public speedCollectorTimer: number = 30;
   public achievement: Achievement;
   public collectorCD: number;
   public collectorIsReady: boolean;

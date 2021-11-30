@@ -16,7 +16,7 @@ let chickenCollectorVolume: number = 0;
 let arrowOnCollector: Phaser.GameObjects.Sprite;
 let arrowOnTerrirory: Phaser.GameObjects.Sprite;
 let arrowOnFactory: Phaser.GameObjects.Sprite;
-const BALANCE_HINT_COUNTDOWN = 20;
+const BALANCE_HINT_COUNTDOWN = 30;
 let balanceCounter: number = 0;
 let balanceCounterMultiplier: number = 1;
 

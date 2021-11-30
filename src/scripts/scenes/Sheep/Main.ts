@@ -182,7 +182,7 @@ class Sheep extends Phaser.Scene {
   public dailyStartCheck: boolean = true; // запущено ли открытие окна daily
   public remaindSellTimer: number = 0;
   public feedBoostRemaindTimer: number = 0;
-  public speedCollectorTimer: number = 0;
+  public speedCollectorTimer: number = 30;
   public ads: Ads;
   public achievement: Achievement;
   public collectorCD: number;
