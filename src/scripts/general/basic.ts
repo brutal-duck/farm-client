@@ -585,12 +585,13 @@ function donePart(): void {
     if (!checkShowSheep && !checkShowCow) {
       if (!Utils.checkActiveScenes(this, ['Modal', 'Tutorial', 'Profile'])) this.showTasks();
     }
-    if (user.part === 7 && farm === 'Sheep' && Utils.checkUserHasName(this.state)) {
-      this.state.clanTutor = true;
-    } else if (user.part === 8 && farm === 'Sheep' && Utils.checkUserHasName(this.state)) {
-      this.state.fortuneTutor = true;
-    }
   }, callbackScope: this, loop: false });
+
+  if (user.part === 7 && farm === 'Sheep' && Utils.checkUserHasName(this.state)) {
+    this.state.clanTutor = true;
+  } else if (user.part === 8 && farm === 'Sheep' && Utils.checkUserHasName(this.state)) {
+    this.state.fortuneTutor = true;
+  }
 }
 
 

@@ -418,19 +418,18 @@ function interval(): void {
 
     if ((this.state.clanTutor || this.state.fortuneTutor) && 
       !arrowOnMap && 
-      !this.scene.get('Modal').load.isLoading() &&
-      !this.scene.isActive('Modal') &&
-      !this.scene.isActive('Tutorial') &&
-      !this.scene.isActive('Profile')) {
+      !Utils.checkActiveScenes(this, ['Modal', 'Tutorial', 'Profile'])) {
       arrowOnMap = Arrow.generate(this.game.scene.keys[`${this.state.farm}Bars`], 20);
     }
 
     if (this.state.clanTutor && this.scene.isActive('Profile') && !this.scene.isActive('Tutorial')) {
       this.showTutorial('clan');
+      arrowOnMap = null;
     }
 
     if (this.state.fortuneTutor && this.scene.isActive('Profile') && !this.scene.isActive('Tutorial')) {
       this.showTutorial('fortune');
+      arrowOnMap = null;
     }
     
     this.intervalPorgressCollectorTime();
