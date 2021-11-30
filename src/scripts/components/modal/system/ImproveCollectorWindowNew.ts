@@ -177,8 +177,8 @@ export default class ImproveCollectorWindowNew {
 
   private improveCollector(improveType: string): void {
     const sale = Utils.checkSale(this.scene.state, `${this.scene.state.farm.toUpperCase()}_COLLECTOR_IMPROVE`);
-    const speedPrice = sale ? Math.round(this.nextSpeedSettings.imporveSpeedPrice / 2) : this.nextSpeedSettings.imporveSpeedPrice;
-    const timePrice = sale ? Math.round(this.nextTimeSettings.improveTimePrice / 2) : this.nextTimeSettings.improveTimePrice;
+    const speedPrice = sale ? Math.round(this.nextSpeedSettings?.imporveSpeedPrice / 2) : this.nextSpeedSettings?.imporveSpeedPrice;
+    const timePrice = sale ? Math.round(this.nextTimeSettings?.improveTimePrice / 2) : this.nextTimeSettings?.improveTimePrice;
 
     if (this.checkImprove(improveType)) {
       if (improveType === 'time') {
@@ -194,6 +194,12 @@ export default class ImproveCollectorWindowNew {
           type: 'improve_collector',
           count: price,
         });
+      }
+      if (this.scene.state.userCow.collectorLevel === this.scene.state.cowSettings.partSettings.length 
+      && this.scene.state.userCow.collectorTimeLevel === this.scene.state.cowSettings.partSettings.length) {
+        if (this.scene.state.farm === 'Sheep') this.scene.game.scene.keys[this.scene.state.farm].achievement.tryId(27);
+        else if (this.scene.state.farm === 'Chicken') this.scene.game.scene.keys[this.scene.state.farm].achievement.tryId(30);
+        else if (this.scene.state.farm === 'Cow') this.scene.game.scene.keys[this.scene.state.farm].achievement.tryId(33);
       }
       this.closeAndFireworksBlow();
 
@@ -218,8 +224,8 @@ export default class ImproveCollectorWindowNew {
 
   private checkImprove(improveType: string): boolean {
     const sale = Utils.checkSale(this.scene.state, `${this.scene.state.farm.toUpperCase()}_COLLECTOR_IMPROVE`);
-    const speedPrice = sale ? Math.round(this.nextSpeedSettings.imporveSpeedPrice / 2) : this.nextSpeedSettings.imporveSpeedPrice;
-    const timePrice = sale ? Math.round(this.nextTimeSettings.improveTimePrice / 2) : this.nextTimeSettings.improveTimePrice;
+    const speedPrice = sale ? Math.round(this.nextSpeedSettings?.imporveSpeedPrice / 2) : this.nextSpeedSettings?.imporveSpeedPrice;
+    const timePrice = sale ? Math.round(this.nextTimeSettings?.improveTimePrice / 2) : this.nextTimeSettings?.improveTimePrice;
     return improveType === 'time' 
     && this.farmUser.money >= timePrice 
     || improveType === 'speed' 

@@ -262,7 +262,7 @@ export default class CowTerritory extends Territory {
       this.scene.scene.launch('Modal', this.scene.state);
     } else if (this.territoryType === 6) {
       if (this.scene.state.userCow.collectorLevel < this.scene.state.cowSettings.partSettings.length 
-        && this.scene.state.userCow.collectorTimeLevel < this.scene.state.cowSettings.partSettings.length) {
+        || this.scene.state.userCow.collectorTimeLevel < this.scene.state.cowSettings.partSettings.length) {
         this.scene.showImproveCollector();
       } else {
         SpeechBubble.create(this.scene.game.scene.keys[`${this.scene.state.farm}Bars`], this.scene.state.lang.maxCollectorLevel, 3);

@@ -103,7 +103,7 @@ export default class SheepTerritory extends Territory {
         this.scene.state.territory = this;
         this.scene.scene.launch('Modal', this.scene.state);
       } else if (this.territoryType === 6) {
-        if (this.scene.state.userSheep.collectorLevel < this.scene.state.sheepSettings.partSettings.length && 
+        if (this.scene.state.userSheep.collectorLevel < this.scene.state.sheepSettings.partSettings.length || 
           this.scene.state.userSheep.collectorTimeLevel < this.scene.state.sheepSettings.partSettings.length) {
           this.scene.showImproveCollector();
         } else {

@@ -104,7 +104,7 @@ export default class ChickenTerritory extends Territory {
 
     } else if (this.territoryType === 6) {
       
-      if (this.scene.state.userChicken.collectorLevel < this.scene.state.chickenSettings.partSettings.length &&
+      if (this.scene.state.userChicken.collectorLevel < this.scene.state.chickenSettings.partSettings.length ||
         this.scene.state.userChicken.collectorTimeLevel < this.scene.state.chickenSettings.partSettings.length) {
         this.scene.showImproveCollector();
       } else {

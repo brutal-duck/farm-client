@@ -2,6 +2,7 @@ import { sheepSettings, chickenSettings, cowSettings } from './settings';
 import LocalStorage from './../libs/LocalStorage';
 import sheepPartSettings from './test/sheepPartSettings';
 import chickenPartSettings from './test/chickenPartSettings';
+import cowPartSettings from './test/cowPartSettings';
 
 export default (test?: boolean): Iprogress => {
 
@@ -46,7 +47,7 @@ export default (test?: boolean): Iprogress => {
     },
     cow: {
       part: cowPart,
-      max: cowSettings.cowParts.length,
+      max: test ? cowPartSettings.length : cowSettings.cowParts.length,
       open: openCow,
       price: 300000000,
       unlock: 8,

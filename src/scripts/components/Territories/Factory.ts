@@ -1,3 +1,4 @@
+import { TaskType } from '../../local/tasks/types';
 import Cow from './../../scenes/Cow/Main';
 import Territory from './Territory';
 
@@ -195,7 +196,7 @@ export default class Factory extends Phaser.GameObjects.Sprite {
 
   public sellProducts(): void {
     if (this.money > 0) {
-      this.scene.tryTask(20, 0);
+      this.scene.tryTask(TaskType['SELL_RESOURCE'], 0, this.money);
 
       this.scene.state.userCow.money += this.money;
       this.money = 0;

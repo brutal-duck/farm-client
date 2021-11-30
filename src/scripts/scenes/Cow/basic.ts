@@ -7,7 +7,7 @@ import Utils from './../../libs/Utils';
 
 // расчет баланса фермы
 function balance(): Ibalance {
-  if (Utils.checkTestB(this.state)) balanceTestB.bind(this)();
+  if (Utils.checkTestB(this.state)) return balanceTestB.bind(this)();
   let waterConsumption: number = 0;
   let grassConsumption: number = 0;
   let waterRecovery: number = 0;
@@ -115,7 +115,7 @@ function balanceTestB(): Ibalance {
   for (let i in this.territories?.children.entries) {
     const territory: Territory = this.territories?.children.entries[i];
     if (territory.territoryType === 2 || territory.territoryType === 3) {
-      const reg: number = this.settings.partSettings[territory.improve - 1].regeneration;
+      const reg: number = this.settings.partSettings[territory.improve - 1].territory.regeneration;
       if (territory.territoryType === 2) {
         grassRecovery += reg;
       } else {
