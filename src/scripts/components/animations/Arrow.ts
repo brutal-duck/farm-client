@@ -29,6 +29,7 @@ import Utils from './../../libs/Utils';
   *18	Стрелка на подстригателя  
   *19 Стрелка на фабрику
   *20 Стрелка на карту для тутора клана
+  *21 Стрелка на мерджилку для тест В задание 3-4
 */
 
 export default class Arrow extends Phaser.GameObjects.Sprite {
@@ -184,13 +185,21 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
         this.y = this.position.y - 180 - this.height / 2;
         this.setAngle(90);
         this.verticalAnim();
-      break;
+        break;
       case 20:
         this.x = 510;
         this.y = Number(this.scene.game.config.height) - 70 - 150 - this.height / 2;
         this.setAngle(90);
         this.verticalAnim();
-      break;
+        break;
+      case 21:
+        this.x = this.position.x;
+        this.y = this.position.y - 180 - this.height / 2;
+        this.setAngle(90);
+        this.verticalAnim();
+        break;
+      default:
+        break;
     }
 
     this.setDepth(this.y * 2);
@@ -237,6 +246,7 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
     switch (this.state) {
       case 9:
       case 10:
+      case 21:
       case 17:
       case 18:
       case 19:
@@ -249,13 +259,13 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
   private checkTaskDone(id: number): boolean {
     const tasks: Itasks[] = this.scene.partTasks();
     const task: Itasks = tasks.find((data: Itasks) => (data.id === id));
-    return task.done === 1;
+    return task?.done === 1;
   }
 
   private checkTaskDoneTestB(id: string): boolean {
     const tasks: Task[] = this.scene.partTasks();
     const task: Task = tasks.find(data => data.id === id);
-    return task.done === 1;
+    return task?.done === 1;
   }
 
   private checkDestroy(): boolean {
@@ -304,6 +314,11 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
         break;
       case 20:
         result = !this.scene.state.clanTutor && !this.scene.state.fortuneTutor;
+        break;
+      case 21:
+        if (Utils.checkTestB(this.scene.state)) {
+          result = this.checkTaskDoneTestB('3-4');
+        } else result = true;
         break;
     }
     return result;

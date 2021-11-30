@@ -21,6 +21,7 @@ function interval(): void {
   let checkRaiting: boolean = false;
   let arrowOnStorage: Phaser.GameObjects.Sprite;
   let arrowOnTerrirory: Phaser.GameObjects.Sprite;
+  let arrowOnMerging: Phaser.GameObjects.Sprite;
   let arrowOnMap: Phaser.GameObjects.Sprite;
   let arrowOnCollector: Phaser.GameObjects.Sprite;
   this.time.addEvent({ delay: 1000, callback: (): void => {
@@ -243,7 +244,7 @@ function interval(): void {
     this.dailyAward();
 
     // стрелки для некоторых заданий
-    if (this.state.userSheep.part < 3) {
+    if (this.state.userSheep.part <= 3) {
       
       let tasks = this.partTasks();
       if (Utils.checkTestB(this.state)) {
@@ -283,6 +284,11 @@ function interval(): void {
       if (task?.done === 0 && (task?.id === 5 || task?.id === '2-1' || task?.id === '2-2') && !arrowOnTerrirory) {
         let territory: Territory = this.territories.children.entries.find((data: any) => data.block === 3 && data.position === 3);
         arrowOnTerrirory = Arrow.generate(this, 10, { x: territory.x + 120, y: territory.y + 180 });
+      }
+
+      if (task?.done === 0 && task?.id === '3-4' && !arrowOnMerging) {
+        const territory: Territory = this.territories.children.entries.find((data: Territory) => data.territoryType === 4);
+        arrowOnMerging = Arrow.generate(this, 21, { x: territory.x + 120, y: territory.y + 180 });
       }
 
     }
