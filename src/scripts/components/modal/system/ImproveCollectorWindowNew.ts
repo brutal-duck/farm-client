@@ -219,7 +219,7 @@ export default class ImproveCollectorWindowNew {
   private checkImprove(improveType: string): boolean {
     const sale = Utils.checkSale(this.scene.state, `${this.scene.state.farm.toUpperCase()}_COLLECTOR_IMPROVE`);
     const speedPrice = sale ? Math.round(this.nextSpeedSettings.imporveSpeedPrice / 2) : this.nextSpeedSettings.imporveSpeedPrice;
-    const timePrice = sale ? Math.round(this.nextSpeedSettings.improveTimePrice / 2) : this.nextSpeedSettings.improveTimePrice;
+    const timePrice = sale ? Math.round(this.nextTimeSettings.improveTimePrice / 2) : this.nextTimeSettings.improveTimePrice;
     return improveType === 'time' 
     && this.farmUser.money >= timePrice 
     || improveType === 'speed' 
