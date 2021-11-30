@@ -51,6 +51,7 @@ enum iconsUrl {
   ach47 = require('../../../assets/images/achievements/icon-1.png'),
   ach48 = require('../../../assets/images/achievements/icon-1.png'),
   ach49 = require('../../../assets/images/achievements/icon-1.png'),
+  ach50 = require('../../../assets/images/achievements/icon-1.png'),
   ach99 = require('../../../assets/images/achievements/icon-1.png'),
   ach100 = require('../../../assets/images/achievements/icon-1.png'),
   ach101 = require('../../../assets/images/achievements/icon-1.png'),
