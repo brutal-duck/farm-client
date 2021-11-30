@@ -525,7 +525,6 @@ function exchange(ad: boolean = false): void {
 
 // завершение главы
 function donePart(): void {
-
   let user: IuserSheep | IuserChicken | IuserCow;
   let parts: Ipart[];
   if (this.state.farm === 'Sheep') {
@@ -539,12 +538,6 @@ function donePart(): void {
     parts = this.state.cowSettings.cowParts;
   }
   
-  // const award: number = parts.find((data: Ipart) => data.sort === user.part).award;
-  // this.state.user.diamonds += award;
-  // this.state.amplitude.logAmplitudeEvent('diamonds_get', {
-  //   type: 'part_award',
-  //   count: award,
-  // });
   if (this.state.farm === 'Sheep' && this.caveTutor) {
     this.caveTutor = !this.caveTutor;
   }
@@ -577,21 +570,24 @@ function donePart(): void {
     this.scene.launch('Modal', this.state);
   }
 
-  const blockedSheepParts = [3, 4, 5, 6, 7];
-  const blockedCowParts = [2];
+
   const { cave, herdBoost, feedBoost } = this.state.user.additionalTutorial as IadditionalTutorial;
   const { farm } = this.state as Istate;
 
-  const checkShowSheep = farm === 'Sheep' && blockedSheepParts.some(el => el === user.part) && (!cave || !herdBoost || !feedBoost);
-  const checkShowCow = farm === 'Cow' &&  blockedCowParts.some(el => el === user.part);
+  const checkShowSheep = farm === 'Sheep' 
+  && (user.part === 3 && !cave 
+  || user.part === 4 
+  || user.part === 5 && !herdBoost
+  || user.part === 6 && !feedBoost);
+  const checkShowCow = farm === 'Cow' && user.part === 2;
 
   this.time.addEvent({ delay: 300, callback: (): void => {
     if (!checkShowSheep && !checkShowCow) {
       if (!Utils.checkActiveScenes(this, ['Modal', 'Tutorial', 'Profile'])) this.showTasks();
     }
-    if (user.part === 7 && this.state.farm === 'Sheep' && Utils.checkUserHasName(this.state)) {
+    if (user.part === 7 && farm === 'Sheep' && Utils.checkUserHasName(this.state)) {
       this.state.clanTutor = true;
-    } else if (user.part === 8 && this.state.farm === 'Sheep' && Utils.checkUserHasName(this.state)) {
+    } else if (user.part === 8 && farm === 'Sheep' && Utils.checkUserHasName(this.state)) {
       this.state.fortuneTutor = true;
     }
   }, callbackScope: this, loop: false });
