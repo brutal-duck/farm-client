@@ -943,7 +943,7 @@ export default function typePreload(): void {
         this.load.image('achievement-frame', achievementFrame);
         this.load.image('achievement-window-header', achievementHeader);
         Object.keys(iconsUrl).forEach(key => {
-          this.load.image(`${key}-status`, iconsUrl[key]);
+          if (key.includes('ach')) this.load.image(`${key}-status`, iconsUrl[key]);
         });
         break;
       default:
