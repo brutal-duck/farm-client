@@ -181,8 +181,9 @@ function interval(): void {
         });
       }
       let task = tasks[0];
+      
       // задание на покупку территории и установку пастбища
-      if (task?.done === 0 && (task?.id === 137 || task.id === '2-2' || task.id === '2-1') && !arrowOnTerrirory) {
+      if (task?.done === 0 && (task?.id === 137 || task.id === '2-2' || task.id === '2-3') && !arrowOnTerrirory) {
         let territory: any = this.territories.children.entries.find((data: Territory) => data.block === 3 && data.position === 1);
         arrowOnTerrirory = Arrow.generate(this, 10, { x: territory.x + 120, y: territory.y + 180 });
       }

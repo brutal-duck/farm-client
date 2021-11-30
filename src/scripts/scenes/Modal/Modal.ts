@@ -368,7 +368,10 @@ class Modal extends Phaser.Scene {
 
     if (this.state.farm === 'Cow' && this.state.territory?.territoryType === 5 && this.state.modal?.sysType === 2) {
 
-      const max: number = this.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === this.state.territory.improve).lotSize * this.state.storageMultiply;
+      let max: number = this.state.cowSettings.cowFactorySettings.find((data: IfactorySettings) => data.improve === this.state.territory.improve).lotSize * this.state.storageMultiply;
+      if (Utils.checkTestB(this.state)) {
+        max = this.state.cowSettings.partSettings[this.state.territory?.improve - 1].territory.maxRepositoryVolume;
+      }
       const count: string = this.state.lang.countMilk;
       let percent: number = 0;
 
