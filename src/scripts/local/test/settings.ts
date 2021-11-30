@@ -1041,7 +1041,7 @@ const cowSettings: IcowSettings = {
     { breed: 1, drinking: 2, eating: 8, maxMilkVolume: 100 },
     { breed: 2, drinking: 2, eating: 10, maxMilkVolume: 200 },
     { breed: 3, drinking: 3, eating: 12, maxMilkVolume: 400 },
-    { breed: 4, drinking: 3, eating: 13, maxMilkVolume: 800 },
+    { breed: 4, drinking: 3, eating: 12, maxMilkVolume: 800 }, // поедание уменьшено для сохранения баланса
     { breed: 5, drinking: 3, eating: 14, maxMilkVolume: 1600 },
     { breed: 6, drinking: 3, eating: 16, maxMilkVolume: 3200 },
     { breed: 7, drinking: 4, eating: 18, maxMilkVolume: 6400 },

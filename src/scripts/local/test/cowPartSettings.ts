@@ -66,7 +66,7 @@ const cowPartSettings: IpartSettings[] = [
       maxRepositoryVolume: 86400,
       improveFairPrice: 24700,
       improveTerritoryPrice: 12433,
-      regeneration: 15,
+      regeneration: 17, // Увеличено для сохранения баланса
       cooldown: 21,
     },
     exchange: 1800,
@@ -84,7 +84,7 @@ const cowPartSettings: IpartSettings[] = [
       maxRepositoryVolume: 264000,
       improveFairPrice: 85200,
       improveTerritoryPrice: 36686,
-      regeneration: 16,
+      regeneration: 19, // Увеличено для сохранения баланса
       cooldown: 52,
     },
     exchange: 4800,
@@ -102,7 +102,7 @@ const cowPartSettings: IpartSettings[] = [
       maxRepositoryVolume: 748800,
       improveFairPrice: 525200,
       improveTerritoryPrice: 197300,
-      regeneration: 18,
+      regeneration: 20, // Увеличено для сохранения баланса
       cooldown: 93,
     },
     exchange: 12000,

@@ -119,23 +119,14 @@ function balanceTestB(): Ibalance {
   let notEnoughWater: boolean = false;
 
   for (let i in this.chicken?.children.entries) {
-
     let chicken = this.chicken?.children.entries[i];
-
-    let breed: number;
-    if (chicken.type === 0) breed = 1;
-    else breed = chicken.type;
-
-    let points: IchickenPoints = this.settings.chickenSettings.find((item: IchickenPoints) => item.breed === breed);
-    
-    grassConsumption += points.eating;
-    waterConsumption += points.drinking;
-
+    if (chicken.type !== 0) {
+      const points: IchickenPoints = this.settings.chickenSettings.find((item: IchickenPoints) => item.breed === chicken.type);
+      grassConsumption += points.eating;
+      waterConsumption += points.drinking;
+    }
   }
   
-  grassConsumption = Math.round(grassConsumption / 2);
-  waterConsumption = Math.round(waterConsumption / 2);
-
   for (let i in this.territories?.children.entries) {
     let territory: Territory = this.territories?.children.entries[i];
     if (territory.territoryType === 2 || territory.territoryType === 3) {

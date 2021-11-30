@@ -108,8 +108,10 @@ function balanceTestB(): Ibalance {
   for (let i in this.animalGroup?.children.entries) {
 
     let cow: CowSprite = this.animalGroup?.children.entries[i];
-    grassConsumption += cow.settings.eating;
-    waterConsumption += cow.settings.drinking;
+    if (cow.breed !== 0) {
+      grassConsumption += cow.settings.eating;
+      waterConsumption += cow.settings.drinking;
+    }
   }
   
   for (let i in this.territories?.children.entries) {

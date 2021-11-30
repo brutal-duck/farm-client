@@ -391,10 +391,6 @@ function convertDiamonds(diamonds: number): number {
   const part: number = this.state[`user${this.state.farm}`].part;
   
   let exchange: number = partsSettings.find((item: Ipart) => item.sort === part).exchange;
-  if (Utils.checkTestB(this.state)) {
-    const partSettings: IpartSettings[] = this.state[`${farm}Settings`].partSettings;
-    exchange = partSettings[part - 1].exchange;
-  }
   return exchange *= diamonds;
 }
 
@@ -402,13 +398,8 @@ function convertDiamondsTestB(diamonds: number): number {
   const farm: string = this.state.farm.toLowerCase();
   const partSettings: IpartSettings[] = this.state[`${farm}Settings`].partSettings;
   const part: number = this.state[`user${this.state.farm}`].part;
-  
-  let exchange: number = partSettings[part - 1].exchange;
-  if (Utils.checkTestB(this.state)) {
-    const partSettings: IpartSettings[] = this.state[`${farm}Settings`].partSettings;
-    exchange = partSettings[part - 1].exchange;
-  }
-  return exchange *= diamonds;
+  const exchange = partSettings[part - 1].exchange;
+  return exchange * diamonds;
 }
 
 
@@ -1289,7 +1280,7 @@ function createTaskZone(): void {
 }
 
 function farmBalance(farm: string): Ibalance {
-  if (Utils.checkTestB(this.state)) farmBalanceTestB.bind(this)(farm);
+  if (Utils.checkTestB(this.state)) return farmBalanceTestB.bind(this)(farm);
   let waterConsumption: number = 0;
   let grassConsumption: number = 0;
   let waterRecovery: number = 0;

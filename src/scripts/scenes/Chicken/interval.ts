@@ -77,7 +77,7 @@ function interval(): void {
       let territory = this.territories.children.entries[i];
       if ((territory.territoryType === 2 || territory.territoryType === 3) && territory.volume < 1000) {
         let reg: number = this.settings.territoriesChickenSettings.find((item: IterritoriesChickenSettings) => item.improve === territory.improve).regeneration;
-        if (Utils.checkTestB(this.state)) reg = this.state.sheepSettings.partSettings[territory.improve - 1].territory.regeneration;
+        if (Utils.checkTestB(this.state)) reg = this.state.chickenSettings.partSettings[territory.improve - 1].territory.regeneration;
         territory.volume += reg;
         if (territory.volume > 1000) {
           territory.volume = 1000;
