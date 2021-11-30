@@ -21,7 +21,7 @@ export default class FarmPastureWindowNew {
       improve = territoriesSettings.length;
     }
 
-    const settings: IterritoriesPartSettings = territoriesSettings[improve - 1].territory;
+    const settings: IterritoriesPartSettings = territoriesSettings[improve].territory;
 
     if (this.scene.state[`user${farm}`].part > improve) {
       const right = {

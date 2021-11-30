@@ -22,6 +22,30 @@ export default class Utils {
 
   /**
    * 
+   * @param state Объект стейта
+   * @returns Вовзращает true, если пользователь зарегистрирован согласно платформе и у него есть имя
+   */
+  public static checkUserHasName = (state: Istate): boolean => {
+    let name = state.user.login;
+    if (Utils.checkHasNamePlatform(state.platform)) name = state.name;
+    return name !== '' || state.yaPlayer && state.platform === 'ya';
+  }
+
+  /**
+   * Провряет запущены или грузятся сцены по ключам
+   * @param scene Объект сцены
+   * @param keys Массив ключей
+   * @returns Возвращает true, если хоть одна из сцен запущена
+   */
+  public static checkActiveScenes = (scene: Phaser.Scene, keys: string[]): boolean => {
+    for (const key of keys) {
+      if (scene.scene.isActive(key) && scene.scene.get(key).load.isLoading()) return true; 
+    }
+    return false;
+  }
+
+  /**
+   * 
    * @param platform ключ платформы
    * @returns Возвращает true, если на платформе есть имя пользователя, иначе false
    */

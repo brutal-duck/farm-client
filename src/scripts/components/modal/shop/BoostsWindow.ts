@@ -278,8 +278,9 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
 
   private checkImproveCollectorTestB(): boolean {
     const farmUser: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.farm}`];
-    const maxLevel: number = this.scene.state[`${this.farm.toLowerCase()}`]?.partSettings?.length || this.scene.state[`${this.farm.toLowerCase()}CollectorSettings`].length;
-    return farmUser.collectorLevel < maxLevel || farmUser.collectorTimeLevel < maxLevel;
+    const maxLevel: number = this.scene.state[`${this.farm.toLowerCase()}Settings`]?.partSettings?.length;
+    return (farmUser.collectorLevel < maxLevel || farmUser.collectorTimeLevel < maxLevel) 
+    && (this.scene.state.farm !== 'Sheep' || farmUser.tutorial >= 100);
   }
 
   private createFreeCollectorBtns(): void {

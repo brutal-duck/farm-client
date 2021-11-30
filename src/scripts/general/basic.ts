@@ -577,28 +577,23 @@ function donePart(): void {
     this.scene.launch('Modal', this.state);
   }
 
+  const blockedSheepParts = [3, 4, 5, 6, 7];
+  const blockedCowParts = [2];
+  const { cave, herdBoost, feedBoost } = this.state.user.additionalTutorial as IadditionalTutorial;
+  const { farm } = this.state as Istate;
+
+  const checkShowSheep = farm === 'Sheep' && blockedSheepParts.some(el => el === user.part) && (!cave || !herdBoost || !feedBoost);
+  const checkShowCow = farm === 'Cow' &&  blockedCowParts.some(el => el === user.part);
+
   this.time.addEvent({ delay: 300, callback: (): void => {
-    if (!((user.part === 3 && this.state.user.additionalTutorial.cave && this.state.farm === 'Sheep') || 
-      (user.part === 5 && this.state.user.additionalTutorial.herdBoost && this.state.farm === 'Sheep') ||
-      (user.part === 6 && this.state.user.additionalTutorial.feedBoost && this.state.farm === 'Sheep') || 
-      user.part === 4 || 
-      user.part === 2 && this.state.farm === 'Cow' || 
-      user.part === 7 && this.state.farm === 'Sheep')) {
-      if (!this.scene.isActive('Modal') &&
-      !this.scene.get('Modal').load.isLoading() &&
-      !this.scene.isActive('Tutorial') &&
-      !this.scene.isActive('Profile')) this.showTasks();
+    if (!checkShowSheep && !checkShowCow) {
+      if (!Utils.checkActiveScenes(this, ['Modal', 'Tutorial', 'Profile'])) this.showTasks();
     }
-    if (user.part === 7 && 
-      this.state.farm === 'Sheep' && 
-      (this.state.user.login || this.state.name) && 
-      this.state.platform !== 'ya'|| this.state.yaPlayer && 
-      this.state.platform === 'ya') this.state.clanTutor = true;
-    if (user.part === 8 && 
-      this.state.farm === 'Sheep' && 
-      (this.state.user.login || this.state.name) && 
-      this.state.platform !== 'ya'|| this.state.yaPlayer && 
-      this.state.platform === 'ya') this.state.fortuneTutor = true;
+    if (user.part === 7 && this.state.farm === 'Sheep' && Utils.checkUserHasName(this.state)) {
+      this.state.clanTutor = true;
+    } else if (user.part === 8 && this.state.farm === 'Sheep' && Utils.checkUserHasName(this.state)) {
+      this.state.fortuneTutor = true;
+    }
   }, callbackScope: this, loop: false });
 }
 
