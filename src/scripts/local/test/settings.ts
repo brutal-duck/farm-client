@@ -468,18 +468,18 @@ const chickenSettings: IchickenSettings = {
     { sort: 16, award: 0, improve_territory_2: 350591000, improve_territory_3: 701182000, improve_territory_4: 1402364000, exchange: 12000000 }
   ],
   chickenSettings: [
-    { breed: 1, drinking: 2, eating: 10, egg: 100, eggPrice: 100 },
-    { breed: 2, drinking: 2, eating: 11, egg: 100, eggPrice: 200 },
+    { breed: 1, drinking: 2, eating: 8, egg: 250, eggPrice: 100 },
+    { breed: 2, drinking: 2, eating: 10, egg: 150, eggPrice: 200 },
     { breed: 3, drinking: 3, eating: 12, egg: 100, eggPrice: 400 },
     { breed: 4, drinking: 3, eating: 13, egg: 100, eggPrice: 800 },
     { breed: 5, drinking: 3, eating: 14, egg: 100, eggPrice: 1600 },
-    { breed: 6, drinking: 3, eating: 15, egg: 100, eggPrice: 3200 },
-    { breed: 7, drinking: 4, eating: 17, egg: 100, eggPrice: 6400 },
-    { breed: 8, drinking: 4, eating: 19, egg: 100, eggPrice: 12800 },
-    { breed: 9, drinking: 5, eating: 21, egg: 100, eggPrice: 25600 },
-    { breed: 10, drinking: 5, eating: 23, egg: 100, eggPrice: 51200 },
-    { breed: 11, drinking: 6, eating: 25, egg: 100, eggPrice: 102400 },
-    { breed: 12, drinking: 7, eating: 28, egg: 100, eggPrice: 204800 }
+    { breed: 6, drinking: 3, eating: 16, egg: 100, eggPrice: 3200 },
+    { breed: 7, drinking: 4, eating: 18, egg: 100, eggPrice: 6400 },
+    { breed: 8, drinking: 4, eating: 20, egg: 100, eggPrice: 12800 },
+    { breed: 9, drinking: 5, eating: 24, egg: 100, eggPrice: 25600 },
+    { breed: 10, drinking: 5, eating: 28, egg: 100, eggPrice: 51200 },
+    { breed: 11, drinking: 6, eating: 32, egg: 100, eggPrice: 102400 },
+    { breed: 12, drinking: 7, eating: 36, egg: 100, eggPrice: 204800 }
   ],
   territoriesChickenPrice: [
     { block: 1, position: 1, unlockCooldown: 0, price: 0, unlock: 1 },
@@ -1038,18 +1038,18 @@ const cowSettings: IcowSettings = {
     { sort: 16, award: 0, improve_territory_2: 350591000, improve_territory_3: 701182000, improve_territory_4: 1402364000, exchange: 12000000 },
   ],
   cowSettings: [
-    { breed: 1, drinking: 2, eating: 10, maxMilkVolume: 100 },
-    { breed: 2, drinking: 2, eating: 11, maxMilkVolume: 200 },
+    { breed: 1, drinking: 2, eating: 8, maxMilkVolume: 100 },
+    { breed: 2, drinking: 2, eating: 10, maxMilkVolume: 200 },
     { breed: 3, drinking: 3, eating: 12, maxMilkVolume: 400 },
     { breed: 4, drinking: 3, eating: 13, maxMilkVolume: 800 },
     { breed: 5, drinking: 3, eating: 14, maxMilkVolume: 1600 },
-    { breed: 6, drinking: 3, eating: 15, maxMilkVolume: 3200 },
-    { breed: 7, drinking: 4, eating: 17, maxMilkVolume: 6400 },
-    { breed: 8, drinking: 4, eating: 19, maxMilkVolume: 12800 },
-    { breed: 9, drinking: 5, eating: 21, maxMilkVolume: 25600 },
-    { breed: 10, drinking: 5, eating: 23, maxMilkVolume: 51200 },
-    { breed: 11, drinking: 6, eating: 25, maxMilkVolume: 102400 },
-    { breed: 12, drinking: 7, eating: 28, maxMilkVolume: 204800 }
+    { breed: 6, drinking: 3, eating: 16, maxMilkVolume: 3200 },
+    { breed: 7, drinking: 4, eating: 18, maxMilkVolume: 6400 },
+    { breed: 8, drinking: 4, eating: 20, maxMilkVolume: 12800 },
+    { breed: 9, drinking: 5, eating: 24, maxMilkVolume: 25600 },
+    { breed: 10, drinking: 5, eating: 28, maxMilkVolume: 51200 },
+    { breed: 11, drinking: 6, eating: 32, maxMilkVolume: 102400 },
+    { breed: 12, drinking: 7, eating: 36, maxMilkVolume: 204800 }
   ],
   territoriesCowPrice: [
     { block: 1, position: 1, unlockCooldown: 0, price: 0, unlock: 1 },
