@@ -2306,6 +2306,7 @@ export default {
     taskHelp_5_2_1: 'Нет доступных новых территорий, обменяй свою территорию на пастбище.',
     taskHelp_5_3_1: 'Нет доступных новых территорий, обменяй свою территорию на поилку.',
     taskHelp_5_5_1: 'Нет доступных новых территорий, обменяй свою территорию на хранилище.',
+    sellWithoutMultiply: 'Продать без утроения',
   },
   en: {
     index: 'en',
@@ -4618,5 +4619,6 @@ export default {
     taskHelp_5_2_1: 'No new territories available, exchange your territory for pasture',
     taskHelp_5_3_1: 'No new territories available, exchange your territory for water',
     taskHelp_5_5_1: 'No new territories available, exchange your territory for the repository',
+    sellWithoutMultiply: 'Sell ​​without tripling',
   },
 };

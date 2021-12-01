@@ -87,10 +87,6 @@ function systemWindow(): void {
       this.state.modal = modal;
       this.scene.restart(this.state);
     }
-    if (this.state.modal.sysType === 27) {
-      if (this.state.farm !== 'Cow') this.state.territory?.sellResource();
-      else this.state.territory?.factory?.sellProducts();
-    }
   });
 
   // блокирование крестика для туториала

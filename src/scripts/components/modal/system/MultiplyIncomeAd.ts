@@ -25,7 +25,7 @@ export default class MultiplyIncomeAd {
       strokeThickness: 7,
     };
 
-    const { multiplyIcomeHeader, multiplyIcomeText,  triple, cancel } = this.scene.state.lang;
+    const { multiplyIcomeHeader, multiplyIcomeText,  triple, sellWithoutMultiply } = this.scene.state.lang;
     const { centerX, centerY } = this.scene.cameras.main;
 
     this.scene.textHeader.setText(multiplyIcomeHeader);
@@ -43,7 +43,7 @@ export default class MultiplyIncomeAd {
     const ad = this.scene.bigButton('green', 'left', 20 + 70, triple, right);
     this.scene.clickModalBtn(ad, (): void => { this.adButtonHandler(); });
 
-    const cancelBtn = this.scene.bigButton('yellow', 'center', 100 + 70, cancel);
+    const cancelBtn = this.scene.bigButton('yellow', 'center', 100 + 70, sellWithoutMultiply);
     this.scene.clickModalBtn(cancelBtn, (): void => { this.closeWindow(); });
 
     this.scene.resizeWindow(400);
