@@ -105,17 +105,17 @@ function balanceTestB(): Ibalance {
   let notEnoughGrass: boolean = false;
   let notEnoughWater: boolean = false;
 
-  for (let i in this.animalGroup?.children.entries) {
+  for (let i in this.animalGroup?.children?.entries) {
 
-    let cow: CowSprite = this.animalGroup?.children.entries[i];
+    let cow: CowSprite = this.animalGroup?.children?.entries[i];
     if (cow.breed !== 0) {
       grassConsumption += cow.settings.eating;
       waterConsumption += cow.settings.drinking;
     }
   }
   
-  for (let i in this.territories?.children.entries) {
-    const territory: Territory = this.territories?.children.entries[i];
+  for (let i in this.territories?.children?.entries) {
+    const territory: Territory = this.territories?.children?.entries[i];
     if (territory.territoryType === 2 || territory.territoryType === 3) {
       const reg: number = this.settings.partSettings[territory.improve - 1].territory.regeneration;
       if (territory.territoryType === 2) {

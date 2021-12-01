@@ -116,7 +116,7 @@ function balanceTestB(): Ibalance {
   let notEnoughGrass: boolean = false;
   let notEnoughWater: boolean = false;
 
-  for (const sheep of this.sheep?.children.entries) {
+  for (const sheep of this.sheep?.children?.entries) {
     if (sheep.type !== 0) {
       const points: IsheepPoints =  this.settings.sheepSettings.find((item: IsheepPoints) => item.breed === sheep.type);
       grassConsumption += points.eating;
@@ -124,7 +124,7 @@ function balanceTestB(): Ibalance {
     }
   }
 
-  const territories: Territory[] = this.territories?.children.entries;
+  const territories: Territory[] = this.territories?.children?.entries;
   for (const territory of territories) {
     const partSettings: IpartSettings[] = this.settings.partSettings;
     if (territory.territoryType === 2 || territory.territoryType === 3) {

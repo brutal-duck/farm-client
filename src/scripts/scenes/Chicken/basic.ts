@@ -118,8 +118,8 @@ function balanceTestB(): Ibalance {
   let notEnoughGrass: boolean = false;
   let notEnoughWater: boolean = false;
 
-  for (let i in this.chicken?.children.entries) {
-    let chicken = this.chicken?.children.entries[i];
+  for (let i in this.chicken?.children?.entries) {
+    let chicken = this.chicken?.children?.entries[i];
     if (chicken.type !== 0) {
       const points: IchickenPoints = this.settings.chickenSettings.find((item: IchickenPoints) => item.breed === chicken.type);
       grassConsumption += points.eating;
@@ -127,8 +127,8 @@ function balanceTestB(): Ibalance {
     }
   }
   
-  for (let i in this.territories?.children.entries) {
-    let territory: Territory = this.territories?.children.entries[i];
+  for (let i in this.territories?.children?.entries) {
+    let territory: Territory = this.territories?.children?.entries[i];
     if (territory.territoryType === 2 || territory.territoryType === 3) {
       const partSettings: IpartSettings[] = this.settings.partSettings;
       const reg: number = partSettings[territory.improve].territory.regeneration;
