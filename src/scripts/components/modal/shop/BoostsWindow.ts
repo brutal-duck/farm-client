@@ -18,7 +18,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   private herdBoostTimerText: Phaser.GameObjects.Text;
   private herdBoostButton: BoostButton;
   private feedBoostButton: BoostButton;
-  private herdBoostBtnUpdated: boolean;
+  private herdBoostBtnUpdated: boolean = false;
   private feedBoostBtnUpdated: boolean;
   private feedProgressBar: Phaser.GameObjects.TileSprite;
   private feedProgressText: Phaser.GameObjects.Text;
@@ -480,13 +480,12 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   }
 
   private destroyHerdBoostBtn(): void {
-    this.feedBoostButton?.destroy();
+    this.herdBoostButton?.destroy();
     this.herdBoostNotificator?.destroy();
     this.herdBoostNotificatorBg?.destroy();
   }
 
   private createHerdBoostBtn(): void {
-    this.herdBoostBtnUpdated = true;
     const y: number = 335 + this.scene.height;
     const xBtn: number =  330;
     const yBtn: number = y + 170;
@@ -758,8 +757,11 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
 
   private updateHerdBoostBtn(): void {
     if (this.herdBoostTimerText?.active) this.herdBoostTimerText?.setText(this.scene.state.lang.stillForBoost + ' ' + shortTime(this.scene.state.timeToNewDay, this.scene.state.lang));
-    if (this.scene.state.timeToNewDay <= 0 && this.herdBoostBtnUpdated) this.herdBoostBtnUpdated = false;
-    if (!this.herdBoostBtnUpdated) {
+    if (this.scene.state.timeToNewDay <= 0 && !this.herdBoostBtnUpdated) {
+      if (this.scene.state[`user${this.farm}`].takenHerdBoost > 0 && this.scene.state.farm !== 'Unicorn') {
+        this.scene.state[`user${this.farm}`].takenHerdBoost = 0;
+      }
+      this.herdBoostBtnUpdated = true;
       this.destroyHerdBoostBtn();
       this.createHerdBoostBtn();
     }
@@ -783,7 +785,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
         if (!this.feedProgressBar?.visible) this.feedProgressBar?.setVisible(true);
         if (!this.feedProgressBarBg?.visible) this.feedProgressBarBg?.setVisible(true);
         if (!this.feedProgressText?.visible)this.feedProgressText?.setVisible(true);
-        if (this.feedProgressText.text !== leftText) this.feedProgressText.setText(leftText);
+        if (this.feedProgressText.text !== leftText) this.feedProgressText?.setText(leftText);
       }
     } else {
       if (this.feedProgressBar?.visible) {
@@ -805,7 +807,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
       if (this.improve) {
         this.improve.y -= 15;
       }
-    } else if (this.collectorTimer?.text !== time) this.collectorTimer.setText(time);
+    } else if (this.collectorTimer?.text !== time) this.collectorTimer?.setText(time);
   }
   
   private checkFeedBoost(): boolean {
