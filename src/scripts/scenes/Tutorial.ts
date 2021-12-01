@@ -1047,7 +1047,8 @@ class Tutorial extends Phaser.Scene {
             color: '#fffcdc', 
           }).setOrigin(0, 0.5).setShadow(2, 2, '#08080888', 2);
       
-          this.add.text(camera.centerX + 148, camera.centerY - 297, shortNum(1000), {
+          const count = Utils.checkTestB(this.state) ? 500 : 1000;
+          this.add.text(camera.centerX + 148, camera.centerY - 297, shortNum(count), {
             font: '20px Shadow',
             color: '#fffcdc', 
           }).setOrigin(0, 0.5).setShadow(2, 2, '#08080888', 2);
