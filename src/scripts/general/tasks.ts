@@ -948,8 +948,13 @@ function clickTaskBoardTestB(task: Task): void {
             this.scene.stop('Modal');
             SpeechBubble.create(barsScene, this.state.lang[`taskHelp_5_1`], 3);
           } else {
-            this.scene.stop('Modal');
-            SpeechBubble.create(barsScene, this.state.lang[`taskHelp_5_${task.state}_1`], 3);
+            const cooldownCloseTerritory = farmTerritories.find(el => el.territoryType === 0 && el.cooldown > 0);
+            if (cooldownCloseTerritory) {
+              SpeechBubble.create(barsScene, this.state.lang[`taskHelp_5_8`], 3);
+            } else {
+              this.scene.stop('Modal');
+              SpeechBubble.create(barsScene, this.state.lang[`taskHelp_5_${task.state}_1`], 3);
+            }
           }
         } 
       }
