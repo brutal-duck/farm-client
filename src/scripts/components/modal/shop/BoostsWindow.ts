@@ -208,11 +208,17 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
         this.improve.y -= 15;
       }
     } else {
+      const levelBg: Phaser.GameObjects.Sprite = this.scene.add.sprite(10, 55 + this.scene.height, 'level-bg').setOrigin(0);
+      const userLevel: Phaser.GameObjects.Text = this.scene.add.text(52, 95 + this.scene.height, 'Max', { font: '26px Bip', color: '#F8DF86' }).setOrigin(0.5).setStroke('#B66B06', 2);
       if (this.scene.state[`user${this.scene.state.farm}`].collector > 0) {
         this.collectorTimer.y += 45;
         collectorSprite.y += 25;
+        levelBg.y += 25;
+        userLevel.y += 25;
       } else {
         collectorSprite.y += 35;
+        levelBg.y += 35;
+        userLevel.y += 35;
       }
     }
   }
