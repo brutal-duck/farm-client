@@ -10,18 +10,71 @@ import axios from 'axios';
 import Utils from './../libs/Utils';
 import { Task } from '../local/tasks/types';
 
-function progressTerritoryCooldown (territories: Iterritories[], time: number, farm: string, offline: boolean = false): void {
+function progressTerritoryCooldown(territories: Iterritories[], time: number, farm: string, offline: boolean = false): void {
+  if (Utils.checkTestB(this.state)) return progressTerritoryCooldownTestB.bind(this)(territories, time, farm, offline);
   for (const territory of territories) {
     if (territory.cooldown > 0) {
       territory.bought = true;
       territory.cooldown -= time;
       if (offline && territory.cooldown <= 0) {
         territory.type = territory.boughtType;
-
         if (territory.type === 1) {
           const sheepTask: Itasks = this.state.sheepTasks.find(el => el.part === this.state.userSheep.part && el.type === 5 && (el.state === 1 || el.state === 0));
           const chickenTask: Itasks = this.state.chickenTasks.find(el => el.part === this.state.userChicken.part && el.type === 5 && (el.state === 1 || el.state === 0));
           const cowTask: Itasks = this.state.cowTasks.find(el => el.part === this.state.userCow.part && el.type === 5 && (el.state === 1 || el.state === 0));
+          if (sheepTask && farm === 'Sheep') {
+            sheepTask.progress += 1;
+            if (sheepTask.count <= sheepTask.progress) {
+              sheepTask.done = 1;
+              this.tryClanTask(16);
+              this.achievement.tryType(2);
+            }
+          }
+          if (chickenTask && farm === 'Chicken') {
+            chickenTask.progress += 1;
+            if (chickenTask.count <= chickenTask.progress) {
+              chickenTask.done = 1;
+              this.tryClanTask(16);
+              this.achievement.tryType(2);
+            }
+          }
+          if (cowTask && farm === 'Cow') {
+            cowTask.progress += 1;
+            if (cowTask.count <= cowTask.progress) {
+              cowTask.done = 1;
+              this.tryClanTask(16);
+              this.achievement.tryType(2);
+            }
+          }
+        }
+      };
+      if (territory.cooldown <= 0) {
+        territory.cooldown = 0;
+      }
+    }
+  }
+}
+
+function progressTerritoryCooldownTestB(territories: Iterritories[], time: number, farm: string, offline: boolean = false): void {
+  for (const territory of territories) {
+    if (territory.cooldown > 0) {
+      territory.bought = true;
+      territory.cooldown -= time;
+      if (offline && territory.cooldown <= 0) {
+        territory.type = territory.boughtType;
+        if (territory.type !== 1) {
+          const sheepTask: Task = this.state.sheepTasks.find((el: Task) => {
+            return Number(el.id.split('-')[0]) === this.state.userSheep.part 
+            && el.type === 5 && el.state === territory.type;
+          });
+          const chickenTask: Task = this.state.chickenTasks.find((el: Task) => {
+            return Number(el.id.split('-')[0]) === this.state.userChicken.part 
+            && el.type === 5 && el.state === territory.type;
+          });
+          const cowTask: Task = this.state.cowTasks.find((el: Task) => {
+            return Number(el.id.split('-')[0]) === this.state.userCow.part 
+            && el.type === 5 && el.state === territory.type;
+          });
           if (sheepTask && farm === 'Sheep') {
             sheepTask.progress += 1;
             if (sheepTask.count <= sheepTask.progress) {
