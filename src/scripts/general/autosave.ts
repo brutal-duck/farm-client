@@ -8,6 +8,7 @@ import ChickenTerritory from './../components/Territories/ChickenTerritory';
 import DataValidator from './../libs/DataValidator';
 import LocalStorage from './../libs/LocalStorage';
 import Utils from './../libs/Utils';
+import { Task } from '../local/tasks/types';
 
 export default function autosave(): void {
   const state: Istate = this.state;
@@ -22,55 +23,73 @@ export default function autosave(): void {
   let cowTasks: Itasks[] = [];
 
   for (let i: number = 0; i < state.sheepTasks.length; i++) {
-    if (state.sheepTasks[i].part === state.userSheep.part) {
-      if (state.sheepTasks[i].type === 10) {
-        if ((this.state.platform === 'web' &&
-          this.state.user.login === '') || 
-          this.takeRewardRegistration) {
+    if (Utils.checkTestB(this.state)) {
+      const sheepTasksOnState = state.sheepTasks as unknown as Task[];
+      const tasks = sheepTasksOnState.filter(el => Number(el.id.split('-')[0]) === state.userSheep.part);
+      sheepTasks = tasks as unknown as Itasks[];
+    } else {
+      if (state.sheepTasks[i].part === state.userSheep.part) {
+        if (state.sheepTasks[i].type === 10) {
+          if ((this.state.platform === 'web' &&
+            this.state.user.login === '') || 
+            this.takeRewardRegistration) {
+              sheepTasks.push(state.sheepTasks[i]);
+          }
+        } else if (state.sheepTasks[i].type === 16) {
+          if (this.state.platform === 'web') {
             sheepTasks.push(state.sheepTasks[i]);
-        }
-      } else if (state.sheepTasks[i].type === 16) {
-        if (this.state.platform === 'web') {
+          }
+        } else {
           sheepTasks.push(state.sheepTasks[i]);
         }
-      } else {
-        sheepTasks.push(state.sheepTasks[i]);
       }
     }
   }
 
   for (let i: number = 0; i < state.chickenTasks.length; i++) {
-    if (state.chickenTasks[i].part === state.userChicken.part) {
-      if (state.chickenTasks[i].type === 10) {
-        if ((this.state.platform === 'web' &&
-          this.state.user.login === '') || 
-          this.takeRewardRegistration) {
+    if (Utils.checkTestB(this.state)) {
+      const chickenTasksOnState = state.chickenTasks as unknown as Task[];
+      const tasks = chickenTasksOnState.filter(el => Number(el.id.split('-')[0]) === state.userChicken.part);
+      chickenTasks = tasks as unknown as Itasks[];
+    } else {
+      if (state.chickenTasks[i].part === state.userChicken.part) {
+        if (state.chickenTasks[i].type === 10) {
+          if ((this.state.platform === 'web' &&
+            this.state.user.login === '') || 
+            this.takeRewardRegistration) {
+              chickenTasks.push(state.chickenTasks[i]);
+          }
+        } else if (state.chickenTasks[i].type === 16) {
+          if (this.state.platform === 'web') {
             chickenTasks.push(state.chickenTasks[i]);
-        }
-      } else if (state.chickenTasks[i].type === 16) {
-        if (this.state.platform === 'web') {
+          }
+        } else {
           chickenTasks.push(state.chickenTasks[i]);
         }
-      } else {
-        chickenTasks.push(state.chickenTasks[i]);
       }
     }
   }
 
   for (let i: number = 0; i < state.cowTasks.length; i++) {
-    if (state.cowTasks[i].part === state.userCow.part) {
-      if (state.cowTasks[i].type === 10) {
-        if ((this.state.platform === 'web' &&
-          this.state.user.login === '') || 
-          this.takeRewardRegistration) {
+    if (Utils.checkTestB(this.state)) {
+      const cowTasksOnState = state.cowTasks as unknown as Task[];
+      const tasks = cowTasksOnState.filter(el => Number(el.id.split('-')[0]) === state.userCow.part);
+      cowTasks = tasks as unknown as Itasks[];
+    } else {
+      if (state.cowTasks[i].part === state.userCow.part) {
+        if (state.cowTasks[i].type === 10) {
+          if ((this.state.platform === 'web' &&
+            this.state.user.login === '') || 
+            this.takeRewardRegistration) {
+              cowTasks.push(state.cowTasks[i]);
+          }
+        } else if (state.sheepTasks[i].type === 16) {
+          if (this.state.platform === 'web') {
             cowTasks.push(state.cowTasks[i]);
-        }
-      } else if (state.sheepTasks[i].type === 16) {
-        if (this.state.platform === 'web') {
+          }
+        } else {
           cowTasks.push(state.cowTasks[i]);
         }
-      } else {
-        cowTasks.push(state.cowTasks[i]);
       }
     }
   }
