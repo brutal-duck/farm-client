@@ -943,12 +943,13 @@ function clickTaskBoardTestB(task: Task): void {
         const unlockTerritory = findUnlockTerritoryForBuy();
         if (unlockTerritory) openTerritoryWindow(unlockTerritory);
         else {
-          const territory = farmTerritories.find(el => el.territoryType === 1 && el.cooldown > 0);
-          if (territory) {
+          const cooldownTerritory = farmTerritories.find(el => el.territoryType === 1 && el.cooldown > 0);
+          if (cooldownTerritory) {
+            this.scene.stop('Modal');
             SpeechBubble.create(barsScene, this.state.lang[`taskHelp_5_1`], 3);
           } else {
             this.scene.stop('Modal');
-            SpeechBubble.create(barsScene, this.state.lang[`taskHelp_5_8`], 3);
+            SpeechBubble.create(barsScene, this.state.lang[`taskHelp_5_${task.state}_1`], 3);
           }
         } 
       }

@@ -2303,6 +2303,9 @@ export default {
     confirmImproveCollectorSpeedChickenText: 'Хотите улучшить Скорость собирателя до $1 уровня?',
     confirmImproveCollectorSpeedCowText: 'Хотите улучшить Скорость собирателя до $1 уровня?',
     taskHelp_5_1: 'Дождись установки территории или ускорь ее за кристаллы',
+    taskHelp_5_2_1: 'Нет доступных новых территорий, обменяй свою территорию на пастбище.',
+    taskHelp_5_3_1: 'Нет доступных новых территорий, обменяй свою территорию на поилку.',
+    taskHelp_5_5_1: 'Нет доступных новых территорий, обменяй свою территорию на хранилище.',
   },
   en: {
     index: 'en',
@@ -4612,5 +4615,8 @@ export default {
     confirmImproveCollectorSpeedChickenText: 'Want to improve the rate of collector to $ 1 level?',
     confirmImproveCollectorSpeedCowText: 'Want to improve the rate of collector to $ 1 level?',
     taskHelp_5_1: 'Wait for the installation of the territory or speeding it for diamonds',
+    taskHelp_5_2_1: 'No new territories available, exchange your territory for pasture',
+    taskHelp_5_3_1: 'No new territories available, exchange your territory for water',
+    taskHelp_5_5_1: 'No new territories available, exchange your territory for the repository',
   },
 };
