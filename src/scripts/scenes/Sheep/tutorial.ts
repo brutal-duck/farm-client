@@ -1,7 +1,6 @@
 // включение туториала
 import SheepTerritory from './../../components/Territories/SheepTerritory';
 import SheepBars from './SheepBars';
-import Achievement from './../../components/Utils/Achievement';
 function showTutorial(additional: boolean | string = false): void {
   if (this.scene.isActive('Modal')) this.scene.stop('Modal');
   if (this.scene.isActive('Tutorial')) this.scene.stop('Tutorial');

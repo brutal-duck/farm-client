@@ -101,22 +101,14 @@ function interval(): void {
     // тутор про бустер переполох
     if (this.state.userSheep.part >= this.herdBoostLvl &&
     !this.state.user.additionalTutorial.herdBoost &&
-    !this.scene.get('Modal').load.isLoading() &&
-    !this.scene.isActive('Modal') &&
-    !this.scene.isActive('Tutorial') &&
-    !this.scene.isActive('Profile')&&
-    !this.scene.isActive('Fortune')) {
+    !Utils.checkActiveScenes(this, ['Modal', 'Tutorial', 'Profile'])) {
     this.showTutorial('herdBoost1');
     }
 
     // тутор про бустер комбикорм
     if (this.state.userSheep.part >= this.feedBoostLvl &&
       !this.state.user.additionalTutorial.feedBoost &&
-      !this.scene.get('Modal').load.isLoading() &&
-      !this.scene.isActive('Modal') &&
-      !this.scene.isActive('Tutorial') &&
-      !this.scene.isActive('Profile')&&
-      !this.scene.isActive('Fortune')) {
+      !Utils.checkActiveScenes(this, ['Modal', 'Tutorial', 'Profile'])) {
       this.showTutorial('feedBoost1');
       }
 

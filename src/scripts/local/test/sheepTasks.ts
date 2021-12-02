@@ -761,7 +761,7 @@ const testSheepTasks: Task[] = [
     id: '10-5',
     type: TaskType['TAKE_ANIMAL_FROM_HERD'],
     state: 0,
-    count: 4,
+    count: 3,
     done: 0,
     awardTaken: 0,
     awardType: 'diamond',

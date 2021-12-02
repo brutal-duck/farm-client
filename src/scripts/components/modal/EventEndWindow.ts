@@ -277,25 +277,26 @@ export default class EventEndWindow {
         axios.post(process.env.API + "/newStatus", data);
         this.scene.game.scene.keys[this.scene.state.farm].achievement.tryId(41);
       }
-      this.scene.state.userUnicorn.takenAward = true;
 
-      this.scene.state.user.diamonds += diamonds;
-      this.scene.state.amplitude.logAmplitudeEvent('diamonds_get', {
-        type: 'unicorn_award',
-        farm_id: 'Unicorn',
-        count: diamonds,
-      });
-      this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
-      this.scene.game.scene.keys[this.scene.state.farm].autosave();
       const data: any = {
         id: this.scene.state.user.id,
         hash: this.scene.state.user.hash,
         counter: this.scene.state.user.counter,
       };
-      axios.post(process.env.API + "/takeAward", data);
-      this.scene.scene.stop('Modal');
-      MoneyAnimation.create(this.scene.game.scene.keys[this.scene.state.farm + 'Bars'], 'diamond');
-      this.scene.game.scene.keys[this.scene.state.farm].ads.showInterstitialAd();
+      axios.post(process.env.API + "/takeAward", data).finally(() => {
+        this.scene.state.userUnicorn.takenAward = true;
+        this.scene.state.user.diamonds += diamonds;
+        this.scene.state.amplitude.logAmplitudeEvent('diamonds_get', {
+          type: 'unicorn_award',
+          farm_id: 'Unicorn',
+          count: diamonds,
+        });
+        this.scene.game.scene.keys[this.scene.state.farm].scrolling.wheel = true;
+        this.scene.game.scene.keys[this.scene.state.farm].autosave();
+        this.scene.scene.stop('Modal');
+        MoneyAnimation.create(this.scene.game.scene.keys[this.scene.state.farm + 'Bars'], 'diamond');
+        this.scene.game.scene.keys[this.scene.state.farm].ads.showInterstitialAd();
+      });
     });
   }
 

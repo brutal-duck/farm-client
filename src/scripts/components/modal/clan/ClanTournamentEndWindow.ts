@@ -219,6 +219,7 @@ export default class ClanTournamentEndWindow {
         this.scene.state.clanEventTakenAward = true;
         this.scene.scene.stop();
         this.scene.game.scene.keys[this.scene.state.farm].ads.showInterstitialAd();
+        this.scene.game.scene.keys[this.scene.state.farm].autosave();
       }
     }).catch(() => {
       this.scene.state.clanEventTakenAward = true;
