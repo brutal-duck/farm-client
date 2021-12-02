@@ -786,13 +786,7 @@ function progressClanEventTime(state: Istate, time: number = 1): void {
 }
 
 function showSale(scene: Sheep | Chicken | Cow): void {
-  const checkInactiveScenes = !scene.scene.isActive('Tutorial')
-  && !scene.scene.isActive('Modal')
-  && !scene.scene.get('Modal').load.isLoading()
-  && !scene.scene.isActive('Profile')
-  && !scene.scene.isActive('Fortune')
-  && !scene.scene.isActive('Block');
-  
+  const checkInactiveScenes = !Utils.checkActiveScenes(scene, ['Modal', 'Tutorial', 'Profile', 'Fortune', 'Block']);  
   if (checkInactiveScenes && scene.state.userSheep.part > 4) {
     const sale = scene.state.sales.find(el => !el.shown && el.startTime <= 0 && el.endTime > 0);
     if (sale) {

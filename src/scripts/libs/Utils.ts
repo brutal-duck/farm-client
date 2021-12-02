@@ -39,7 +39,7 @@ export default class Utils {
    */
   public static checkActiveScenes = (scene: Phaser.Scene, keys: string[]): boolean => {
     for (const key of keys) {
-      if (scene.scene.isActive(key) && scene.scene.get(key).load.isLoading()) return true; 
+      if (scene.scene.isActive(key) || scene.scene.get(key).load.isLoading()) return true; 
     }
     return false;
   }

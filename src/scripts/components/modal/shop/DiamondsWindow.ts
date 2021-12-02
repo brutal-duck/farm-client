@@ -114,7 +114,7 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
       const btn = this.scene.shopButton(position.x + 110, position.y + 223 + this.scene.height, text);
       this.scene.clickShopBtn(btn, (): void => { this.packHandler(packData); });
     } else {
-      const str1: string = this.getPlatformPrice(basicPackage);
+      const str1: string = String(basicPackage.price);
       const str2: string = this.getPlatformPrice(packData);
 
       const btn = this.scene.add.sprite(position.x + 110, position.y + 223 + this.scene.height, 'shop-btn');

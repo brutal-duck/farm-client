@@ -86,12 +86,7 @@ function interval(): void {
     if (this.state.userSheep.part >= 3 &&
       !this.state.user.additionalTutorial.cave &&
       this.state.userSheep.diamondAnimalTime === 0 &&
-      !this.scene.get('Modal').load.isLoading() &&
-      !this.scene.isActive('Modal') &&
-      !this.scene.isActive('Tutorial') &&
-      !this.scene.isActive('Profile') &&
-      !this.scene.isActive('Fortune')) {
-
+      !Utils.checkActiveScenes(this, ['Modal', 'Tutorial', 'Profile'])) {
       this.caveTutor = true;
       this.time.addEvent({ delay: 300, callback: (): void => {
         this.showTutorial('cave1');
@@ -102,7 +97,7 @@ function interval(): void {
     if (this.state.userSheep.part >= this.herdBoostLvl &&
     !this.state.user.additionalTutorial.herdBoost &&
     !Utils.checkActiveScenes(this, ['Modal', 'Tutorial', 'Profile'])) {
-    this.showTutorial('herdBoost1');
+      this.showTutorial('herdBoost1');
     }
 
     // тутор про бустер комбикорм
@@ -110,7 +105,7 @@ function interval(): void {
       !this.state.user.additionalTutorial.feedBoost &&
       !Utils.checkActiveScenes(this, ['Modal', 'Tutorial', 'Profile'])) {
       this.showTutorial('feedBoost1');
-      }
+    }
 
     let checkTerritory = true;
     // восстановаление территорий
@@ -463,7 +458,10 @@ function interval(): void {
       this.state.modal = { type: 22 };
       this.scene.launch('Modal', this.state);
     }
-    showSale(this);
+    this.time.addEvent({
+      delay: 100,
+      callback: () => { showSale(this); }
+    });
     this.speedCheckCollector();
     decrementAdFreeDiamondTime(this.state);
     incInterstitialAdTimer(this.state);
