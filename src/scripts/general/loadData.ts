@@ -279,7 +279,10 @@ const filterSale = (state: Istate, sales: Isale[]): Isale[] => {
   });
 
   sales.forEach(sale => {
-    if (!inactiveFarm.some(el => sale.type.includes(el))) filteredSales.push(sale);
+    if (!inactiveFarm.some(el => sale.type.includes(el))) {
+      sale.shown = sale.type === 'CLAN' && state.userSheep.part < 7;
+      filteredSales.push(sale);
+    }
   });
 
   state.sales.forEach(sale => {
