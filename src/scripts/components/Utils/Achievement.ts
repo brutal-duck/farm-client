@@ -279,7 +279,8 @@ export default class Achievement {
 
   public checkDoneFarm(): void {
     const mainScene = this.scene as Sheep | Chicken | Cow;
-    const maxPart: number = this.state[`${this.state.farm.toLowerCase()}Settings`][`${this.state.farm.toLowerCase()}Parts`].length;
+    let maxPart: number = this.state[`${this.state.farm.toLowerCase()}Settings`][`${this.state.farm.toLowerCase()}Parts`].length;
+    if (Utils.checkTestB(this.scene.state)) maxPart = this.state[`${this.state.farm.toLowerCase()}Settings`].partSettings.length;
     if (this.state[`user${this.state.farm}`].part === maxPart) {
       const partTask: Itasks[] = mainScene.partTasks();
       const check = partTask.every(el => el.done === 1);
