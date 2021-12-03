@@ -148,7 +148,7 @@ export default class SpeechBubble {
   private setAnim(): void {
     const anims: Phaser.Tweens.Tween = this.scene.tweens.add({
       targets: [this.bubble, this.bubbleText, this.bubbleFarmer, this.bubbleBg],
-      delay: 1000,
+      delay: 4000,
       duration: 1000,
       alpha: 0,
       ease: 'Power1',
