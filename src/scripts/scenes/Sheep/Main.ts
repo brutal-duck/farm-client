@@ -361,9 +361,6 @@ class Sheep extends Phaser.Scene {
     this.input.keyboard.createCursorKeys().space.on('down', (): void => {
       this.state.offlineTime = 60 * 60
       this.autoprogress()
-      this.state.user.achievements.forEach(el => {
-        el.progress = el.count;
-      })
     });
   }
 
