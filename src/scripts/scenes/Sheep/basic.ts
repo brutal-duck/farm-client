@@ -218,8 +218,8 @@ function checkSheepBalance(newAnimalBreed: number): { pasture: boolean, water: b
   }
 
   return { 
-    pasture: grassConsumption < grassRecovery,
-    water: waterConsumption < waterRecovery,
+    pasture: grassConsumption <= grassRecovery,
+    water: waterConsumption <= waterRecovery,
   };
 }
 
@@ -250,8 +250,8 @@ function checkSheepBalanceTestB(newAnimalBreed: number): { pasture: boolean, wat
   }
 
   return { 
-    pasture: grassConsumption < grassRecovery,
-    water: waterConsumption < waterRecovery,
+    pasture: grassConsumption <= grassRecovery,
+    water: waterConsumption <= waterRecovery,
   };
 }
 
