@@ -292,10 +292,10 @@ class Chicken extends Phaser.Scene {
       sendSocialEvent(this.state, 2, 100);
       sendAppEventVk(this.state, 3, 100);
     }
-    this.input.keyboard.createCursorKeys().space.on('down', (): void => {
-      this.state.offlineTime = 60 * 60
-      this.autoprogress()
-    });
+    // this.input.keyboard.createCursorKeys().space.on('down', (): void => {
+    //   this.state.offlineTime = 60 * 60
+    //   this.autoprogress()
+    // });
   }
 
 

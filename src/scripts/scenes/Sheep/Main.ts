@@ -358,10 +358,10 @@ class Sheep extends Phaser.Scene {
     this.ads.showInterstitialAd();
 
     if (!Utils.checkTestB(this.state)) this.setCollector();
-    this.input.keyboard.createCursorKeys().space.on('down', (): void => {
-      this.state.offlineTime = 60 * 60
-      this.autoprogress()
-    });
+    // this.input.keyboard.createCursorKeys().space.on('down', (): void => {
+    //   this.state.offlineTime = 60 * 60
+    //   this.autoprogress()
+    // });
   }
 
 

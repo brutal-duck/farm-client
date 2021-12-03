@@ -308,10 +308,10 @@ class Cow extends Phaser.Scene {
       sendAppEventVk(this.state, 4, 100);
     }
 
-    this.input.keyboard.createCursorKeys().space.on('down', (): void => {
-      this.state.offlineTime = 60 * 60
-      this.autoprogress()
-    });
+    // this.input.keyboard.createCursorKeys().space.on('down', (): void => {
+    //   this.state.offlineTime = 60 * 60
+    //   this.autoprogress()
+    // });
     
   }
 
