@@ -424,7 +424,7 @@ function cancelMerging(territory: any, sheep1: any, sheep2: any) {
 
 
 // покупка овцы
-function buySheep(breed: number, shop: boolean = false): boolean {
+function buySheep(breed: number, shop: boolean = false): boolean { 
   const checkSale = (saleName: string): boolean => {
     return this.state.sales.some((el: Isale) => el.type === saleName && el.startTime <= 0 && el.endTime > 0) && this.state.userSheep.tutorial >= 100; 
   }
@@ -438,53 +438,67 @@ function buySheep(breed: number, shop: boolean = false): boolean {
 
     if (this.state.userSheep.money >= sheepPrice.price) {
       
-      success = true;
-  
-      let x: number = Phaser.Math.Between(550, 660);
-      let y: number = Phaser.Math.Between(530, 540);
-      if (this.scrolling.scrollY > 350) {
-        const position: Iposition = this.findFreeTerritory(600,  this.height + this.scrolling.scrollY + 250);
-        if (position) {
-          x = Phaser.Math.Between(position.x - 50, position.x + 50);
-          y = Phaser.Math.Between(position.y - 10, position.y + 10);
+      const action = () => {
+        success = true;
+        let x: number = Phaser.Math.Between(550, 660);
+        let y: number = Phaser.Math.Between(530, 540);
+        if (this.scrolling.scrollY > 350) {
+          const position: Iposition = this.findFreeTerritory(600,  this.height + this.scrolling.scrollY + 250);
+          if (position) {
+            x = Phaser.Math.Between(position.x - 50, position.x + 50);
+            y = Phaser.Math.Between(position.y - 10, position.y + 10);
+          }
         }
-      }
-      if (this.state.userSheep.tutorial === 20) {
-        x = 550;
-        y = 530;
-      }
-
-      let id: string = 'local_' + randomString(18);
-      let sheep = this.getSheep(id, breed, x, y);
-      this.state.userSheep.money -= sheepPrice.price;
-      this.state.userSheep.countSheep = sheepPrice.countSheep;
-      this.game.scene.keys['SheepBars'].updateAnimalPrice();
-      this.tryTask(1, breed);
-      this.tryClanTask(1);
-      this.tryTask(4, breed);
-      this.checkAnimalTask();
-
-      let land: number = this.territories.children.entries.find((data: any) => data.block === 2 && data.position === 3).territoryType;
-
-      if (land !== 2 && land !== 3) {
-
         if (this.state.userSheep.tutorial === 20) {
-          
-          this.aim(sheep, 360, 600);
-          Firework.create(this, { x: 600, y: 600 }, 1);
-
-        } else {
-          
-          sheep.body.reset(sheep.x, sheep.y);
-          sheep.drag = true;
-          sheep.x = 600;
-          sheep.y = 600;
-          sheep.wool = 0;
-
+          x = 550;
+          y = 530;
         }
+  
+        let id: string = 'local_' + randomString(18);
+        let sheep = this.getSheep(id, breed, x, y);
+        this.state.userSheep.money -= sheepPrice.price;
+        this.state.userSheep.countSheep = sheepPrice.countSheep;
+        this.game.scene.keys['SheepBars'].updateAnimalPrice();
+        this.tryTask(1, breed);
+        this.tryClanTask(1);
+        this.tryTask(4, breed);
+        this.checkAnimalTask();
+  
+        let land: number = this.territories.children.entries.find((data: any) => data.block === 2 && data.position === 3).territoryType;
+  
+        if (land !== 2 && land !== 3) {
+          if (this.state.userSheep.tutorial === 20) {
+            this.aim(sheep, 360, 600);
+            Firework.create(this, { x: 600, y: 600 }, 1);
+          } else {
+            sheep.body.reset(sheep.x, sheep.y);
+            sheep.drag = true;
+            sheep.x = 600;
+            sheep.y = 600;
+            sheep.wool = 0;
+          }
+        }
+      };
 
+      const checkNewBalance: { pasture: boolean, water: boolean } = this.checkSheepBalance(breed);
+      const oldBalance: Ibalance  = this.balance();
+      if (!checkNewBalance.pasture && !oldBalance.alarm) {
+        const modal: Imodal = { type: 1, sysType: 28, confirmSpendParams: { type: 'pasture', price: 0, callback: () => { action(); }} };
+        this.state.modal = modal;
+        this.scene.stop('Modal');
+        this.scene.stop('Shop');
+        this.scene.stop('ShopBars');
+        this.scene.launch('Modal', this.state);
+      } else if (!checkNewBalance.water && !oldBalance.alarm) {
+        const modal: Imodal = { type: 1, sysType: 28, confirmSpendParams: { type: 'water', price: 0, callback: () => { action(); }} };
+        this.state.modal = modal;
+        this.scene.stop('Modal');
+        this.scene.stop('Shop');
+        this.scene.stop('ShopBars');
+        this.scene.launch('Modal', this.state);
+      } else {
+        action();
       }
-
     } else {
 
       if (shop) {

@@ -200,8 +200,8 @@ const testSheepTasks: Task[] = [
     count: 1,
     done: 0,
     awardTaken: 0,
-    awardType: 'diamond',
-    award: 1,
+    awardType: 'coin',
+    award: 10_000,
     progress: 0,
     sort: 70
   },

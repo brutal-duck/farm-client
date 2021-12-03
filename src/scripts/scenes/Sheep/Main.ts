@@ -89,6 +89,7 @@ import {
 } from './sheep';
 import {
   balance,
+  checkSheepBalance,
   sheepPrice,
   maxBreedForBuy,
   takeDiamondSheep
@@ -216,6 +217,7 @@ class Sheep extends Phaser.Scene {
   public confirmExchangeTerritory: (type: number) => void = confirmExchangeTerritory.bind(this);
   public deleteTerritoriesLocks: () => void = deleteTerritoriesLocks.bind(this);
   public balance: () => Ibalance = balance.bind(this);
+  public checkSheepBalance: (animalBreed: number) => { pasture: boolean, water: boolean } = checkSheepBalance.bind(this);
   public convertDiamonds: (diamonds: number) => number = convertDiamonds.bind(this);
   public convertMoney: (money: number) => number = convertMoney.bind(this);
   public exchange: (ad?: boolean) => void = exchange.bind(this);

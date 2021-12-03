@@ -2,6 +2,7 @@ import { randomString } from '../../general/basic';
 import SpeechBubble from '../../components/animations/SpeechBuble';
 import Utils from './../../libs/Utils';
 import Territory from './../../components/Territories/Territory';
+import Sheep from './Main';
 
 // расчет баланса фермы
 function balance(): Ibalance {
@@ -187,6 +188,73 @@ function balanceTestB(): Ibalance {
 
 }
 
+function checkSheepBalance(newAnimalBreed: number): { pasture: boolean, water: boolean } {
+  const { state, sheep, settings, territories } = this as Sheep;
+  if (Utils.checkTestB(state)) return checkSheepBalanceTestB.bind(this)(newAnimalBreed);
+
+  let waterConsumption = 0;
+  let grassConsumption = 0;
+  let waterRecovery =0;
+  let grassRecovery = 0;
+  const animalsBreed = sheep?.getChildren().map(el => Number(el.type));
+  animalsBreed.push(newAnimalBreed);
+  for (const breed of animalsBreed) {
+    const checkBreed = breed === 0 ? 0 : breed;
+    const points = settings.sheepSettings.find(item => item.breed === checkBreed);
+    grassConsumption += points.eating;
+    waterConsumption += points.drinking;
+  }
+
+  grassConsumption = Math.round(grassConsumption / 2);
+  waterConsumption = Math.round(waterConsumption / 2);
+
+  for (const i in territories?.children?.entries) {
+    const territory = territories.children.entries[i] as Territory;
+    if (territory.territoryType === 2 || territory.territoryType === 3) {
+      const reg = settings.territoriesSheepSettings.find(item => item.improve === territory.improve).regeneration;
+      if (territory.territoryType === 2) grassRecovery += reg;
+      else waterRecovery += reg;
+    }
+  }
+
+  return { 
+    pasture: grassConsumption < grassRecovery,
+    water: waterConsumption < waterRecovery,
+  };
+}
+
+function checkSheepBalanceTestB(newAnimalBreed: number): { pasture: boolean, water: boolean } {
+  const { sheep, settings, territories } = this as Sheep;
+
+  let waterConsumption = 0;
+  let grassConsumption = 0;
+  let waterRecovery = 0;
+  let grassRecovery = 0;
+  const animalsBreed = sheep?.getChildren().map(el => Number(el.type));
+  animalsBreed.push(newAnimalBreed);
+  for (const breed of animalsBreed) {
+    if (breed !== 0) {
+      const points = settings?.sheepSettings.find(item => item.breed === breed);
+      grassConsumption += points.eating;
+      waterConsumption += points.drinking;
+    }
+  }
+
+  for (const i in territories?.children?.entries) {
+    const territory = territories.children.entries[i] as Territory;
+    if (territory.territoryType === 2 || territory.territoryType === 3) {
+      const reg = settings.partSettings[territory.improve - 1].territory.regeneration;
+      if (territory.territoryType === 2) grassRecovery += reg;
+      else waterRecovery += reg;
+    }
+  }
+
+  return { 
+    pasture: grassConsumption < grassRecovery,
+    water: waterConsumption < waterRecovery,
+  };
+}
+
 // цена овцы
 function sheepPrice(breed: number) {
 
@@ -289,5 +357,6 @@ export {
   balance,
   sheepPrice,
   maxBreedForBuy,
-  takeDiamondSheep
-}
+  checkSheepBalance,
+  takeDiamondSheep,
+};

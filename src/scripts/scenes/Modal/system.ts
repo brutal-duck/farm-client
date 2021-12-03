@@ -43,6 +43,7 @@ import Utils from './../../libs/Utils';
 import FarmPastureWindowNew from './../../components/modal/system/FarmPastureWindowNew';
 import FarmWaterWindowNew from './../../components/modal/system/FarmWaterWindowNew';
 import FarmFairWindowNew from './../../components/modal/system/FarmFairWindowNew';
+import ConfirmBuyAnimal from './../../components/modal/system/ConfirmBuyAnimal';
 
 function systemWindow(): void {
   let height:number = 0;
@@ -227,6 +228,10 @@ function systemWindow(): void {
 
     case 27:
       new MultiplyIncomeAd(this);
+      break;
+
+    case 28:
+      new ConfirmBuyAnimal(this);
       break;
     
     default:      

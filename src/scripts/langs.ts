@@ -2307,6 +2307,9 @@ export default {
     taskHelp_5_3_1: 'Нет доступных новых территорий, обменяй свою территорию на поилку.',
     taskHelp_5_5_1: 'Нет доступных новых территорий, обменяй свою территорию на хранилище.',
     sellWithoutMultiply: 'Продать без утроения',
+    badBalancePasture: 'Следующая покупка овечки приведет к нехватки травы. Ваш доход упадет.\nХотите купить овечку?',
+    badBalanceWater: 'Следующая покупка овечки приведет к нехватки воды. Ваш доход упадет.\nХотите купить овечку?',
+    buySheep: 'Купить овечку',
   },
   en: {
     index: 'en',
@@ -4620,5 +4623,8 @@ export default {
     taskHelp_5_3_1: 'No new territories available, exchange your territory for water',
     taskHelp_5_5_1: 'No new territories available, exchange your territory for the repository',
     sellWithoutMultiply: 'Sell ​​without tripling',
+    badBalancePasture: 'The next shopping of the lamb will lead to a lack of grass. Your income will fall. Want to buy a sheep?',
+    badBalanceWater: 'The next shopping of the lamb will lead to a lack of water. Your income will fall. Want to buy a sheep?',
+    buySheep: 'Buy sheep',
   },
 };
