@@ -138,6 +138,7 @@ import Ads from '../../components/Utils/Ads';
 import Achievement from './../../components/Utils/Achievement';
 import Utils from './../../libs/Utils';
 import SheepTerritory from '../../components/Territories/SheepTerritory';
+import SpeechBubble from './../../components/animations/SpeechBuble';
 
 class Sheep extends Phaser.Scene {
   constructor() {
@@ -188,6 +189,7 @@ class Sheep extends Phaser.Scene {
   public achievement: Achievement;
   public collectorCD: number;
   public collectorIsReady: boolean;
+  public activeBubble: SpeechBubble;
 
   public readonly moneyTasks: { id: number, money: number }[] = [
     {

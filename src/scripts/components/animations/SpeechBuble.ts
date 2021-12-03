@@ -1,3 +1,8 @@
+import BarsScene from './../Scenes/BarsScene';
+import Sheep from './../../scenes/Sheep/Main';
+import Chicken from './../../scenes/Chicken/Main';
+import Cow from './../../scenes/Cow/Main';
+
 interface ItriangleCoords {
   point1X: number;
   point1Y: number;
@@ -21,15 +26,17 @@ interface ItriangleCoords {
 */
 export default class SpeechBubble {
   private text: string;
-  private type: number;
+  public type: number;
   private x: number = 80;
   private y: number = 360;
   private width: number = 380;
-  private scene: Phaser.Scene;
+  private scene: BarsScene | Sheep | Chicken | Cow;
   private bubble: Phaser.GameObjects.Graphics;
   private bubbleText: Phaser.GameObjects.Text;
   private bubbleFarmer: Phaser.GameObjects.Image;
   private bubbleBg: Phaser.GameObjects.Graphics;
+  public active: boolean;
+
   private triangleCoords: ItriangleCoords = {
     point1X: 380,
     point1Y: 40,
@@ -38,18 +45,31 @@ export default class SpeechBubble {
     point3X: 420,
     point3Y: 20,
   };
-  constructor(scene: Phaser.Scene, text: string, type: number = 1) {
+
+  constructor(scene: BarsScene | Sheep | Chicken | Cow, text: string, type: number = 1) {
     this.text = text;
     this.type = type;
     this.scene = scene;
     this.init();
   }
 
-  static create(scene: Phaser.Scene, text: string, type: number): SpeechBubble {
-    return new SpeechBubble(scene, text, type);
+  static create(scene: BarsScene | Sheep | Chicken | Cow, text: string, type: number): void {
+    const barsScene = scene.game.scene.getScene(`${scene.state.farm}Bars`) as BarsScene;
+    const mainScene = scene.game.scene.getScene(`${scene.state.farm}`) as Sheep | Chicken | Cow;
+    if (barsScene.activeBubble && barsScene.activeBubble.active && barsScene.activeBubble.type !== type) {
+      barsScene.activeBubble.destroy();
+    }
+    if (mainScene.activeBubble && mainScene.activeBubble.active && mainScene.activeBubble.type !== type) {
+      mainScene.activeBubble.destroy();
+    }
+    if ((!barsScene.activeBubble || !barsScene.activeBubble.active) 
+      && (!mainScene.activeBubble || !mainScene.activeBubble.active)) {
+      scene.activeBubble = new SpeechBubble(scene, text, type);
+    }
   }
 
   private init(): void {
+    this.active = true;
     this.bubble = this.scene.add.graphics({ x: this.x, y: this.y }).setDepth(this.y + 240);
     this.bubbleBg = this.scene.add.graphics();
     this.bubbleText = this.scene.add.text(0, 0, this.text, {
@@ -128,7 +148,7 @@ export default class SpeechBubble {
   private setAnim(): void {
     const anims: Phaser.Tweens.Tween = this.scene.tweens.add({
       targets: [this.bubble, this.bubbleText, this.bubbleFarmer, this.bubbleBg],
-      delay: 5000,
+      delay: 1000,
       duration: 1000,
       alpha: 0,
       ease: 'Power1',
@@ -144,6 +164,7 @@ export default class SpeechBubble {
     this.bubbleText?.destroy();
     this.bubbleFarmer?.destroy();
     this.bubbleBg?.destroy();
+    this.active = false;
   }
   
 }

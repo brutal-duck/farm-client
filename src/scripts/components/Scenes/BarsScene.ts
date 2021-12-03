@@ -82,7 +82,8 @@ export default class BarsScene extends Phaser.Scene {
   public feedRound: RoundedProgress;
   public mainScene: Sheep | Chicken | Cow;
   public farmUser: IuserSheep | IuserChicken | IuserCow;
-
+  public activeBubble: SpeechBubble;
+  
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);

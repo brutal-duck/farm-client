@@ -115,6 +115,7 @@ import {
 import Ads from '../../components/Utils/Ads';
 import Achievement from './../../components/Utils/Achievement';
 import Utils from './../../libs/Utils';
+import SpeechBubble from './../../components/animations/SpeechBuble';
 
 class Cow extends Phaser.Scene {
   constructor() {
@@ -160,6 +161,7 @@ class Cow extends Phaser.Scene {
   public achievement: Achievement;
   public collectorCD: number;
   public collectorIsReady: boolean;
+  public activeBubble: SpeechBubble;
 
   public world = world.bind(this);
   public drag = drag.bind(this);

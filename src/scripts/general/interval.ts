@@ -9,6 +9,7 @@ import Factory from './../components/Territories/Factory';
 import axios from 'axios';
 import Utils from './../libs/Utils';
 import { Task } from '../local/tasks/types';
+import BarsScene from './../components/Scenes/BarsScene';
 
 function progressTerritoryCooldown(territories: Iterritories[], time: number, farm: string, offline: boolean = false): void {
   if (Utils.checkTestB(this.state)) return progressTerritoryCooldownTestB.bind(this)(territories, time, farm, offline);
@@ -826,7 +827,7 @@ function speedCheckCollector(): void {
       if (scene.speedCollectorTimer <= 0) {
         const text = scene.state.lang[`speedCollectorNotification${farm}`];
         scene.speedCollectorTimer = 60;
-        SpeechBubble.create(scene.scene.get(`${farm}Bars`), text, 3);
+        SpeechBubble.create(scene.scene.get(`${farm}Bars`) as BarsScene, text, 3);
       }
     }
   }
@@ -854,7 +855,7 @@ function speedCheckCollectorTestB(): void {
       if (scene.speedCollectorTimer <= 0) {
         const text = scene.state.lang[`speedCollectorNotification${farm}`];
         scene.speedCollectorTimer = 60;
-        SpeechBubble.create(scene.scene.get(`${farm}Bars`), text, 3);
+        SpeechBubble.create(scene.scene.get(`${farm}Bars`) as BarsScene, text, 3);
       }
     }
   }
