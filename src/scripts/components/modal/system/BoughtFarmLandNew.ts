@@ -126,10 +126,10 @@ export default class BoughtFarmLand {
       } else {
         const count: number = price - user.diamonds;
         this.scene.state.convertor = {
-          fun: 5,
+          fun: 0,
           count: count,
           diamonds: count,
-          type: 1
+          type: 2
         };
         const modal: Imodal = { type: 1, sysType: 4 };
         this.scene.state.modal = modal;
@@ -150,7 +150,7 @@ export default class BoughtFarmLand {
         const count: number = price - farmUser.money;
         const diamonds: number = this.scene.game.scene.keys[this.scene.state.farm].convertMoney(count);
         this.scene.state.convertor = {
-          fun: 5,
+          fun: 0,
           count: count,
           diamonds: diamonds,
           type: 1
