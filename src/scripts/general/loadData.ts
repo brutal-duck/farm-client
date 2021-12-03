@@ -36,7 +36,7 @@ const checkUserName = (state: Istate) => {
     if (platform !== 'web' && platform !== 'android') newName = name;
     const newAvatar: string = Number(user.avatar) > 0 ? user.avatar : avatar;
   
-    if (clanUser.name !== newName || clanUser.avatar !== newAvatar) {
+    if (clanUser.name !== newName || clanUser.avatar !== newAvatar || clanUser.status !== user.status) {
       const data = {
         id: user.id,
         hash: user.hash,
