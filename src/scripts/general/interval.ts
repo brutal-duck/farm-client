@@ -62,6 +62,7 @@ function progressTerritoryCooldownTestB(territories: Iterritories[], time: numbe
       territory.cooldown -= time;
       if (offline && territory.cooldown <= 0) {
         territory.type = territory.boughtType;
+        territory.improve = this.state[`user${farm}`].part - 1 || 1;
         if (territory.type !== 1) {
           const sheepTask: Task = this.state.sheepTasks.find((el: Task) => {
             return Number(el.id.split('-')[0]) === this.state.userSheep.part 
