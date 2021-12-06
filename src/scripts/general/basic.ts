@@ -1633,7 +1633,7 @@ function createСleanButton(): void {
   const actionCow = (): void => {
     const mainScene: Cow = barsScene.game.scene.keys['Cow'];
     mainScene.animalGroup.children.iterate(el => {
-      if (el) mainScene.collectMilk(el, true);
+      if (el) mainScene.collectMilk(el, true, false);
     });
     mainScene.territories.children.iterate((el: CowTerritory) => {
       if (el.territoryType === 2 || el.territoryType === 3) el.volume = 1000;

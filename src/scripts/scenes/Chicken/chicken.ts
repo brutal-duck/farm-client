@@ -482,12 +482,14 @@ function collectEgg(egg: Egg, manualСollect: boolean = false, anim: boolean = t
       }
       this.state.userChicken.money += price;
       egg.destroy();
-      if (anim) this.game.scene.keys['ChickenBars'].getCurrency({
-        x: egg.x,
-        y: egg.y - 50
-      }, 3, 'chickenCoin');
-      this.tryTask(11, 0);
-      this.tryClanTask(4);
+      if (anim) {
+        this.game.scene.keys['ChickenBars'].getCurrency({
+          x: egg.x,
+          y: egg.y - 50
+        }, 3, 'chickenCoin');
+        this.tryTask(11, 0);
+        this.tryClanTask(4);
+      }
     } else {
       for (let i in this.territories.children.entries) {
         const territory = this.territories.children.entries[i];

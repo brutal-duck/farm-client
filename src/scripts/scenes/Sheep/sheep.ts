@@ -482,14 +482,14 @@ function buySheep(breed: number, shop: boolean = false): boolean {
 
       const checkNewBalance: { pasture: boolean, water: boolean } = this.checkSheepBalance(breed);
       const oldBalance: Ibalance  = this.balance();
-      if (!checkNewBalance.pasture && !oldBalance.alarm) {
+      if (!checkNewBalance.pasture && !oldBalance.alarm && this.state.userSheep.tutorial >= 100) {
         const modal: Imodal = { type: 1, sysType: 28, confirmSpendParams: { type: 'pasture', price: 0, callback: () => { action(); }} };
         this.state.modal = modal;
         this.scene.stop('Modal');
         this.scene.stop('Shop');
         this.scene.stop('ShopBars');
         this.scene.launch('Modal', this.state);
-      } else if (!checkNewBalance.water && !oldBalance.alarm) {
+      } else if (!checkNewBalance.water && !oldBalance.alarm && this.state.userSheep.tutorial >= 100) {
         const modal: Imodal = { type: 1, sysType: 28, confirmSpendParams: { type: 'water', price: 0, callback: () => { action(); }} };
         this.state.modal = modal;
         this.scene.stop('Modal');
@@ -571,13 +571,15 @@ function collectWool(sheep: any, manualСollect: boolean = false, anim: boolean 
       }
       this.state.userSheep.money += price;
 
-      if (anim) this.game.scene.keys['SheepBars'].plusMoneyAnimation({
-        x: sheep.x,
-        y: sheep.y
-      });
+      if (anim) {
+        this.game.scene.keys['SheepBars'].plusMoneyAnimation({
+          x: sheep.x,
+          y: sheep.y
+        });
+        this.tryTask(11, 1);
+        this.tryClanTask(4);
+      }
 
-      this.tryTask(11, 1);
-      this.tryClanTask(4);
 
       if (this.state.userSheep.tutorial === 40) {
         this.doneTutor_40();

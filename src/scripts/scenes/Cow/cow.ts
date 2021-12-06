@@ -296,7 +296,7 @@ function buyCow(breed: number, shop: boolean = false): boolean {
 
 
 // собиратель молока
-function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
+function collectMilk(cow: CowSprite, manualСollect: boolean = false, anim: boolean = true): void {
 
   let path: Iposition;
   let length: number;
@@ -305,8 +305,10 @@ function collectMilk(cow: CowSprite, manualСollect: boolean = false): void {
 
   if (cow.breed !== 0) {
     if (manualСollect) {
-      this.tryTask(11, 0);
-      this.tryClanTask(4);
+      if (anim) {
+        this.tryTask(11, 0);
+        this.tryClanTask(4);
+      }
     }
     for (let i in this.territories.children.entries) {
       const territory: CowTerritory = this.territories.children.entries[i];
