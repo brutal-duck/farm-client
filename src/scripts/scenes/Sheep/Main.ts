@@ -190,6 +190,7 @@ class Sheep extends Phaser.Scene {
   public collectorCD: number;
   public collectorIsReady: boolean;
   public activeBubble: SpeechBubble;
+  public blockedSroll: boolean = false;
 
   public readonly moneyTasks: { id: number, money: number }[] = [
     {
@@ -358,6 +359,7 @@ class Sheep extends Phaser.Scene {
     this.ads.showInterstitialAd();
 
     if (!Utils.checkTestB(this.state)) this.setCollector();
+
     // this.input.keyboard.createCursorKeys().space.on('down', (): void => {
     //   this.state.offlineTime = 60 * 60
     //   this.autoprogress()
@@ -372,6 +374,18 @@ class Sheep extends Phaser.Scene {
     this.dragSheep(true);
 
     if (Utils.checkTestB(this.state)) this.updateCollector(delta);
+
+    if (this.state.userSheep.part === 1) {
+      this.scrolling.enabled = false;
+      this.scrolling.moving = false;
+      this.scrolling.wheel = false;
+      this.blockedSroll = true;
+    } else if (this.state.userSheep.part > 1 && this.blockedSroll) {
+      this.blockedSroll = false;
+      this.scrolling.enabled = true;
+      this.scrolling.moving = true;
+      this.scrolling.wheel = true;
+    }
   }
 }
 

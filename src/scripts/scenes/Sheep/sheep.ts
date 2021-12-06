@@ -482,15 +482,19 @@ function buySheep(breed: number, shop: boolean = false): boolean {
 
       const checkNewBalance: { pasture: boolean, water: boolean } = this.checkSheepBalance(breed);
       const oldBalance: Ibalance  = this.balance();
-      if (!checkNewBalance.pasture && !oldBalance.alarm && this.state.userSheep.tutorial >= 100) {
-        const modal: Imodal = { type: 1, sysType: 28, confirmSpendParams: { type: 'pasture', price: 0, callback: () => { action(); }} };
-        this.state.modal = modal;
-        this.scene.stop('Modal');
-        this.scene.stop('Shop');
-        this.scene.stop('ShopBars');
-        this.scene.launch('Modal', this.state);
-      } else if (!checkNewBalance.water && !oldBalance.alarm && this.state.userSheep.tutorial >= 100) {
-        const modal: Imodal = { type: 1, sysType: 28, confirmSpendParams: { type: 'water', price: 0, callback: () => { action(); }} };
+      if ((!checkNewBalance.pasture || !checkNewBalance.water) 
+        && !oldBalance.alarm 
+        && this.state.userSheep.tutorial >= 100 
+        && this.state.user.additionalTutorial.balance) {
+        const modal: Imodal = { 
+          type: 1, 
+          sysType: 28, 
+          confirmSpendParams: { 
+            type: !checkNewBalance.pasture ? 'pasture' : 'water', 
+            price: 0, 
+            callback: () => { action(); },
+          },
+        };
         this.state.modal = modal;
         this.scene.stop('Modal');
         this.scene.stop('Shop');
