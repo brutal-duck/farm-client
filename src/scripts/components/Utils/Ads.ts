@@ -12,6 +12,7 @@ import { randomString } from "../../general/basic";
 import Shop from './../../scenes/Modal/Shop/Main';
 import { incFortuneAdTimer } from '../../general/interval';
 import Fortune from './../../scenes/Fortune';
+import Utils from './../../libs/Utils';
 
 const INTERSTITIAL_DELAY = 60;
 const ONE_HOUR = 3600;
@@ -230,29 +231,56 @@ export default class Ads {
       case 3: // удвоенный бесплатный собиратель
         let time: number = 0;
   
-        if (this.scene.state.farm === 'Sheep') {
-  
-          type = 'sheep_trimmer';
-          time = this.scene.state.sheepCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userSheep.collectorLevel).time * 2;
-          this.scene.state.userSheep.collector = time * 60;
-          this.scene.state.userSheep.collectorTakenTime = this.scene.state.userSheep.collector;
-        } else if (this.scene.state.farm === 'Chicken') {
-          
-          type = 'egg_catcher';
-          time = this.scene.state.chickenCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userChicken.collectorLevel).time * 2;
-          this.scene.state.userChicken.collector = time * 60;
-          this.scene.state.userChicken.collectorTakenTime = this.scene.state.userChicken.collector;
-        } else if (this.scene.state.farm === 'Cow') {
-          
-          type = 'milk_picker';
-          time = this.scene.state.cowCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userCow.collectorLevel).time * 2;
-          this.scene.state.userCow.collector = time * 60;
-          this.scene.state.userCow.collectorTakenTime = this.scene.state.userCow.collector;
-        } else if (this.scene.state.farm === 'Unicorn') {
-          type = 'resource_catcher';
-          time = this.scene.state.unicornCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userUnicorn.collectorLevel).time * 2;
-          this.scene.state.userUnicorn.collector = time * 60;
-          this.scene.state.userUnicorn.collectorTakenTime = this.scene.state.userUnicorn.collector;
+        if (Utils.checkTestB(this.scene.state)) {
+          if (this.scene.state.farm === 'Sheep') {
+    
+            type = 'sheep_trimmer';
+            time = this.scene.state.sheepSettings.partSettings[this.scene.state.userSheep.collectorTimeLevel - 1].collector.time * 2;
+            this.scene.state.userSheep.collector = time * 60;
+            this.scene.state.userSheep.collectorTakenTime = this.scene.state.userSheep.collector;
+          } else if (this.scene.state.farm === 'Chicken') {
+            
+            type = 'egg_catcher';
+            time = this.scene.state.chickenSettings.partSettings[this.scene.state.userChicken.collectorTimeLevel - 1].collector.time * 2;
+            this.scene.state.userChicken.collector = time * 60;
+            this.scene.state.userChicken.collectorTakenTime = this.scene.state.userChicken.collector;
+          } else if (this.scene.state.farm === 'Cow') {
+            
+            type = 'milk_picker';
+            time = this.scene.state.cowSettings.partSettings[this.scene.state.userCow.collectorTimeLevel - 1].collector.time * 2
+            this.scene.state.userCow.collector = time * 60;
+            this.scene.state.userCow.collectorTakenTime = this.scene.state.userCow.collector;
+          } else if (this.scene.state.farm === 'Unicorn') {
+            type = 'resource_catcher';
+            time = this.scene.state.unicornCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userUnicorn.collectorLevel).time * 2;
+            this.scene.state.userUnicorn.collector = time * 60;
+            this.scene.state.userUnicorn.collectorTakenTime = this.scene.state.userUnicorn.collector;
+          }
+        } else {
+          if (this.scene.state.farm === 'Sheep') {
+    
+            type = 'sheep_trimmer';
+            time = this.scene.state.sheepCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userSheep.collectorLevel).time * 2;
+            this.scene.state.userSheep.collector = time * 60;
+            this.scene.state.userSheep.collectorTakenTime = this.scene.state.userSheep.collector;
+          } else if (this.scene.state.farm === 'Chicken') {
+            
+            type = 'egg_catcher';
+            time = this.scene.state.chickenCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userChicken.collectorLevel).time * 2;
+            this.scene.state.userChicken.collector = time * 60;
+            this.scene.state.userChicken.collectorTakenTime = this.scene.state.userChicken.collector;
+          } else if (this.scene.state.farm === 'Cow') {
+            
+            type = 'milk_picker';
+            time = this.scene.state.cowCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userCow.collectorLevel).time * 2;
+            this.scene.state.userCow.collector = time * 60;
+            this.scene.state.userCow.collectorTakenTime = this.scene.state.userCow.collector;
+          } else if (this.scene.state.farm === 'Unicorn') {
+            type = 'resource_catcher';
+            time = this.scene.state.unicornCollectorSettings.find((data: IcollectorSettings) => data.level === this.scene.state.userUnicorn.collectorLevel).time * 2;
+            this.scene.state.userUnicorn.collector = time * 60;
+            this.scene.state.userUnicorn.collectorTakenTime = this.scene.state.userUnicorn.collector;
+          }
         }
         this.scene.tryTask(3, 0, time);
         this.scene.tryClanTask(7, 0, time);
