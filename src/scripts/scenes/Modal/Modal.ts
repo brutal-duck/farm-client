@@ -49,7 +49,7 @@ import ClanTournamentEndWindow from './../../components/modal/clan/ClanTournamen
 import SaleWindow from './../../components/modal/SaleWindow';
 import ReviewWindow from '../../components/modal/ReviewWindow';
 import AvatarsWindow from './../../components/modal/AvatarsWindow';
-import AchievementsBars from '../../components/modal/achievements/AchievementsBars';
+import AchievementsWindow from '../../components/modal/AchievementsWindow';
 import Utils from './../../libs/Utils';
 import TasksWindowNew from '../../components/modal/TasksWindowNew';
 
@@ -212,7 +212,7 @@ class Modal extends Phaser.Scene {
         new AvatarsWindow(this);
         break;
       case 26:
-        new AchievementsBars(this);
+        new AchievementsWindow(this);
         break;
       default:
         this.scene.stop();
