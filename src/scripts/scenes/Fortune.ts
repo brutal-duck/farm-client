@@ -505,7 +505,7 @@ export default class Fortune extends Phaser.Scene {
         data = {
           userId: this.state.user.id,
           name: name,
-          spending: this.price,
+          spending: this.adStart ? 0 : this.price,
           prize: prize,
           jackpot: true,
         };
@@ -513,7 +513,7 @@ export default class Fortune extends Phaser.Scene {
         data = {
           userId: this.state.user.id,
           name: name,
-          spending: this.price,
+          spending: this.adStart ? 0 : this.price,
           prize: prize,
           jackpot: false,
         };
@@ -521,7 +521,7 @@ export default class Fortune extends Phaser.Scene {
         data = {
           userId: this.state.user.id,
           name: name,
-          spending: this.price,
+          spending: this.adStart ? 0 : this.price,
           prize: 0,
           jackpot: false,
         };
