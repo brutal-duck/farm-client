@@ -28,7 +28,7 @@ function progressTerritoryCooldown(territories: Iterritories[], time: number, fa
             if (sheepTask.count <= sheepTask.progress) {
               sheepTask.done = 1;
               this.tryClanTask(16);
-              this.achievement.tryType(2);
+              this.achievement?.tryType(2);
             }
           }
           if (chickenTask && farm === 'Chicken') {
@@ -36,7 +36,7 @@ function progressTerritoryCooldown(territories: Iterritories[], time: number, fa
             if (chickenTask.count <= chickenTask.progress) {
               chickenTask.done = 1;
               this.tryClanTask(16);
-              this.achievement.tryType(2);
+              this.achievement?.tryType(2);
             }
           }
           if (cowTask && farm === 'Cow') {
@@ -44,7 +44,7 @@ function progressTerritoryCooldown(territories: Iterritories[], time: number, fa
             if (cowTask.count <= cowTask.progress) {
               cowTask.done = 1;
               this.tryClanTask(16);
-              this.achievement.tryType(2);
+              this.achievement?.tryType(2);
             }
           }
         }
@@ -82,7 +82,7 @@ function progressTerritoryCooldownTestB(territories: Iterritories[], time: numbe
             if (sheepTask.count <= sheepTask.progress) {
               sheepTask.done = 1;
               this.tryClanTask(16);
-              this.achievement.tryType(2);
+              this.achievement?.tryType(2);
             }
           }
           if (chickenTask && farm === 'Chicken') {
@@ -90,7 +90,7 @@ function progressTerritoryCooldownTestB(territories: Iterritories[], time: numbe
             if (chickenTask.count <= chickenTask.progress) {
               chickenTask.done = 1;
               this.tryClanTask(16);
-              this.achievement.tryType(2);
+              this.achievement?.tryType(2);
             }
           }
           if (cowTask && farm === 'Cow') {
@@ -98,7 +98,7 @@ function progressTerritoryCooldownTestB(territories: Iterritories[], time: numbe
             if (cowTask.count <= cowTask.progress) {
               cowTask.done = 1;
               this.tryClanTask(16);
-              this.achievement.tryType(2);
+              this.achievement?.tryType(2);
             }
           }
         }
