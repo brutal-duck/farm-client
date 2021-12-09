@@ -25,7 +25,7 @@ export default class DataValidator {
     for (const key in userData) {
       if (typeof data[key] !== typeof userData[key]) data[key] = userData[key];
     }
-    data.diamonds = data.diamonds <= 0 ? 0 : data.diamonds;
+    data.diamonds = !data.diamonds || data.diamonds <= 0 ? 0 : data.diamonds;
     return data;
   }
 

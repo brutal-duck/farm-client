@@ -248,8 +248,8 @@ export default class ImproveClanFarmWindow extends Phaser.GameObjects.Sprite{
           this.scene.state.amplitude.logAmplitudeEvent(`clan_${this.farm}_improve`, {
             level: this.level + 1,
           });
-          this.scene.scene.stop();
         }
+        this.scene.scene.stop();
       });
     } else {
       this.scene.state.modal = {
