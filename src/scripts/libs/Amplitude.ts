@@ -43,7 +43,7 @@ export default class Amplitude implements Iamplitude {
         .set('browser', navigator.userAgent)
         .set('partner', this.state.platform)
         .set('test', this.state.user.test)
-        .set(`Catcher${this.state.farm}`, this.state[`user${this.state.farm}`].collectorLevel);
+        .set(`Catcher${this.state.farm}`, this.state[`user${this.state.farm}`]?.collectorLevel || 0);
 
       if (this.state.platform === 'ok' || this.state.platform === 'vk') {
         let refer: string = '';
