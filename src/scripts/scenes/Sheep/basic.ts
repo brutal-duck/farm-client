@@ -194,12 +194,12 @@ function checkSheepBalance(newAnimalBreed: number): { pasture: boolean, water: b
 
   let waterConsumption = 0;
   let grassConsumption = 0;
-  let waterRecovery =0;
+  let waterRecovery = 0;
   let grassRecovery = 0;
   const animalsBreed = sheep?.getChildren().map(el => Number(el.type));
   animalsBreed.push(newAnimalBreed);
   for (const breed of animalsBreed) {
-    const checkBreed = breed === 0 ? 0 : breed;
+    const checkBreed = breed === 0 ? 1 : breed;
     const points = settings.sheepSettings.find(item => item.breed === checkBreed);
     grassConsumption += points.eating;
     waterConsumption += points.drinking;
