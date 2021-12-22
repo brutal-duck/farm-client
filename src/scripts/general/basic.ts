@@ -583,6 +583,8 @@ function donePart(): void {
   } else if (user.part === 8 && farm === 'Sheep' && Utils.checkUserHasName(this.state)) {
     this.state.fortuneTutor = true;
   }
+
+  if (this.state.farm === 'Sheep') this.state.badBalanceWindowShown = false;
 }
 
 

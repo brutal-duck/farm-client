@@ -969,6 +969,7 @@ interface Iadmob {
   rewarded: any;
 }
 interface Istate {
+  badBalanceWindowShown: boolean;
   interstitialTimer: number;
   platform: string;
   autoSaveSpeed: number;

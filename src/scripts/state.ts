@@ -92,6 +92,7 @@ let admob: Iadmob = {
   interstitial: null,
   rewarded: null
 };
+let badBalanceWindowShown: boolean = false;
 
 let state: Istate = {
   // записываемые в localStorage
@@ -130,6 +131,7 @@ let state: Istate = {
   dailyAwards, // награды новичка
 
   // не записываемые в localStorage
+  badBalanceWindowShown,
   clanChatNotificationCount,
   shopNotificationCount: notificationCounter, // счетчик нативов в магазине ['diamonds', 'gold', 'animals', 'booster']
   lang, // массив слов выбранного языка

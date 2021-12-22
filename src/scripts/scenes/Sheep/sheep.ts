@@ -485,7 +485,9 @@ function buySheep(breed: number, shop: boolean = false): boolean {
       if ((!checkNewBalance.pasture || !checkNewBalance.water) 
         && !oldBalance.alarm 
         && this.state.userSheep.tutorial >= 100 
-        && this.state.user.additionalTutorial.balance) {
+        && this.state.user.additionalTutorial.balance
+        && !this.state.badBalanceWindowShown) {
+        this.state.badBalanceWindowShown = true;
         const modal: Imodal = { 
           type: 1, 
           sysType: 28, 
