@@ -122,6 +122,18 @@ const testChickenTasks: Task[] = [
     sort: 60
   },
   {
+    id: '2-7',
+    type: TaskType['IMPROVE_SPEED_COLLECTOR'],
+    state: 2,
+    count: 1,
+    done: 0,
+    awardTaken: 0,
+    awardType: 'coin',
+    award: 450,
+    progress: 0,
+    sort: 70
+  },
+  {
     id: '3-1',
     type: TaskType['BUY_TERRITORY'],
     state: TerritoryType['BOUGHT'],
@@ -204,6 +216,18 @@ const testChickenTasks: Task[] = [
     award: 1,
     progress: 0,
     sort: 70
+  },
+  {
+    id: '3-8',
+    type: TaskType['IMPROVE_SPEED_COLLECTOR'],
+    state: 3,
+    count: 1,
+    done: 0,
+    awardTaken: 0,
+    awardType: 'coin',
+    award: 900,
+    progress: 0,
+    sort: 90
   },
   {
     id: '4-1',
@@ -290,6 +314,18 @@ const testChickenTasks: Task[] = [
     sort: 70
   },
   {
+    id: '4-8',
+    type: TaskType['IMPROVE_SPEED_COLLECTOR'],
+    state: 4,
+    count: 1,
+    done: 0,
+    awardTaken: 0,
+    awardType: 'coin',
+    award: 1800,
+    progress: 0,
+    sort: 90
+  },
+  {
     id: '5-1',
     type: TaskType['BUY_TERRITORY'],
     state: TerritoryType['BOUGHT'],
@@ -372,6 +408,18 @@ const testChickenTasks: Task[] = [
     award: 1,
     progress: 0,
     sort: 70
+  },
+  {
+    id: '5-8',
+    type: TaskType['IMPROVE_SPEED_COLLECTOR'],
+    state: 5,
+    count: 1,
+    done: 0,
+    awardTaken: 0,
+    awardType: 'coin',
+    award: 4800,
+    progress: 0,
+    sort: 90
   },
   {
     id: '6-1',
@@ -458,6 +506,18 @@ const testChickenTasks: Task[] = [
     sort: 70
   },
   {
+    id: '6-8',
+    type: TaskType['IMPROVE_SPEED_COLLECTOR'],
+    state: 6,
+    count: 1,
+    done: 0,
+    awardTaken: 0,
+    awardType: 'coin',
+    award: 12000,
+    progress: 0,
+    sort: 90
+  },
+  {
     id: '7-1',
     type: TaskType['BUY_TERRITORY'],
     state: TerritoryType['BOUGHT'],
@@ -540,6 +600,18 @@ const testChickenTasks: Task[] = [
     award: 1,
     progress: 0,
     sort: 70
+  },
+  {
+    id: '7-8',
+    type: TaskType['IMPROVE_SPEED_COLLECTOR'],
+    state: 7,
+    count: 1,
+    done: 0,
+    awardTaken: 0,
+    awardType: 'coin',
+    award: 28800,
+    progress: 0,
+    sort: 90
   },
   {
     id: '8-1',
@@ -626,6 +698,18 @@ const testChickenTasks: Task[] = [
     sort: 70
   },
   {
+    id: '8-8',
+    type: TaskType['IMPROVE_SPEED_COLLECTOR'],
+    state: 8,
+    count: 1,
+    done: 0,
+    awardTaken: 0,
+    awardType: 'coin',
+    award: 38400,
+    progress: 0,
+    sort: 90
+  },
+  {
     id: '9-1',
     type: TaskType['BUY_TERRITORY'],
     state: TerritoryType['BOUGHT'],
@@ -708,6 +792,18 @@ const testChickenTasks: Task[] = [
     award: 1,
     progress: 0,
     sort: 70
+  },
+  {
+    id: '9-8',
+    type: TaskType['IMPROVE_SPEED_COLLECTOR'],
+    state: 9,
+    count: 1,
+    done: 0,
+    awardTaken: 0,
+    awardType: 'coin',
+    award: 86400,
+    progress: 0,
+    sort: 90
   },
   {
     id: '10-1',
@@ -794,6 +890,18 @@ const testChickenTasks: Task[] = [
     sort: 70
   },
   {
+    id: '10-8',
+    type: TaskType['IMPROVE_SPEED_COLLECTOR'],
+    state: 10,
+    count: 1,
+    done: 0,
+    awardTaken: 0,
+    awardType: 'coin',
+    award: 105600,
+    progress: 0,
+    sort: 90
+  },
+  {
     id: '11-1',
     type: TaskType['BUY_TERRITORY'],
     state: TerritoryType['BOUGHT'],
@@ -876,6 +984,18 @@ const testChickenTasks: Task[] = [
     award: 1,
     progress: 0,
     sort: 70
+  },
+  {
+    id: '11-8',
+    type: TaskType['IMPROVE_SPEED_COLLECTOR'],
+    state: 11,
+    count: 1,
+    done: 0,
+    awardTaken: 0,
+    awardType: 'coin',
+    award: 211200,
+    progress: 0,
+    sort: 90
   },
   {
     id: '12-1',
@@ -962,6 +1082,18 @@ const testChickenTasks: Task[] = [
     sort: 70
   },
   {
+    id: '12-8',
+    type: TaskType['IMPROVE_SPEED_COLLECTOR'],
+    state: 12,
+    count: 1,
+    done: 0,
+    awardTaken: 0,
+    awardType: 'coin',
+    award: 249600,
+    progress: 0,
+    sort: 90
+  },
+  {
     id: '13-1',
     type: TaskType['BUY_TERRITORY'],
     state: TerritoryType['BOUGHT'],
@@ -1044,6 +1176,18 @@ const testChickenTasks: Task[] = [
     award: 1,
     progress: 0,
     sort: 70
+  },
+  {
+    id: '13-8',
+    type: TaskType['IMPROVE_SPEED_COLLECTOR'],
+    state: 13,
+    count: 1,
+    done: 0,
+    awardTaken: 0,
+    awardType: 'coin',
+    award: 499200,
+    progress: 0,
+    sort: 90
   },
   {
     id: '14-1',
@@ -1130,6 +1274,18 @@ const testChickenTasks: Task[] = [
     sort: 70
   },
   {
+    id: '14-8',
+    type: TaskType['IMPROVE_SPEED_COLLECTOR'],
+    state: 14,
+    count: 1,
+    done: 0,
+    awardTaken: 0,
+    awardType: 'coin',
+    award: 576000,
+    progress: 0,
+    sort: 90
+  },
+  {
     id: '15-1',
     type: TaskType['BUY_TERRITORY'],
     state: TerritoryType['BOUGHT'],
@@ -1212,6 +1368,18 @@ const testChickenTasks: Task[] = [
     award: 1,
     progress: 0,
     sort: 70
+  },
+  {
+    id: '15-8',
+    type: TaskType['IMPROVE_SPEED_COLLECTOR'],
+    state: 15,
+    count: 1,
+    done: 0,
+    awardTaken: 0,
+    awardType: 'coin',
+    award: 1152000,
+    progress: 0,
+    sort: 90
   },
   {
     id: '16-1',
@@ -1298,6 +1466,18 @@ const testChickenTasks: Task[] = [
     sort: 70
   },
   {
+    id: '16-8',
+    type: TaskType['IMPROVE_SPEED_COLLECTOR'],
+    state: 16,
+    count: 1,
+    done: 0,
+    awardTaken: 0,
+    awardType: 'coin',
+    award: 1305600,
+    progress: 0,
+    sort: 90
+  },
+  {
     id: '17-1',
     type: TaskType['BUY_TERRITORY'],
     state: TerritoryType['BOUGHT'],
@@ -1380,6 +1560,18 @@ const testChickenTasks: Task[] = [
     award: 1,
     progress: 0,
     sort: 70
+  },
+  {
+    id: '17-8',
+    type: TaskType['IMPROVE_SPEED_COLLECTOR'],
+    state: 17,
+    count: 1,
+    done: 0,
+    awardTaken: 0,
+    awardType: 'coin',
+    award: 2611200,
+    progress: 0,
+    sort: 90
   },
   {
     id: '18-1',
@@ -1466,6 +1658,18 @@ const testChickenTasks: Task[] = [
     sort: 70
   },
   {
+    id: '18-8',
+    type: TaskType['IMPROVE_SPEED_COLLECTOR'],
+    state: 18,
+    count: 1,
+    done: 0,
+    awardTaken: 0,
+    awardType: 'coin',
+    award: 2918400,
+    progress: 0,
+    sort: 90
+  },
+  {
     id: '19-1',
     type: TaskType['BUY_TERRITORY'],
     state: TerritoryType['BOUGHT'],
@@ -1550,6 +1754,18 @@ const testChickenTasks: Task[] = [
     sort: 70
   },
   {
+    id: '19-8',
+    type: TaskType['IMPROVE_SPEED_COLLECTOR'],
+    state: 19,
+    count: 1,
+    done: 0,
+    awardTaken: 0,
+    awardType: 'coin',
+    award: 5836800,
+    progress: 0,
+    sort: 90
+  },
+  {
     id: '20-1',
     type: TaskType['IMPROVE_ALL_TERRITORY'],
     state: 20,
@@ -1608,6 +1824,18 @@ const testChickenTasks: Task[] = [
     award: 1,
     progress: 0,
     sort: 50
+  },
+  {
+    id: '20-6',
+    type: TaskType['IMPROVE_SPEED_COLLECTOR'],
+    state: 20,
+    count: 1,
+    done: 0,
+    awardTaken: 0,
+    awardType: 'coin',
+    award: 6451200,
+    progress: 0,
+    sort: 90
   },
 ];
 

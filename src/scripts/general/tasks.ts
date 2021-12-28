@@ -1027,7 +1027,8 @@ function clickTaskBoardTestB(task: Task): void {
       break;
     case TaskType['TAKE_FEED_BOOST']: openShopBoosters(); break;
     case TaskType['TAKE_HERD_BOOST']: openShopBoosters(); break;
-    case TaskType['IMPROVE_COLLECTOR']: 
+    case TaskType['IMPROVE_COLLECTOR']:
+    case TaskType['IMPROVE_SPEED_COLLECTOR']:
       this.game.scene.keys[this.state.farm].showImproveCollector();
       break;
     case TaskType['IMPROVE_FACTORY']: openImproveFactory(); break;

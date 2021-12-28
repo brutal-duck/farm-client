@@ -189,6 +189,7 @@ export default class ImproveCollectorWindowNew {
         this.scene.state[`user${this.farm}`].collectorLevel++;
         const price = speedPrice;
         this.scene.state.user.diamonds -= price;
+        this.scene.game.scene.keys[this.farm].tryTask(TaskType.IMPROVE_SPEED_COLLECTOR, this.scene.state[`user${this.farm}`].collectorLevel);
         this.scene.game.scene.keys[this.scene.state.farm].tryTask(15, 0, price);
         this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
           type: 'improve_collector',

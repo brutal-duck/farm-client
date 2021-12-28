@@ -26,6 +26,7 @@ enum TaskType {
   SAVE_MILK = 26,
   IMPROVE_ALL_TERRITORY = 27,
   EXCHANGE_DIAMOND = 28,
+  IMPROVE_SPEED_COLLECTOR = 29,
 };
 
 enum TerritoryType {
