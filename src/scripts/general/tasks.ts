@@ -303,6 +303,7 @@ function getTaskDataTestB(task: Task): ItaskData {
     case TaskType['SAVE_MILK']: num = 36; break;
     case TaskType['IMPROVE_ALL_TERRITORY']: num = 39; break;
     case TaskType['EXCHANGE_DIAMOND']: num = 38; break;
+    case TaskType['IMPROVE_SPEED_COLLECTOR']: num = 40; break;
     default: num = 21; break;
   }
 

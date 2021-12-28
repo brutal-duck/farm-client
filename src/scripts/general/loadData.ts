@@ -22,6 +22,7 @@ import Utils from './../libs/Utils';
 import testChickenTasks from './../local/test/chickenTasks';
 import testCowTasks from './../local/test/cowTasks';
 import cowPartSettings from './../local/test/cowPartSettings';
+import { Task, TaskType } from '../local/tasks/types';
 const basicUserCow = userCow;
 const basicUserSheep = userSheep;
 const basicUserChicken = userChicken;
@@ -159,6 +160,39 @@ function checkDoneTasks(state: Istate): void {
       }
     }
   }
+}
+
+function checkDoneCollectorTaskTestB(state: Istate): void {
+  const sheepTasks = state.sheepTasks.filter((el: any) => el.id.split('-')[0] === String(state.userSheep.part)) as unknown as Task[];
+  const chickenTasks = state.chickenTasks.filter((el: any) => el.id.split('-')[0] === String(state.userChicken.part)) as unknown as Task[];
+  const cowTasks = state.cowTasks.filter((el: any) => el.id.split('-')[0] === String(state.userCow.part)) as unknown as Task[];
+  sheepTasks.forEach(task => {
+    if (
+      task.type === TaskType.IMPROVE_SPEED_COLLECTOR 
+      && task.done !== 1 
+      && task.state === state.userSheep.collectorLevel
+    ) {
+      task.done = 1; 
+    }
+  });
+  chickenTasks.forEach(task => {
+    if (
+      task.type === TaskType.IMPROVE_SPEED_COLLECTOR 
+      && task.done !== 1 
+      && task.state === state.userChicken.collectorLevel
+    ) {
+      task.done = 1; 
+    }
+  });
+  cowTasks.forEach(task => {
+    if (
+      task.type === TaskType.IMPROVE_SPEED_COLLECTOR 
+      && task.done !== 1 
+      && task.state === state.userCow.collectorLevel
+    ) {
+      task.done = 1; 
+    }
+  });
 }
 
 const checkDoneAchievement = (state: Istate): void => {
@@ -652,6 +686,10 @@ export default function loadData(response: AxiosResponse): void {
   
   if (response.data.user.build && response.data.user.build < 4.14) {
     checkDoneAchievement(state);
+  }
+
+  if (response.data.user.build && response.data.user.build < 4.16 && Utils.checkTestB(state)) {
+    checkDoneCollectorTaskTestB(state);
   }
 
   if (

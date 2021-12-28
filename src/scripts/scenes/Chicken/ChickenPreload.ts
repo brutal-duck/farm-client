@@ -173,6 +173,7 @@ const taskIcon33: string = require('./../../../assets/images/chicken/tasks/task-
 const taskIcon34: string = require('./../../../assets/images/chicken/tasks/task-icon-34.png');
 const taskIcon38: string = require('./../../../assets/images/chicken/tasks/task-icon-38.png');
 const taskIcon39: string = require('./../../../assets/images/chicken/tasks/task-icon-39.png');
+const taskIcon40: string = require('./../../../assets/images/chicken/tasks/task-icon-40.png');
 const plus: string = require('./../../../assets/images/icons/plus.png');
 const chickenLeaves: string = require('./../../../assets/images/chicken/chicken-leaves.png');
 const greenBalanceBg: string = require('./../../../assets/images/balance/green-balance-bg.png');
@@ -429,6 +430,7 @@ class ChickenPreload extends Phaser.Scene {
     this.load.image('chicken-task-icon-34', taskIcon34);
     this.load.image('chicken-task-icon-38', taskIcon38);
     this.load.image('chicken-task-icon-39', taskIcon39);
+    this.load.image('chicken-task-icon-40', taskIcon40);
     this.load.image('plus', plus);
     this.load.image('chicken-leaves', chickenLeaves);
     this.load.image('green-balance-bg', greenBalanceBg);
