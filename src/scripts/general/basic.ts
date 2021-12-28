@@ -582,6 +582,7 @@ function donePart(): void {
     this.state.clanTutor = true;
   } else if (user.part === 8 && farm === 'Sheep' && Utils.checkUserHasName(this.state)) {
     this.state.fortuneTutor = true;
+    this.state.fortuneTutorialWin = true;
   }
 
   if (this.state.farm === 'Sheep') this.state.badBalanceWindowShown = false;

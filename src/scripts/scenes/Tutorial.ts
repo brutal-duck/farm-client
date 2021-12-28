@@ -505,6 +505,7 @@ class Tutorial extends Phaser.Scene {
             this.pointerTutorial();
             this.generalClick = (): void => {
               this.state.fortuneTutor = false;
+              this.state.fortuneTutorialWin = true;
               this.scene.stop('Tutorial');
               this.scene.launch('Fortune', this.state);
             };

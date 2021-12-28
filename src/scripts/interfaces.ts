@@ -1066,6 +1066,7 @@ interface Istate {
   clanAvatar?: IconfigIcon;
   clanTutor?: boolean;
   fortuneTutor?: boolean;
+  fortuneTutorialWin?: boolean;
   openConvertor?: boolean;
   adjust?: Iadjust;
   clanTournamentData?: ItournamentData;

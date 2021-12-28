@@ -344,12 +344,17 @@ export default class Fortune extends Phaser.Scene {
       id: this.state.user.id,
       hash: this.state.user.hash,
       counter: this.state.user.counter,
+      ad: this.adStart,
     };
     this.removeInteractiveElements();
     axios.post(process.env.API + '/getFortunePrize', data).then(res => {
       const { error, prizeId } = res.data;
       if (!error) {
         this.prizeId = prizeId;
+        if (this.state.fortuneTutorialWin) {
+          this.state.fortuneTutorialWin = false;
+          this.prizeId = 2;
+        }
         this.setUpdatedButton();
         this.whellIsScrolling = true;
         this.startScrollWheel();
