@@ -205,10 +205,16 @@ export default class SettingsWindow {
     erudaCdn.onload = (): void => {
       window['eruda'].init();
       console.log(window);
-      console.log('TrackingPlugin', window['TrackingPlugin']);
-      console.log('trackingPlugin', window['trackingPlugin']);
-      console.log('trackingplugin', window['trackingplugin']);
-      console.log('search', window.location.search);
+      //@ts-ignore
+      referrer.getReferrer(function onSuccess(referrer) {
+        if (referrer.length()) {
+            console.log("The referrer is: "+referrer);
+        } else {
+            console.log("No referrer found.");
+        }
+      }, function onError(error) {
+        console.log(error);
+      });
     };
   }
 }
