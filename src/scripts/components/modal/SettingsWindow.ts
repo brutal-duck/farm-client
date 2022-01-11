@@ -204,7 +204,11 @@ export default class SettingsWindow {
     document.body.appendChild(erudaCdn);
     erudaCdn.onload = (): void => {
       window['eruda'].init();
-      this.scene.game.scene.keys[this.scene.state.farm].ads.showInterstitialAd();
+      console.log(window);
+      console.log('TrackingPlugin', window['TrackingPlugin']);
+      console.log('trackingPlugin', window['trackingPlugin']);
+      console.log('trackingplugin', window['trackingplugin']);
+      console.log('search', window.location.search);
     };
   }
 }
