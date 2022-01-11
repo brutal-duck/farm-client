@@ -205,16 +205,17 @@ export default class SettingsWindow {
     erudaCdn.onload = (): void => {
       window['eruda'].init();
       console.log(window);
-      //@ts-ignore
-      referrer.getReferrer(function onSuccess(referrer) {
-        if (referrer.length()) {
-            console.log("The referrer is: "+referrer);
-        } else {
-            console.log("No referrer found.");
-        }
-      }, function onError(error) {
-        console.log(error);
-      });
+      
+      const ref = window['referrer'];
+      const onSuccess = referrer => {
+        console.log(referrer);
+        if (referrer.length > 0) console.log("The referrer is: " + referrer);
+        else if (typeof referrer.length === 'function' && referrer.length()) console.log("The referrer is: " + referrer);
+        else console.log("No referrer found.");
+      };
+      const onError = error => console.log(error);
+
+      ref.getReferrer(onSuccess, onError);
     };
   }
 }
