@@ -1,7 +1,7 @@
 import { shortNum, shortTime } from '../../general/basic';
 import Sheep from './../../scenes/Sheep/Main';
 
-const TIMER_COEFFICIENT = 2;
+const TIMER_COEFFICIENT = 3;
 
 export default class CooldownSprite extends Phaser.GameObjects.Sprite {
   public scene: Sheep;
