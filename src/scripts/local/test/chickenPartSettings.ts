@@ -174,7 +174,7 @@ const chickenPartSettings: IpartSettings[] = [
       maxRepositoryVolume: 1386,
       improveFairPrice: 12020800,
       improveTerritoryPrice: 2003467,
-      regeneration: 27,
+      regeneration: 28,
       cooldown: 100,
     },
     exchange: 105600,

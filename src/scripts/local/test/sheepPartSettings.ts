@@ -174,7 +174,7 @@ const sheepPartSettings: IpartSettings[] = [
       maxRepositoryVolume: 1386,
       improveFairPrice: 6001600,
       improveTerritoryPrice: 1000267,
-      regeneration: 27,
+      regeneration: 28,
       cooldown: 50,
     },
     exchange: 105600,

@@ -174,7 +174,7 @@ const cowPartSettings: IpartSettings[] = [
       maxRepositoryVolume: 8870400,
       improveFairPrice: 18040000,
       improveTerritoryPrice: 3006667,
-      regeneration: 27,
+      regeneration: 28,
       cooldown: 201,
     },
     exchange: 105600,
