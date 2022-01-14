@@ -397,6 +397,7 @@ class Boot extends Phaser.Scene {
     document.addEventListener('deviceready', (): void => {
       this.hash = LocalStorage.get('hash');
       this.initAndroidAdjust();
+      this.FBinit();
       window.screen.orientation.lock('portrait-primary');
 
       const admob = window['admob'];
@@ -404,7 +405,7 @@ class Boot extends Phaser.Scene {
         this.initAndroidRewardedAd();
         this.initAndroidInterstitialAd();
       });
-      
+
       this.pushToken = '';
       let userData: IgooglePlayServicesData | string = this.hash;
       let token: boolean = false;
@@ -459,6 +460,22 @@ class Boot extends Phaser.Scene {
     });
   }
 
+  private FBinit(): void {
+    const script = document.createElement('script');
+    script.setAttribute('src', 'text/javascript');
+    script.setAttribute('src', 'https://connect.facebook.net/en_US/sdk.js');
+    script.setAttribute('charset', 'utf-8');
+    document.body.append(script);
+
+    script.onload = (): void => {
+      const FB = window['FB'];
+      FB.init({
+        appId: '911792946365467',
+        xfbml: true,
+        version: 'v9.0'
+      });
+    }
+  }
 
   private checkAuthAndroidUser(data: IgooglePlayServicesData): void {
     this.state.playId = data.playerId;

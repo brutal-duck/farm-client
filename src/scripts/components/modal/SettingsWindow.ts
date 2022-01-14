@@ -204,18 +204,7 @@ export default class SettingsWindow {
     document.body.appendChild(erudaCdn);
     erudaCdn.onload = (): void => {
       window['eruda'].init();
-      console.log(window);
-      
-      const ref = window['referrer'];
-      const onSuccess = referrer => {
-        console.log(referrer);
-        if (referrer.length > 0) console.log("The referrer is: " + referrer);
-        else if (typeof referrer.length === 'function' && referrer.length()) console.log("The referrer is: " + referrer);
-        else console.log("No referrer found.");
-      };
-      const onError = error => console.log(error);
-
-      ref.getReferrer(onSuccess, onError);
+      console.log(window['FB']);
     };
   }
 }
