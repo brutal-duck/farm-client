@@ -34,7 +34,7 @@ const general: {
       bonus: 150,
       stock: 20,
       top: false,
-      dollars: 2.59,
+      dollars: 2.49,
     },
     {
       id: 3,
@@ -45,7 +45,7 @@ const general: {
       bonus: 500,
       stock: 25,
       top: true,
-      dollars: 6.59,
+      dollars: 5.99,
     },
     {
       id: 4,
@@ -56,7 +56,7 @@ const general: {
       bonus: 2600,
       stock: 40,
       top: false,
-      dollars: 18.99,
+      dollars: 16.99,
     },
     {
       id: 5,
@@ -78,7 +78,7 @@ const general: {
       bonus: 150,
       stock: 40,
       top: false,
-      dollars: 1.39,
+      dollars: 1.29,
     },
     {
       id: 7,
@@ -101,7 +101,7 @@ const general: {
       bonus: 2600,
       stock: 80,
       top: false,
-      dollars: 9.99,
+      dollars: 8.49,
     },
     {
       id: 9,
@@ -123,7 +123,7 @@ const general: {
       bonus: 300,
       stock: 40,
       top: false,
-      dollars: 2.59,
+      dollars: 2.49,
     },
     {
       id: 11,
@@ -134,7 +134,7 @@ const general: {
       bonus: 1000,
       stock: 50,
       top: true,
-      dollars: 6.59,
+      dollars: 5.99,
     },
     {
       id: 12,
@@ -145,7 +145,7 @@ const general: {
       bonus: 5200,
       stock: 80,
       top: false,
-      dollars: 18.99
+      dollars: 16.99
     },
   ],
 }
