@@ -131,7 +131,7 @@ function balanceTestB(): Ibalance {
     let territory: Territory = this.territories?.children?.entries[i];
     if (territory.territoryType === 2 || territory.territoryType === 3) {
       const partSettings: IpartSettings[] = this.settings.partSettings;
-      const reg: number = partSettings[territory.improve].territory.regeneration;
+      const reg: number = partSettings[territory.improve - 1].territory.regeneration;
       if (territory.territoryType === 2) grassRecovery += reg;
       else waterRecovery += reg;
     }
