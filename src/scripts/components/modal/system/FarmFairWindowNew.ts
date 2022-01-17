@@ -31,10 +31,10 @@ export default class FarmFairWindowNew {
       }).setDepth(1).setOrigin(0.5, 0);
 
       const filteredSettings = partSettings.filter(el => el.territory.improveFairPrice > 0);
-      const currentSettings = filteredSettings[fairLevel];
+      const currentSettings = filteredSettings[fairLevel - 1];
       let price = currentSettings.territory.improveFairPrice;
       const index = partSettings.findIndex(el => el.territory.improveFairPrice === price);
-      if (index > farmUser.part) price = 0;
+      if (index > farmUser.part - 1) price = 0;
 
       if (price > 0) {
           const right = {
