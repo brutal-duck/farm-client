@@ -62,6 +62,8 @@ function world(): void {
   if (this.state.userSheep.tutorial < 100) {
     this.showTutorial();
   }
+
+  this.checkDoneTasks();
 }
 
 function getTerritoryType(data: Iterritories): string {

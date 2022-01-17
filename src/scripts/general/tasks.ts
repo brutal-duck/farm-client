@@ -564,6 +564,8 @@ function checkDoneTasksTestB(): void {
       this.tryTask(27, availableTerritories, 0, filteredTer.length)
     }
   });
+  const fair = this.state[`user${this.state.farm}`].fair;
+  this.tryTask(TaskType['IMPROVE_FAIR'], fair);
   this.game.scene.keys[this.state.farm + 'Bars'].setCurrentPartProgress();
 }
 

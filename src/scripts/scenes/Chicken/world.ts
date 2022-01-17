@@ -61,6 +61,8 @@ function world(): void {
     Egg.create(this, data)
   });
 
+  this.checkDoneTasks();
+
   // туториал, если нужен
   if (this.state.userChicken.tutorial === 0) {
     this.showTutorial();

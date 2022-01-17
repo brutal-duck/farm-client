@@ -52,6 +52,8 @@ function world(): void {
     this.animalGroup.generate({ x: data.x, y: data.y }, data.type, data._id, data.counter, data.milk, data.diamond, data.vector, false)
   });
 
+  this.checkDoneTasks();
+
   // туториал, если нужен
   if (this.state.userCow.tutorial === 0) {
     this.showTutorial();
