@@ -21,6 +21,7 @@ import Cow from './../scenes/Cow/Main';
 import Territory from './../components/Territories/Territory';
 import Factory from './../components/Territories/Factory';
 import { Task, TaskType } from '../local/tasks/types';
+import { general } from '../local/settings';
 
 // рандомное число
 function random(min: number, max: number): number {
@@ -1703,6 +1704,55 @@ function checkCleanUpBtn():  boolean {
   return farmUser.collector <= 0 && check && barsScene.state.userSheep.part > 8;
 }
 
+function initAndroidStore(): void {
+  const { packages } = general;
+  const store: any = window['store'];
+  if (!store) {
+    console.log('Store not available');
+    return;
+  }
+
+  for (const pack of packages) {
+    store.register({
+      id: String(pack.id),
+      alias: 'package_' + pack.id,
+      price: pack.price,
+      type: store.CONSUMABLE
+    });
+  }
+
+  for (const pack of packages) {
+    store.when('package_' + pack.id)
+      .approved((p) => {
+        p.verify();
+      })
+      .verified((p) => {
+        axios.post(process.env.API + '/callbackPayAndroid', {
+          id: this.state.user.id,
+          hash: this.state.user.hash,
+          counter: this.state.user.counter,
+          pack: p,
+        }).then(res => {
+          if (!res.data.error) {
+            try {
+              this.state.adjust.shopPurchaseEvent.setRevenue(pack.price, 'RUB');
+              window[`Adjust`].trackEvent(this.state.adjust.shopPurchaseEvent);
+            } catch (err) { console.log('ADJUST', err) }
+
+            this.game.scene.keys[this.state.farm].autosave();
+          }
+        });
+        p.finish();
+      });
+  }
+
+  store.error((error) => {
+    console.log('ERROR ' + error.code + ': ' + error.message);
+  });
+  store.applicationUsername = () => this.state.user.id;
+  store.refresh();
+}
+
 export {
   createСleanButton,
   openConvertorForClan,
@@ -1746,4 +1796,5 @@ export {
   setPlatformStorage,
   getPlatformStorage,
   checkCleanUpBtn,
+  initAndroidStore
 }

@@ -737,6 +737,7 @@ interface Ipackage {
   voices: number;
   stock: number;
   top: boolean;
+  dollars: number;
 }
 interface Itutorial {
   farm: number;

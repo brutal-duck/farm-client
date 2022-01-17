@@ -2,10 +2,9 @@ import axios from 'axios';
 import Socket from '../../Socket';
 import loadSheep from '../../local/loadSheep';
 import loadData from '../../general/loadData';
-import { checkStorage, loadingScreen } from '../../general/basic';
+import { checkStorage, initAndroidStore, loadingScreen } from '../../general/basic';
 import LocalStorage from './../../libs/LocalStorage';
 import { clickShopBtn } from '../../general/clicks';
-import { general } from '../../local/settings';
 import ErrorWindow from './../../components/Web/ErrorWindow';
 import Ads from './../../components/Utils/Ads';
 
@@ -346,12 +345,12 @@ class SheepPreload extends Phaser.Scene {
   public loadingScreen = loadingScreen.bind(this);
   public loadData = loadData.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
+  public initAndroidStore = initAndroidStore.bind(this);
 
   constructor() {
     super('SheepPreload');
   }
 
-  
   public init(state: Istate): void {
     this.state  = state;
     this.userReady = false;
@@ -768,56 +767,6 @@ class SheepPreload extends Phaser.Scene {
     this.state.shopNotificationCount = [0, 0, 0, 0];
     this.state.farm = 'Sheep';
     LocalStorage.set('farm', 'Sheep');
-  }
-  
-  
-  private initAndroidStore(): void {
-    const { packages } = general;
-    const store: any = window['store'];
-    if (!store) {
-      console.log('Store not available');
-      return;
-    }
-
-    for (const pack of packages) {
-      store.register({
-        id: String(pack.id),
-        alias: 'package_' + pack.id,
-        price: pack.price,
-        type: store.CONSUMABLE
-      });
-    }
-
-    for (const pack of packages) {
-      store.when('package_' + pack.id)
-        .approved((p) => {
-          p.verify();
-        })
-        .verified((p) => {
-          axios.post(process.env.API + '/callbackPayAndroid', {
-            id: this.state.user.id,
-            hash: this.state.user.hash,
-            counter: this.state.user.counter,
-            pack: p,
-          }).then(res => {
-            if (!res.data.error) {
-              try {
-                this.state.adjust.shopPurchaseEvent.setRevenue(pack.price, 'RUB');
-                window[`Adjust`].trackEvent(this.state.adjust.shopPurchaseEvent);
-              } catch (err) { console.log('ADJUST', err) }
-
-              this.game.scene.keys[this.state.farm].autosave();
-            }
-          });
-          p.finish();
-        });
-    }
-
-    store.error((error) => {
-      console.log('ERROR ' + error.code + ': ' + error.message);
-    });
-    store.applicationUsername = () => this.state.user.id;
-    store.refresh();
   }
 }
 

@@ -130,5 +130,10 @@ export default class Utils {
    * @returns Возвращает true, если пользователь имеет тест В, иначе false
    */
   public static checkTestB = (state: Istate): boolean => state && state.user.test === 'B';
+
+  public static checkAndroidEngPlatform = (state: Istate) => {
+    const { platform, lang } = state;
+    return platform === 'android' && lang.index === 'en';
+  }
 };
 

@@ -1,4 +1,5 @@
 // большая кнопка
+import Utils from './libs/Utils';
 function bigButton(
   color: string,
   textAlign: string,
@@ -145,8 +146,10 @@ function shopButton(x: number, y: number, text: string, icon: any = false): any 
   let textX: number = x;
   if (icon) textX += 20;
 
+  const fontFamily = Utils.checkAndroidEngPlatform(this.state) ? 'Bip' : 'Shadow';
   let title: Phaser.GameObjects.Text = this.add.text(textX, y - 5, text, {
-    font: '28px Shadow',
+    fontSize: '28px ',
+    fontFamily: fontFamily,
     color: '#FFFFFF'
   }).setOrigin(0.5, 0.5);
 

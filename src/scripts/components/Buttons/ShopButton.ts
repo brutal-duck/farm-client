@@ -78,5 +78,10 @@ export default class ShopButton extends Button {
       this.img?.setX(this.text1.getBounds().left - 25);
     }
   }
+
+  public setFontFamily(fontFamily: string) {
+    this.text1?.setFontFamily(fontFamily);
+    this.text2?.setFontFamily(fontFamily);
+  }
   
 }
