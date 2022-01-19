@@ -364,7 +364,6 @@ class Sheep extends Phaser.Scene {
     //   this.state.offlineTime = 60 * 60
     //   this.autoprogress()
     // });
-    console.log(this.state);
   }
 
 
