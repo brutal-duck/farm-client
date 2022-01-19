@@ -114,6 +114,8 @@ const settingsWindowPlus: string = require('./../../../assets/images/modal/setti
 const settingsWindowSegment: string = require('./../../../assets/images/modal/settings/segment.png');
 const settingsWindowMusicPlate: string = require('./../../../assets/images/modal/settings/music-plate.png');
 const settingsWindowSoundPlate: string = require('./../../../assets/images/modal/settings/sound-plate.png');
+const settingsPlate: string = require('./../../../assets/images/modal/settings/settings-plate.png');
+const clearPlate: string = require('./../../../assets/images/modal/settings/clear-plate.png');
 const squareBg: string = require('../../../assets/images/modal/square-bg.png');
 const clanWindowHeader: string = require('../../../assets/images/modal/clan/header.png');
 const clanWindowTabActive: string = require('../../../assets/images/modal/clan/tab-active.png');
@@ -945,6 +947,10 @@ export default function typePreload(): void {
         Object.keys(iconsUrl).forEach(key => {
           if (key.includes('ach')) this.load.image(`${key}-status`, iconsUrl[key]);
         });
+        break;
+      case 27:
+        this.load.image('settings-plate', settingsPlate);
+        this.load.image('clear-plate', clearPlate);
         break;
       default:
         break;

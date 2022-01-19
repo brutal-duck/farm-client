@@ -14,6 +14,8 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
   private chatAnim: Phaser.Tweens.Tween;
   private chatNotificatorAnim: Phaser.Tweens.Tween;
   private chatNotificator: Notificator;
+  private debugIcon: Phaser.GameObjects.Sprite;
+  private debugAnim: Phaser.Tweens.Tween;
 
   constructor(scene: UnicornBars | BarsScene) {
     super(scene, 650, scene.height - 90, 'sandwich');
@@ -49,6 +51,10 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       .setInteractive()
       .setDepth(this.y + 4)
       .setVisible(false);
+    this.debugIcon = this.scene.add.sprite(this.x, this.y, 'debug')
+      .setInteractive()
+      .setDepth(this.y + 1)
+      .setVisible(Boolean(process.env.DEBUG));
   }
 
   private setListeners(): void {
@@ -92,6 +98,11 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
         }
       }
     });
+    
+    this.scene.clickButton(this.debugIcon, (): void => {
+      this.scene.state.modal = { type: 27 };
+      this.scene.scene.launch('Modal', this.scene.state);
+    });
   }
 
   private removeAmimation(): void {
@@ -101,6 +112,8 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
     this.chatAnim = undefined;
     this.chatNotificatorAnim?.remove();
     this.chatNotificatorAnim = undefined;
+    this.debugAnim?.remove();
+    this.debugAnim = undefined;
   }
 
   private setVisibility(): void {
@@ -110,11 +123,13 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       this.profileIcon.setVisible(false);
       this.chatIcon.setVisible(false);
       this.chatNotificator.setVisible(false);
+      this.debugIcon.setVisible(false);
     } else if (this.scene.state.platform === 'web' && this.scene.state.user.login !== '' && this.authIcon.visible) {
       this.authIcon.setVisible(false);
       this.setVisible(true);
       this.profileIcon.setVisible(true);
       this.chatIcon.setVisible(true);
+      this.debugIcon.setVisible(Boolean(process.env.DEBUG));
       this.chatNotificator.setCount(this.getMessagesCount());
     }
 
@@ -124,11 +139,13 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       this.profileIcon.setVisible(false);
       this.chatIcon.setVisible(false);      
       this.chatNotificator.setVisible(false);
+      this.debugIcon.setVisible(false);
     } else if (this.scene.state.platform === 'ya' && this.scene.state.yaPlayer && this.authIcon.visible) {
       this.authIcon.setVisible(false);
       this.setVisible(true);
       this.profileIcon.setVisible(true);
-      this.chatIcon.setVisible(true);      
+      this.chatIcon.setVisible(true);
+      this.debugIcon.setVisible(Boolean(process.env.DEBUG));
       this.chatNotificator.setCount(this.getMessagesCount());
     }
 
@@ -143,6 +160,7 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       this.chatIcon.setVisible(false);
       this.chatNotificator.setVisible(false);
       this.profileIcon.setVisible(false);
+      this.debugIcon.setVisible(false);
     } else if (this.scene.state.farm === 'Sheep' && this.scene.state.userSheep.tutorial >= 100 && (this.scene.state.platform === 'web' || this.scene.state.platform === 'ya') && !this.visible) {
       this.authIcon.setVisible(true);
     } else if (this.scene.state.farm === 'Sheep' && this.scene.state.userSheep.tutorial >= 100 && this.scene.state.platform !== 'web' && this.scene.state.platform !== 'ya') {
@@ -151,6 +169,7 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       this.chatIcon.setVisible(true);
       this.chatNotificator.setCount(this.getMessagesCount());
       this.profileIcon.setVisible(true);
+      this.debugIcon.setVisible(Boolean(process.env.DEBUG));
     }
 
     if (this.scene.state.farm === 'Unicorn' && this.scene.state.userUnicorn?.tutorial < 80 && this.visible) {
@@ -158,11 +177,13 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       this.chatIcon.setVisible(false);
       this.chatNotificator.setVisible(false);
       this.profileIcon.setVisible(false);
+      this.debugIcon.setVisible(false);
     } else if (this.scene.state.farm === 'Unicorn' && this.scene.state.userUnicorn?.tutorial >= 80 && !this.visible) {
       this.setVisible(true);
       this.profileIcon.setVisible(true);
       this.chatIcon.setVisible(true);
       this.chatNotificator.setCount(this.getMessagesCount());
+      this.debugIcon.setVisible(Boolean(process.env.DEBUG));
     }
   }
 
@@ -196,6 +217,14 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       ease: 'Power1',
       scale: 1,
     });
+    this.debugAnim = this.scene.add.tween({
+      targets: this.debugIcon,
+      y: { from: this.y, to: this.y - 375 },
+      duration: duration,
+      ease: 'Power1',
+      scale: 1,
+    });
+
     const targets = this.chatNotificator.children;
     this.chatNotificatorAnim = this.scene.add.tween({
       targets: targets,
@@ -226,6 +255,13 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       onComplete: (): void => {
         this.removeAmimation();
       }
+    });
+    this.debugAnim = this.scene.add.tween({
+      targets: this.debugIcon,
+      y: { from: this.debugIcon.y, to: this.y },
+      duration: duration,
+      ease: 'Power1',
+      scale: 1,
     });
     this.chatNotificatorAnim = this.scene.add.tween({
       targets: this.chatNotificator.children,

@@ -52,6 +52,7 @@ import AvatarsWindow from './../../components/modal/AvatarsWindow';
 import AchievementsWindow from '../../components/modal/AchievementsWindow';
 import Utils from './../../libs/Utils';
 import TasksWindowNew from '../../components/modal/TasksWindowNew';
+import DebugWindow from './../../components/modal/DebugWindow';
 
 class Modal extends Phaser.Scene {
   constructor() {
@@ -213,6 +214,9 @@ class Modal extends Phaser.Scene {
         break;
       case 26:
         new AchievementsWindow(this);
+        break;
+      case 27:
+        new DebugWindow(this);
         break;
       default:
         this.scene.stop();
