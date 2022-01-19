@@ -110,14 +110,14 @@ export default class EventEndWindow {
     }).setOrigin(1, 0).setVisible(false);
 
     const priceTopPlacesDiamonds: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX + 50, this.scene.cameras.main.centerY - 230,
-      '- 1000\n' + '- 700\n' + '- 400', {
+      '- 500\n' + '- 350\n' + '- 200', {
       font: 'Bold 21px Bip',
       color: '#793D0A',
       align: 'left'
     }).setOrigin(0, 0).setVisible(false);
 
     const pricePlacesDiamonds: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX + 50, this.scene.cameras.main.centerY - 144,
-      '- 300\n- 100\n- 50\n- 20', {
+      '- 150\n- 50\n- 25\n- 10', {
       font: '21px Bip',
       color: '#793D0A',
       align: 'left'
@@ -243,13 +243,13 @@ export default class EventEndWindow {
     this.priceBtn.on('pointerdown', (): void => { this.toogleBtn(false) });
 
     let diamonds: number;
-    if (this.scene.state.unicornRaitings?.user.place === 1) diamonds = 1000;
-    else if (this.scene.state.unicornRaitings?.user.place === 2) diamonds = 700;
-    else if (this.scene.state.unicornRaitings?.user.place === 3) diamonds = 400;
-    else if (this.scene.state.unicornRaitings?.user.place <= 10) diamonds = 300;
-    else if (this.scene.state.unicornRaitings?.user.place <= 100) diamonds = 100;
-    else if (this.scene.state.unicornRaitings?.user.place <= 500) diamonds = 50;
-    else if (this.scene.state.unicornRaitings?.user.place >= 501) diamonds = 20;
+    if (this.scene.state.unicornRaitings?.user.place === 1) diamonds = 500;
+    else if (this.scene.state.unicornRaitings?.user.place === 2) diamonds = 350;
+    else if (this.scene.state.unicornRaitings?.user.place === 3) diamonds = 200;
+    else if (this.scene.state.unicornRaitings?.user.place <= 10) diamonds = 150;
+    else if (this.scene.state.unicornRaitings?.user.place <= 100) diamonds = 50;
+    else if (this.scene.state.unicornRaitings?.user.place <= 500) diamonds = 25;
+    else if (this.scene.state.unicornRaitings?.user.place >= 501) diamonds = 10;
     // кнопка
     const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY + height, 'repository-sell-btn').setScale(0.7);
     const title: Phaser.GameObjects.Text = this.scene.add.text(btn.getBounds().centerX, this.scene.cameras.main.centerY - 10 + height, this.scene.state.lang.pickUp + ' + ' + diamonds, {
