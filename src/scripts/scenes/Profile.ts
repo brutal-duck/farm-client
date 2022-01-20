@@ -415,7 +415,7 @@ class Profile extends Phaser.Scene {
       x: 720,
       y: 775
     }
-    this.eventMapFarm = this.add.sprite(farmPosition.x, farmPosition.y, 'profile-event-farm').setOrigin(1, 0.5).setVisible(false);
+    this.eventMapFarm = this.add.sprite(farmPosition.x, farmPosition.y - 15, 'profile-event-farm').setOrigin(1, 0.5).setVisible(false);
     this.eventZone = this.add.zone(570, 790, 300, 170).setDropZone(undefined, () => {});
 
     this.eventScore = this.add.text(farmPosition.x - 122, farmPosition.y - 58, `- ${this.state.lang.eventScores}`, {
