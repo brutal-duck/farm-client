@@ -10,7 +10,7 @@ import LocalStorage from './../libs/LocalStorage';
 import Utils from './../libs/Utils';
 import { Task } from '../local/tasks/types';
 
-export default function autosave(): void {
+export default function autosave(): Promise<void> {
   const state: Istate = this.state;
   this.autoSaveTimer = 0;
 
@@ -363,7 +363,7 @@ export default function autosave(): void {
     isUnicornFarm: this.state.farm === 'Unicorn',
   };
 
-  axios.post(process.env.API + "/autoSave", data)
+  return axios.post(process.env.API + "/autoSave", data)
     .then((res) => {
       if (this.scene.isActive('Sheep') || this.scene.isActive('Chicken') || this.scene.isActive('Cow')) {
         if (res.data.error) this.logout();

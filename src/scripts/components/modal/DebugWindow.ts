@@ -189,8 +189,10 @@ export default class DebugWindow {
 
     const mainScene = this.scene.scene.get(this.scene.state.farm) as Sheep | Chicken | Cow;
     mainScene.world();
-    mainScene.autosave();
-    window.location.reload();
+    mainScene.autosave().then(() => {
+      window.location.reload();
+    });
+
   }
 
   private updateSheepFarm() {
