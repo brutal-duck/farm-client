@@ -130,6 +130,15 @@ export default class BarsScene extends Phaser.Scene {
     this.updateCleanUpBtn();
     this.updateFeedBoostTimer();
     this.updatePulseFeedBoostTimer();
+    this.updateMapNotificator();
+  }
+
+  private updateMapNotificator(): void {
+    if (this.mapNotificator.visible && this.state.userSheep.tutorial < 100) {
+      this.mapNotificator.setVisible(false);
+    } else if (!this.mapNotificator.visible && this.state.userSheep.tutorial >= 100) {
+      this.mapNotificator.setVisible(true);
+    }
   }
 
   public setCurrentPartProgress(): void {
