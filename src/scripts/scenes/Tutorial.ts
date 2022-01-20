@@ -806,7 +806,7 @@ class Tutorial extends Phaser.Scene {
           
           this.add.sprite(720, 775, 'profile-event-island').setOrigin(1, 0.5);
           Firework.create(this, { x: 580, y: 775 }, 5);
-          const eventFarm: Phaser.GameObjects.Image = this.add.image(720, 775, 'profile-event-farm').setOrigin(1, 0.5).setAlpha(0);
+          const eventFarm: Phaser.GameObjects.Image = this.add.image(720, 760, 'profile-event-farm').setOrigin(1, 0.5).setAlpha(0);
           const eventFarmText: Phaser.GameObjects.Text = this.add.text(600,765, this.state.lang.eventFarm, {
             fontSize: '18px',
             color: '#f0e8ce',
