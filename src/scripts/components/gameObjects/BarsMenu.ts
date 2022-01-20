@@ -55,7 +55,7 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       .setInteractive()
       .setDepth(this.y + 1)
       .setScale(0.8)
-      .setVisible(Boolean(process.env.DEBUG));
+      .setVisible(Boolean(process.env.DEBUG) && this.scene.state.farm !== 'Unicorn');
   }
 
   private setListeners(): void {
@@ -130,7 +130,7 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       this.setVisible(true);
       this.profileIcon.setVisible(true);
       this.chatIcon.setVisible(true);
-      this.debugIcon.setVisible(Boolean(process.env.DEBUG));
+      this.debugIcon.setVisible(Boolean(process.env.DEBUG) && this.scene.state.farm !== 'Unicorn');
       this.chatNotificator.setCount(this.getMessagesCount());
     }
 
@@ -146,7 +146,7 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       this.setVisible(true);
       this.profileIcon.setVisible(true);
       this.chatIcon.setVisible(true);
-      this.debugIcon.setVisible(Boolean(process.env.DEBUG));
+      this.debugIcon.setVisible(Boolean(process.env.DEBUG) && this.scene.state.farm !== 'Unicorn');
       this.chatNotificator.setCount(this.getMessagesCount());
     }
 
@@ -184,7 +184,7 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       this.profileIcon.setVisible(true);
       this.chatIcon.setVisible(true);
       this.chatNotificator.setCount(this.getMessagesCount());
-      this.debugIcon.setVisible(Boolean(process.env.DEBUG));
+      this.debugIcon.setVisible(Boolean(process.env.DEBUG) && this.scene.state.farm !== 'Unicorn');
     }
   }
 
