@@ -137,7 +137,7 @@ export default class BarsScene extends Phaser.Scene {
     if (tasks) {
       const done: number = tasks.filter(el => el.done === 1).length;
       const text: string = done + '/' + tasks?.length;
-      if (text !== this.partProgress?.text) this.partProgress?.setText(text);
+      if (this.partProgress?.active && text !== this.partProgress?.text) this.partProgress?.setText(text);
     }
   }
 

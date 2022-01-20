@@ -13,6 +13,7 @@ import { basicChickenFarm, fullChickenTerritories } from "../../local/basicFarms
 import chickenTerritories from "../../local/chickenTerritories";
 import cowTerritories from "../../local/cowTerritories";
 import { basicCowFarm, fullCowTerritories } from "../../local/basicFarms/basicCowFarm";
+import { Task } from "../../local/tasks/types";
 
 export default class DebugWindow {
   public scene: Modal;
@@ -186,6 +187,8 @@ export default class DebugWindow {
         this.updateCowFarm();
         break;
     }
+
+    this.clearTask();
 
     const mainScene = this.scene.scene.get(this.scene.state.farm) as Sheep | Chicken | Cow;
     mainScene.world();
@@ -382,6 +385,15 @@ export default class DebugWindow {
     this.scene.clickButton(coinPlus, callbackPlus);
   }
 
+  private clearTask(): void {
+    const tasks = this.scene.state[`${this.scene.state.farm.toLowerCase()}Tasks`] as any as Task[];
+    tasks.forEach(el => {
+      el.done = 0;
+      el.progress = 0;
+      el.awardTaken = 0;
+    });
+  }
+
   private createAutoprogressInc(): void {
     const pos = { x: this.x, y: this.y + 50 };
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
@@ -408,11 +420,11 @@ export default class DebugWindow {
       this.autoprogressTime += 1;
       timeCount.setText(`${this.autoprogressTime} ч.`);
     };
-
+    
     this.scene.clickButton(timeMinus, callBackMinus);
     this.scene.clickButton(timePlus, callBackPlus);
   }
-
+  
   private createPartInc(): void {
     const pos = { x: this.x, y: this.y + 170 };
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
