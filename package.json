@@ -6,6 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --config webpack/localhost/config.js --open",
     "build-android": "webpack --config webpack/android/build.js && node webpack/eruda.js",
+    "build-debug": "webpack --config webpack/debug/build.js && node webpack/eruda.js",
     "build-dev": "webpack --config webpack/dev/build.js && node webpack/eruda.js",
     "build-localhost": "webpack --config webpack/localhost/build.js && node webpack/eruda.js",
     "build-web": "webpack --config webpack/web/build.js && node webpack/eruda.js",
