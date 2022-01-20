@@ -4,9 +4,15 @@ import sheepPartSettings from "../../local/test/sheepPartSettings";
 import Modal from "../../scenes/Modal/Modal";
 import Hint from "../animations/Hint";
 import BigButton from "../Buttons/BigButton";
-import { basicSheepFarm, fullTerritories } from "../../local/basicFarms/basicSheepFarm";
+import { basicSheepFarm, fullSheepTerritories } from "../../local/basicFarms/basicSheepFarm";
 import Sheep from './../../scenes/Sheep/Main';
 import sheepTerritories from "../../local/sheepTerritories";
+import Chicken from './../../scenes/Chicken/Main';
+import Cow from './../../scenes/Cow/Main';
+import { basicChickenFarm, fullChickenTerritories } from "../../local/basicFarms/basicChickenFarm";
+import chickenTerritories from "../../local/chickenTerritories";
+import cowTerritories from "../../local/cowTerritories";
+import { basicCowFarm, fullCowTerritories } from "../../local/basicFarms/basicCowFarm";
 
 export default class DebugWindow {
   public scene: Modal;
@@ -168,35 +174,164 @@ export default class DebugWindow {
   private updatePart(): void {
     const currentPart = this.scene.state[`user${this.scene.state.farm}`].part;
     if (this.newPart === currentPart) return;
+
+    switch (this.scene.state.farm) {
+      case 'Sheep':
+        this.updateSheepFarm();
+        break;
+      case 'Chicken':
+        this.updateChickenFarm();
+        break;
+      case 'Cow':
+        this.updateCowFarm();
+        break;
+    }
+
+    const mainScene = this.scene.scene.get(this.scene.state.farm) as Sheep | Chicken | Cow;
+    mainScene.world();
+    mainScene.autosave();
+    window.location.reload();
+  }
+
+  private updateSheepFarm() {
     const newSettings = basicSheepFarm[this.newPart - 1];
 
-    this.scene.state[`user${this.scene.state.farm}`].part = this.newPart;
-    this.scene.state[`user${this.scene.state.farm}`].fair = newSettings.fairLevel;
-    this.scene.state[`user${this.scene.state.farm}`].collectorLevel = this.newPart - 1;
-    this.scene.state[`user${this.scene.state.farm}`].collectorTimeLevel = this.newPart - 1;
+    const improve = this.newPart > 1 ? this.newPart - 1 : 1;
+    this.scene.state.userSheep.part = this.newPart;
+    this.scene.state.userSheep.fair = newSettings.fairLevel;
+    this.scene.state.userSheep.collectorLevel = improve;
+    this.scene.state.userSheep.collectorTimeLevel = improve;
+    this.scene.state.userSheep.collector = 0;
+
     const mainScene = this.scene.scene.get('Sheep') as Sheep;
     mainScene.sheep.clear(true, true);
     mainScene.territories.clear(true, true);
+    mainScene.state.sheep = [];
 
-    for (let i = 1; i < newSettings.animalBreed; i += 1) {
+    for (let i = 0; i < newSettings.animalCount; i += 1) {
       const id = 'local_' + randomString(18);
-      mainScene.state.sheep = [];
       mainScene.state.sheep.push({ _id: id, type: newSettings.animalBreed, x: 0, y: 0, wool: 0, counter: 0, diamond: 0, vector: 0 });
     }
 
     mainScene.state.sheepTerritories = sheepTerritories;
+
+    mainScene.state.sheepTerritories.sort((a, b) => {
+      if (a.block > b.block)
+        return 1;
+      if (a.block < b.block)
+        return -1;
+      if (a.position < b.position)
+        return 1;
+      if (a.position > b.position)
+        return -1;
+      return 0;
+    });
+
     if (this.newPart > 1) {
       for (let i = 0; i < newSettings.territoryCount; i += 1) {
-        mainScene.state.sheepTerritories[i] = fullTerritories[i];
-        mainScene.state.sheepTerritories[i].improve = this.newPart - 1;
+        const { block, position } = mainScene.state.sheepTerritories[i];
+        const newTerritory = fullSheepTerritories.find(el => el.block === block && el.position === position);
+        mainScene.state.sheepTerritories[i] = newTerritory;
+        mainScene.state.sheepTerritories[i].improve = improve;
       }
+    } else {
+      this.scene.state.userSheep.tutorial = 0;
+    }
+    this.clearAdditionalTutorial();
+  }
+
+  private clearAdditionalTutorial() {
+    if (this.scene.state.farm !== 'Sheep') return;
+    const { additionalTutorial } = this.scene.state.user;
+    additionalTutorial.balance = this.newPart > 3;
+    additionalTutorial.cave = this.newPart > 3;
+    additionalTutorial.collector = this.newPart > 3;
+    additionalTutorial.herdBoost = this.newPart > 5;
+    additionalTutorial.feedBoost = this.newPart > 6;
+    if (!additionalTutorial.cave) this.scene.state.userSheep.diamondAnimalTime = 0;
+  }
+
+  private updateChickenFarm() {
+    const newSettings = basicChickenFarm[this.newPart - 1];
+
+    const improve = this.newPart > 1 ? this.newPart - 1 : 1;
+    this.scene.state.userChicken.part = this.newPart;
+    this.scene.state.userChicken.fair = newSettings.fairLevel;
+    this.scene.state.userChicken.collectorLevel = improve;
+    this.scene.state.userChicken.collectorTimeLevel = improve;
+    this.scene.state.userChicken.collector = 0;
+
+    const mainScene = this.scene.scene.get('Chicken') as Chicken;
+    mainScene.chicken.clear(true, true);
+    mainScene.territories.clear(true, true);
+    mainScene.state.chicken = [];
+
+    for (let i = 0; i < newSettings.animalCount; i += 1) {
+      const id = 'local_' + randomString(18);
+      mainScene.state.chicken.push({ _id: id, type: newSettings.animalBreed, x: 0, y: 0, egg: 0, counter: 0, diamond: 0, vector: 0 });
     }
 
-    mainScene.world();
-    mainScene.autosave();
-    this.scene.scene.stop('Sheep');
-    this.scene.scene.stop('SheepBars');
-    mainScene.scene.start('Sheep' + 'Preload');
+    mainScene.state.chickenTerritories = chickenTerritories;
+    mainScene.state.chickenTerritories.sort((a, b) => {
+      if (a.block > b.block) return 1;
+      if (a.block < b.block) return -1;
+      if (a.position < b.position) return 1;
+      if (a.position > b.position) return -1;
+      return 0;
+    });
+
+    if (this.newPart > 1) {
+      for (let i = 0; i < newSettings.territoryCount; i += 1) {
+        const { block, position } = mainScene.state.chickenTerritories[i];
+        const newTerritory = fullChickenTerritories.find(el => el.block === block && el.position === position);
+        mainScene.state.chickenTerritories[i] = newTerritory;
+        mainScene.state.chickenTerritories[i].improve = improve;
+      }
+    } else {
+      this.scene.state.userChicken.tutorial = 0;
+    }
+  }
+
+  private updateCowFarm() {
+    const newSettings = basicCowFarm[this.newPart - 1];
+
+    const improve = this.newPart > 1 ? this.newPart - 1 : 1;
+    this.scene.state.userCow.part = this.newPart;
+    this.scene.state.userCow.fair = newSettings.fairLevel;
+    this.scene.state.userCow.collectorLevel = improve;
+    this.scene.state.userCow.collectorTimeLevel = improve;
+    this.scene.state.userCow.collector = 0;
+
+    const mainScene = this.scene.scene.get('Cow') as Cow;
+    mainScene.animalGroup.clear(true, true);
+    mainScene.territories.clear(true, true);
+    mainScene.state.cow = [];
+
+    for (let i = 0; i < newSettings.animalCount; i += 1) {
+      const id = 'local_' + randomString(18);
+      mainScene.state.cow.push({ _id: id, type: newSettings.animalBreed, x: 0, y: 0, milk: 0, counter: 0, diamond: 0, vector: 0 });
+    }
+
+    mainScene.state.cowTerritories = cowTerritories;
+    mainScene.state.cowTerritories.sort((a, b) => {
+      if (a.block > b.block) return 1;
+      if (a.block < b.block) return -1;
+      if (a.position < b.position) return 1;
+      if (a.position > b.position) return -1;
+      return 0;
+    });
+
+    if (this.newPart > 1) {
+      for (let i = 0; i < newSettings.territoryCount; i += 1) {
+        const { block, position } = mainScene.state.cowTerritories[i];
+        const newTerritory = fullCowTerritories.find(el => el.block === block && el.position === position);
+        mainScene.state.cowTerritories[i] = newTerritory;
+        mainScene.state.cowTerritories[i].improve = improve;
+      }
+    }
+    if (this.newPart === 1) this.scene.state.userCow.tutorial = 0;
+    else if (this.newPart === 2) this.scene.state.userCow.tutorial = 10;
+    else this.scene.state.userCow.tutorial = 50;
   }
 
   private createIncrement(pos: Iposition, farm: string): void {
