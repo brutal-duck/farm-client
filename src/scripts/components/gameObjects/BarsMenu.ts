@@ -54,6 +54,7 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
     this.debugIcon = this.scene.add.sprite(this.x, this.y, 'debug')
       .setInteractive()
       .setDepth(this.y + 1)
+      .setScale(0.8)
       .setVisible(Boolean(process.env.DEBUG));
   }
 
@@ -261,7 +262,7 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       y: { from: this.debugIcon.y, to: this.y },
       duration: duration,
       ease: 'Power1',
-      scale: 1,
+      scale: 0.8,
     });
     this.chatNotificatorAnim = this.scene.add.tween({
       targets: this.chatNotificator.children,

@@ -198,6 +198,16 @@ export default class DebugWindow {
 
   }
 
+  private clearAdditionalTutorial() {
+    if (this.scene.state.farm !== 'Sheep') return;
+    const { additionalTutorial } = this.scene.state.user;
+    additionalTutorial.balance = this.newPart > 3;
+    additionalTutorial.cave = this.newPart > 3;
+    additionalTutorial.collector = this.newPart > 3;
+    additionalTutorial.herdBoost = this.newPart > 5;
+    additionalTutorial.feedBoost = this.newPart > 6;
+  }
+
   private updateSheepFarm() {
     const newSettings = basicSheepFarm[this.newPart - 1];
 
@@ -207,6 +217,7 @@ export default class DebugWindow {
     this.scene.state.userSheep.collectorLevel = improve;
     this.scene.state.userSheep.collectorTimeLevel = improve;
     this.scene.state.userSheep.collector = 0;
+    this.scene.state.userSheep.diamondAnimalTime = 0;
 
     const mainScene = this.scene.scene.get('Sheep') as Sheep;
     mainScene.sheep.clear(true, true);
@@ -245,17 +256,6 @@ export default class DebugWindow {
     this.clearAdditionalTutorial();
   }
 
-  private clearAdditionalTutorial() {
-    if (this.scene.state.farm !== 'Sheep') return;
-    const { additionalTutorial } = this.scene.state.user;
-    additionalTutorial.balance = this.newPart > 3;
-    additionalTutorial.cave = this.newPart > 3;
-    additionalTutorial.collector = this.newPart > 3;
-    additionalTutorial.herdBoost = this.newPart > 5;
-    additionalTutorial.feedBoost = this.newPart > 6;
-    if (!additionalTutorial.cave) this.scene.state.userSheep.diamondAnimalTime = 0;
-  }
-
   private updateChickenFarm() {
     const newSettings = basicChickenFarm[this.newPart - 1];
 
@@ -265,11 +265,14 @@ export default class DebugWindow {
     this.scene.state.userChicken.collectorLevel = improve;
     this.scene.state.userChicken.collectorTimeLevel = improve;
     this.scene.state.userChicken.collector = 0;
+    this.scene.state.userChicken.diamondAnimalTime = 0;
+
 
     const mainScene = this.scene.scene.get('Chicken') as Chicken;
     mainScene.chicken.clear(true, true);
     mainScene.territories.clear(true, true);
     mainScene.state.chicken = [];
+    mainScene.state.chickenEggs = [];
 
     for (let i = 0; i < newSettings.animalCount; i += 1) {
       const id = 'local_' + randomString(18);
@@ -306,6 +309,7 @@ export default class DebugWindow {
     this.scene.state.userCow.collectorLevel = improve;
     this.scene.state.userCow.collectorTimeLevel = improve;
     this.scene.state.userCow.collector = 0;
+    this.scene.state.userCow.diamondAnimalTime = 0;
 
     const mainScene = this.scene.scene.get('Cow') as Cow;
     mainScene.animalGroup.clear(true, true);
@@ -354,7 +358,7 @@ export default class DebugWindow {
     const coinMinus = this.scene.add.sprite(coinBgGeom.left + 130, coinBgGeom.centerY, 'settings-window-minus').setDepth(1);
     const coinPlus = this.scene.add.sprite(coinBgGeom.right - 40, coinBgGeom.centerY, 'settings-window-plus').setDepth(1);
     const coinCount = this.scene.add.text(coinBgGeom.centerX + 45, coinBgGeom.centerY, shortNum(this.newMoney), textStyle).setOrigin(0.5).setDepth(1);
-    const moneyDelta = this.scene.game.scene.keys[this.scene.state.farm].convertDiamonds(10);
+    const moneyDelta = this.scene.game.scene.keys[this.scene.state.farm].convertDiamonds(50);
     let callbackMinus = () => {
       if (this.newMoney <= 0) return;
       this.newMoney -= moneyDelta;
