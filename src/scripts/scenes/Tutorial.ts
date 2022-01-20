@@ -885,8 +885,8 @@ class Tutorial extends Phaser.Scene {
 
           this.tutorText = this.state.lang.eventTutorial_40;
           this.topPosition = false;
-          this.indent = 700;
-          this.tailX = 300;
+          this.indent = this.cameras.main.height - 600;
+          this.tailX = 300 ;
           this.tailFlipX = true;
           this.showContinue = true;
           this.tailFlipY = false;
