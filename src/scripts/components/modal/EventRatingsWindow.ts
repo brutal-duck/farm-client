@@ -112,14 +112,14 @@ export default class EventRatingsWindow extends Phaser.GameObjects.Sprite {
     }).setOrigin(1, 0).setVisible(false);
 
     const priceTopPlacesDiamonds: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX + 50, this.scene.cameras.main.centerY - 210,
-      '- 1000\n' + '- 700\n' + '- 400', {
+      '- 500\n' + '- 350\n' + '- 200', {
       font: 'Bold 21px Bip',
       color: '#793D0A',
       align: 'left'
     }).setOrigin(0, 0).setVisible(false);
 
     const pricePlacesDiamonds: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX + 50, this.scene.cameras.main.centerY - 124,
-      '- 300\n- 100\n- 50\n- 20', {
+      '- 150\n- 50\n- 25\n- 10', {
       font: '21px Bip',
       color: '#793D0A',
       align: 'left'
