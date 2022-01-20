@@ -204,7 +204,6 @@ export default class SettingsWindow {
     document.body.appendChild(erudaCdn);
     erudaCdn.onload = (): void => {
       window['eruda'].init();
-      console.log(window['FB']);
     };
   }
 }
