@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "get-translate": "node webpack/langs/app.js",
     "start": "webpack-dev-server --config webpack/localhost/config.js --open",
     "build-android": "webpack --config webpack/android/build.js && node webpack/eruda.js",
     "build-debug": "webpack --config webpack/debug/build.js && node webpack/eruda.js",
@@ -41,6 +42,7 @@
     "phaser": "3.24.1",
     "phaser3-nineslice": "^0.5.0",
     "platform": "^1.3.6",
-    "socket.io-client": "^2.3.1"
+    "socket.io-client": "^2.3.1",
+    "tsv-json": "^2.0.0"
   }
 }

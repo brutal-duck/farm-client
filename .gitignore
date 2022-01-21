@@ -4,3 +4,4 @@ release/
 package-lock.json
 .env
 debug.log
+langs.json
