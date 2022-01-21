@@ -595,7 +595,7 @@ function updateMapNotification(): void {
   }
   const clanCount: number = this.state.user.clanTasks?.filter(el => el.done && !el.got_awarded).length;
   if (this.state.userSheep.tutorial < 100 || this.state.shownSocialTaskWindow) socialCount = 0;
-  const count: number = this.state.farm === 'Sheep' ? chickenCount + cowCount + unicornCount + socialCount + clanCount:
+  const count: number = this.state.farm === 'Sheep' && this.state.userSheep.tutorial >= 100 ? chickenCount + cowCount + unicornCount + socialCount + clanCount:
   this.state.farm === 'Chicken' ? sheepCount + cowCount + unicornCount + socialCount + clanCount:
   this.state.farm === 'Cow' ? sheepCount + chickenCount + unicornCount + socialCount + clanCount:
   this.state.farm === 'Unicorn' && this.state.userUnicorn.tutorial >= 80 ? sheepCount + chickenCount + cowCount + socialCount + clanCount: 0;
