@@ -151,6 +151,7 @@ export default class PersonalChat {
     if (status) {
       const y = bg.y + bg.height / 2;
       this.scene.game.scene.keys[this.scene.state.farm].achievement.lazyLoading(msgData.status).then(() => {
+        if (this.scene.state.modal.chatType !== 2) return;
         this.scene.add.sprite(bgX - 5, y, status.iconTexture).setOrigin(1, 0.5).setScale(0.5);
       });
     }
@@ -228,6 +229,7 @@ export default class PersonalChat {
     if (status) {
       const y = bg.y + bg.height / 2;
       this.scene.game.scene.keys[this.scene.state.farm].achievement.lazyLoading(msgData.status).then(() => {
+        if (this.scene.state.modal.chatType !== 2) return;
         this.scene.add.sprite(bgX + bgWidth + 5, y, status.iconTexture).setOrigin(0, 0.5).setScale(0.4);
       });
     }

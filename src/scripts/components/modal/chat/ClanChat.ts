@@ -164,6 +164,7 @@ export default class ClanChat {
     if (status) {
       const y = bg.getCenter().y;
       this.scene.game.scene.keys[this.scene.state.farm].achievement.lazyLoading(msgData.status).then(() => {
+        if (this.scene.state.modal.chatType !== 3) return;
         this.scene.add.sprite(bgX - 5, y, status.iconTexture).setOrigin(1, 0.5).setScale(0.4);
       });
     }
@@ -239,6 +240,7 @@ export default class ClanChat {
     if (status) {
       const y = bg.getCenter().y;
       this.scene.game.scene.keys[this.scene.state.farm].achievement.lazyLoading(msgData.status).then(() => {
+        if (this.scene.state.modal.chatType !== 3) return;
         this.scene.add.sprite(bgX + bgWidth + 5, y, status.iconTexture).setOrigin(0, 0.5).setScale(0.4);
       });
     }
