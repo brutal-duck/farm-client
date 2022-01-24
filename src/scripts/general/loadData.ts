@@ -688,7 +688,7 @@ export default function loadData(response: AxiosResponse): void {
     checkDoneAchievement(state);
   }
 
-  if (response.data.user.build && response.data.user.build < 4.16 && Utils.checkTestB(state)) {
+  if (Utils.checkTestB(state)) {
     checkDoneCollectorTaskTestB(state);
   }
 
