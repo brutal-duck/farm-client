@@ -240,7 +240,7 @@ export default class Achievement {
     
     const status = ach.id === 41 ? 'unicorn' : `ach${ach.id}`;
     const hintStr = `${Utils.ucFirst(this.state.lang.achievementUnlock)}\n${Utils.ucFirst(this.state.lang[`${status}Status`])}`;
-    Hint.create(currentScene, -250, hintStr, 2);
+    if (currentScene.scene.isActive()) Hint.create(currentScene, -250, hintStr, 2);
     const checkStatus = this.state.user.statuses.some(el => el === status);
     if (!checkStatus) this.state.user.statuses.push(status);
     if (!this.state.user.status) this.state.user.status = status;
