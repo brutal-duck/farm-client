@@ -345,6 +345,7 @@ export default class Fortune extends Phaser.Scene {
       hash: this.state.user.hash,
       counter: this.state.user.counter,
       ad: this.adStart,
+      pull: this.state.fortuneData.pull,
     };
     this.removeInteractiveElements();
     axios.post(process.env.API + '/getFortunePrize', data).then(res => {
