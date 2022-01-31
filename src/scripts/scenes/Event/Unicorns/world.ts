@@ -177,7 +177,7 @@ function world(): void {
   });
 
   // подгружаем животных
-  state.unicorn.map((data: Iunicorn) => {
+  state.unicorn?.map((data: Iunicorn) => {
     this.getAnimal(data._id, data.type, data.x, data.y, data.activeAnimal, true);
   });
   

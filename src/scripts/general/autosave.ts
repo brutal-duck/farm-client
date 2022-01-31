@@ -305,6 +305,7 @@ export default function autosave(): Promise<void> {
     unicorn = animals;
     unicornTerritories = territories;
     unicornResource = resources;
+    state.unicorn = unicorn;
   }
   
   state.user = DataValidator.validateUser(state.user);
