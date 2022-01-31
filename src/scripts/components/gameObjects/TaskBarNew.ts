@@ -127,7 +127,7 @@ export default class TaskBarNew extends Phaser.GameObjects.Sprite {
     this.text.setPosition(this.getCenter().x + 60, this.getCenter().y - 26).setColor(this.taskCompliteAwardNonTakenTextColor);
     this.checkIcon.setVisible(true);
     this.bar.setPosition(this.x - 30, this.y + this.getBounds().height - 1);
-    this.takeButton = this.scene.add.sprite(this.bar.getLeftCenter().x + 18, this.bar.getLeftCenter().y + 3, 'little-button').setOrigin(0, 0.5).setDepth(3).setDisplaySize(134, 48);
+    this.takeButton = this.takeButton || this.scene.add.sprite(this.bar.getLeftCenter().x + 18, this.bar.getLeftCenter().y + 3, 'little-button').setOrigin(0, 0.5).setDepth(3).setDisplaySize(134, 48);
     this.barText.setPosition(this.takeButton.getCenter().x, this.takeButton.getCenter().y - 4).setFontSize(22).setText(this.scene.state.lang.pickUp).setOrigin(0.5);
     this.valuta.setPosition(this.barText.getRightCenter().x + (this.award ? 18 : 24), this.barText.getRightCenter().y);
     this.valutaSum.setPosition(this.valuta.getRightCenter().x + 4, this.valuta.getRightCenter().y);
