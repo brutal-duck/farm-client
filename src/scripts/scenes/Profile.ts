@@ -5,26 +5,7 @@ import Currency from '../components/animations/Currency';
 import Notificator from './../components/gameObjects/Notificator';
 import ClanFlagPole from './../components/clan/ClanFlagPole';
 import Utils from './../libs/Utils';
-
-const background: string = require('./../../assets/images/profile/background.jpg');
-const chickenFarm: string = require('./../../assets/images/profile/chicken-farm.png');
-const cowFarm: string = require('./../../assets/images/profile/cow-farm.png');
-const eventFarm: string = require('./../../assets/images/profile/event-farm.png');
-const sticker: string = require('./../../assets/images/profile/sticker.png');
-const cowFarmLock: string = require('./../../assets/images/profile/cow-farm-lock.png');
-const profileLockIcon: string = require('./../../assets/images/icons/profile-lock-icon.png');
-const eventIsland: string = require('./../../assets/images/profile/event-island.png');
-const btn: string = require('./../../assets/images/profile/btn.png');
-const pointer: string = require('./../../assets/images/profile/pointer.png');
-const socialBtnVk: string = require('./../../assets/images/profile/social-btn-vk.png');
-const socialBtnOk: string = require('./../../assets/images/profile/social-btn-ok.png');
-const closeWindowBtn: string = require('../../assets/images/modal/close-window-btn.png');
-const clanFlagpole: string = require('../../assets/images/clan/flagpole.png');
-const clanBuilding: string = require('../../assets/images/clan/clan-building.png');
-const fortuneBg: string = require('./../../assets/images/profile/fortune-bg.png');
-const fortuneWheel: string = require('./../../assets/images/profile/fortune-wheel.png');
-const fortunePointer: string = require('./../../assets/images/profile/fortune-pointer.png');
-
+import assets from '../data/assets';
 
 const progressTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
   fontFamily: 'Shadow',
@@ -93,24 +74,24 @@ class Profile extends Phaser.Scene {
   public preload(): void {
     this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)');
     this.loadingModal();
-    this.load.image('profile-bg', background);
-    this.load.image('profile-chciken-farm', chickenFarm);
-    this.load.image('profile-cow-farm', cowFarm);
-    this.load.image('profile-event-farm', eventFarm);
-    this.load.image('profile-sticker', sticker);
-    this.load.image('profile-cow-farm-lock', cowFarmLock);
-    this.load.image('profile-lock-icon', profileLockIcon);
-    this.load.image('profile-event-island', eventIsland);
-    this.load.image('profile-fortune-bg', fortuneBg);
-    this.load.image('profile-fortune-wheel', fortuneWheel);
-    this.load.image('profile-fortune-pointer', fortunePointer);
-    this.load.image('profile-btn', btn);
-    this.load.image('profile-pointer', pointer);
-    this.load.image('profile-social-btn-vk', socialBtnVk);
-    this.load.image('profile-social-btn-ok', socialBtnOk);
-    this.load.image('close-window-btn', closeWindowBtn);
-    this.load.image('clan-flagpole', clanFlagpole);
-    this.load.image('clan-building', clanBuilding);
+    this.load.image('profile-bg', assets.profileBackground);
+    this.load.image('profile-chciken-farm', assets.chickenFarm);
+    this.load.image('profile-cow-farm', assets.cowFarm);
+    this.load.image('profile-event-farm', assets.eventFarm);
+    this.load.image('profile-sticker', assets.sticker);
+    this.load.image('profile-cow-farm-lock', assets.cowFarmLock);
+    this.load.image('profile-lock-icon', assets.profileLockIcon);
+    this.load.image('profile-event-island', assets.eventIsland);
+    this.load.image('profile-fortune-bg', assets.fortuneBg);
+    this.load.image('profile-fortune-wheel', assets.fortuneWheel);
+    this.load.image('profile-fortune-pointer', assets.fortunePointer);
+    this.load.image('profile-btn', assets.profileBtn);
+    this.load.image('profile-pointer', assets.profilePointer);
+    this.load.image('profile-social-btn-vk', assets.socialBtnVk);
+    this.load.image('profile-social-btn-ok', assets.socialBtnOk);
+    this.load.image('close-window-btn', assets.closeWindowBtn);
+    this.load.image('clan-flagpole', assets.clanFlagpole);
+    this.load.image('clan-building', assets.clanBuilding);
     if ((this.state.platform === 'vk' || this.state.platform === 'ok' || this.state.platform === 'ya') && this.state.avatar !== '') {
       this.load.image(`avatar-${this.state.user.id}`, this.state.avatar);
     }

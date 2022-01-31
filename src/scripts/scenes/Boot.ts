@@ -16,23 +16,8 @@ import { setPlatformStorage, getPlatformStorage } from './../general/basic';
 import RoundedField from '../components/gameObjects/RoundedField';
 import ConfirmSaveAndroidProgress from './../components/Web/ConfirmSaveAndroidProgress';
 import achievements from './../local/tasks/achievements';
-
+import assets from './../data/assets';
 Amplitude.init();
-
-const headerSyst: string = require('./../../assets/images/modal/header-syst.png');
-const midSyst: string = require('./../../assets/images/modal/mid-syst.png');
-const bottomSyst: string = require('./../../assets/images/modal/bottom-syst.png');
-const pbEmptyCorner: string = require('./../../assets/images/modal/pb_empty_corner.png');
-const pbEmptyMid: string = require('./../../assets/images/modal/pb_empty_mid.png');
-const pbFullCorner: string = require('./../../assets/images/modal/pb_full_corner.png');
-const pbFullMid: string = require('./../../assets/images/modal/pb_full_mid.png');
-const modal: string = require('./../../assets/images/modal/modal.png');
-const landingBtn: string = require('./../../assets/images/modal/middle-button.png');
-const loginBtnGreen: string = require('./../../assets/images/modal/btn_lg.png');
-const loginBtnRed: string = require('./../../assets/images/modal/btn_lr.png');
-const loginBtnYellow: string = require('./../../assets/images/modal/btn_ly.png');
-const pixelForLanding: string = require('./../../assets/images/white-pixel.jpg');
-const diamondLil: string = require('../../assets/images/icons/diamond-lil.png');
 
 class Boot extends Phaser.Scene {
   constructor() {
@@ -99,20 +84,20 @@ class Boot extends Phaser.Scene {
   }
 
   public preload(): void {
-    this.load.image('header-syst', headerSyst);
-    this.load.image('mid-syst', midSyst);
-    this.load.image('bottom-syst', bottomSyst);
-    this.load.image('pb-empty-corner', pbEmptyCorner);
-    this.load.image('pb-empty-mid', pbEmptyMid);
-    this.load.image('pb-full-corner', pbFullCorner);
-    this.load.image('pb-full-mid', pbFullMid);
-    this.load.image('modal', modal);
-    this.load.image('diamond-lil', diamondLil);
-    this.load.image('shop-btn', landingBtn);
-    this.load.image('big-btn-green', loginBtnGreen);
-    this.load.image('big-btn-red', loginBtnRed);
-    this.load.image('big-btn-yellow', loginBtnYellow);
-    this.load.image('pixel-landing', pixelForLanding);
+    this.load.image('header-syst', assets.headerSyst);
+    this.load.image('mid-syst', assets.midSyst);
+    this.load.image('bottom-syst', assets.bottomSyst);
+    this.load.image('pb-empty-corner', assets.pbEmptyCorner);
+    this.load.image('pb-empty-mid', assets.pbEmptyMid);
+    this.load.image('pb-full-corner', assets.pbFullCorner);
+    this.load.image('pb-full-mid', assets.pbFullMid);
+    this.load.image('modal', assets.modal);
+    this.load.image('diamond-lil', assets.diamondLil);
+    this.load.image('shop-btn', assets.landingBtn);
+    this.load.image('big-btn-green', assets.loginBtnGreen);
+    this.load.image('big-btn-red', assets.loginBtnRed);
+    this.load.image('big-btn-yellow', assets.loginBtnYellow);
+    this.load.image('pixel-landing', assets.pixelForLanding);
   }
 
   public update(): void {

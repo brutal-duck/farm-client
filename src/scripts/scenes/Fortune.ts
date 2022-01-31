@@ -6,17 +6,7 @@ import Hint from '../components/animations/Hint';
 import Firework from '../components/animations/Firework';
 import Currency from '../components/animations/Currency';
 import axios from 'axios';
-import { incFortuneAdTimer } from '../general/interval';
-
-const modal: string = require('../../assets/images/event/fortune/modal.png');
-const btn: string = require('../../assets/images/event/fortune/btn.png');
-const wheel: string = require('../../assets/images/event/fortune/wheel.png');
-const pointer: string = require('../../assets/images/event/fortune/pointer.png');
-const ticket: string = require('../../assets/images/event/fortune/ticket.png');
-const jackpotBg: string = require('../../assets/images/event/fortune/jackpot-bg.png');
-const doneChapterButton: string = require('../../assets/images/modal/done-chapter-button.png');
-const bgTimerAd: string = require('../../assets/images/icons/bg-timer-ad.png');
-const adFortuneIcon: string = require('../../assets/images/icons/ad-fortune-icon.png');
+import assets from '../data/assets';
 
 const ONE_HOUR = 3600;
 export default class Fortune extends Phaser.Scene {
@@ -65,15 +55,15 @@ export default class Fortune extends Phaser.Scene {
   public preload(): void {
     this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)');
     this.loadingModal();
-    this.load.image('fortune-modal', modal);
-    this.load.image('fortune-btn', btn);
-    this.load.image('fortune-wheel', wheel);
-    this.load.image('fortune-pointer', pointer);
-    this.load.image('fortune-ticket', ticket);
-    this.load.image('fortune-jackpot-bg', jackpotBg);
-    this.load.image('done-chapter-button', doneChapterButton);
-    this.load.image('bg-timer-ad', bgTimerAd);
-    this.load.image('ad-fortune-icon', adFortuneIcon);
+    this.load.image('fortune-modal', assets.fortuneModal);
+    this.load.image('fortune-btn', assets.btn);
+    this.load.image('fortune-wheel', assets.wheel);
+    this.load.image('fortune-pointer', assets.pointer);
+    this.load.image('fortune-ticket', assets.ticket);
+    this.load.image('fortune-jackpot-bg', assets.jackpotBg);
+    this.load.image('done-chapter-button', assets.doneChapterButton);
+    this.load.image('bg-timer-ad', assets.bgTimerAd);
+    this.load.image('ad-fortune-icon', assets.adFortuneIcon);
 
   }
 

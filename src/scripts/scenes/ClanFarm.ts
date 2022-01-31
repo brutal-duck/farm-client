@@ -1,24 +1,12 @@
-import axios from "axios";
-import Notificator from "../components/gameObjects/Notificator";
-import LogoManager, { Icon } from "../components/Utils/LogoManager";
-import { shortNum, loadingModal, shortTime } from "../general/basic";
-import { click, clickButton, clickModalBtn } from "../general/clicks";
-import { getNewClanTasks } from "../general/tasks";
+import axios from 'axios';
+import Notificator from '../components/gameObjects/Notificator';
+import LogoManager, { Icon } from '../components/Utils/LogoManager';
+import { shortNum, loadingModal, shortTime } from '../general/basic';
+import { click, clickButton, clickModalBtn } from '../general/clicks';
+import { getNewClanTasks } from '../general/tasks';
 import ClanCooldownBuilding from './../components/clan/ClanCooldownBuilding';
 import ClanFlagPole from './../components/clan/ClanFlagPole';
-
-const clanMap: string = require('../../assets/images/clan/map.jpg');
-const clanChickenFarm: string = require('../../assets/images/clan/chicken-farm.png');
-const clanFlagpole: string = require('../../assets/images/clan/flagpole.png');
-const clanCooldownBg: string = require('../../assets/images/clan/cooldown-bg.png');
-const clanSheepCoin: string = require('../../assets/images/clan/coin-sheep.png');
-const clanChickenCoin: string = require('../../assets/images/clan/coin-chicken.png');
-const clanCowCoin: string = require('../../assets/images/clan/coin-cow.png');
-const clanDiamondCoin: string = require('../../assets/images/clan/coin-diamond.png');
-const factorySmoke: string = require('../../assets/images/cow/factory-smoke.png');
-const event: string = require('../../assets/images/clan/event.png');
-const glow: string = require('../../assets/images/modal/clan/glow.png');
-
+import assets from '../data/assets';
 
 const levelTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
   fontFamily: 'Shadow',
@@ -71,17 +59,17 @@ export default class ClanFarm extends Phaser.Scene {
   public preload(): void {
     this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.5)');
     this.loadingModal();
-    this.load.image('clan-map', clanMap);
-    this.load.image('clan-chicken-farm', clanChickenFarm);
-    this.load.image('clan-flagpole', clanFlagpole);
-    this.load.image('clan-cooldown-bg', clanCooldownBg);
-    this.load.image('factory-smoke', factorySmoke);
-    this.load.image('clan-sheep-coin', clanSheepCoin);
-    this.load.image('clan-chicken-coin', clanChickenCoin);
-    this.load.image('clan-cow-coin', clanCowCoin);
-    this.load.image('clan-diamond-coin', clanDiamondCoin);
-    this.load.image('clan-map-event', event);
-    this.load.image('clan-glow', glow);
+    this.load.image('clan-map', assets.clanMap);
+    this.load.image('clan-chicken-farm', assets.clanChickenFarm);
+    this.load.image('clan-flagpole', assets.clanFlagpole);
+    this.load.image('clan-cooldown-bg', assets.clanCooldownBg);
+    this.load.image('factory-smoke', assets.factorySmoke);
+    this.load.image('clan-sheep-coin', assets.clanSheepCoin);
+    this.load.image('clan-chicken-coin', assets.clanChickenCoin);
+    this.load.image('clan-cow-coin', assets.clanCowCoin);
+    this.load.image('clan-diamond-coin', assets.clanDiamondCoin);
+    this.load.image('clan-map-event', assets.clanEvent);
+    this.load.image('clan-glow', assets.clanGlow);
   }
   
   public init(state: Istate): void {
