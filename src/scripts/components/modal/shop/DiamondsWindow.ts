@@ -14,6 +14,7 @@ const FREE_DIAMONDS: number = 1;
 export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
   public scene: Shop;
   private rows: number;
+  private freeDiamondText: Phaser.GameObjects.Text;
   private freeDiamondTimer: Phaser.GameObjects.Text;
   private freeDiamondBtn: ShopButton;
   private adButton: boolean;
@@ -37,13 +38,13 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
     }
     this.setScrolling();
     this.hasStarterpack = Utils.checkStarterpack(this.scene.state);
-
   }
   
   private create(): void {
     this.createAllPackages();
     if (this.hasStarterpack && !this.iOSplatform) this.createStarterpack();
-    if (this.checkFreeDiamonds()) this.createFreeDiamonds();
+    if (this.checkFreeDiamonds() && !this.iOSplatform) this.createFreeDiamonds();
+    if (this.iOSplatform) this.createIOSFreeDiamonds();
   }
 
   private createIOSInfo(): void {
@@ -54,12 +55,10 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
       wordWrap: { width: 450 },
       align: 'center'
     };
-    let y: number = (this.rows + 1) * 270 + this.scene.height - 238 + 20;
-    const str1 = 'Покупка кристаллов недоступна в приложении ВК на IOS устройствах.';
-    const str2 = 'Вы можете получить кристаллы посмотрев рекламу.';
+    let y: number = this.scene.height + 100;
+    const str1 = 'Бесплатный кристалл';
     const { centerX } = this.scene.cameras.main;
     const text1 = this.scene.add.text(centerX - 130, y, str1, textStyle).setOrigin(0.5, 0);
-    const text2 = this.scene.add.text(centerX - 130, text1.getBounds().bottom + 35, str2, textStyle).setOrigin(0.5, 0);
   }
   
   private createAllPackages(): void {
@@ -220,6 +219,28 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
     this.adButton = this.scene.state.user.takenFreeDiamonds;
   }
 
+  private createIOSFreeDiamonds(): void {
+    const timerStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontSize: '20px',
+      fontFamily: 'Shadow',
+      color: '#FFFFFF',
+      wordWrap: { width: 220 },
+      align: 'center'
+    };
+    let y: number = this.scene.height + 402;
+    this.scene.add.sprite(this.scene.cameras.main.centerX - 130, y - 70, 'free-diamond-plate');
+    const diamondCount: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 290, y, `+${FREE_DIAMONDS}`, {
+      font: '50px Shadow',
+      color: '#FFFFFF'
+    }).setOrigin(0.5);
+    this.scene.add.sprite(diamondCount.getBounds().right + 5, y, 'diamond').setScale(0.23).setOrigin(0, 0.5);
+    this.createFreeBtn(this.scene.state.user.takenFreeDiamonds);
+    const str = shortTime(this.scene.state.user.takeFreeDiamondTime, this.scene.state.lang);
+    this.freeDiamondText = this.scene.add.text(this.scene.cameras.main.centerX - 50, y - 20, this.scene.state.lang.forNextAd, timerStyle).setVisible(false).setOrigin(0.5);
+    this.freeDiamondTimer = this.scene.add.text(this.scene.cameras.main.centerX - 50, this.freeDiamondText.getBounds().bottom, str, timerStyle).setVisible(false).setOrigin(0.5, 0).setFontSize(30).setColor('#ffd800');
+    this.adButton = this.scene.state.user.takenFreeDiamonds;
+  }
+
   private createStarterpack(): void {
     this.scene.scrolling.bottom += 350;
     const y: number = this.scene.height + 140;
@@ -318,7 +339,7 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
     let y: number = (this.rows + 1) * 270 + 50 + this.scene.height - 238;
     if (this.hasStarterpack && !this.iOSplatform) y += 238;
     else if (this.iOSplatform) y += 320;
-    const price = this.getPlatformPrice({ voices: 0, price: 0, dollars: 0 });
+    const price = this.iOSplatform ?  this.scene.state.lang.pickUp : this.getPlatformPrice({ voices: 0, price: 0, dollars: 0 });
     const elements: IshopButtonElements = { text1: price };
     if (ad) {
       elements.text1 = this.scene.state.lang.pickUp;
@@ -350,18 +371,27 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
   public preUpdate(time: number, delta: number): void {
     super.preUpdate(time, delta);
     if (this.freeDiamondTimer?.active && this.freeDiamondBtn?.active) {
-      if (this.scene.state.user.takenFreeDiamonds) {
+      if (this.scene.state.user.takenFreeDiamonds && this.scene.state.readyAd) {
         if (this.scene.state.user.takeFreeDiamondTime > 0 && this.freeDiamondTimer.visible) {
-          const str = `${this.scene.state.lang.forNextAd} ${shortTime(this.scene.state.user.takeFreeDiamondTime, this.scene.state.lang)}`;
-          if (str !== this.freeDiamondTimer.text) this.freeDiamondTimer.setText(str);
+          if (this.iOSplatform) {
+            const str1 = shortTime(this.scene.state.user.takeFreeDiamondTime, this.scene.state.lang);
+            const str2 = this.scene.state.lang.forNextAd;
+            if (str1 !== this.freeDiamondTimer.text) this.freeDiamondTimer.setText(str1);
+            if (str2 !== this.freeDiamondText.text) this.freeDiamondText.setText(str2);
+          } else {
+            const str = `${this.scene.state.lang.forNextAd} ${shortTime(this.scene.state.user.takeFreeDiamondTime, this.scene.state.lang)}`;
+            if (str !== this.freeDiamondTimer.text) this.freeDiamondTimer.setText(str);
+          }
         } else if (this.scene.state.user.takeFreeDiamondTime > 0 && !this.freeDiamondTimer.visible) {
           this.freeDiamondBtn.setVisible(false);
           this.freeDiamondTimer.setVisible(true);
+          this.freeDiamondText?.setVisible(true);
         } else if (this.scene.state.user.takeFreeDiamondTime <= 0 && !this.freeDiamondBtn.visible) {
           this.freeDiamondBtn.setVisible(true);
           this.freeDiamondTimer.setVisible(false);
+          this.freeDiamondText?.setVisible(false);
         }
-      } else {
+      } else if (!this.scene.state.user.takenFreeDiamonds && this.scene.state.readyAd) {
         if (this.adButton) {
           this.createFreeBtn(true);
           this.freeDiamondBtn.setVisible(true);
@@ -369,6 +399,16 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
           if (!this.freeDiamondBtn.visible) this.freeDiamondBtn.setVisible(true);
         }
         if (this.freeDiamondTimer.visible) this.freeDiamondTimer.setVisible(false);
+      } else if (this.scene.state.user.takenFreeDiamonds && !this.scene.state.readyAd) {
+        if (this.freeDiamondBtn.visible) {
+          this.freeDiamondBtn.setVisible(false);
+          this.freeDiamondTimer.setVisible(true);
+          this.freeDiamondText?.setVisible(true);
+        }
+        const str1 = shortTime(this.scene.state.timeToNewDay, this.scene.state.lang);
+        const str2 = this.scene.state.lang.stillForBoost;
+        if (str1 !== this.freeDiamondTimer.text) this.freeDiamondTimer.setText(str1);
+        if (str2 !== this.freeDiamondText.text) this.freeDiamondText.setText(str2);
       }
     }
   }

@@ -102,6 +102,7 @@ class Shop extends Phaser.Scene {
     if (this.state.farm === 'Unicorn') this.load.image('unicorn-feed-boost-icon', assets.feedBoostEventIcon);
     this.load.image('boost-counter-bg', assets.boostCounterBg);
     this.load.image('starterpack-icon', assets.starterpackIcon);
+    this.load.image('free-diamond-plate', assets.freeDiamondPlate);
   }
 
 

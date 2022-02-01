@@ -1548,6 +1548,7 @@ const assets = {
   fortunePointer: require('../../assets/images/profile/fortune-pointer.png'),
   freeDiamondsBg: require('../../assets/images/modal/free-diamonds-bg.png'),
   starterpackIcon: require('../../assets/images/icons/starterpack.png'),
+  freeDiamondPlate: require('../../assets/images/modal/free-diamond-plate.png'),
 };
 
 const url = process.env.BASE_URL;
@@ -3101,6 +3102,7 @@ const urls = {
   fortunePointer: url + '/assets/images/profile/fortune-pointer.png',
   freeDiamondsBg: url + '/assets/images/modal/free-diamonds-bg.png',
   starterpackIcon: url + '/assets/images/icons/starterpack.png',
+  freeDiamondPlate: url + '/assets/images/modal/free-diamond-plate.png',
 };
 
 
