@@ -49,7 +49,6 @@ export default class ClanTasksWindow {
     const title: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, this.scene.state.lang.updatingTasksThrough, textStyle).setOrigin(0.5);
     this.timer = this.scene.add.text(pos.x, pos.y + 30, shortTime(this.scene.state.timeToNewDay, this.scene.state.lang), textStyle).setOrigin(0.5).setFontSize(28).setColor('#ffe1c0');
     
-    // this.scene.add.nineslice(pos.x, this.y + 110, this.window.width - 40, 650, 'modal-square-bg', 10).setOrigin(0.5); ns!
     this.scene.add.roundedField(pos.x, this.y + 110, this.window.width - 40, 650, 'modal-square-bg');
     this.createTasksBars();
   }

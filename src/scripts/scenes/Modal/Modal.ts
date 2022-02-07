@@ -9,7 +9,8 @@ import {
   clickButton,
   clickModalBtn,
   clickShopBtn,
-  clickButtonUp
+  clickButtonUp,
+  clickButtonClanUp
 } from '../../general/clicks';
 import {
   systemWindow,
@@ -105,6 +106,7 @@ class Modal extends Phaser.Scene {
   public openModal = openModal.bind(this);
   public loadingModal = loadingModal.bind(this);
   public clickButtonUp = clickButtonUp.bind(this);
+  public clickButtonClanUp = clickButtonClanUp.bind(this);
 
   public init(state: Istate): void {
     this.state = state;

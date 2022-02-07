@@ -79,7 +79,7 @@ export default class ImproveClanFarmWindow extends Phaser.GameObjects.Sprite{
     this.scene.add.text(this.x, pos.y - 265, this.scene.state.lang.clanFarmImproveNote, noteTextStyle).setOrigin(0.5);
     const bg: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.x, pos.y - 110, `icon-clan-${this.farm}`).setDepth(1);
     this.scene.add.sprite(bg.x, bg.y + 10, 'clan-window-wreath').setDepth(1);
-    this.scene.add.nineslice(this.x, bg.y, this.window.width, bg.displayHeight + 10, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
+    this.scene.add.tileSprite(this.x, bg.y, this.window.width, bg.displayHeight + 10, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
 
     const levelPlate: Phaser.GameObjects.Sprite = this.scene.add.sprite(bg.x, bg.y + bg.displayHeight / 2 - 20, 'profile-window-level').setDepth(1);
 
@@ -102,10 +102,10 @@ export default class ImproveClanFarmWindow extends Phaser.GameObjects.Sprite{
 
     const text1: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, nowText, textStyle).setDepth(1);
     const count1: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 400, text1.getBounds().centerY, `${String(this.level)}%`, textStyle).setOrigin(0, 0.5).setDepth(1).setFontFamily('Shadow').setFontSize(30);
-    this.scene.add.nineslice(this.x, text1.getBounds().centerY, this.window.width, text1.displayHeight + 20, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
+    this.scene.add.tileSprite(this.x, text1.getBounds().centerY, this.window.width, text1.displayHeight + 20, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
     const text2: Phaser.GameObjects.Text = this.scene.add.text(pos.x, text1.getBounds().bottom + 30, nextText, textStyle).setDepth(1);
     const count2: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 400, text2.getBounds().centerY, `${String(this.level + 1)}%`, textStyle).setDepth(1).setColor('#dcff3c').setOrigin(0, 0.5).setFontFamily('Shadow').setFontSize(30);
-    this.scene.add.nineslice(this.x, text2.getBounds().centerY, this.window.width, text2.displayHeight + 20, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
+    this.scene.add.tileSprite(this.x, text2.getBounds().centerY, this.window.width, text2.displayHeight + 20, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
 
     this.scene.add.sprite(this.window.bg.getBounds().right - 30, count2.y - 7, 'chat-arrow').setAngle(90).setScale(0.65);
     this.scene.add.sprite(this.window.bg.getBounds().right - 30, count2.y + 7, 'chat-arrow').setAngle(90).setScale(0.65);
@@ -165,7 +165,7 @@ export default class ImproveClanFarmWindow extends Phaser.GameObjects.Sprite{
     this.scene.add.text(this.x, pos.y - 265, this.scene.state.lang.clanFarmImproveNote, noteTextStyle).setOrigin(0.5);
     const bg: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.x, pos.y - 110, `icon-clan-${this.farm}`).setDepth(1);
     this.scene.add.sprite(bg.x, bg.y + 10, 'clan-window-wreath').setDepth(1);
-    this.scene.add.nineslice(this.x, bg.y, this.window.width, bg.displayHeight + 10, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
+    this.scene.add.tileSprite(this.x, bg.y, this.window.width, bg.displayHeight + 10, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
 
     const levelPlate: Phaser.GameObjects.Sprite = this.scene.add.sprite(bg.x, bg.y + bg.displayHeight / 2 - 20, 'profile-window-level').setDepth(1);
 
@@ -173,7 +173,7 @@ export default class ImproveClanFarmWindow extends Phaser.GameObjects.Sprite{
 
     const text1: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, this.scene.state.lang.increasingFarmIncome, textStyle).setDepth(1);
     const count1: Phaser.GameObjects.Text = this.scene.add.text(pos.x + 400, text1.getBounds().centerY, `${String(this.level)}%`, textStyle).setOrigin(0, 0.5).setDepth(1).setFontFamily('Shadow').setFontSize(30);
-    this.scene.add.nineslice(this.x, text1.getBounds().centerY, this.window.width, text1.displayHeight + 20, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
+    this.scene.add.tileSprite(this.x, text1.getBounds().centerY, this.window.width, text1.displayHeight + 20, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
     
     this.scene.add.text(this.x, pos.y + 100, this.scene.state.lang.maxLevelFarm, maxLevelStyle)
       .setOrigin(0.5)

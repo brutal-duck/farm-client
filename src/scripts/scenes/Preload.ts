@@ -97,7 +97,6 @@ class Preload extends Phaser.Scene {
     this.load.image('tasks-uncomplite', assets.tasksUncomplete);
     this.load.image('tasks-reward', assets.tasksReward);
     this.load.image('tasks-bar', assets.tasksBar);
-    this.load.image('tasks-bar-ns', assets.tasksBar);
     this.load.image('close-window-btn', assets.closeWindowBtn);
     this.load.image('pb-chapter', assets.pbChapter);
     this.load.image('big-btn-grey', assets.bigButtonGrey);

@@ -148,7 +148,6 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     const bgHeight: number = 610;
     const bgY: number = this.y + 30;
-    // this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5); ns!
     this.scene.add.roundedField(this.x, bgY, 480, bgHeight, 'modal-square-bg').setDepth(1);
 
     this.headerText = this.scene.add.text(headerGeom.centerX, headerGeom.centerY - 3, this.scene.state.lang.clansLiderboard, this.headerTextStyle).setDepth(2).setOrigin(0.5);
@@ -167,7 +166,6 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     const bgHeight: number = 610;
     const bgY: number = this.y + 30;
-    // this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5); ns!
     this.scene.add.roundedField(this.x, bgY, 480, bgHeight, 'modal-square-bg').setDepth(1);
 
     this.headerText = this.scene.add.text(headerGeom.centerX, headerGeom.centerY - 3, this.scene.state.lang.clanLeaders, this.headerTextStyle).setDepth(2).setOrigin(0.5).setFontSize(28);
@@ -205,7 +203,6 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
     };
 
     const bgY: number = this.y - 120;
-    // this.scene.add.nineslice(this.x, bgY, 480, 310, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5); ns!
     this.scene.add.roundedField(this.x, bgY, 480, 310, 'modal-square-bg').setDepth(1);
     const startX: number = this.x - 20;
     const startY: number = this.y - 210
@@ -222,7 +219,7 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
       .setDepth(2)
       .setAlign('left');
 
-    this.scene.add.nineslice(this.x, priceTopPlaces.getCenter().y, 480, priceTopPlaces.displayHeight + 20,'clan-window-leader-plate-ns', 5)
+    this.scene.add.tileSprite(this.x, priceTopPlaces.getCenter().y, 480, priceTopPlaces.displayHeight + 20,'clan-window-leader-plate-ns', 5)
       .setOrigin(0.5)
       .setAlpha(0.8)
       .setDepth(1);
@@ -279,7 +276,6 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
     };
 
     const bgY: number = this.y + 190;
-    // this.scene.add.nineslice(this.x, bgY, 480, 250, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5); ns!
     this.scene.add.roundedField(this.x, bgY, 480, 250, 'modal-square-bg').setDepth(1);
     const startX: number = this.x - 20;
     const startY: number = bgY - 60;
@@ -296,7 +292,7 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
       .setDepth(2)
       .setAlign('left');
 
-    this.scene.add.nineslice(this.x, priceTopPlaces.getCenter().y, 480, priceTopPlaces.displayHeight + 20,'clan-window-leader-plate-ns', 5)
+    this.scene.add.tileSprite(this.x, priceTopPlaces.getCenter().y, 480, priceTopPlaces.displayHeight + 20,'clan-window-leader-plate-ns', 5)
       .setOrigin(0.5)
       .setAlpha(0.8)
       .setDepth(1);

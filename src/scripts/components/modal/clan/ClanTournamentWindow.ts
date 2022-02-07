@@ -5,6 +5,7 @@ import { clanTournamentSettings } from '../../../local/settings';
 import BigInteger from '../../../libs/BigInteger';
 import FlyAwayStar from '../../animations/FlyAwayStar';
 import Utils from './../../../libs/Utils';
+import ClanTab from './ClanTab';
 
 export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
   public scene: Modal;
@@ -161,11 +162,11 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
   private createTabs(types: Array<number>): void {
     const tabCount: number = types.length;
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
-    let left: number = headerGeom.left + 15;
+    let left: number = headerGeom.left + 90;
     const maxWidth: number = 455;
     types.forEach((el: number) => {
-      this.createTab({ x: left, y: headerGeom.top + 25 }, tabCount, el)
-      left += maxWidth / tabCount;
+      this.createTab({ x: left, y: headerGeom.top - 25 }, tabCount, el)
+      left += maxWidth / tabCount - 1;
     });
   }
 
@@ -174,24 +175,17 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
     const maxWidth: number = 455;
     const tabHeight: number = 104;
     const activeTabHeight: number = 115;
-    const slice: number = 30;
     const height: number = active ? activeTabHeight : tabHeight;
-    const texture: string = active ? 'clan-window-tab-active' : 'clan-window-tab-disable';
-    const tab: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(pos.x, pos.y, maxWidth / count, height, texture, slice).setOrigin(0, 1);
-    const tabGeom: Phaser.Geom.Rectangle = tab.getBounds();
     const textureIcon: string = type === 1 ? 'clan-tab-icon-sheep' : 
     type === 2 ? 'clan-tab-icon-chicken' : 'clan-tab-icon-cow';
-    const tabIcon: Phaser.GameObjects.Sprite = this.scene.add.sprite(tabGeom.centerX, tabGeom.centerY - 10, textureIcon);
-    
-    if (!active) {
-      this.scene.clickButtonUp(tab, (): void => {
-        this.scene.state.modal = {
-          type: 20,
-          clanTabType: type,
-        };
-        this.scene.scene.restart(this.scene.state);
-      }, tabIcon);
-    }
+    const callback = (): void => {
+      this.scene.state.modal = {
+        type: 20,
+        clanTabType: type,
+      };
+      this.scene.scene.restart(this.scene.state);
+    };
+    new ClanTab(this.scene, pos.x, pos.y, maxWidth / count, height, textureIcon, active, callback);
   }
 
   private createInfo(): void {
@@ -229,7 +223,7 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
       .setDepth(2)
       .setColor('#dcff3c');
 
-    this.scene.add.nineslice(this.bg.getBounds().left, headerGeom.centerY + 115, 400, 40, 'clan-window-leader-plate-ns', 5).setOrigin(0, 0.5);
+    this.scene.add.tileSprite(this.bg.getBounds().left, headerGeom.centerY + 115, 400, 40, 'clan-window-leader-plate-ns', 5).setOrigin(0, 0.5);
 
     this.textClanPlace = this.scene.add.text(0, headerGeom.centerY + 115, `${this.scene.state.lang.clanPlace}:`, textStyle)
       .setOrigin(0, 0.5)
@@ -267,7 +261,7 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
 
     const bgWidth: number = 490;
 
-    const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(pos.x, pos.y, bgWidth, 50, 'tasks-bar-ns', 15).setOrigin(0.5, 0);
+    const bg = this.scene.add.nineslice(pos.x, pos.y, bgWidth, 50, 'tasks-bar-ns', 15).setOrigin(0.5, 0);
     const bgGeom: Phaser.Geom.Rectangle = bg.getBounds();
     this.timer = this.scene.add.text(bgGeom.centerX, bgGeom.centerY, '', textStyle).setOrigin(0.5);
   }
@@ -365,7 +359,6 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
       },
     };
     const y = this.posy + 90;
-    // this.scene.add.nineslice(this.posx, y, 490, 590, 'modal-square-bg', 10).setOrigin(0.5); ns!
     this.scene.add.roundedField(this.posx, y, 490, 590, 'modal-square-bg');
     if (this.scene.state.progress[this.farm].open) {
       this.scene.add.sprite(this.posx, y - 308, 'clan-tournament-plate-bg');

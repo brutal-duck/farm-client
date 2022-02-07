@@ -490,6 +490,63 @@ function clickButtonUp(button: any, action: any, icon: any = false, text: any = 
   });
 }
 
+function clickButtonClanUp(button: any, action: any, args: any[]): void {
+  button.setInteractive();
+  button.up = 0;
+
+  button.on('pointerdown', (): void => {
+    this.game.scene.keys[this.state.farm].scrolling.enabled = false;
+    this.game.scene.keys[this.state.farm].scrolling.downHandler();
+    button.press = true;
+    button.increase = false;
+    let interval = this.time.addEvent({ delay: 5, callback: () => {
+      if (button.up < 7 && !button.increase) {
+        button.up++;
+        button.setY(button.y += 1);
+        args.forEach(el => {
+          el.y += 1;
+        });
+      }
+      if (button.up >= 7) interval.remove(false);
+    }, callbackScope: this, loop: true });
+    this.game.scene.keys[this.state.farm]?.playSoundOnce('click-sound');
+  });
+
+  button.on('pointerout', (): void => {
+    if (button.press) {
+      button.press = false;
+      button.increase = true;
+      const interval = this.time.addEvent({ delay: 10, callback: () => {
+        if (button.up > 0 && button.increase) {
+          button.up--;
+          button.setY(button.y -= 1);
+          args.forEach(el => { el.y -= 1; });
+        }
+        if (button.up <= 0) interval.remove(false);
+      }, callbackScope: this, loop: true });
+    }
+  });
+
+  button.on('pointerup', (): void => {
+    if (button.press) {
+      button.press = false;
+      button.increase = true;
+      const interval = this.time.addEvent({ delay: 10, callback: () => {
+        if (button.up > 0 && button.increase) {
+          button.up--;
+          button.setY(button.y -= 1);
+          args.forEach(el => { el.y -= 1; });
+        }
+        if (button.up <= 0) interval.remove(false);
+      }, callbackScope: this, loop: true });
+      this.game.scene.keys[this.state.farm].scrolling.enabled = true;
+      action();
+    } else {
+      this.game.scene.keys[this.state.farm].scrolling.enabled = true;
+    }
+  });
+}
+
 function doubleClick(object: any, action: any, maxMoveCounter: number = 3): void {
 
   object.setInteractive();
@@ -685,4 +742,5 @@ export {
   clickBoostBtn,
   clickTerritory,
   doubleClick,
+  clickButtonClanUp,
 }

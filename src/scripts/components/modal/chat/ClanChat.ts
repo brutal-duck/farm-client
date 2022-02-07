@@ -281,7 +281,6 @@ export default class ClanChat {
       text.setCrop(this.textWrap / 2 - 10, 0, this.textWrap, textHeight);
     }
     const bgWidth: number = text.getBounds().width > this.textWrap ? this.textWrap + 50 : text.getBounds().width + 50;
-    // const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(pos.x, pos.y - 10, bgWidth, textHeight, 'chat-user-message-bg', 20).setOrigin(0.5, 0).setAlpha(0.5); //!
     const bg: IroundedField = this.scene.add.roundedField(pos.x, pos.y - 10, bgWidth, textHeight, 'chat-user-message-bg').setOriginY(0).setAlpha(0.5);
     this.lastMsgFromUser = '';
     // Добавляем длинну скролла если высота всех сообщений уходит за границу

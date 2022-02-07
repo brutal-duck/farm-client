@@ -71,7 +71,7 @@ export default class CreateClanWindow {
     this.input.style.bottom = `${startBottom - height / 4}%`;
     const inputWidth: number = 460;
     const inputHeigth: number = 70;
-    const inputBg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(pos.x, pos.y - 20, inputWidth, inputHeigth, 'clan-window-search-plate-ns', 5).setDepth(2).setOrigin(0.5);
+    const inputBg = this.scene.add.tileSprite(pos.x, pos.y - 20, inputWidth, inputHeigth, 'clan-window-search-plate-ns', 5).setDepth(2).setOrigin(0.5);
     const inputBgGeom: Phaser.Geom.Rectangle = inputBg.getBounds();
     // Заголовок и описание
     const text: string = this.input.value || this.scene.state.lang.inputClanName;
@@ -331,7 +331,6 @@ export default class CreateClanWindow {
       },
     };
     
-    // const tile: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(this.x, this.switchBg.getBounds().bottom + 20, this.window.width - 50, 200, 'modal-square-bg', 10).setOrigin(0.5, 0); ns!
     const tile: IroundedField = this.scene.add.roundedField(this.x, this.switchBg.getBounds().bottom + 20, this.window.width - 50, 200, 'modal-square-bg').setOriginY( 0);
     this.initAvatar();
     const y: number = tile.getCenter().y;

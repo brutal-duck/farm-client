@@ -9,6 +9,8 @@ import Unicorn from './../../../scenes/Event/Unicorns/Main';
 import Currency from './../../animations/Currency';
 import MoneyAnimation from './../../animations/MoneyAnimation';
 import Utils from './../../../libs/Utils';
+import DataValidator from '../../../libs/DataValidator';
+import ClanTab from './ClanTab';
 
 const FARM_PACKAGE: Array<number> = [1000, 100000, 1000000, 1000000000];
 const DIAMOND_PACKAGE: Array<number> = [1, 10, 100, 1000];
@@ -134,11 +136,11 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
   private createTabs(types: Array<number>): void {
     const tabCount: number = types.length;
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
-    let left: number = headerGeom.left + 15;
+    let left: number = headerGeom.left + 70;
     const maxWidth: number = 455;
     types.forEach((el: number) => {
-      this.createTab({x: left, y: headerGeom.top + 25}, tabCount, el)
-      left += maxWidth / tabCount;
+      this.createTab({x: left, y: headerGeom.top - 25 }, tabCount, el)
+      left += maxWidth / tabCount - 1;
     });
   }
 
@@ -147,26 +149,30 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
     const maxWidth: number = 455;
     const tabHeight: number = 104;
     const activeTabHeight: number = 115;
-    const slice: number = 30;
     const height: number = active ? activeTabHeight : tabHeight;
-    const texture: string = active ? 'clan-window-tab-active' : 'clan-window-tab-disable';
-    const tab: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(pos.x, pos.y, maxWidth / count, height, texture, slice).setOrigin(0, 1);
-    const tabGeom: Phaser.Geom.Rectangle = tab.getBounds();
     const textureIcon: string = type === 1 ? 'clan-diamond-coin' : 
     type === 2 ? 'clan-sheep-coin' :
     type === 3 ? 'clan-chicken-coin' : 'clan-cow-coin';
-    const tabIcon: Phaser.GameObjects.Sprite = this.scene.add.sprite(tabGeom.centerX, tabGeom.centerY - 10, textureIcon);
-    
-    this.modalElements.push(tab, tabIcon);
-    if (!active) {
-      this.scene.clickButtonUp(tab, (): void => {
-        this.scene.state.modal = {
-          type: 19,
-          clanTabType: type,
-        };
-        this.scene.scene.restart(this.scene.state);
-      }, tabIcon);
-    }
+    const callback =  (): void => {
+      this.scene.state.modal = {
+        type: 19,
+        clanTabType: type,
+      };
+      this.scene.scene.restart(this.scene.state);
+    };
+    const tab = new ClanTab(this.scene, pos.x, pos.y, maxWidth / count, height, textureIcon, active, callback);
+    this.modalElements.push(
+      tab, 
+      tab.tl,
+      tab.tc,
+      tab.tr,
+      tab.ml,
+      tab.mr,
+      tab.bl,
+      tab.bc,
+      tab.br,
+      tab.icon
+    );
   }
 
   private createBank(): void {
@@ -185,15 +191,14 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
     };
 
     const y = this.scene.cameras.main.centerY + 219
-    // this.scene.add.nineslice(this.posx, y, 500, 385, 'modal-square-bg', 10).setOrigin(0.5); // ns!
     this.scene.add.roundedField(this.posx, y, 500, 385, 'modal-square-bg')
-    this.scene.add.nineslice(this.posx, y - 150, this.windowWidth - 25, 70,'clan-window-leader-plate-ns', 5)
+    this.scene.add.tileSprite(this.posx, y - 150, this.windowWidth - 25, 70,'clan-window-leader-plate-ns', 5)
       .setOrigin(0.5)
       .setAlpha(0.5);
-    this.scene.add.nineslice(this.posx, y, this.windowWidth - 25, 70,'clan-window-leader-plate-ns', 5)
+    this.scene.add.tileSprite(this.posx, y, this.windowWidth - 25, 70,'clan-window-leader-plate-ns', 5)
       .setOrigin(0.5)
       .setAlpha(0.5);
-    this.scene.add.nineslice(this.posx, y + 145, this.windowWidth - 25, 70,'clan-window-leader-plate-ns', 5)
+    this.scene.add.tileSprite(this.posx, y + 145, this.windowWidth - 25, 70,'clan-window-leader-plate-ns', 5)
       .setOrigin(0.5)
       .setAlpha(0.5);
 
@@ -236,7 +241,7 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     let x: number = headerGeom.left + 100;
     const btnTexture: string = `clan-bank-${this.farm}-package`;
-    this.scene.add.nineslice(this.posx, headerGeom.bottom + 130, this.windowWidth, 150, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
+    this.scene.add.tileSprite(this.posx, headerGeom.bottom + 130, this.windowWidth, 150, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
     for (let i: number = 0; i < 4; i += 1) {
       const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(x, headerGeom.bottom + 130, `${btnTexture}-${i + 1}`).setScale(0.81).setTint(0xcccccc);
       const text: Phaser.GameObjects.Text = this.scene.add.text(x, headerGeom.bottom + 160, shortNum(array[i]), textStyle).setOrigin(0.5).setTint(0xcccccc);
@@ -301,7 +306,7 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
     };
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     let x: number = headerGeom.left + 100;
-    this.scene.add.nineslice(this.posx, headerGeom.bottom + 130, this.windowWidth, 150, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
+    this.scene.add.tileSprite(this.posx, headerGeom.bottom + 130, this.windowWidth, 150, 'clan-window-leader-plate-ns', 5).setOrigin(0.5);
     const btnTexture: string = `clan-bank-${this.farm}-package`;
     for (let i: number = 0; i < 4; i += 1) {
       const btn: Phaser.GameObjects.Sprite = this.scene.add.sprite(x, headerGeom.bottom + 130, `${btnTexture}-${i + 1}`).setScale(0.81).setTint(0x777777);
@@ -472,7 +477,7 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
       if (farmMoney >= packageCount) {
         this.postMoney(packageCount).then(res => {
           if (!res.data.error) {
-            this.scene.state.clan = res.data.clan;
+            this.scene.state.clan = DataValidator.validateClan(res.data.clan);
             this.scene.state[farmUser].money -= Number(packageCount);
             if (Number(packageCount) >= FARM_PACKAGE[2]) {
               MoneyAnimation.create(this.scene, `${this.farm}Coin`, {
@@ -507,7 +512,7 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
       if (userDiamonds >= Number(packageCount)) {
         this.postMoney(Number(packageCount)).then(res => {
           if (!res.data.error) {
-            this.scene.state.clan = res.data.clan;
+            this.scene.state.clan = DataValidator.validateClan(res.data.clan); ;
             this.scene.state.user.diamonds -= Number(packageCount);
             this.scene.state.amplitude.logAmplitudeEvent('diamonds_spent', {
               type: 'donate_clan',

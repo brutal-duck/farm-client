@@ -5,6 +5,7 @@ import LogoManager from '../../Utils/LogoManager';
 import { CHANGE_EMBLEM_COST, CHANGE_CLAN_NAME_COST, CREATE_CLAN_COST } from '../../../local/settings';
 import BigButton from './../../Buttons/BigButton';
 import Utils from './../../../libs/Utils';
+import ClanTab from './ClanTab';
 const KEY: string = '1491f4c9d53dfa6c50d0c4a375f9ba76';
 
 
@@ -127,11 +128,11 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     const activeTab: number = this.windowType;
     const tabCount: number = types.length;
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
-    let left: number = headerGeom.left + 15;
+    let left: number = headerGeom.left + 90;
     const maxWidth: number = 455;
     types.forEach((el: number) => {
-      this.createTab({x: left, y: headerGeom.top + 25}, activeTab === el, tabCount, el)
-      left += maxWidth / tabCount;
+      this.createTab({ x: left, y: headerGeom.top - 25 }, activeTab === el, tabCount, el)
+      left += maxWidth / tabCount - 1;
     });
   }
 
@@ -141,30 +142,31 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     const activeTabHeight: number = 115;
     const slice: number = 30;
     const height: number = active ? activeTabHeight : tabHeight;
-    const texture: string = active ? 'clan-window-tab-active' : 'clan-window-tab-disable';
-    const tab: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(pos.x, pos.y, maxWidth / count, height, texture, slice).setOrigin(0, 1);
-    const tabGeom: Phaser.Geom.Rectangle = tab.getBounds();
-    let tabIcon: Phaser.GameObjects.Sprite = this.scene.add.sprite(tabGeom.centerX, tabGeom.centerY - 10, `clan-window-icon-${type}`).setOrigin(0.5);
-    let flag: Phaser.GameObjects.Sprite;
-    if (type === 1) {
-      const mask = new Phaser.Display.Masks.BitmapMask(this.scene, tabIcon);
-      mask.invertAlpha = true;
-      if (this.scene.state.clan?.avatar) {
-        flag = LogoManager.createFlag(this.scene, tabGeom.centerX + 5, tabGeom.centerY - 10 - 5, this.scene.state.clan?.avatar).setScale(0.205).setMask(mask);
-      }
-    }
-    this.modalElements.push(tab, tabIcon);
-    if (!active) {
-      this.scene.clickButtonUp(tab, (): void => {
-        this.scene.state.modal = {
-          type: 17,
-          clanTabType: type,
-        };
-        this.removeInput();
-        this.scene.scene.stop('ClanScroll');
-        this.scene.scene.restart(this.scene.state);
-      }, tabIcon, flag);
-    }
+    const texture = active ? 'clan-window-tab-active' : 'clan-window-tab-disable';
+    const callback = () => {
+      this.scene.state.modal = {
+        type: 17,
+        clanTabType: type,
+      };
+      this.removeInput();
+      this.scene.scene.stop('ClanScroll');
+      this.scene.scene.restart(this.scene.state);
+    };
+
+    const tab = new ClanTab(this.scene, pos.x, pos.y, maxWidth / count, height, `clan-window-icon-${type}`, active, callback, type);
+    this.modalElements.push(
+      tab, 
+      tab.tl,
+      tab.tc,
+      tab.tr,
+      tab.ml,
+      tab.mr,
+      tab.bl,
+      tab.bc,
+      tab.br,
+      tab.icon,
+      tab.flag,
+    );
   }
 
   private createClanInfo(): void {
@@ -196,7 +198,6 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     const scoreBgGeom: Phaser.Geom.Rectangle = scoreBg.getBounds();
     const text: string = `${this.scene.state.lang.scores}: ${shortNum(points)}`;
     const scoreText = this.scene.add.text(scoreBgGeom.centerX, scoreBgGeom.centerY, text, scoreTextStyle).setDepth(2).setOrigin(0.5);
-    // this.scene.add.nineslice(this.x, this.y + 100, 480, 600, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5); // ns!
     this.scene.add.roundedField(this.x, this.y + 100, 480, 600, 'modal-square-bg').setDepth(1);
     this.createClanBtns();
     this.scene.scene.launch('ClanScroll', this.scene.state);
@@ -331,7 +332,6 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     const bgHeight: number = 590;
     const bgY: number = this.y + 120;
-    // const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(this.x, bgY, 480, bgHeight, 'modal-square-bg', 10).setDepth(1).setOrigin(0.5); ns!
     const bg: IroundedField = this.scene.add.roundedField(this.x, bgY, 480, bgHeight, 'modal-square-bg').setDepth(1);
     const tile: Phaser.GameObjects.TileSprite = this.scene.add.tileSprite(this.x, headerGeom.bottom - 2, this.windowWidth, 100, 'white-pixel').setTint(0xD06900).setOrigin(0.5, 0);
     const inputBg: Phaser.GameObjects.Sprite = this.scene.add.sprite(headerGeom.centerX - 45, headerGeom.centerY, 'clan-window-search-plate').setDepth(2);

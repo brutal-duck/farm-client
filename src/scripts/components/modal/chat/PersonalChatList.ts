@@ -156,7 +156,6 @@ export default class PersonalChatList {
     const messageTextGeom: Phaser.Geom.Rectangle = messageText.getBounds();
     
     const bgHeight: number = nameTextGeom.height + messageTextGeom.height + 50;
-    // const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(nameTextGeom.left - 20, nameTextGeom.top - 20, bgWidth, bgHeight, 'chat-foreign-message-bg', 20).setOrigin(0); //!
     const bg: IroundedField = this.scene.add.roundedField(nameTextGeom.left - 20 + bgWidth / 2, nameTextGeom.top - 20, bgWidth, bgHeight, 'chat-foreign-message-bg').setOriginY(0);
     // const bgGeom: Phaser.Geom.Rectangle = bg.getBounds();
     const date: string = this.getDate(lastMessage.time);
@@ -320,7 +319,6 @@ export default class PersonalChatList {
     }
     
     const bgHeight: number = messageTextGeom.height + 50 + height;
-    // const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(messageTextGeom.left - 20, messageTextGeom.top - 20, bgWidth, bgHeight, 'chat-clan-message-bg', 20).setOrigin(0); //!
     const bg: IroundedField = this.scene.add.roundedField(messageTextGeom.left - 20 + bgWidth / 2, messageTextGeom.top - 20, bgWidth, bgHeight, 'chat-clan-message-bg').setOriginY(0);
     const date: string = this.getDate(data.time);
     const time: Phaser.GameObjects.Text = this.scene.add.text(bg.getLeftCenter().x + 15, bg.getBottomCenter().y, date, timeTextStyle).setOrigin(0);
@@ -370,7 +368,6 @@ export default class PersonalChatList {
     let height: number = 0;
 
     const bgHeight: number = messageTextGeom.height + 50 + height;
-    // const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(messageTextGeom.left - 20, messageTextGeom.top - 20, bgWidth, bgHeight, 'chat-clan-message-bg', 20).setOrigin(0); //!
     const bg: IroundedField = this.scene.add.roundedField(messageTextGeom.left - 20 + bgWidth / 2, messageTextGeom.top - 20, bgWidth, bgHeight, 'chat-clan-message-bg').setOriginY(0);
     const date: string = this.getDate(data.time);
     const time: Phaser.GameObjects.Text = this.scene.add.text(bg.getLeftCenter().x + 15, bg.getBottomCenter().y, date, timeTextStyle).setOrigin(0);
@@ -492,7 +489,6 @@ export default class PersonalChatList {
     }
     
     const bgHeight: number = messageTextGeom.height + 50 + height;
-    // const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(messageTextGeom.left - 20, messageTextGeom.top - 20, bgWidth, bgHeight, 'chat-clan-message-bg', 20).setOrigin(0); //!
     const bg: IroundedField = this.scene.add.roundedField(messageTextGeom.left - 20 + bgWidth / 2, messageTextGeom.top - 20, bgWidth, bgHeight, 'chat-clan-message-bg').setOriginY(0);
     const date: string = this.getDate(data.time);
     const time: Phaser.GameObjects.Text = this.scene.add.text(bg.getLeftCenter().x + 15, bg.getBottomCenter().y, date, timeTextStyle).setOrigin(0);

@@ -78,7 +78,6 @@ export default class ClanTournamentEndWindow {
     const title: Phaser.GameObjects.Text = this.scene.add.text(this.plate.x + 12, this.plate.getTopCenter().y + 12, this.scene.state.lang.clanTournamentAwards, { font: '23px Shadow', color: '#F27E35' }).setOrigin(0.5, 0).setDepth(3);
     this.createClanAwardInfo();
 
-    // this.bg = this.scene.add.nineslice(x, this.plate.getCenter().y + 20, 480, 260, 'modal-square-bg', 10).setOrigin(0.5, 0).setDepth(2); ns!
     this.bg = this.scene.add.roundedField(x, this.plate.getCenter().y + 20, 480, 260, 'modal-square-bg').setOriginY(0).setDepth(2);
     this.createPlayerAwardInfo();
 

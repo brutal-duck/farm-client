@@ -47,7 +47,7 @@ export default class EditClanAvatarWindow {
       x: this.x, 
       y: this.y - 130,
     };
-    const bg = this.scene.add.nineslice(pos.x, pos.y, this.window.width, 130, 'clan-window-leader-plate', 1).setOrigin(0.5);
+    const bg = this.scene.add.tileSprite(pos.x, pos.y, this.window.width, 130, 'clan-window-leader-plate-ns', 1).setOrigin(0.5);
     this.scene.add.tileSprite(pos.x, pos.y, 145, 115, 'white-pixel').setTint(0xD06900);
     this.bgScroller = new Scroller(this.scene, pos, 'clan-bg-', this.avatar.bg, this);
   }
@@ -57,7 +57,7 @@ export default class EditClanAvatarWindow {
       x: this.x, 
       y: this.y + 10,
     };
-    const bg = this.scene.add.nineslice(pos.x, pos.y, this.window.width, 130, 'clan-window-leader-plate', 1).setOrigin(0.5);
+    const bg = this.scene.add.tileSprite(pos.x, pos.y, this.window.width, 130, 'clan-window-leader-plate-ns', 1).setOrigin(0.5);
     this.scene.add.tileSprite(pos.x, pos.y, 145, 115, 'white-pixel').setTint(0xD06900);
     this.frameBg = this.scene.add.sprite(pos.x, pos.y, `clan-bg-${this.avatar.bg}`).setOrigin(0.5).setScale(0.55);
     this.frameScroller = new Scroller(this.scene, pos, 'clan-frame-', this.avatar.frame, this);
@@ -68,7 +68,7 @@ export default class EditClanAvatarWindow {
       x: this.x, 
       y: this.y + 150,
     };
-    const bg = this.scene.add.nineslice(pos.x, pos.y, this.window.width, 130, 'clan-window-leader-plate', 1).setOrigin(0.5);
+    const bg = this.scene.add.tileSprite(pos.x, pos.y, this.window.width, 130, 'clan-window-leader-plate-ns', 1).setOrigin(0.5);
     this.scene.add.tileSprite(pos.x, pos.y, 145, 115, 'white-pixel').setTint(0xD06900);
     this.iconBg = this.scene.add.sprite(pos.x, pos.y, `clan-bg-${this.avatar.bg}`).setOrigin(0.5).setScale(0.55);
     this.iconFrame = this.scene.add.sprite(pos.x, pos.y, `clan-frame-${this.avatar.frame}`).setOrigin(0.5).setScale(0.55);
@@ -92,10 +92,10 @@ export default class EditClanAvatarWindow {
       },
     };
     
-    const saveBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.x - 100, this.y + 285, 'profile-window-button-green').setScale(1.2);
-    const saveBtnText: Phaser.GameObjects.Text = this.scene.add.text(saveBtn.x, saveBtn.y - 5, this.scene.state.lang.saveAvatar, buttonTextStyle).setOrigin(0.5);
-    const randomBtn: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.x + 100, this.y + 285, 'profile-window-button-red').setScale(1.2);
-    const randomBtnText: Phaser.GameObjects.Text = this.scene.add.text(randomBtn.x, randomBtn.y - 5, this.scene.state.lang.random, buttonTextStyle).setOrigin(0.5);
+    const saveBtn = this.scene.add.sprite(this.x - 100, this.y + 285, 'profile-window-button-green').setScale(1.2);
+    const saveBtnText = this.scene.add.text(saveBtn.x, saveBtn.y - 5, this.scene.state.lang.saveAvatar, buttonTextStyle).setOrigin(0.5);
+    const randomBtn = this.scene.add.sprite(this.x + 100, this.y + 285, 'profile-window-button-red').setScale(1.2);
+    const randomBtnText = this.scene.add.text(randomBtn.x, randomBtn.y - 5, this.scene.state.lang.random, buttonTextStyle).setOrigin(0.5);
 
     this.scene.clickModalBtn({ btn: saveBtn, title: saveBtnText }, () => { this.onSaveBtn(); });
 
