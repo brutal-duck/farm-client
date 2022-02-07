@@ -93,7 +93,7 @@ export default class Socket {
 
     this.io.on('updateClanData', (data: Iclan) => {
       if (this.state.clan) {
-       this.state.clan =  DataValidator.validateClan(data);
+       this.state.clan = DataValidator.validateClan(data);
       }
       if (!data) this.state.clanChatNotificationCount = 0;
     });
