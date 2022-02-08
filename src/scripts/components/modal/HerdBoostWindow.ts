@@ -19,6 +19,11 @@ export default class HerdBoostWindow {
   private mergingArray: any[];
   private animalForBoost: Phaser.Physics.Arcade.Group;
   private currentTime: number;
+  private merged: boolean;
+  private timerCreate: Phaser.Time.TimerEvent;
+  private mainTimer: Phaser.Time.TimerEvent;
+  private text1: Phaser.GameObjects.Text;
+  private text2: Phaser.GameObjects.Text;
 
   constructor(scene: Modal) {
     this.scene = scene;
@@ -32,7 +37,8 @@ export default class HerdBoostWindow {
     this.y = 360;
     this.xRoad = 0;
     this.yRoad = 480;
-    this.scene.game.scene.keys[this.scene.state.farm].scrolling.scrollY = 0; // останавливаем скролл
+    this.scene.game.scene.keys[this.scene.state.farm].scrolling.scrollY = 0;
+    this.merged = false;
   }
 
 
@@ -40,26 +46,26 @@ export default class HerdBoostWindow {
     let startCount: number = START_DELAY;
     this.boostCounterWindow = this.scene.physics.add.sprite(360, 400, 'boost-window-bg').setDepth(1);
   
-    const text1: Phaser.GameObjects.Text = this.scene.add.text(360, 360, this.scene.state.lang[`herdBoostStartTimout${this.scene.state.farm}_1`], {
+    this.text1 = this.scene.add.text(360, 360, this.scene.state.lang[`herdBoostStartTimout${this.scene.state.farm}_1`], {
       font: '19px Shadow',
       color: '#ce9457',
       wordWrap: { width: 230 },
       align: 'center'
     }).setOrigin(0.5, 0.5).setDepth(this.y * 2);
   
-    const text2: Phaser.GameObjects.Text = this.scene.add.text(360, 410, this.scene.state.lang[`herdBoostStartTimout${this.scene.state.farm}_2`], {
+    this.text2 = this.scene.add.text(360, 410, this.scene.state.lang[`herdBoostStartTimout${this.scene.state.farm}_2`], {
       font: '21px Shadow',
       color: '#946939',
       wordWrap: { width: 440 },
       align: 'center'
     }).setOrigin(0.5, 0.5).setDepth(this.y * 2);
   
-    const countdown: Phaser.GameObjects.Sprite = this.scene.add.sprite(360, 500, 'boost-countdown').setDepth(2);
-    const leaves1: Phaser.GameObjects.Sprite = this.scene.add.sprite(440, 510, 'boost-leaves').setDepth(0).setFlip(true, true);
-    const leaves2: Phaser.GameObjects.Sprite = this.scene.add.sprite(280, 510, 'boost-leaves').setDepth(0).setFlip(false, true);
+    const countdown = this.scene.add.sprite(360, 500, 'boost-countdown').setDepth(2);
+    const leaves1 = this.scene.add.sprite(440, 510, 'boost-leaves').setDepth(0).setFlip(true, true);
+    const leaves2 = this.scene.add.sprite(280, 510, 'boost-leaves').setDepth(0).setFlip(false, true);
     const timerText: Phaser.GameObjects.Text = this.scene.add.text(362, 492, String(startCount), { font: '64px Shadow', color: '#f3eae6' }).setOrigin(0.5, 0.5).setDepth(3);
 
-    this.elements = [timerText, leaves1, leaves2, countdown, text1, text2];
+    this.elements = [timerText, leaves1, leaves2, countdown, this.text1, this.text2];
 
     const timer: Phaser.Time.TimerEvent = this.scene.time.addEvent({
       delay: 1000,
@@ -81,18 +87,17 @@ export default class HerdBoostWindow {
     });
   }
 
-
   private moveItems(): void {
-    let [timerText, leaves1, leaves2, countdown, text1, text2]: any = this.elements;
+    let [timerText, leaves1, leaves2, countdown]: any = this.elements;
     
     // установка новых позиций
     timerText.setText(this.scene.state.herdBoostTime).setPosition(430, 355);
     countdown.setPosition(430, 360);
     leaves1.setAngle(90).setPosition(455, 420);
     leaves2.setAngle(90).setPosition(455, 290);
-    text1.style.wordWrapWidth = 280;
-    text1.setText(this.scene.state.lang[`herdBoostTimer${this.scene.state.farm}_1`] + this.scene.state.herdBoostTime + ' ' + this.scene.state.lang.seconds).setFontSize('26px').setY(1050);
-    text2.setText(this.scene.state.lang[`herdBoostTimer${this.scene.state.farm}_2`]).setY(1100);
+    this.text1.style.wordWrapWidth = 280;
+    this.text1.setText(this.scene.state.lang[`herdBoostTimer${this.scene.state.farm}_1`] + this.scene.state.herdBoostTime + ' ' + this.scene.state.lang.seconds).setFontSize(26).setY(1050).setVisible(false);
+    this.text2.setText(this.scene.state.lang[`herdBoostTimer${this.scene.state.farm}_2`]).setY(1080);
 
     this.scene.tweens.add({
       targets: this.boostCounterWindow,
@@ -113,11 +118,10 @@ export default class HerdBoostWindow {
     });
   }
   
-
   private createWorld(): void {
     const farm: string = this.scene.state.farm.toLowerCase();
     // ярмарка и тент
-    const fairy: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.x, this.y, `${farm}-merging`).setDepth(this.y).setAlpha(0);
+    const fairy = this.scene.add.sprite(this.x, this.y, `${farm}-merging`).setDepth(this.y).setAlpha(0);
     
     if (farm === 'sheep') { 
       this.yTent = this.y - 24;
@@ -133,20 +137,20 @@ export default class HerdBoostWindow {
     this.mergingArray = []; // массив животных для слияния
     this.scene.state.herdBoostAnimals = []; // Обнуляем массив животных для буста
   
-    const tent: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.x, this.yTent, `${farm}-tent`).setDepth(this.y + 1).setAlpha(0);
+    const tent = this.scene.add.sprite(this.x, this.yTent, `${farm}-tent`).setDepth(this.y + 1).setAlpha(0);
     const xTextLevel: number = farm === 'cow' ? this.x - 75 : this.x + 80;
-    const textLevel: Phaser.GameObjects.Text = this.scene.add.text(xTextLevel, this.yTextLevel, this.scene.state[`user${this.scene.state.farm}`].fair, { font: '36px Shadow', color: '#b5315a' }).setOrigin(0.5, 0.5).setDepth(this.y * 2).setAlpha(0);
+    const textLevel = this.scene.add.text(xTextLevel, this.yTextLevel, this.scene.state[`user${this.scene.state.farm}`].fair, { font: '36px Shadow', color: '#b5315a' }).setOrigin(0.5).setDepth(this.y * 2).setAlpha(0);
     
     if (farm === 'unicorn') textLevel.setText(String(this.scene.state.userUnicorn.points));
     // дорога
-    const road: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.xRoad, this.yRoad, `herd-boost-road-${farm}`).setOrigin(0).setDepth(this.yRoad).setDataEnabled().setAlpha(0);
+    const road = this.scene.add.sprite(this.xRoad, this.yRoad, `herd-boost-road-${farm}`).setOrigin(0).setDepth(this.yRoad).setDataEnabled().setAlpha(0);
   
     // Заборы
-    const border1: Phaser.GameObjects.Sprite = this.scene.add.sprite(0, this.yRoad + 15, `${farm}-horizontal-border-1`).setOrigin(0, 1).setDepth(this.yRoad + 1).setAlpha(0);
-    const border2: Phaser.GameObjects.Sprite = this.scene.add.sprite(0 + 240, this.yRoad + 15, `${farm}-horizontal-border-2`).setOrigin(0, 1).setDepth(this.yRoad + 1).setAlpha(0);
-    const border3: Phaser.GameObjects.Sprite = this.scene.add.sprite(0, this.yRoad + road.height + 15, `${farm}-horizontal-border-1`).setOrigin(0, 1).setDepth(this.yRoad + 1).setAlpha(0);
-    const border4: Phaser.GameObjects.Sprite = this.scene.add.sprite(0 + 240, this.yRoad + road.height  + 15, `${farm}-horizontal-border-2`).setOrigin(0, 1).setDepth(this.yRoad + 1).setAlpha(0);
-    const border5: Phaser.GameObjects.Sprite = this.scene.add.sprite(0 + 480, this.yRoad + road.height  + 15, `${farm}-horizontal-border-3`).setOrigin(0, 1).setDepth(this.yRoad + 1).setAlpha(0);
+    const border1 = this.scene.add.sprite(0, this.yRoad + 15, `${farm}-horizontal-border-1`).setOrigin(0, 1).setDepth(this.yRoad + 1).setAlpha(0);
+    const border2 = this.scene.add.sprite(0 + 240, this.yRoad + 15, `${farm}-horizontal-border-2`).setOrigin(0, 1).setDepth(this.yRoad + 1).setAlpha(0);
+    const border3 = this.scene.add.sprite(0, this.yRoad + road.height + 15, `${farm}-horizontal-border-1`).setOrigin(0, 1).setDepth(this.yRoad + 1).setAlpha(0);
+    const border4 = this.scene.add.sprite(0 + 240, this.yRoad + road.height  + 15, `${farm}-horizontal-border-2`).setOrigin(0, 1).setDepth(this.yRoad + 1).setAlpha(0);
+    const border5 = this.scene.add.sprite(0 + 480, this.yRoad + road.height  + 15, `${farm}-horizontal-border-3`).setOrigin(0, 1).setDepth(this.yRoad + 1).setAlpha(0);
   
     this.elements.push(fairy, tent, textLevel, road, border1, border2, border3, border4, border5);
   }
@@ -157,84 +161,49 @@ export default class HerdBoostWindow {
   
     if (this.scene.state.farm === 'Sheep') {
       // дроп зоны 
-      const topZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.x, this.y - 75, 300, 145).setDropZone(undefined, () => {});
+      const topZone = this.scene.add.zone(this.x, this.y - 75, 300, 145).setDropZone(undefined, () => {});
       topZone.type = 'top';
-      const bottomZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.x, this.y + 70, 300, 145).setDropZone(undefined, () => {});
-      bottomZone.type = 'bottom';
-  
-      // Для проверки дроп зон
-      // let graphics2 = this.add.graphics().setDepth(bottomZone.y * 5);
-      // graphics2.lineStyle(2, 0x00ff00);
-      // graphics2.strokeRect(bottomZone.x - bottomZone.input.hitArea.width / 2, bottomZone.y - bottomZone.input.hitArea.height / 2, bottomZone.input.hitArea.width, bottomZone.input.hitArea.height);
-      // let graphics1 = this.add.graphics().setDepth(topZone.y * 5);
-      // graphics1.lineStyle(2, 0xffff00);
-      // graphics1.strokeRect(topZone.x - topZone.input.hitArea.width / 2, topZone.y - topZone.input.hitArea.height / 2, topZone.input.hitArea.width, topZone.input.hitArea.height);
-  
-  
+      const bottomZone = this.scene.add.zone(this.x, this.y + 70, 300, 145).setDropZone(undefined, () => {});
+      bottomZone.type = 'bottom'; 
     } else if (this.scene.state.farm === 'Chicken') {
       // дроп зоны 
-      const leftZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.x - 75, this.y - 30, 145, 300).setDropZone(undefined, () => {});
+      const leftZone = this.scene.add.zone(this.x - 75, this.y - 30, 145, 300).setDropZone(undefined, () => {});
       leftZone.type = 'left';
       
-      const rightZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.x + 70, this.y - 30, 145, 300).setDropZone(undefined, () => {});
-      rightZone.type = 'right';
-  
-      // для проверки дроп зон
-      // let graphics1 = this.add.graphics().setDepth(leftZone.y * 5);
-      // graphics1.lineStyle(2, 0xffff00);
-      // graphics1.strokeRect(leftZone.x - leftZone.input.hitArea.width / 2, leftZone.y - leftZone.input.hitArea.height / 2, leftZone.input.hitArea.width, leftZone.input.hitArea.height);
-  
-      // let graphics2 = this.add.graphics().setDepth(rightZone.y * 5);
-      // graphics2.lineStyle(2, 0x00ff00);
-      // graphics2.strokeRect(rightZone.x - rightZone.input.hitArea.width / 2, rightZone.y - rightZone.input.hitArea.height / 2, rightZone.input.hitArea.width, rightZone.input.hitArea.height);
-  
+      const rightZone = this.scene.add.zone(this.x + 70, this.y - 30, 145, 300).setDropZone(undefined, () => {});
+      rightZone.type = 'right';  
     } else if (this.scene.state.farm === 'Cow') {
-      // дроп зоны 
-      const topZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.x, this.y - 75, 300, 145).setDropZone(undefined, () => {});
+      const topZone = this.scene.add.zone(this.x, this.y - 75, 300, 145).setDropZone(undefined, () => {});
       topZone.type = 'top';
-      const bottomZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.x, this.y + 70, 300, 145).setDropZone(undefined, () => {});
-      bottomZone.type = 'bottom';
-  
-      // Для проверки дроп зон
-      // let graphics2 = this.add.graphics().setDepth(bottomZone.y * 5);
-      // graphics2.lineStyle(2, 0x00ff00);
-      // graphics2.strokeRect(bottomZone.x - bottomZone.input.hitArea.width / 2, bottomZone.y - bottomZone.input.hitArea.height / 2, bottomZone.input.hitArea.width, bottomZone.input.hitArea.height);
-      // let graphics1 = this.add.graphics().setDepth(topZone.y * 5);
-      // graphics1.lineStyle(2, 0xffff00);
-      // graphics1.strokeRect(topZone.x - topZone.input.hitArea.width / 2, topZone.y - topZone.input.hitArea.height / 2, topZone.input.hitArea.width, topZone.input.hitArea.height);
-  
+      const bottomZone = this.scene.add.zone(this.x, this.y + 70, 300, 145).setDropZone(undefined, () => {});
+      bottomZone.type = 'bottom';  
     } else if (this.scene.state.farm === 'unicorn') {
-      // дроп зоны 
-      const leftZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.x - 75, this.y - 30, 145, 300).setDropZone(undefined, () => {});
+      const leftZone = this.scene.add.zone(this.x - 75, this.y - 30, 145, 300).setDropZone(undefined, () => {});
       leftZone.type = 'left';
       
-      const rightZone: Phaser.GameObjects.Zone = this.scene.add.zone(this.x + 70, this.y - 30, 145, 300).setDropZone(undefined, () => {});
+      const rightZone = this.scene.add.zone(this.x + 70, this.y - 30, 145, 300).setDropZone(undefined, () => {});
       rightZone.type = 'right';
-  
-      // для проверки дроп зон
-      // let graphics1 = this.add.graphics().setDepth(leftZone.y * 5);
-      // graphics1.lineStyle(2, 0xffff00);
-      // graphics1.strokeRect(leftZone.x - leftZone.input.hitArea.width / 2, leftZone.y - leftZone.input.hitArea.height / 2, leftZone.input.hitArea.width, leftZone.input.hitArea.height);
-  
-      // let graphics2 = this.add.graphics().setDepth(rightZone.y * 5);
-      // graphics2.lineStyle(2, 0x00ff00);
-      // graphics2.strokeRect(rightZone.x - rightZone.input.hitArea.width / 2, rightZone.y - rightZone.input.hitArea.height / 2, rightZone.input.hitArea.width, rightZone.input.hitArea.height);
-  
     }
   
     // создаю группу для животных
     this.animalForBoost = this.scene.physics.add.group();
     this.currentTime = this.scene.state.herdBoostTime;
 
-    const timerCreate: Phaser.Time.TimerEvent = this.scene.time.addEvent({
+    this.timerCreate = this.scene.time.addEvent({
       delay: this.scene.state.herdBoostDelay,
       loop: true,
-      callback: () => { this.getRandomAnimal(); },
+      callback: () => { 
+        this.getRandomAnimal();
+        if (this.merged && !this.mainTimer) {
+          this.createTimers();
+        }
+      },
       callbackScope: this
     });
-    
-    // кристалическая овца
-    const timerCreateCrystalAnimal: Phaser.Time.TimerEvent = this.scene.time.addEvent({
+  }
+  
+  private createTimers(): void {
+    const timerCreateCrystalAnimal = this.scene.time.addEvent({
       delay: this.scene.state.herdBoostTime / 3 * 1000,
       loop: true,
       callback: () => {
@@ -243,11 +212,11 @@ export default class HerdBoostWindow {
       },
       callbackScope: this
     });
-  
-    const [timerText]: any= this.elements  ;
+
+    const [timerText]: any = this.elements;
     this.createSkipBtn();
-    // таймер переключающий время
-    const timerTickText: Phaser.Time.TimerEvent = this.scene.time.addEvent({
+
+    this.mainTimer = this.scene.time.addEvent({
       delay: 1000,
       loop: true,
       callback: () => {
@@ -256,8 +225,8 @@ export default class HerdBoostWindow {
         if (this.currentTime <= 0) {
           this.animalForBoost.children.entries.forEach((sheep) => { sheep.data.values.woolSprite?.destroy(); });
           this.animalForBoost.destroy(true);
-          timerCreate.remove();
-          timerTickText.remove();
+          this.timerCreate.remove();
+          this.mainTimer.remove();
           timerCreateCrystalAnimal.remove();
           this.scene.tweens.add({
             targets: this.elements,
@@ -277,10 +246,9 @@ export default class HerdBoostWindow {
           });
         }
       },
-      callbackScope: this
+      callbackScope: this,
     });
   }
-  
 
   private createSkipBtn(): void {
     const skip = this.scene.add.text(710, 30, this.scene.state.lang.skipHerdBoost, {
@@ -311,7 +279,6 @@ export default class HerdBoostWindow {
     });
   }
   
-  
   private createScoreText(): void {
     this.scene.add.text(360, 380, this.scene.state.lang[`herdBoostScore${this.scene.state.farm}`] + this.scene.state.herdBoostAnimals.length, {
       font: '30px Shadow',
@@ -326,7 +293,6 @@ export default class HerdBoostWindow {
       align: 'center'
     }).setOrigin(0.5, 0.5).setDepth(2);
   }
-
 
   private getRandomAnimal(crystal: boolean = false): void {
     let {x, y, side, _id} = this.getRandomStartPosition(); 
@@ -375,7 +341,6 @@ export default class HerdBoostWindow {
   
     animal.play(this.animal + '-move-' + animal.data.values.side + animal.data.values.type);
   }
-  
 
   private getRandomStartPosition(): {x: number, y: number, side: string, _id: string} {
     let x: number = 0;
@@ -390,7 +355,6 @@ export default class HerdBoostWindow {
   
     return {x, y, side, _id};
   }
-  
   
   private checkMerging(animal: Phaser.Physics.Arcade.Sprite, position: string): void {
     if (animal) {
@@ -464,7 +428,11 @@ export default class HerdBoostWindow {
               : animal.data.values.type;
             if (animal1.data.values.type === 0 && animal2.data.values.type === 0) newType = 0;
             this.scene.state.herdBoostAnimals.push(newType);
-    
+            if (!this.merged) {
+              this.text1.setVisible(true);
+              this.text2.setY(1100);
+            }
+            this.merged = true;
             this.scene.time.addEvent({ delay: 100, callback: (): void => {
               MergingCloud.create(this.scene, { x: this.x, y: this.y });
               animal1?.data?.values.woolSprite?.destroy();
