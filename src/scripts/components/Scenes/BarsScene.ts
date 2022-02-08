@@ -55,6 +55,8 @@ export default class BarsScene extends Phaser.Scene {
   public grassProblem: boolean;
   public addDiamonds: Phaser.GameObjects.Sprite;
   public addMoney: Phaser.GameObjects.Sprite;
+  public zoneDiamonds: Phaser.GameObjects.Zone;
+  public zoneMoney: Phaser.GameObjects.Zone;
   public shop: Phaser.GameObjects.Sprite;
   public map: Phaser.GameObjects.Sprite;
   public collectorBtn: Phaser.GameObjects.Sprite;
@@ -178,15 +180,15 @@ export default class BarsScene extends Phaser.Scene {
     if (this.state.newbieTime <= 0) return;
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Bip',
-      fontSize: '25px',
+      fontSize: '35px',
       color: '#285881',
     };
-    this.calendar = this.add.sprite(140, 115, 'calendar');
+    this.calendar = this.add.sprite(40, 180, 'calendar').setScale(1.5);
     this.click(this.calendar, (): void => { this.openModal({ type: 6 }); });
 
     const { x, y } = this.calendar;
     const str = String(Number(this.state.daily));
-    this.calendarText = this.add.text(x + 2, y + 8, str, textStyle).setOrigin(0.5);
+    this.calendarText = this.add.text(x + 5, y + 12, str, textStyle).setOrigin(0.5);
   }
 
   private createMoneyInfo(): void {
@@ -197,13 +199,17 @@ export default class BarsScene extends Phaser.Scene {
     };
     this.diamonds = this.add.text(590, 38, '', textStyle).setOrigin(0.5);
     this.money = this.add.text(590, 100, '', textStyle).setOrigin(0.5);
+    this.zoneDiamonds = this.add.zone(585, 38, 230, 60).setDropZone(undefined, () => {});
+    this.zoneMoney = this.add.zone(585, 100, 230, 60).setDropZone(undefined, () => {});
     this.addDiamonds = this.add.sprite(680, 38, 'plus');
     this.addMoney = this.add.sprite(680, 100, 'plus');
     this.add.sprite(498, 100, `${this.state.farm.toLowerCase()}Coin`).setScale(0.22);
     this.createStarterpackIcon();
-
+    
     this.clickButton(this.addDiamonds, (): void => { this.openModal({ type: 2, shopType: 1 }); });
     this.clickButton(this.addMoney, (): void => { this.openModal({ type: 2, shopType: 2 }); });
+    this.click(this.zoneDiamonds, (): void => { this.openModal({ type: 2, shopType: 1 }); });
+    this.click(this.zoneMoney, (): void => { this.openModal({ type: 2, shopType: 2 }); });
   }
 
   private createStarterpackIcon(): void {

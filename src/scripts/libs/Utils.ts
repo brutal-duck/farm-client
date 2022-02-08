@@ -74,6 +74,14 @@ export default class Utils {
     || platform === 'android';
   }
 
+  public static createZoneGraphics(scene: Phaser.Scene, zone: Phaser.GameObjects.Zone, color: number): void {
+    const { height, width } = zone.input.hitArea;
+    const { x, y } = zone;
+    const graphics: Phaser.GameObjects.Graphics = scene.add.graphics();
+    graphics.lineStyle(5, color);
+    graphics.strokeRect(x - width / 2, y - height / 2, width, height);
+  }
+
   /**
    * @param state Стейт
    * @param saleName Название акции из списка

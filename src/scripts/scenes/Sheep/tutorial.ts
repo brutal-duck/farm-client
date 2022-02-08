@@ -252,6 +252,8 @@ function doneTutor_90(): void {
   barsScene.taskZone.setVisible(true);
   barsScene.addDiamonds.setVisible(true);
   barsScene.addMoney.setVisible(true);
+  barsScene.zoneDiamonds.setVisible(true);
+  barsScene.zoneMoney.setVisible(true);
   barsScene.shop.setVisible(true);
   barsScene.map.setVisible(true);
   barsScene.collectorBtn.setVisible(true);

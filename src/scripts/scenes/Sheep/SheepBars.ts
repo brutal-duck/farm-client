@@ -70,6 +70,8 @@ class SheepBars extends Bars {
       this.taskZone.setVisible(false);
       this.addDiamonds.setVisible(false);
       this.addMoney.setVisible(false);
+      this.zoneDiamonds.setVisible(false);
+      this.zoneMoney.setVisible(false);
       this.shop.setVisible(false);
       this.map.setVisible(false);
       this.collectorBtn.setVisible(false);
