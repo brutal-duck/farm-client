@@ -37,7 +37,7 @@ function interval(): void {
       balanceCounter++;
 
       if (balanceCounter >= BALANCE_HINT_COUNTDOWN * balanceCounterMultiplier && this.state.userSheep.part >= 2) {
-        SpeechBubble.create(this.game.scene.keys['SheepBars'], this.state.lang.remainderBalance, 4);
+        SpeechBubble.create(this.game.scene.keys['SheepBars'], this.state.lang.notEnoughtWaterAndGrass, 4);
         balanceCounter = 0;
         balanceCounterMultiplier++;
       }
