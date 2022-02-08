@@ -348,6 +348,17 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
     }
     this.adButton = ad;
     this.freeDiamondBtn = new ShopButton(this.scene, { x: this.scene.cameras.main.centerX - 30, y: y }, () => {this.freeDiamondsBtnHandler()}, elements);
+    if (!ad) {
+      const geom = this.freeDiamondBtn.getBounds();
+      const pos: Iposition = { x: geom.left + 5, y: geom.top + 5 };
+      this.scene.add.sprite(pos.x, pos.y, 'notification-bg');
+      this.scene.add.text(pos.x, pos.y, '!', {
+        fontFamily: 'Bip',
+        fontSize: '28px',
+        color: '#ffffff',
+        fontStyle: 'Bold',
+      }).setOrigin(0.5);
+    }
     if (Utils.checkAndroidEngPlatform(this.scene.state)) {
       this.freeDiamondBtn.setFontFamily('Bip');
     }
