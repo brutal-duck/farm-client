@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { shortNum, shortTime } from '../../general/basic';
+import { shortNum, shortTime, timer } from '../../general/basic';
 import Chicken from '../../scenes/Chicken/Main';
 import Cow from '../../scenes/Cow/Main';
 import Unicorn from '../../scenes/Event/Unicorns/Main';
@@ -89,7 +89,7 @@ export default class DailyNewbieWindow extends Phaser.GameObjects.Sprite {
       color: '#F4FEFF'
     }).setOrigin(0, 0.5);
   
-    this.timerNewbieAward = this.scene.add.text(0, this.y - 310, shortTime(this.scene.state.timeToNewDay, this.scene.state.lang), {
+    this.timerNewbieAward = this.scene.add.text(0, this.y - 310, timer(this.scene.state.timeToNewDay), {
       font: '21px Shadow',
       color: '#E9B744'
     }).setOrigin(0, 0.5);
@@ -448,7 +448,7 @@ export default class DailyNewbieWindow extends Phaser.GameObjects.Sprite {
   public preUpdate(time: number, delta: number): void {
     super.preUpdate(time, delta);
     if (this.scene.state.modal.type === 6) {
-      let text: string = shortTime(this.scene.state.timeToNewDay, this.scene.state.lang);
+      let text: string = timer(this.scene.state.timeToNewDay);
       if (this.timerNewbieAward.text !== text) this.timerNewbieAward.setText(text);
     }
   }
