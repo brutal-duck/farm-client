@@ -59,26 +59,41 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
         else this.collectorBoostTestB();
         
         if (this.checkHerdBoost()) this.herdBoost();
+        else this.createLockedHerdBoost();
+
         if (this.checkFeedBoost()) this.feedBoost();
+        else this.createLockedFeedBoost();
         break;
       case 'Chicken':
         if (!Utils.checkTestB(this.scene.state)) this.collectorBoost();
         else this.collectorBoostTestB();
 
         if (this.checkHerdBoost()) this.herdBoost();
+        else this.createLockedHerdBoost();
+
         if (this.checkFeedBoost()) this.feedBoost();
+        else this.createLockedFeedBoost();
+
         break;
       case 'Cow':
         if (!Utils.checkTestB(this.scene.state)) this.collectorBoost();
         else this.collectorBoostTestB();
 
         if (this.checkHerdBoost()) this.herdBoost();
+        else this.createLockedHerdBoost();
+
         if (this.checkFeedBoost()) this.feedBoost();
+        else this.createLockedFeedBoost();
+
         break;
       case 'Unicorn':
         this.collectorBoost();
         if (this.checkEventHerdBoost()) this.herdBoost();
+        else this.createLockedHerdBoost();
+
         if (this.checkEventFeedBoost()) this.feedBoost();
+        else this.createLockedFeedBoost();
+
         break;
     }
     this.createTutorialArrow();
@@ -101,7 +116,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     if (this.scene.state.farm === 'Cow') resource = 'milk';
     if (this.scene.state.farm === 'Unicorn') resource = 'resource';
     this.scene.add.sprite(0, 20 + this.scene.height, 'boost-bg').setOrigin(0, 0);
-    this.scene.add.text(225, 40 + this.scene.height, this.scene.state.lang[`${resource}Collector`], { font: '28px Shadow', color: '#FFFFFF' }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
+    this.scene.add.text(225, 40 + this.scene.height, this.scene.state.lang[`${resource}Collector`], { font: '25px Shadow', color: '#FFFFFF' }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
     const collectorSprite: Phaser.GameObjects.Sprite = this.scene.add.sprite(40, 65 + this.scene.height, `shop-${this.scene.state.farm.toLowerCase()}-${resource}-collector`).setOrigin(0, 0);
     const levelBg: Phaser.GameObjects.Sprite = this.scene.add.sprite(10, 55 + this.scene.height, 'level-bg').setOrigin(0, 0);
     let level: string = String(this.scene.state[`user${this.scene.state.farm}`].collectorLevel);
@@ -155,7 +170,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
   private collectorBoostTestB(): void {
     const headerTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Shadow',
-      fontSize: '28px',
+      fontSize: '25px',
       color: '#ffffff',
       stroke: '#8B4A84',
       strokeThickness: 2,
@@ -438,13 +453,13 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     const y: number = 335 + this.scene.height;
     this.scene.add.tileSprite(0, y, 466, 235, 'boost-bg').setOrigin(0, 0);
     this.scene.add.text(240, y + 35, this.scene.state.lang[`herdBoostTitle${this.farm}`], { 
-      font: '28px Shadow',
+      font: '25px Shadow',
       color: '#FFFFFF',
       wordWrap: { width: 300 },
       align: 'center'
     }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
     
-    const icon = this.scene.add.sprite(25, y + 70, `${this.farm.toLocaleLowerCase()}-herd-boost-icon`).setOrigin(0, 0);
+    const icon = this.scene.add.sprite(25, y + 70 - 10, `${this.farm.toLocaleLowerCase()}-herd-boost-icon`).setOrigin(0, 0);
 
     if (this.scene.state.readyAd && farmUser.herdBoostAd && farmUser.takenHerdBoost > 0) {
       this.createAdBtn(icon, () => { this.scene.game.scene.keys[this.farm].ads.watchAd(8); });
@@ -580,7 +595,7 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     const y: number = 585 + this.scene.height;
     this.scene.add.tileSprite(0, y, 466, 270, 'boost-bg').setOrigin(0, 0);
     this.scene.add.text(240, y + 20, this.scene.state.lang.feedBoostTitle, { 
-      font: '28px Shadow',
+      font: '25px Shadow',
       color: '#FFFFFF',
       wordWrap: { width: 300 },
       align: 'center'
@@ -839,4 +854,55 @@ export default class BoostsWindow extends Phaser.GameObjects.Sprite {
     return this.scene.state.modal.shopType === 4 && 
     this.scene.state[`user${this.farm}`].points >= this.scene.game.scene.keys[this.farm].feedBoostLvl;
   }
-}
+
+  private createLockedHerdBoost(): void {
+    if (this.farm === 'Unicorn' && this.scene.state.userUnicorn.takenHerdBoost <= 0) this.scene.state.userUnicorn.takenHerdBoost = 1;
+    const y: number = 335 + this.scene.height;
+    this.scene.add.tileSprite(0, y, 466, 235, 'lock-boost-bg').setOrigin(0).setAlpha(0.5);
+    this.scene.add.text(240, y + 35, this.scene.state.lang[`herdBoostTitle${this.farm}`], { 
+      font: '25px Shadow',
+      color: '#FFFFFF',
+      wordWrap: { width: 300 },
+      align: 'center'
+    }).setOrigin(0.5).setStroke('#8B4A84', 2);
+    
+    const icon = this.scene.add.sprite(25, y + 70 - 10, `${this.farm.toLocaleLowerCase()}-herd-boost-icon`).setOrigin(0);
+    const iconGeom = icon.getBounds();
+    const lock = this.scene.add.sprite(iconGeom.centerX, iconGeom.centerY, 'lock-boost');
+
+    const style: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontSize: '21px',
+      fontFamily: 'Shadow',
+      color: '#f6e1ff',
+      wordWrap: { width: 200 },
+      align: 'center',
+    };
+    const str = this.scene.state.lang.openFarm.replace('$1', '4');
+    const text = this.scene.add.text(iconGeom.right + 140, iconGeom.centerY, str, style).setOrigin(0.5);
+  }
+
+  private createLockedFeedBoost(): void {
+    const y: number = 585 + this.scene.height + 20;
+    this.scene.add.tileSprite(0, y - 20, 466, 270, 'lock-boost-bg').setOrigin(0).setAlpha(0.5);
+    this.scene.add.text(240, y + 20, this.scene.state.lang.feedBoostTitle, { 
+      font: '25px Shadow',
+      color: '#FFFFFF',
+      wordWrap: { width: 300 },
+      align: 'center'
+    }).setOrigin(0.5, 0.5).setStroke('#8B4A84', 2);
+    
+    const icon = this.scene.add.sprite(25, y + 35, `${this.farm.toLocaleLowerCase()}-feed-boost-icon`).setOrigin(0);
+    const iconGeom = icon.getBounds();
+    const lock = this.scene.add.sprite(iconGeom.centerX, iconGeom.centerY, 'lock-boost');
+
+    const style: Phaser.Types.GameObjects.Text.TextStyle = {
+      fontSize: '21px',
+      fontFamily: 'Shadow',
+      color: '#f6e1ff',
+      wordWrap: { width: 200 },
+      align: 'center',
+    };
+    const str = this.scene.state.lang.openFarm.replace('$1', '5');
+    const text = this.scene.add.text(iconGeom.right + 140, iconGeom.centerY, str, style).setOrigin(0.5);
+  }
+};

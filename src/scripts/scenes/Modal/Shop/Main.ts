@@ -88,6 +88,8 @@ class Shop extends Phaser.Scene {
     this.load.image('boost-btn-ad', assets.boostBtnAd);
     this.load.image('level-bg', assets.levelBg);
     this.load.image('boost-bg', assets.boostBg);
+    this.load.image('lock-boost-bg', assets.lockBoostBg);
+    this.load.image('lock-boost', assets.lockBoost);
     this.load.image('improve-collector', assets.improveCollector);
     this.load.image('starterpack-bg', assets.starterpackBg);
     this.load.image('starterpack-shadow', assets.starterpackShadow);
