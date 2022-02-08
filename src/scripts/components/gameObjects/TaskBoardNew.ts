@@ -94,6 +94,7 @@ export default class TaskBoardNew extends Phaser.GameObjects.TileSprite {
     // this.scene.input.keyboard.addKey('W').on('down', (): void => { this.t.done = 1 })
 
     this.bg = new TaskBoardBg(this.scene, this.bgY);
+    this.bg.setVisible(false);
     this.taskIcon = this.scene.add.sprite(0, 0, ' ').setDepth(this.bg.depth + 1).setVisible(false);
     this.star = this.scene.add.sprite(0, 0, 'star').setDepth(this.bg.depth + 1).setVisible(false);
 
