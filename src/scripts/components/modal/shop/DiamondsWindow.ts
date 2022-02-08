@@ -63,9 +63,10 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
   private createAllPackages(): void {
     const startIndex = Utils.checkSale(this.scene.state,'PACKAGE_PRICE') ? 2 : Utils.checkSale(this.scene.state,'DIAMOND_COUNT') ? 4 : 0;
     for (let i: number = startIndex; i < this.rows + startIndex; i++) {
-      let y: number = (i - startIndex) * 270 + 40;
-      if (this.hasStarterpack) y += 238;
-      
+      let y: number = (i - startIndex) * 270 + 20;
+      if (this.hasStarterpack) y += 208;
+      if (this.checkFreeDiamonds() && this.hasStarterpack) y += 100;
+      else if (this.checkFreeDiamonds() && !this.hasStarterpack) y += 110;
       const left: Ipackage = this.scene.state.packages[i * 2];
       const right: Ipackage = this.scene.state.packages[i * 2 + 1];
       
@@ -203,8 +204,8 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
       wordWrap: { width: 220 },
       align: 'center'
     };
-    let y: number = (this.rows + 1) * 270 + 50 + this.scene.height - 238;
-    if (this.hasStarterpack && !this.iOSplatform) y += 238;
+    let y: number = this.scene.height + 37 + 40;
+    if (this.hasStarterpack && !this.iOSplatform) y += 198;
     else if (this.iOSplatform) y += 320;
     this.scene.add.sprite(this.scene.cameras.main.centerX - 130, y, 'free-diamonds-bg');
     const diamondCount: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 300, y, `+${FREE_DIAMONDS}`, {
@@ -241,8 +242,8 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
   }
 
   private createStarterpack(): void {
-    this.scene.scrolling.bottom += 350;
-    const y: number = this.scene.height + 140;
+    this.scene.scrolling.bottom += 300;
+    const y: number = this.scene.height + 120;
     const { centerX } = this.scene.cameras.main;
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Shadow',
@@ -258,7 +259,7 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
       wordWrap: { width: 290 },
       align: 'center',
     };
-    const starterpackBg = this.scene.add.sprite(centerX - 130, y, 'starterpack-bg');
+    const starterpackBg = this.scene.add.sprite(centerX - 130, y, 'starterpack-bg').setDisplaySize(472, 210);
     const starterpackIconShadow = this.scene.add.sprite(centerX - 265, y + 70, 'starterpack-shadow');
     const starterpackIcon = this.scene.add.sprite(centerX - 270, y, 'starterpack-icon');
     const text1 = this.scene.add.text(centerX - 90, y - 60, this.scene.state.lang.buyFrom, textStyle).setColor('#FFFFFF').setOrigin(0.5, 0.5);
@@ -336,17 +337,14 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
 
   private createFreeBtn(ad: boolean): void {
     this.freeDiamondBtn?.destroy();
-    let y: number = (this.rows + 1) * 270 + 50 + this.scene.height - 238;
-    if (this.hasStarterpack && !this.iOSplatform) y += 238;
-    else if (this.iOSplatform) y += 320;
+    let y: number = this.scene.height + 40 + 40;
+    if (this.hasStarterpack && !this.iOSplatform) y += 198;
+    else if (this.iOSplatform) y = 50 + this.scene.height - 238 + 320;
     const price = this.iOSplatform ?  this.scene.state.lang.pickUp : this.getPlatformPrice({ voices: 0, price: 0, dollars: 0 });
     const elements: IshopButtonElements = { text1: price };
     if (ad) {
       elements.text1 = this.scene.state.lang.pickUp;
-      elements.img = {
-        texture: 'ad-icon',
-        scale: 0.6,
-      };
+      elements.img = { texture: 'ad-icon', scale: 0.6 };
     }
     this.adButton = ad;
     this.freeDiamondBtn = new ShopButton(this.scene, { x: this.scene.cameras.main.centerX - 30, y: y }, () => {this.freeDiamondsBtnHandler()}, elements);
