@@ -75,7 +75,8 @@ export default class ImproveClanFarmWindow extends Phaser.GameObjects.Sprite{
       wordWrap: { width: 400, useAdvancedWrap: true },
     }
 
-    this.scene.add.nineslice(this.x, pos.y - 265, this.window.width - 30, 100, 'tasks-bar-ns', 15).setOrigin(0.5);
+    const bar = this.scene.add.sprite(this.x, pos.y - 265, 'tasks-bar-fix').setOrigin(0.5);
+    bar.setDisplaySize(this.window.width - 30, 100);
     this.scene.add.text(this.x, pos.y - 265, this.scene.state.lang.clanFarmImproveNote, noteTextStyle).setOrigin(0.5);
     const bg: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.x, pos.y - 110, `icon-clan-${this.farm}`).setDepth(1);
     this.scene.add.sprite(bg.x, bg.y + 10, 'clan-window-wreath').setDepth(1);
@@ -161,7 +162,8 @@ export default class ImproveClanFarmWindow extends Phaser.GameObjects.Sprite{
       wordWrap: { width: 400, useAdvancedWrap: true },
     }
 
-    this.scene.add.nineslice(this.x, pos.y - 265, this.window.width - 30, 100, 'tasks-bar-ns', 15).setOrigin(0.5);
+    const bar = this.scene.add.sprite(this.x, pos.y - 265,'tasks-bar-fix').setOrigin(0.5);
+    bar.setDisplaySize(this.window.width - 30, 100);
     this.scene.add.text(this.x, pos.y - 265, this.scene.state.lang.clanFarmImproveNote, noteTextStyle).setOrigin(0.5);
     const bg: Phaser.GameObjects.Sprite = this.scene.add.sprite(this.x, pos.y - 110, `icon-clan-${this.farm}`).setDepth(1);
     this.scene.add.sprite(bg.x, bg.y + 10, 'clan-window-wreath').setDepth(1);

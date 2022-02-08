@@ -170,14 +170,14 @@ function checkDoneCollectorTaskTestB(state: Istate): void {
     if (
       task.type === TaskType.IMPROVE_SPEED_COLLECTOR 
       && task.done !== 1 
-      && task.state === state.userSheep.collectorLevel
+      && state.userSheep.collectorLevel >= task.state
     ) {
       task.done = 1; 
     }
     if (
       task.type === TaskType.IMPROVE_COLLECTOR 
       && task.done !== 1 
-      && task.state === state.userSheep.collectorTimeLevel
+      &&  state.userSheep.collectorTimeLevel >= task.state
     ) {
       task.done = 1; 
     }
@@ -186,14 +186,14 @@ function checkDoneCollectorTaskTestB(state: Istate): void {
     if (
       task.type === TaskType.IMPROVE_SPEED_COLLECTOR 
       && task.done !== 1 
-      && task.state === state.userChicken.collectorLevel
+      && state.userChicken.collectorLevel >= task.state 
     ) {
       task.done = 1; 
     }
     if (
       task.type === TaskType.IMPROVE_COLLECTOR 
       && task.done !== 1 
-      && task.state === state.userChicken.collectorTimeLevel
+      && state.userChicken.collectorTimeLevel >= task.state 
     ) {
       task.done = 1; 
     }
@@ -202,14 +202,14 @@ function checkDoneCollectorTaskTestB(state: Istate): void {
     if (
       task.type === TaskType.IMPROVE_SPEED_COLLECTOR 
       && task.done !== 1 
-      && task.state === state.userCow.collectorLevel
+      && state.userCow.collectorLevel >= task.state
     ) {
       task.done = 1; 
     }
     if (
       task.type === TaskType.IMPROVE_COLLECTOR 
       && task.done !== 1 
-      && task.state === state.userCow.collectorTimeLevel
+      && state.userCow.collectorTimeLevel >= task.state
     ) {
       task.done = 1; 
     }

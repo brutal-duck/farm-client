@@ -41,8 +41,8 @@ export default class RoundedProgress {
 
   private create(): void {
     this.isVisible = true
-    this.rightSegment = this.scene.add.sprite(this.x, this.y, this.texture).setOrigin(0, 0.5).setTint(this.tint).setScale(this.scale).setDepth(100000);
-    this.leftSegment = this.scene.add.sprite(this.x, this.y, this.texture).setOrigin(1, 0.5).setFlipX(true).setTint(this.tint).setScale(this.scale).setDepth(100000);
+    this.rightSegment = this.scene.add.sprite(this.x, this.y, this.texture).setOrigin(0, 0.5).setTint(this.tint).setScale(this.scale);
+    this.leftSegment = this.scene.add.sprite(this.x, this.y, this.texture).setOrigin(1, 0.5).setFlipX(true).setTint(this.tint).setScale(this.scale);
 
     this.mask = this.scene.add.tileSprite(this.x, this.y, this.rightSegment.getBounds().width + 5, this.rightSegment.getBounds().height + 5, 'white-pixel').setOrigin(0, 1).setVisible(false).setDepth(-1).createBitmapMask();
     this.mask.invertAlpha = true;

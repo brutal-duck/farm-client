@@ -200,7 +200,8 @@ export default class ClanSearch {
       y: this.scene.windowHeight + this.scene.scrollHeight + padding,
     };
 
-    const bg = this.scene.add.nineslice(pos.x, pos.y, bgWidth, 100, 'tasks-bar-ns', 15).setOrigin(0, 0.5);
+    const bg = this.scene.add.sprite(pos.x, pos.y, 'tasks-bar-fix').setOrigin(0, 0.5);
+    bg.setDisplaySize(bgWidth, 100);
     const bgGeom: Phaser.Geom.Rectangle = bg.getBounds();
     const text: Phaser.GameObjects.Text = this.scene.add.text(bgGeom.centerX, bgGeom.centerY, this.scene.state.lang.clansNotFound, textStyle).setOrigin(0.5);
 

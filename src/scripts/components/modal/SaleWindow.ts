@@ -127,7 +127,8 @@ export default class SaleWindow {
 
     const bgWidth: number = 490;
 
-    const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(pos.x, pos.y, bgWidth, 50, 'tasks-bar-ns', 15).setOrigin(0.5, 0);
+    const bg = this.scene.add.sprite(pos.x, pos.y, 'tasks-bar-fix').setOrigin(0.5, 0);
+    bg.setDisplaySize(bgWidth, 50);
     const bgGeom: Phaser.Geom.Rectangle = bg.getBounds();
     const last = this.scene.add.text(0, bgGeom.centerY, this.scene.state.lang.saleLastTime, textStyle).setOrigin(0, 0.5);
     const timer = this.scene.add.text(0, bgGeom.centerY, shortTime(this.getLastTime(), this.scene.state.lang), timerStyle).setOrigin(0, 0.5);

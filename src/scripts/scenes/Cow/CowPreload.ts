@@ -251,7 +251,7 @@ class CowPreload extends Phaser.Scene {
     this.load.image('hatchet', assets.hatchet);
     this.load.image('hammer', assets.hammer);
     this.load.image('improve-collector', assets.improveCollector);
-    this.load.image('tasks-uncomplete-rend', assets.tasksUncomplete);
+    this.load.image('task-award-bg', assets.tasksAwardBg);
 
     this.load.image('circle', assets.circle);
     this.load.image('notification-bg', assets.notificationBg);
@@ -259,6 +259,10 @@ class CowPreload extends Phaser.Scene {
     this.load.image('circle-outline', assets.circleOutline);
     this.load.image('cooldown-plate', assets.cooldownPlate);
     this.load.image('tasks-bar-ns', assets.tasksBarNs);
+    this.load.image('tasks-bar-fix', assets.tasksBarNs);
+    this.load.image('task-bar-top', assets.taskBarTop);
+    this.load.image('task-bar-bot', assets.taskBarBot);
+    this.load.image('task-bar-mid', assets.taskBarMid);
     this.load.image('text-sale', assets.textSale);
     this.load.image('icon-sale', assets.saleIcon);
     this.load.image('btn-clean', assets.btnClean);

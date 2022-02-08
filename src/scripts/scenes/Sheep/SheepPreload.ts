@@ -355,8 +355,12 @@ class SheepPreload extends Phaser.Scene {
     this.load.image('white-pixel', assets.whitePixel);
     this.load.image('scroll-arrow', assets.scrollArrow);
     this.load.image('improve-collector', assets.improveCollector);
-    this.load.image('tasks-uncomplete-rend', assets.tasksUncomplete);
+    this.load.image('task-award-bg', assets.tasksAwardBg);
     this.load.image('tasks-bar-ns', assets.tasksBarNs);
+    this.load.image('tasks-bar-fix', assets.tasksBarNs);
+    this.load.image('task-bar-top', assets.taskBarTop);
+    this.load.image('task-bar-bot', assets.taskBarBot);
+    this.load.image('task-bar-mid', assets.taskBarMid);
     this.load.image('notification-bg', assets.notificationBg);
     this.load.image('rounded-segment', assets.roundedBarSegment);
     this.load.image('circle-outline', assets.circleOutline);

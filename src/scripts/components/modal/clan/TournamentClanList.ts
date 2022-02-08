@@ -164,16 +164,10 @@ export default class TournamentClanList {
     const positionText: Phaser.GameObjects.Text = this.scene.add.text(pos.x, pos.y, String(this.place), scoreTextStyle)
       .setOrigin(0, 0.5)
       .setDepth(2);
-    const positionSprite: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(
-      positionText.getBottomCenter().x,
-      positionText.y,
-      positionText.displayWidth + 15,
-      32,
-      'clan-window-medal-ns',
-      15,
-    )
+    const positionSprite = this.scene.add.sprite(positionText.getBottomCenter().x, positionText.y, 'clan-window-medal-ns')
       .setOrigin(0.5)
-      .setDepth(1);
+      .setDepth(1)
+      .setDisplaySize(positionText.displayWidth + 15, 32);
 
     const avatarSprite = LogoManager.createIcon(this.scene, positionText.getBounds().right + 50, pos.y, avatar)
       .setScale(0.35)

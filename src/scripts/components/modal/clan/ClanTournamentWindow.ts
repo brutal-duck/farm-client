@@ -261,7 +261,8 @@ export default class ClanTournamentWindow extends Phaser.GameObjects.Sprite {
 
     const bgWidth: number = 490;
 
-    const bg = this.scene.add.nineslice(pos.x, pos.y, bgWidth, 50, 'tasks-bar-ns', 15).setOrigin(0.5, 0);
+    const bg = this.scene.add.sprite(pos.x, pos.y, 'tasks-bar-fix').setOrigin(0.5, 0);
+    bg.setDisplaySize(bgWidth, 50);
     const bgGeom: Phaser.Geom.Rectangle = bg.getBounds();
     this.timer = this.scene.add.text(bgGeom.centerX, bgGeom.centerY, '', textStyle).setOrigin(0.5);
   }

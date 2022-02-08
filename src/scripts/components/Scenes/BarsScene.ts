@@ -167,8 +167,8 @@ export default class BarsScene extends Phaser.Scene {
       color: '#CA6200'
     };
 
-    this.part = this.add.text(82, 55, '', currentPartStyle).setDepth(1).setOrigin(0.5, 0.5);
-    this.partProgress = this.add.text(82, 120, '', progressStyle).setDepth(1).setOrigin(0.5, 0.5);
+    this.part = this.add.text(82, 55, '', currentPartStyle).setOrigin(0.5);
+    this.partProgress = this.add.text(82, 120, '', progressStyle).setOrigin(0.5);
     this.add.sprite(70, 0, `${this.state.farm.toLowerCase()}-leaves`).setOrigin(0.5, 0);
     this.createTaskZone();
     this.setCurrentPartProgress();
@@ -181,12 +181,12 @@ export default class BarsScene extends Phaser.Scene {
       fontSize: '25px',
       color: '#285881',
     };
-    this.calendar = this.add.sprite(140, 115, 'calendar').setDepth(2);
+    this.calendar = this.add.sprite(140, 115, 'calendar');
     this.click(this.calendar, (): void => { this.openModal({ type: 6 }); });
 
     const { x, y } = this.calendar;
     const str = String(Number(this.state.daily));
-    this.calendarText = this.add.text(x + 2, y + 8, str, textStyle).setOrigin(0.5).setDepth(2);
+    this.calendarText = this.add.text(x + 2, y + 8, str, textStyle).setOrigin(0.5);
   }
 
   private createMoneyInfo(): void {
@@ -195,10 +195,10 @@ export default class BarsScene extends Phaser.Scene {
       fontFamily: 'Shadow',
       color: '#7b3b0d',
     };
-    this.diamonds = this.add.text(590, 38, '', textStyle).setDepth(1).setOrigin(0.5);
-    this.money = this.add.text(590, 100, '', textStyle).setDepth(1).setOrigin(0.5);
-    this.addDiamonds = this.add.sprite(680, 38, 'plus').setDepth(2);
-    this.addMoney = this.add.sprite(680, 100, 'plus').setDepth(2);
+    this.diamonds = this.add.text(590, 38, '', textStyle).setOrigin(0.5);
+    this.money = this.add.text(590, 100, '', textStyle).setOrigin(0.5);
+    this.addDiamonds = this.add.sprite(680, 38, 'plus');
+    this.addMoney = this.add.sprite(680, 100, 'plus');
     this.add.sprite(498, 100, `${this.state.farm.toLowerCase()}Coin`).setScale(0.22);
     this.createStarterpackIcon();
 
@@ -354,12 +354,12 @@ export default class BarsScene extends Phaser.Scene {
       }
     };
 
-    this.grassBalance = this.add.sprite(balanceGeom.left + 10, balanceGeom.centerY - 25, 'grass-balance').setOrigin(0, 0.5).setDepth(2);
-    this.waterBalance = this.add.sprite(balanceGeom.left + 10, balanceGeom.centerY + 30, 'water-balance').setOrigin(0, 0.5).setDepth(2);
+    this.grassBalance = this.add.sprite(balanceGeom.left + 10, balanceGeom.centerY - 25, 'grass-balance').setOrigin(0, 0.5);
+    this.waterBalance = this.add.sprite(balanceGeom.left + 10, balanceGeom.centerY + 30, 'water-balance').setOrigin(0, 0.5);
     const grassSpriteGeom = this.grassBalance.getBounds();
     const waterSpriteGeom = this.waterBalance.getBounds();
-    this.textGrass = this.add.text(balanceGeom.centerX + 20, grassSpriteGeom.centerY, '0%', textStyle).setDepth(2).setOrigin(0.5);
-    this.textWater = this.add.text(balanceGeom.centerX + 20, waterSpriteGeom.centerY, '0%', textStyle).setDepth(2).setOrigin(0.5);
+    this.textGrass = this.add.text(balanceGeom.centerX + 20, grassSpriteGeom.centerY, '0%', textStyle).setOrigin(0.5);
+    this.textWater = this.add.text(balanceGeom.centerX + 20, waterSpriteGeom.centerY, '0%', textStyle).setOrigin(0.5);
     this.textGrass.setDataEnabled();
     this.textGrass.setData('pulseTimer', 0);
     this.textWater.setDataEnabled();

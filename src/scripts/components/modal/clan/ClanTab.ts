@@ -47,13 +47,13 @@ export default class ClanTab extends Phaser.GameObjects.TileSprite {
     this.bc = this.scene.add.tileSprite(tabGeom.centerX, tabGeom.bottom, this.width, OFFSET_BOTTOM, texturePrefix + 'bc').setOrigin(0.5, 0);
     this.br = this.scene.add.sprite(tabGeom.right, tabGeom.bottom, texturePrefix + 'br').setOrigin(0);
 
-    this.icon = this.scene.add.sprite(tabGeom.centerX, tabGeom.centerY - 10, this.iconTexture);
+    this.icon = this.scene.add.sprite(tabGeom.centerX, tabGeom.centerY - 13, this.iconTexture);
 
     if (this.typeIcon === 1) {
       const mask = new Phaser.Display.Masks.BitmapMask(this.scene, this.icon);
       mask.invertAlpha = true;
       if (this.scene.state.clan?.avatar) {
-        this.flag = LogoManager.createFlag(this.scene, tabGeom.centerX + 5, tabGeom.centerY - 10 - 5, this.scene.state.clan?.avatar).setScale(0.205).setMask(mask);
+        this.flag = LogoManager.createFlag(this.scene, tabGeom.centerX + 5, tabGeom.centerY - 13 - 5, this.scene.state.clan?.avatar).setScale(0.205).setMask(mask);
       }
     }
 

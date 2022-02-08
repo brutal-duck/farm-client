@@ -1,6 +1,7 @@
 import { shortTime } from '../../../general/basic';
 import Modal from '../../../scenes/Modal/Modal';
 import LogoManager from '../../Utils/LogoManager';
+import ClanTab from './ClanTab';
 
 export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite {
   public scene: Modal;
@@ -15,7 +16,7 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
   private headerText: Phaser.GameObjects.Text;
   private footer: Phaser.GameObjects.Sprite;
   private timer: Phaser.GameObjects.Text;
-  private windowType: number = 1;
+  private windowType: number = 2;
   private headerTextStyle: Phaser.Types.GameObjects.Text.TextStyle = {
     color: '#fffdfa',
     fontFamily: 'Shadow',
@@ -40,7 +41,7 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
   
   private init(): void {
     this.scene.add.existing(this);
-    this.windowType = this.scene.state.modal.clanTabType || 1;
+    this.windowType = this.scene.state.modal.clanTabType || 2;
     this.windowHeight = 600;
     this.windowWidth = 527;
   }
@@ -50,16 +51,16 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
     this.createHeader();
     this.createFooter();
     this.createCloseTab();
-    this.createTabs([1, 2, 3]);
+    this.createTabs([2, 1, 3]);
     this.createMainElements();
   }
 
   private createMainElements(): void {
     switch (this.windowType) {
-      case 1:
+      case 2:
         this.createClanLeaderboard();
         break;
-      case 2:
+      case 1:
         this.createUserLeaderboard();
         break;
       case 3:
@@ -104,10 +105,10 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
     const activeTab: number = this.windowType;
     const tabCount: number = types.length;
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
-    let left: number = headerGeom.left + 15;
+    let left: number = headerGeom.left + 87;
     const maxWidth: number = 455;
     types.forEach((el: number) => {
-      this.createTab({x: left, y: headerGeom.top + 25}, activeTab === el, tabCount, el)
+      this.createTab({ x: left, y: headerGeom.top - 22 }, activeTab === el, tabCount, el)
       left += maxWidth / tabCount;
     });
   }
@@ -116,31 +117,18 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
     const maxWidth: number = 455;
     const tabHeight: number = 104;
     const activeTabHeight: number = 115;
-    const slice: number = 30;
     const height: number = active ? activeTabHeight : tabHeight;
-    const texture: string = active ? 'clan-window-tab-active' : 'clan-window-tab-disable';
-    const tab: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(pos.x, pos.y, maxWidth / count, height, texture, slice).setOrigin(0, 1);
-    const tabGeom: Phaser.Geom.Rectangle = tab.getBounds();
-    const icon: string =  type === 1 ?  'clan-window-icon-2' : type === 2 ?  'clan-window-icon-1' : 'clan-window-icon-5';
-    let tabIcon: Phaser.GameObjects.Sprite = this.scene.add.sprite(tabGeom.centerX, tabGeom.centerY - 10, icon).setOrigin(0.5);
-    let flag: Phaser.GameObjects.Sprite;
-    if (type === 2) {
-      const mask = new Phaser.Display.Masks.BitmapMask(this.scene, tabIcon);
-      mask.invertAlpha = true;
-      if (this.scene.state.clan.avatar) {
-        flag = LogoManager.createFlag(this.scene, tabGeom.centerX + 5, tabGeom.centerY - 10 - 5, this.scene.state.clan.avatar).setScale(0.205).setMask(mask);
-      }
-    }
-    if (!active) {
-      this.scene.clickButtonUp(tab, (): void => {
-        this.scene.state.modal = {
-          type: 21,
-          clanTabType: type,
-        };
-        this.scene.scene.stop('ClanScroll');
-        this.scene.scene.restart(this.scene.state);
-      }, tabIcon, flag);
-    }
+
+    const icon: string =  type === 2 ?  'clan-window-icon-2' : type === 1 ?  'clan-window-icon-1' : 'clan-window-icon-5';
+    const callback = (): void => {
+      this.scene.state.modal = {
+        type: 21,
+        clanTabType: type,
+      };
+      this.scene.scene.stop('ClanScroll');
+      this.scene.scene.restart(this.scene.state);
+    };
+    new ClanTab(this.scene, pos.x, pos.y, maxWidth / count, height, icon, active, callback, type);
   }
 
   private createClanLeaderboard(): void {
@@ -348,7 +336,8 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
 
     const bgWidth: number = 480;
 
-    const bg: Phaser.GameObjects.RenderTexture = this.scene.add.nineslice(pos.x, pos.y, bgWidth, 50, 'tasks-bar-ns', 15).setOrigin(0.5, 0);
+    const bg = this.scene.add.sprite(pos.x, pos.y, 'tasks-bar-fix', 15).setOrigin(0.5, 0);
+    bg.setDisplaySize(bgWidth, 50);
     const bgGeom: Phaser.Geom.Rectangle = bg.getBounds();
     this.timer = this.scene.add.text(bgGeom.centerX, bgGeom.centerY, '', textStyle).setOrigin(0.5);
   }
