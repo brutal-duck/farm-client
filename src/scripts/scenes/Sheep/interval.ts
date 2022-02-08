@@ -23,7 +23,6 @@ function interval(): void {
   let arrowOnTerrirory: Phaser.GameObjects.Sprite;
   let arrowOnMerging: Phaser.GameObjects.Sprite;
   let arrowOnMap: Phaser.GameObjects.Sprite;
-  let arrowOnCollector: Phaser.GameObjects.Sprite;
   this.time.addEvent({ delay: 1000, callback: (): void => {
     
     this.remainderSellResource();
@@ -280,7 +279,7 @@ function interval(): void {
 
     }
 
-    this.intervalCollectorTutorial(arrowOnCollector);
+    this.intervalCollectorTutorial();
 
     if (this.state.newbieTime > 0) this.state.newbieTime--;
 

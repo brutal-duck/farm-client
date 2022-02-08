@@ -10,7 +10,6 @@ import Utils from './../../libs/Utils';
 let checkCollector: number = 0;
 let sheepCollectorVolume: number = 0;
 let cowCollectorVolume: number = 0;
-let arrowOnCollector: Phaser.GameObjects.Sprite;
 const BALANCE_HINT_COUNTDOWN = 30;
 let balanceCounter: number = 0;
 let balanceCounterMultiplier = 1;
@@ -236,7 +235,7 @@ function interval(): void {
       this.state.userChicken.collector--;
     } 
 
-    this.intervalCollectorTutorial(arrowOnCollector);
+    this.intervalCollectorTutorial();
     // задание на накопление денег
     this.tryTask(6, 0, 0, this.state.userChicken.money);
 

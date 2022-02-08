@@ -85,7 +85,8 @@ export default class BarsScene extends Phaser.Scene {
   public mainScene: Sheep | Chicken | Cow;
   public farmUser: IuserSheep | IuserChicken | IuserCow;
   public activeBubble: SpeechBubble;
-  
+  public arrowOnCollector: Phaser.GameObjects.Sprite;
+
   public click = click.bind(this);
   public clickButton = clickButton.bind(this);
   public clickShopBtn = clickShopBtn.bind(this);
@@ -111,6 +112,7 @@ export default class BarsScene extends Phaser.Scene {
     this.hints = this.add.group();
     this.mainScene = this.game.scene.getScene(this.state.farm) as Sheep | Chicken | Cow;
     this.farmUser = this.state[`user${this.state.farm}`];
+    this.arrowOnCollector = undefined;
   }
 
 

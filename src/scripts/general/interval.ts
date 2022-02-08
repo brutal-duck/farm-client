@@ -718,12 +718,14 @@ function intervalPorgressCollectorTime(): void {
   if (this.state.userCow.diamondAnimalTime > 0) this.state.userCow.diamondAnimalTime--;
 }
 
-function intervalCollectorTutorial(arrowOnCollector: Phaser.GameObjects.Sprite): void {
+function intervalCollectorTutorial(): void {
+  const barsScene: BarsScene = this.game.scene.keys[`${this.state.farm}Bars`];
+  if (barsScene.arrowOnCollector && barsScene.arrowOnCollector.active) return;
   const DELAY: number = 10;
   if (this.state.user.additionalTutorial.collector || this.state.farm !== 'Sheep') {
 
     if (this.state[`user${this.state.farm}`].collector === 0 &&
-      !arrowOnCollector &&
+      !barsScene.arrowOnCollector &&
       !this.scene.isActive('Modal') &&
       !this.scene.isActive('Tutorial') &&
       !this.scene.isActive('Profile') &&
@@ -732,7 +734,7 @@ function intervalCollectorTutorial(arrowOnCollector: Phaser.GameObjects.Sprite):
       this.counterWithoutCollector++;
       if (this.counterWithoutCollector >= DELAY) {
         this.counterWithoutCollector = 0;
-        arrowOnCollector = Arrow.generate(this.game.scene.keys[`${this.state.farm}Bars`], 18);
+        barsScene.arrowOnCollector = Arrow.generate(barsScene, 18);
       }
     }
   } else {
@@ -751,7 +753,7 @@ function intervalCollectorTutorial(arrowOnCollector: Phaser.GameObjects.Sprite):
       }
     }
   }
-  if (arrowOnCollector && this.state[`user${this.state.farm}`].collector > 0) this.counterWithoutCollector = 0;
+  if (barsScene.arrowOnCollector && this.state[`user${this.state.farm}`].collector > 0) this.counterWithoutCollector = 0;
 }
 
 function showFeedBoostSpeechBubble(): void {

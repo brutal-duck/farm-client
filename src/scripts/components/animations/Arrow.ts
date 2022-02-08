@@ -5,6 +5,7 @@ import Shop from '../../scenes/Modal/Shop/Main';
 import CowTerritory from './../Territories/CowTerritory';
 import { Task } from '../../local/tasks/types';
 import Utils from './../../libs/Utils';
+import BarsScene from '../Scenes/BarsScene';
 /**
   *  Конструктор принимает:
   ** Объект сцены, состояние(номер типа) и необязательный параметр позиции.
@@ -38,7 +39,7 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
   public position: Iposition;
   public state: number;
   constructor(
-    scene: Sheep | SheepBars | Shop | Tutorial,
+    scene: Sheep | BarsScene | Shop | Tutorial,
     state: number, 
     position?: Iposition | Phaser.GameObjects.Sprite,
   ) {
@@ -48,7 +49,7 @@ export default class Arrow extends Phaser.GameObjects.Sprite {
     this.type = 'Arrow'
   }
   
-  static generate(scene: Sheep | SheepBars | Shop | Tutorial, state: number, position?: Iposition | Phaser.GameObjects.Sprite): Arrow {
+  static generate(scene: Sheep | BarsScene | Shop | Tutorial, state: number, position?: Iposition | Phaser.GameObjects.Sprite): Arrow {
     return new Arrow(scene, state, position);
   }
 
