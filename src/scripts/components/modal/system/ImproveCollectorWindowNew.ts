@@ -183,7 +183,7 @@ export default class ImproveCollectorWindowNew {
     if (this.checkImprove(improveType)) {
       if (improveType === 'time') {
         this.scene.state[`user${this.farm}`].collectorTimeLevel++;
-        this.scene.game.scene.keys[this.farm].tryTask(TaskType.IMPROVE_COLLECTOR);
+        this.scene.game.scene.keys[this.farm].tryTask(TaskType.IMPROVE_COLLECTOR, this.scene.state[`user${this.farm}`].collectorTimeLevel);
         this.farmUser.money -= timePrice;
       } else if (improveType === 'speed') {
         this.scene.state[`user${this.farm}`].collectorLevel++;

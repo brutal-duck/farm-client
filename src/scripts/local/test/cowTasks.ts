@@ -124,7 +124,7 @@ const testCowTasks: Task[] = [
   {
     id: '2-7',
     type: TaskType['IMPROVE_COLLECTOR'],
-    state: 0,
+    state: 2,
     count: 1,
     done: 0,
     awardTaken: 0,
@@ -172,7 +172,7 @@ const testCowTasks: Task[] = [
   {
     id: '3-3',
     type: TaskType['IMPROVE_COLLECTOR'],
-    state: 0,
+    state: 3,
     count: 1,
     done: 0,
     awardTaken: 0,
@@ -256,7 +256,7 @@ const testCowTasks: Task[] = [
   {
     id: '4-4',
     type: TaskType['IMPROVE_COLLECTOR'],
-    state: 0,
+    state: 4,
     count: 1,
     done: 0,
     awardTaken: 0,
@@ -352,7 +352,7 @@ const testCowTasks: Task[] = [
   {
     id: '5-6',
     type: TaskType['IMPROVE_COLLECTOR'],
-    state: 0,
+    state: 5,
     count: 1,
     done: 0,
     awardTaken: 0,
@@ -448,7 +448,7 @@ const testCowTasks: Task[] = [
   {
     id: '6-6',
     type: TaskType['IMPROVE_COLLECTOR'],
-    state: 0,
+    state: 6,
     count: 1,
     done: 0,
     awardTaken: 0,
@@ -532,7 +532,7 @@ const testCowTasks: Task[] = [
   {
     id: '7-5',
     type: TaskType['IMPROVE_COLLECTOR'],
-    state: 0,
+    state: 7,
     count: 1,
     done: 0,
     awardTaken: 0,
@@ -640,7 +640,7 @@ const testCowTasks: Task[] = [
   {
     id: '8-6',
     type: TaskType['IMPROVE_COLLECTOR'],
-    state: 0,
+    state: 8,
     count: 1,
     done: 0,
     awardTaken: 0,
@@ -724,7 +724,7 @@ const testCowTasks: Task[] = [
   {
     id: '9-5',
     type: TaskType['IMPROVE_COLLECTOR'],
-    state: 0,
+    state: 9,
     count: 1,
     done: 0,
     awardTaken: 0,
@@ -832,7 +832,7 @@ const testCowTasks: Task[] = [
   {
     id: '10-6',
     type: TaskType['IMPROVE_COLLECTOR'],
-    state: 0,
+    state: 10,
     count: 1,
     done: 0,
     awardTaken: 0,
@@ -916,7 +916,7 @@ const testCowTasks: Task[] = [
   {
     id: '11-5',
     type: TaskType['IMPROVE_COLLECTOR'],
-    state: 0,
+    state: 11,
     count: 1,
     done: 0,
     awardTaken: 0,
@@ -1024,7 +1024,7 @@ const testCowTasks: Task[] = [
   {
     id: '12-6',
     type: TaskType['IMPROVE_COLLECTOR'],
-    state: 0,
+    state: 12,
     count: 1,
     done: 0,
     awardTaken: 0,
@@ -1108,7 +1108,7 @@ const testCowTasks: Task[] = [
   {
     id: '13-5',
     type: TaskType['IMPROVE_COLLECTOR'],
-    state: 0,
+    state: 13,
     count: 1,
     done: 0,
     awardTaken: 0,
@@ -1216,7 +1216,7 @@ const testCowTasks: Task[] = [
   {
     id: '14-6',
     type: TaskType['IMPROVE_COLLECTOR'],
-    state: 0,
+    state: 14,
     count: 1,
     done: 0,
     awardTaken: 0,
@@ -1300,7 +1300,7 @@ const testCowTasks: Task[] = [
   {
     id: '15-5',
     type: TaskType['IMPROVE_COLLECTOR'],
-    state: 0,
+    state: 15,
     count: 1,
     done: 0,
     awardTaken: 0,
@@ -1408,7 +1408,7 @@ const testCowTasks: Task[] = [
   {
     id: '16-6',
     type: TaskType['IMPROVE_COLLECTOR'],
-    state: 0,
+    state: 16,
     count: 1,
     done: 0,
     awardTaken: 0,
@@ -1492,7 +1492,7 @@ const testCowTasks: Task[] = [
   {
     id: '17-5',
     type: TaskType['IMPROVE_COLLECTOR'],
-    state: 0,
+    state: 17,
     count: 1,
     done: 0,
     awardTaken: 0,
@@ -1600,7 +1600,7 @@ const testCowTasks: Task[] = [
   {
     id: '18-6',
     type: TaskType['IMPROVE_COLLECTOR'],
-    state: 0,
+    state: 18,
     count: 1,
     done: 0,
     awardTaken: 0,
@@ -1684,7 +1684,7 @@ const testCowTasks: Task[] = [
   {
     id: '19-5',
     type: TaskType['IMPROVE_COLLECTOR'],
-    state: 0,
+    state: 19,
     count: 1,
     done: 0,
     awardTaken: 0,
@@ -1744,7 +1744,7 @@ const testCowTasks: Task[] = [
   {
     id: '20-2',
     type: TaskType['IMPROVE_COLLECTOR'],
-    state: 0,
+    state: 20,
     count: 1,
     done: 0,
     awardTaken: 0,
