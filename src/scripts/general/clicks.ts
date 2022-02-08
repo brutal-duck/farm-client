@@ -606,10 +606,9 @@ function doubleClick(object: any, action: any, maxMoveCounter: number = 3): void
 
 
 // функция нажатия
-function click(object: any, action: () => void, maxMoveCounter: number = 3): void {
+function click(object: any, action: () => void): void {
 
   object.setInteractive();
-  let moveCounter: number = 0;
 
   object.on('pointerdown', (): void => {
     object.xDown = object.x;
@@ -617,17 +616,10 @@ function click(object: any, action: () => void, maxMoveCounter: number = 3): voi
     object.press = true;
   });
 
-  object.on('pointermove', (): void => {
-    if (object.press) moveCounter++;
-  });
-
   object.on('pointerout', (): void => {
-    
     if (object.press) {
-      moveCounter = 0;
       object.press = false;
     }
-
   });
 
   object.on('pointerup', (): void => {
@@ -641,14 +633,12 @@ function click(object: any, action: () => void, maxMoveCounter: number = 3): voi
     if (object.yDown >= object.y) y = object.yDown - object.y;
     else y = object.y - object.yDown;
     
-    if (object.press && moveCounter < maxMoveCounter && x < 5 && y < 5) {
+    if (object.press && x < 5 && y < 5) {
       object.press = false;
       action();
     } else if (object.press) {
       object.press = false;
     }
-
-    moveCounter = 0;
 
   });
   
