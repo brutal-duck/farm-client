@@ -129,6 +129,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     const tabCount: number = types.length;
     const headerGeom: Phaser.Geom.Rectangle = this.header.getBounds();
     let left: number = headerGeom.left + 90;
+    if (types.length === 2) left = headerGeom.left + 130;
     const maxWidth: number = 455;
     types.forEach((el: number) => {
       this.createTab({ x: left, y: headerGeom.top - 25 }, activeTab === el, tabCount, el)

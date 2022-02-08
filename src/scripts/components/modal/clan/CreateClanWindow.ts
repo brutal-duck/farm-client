@@ -71,7 +71,7 @@ export default class CreateClanWindow {
     this.input.style.bottom = `${startBottom - height / 4}%`;
     const inputWidth: number = 460;
     const inputHeigth: number = 70;
-    const inputBg = this.scene.add.tileSprite(pos.x, pos.y - 20, inputWidth, inputHeigth, 'clan-window-search-plate-ns', 5).setDepth(2).setOrigin(0.5);
+    const inputBg = this.scene.add.sprite(pos.x, pos.y - 20, 'clan-window-search-plate-ns').setDepth(2).setOrigin(0.5).setDisplaySize(inputWidth, inputHeigth);
     const inputBgGeom: Phaser.Geom.Rectangle = inputBg.getBounds();
     // Заголовок и описание
     const text: string = this.input.value || this.scene.state.lang.inputClanName;
