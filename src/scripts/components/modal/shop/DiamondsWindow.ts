@@ -1,9 +1,8 @@
 import * as platform from 'platform';
-import { payRobokassa, payAndroid, shortNum, shortTime } from "../../../general/basic";
+import { payRobokassa, payAndroid, shortTime } from "../../../general/basic";
 import Shop from "../../../scenes/Modal/Shop/Main";
 import Utils from './../../../libs/Utils';
 import ShopButton from './../../Buttons/ShopButton';
-import ShopBars from './../../../scenes/Modal/Shop/Bars';
 import Sheep from './../../../scenes/Sheep/Main';
 import Chicken from './../../../scenes/Chicken/Main';
 import Cow from './../../../scenes/Cow/Main';
@@ -256,6 +255,7 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
         blur: 2,
         fill: true,
       },
+      wordWrap: { width: 290 },
       align: 'center',
     };
     const starterpackBg = this.scene.add.sprite(centerX - 130, y, 'starterpack-bg');
