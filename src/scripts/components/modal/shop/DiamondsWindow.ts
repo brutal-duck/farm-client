@@ -29,7 +29,7 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
   private init(): void {
     this.scene.add.existing(this);
     this.scene.state.amplitude.logAmplitudeEvent('bank_page_viewed', {});
-    this.iOSplatform = platform.os.family === 'iOS' && this.scene.state.platform === 'vk';
+    this.iOSplatform = platform.os.family === 'iOS' && this.scene.state.platform === 'vk' || true;
     this.rows = 2;
     if (this.iOSplatform) {
       this.rows = 0;
@@ -339,7 +339,7 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
     this.freeDiamondBtn?.destroy();
     let y: number = this.scene.height + 40 + 40;
     if (this.hasStarterpack && !this.iOSplatform) y += 198;
-    else if (this.iOSplatform) y = 50 + this.scene.height - 238 + 320;
+    else if (this.iOSplatform) y = this.scene.height + 410;
     const price = this.iOSplatform ?  this.scene.state.lang.pickUp : this.getPlatformPrice({ voices: 0, price: 0, dollars: 0 });
     const elements: IshopButtonElements = { text1: price };
     if (ad) {
