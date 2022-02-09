@@ -80,10 +80,10 @@ export default class Button extends Phaser.GameObjects.Group {
     const interval = this.scene.time.addEvent({ delay: 5, callback: () => {
       filter -= 0x222222;
       this.mainSprite.setTint(filter);
-      this.mainSprite.y += 1;
+      // this.mainSprite.y += 1;
       this.children.iterate((el: childrenType) => {
         el.setTint(filter);
-        el.y += 1;
+        // el.y += 1;
       });
       counter++;
       if (counter >= 3) interval.remove(false);
@@ -96,10 +96,10 @@ export default class Button extends Phaser.GameObjects.Group {
     const interval = this.scene.time.addEvent({ delay: 10, callback: () => {
       filter += 0x222222;
       this.mainSprite.setTint(filter);
-      this.mainSprite.y -= 1;
+      // this.mainSprite.y -= 1;
       this.children.iterate((el: childrenType) => {
         el.setTint(filter);
-        el.y -= 1;
+        // el.y -= 1;
       });
       counter++;
       if (counter >= 3) interval.remove(false);
@@ -112,10 +112,10 @@ export default class Button extends Phaser.GameObjects.Group {
     const interval = this.scene.time.addEvent({ delay: 10, callback: () => {
       filter += 0x222222;
       this.mainSprite.setTint(filter);
-      this.mainSprite.y -= 1;
+      // this.mainSprite.y -= 1;
       this.children.iterate((el: childrenType) => {
         el.setTint(filter);
-        el.y -= 1;
+        // el.y -= 1;
       });
       counter++;
       if (counter >= 3) {

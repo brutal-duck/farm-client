@@ -24,12 +24,12 @@ function clickShopBtn(btn: any, action: any) {
       filter -= 0x222222;
       button.setTint(filter);
       title.setTint(filter);
-      button.y = Math.round(button.y + 1);
-      title.y = Math.round(title.y + 1);
+      // button.y = Math.round(button.y + 1);
+      // title.y = Math.round(title.y + 1);
 
       if (img) {
         img.setTint(filter);
-        img.y = Math.round(img.y + 1);
+        // img.y = Math.round(img.y + 1);
       }
 
       counter++;
@@ -56,12 +56,12 @@ function clickShopBtn(btn: any, action: any) {
         filter += 0x222222;
         button.setTint(filter);
         title.setTint(filter);
-        button.y = Math.round(button.y - 1);
-        title.y = Math.round(title.y - 1);
+        // button.y = Math.round(button.y - 1);
+        // title.y = Math.round(title.y - 1);
 
         if (img) {
           img.setTint(filter);
-          img.y = Math.round(img.y - 1);
+          // img.y = Math.round(img.y - 1);
         }
 
         counter++;
@@ -87,12 +87,12 @@ function clickShopBtn(btn: any, action: any) {
         filter += 0x222222;
         button.setTint(filter);
         title.setTint(filter);
-        button.y = Math.round(button.y - 1);
-        title.y = Math.round(title.y - 1);
+        // button.y = Math.round(button.y - 1);
+        // title.y = Math.round(title.y - 1);
 
         if (img) {
           img.setTint(filter);
-          img.y = Math.round(img.y - 1);
+          // img.y = Math.round(img.y - 1);
         }
 
         counter++;
@@ -134,14 +134,14 @@ function clickBoostBtn(btn: any, action: any) {
       left.setTint(filter);
       leftLitle.setTint(filter);
       right.setTint(filter);
-      button.y = Math.round(button.y + 1);
-      left.y = Math.round(left.y + 1);
-      leftLitle.y = Math.round(leftLitle.y + 1);
-      right.y = Math.round(right.y + 1);
+      // button.y = Math.round(button.y + 1);
+      // left.y = Math.round(left.y + 1);
+      // leftLitle.y = Math.round(leftLitle.y + 1);
+      // right.y = Math.round(right.y + 1);
 
       if (img) {
         img.setTint(filter);
-        img.y = Math.round(img.y + 1);
+        // img.y = Math.round(img.y + 1);
       }
 
       counter++;
@@ -170,14 +170,14 @@ function clickBoostBtn(btn: any, action: any) {
         left.setTint(filter);
         leftLitle.setTint(filter);
         right.setTint(filter);
-        button.y = Math.round(button.y - 1);
-        left.y = Math.round(left.y - 1);
-        leftLitle.y = Math.round(leftLitle.y - 1);
-        right.y = Math.round(right.y - 1);
+        // button.y = Math.round(button.y - 1);
+        // left.y = Math.round(left.y - 1);
+        // leftLitle.y = Math.round(leftLitle.y - 1);
+        // right.y = Math.round(right.y - 1);
 
         if (img) {
           img.setTint(filter);
-          img.y = Math.round(img.y - 1);
+          // img.y = Math.round(img.y - 1);
         }
 
         counter++;
@@ -205,14 +205,14 @@ function clickBoostBtn(btn: any, action: any) {
         left.setTint(filter);
         leftLitle.setTint(filter);
         right.setTint(filter);
-        button.y = Math.round(button.y - 1);
-        left.y = Math.round(left.y - 1);
-        leftLitle.y = Math.round(leftLitle.y - 1);
-        right.y = Math.round(right.y - 1);
+        // button.y = Math.round(button.y - 1);
+        // left.y = Math.round(left.y - 1);
+        // leftLitle.y = Math.round(leftLitle.y - 1);
+        // right.y = Math.round(right.y - 1);
 
         if (img) {
           img.setTint(filter);
-          img.y = Math.round(img.y - 1);
+          // img.y = Math.round(img.y - 1);
         }
 
         counter++;
@@ -300,27 +300,27 @@ function clickModalBtn(arr: any, action: () => void): void {
       filter -= 0x222222;
       button.setTint(filter);
       title.setTint(filter);
-      button.y = Math.round(button.y + 1);
-      title.y = Math.round(title.y + 1);
+      // button.y = Math.round(button.y + 1);
+      // title.y = Math.round(title.y + 1);
 
       if (text1 !== undefined) {
         text1.setTint(filter);
-        text1.y = Math.round(text1.y + 1);
+        // text1.y = Math.round(text1.y + 1);
       }
 
       if (text2 !== undefined) {
         text2.setTint(filter);
-        text2.y = Math.round(text2.y + 1);
+        // text2.y = Math.round(text2.y + 1);
       }
 
       if (img1 !== undefined) {
         img1.setTint(filter);
-        img1.y = Math.round(img1.y + 1);
+        // img1.y = Math.round(img1.y + 1);
       }
 
       if (img2 !== undefined) {
         img2.setTint(filter);
-        img2.y = Math.round(img2.y + 1);
+        // img2.y = Math.round(img2.y + 1);
       }
 
       counter++;
@@ -347,27 +347,27 @@ function clickModalBtn(arr: any, action: () => void): void {
         filter += 0x222222;
         button.setTint(filter);
         title.setTint(filter);
-        button.y = Math.round(button.y - 1);
-        title.y = Math.round(title.y - 1);
+        // button.y = Math.round(button.y - 1);
+        // title.y = Math.round(title.y - 1);
 
         if (text1 !== undefined) {
           text1.setTint(filter);
-          text1.y = Math.round(text1.y - 1);
+          // text1.y = Math.round(text1.y - 1);
         }
 
         if (text2 !== undefined) {
           text2.setTint(filter);
-          text2.y = Math.round(text2.y - 1);
+          // text2.y = Math.round(text2.y - 1);
         }
 
         if (img1 !== undefined) {
           img1.setTint(filter);
-          img1.y = Math.round(img1.y - 1);
+          // img1.y = Math.round(img1.y - 1);
         }
 
         if (img2 !== undefined) {
           img2.setTint(filter);
-          img2.y = Math.round(img2.y - 1);
+          // img2.y = Math.round(img2.y - 1);
         }
 
         counter++;
@@ -393,27 +393,27 @@ function clickModalBtn(arr: any, action: () => void): void {
         filter += 0x222222;
         button.setTint(filter);
         title.setTint(filter);
-        button.y = Math.round(button.y - 1);
-        title.y = Math.round(title.y - 1);
+        // button.y = Math.round(button.y - 1);
+        // title.y = Math.round(title.y - 1);
 
         if (text1 !== undefined) {
           text1.setTint(filter);
-          text1.y = Math.round(text1.y - 1);
+          // text1.y = Math.round(text1.y - 1);
         }
 
         if (text2 !== undefined) {
           text2.setTint(filter);
-          text2.y = Math.round(text2.y - 1);
+          // text2.y = Math.round(text2.y - 1);
         }
 
         if (img1 !== undefined) {
           img1.setTint(filter);
-          img1.y = Math.round(img1.y - 1);
+          // img1.y = Math.round(img1.y - 1);
         }
 
         if (img2 !== undefined) {
           img2.setTint(filter);
-          img2.y = Math.round(img2.y - 1);
+          // img2.y = Math.round(img2.y - 1);
         }
 
         counter++;
