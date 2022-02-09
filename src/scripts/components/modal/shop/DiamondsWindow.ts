@@ -351,8 +351,8 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
     if (!ad) {
       const geom = this.freeDiamondBtn.getBounds();
       const pos: Iposition = { x: geom.left + 5, y: geom.top + 5 };
-      const notificator = this.scene.add.sprite(pos.x, pos.y, 'notification-bg');
-      const notificatorText = this.scene.add.text(pos.x, pos.y, '!', {
+      notificator = this.scene.add.sprite(pos.x, pos.y, 'notification-bg');
+      notificatorText = this.scene.add.text(pos.x, pos.y, '!', {
         fontFamily: 'Bip',
         fontSize: '28px',
         color: '#ffffff',
