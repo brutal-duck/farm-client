@@ -29,7 +29,7 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
   private init(): void {
     this.scene.add.existing(this);
     this.scene.state.amplitude.logAmplitudeEvent('bank_page_viewed', {});
-    this.iOSplatform = platform.os.family === 'iOS' && this.scene.state.platform === 'vk' || true;
+    this.iOSplatform = platform.os.family === 'iOS' && this.scene.state.platform === 'vk';
     this.rows = 2;
     if (this.iOSplatform) {
       this.rows = 0;
