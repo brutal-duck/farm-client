@@ -182,15 +182,15 @@ export default class BarsScene extends Phaser.Scene {
     if (this.state.newbieTime <= 0) return;
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
       fontFamily: 'Bip',
-      fontSize: '35px',
-      color: '#285881',
+      fontSize: '32px',
+      color: '#327bb7',
     };
-    this.calendar = this.add.sprite(40, 180, 'calendar').setScale(1.5);
+    this.calendar = this.add.sprite(40, 180, 'calendar');
     this.click(this.calendar, (): void => { this.openModal({ type: 6 }); });
 
     const { x, y } = this.calendar;
     const str = String(Number(this.state.daily));
-    this.calendarText = this.add.text(x + 5, y + 12, str, textStyle).setOrigin(0.5);
+    this.calendarText = this.add.text(x, y + 12, str, textStyle).setOrigin(0.5);
   }
 
   private createMoneyInfo(): void {
