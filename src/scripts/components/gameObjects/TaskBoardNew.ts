@@ -1,6 +1,6 @@
 import { sendAppEventVk } from '../../general/basic';
 import LocalStorage from '../../libs/LocalStorage';
-import { Task } from '../../local/tasks/types';
+import { Task, TaskType } from '../../local/tasks/types';
 import RoundedProgress from '../animations/RoundedProgress';
 import BarsScene from '../Scenes/BarsScene';
 import TaskBoardBg from './TaskBoardBg';
@@ -680,16 +680,18 @@ export default class TaskBoardNew extends Phaser.GameObjects.TileSprite {
     this.interactiveElements.push(clickZone);
     this.aditionalHeight += clickZone.height + 4;
 
-    let completed: Phaser.GameObjects.Sprite = null;
-    let progress: RoundedProgress = null;
-    let border1: Phaser.GameObjects.Sprite = null;
-    let border2: Phaser.GameObjects.Sprite = null;
+    let completed: Phaser.GameObjects.Sprite;
+    let progress: RoundedProgress;
+    let border1: Phaser.GameObjects.Sprite;
+    let border2: Phaser.GameObjects.Sprite;
     if (task.done === 1 && task.awardTaken === 1) {
       icon.setTint(0x777777).setAlpha(0);
       completed = this.scene.add.sprite(icon.x, icon.y, 'completed').setDepth(this.bg.depth + 2).setTint(0xc0c0c0).setOrigin(0.5).setAlpha(0);
       text.setColor('#6f6f6f').setAlpha(0);
     } else {
-      progress = new RoundedProgress(this.scene, icon.x, icon.y, 1.13).setPercent(Math.round(100 / task.count * task.progress)).setTint(0x70399f).setAlpha(0);
+      const countBreed: number = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`${this.scene.state.farm.toLowerCase()}Settings`].length;
+      const count = task.type === TaskType.ANIMAL_ON_FARM ? countBreed : task.count;
+      progress = new RoundedProgress(this.scene, icon.x, icon.y, 1.13).setPercent(Math.round(100 / count * task.progress)).setTint(0x70399f).setAlpha(0);
       border1 = this.scene.add.sprite(icon.x, icon.y, 'circle-outline').setScale(1.15).setTint(0xc09245).setAlpha(0).setDepth(progress.rightSegment.depth + 1);
       border2 = this.scene.add.sprite(icon.x, icon.y, 'circle-outline').setScale(0.9).setTint(0xc09245).setAlpha(0).setDepth(progress.rightSegment.depth + 1);
     }

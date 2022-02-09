@@ -5,6 +5,7 @@ import BarsScene from '../Scenes/BarsScene';
 import Utils from './../../libs/Utils';
 import TaskBoardNew from './TaskBoardNew';
 import TaskBoardBg from './TaskBoardBg';
+import { TaskType } from '../../local/tasks/types';
 
 /**
   *  Планка заданий в барах сцен    
@@ -708,7 +709,9 @@ export default class TaskBoard extends Phaser.GameObjects.TileSprite {
       completed = this.scene.add.sprite(icon.x, icon.y, 'completed').setDepth(this.bg.depth + 2).setTint(0xc0c0c0).setOrigin(0.5).setAlpha(0);
       text.setColor('#6f6f6f').setAlpha(0);
     } else {
-      progress = new RoundedProgress(this.scene, icon.x, icon.y, 1.13).setPercent(Math.round(100 / task.count * task.progress)).setTint(0x70399f).setAlpha(0);
+      const countBreed: number = this.scene.state[`${this.scene.state.farm.toLowerCase()}Settings`][`${this.scene.state.farm.toLowerCase()}Settings`].length;
+      const count = task.type === TaskType.ANIMAL_ON_FARM ? countBreed : task.count;
+      progress = new RoundedProgress(this.scene, icon.x, icon.y, 1.13).setPercent(Math.round(100 / count * task.progress)).setTint(0x70399f).setAlpha(0);
       border1 = this.scene.add.sprite(icon.x, icon.y, 'circle-outline').setScale(1.15).setTint(0xc09245).setAlpha(0).setDepth(progress.rightSegment.depth + 1);
       border2 = this.scene.add.sprite(icon.x, icon.y, 'circle-outline').setScale(0.9).setTint(0xc09245).setAlpha(0).setDepth(progress.rightSegment.depth + 1);
     }
