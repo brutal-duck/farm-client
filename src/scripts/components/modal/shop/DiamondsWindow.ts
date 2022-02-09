@@ -348,6 +348,15 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
     }
     let notificator: Phaser.GameObjects.Sprite;
     let notificatorText: Phaser.GameObjects.Text;
+
+
+    this.adButton = ad;
+    this.freeDiamondBtn = new ShopButton(this.scene, { x: this.scene.cameras.main.centerX - 30, y: y }, () => {
+      notificator?.destroy();
+      notificatorText?.destroy();
+      this.freeDiamondsBtnHandler();
+    }, elements);
+
     if (!ad) {
       const geom = this.freeDiamondBtn.getBounds();
       const pos: Iposition = { x: geom.left + 5, y: geom.top + 5 };
@@ -359,14 +368,7 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
         fontStyle: 'Bold',
       }).setOrigin(0.5);
     }
-
-    this.adButton = ad;
-    this.freeDiamondBtn = new ShopButton(this.scene, { x: this.scene.cameras.main.centerX - 30, y: y }, () => {
-      notificator?.destroy();
-      notificatorText?.destroy();
-      this.freeDiamondsBtnHandler();
-    }, elements);
-
+    
     if (Utils.checkAndroidEngPlatform(this.scene.state)) {
       this.freeDiamondBtn.setFontFamily('Bip');
     }
