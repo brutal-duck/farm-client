@@ -189,6 +189,8 @@ export default class HerdBoostWindow {
     this.animalForBoost = this.scene.physics.add.group();
     this.currentTime = this.scene.state.herdBoostTime;
 
+    this.createSkipBtn();
+
     this.timerCreate = this.scene.time.addEvent({
       delay: this.scene.state.herdBoostDelay,
       loop: true,
@@ -214,7 +216,6 @@ export default class HerdBoostWindow {
     });
 
     const [timerText]: any = this.elements;
-    this.createSkipBtn();
 
     this.mainTimer = this.scene.time.addEvent({
       delay: 1000,
@@ -266,6 +267,7 @@ export default class HerdBoostWindow {
     ).setDropZone(undefined, () => {});
 
     this.scene.click(zone, (): void => {
+      if (!this.mainTimer) this.createTimers();
       this.currentTime = 1;
       zone.destroy();
       skip.destroy();
