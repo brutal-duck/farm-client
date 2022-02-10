@@ -492,7 +492,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     const boosterTextBg = this.scene.add.sprite(boosterBg.getTopCenter().x, boosterBg.getTopCenter().y + 2, 'clan-window-leader-plate-2').setOrigin(0.5, 0).setDisplaySize(479, 45).setDepth(2);
     const boosterIcon = this.scene.add.sprite(boosterBg.getLeftCenter().x + 70, boosterBg.getCenter().y, 'clan-task-icon-6').setScale(1.15).setDepth(2);
     this.cooldownTimer = this.scene.add.text(boosterTextBg.getCenter().x + 40, boosterTextBg.getCenter().y, '', this.headerTextStyle).setOrigin(0.5).setDepth(2);
-    const boosterBtn = this.scene.add.sprite(boosterBg.getCenter().x, boosterBg.getCenter().y + 24, 'profile-window-button-green').setScale(1.40, 1.05).setDepth(2);
+    const boosterBtn = this.scene.add.sprite(boosterBg.getCenter().x - 10, boosterBg.getCenter().y + 24, 'profile-window-button-green').setScale(1.40, 1.05).setDepth(2);
     const boosterBtnText = this.scene.add.text(boosterBtn.getCenter().x, boosterBtn.getCenter().y - 1, '', btnTextStyle).setOrigin(0.5, 0.6).setDepth(2);
     const boosterValuta = this.scene.add.sprite(boosterBtn.getRightCenter().x + 40, boosterBtn.y - 5, 'clan-diamond-coin').setScale(0.7).setDepth(2);
     const boosterPriceText = this.scene.add.text(boosterValuta.x + 30, boosterValuta.y, '', this.headerTextStyle).setFontSize(28).setOrigin(0, 0.5).setDepth(2);
@@ -517,7 +517,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
     const changeEmblemTextBg = this.scene.add.sprite(changeEmblemBg.getTopCenter().x, changeEmblemBg.getTopCenter().y + 2, 'clan-window-leader-plate-2').setOrigin(0.5, 0).setDisplaySize(479, 45).setDepth(2);
     const clanEmblem = LogoManager.createIcon(this.scene, changeEmblemBg.getLeftCenter().x + 70, changeEmblemBg.getCenter().y, this.scene.state.clan?.avatar).setDepth(2).setScale(0.5);
     const changeEmblemText = this.scene.add.text(changeEmblemTextBg.getCenter().x + 40, changeEmblemTextBg.getCenter().y, this.scene.state.lang.emblem, this.headerTextStyle).setOrigin(0.5).setDepth(2);
-    const changeEmblemBtn = this.scene.add.sprite(changeEmblemBg.getCenter().x, changeEmblemBg.getCenter().y + 24, 'profile-window-button-green').setScale(1.40, 1.05).setDepth(2);
+    const changeEmblemBtn = this.scene.add.sprite(changeEmblemBg.getCenter().x - 10, changeEmblemBg.getCenter().y + 24, 'profile-window-button-green').setScale(1.40, 1.05).setDepth(2);
     const changeEmblemBtnText = this.scene.add.text(changeEmblemBtn.getCenter().x, changeEmblemBtn.getCenter().y - 1, this.scene.state.lang.changeEmblem, btnTextStyle).setOrigin(0.5, 0.6).setDepth(2);
     
     if (Utils.checkSale(this.scene.state, 'CLAN')) {
