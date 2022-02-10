@@ -125,7 +125,7 @@ export default class Ads {
         }
         break;
       case 'android':
-        this.scene.state.admob.interstitial.show();
+        this.scene.state.admob.interstitial.load();
         break;
       default:
         break;
