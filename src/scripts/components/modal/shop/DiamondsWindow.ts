@@ -417,7 +417,7 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
         const str1 = shortTime(this.scene.state.timeToNewDay, this.scene.state.lang);
         const str2 = this.scene.state.lang.stillForBoost;
         if (str1 !== this.freeDiamondTimer.text) this.freeDiamondTimer.setText(str1);
-        if (str2 !== this.freeDiamondText.text) this.freeDiamondText.setText(str2);
+        if (str2 !== this.freeDiamondText?.text) this.freeDiamondText.setText(str2);
       }
     }
   }
