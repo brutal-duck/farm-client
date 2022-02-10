@@ -57,9 +57,10 @@ export default class BigButton extends Button {
 
     textStyle.fontSize = '24px';
     if (this.settings.right1) {
-      const text1 = this.scene.add.text(575, this.position.y - 5, this.settings.right1.text, textStyle).setDepth(1).setOrigin(1, 0.5);
+      const x = this.scale === 0.9 ? 565 : 575;
+      const text1 = this.scene.add.text(x, this.position.y - 5, this.settings.right1.text, textStyle).setDepth(1).setOrigin(1, 0.5);
   
-      const img1 = this.scene.add.sprite(570 - text1.displayWidth, this.position.y - 5, this.settings.right1.icon)
+      const img1 = this.scene.add.sprite(x - 5 - text1.displayWidth, this.position.y - 5, this.settings.right1.icon)
         .setOrigin(1, 0.5)
         .setScale(0.9);
   
