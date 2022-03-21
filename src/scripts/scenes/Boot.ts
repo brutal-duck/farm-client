@@ -53,7 +53,7 @@ class Boot extends Phaser.Scene {
   public getPlatformStorage = getPlatformStorage.bind(this);
 
   public init(): void {
-    this.build = 4.21;
+    this.build = 4.22;
     // console.log(this.game.device, 'this.game.device');
     this.state = state;
     this.fontsReady = false;
@@ -351,23 +351,21 @@ class Boot extends Phaser.Scene {
         switch (event.name) {
           case 'SDK_GAME_START':
             console.log('SDK_GAME_START');
-            // advertisement done, resume game logic and unmute audio
+            this.state.musicVolume = this.game.scene.keys[this.state.farm].ads.musicVolume;
+            this.state.soundVolume = this.game.scene.keys[this.state.farm].ads.soundVolume;
+            // @ts-ignore
+            this.sound.get('music').volume = this.state.musicVolume;
             break;
           case 'SDK_GAME_PAUSE':
             console.log('SDK_GAME_PAUSE');
-            // pause game logic / mute audio
-            break;
-          case 'SDK_GDPR_TRACKING':
-            console.log('SDK_GDPR_TRACKING');
-            // this event is triggered when your user doesn't want to be tracked
-            break;
-          case 'SDK_GDPR_TARGETING':
-            console.log('SDK_GDPR_TARGETING');
-            // this event is triggered when your user doesn't want personalised targeting of ads and such
+            this.state.musicVolume = 0;
+            this.state.soundVolume = 0;
+            // @ts-ignore
+            this.scene.sound.get('music').volume = this.scene.state.musicVolume;
             break;
           case 'SDK_REWARDED_WATCH_COMPLETE':
             console.log('SDK_REWARDED_WATCH_COMPLETE');
-            // this event is triggered when your user completely watched rewarded ad
+            this.game.scene.keys[this.state.farm].ads.adReward();
             break;
         }
       },

@@ -18,7 +18,7 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
   private freeDiamondBtn: ShopButton;
   private adButton: boolean;
   private hasStarterpack: boolean;
-  private iOSplatform: boolean;
+  private block: boolean;
 
   constructor(scene: Shop) {
     super(scene, 0, 0, 'pixel');
@@ -29,9 +29,9 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
   private init(): void {
     this.scene.add.existing(this);
     this.scene.state.amplitude.logAmplitudeEvent('bank_page_viewed', {});
-    this.iOSplatform = platform.os.family === 'iOS' && this.scene.state.platform === 'vk';
+    this.block = (platform.os.family === 'iOS' && this.scene.state.platform === 'vk') || this.scene.state.platform === 'gd';
     this.rows = 2;
-    if (this.iOSplatform) {
+    if (this.block) {
       this.rows = 0;
       this.createIOSInfo();
     }
@@ -41,9 +41,9 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
   
   private create(): void {
     this.createAllPackages();
-    if (this.hasStarterpack && !this.iOSplatform) this.createStarterpack();
-    if (this.checkFreeDiamonds() && !this.iOSplatform) this.createFreeDiamonds();
-    if (this.iOSplatform) this.createIOSFreeDiamonds();
+    if (this.hasStarterpack && !this.block) this.createStarterpack();
+    if (this.checkFreeDiamonds() && !this.block) this.createFreeDiamonds();
+    if (this.block) this.createIOSFreeDiamonds();
   }
 
   private createIOSInfo(): void {
@@ -205,8 +205,8 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
       align: 'center'
     };
     let y: number = this.scene.height + 37 + 40;
-    if (this.hasStarterpack && !this.iOSplatform) y += 198;
-    else if (this.iOSplatform) y += 320;
+    if (this.hasStarterpack && !this.block) y += 198;
+    else if (this.block) y += 320;
     this.scene.add.sprite(this.scene.cameras.main.centerX - 130, y, 'free-diamonds-bg');
     const diamondCount: Phaser.GameObjects.Text = this.scene.add.text(this.scene.cameras.main.centerX - 300, y, `+${FREE_DIAMONDS}`, {
       font: '34px Shadow',
@@ -338,9 +338,9 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
   private createFreeBtn(ad: boolean): void {
     this.freeDiamondBtn?.destroy();
     let y: number = this.scene.height + 40 + 40;
-    if (this.hasStarterpack && !this.iOSplatform) y += 198;
-    else if (this.iOSplatform) y = this.scene.height + 410;
-    const price = this.iOSplatform ?  this.scene.state.lang.pickUp : this.getPlatformPrice({ voices: 0, price: 0, dollars: 0 });
+    if (this.hasStarterpack && !this.block) y += 198;
+    else if (this.block) y = this.scene.height + 410;
+    const price = this.block ?  this.scene.state.lang.pickUp : this.getPlatformPrice({ voices: 0, price: 0, dollars: 0 });
     const elements: IshopButtonElements = { text1: price };
     if (ad) {
       elements.text1 = this.scene.state.lang.pickUp;
@@ -392,7 +392,7 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
     if (this.freeDiamondTimer?.active && this.freeDiamondBtn?.active) {
       if (this.scene.state.user.takenFreeDiamonds && this.scene.state.readyAd) {
         if (this.scene.state.user.takeFreeDiamondTime > 0 && this.freeDiamondTimer.visible) {
-          if (this.iOSplatform) {
+          if (this.block) {
             const str1 = shortTime(this.scene.state.user.takeFreeDiamondTime, this.scene.state.lang);
             const str2 = this.scene.state.lang.forNextAd;
             if (str1 !== this.freeDiamondTimer.text) this.freeDiamondTimer.setText(str1);
