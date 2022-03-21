@@ -246,7 +246,7 @@ export default class ClanTabsWindow extends Phaser.GameObjects.Sprite {
 
   private onLeaveBtn(): void {
     let login: string = this.scene.state.user.login;
-    if (this.scene.state.platform !== 'web' && this.scene.state.platform !== 'android') login = this.scene.state.name;
+    if (this.scene.state.platform !== 'web' && this.scene.state.platform !== 'gd' && this.scene.state.platform !== 'android') login = this.scene.state.name;
     this.scene.state.socket.io.emit('sendClanMessage', {
       id: this.scene.state.user.id,
       clanId: this.scene.state.user.clanId,

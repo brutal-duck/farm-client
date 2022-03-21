@@ -155,7 +155,7 @@ class Boot extends Phaser.Scene {
   }
 
   private setPlatform(): void {
-    this.platform = process.env.platform === 'ya' ? 'ya' : process.env.platform === 'android' ? 'android' : 'web';
+    this.platform = process.env.platform === 'ya' ? 'ya' : process.env.platform === 'android' ? 'android' : process.env.platform === 'gd' ? 'gd' : 'web';
     this.hash = '';
 
     const search: string = window.location.search;
@@ -309,6 +309,8 @@ class Boot extends Phaser.Scene {
       this.checkYandexUser();
     } else if (this.platform === 'android') {
       this.initAndroidPlatform();
+    } else if (this.platform === 'gd') {
+      this.checkGDUser();
     }
   }
 
@@ -340,6 +342,46 @@ class Boot extends Phaser.Scene {
   private checkWebUser(): void {
     this.hash = LocalStorage.get('hash');
     this.postCheckUser(this.hash);
+  }
+
+  private checkGDUser(): void {
+    window["GD_OPTIONS"] = {
+      'gameId': process.env.GD_ID,
+      'onEvent': (event) => {
+        switch (event.name) {
+          case 'SDK_GAME_START':
+            console.log('SDK_GAME_START');
+            // advertisement done, resume game logic and unmute audio
+            break;
+          case 'SDK_GAME_PAUSE':
+            console.log('SDK_GAME_PAUSE');
+            // pause game logic / mute audio
+            break;
+          case 'SDK_GDPR_TRACKING':
+            console.log('SDK_GDPR_TRACKING');
+            // this event is triggered when your user doesn't want to be tracked
+            break;
+          case 'SDK_GDPR_TARGETING':
+            console.log('SDK_GDPR_TARGETING');
+            // this event is triggered when your user doesn't want personalised targeting of ads and such
+            break;
+          case 'SDK_REWARDED_WATCH_COMPLETE':
+            console.log('SDK_REWARDED_WATCH_COMPLETE');
+            // this event is triggered when your user completely watched rewarded ad
+            break;
+        }
+      },
+    };
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = 'https://html5.api.gamedistribution.com/main.min.js';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'gamedistribution-jssdk'));
+
+    this.checkWebUser();
   }
 
   private checkYandexUser(): void {
@@ -571,9 +613,7 @@ class Boot extends Phaser.Scene {
         if (this.platform === 'web' && status === 'new') {
           this.createnLanding = false;
         } else if (
-          this.platform === 'web' 
-          || (this.platform === 'android' 
-          || this.platform === 'ya') && !auth
+          this.platform === 'web' || (this.platform === 'android' || this.platform === 'ya' || this.platform === 'gd') && !auth
         ) {
           this.setLocalStorageHash(hash);
         } else {

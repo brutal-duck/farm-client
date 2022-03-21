@@ -535,7 +535,7 @@ class AnimalPlate extends Phaser.GameObjects.Sprite {
 
   private postServer(): Promise<AxiosResponse<any>> {
     let login: string = this.scene.state.user.login;;
-    if (this.scene.state.platform !== 'web' && this.scene.state.platform !== 'android') login = this.scene.state.name;
+    if (this.scene.state.platform !== 'web' && this.scene.state.platform !== 'gd' && this.scene.state.platform !== 'android') login = this.scene.state.name;
     const data = {
       id: this.scene.state.user.id,
       hash: this.scene.state.user.hash,

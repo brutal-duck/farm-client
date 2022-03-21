@@ -559,7 +559,7 @@ export default class ClanBankWindow extends Phaser.GameObjects.Sprite {
 
   private postMoney(count: string | number): Promise<any> {
     let login: string = this.scene.state.user.login;
-    if (this.scene.state.platform !== 'web' && this.scene.state.platform !== 'android') login = this.scene.state.name;
+    if (this.scene.state.platform !== 'web' && this.scene.state.platform !== 'gd' && this.scene.state.platform !== 'android') login = this.scene.state.name;
     const avatar: string = Number(this.scene.state.user.avatar) > 0 ? this.scene.state.user.avatar : this.scene.state.avatar;
     const points: number = this.farm !== 'diamond' ? this.convertPoints(Number(count)) : Number(count);
     const data = {

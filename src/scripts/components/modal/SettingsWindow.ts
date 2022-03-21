@@ -38,7 +38,7 @@ export default class SettingsWindow {
     this.createSoundsController();
     this.createHeader();
     this.createFooter();
-    if (this.scene.state.platform === 'web' || this.scene.state.platform === 'android' && !this.scene.state.playId) {
+    if (this.scene.state.platform === 'web' || this.scene.state.platform === 'gd' || this.scene.state.platform === 'android' && !this.scene.state.playId) {
       this.createChangeNicknameBtn();
     }
     this.setSegmentsState();

@@ -152,7 +152,7 @@ export default class ChangeNicknameWindow {
             this.change = false;
             if (res.data.success) {
               this.scene.state.user.login = this.scene.mainInput.value;
-              if (this.scene.state.platform === 'web') {
+              if (this.scene.state.platform === 'web' || this.scene.state.platform === 'gd') {
                 LocalStorage.set('hash', res.data.hash);
               } else if (this.scene.state.platform === 'android'){
                 LocalStorage.set('hash', res.data.hash);

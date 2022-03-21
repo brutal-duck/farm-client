@@ -52,7 +52,7 @@ function partTasks(): Itasks[] {
 
       if (tasks[i].type === 10) {
         
-        if ((this.state.platform === 'web' &&
+        if (((this.state.platform === 'web' || this.state.platform === 'gd') &&
           this.state.user.login === '') || 
           this.takeRewardRegistration) {
           partTasks.push(tasks[i]);
@@ -60,7 +60,7 @@ function partTasks(): Itasks[] {
         
       } else if (tasks[i].type === 16) {
 
-        if (this.state.platform === 'web') {
+        if (this.state.platform === 'web' || this.state.platform === 'gd') {
           partTasks.push(tasks[i]);
         }
 
