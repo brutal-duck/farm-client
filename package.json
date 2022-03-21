@@ -12,7 +12,8 @@
     "build-localhost": "webpack --config webpack/localhost/build.js && node webpack/eruda.js",
     "build-web": "webpack --config webpack/web/build.js && node webpack/eruda.js",
     "build-odr": "webpack --config webpack/odr/build.js && node webpack/eruda.js",
-    "build-yandex": "webpack --config webpack/yandex/build.js && node webpack/eruda.js"
+    "build-yandex": "webpack --config webpack/yandex/build.js && node webpack/eruda.js",
+    "build-gd": "webpack --config webpack/gd/build.js && node webpack/eruda.js"
   },
   "author": "Aleksandr Skorobogatyi",
   "license": "ISC",

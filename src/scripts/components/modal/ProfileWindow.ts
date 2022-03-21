@@ -314,6 +314,7 @@ export default class ProfileWindow {
           .setStroke('#7a7a7a', 2);
         break;
       case 'web':
+      case 'gd':
         this.supportBtn = this.scene.add.sprite(pos1.x, pos1.y, 'profile-window-button-yellow');
         this.supportBtnText = this.scene.add.text(this.supportBtn.x, this.supportBtn.y - 5, this.scene.state.lang.support, textStyle).setOrigin(0.5);
         this.exitProfileBtn = this.scene.add.sprite(pos2.x, pos2.y, 'profile-window-button-red');

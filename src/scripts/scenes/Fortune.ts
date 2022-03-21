@@ -70,7 +70,7 @@ export default class Fortune extends Phaser.Scene {
   public create(): void {
     const data = {
       userId: this.state.user.id,
-      name: this.state.platform !== 'web' && this.state.platform !== 'android' ? this.state.name : this.state.user.login,
+      name: this.state.platform !== 'web' && this.state.platform !== 'gd' && this.state.platform !== 'android' ? this.state.name : this.state.user.login,
       spending: 0,
       prize: 0,
       jackpot: false,
@@ -470,7 +470,7 @@ export default class Fortune extends Phaser.Scene {
   }
 
   private sendSocket(prize: number = 0): void {
-    const name: string = this.state.platform !== 'web' && this.state.platform !== 'android' ? this.state.name : this.state.user.login;
+    const name: string = this.state.platform !== 'web' && this.state.platform !== 'gd' && this.state.platform !== 'android' ? this.state.name : this.state.user.login;
     let data: any = {
       userId: this.state.user.id,
       name: name,
@@ -631,7 +631,7 @@ export default class Fortune extends Phaser.Scene {
     this.state.socket.io.emit('send', {
       id: this.state.user.id,
       hash: this.state.user.hash,
-      login: this.state.platform !== 'web' && this.state.platform !== 'android' ? this.state.name : this.state.user.login,
+      login: this.state.platform !== 'web' && this.state.platform !== 'gd' && this.state.platform !== 'android' ? this.state.name : this.state.user.login,
       text: `${KEY}_${prize}`,
       type: 1,
       status: this.state.user.status

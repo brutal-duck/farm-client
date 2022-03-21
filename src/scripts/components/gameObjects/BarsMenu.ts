@@ -60,7 +60,7 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
 
   private setListeners(): void {
     this.scene.clickButton(this.authIcon, (): void => {
-      if (this.scene.state.platform === 'web') {
+      if (this.scene.state.platform === 'web' || this.scene.state.platform === 'gd') {
         let modal: Imodal = {
           type: 1,
           sysType: 15
@@ -118,14 +118,14 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
   }
 
   private setVisibility(): void {
-    if (this.scene.state.platform === 'web' && this.scene.state.user.login === '' && !this.authIcon.visible) { 
+    if ((this.scene.state.platform === 'web' || this.scene.state.platform === 'gd') && this.scene.state.user.login === '' && !this.authIcon.visible) { 
       this.authIcon.setVisible(true);
       this.setVisible(false);
       this.profileIcon.setVisible(false);
       this.chatIcon.setVisible(false);
       this.chatNotificator.setVisible(false);
       this.debugIcon.setVisible(false);
-    } else if (this.scene.state.platform === 'web' && this.scene.state.user.login !== '' && this.authIcon.visible) {
+    } else if ((this.scene.state.platform === 'web' || this.scene.state.platform === 'gd') && this.scene.state.user.login !== '' && this.authIcon.visible) {
       this.authIcon.setVisible(false);
       this.setVisible(true);
       this.profileIcon.setVisible(true);
@@ -162,9 +162,9 @@ export default class BarsMenu extends Phaser.GameObjects.Sprite {
       this.chatNotificator.setVisible(false);
       this.profileIcon.setVisible(false);
       this.debugIcon.setVisible(false);
-    } else if (this.scene.state.farm === 'Sheep' && this.scene.state.userSheep.tutorial >= 100 && (this.scene.state.platform === 'web' || this.scene.state.platform === 'ya') && !this.visible) {
+    } else if (this.scene.state.farm === 'Sheep' && this.scene.state.userSheep.tutorial >= 100 && (this.scene.state.platform === 'web' || this.scene.state.platform === 'gd' || this.scene.state.platform === 'ya') && !this.visible) {
       this.authIcon.setVisible(true);
-    } else if (this.scene.state.farm === 'Sheep' && this.scene.state.userSheep.tutorial >= 100 && this.scene.state.platform !== 'web' && this.scene.state.platform !== 'ya') {
+    } else if (this.scene.state.farm === 'Sheep' && this.scene.state.userSheep.tutorial >= 100 && this.scene.state.platform !== 'web' && this.scene.state.platform !== 'gd' && this.scene.state.platform !== 'ya') {
       this.authIcon.setVisible(false);
       this.setVisible(true);
       this.chatIcon.setVisible(true);
