@@ -46,6 +46,8 @@ export default class Ads {
         this.scene.state.readyAd = true;
       } else if (this.scene.state.platform === 'ya') {
         this.scene.state.readyAd = true;
+      } else if (this.scene.state.platform === 'gd') {
+        this.scene.state.readyAd = true;
       }
     }
   }
@@ -55,7 +57,7 @@ export default class Ads {
     this.scene.state.readyAd = false;
     this.scene.state.musicVolume = 0;
     this.scene.state.soundVolume = 0;
-    //@ts-ignore
+    // @ts-ignore
     this.scene.sound.get('music').volume = this.scene.state.musicVolume;
 
     if (this.scene.state.platform === 'ok') {
@@ -95,6 +97,11 @@ export default class Ads {
       });
     } else if (this.scene.state.platform === 'android') {
       this.scene.state.admob.rewarded.show();
+    } else if (this.scene.state.platform === 'gd') {
+      const gdsdk = window['gdsdk'];
+      if (typeof gdsdk !== 'undefined' && gdsdk.showAd !== 'undefined') {
+        gdsdk.showAd('rewarded');
+      }
     }
   }
 
@@ -126,6 +133,18 @@ export default class Ads {
         break;
       case 'android':
         this.scene.state.admob.interstitial.load();
+        this.scene.state.amplitude.logAmplitudeRevenue('interstitial', 0, 'interstitial', {});
+        break;
+      case 'gd':
+        const gdsdk = window['gdsdk'];
+        if (typeof gdsdk !== 'undefined' && gdsdk.showAd !== 'undefined') {
+          this.scene.state.musicVolume = 0;
+          this.scene.state.soundVolume = 0;
+          // @ts-ignore
+          this.scene.sound.get('music').volume = this.scene.state.musicVolume;
+          gdsdk.showAd('interstitial');
+          this.scene.state.amplitude.logAmplitudeRevenue('interstitial', 0, 'interstitial', {});
+        }
         break;
       default:
         break;
@@ -148,7 +167,7 @@ export default class Ads {
     && !state.user.starterpack;
   }
 
-  public static showInterstitialOnPreload(state: Istate): void {
+  public static showInterstitialOnPreload(state: Istate, scene: Phaser.Scene): void {
     if (!Ads.checkShowInterstitial(state)) return;
     state.interstitialTimer = 0;
     switch (state.platform) {
@@ -175,8 +194,15 @@ export default class Ads {
         }
         break;
       case 'android':
-        window['admob'].interstitial.prepare();
+        state.admob.interstitial.load();
         state.amplitude.logAmplitudeRevenue('interstitial', 0, 'interstitial', {});
+        break;
+      case 'gd':
+        const gdsdk = window['gdsdk'];
+        if (typeof gdsdk !== 'undefined' && gdsdk.showAd !== 'undefined') {
+          gdsdk.showAd('interstitial');
+          state.amplitude.logAmplitudeRevenue('interstitial', 0, 'interstitial', {});
+        }
         break;
       default:
         break;
@@ -187,7 +213,7 @@ export default class Ads {
     let type: string;
     const farmUser: IuserSheep | IuserChicken | IuserCow = this.scene.state[`user${this.scene.state.farm}`];
     const MainScene: Sheep | Chicken | Cow | Unicorn = this.scene.game.scene.keys[this.scene.state.farm];
-    switch(this.scene.state.adRewardedType) {
+    switch (this.scene.state.adRewardedType) {
   
       case 1: // доп.софта для обмена
         this.scene.state.user.diamonds += 1;
