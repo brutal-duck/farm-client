@@ -162,9 +162,7 @@ export default class Ads {
       result = state.interstitialTimer >= INTERSTITIAL_DELAY && userFarm.part >= 2;
     }
 
-    return result 
-    && (state.newbieTime <= 0 || state.userChicken.part > 0) 
-    && !state.user.starterpack;
+    return result && !state.user.starterpack;
   }
 
   public static showInterstitialOnPreload(state: Istate, scene: Phaser.Scene): void {

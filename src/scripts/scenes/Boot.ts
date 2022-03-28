@@ -53,7 +53,7 @@ class Boot extends Phaser.Scene {
   public getPlatformStorage = getPlatformStorage.bind(this);
 
   public init(): void {
-    this.build = 4.22;
+    this.build = 4.23;
     // console.log(this.game.device, 'this.game.device');
     this.state = state;
     this.fontsReady = false;
@@ -349,6 +349,14 @@ class Boot extends Phaser.Scene {
       'gameId': process.env.GD_ID,
       'onEvent': (event) => {
         switch (event.name) {
+          case 'SDK_READY':
+            console.log('SDK_READY');
+            const gdsdk = window['gdsdk'];
+            if (typeof gdsdk !== 'undefined' && gdsdk.showAd !== 'undefined') {
+              gdsdk.showAd('interstitial');
+              this.state.amplitude.logAmplitudeRevenue('interstitial', 0, 'interstitial', {});
+            }
+            break;
           case 'SDK_GAME_START':
             console.log('SDK_GAME_START');
             this.state.musicVolume = this.game.scene.keys[this.state.farm].ads.musicVolume;
@@ -733,7 +741,7 @@ class Boot extends Phaser.Scene {
       if (document.visibilityState === 'visible') {
         setTimeout((): void => {
           const music: Phaser.Sound.BaseSound = this.sound.get('music');
-          music?.play();
+          music?.resume();
         }, 10);
       } else {
         const music: Phaser.Sound.BaseSound = this.sound.get('music');
