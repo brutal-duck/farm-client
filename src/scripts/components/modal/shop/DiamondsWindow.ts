@@ -55,9 +55,8 @@ export default class DiamondsWindow extends Phaser.GameObjects.Sprite{
       align: 'center'
     };
     let y: number = this.scene.height + 100;
-    const str1 = 'Бесплатный кристалл';
     const { centerX } = this.scene.cameras.main;
-    const text1 = this.scene.add.text(centerX - 130, y, str1, textStyle).setOrigin(0.5, 0);
+    this.scene.add.text(centerX - 130, y, this.scene.state.lang.freeCrystal, textStyle).setOrigin(0.5, 0);
   }
   
   private createAllPackages(): void {

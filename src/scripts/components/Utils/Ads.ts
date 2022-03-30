@@ -55,6 +55,8 @@ export default class Ads {
   public watchAd(type: number): void {
     this.scene.state.adRewardedType = type;
     this.scene.state.readyAd = false;
+    this.musicVolume = this.scene.state.musicVolume;
+    this.soundVolume = this.scene.state.soundVolume;
     this.scene.state.musicVolume = 0;
     this.scene.state.soundVolume = 0;
     // @ts-ignore
@@ -138,6 +140,8 @@ export default class Ads {
       case 'gd':
         const gdsdk = window['gdsdk'];
         if (typeof gdsdk !== 'undefined' && gdsdk.showAd !== 'undefined') {
+          this.musicVolume = this.scene.state.musicVolume;
+          this.soundVolume = this.scene.state.soundVolume;
           this.scene.state.musicVolume = 0;
           this.scene.state.soundVolume = 0;
           // @ts-ignore

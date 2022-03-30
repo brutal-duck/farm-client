@@ -53,7 +53,7 @@ class Boot extends Phaser.Scene {
   public getPlatformStorage = getPlatformStorage.bind(this);
 
   public init(): void {
-    this.build = 4.23;
+    this.build = 4.3;
     // console.log(this.game.device, 'this.game.device');
     this.state = state;
     this.fontsReady = false;
@@ -373,6 +373,8 @@ class Boot extends Phaser.Scene {
             break;
           case 'SDK_REWARDED_WATCH_COMPLETE':
             console.log('SDK_REWARDED_WATCH_COMPLETE');
+            this.state.musicVolume = this.game.scene.keys[this.state.farm].ads.musicVolume;
+            this.state.soundVolume = this.game.scene.keys[this.state.farm].ads.soundVolume;
             this.game.scene.keys[this.state.farm].ads.adReward();
             break;
         }

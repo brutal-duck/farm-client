@@ -2367,7 +2367,8 @@ export default {
     "ok": "ОК",
     "sale": "Акция",
     "bonus": "Бонус",
-    "notEnoughtWaterAndGrass": "У тебя не хватает ресурсов для такого количества животных. Cледи, чтобы всем твоим животным хватало травы и воды"
+    "notEnoughtWaterAndGrass": "У тебя не хватает ресурсов для такого количества животных. Cледи, чтобы всем твоим животным хватало травы и воды",
+    "freeCrystal": "Бесплатный кристалл"
   },
   "en": {
     "index": "en",
@@ -4737,6 +4738,7 @@ export default {
     "ok": "ОК",
     "sale": "Sale",
     "bonus": "Bonus",
-    "notEnoughtWaterAndGrass": "You don't have enough resources for so many animals. Make sure that all your animals have enough grass and water"
+    "notEnoughtWaterAndGrass": "You don't have enough resources for so many animals. Make sure that all your animals have enough grass and water",
+    "freeCrystal": "Free crystal"
   }
 };
