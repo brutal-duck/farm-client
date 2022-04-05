@@ -46,7 +46,9 @@ class ChickenPreload extends Phaser.Scene {
       this.loadTime = Math.round(new Date().getTime() / 1000);
       this.state.socket = new Socket(this.state);
     }
-    Ads.showInterstitialOnPreload(this.state, this);
+    if (process.env.platform !== 'gd') {
+      Ads.showInterstitialOnPreload(this.state, this);
+    }
   }
   
   public preload(): void {

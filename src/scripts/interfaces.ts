@@ -1078,4 +1078,5 @@ interface Istate {
   clanChatNotificationCount: number;
   dataIsLoaded: boolean;
   admob: Iadmob;
+  prerollInterstitial: boolean;
 }

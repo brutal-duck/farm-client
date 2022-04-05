@@ -14,7 +14,7 @@ import { incFortuneAdTimer } from '../../general/interval';
 import Fortune from './../../scenes/Fortune';
 import Utils from './../../libs/Utils';
 
-const INTERSTITIAL_DELAY = 60;
+const INTERSTITIAL_DELAY = process.env.platform === 'gd' ? 120 : 60;
 const ONE_HOUR = 3600;
 const TWO_HOURS = 7200;
 /**
@@ -144,8 +144,10 @@ export default class Ads {
           this.soundVolume = this.scene.state.soundVolume;
           this.scene.state.musicVolume = 0;
           this.scene.state.soundVolume = 0;
-          // @ts-ignore
-          this.scene.sound.get('music').volume = this.scene.state.musicVolume;
+          if (this.scene.sound.get('music')) {
+            // @ts-ignore
+            this.scene.sound.get('music').volume = this.scene.state.musicVolume;
+          }
           gdsdk.showAd('interstitial');
           this.scene.state.amplitude.logAmplitudeRevenue('interstitial', 0, 'interstitial', {});
         }
@@ -156,6 +158,12 @@ export default class Ads {
   }
 
   public static checkShowInterstitial(state: Istate): boolean {
+    if (process.env.platform === 'gd' && !state.prerollInterstitial) {
+      console.log('PREROLL INTERSTITIAL');
+      state.prerollInterstitial = true;
+      return true;
+    }
+
     const farm: string = state.farm;
     let result: boolean;
     if (farm === 'Unicorn') {
