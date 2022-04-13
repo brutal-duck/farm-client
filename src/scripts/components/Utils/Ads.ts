@@ -53,6 +53,9 @@ export default class Ads {
   }
 
   public watchAd(type: number): void {
+    if (process.env.platform === 'gd') {
+      this.scene.state.interstitialTimer = 0;
+    }
     this.scene.state.adRewardedType = type;
     this.scene.state.readyAd = false;
     this.musicVolume = this.scene.state.musicVolume;
@@ -371,8 +374,9 @@ export default class Ads {
         break;
       case 6: 
         const FREE_DIAMONDS = 1;
+        const FREE_DIAMONDS_TIME = process.env.platform === 'gd' ? 5 : 60;
         this.scene.state.user.diamonds += FREE_DIAMONDS;
-        this.scene.state.user.takeFreeDiamondTime = 60 * 60;
+        this.scene.state.user.takeFreeDiamondTime = 60 * FREE_DIAMONDS_TIME;
         this.scene.game.scene.keys[this.scene.state.farm].autosave();
         this.scene.state.amplitude.logAmplitudeEvent('diamonds_get', {
           type: 'take_ad_diamond',

@@ -26,6 +26,9 @@ function interval(): void {
   let arrowOnMap: Phaser.GameObjects.Sprite;
   
   this.time.addEvent({ delay: 1000, callback: (): void => {
+    if (process.env.platform === 'gd') {
+      this.ads.showInterstitialAd();
+    }
     
     // проверка подключения к интернету
     this.onlineStatus();
