@@ -14,7 +14,7 @@ import { incFortuneAdTimer } from '../../general/interval';
 import Fortune from './../../scenes/Fortune';
 import Utils from './../../libs/Utils';
 
-const INTERSTITIAL_DELAY = process.env.platform === 'gd' ? 120 : 60;
+const INTERSTITIAL_DELAY = process.env.platform === 'gd' ? 180 : 60;
 const ONE_HOUR = 3600;
 const TWO_HOURS = 7200;
 /**
