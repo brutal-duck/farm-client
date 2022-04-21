@@ -93,6 +93,7 @@ let admob: Iadmob = {
   rewarded: null
 };
 let badBalanceWindowShown: boolean = false;
+let prerollInterstitial: boolean = false;
 
 let state: Istate = {
   // записываемые в localStorage
@@ -189,6 +190,7 @@ let state: Istate = {
   playId,
   interstitialTimer,
   admob,
+  prerollInterstitial // преролл метка для GameDistribution
 }
 
 export default state;

@@ -163,6 +163,7 @@ export default class TournamentRaitingsWindow extends Phaser.GameObjects.Sprite 
       y: bgY + bgHeight / 2 + 15,
     });
 
+    this.scene.state.modal.clanTabType = 2;
     this.scene.scene.launch('ClanScroll', this.scene.state);
   }
 

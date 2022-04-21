@@ -108,12 +108,12 @@ export default class Amplitude implements Iamplitude {
     const UnicornScene: Unicorn = this.scene.game.scene.getScene('Unicorn') as Unicorn;
   
     if (this.state.farm !== 'Unicorn' && data.farm_id !== 'Unicorn') {
-      const balance: Ibalance = MainScene?.balance();
-      const waterPercent: number = balance?.notEnoughWater ? -1 * balance?.waterPercent : balance?.waterPercent;
-      const grassPercent: number = balance?.notEnoughGrass ? -1 * balance?.grassPercent : balance?.grassPercent;
-      let countAnimal: number = 0;
-      if (this.state.farm !== 'Cow') this[this.state.farm?.toLowerCase()]?.children.entries.length;
-      if (this.state.farm === 'Cow') countAnimal = CowScene?.animalGroup?.children.entries.length;
+      // const balance: Ibalance = MainScene?.balance();
+      // const waterPercent: number = balance?.notEnoughWater ? -1 * balance?.waterPercent : balance?.waterPercent;
+      // const grassPercent: number = balance?.notEnoughGrass ? -1 * balance?.grassPercent : balance?.grassPercent;
+      // let countAnimal: number = 0;
+      // if (this.state.farm !== 'Cow') this[this.state.farm?.toLowerCase()]?.children.entries.length;
+      // if (this.state.farm === 'Cow') countAnimal = CowScene?.animalGroup?.children.entries.length;
   
       eventData = {
         test: this.state.user?.test,
@@ -123,13 +123,13 @@ export default class Amplitude implements Iamplitude {
         money: this.state[`user${this.state.farm}`]?.money,
         fairLevel: this.state[`user${this.state.farm}`]?.fair,
         collector: this.state[`user${this.state.farm}`]?.collector,
-        countAnimal: countAnimal,
-        balanceWaterPercent: waterPercent,
-        balanceGrassPercent: grassPercent,
+        // countAnimal: countAnimal,
+        // balanceWaterPercent: waterPercent,
+        // balanceGrassPercent: grassPercent,
       }
     } else {
-      let countAnimal: number = UnicornScene?.animals?.children.entries.length;
-      if (!countAnimal) countAnimal = 0;
+      // let countAnimal: number = UnicornScene?.animals?.children.entries.length;
+      // if (!countAnimal) countAnimal = 0;
   
       eventData = {
         test: this.state.user.test,
@@ -138,7 +138,7 @@ export default class Amplitude implements Iamplitude {
         diamonds: this.state.user.diamonds,
         money: this.state[`user${this.state.farm}`].money,
         collector: this.state[`user${this.state.farm}`].collector,
-        countAnimal: countAnimal,
+        // countAnimal: countAnimal,
       }
     }
     for (const key in data) {

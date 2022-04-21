@@ -26,6 +26,9 @@ function interval(): void {
   let arrowOnMap: Phaser.GameObjects.Sprite;
   const MILK_DELAY: number = 10;
   this.time.addEvent({ delay: 1000, callback: (): void => {
+    if (process.env.platform === 'gd') {
+      this.ads.showInterstitialAd();
+    }
     
     // проверка подключения к интернету
     this.onlineStatus();

@@ -53,7 +53,7 @@ class Boot extends Phaser.Scene {
   public getPlatformStorage = getPlatformStorage.bind(this);
 
   public init(): void {
-    this.build = 4.21;
+    this.build = 4.4;
     // console.log(this.game.device, 'this.game.device');
     this.state = state;
     this.fontsReady = false;
@@ -155,7 +155,7 @@ class Boot extends Phaser.Scene {
   }
 
   private setPlatform(): void {
-    this.platform = process.env.platform === 'ya' ? 'ya' : process.env.platform === 'android' ? 'android' : 'web';
+    this.platform = process.env.platform === 'ya' ? 'ya' : process.env.platform === 'android' ? 'android' : process.env.platform === 'gd' ? 'gd' : 'web';
     this.hash = '';
 
     const search: string = window.location.search;
@@ -309,6 +309,8 @@ class Boot extends Phaser.Scene {
       this.checkYandexUser();
     } else if (this.platform === 'android') {
       this.initAndroidPlatform();
+    } else if (this.platform === 'gd') {
+      this.checkGDUser();
     }
   }
 
@@ -340,6 +342,46 @@ class Boot extends Phaser.Scene {
   private checkWebUser(): void {
     this.hash = LocalStorage.get('hash');
     this.postCheckUser(this.hash);
+  }
+
+  private checkGDUser(): void {
+    window["GD_OPTIONS"] = {
+      'gameId': process.env.GD_ID,
+      'onEvent': (event) => {
+        switch (event.name) {
+          case 'SDK_GAME_START':
+            console.log('SDK_GAME_START');
+            this.state.musicVolume = this.game.scene.keys[this.state.farm].ads.musicVolume;
+            this.state.soundVolume = this.game.scene.keys[this.state.farm].ads.soundVolume;
+            // @ts-ignore
+            this.sound.get('music').volume = this.state.musicVolume;
+            break;
+          case 'SDK_GAME_PAUSE':
+            console.log('SDK_GAME_PAUSE');
+            this.state.musicVolume = 0;
+            this.state.soundVolume = 0;
+            // @ts-ignore
+            this.scene.sound.get('music').volume = 0;
+            break;
+          case 'SDK_REWARDED_WATCH_COMPLETE':
+            console.log('SDK_REWARDED_WATCH_COMPLETE');
+            this.state.musicVolume = this.game.scene.keys[this.state.farm].ads.musicVolume;
+            this.state.soundVolume = this.game.scene.keys[this.state.farm].ads.soundVolume;
+            this.game.scene.keys[this.state.farm].ads.adReward();
+            break;
+        }
+      },
+    };
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = 'https://html5.api.gamedistribution.com/main.min.js';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'gamedistribution-jssdk'));
+
+    this.checkWebUser();
   }
 
   private checkYandexUser(): void {
@@ -571,9 +613,7 @@ class Boot extends Phaser.Scene {
         if (this.platform === 'web' && status === 'new') {
           this.createnLanding = false;
         } else if (
-          this.platform === 'web' 
-          || (this.platform === 'android' 
-          || this.platform === 'ya') && !auth
+          this.platform === 'web' || (this.platform === 'android' || this.platform === 'ya' || this.platform === 'gd') && !auth
         ) {
           this.setLocalStorageHash(hash);
         } else {
@@ -695,7 +735,7 @@ class Boot extends Phaser.Scene {
       if (document.visibilityState === 'visible') {
         setTimeout((): void => {
           const music: Phaser.Sound.BaseSound = this.sound.get('music');
-          music?.play();
+          music?.resume();
         }, 10);
       } else {
         const music: Phaser.Sound.BaseSound = this.sound.get('music');

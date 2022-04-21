@@ -30,13 +30,13 @@ export default function autosave(): Promise<void> {
     } else {
       if (state.sheepTasks[i].part === state.userSheep.part) {
         if (state.sheepTasks[i].type === 10) {
-          if ((this.state.platform === 'web' &&
+          if (((this.state.platform === 'web' || this.state.platform === 'gd') &&
             this.state.user.login === '') || 
             this.takeRewardRegistration) {
               sheepTasks.push(state.sheepTasks[i]);
           }
         } else if (state.sheepTasks[i].type === 16) {
-          if (this.state.platform === 'web') {
+          if (this.state.platform === 'web' || this.state.platform === 'gd') {
             sheepTasks.push(state.sheepTasks[i]);
           }
         } else {
@@ -54,13 +54,13 @@ export default function autosave(): Promise<void> {
     } else {
       if (state.chickenTasks[i].part === state.userChicken.part) {
         if (state.chickenTasks[i].type === 10) {
-          if ((this.state.platform === 'web' &&
+          if (((this.state.platform === 'web' || this.state.platform === 'gd') &&
             this.state.user.login === '') || 
             this.takeRewardRegistration) {
               chickenTasks.push(state.chickenTasks[i]);
           }
         } else if (state.chickenTasks[i].type === 16) {
-          if (this.state.platform === 'web') {
+          if (this.state.platform === 'web' || this.state.platform === 'gd') {
             chickenTasks.push(state.chickenTasks[i]);
           }
         } else {
@@ -78,13 +78,13 @@ export default function autosave(): Promise<void> {
     } else {
       if (state.cowTasks[i].part === state.userCow.part) {
         if (state.cowTasks[i].type === 10) {
-          if ((this.state.platform === 'web' &&
+          if (((this.state.platform === 'web' || this.state.platform === 'gd') &&
             this.state.user.login === '') || 
             this.takeRewardRegistration) {
               cowTasks.push(state.cowTasks[i]);
           }
         } else if (state.sheepTasks[i].type === 16) {
-          if (this.state.platform === 'web') {
+          if (this.state.platform === 'web' || this.state.platform === 'gd') {
             cowTasks.push(state.cowTasks[i]);
           }
         } else {
@@ -373,7 +373,7 @@ export default function autosave(): Promise<void> {
             state.user.id = res.data.newUser._id;
             state.user.hash = res.data.newUser.hash;
             state.user.counter = res.data.newUser.counter;
-            if (state.platform === 'web') {
+            if (state.platform === 'web' || state.platform === 'gd') {
               LocalStorage.set('hash', res.data.hash);
             }
           }

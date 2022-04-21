@@ -1154,7 +1154,7 @@ function spreadAnimals(): void {
 
 function getEventRaiting(): void {
   let login: string;
-  if (this.state.platform !== 'web') {
+  if (this.state.platform !== 'web' && this.state.platform !== 'gd') {
     login = this.state.name
   } else login = this.state.user.login
 
