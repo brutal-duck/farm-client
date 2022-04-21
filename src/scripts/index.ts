@@ -46,9 +46,13 @@ window.onload = (): void => {
     if (canvasHeight > 1700) canvasHeight = 1700;
     else if (canvasHeight < 1200) canvasHeight = 1200;
  
+    if (process.env.platform === 'odr') {
+      canvasHeight *= 0.97;
+    }
+
     let x: number = canvasWidth / gcd(canvasHeight, canvasWidth);
     let y: number = canvasHeight / gcd(canvasHeight, canvasWidth);
-  
+
     if (clientHeight / y > clientWidth / x) {
       width = clientWidth;
       height = clientWidth / x * y;
@@ -56,7 +60,7 @@ window.onload = (): void => {
       width = clientHeight / y * x;
       height = clientHeight;
     }
-  
+
     root.style.height = height + 'px';
     root.style.width = width + 'px';
 
