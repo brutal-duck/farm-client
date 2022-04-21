@@ -111,11 +111,12 @@ window.onload = (): void => {
       game.scale.resize(canvasWidth, canvasHeight);
     }, false);
 
+    const body: HTMLElement = document.querySelector('body');
     const prevent = ev => ev.preventDefault();
     const disableScrolling = () => document.addEventListener('wheel', prevent, {passive: false});
     const enableScrolling = () => document.removeEventListener('wheel', prevent);
-    root.addEventListener('mouseover', disableScrolling);
-    root.addEventListener('mouseleave', enableScrolling);
+    body.addEventListener('mouseover', disableScrolling);
+    body.addEventListener('mouseleave', enableScrolling);
     
   }, 100);
 }
