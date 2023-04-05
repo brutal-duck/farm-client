@@ -1,0 +1,311 @@
+@font-face {
+  font-family: Shadow;
+  src: url(1688a3517b455bfe68bcf80e5dee8a9a.ttf);
+}
+@font-face {
+  font-family: Bip;
+  src: url(c56113ae65c1145efec57a93ed91f60b.ttf);
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+div, p, span, h1, h2, h3, h4, img {
+  -moz-user-select: -moz-none;
+  -o-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  outline: none;
+}
+html, body { height: 100%; }
+body {
+  margin: 0;
+  padding: 0;
+  background: #DCF6FB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+body::before {
+  content: '';
+  background: url(1eead9ea1cf8684b8fb245456994c3cc.jpg) center no-repeat;
+  background-size: cover;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -2;
+}
+canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  cursor: pointer;
+}
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+.window {
+  position: relative;
+  max-width: 414px;
+  min-width: 320px;
+  font-family: Shadow;
+  display: flex;
+  align-items: center;
+}
+textarea:focus, input:focus { outline: none; }
+/* .mt-10 { margin-top: 10px !important; } */
+/* .error {
+  color: #FF0000;
+  max-width: 290px;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 14px;
+} */
+
+/* .chat {
+  width: 300px;
+  height: 300px;
+  margin: 0 auto 30px;
+  position: relative;
+  overflow: hidden;
+}
+.chat-inside {
+  position: absolute;
+  left: 0;
+  right: -20px;
+  top: 0;
+  bottom: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
+  box-sizing: border-box;
+  padding: 10px 0;
+} */
+
+/* чат */
+
+/* .enter-mail {
+  color: #925C28;
+  margin: 25px auto 15px;
+} */
+
+/* проверка рекламы */
+
+#adblock {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.adBanner {
+  height: 2px;
+  width: 2px;
+  visibility: hidden;
+}
+
+/* НОВЫЙ ИНПУТ */
+
+#root {
+  position: fixed;
+}
+
+/* Никнейм и отправка почты */
+#nickname {
+  display: none;
+  position: absolute;
+  width: 62.5%;
+  top: 50%;
+  left: 17.5%;
+  bottom: 44%;
+  z-index: 10;
+  border: none;
+  padding-left: 8px;
+  font-family: 'Bip';
+  font-size: 120%;
+  color: '#974f00';
+}
+#nickname:focus {
+  border: 3px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+/* Никнейм и отправка почты */
+#clanname {
+  display: none;
+  position: absolute;
+  width: 62.5%;
+  top: 37%;
+  left: 17.5%;
+  bottom: 57%;
+  z-index: 10;
+  border: none;
+  padding-left: 8px;
+  font-family: 'Bip';
+  font-size: 120%;
+  color: '#974f00';
+}
+#clanname:focus {
+  border: 3px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+/* Чат */
+#chat {
+  display: none;
+  position: absolute;
+  width: 39%;
+  top: 78%;
+  left: 19%;
+  bottom: 17%;
+  z-index: 10;
+  border: none;
+  padding-left: 6px;
+  font-family: 'Bip';
+  font-size: 115%;
+  color: '#974f00';
+}
+#chat:focus {
+  border: none;
+  background: transparent;
+  /* background: rgba(0, 0, 0, 0.5); */
+}
+
+/* Чат */
+#clan-search {
+  display: none;
+  position: absolute;
+  width: 39%;
+  top: 19%;
+  left: 19%;
+  bottom: 77%;
+  z-index: 10;
+  border: none;
+  padding-left: 6px;
+  font-family: 'Bip';
+  font-size: 100%;
+  color: '#974f00';
+}
+#clan-search:focus {
+  border: none;
+  background: transparent;
+  /* background: rgba(0, 0, 0, 0.5); */
+}
+
+/* Техподдержка */
+#sup-email {
+  display: none;
+  position: absolute;
+  box-sizing: border-box;
+  width: 64.5%;
+  top: 38.5%;
+  left: 17.5%;
+  bottom: 55.5%;
+  z-index: 10;
+  border: none;
+  padding-left: 8px;
+  font-family: 'Bip';
+  font-size: 120%;
+  color: '#974f00';
+}
+#sup-email:focus {
+  border: 3px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+#sup-msg {
+  display: none;
+  position: absolute;
+  box-sizing: border-box;
+  width: 64.5%;
+  top: 46%;
+  left: 17.5%;
+  bottom: 32%;
+  z-index: 10;
+  border: none;
+  padding-left: 8px;
+  padding-right: 13px;
+  font-family: 'Bip';
+  font-size: 120%;
+  line-height: 1.4;
+  color: '#974f00';
+  resize: none;
+  overflow: hidden;
+}
+#sup-msg:focus {
+  border: 3px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+/* Регистрация */
+#reg-login {
+  display: none;
+  position: absolute;
+  box-sizing: border-box;
+  top: 37.5%;
+  bottom: 56.5%;
+  width: 64.5%;
+  left: 17.5%;
+  z-index: 10;
+  border: none;
+  padding-left: 8px;
+  font-family: 'Bip';
+  font-size: 120%;
+  color: '#974f00';
+}
+#reg-login:focus {
+  border: 3px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+#reg-pass {
+  display: none;
+  position: absolute;
+  box-sizing: border-box;
+  top: 45.5%;
+  bottom: 48.5%;
+  width: 64.5%;
+  left: 17.5%;
+  z-index: 10;
+  border: none;
+  padding-left: 8px;
+  font-family: 'Bip';
+  font-size: 120%;
+  color: '#974f00';
+}
+#reg-pass:focus {
+  border: 3px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+#clan-change-name {
+  display: none;
+  position: absolute;
+  width: 58.5%;
+  left: 19.5%;
+  top: 63%;
+  bottom: 32.5%;
+  z-index: 10;
+  border: none;
+  padding-left: 8px;
+  font-family: 'Bip';
+  font-size: 120%;
+  color: '#974f00';
+}
+#clan-change-name {
+  border: 3px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+
