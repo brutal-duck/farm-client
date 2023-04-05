@@ -1,4 +1,4 @@
-import bridge from '@vkontakte/vk-bridge';
+import bridge, { EAdsFormats } from '@vkontakte/vk-bridge';
 import Chicken from "../../scenes/Chicken/Main";
 import { FAPI } from '../../libs/Fapi'
 import Cow from "../../scenes/Cow/Main";
@@ -70,7 +70,7 @@ export default class Ads {
     } else if (this.scene.state.platform === 'vk') {
       this.scene.scene.launch('Block');
       bridge
-        .send('VKWebAppShowNativeAds', { ad_format:'reward' })
+        .send('VKWebAppShowNativeAds', { ad_format: EAdsFormats.REWARD })
         .then(data => {
           if (data.result) this.adReward();
         })
@@ -115,7 +115,7 @@ export default class Ads {
     this.scene.state.interstitialTimer = 0;
     switch (this.scene.state.platform) {
       case 'vk':
-        bridge.send("VKWebAppShowNativeAds", { ad_format:"interstitial" })
+        bridge.send("VKWebAppShowNativeAds", { ad_format: EAdsFormats.INTERSTITIAL })
         .then(data => {
           if (data.result) this.scene.state.amplitude.logAmplitudeRevenue('interstitial', 0, 'interstitial', {});
         });
@@ -185,7 +185,7 @@ export default class Ads {
     state.interstitialTimer = 0;
     switch (state.platform) {
       case 'vk':
-        bridge.send("VKWebAppShowNativeAds", { ad_format:"interstitial" })
+        bridge.send("VKWebAppShowNativeAds", { ad_format: EAdsFormats.INTERSTITIAL })
         .then(data => {
           if (data.result) state.amplitude.logAmplitudeRevenue('interstitial', 0, 'interstitial', {});
         });

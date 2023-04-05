@@ -969,7 +969,18 @@ interface Iadmob {
   interstitial: any;
   rewarded: any;
 }
+
+interface IvkplayApi {
+  getLoginStatus: () => void;
+  reloadWindow: () => void
+  userInfo: () => void;
+  registerUser: () => void;
+  authUser: () => void;
+  showAds: (format: {interstitial: Boolean})=> void;
+}
+
 interface Istate {
+  vkplayApi: IvkplayApi;
   badBalanceWindowShown: boolean;
   interstitialTimer: number;
   platform: string;

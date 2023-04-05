@@ -94,6 +94,7 @@ let admob: Iadmob = {
 };
 let badBalanceWindowShown: boolean = false;
 let prerollInterstitial: boolean = false;
+let vkplayApi: IvkplayApi = null
 
 let state: Istate = {
   // записываемые в localStorage
@@ -132,6 +133,7 @@ let state: Istate = {
   dailyAwards, // награды новичка
 
   // не записываемые в localStorage
+  vkplayApi,
   badBalanceWindowShown,
   clanChatNotificationCount,
   shopNotificationCount: notificationCounter, // счетчик нативов в магазине ['diamonds', 'gold', 'animals', 'booster']

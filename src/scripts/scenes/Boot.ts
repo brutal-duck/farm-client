@@ -118,7 +118,7 @@ class Boot extends Phaser.Scene {
     if (this.fontsReady && this.serverError) {
       this.serverError = false;
       this.children.destroy();
-      new ErrorWindow(this, this.state.lang.checkYourInternet); 
+      new ErrorWindow(this, this.state.lang.checkYourInternet);
     }
   }
 
@@ -165,8 +165,12 @@ class Boot extends Phaser.Scene {
     // })
     const vk: string = this.params.get('api_url');
     const ok: string = this.params.get('api_server');
+    const vkplayParams = Object.fromEntries(this.params.entries())
+    console.log('params', vkplayParams)
+    console.log('1.0.9')
     if (vk === 'https://api.vk.com/api.php') this.platform = 'vk';
     else if (ok === 'https://api.ok.ru/') this.platform = 'ok';
+    else if (vkplayParams.hasOwnProperty('lang')) this.platform = 'vkplay';
     console.log('Platform', this.platform);
   }
 
@@ -193,11 +197,18 @@ class Boot extends Phaser.Scene {
       let lang: string = window.navigator.language;
       lang = lang.toLowerCase();
       let ru: number = lang.indexOf('ru');
-  
+
       if (ru !== -1) this.lang = 'ru';
       else this.lang = 'en';
     } else this.lang = 'ru';
+    if (this.platform === 'vkplay') {
+      const search: string = window.location.search;
+      this.params = new URLSearchParams(search);
+      const vkplayParams = Object.fromEntries(this.params.entries())
+      this.lang = vkplayParams.lang === 'ru_RU' ? 'ru' : 'en'
+    }
     this.state.lang = langs[this.lang];
+    console.log(this.lang, 'lang')
   }
 
   private initAmplitude(): void {
@@ -266,7 +277,7 @@ class Boot extends Phaser.Scene {
       try { window[`Adjust`].trackEvent(this.state.adjust.firstOpenEvent) }
       catch (err) { console.log('ADJUST', err) }
     }
-   
+
     if (LocalStorage.get('farm') === 'Sheep' ||
       LocalStorage.get('farm') === 'Chicken' ||
       LocalStorage.get('farm') === 'Cow') {
@@ -311,7 +322,63 @@ class Boot extends Phaser.Scene {
       this.initAndroidPlatform();
     } else if (this.platform === 'gd') {
       this.checkGDUser();
+    } else if (this.platform === 'vkplay') {
+      this.checkVkPlayUser()
     }
+  }
+
+  private async checkVkPlayUser(): Promise<void> {
+    (function apiHandshake(iframeApi, state) {
+      if (typeof iframeApi === 'undefined') {
+        console.log('Cannot find iframeApi function, are we inside an iframe?');
+        return;
+      }
+
+      var callbacks = {
+        appid: [process.env.VK_PLAY_ID],
+
+        getLoginStatusCallback: function (status) {
+          if (status.status != 'ok') {
+            console.log(status)
+            console.log("Ошибка авторизации...");
+          } else {
+            switch (status.loginStatus) {
+              case 0:
+                state.vkplayApi.authUser();
+                break;
+              case 1:
+                state.vkplayApi.registerUser();
+                break;
+              case 2:
+                state.vkplayApi.showAds({interstitial: true})
+                state.vkplayApi.userInfo();
+                break;
+            }
+          }
+        },
+        userInfoCallback: function (info) {
+          console.log('info', info)
+        },
+        registerUserCallback: function (info) {
+          state.vkplayApi.reloadWindow();
+        },
+        adsCallback: function(context) {},
+      };
+
+      function error(err) {
+        throw new Error('Could not init external api ' + err);
+      }
+
+      function connected(api) {
+        state.vkplayApi = api;
+        state.vkplayApi.getLoginStatus()
+      }
+
+      iframeApi(callbacks).then(connected, error);
+    }((window as any).iframeApi, this.state));
+
+    this.platform = 'web'
+    this.checkWebUser()
   }
 
   private async checkVkUser(): Promise<void> {
@@ -372,7 +439,7 @@ class Boot extends Phaser.Scene {
         }
       },
     };
-    (function(d, s, id) {
+    (function (d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) return;
       js = d.createElement(s);
@@ -461,26 +528,26 @@ class Boot extends Phaser.Scene {
         }
       );
 
-      document.addEventListener("play.SILENT_SIGNED_IN_FAILED",  (): void => {
+      document.addEventListener("play.SILENT_SIGNED_IN_FAILED", (): void => {
         if (!login) {
           login = true;
           checkUser();
         }
       });
-      document.addEventListener("play.SIGN_IN_FAILED",  (): void => {
+      document.addEventListener("play.SIGN_IN_FAILED", (): void => {
         if (!login) {
           login = true;
           checkUser();
         }
       });
-      document.addEventListener("play.PLAYER_INFO",  (data: any): void => {
+      document.addEventListener("play.PLAYER_INFO", (data: any): void => {
         if (!login) {
           login = true;
           userData = data;
           checkUser();
         }
       });
-      
+
       const cordova = window['cordova'];
       cordova.plugins.playGamesServices.initialize();
     });
@@ -538,7 +605,7 @@ class Boot extends Phaser.Scene {
     // @ts-ignore
     const adjustConfig = new AdjustConfig(process.env.ADJUST, AdjustConfig.EnvironmentProduction); // Для продакшена
     window[`Adjust`].create(adjustConfig);
-    
+
     this.state.adjust = {
       // @ts-ignore
       firstOpenEvent: new AdjustEvent("odowuy"),

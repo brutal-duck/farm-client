@@ -1,10 +1,12 @@
 {
   "name": "farm-client",
+  "homepage": "https://brutal-duck.github.io/farm-client/",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "get-translate": "node webpack/langs/app.js",
+    "deploy": "gh-pages -d build",
     "start": "webpack-dev-server --config webpack/localhost/config.js --open",
     "build-android": "webpack --config webpack/android/build.js && node webpack/eruda.js",
     "build-debug": "webpack --config webpack/debug/build.js && node webpack/eruda.js",
@@ -20,11 +22,13 @@
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
+    "@types/node": "^18.11.19",
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.4.2",
     "dotenv": "^8.2.0",
     "file-loader": "^4.3.0",
+    "gh-pages": "^5.0.0",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.9.0",
     "raw-loader": "^3.1.0",
