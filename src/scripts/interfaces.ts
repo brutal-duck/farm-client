@@ -973,7 +973,7 @@ interface Iadmob {
 interface IvkplayApi {
   getLoginStatus: () => void;
   reloadWindow: () => void
-  userInfo: () => void;
+  userProfile: () => void;
   registerUser: () => void;
   authUser: () => void;
   showAds: (format: {interstitial: Boolean})=> void;

@@ -43,6 +43,7 @@ class Boot extends Phaser.Scene {
   private pushToken: string = '';
   public androidData: IconfirmAndroidData;
   private serverError: boolean;
+  private vkplayLoginStatus: number;
 
   public shopButton = shopButton.bind(this);
   public bigButton = bigButton.bind(this);
@@ -167,7 +168,7 @@ class Boot extends Phaser.Scene {
     const ok: string = this.params.get('api_server');
     const vkplayParams = Object.fromEntries(this.params.entries())
     console.log('params', vkplayParams)
-    console.log('1.0.9')
+    console.log('1.0.4')
     if (vk === 'https://api.vk.com/api.php') this.platform = 'vk';
     else if (ok === 'https://api.ok.ru/') this.platform = 'ok';
     else if (vkplayParams.hasOwnProperty('lang')) this.platform = 'vkplay';
@@ -328,57 +329,57 @@ class Boot extends Phaser.Scene {
   }
 
   private async checkVkPlayUser(): Promise<void> {
-    (function apiHandshake(iframeApi, state) {
+    (function apiHandshake(iframeApi, state, postCheckUser, name, avatar, createLanding, curObj) {
       if (typeof iframeApi === 'undefined') {
         console.log('Cannot find iframeApi function, are we inside an iframe?');
         return;
       }
-
       var callbacks = {
         appid: [process.env.VK_PLAY_ID],
-
         getLoginStatusCallback: function (status) {
           if (status.status != 'ok') {
             console.log(status)
             console.log("Ошибка авторизации...");
           } else {
+            const bindLanding = createLanding.bind(curObj)
+            curObj.vkplayLoginStatus = status.loginStatus
+            console.log(status, 'status')
             switch (status.loginStatus) {
-              case 0:
-                state.vkplayApi.authUser();
+              case 0: 
+                curObj.createnLanding = false
+                bindLanding()
                 break;
               case 1:
-                state.vkplayApi.registerUser();
+                curObj.createnLanding = false
+                bindLanding()
                 break;
               case 2:
-                state.vkplayApi.showAds({interstitial: true})
-                state.vkplayApi.userInfo();
+                state.vkplayApi.userProfile();
                 break;
             }
           }
         },
-        userInfoCallback: function (info) {
-          console.log('info', info)
+        userProfileCallback: function (profile) {
+          console.log('info', profile)
+          const bindPostCheckUser = postCheckUser.bind(curObj)
+          bindPostCheckUser(profile.uid);
+          name = profile.nick;
+          avatar = profile.avatar;
         },
         registerUserCallback: function (info) {
-          state.vkplayApi.reloadWindow();
+          state.vkplayApi.reloadWindow()
         },
-        adsCallback: function(context) {},
+        adsCallback: function (context) { },
       };
-
       function error(err) {
         throw new Error('Could not init external api ' + err);
       }
-
       function connected(api) {
         state.vkplayApi = api;
         state.vkplayApi.getLoginStatus()
       }
-
       iframeApi(callbacks).then(connected, error);
-    }((window as any).iframeApi, this.state));
-
-    this.platform = 'web'
-    this.checkWebUser()
+    }((window as any).iframeApi, this.state, this.postCheckUser, this.name, this.avatar, this.createLanding, this));
   }
 
   private async checkVkUser(): Promise<void> {
@@ -668,6 +669,7 @@ class Boot extends Phaser.Scene {
   }
 
   public postCheckUser(id: number | string, auth?: boolean, login?: string): void {
+    console.log(this.platform, 'platform')
     axios.post(process.env.API + '/checkUser', {
       platform: this.platform,
       data: id,
@@ -676,6 +678,9 @@ class Boot extends Phaser.Scene {
       login: login,
     }).then((response) => {
       const { hash, error, expires, status } = response.data;
+      console.log(response.data, 'data')
+      console.log(hash, 'hash')
+      console.log(error, 'error')
       if (error === false) {
         if (this.platform === 'web' && status === 'new') {
           this.createnLanding = false;
@@ -684,6 +689,7 @@ class Boot extends Phaser.Scene {
         ) {
           this.setLocalStorageHash(hash);
         } else {
+          console.log('ready')
           this.userReady = true;
           this.hash = hash;
         }
@@ -701,6 +707,7 @@ class Boot extends Phaser.Scene {
 
   public createLanding(): void {
     this.createnLanding = true;
+    console.log(this.textures.list)
     if (this.authorizationWindow) {
       this.landing = new Landing(this);
     } else {
@@ -715,8 +722,12 @@ class Boot extends Phaser.Scene {
   }
 
   public createAuthorizationWindow(): void {
-    this.destroyLanding();
-    this.authorizationWindow = new Login(this);
+    if (this.platform === 'vkplay') {
+      this.state.vkplayApi.authUser()
+    } else {
+      this.destroyLanding();
+      this.authorizationWindow = new Login(this);
+    }
   }
 
   private destroyAuthorizationWindow(): void {
@@ -724,17 +735,25 @@ class Boot extends Phaser.Scene {
   }
 
   public playBtnHandler(): void {
-    if (!this.play) {
-      axios.post(process.env.API + '/checkUser', {
-        platform: 'webNew',
-      }).then((response) => {
-        if (response.data.error === false) {
-          this.setLocalStorageHash(response.data.hash);
-          this.state.amplitude.logAmplitudeEvent('landing_login', {});
-        } else this.createErrorWindow();
-      }).catch(() => {
-        this.serverError = true;
-      });
+    if (this.platform === 'vkplay') {
+      if (this.vkplayLoginStatus === 1) {
+        this.state.vkplayApi.registerUser()
+      } else {
+        this.state.vkplayApi.authUser()
+      }
+    } else {
+      if (!this.play) {
+        axios.post(process.env.API + '/checkUser', {
+          platform: 'webNew',
+        }).then((response) => {
+          if (response.data.error === false) {
+            this.setLocalStorageHash(response.data.hash);
+            this.state.amplitude.logAmplitudeEvent('landing_login', {});
+          } else this.createErrorWindow();
+        }).catch(() => {
+          this.serverError = true;
+        });
+      }
     }
   }
 
