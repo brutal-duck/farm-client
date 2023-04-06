@@ -48,6 +48,8 @@ export default class Ads {
         this.scene.state.readyAd = true;
       } else if (this.scene.state.platform === 'gd') {
         this.scene.state.readyAd = true;
+      } else if (this.scene.state.platform === 'vkplay') {
+        this.scene.state.readyAd = true;
       }
     }
   }
@@ -107,6 +109,8 @@ export default class Ads {
       if (typeof gdsdk !== 'undefined' && gdsdk.showAd !== 'undefined') {
         gdsdk.showAd('rewarded');
       }
+    } else if (this.scene.state.platform === 'vkplay') {
+      this.scene.state.vkplayApi.showAds( {interstitial: false} )
     }
   }
 
@@ -154,6 +158,9 @@ export default class Ads {
           gdsdk.showAd('interstitial');
           this.scene.state.amplitude.logAmplitudeRevenue('interstitial', 0, 'interstitial', {});
         }
+        break;
+      case 'vkplay':
+        this.scene.state.vkplayApi.showAds( {interstitial: true} )
         break;
       default:
         break;
@@ -216,6 +223,9 @@ export default class Ads {
           gdsdk.showAd('interstitial');
           state.amplitude.logAmplitudeRevenue('interstitial', 0, 'interstitial', {});
         }
+        break;
+      case 'vkplay':
+        state.vkplayApi.showAds( {interstitial: true} )
         break;
       default:
         break;

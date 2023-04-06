@@ -174,7 +174,7 @@ class Boot extends Phaser.Scene {
     const ok: string = this.params.get('api_server');
     const vkplayParams = Object.fromEntries(this.params.entries())
     console.log('params', vkplayParams)
-    console.log('1.0.47')
+    console.log('1.0.50')
     if (vk === 'https://api.vk.com/api.php') this.platform = 'vk';
     else if (ok === 'https://api.ok.ru/') this.platform = 'ok';
     else if (vkplayParams.hasOwnProperty('lang')) this.platform = 'vkplay';
@@ -340,8 +340,8 @@ class Boot extends Phaser.Scene {
         console.log('Cannot find iframeApi function, are we inside an iframe?');
         return;
       }
-      const callbacks = {
-        appid: [process.env.VK_PLAY_ID],
+      this.state.callbacks = {
+        appid: Number([process.env.VK_PLAY_ID]),
         getLoginStatusCallback: (status) => {
           if (status.status != 'ok') {
             console.log(status)
@@ -364,14 +364,23 @@ class Boot extends Phaser.Scene {
         },
         userProfileCallback: (profile) => {
           console.log('info', profile)
-          this.postCheckUser(profile.uid);
+          this.postCheckUser(profile.uid, false, profile.nick);
           this.name = profile.nick;
+          this.state.name = profile.nick;
           this.avatar = profile.avatar;
+          this.state.avatar = profile.avatar;
         },
         registerUserCallback: (info) => {
           this.state.vkplayApi.reloadWindow()
         },
-        adsCallback: (context) => { },
+        adsCallback: (context) => { 
+          console.log('context', context)
+          if (context.type === 'adCompleted') {
+            this.state.musicVolume = this.game.scene.keys[this.state.farm].ads.musicVolume;
+            this.state.soundVolume = this.game.scene.keys[this.state.farm].ads.soundVolume;
+            this.game.scene.keys[this.state.farm].ads.adReward();
+          }
+        }
       };
       const error = (err) => {
         throw new Error('Could not init external api ' + err);
@@ -379,8 +388,9 @@ class Boot extends Phaser.Scene {
       const connected = (api) => {
         this.state.vkplayApi = api;
         this.state.vkplayApi.getLoginStatus()
+        this.state.vkplayApi.showAds({interstitial: true})
       }
-      iframeApi(callbacks).then(connected, error);
+      iframeApi(this.state.callbacks).then(connected, error);
     }) ((window as any).iframeApi);
   }
 
@@ -680,9 +690,6 @@ class Boot extends Phaser.Scene {
       login: login,
     }).then((response) => {
       const { hash, error, expires, status } = response.data;
-      console.log(response.data, 'data')
-      console.log(hash, 'hash')
-      console.log(error, 'error')
       if (error === false) {
         if (this.platform === 'web' && status === 'new') {
           this.createnLanding = false;

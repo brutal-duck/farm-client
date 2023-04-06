@@ -979,7 +979,16 @@ interface IvkplayApi {
   showAds: (format: {interstitial: Boolean})=> void;
 }
 
+interface Icallbacks {
+  appid: number;
+  getLoginStatusCallback?: (status) => void;
+  userProfileCallback?: (profile) => void;
+  registerUserCallback?: (info) => void;
+  adsCallback?: (context) => void;
+}
+
 interface Istate {
+  callbacks: Icallbacks
   vkplayApi: IvkplayApi;
   badBalanceWindowShown: boolean;
   interstitialTimer: number;
