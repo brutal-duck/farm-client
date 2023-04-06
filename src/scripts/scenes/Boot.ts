@@ -44,6 +44,7 @@ class Boot extends Phaser.Scene {
   public androidData: IconfirmAndroidData;
   private serverError: boolean;
   private vkplayLoginStatus: number;
+  private _preload: boolean = false
 
   public shopButton = shopButton.bind(this);
   public bigButton = bigButton.bind(this);
@@ -101,6 +102,10 @@ class Boot extends Phaser.Scene {
     this.load.image('pixel-landing', assets.pixelForLanding);
   }
 
+  public create(): void {
+    this._preload = true
+  }
+
   public update(): void {
     if (this.userReady && this.fontsReady) {
       this.userReady = false;
@@ -108,7 +113,8 @@ class Boot extends Phaser.Scene {
       this.setStartState();
       this.initVolume();
     }
-    if (!this.createnLanding && this.fontsReady) {
+    if (!this.createnLanding && this.fontsReady && this._preload) {
+      console.log('create')
       this.createLanding();
     }
     if (this.fontsReady && this.doubleSave) {
@@ -168,7 +174,7 @@ class Boot extends Phaser.Scene {
     const ok: string = this.params.get('api_server');
     const vkplayParams = Object.fromEntries(this.params.entries())
     console.log('params', vkplayParams)
-    console.log('1.0.4')
+    console.log('1.0.47')
     if (vk === 'https://api.vk.com/api.php') this.platform = 'vk';
     else if (ok === 'https://api.ok.ru/') this.platform = 'ok';
     else if (vkplayParams.hasOwnProperty('lang')) this.platform = 'vkplay';
@@ -329,57 +335,53 @@ class Boot extends Phaser.Scene {
   }
 
   private async checkVkPlayUser(): Promise<void> {
-    (function apiHandshake(iframeApi, state, postCheckUser, name, avatar, createLanding, curObj) {
+    ((iframeApi) => {
       if (typeof iframeApi === 'undefined') {
         console.log('Cannot find iframeApi function, are we inside an iframe?');
         return;
       }
-      var callbacks = {
+      const callbacks = {
         appid: [process.env.VK_PLAY_ID],
-        getLoginStatusCallback: function (status) {
+        getLoginStatusCallback: (status) => {
           if (status.status != 'ok') {
             console.log(status)
             console.log("Ошибка авторизации...");
           } else {
-            const bindLanding = createLanding.bind(curObj)
-            curObj.vkplayLoginStatus = status.loginStatus
+            this.vkplayLoginStatus = status.loginStatus
             console.log(status, 'status')
             switch (status.loginStatus) {
               case 0: 
-                curObj.createnLanding = false
-                bindLanding()
+                this.createnLanding = false
                 break;
               case 1:
-                curObj.createnLanding = false
-                bindLanding()
+                this.createnLanding = false
                 break;
               case 2:
-                state.vkplayApi.userProfile();
+                this.state.vkplayApi.userProfile();
                 break;
             }
           }
         },
-        userProfileCallback: function (profile) {
+        userProfileCallback: (profile) => {
           console.log('info', profile)
-          const bindPostCheckUser = postCheckUser.bind(curObj)
-          bindPostCheckUser(profile.uid);
-          name = profile.nick;
-          avatar = profile.avatar;
+          this.postCheckUser(profile.uid);
+          this.name = profile.nick;
+          this.avatar = profile.avatar;
         },
-        registerUserCallback: function (info) {
-          state.vkplayApi.reloadWindow()
+        registerUserCallback: (info) => {
+          this.state.vkplayApi.reloadWindow()
         },
-        adsCallback: function (context) { },
+        adsCallback: (context) => { },
       };
-      function error(err) {
+      const error = (err) => {
         throw new Error('Could not init external api ' + err);
       }
-      function connected(api) {
-        state.vkplayApi = api;
-        state.vkplayApi.getLoginStatus()
+      const connected = (api) => {
+        this.state.vkplayApi = api;
+        this.state.vkplayApi.getLoginStatus()
       }
       iframeApi(callbacks).then(connected, error);
-    }((window as any).iframeApi, this.state, this.postCheckUser, this.name, this.avatar, this.createLanding, this));
+    }) ((window as any).iframeApi);
   }
 
   private async checkVkUser(): Promise<void> {
@@ -707,7 +709,7 @@ class Boot extends Phaser.Scene {
 
   public createLanding(): void {
     this.createnLanding = true;
-    console.log(this.textures.list)
+    console.log(this.textures.list['mid-syst'])
     if (this.authorizationWindow) {
       this.landing = new Landing(this);
     } else {
