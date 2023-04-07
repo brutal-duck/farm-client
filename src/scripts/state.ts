@@ -96,6 +96,7 @@ let badBalanceWindowShown: boolean = false;
 let prerollInterstitial: boolean = false;
 let vkplayApi: IvkplayApi = null
 let callbacks: Icallbacks = null
+let vkplayApiAdType = ''
 
 let state: Istate = {
   // записываемые в localStorage
@@ -134,6 +135,7 @@ let state: Istate = {
   dailyAwards, // награды новичка
 
   // не записываемые в localStorage
+  vkplayApiAdType,
   vkplayApi,
   callbacks,
   badBalanceWindowShown,

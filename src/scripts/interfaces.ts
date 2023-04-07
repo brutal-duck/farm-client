@@ -988,6 +988,7 @@ interface Icallbacks {
 }
 
 interface Istate {
+  vkplayApiAdType: string
   callbacks: Icallbacks
   vkplayApi: IvkplayApi;
   badBalanceWindowShown: boolean;

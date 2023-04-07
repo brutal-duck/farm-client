@@ -111,6 +111,7 @@ export default class Ads {
       }
     } else if (this.scene.state.platform === 'vkplay') {
       this.scene.state.vkplayApi.showAds( {interstitial: false} )
+      this.scene.state.vkplayApiAdType = 'reward'
     }
   }
 
@@ -161,6 +162,7 @@ export default class Ads {
         break;
       case 'vkplay':
         this.scene.state.vkplayApi.showAds( {interstitial: true} )
+        this.scene.state.vkplayApiAdType = 'interstitial'
         break;
       default:
         break;
@@ -226,6 +228,7 @@ export default class Ads {
         break;
       case 'vkplay':
         state.vkplayApi.showAds( {interstitial: true} )
+        state.vkplayApiAdType = 'interstitial'
         break;
       default:
         break;

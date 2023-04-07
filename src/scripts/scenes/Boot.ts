@@ -114,7 +114,6 @@ class Boot extends Phaser.Scene {
       this.initVolume();
     }
     if (!this.createnLanding && this.fontsReady && this._preload) {
-      console.log('create')
       this.createLanding();
     }
     if (this.fontsReady && this.doubleSave) {
@@ -173,12 +172,9 @@ class Boot extends Phaser.Scene {
     const vk: string = this.params.get('api_url');
     const ok: string = this.params.get('api_server');
     const vkplayParams = Object.fromEntries(this.params.entries())
-    console.log('params', vkplayParams)
-    console.log('1.0.50')
     if (vk === 'https://api.vk.com/api.php') this.platform = 'vk';
     else if (ok === 'https://api.ok.ru/') this.platform = 'ok';
     else if (vkplayParams.hasOwnProperty('lang')) this.platform = 'vkplay';
-    console.log('Platform', this.platform);
   }
 
   private loadFonts(): void {
@@ -215,7 +211,6 @@ class Boot extends Phaser.Scene {
       this.lang = vkplayParams.lang === 'ru_RU' ? 'ru' : 'en'
     }
     this.state.lang = langs[this.lang];
-    console.log(this.lang, 'lang')
   }
 
   private initAmplitude(): void {
@@ -344,11 +339,9 @@ class Boot extends Phaser.Scene {
         appid: Number([process.env.VK_PLAY_ID]),
         getLoginStatusCallback: (status) => {
           if (status.status != 'ok') {
-            console.log(status)
             console.log("Ошибка авторизации...");
           } else {
             this.vkplayLoginStatus = status.loginStatus
-            console.log(status, 'status')
             switch (status.loginStatus) {
               case 0: 
                 this.createnLanding = false
@@ -363,7 +356,6 @@ class Boot extends Phaser.Scene {
           }
         },
         userProfileCallback: (profile) => {
-          console.log('info', profile)
           this.postCheckUser(profile.uid, false, profile.nick);
           this.name = profile.nick;
           this.state.name = profile.nick;
@@ -374,11 +366,13 @@ class Boot extends Phaser.Scene {
           this.state.vkplayApi.reloadWindow()
         },
         adsCallback: (context) => { 
-          console.log('context', context)
           if (context.type === 'adCompleted') {
             this.state.musicVolume = this.game.scene.keys[this.state.farm].ads.musicVolume;
             this.state.soundVolume = this.game.scene.keys[this.state.farm].ads.soundVolume;
-            this.game.scene.keys[this.state.farm].ads.adReward();
+            if (this.state.vkplayApiAdType === 'reward') {
+              this.game.scene.keys[this.state.farm].ads.adReward();
+            }
+            this.state.vkplayApiAdType = ''
           }
         }
       };
@@ -388,7 +382,6 @@ class Boot extends Phaser.Scene {
       const connected = (api) => {
         this.state.vkplayApi = api;
         this.state.vkplayApi.getLoginStatus()
-        this.state.vkplayApi.showAds({interstitial: true})
       }
       iframeApi(this.state.callbacks).then(connected, error);
     }) ((window as any).iframeApi);
@@ -681,7 +674,6 @@ class Boot extends Phaser.Scene {
   }
 
   public postCheckUser(id: number | string, auth?: boolean, login?: string): void {
-    console.log(this.platform, 'platform')
     axios.post(process.env.API + '/checkUser', {
       platform: this.platform,
       data: id,
@@ -716,7 +708,6 @@ class Boot extends Phaser.Scene {
 
   public createLanding(): void {
     this.createnLanding = true;
-    console.log(this.textures.list['mid-syst'])
     if (this.authorizationWindow) {
       this.landing = new Landing(this);
     } else {
